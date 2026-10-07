@@ -1,0 +1,53 @@
+{
+  "schema": "er10.exact.complete.pair.freeze.v1",
+  "case": "I-METHOD-06",
+  "version": "v1",
+  "record_at": "2026-10-07T20:51:23.947689+00:00",
+  "both_finals_frozen": true,
+  "both_full_final_carriers_present": true,
+  "both_native_complete_terminal_states": true,
+  "all_tasks_quiet": true,
+  "current_actual_task_statuses": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-06-pair-current-quiet-v1.json",
+  "finals": {
+    "control": {
+      "role": "reviser",
+      "native_terminal": "complete",
+      "native_identity": "01a11816-0c76-7631-9743-0395ce923436",
+      "native_active_observed": true,
+      "delivery_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/frozen-delivery.json",
+      "final_files": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/artifact.md": {
+          "sha256": "33727f1c8524cc3f4ea5cb18dee3ca9458a3ee35a78069e3bc19cc71dc11b82f",
+          "bytes": 28103
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/source-map.json": {
+          "sha256": "707b4dcedf40abfde78e5934b3f84810b6917f611fe8ae3b6613b1cada1640fe",
+          "bytes": 13177
+        }
+      },
+      "source_quality": null,
+      "lifecycle_hold": null
+    },
+    "treatment": {
+      "role": "reviser",
+      "native_terminal": "complete",
+      "native_identity": "01a11813-c907-7533-b44b-7cc1b97b7e8e",
+      "native_active_observed": true,
+      "delivery_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/reviser-v1/frozen-delivery.json",
+      "final_files": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/reviser-v1/artifact.md": {
+          "sha256": "d1665b64727f68c82a0368e009f2b5f36f3690b5ab7666168aac72c7e55e7650",
+          "bytes": 28653
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/reviser-v1/source-map.json": {
+          "sha256": "cd07a1f79d71a7b2c42dcb87dabb8c7eadb41be3aa830ccd96cdbe3a53323bf9",
+          "bytes": 20276
+        }
+      },
+      "source_quality": null,
+      "lifecycle_hold": null
+    }
+  },
+  "source_assessment": null,
+  "scope": "mechanical gate only; actual reviewers decide full scientific completeness/source correctness; lifecycle/time limits separate"
+}

@@ -1,0 +1,1551 @@
+{
+  "schema": "independent-semantic-source-checks.v1",
+  "source_judgment": "FAIL",
+  "assessment_complete": true,
+  "counts": {
+    "complete": 22,
+    "assessed": 22,
+    "unassessed": 0,
+    "material_error_count": 4
+  },
+  "material_defect_ids": [
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "checks": [
+    {
+      "id": "C01",
+      "assessment": "ASSESSED",
+      "claim": "Zed reports external-write while dirty followed by undo-to-clean stale content",
+      "final_lines": "9,100,120,122",
+      "result": "SUPPORTED",
+      "source_files": [
+        "zed-issue-48697.json",
+        "zed-pr-51037.json"
+      ],
+      "source_ranges_or_symbols": [
+        "issue body Summary/Steps/Root cause",
+        "PR body Problem/Fix; merged_at"
+      ],
+      "version_or_condition": "issue #48697 opened 2026-02-07; PR #51037 merged 2026-03-10",
+      "judgment": "A real analogous report. Not evidence of a PM implementation defect."
+    },
+    {
+      "id": "C02",
+      "assessment": "ASSESSED",
+      "claim": "Pinned Zed dirty-to-clean guard, metadata condition, and undo caller",
+      "final_lines": "9,37,101,121",
+      "result": "SUPPORTED",
+      "source_files": [
+        "zed-buffer.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "Buffer.saved_mtime:106-111",
+        "DiskState and mtime:434-455",
+        "file_updated:1676-1708",
+        "did_edit:2847-2870",
+        "undo:3126-3138"
+      ],
+      "version_or_condition": "426a5666dc12e37b2441f135388b683be8ade481",
+      "judgment": "Present + was_dirty && !is_dirty + changed saved_mtime emits ReloadNeeded. Metadata comes from file_updated; did_edit does not itself reread the filesystem."
+    },
+    {
+      "id": "C03",
+      "assessment": "ASSESSED",
+      "claim": "Focused upstream regression demonstrates external reload after undo",
+      "final_lines": "9,100,121,122",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "source_files": [
+        "zed-project-tests.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "test_dirty_buffer_reloads_after_undo:5691-5759"
+      ],
+      "version_or_condition": "same immutable Zed commit as C02; fake local filesystem",
+      "judgment": "Inspected test source, not executed. It establishes intended single-buffer local behavior under fake-FS scheduling, not remote identity, timestamp uniqueness, or PM prompt semantics."
+    },
+    {
+      "id": "C04",
+      "assessment": "ASSESSED",
+      "claim": "Release notes contain fix but exact shipped Zed applicability remains unresolved in final",
+      "final_lines": "102,122",
+      "result": "REQUIRED_WORK_INCOMPLETE",
+      "source_files": [
+        "zed-release-v0.228.0.html",
+        "zed-release-v0.228.0.html.txt",
+        "zed-8421009-buffer.rs",
+        "zed-8421009-tests.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "release rendered text:84-98,136",
+        "did_edit:2857-2884",
+        "test_dirty_buffer_reloads_after_undo:5691-5759"
+      ],
+      "version_or_condition": "published v0.228.0 2026-03-18T15:31:37Z; release commit 8421009ef8a022df1196d54bb42fd94366ec0988",
+      "judgment": "Notes plus released code and test support applicability to this release. Final uncertainty is honest but does not complete required O3 release applicability. No earliest-release or all-later-release claim is made."
+    },
+    {
+      "id": "C05",
+      "assessment": "ASSESSED",
+      "claim": "Consequential later interaction of the chosen Zed repair",
+      "final_lines": "9,35,37,100-103,122",
+      "result": "DISCOVERY_LIMIT",
+      "source_files": [
+        "zed-pr-52855.html",
+        "zed-pr-52855.html.txt",
+        "zed-pr-52855.patch",
+        "zed-8421009-project.rs",
+        "zed-7ed4928-project.rs",
+        "zed-7ed4928-lsp-store.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "PR body describes format-on-save undo-to-clean reload; closed May 24 without merge",
+        "patch test_save_does_not_reload_when_format_removes_user_edits",
+        "released project ReloadNeeded handler:3649-3655",
+        "unmerged project handler:3696-3704",
+        "unmerged LspStore guard:4187-4190"
+      ],
+      "version_or_condition": "draft commits b2dd8d32c3a091b0ee2e5e457800a12dbfdfe87a and 7ed49280da799eac87dc962621918284cbf7280f",
+      "judgment": "A linked upstream report/test patch adds a format-in-progress exclusion. It was not merged here; no shipped correction or current PM defect inferred. Final avoids auto-reload, so this is a missing applicability condition/opportunity, not proof its prompt rule has the same bug."
+    },
+    {
+      "id": "C06",
+      "assessment": "ASSESSED",
+      "claim": "mtime is an example rather than universal revision proof",
+      "final_lines": "37,101,151",
+      "result": "SUPPORTED_INFERENCE",
+      "source_files": [
+        "zed-buffer.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "DiskState::Present:434-455",
+        "did_edit:2847-2870"
+      ],
+      "version_or_condition": "C02 commit, metadata-only comparison",
+      "judgment": "An equal mtime gives no content comparison in this code. The final correctly leaves same-tick, replacement, remote/cache identity and compare-at-write decisions open. This is a logical limit of the guard, not an executed filesystem experiment."
+    },
+    {
+      "id": "C07",
+      "assessment": "ASSESSED",
+      "claim": "Ropey accepts valid UTF-8, uses scalar positions and rejects invalid reader data",
+      "final_lines": "51,67,121",
+      "result": "SUPPORTED",
+      "source_files": [
+        "ropey-d41ee-Cargo.toml",
+        "ropey-immutable-lib.rs",
+        "ropey-immutable-rope.rs",
+        "ropey-from-reader-tests.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "Cargo.toml:1-3",
+        "lib.rs:1-7",
+        "from_reader:107-193",
+        "insert:333-347",
+        "from_reader tests"
+      ],
+      "version_or_condition": "v1.6.1, commit d41ee247f2f097c7f9c8e4730b7dd884734f1ee5",
+      "judgment": "Reader and str APIs support UTF-8 representation. Binary recognition and grapheme/UI cursor semantics are separate and correctly remain unselected."
+    },
+    {
+      "id": "C08",
+      "assessment": "ASSESSED",
+      "claim": "Serialization emits existing chunks in order, can partially write, and is not atomic Save",
+      "final_lines": "53,67,107",
+      "result": "SUPPORTED",
+      "source_files": [
+        "ropey-immutable-rope.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "write_to documentation and implementation:197-222"
+      ],
+      "version_or_condition": "same Ropey immutable commit",
+      "judgment": "Ordered write_all on chunk bytes has no newline normalization policy. Error can follow partial output; no-op and edited PM byte invariants remain proposed checks."
+    },
+    {
+      "id": "C09",
+      "assessment": "ASSESSED",
+      "claim": "Ropey byte/character/line counts are O(1)",
+      "final_lines": "67",
+      "result": "SUPPORTED",
+      "source_files": [
+        "ropey-immutable-rope.rs",
+        "ropey-immutable-node.rs",
+        "ropey-immutable-node-children.rs",
+        "ropey-immutable-tree-mod.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "Rope len_bytes/len_chars/len_lines:227-249",
+        "Node count getters:25-41; text_info:580-585",
+        "NodeChildren::combined_info:284-296",
+        "tree module bounded MAX_CHILDREN/MAX_BYTES:14-115"
+      ],
+      "version_or_condition": "Ropey v1.6.1",
+      "judgment": "Root count methods use bounded root child metadata or a bounded leaf scan: NodeChildren::combined_info sums at most fixed MAX_CHILDREN entries and a root leaf is bounded by fixed MAX_BYTES. No traversal of all document text. len_lines returns line_break_count + 1, not a product threshold definition."
+    },
+    {
+      "id": "C10",
+      "assessment": "ASSESSED",
+      "claim": "RopeBuilder incrementally builds without whole-input String staging but retains text",
+      "final_lines": "67,69",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "source_files": [
+        "ropey-immutable-builder.rs",
+        "ropey-immutable-lib.rs",
+        "ropey-tree-mod.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "RopeBuilder fields:40-45; append:61-70; finish:72-81; append_internal:120 onward",
+        "lib.rs chunks:81-91",
+        "tree definitions"
+      ],
+      "version_or_condition": "Ropey v1.6.1",
+      "judgment": "Builder has its own String working buffer and Arc tree stack; completed Rope remains in memory. No actual UI memory/latency conclusion follows."
+    },
+    {
+      "id": "C11",
+      "assessment": "ASSESSED",
+      "claim": "CRLF seams, Unicode line features and disabling-default SIMD implications",
+      "final_lines": "67,69",
+      "result": "SUPPORTED",
+      "source_files": [
+        "ropey-d41ee-Cargo.toml",
+        "ropey-immutable-lib.rs",
+        "ropey-immutable-crlf.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "Cargo features:14-18",
+        "lib line breaks/SIMD:115-162",
+        "crlf::is_break/seam_is_break:1-24"
+      ],
+      "version_or_condition": "Ropey v1.6.1",
+      "judgment": "Default unicode_lines adds CR/VT/FF/NEL/LS/PS. Explicit cr_lines + simd with defaults disabled is consistent with LF/CRLF/CR counting; this does not change text bytes or select nearest-ending insertion."
+    },
+    {
+      "id": "C12",
+      "assessment": "ASSESSED",
+      "claim": "Ropey changelog and seam/property tests are qualified history",
+      "final_lines": "106,122",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "source_files": [
+        "ropey-immutable-changelog.md",
+        "ropey-crlf-tests.rs",
+        "ropey-proptests.rs",
+        "ropey-immutable-slice.rs",
+        "ropey-release-v1.6.1.html"
+      ],
+      "source_ranges_or_symbols": [
+        "CHANGELOG:7-33",
+        "tests/crlf.rs::crlf_inserts/crlf_removals:1-70",
+        "proptest::pt_lines_iter_exact_01:735-769",
+        "slice::len_lines_03/04:2108-2129"
+      ],
+      "version_or_condition": "1.5.1 fixes listed in changelog; 1.6.1 published 2023-10-18",
+      "judgment": "It is release/test evolution, not proof of an issue-to-PR causal chain. Direct slice tests matching CRLF-split conditions exist; no commit linkage was established. Final does not mislabel the historical defect as current."
+    },
+    {
+      "id": "C13",
+      "assessment": "ASSESSED",
+      "claim": "Slint text is in-out and read-only is bound to TextInput",
+      "final_lines": "11,73,108,121",
+      "result": "SUPPORTED",
+      "source_files": [
+        "slint-immutable-textedit.slint",
+        "slint-immutable-base.slint",
+        "slint-37fb91-text.rs",
+        "slint-latest-textedit.html",
+        "slint-latest-textedit.html.txt"
+      ],
+      "source_ranges_or_symbols": [
+        "material wrapper:11,18,55-57",
+        "base:11,17,55-57,105-115",
+        "TextInput property:503",
+        "live docs read-only paragraph"
+      ],
+      "version_or_condition": "v1.12.0 commit 37fb91fafced9e117597a9a1825a641a8c3ea541; latest docs fetched with version unknown",
+      "judgment": "Pinned writable binding supports programmatic assignment; live docs agree. Latest docs were not substituted for pinned implementation."
+    },
+    {
+      "id": "C14",
+      "assessment": "ASSESSED",
+      "claim": "Slint keyboard guard differs from public paste and undo/redo paths",
+      "final_lines": "11,73,108",
+      "result": "SUPPORTED",
+      "source_files": [
+        "slint-immutable-textedit.slint",
+        "slint-immutable-base.slint",
+        "slint-37fb91-text.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "wrapper paste:55-57; base paste:55-57; context-menu guards:64-87",
+        "core shortcuts:775-811; insert:1523-1569; paste:1680-1698; undo/redo:1861-1950"
+      ],
+      "version_or_condition": "same pinned Slint commit",
+      "judgment": "Public paste reaches insert without read_only guard; Undo/Redo dispatch and implementations have no such guard. Keyboard typing/Cut/Paste and context menus do guard. These observations warrant backend/adapter checks, not an assertion of PM runtime failure or denial of authorized reload."
+    },
+    {
+      "id": "C15",
+      "assessment": "ASSESSED",
+      "claim": "Slint #8877 is a configuration-specific performance report, not benchmark or shipped fix",
+      "final_lines": "75,109",
+      "result": "SUPPORTED",
+      "source_files": [
+        "slint-issue-8877.json",
+        "slint-8877.html",
+        "slint-8877.html.txt"
+      ],
+      "source_ranges_or_symbols": [
+        "issue body Reproduction, Additional Context, Environment Details; closed-as-duplicate heading"
+      ],
+      "version_or_condition": "report Slint 1.12, Rust, Windows 11 23H2, wint/skia; opened 2025-07-09",
+      "judgment": "Final reproduces the reported approximately 130,172 x3 size accurately and makes no performance threshold or fix/release claim."
+    },
+    {
+      "id": "C16",
+      "assessment": "ASSESSED",
+      "claim": "Slint CRLF lead was left uncertain; primary follow-through shows a specific released layout correction",
+      "final_lines": "75,112",
+      "result": "DISCOVERY_LIMIT",
+      "source_files": [
+        "slint-discussion-12343.html",
+        "slint-discussion-12343.html.txt",
+        "slint-pr-12347.html",
+        "slint-pr-12347.patch",
+        "slint-release-v1.17.1.html",
+        "slint-v1.17.0-sharedparley.rs",
+        "slint-cf62c9-sharedparley.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "discussion text:108-147,161-164",
+        "PR description and patch",
+        "sharedparley::paragraph_ranges/create_text_paragraphs:400-455; paragraph_by_byte_offset:988; cursor_rect_for_byte_offset:1067; test_crlf_line_count/cursor/ranges:1771-1813"
+      ],
+      "version_or_condition": "report Bun/TypeScript Slint 1.17.0; PR #12347 merged 2026-07-03; release 1.17.1 commit cf62c975c311e7036d599ed8ed0b7e6a8386a934 published 2026-07-07",
+      "judgment": "Released parley layout excludes CR before LF from paragraph ranges and clamps cursor in the gap; tests are present. Not a PM normalization recommendation, not shown to affect pinned 1.12.0 or every renderer. Final uncertainty is truthful, but a useful known lead remains shallow. No candidate credit for reviewer discovery."
+    },
+    {
+      "id": "C17",
+      "assessment": "ASSESSED",
+      "claim": "Watcher events can be coalesced/lost and cannot alone prove current content",
+      "final_lines": "31,37,129",
+      "result": "SUPPORTED_WITH_PLATFORM_LIMIT",
+      "source_files": [
+        "inotify.html",
+        "inotify.html.txt"
+      ],
+      "source_ranges_or_symbols": [
+        "inotify queue overflow IN_Q_OVERFLOW; NOTES identical-event coalescing; LIMITATIONS event loss/rebuild"
+      ],
+      "version_or_condition": "Linux man-pages 6.19, inotify(7) dated 2026-02-14; live HTML rendering 2026-09-09; actual retrieval times in metadata",
+      "judgment": "Linux supplies a concrete primary mechanism for the caution; this is not a universal implementation contract for every OS/remote watcher."
+    },
+    {
+      "id": "C18",
+      "assessment": "ASSESSED",
+      "claim": "In-place truncate/write and temp-file rename have distinct conditions",
+      "final_lines": "41,104,137,152",
+      "result": "SUPPORTED_WITH_PLATFORM_LIMIT",
+      "source_files": [
+        "posix-open.html",
+        "posix-open.html.txt",
+        "posix-rename.html",
+        "posix-rename.html.txt"
+      ],
+      "source_ranges_or_symbols": [
+        "open O_TRUNC definition",
+        "rename DESCRIPTION replacement visibility/file-link behavior; ERRORS EXDEV"
+      ],
+      "version_or_condition": "The Open Group Base Specifications Issue 8 / POSIX.1-2024",
+      "judgment": "Regular-file O_TRUNC sets length zero; rename replaces directory entry and can fail across file systems. Metadata/inode/visibility tradeoffs are coherent; crash durability, Windows and FileSafe implementation remain unproven."
+    },
+    {
+      "id": "C19",
+      "assessment": "ASSESSED",
+      "claim": "Only successful write can advance saved baseline/clear dirty",
+      "final_lines": "21,39,137",
+      "result": "MATERIAL_CONTRACT_CONFLICT",
+      "source_files": [
+        "frozen-inputs/definitions_and_transactions.md",
+        "frozen-inputs/text_and_size_context.md",
+        "zed-buffer.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "frozen definitions:18-19",
+        "frozen text:4-5",
+        "Zed did_reload:1658-1673"
+      ],
+      "version_or_condition": "frozen PM ab121bf69197ebea81fa726d527062fbf13f9ec5; Zed C02 commit analogous only",
+      "judgment": "D1: final unqualified only-write wording conflicts with owner-confirmed reload/restore baseline adoption and explicit clear-dirty-on-reload. No application failure asserted."
+    },
+    {
+      "id": "C20",
+      "assessment": "ASSESSED",
+      "claim": "Blanket read-only rejection includes restore/recovery/external reload",
+      "final_lines": "25,51,134",
+      "result": "MATERIAL_CONTRACT_CONFLICT",
+      "source_files": [
+        "frozen-inputs/definitions_and_transactions.md",
+        "frozen-inputs/text_and_size_context.md",
+        "frozen-inputs/editing_and_save_context.md",
+        "slint-37fb91-text.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "definitions:16-18",
+        "text:15,19",
+        "editing:16-21",
+        "Slint methods in C14"
+      ],
+      "version_or_condition": "PM frozen contract; source evidence concerns UI input flag only",
+      "judgment": "D2: application-wide rejection wording lacks the required authorized recovery/reload exception, including reload after external UTF-8 repair. Source supports gating unauthorized edits, not forbidding all owner-authorized adoption."
+    },
+    {
+      "id": "C21",
+      "assessment": "ASSESSED",
+      "claim": "No MVP virtualized read-only editing is retained without exception",
+      "final_lines": "13,63,88",
+      "result": "MATERIAL_PRESERVATION_LOSS",
+      "source_files": [
+        "frozen-inputs/F-028.md",
+        "frozen-inputs/text_and_size_context.md",
+        "admitted-control/research-v1/artifact.md"
+      ],
+      "source_ranges_or_symbols": [
+        "F-028:42-43",
+        "text:24",
+        "research:44,137"
+      ],
+      "version_or_condition": "frozen PM accepted rule expressly has unless needed",
+      "judgment": "D3: final drops the accepted necessity exception and labels unconditional ban retain. No benchmark justifies this narrowing."
+    },
+    {
+      "id": "C22",
+      "assessment": "ASSESSED",
+      "claim": "Proposed checks, executed work and witness applicability are distinguished",
+      "final_lines": "131-145,160",
+      "result": "SUPPORTED_WITH_VERIFICATION_LIMIT",
+      "source_files": [
+        "admitted-control/reviser-v1/artifact.md",
+        "admitted-control/research-v1/artifact.md",
+        "admitted-control/critic-v1/artifact.md",
+        "zed-project-tests.rs",
+        "ropey-crlf-tests.rs"
+      ],
+      "source_ranges_or_symbols": [
+        "final proposed validations:131-143; execution statement:145,160",
+        "research:75,162-164",
+        "critic:64-66",
+        "upstream test sources C03/C12"
+      ],
+      "version_or_condition": "candidate reports source inspection; all PM checks proposed",
+      "judgment": "No build, benchmark or PM runtime result is asserted. Candidate historical execution logs were not admitted; reported browsing/hashes are not runtime proof. Reviewer performed static source checks and retrieval only; no downloaded code executed."
+    }
+  ],
+  "file_evidence": [
+    {
+      "id": "admitted-control/critic-v1/artifact.md",
+      "path": "sources/admitted-control/critic-v1/artifact.md",
+      "sha256": "4ee82161cc9f6620ca2c3b893fb8395590424373922497ca4aeb758a6ab557f5",
+      "bytes": 12278
+    },
+    {
+      "id": "admitted-control/research-v1/artifact.md",
+      "path": "sources/admitted-control/research-v1/artifact.md",
+      "sha256": "5d481044e29a0891ebc32df8a4955a8c2298a16665eb38f0ebf79b4652ee7104",
+      "bytes": 31376
+    },
+    {
+      "id": "admitted-control/reviser-v1/artifact.md",
+      "path": "sources/admitted-control/reviser-v1/artifact.md",
+      "sha256": "aa54c03322cb723962a158b9a00020a5e0d5dfa9c4c581fc88a7ac2cf45da841",
+      "bytes": 30197
+    },
+    {
+      "id": "frozen-inputs/F-028.md",
+      "path": "sources/frozen-inputs/F-028.md",
+      "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+      "bytes": 2001
+    },
+    {
+      "id": "frozen-inputs/definitions_and_transactions.md",
+      "path": "sources/frozen-inputs/definitions_and_transactions.md",
+      "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+      "bytes": 5313
+    },
+    {
+      "id": "frozen-inputs/editing_and_save_context.md",
+      "path": "sources/frozen-inputs/editing_and_save_context.md",
+      "sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+      "bytes": 4948
+    },
+    {
+      "id": "frozen-inputs/text_and_size_context.md",
+      "path": "sources/frozen-inputs/text_and_size_context.md",
+      "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7",
+      "bytes": 3663
+    },
+    {
+      "id": "inotify.html",
+      "path": "sources/inotify.html",
+      "sha256": "79f5ab18e2fc423631cf4949ef82ca1384844353ea11a4dba42e1a77e8fdd8fd",
+      "bytes": 44066
+    },
+    {
+      "id": "inotify.html.txt",
+      "path": "sources/inotify.html.txt",
+      "sha256": "12d75e7325357f4d0c0b4dbd9cef700c027a053466eee94dbe9db9c89d10f155",
+      "bytes": 27120
+    },
+    {
+      "id": "posix-open.html",
+      "path": "sources/posix-open.html",
+      "sha256": "57b770918aa3e0c25186972675df8c96da119cf4b973335ed4487405e260dc3a",
+      "bytes": 40401
+    },
+    {
+      "id": "posix-open.html.txt",
+      "path": "sources/posix-open.html.txt",
+      "sha256": "f2cee11af15a709e1b80811a28aafdc101e999a4bebea26a2b1df6e83bec665c",
+      "bytes": 29994
+    },
+    {
+      "id": "posix-rename.html",
+      "path": "sources/posix-rename.html",
+      "sha256": "06671610134b0a52cdf4dcdaf382f72fef85ef51088b8a52b8679c7f03829318",
+      "bytes": 26407
+    },
+    {
+      "id": "posix-rename.html.txt",
+      "path": "sources/posix-rename.html.txt",
+      "sha256": "e5a89ad37d3f5211943e9036d211efe5cdec90345096806f4dcccc28d9023511",
+      "bytes": 14459
+    },
+    {
+      "id": "ropey-crlf-tests.rs",
+      "path": "sources/ropey-crlf-tests.rs",
+      "sha256": "64dd6cc32ef5737502571896012bcceadc21be6fbc02c4d77b691d5c31b1c532",
+      "bytes": 2552
+    },
+    {
+      "id": "ropey-d41ee-Cargo.toml",
+      "path": "sources/ropey-d41ee-Cargo.toml",
+      "sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd",
+      "bytes": 1410
+    },
+    {
+      "id": "ropey-from-reader-tests.rs",
+      "path": "sources/ropey-from-reader-tests.rs",
+      "sha256": "cbd1d35843cec11fc43170794de9ffbf8404086a136f29632d4f7655ceadfe80",
+      "bytes": 1364
+    },
+    {
+      "id": "ropey-immutable-builder.rs",
+      "path": "sources/ropey-immutable-builder.rs",
+      "sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398",
+      "bytes": 12592
+    },
+    {
+      "id": "ropey-immutable-changelog.md",
+      "path": "sources/ropey-immutable-changelog.md",
+      "sha256": "cb39bd9b0d622a83d18a4ada0f384e9067a07c57023cf5058a842d35e1bbec63",
+      "bytes": 15390
+    },
+    {
+      "id": "ropey-immutable-crlf.rs",
+      "path": "sources/ropey-immutable-crlf.rs",
+      "sha256": "2705a577d31e5efecd95b81bf63339dc1c9d009085fe346685cf36703fb938cb",
+      "bytes": 6199
+    },
+    {
+      "id": "ropey-immutable-lib.rs",
+      "path": "sources/ropey-immutable-lib.rs",
+      "sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a",
+      "bytes": 14151
+    },
+    {
+      "id": "ropey-immutable-node-children.rs",
+      "path": "sources/ropey-immutable-node-children.rs",
+      "sha256": "18576a441d56f98b7bcef174824d5a4d315211699919a7becd16ec876f2f12ae",
+      "bytes": 35148
+    },
+    {
+      "id": "ropey-immutable-node.rs",
+      "path": "sources/ropey-immutable-node.rs",
+      "sha256": "a591c350ee59617fea969e9ee5e4361fb351e41126e96e1ef844054ce044bd65",
+      "bytes": 42390
+    },
+    {
+      "id": "ropey-immutable-rope.rs",
+      "path": "sources/ropey-immutable-rope.rs",
+      "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee",
+      "bytes": 104334
+    },
+    {
+      "id": "ropey-immutable-slice.rs",
+      "path": "sources/ropey-immutable-slice.rs",
+      "sha256": "c58b364583e7781b3d56f4da3a1dcad21aeb761c3f5cca78a4a9d2a0a832ce30",
+      "bytes": 103420
+    },
+    {
+      "id": "ropey-immutable-tree-mod.rs",
+      "path": "sources/ropey-immutable-tree-mod.rs",
+      "sha256": "8ce7879907edeeb571d13c6d50406c7c5775fac6ebc2af06215e119fcfe499be",
+      "bytes": 4323
+    },
+    {
+      "id": "ropey-proptests.rs",
+      "path": "sources/ropey-proptests.rs",
+      "sha256": "be4d6a148b7f3c3f4fb9c74bb53fc468ec3f9bbbc376ba255904ef98aaee77fb",
+      "bytes": 54876
+    },
+    {
+      "id": "ropey-release-v1.6.1.html",
+      "path": "sources/ropey-release-v1.6.1.html",
+      "sha256": "4a22794f49721d75d5772018590cbd64b2ff122976b1d17a46b525bacd047b94",
+      "bytes": 200737
+    },
+    {
+      "id": "ropey-tree-mod.rs",
+      "path": "sources/ropey-tree-mod.rs",
+      "sha256": "8ce7879907edeeb571d13c6d50406c7c5775fac6ebc2af06215e119fcfe499be",
+      "bytes": 4323
+    },
+    {
+      "id": "slint-37fb91-text.rs",
+      "path": "sources/slint-37fb91-text.rs",
+      "sha256": "5603082f0ec16f7d6c68d8f13283e6e32cdf415a922d05c9fd956dcba3277db0",
+      "bytes": 78584
+    },
+    {
+      "id": "slint-8877.html",
+      "path": "sources/slint-8877.html",
+      "sha256": "bd83431033ff7a82a62216515c572463557f6204d507e07b7c26117376e9432b",
+      "bytes": 266113
+    },
+    {
+      "id": "slint-8877.html.txt",
+      "path": "sources/slint-8877.html.txt",
+      "sha256": "9ff0e8acfdf4629bd63c0c7eee647245b4b7c7d7ee199e19edf07b11fadaf5cb",
+      "bytes": 6205
+    },
+    {
+      "id": "slint-cf62c9-sharedparley.rs",
+      "path": "sources/slint-cf62c9-sharedparley.rs",
+      "sha256": "1e3c277e6c9e18090b1570846950cecc55497a3f5de16d1b517954e69dc3dc28",
+      "bytes": 69210
+    },
+    {
+      "id": "slint-discussion-12343.html",
+      "path": "sources/slint-discussion-12343.html",
+      "sha256": "c86bc83fe8345c8effd22859636dcb5574bf1726d12b6b7691b8e04d77c7caad",
+      "bytes": 311486
+    },
+    {
+      "id": "slint-discussion-12343.html.txt",
+      "path": "sources/slint-discussion-12343.html.txt",
+      "sha256": "240a2e85676d9ff309849db9ea5dccf510d5b36d0bf0f3f610040619ab1ad588",
+      "bytes": 7401
+    },
+    {
+      "id": "slint-immutable-base.slint",
+      "path": "sources/slint-immutable-base.slint",
+      "sha256": "d9fb982b5dfb72ad737f6f3806bd6b40229717c0b5db2532849620cf0d47bd26",
+      "bytes": 5978
+    },
+    {
+      "id": "slint-immutable-textedit.slint",
+      "path": "sources/slint-immutable-textedit.slint",
+      "sha256": "c1e9fac8f764de40b99072d74b6ae7f2f11a80fb8202e471d214f6e8f3921dd8",
+      "bytes": 2960
+    },
+    {
+      "id": "slint-issue-8877.json",
+      "path": "sources/slint-issue-8877.json",
+      "sha256": "5fe95914f9b2267e7173def36c41d47fd7c6c202a5a3cec17b8f0b4369cdb19e",
+      "bytes": 7232
+    },
+    {
+      "id": "slint-latest-textedit.html",
+      "path": "sources/slint-latest-textedit.html",
+      "sha256": "d79942b912b93fcf7902ea57f8e57ebe36d11798527bb9e773145aaeed2a3157",
+      "bytes": 138082
+    },
+    {
+      "id": "slint-latest-textedit.html.txt",
+      "path": "sources/slint-latest-textedit.html.txt",
+      "sha256": "e3ae3a9fc7cb178451fd431a56d19e059bdc5e96926d03e71ddbad62ee85264c",
+      "bytes": 10474
+    },
+    {
+      "id": "slint-pr-12347.html",
+      "path": "sources/slint-pr-12347.html",
+      "sha256": "cf4d2ce56a4596a1ccee53f883ab425be1bb085f01ecab849b5db81244f0d783",
+      "bytes": 356516
+    },
+    {
+      "id": "slint-pr-12347.patch",
+      "path": "sources/slint-pr-12347.patch",
+      "sha256": "f9c26633ff6ccbab48ebbfe3938d3c5587421f113515bc2fc15827688865d765",
+      "bytes": 7144
+    },
+    {
+      "id": "slint-release-v1.17.1.html",
+      "path": "sources/slint-release-v1.17.1.html",
+      "sha256": "132a131efbc8682bdff64144c00d9b85f3efbe18fef79fd771eaf42ca21711d2",
+      "bytes": 199993
+    },
+    {
+      "id": "slint-v1.17.0-sharedparley.rs",
+      "path": "sources/slint-v1.17.0-sharedparley.rs",
+      "sha256": "c8e466c99d9292449d7e24208ac9949dcbdd57b8fe6a591087e83cbad29d90dc",
+      "bytes": 60962
+    },
+    {
+      "id": "zed-7ed4928-lsp-store.rs",
+      "path": "sources/zed-7ed4928-lsp-store.rs",
+      "sha256": "8932e9fcfbb312af99e76263ebfe9dd787ffba626f19ba1b664226808c9c68d4",
+      "bytes": 600042
+    },
+    {
+      "id": "zed-7ed4928-project.rs",
+      "path": "sources/zed-7ed4928-project.rs",
+      "sha256": "99f62fd581dc3fd67be8d96dd20d82fdacd5199ba8da91e16d9f0ea5a504debf",
+      "bytes": 221727
+    },
+    {
+      "id": "zed-8421009-buffer.rs",
+      "path": "sources/zed-8421009-buffer.rs",
+      "sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b",
+      "bytes": 225371
+    },
+    {
+      "id": "zed-8421009-project.rs",
+      "path": "sources/zed-8421009-project.rs",
+      "sha256": "d6afe383b4c545c0c42158aa930959117f7c76b74f66026909b1ccd1ec15b33e",
+      "bytes": 218658
+    },
+    {
+      "id": "zed-8421009-tests.rs",
+      "path": "sources/zed-8421009-tests.rs",
+      "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742",
+      "bytes": 400358
+    },
+    {
+      "id": "zed-buffer.rs",
+      "path": "sources/zed-buffer.rs",
+      "sha256": "000c461be379974adcda33ecbfc2e464d21f05b4e4014aea6fad1a0dc86a99de",
+      "bytes": 224892
+    },
+    {
+      "id": "zed-issue-48697.json",
+      "path": "sources/zed-issue-48697.json",
+      "sha256": "77af8fb1a3caea9eed622cd7fb866a87328a17b1f188ed60b8ab90e0446ac218",
+      "bytes": 5411
+    },
+    {
+      "id": "zed-pr-51037.json",
+      "path": "sources/zed-pr-51037.json",
+      "sha256": "6d15dfcb46ab8d2410fa1a6cb887f60d39391cecc25dd7431c6e84f7193ec80b",
+      "bytes": 17762
+    },
+    {
+      "id": "zed-pr-52855.html",
+      "path": "sources/zed-pr-52855.html",
+      "sha256": "938e210e0416b55df31d9100efb40044bbe7a538a473a35350737beb17184583",
+      "bytes": 316981
+    },
+    {
+      "id": "zed-pr-52855.html.txt",
+      "path": "sources/zed-pr-52855.html.txt",
+      "sha256": "743b56d61f64637a0d61156ac9c3dea5fc482cd2b0f89d4509dd022a5b18830f",
+      "bytes": 5982
+    },
+    {
+      "id": "zed-pr-52855.patch",
+      "path": "sources/zed-pr-52855.patch",
+      "sha256": "c0c55c87f107d1d99fac993d3d94e42dcc41452fd26459008265d74457fdbfa0",
+      "bytes": 5850
+    },
+    {
+      "id": "zed-project-tests.rs",
+      "path": "sources/zed-project-tests.rs",
+      "sha256": "e0964a72fd365bab92ab9aa66c03779f6266c2d0fcda2c6bb74ab9402d660fb8",
+      "bytes": 400244
+    },
+    {
+      "id": "zed-release-v0.228.0.html",
+      "path": "sources/zed-release-v0.228.0.html",
+      "sha256": "47a26a19c5cde8ccfc48fdd7a2c64edf6080bdf7465a1245b91df8ef9bf626a9",
+      "bytes": 217663
+    },
+    {
+      "id": "zed-release-v0.228.0.html.txt",
+      "path": "sources/zed-release-v0.228.0.html.txt",
+      "sha256": "5b35d4e133f21f5d89f82d736f1fb87fa7691d877c79a2097fc432fe125bd4a1",
+      "bytes": 10600
+    }
+  ],
+  "retrievals": [
+    {
+      "id": "inotify.html",
+      "metadata_path": "sources/inotify.html.meta.json",
+      "url": "https://man7.org/linux/man-pages/man7/inotify.7.html",
+      "retrieval_started_utc": "2026-10-07T20:50:24.505606+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:25.046841+00:00",
+      "path": "sources/inotify.html",
+      "sha256": "79f5ab18e2fc423631cf4949ef82ca1384844353ea11a4dba42e1a77e8fdd8fd",
+      "bytes": 44066,
+      "http_status": 200,
+      "final_url": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "posix-open.html",
+      "metadata_path": "sources/posix-open.html.meta.json",
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/open.html",
+      "retrieval_started_utc": "2026-10-07T20:50:24.435893+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:24.511140+00:00",
+      "path": "sources/posix-open.html",
+      "sha256": "57b770918aa3e0c25186972675df8c96da119cf4b973335ed4487405e260dc3a",
+      "bytes": 40401,
+      "http_status": 200,
+      "final_url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/open.html"
+    },
+    {
+      "id": "posix-rename.html",
+      "metadata_path": "sources/posix-rename.html.meta.json",
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html",
+      "retrieval_started_utc": "2026-10-07T20:50:24.338864+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:24.435585+00:00",
+      "path": "sources/posix-rename.html",
+      "sha256": "06671610134b0a52cdf4dcdaf382f72fef85ef51088b8a52b8679c7f03829318",
+      "bytes": 26407,
+      "http_status": 200,
+      "final_url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+    },
+    {
+      "id": "ropey-CHANGELOG.md",
+      "metadata_path": "sources/ropey-CHANGELOG.md.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/CHANGELOG.md",
+      "retrieval_started_utc": "2026-10-07T20:47:53.914456+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.034557+00:00",
+      "path": "sources/ropey-CHANGELOG.md",
+      "sha256": "cb39bd9b0d622a83d18a4ada0f384e9067a07c57023cf5058a842d35e1bbec63",
+      "bytes": 15390,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/CHANGELOG.md"
+    },
+    {
+      "id": "ropey-Cargo.toml",
+      "metadata_path": "sources/ropey-Cargo.toml.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/Cargo.toml",
+      "retrieval_started_utc": "2026-10-07T20:47:53.559810+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:53.888137+00:00",
+      "path": "sources/ropey-Cargo.toml",
+      "sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd",
+      "bytes": 1410,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/Cargo.toml"
+    },
+    {
+      "id": "ropey-builder.rs",
+      "metadata_path": "sources/ropey-builder.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/rope_builder.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:53.732282+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:53.864650+00:00",
+      "path": "sources/ropey-builder.rs",
+      "sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398",
+      "bytes": 12592,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/rope_builder.rs"
+    },
+    {
+      "id": "ropey-crlf-tests.rs",
+      "metadata_path": "sources/ropey-crlf-tests.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/tests/crlf.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:53.864954+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.017858+00:00",
+      "path": "sources/ropey-crlf-tests.rs",
+      "sha256": "64dd6cc32ef5737502571896012bcceadc21be6fbc02c4d77b691d5c31b1c532",
+      "bytes": 2552,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/tests/crlf.rs"
+    },
+    {
+      "id": "ropey-crlf.rs",
+      "metadata_path": "sources/ropey-crlf.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/crlf.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:53.796423+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:53.914092+00:00",
+      "path": "sources/ropey-crlf.rs",
+      "sha256": "2705a577d31e5efecd95b81bf63339dc1c9d009085fe346685cf36703fb938cb",
+      "bytes": 6199,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/crlf.rs"
+    },
+    {
+      "id": "ropey-d41ee-Cargo.toml",
+      "metadata_path": "sources/ropey-d41ee-Cargo.toml.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/Cargo.toml",
+      "retrieval_started_utc": "2026-10-07T20:50:24.306109+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:24.338552+00:00",
+      "path": "sources/ropey-d41ee-Cargo.toml",
+      "sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd",
+      "bytes": 1410,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/Cargo.toml"
+    },
+    {
+      "id": "ropey-from-reader-tests.rs",
+      "metadata_path": "sources/ropey-from-reader-tests.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/tests/from_reader.rs",
+      "retrieval_started_utc": "2026-10-07T20:48:52.594979+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:52.711616+00:00",
+      "path": "sources/ropey-from-reader-tests.rs",
+      "sha256": "cbd1d35843cec11fc43170794de9ffbf8404086a136f29632d4f7655ceadfe80",
+      "bytes": 1364,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/tests/from_reader.rs"
+    },
+    {
+      "id": "ropey-immutable-builder.rs",
+      "metadata_path": "sources/ropey-immutable-builder.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope_builder.rs",
+      "retrieval_started_utc": "2026-10-07T20:52:43.947390+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.017002+00:00",
+      "path": "sources/ropey-immutable-builder.rs",
+      "sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398",
+      "bytes": 12592,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope_builder.rs"
+    },
+    {
+      "id": "ropey-immutable-changelog.md",
+      "metadata_path": "sources/ropey-immutable-changelog.md.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/CHANGELOG.md",
+      "retrieval_started_utc": "2026-10-07T20:52:44.017404+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.058662+00:00",
+      "path": "sources/ropey-immutable-changelog.md",
+      "sha256": "cb39bd9b0d622a83d18a4ada0f384e9067a07c57023cf5058a842d35e1bbec63",
+      "bytes": 15390,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/CHANGELOG.md"
+    },
+    {
+      "id": "ropey-immutable-crlf.rs",
+      "metadata_path": "sources/ropey-immutable-crlf.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/crlf.rs",
+      "retrieval_started_utc": "2026-10-07T20:52:43.948606+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.039816+00:00",
+      "path": "sources/ropey-immutable-crlf.rs",
+      "sha256": "2705a577d31e5efecd95b81bf63339dc1c9d009085fe346685cf36703fb938cb",
+      "bytes": 6199,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/crlf.rs"
+    },
+    {
+      "id": "ropey-immutable-lib.rs",
+      "metadata_path": "sources/ropey-immutable-lib.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/lib.rs",
+      "retrieval_started_utc": "2026-10-07T20:52:43.949724+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.014530+00:00",
+      "path": "sources/ropey-immutable-lib.rs",
+      "sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a",
+      "bytes": 14151,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/lib.rs"
+    },
+    {
+      "id": "ropey-immutable-node-children.rs",
+      "metadata_path": "sources/ropey-immutable-node-children.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/tree/node_children.rs",
+      "retrieval_started_utc": "2026-10-07T21:03:31.687165+00:00",
+      "retrieval_finished_utc": "2026-10-07T21:03:31.932445+00:00",
+      "path": "sources/ropey-immutable-node-children.rs",
+      "sha256": "18576a441d56f98b7bcef174824d5a4d315211699919a7becd16ec876f2f12ae",
+      "bytes": 35148,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/tree/node_children.rs"
+    },
+    {
+      "id": "ropey-immutable-node.rs",
+      "metadata_path": "sources/ropey-immutable-node.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/tree/node.rs",
+      "retrieval_started_utc": "2026-10-07T21:03:21.571523+00:00",
+      "retrieval_finished_utc": "2026-10-07T21:03:21.662823+00:00",
+      "path": "sources/ropey-immutable-node.rs",
+      "sha256": "a591c350ee59617fea969e9ee5e4361fb351e41126e96e1ef844054ce044bd65",
+      "bytes": 42390,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/tree/node.rs"
+    },
+    {
+      "id": "ropey-immutable-rope.rs",
+      "metadata_path": "sources/ropey-immutable-rope.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope.rs",
+      "retrieval_started_utc": "2026-10-07T20:52:43.945536+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.049952+00:00",
+      "path": "sources/ropey-immutable-rope.rs",
+      "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee",
+      "bytes": 104334,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope.rs"
+    },
+    {
+      "id": "ropey-immutable-slice.rs",
+      "metadata_path": "sources/ropey-immutable-slice.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/slice.rs",
+      "retrieval_started_utc": "2026-10-07T20:52:44.015016+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.343881+00:00",
+      "path": "sources/ropey-immutable-slice.rs",
+      "sha256": "c58b364583e7781b3d56f4da3a1dcad21aeb761c3f5cca78a4a9d2a0a832ce30",
+      "bytes": 103420,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/slice.rs"
+    },
+    {
+      "id": "ropey-immutable-tree-mod.rs",
+      "metadata_path": "sources/ropey-immutable-tree-mod.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/tree/mod.rs",
+      "retrieval_started_utc": "2026-10-07T21:04:04.479405+00:00",
+      "retrieval_finished_utc": "2026-10-07T21:04:04.593102+00:00",
+      "path": "sources/ropey-immutable-tree-mod.rs",
+      "sha256": "8ce7879907edeeb571d13c6d50406c7c5775fac6ebc2af06215e119fcfe499be",
+      "bytes": 4323,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/tree/mod.rs"
+    },
+    {
+      "id": "ropey-lib.rs",
+      "metadata_path": "sources/ropey-lib.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/lib.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:53.981105+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.207809+00:00",
+      "path": "sources/ropey-lib.rs",
+      "sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a",
+      "bytes": 14151,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/lib.rs"
+    },
+    {
+      "id": "ropey-proptests.rs",
+      "metadata_path": "sources/ropey-proptests.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/tests/proptest_tests.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:53.888921+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.051407+00:00",
+      "path": "sources/ropey-proptests.rs",
+      "sha256": "be4d6a148b7f3c3f4fb9c74bb53fc468ec3f9bbbc376ba255904ef98aaee77fb",
+      "bytes": 54876,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/tests/proptest_tests.rs"
+    },
+    {
+      "id": "ropey-release-v1.6.1.html",
+      "metadata_path": "sources/ropey-release-v1.6.1.html.meta.json",
+      "url": "https://github.com/cessen/ropey/releases/tag/v1.6.1",
+      "retrieval_started_utc": "2026-10-07T20:49:08.159771+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:08.489579+00:00",
+      "path": "sources/ropey-release-v1.6.1.html",
+      "sha256": "4a22794f49721d75d5772018590cbd64b2ff122976b1d17a46b525bacd047b94",
+      "bytes": 200737,
+      "http_status": 200,
+      "final_url": "https://github.com/cessen/ropey/releases/tag/v1.6.1"
+    },
+    {
+      "id": "ropey-rope.rs",
+      "metadata_path": "sources/ropey-rope.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/rope.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:53.561456+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:53.980800+00:00",
+      "path": "sources/ropey-rope.rs",
+      "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee",
+      "bytes": 104334,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/rope.rs"
+    },
+    {
+      "id": "ropey-slice.rs",
+      "metadata_path": "sources/ropey-slice.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/slice.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:54.018159+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.196364+00:00",
+      "path": "sources/ropey-slice.rs",
+      "sha256": "c58b364583e7781b3d56f4da3a1dcad21aeb761c3f5cca78a4a9d2a0a832ce30",
+      "bytes": 103420,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/slice.rs"
+    },
+    {
+      "id": "ropey-tag-ref.json",
+      "metadata_path": "sources/ropey-tag-ref.json.meta.json",
+      "url": "https://api.github.com/repos/cessen/ropey/git/ref/tags/v1.6.1",
+      "retrieval_started_utc": "2026-10-07T20:48:52.514064+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:52.594593+00:00",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "http_status": null
+    },
+    {
+      "id": "ropey-tree-mod.rs",
+      "metadata_path": "sources/ropey-tree-mod.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/tree/mod.rs",
+      "retrieval_started_utc": "2026-10-07T20:48:52.599038+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:52.867507+00:00",
+      "path": "sources/ropey-tree-mod.rs",
+      "sha256": "8ce7879907edeeb571d13c6d50406c7c5775fac6ebc2af06215e119fcfe499be",
+      "bytes": 4323,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/tree/mod.rs"
+    },
+    {
+      "id": "slint-37fb91-text.rs",
+      "metadata_path": "sources/slint-37fb91-text.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/core/items/text.rs",
+      "retrieval_started_utc": "2026-10-07T20:50:24.333545+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:24.505187+00:00",
+      "path": "sources/slint-37fb91-text.rs",
+      "sha256": "5603082f0ec16f7d6c68d8f13283e6e32cdf415a922d05c9fd956dcba3277db0",
+      "bytes": 78584,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/core/items/text.rs"
+    },
+    {
+      "id": "slint-8877-comments.json",
+      "metadata_path": "sources/slint-8877-comments.json.meta.json",
+      "url": "https://api.github.com/repos/slint-ui/slint/issues/8877/comments",
+      "retrieval_started_utc": "2026-10-07T20:48:52.588658+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:52.639161+00:00",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "http_status": null
+    },
+    {
+      "id": "slint-8877.html",
+      "metadata_path": "sources/slint-8877.html.meta.json",
+      "url": "https://github.com/slint-ui/slint/issues/8877",
+      "retrieval_started_utc": "2026-10-07T20:49:08.277876+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:08.930954+00:00",
+      "path": "sources/slint-8877.html",
+      "sha256": "bd83431033ff7a82a62216515c572463557f6204d507e07b7c26117376e9432b",
+      "bytes": 266113,
+      "http_status": 200,
+      "final_url": "https://github.com/slint-ui/slint/issues/8877"
+    },
+    {
+      "id": "slint-cf62c9-sharedparley.rs",
+      "metadata_path": "sources/slint-cf62c9-sharedparley.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/cf62c975c311e7036d599ed8ed0b7e6a8386a934/internal/core/textlayout/sharedparley.rs",
+      "retrieval_started_utc": "2026-10-07T20:55:52.881019+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:55:53.027964+00:00",
+      "path": "sources/slint-cf62c9-sharedparley.rs",
+      "sha256": "1e3c277e6c9e18090b1570846950cecc55497a3f5de16d1b517954e69dc3dc28",
+      "bytes": 69210,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/cf62c975c311e7036d599ed8ed0b7e6a8386a934/internal/core/textlayout/sharedparley.rs"
+    },
+    {
+      "id": "slint-discussion-12343.html",
+      "metadata_path": "sources/slint-discussion-12343.html.meta.json",
+      "url": "https://github.com/slint-ui/slint/discussions/12343",
+      "retrieval_started_utc": "2026-10-07T20:47:54.196731+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.564913+00:00",
+      "path": "sources/slint-discussion-12343.html",
+      "sha256": "c86bc83fe8345c8effd22859636dcb5574bf1726d12b6b7691b8e04d77c7caad",
+      "bytes": 311486,
+      "http_status": 200,
+      "final_url": "https://github.com/slint-ui/slint/discussions/12343"
+    },
+    {
+      "id": "slint-immutable-base.slint",
+      "metadata_path": "sources/slint-immutable-base.slint.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/compiler/widgets/common/textedit-base.slint",
+      "retrieval_started_utc": "2026-10-07T20:52:44.050368+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.192475+00:00",
+      "path": "sources/slint-immutable-base.slint",
+      "sha256": "d9fb982b5dfb72ad737f6f3806bd6b40229717c0b5db2532849620cf0d47bd26",
+      "bytes": 5978,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/compiler/widgets/common/textedit-base.slint"
+    },
+    {
+      "id": "slint-immutable-textedit.slint",
+      "metadata_path": "sources/slint-immutable-textedit.slint.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/compiler/widgets/material/textedit.slint",
+      "retrieval_started_utc": "2026-10-07T20:52:44.040156+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.168714+00:00",
+      "path": "sources/slint-immutable-textedit.slint",
+      "sha256": "c1e9fac8f764de40b99072d74b6ae7f2f11a80fb8202e471d214f6e8f3921dd8",
+      "bytes": 2960,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/compiler/widgets/material/textedit.slint"
+    },
+    {
+      "id": "slint-issue-8877.json",
+      "metadata_path": "sources/slint-issue-8877.json.meta.json",
+      "url": "https://api.github.com/repos/slint-ui/slint/issues/8877",
+      "retrieval_started_utc": "2026-10-07T20:47:54.134715+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.326700+00:00",
+      "path": "sources/slint-issue-8877.json",
+      "sha256": "5fe95914f9b2267e7173def36c41d47fd7c6c202a5a3cec17b8f0b4369cdb19e",
+      "bytes": 7232,
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/slint-ui/slint/issues/8877"
+    },
+    {
+      "id": "slint-latest-textedit.html",
+      "metadata_path": "sources/slint-latest-textedit.html.meta.json",
+      "url": "https://docs.slint.dev/latest/docs/slint/reference/std-widgets/views/textedit/",
+      "retrieval_started_utc": "2026-10-07T20:47:54.202977+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.337685+00:00",
+      "path": "sources/slint-latest-textedit.html",
+      "sha256": "d79942b912b93fcf7902ea57f8e57ebe36d11798527bb9e773145aaeed2a3157",
+      "bytes": 138082,
+      "http_status": 200,
+      "final_url": "https://docs.slint.dev/latest/docs/slint/reference/std-widgets/views/textedit/"
+    },
+    {
+      "id": "slint-pr-12347.html",
+      "metadata_path": "sources/slint-pr-12347.html.meta.json",
+      "url": "https://github.com/slint-ui/slint/pull/12347",
+      "retrieval_started_utc": "2026-10-07T20:54:58.035098+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:54:58.975566+00:00",
+      "path": "sources/slint-pr-12347.html",
+      "sha256": "cf4d2ce56a4596a1ccee53f883ab425be1bb085f01ecab849b5db81244f0d783",
+      "bytes": 356516,
+      "http_status": 200,
+      "final_url": "https://github.com/slint-ui/slint/pull/12347"
+    },
+    {
+      "id": "slint-pr-12347.patch",
+      "metadata_path": "sources/slint-pr-12347.patch.meta.json",
+      "url": "https://patch-diff.githubusercontent.com/raw/slint-ui/slint/pull/12347.patch",
+      "retrieval_started_utc": "2026-10-07T20:54:58.037064+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:54:58.308806+00:00",
+      "path": "sources/slint-pr-12347.patch",
+      "sha256": "f9c26633ff6ccbab48ebbfe3938d3c5587421f113515bc2fc15827688865d765",
+      "bytes": 7144,
+      "http_status": 200,
+      "final_url": "https://patch-diff.githubusercontent.com/raw/slint-ui/slint/pull/12347.patch"
+    },
+    {
+      "id": "slint-release-v1.12.0.html",
+      "metadata_path": "sources/slint-release-v1.12.0.html.meta.json",
+      "url": "https://github.com/slint-ui/slint/releases/tag/v1.12.0",
+      "retrieval_started_utc": "2026-10-07T20:49:08.160896+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:08.850598+00:00",
+      "path": "sources/slint-release-v1.12.0.html",
+      "sha256": "9299b52fc79254f83289ceec945323048f182b6e7afcec0bd94d4a91793e9e9b",
+      "bytes": 204736,
+      "http_status": 200,
+      "final_url": "https://github.com/slint-ui/slint/releases/tag/v1.12.0"
+    },
+    {
+      "id": "slint-release-v1.17.1.html",
+      "metadata_path": "sources/slint-release-v1.17.1.html.meta.json",
+      "url": "https://github.com/slint-ui/slint/releases/tag/v1.17.1",
+      "retrieval_started_utc": "2026-10-07T20:54:58.038465+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:54:58.657424+00:00",
+      "path": "sources/slint-release-v1.17.1.html",
+      "sha256": "132a131efbc8682bdff64144c00d9b85f3efbe18fef79fd771eaf42ca21711d2",
+      "bytes": 199993,
+      "http_status": 200,
+      "final_url": "https://github.com/slint-ui/slint/releases/tag/v1.17.1"
+    },
+    {
+      "id": "slint-tag-ref.json",
+      "metadata_path": "sources/slint-tag-ref.json.meta.json",
+      "url": "https://api.github.com/repos/slint-ui/slint/git/ref/tags/v1.12.0",
+      "retrieval_started_utc": "2026-10-07T20:48:52.515514+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:52.589828+00:00",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "http_status": null
+    },
+    {
+      "id": "slint-text.rs",
+      "metadata_path": "sources/slint-text.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/core/items/text.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:54.034855+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.202670+00:00",
+      "path": "sources/slint-text.rs",
+      "sha256": "5603082f0ec16f7d6c68d8f13283e6e32cdf415a922d05c9fd956dcba3277db0",
+      "bytes": 78584,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/core/items/text.rs"
+    },
+    {
+      "id": "slint-textedit-base.slint",
+      "metadata_path": "sources/slint-textedit-base.slint.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/compiler/widgets/common/textedit-base.slint",
+      "retrieval_started_utc": "2026-10-07T20:47:54.078244+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.224189+00:00",
+      "path": "sources/slint-textedit-base.slint",
+      "sha256": "d9fb982b5dfb72ad737f6f3806bd6b40229717c0b5db2532849620cf0d47bd26",
+      "bytes": 5978,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/compiler/widgets/common/textedit-base.slint"
+    },
+    {
+      "id": "slint-textedit.slint",
+      "metadata_path": "sources/slint-textedit.slint.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/compiler/widgets/material/textedit.slint",
+      "retrieval_started_utc": "2026-10-07T20:47:54.051728+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.206856+00:00",
+      "path": "sources/slint-textedit.slint",
+      "sha256": "c1e9fac8f764de40b99072d74b6ae7f2f11a80fb8202e471d214f6e8f3921dd8",
+      "bytes": 2960,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/compiler/widgets/material/textedit.slint"
+    },
+    {
+      "id": "slint-v1.17.0-sharedparley.rs",
+      "metadata_path": "sources/slint-v1.17.0-sharedparley.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/v1.17.0/internal/core/textlayout/sharedparley.rs",
+      "retrieval_started_utc": "2026-10-07T20:54:58.496923+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:54:58.714490+00:00",
+      "path": "sources/slint-v1.17.0-sharedparley.rs",
+      "sha256": "c8e466c99d9292449d7e24208ac9949dcbdd57b8fe6a591087e83cbad29d90dc",
+      "bytes": 60962,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/v1.17.0/internal/core/textlayout/sharedparley.rs"
+    },
+    {
+      "id": "slint-v1.17.1-sharedparley.rs",
+      "metadata_path": "sources/slint-v1.17.1-sharedparley.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/v1.17.1/internal/core/textlayout/sharedparley.rs",
+      "retrieval_started_utc": "2026-10-07T20:54:58.309279+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:54:58.496503+00:00",
+      "path": "sources/slint-v1.17.1-sharedparley.rs",
+      "sha256": "1e3c277e6c9e18090b1570846950cecc55497a3f5de16d1b517954e69dc3dc28",
+      "bytes": 69210,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/slint-ui/slint/v1.17.1/internal/core/textlayout/sharedparley.rs"
+    },
+    {
+      "id": "zed-7ed4928-lsp-store.rs",
+      "metadata_path": "sources/zed-7ed4928-lsp-store.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/7ed49280da799eac87dc962621918284cbf7280f/crates/project/src/lsp_store.rs",
+      "retrieval_started_utc": "2026-10-07T20:50:24.093423+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:24.333003+00:00",
+      "path": "sources/zed-7ed4928-lsp-store.rs",
+      "sha256": "8932e9fcfbb312af99e76263ebfe9dd787ffba626f19ba1b664226808c9c68d4",
+      "bytes": 600042,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/7ed49280da799eac87dc962621918284cbf7280f/crates/project/src/lsp_store.rs"
+    },
+    {
+      "id": "zed-7ed4928-project.rs",
+      "metadata_path": "sources/zed-7ed4928-project.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/7ed49280da799eac87dc962621918284cbf7280f/crates/project/src/project.rs",
+      "retrieval_started_utc": "2026-10-07T20:50:24.092194+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:24.523184+00:00",
+      "path": "sources/zed-7ed4928-project.rs",
+      "sha256": "99f62fd581dc3fd67be8d96dd20d82fdacd5199ba8da91e16d9f0ea5a504debf",
+      "bytes": 221727,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/7ed49280da799eac87dc962621918284cbf7280f/crates/project/src/project.rs"
+    },
+    {
+      "id": "zed-8421009-buffer.rs",
+      "metadata_path": "sources/zed-8421009-buffer.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/8421009ef8a022df1196d54bb42fd94366ec0988/crates/language/src/buffer.rs",
+      "retrieval_started_utc": "2026-10-07T20:50:24.088857+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:24.305570+00:00",
+      "path": "sources/zed-8421009-buffer.rs",
+      "sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b",
+      "bytes": 225371,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/8421009ef8a022df1196d54bb42fd94366ec0988/crates/language/src/buffer.rs"
+    },
+    {
+      "id": "zed-8421009-project.rs",
+      "metadata_path": "sources/zed-8421009-project.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/8421009ef8a022df1196d54bb42fd94366ec0988/crates/project/src/project.rs",
+      "retrieval_started_utc": "2026-10-07T20:50:24.090946+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:50:24.547372+00:00",
+      "path": "sources/zed-8421009-project.rs",
+      "sha256": "d6afe383b4c545c0c42158aa930959117f7c76b74f66026909b1ccd1ec15b33e",
+      "bytes": 218658,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/8421009ef8a022df1196d54bb42fd94366ec0988/crates/project/src/project.rs"
+    },
+    {
+      "id": "zed-8421009-tests.rs",
+      "metadata_path": "sources/zed-8421009-tests.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/8421009ef8a022df1196d54bb42fd94366ec0988/crates/project/tests/integration/project_tests.rs",
+      "retrieval_started_utc": "2026-10-07T20:52:44.059007+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:52:44.457164+00:00",
+      "path": "sources/zed-8421009-tests.rs",
+      "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742",
+      "bytes": 400358,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/8421009ef8a022df1196d54bb42fd94366ec0988/crates/project/tests/integration/project_tests.rs"
+    },
+    {
+      "id": "zed-buffer.rs",
+      "metadata_path": "sources/zed-buffer.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/language/src/buffer.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:53.553929+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:53.731742+00:00",
+      "path": "sources/zed-buffer.rs",
+      "sha256": "000c461be379974adcda33ecbfc2e464d21f05b4e4014aea6fad1a0dc86a99de",
+      "bytes": 224892,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/language/src/buffer.rs"
+    },
+    {
+      "id": "zed-issue-48697.json",
+      "metadata_path": "sources/zed-issue-48697.json.meta.json",
+      "url": "https://api.github.com/repos/zed-industries/zed/issues/48697",
+      "retrieval_started_utc": "2026-10-07T20:47:53.557549+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:53.796066+00:00",
+      "path": "sources/zed-issue-48697.json",
+      "sha256": "77af8fb1a3caea9eed622cd7fb866a87328a17b1f188ed60b8ab90e0446ac218",
+      "bytes": 5411,
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/zed-industries/zed/issues/48697"
+    },
+    {
+      "id": "zed-pr-51037-files.json",
+      "metadata_path": "sources/zed-pr-51037-files.json.meta.json",
+      "url": "https://api.github.com/repos/zed-industries/zed/pulls/51037/files",
+      "retrieval_started_utc": "2026-10-07T20:48:52.590318+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:52.636925+00:00",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "http_status": null
+    },
+    {
+      "id": "zed-pr-51037.json",
+      "metadata_path": "sources/zed-pr-51037.json.meta.json",
+      "url": "https://api.github.com/repos/zed-industries/zed/pulls/51037",
+      "retrieval_started_utc": "2026-10-07T20:47:53.558706+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.134352+00:00",
+      "path": "sources/zed-pr-51037.json",
+      "sha256": "6d15dfcb46ab8d2410fa1a6cb887f60d39391cecc25dd7431c6e84f7193ec80b",
+      "bytes": 17762,
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/zed-industries/zed/pulls/51037"
+    },
+    {
+      "id": "zed-pr-52855.html",
+      "metadata_path": "sources/zed-pr-52855.html.meta.json",
+      "url": "https://github.com/zed-industries/zed/pull/52855",
+      "retrieval_started_utc": "2026-10-07T20:49:07.446103+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:08.276534+00:00",
+      "path": "sources/zed-pr-52855.html",
+      "sha256": "938e210e0416b55df31d9100efb40044bbe7a538a473a35350737beb17184583",
+      "bytes": 316981,
+      "http_status": 200,
+      "final_url": "https://github.com/zed-industries/zed/pull/52855"
+    },
+    {
+      "id": "zed-pr-52855.json",
+      "metadata_path": "sources/zed-pr-52855.json.meta.json",
+      "url": "https://api.github.com/repos/zed-industries/zed/pulls/52855",
+      "retrieval_started_utc": "2026-10-07T20:48:52.516996+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:52.598615+00:00",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "http_status": null
+    },
+    {
+      "id": "zed-pr-52855.patch",
+      "metadata_path": "sources/zed-pr-52855.patch.meta.json",
+      "url": "https://patch-diff.githubusercontent.com/raw/zed-industries/zed/pull/52855.patch",
+      "retrieval_started_utc": "2026-10-07T20:49:07.448136+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:07.726397+00:00",
+      "path": "sources/zed-pr-52855.patch",
+      "sha256": "c0c55c87f107d1d99fac993d3d94e42dcc41452fd26459008265d74457fdbfa0",
+      "bytes": 5850,
+      "http_status": 200,
+      "final_url": "https://patch-diff.githubusercontent.com/raw/zed-industries/zed/pull/52855.patch"
+    },
+    {
+      "id": "zed-project-tests.rs",
+      "metadata_path": "sources/zed-project-tests.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/project/tests/integration/project_tests.rs",
+      "retrieval_started_utc": "2026-10-07T20:47:53.556114+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:47:54.077693+00:00",
+      "path": "sources/zed-project-tests.rs",
+      "sha256": "e0964a72fd365bab92ab9aa66c03779f6266c2d0fcda2c6bb74ab9402d660fb8",
+      "bytes": 400244,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/project/tests/integration/project_tests.rs"
+    },
+    {
+      "id": "zed-release-0.192.5.html",
+      "metadata_path": "sources/zed-release-0.192.5.html.meta.json",
+      "url": "https://zed.dev/releases/preview/0.192.5",
+      "retrieval_started_utc": "2026-10-07T20:47:54.207387+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:02.901693+00:00",
+      "path": "sources/zed-release-0.192.5.html",
+      "sha256": "2e420619e6c1c05567ef6a6adf2b97af19a1b5328d9da62b0ac11da4b8d6ae68",
+      "bytes": 2148794,
+      "http_status": 200,
+      "final_url": "https://zed.dev/releases/stable"
+    },
+    {
+      "id": "zed-release-v0.227.1.html",
+      "metadata_path": "sources/zed-release-v0.227.1.html.meta.json",
+      "url": "https://github.com/zed-industries/zed/releases/tag/v0.227.1",
+      "retrieval_started_utc": "2026-10-07T20:49:07.450371+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:08.159345+00:00",
+      "path": "sources/zed-release-v0.227.1.html",
+      "sha256": "cb20de3d8fd6ccd22e847825c0d2f857759e63d3338fed543959a4a392e90106",
+      "bytes": 220092,
+      "http_status": 200,
+      "final_url": "https://github.com/zed-industries/zed/releases/tag/v0.227.1"
+    },
+    {
+      "id": "zed-release-v0.228.0.html",
+      "metadata_path": "sources/zed-release-v0.228.0.html.meta.json",
+      "url": "https://github.com/zed-industries/zed/releases/tag/v0.228.0",
+      "retrieval_started_utc": "2026-10-07T20:49:07.449298+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:08.160561+00:00",
+      "path": "sources/zed-release-v0.228.0.html",
+      "sha256": "47a26a19c5cde8ccfc48fdd7a2c64edf6080bdf7465a1245b91df8ef9bf626a9",
+      "bytes": 217663,
+      "http_status": 200,
+      "final_url": "https://github.com/zed-industries/zed/releases/tag/v0.228.0"
+    },
+    {
+      "id": "zed-release-v0.228.0.json",
+      "metadata_path": "sources/zed-release-v0.228.0.json.meta.json",
+      "url": "https://api.github.com/repos/zed-industries/zed/releases/tags/v0.228.0",
+      "retrieval_started_utc": "2026-10-07T20:48:52.518370+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:48:52.588124+00:00",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "http_status": null
+    },
+    {
+      "id": "zed-v0.228.0-buffer.rs",
+      "metadata_path": "sources/zed-v0.228.0-buffer.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/v0.228.0/crates/language/src/buffer.rs",
+      "retrieval_started_utc": "2026-10-07T20:49:07.726852+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:08.138094+00:00",
+      "path": "sources/zed-v0.228.0-buffer.rs",
+      "sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b",
+      "bytes": 225371,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/v0.228.0/crates/language/src/buffer.rs"
+    },
+    {
+      "id": "zed-v0.228.0-tests.rs",
+      "metadata_path": "sources/zed-v0.228.0-tests.rs.meta.json",
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/v0.228.0/crates/project/tests/integration/project_tests.rs",
+      "retrieval_started_utc": "2026-10-07T20:49:08.138430+00:00",
+      "retrieval_finished_utc": "2026-10-07T20:49:08.307144+00:00",
+      "path": "sources/zed-v0.228.0-tests.rs",
+      "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742",
+      "bytes": 400358,
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/zed-industries/zed/v0.228.0/crates/project/tests/integration/project_tests.rs"
+    }
+  ],
+  "input_manifest": "sources/admitted-input-manifest.json",
+  "limits": [
+    "HTTP API rate limit blocked six follow-up API calls; public GitHub HTML/raw immutable files supplied the evidence instead.",
+    "Full raw bytes are preserved where retrieved; rendered .html.txt companions are reviewer-derived convenience views.",
+    "No source execution, application build, benchmark or acceptance test.",
+    "No current PM implementation was inspected or inferred.",
+    "No earliest-release, latest-release, all-renderer or exhaustive-opportunity claim."
+  ],
+  "usage": null,
+  "billing": null,
+  "provider_identity_verification": null
+}

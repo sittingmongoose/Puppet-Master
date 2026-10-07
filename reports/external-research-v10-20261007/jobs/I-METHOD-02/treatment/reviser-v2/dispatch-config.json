@@ -1,0 +1,34 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "mode": "async",
+  "role": "general",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "clientRequestId": "er10-I-METHOD-02-treatment-reviser-v2",
+  "record_at": "2026-10-07T20:55:13.005373+00:00",
+  "stage_allowance_seconds": 1200,
+  "prospective_arm_deadline": "2026-10-07T21:20:48+00:00",
+  "prospective_stage_deadline": "2026-10-07T21:15:13.005373+00:00",
+  "deadline_rule": "stage activation<=allocation AND wholedeadline preserves1200final forcritic; totaloccupied<=3600; no reset",
+  "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+  "version": "v2",
+  "prior_nonoverlapping_occupied_seconds": 1814.839,
+  "final_reserve_seconds": 0,
+  "linked_prospective_clock_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-v2-prospective-clock-annotation.json",
+  "registration_order_policy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/prospective-activation-notice-registration-order-v1.json"
+}

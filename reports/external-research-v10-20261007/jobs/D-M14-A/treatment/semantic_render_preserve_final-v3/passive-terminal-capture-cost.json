@@ -1,0 +1,33 @@
+{
+  "event": "terminal",
+  "stage": "D-M14-A/treatment/semantic_render_preserve_final-v3",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M14-A/treatment/semantic_render_preserve_final-v3"
+  ],
+  "start": "2026-10-07T20:53:44.797443+00:00",
+  "end": "2026-10-07T20:53:44.983104+00:00",
+  "elapsed_seconds": 0.18566530700263684,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T20:53:44.878166+00:00",
+    "entries": [
+      {
+        "stage": "D-M14-A/treatment/semantic_render_preserve_final-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--treatment--semantic_render_preserve_final-v3--26b8a614bd099fc5.json",
+        "sha256": "26b8a614bd099fc502a06a0187b12d9d3589a60562a93f684e79bfa4a1f067fc",
+        "bytes": 11041,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

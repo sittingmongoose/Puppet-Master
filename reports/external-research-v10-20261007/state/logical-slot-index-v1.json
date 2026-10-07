@@ -1,0 +1,494 @@
+{
+  "schema": "ER10-immutable-logical-slot-index-v1",
+  "generated_at": "2026-10-07T20:32:45.483051+00:00",
+  "logical_slots": 40,
+  "logical_arms": 80,
+  "tracks": {
+    "targeted": 24,
+    "integrated": 12,
+    "confirmation": 4
+  },
+  "method_techniques": 16,
+  "count_rule": "Versions/seed/helper/critic/review stages are attempts within the same logical slot, never additional comparisons. Missing artifact/native infrastructure tests are not method comparisons. Latest version does not replace any original grade or failed cost. Full source assessment, delivery, lifecycle, method eligibility and economics counted separately.",
+  "slots": [
+    {
+      "slot_id": "D-M01-A",
+      "track": "targeted",
+      "method_id": "M01",
+      "title": "Live snapshot backup while a SQLite writer runs",
+      "owner": "targeted_cohort1",
+      "card_path": "cases/D-M01-A/case-card.json",
+      "card_sha256": "4f562424f3f3ac14d73bd50c279b196ed07b85d69d1de047731786e3f3d62a49",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M01-B",
+      "track": "targeted",
+      "method_id": "M01",
+      "title": "Valid-pixel policy for a multiband land-cover tile",
+      "owner": "targeted_cohort1",
+      "card_path": "cases/D-M01-B/case-card.json",
+      "card_sha256": "965f3b82b6af86c9347dd58a9ae89efcac7ac1bac067367a1672e753fc408450",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M02-A",
+      "track": "targeted",
+      "method_id": "M02",
+      "title": "Two questions about one private HTTP cache",
+      "owner": "targeted_cohort1",
+      "card_path": "cases/D-M02-A/case-card.json",
+      "card_sha256": "8c340630fb5a1c66a56625c825c98cf9071bd88b000afd9f437c76c8fe0ba393",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M02-B",
+      "track": "targeted",
+      "method_id": "M02",
+      "title": "Two questions about one raster window",
+      "owner": "targeted_cohort1",
+      "card_path": "cases/D-M02-B/case-card.json",
+      "card_sha256": "455b16fd50ea37ed95ee8e71400dcba5b777f10b123e20441a9921fd14caced2",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M03-A",
+      "track": "targeted",
+      "method_id": "M03",
+      "title": "Recursive pathlib search at one release",
+      "owner": "targeted_cohort1",
+      "card_path": "cases/D-M03-A/case-card.json",
+      "card_sha256": "b36585f1a14fbe0bd8432a6426bda4d97f4a1dd9de00599c9fe631cd0c089888",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M03-B",
+      "track": "targeted",
+      "method_id": "M03",
+      "title": "pyproj axis-order contract from implementation",
+      "owner": "targeted_cohort1",
+      "card_path": "cases/D-M03-B/case-card.json",
+      "card_sha256": "b2ce873e58a0cd7a2b7428b0afaf97cb57483976bd748fd698957bb5e813257b",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M04-A",
+      "track": "targeted",
+      "method_id": "M04",
+      "title": "Transaction policy across research and criticism",
+      "owner": "targeted_cohort2",
+      "card_path": "cases/D-M04-A/case-card.json",
+      "card_sha256": "62669d091a02a685da3dee83796e8bf4617ec797935f9aab2309c871c7d881a6",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M04-B",
+      "track": "targeted",
+      "method_id": "M04",
+      "title": "Mask and resampling policy across stages",
+      "owner": "targeted_cohort2",
+      "card_path": "cases/D-M04-B/case-card.json",
+      "card_sha256": "5d320c37a0d60bbe3e7a68e4911300b073a219ca3b7a468808913f3db87884f9",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M05-A",
+      "track": "targeted",
+      "method_id": "M05",
+      "title": "Incremental archive-import research after runtime change",
+      "owner": "targeted_cohort2",
+      "card_path": "cases/D-M05-A/case-card.json",
+      "card_sha256": "db9c52734ccfec8f80d346aa4abe94e827ded951b5a1bc84e783921c46c7e096",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M05-B",
+      "track": "targeted",
+      "method_id": "M05",
+      "title": "Incremental WAL research after deployment change",
+      "owner": "targeted_cohort2",
+      "card_path": "cases/D-M05-B/case-card.json",
+      "card_sha256": "13d38c52cc816225f9cf896746397bd8f9e5f7ede862f027418b8785ee1b23a3",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M06-A",
+      "track": "targeted",
+      "method_id": "M06",
+      "title": "Canonical JSON identity at the Unicode/number boundary",
+      "owner": "targeted_cohort2",
+      "card_path": "cases/D-M06-A/case-card.json",
+      "card_sha256": "2c8b81389650986a5b578de3d60db7f1df270447593e1417a66617f715067667",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M06-B",
+      "track": "targeted",
+      "method_id": "M06",
+      "title": "Affine raster coordinates and inverse applicability",
+      "owner": "targeted_cohort2",
+      "card_path": "cases/D-M06-B/case-card.json",
+      "card_sha256": "21824ba1d3b0aa714ac5f285f397de742eb01f90fc964c94359efa5afc384bc3",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M07-A",
+      "track": "targeted",
+      "method_id": "M07",
+      "title": "Verify a WAL deployment recommendation with breadth reserved",
+      "owner": "targeted_cohort3",
+      "card_path": "cases/D-M07-A/case-card.json",
+      "card_sha256": "fb096d7c87a0cfda8fd4cfd37c5a3d01a76005d92bb160e22c6e935711a3f54c",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M07-B",
+      "track": "targeted",
+      "method_id": "M07",
+      "title": "Verify a CRS import recommendation with breadth reserved",
+      "owner": "targeted_cohort3",
+      "card_path": "cases/D-M07-B/case-card.json",
+      "card_sha256": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M08-A",
+      "track": "targeted",
+      "method_id": "M08",
+      "title": "Repair a resumable-download proposal without losing conditions",
+      "owner": "targeted_cohort3",
+      "card_path": "cases/D-M08-A/case-card.json",
+      "card_sha256": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M08-B",
+      "track": "targeted",
+      "method_id": "M08",
+      "title": "Repair a categorical-raster export proposal",
+      "owner": "targeted_cohort3",
+      "card_path": "cases/D-M08-B/case-card.json",
+      "card_sha256": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M09-A",
+      "track": "targeted",
+      "method_id": "M09",
+      "title": "Complementary review of one online-backup module",
+      "owner": "targeted_cohort3",
+      "card_path": "cases/D-M09-A/case-card.json",
+      "card_sha256": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M10-A",
+      "track": "targeted",
+      "method_id": "M10",
+      "title": "Evidence-first review of a cache proposal",
+      "owner": "targeted_cohort3",
+      "card_path": "cases/D-M10-A/case-card.json",
+      "card_sha256": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M11-A",
+      "track": "targeted",
+      "method_id": "M11",
+      "title": "Bind release and API before choosing an extraction policy",
+      "owner": "targeted_cohort4",
+      "card_path": "cases/D-M11-A/case-card.json",
+      "card_sha256": "57133cbd0802ec337bb00f55e75b20eccca9ce61b3757a5ab4ebf02d7e709f3f",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M12-A",
+      "track": "targeted",
+      "method_id": "M12",
+      "title": "Offline survey capture: challenge one thin sync assumption",
+      "owner": "targeted_cohort4",
+      "card_path": "cases/D-M12-A/case-card.json",
+      "card_sha256": "ffa53c849238284901cb0eb66eff603ea3bf333df39b7705e763dd2ab7d3c8f5",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M13-A",
+      "track": "targeted",
+      "method_id": "M13",
+      "title": "Trace one real extraction-filter change into a release",
+      "owner": "targeted_cohort4",
+      "card_path": "cases/D-M13-A/case-card.json",
+      "card_sha256": "1f52a6cf020ecf1d621148692cd48a69c463e04da4490e8fdc1d128ba04bcd93",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M14-A",
+      "track": "targeted",
+      "method_id": "M14",
+      "title": "Deliver one reusable decision view for raster validity",
+      "owner": "targeted_cohort4",
+      "card_path": "cases/D-M14-A/case-card.json",
+      "card_sha256": "67bc9697bc4abc6bc6b0169e5fee607444d326646eaccf308b7c9ce2587084e3",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M15-A",
+      "track": "targeted",
+      "method_id": "M15",
+      "title": "Synchronizing inspection attachments over intermittent links",
+      "owner": "targeted_cohort4",
+      "card_path": "cases/D-M15-A/case-card.json",
+      "card_sha256": "06968c3c7758e0ee54378b75bdb3234a2f08b89dde4a3d12d5fa4eeacef8014e",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "D-M16-A",
+      "track": "targeted",
+      "method_id": "M16",
+      "title": "One discovery bundle for two offline map topics",
+      "owner": "targeted_cohort4",
+      "card_path": "cases/D-M16-A/case-card.json",
+      "card_sha256": "7d42f944dffc38459640bbca41bd515c78ad235618b83b7b4b89d2b1ffe1f3de",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ]
+    },
+    {
+      "slot_id": "I-ANCHOR-LUNA",
+      "track": "integrated",
+      "owner": "anchor_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-ANCHOR-LUNA",
+      "note": "One topology anchor per candidate family; preserved original scientific/lifecycle limits"
+    },
+    {
+      "slot_id": "I-ANCHOR-MUSE",
+      "track": "integrated",
+      "owner": "anchor_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-ANCHOR-MUSE",
+      "note": "One topology anchor per candidate family; preserved original scientific/lifecycle limits"
+    },
+    {
+      "slot_id": "I-ANCHOR-GLM",
+      "track": "integrated",
+      "owner": "anchor_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-ANCHOR-GLM",
+      "note": "One topology anchor per candidate family; preserved original scientific/lifecycle limits"
+    },
+    {
+      "slot_id": "I-METHOD-01",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-METHOD-01"
+    },
+    {
+      "slot_id": "I-METHOD-02",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-METHOD-02"
+    },
+    {
+      "slot_id": "I-METHOD-03",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-METHOD-03"
+    },
+    {
+      "slot_id": "I-METHOD-04",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-METHOD-04"
+    },
+    {
+      "slot_id": "I-METHOD-05",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-METHOD-05"
+    },
+    {
+      "slot_id": "I-METHOD-06",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "card_path": "cases/I-METHOD-06"
+    },
+    {
+      "slot_id": "I-FAST-01",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "recipe_lock": "locks/speed-budget-selection-v1.json"
+    },
+    {
+      "slot_id": "I-FAST-02",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "recipe_lock": "locks/speed-budget-selection-v1.json"
+    },
+    {
+      "slot_id": "I-FAST-03",
+      "track": "integrated",
+      "owner": "integrated_method_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "recipe_lock": "locks/speed-budget-selection-v1.json"
+    },
+    {
+      "slot_id": "C-01",
+      "track": "confirmation",
+      "owner": "confirmation_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "recipe_lock": "locks/confirmation-selection.json",
+      "recipe_lock_sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a"
+    },
+    {
+      "slot_id": "C-02",
+      "track": "confirmation",
+      "owner": "confirmation_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "recipe_lock": "locks/confirmation-selection.json",
+      "recipe_lock_sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a"
+    },
+    {
+      "slot_id": "C-03",
+      "track": "confirmation",
+      "owner": "confirmation_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "recipe_lock": "locks/confirmation-selection.json",
+      "recipe_lock_sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a"
+    },
+    {
+      "slot_id": "C-04",
+      "track": "confirmation",
+      "owner": "confirmation_supervisor",
+      "logical_arms": [
+        "control",
+        "treatment"
+      ],
+      "recipe_lock": "locks/confirmation-selection.json",
+      "recipe_lock_sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a"
+    }
+  ]
+}

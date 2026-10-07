@@ -1,0 +1,18 @@
+{
+  "schema": "pm.er10.passive-receipts-index.v1",
+  "observed_at_utc": "2026-10-07T20:00:28.058792+00:00",
+  "entries": [
+    {
+      "stage": "I-METHOD-03/treatment/reviser-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-03--treatment--reviser-v1--866d0e03777c8c5f.json",
+      "sha256": "866d0e03777c8c5fe5ba3612e38d2106a97647c0e836696f918b710f6236ceb0",
+      "bytes": 10879,
+      "capture": {
+        "create_goal": "missing_actual_response",
+        "get_goal": "missing_actual_response",
+        "update_goal": "missing_actual_response"
+      }
+    }
+  ],
+  "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+}

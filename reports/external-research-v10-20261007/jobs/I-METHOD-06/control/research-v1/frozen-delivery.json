@@ -1,0 +1,191 @@
+{
+  "record_at": "2026-10-07T20:28:23.921507+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/artifact.md": {
+      "sha256": "76fbecfe9b92294c46073b3639951161dbb2c7d50d910b42bddf638d5af760fd",
+      "bytes": 30755
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/source-map.json": {
+      "sha256": "1f89336197e6c63756955a096d84ebdf8469827ebbfc1031875f32dfddb8d41b",
+      "bytes": 13139
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/borg-check.html": {
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b",
+      "bytes": 25422
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/cisa-stopransomware-guide.pdf": {
+      "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44",
+      "bytes": 1047655
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/cisa-stopransomware-resource.html": {
+      "sha256": "52097742990c8e38c6e81c89fd365d55ad976f5d8f4212e535603b4bfd372592",
+      "bytes": 56374
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/kopia-consistency.html": {
+      "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64",
+      "bytes": 32457
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/kopia-issue-3605.html": {
+      "sha256": "9dc7dc0ffeffeb60176966d61e6827762c8b2d4e3063d6c17db740643058bf0d",
+      "bytes": 232329
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/kopia-snapshot-verify-docs.html": {
+      "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d",
+      "bytes": 25795
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/nist-sp800-34r1.pdf": {
+      "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df",
+      "bytes": 952921
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/rclone-copy-docs.html": {
+      "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc",
+      "bytes": 51621
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/rclone-sync-docs.html": {
+      "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d",
+      "bytes": 53053
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-backup-docs.html": {
+      "sha256": "c26df1ab47454f6d252fa300ec1371eefaa273b2cb92269186610f0a22ae5ee0",
+      "bytes": 71760
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-issue-5667.html": {
+      "sha256": "31098dfbf1a12f4b8840d478417e5ed8af81823dcc7142bb9e0b1d43c5571358",
+      "bytes": 426417
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-pr-21852.html": {
+      "sha256": "c6a6bfded29d4e34d1130001e4e5296b55b38f7a7b6c6b0f04af2081765b522a",
+      "bytes": 515016
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-release-v0.19.1.html": {
+      "sha256": "e04438d9195e16362c18990e55d7a9f09212a6d05df9927b3420471149c01009",
+      "bytes": 217007
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-v0.19.1-checker.go": {
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+      "bytes": 9003
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-v0.19.1-cmd_backup.go": {
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+      "bytes": 21681
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-v0.19.1-cmd_backup_test.go": {
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+      "bytes": 4442
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-v0.19.1-cmd_check.go": {
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+      "bytes": 17364
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-working-with-repos.html": {
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0",
+      "bytes": 61216
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-06-control-research-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:12:27.046Z",
+    "startedAt": "2026-10-07T20:12:27.689Z",
+    "completedAt": "2026-10-07T20:28:14.238Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-06/control/research-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-06--control--research-v1--7a1693a58410b837.json",
+    "sha256": "7a1693a58410b8372bee2c35e08590e7474dd778eb3feaba5284142da2cd7f2d",
+    "bytes": 10872,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "5acf77331b281fe6103152f8b8059715fc92acd89e83348584f364993dcef582",
+      "status": "complete",
+      "tokensUsed": 283823,
+      "tokenBudget": null,
+      "timeUsedSeconds": 921
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-06-control-research-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a117fe-f514-7831-a9aa-45e52fa409d4",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:28:14.047Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-06-control-research-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:28:14.047Z",
+        "sha256": "2cefdea4775b5d12c64c6e354d2581a5fc8f459a39ee4c37e17b0485641b641d"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a117fe-f514-7831-a9aa-45e52fa409d4",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 283823,
+  "native_elapsed_seconds": 921,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "record_at": "2026-10-07T20:12:01.289900+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:32:01.289900+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:57:01.289900+00:00",
+    "clientRequestId": "er10-I-METHOD-06-control-research-v1",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "mode": "async",
+    "role": "research",
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

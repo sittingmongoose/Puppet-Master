@@ -1,0 +1,269 @@
+{
+  "schema": "pm.er10.passive-receipts.v1",
+  "stage": "I-METHOD-03/treatment/reviser-v1",
+  "observed_at_utc": "2026-10-07T20:00:28.058792+00:00",
+  "thread_id": "thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-03-treatment-reviser-v1",
+  "task_id": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-03-treatment-reviser-v1",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/dispatch.json",
+    "type": "stage_dispatch",
+    "version": null,
+    "record_id": null,
+    "call_id": null,
+    "time": null,
+    "sha256": "d5c98c8ed577ce6ccdbc6743fff4c03b2c96047ce2292f5120b64ba41510c776"
+  },
+  "authority_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/checkpoint.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "f483dc16a053e16c68b6d9dc52e78ac91358cf35e6eb3991ddc0ed7af0e77116"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-supervisor.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "631af8f27121a93a475c69c8b67a0e8d519ee7a9d9006d4517ae8bc0e5f358d6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-supervisor.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "ad6b1c10f84bce1facbfbd102a8cad531ebf42ddf880b6ccc899d0e88f5a35dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "3015b3fed80c54a4912ccf83d2ead19ba03424a0235b5b0736668d4165195a8c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "ed56d785fe9711d267bf56bff4e214ccc9795582c0a68a174ca8030ec91b6aac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "6fb206310729c1463846ac9e548bba06a6eede508970f7e2ffc16110adadef08"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "a9d11c274d18387129a80410aceffdda81b82f963bd8ae5f455d326578933655"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "fbb1b91eb1445d1d042290abe221d2de07e7d061aa8149387cffaeaee89d2914"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "34922d63bb33b71158b8411a6ce566f1e55062d30ec26f0c0254c1dbe4963dd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "2a745a2f21ebdd26dc4fb67d8d5fab5e3214e7f0e4f86d87a45e5db8a2003e89"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "6d365ea7680ccdf9b30ac8db3a8906671bf6397cfa8eb163cf5e0cd23c33dd68"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "72f7bd0e219ab83bae45a6b7383608bd6024dbfec258744e2b1cc1f964b306cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "bfedb483e6d0a10faa6f2a7ddf22da4f56def16ad18dbffb3f0d260c75afce12"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "e2e2c295754dbade5da583b4ebdb3832996fb8ea4c98b40409e61c9f4391b2c7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "41dc27199369661377a09aa1d8810d7d4afb7bde004235f6699493f114c94221"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "44dfdf49bc9b977ac285ba57df1e5fe92ce9c26201dd9387dd66ea78e8bcd27c"
+    }
+  ],
+  "binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-treatment-reviser-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a117e8-49c9-7540-90ff-6af9bd265e39",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:00:13.201Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-treatment-reviser-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:00:13.201Z",
+        "sha256": "dd8d689f59727967bc7ca2eaa919f1fd942a4a84bfba4e155b63b6721adb1028"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_native_goal_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-treatment-reviser-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:00:13.201Z",
+        "sha256": "dd8d689f59727967bc7ca2eaa919f1fd942a4a84bfba4e155b63b6721adb1028"
+      },
+      "tool": null,
+      "native_response": {
+        "objective_sha256": "f234b4b3608497d5e60592a632ed62fe8233dc48b8e84981b66430d7b4c23677",
+        "status": "complete",
+        "tokensUsed": 186672,
+        "tokenBudget": null,
+        "timeUsedSeconds": 722
+      },
+      "response_sha256": "cc53f4f7b0e6fc469f0b6b35b05346396d0046aa06f8afb3d38fed301eb59c20",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    }
+  ],
+  "limitations": [
+    "No generated/cached/provider billing fields exposed by selected sources; bounded absence only. No additional quota probes.",
+    "No continuous Goal reasoning certification. Fresh native state plus binding is an observed state, never a replacement create receipt.",
+    "SQLite record hashes identify observed payloads, not immutable whole DB snapshots. Source can change immediately after observation.",
+    "File access names/hashes not harvested on this route; scope audit remains incomplete_unknown."
+  ],
+  "usage": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning_subset": null,
+    "provider_billing": null,
+    "semantics": "Unknown unless explicitly exposed. Native cumulative Goal/context counters remain in their original states; no sums or billing estimates."
+  },
+  "scope_audit": "incomplete_unknown; advisory map is not a filesystem firewall",
+  "thread_metadata": {
+    "modelSelection": {
+      "instanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "providerInstanceId": "codex_gmail",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "lineage": {
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+      "relationshipToParent": "subagent",
+      "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+    }
+  },
+  "parent_in_campaign_authority": true,
+  "native_timestamp_units": {
+    "*_ms": "milliseconds_since_unix_epoch",
+    "createdAt/updatedAt_in_GLM_driver": "milliseconds_since_unix_epoch",
+    "Codex_goal_createdAt/updatedAt": "seconds_since_unix_epoch",
+    "T3_source_times": "ISO-8601; native values preserved"
+  },
+  "lifecycle_observations": {
+    "states_in_source_order": [
+      "complete"
+    ],
+    "active_get_response": false,
+    "terminal_get_response": false,
+    "meaning": "Observed source fields only; no order adjudication or inferred lifecycle transition."
+  },
+  "capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  }
+}

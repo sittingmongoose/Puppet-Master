@@ -1,0 +1,111 @@
+{
+  "at": "2026-10-07T20:26:54.785471+00:00",
+  "T3_children_quiet": true,
+  "native_disposition": "complete",
+  "files": {
+    "prospective-timing.json": {
+      "sha256": "77f3404d7b688509e0c6b3d658c9496caf4a786daa337d0a760d8c0761c9d1e1",
+      "bytes": 302
+    },
+    "dispatch-receipt.json": {
+      "sha256": "5ca345fed40b5a894a3885b1c3fb1b98f89b43c1caaea78cefab925732036089",
+      "bytes": 1087
+    },
+    "passive-active.json": {
+      "sha256": "67eb26650c0c4fc8d176523ba72b9d10b0b4238a9b0a5c1c51ed3ae53852020a",
+      "bytes": 15680
+    },
+    "task-terminal.json": {
+      "sha256": "74b36739854a7302ffc38bf71c0fdca1dbbe011287292e5b2a9f890c7ba49184",
+      "bytes": 2130
+    },
+    "passive-terminal-capture-cost.json": {
+      "sha256": "8b0e9523d610a732fa8a0e8fea29020ea8f1f257714fea2930652ca8d8911da7",
+      "bytes": 1298
+    },
+    "passive-active-capture-cost.json": {
+      "sha256": "aee8c98721fe39fa56e69d039ecdb481a3d49c676ad7306a5f4d2361b0c16586",
+      "bytes": 1295
+    },
+    "assignment.md": {
+      "sha256": "f709cc85c189d6da71c819f8a53cd41ebfd3284bbf919f589e44a2a6ff1c8018",
+      "bytes": 3781
+    },
+    "dispatch.json": {
+      "sha256": "e7dc17539de6cbc20de2c362809fe8f89e9f4ca0e3cb4740a2721336971f0257",
+      "bytes": 1504
+    },
+    "INPUT_MAP.json": {
+      "sha256": "4ebe45a271fe861876384a5fe709fd86de7d52fcca3d53057be65260983e25ec",
+      "bytes": 1183
+    },
+    "scope.md": {
+      "sha256": "93f54e11cc41a5be644c48d00933e8db65274eba14b6642ac9ca5c164b242d01",
+      "bytes": 3656
+    },
+    "integration-state-terminal.json": {
+      "sha256": "3618874dd38e87e70a105494d236021327b3aa8574f1713a51c433de75a7dc66",
+      "bytes": 4769
+    },
+    "dispatch-request.json": {
+      "sha256": "ea65067f08da560aea44e00b9cf1467951600281482ac9a0c37290489edec9b2",
+      "bytes": 673
+    },
+    "timings.json": {
+      "sha256": "48c5175f3c3036f8938117c1855e4021bb6419b0dc528626c2e6069d4666d25f",
+      "bytes": 2465
+    },
+    "final.md": {
+      "sha256": "d14088f3cbd98e091f6f0ed2b9b6672219d2da23620a3bc1cdab6dd7047bec15",
+      "bytes": 7675
+    },
+    "integration-state-active.json": {
+      "sha256": "c3b084a481b097be691585fe78a1ab81e61fe6611f8b6767e6ee3b4590aa742a",
+      "bytes": 2561
+    },
+    "passive-terminal.json": {
+      "sha256": "b2154236e65e5352509f72f21570d94c17244c86e4ac8bbb847d1542488814fd",
+      "bytes": 18772
+    },
+    "sources/index.json": {
+      "sha256": "cdc2c5102b16bb677bc4c9744cefce36e48001b3961445efa6d6ca6810464e22",
+      "bytes": 7593
+    },
+    "sources/checksums.txt": {
+      "sha256": "26b0eeb722cf347232aafc31387d4c97786b46b2230e28b64d242b96ac97c775",
+      "bytes": 722
+    },
+    "sources/raw/rfc5321.txt": {
+      "sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "bytes": 225929
+    },
+    "sources/raw/transactional-outbox.html": {
+      "sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "bytes": 25474
+    },
+    "sources/raw/mqtt-v5.0-os.html": {
+      "sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce",
+      "bytes": 1436465
+    },
+    "sources/raw/rfc9110.txt": {
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    "sources/raw/couchdb-replication-protocol.html": {
+      "sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "bytes": 185155
+    },
+    "sources/raw/sqs-standard-queues.html": {
+      "sha256": "ddc9c32ef9654fed493a1a61d05d05896214e32d6012e6be4658558ce65058b2",
+      "bytes": 14250
+    },
+    "sources/raw/rfc4838.txt": {
+      "sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790",
+      "bytes": 89265
+    },
+    "sources/raw/rabbitmq-confirms.html": {
+      "sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951",
+      "bytes": 121173
+    }
+  }
+}

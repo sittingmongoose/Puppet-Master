@@ -1,0 +1,58 @@
+{
+  "stage": "I-METHOD-05/control/research-topic-a-v1",
+  "topic": {
+    "id": "A",
+    "title": "Shared buffer, save and recovery state",
+    "owner_refs": ["F-008", "F-018", "F-020", "F-026", "definitions_and_transactions", "editing_and_save_context"]
+  },
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/input-map.json",
+    "sha256_verified_2026-10-07T20:10:08Z": "d995ad1264a112bb70c147c41ee8709da0920a920e28e04a68ff21223fa24a4e"
+  },
+  "input_sources": [
+    {"id":"I-INPUTS","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/INPUTS.md","sha256":"c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae","bytes":2113},
+    {"id":"I-BRIEF","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/brief.md","sha256":"9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d","bytes":5605},
+    {"id":"I-PLAN","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/plan.md","sha256":"9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4","bytes":2932},
+    {"id":"I-F008","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-008.md","sha256":"228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254","bytes":2828},
+    {"id":"I-F018","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-018.md","sha256":"2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146","bytes":2233},
+    {"id":"I-F020","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-020.md","sha256":"0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874","bytes":2235},
+    {"id":"I-F026","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-026.md","sha256":"3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea","bytes":2399},
+    {"id":"I-F027","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-027.md","sha256":"770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c","bytes":2090},
+    {"id":"I-F028","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-028.md","sha256":"dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65","bytes":2001},
+    {"id":"I-F082","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-082.md","sha256":"b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f","bytes":2294},
+    {"id":"I-DEFINITIONS","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/definitions_and_transactions.md","sha256":"322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608","bytes":5313},
+    {"id":"I-EDITING-SAVE","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/editing_and_save_context.md","sha256":"e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440","bytes":4948},
+    {"id":"I-TEXT-SIZE","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/text_and_size_context.md","sha256":"44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7","bytes":3663}
+  ],
+  "public_sources": [
+    {"id":"S1","kind":"primary issue report","title":"Zed #48697 — Buffer shows stale content after undo when file changed externally while dirty","url":"https://github.com/zed-industries/zed/issues/48697","scope":"Reproduction, expected behavior, and root-cause account; opened 2026-02-07; relates to broader #38109.","capture":"Browser-visible excerpt summarized in sources/first-useful-finding.md and sources/zed-buffer-undo-reload.md; not a full raw-page archive."},
+    {"id":"S2","kind":"primary merged pull request","title":"Zed #51037 — buffer: Reload after undo when file changed while dirty","url":"https://github.com/zed-industries/zed/pull/51037","scope":"Merged to main 2026-03-10; implementation commit 426a5666dc12e37b2441f135388b683be8ade481; merge commit shown as 50aef1f; fix rationale, no-double-reload argument, regression test name, test plan, and release-note text."},
+    {"id":"S3","kind":"pinned primary source code","title":"Zed crates/language/src/buffer.rs","url":"https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/language/src/buffer.rs","version":"426a5666dc12e37b2441f135388b683be8ade481","locators":"Buffer.saved_mtime lines 101-103; BufferEvent::ReloadNeeded lines 330-350; DiskState and mtime lines 401-426; did_edit lines 2638-2660; undo caller lines 2902-2910.","capture":"Browser-visible source excerpts at immutable commit; captured into sources/zed-buffer-undo-reload.md; not a full raw file archive."},
+    {"id":"S4","kind":"pinned primary regression test","title":"Zed crates/project/tests/integration/project_tests.rs","url":"https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/project/tests/integration/project_tests.rs","version":"426a5666dc12e37b2441f135388b683be8ade481","locators":"test_dirty_buffer_reloads_after_undo lines 5324-5386, including FakeFs scenario, conflict assertion and post-undo content/clean-state assertion.","capture":"Browser-visible source excerpt at immutable commit; captured into sources/zed-buffer-undo-reload.md; not a full raw file archive."},
+    {"id":"S5","kind":"primary project release notes","title":"Zed Preview release notes","url":"https://zed.dev/releases/preview","discovery_url":"https://zed.dev/releases/preview/0.192.5","scope":"Search-indexed channel release notes list #51037 as a bug fix. Version-specific route redirected to channel listing; exact release tag was not confidently resolved, so stable-channel applicability is not asserted.","capture":"Browser search/open at 2026-10-07T20:09:05Z; excerpt summarized in sources/zed-buffer-undo-reload.md."}
+  ],
+  "source_operations": [
+    {"order":"1","operation":"Read exact input-map.json; then read INPUTS.md, complete brief.md, frozen plan.md and every listed source copy before public discovery.","time":"2026-10-07T20:04:19Z onward; exact per-file read time not independently captured","result":"All original inputs read; hash check below matches input-map declarations."},
+    {"order":"2","operation":"Public web searches for editor external-change/reload behavior and code/history, then opened Zed issue #48697, broader issue #38109, PR #51037 and its file diff.","time":"After source reads and before 2026-10-07T20:08:08Z; exact individual search timestamps not independently captured","result":"Independent finding: dirty-to-clean transition can leave stale buffer; upstream fix and focused regression test found."},
+    {"order":"3","operation":"Opened immutable raw source paths at commit 426a5666dc12e37b2441f135388b683be8ade481 for buffer.rs and project_tests.rs; opened official Preview release notes route.","time":"2026-10-07T20:09:05Z verified","result":"Pinned code definitions, did_edit guard, undo caller and regression test confirmed; official channel notes list #51037, exact tag unresolved."},
+    {"order":"4","operation":"Host SHA-256 recheck of exact input-map and every declared original input.","time":"2026-10-07T20:10:08Z","result":"All input hashes match declarations; no input file was written."}
+  ],
+  "local_outputs": [
+    {"path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/artifact.md","sha256":"f49b9f6a0a17c0bbc5050229627ffb1f4ac17bf073bc827a8db722b2cb5825ee","purpose":"Full proposed topic draft, plan comparison, alternatives, limits, dependencies and validation proposals."},
+    {"path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/sources/first-useful-finding.md","sha256":"7c009e93b209cb444df0d1401d8ed2ee3ab9fff0103ff4ec396d9a8256f532f4","saved_utc":"2026-10-07T20:08:08Z","purpose":"First useful finding saved before final draft completion."},
+    {"path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/sources/zed-buffer-undo-reload.md","sha256":"b50235c2e2dc54e4120705740fd1807427fe8d32c3517a31a9dfd0ce9d655185","purpose":"Browser-visible primary-source excerpts and pinned locators; authored capture note, not complete raw web archives."}
+  ],
+  "stage_record": {
+    "goal_identity":"01a117f7-2052-7993-931e-7d595ce3bc0d",
+    "goal_created_active_utc":"2026-10-07T20:04:10Z",
+    "activation_notice":"Sent once to the exact requested parent thread; accepted with delivery=steered.",
+    "first_useful_saved_finding_utc":"2026-10-07T20:08:08Z",
+    "full_artifact_completion_utc":"2026-10-07T20:10:08Z (artifact was present and hashed by this time)",
+    "usage":null,
+    "billing":null,
+    "usage_billing_note":"Distinct usage and billing figures were not exposed by the available stage tools; both remain null.",
+    "executed_candidate_checks":[],
+    "proposed_validation_executed":false,
+    "scope_note":"No nested delegation, other cases/arms, repository or canonical-plan edits, or external actions were performed."
+  }
+}

@@ -1,0 +1,1035 @@
+{
+  "record_at": "2026-10-07T21:06:51.767922+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-06-control-independent-review-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T20:51:35.196Z",
+    "startedAt": "2026-10-07T20:51:35.799Z",
+    "completedAt": "2026-10-07T21:05:58.773Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "schema_version": "1.0",
+    "case": "I-METHOD-06",
+    "artifact": "control/reviser-v1/artifact.md",
+    "source_judgment": "PASS_WITH_LIMITATIONS",
+    "counts": {
+      "six_axes": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "brief_O1_O6": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "additional_brief_constraints": {
+        "complete": 4,
+        "assessed": 4,
+        "unassessed": 0
+      },
+      "frozen_input_units_contexts": {
+        "complete": 11,
+        "assessed": 11,
+        "unassessed": 0
+      },
+      "owner_decision_groups": {
+        "complete": 71,
+        "assessed": 71,
+        "unassessed": 0
+      },
+      "consequential_claim_groups": {
+        "complete": 20,
+        "assessed": 20,
+        "unassessed": 0
+      },
+      "critic_disposition_groups": {
+        "complete": 27,
+        "assessed": 27,
+        "unassessed": 0
+      },
+      "draft_preservation_themes": {
+        "complete": 12,
+        "assessed": 12,
+        "unassessed": 0
+      },
+      "validation_proposal_groups": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "material_error_count": 0,
+      "nonmaterial_behavior_error_count": 1,
+      "note": "Complete means declared inventory, assessed includes insufficient/partial/qualified findings, not satisfied. Categories overlap and must not be summed."
+    },
+    "axes": [
+      {
+        "axis": 1,
+        "status": "assessed_with_limitations",
+        "finding": "All scope compared; O1 chronology unestablished and Rust/Slint boundary not explicit."
+      },
+      {
+        "axis": 2,
+        "status": "assessed_with_nonmaterial_error",
+        "finding": "Pinned Restic/history and documentation supported; random-subset blanket has all-inventory boundary exceptions."
+      },
+      {
+        "axis": 3,
+        "status": "assessed_supported_with_limits",
+        "finding": "Useful primary alternatives and negative/optional leads; no exhaustive opportunity claim or reconstructed historical proof."
+      },
+      {
+        "axis": 4,
+        "status": "assessed_supported_with_limits",
+        "finding": "Rejections justified by retained choices; no current Kopia defect inferred; retained-by-reference dispositions not counted as runtime proof."
+      },
+      {
+        "axis": 5,
+        "status": "assessed_supported_with_limits",
+        "finding": "All 27 critic disposition groups and 12 draft themes assessed; P5 discovery chronology remains unresolved."
+      },
+      {
+        "axis": 6,
+        "status": "assessed_supported",
+        "finding": "All six validation proposals assessed. No executed component/application/recovery witness claimed."
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O1",
+        "status": "assessed_partial",
+        "reason": "Primary discovery beyond plan documented; starting before plan narrowing is not established by admitted evidence."
+      },
+      {
+        "id": "O2",
+        "status": "assessed_satisfied_with_minor_qualification",
+        "reason": "Immutable code/caller/governing context supports mechanism; subset upper boundaries need qualification."
+      },
+      {
+        "id": "O3",
+        "status": "assessed_satisfied",
+        "reason": "Real issue, immutable fix, helper regression and released v0.19.1 applicability independently checked."
+      },
+      {
+        "id": "O4",
+        "status": "assessed_satisfied_with_limits",
+        "reason": "All 11 copied inputs and 71 decision groups compared; Rust/Slint explicit boundary missing; recovery order wording ambiguous."
+      },
+      {
+        "id": "O5",
+        "status": "assessed_substantively_satisfied",
+        "reason": "All criticism dispositions visible; provider/family provenance belongs to host and was not inferred."
+      },
+      {
+        "id": "O6",
+        "status": "assessed_satisfied_with_limits",
+        "reason": "One coherent proposal, options, retained/rejected matters, concrete checks and blockers; not executable recovery proof."
+      }
+    ],
+    "brief_constraints": [
+      {
+        "id": "BC01",
+        "requirement": "One Project/two destinations/capture/verify/as_new; preserve retained modes/products",
+        "status": "assessed_satisfied"
+      },
+      {
+        "id": "BC02",
+        "requirement": "Rust + Slint desktop; no Iced revival/framework change",
+        "status": "assessed_partial",
+        "reason": "No incompatible architecture proposed, but neither Rust nor Slint is stated in final."
+      },
+      {
+        "id": "BC03",
+        "requirement": "Read-only/public research; no actual backup/restore/retention/canon/WorkNodes/private actions",
+        "status": "assessed_authored_boundary_satisfied",
+        "reason": "Source assessment uses statements and admitted artifacts; lifecycle/account execution audit excluded."
+      },
+      {
+        "id": "BC04",
+        "requirement": "Missing adjacent owners remain dependencies, not inferred whole-project defects",
+        "status": "assessed_satisfied"
+      }
+    ],
+    "plan_inputs": [
+      {
+        "id": "scope_and_owners",
+        "status": "assessed_retained",
+        "decision_count": 8,
+        "assessed_decision_ids": [
+          "SC01",
+          "SC02",
+          "SC03",
+          "SC04",
+          "SC05",
+          "SC06",
+          "SC07",
+          "SC08"
+        ],
+        "assessed_decision_count": 8,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "non_goals",
+        "status": "assessed_retained",
+        "decision_count": 6,
+        "assessed_decision_ids": [
+          "NG01",
+          "NG02",
+          "NG03",
+          "NG04",
+          "NG05",
+          "NG06"
+        ],
+        "assessed_decision_count": 6,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "BRS-001",
+        "status": "assessed_retained",
+        "decision_count": 3,
+        "assessed_decision_ids": [
+          "001a",
+          "001b",
+          "001c"
+        ],
+        "assessed_decision_count": 3,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "BRS-004",
+        "status": "assessed_retained",
+        "decision_count": 6,
+        "assessed_decision_ids": [
+          "004a",
+          "004b",
+          "004c",
+          "004d",
+          "004e",
+          "004f"
+        ],
+        "assessed_decision_count": 6,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "BRS-005",
+        "status": "assessed_retained",
+        "decision_count": 6,
+        "assessed_decision_ids": [
+          "005a",
+          "005b",
+          "005c",
+          "005d",
+          "005e",
+          "005f"
+        ],
+        "assessed_decision_count": 6,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "BRS-006",
+        "status": "assessed_retained",
+        "decision_count": 7,
+        "assessed_decision_ids": [
+          "006a",
+          "006b",
+          "006c",
+          "006d",
+          "006e",
+          "006f",
+          "006g"
+        ],
+        "assessed_decision_count": 7,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "BRS-010",
+        "status": "assessed_retained",
+        "decision_count": 4,
+        "assessed_decision_ids": [
+          "010a",
+          "010b",
+          "010c",
+          "010d"
+        ],
+        "assessed_decision_count": 4,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "BRS-017",
+        "status": "assessed_retained",
+        "decision_count": 7,
+        "assessed_decision_ids": [
+          "017a",
+          "017b",
+          "017c",
+          "017d",
+          "017e",
+          "017f",
+          "017g"
+        ],
+        "assessed_decision_count": 7,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "BRS-019",
+        "status": "assessed_with_limitations",
+        "decision_count": 11,
+        "assessed_decision_ids": [
+          "019a",
+          "019b",
+          "019c",
+          "019d",
+          "019e",
+          "019f",
+          "019g",
+          "019h",
+          "019i",
+          "019j",
+          "019k"
+        ],
+        "assessed_decision_count": 11,
+        "unassessed_decision_count": 0,
+        "exceptions": {
+          "019a": "ordering_ambiguity_L03"
+        }
+      },
+      {
+        "id": "BRS-023",
+        "status": "assessed_retained",
+        "decision_count": 6,
+        "assessed_decision_ids": [
+          "023a",
+          "023b",
+          "023c",
+          "023d",
+          "023e",
+          "023f"
+        ],
+        "assessed_decision_count": 6,
+        "unassessed_decision_count": 0
+      },
+      {
+        "id": "BRS-030",
+        "status": "assessed_retained",
+        "decision_count": 7,
+        "assessed_decision_ids": [
+          "030a",
+          "030b",
+          "030c",
+          "030d",
+          "030e",
+          "030f",
+          "030g"
+        ],
+        "assessed_decision_count": 7,
+        "unassessed_decision_count": 0
+      }
+    ],
+    "unassessed_scientific_scope": [],
+    "excluded_host_fields": [
+      "family/provider identity",
+      "lifecycle/native terminal disposition",
+      "stage timing/quota",
+      "usage/billing",
+      "counterpart/comparative result"
+    ],
+    "usage": {
+      "input_tokens": null,
+      "cache_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    },
+    "blinding_limits": [
+      "Exact authorized paths visibly name arm.",
+      "Authored artifact/procedure structure and method prose can reveal procedure.",
+      "Source maps contain author timing/counters; ignored for judgment.",
+      "No other-arm output/grades/cost/speed targets or parent/evaluator analysis read."
+    ],
+    "scope_limit": "No exhaustive opportunity recall asserted; absent adjacent owner contents are outside the supplied comparison boundary.",
+    "owner_decision_details": "judgment.md#frozen-owner-decision-coverage-appendix",
+    "completed_at_utc": "2026-10-07T21:05:40.196574+00:00"
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/coverage.json",
+      "bytes": 9430,
+      "sha256": "6a5f7bbef857fd5543f9b5ac8be07b6eb3a61d9b75a087fe36eb9a81bab05574"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/judgment.md",
+      "bytes": 38665,
+      "sha256": "df592f8d9d97f6f6422a5523cedd44ffdccdd82c3255beeeb08fae3d1aa4a33c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/source-checks.json",
+      "bytes": 50960,
+      "sha256": "8cafe589e9891fbb720a46dd3ed9ae0391a68b15c3eb3923b3ba2b241ba14ab3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/artifact.md",
+      "bytes": 11908,
+      "sha256": "c292910d80a50013f42510c886d2d796cdbbbf559179928d430468555fd52061"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/source-map.json",
+      "bytes": 7829,
+      "sha256": "bf92264268e6840a2df7be4cb36b417a0d033f5c77ff3634b539d23abd961dc6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/sources/restic-5667-issue.html",
+      "bytes": 426423,
+      "sha256": "c19f2bbfff6c01869792db61827803465b3aa19666c44043b1bcef9d7797339f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/sources/restic-6aa3-checker.go",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/sources/restic-6aa3-cmd_backup.go",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/sources/restic-6aa3-cmd_backup_test.go",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/sources/restic-6aa3-cmd_check.go",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/sources/restic-6aa3-working_with_repos.rst",
+      "bytes": 28606,
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/sources/restic-pr-21852.html",
+      "bytes": 515022,
+      "sha256": "43b928b5859f681add5af6a3a533d904a0faca86ce7ca585707158a1ef8c19ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/critic-v1/sources/restic-v0.19.1-release.html",
+      "bytes": 217012,
+      "sha256": "55a95d75b7a67a2b8f90de2d6015fff1f509f720f4ccb875fb7445eaa4aa871b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/artifact.md",
+      "bytes": 30755,
+      "sha256": "76fbecfe9b92294c46073b3639951161dbb2c7d50d910b42bddf638d5af760fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/source-map.json",
+      "bytes": 13139,
+      "sha256": "1f89336197e6c63756955a096d84ebdf8469827ebbfc1031875f32dfddb8d41b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/borg-check.html",
+      "bytes": 25422,
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/cisa-stopransomware-guide.pdf",
+      "bytes": 1047655,
+      "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/cisa-stopransomware-resource.html",
+      "bytes": 56374,
+      "sha256": "52097742990c8e38c6e81c89fd365d55ad976f5d8f4212e535603b4bfd372592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/kopia-consistency.html",
+      "bytes": 32457,
+      "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/kopia-issue-3605.html",
+      "bytes": 232329,
+      "sha256": "9dc7dc0ffeffeb60176966d61e6827762c8b2d4e3063d6c17db740643058bf0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/kopia-snapshot-verify-docs.html",
+      "bytes": 25795,
+      "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/nist-sp800-34r1.pdf",
+      "bytes": 952921,
+      "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/rclone-copy-docs.html",
+      "bytes": 51621,
+      "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/rclone-sync-docs.html",
+      "bytes": 53053,
+      "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-backup-docs.html",
+      "bytes": 71760,
+      "sha256": "c26df1ab47454f6d252fa300ec1371eefaa273b2cb92269186610f0a22ae5ee0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-issue-5667.html",
+      "bytes": 426417,
+      "sha256": "31098dfbf1a12f4b8840d478417e5ed8af81823dcc7142bb9e0b1d43c5571358"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-pr-21852.html",
+      "bytes": 515016,
+      "sha256": "c6a6bfded29d4e34d1130001e4e5296b55b38f7a7b6c6b0f04af2081765b522a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-release-v0.19.1.html",
+      "bytes": 217007,
+      "sha256": "e04438d9195e16362c18990e55d7a9f09212a6d05df9927b3420471149c01009"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-v0.19.1-checker.go",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-v0.19.1-cmd_backup.go",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-v0.19.1-cmd_backup_test.go",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-v0.19.1-cmd_check.go",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/research-v1/sources/restic-working-with-repos.html",
+      "bytes": 61216,
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/artifact.md",
+      "bytes": 28103,
+      "sha256": "33727f1c8524cc3f4ea5cb18dee3ca9458a3ee35a78069e3bc19cc71dc11b82f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/source-map.json",
+      "bytes": 13177,
+      "sha256": "707b4dcedf40abfde78e5934b3f84810b6917f611fe8ae3b6613b1cada1640fe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/critic/restic-5667-issue.html",
+      "bytes": 426423,
+      "sha256": "c19f2bbfff6c01869792db61827803465b3aa19666c44043b1bcef9d7797339f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/critic/restic-6aa3-checker.go",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/critic/restic-6aa3-cmd_backup.go",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/critic/restic-6aa3-cmd_backup_test.go",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/critic/restic-6aa3-cmd_check.go",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/critic/restic-6aa3-working_with_repos.rst",
+      "bytes": 28606,
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/critic/restic-pr-21852.html",
+      "bytes": 515022,
+      "sha256": "43b928b5859f681add5af6a3a533d904a0faca86ce7ca585707158a1ef8c19ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/critic/restic-v0.19.1-release.html",
+      "bytes": 217012,
+      "sha256": "55a95d75b7a67a2b8f90de2d6015fff1f509f720f4ccb875fb7445eaa4aa871b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/borg-check.html",
+      "bytes": 25422,
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/cisa-stopransomware-guide.pdf",
+      "bytes": 1047655,
+      "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/cisa-stopransomware-resource.html",
+      "bytes": 56374,
+      "sha256": "52097742990c8e38c6e81c89fd365d55ad976f5d8f4212e535603b4bfd372592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/kopia-consistency.html",
+      "bytes": 32457,
+      "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/kopia-issue-3605.html",
+      "bytes": 232329,
+      "sha256": "9dc7dc0ffeffeb60176966d61e6827762c8b2d4e3063d6c17db740643058bf0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/kopia-snapshot-verify-docs.html",
+      "bytes": 25795,
+      "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/nist-sp800-34r1.pdf",
+      "bytes": 952921,
+      "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/rclone-copy-docs.html",
+      "bytes": 51621,
+      "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/rclone-sync-docs.html",
+      "bytes": 53053,
+      "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-backup-docs.html",
+      "bytes": 71760,
+      "sha256": "c26df1ab47454f6d252fa300ec1371eefaa273b2cb92269186610f0a22ae5ee0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-issue-5667.html",
+      "bytes": 426417,
+      "sha256": "31098dfbf1a12f4b8840d478417e5ed8af81823dcc7142bb9e0b1d43c5571358"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-pr-21852.html",
+      "bytes": 515016,
+      "sha256": "c6a6bfded29d4e34d1130001e4e5296b55b38f7a7b6c6b0f04af2081765b522a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-release-v0.19.1.html",
+      "bytes": 217007,
+      "sha256": "e04438d9195e16362c18990e55d7a9f09212a6d05df9927b3420471149c01009"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-v0.19.1-checker.go",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-v0.19.1-cmd_backup.go",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-v0.19.1-cmd_backup_test.go",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-v0.19.1-cmd_check.go",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted/reviser-v1/sources/research/restic-working-with-repos.html",
+      "bytes": 61216,
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/admitted-inputs.json",
+      "bytes": 26354,
+      "sha256": "499d315f5c92608a02231a984b84953c984782fffb4e27d796bfc22fbd380be6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/capture-link-check.json",
+      "bytes": 7947,
+      "sha256": "be8734564cb52d96687ef47dd0762ff72285ca41f3b94eaa5d8b3e317d089fce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/borg-check.txt",
+      "bytes": 8624,
+      "sha256": "32b5c5b4afc3bc711051db8c798f9ad2cf6c9483f74237037323c7586bc1e6f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/cisa-stopransomware-guide.txt",
+      "bytes": 91436,
+      "sha256": "03e010856f75d826f2ecf32d328333f3b978a41b5d49a90490da6eea425e2565"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/cisa-stopransomware-resource.txt",
+      "bytes": 3694,
+      "sha256": "4a804b9a0069a845202b72905e7db8e34502e427de8f44e3efada31405779d29"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/borg-1.4.5-check.txt",
+      "bytes": 8624,
+      "sha256": "32b5c5b4afc3bc711051db8c798f9ad2cf6c9483f74237037323c7586bc1e6f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/cisa-guide-resource.txt",
+      "bytes": 3694,
+      "sha256": "4a804b9a0069a845202b72905e7db8e34502e427de8f44e3efada31405779d29"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/cisa-guide.txt",
+      "bytes": 91436,
+      "sha256": "03e010856f75d826f2ecf32d328333f3b978a41b5d49a90490da6eea425e2565"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/kopia-consistency.txt",
+      "bytes": 9648,
+      "sha256": "dc97e83c7633ec5d5a758486f29135a761c3c54adb9c539cf91328059bba1007"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/kopia-issue-3605.txt",
+      "bytes": 4121,
+      "sha256": "90b09352b62e510e5131de2c56a490c624ed82100642d3b9a40fc4fd722ee03a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/kopia-snapshot-verify.txt",
+      "bytes": 1703,
+      "sha256": "de36820832667848a196e44a859ce1ffc9e3c7568c18a308e6cd69466fd382fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/nist-sp800-34r1.txt",
+      "bytes": 463733,
+      "sha256": "6f3a910e04459b7d6cc679c0e97f0cea47a95b4ef54170c1b45887800bd4e636"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/rclone-copy.txt",
+      "bytes": 14628,
+      "sha256": "48a5aa1fbe2c24304762bf0e7c262c05838a96a3d78aef664aa93fd1db292460"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/rclone-sync.txt",
+      "bytes": 15911,
+      "sha256": "cab51e35239fb8714e85e919c5e072b0622eb7347e5b75b84125cfc6e7b8ca78"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/restic-0.19.1-backup.txt",
+      "bytes": 31138,
+      "sha256": "dbd11bdc6672438496977db5e8f3faa5c1bba5d86f4136bf49cd6e5f89239c40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/restic-0.19.1-working.txt",
+      "bytes": 26347,
+      "sha256": "ded4b13e8f3f1df23a9e4b1eec5f2931d6f69de7d0cfcc32c772925e204a6421"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/restic-issue-5667.txt",
+      "bytes": 5297,
+      "sha256": "85b09b8e0f9f046cf861cb51e5ef81d9cfde3d89fdc9641790a3bb3229b6f4f3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/restic-pr-21852.txt",
+      "bytes": 42990,
+      "sha256": "9d043cfd8bc33ae28411b03b97f86dbe2cbdd5e5f5cd0e1a39fb47d47e8328e4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/independent/restic-v0.19.1-release.txt",
+      "bytes": 7710,
+      "sha256": "ff755dec6731e90c7a1d900a506618f5feb994ca1b48dd641c72af066df7aef3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/kopia-consistency.txt",
+      "bytes": 9648,
+      "sha256": "dc97e83c7633ec5d5a758486f29135a761c3c54adb9c539cf91328059bba1007"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/kopia-issue-3605.txt",
+      "bytes": 4121,
+      "sha256": "90b09352b62e510e5131de2c56a490c624ed82100642d3b9a40fc4fd722ee03a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/kopia-snapshot-verify-docs.txt",
+      "bytes": 1703,
+      "sha256": "de36820832667848a196e44a859ce1ffc9e3c7568c18a308e6cd69466fd382fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/nist-sp800-34r1.txt",
+      "bytes": 463733,
+      "sha256": "6f3a910e04459b7d6cc679c0e97f0cea47a95b4ef54170c1b45887800bd4e636"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/rclone-copy-docs.txt",
+      "bytes": 14628,
+      "sha256": "48a5aa1fbe2c24304762bf0e7c262c05838a96a3d78aef664aa93fd1db292460"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/rclone-sync-docs.txt",
+      "bytes": 15911,
+      "sha256": "cab51e35239fb8714e85e919c5e072b0622eb7347e5b75b84125cfc6e7b8ca78"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/restic-backup-docs.txt",
+      "bytes": 31138,
+      "sha256": "dbd11bdc6672438496977db5e8f3faa5c1bba5d86f4136bf49cd6e5f89239c40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/restic-issue-5667.txt",
+      "bytes": 5297,
+      "sha256": "85b09b8e0f9f046cf861cb51e5ef81d9cfde3d89fdc9641790a3bb3229b6f4f3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/restic-pr-21852.txt",
+      "bytes": 42990,
+      "sha256": "9d043cfd8bc33ae28411b03b97f86dbe2cbdd5e5f5cd0e1a39fb47d47e8328e4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/restic-release-v0.19.1.txt",
+      "bytes": 7710,
+      "sha256": "ff755dec6731e90c7a1d900a506618f5feb994ca1b48dd641c72af066df7aef3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/derived/restic-working-with-repos.txt",
+      "bytes": 26347,
+      "sha256": "ded4b13e8f3f1df23a9e4b1eec5f2931d6f69de7d0cfcc32c772925e204a6421"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/borg-1.4.5-check.html",
+      "bytes": 25422,
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/cisa-guide-resource.html",
+      "bytes": 56374,
+      "sha256": "052c1227f5fa437bd9fbfe8975cc71fbbc10737cf23ec5b8076c2c6fbebb03c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/cisa-guide.pdf",
+      "bytes": 1047655,
+      "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/kopia-consistency.html",
+      "bytes": 32457,
+      "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/kopia-issue-3605.html",
+      "bytes": 232335,
+      "sha256": "9f1cbe5b31361f306e7811107820ce7e483119eb137553b3a32d8f99694d815f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/kopia-snapshot-verify.html",
+      "bytes": 25795,
+      "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/nist-sp800-34r1.pdf",
+      "bytes": 952921,
+      "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/rclone-copy.html",
+      "bytes": 51621,
+      "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/rclone-sync.html",
+      "bytes": 53053,
+      "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-0.19.1-backup.html",
+      "bytes": 71760,
+      "sha256": "c26df1ab47454f6d252fa300ec1371eefaa273b2cb92269186610f0a22ae5ee0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-0.19.1-working.html",
+      "bytes": 61216,
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-CHANGELOG.md",
+      "bytes": 337782,
+      "sha256": "fbf2ba611d2821e6b965129ce455ae3d086dab29fc7552eb34610aff289bbf21"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-cmd_restic_cmd_backup.go",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-cmd_restic_cmd_backup_test.go",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-cmd_restic_cmd_check.go",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-cmd_restic_cmd_check_test.go",
+      "bytes": 7966,
+      "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-cmd_restic_main.go",
+      "bytes": 6524,
+      "sha256": "5ec6244896cfad78a2a93d9c4ac0db9168d3c446bc70f2a40d657bae6068ac75"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-doc_045_working_with_repos.rst",
+      "bytes": 28606,
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-internal_archiver_archiver.go",
+      "bytes": 29062,
+      "sha256": "f523d157451bf903861c6cf15d01427ad2bd53798f0345adcb1937ca16db5bb6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-internal_checker_checker.go",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-internal_fs_fs_local.go",
+      "bytes": 4770,
+      "sha256": "297db779358e12b83d14f6c280ee3e6e5240b195a20f4808c3b8ca961a3f6d6e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-6aa3-internal_repository_check.go",
+      "bytes": 6212,
+      "sha256": "a34e49a702f73047ff0e34b2fb09d85e828d294e20a691d7117bf59817552533"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-fix-8d7679c.patch",
+      "bytes": 3913,
+      "sha256": "b8d2412d44af4d887b26f4ae3d86ce300371912edce2e6f8f36b5156fe0855e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-issue-5667.html",
+      "bytes": 426427,
+      "sha256": "ac78064dbc1b795aab968082cb1d2abffb13a6549b28b920368478c27de7627b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-pr-21852.html",
+      "bytes": 515017,
+      "sha256": "f972143192fbe04c58e3a713fce92bc9994dc2118bc621419bf74d043a9ccf7a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-tag-object.json",
+      "bytes": 2576,
+      "sha256": "92f275ac0cf7cadaa4c927e0d39b06129f4140053ded476714fba5c56a7b2b92"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-tag-v0.19.1.json",
+      "bytes": 331,
+      "sha256": "4047384bb77373a0bd00db2bf9c8f719e696562b8a7109bb996333063d2cd7f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-v0.19.1-release.html",
+      "bytes": 217007,
+      "sha256": "b4a630fd588b8d3faafecc8c0349b675308f182d1ebb4d04963e94db0e3e252a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent-retrievals.json",
+      "bytes": 18669,
+      "sha256": "e4abe3546f0b8c3dbbe3910fdfa39d6d4d1e9f7c696977b11dec9bbc1d6a3dac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/brief.md",
+      "bytes": 5708,
+      "sha256": "2c9cded4ef7b6ca1d11bcfbde218bf49e7c493964022d7ed7f7f3e5b5634ffe9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-001.md",
+      "bytes": 2553,
+      "sha256": "54475617a61b30a619746ca7f92c0b10501dce5f68007e74be0521419ec0d146"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-004.md",
+      "bytes": 3805,
+      "sha256": "c457a59a843d906e6f1c113800859cc08102788163fc063e45b5ed0e5a57192a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-005.md",
+      "bytes": 3692,
+      "sha256": "109291ef836880790bd083bf271e2b33ec0f6e5c1641a32af4fb11004a58fff1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-006.md",
+      "bytes": 3667,
+      "sha256": "234cf930ce4e1b582de298be39587713f164943b259c4c60135366dc43a3735e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-010.md",
+      "bytes": 2930,
+      "sha256": "721c82c7946398bbd0f7766f67ec7e25eef2d27b94daec120195922886abe8c9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-017.md",
+      "bytes": 5453,
+      "sha256": "ff9bd102297b484394e57a4e0a203677905fe883ef6d8ebb48c016330dea967e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-019.md",
+      "bytes": 7651,
+      "sha256": "f47075ec350a87c6f65eafae3061c7c66964d9e6f535f7333f327b793ccf0008"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-023.md",
+      "bytes": 3092,
+      "sha256": "075c17c7ff747ca2e23a401128b10467863db4e0df4d5fe36a09d6fbc7caf1f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/BRS-030.md",
+      "bytes": 7424,
+      "sha256": "e1d7d0613914a2efa4de7a60f4938e40558c4c89e308085545b1b4e8b00dfa63"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/non_goals.md",
+      "bytes": 2012,
+      "sha256": "6b429d189287b99a69adde2d5bf68d9f5f8ec67c31e21e0db1dffb2341ab2dc0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/owner-slice/scope_and_owners.md",
+      "bytes": 7104,
+      "sha256": "a5ccbd08488f10c1d966f5e9f29b07d1274535704b9907942f197637e007906a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/inputs/plan.md",
+      "bytes": 3228,
+      "sha256": "304ba8e4ba46efc399176e4c68c40af0dc6be0873ab5d59b063889cb154770a9"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-06-pair-freeze-v1.json"
+}

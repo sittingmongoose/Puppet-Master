@@ -1,0 +1,131 @@
+{
+  "record_at": "2026-10-07T20:15:43.719759+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/artifact.md": {
+      "sha256": "0ff7f9277193197e5d0ab36f19d8d5eb772d58b4c79d1d56479843497d312b20",
+      "bytes": 15567
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/source-map.json": {
+      "sha256": "a68c42593264c5a6a5069ff205d85b8d373c1b4b71413c33bb41466e71ed65f5",
+      "bytes": 11133
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources/first-finding.md": {
+      "sha256": "95c447904322024cdeca949de80097bfb5db438dd050caf18667e8d166423425",
+      "bytes": 963
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources/public-evidence.md": {
+      "sha256": "4ca5c029facab16de0ef1675394e42c9ec65122c957b016e278945ef86fe85b8",
+      "bytes": 3316
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-control-research-topic-b-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "interrupted",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:04:07.270Z",
+    "startedAt": "2026-10-07T20:04:07.748Z",
+    "completedAt": "2026-10-07T20:15:15.266Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-05/control/research-topic-b-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-05--control--research-topic-b-v1--1d8d8ca04c106216.json",
+    "sha256": "1d8d8ca04c10621631c1388c15fb05690c81207b770342db34da6dcf74391922",
+    "bytes": 10928,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "d48fa281a5381f332cd552aebba9926c6d635f145efff5089d85a7bab97564c5",
+      "status": "complete",
+      "tokensUsed": 213553,
+      "tokenBudget": null,
+      "timeUsedSeconds": 633
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-05-control-research-topic-b-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a117f7-545e-7162-ba35-8e028b461629",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:15:15.266Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-05-control-research-topic-b-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:15:15.266Z",
+        "sha256": "49535c943eea2cbb4728dd4517b866386bc27937ad50016a2a6602412d26090e"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a117f7-545e-7162-ba35-8e028b461629",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 213553,
+  "native_elapsed_seconds": 633,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "research",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-METHOD-05-control-research-topic-b-v1",
+    "record_at": "2026-10-07T20:04:06.812150+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:14:06.812150+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:48:53.415926+00:00",
+    "stage_allowance_seconds": 600,
+    "prior_nonoverlapping_occupied_seconds": 0,
+    "aggregate_ceiling_seconds": 2700,
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2"
+  },
+  "t3_delivery_in_prefrozen_deadline": false,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

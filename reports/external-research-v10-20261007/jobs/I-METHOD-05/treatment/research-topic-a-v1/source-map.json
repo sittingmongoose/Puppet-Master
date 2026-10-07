@@ -1,0 +1,173 @@
+{
+  "schema": "I-METHOD-05-topic-research-source-map-v1",
+  "stage": "I-METHOD-05/treatment/research-topic-a-v1",
+  "created_at_utc": "2026-10-07T20:17:28Z",
+  "stage_deadline_utc": "2026-10-07T20:18:33.897149Z",
+  "first_useful_saved_finding": {
+    "path": "sources/first-useful-finding.md",
+    "saved_at_utc": "2026-10-07T20:15:28Z",
+    "bytes": 1028,
+    "sha256": "ab336e76e0979ac404397b74809ed0bdc49663b846106ba8d7c65fc92f800006"
+  },
+  "full_artifact": {
+    "path": "artifact.md",
+    "completed_at_utc": "2026-10-07T20:17:28Z",
+    "bytes": 12210,
+    "sha256": "2ae9cab6bd061b92300ded762cdf7625094f9094b5ec321596584a12465c10d5"
+  },
+  "input_boundary": {
+    "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/input-map.json",
+    "input_map_bytes": 5016,
+    "input_map_sha256": "4e15c62ea97e6828b6e8f8b817b3c7f538ade3d80569f120900f1eb4f16bb548",
+    "brief_read_first": true,
+    "full_brief_plan_and_all_map_listed_source_copies_read": true,
+    "all_input_hashes_match": true,
+    "predecessors_read_in_full": true,
+    "other_arm_or_campaign_inputs_read": false
+  },
+  "input_hashes_observed": {
+    "INPUTS.md": "c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae",
+    "brief.md": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+    "plan.md": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+    "source/F-008.md": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+    "source/F-018.md": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+    "source/F-020.md": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+    "source/F-026.md": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+    "source/F-027.md": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+    "source/F-028.md": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+    "source/F-082.md": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+    "source/definitions_and_transactions.md": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+    "source/editing_and_save_context.md": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+    "source/text_and_size_context.md": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+  },
+  "predecessors": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/artifact.md",
+      "bytes": 18550,
+      "sha256": "4e7c8dfd06f066363dfa4352897569d89b3f37b7c3fe12c72e30d97242427bbc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source-map.json",
+      "bytes": 11620,
+      "sha256": "7f5d2cfa38ec47b586f89a9074c652a14aeb9c47b08a9b65cda93e7005b465b6"
+    }
+  ],
+  "predecessor_source_copies": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/sources/discovery-capture.md",
+      "bytes": 6816,
+      "sha256": "e9bf4052c38ba938949c39be257b5e5165e0c671bf2527ee843b1c39c187d39b"
+    }
+  ],
+  "owned_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/sources/first-useful-finding.md",
+      "bytes": 1028,
+      "sha256": "ab336e76e0979ac404397b74809ed0bdc49663b846106ba8d7c65fc92f800006"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/sources/topic-a-public-sources.md",
+      "bytes": 2358,
+      "sha256": "ee32ebd045acb1d3c8240ab561b560484b23cc8cc7cc905be09761caf715a0a5"
+    }
+  ],
+  "public_sources": [
+    {
+      "id": "zed-issue-48697",
+      "kind": "upstream issue",
+      "accessed_utc": "2026-10-07T20:14Z",
+      "url": "https://github.com/zed-industries/zed/issues/48697",
+      "finding": "dirty external update is suppressed; undo-to-clean leaves stale text"
+    },
+    {
+      "id": "zed-pr-51037",
+      "kind": "merged code, regression test and reported checks",
+      "version": "merge commit 50aef1f115493aab506df9d5b33da5435dc36bfc; merged 2026-03-10",
+      "accessed_utc": "2026-10-07T20:14Z/20:16Z",
+      "urls": [
+        "https://github.com/zed-industries/zed/pull/51037",
+        "https://github.com/zed-industries/zed/pull/51037/files",
+        "https://github.com/zed-industries/zed/blob/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/language/src/buffer.rs"
+      ],
+      "code_symbols": [
+        "crates/language/src/buffer.rs::Buffer::did_edit / BufferEvent::ReloadNeeded / DiskState::Present",
+        "crates/project/tests/integration/project_tests.rs::test_dirty_buffer_reloads_after_undo"
+      ],
+      "history": "mtime comparison on dirty-to-clean; regression models external save while dirty and undo; PR reports 28 checks passed"
+    },
+    {
+      "id": "zed-release-0.229.0",
+      "kind": "official release listing",
+      "version": "0.229.0, 2026-03-25; includes issue #51037",
+      "accessed_utc": "2026-10-07T20:16Z",
+      "url": "https://zed.dev/releases/preview/0.192.5"
+    },
+    {
+      "id": "ropey-1.6.1",
+      "kind": "reused same-arm pinned package source",
+      "version": "1.6.1; upstream commit d41ee247f2f097c7f9c8e4730b7dd884734f1ee5",
+      "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source-map.json",
+      "urls": [
+        "https://docs.rs/crate/ropey/1.6.1/source/src/rope.rs",
+        "https://docs.rs/crate/ropey/1.6.1/source/src/crlf.rs"
+      ],
+      "scope": "context only; not selected for topic A"
+    },
+    {
+      "id": "notify-8.2.0-rust-std-tempfile-3.27.0",
+      "kind": "reused same-arm official/versioned documentation",
+      "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source-map.json",
+      "urls": [
+        "https://docs.rs/notify/8.2.0/notify/",
+        "https://doc.rust-lang.org/std/fs/fn.rename.html",
+        "https://docs.rs/tempfile/3.27.0/tempfile/struct.TempPath.html"
+      ],
+      "scope": "alternatives and limitations only"
+    }
+  ],
+  "source_operations": [
+    {
+      "window_utc": "2026-10-07T20:14:26Z/20:15:28Z",
+      "operation": "Read exact topic input map, full original brief and plan, all map-listed original source copies; separately reviewed all topic owner sources and adjacent owner-boundary sources. Read full same-arm discovery artifact, source-map JSON and discovery capture bytes.",
+      "result": "map-listed input hashes match; no originals changed"
+    },
+    {
+      "window_utc": "2026-10-07T20:14Z/20:16Z",
+      "operation": "Public web open of Zed issue #48697, merged PR #51037, exact file diff and pinned buffer source; searched official release notes for 0.229.0. Reused discovery inventory evidence for Ropey, notify, Rust std and tempfile.",
+      "capture": "sources/first-useful-finding.md and sources/topic-a-public-sources.md; no source code downloaded"
+    },
+    {
+      "window_utc": "2026-10-07T20:16Z/20:17:28Z",
+      "operation": "Compared F-008/F-018/F-020/F-026 and copied transaction/save context; preserved cross-topic F-027/F-028/F-082 interactions; authored complete topic-A replacement section and validation proposals."
+    }
+  ],
+  "comparison_coverage": {
+    "primary_topic_units": [
+      "F-008",
+      "F-018",
+      "F-020",
+      "F-026",
+      "definitions_and_transactions.md",
+      "editing_and_save_context.md"
+    ],
+    "cross_topic_boundaries": [
+      "F-027",
+      "F-028",
+      "F-082",
+      "FileSafe",
+      "LSPSupport",
+      "storage-plan",
+      "FinalGUISpec"
+    ],
+    "all_relevant_topic_decisions_dispositioned": true,
+    "critic_and_final_reviser": "downstream stages, not assigned here"
+  },
+  "validation": {
+    "executed_scientific_checks": [],
+    "proposed_checks": "listed in artifact.md",
+    "build_or_application_validation_claim": false,
+    "sourcepass_or_speed_claim": false
+  },
+  "unknown_usage": null,
+  "unknown_billing": null
+}

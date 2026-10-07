@@ -1,0 +1,107 @@
+{
+  "version": "prospective-v2",
+  "case": "D-M02-B",
+  "frozen_at": "2026-10-07T19:36:58.681620+00:00",
+  "original_frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/case-card.json",
+      "sha256": "455b16fd50ea37ed95ee8e71400dcba5b777f10b123e20441a9921fd14caced2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/CASE_CARD.md",
+      "sha256": "03b6ca54b56f6c72e54e548358e6921a31ae5dd624f6ebb6b9f9d13ad2897ded"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/INPUT_MAP.json",
+      "sha256": "e0532b5eec36190044f0d2072a79df1f54cda80ad9714c8725274702501ac44e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/brief.md",
+      "sha256": "e07ea001f30f1aaba839bfcfe14939a85e4c2a0814472579b395e03469e1e5b3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources.json",
+      "sha256": "779a28bf9ec6e4aba05abb84a9288f78603f94caa6534d9645050599f78ad543"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/rasterwindow.rst",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/rasterresample.rst",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/geotransform.rst",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc"
+    }
+  ],
+  "both_arm_stages": {
+    "treatment": [
+      "batch-v2",
+      "finalize-v2"
+    ],
+    "control": [
+      "question_1-v2",
+      "question_2-v2",
+      "join-v2"
+    ]
+  },
+  "native_route": "codex_gmail/gpt-6-luna/max/priority",
+  "budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "question_1",
+          "candidate_minutes": 6,
+          "procedure": "Fresh same-family researcher answers Q1 with its relevant shared conditions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/outputs/control/question_1.md"
+        },
+        {
+          "stage": "question_2",
+          "candidate_minutes": 6,
+          "procedure": "Another fresh same-family researcher answers Q2 from the same brief and sources; no sibling answer is supplied.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/outputs/control/question_2.md"
+        },
+        {
+          "stage": "join",
+          "candidate_minutes": 3,
+          "procedure": "Same-family author reconciles Q1/Q2 dispositions and shared conditions into one final; source-check contradictions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/outputs/control/join.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "batch",
+          "candidate_minutes": 12,
+          "procedure": "One fresh researcher answers Q1 and Q2 coherently, reusing acquired context and keeping each disposition visible.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/outputs/treatment/batch.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 3,
+          "procedure": "The same author checks the shared-condition map and produces the identical final scope.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/outputs/treatment/finalize.md"
+        }
+      ]
+    }
+  },
+  "scope_unchanged": true,
+  "carrier": "Actual fresh native create/get active/update terminal/get same identity; passive host exact-thread state export. Codex state projection is not raw API JSON. Missing actual state HOLD. No manual receipt engineering. Scientific files in jobs role-v2. Timings unknown fields null. Host capture costs separate. Advisory path map is not confinement.",
+  "policy_hashes": {
+    "helpers/passive-receipts/ROOT_ADMISSION_V2.json": "6f0be4322b0292d7bef25b92f728435c89b29d650ca4c66a5e3f7b8ae700f4bb",
+    "helpers/passive-receipts/PROSPECTIVE_CARRIER_V2.md": "42d94f8f92aead30f4527029e534d97e016d0df24df8fd62744e44aa433ac4da"
+  },
+  "same_author_batch": "M02 treatment batch and finalize use one delegated author with two sequential fresh native Goals; control questions use distinct tasks and no sibling input."
+}

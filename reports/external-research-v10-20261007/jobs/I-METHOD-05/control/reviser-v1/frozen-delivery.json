@@ -1,0 +1,151 @@
+{
+  "record_at": "2026-10-07T20:36:06.280665+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/artifact.md": {
+      "sha256": "aa54c03322cb723962a158b9a00020a5e0d5dfa9c4c581fc88a7ac2cf45da841",
+      "bytes": 30197
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/source-map.json": {
+      "sha256": "ed9b028ee6095bbb40a8c5f78a9fb5f387cd3010fea8e9b4c9e7b03c7604be94",
+      "bytes": 11622
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/sources/critic-first-useful-finding.md": {
+      "sha256": "e354244da3c64282c369d9f1bf2885ef3eeee456b96b40c8033433eb0f17c342",
+      "bytes": 1392
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/sources/critic-primary-source-evidence.md": {
+      "sha256": "92bec3c6264561351abec78d4de460358d207141286b0994b5e698bd2af03281",
+      "bytes": 6523
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/sources/first-useful-finding.md": {
+      "sha256": "ef15f936c8ed3ddbbc0863447795c749106348fcc05d58ad20570b2d4618f1e2",
+      "bytes": 1203
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/sources/topic-a-first-useful-finding.md": {
+      "sha256": "7c009e93b209cb444df0d1401d8ed2ee3ab9fff0103ff4ec396d9a8256f532f4",
+      "bytes": 1559
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/sources/topic-a-zed-buffer-undo-reload.md": {
+      "sha256": "b50235c2e2dc54e4120705740fd1807427fe8d32c3517a31a9dfd0ce9d655185",
+      "bytes": 4409
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/sources/topic-b-first-finding.md": {
+      "sha256": "95c447904322024cdeca949de80097bfb5db438dd050caf18667e8d166423425",
+      "bytes": 963
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/sources/topic-b-public-evidence.md": {
+      "sha256": "4ca5c029facab16de0ef1675394e42c9ec65122c957b016e278945ef86fe85b8",
+      "bytes": 3316
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-control-reviser-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:27:32.111Z",
+    "startedAt": "2026-10-07T20:27:33.050Z",
+    "completedAt": "2026-10-07T20:35:50.213Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-05/control/reviser-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-05--control--reviser-v1--3dc9042f726d1e55.json",
+    "sha256": "3dc9042f726d1e55446c763abdbd48e4d5e8b3afb49722f1e66205612231334b",
+    "bytes": 10865,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "0dd0cfca40ace7f14e94b124fbbfd4c560e47c3a5920ce5956414c5a041a1ad6",
+      "status": "complete",
+      "tokensUsed": 121231,
+      "tokenBudget": null,
+      "timeUsedSeconds": 450
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-05-control-reviser-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a1180c-c5e2-77b1-9458-638ecc241744",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:35:50.100Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-05-control-reviser-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:35:50.100Z",
+        "sha256": "5e7c5f6895794692d1ec91daf7435346565beef314d8e9e9cf5decca169d0c3a"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a1180c-c5e2-77b1-9458-638ecc241744",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 121231,
+  "native_elapsed_seconds": 450,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-METHOD-05-control-reviser-v1",
+    "record_at": "2026-10-07T20:27:24.847250+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:42:24.847250+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:48:53.415926+00:00",
+    "stage_allowance_seconds": 900,
+    "prior_nonoverlapping_occupied_seconds": 1668.7530000000002,
+    "aggregate_ceiling_seconds": 2700,
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

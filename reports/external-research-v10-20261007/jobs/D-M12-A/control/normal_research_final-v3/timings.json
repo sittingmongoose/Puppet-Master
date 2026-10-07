@@ -1,0 +1,58 @@
+{
+  "schema": "er10.arm-timings.v1",
+  "arm": "D-M12-A/control/normal_research_final-v3",
+  "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+  "native_clock": {
+    "prepared_at": "2026-10-07T20:06:55.171353+00:00",
+    "first_dispatch": "2026-10-07T20:06:55.171353+00:00",
+    "workspace_scaffolded": "2026-10-07T20:10:02Z",
+    "sources_captured": "2026-10-07T20:12:44Z/2026-10-07T20:15:23Z",
+    "sources_indexed_hashed": "2026-10-07T20:17:15Z",
+    "final_md_authored": "2026-10-07T20:21:33Z/2026-10-07T20:21:57Z",
+    "timings_written": "2026-10-07T20:24:00Z",
+    "research_deadline": "2026-10-07T20:31:55.171353+00:00",
+    "arm_deadline": "2026-10-07T20:36:55.171353+00:00",
+    "delivered_within_deadline": true
+  },
+  "sourceops": {
+    "retrieval_attempts": 25,
+    "captures_kept": 8,
+    "first_capture": "2026-10-07T20:12:44Z (mqtt-v5.0-os.html)",
+    "failed_routes_recorded_in": "sources/index.json meta.failed_routes",
+    "code_executed_from_sources": false,
+    "repo_clones": 0
+  },
+  "first_useful_saved_finding": {
+    "at": "2026-10-07T20:12:44Z",
+    "what": "MQTT 5.0 OASIS Standard frozen byte-exact; first mechanism evidence that mature protocols bound in-session re-sending ([MQTT-4.3.3-6] MUST NOT re-send after PUBREL), feeding findings F1-F4"
+  },
+  "output": {
+    "final_report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/final.md",
+    "status": "complete",
+    "findings_count": 8,
+    "words": 1099,
+    "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources",
+    "checksum_manifest": "sources/checksums.txt (sha256sum -c: 8/8 OK)"
+  },
+  "known_usage": {
+    "bytes_sources_dir": 2608967,
+    "bytes_final_md": 7675,
+    "bytes_scope_md": 3656,
+    "network_fetches": 25
+  },
+  "unknown_input": null,
+  "cache": null,
+  "generated": null,
+  "billing": null,
+  "native_goal_counters": {
+    "note": "kept separate from arm timings; captured passively by host, not agent-visible",
+    "goals_activated": 1,
+    "agent_side_goal_tool_calls": 0
+  },
+  "conditions_confirmed": {
+    "sources_only_this_arm": true,
+    "counterpart_corpus_not_accessed": true,
+    "siblingarm_oldv1_v2_helpers_not_accessed": true,
+    "scientific_files_frozen_after_completion": "final.md, sources/** unmodified after 2026-10-07T20:21:57Z; this timings.json is the only file written at closeout"
+  }
+}

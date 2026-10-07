@@ -1,0 +1,947 @@
+{
+  "schema_version": "1.0",
+  "case": "I-METHOD-06",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "review_completed_at_utc": "2026-10-07T21:05:40.196574+00:00",
+  "checks": [
+    {
+      "id": "C01",
+      "claim_group": "Restic issue #5667 contains a saved zero-file snapshot on Windows 0.18.1",
+      "final_lines": "29,123",
+      "assessed": true,
+      "result": "SUPPORTED",
+      "conditions_and_limits": "Malformed quoted trailing-backslash source path. Issue output establishes the report, not an independently reproduced defect or an exit code.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-issue-5667.html",
+          "url": "https://github.com/restic/restic/issues/5667",
+          "accessed_at_utc": "2026-10-07T20:53:05.795265+00:00",
+          "version": "Issue against 0.18.1 Windows/amd64, local repository",
+          "locator": "Issue description; extracted sources/derived/independent/restic-issue-5667.txt, version/command/processed-files/snapshot output",
+          "sha256": "ac78064dbc1b795aab968082cb1d2abffb13a6549b28b920368478c27de7627b"
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "claim_group": "Merged #21852 fix is present in released v0.19.1",
+      "final_lines": "29,105,123",
+      "assessed": true,
+      "result": "SUPPORTED",
+      "conditions_and_limits": "Release notes plus tagged code establish release applicability. GitHub signature metadata was inspected; no local signature or binary supply-chain validation ran.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-pr-21852.html",
+          "url": "https://github.com/restic/restic/pull/21852",
+          "accessed_at_utc": "2026-10-07T20:53:05.797076+00:00",
+          "version": "Live public primary capture; version stated in locator",
+          "locator": "Merged commit/date and discussion; primary page",
+          "sha256": "f972143192fbe04c58e3a713fce92bc9994dc2118bc621419bf74d043a9ccf7a"
+        },
+        {
+          "path": "sources/independent/restic-fix-8d7679c.patch",
+          "url": "https://github.com/restic/restic/commit/8d7679c83110257bc458e0ed68c7985cd37cecb9.patch",
+          "accessed_at_utc": "2026-10-07T20:53:06.093880+00:00",
+          "version": "8d7679c83110257bc458e0ed68c7985cd37cecb9",
+          "locator": "Patch header and cmd/restic/cmd_backup.go / cmd_backup_test.go hunks",
+          "sha256": "b8d2412d44af4d887b26f4ae3d86ce300371912edce2e6f8f36b5156fe0855e3"
+        },
+        {
+          "path": "sources/independent/restic-v0.19.1-release.html",
+          "url": "https://github.com/restic/restic/releases/tag/v0.19.1",
+          "accessed_at_utc": "2026-10-07T20:53:05.798540+00:00",
+          "version": "Live public primary capture; version stated in locator",
+          "locator": "v0.19.1 fix #5667/#21852 entry",
+          "sha256": "b4a630fd588b8d3faafecc8c0349b675308f182d1ebb4d04963e94db0e3e252a"
+        },
+        {
+          "path": "sources/independent/restic-tag-v0.19.1.json",
+          "url": "https://api.github.com/repos/restic/restic/git/ref/tags/v0.19.1",
+          "accessed_at_utc": "2026-10-07T20:53:06.159168+00:00",
+          "version": "Live public primary capture; version stated in locator",
+          "locator": "object.sha",
+          "sha256": "4047384bb77373a0bd00db2bf9c8f719e696562b8a7109bb996333063d2cd7f5"
+        },
+        {
+          "path": "sources/independent/restic-tag-object.json",
+          "url": "https://api.github.com/repos/restic/restic/git/tags/6099d4b5c4376368d42b9982c7d3e93ba13d83b1",
+          "accessed_at_utc": "2026-10-07T20:53:06.175543+00:00",
+          "version": "Live public primary capture; version stated in locator",
+          "locator": "object.sha, tag and signature/host verification fields",
+          "sha256": "92f275ac0cf7cadaa4c927e0d39b06129f4140053ded476714fba5c56a7b2b92"
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "claim_group": "All rejected roots abort before repository open; mixed roots can write before incomplete-source error",
+      "final_lines": "29-33,74,123",
+      "assessed": true,
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "conditions_and_limits": "All-invalid means every target rejected by Lstat in the ordinary filesystem-target path. Metadata accessibility is not content readability. Mixed output requires other gates and Snapshot to succeed; dry-run/skip-if-unchanged or fatal archiver errors need not emit a new snapshot. Final uses can, not must.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-6aa3-cmd_restic_cmd_backup.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup.go",
+          "accessed_at_utc": "2026-10-07T20:53:05.803575+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "filterExisting 168-198; collectTargets 450-458; runBackup 511-538 and 648-707",
+          "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+        },
+        {
+          "path": "sources/independent/restic-6aa3-internal_archiver_archiver.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/archiver/archiver.go",
+          "accessed_at_utc": "2026-10-07T20:53:06.002317+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "Snapshot 882-988; SaveSnapshot 983-988",
+          "sha256": "f523d157451bf903861c6cf15d01427ad2bd53798f0345adcb1937ca16db5bb6"
+        },
+        {
+          "path": "sources/independent/restic-6aa3-internal_fs_fs_local.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/fs/fs_local.go",
+          "accessed_at_utc": "2026-10-07T20:55:25.034691+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "Local.Lstat 42-51",
+          "sha256": "297db779358e12b83d14f6c280ee3e6e5240b195a20f4808c3b8ca961a3f6d6e"
+        }
+      ]
+    },
+    {
+      "id": "C04",
+      "claim_group": "Regression test is helper-level and not a repository-write/Windows quote reproduction",
+      "final_lines": "29,33,106,123",
+      "assessed": true,
+      "result": "SUPPORTED",
+      "conditions_and_limits": "Existing directory plus file/child and embedded NUL inputs; assertions call filterExisting directly. No upstream or local test was executed by reviewer.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-6aa3-cmd_restic_cmd_backup_test.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup_test.go",
+          "accessed_at_utc": "2026-10-07T20:53:05.804765+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "TestFilterExistingUnreadable 80-100",
+          "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+        },
+        {
+          "path": "sources/independent/restic-fix-8d7679c.patch",
+          "url": "https://github.com/restic/restic/commit/8d7679c83110257bc458e0ed68c7985cd37cecb9.patch",
+          "accessed_at_utc": "2026-10-07T20:53:06.093880+00:00",
+          "version": "8d7679c83110257bc458e0ed68c7985cd37cecb9",
+          "locator": "Added TestFilterExistingUnreadable hunk",
+          "sha256": "b8d2412d44af4d887b26f4ae3d86ce300371912edce2e6f8f36b5156fe0855e3"
+        }
+      ]
+    },
+    {
+      "id": "C05",
+      "claim_group": "Default structural checking is separate from full or subset pack reads",
+      "final_lines": "51-56,107,124",
+      "assessed": true,
+      "result": "SUPPORTED",
+      "conditions_and_limits": "Default Structure checks tree/reference/index availability; data reading is conditional on flags. Pack checks establish engine consistency, not PM importability.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-6aa3-cmd_restic_cmd_check.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+          "accessed_at_utc": "2026-10-07T20:53:05.805955+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "CheckOptions/AddFlags 74-95; runCheck 229-429; buildPacksFilter 431-486",
+          "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+        },
+        {
+          "path": "sources/independent/restic-6aa3-internal_checker_checker.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/checker/checker.go",
+          "accessed_at_utc": "2026-10-07T20:53:05.866883+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "Structure 139-194; checkTree 196-265; ReadPacks 291-319",
+          "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+        },
+        {
+          "path": "sources/independent/restic-6aa3-internal_repository_check.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/repository/check.go",
+          "accessed_at_utc": "2026-10-07T20:55:24.914966+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "CheckPack/checkPackInner 38-180",
+          "sha256": "a34e49a702f73047ff0e34b2fb09d85e828d294e20a691d7117bf59817552533"
+        }
+      ]
+    },
+    {
+      "id": "C06",
+      "claim_group": "Data verification can be bound to selected snapshot or repository scope",
+      "final_lines": "45,51-54,95",
+      "assessed": true,
+      "result": "SUPPORTED_WITH_SCOPE_LIMIT",
+      "conditions_and_limits": "Selected snapshots determine referenced blobs and encompassing packs. Shared packs and repository-wide index/pack structure checks can exceed one snapshot; exact scope/cost still needs PM admission/adapter conformance. Final does not claim such integration ran.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-6aa3-cmd_restic_cmd_check.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+          "accessed_at_utc": "2026-10-07T20:53:05.805955+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "SnapshotFilter/AddFlags 74-95; LoadSnapshots 251-255",
+          "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+        },
+        {
+          "path": "sources/independent/restic-6aa3-internal_checker_checker.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/checker/checker.go",
+          "accessed_at_utc": "2026-10-07T20:53:05.866883+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "LoadSnapshots/IsFiltered 56-67; loadActiveTrees 111-136; ReadPacks 291-319",
+          "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+        }
+      ]
+    },
+    {
+      "id": "C07",
+      "claim_group": "Partition receipts need fixed inventory identity for a complete-coverage claim",
+      "final_lines": "52,77,113,124",
+      "assessed": true,
+      "result": "SUPPORTED_CONSERVATIVE_DESIGN",
+      "conditions_and_limits": "Bucket assignment uses pack-ID byte modulo t. All partitions and matching selection/inventory must be accounted for. New/repacked data can invalidate an old complete-inventory claim. Inventory digest/invalidation is a proposed PM control, not native Restic receipt evidence.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-6aa3-cmd_restic_cmd_check.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+          "accessed_at_utc": "2026-10-07T20:53:05.805955+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "buildPacksFilter 443-453; selectPacksByBucket 489-500",
+          "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+        },
+        {
+          "path": "sources/independent/restic-6aa3-cmd_restic_cmd_check_test.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check_test.go",
+          "accessed_at_utc": "2026-10-07T20:55:25.146455+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "TestSelectPacksByBucket 76-99",
+          "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01"
+        },
+        {
+          "path": "sources/independent/restic-6aa3-doc_045_working_with_repos.rst",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/doc/045_working_with_repos.rst",
+          "accessed_at_utc": "2026-10-07T20:53:05.895845+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "n/t documentation 503-521",
+          "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+        }
+      ]
+    },
+    {
+      "id": "C08",
+      "claim_group": "Percentage/size selectors cannot guarantee complete coverage",
+      "final_lines": "52,56,113,124",
+      "assessed": true,
+      "result": "NONMATERIAL_OVERSTATEMENT",
+      "conditions_and_limits": "Proper random subsets have no deterministic eventual coverage guarantee. At 100 percent every pack is selected; size at/above inventory size is capped to full size, and a one-pack inventory can be fully selected by a small positive percentage. This exception limits the blanket wording. The proposed --read-data full-data path remains valid; no false recovery pass results.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-6aa3-cmd_restic_cmd_check.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+          "accessed_at_utc": "2026-10-07T20:53:05.805955+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "size cap 465-483; selectRandomPacksByPercentage 502-525; selectRandomPacksByFileSize 527-531",
+          "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+        },
+        {
+          "path": "sources/independent/restic-6aa3-cmd_restic_cmd_check_test.go",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check_test.go",
+          "accessed_at_utc": "2026-10-07T20:55:25.146455+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "100-percent all-input membership test 124-129; 76-99 bucket test",
+          "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01"
+        }
+      ]
+    },
+    {
+      "id": "C09",
+      "claim_group": "Restic copy is a cross-repository option with read/upload and deduplication costs",
+      "final_lines": "37,125,134",
+      "assessed": true,
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "conditions_and_limits": "Independent destination identity remains necessary. Different encryption keys require transfer; matching chunker parameters avoid the documented deduplication loss. Same-backend configuration can apply to both repositories, so distinct-account behavior is not guaranteed by this documentation. Default proposal uses separate uploads instead.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/restic-6aa3-doc_045_working_with_repos.rst",
+          "url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/doc/045_working_with_repos.rst",
+          "accessed_at_utc": "2026-10-07T20:53:05.895845+00:00",
+          "version": "Restic v0.19.1 / 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+          "locator": "copy 202-268; deduplication 289-310",
+          "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "claim_group": "Kopia offers structural/blob checks versus downloaded/decrypted/decompressed file verification",
+      "final_lines": "56,108,125",
+      "assessed": true,
+      "result": "SUPPORTED_DOCUMENTATION_ONLY",
+      "conditions_and_limits": "Documentation-level alternative, not examined Kopia code or proof of equivalent PM behavior. Neither engine validity nor documentation claims establish application recovery. Final does not select Kopia.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/kopia-consistency.html",
+          "url": "https://kopia.io/docs/advanced/consistency/",
+          "accessed_at_utc": "2026-10-07T20:53:50.513027+00:00",
+          "version": "Live docs captured 2026-10-07; footer modification 2026-09-10, edcd1171",
+          "locator": "derived independent kopia-consistency.txt 49-56 and modification footer 73",
+          "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64"
+        },
+        {
+          "path": "sources/independent/kopia-snapshot-verify.html",
+          "url": "https://kopia.io/docs/reference/command-line/common/snapshot-verify/",
+          "accessed_at_utc": "2026-10-07T20:53:50.515282+00:00",
+          "version": "Live docs, not release-pinned",
+          "locator": "derived independent kopia-snapshot-verify.txt 42-82; verify-files-percent",
+          "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d"
+        }
+      ]
+    },
+    {
+      "id": "C11",
+      "claim_group": "Kopia ENOSPC issue is historical rather than proof of a current defect",
+      "final_lines": "56,108,125",
+      "assessed": true,
+      "result": "SUPPORTED",
+      "conditions_and_limits": "Captured page is open and shows no linked PR; that UI status is not a current-release behavior test. Final correctly declines current-defect extrapolation.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/kopia-issue-3605.html",
+          "url": "https://github.com/kopia/kopia/issues/3605",
+          "accessed_at_utc": "2026-10-07T20:53:50.516562+00:00",
+          "version": "Historical 0.15.0 dd1ebb11cfdb7902a2b87106dfeea038858bafb5 report, 2024-02-01",
+          "locator": "derived independent kopia-issue-3605.txt 106-128, 148-149",
+          "sha256": "9f1cbe5b31361f306e7811107820ce7e483119eb137553b3a32d8f99694d815f"
+        }
+      ]
+    },
+    {
+      "id": "C12",
+      "claim_group": "Borg full-data verification has cost; default check is read-only and repair can lose data",
+      "final_lines": "56,108,125",
+      "assessed": true,
+      "result": "SUPPORTED_DOCUMENTATION_ONLY",
+      "conditions_and_limits": "Archive-data cryptographic verification needs --verify-data; partial repository checks are a different mechanism. No Borg adoption, execution or PM application proof is inferred.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/borg-1.4.5-check.html",
+          "url": "https://borgbackup.readthedocs.io/en/1.4.5/usage/check.html",
+          "accessed_at_utc": "2026-10-07T20:53:50.522608+00:00",
+          "version": "Borg 1.4.5 docs",
+          "locator": "derived independent borg-1.4.5-check.txt 90-107, 128-154",
+          "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b"
+        }
+      ]
+    },
+    {
+      "id": "C13",
+      "claim_group": "Rclone copy is bounded transport; live sync can delete destination-only content",
+      "final_lines": "37,108,126",
+      "assessed": true,
+      "result": "SUPPORTED",
+      "conditions_and_limits": "Sync deletion depends on matching/source/error/filter conditions. The final says may delete and rejects live-Vault sync, consistently with the frozen owner. Copy documentation does not prove PM atomicity/identity/commit semantics.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/rclone-copy.html",
+          "url": "https://rclone.org/commands/rclone_copy/",
+          "accessed_at_utc": "2026-10-07T20:53:50.523573+00:00",
+          "version": "Live docs captured 2026-10-07, no release pin",
+          "locator": "derived independent rclone-copy.txt 166-181",
+          "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc"
+        },
+        {
+          "path": "sources/independent/rclone-sync.html",
+          "url": "https://rclone.org/commands/rclone_sync/",
+          "accessed_at_utc": "2026-10-07T20:53:50.524845+00:00",
+          "version": "Live docs captured 2026-10-07, no release pin",
+          "locator": "derived independent rclone-sync.txt 167-184",
+          "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d"
+        }
+      ]
+    },
+    {
+      "id": "C14",
+      "claim_group": "CISA supports offline encrypted copies and availability/integrity recovery exercises",
+      "final_lines": "41,66,127",
+      "assessed": true,
+      "result": "SUPPORTED_GUIDANCE_ONLY",
+      "conditions_and_limits": "Guidance supports concern about shared reachable credentials/accounts and backups. It does not prescribe a PM independence threshold, certify Object Lock, or establish actual destination protection.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/cisa-guide.pdf",
+          "url": "https://www.cisa.gov/sites/default/files/2025-03/StopRansomware-Guide%20508.pdf",
+          "accessed_at_utc": "2026-10-07T20:53:50.715838+00:00",
+          "version": "Publication October 2023; version 3.0 change record",
+          "locator": "PDF physical p5 lines 20-30 in layout text; p6 lines 12-17; p27 lines 5-10",
+          "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44"
+        },
+        {
+          "path": "sources/independent/cisa-guide-resource.html",
+          "url": "https://www.cisa.gov/resources-tools/resources/stopransomware-guide",
+          "accessed_at_utc": "2026-10-07T20:53:50.596713+00:00",
+          "version": "Revision Date October 19, 2023",
+          "locator": "Revision Date metadata",
+          "sha256": "052c1227f5fa437bd9fbfe8975cc71fbbc10737cf23ec5b8076c2c6fbebb03c4"
+        }
+      ]
+    },
+    {
+      "id": "C15",
+      "claim_group": "NIST supports alternate-platform recovery testing and after-action documentation",
+      "final_lines": "66,127",
+      "assessed": true,
+      "result": "SUPPORTED_GUIDANCE_ONLY",
+      "conditions_and_limits": "Support for exercise shape only; not PM acceptance or authority to waive a recovery prerequisite. Original source-map PDF page40 is consistent with zero-based page indexing; reviewer uses physical p41 explicitly.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/independent/nist-sp800-34r1.pdf",
+          "url": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-34r1.pdf",
+          "accessed_at_utc": "2026-10-07T20:53:50.788654+00:00",
+          "version": "May 2010, Revision 1",
+          "locator": "SP800-34 Rev1 section 3.5/3.5.1; physical PDF p41, printed p27, lines 35-50",
+          "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df"
+        }
+      ]
+    },
+    {
+      "id": "C16",
+      "claim_group": "Immutable capture versus append-only attempt receipts is coherent with owner recovery boundaries",
+      "final_lines": "17-25,109",
+      "assessed": true,
+      "result": "SUPPORTED_PROPOSED_DESIGN",
+      "conditions_and_limits": "This is a proposed evidence model, not a shipped schema or Storage implementation. Full Server manifest requirements remain retained by reference, beyond bounded deep design. Adjacent Storage implementation contracts are absent.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/inputs/owner-slice/BRS-004.md",
+          "locator": "16-19,27-28,43"
+        },
+        {
+          "path": "sources/inputs/owner-slice/BRS-005.md",
+          "locator": "14-18,40"
+        },
+        {
+          "path": "sources/inputs/owner-slice/BRS-017.md",
+          "locator": "9,17-21"
+        }
+      ]
+    },
+    {
+      "id": "C17",
+      "claim_group": "Two repository IDs do not prove disaster independence; threshold and mandatory-commit policy remain owner choices",
+      "final_lines": "35-41,70,111,115,131-134",
+      "assessed": true,
+      "result": "SUPPORTED_PROPOSED_BOUNDARY",
+      "conditions_and_limits": "The user still requires a plan toward two independent copies. Final explicitly withholds independence, not fulfillment by acknowledgment. It defines two committed copies as two receipts; whether a general operation may terminate partial is left open. No actual copy independence was validated.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/inputs/owner-slice/BRS-004.md",
+          "locator": "10-15,26-27,43"
+        },
+        {
+          "path": "sources/inputs/owner-slice/BRS-005.md",
+          "locator": "26-27"
+        },
+        {
+          "path": "sources/independent/cisa-guide.pdf",
+          "url": "https://www.cisa.gov/sites/default/files/2025-03/StopRansomware-Guide%20508.pdf",
+          "accessed_at_utc": "2026-10-07T20:53:50.715838+00:00",
+          "version": "October 2023",
+          "locator": "physical p5 credential/accessibility risks; p6 multi-cloud guidance",
+          "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44"
+        }
+      ]
+    },
+    {
+      "id": "C18",
+      "claim_group": "Restore as New remains isolated, immutable, owner-approved and bound to BRS-023",
+      "final_lines": "58-66,78,90,93-94,112,137",
+      "assessed": true,
+      "result": "SUPPORTED_WITH_DEPENDENCY_AND_ORDERING_LIMIT",
+      "conditions_and_limits": "Empty-target evidence is not supplied; declared drill is conditional. Verified-unavailability/current human consent alternative is preserved without creating rollback. Final line60 places known snapshot selection before locator/auth/unlock/manifest; it can be preliminary ID intent, but does not reproduce the owner discovery order explicitly. No credential-before-trust instruction exists; not scored as a material safety defect.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/inputs/owner-slice/BRS-006.md",
+          "locator": "9-18,24-28,40"
+        },
+        {
+          "path": "sources/inputs/owner-slice/BRS-019.md",
+          "locator": "9,15-20"
+        },
+        {
+          "path": "sources/inputs/owner-slice/BRS-023.md",
+          "locator": "9-13,19-24,35-38"
+        }
+      ]
+    },
+    {
+      "id": "C19",
+      "claim_group": "Complete frozen comparison and native framework preservation",
+      "final_lines": "11-13,83-98",
+      "assessed": true,
+      "result": "ASSESSED_WITH_COMPLETENESS_LIMIT",
+      "conditions_and_limits": "Every copied owner group was assessed and precise table references are valid. Retain-by-reference is accepted when it is not contradicted; it is not implementation evidence. The final omits explicit Rust + Slint wording but proposes no Iced or alternative-framework implementation. Treat omission as a scope limitation, not a proven framework switch.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/inputs/brief.md",
+          "locator": "Frozen scope and Rust + Slint supplied boundary; O4/O6"
+        },
+        {
+          "path": "sources/inputs/plan.md",
+          "locator": "All eleven exact copied units/contexts and pinned original owner revision"
+        },
+        {
+          "path": "sources/admitted/reviser-v1/artifact.md",
+          "locator": "Entire artifact, lines1-142; no Rust/Slint/Iced occurrence"
+        }
+      ]
+    },
+    {
+      "id": "C20",
+      "claim_group": "Validation proposals are not executed witnesses; discovery chronology is unestablished",
+      "final_lines": "4,6,72-81,113,117-127,141",
+      "assessed": true,
+      "result": "SUPPORTED_PROOF_BOUNDARY_WITH_O1_GAP",
+      "conditions_and_limits": "All six proposed groups reviewed. No downloaded component code, backup, restore, retention operation, product build or test was executed in this review. Source inspection proves code/evidence content, not real PM recovery. Reconstructed discovery trace cannot establish the required pre-comparison sequence. Provider/family/lifecycle/counters are host-owned and excluded.",
+      "material_error": false,
+      "evidence": [
+        {
+          "path": "sources/admitted/research-v1/artifact.md",
+          "locator": "94-105,118-124; authored claims, not tool/source truth"
+        },
+        {
+          "path": "sources/admitted/critic-v1/artifact.md",
+          "locator": "47-51,71-73"
+        },
+        {
+          "path": "sources/admitted/reviser-v1/artifact.md",
+          "locator": "4,72-81,113,119,141"
+        },
+        {
+          "path": "sources/admitted/research-v1/source-map.json",
+          "locator": "Source inventory has public URLs/times but no original query sequence"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "complete_claim_groups": 20,
+    "assessed_claim_groups": 20,
+    "unassessed_claim_groups": 0,
+    "material_error_count": 0,
+    "nonmaterial_behavior_error_count": 1
+  },
+  "independent_retrievals": [
+    {
+      "file": "sources/independent/restic-issue-5667.html",
+      "requested_url": "https://github.com/restic/restic/issues/5667",
+      "accessed_at_utc": "2026-10-07T20:53:05.795265+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://github.com/restic/restic/issues/5667",
+      "content_type": "text/html; charset=utf-8",
+      "etag": null,
+      "last_modified": null,
+      "sha256": "ac78064dbc1b795aab968082cb1d2abffb13a6549b28b920368478c27de7627b",
+      "byte_count": 426427
+    },
+    {
+      "file": "sources/independent/restic-pr-21852.html",
+      "requested_url": "https://github.com/restic/restic/pull/21852",
+      "accessed_at_utc": "2026-10-07T20:53:05.797076+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://github.com/restic/restic/pull/21852",
+      "content_type": "text/html; charset=utf-8",
+      "etag": null,
+      "last_modified": null,
+      "sha256": "f972143192fbe04c58e3a713fce92bc9994dc2118bc621419bf74d043a9ccf7a",
+      "byte_count": 515017
+    },
+    {
+      "file": "sources/independent/restic-v0.19.1-release.html",
+      "requested_url": "https://github.com/restic/restic/releases/tag/v0.19.1",
+      "accessed_at_utc": "2026-10-07T20:53:05.798540+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://github.com/restic/restic/releases/tag/v0.19.1",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "W/\"87dfc80f69f3e39da59ebdb5a1a76179\"",
+      "last_modified": null,
+      "sha256": "b4a630fd588b8d3faafecc8c0349b675308f182d1ebb4d04963e94db0e3e252a",
+      "byte_count": 217007
+    },
+    {
+      "file": "sources/independent/restic-6aa3-cmd_restic_cmd_backup.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup.go",
+      "accessed_at_utc": "2026-10-07T20:53:05.803575+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"11a371c3672cc3f9c01ba8dc25ab8e9bc76217b807b4933a3ef8370d85952db3\"",
+      "last_modified": null,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+      "byte_count": 21681
+    },
+    {
+      "file": "sources/independent/restic-6aa3-cmd_restic_cmd_backup_test.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup_test.go",
+      "accessed_at_utc": "2026-10-07T20:53:05.804765+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup_test.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"ac92704906b55eb8a4f2bcea8f73e04dccda36657518cc9e5545ff6347582dbd\"",
+      "last_modified": null,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+      "byte_count": 4442
+    },
+    {
+      "file": "sources/independent/restic-6aa3-cmd_restic_cmd_check.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+      "accessed_at_utc": "2026-10-07T20:53:05.805955+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"e5e488c4a8d15c0a44b5717e093be73879b034cc358ceaf696dc7c05db65f96e\"",
+      "last_modified": null,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+      "byte_count": 17364
+    },
+    {
+      "file": "sources/independent/restic-6aa3-internal_checker_checker.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/checker/checker.go",
+      "accessed_at_utc": "2026-10-07T20:53:05.866883+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/checker/checker.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"9d6fb200a19d07f6ba57ba4caf6d0fc26b5c738911f9a848fb2c37b02aa8b7ab\"",
+      "last_modified": null,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+      "byte_count": 9003
+    },
+    {
+      "file": "sources/independent/restic-6aa3-doc_045_working_with_repos.rst",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/doc/045_working_with_repos.rst",
+      "accessed_at_utc": "2026-10-07T20:53:05.895845+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/doc/045_working_with_repos.rst",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"7afb786675c28f4b3d0a640fcbf04129be1b69096fbea8883c48dcacdacac59f\"",
+      "last_modified": null,
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6",
+      "byte_count": 28606
+    },
+    {
+      "file": "sources/independent/restic-6aa3-CHANGELOG.md",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/CHANGELOG.md",
+      "accessed_at_utc": "2026-10-07T20:53:05.924659+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/CHANGELOG.md",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"d97d445ede3f01b22648d6ef548de13b14f914d496f63eb70e4f879c74435fa3\"",
+      "last_modified": null,
+      "sha256": "fbf2ba611d2821e6b965129ce455ae3d086dab29fc7552eb34610aff289bbf21",
+      "byte_count": 337782
+    },
+    {
+      "file": "sources/independent/restic-6aa3-cmd_restic_main.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/main.go",
+      "accessed_at_utc": "2026-10-07T20:53:05.956070+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/main.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"dff73526ba61df83c1fa0d460396f8fef7af16fdf9539537b0d512a60277c60f\"",
+      "last_modified": null,
+      "sha256": "5ec6244896cfad78a2a93d9c4ac0db9168d3c446bc70f2a40d657bae6068ac75",
+      "byte_count": 6524
+    },
+    {
+      "file": "sources/independent/restic-6aa3-internal_archiver_archiver.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/archiver/archiver.go",
+      "accessed_at_utc": "2026-10-07T20:53:06.002317+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/archiver/archiver.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"909f21440c539fd9944148e54c316e45cb170f64ce1d20d3d61671c1759f3451\"",
+      "last_modified": null,
+      "sha256": "f523d157451bf903861c6cf15d01427ad2bd53798f0345adcb1937ca16db5bb6",
+      "byte_count": 29062
+    },
+    {
+      "file": "sources/independent/restic-fix-8d7679c.patch",
+      "requested_url": "https://github.com/restic/restic/commit/8d7679c83110257bc458e0ed68c7985cd37cecb9.patch",
+      "accessed_at_utc": "2026-10-07T20:53:06.093880+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://github.com/restic/restic/commit/8d7679c83110257bc458e0ed68c7985cd37cecb9.patch",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "W/\"b8d2412d44af4d887b26f4ae3d86ce30\"",
+      "last_modified": null,
+      "sha256": "b8d2412d44af4d887b26f4ae3d86ce300371912edce2e6f8f36b5156fe0855e3",
+      "byte_count": 3913
+    },
+    {
+      "file": "sources/independent/restic-tag-v0.19.1.json",
+      "requested_url": "https://api.github.com/repos/restic/restic/git/ref/tags/v0.19.1",
+      "accessed_at_utc": "2026-10-07T20:53:06.159168+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/restic/restic/git/ref/tags/v0.19.1",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"4047384bb77373a0bd00db2bf9c8f719e696562b8a7109bb996333063d2cd7f5\"",
+      "last_modified": "Wed, 07 Oct 2026 18:44:19 GMT",
+      "sha256": "4047384bb77373a0bd00db2bf9c8f719e696562b8a7109bb996333063d2cd7f5",
+      "byte_count": 331
+    },
+    {
+      "file": "sources/independent/restic-tag-object.json",
+      "requested_url": "https://api.github.com/repos/restic/restic/git/tags/6099d4b5c4376368d42b9982c7d3e93ba13d83b1",
+      "accessed_at_utc": "2026-10-07T20:53:06.175543+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/restic/restic/git/tags/6099d4b5c4376368d42b9982c7d3e93ba13d83b1",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "W/\"92f275ac0cf7cadaa4c927e0d39b06129f4140053ded476714fba5c56a7b2b92\"",
+      "last_modified": "Wed, 07 Oct 2026 18:44:19 GMT",
+      "sha256": "92f275ac0cf7cadaa4c927e0d39b06129f4140053ded476714fba5c56a7b2b92",
+      "byte_count": 2576
+    },
+    {
+      "file": "sources/independent/kopia-consistency.html",
+      "requested_url": "https://kopia.io/docs/advanced/consistency/",
+      "accessed_at_utc": "2026-10-07T20:53:50.513027+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://kopia.io/docs/advanced/consistency/",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": null,
+      "last_modified": null,
+      "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64",
+      "byte_count": 32457
+    },
+    {
+      "file": "sources/independent/kopia-snapshot-verify.html",
+      "requested_url": "https://kopia.io/docs/reference/command-line/common/snapshot-verify/",
+      "accessed_at_utc": "2026-10-07T20:53:50.515282+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://kopia.io/docs/reference/command-line/common/snapshot-verify/",
+      "content_type": "text/html; charset=UTF-8",
+      "etag": null,
+      "last_modified": null,
+      "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d",
+      "byte_count": 25795
+    },
+    {
+      "file": "sources/independent/kopia-issue-3605.html",
+      "requested_url": "https://github.com/kopia/kopia/issues/3605",
+      "accessed_at_utc": "2026-10-07T20:53:50.516562+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://github.com/kopia/kopia/issues/3605",
+      "content_type": "text/html; charset=utf-8",
+      "etag": null,
+      "last_modified": null,
+      "sha256": "9f1cbe5b31361f306e7811107820ce7e483119eb137553b3a32d8f99694d815f",
+      "byte_count": 232335
+    },
+    {
+      "file": "sources/independent/borg-1.4.5-check.html",
+      "requested_url": "https://borgbackup.readthedocs.io/en/1.4.5/usage/check.html",
+      "accessed_at_utc": "2026-10-07T20:53:50.522608+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://borgbackup.readthedocs.io/en/1.4.5/usage/check.html",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "W/\"528fdec0e630f0c276e9d57e135a5bca\"",
+      "last_modified": "Sat, 18 Jul 2026 22:14:20 GMT",
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b",
+      "byte_count": 25422
+    },
+    {
+      "file": "sources/independent/rclone-copy.html",
+      "requested_url": "https://rclone.org/commands/rclone_copy/",
+      "accessed_at_utc": "2026-10-07T20:53:50.523573+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://rclone.org/commands/rclone_copy/",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "\"dla0a5bkx0yo13tx\"",
+      "last_modified": "Tue, 08 Sep 2026 14:31:11 GMT",
+      "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc",
+      "byte_count": 51621
+    },
+    {
+      "file": "sources/independent/rclone-sync.html",
+      "requested_url": "https://rclone.org/commands/rclone_sync/",
+      "accessed_at_utc": "2026-10-07T20:53:50.524845+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://rclone.org/commands/rclone_sync/",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "\"dla0a5ctkj3514xp\"",
+      "last_modified": "Tue, 08 Sep 2026 14:31:12 GMT",
+      "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d",
+      "byte_count": 53053
+    },
+    {
+      "file": "sources/independent/cisa-guide-resource.html",
+      "requested_url": "https://www.cisa.gov/resources-tools/resources/stopransomware-guide",
+      "accessed_at_utc": "2026-10-07T20:53:50.596713+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://www.cisa.gov/resources-tools/resources/stopransomware-guide",
+      "content_type": "text/html; charset=utf-8",
+      "etag": null,
+      "last_modified": null,
+      "sha256": "052c1227f5fa437bd9fbfe8975cc71fbbc10737cf23ec5b8076c2c6fbebb03c4",
+      "byte_count": 56374
+    },
+    {
+      "file": "sources/independent/cisa-guide.pdf",
+      "requested_url": "https://www.cisa.gov/sites/default/files/2025-03/StopRansomware-Guide%20508.pdf",
+      "accessed_at_utc": "2026-10-07T20:53:50.715838+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://www.cisa.gov/sites/default/files/2025-03/StopRansomware-Guide%20508.pdf",
+      "content_type": "application/pdf",
+      "etag": "\"ffc67-62f779e425180\"",
+      "last_modified": "Mon, 03 Mar 2025 22:24:23 GMT",
+      "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44",
+      "byte_count": 1047655
+    },
+    {
+      "file": "sources/independent/nist-sp800-34r1.pdf",
+      "requested_url": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-34r1.pdf",
+      "accessed_at_utc": "2026-10-07T20:53:50.788654+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-34r1.pdf",
+      "content_type": "application/pdf",
+      "etag": "\"f6649ba2722d11:0\"",
+      "last_modified": "Wed, 18 Nov 2015 17:36:59 GMT",
+      "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df",
+      "byte_count": 952921
+    },
+    {
+      "file": "sources/independent/restic-0.19.1-working.html",
+      "requested_url": "https://restic.readthedocs.io/en/v0.19.1/045_working_with_repos.html",
+      "accessed_at_utc": "2026-10-07T20:53:50.805992+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://restic.readthedocs.io/en/v0.19.1/045_working_with_repos.html",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "W/\"e2dbeafe4d84036986fa7dfa9fe6b86f\"",
+      "last_modified": "Sun, 05 Jul 2026 08:04:29 GMT",
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0",
+      "byte_count": 61216
+    },
+    {
+      "file": "sources/independent/restic-0.19.1-backup.html",
+      "requested_url": "https://restic.readthedocs.io/en/v0.19.1/040_backup.html",
+      "accessed_at_utc": "2026-10-07T20:53:50.808975+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://restic.readthedocs.io/en/v0.19.1/040_backup.html",
+      "content_type": "text/html; charset=utf-8",
+      "etag": "W/\"47ff40b246e3dc99478a1118f1037189\"",
+      "last_modified": "Sun, 05 Jul 2026 08:04:29 GMT",
+      "sha256": "c26df1ab47454f6d252fa300ec1371eefaa273b2cb92269186610f0a22ae5ee0",
+      "byte_count": 71760
+    },
+    {
+      "file": "sources/independent/restic-6aa3-internal_repository_check.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/repository/check.go",
+      "accessed_at_utc": "2026-10-07T20:55:24.914966+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/repository/check.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"15592133e371fe5be5ec9839cc87dfb3aa6da8b0536e1c916e62cdfce82d85a3\"",
+      "sha256": "a34e49a702f73047ff0e34b2fb09d85e828d294e20a691d7117bf59817552533",
+      "byte_count": 6212
+    },
+    {
+      "file": "sources/independent/restic-6aa3-internal_fs_fs_local.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/fs/fs_local.go",
+      "accessed_at_utc": "2026-10-07T20:55:25.034691+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/fs/fs_local.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"8a389e2e0c6092c00960355169b71bc4c1a166b4ff0a5e6a05201960d2cf1d0d\"",
+      "sha256": "297db779358e12b83d14f6c280ee3e6e5240b195a20f4808c3b8ca961a3f6d6e",
+      "byte_count": 4770
+    },
+    {
+      "file": "sources/independent/restic-6aa3-cmd_restic_cmd_check_test.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check_test.go",
+      "accessed_at_utc": "2026-10-07T20:55:25.146455+00:00",
+      "method": "independent public HTTPS GET; not executed",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check_test.go",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"565e25600acefb557533d0aab39b77e6d6a2f0d540749eacd3ae48b81854e411\"",
+      "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01",
+      "byte_count": 7966
+    }
+  ],
+  "admitted_capture_link_check": "sources/capture-link-check.json",
+  "admitted_input_preservation": "sources/admitted-inputs.json",
+  "source_truth_rule": "Primary bytes and code were inspected. Maps/hashes verify provenance/integrity only; no model assertion, exit code or manifest alone establishes source truth.",
+  "executed_by_reviewer": {
+    "public_HTTPS_retrieval": true,
+    "static_text_and_code_inspection": true,
+    "HTML_and_PDF_text_extraction": true,
+    "component_tests": false,
+    "downloaded_code_execution": false,
+    "application_build_or_validation": false,
+    "backup_restore_retention": false,
+    "native_goal": false,
+    "delegation": false
+  },
+  "unknown_fields": {
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null
+  },
+  "output_validation": {
+    "json_parsed": true,
+    "coverage_and_claim_counts_consistent": true,
+    "all_71_decision_rows_present": true,
+    "all_20_claim_rows_present": true,
+    "evidence_paths_exist": true,
+    "capture_hashes_match_preserved_bytes": true,
+    "final_capture_link_count": 26,
+    "final_captures_equal_admitted_predecessors": 26,
+    "note": "Output/integrity checks only; not application or recovery proof.",
+    "all_owner_copy_locators_resolve": true
+  }
+}

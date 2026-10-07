@@ -1,0 +1,510 @@
+{
+  "schema": "er10.standalone.diagnostic.review.freeze.v1",
+  "record_at": "2026-10-07T21:00:57.999479+00:00",
+  "case": "I-FAST-01",
+  "arm": "treatment",
+  "actual_task_status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "**PASS_WITH_LIMITATIONS.** Assessed all six axes: 6 obligations, 43 plan clauses, 57 conditions and 35 claims; **0 unassessed**. Captured 53 primary sources; credited 0 application validations. Critic-family provenance remains unverified.\n\n- [judgment.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/judgment.md)\n- [coverage.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/coverage.json)\n- [source-checks.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/source-checks.json)",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:e9fb7c4c-b28e-468a-86ba-04375a1b3c3a",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": "**PASS_WITH_LIMITATIONS.** Assessed all six axes: 6 obligations, 43 plan clauses, 57 conditions and 35 claims; **0 unassessed**. Captured 53 primary sources; credited 0 application validations. Critic-family provenance remains unverified.\n\n- [judgment.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/judgment.md)\n- [coverage.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/coverage.json)\n- [source-checks.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/source-checks.json)",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:e9fb7c4c-b28e-468a-86ba-04375a1b3c3a",
+    "waitTimedOut": false
+  },
+  "actual_t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T20:45:08.603Z",
+    "startedAt": "2026-10-07T20:45:09.193Z",
+    "completedAt": "2026-10-07T21:00:16.590Z"
+  },
+  "all_review_descendants_quiet": true,
+  "review_sources_and_outputs": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/admitted-evidence-identities.json": {
+      "sha256": "abcf2ff5efb8db030d8460d5f7b60545318f7b1a2223cf2849af5351396950ce",
+      "bytes": 7890
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/capture-log.json": {
+      "sha256": "d2c0d53f4b2b534beff829ae126c78f1a73d330d197e04fca0b334bf20fcb139",
+      "bytes": 43499
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/coverage.json": {
+      "sha256": "763ebe439ca2fa2e140ce7ea289946ffb6347d00086e1b53e9fd32fbbf2195db",
+      "bytes": 145864
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-3110-homography-test.py": {
+      "sha256": "4d88254929a8472ecdca378478d564de3ebcdcc6cd7d1dedd361a1ebefc39cd9",
+      "bytes": 6816
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-3110-homography.cpp": {
+      "sha256": "c4e1db2113380e413131252271bc21c2a6fe009854c7dfb98b30a65d30703585",
+      "bytes": 24421
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-3111-homography-inverse-test.py": {
+      "sha256": "d0b91fada46826ed17596495f61bf33bdf2cce5e4c113412681d620a49537881",
+      "bytes": 2650
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-3111-homography-test.py": {
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "bytes": 6988
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-3111-homography.cpp": {
+      "sha256": "470b2958d5c52ed89ac6bfe5420dae5728b5cde40efa0714221cf026b733b984",
+      "bytes": 25561
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-3111-news.md": {
+      "sha256": "df8b26c84bc66073785cdc13d0d8af2da29f2bf1444b0ddcd3353f9d41617cbc",
+      "bytes": 462242
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-alg.h": {
+      "sha256": "17eaab31a35a09851bb79d63bbe0b43ba49a23f6de1474529893ede074f1fa27",
+      "bytes": 31457
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-dataset-rasterio.cpp": {
+      "sha256": "7a840845b183b32792f420fb64dd60186f029c5c797e317884547a175182941b",
+      "bytes": 306907
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-gcp-polynomial.cpp": {
+      "sha256": "d44e8ba663f31df4d2384908a1eb4d4824f2d37f75e22b1758625c687934132c",
+      "bytes": 40308
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-geotransform.rst": {
+      "sha256": "93b96d2db363d1c6f3c54864fadae74c7de3030fe36722302e90085c31a88684",
+      "bytes": 1721
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-gtiff-driver.rst": {
+      "sha256": "426ac899614bd1ce92416f2ace91785a174df0a8f3c57fee41f091e706b28a52",
+      "bytes": 61698
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-homography-test.py": {
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "bytes": 6988
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-homography.cpp": {
+      "sha256": "837910cf3a0ab4dcb4f31aa486b173a8d91752abcea124cc403849d9a0dd8f21",
+      "bytes": 25561
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-issue-12435.json": {
+      "sha256": "8cb421258c87e033fd3dd86da0dad9b00795f5bc6b5494802cc338e035498100",
+      "bytes": 7712
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-pr-12438.json": {
+      "sha256": "62285df949e42428bc6af155688c687701c6a4f40e5a66ce93b50d32f501bb35",
+      "bytes": 16214
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-pr-12438.patch": {
+      "sha256": "d6fe01ea3bc86c63f0a87e8243224d8a3609f206606d82549b8082ff3bcc2cd0",
+      "bytes": 8328
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-pr-12451.json": {
+      "sha256": "31bbd9c1cb6b2e7586a88ea0c86c4490b1a0ef5ce8b0f1fb751dd44abe8b5eb3",
+      "bytes": 17385
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-pr-12451.patch": {
+      "sha256": "d326b34e320c4ee665d6ec51608d510d1f53d32b19c6ec9438f93b1e668c70f3",
+      "bytes": 8328
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-raster-api.rst": {
+      "sha256": "56115dd6642b1eb5e3e5908c49ead45e266cf5e6d24882d330e767a1b5d4915d",
+      "bytes": 23864
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-ref-3110.json": {
+      "sha256": "ebfdfe3fece425a23c990fdefded14b0ec1e7e63628670ba422f165ac456b6ef",
+      "bytes": 325
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-ref-3111.json": {
+      "sha256": "fe63e7509d0311e16372df098225d1a9280096bb8b8422d9028b84b82dbf4fb7",
+      "bytes": 325
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-ref-3133.json": {
+      "sha256": "7d4e45bf41e4f39f8d15e5dbb6ed115d88903f6f9bfedb4dba457f54439a85bd",
+      "bytes": 325
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-release-3111.json": {
+      "sha256": "f30549636d8f76680e07e8cb0126bb12cf4fd59b2e1bb12de61dd65d6773c5dc",
+      "bytes": 11867
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-release-3133.json": {
+      "sha256": "4fa12654b76f9059fc3c682e45ca334fc315757fc703d567f2c2960f8ddd0853",
+      "bytes": 19993
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-release-latest.json": {
+      "sha256": "4fa12654b76f9059fc3c682e45ca334fc315757fc703d567f2c2960f8ddd0853",
+      "bytes": 19993
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-tag-3110.json": {
+      "sha256": "656d7d6e45961f9d28d21d7d92279d6ad42066240e3e1a87ece840179717db82",
+      "bytes": 662
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-tag-3111.json": {
+      "sha256": "92f6d3fdd73c8cb3451271d3897d7e07d1f92211bfc6116ec7c4c77a98bcfc22",
+      "bytes": 662
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-tag-3133.json": {
+      "sha256": "00141d91b7f7b064fe6b6bc3837961d8a645b998f5ea601efdd96a852d36764f",
+      "bytes": 1834
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-transformer.cpp": {
+      "sha256": "25b515c14f18010b3b0a23dd2741bc388d83254c82d028e8432ed83ab861e3a0",
+      "bytes": 213134
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-vrt-driver.rst": {
+      "sha256": "7d8077e8824ea40a94edc149c67bfba08dd5deb71c927e6cb9ef6cde4dd4030f",
+      "bytes": 121042
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/gdal-warp.rst": {
+      "sha256": "99ba07ffe4ab62f0696b9c480e5123cb8ae89be7ebf949dfb9c2aaa17bd48e7f",
+      "bytes": 34232
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/input-identities.json": {
+      "sha256": "e2bcdb7579372a62021fde6af221d9e1da6cb8c3de8d58befe0918fecfd33f8d",
+      "bytes": 1356
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/judgment.md": {
+      "sha256": "010bfdc4f3f5283236d1d4aafa92f19d7ff661f3c8030b55d9ec645a99b217da",
+      "bytes": 19164
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/maplibre-compare-readme.md": {
+      "sha256": "8e62cfd5fa81afdccaec2169680a877f0e2df0bfd77e23188256205d090f71e9",
+      "bytes": 7320
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-about.html": {
+      "sha256": "de36ac66d7d4fa6ea12f39ffd36585bb0f0cbcefa0d90ee372f19129b9b4e75c",
+      "bytes": 4523
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-about.html.txt": {
+      "sha256": "79105c40dba6e408428408fd559625ac84f29e3d3cb01d0ab744fb39022a67ac",
+      "bytes": 1477
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-application-config.rb": {
+      "sha256": "5ad90cc18a1293f48fcdc75c957d3663b666cf516fbc71aabb950acd83d16d78",
+      "bytes": 1506
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-head.json": {
+      "sha256": "868ca97305d8a9bddc2cfc0ada3e3a4e3d95ed9ecb45a1bc85e2ddcd5f6ea256",
+      "bytes": 15487
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-home.html": {
+      "sha256": "44fc9df591dcdb178f29ad1cdc881ec8923f86f86a6f89c0b0e90607e57dc254",
+      "bytes": 22015
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-home.html.txt": {
+      "sha256": "bde956f6d63feab24e5453e04059b0ea04b7f55b276cf4307b3d042c5b182714",
+      "bytes": 4971
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-license": {
+      "sha256": "0eaeb2766f415b5c8abf3fc0f8a6df3884c22686faedd08031fe86b24f38b13d",
+      "bytes": 1058
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-readme.md": {
+      "sha256": "6de9be43a015ac932fa54a0daf19c681174552bbf56990078f8e0c638610ebba",
+      "bytes": 6884
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-repo.json": {
+      "sha256": "f24814f1eb158126e8659b4872771b584e60f988aeb949d819584d2a0ca1bc94",
+      "bytes": 5409
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-terms.html": {
+      "sha256": "0991bbab9b0513c12ac5a9c2e84ab5b30f26048253bdd26eebed18e7b593e028",
+      "bytes": 10328
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/mapwarper-terms.html.txt": {
+      "sha256": "b6cfdb866e4aad720983808c39725bedd65cf9b9825c2122cb8fbd6b09b478e0",
+      "bytes": 6975
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/osm-tile-policy.html": {
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/osm-tile-policy.html.txt": {
+      "sha256": "03240b60c8abc4f621cae72710bfe21c8418a6650d7c4060d2fd904d7dbbd75f",
+      "bytes": 9832
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-344-georeferencer.html": {
+      "sha256": "888298d0b7959723ccc20b41848e5724b29ca46d129c484b31b10847f72636da",
+      "bytes": 56918
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-3440-gcptransformer.cpp": {
+      "sha256": "7766644c005ec828052ca4c25ae4892d4db8d63eaa26958191a41602aec72995",
+      "bytes": 16106
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-3440-gcptransformer.h": {
+      "sha256": "d7d3005b80e045985e9b44fa6e34aa179a31eef6d81c26a413ce6f1e9b464136",
+      "bytes": 10263
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-3440-georeftransform.cpp": {
+      "sha256": "28c28f883d737bad83683a11a79f4e7ebcc98cfb28ce22ef88b7c471fc6f723d",
+      "bytes": 7116
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-3440-leastsquares.cpp": {
+      "sha256": "46e94f9d6ff3616a419cde38f8a16cf5c2a60052cc62122f55a8652ceb71d186",
+      "bytes": 13782
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-current-georeferencer.html": {
+      "sha256": "f58e068c96b0dbba3b15c79573cfa9e6c723f86becaa9d378504301a78d97dda",
+      "bytes": 57285
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-download.html": {
+      "sha256": "d7d539a63ff00703eb4318b7b3edc15fe111b86b31a84bf101e9cbee63671767",
+      "bytes": 54874
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-ref-3440.json": {
+      "sha256": "fb41ea3f68bb2db023c3b9eb04665e3f463a147fca9a4e2708d69c2102cdeffd",
+      "bytes": 337
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/qgis-tag-3440.json": {
+      "sha256": "e56dfffa69b50e075c8a62d17c42746f53e2b0c5884839f1e35acdff9c795c6d",
+      "bytes": 652
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/registration-paper-1811.09081.html": {
+      "sha256": "1b45c70dc4f0760860815b8f30b40a6e134478cc3da58fea46b6945851c7252d",
+      "bytes": 42857
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/source-checks.json": {
+      "sha256": "f39b18866f8e6842949f3404cba1c4e4e1d3728613c8596f773941da6197343e",
+      "bytes": 92588
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/usgs-aerial.html": {
+      "sha256": "c89270f578c6c9b8b9270e64a042c57d8b802b7d9f90c7b7892f1a46211f27d0",
+      "bytes": 34773
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/usgs-orthoimagery.html": {
+      "sha256": "80b4ceb90831cc9baf292a707b6f9bc7f586859c19bd7d9b8f2984d8681d9c86",
+      "bytes": 9365
+    }
+  },
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "full_requirement_closure": "NOT_FULLY_VERIFIABLE",
+  "original_inventory": {
+    "obligations": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "artifact_content_complete": 3,
+      "artifact_content_qualified_or_unknown": 3
+    },
+    "plan_decisions": {
+      "total": 43,
+      "complete": 43,
+      "assessed": 43,
+      "unassessed": 0,
+      "artifact_content_complete": 42,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "conditions": {
+      "total": 57,
+      "complete": 57,
+      "assessed": 57,
+      "unassessed": 0,
+      "artifact_content_complete": 49,
+      "artifact_content_qualified_or_unknown": 8
+    },
+    "brief_conditions": {
+      "total": 31,
+      "complete": 31,
+      "assessed": 31,
+      "unassessed": 0,
+      "artifact_content_complete": 24,
+      "artifact_content_qualified_or_unknown": 7
+    },
+    "plan_scope_conditions": {
+      "total": 26,
+      "complete": 26,
+      "assessed": 26,
+      "unassessed": 0,
+      "artifact_content_complete": 25,
+      "artifact_content_qualified_or_unknown": 1
+    }
+  },
+  "category_counts": {
+    "alternative_planning_disposition": {
+      "total": 8,
+      "complete": 8,
+      "assessed": 8,
+      "unassessed": 0,
+      "artifact_content_complete": 8,
+      "artifact_content_qualified_or_unknown": 0
+    },
+    "bounded_discovery": {
+      "total": 15,
+      "complete": 15,
+      "assessed": 15,
+      "unassessed": 0,
+      "artifact_content_complete": 8,
+      "artifact_content_qualified_or_unknown": 7
+    },
+    "consequential_claim": {
+      "total": 35,
+      "complete": 35,
+      "assessed": 35,
+      "unassessed": 0,
+      "artifact_content_complete": 34,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "criticism_correction_disposition": {
+      "total": 10,
+      "complete": 10,
+      "assessed": 10,
+      "unassessed": 0,
+      "artifact_content_complete": 9,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "execution_evidence_boundary": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "artifact_content_complete": 6,
+      "artifact_content_qualified_or_unknown": 0
+    },
+    "original_brief_condition": {
+      "total": 31,
+      "complete": 31,
+      "assessed": 31,
+      "unassessed": 0,
+      "artifact_content_complete": 24,
+      "artifact_content_qualified_or_unknown": 7
+    },
+    "original_obligation": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "artifact_content_complete": 3,
+      "artifact_content_qualified_or_unknown": 3
+    },
+    "original_plan_decision": {
+      "total": 43,
+      "complete": 43,
+      "assessed": 43,
+      "unassessed": 0,
+      "artifact_content_complete": 42,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "original_plan_scope_condition": {
+      "total": 26,
+      "complete": 26,
+      "assessed": 26,
+      "unassessed": 0,
+      "artifact_content_complete": 25,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "proposed_validation": {
+      "total": 10,
+      "complete": 10,
+      "assessed": 10,
+      "unassessed": 0,
+      "artifact_content_complete": 10,
+      "artifact_content_qualified_or_unknown": 0
+    },
+    "scope_choice_uncertainty_preservation": {
+      "total": 18,
+      "complete": 18,
+      "assessed": 18,
+      "unassessed": 0,
+      "artifact_content_complete": 17,
+      "artifact_content_qualified_or_unknown": 1
+    }
+  },
+  "six_axis_counts": [
+    {
+      "axis": 1,
+      "counts": {
+        "total": 106,
+        "complete": 106,
+        "assessed": 106,
+        "unassessed": 0,
+        "artifact_content_complete": 94,
+        "artifact_content_qualified_or_unknown": 12
+      }
+    },
+    {
+      "axis": 2,
+      "counts": {
+        "total": 35,
+        "complete": 35,
+        "assessed": 35,
+        "unassessed": 0,
+        "artifact_content_complete": 34,
+        "artifact_content_qualified_or_unknown": 1
+      }
+    },
+    {
+      "axis": 3,
+      "counts": {
+        "total": 15,
+        "complete": 15,
+        "assessed": 15,
+        "unassessed": 0,
+        "artifact_content_complete": 8,
+        "artifact_content_qualified_or_unknown": 7
+      }
+    },
+    {
+      "axis": 4,
+      "counts": {
+        "total": 61,
+        "complete": 61,
+        "assessed": 61,
+        "unassessed": 0,
+        "artifact_content_complete": 59,
+        "artifact_content_qualified_or_unknown": 2
+      }
+    },
+    {
+      "axis": 5,
+      "counts": {
+        "total": 118,
+        "complete": 118,
+        "assessed": 118,
+        "unassessed": 0,
+        "artifact_content_complete": 108,
+        "artifact_content_qualified_or_unknown": 10
+      }
+    },
+    {
+      "axis": 6,
+      "counts": {
+        "total": 16,
+        "complete": 16,
+        "assessed": 16,
+        "unassessed": 0,
+        "artifact_content_complete": 16,
+        "artifact_content_qualified_or_unknown": 0
+      }
+    }
+  ],
+  "material_scientific_errors": 0,
+  "incorrect_scientific_rejections": 0,
+  "nonmaterial_limitations": 6,
+  "review_dispatch_to_delivery_seconds": 907.987,
+  "review_queue_service_delay_seconds": 0.59,
+  "review_delivery_within_original_deadline": true,
+  "ordinary_review_no_goal_required": true,
+  "usage": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "source_scope_limits": [
+    "All declared inventory assessed; assessment completion does not certify all requirements satisfied. Critic family/prior independence and discovery sequence unverified; projection flow underdescribed.",
+    "Original pair HOLD and control full-final UNASSESSED remain immutable. No matched comparison/speedup/outputabsence benefit.",
+    "Full bounded declared opportunity inventory, not exhaustive opportunity recall."
+  ]
+}

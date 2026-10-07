@@ -1,0 +1,428 @@
+[
+  {
+    "path": "sources/inputs/brief.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/brief.md",
+    "sha256": "2c9cded4ef7b6ca1d11bcfbde218bf49e7c493964022d7ed7f7f3e5b5634ffe9",
+    "role": "frozen obligation input"
+  },
+  {
+    "path": "sources/inputs/plan.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/plan.md",
+    "sha256": "304ba8e4ba46efc399176e4c68c40af0dc6be0873ab5d59b063889cb154770a9",
+    "role": "frozen obligation input"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-001.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-001.md",
+    "sha256": "54475617a61b30a619746ca7f92c0b10501dce5f68007e74be0521419ec0d146",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-004.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-004.md",
+    "sha256": "c457a59a843d906e6f1c113800859cc08102788163fc063e45b5ed0e5a57192a",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-005.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-005.md",
+    "sha256": "109291ef836880790bd083bf271e2b33ec0f6e5c1641a32af4fb11004a58fff1",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-006.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-006.md",
+    "sha256": "234cf930ce4e1b582de298be39587713f164943b259c4c60135366dc43a3735e",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-010.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-010.md",
+    "sha256": "721c82c7946398bbd0f7766f67ec7e25eef2d27b94daec120195922886abe8c9",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-017.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-017.md",
+    "sha256": "ff9bd102297b484394e57a4e0a203677905fe883ef6d8ebb48c016330dea967e",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-019.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-019.md",
+    "sha256": "f47075ec350a87c6f65eafae3061c7c66964d9e6f535f7333f327b793ccf0008",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-023.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-023.md",
+    "sha256": "075c17c7ff747ca2e23a401128b10467863db4e0df4d5fe36a09d6fbc7caf1f1",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/BRS-030.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-030.md",
+    "sha256": "e1d7d0613914a2efa4de7a60f4938e40558c4c89e308085545b1b4e8b00dfa63",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/non_goals.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/non_goals.md",
+    "sha256": "6b429d189287b99a69adde2d5bf68d9f5f8ec67c31e21e0db1dffb2341ab2dc0",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/inputs/owner-slice/scope_and_owners.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/scope_and_owners.md",
+    "sha256": "a5ccbd08488f10c1d966f5e9f29b07d1274535704b9907942f197637e007906a",
+    "role": "frozen owner comparison, not public truth"
+  },
+  {
+    "path": "sources/admitted/research-v1/artifact.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/artifact.md",
+    "sha256": "76fbecfe9b92294c46073b3639951161dbb2c7d50d910b42bddf638d5af760fd",
+    "role": "admitted authorship/preservation; lifecycle/counters ignored"
+  },
+  {
+    "path": "sources/admitted/research-v1/source-map.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/source-map.json",
+    "sha256": "1f89336197e6c63756955a096d84ebdf8469827ebbfc1031875f32dfddb8d41b",
+    "role": "admitted authorship/preservation; lifecycle/counters ignored"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/borg-check.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/borg-check.html",
+    "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/cisa-stopransomware-guide.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/cisa-stopransomware-guide.pdf",
+    "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/cisa-stopransomware-resource.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/cisa-stopransomware-resource.html",
+    "sha256": "52097742990c8e38c6e81c89fd365d55ad976f5d8f4212e535603b4bfd372592",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/kopia-consistency.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/kopia-consistency.html",
+    "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/kopia-issue-3605.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/kopia-issue-3605.html",
+    "sha256": "9dc7dc0ffeffeb60176966d61e6827762c8b2d4e3063d6c17db740643058bf0d",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/kopia-snapshot-verify-docs.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/kopia-snapshot-verify-docs.html",
+    "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/nist-sp800-34r1.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/nist-sp800-34r1.pdf",
+    "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/rclone-copy-docs.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/rclone-copy-docs.html",
+    "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/rclone-sync-docs.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/rclone-sync-docs.html",
+    "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-backup-docs.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-backup-docs.html",
+    "sha256": "c26df1ab47454f6d252fa300ec1371eefaa273b2cb92269186610f0a22ae5ee0",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-issue-5667.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-issue-5667.html",
+    "sha256": "31098dfbf1a12f4b8840d478417e5ed8af81823dcc7142bb9e0b1d43c5571358",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-pr-21852.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-pr-21852.html",
+    "sha256": "c6a6bfded29d4e34d1130001e4e5296b55b38f7a7b6c6b0f04af2081765b522a",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-release-v0.19.1.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-release-v0.19.1.html",
+    "sha256": "e04438d9195e16362c18990e55d7a9f09212a6d05df9927b3420471149c01009",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-v0.19.1-checker.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-v0.19.1-checker.go",
+    "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-v0.19.1-cmd_backup.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-v0.19.1-cmd_backup.go",
+    "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-v0.19.1-cmd_backup_test.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-v0.19.1-cmd_backup_test.go",
+    "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-v0.19.1-cmd_check.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-v0.19.1-cmd_check.go",
+    "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/research-v1/sources/restic-working-with-repos.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/restic-working-with-repos.html",
+    "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/critic-v1/artifact.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/artifact.md",
+    "sha256": "c292910d80a50013f42510c886d2d796cdbbbf559179928d430468555fd52061",
+    "role": "admitted authorship/preservation; lifecycle/counters ignored"
+  },
+  {
+    "path": "sources/admitted/critic-v1/source-map.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/source-map.json",
+    "sha256": "bf92264268e6840a2df7be4cb36b417a0d033f5c77ff3634b539d23abd961dc6",
+    "role": "admitted authorship/preservation; lifecycle/counters ignored"
+  },
+  {
+    "path": "sources/admitted/critic-v1/sources/restic-5667-issue.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-5667-issue.html",
+    "sha256": "c19f2bbfff6c01869792db61827803465b3aa19666c44043b1bcef9d7797339f",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/critic-v1/sources/restic-6aa3-checker.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-checker.go",
+    "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/critic-v1/sources/restic-6aa3-cmd_backup.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-cmd_backup.go",
+    "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/critic-v1/sources/restic-6aa3-cmd_backup_test.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-cmd_backup_test.go",
+    "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/critic-v1/sources/restic-6aa3-cmd_check.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-cmd_check.go",
+    "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/critic-v1/sources/restic-6aa3-working_with_repos.rst",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-working_with_repos.rst",
+    "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/critic-v1/sources/restic-pr-21852.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-pr-21852.html",
+    "sha256": "43b928b5859f681add5af6a3a533d904a0faca86ce7ca585707158a1ef8c19ba",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/critic-v1/sources/restic-v0.19.1-release.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-v0.19.1-release.html",
+    "sha256": "55a95d75b7a67a2b8f90de2d6015fff1f509f720f4ccb875fb7445eaa4aa871b",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/artifact.md",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/artifact.md",
+    "sha256": "33727f1c8524cc3f4ea5cb18dee3ca9458a3ee35a78069e3bc19cc71dc11b82f",
+    "role": "admitted authorship/preservation; lifecycle/counters ignored"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/source-map.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/source-map.json",
+    "sha256": "707b4dcedf40abfde78e5934b3f84810b6917f611fe8ae3b6613b1cada1640fe",
+    "role": "admitted authorship/preservation; lifecycle/counters ignored"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/critic/restic-5667-issue.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-5667-issue.html",
+    "sha256": "c19f2bbfff6c01869792db61827803465b3aa19666c44043b1bcef9d7797339f",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/critic/restic-6aa3-checker.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-checker.go",
+    "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/critic/restic-6aa3-cmd_backup.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-cmd_backup.go",
+    "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/critic/restic-6aa3-cmd_backup_test.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-cmd_backup_test.go",
+    "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/critic/restic-6aa3-cmd_check.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-cmd_check.go",
+    "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/critic/restic-6aa3-working_with_repos.rst",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-working_with_repos.rst",
+    "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/critic/restic-pr-21852.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-pr-21852.html",
+    "sha256": "43b928b5859f681add5af6a3a533d904a0faca86ce7ca585707158a1ef8c19ba",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/critic/restic-v0.19.1-release.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-v0.19.1-release.html",
+    "sha256": "55a95d75b7a67a2b8f90de2d6015fff1f509f720f4ccb875fb7445eaa4aa871b",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/borg-check.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/borg-check.html",
+    "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/cisa-stopransomware-guide.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/cisa-stopransomware-guide.pdf",
+    "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/cisa-stopransomware-resource.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/cisa-stopransomware-resource.html",
+    "sha256": "52097742990c8e38c6e81c89fd365d55ad976f5d8f4212e535603b4bfd372592",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/kopia-consistency.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/kopia-consistency.html",
+    "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/kopia-issue-3605.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/kopia-issue-3605.html",
+    "sha256": "9dc7dc0ffeffeb60176966d61e6827762c8b2d4e3063d6c17db740643058bf0d",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/kopia-snapshot-verify-docs.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/kopia-snapshot-verify-docs.html",
+    "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/nist-sp800-34r1.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/nist-sp800-34r1.pdf",
+    "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/rclone-copy-docs.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/rclone-copy-docs.html",
+    "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/rclone-sync-docs.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/rclone-sync-docs.html",
+    "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-backup-docs.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-backup-docs.html",
+    "sha256": "c26df1ab47454f6d252fa300ec1371eefaa273b2cb92269186610f0a22ae5ee0",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-issue-5667.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-issue-5667.html",
+    "sha256": "31098dfbf1a12f4b8840d478417e5ed8af81823dcc7142bb9e0b1d43c5571358",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-pr-21852.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-pr-21852.html",
+    "sha256": "c6a6bfded29d4e34d1130001e4e5296b55b38f7a7b6c6b0f04af2081765b522a",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-release-v0.19.1.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-release-v0.19.1.html",
+    "sha256": "e04438d9195e16362c18990e55d7a9f09212a6d05df9927b3420471149c01009",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-v0.19.1-checker.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-v0.19.1-checker.go",
+    "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-v0.19.1-cmd_backup.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-v0.19.1-cmd_backup.go",
+    "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-v0.19.1-cmd_backup_test.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-v0.19.1-cmd_backup_test.go",
+    "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-v0.19.1-cmd_check.go",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-v0.19.1-cmd_check.go",
+    "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+    "role": "linked primary capture, content to be checked"
+  },
+  {
+    "path": "sources/admitted/reviser-v1/sources/research/restic-working-with-repos.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-working-with-repos.html",
+    "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0",
+    "role": "linked primary capture, content to be checked"
+  }
+]

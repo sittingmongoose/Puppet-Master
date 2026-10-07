@@ -1,0 +1,46 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "rasterwindow",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/rasterwindow.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterresample",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/rasterresample.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "predecessor_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/question_1-v3/report.md",
+      "sha256": "f2dad9fb43d90bff299fb5927fb91052e8f3e8fe810d5f3f9296df151e1b4ec9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/question_2-v3/report.md",
+      "sha256": "ba9f3117294e3127537ee74aba1cbc4aed9ff8c863b04203345c273130f07489"
+    }
+  ],
+  "writable_stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/join-v3",
+  "stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/join-v3/report.md",
+  "final_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/join-v3/final.md"
+}

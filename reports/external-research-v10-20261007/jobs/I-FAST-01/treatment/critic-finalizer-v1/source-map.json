@@ -1,0 +1,415 @@
+{
+  "schema_version": 1,
+  "task": "I-FAST-01/treatment/critic-finalizer-v1",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/input-map.json",
+  "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/artifact.md",
+  "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/source-map.json",
+  "goal_identity": "01a11809-323f-7ee1-b83c-c08acf2ddf9a",
+  "status": "DIAGNOSTIC_UNQUALIFIED",
+  "timing": {
+    "first_useful_independent_finding_at_utc": "2026-10-07T20:25:11Z",
+    "full_artifact_saved_at_utc": "2026-10-07T20:31:43.598Z",
+    "source_map_saved_at_utc": "2026-10-07T20:31:43.600Z",
+    "deadline_utc": "2026-10-07T20:32:24.427682Z"
+  },
+  "input_identities_verified": [
+    {
+      "id": "INPUTS.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01/INPUTS.md",
+      "bytes": 1917,
+      "sha256": "a20b549073d5026e97900433055f986585b1986465baa5f780c6eee323fb7e4a"
+    },
+    {
+      "id": "brief.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01/brief.md",
+      "bytes": 5140,
+      "sha256": "6dd2544d34fd845067a74914ec5b87767c2fdc447981616f0b231f887d53a40c"
+    },
+    {
+      "id": "plan.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01/plan.md",
+      "bytes": 1751,
+      "sha256": "6e511c3749bfa87d7ddb0abc0dc616e854c898feb2bdc65cf6f4b15e24993651"
+    }
+  ],
+  "predecessor_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/research-v1/artifact.md",
+  "predecessor_source_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/research-v1/source-map.json",
+    "copied_path": "sources/predecessor-source-map.json",
+    "bytes": 10562,
+    "sha256": "cc97ba351e2451db9cbaa0af4cb37a11bf5d64178d5a71375b94010a7f7a8f22"
+  },
+  "source_operations": {
+    "primary_public_web_open_requests": 10,
+    "primary_public_web_find_requests": 12,
+    "web_search_queries": 0,
+    "independent_direct_http_capture_attempts": 12,
+    "independent_direct_http_capture_successes": 12,
+    "independent_direct_http_capture_failures": 0,
+    "inherited_capture_files_copied_and_rehashed": 23,
+    "inherited_capture_total_bytes": 2997156,
+    "read_only_input_and_predecessor_files_read": 6,
+    "notes": "Web opens/finds independently checked official/public primary sources. Independent direct captures were fetched by HTTPS GET; no captured code was executed. The predecessor captures were copied byte-for-byte into this output and all output copies were SHA-256 hashed. Source contents are not presented as executed tests.",
+    "predecessor_map_declared_captures": 21,
+    "unreferenced_files_found_in_predecessor_capture_directory": 2,
+    "note_unreferenced_files": "Two additional files were present in the declared predecessor source directory but not linked by its source-map; they were copied and hashed for completeness, excluded from evidentiary claims."
+  },
+  "independent_primary_sources": [
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc/alg/gdaltransformer.cpp",
+      "version": "GDAL v3.13.3 commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "captured_at_utc": "2026-10-07T20:26:11.226709+00:00",
+      "path": "sources/gdal-3133-transformer.cpp",
+      "bytes": 213134,
+      "sha256": "25b515c14f18010b3b0a23dd2741bc388d83254c82d028e8432ed83ab861e3a0"
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc/alg/gdal_homography.cpp",
+      "version": "GDAL v3.13.3 commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "captured_at_utc": "2026-10-07T20:26:11.387413+00:00",
+      "path": "sources/gdal-3133-homography.cpp",
+      "bytes": 25561,
+      "sha256": "837910cf3a0ab4dcb4f31aa486b173a8d91752abcea124cc403849d9a0dd8f21"
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc/autotest/alg/gcps2homography.py",
+      "version": "GDAL v3.13.3 commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "captured_at_utc": "2026-10-07T20:26:11.473913+00:00",
+      "path": "sources/gdal-3133-gcps2homography-test.py",
+      "bytes": 6988,
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278"
+    },
+    {
+      "id": "S1",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/managing_data_source/georeferencer.html",
+      "version": "QGIS documentation 3.44",
+      "captured_at_utc": "2026-10-07T20:26:11.668287+00:00",
+      "path": "sources/qgis-3.44-georeferencer.html",
+      "bytes": 57285,
+      "sha256": "f58e068c96b0dbba3b15c79573cfa9e6c723f86becaa9d378504301a78d97dda"
+    },
+    {
+      "id": "S5",
+      "url": "https://github.com/OSGeo/gdal/issues/12435",
+      "version": "GDAL issue #12435",
+      "captured_at_utc": "2026-10-07T20:26:13.493127+00:00",
+      "path": "sources/gdal-issue-12435.html",
+      "bytes": 254643,
+      "sha256": "51a45aea2af5e399b6beecff9b088e40314c2700745e9392ab5c5e77e0c68005"
+    },
+    {
+      "id": "S6",
+      "url": "https://github.com/OSGeo/gdal/pull/12438",
+      "version": "GDAL PR #12438",
+      "captured_at_utc": "2026-10-07T20:26:14.208361+00:00",
+      "path": "sources/gdal-pr-12438.html",
+      "bytes": 300035,
+      "sha256": "90b4e65d7413b033afedee60510f64e53db5c250c47611e5cc69a880f625927c"
+    },
+    {
+      "id": "S7",
+      "url": "https://github.com/OSGeo/gdal/pull/12451",
+      "version": "GDAL PR #12451",
+      "captured_at_utc": "2026-10-07T20:26:14.808525+00:00",
+      "path": "sources/gdal-pr-12451.html",
+      "bytes": 308220,
+      "sha256": "df9236b417b016fc10ee3c01e4b99e98fd8e72d07610d03680b1fee01d850800"
+    },
+    {
+      "id": "S8",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.11.1",
+      "version": "GDAL v3.11.1 tag",
+      "captured_at_utc": "2026-10-07T20:26:13.087872+00:00",
+      "path": "sources/gdal-release-v3.11.1-page.html",
+      "bytes": 197293,
+      "sha256": "e2cea10d6b5267ab4f2f50433f6824f537be48afd364f405e8c4e49fde0de9ef"
+    },
+    {
+      "id": "S9",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.13.3",
+      "version": "GDAL v3.13.3 tag",
+      "captured_at_utc": "2026-10-07T20:26:12.646297+00:00",
+      "path": "sources/gdal-release-v3.13.3-page.html",
+      "bytes": 205152,
+      "sha256": "aaaa79763edd0d64e7e4229786b948da06c08a7b6bda45c0de474e4e1c5e4a6b"
+    },
+    {
+      "id": "S10",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc/doc/source/tutorials/raster_api_tut.rst",
+      "version": "GDAL v3.13.3 commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "captured_at_utc": "2026-10-07T20:26:11.599786+00:00",
+      "path": "sources/gdal-raster-api-c8b4c45.rst",
+      "bytes": 23864,
+      "sha256": "56115dd6642b1eb5e3e5908c49ead45e266cf5e6d24882d330e767a1b5d4915d"
+    },
+    {
+      "id": "S11",
+      "url": "https://raw.githubusercontent.com/maplibre/maplibre-gl-compare/fd86addd6a666f833629ae29c4ef09ff36538662/README.md",
+      "version": "maplibre-gl-compare commit fd86addd6a666f833629ae29c4ef09ff36538662",
+      "captured_at_utc": "2026-10-07T20:26:12.514139+00:00",
+      "path": "sources/maplibre-compare-readme-fd86add.md",
+      "bytes": 7320,
+      "sha256": "8e62cfd5fa81afdccaec2169680a877f0e2df0bfd77e23188256205d090f71e9"
+    },
+    {
+      "id": "S13",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "version": "OSM Foundation rolling policy captured 2026-10-07",
+      "captured_at_utc": "2026-10-07T20:26:12.120786+00:00",
+      "path": "sources/osm-tile-policy-20261007.html",
+      "bytes": 18563,
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2"
+    },
+    {
+      "id": "S12",
+      "url": "https://mapwarper.net/",
+      "version": "MapWarper rolling public homepage, captured by predecessor source map at 2026-10-07T20:16:10Z",
+      "captured_at_utc": "2026-10-07T20:16:10Z (predecessor capture)",
+      "path": "sources/inherited-research-v1/mapwarper-home-20261007.html",
+      "bytes": 22280,
+      "sha256": "b6bdc3c004a247d095d39fadda52068e4b9e6ca41faf640046852cae9d826a59",
+      "capture_origin": "predecessor"
+    }
+  ],
+  "inherited_captures": [
+    {
+      "path": "sources/inherited-research-v1/gdal-3133-gcps2homography-test.py",
+      "bytes": 6988,
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "predecessor_source_id": "gdal-v3133-current-code",
+      "url": "https://github.com/OSGeo/gdal/tree/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "version": "v3.13.3 peeled commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc; tag signed; current release as of 2026-10-07",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-3133-homography.cpp",
+      "bytes": 25561,
+      "sha256": "837910cf3a0ab4dcb4f31aa486b173a8d91752abcea124cc403849d9a0dd8f21",
+      "predecessor_source_id": "gdal-v3133-current-code",
+      "url": "https://github.com/OSGeo/gdal/tree/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "version": "v3.13.3 peeled commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc; tag signed; current release as of 2026-10-07",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-3133-news.md",
+      "bytes": 568172,
+      "sha256": "209b7dd36ccefe09c2c01cdc945b6782bc29dda81363e68857bd6ba2575a1a9f",
+      "predecessor_source_id": "gdal-v3133-current-code",
+      "url": "https://github.com/OSGeo/gdal/tree/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "version": "v3.13.3 peeled commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc; tag signed; current release as of 2026-10-07",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-3133-transformer.cpp",
+      "bytes": 213134,
+      "sha256": "25b515c14f18010b3b0a23dd2741bc388d83254c82d028e8432ed83ab861e3a0",
+      "predecessor_source_id": "gdal-v3133-current-code",
+      "url": "https://github.com/OSGeo/gdal/tree/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "version": "v3.13.3 peeled commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc; tag signed; current release as of 2026-10-07",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-download-page-20261007.html",
+      "bytes": 40693,
+      "sha256": "24ef1cee884beda29d2ddad2767725f21224d787e9f6079ab10270e659f1eb11",
+      "predecessor_source_id": "gdal-current-release-record",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.13.3",
+      "version": "v3.13.3 released 2026-08-18; signed tag commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-gcps2homography-test-226b7732.py",
+      "bytes": 6988,
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "predecessor_source_id": "gdal-v3111-release",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.11.1",
+      "version": "v3.11.1 peeled commit 226b7732b4672deaf35d6a16a39216047358f7d8; signed release published 2025-07-01",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-homography-226b7732.cpp",
+      "bytes": 25561,
+      "sha256": "470b2958d5c52ed89ac6bfe5420dae5728b5cde40efa0714221cf026b733b984",
+      "predecessor_source_id": "gdal-v3111-release",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.11.1",
+      "version": "v3.11.1 peeled commit 226b7732b4672deaf35d6a16a39216047358f7d8; signed release published 2025-07-01",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-homography-test-226b7732.py",
+      "bytes": 2650,
+      "sha256": "d0b91fada46826ed17596495f61bf33bdf2cce5e4c113412681d620a49537881",
+      "predecessor_source_id": null,
+      "url": null,
+      "version": null,
+      "linked_by_predecessor_map": false
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-issue-12435.html",
+      "bytes": 254643,
+      "sha256": "f2cd661dc2b6b6b8ff00e54c3fa4e58083297fce4de2cfbcc77fba19e3d43da6",
+      "predecessor_source_id": "gdal-issue-12435",
+      "url": "https://github.com/OSGeo/gdal/issues/12435",
+      "version": "issue opened 2025-05-21; report states GDAL 3.11",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-news-226b7732.md",
+      "bytes": 462242,
+      "sha256": "df8b26c84bc66073785cdc13d0d8af2da29f2bf1444b0ddcd3353f9d41617cbc",
+      "predecessor_source_id": "gdal-v3111-release",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.11.1",
+      "version": "v3.11.1 peeled commit 226b7732b4672deaf35d6a16a39216047358f7d8; signed release published 2025-07-01",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-pr-12438.html",
+      "bytes": 300035,
+      "sha256": "b7e3856532f7632b0c92a08e765f711dcd1f63e041bf522e17b9d27d0f0b292b",
+      "predecessor_source_id": "gdal-pr-12438",
+      "url": "https://github.com/OSGeo/gdal/pull/12438",
+      "version": "merged 2025-05-23; head commit eda0ae2b3f428e616d1a16b4f6733ff76f759b83; merged main commit short ef60b9b",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-pr-12451.html",
+      "bytes": 308214,
+      "sha256": "b73910108d60779f2102221c9b9c3364042e72d3eae390a1808a4aacbe6d35f3",
+      "predecessor_source_id": "gdal-pr-12451-backport",
+      "url": "https://github.com/OSGeo/gdal/pull/12451",
+      "version": "merged to release/3.11 on 2025-05-23; backport head f85fcaf; merge commit short 931669d; milestone 3.11.1",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-pr12438.patch",
+      "bytes": 8328,
+      "sha256": "d6fe01ea3bc86c63f0a87e8243224d8a3609f206606d82549b8082ff3bcc2cd0",
+      "predecessor_source_id": "gdal-pr-12438",
+      "url": "https://github.com/OSGeo/gdal/pull/12438",
+      "version": "merged 2025-05-23; head commit eda0ae2b3f428e616d1a16b4f6733ff76f759b83; merged main commit short ef60b9b",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-pr12451.patch",
+      "bytes": 8328,
+      "sha256": "d326b34e320c4ee665d6ec51608d510d1f53d32b19c6ec9438f93b1e668c70f3",
+      "predecessor_source_id": "gdal-pr-12451-backport",
+      "url": "https://github.com/OSGeo/gdal/pull/12451",
+      "version": "merged to release/3.11 on 2025-05-23; backport head f85fcaf; merge commit short 931669d; milestone 3.11.1",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-raster-api-226b7732.rst",
+      "bytes": 23673,
+      "sha256": "b79d3437a2d82c426164d55803241e79f9c9c5d07ae8a3fb0137c779fb2f469d",
+      "predecessor_source_id": null,
+      "url": null,
+      "version": null,
+      "linked_by_predecessor_map": false
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-raster-api-c8b4c45.rst",
+      "bytes": 23864,
+      "sha256": "56115dd6642b1eb5e3e5908c49ead45e266cf5e6d24882d330e767a1b5d4915d",
+      "predecessor_source_id": "gdal-raster-window-reading",
+      "url": "https://github.com/OSGeo/gdal/blob/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc/doc/source/tutorials/raster_api_tut.rst",
+      "version": "GDAL v3.13.3 commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-release-v3.11.1.html",
+      "bytes": 197288,
+      "sha256": "a6f43d284889c5a6d5008d1924100190875a3ee9b1913e9a8fc697f1b51c335b",
+      "predecessor_source_id": "gdal-v3111-release",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.11.1",
+      "version": "v3.11.1 peeled commit 226b7732b4672deaf35d6a16a39216047358f7d8; signed release published 2025-07-01",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-release-v3.13.3-page.html",
+      "bytes": 205152,
+      "sha256": "519cd8ba5284560af845cc0d0128d32271373e9b24e0df9ea7868eb6da3d561f",
+      "predecessor_source_id": "gdal-current-release-record",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.13.3",
+      "version": "v3.13.3 released 2026-08-18; signed tag commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-transformer-226b7732.cpp",
+      "bytes": 210561,
+      "sha256": "aa2552e67b8d53628c2ff366f3a0bd152cdbb0d79a234f900e356a08c866139d",
+      "predecessor_source_id": "gdal-v3111-release",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.11.1",
+      "version": "v3.11.1 peeled commit 226b7732b4672deaf35d6a16a39216047358f7d8; signed release published 2025-07-01",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/maplibre-compare-readme-fd86add.md",
+      "bytes": 7320,
+      "sha256": "8e62cfd5fa81afdccaec2169680a877f0e2df0bfd77e23188256205d090f71e9",
+      "predecessor_source_id": "maplibre-compare-readme",
+      "url": "https://raw.githubusercontent.com/maplibre/maplibre-gl-compare/fd86addd6a666f833629ae29c4ef09ff36538662/README.md",
+      "version": "repository commit fd86addd6a666f833629ae29c4ef09ff36538662 on main at reference lookup",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/mapwarper-home-20261007.html",
+      "bytes": 22280,
+      "sha256": "b6bdc3c004a247d095d39fadda52068e4b9e6ca41faf640046852cae9d826a59",
+      "predecessor_source_id": "mapwarper-product-home",
+      "url": "https://mapwarper.net/",
+      "version": "rolling hosted homepage snapshot; no release identifier exposed",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/osm-tile-policy-20261007.html",
+      "bytes": 18563,
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "predecessor_source_id": "osm-standard-tile-policy",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "version": "rolling policy snapshot; verify at product release",
+      "linked_by_predecessor_map": true
+    },
+    {
+      "path": "sources/inherited-research-v1/qgis-3.44-georeferencer.html",
+      "bytes": 56918,
+      "sha256": "888298d0b7959723ccc20b41848e5724b29ca46d129c484b31b10847f72636da",
+      "predecessor_source_id": "qgis-georeferencer-docs",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/managing_data_source/georeferencer.html",
+      "version": "QGIS documentation 3.44",
+      "linked_by_predecessor_map": true
+    }
+  ],
+  "capture_log": "sources/independent-capture-log.json",
+  "usage": {
+    "model_input_tokens": null,
+    "model_output_tokens": null,
+    "web_provider_usage_units": null,
+    "http_provider_usage_units": null,
+    "billable_amount": null,
+    "note": "Distinct per-source/model usage and billing were not exposed; null is intentional. Native Goal aggregate counters are reported only from terminal get_goal output."
+  },
+  "unreferenced_predecessor_source_files": [
+    {
+      "path": "sources/inherited-research-v1/gdal-homography-test-226b7732.py",
+      "bytes": 2650,
+      "sha256": "d0b91fada46826ed17596495f61bf33bdf2cce5e4c113412681d620a49537881",
+      "predecessor_source_id": null,
+      "url": null,
+      "version": null,
+      "linked_by_predecessor_map": false
+    },
+    {
+      "path": "sources/inherited-research-v1/gdal-raster-api-226b7732.rst",
+      "bytes": 23673,
+      "sha256": "b79d3437a2d82c426164d55803241e79f9c9c5d07ae8a3fb0137c779fb2f469d",
+      "predecessor_source_id": null,
+      "url": null,
+      "version": null,
+      "linked_by_predecessor_map": false
+    }
+  ]
+}

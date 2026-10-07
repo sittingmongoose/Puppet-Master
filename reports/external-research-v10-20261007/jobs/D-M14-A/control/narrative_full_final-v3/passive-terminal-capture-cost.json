@@ -1,0 +1,33 @@
+{
+  "event": "terminal",
+  "stage": "D-M14-A/control/narrative_full_final-v3",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M14-A/control/narrative_full_final-v3"
+  ],
+  "start": "2026-10-07T20:43:16.969232+00:00",
+  "end": "2026-10-07T20:43:17.195270+00:00",
+  "elapsed_seconds": 0.22605820700118784,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T20:43:17.077560+00:00",
+    "entries": [
+      {
+        "stage": "D-M14-A/control/narrative_full_final-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--control--narrative_full_final-v3--6989cf7edd857e91.json",
+        "sha256": "6989cf7edd857e91f60d6a6285e43078b4c319b415080c5a58db85827801e02b",
+        "bytes": 10956,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

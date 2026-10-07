@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "checks": 4,
+  "version": "m14-renderer-1.0.0",
+  "renderer_sha256": "80e925fe69e7ccc2d58297fd48ab857795545d6d94572b653bffc5803ace9ef0",
+  "check_sha256": "439ed8101fe602d408912af8b2ca1ac1a11fe3ff57c5388536b3213422499415",
+  "readme_sha256": "a314a3833f638b216c2250e0d8eb597d7da63a2247efdc62abaf61b57e694994",
+  "actual_command": "python3 helpers/m14-renderer/check.py",
+  "reported_test_seconds": 0.316,
+  "limitation": "Structural retention, not scientific truth; root tool call performed actual check before future candidate dispatch; precise wall interval not separately exposed.",
+  "usage_unknown": true
+}

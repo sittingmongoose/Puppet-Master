@@ -1,0 +1,309 @@
+{
+  "case_id": "I-METHOD-03",
+  "stage": "treatment/critic-v1",
+  "artifact": "artifact.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/input-map.json",
+  "inputs": {
+    "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/brief.md",
+    "plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/plan.md",
+    "researcher_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/artifact.md",
+    "researcher_source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/source-map.json"
+  },
+  "procedure": {
+    "boundary": "Exact brief/plan, full research-v1 artifact and source-map, admitted research-v1 captures, and public primary technical sources only.",
+    "first_useful_saved_finding_at": "2026-10-07T19:46:55.962869+00:00",
+    "complete_artifact_saved_at": "2026-10-07T19:46:55.962869+00:00",
+    "artifact_time_note": "Filesystem modification time after the complete critic artifact was written.",
+    "source_operations": {
+      "direct_public_http_requests": 7,
+      "successes": 7,
+      "failures": 0,
+      "web_search_calls": 0,
+      "web_open_or_click_calls": 0,
+      "public_git_resolution_calls": 0,
+      "inherited_capture_copies": 12,
+      "counting_rule": "Only this critic turn direct public HTTP retrievals counted as new public-source operations. Local input/capture reads and copying admitted research-v1 captures are separate; no test/build/feed/validator operation was performed."
+    },
+    "verification_scope": "Reviewed pinned GTFS semantics, exact issue-reported pre-fix OTP code, OTP v2.10.0 matcher and caller, PR patch, release ancestry and release tests. No application tests were executed.",
+    "deadlines": {
+      "stage_max_seconds": 600,
+      "fixed_stage_deadline_utc": "2026-10-07T19:49:21.007396+00:00",
+      "whole_arm_deadline_utc": "2026-10-07T20:05:22.484372+00:00",
+      "final_reviser_reserve_seconds": 900,
+      "clock_reset": false
+    }
+  },
+  "native_goal_counters": {
+    "identity": "01a117e0-c66e-70d3-a746-0bc649378a66",
+    "counter_type": "Aggregate native Goal lifecycle counters only; not per-task input/output/reasoning/billing counters.",
+    "observations": [
+      {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "remainingTokens": null,
+        "completionBudgetReport": null,
+        "source": "Actual create_goal response; createdAt epoch 1791401981."
+      },
+      {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "remainingTokens": null,
+        "completionBudgetReport": null,
+        "observation_time_utc": null,
+        "source": "Actual get_goal response after activation; same threadId identity."
+      },
+      {
+        "status": "active",
+        "tokensUsed": 71180,
+        "timeUsedSeconds": 159,
+        "remainingTokens": null,
+        "completionBudgetReport": null,
+        "observation_time_utc": null,
+        "source": "Actual get_goal response before source verification continued; same threadId identity."
+      },
+      {
+        "status": "active",
+        "tokensUsed": 108550,
+        "timeUsedSeconds": 360,
+        "remainingTokens": null,
+        "completionBudgetReport": null,
+        "observation_time_utc": "2026-10-07 19:46:02 UTC (adjacent clock observation)",
+        "source": "Actual get_goal response before final source-map write; same threadId identity."
+      }
+    ],
+    "unavailable_distinct_counters": {
+      "input_tokens": null,
+      "cached_input_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    },
+    "terminal_observation": "Recorded in final response from actual update_goal and get_goal calls after the scientific output was complete."
+  },
+  "sources": [
+    {
+      "id": "E01",
+      "title": "Pinned GTFS Schedule reference",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+      "requested_at": "2026-10-07T19:42:04.233621+00:00",
+      "version": "google/transit commit 3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "capture_path": "sources/gtfs-schedule-reference.md",
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+      "bytes": 138481,
+      "inspection": "Direct public primary-source retrieval; inspected for the claims cited in artifact.md."
+    },
+    {
+      "id": "E02",
+      "title": "Pinned GTFS Realtime protobuf definition",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/proto/gtfs-realtime.proto",
+      "requested_at": "2026-10-07T19:42:04.349431+00:00",
+      "version": "google/transit commit 3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "capture_path": "sources/gtfs-realtime-proto.proto",
+      "sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299",
+      "bytes": 65237,
+      "inspection": "Direct public primary-source retrieval; inspected for the claims cited in artifact.md."
+    },
+    {
+      "id": "E03",
+      "title": "Pinned GTFS Realtime Best Practices",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/best-practices/best-practices.md",
+      "requested_at": "2026-10-07T19:42:04.442027+00:00",
+      "version": "google/transit commit 3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "capture_path": "sources/gtfs-realtime-best-practices.md",
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe",
+      "bytes": 17511,
+      "inspection": "Direct public primary-source retrieval; inspected for the claims cited in artifact.md."
+    },
+    {
+      "id": "E04",
+      "title": "OTP v2.10.0 RealtimeVehiclePatternMatcher",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/521cd5d8acaae628878f43bf5946f4942c118548/application/src/main/java/org/opentripplanner/updater/vehicle_position/RealtimeVehiclePatternMatcher.java",
+      "requested_at": "2026-10-07T19:42:04.513004+00:00",
+      "version": "OpenTripPlanner commit 521cd5d8acaae628878f43bf5946f4942c118548 (v2.10.0)",
+      "capture_path": "sources/otp-v2.10.0-matcher.java",
+      "sha256": "f584f5ceebbc649eb05943f4bde8f0cc0da3c855220ada7012ca6633008841f3",
+      "bytes": 17458,
+      "inspection": "Direct public primary-source retrieval; inspected for the claims cited in artifact.md."
+    },
+    {
+      "id": "E05",
+      "title": "OTP PR #4066 patch",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/pull/4066.patch",
+      "requested_at": "2026-10-07T19:42:04.601632+00:00",
+      "version": "PR #4066 public patch",
+      "capture_path": "sources/otp-pr-4066.patch",
+      "sha256": "9421d9d505b4d3eef504d4bfd494130cd7ac18a676003fed6e8092fa4be48923",
+      "bytes": 107509,
+      "inspection": "Direct public primary-source retrieval; inspected for the claims cited in artifact.md."
+    },
+    {
+      "id": "E06",
+      "title": "OTP PR merge to v2.2.0 comparison",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/compare/d9bf0bbec860c66591a993ee62760447b9f00537...0e15511b630347df581f1f230de7f470db1b7b26",
+      "requested_at": "2026-10-07T19:42:05.166981+00:00",
+      "version": "OTP merge d9bf0bbec860c66591a993ee62760447b9f00537 compared with release commit 0e15511b630347df581f1f230de7f470db1b7b26",
+      "capture_path": "sources/otp-4066-to-v2.2.0-compare.json",
+      "sha256": "fbd99d01d3494fc6a0269daf10016b1dc735765b23b6c3dc3f63e744c1fe34b2",
+      "bytes": 2085188,
+      "inspection": "Direct public primary-source retrieval; inspected for the claims cited in artifact.md."
+    },
+    {
+      "id": "E07",
+      "title": "OTP matcher at issue-reported deployed commit",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/b0c9829e3bfe10daddae72485a09a7f48b0be8ff/src/main/java/org/opentripplanner/updater/vehicle_positions/VehiclePositionPatternMatcher.java",
+      "requested_at": "2026-10-07T19:43:50.051818+00:00",
+      "version": "OpenTripPlanner commit b0c9829e3bfe10daddae72485a09a7f48b0be8ff, identified by issue reporter",
+      "capture_path": "sources/otp-issue-observed-b0c9829e-vpm.java",
+      "sha256": "c9e7144944b1bc27293ecd9e9b5fa511a3d902922464a2969942e27469643611",
+      "bytes": 8483,
+      "inspection": "Direct public primary-source retrieval; inspected for the claims cited in artifact.md."
+    },
+    {
+      "id": "R-S02",
+      "research_source_id": "S02",
+      "title": "GTFS Realtime reference",
+      "url": "https://github.com/google/transit/blob/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+      "version": "google/transit commit 3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "capture_path": "sources/gtfs-realtime-reference.md",
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+      "bytes": 90262,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S08",
+      "research_source_id": "S08",
+      "title": "OTP v2.10.0 vehicle matcher tests",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/521cd5d8acaae628878f43bf5946f4942c118548/application/src/test/java/org/opentripplanner/updater/vehicle_position/RealtimeVehicleMatcherTest.java",
+      "version": "OpenTripPlanner commit 521cd5d8acaae628878f43bf5946f4942c118548 (v2.10.0)",
+      "capture_path": "sources/otp-v2.10.0-matcher-test.java",
+      "sha256": "2ec4bc86d684b933c23245a6cd4993e45569d15d3e83b5890129a38f326ea079",
+      "bytes": 21302,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S09",
+      "research_source_id": "S09",
+      "title": "OTP v2.10.0 PollingVehiclePositionUpdater caller",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/521cd5d8acaae628878f43bf5946f4942c118548/application/src/main/java/org/opentripplanner/updater/vehicle_position/PollingVehiclePositionUpdater.java",
+      "version": "OpenTripPlanner commit 521cd5d8acaae628878f43bf5946f4942c118548 (v2.10.0)",
+      "capture_path": "sources/otp-v2.10.0-polling-caller.java",
+      "sha256": "ab64b1f6385f8f6987c02c54dd8db1ff5c95dba6f7d52f9605ec5b2cb95f02b2",
+      "bytes": 2572,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S10",
+      "research_source_id": "S10",
+      "title": "OTP issue #4058 — VehiclePositions without start_date were ignored",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/issues/4058",
+      "version": "Issue opened 2022-04-01; reporter states OTP commit b0c9829e3bfe10daddae72485a09a7f48b0be8ff; issue closed via PR #4066",
+      "capture_path": "sources/otp-issue-4058.html",
+      "sha256": "3851107940b4be7e54bb9ef47624d4c74d3fde1cade31dcd1f72b8fdeee60b55",
+      "bytes": 277886,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S12",
+      "research_source_id": "S12",
+      "title": "OTP PR #4066 metadata",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/4066",
+      "version": "GitHub public pull request metadata",
+      "capture_path": "sources/otp-pull-4066.json",
+      "sha256": "d8df6c70313173c707d2a22d417026226738238838f97b5469f3f677cbe3c5a6",
+      "bytes": 22015,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S13",
+      "research_source_id": "S13",
+      "title": "OTP v2.2.0 release",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/releases/tag/v2.2.0",
+      "version": "tag v2.2.0, commit 0e15511b630347df581f1f230de7f470db1b7b26; tag object ae7df694026e0166becde592897267a917c9b7c2",
+      "capture_path": "sources/otp-v2.2.0-release.html",
+      "sha256": "b0a0e350d4794629d04a969a9b328a88f4c0ec846e90b6528730e926d8b6d9ae",
+      "bytes": 198238,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S14",
+      "research_source_id": "S14",
+      "title": "OTP v2.2.0 VehiclePositionPatternMatcher source",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/0e15511b630347df581f1f230de7f470db1b7b26/src/main/java/org/opentripplanner/updater/vehicle_position/VehiclePositionPatternMatcher.java",
+      "version": "OpenTripPlanner commit 0e15511b630347df581f1f230de7f470db1b7b26 (v2.2.0)",
+      "capture_path": "sources/otp-v2.2.0-matcher.java",
+      "sha256": "ebee32d0fb6db5b41056ae000752a1457e202a3ff364ae0c895ea184e4b9714b",
+      "bytes": 10364,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S15",
+      "research_source_id": "S15",
+      "title": "OTP v2.2.0 VehiclePositionsMatcherTest",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/0e15511b630347df581f1f230de7f470db1b7b26/src/test/java/org/opentripplanner/updater/vehicle_position/VehiclePositionsMatcherTest.java",
+      "version": "OpenTripPlanner commit 0e15511b630347df581f1f230de7f470db1b7b26 (v2.2.0)",
+      "capture_path": "sources/otp-v2.2.0-matcher-test.java",
+      "sha256": "bfda3f6fa0448775da0b47f517207b09c51f48cd2ff93e9a989d961274c42d0c",
+      "bytes": 7929,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S16",
+      "research_source_id": "S16",
+      "title": "OTP v2.2.0 PollingVehiclePositionUpdater caller",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/blob/0e15511b630347df581f1f230de7f470db1b7b26/src/main/java/org/opentripplanner/updater/vehicle_position/PollingVehiclePositionUpdater.java",
+      "version": "OpenTripPlanner commit 0e15511b630347df581f1f230de7f470db1b7b26 (v2.2.0)",
+      "capture_path": "sources/otp-v2.2.0-polling-caller.java",
+      "sha256": "0fe98c6e2a65153fde26fd25a1b08c251cae64449bcd6edd6803dfc381ef21ff",
+      "bytes": 3441,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S21",
+      "research_source_id": "S21",
+      "title": "MobilityData GTFS Validator issue #2174",
+      "url": "https://github.com/MobilityData/gtfs-validator/issues/2174",
+      "version": "Issue opened 2026-08-20; status shown open in search/page at research time",
+      "capture_path": "sources/gtfs-validator-issue-2174.html",
+      "sha256": "2215aedd449b79f5090d9bb60afa5fa92ed05e2add8f3dfb748fdd3aa948e36a",
+      "bytes": 249932,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S22",
+      "research_source_id": "S22",
+      "title": "MobilityData GTFS Validator latest release endpoint",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/latest",
+      "version": "Endpoint returned v8.0.1, published 2026-05-12T13:35:43Z",
+      "capture_path": "sources/gtfs-validator-latest-release.json",
+      "sha256": "a441d980ffb65ac45ffa0bf4459a7a36b0e9117a9fa3068e87f4a71facca6c50",
+      "bytes": 21187,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    },
+    {
+      "id": "R-S23",
+      "research_source_id": "S23",
+      "title": "MobilityData GTFS Validator v8.0.1 release metadata",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/tags/v8.0.1",
+      "version": "release v8.0.1, published 2026-05-12T13:35:43Z",
+      "capture_path": "sources/gtfs-validator-v8.0.1-release.json",
+      "sha256": "a441d980ffb65ac45ffa0bf4459a7a36b0e9117a9fa3068e87f4a71facca6c50",
+      "bytes": 21187,
+      "provenance": "Copied without alteration from admitted research-v1/sources; metadata linked through research-v1/source-map.json.",
+      "inspection": "Retained for cited issue/release/caller/test/alert/validator scope and limits."
+    }
+  ],
+  "hash_policy": "SHA-256 computed by the host from each retained local capture byte stream. No input or artifact hash was invented."
+}

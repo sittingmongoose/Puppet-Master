@@ -1,0 +1,107 @@
+{
+  "at": "2026-10-07T20:25:46.111981+00:00",
+  "T3_children_quiet": true,
+  "native_disposition": "complete",
+  "files": {
+    "prospective-timing.json": {
+      "sha256": "77f3404d7b688509e0c6b3d658c9496caf4a786daa337d0a760d8c0761c9d1e1",
+      "bytes": 302
+    },
+    "findings-draft.md": {
+      "sha256": "02f91f500609cf008441fd3e31fe50fd892fe69501f2cf0c0f32c10c3e68cfc9",
+      "bytes": 6635
+    },
+    "dispatch-receipt.json": {
+      "sha256": "1e4f19ef3b7cdbaffd6d861c6ae68c68c869db42bac84365b8f4f80a8dafb71d",
+      "bytes": 1103
+    },
+    "passive-active.json": {
+      "sha256": "794562de4cb366c80a86f59b3c9499126949abab479d528498929e4c1787f01c",
+      "bytes": 16010
+    },
+    "task-terminal.json": {
+      "sha256": "f4bfb3331a423b5f99877e9752cbdb80247a68286980e7dcaa142eee49fc1241",
+      "bytes": 2158
+    },
+    "passive-terminal-capture-cost.json": {
+      "sha256": "e1ef1cc8c0f4b1169365b5adb0ab5c8bbc56c9cc94766589ead17314108c4815",
+      "bytes": 1314
+    },
+    "passive-active-capture-cost.json": {
+      "sha256": "bab88b2098413c2befd8abc25afae12742a2c335b13a42dc3614a5a37e6f47df",
+      "bytes": 1312
+    },
+    "assignment.md": {
+      "sha256": "239738e169fb70b6a6e4d8d82b751405c91ce5228c391534e5e74450ec93a743",
+      "bytes": 3855
+    },
+    "dispatch.json": {
+      "sha256": "1aa8314625e6708afb72c6d8b6a8868a15cd3fe14e71f3841d2cea2337796adc",
+      "bytes": 1528
+    },
+    "INPUT_MAP.json": {
+      "sha256": "12398f0f73bcdcac9bfe6b2d691b6ea47bde8994c0d85ccac5bcf3e01a66e5d4",
+      "bytes": 1191
+    },
+    "integration-state-terminal.json": {
+      "sha256": "fd124cd4f82ea5ba495b4a3a68b83a294714a583121e65a77f279d6a51b5edae",
+      "bytes": 4947
+    },
+    "dispatch-request.json": {
+      "sha256": "09cd40901d53c255cb593e8489f20a2d29865818ebe0055a6496ae2f5c630b13",
+      "bytes": 687
+    },
+    "timings.json": {
+      "sha256": "14ae81ed021543b6af822cc0681c1299b4fc74932a940af65232ddd86003a9f1",
+      "bytes": 2428
+    },
+    "final.md": {
+      "sha256": "f7068c5cf13266b787121bcb9f65fa97b2c270ca0f03f7acbc809815b899b1f1",
+      "bytes": 7763
+    },
+    "constraints-notes.md": {
+      "sha256": "7d20d22e61b51de40ef96f8b24f45e4394a2f3375b25de503dec890023b672be",
+      "bytes": 2604
+    },
+    "integration-state-active.json": {
+      "sha256": "fed777928eff2fc75a38db6d60b5ad9c1bf1fe466a6682c473dacbb9c1cd7296",
+      "bytes": 2569
+    },
+    "passive-terminal.json": {
+      "sha256": "89026dd06959ab56ac264a9ff3cf11a48d7577a6334db5cfc2f4be2276cf1bde",
+      "bytes": 19386
+    },
+    "sources/index.json": {
+      "sha256": "4130371aa6a9d67542093c8d5a3fd85ec7a24d2ab7a4b267bd6528232bd227f5",
+      "bytes": 6107
+    },
+    "sources/stripe-idempotency.html": {
+      "sha256": "a93f0ffb31a6adcc917168ac576201bc7946276322921e932d0357ee6ef95150",
+      "bytes": 1375297
+    },
+    "sources/transactional-outbox.html": {
+      "sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "bytes": 25474
+    },
+    "sources/mqtt-v5.0-os.html": {
+      "sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "bytes": 1436465
+    },
+    "sources/pouchdb-conflicts.html": {
+      "sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "bytes": 28467
+    },
+    "sources/checksums.sha256": {
+      "sha256": "d453ccd885f8b5f9be78f4fd0ce982cd7ccd56378bbf9948870fc774161b1603",
+      "bytes": 536
+    },
+    "sources/aws-retries-jitter.html": {
+      "sha256": "bff72c61f7dae855aeb35bb2834b2ac9839390f86d1132ab1ae1fb722e729def",
+      "bytes": 127198
+    },
+    "sources/sqlite-atomiccommit.html": {
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968
+    }
+  }
+}

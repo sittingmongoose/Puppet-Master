@@ -1,0 +1,128 @@
+{
+  "schema": "ER10-batch006-completed-comparison-tranche-v1",
+  "cutoff": "2026-10-07T21:14:03.633270+00:00",
+  "campaign_complete": false,
+  "rows": [
+    {
+      "case": "D-M12-A",
+      "version": "matched v3",
+      "display_original_grade_only": "FAIL / FAIL",
+      "limits": "Full declared six-axis assessments; changed 30min budget, original failures retained",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/comparison-v3.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M12-A/comparison-v3.json"
+    },
+    {
+      "case": "D-M14-A",
+      "version": "matched v3",
+      "display_original_grade_only": "FAIL / FAIL",
+      "limits": "Structural preservation separate; expanded budgets are not original 15/45 success",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/comparison-v3.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M14-A/comparison-v3.json"
+    },
+    {
+      "case": "D-M08-A",
+      "version": "matched v3",
+      "display_original_grade_only": "FullSourcePASS / FullSourceFAIL",
+      "limits": "Exact source comparison; no treatment speed win or general causal estimate",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/PAIR_COMPARISON.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/targeted-cohort3/D-M08-A-v3/PAIR_COMPARISON.json"
+    },
+    {
+      "case": "D-M02-B",
+      "version": "candidate v3 / review v2",
+      "display_original_grade_only": "X/Y finals supported with stated conditions",
+      "limits": "X intermediate defect corrected later; Y minor wording limit; same-author/provenance remains separate",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/REVIEW.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/targeted/D-M02-B/source-review-v2/REVIEW.json"
+    },
+    {
+      "case": "D-M03-B",
+      "version": "v2",
+      "display_original_grade_only": "X qualification required / Y consequential errors",
+      "limits": "Both original full-artifact scientific-pass fields false; separate method/carrier limits",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json"
+    },
+    {
+      "case": "D-M01-B",
+      "version": "paired assessment v2",
+      "display_original_grade_only": "Conditional support with precision/intermediate issues",
+      "limits": "No numeric or pass/fail grade invented; original byte-identity/condition limits retained",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW.json"
+    },
+    {
+      "case": "D-M03-A",
+      "version": "assessment v2 X/Y",
+      "display_original_grade_only": "Material corrections required, each original review",
+      "limits": "Independent assessment outputs and exact mapped original candidates",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW.json"
+    },
+    {
+      "case": "I-METHOD-01",
+      "version": "original v1",
+      "display_original_grade_only": "FAIL / PASS_WITH_LIMITATIONS",
+      "limits": "Diagnostic qualification separate from all six axes/full obligations",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/integrated-execution/method01-pair-disposition-v1.json"
+    },
+    {
+      "case": "I-METHOD-03",
+      "version": "original v1",
+      "display_original_grade_only": "FAIL / FAIL",
+      "limits": "Different inventories/defects; missing active final proofs and overrun retained",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method03-pair-disposition-v1.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/integrated-execution/method03-pair-disposition-v1.json"
+    },
+    {
+      "case": "I-METHOD-05",
+      "version": "original v1",
+      "display_original_grade_only": "FAIL / FAIL",
+      "limits": "Full assessment differs from fulfilled requirements; discovery/history gaps retained",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method05-pair-disposition-v1.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/integrated-execution/method05-pair-disposition-v1.json"
+    },
+    {
+      "case": "I-METHOD-06",
+      "version": "original v1",
+      "display_original_grade_only": "PASS_WITH_LIMITATIONS / FAIL",
+      "limits": "Control requirement and chronology limits retained; no treatment source-correct win",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/integrated-execution/method06-pair-disposition-v1.json"
+    },
+    {
+      "case": "I-METHOD-02 / 04",
+      "version": "original v1 failures; LASTv2 protocol",
+      "display_original_grade_only": "UNASSESSED paired source result",
+      "limits": "Original infrastructure/native/failed-cost records preserved; new policy not completion",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-pair-disposition-v1.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/integrated-execution/method02-pair-disposition-v1.json"
+    },
+    {
+      "case": "I-FAST-01",
+      "version": "original paired gate + standalone treatment",
+      "display_original_grade_only": "Paired incomplete; treatment PASS_WITH_LIMITATIONS",
+      "limits": "Standalone SourcePASS with fulfillment limits is not paired speed win",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/frozen-standalone-review.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/frozen-standalone-review.json"
+    },
+    {
+      "case": "C-02",
+      "version": "actual original Source6",
+      "display_original_grade_only": "FAIL / HOLD",
+      "limits": "ONE delivered disposition; treatment O1 remainder; not both-arm full-source assessed",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/COMPARISON.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/confirmation/C-02/COMPARISON.json"
+    },
+    {
+      "case": "C-01",
+      "version": "original treatment only",
+      "display_original_grade_only": "Treatment FAIL",
+      "limits": "Control reviewer not frozen; no completed-pair claim",
+      "exact_original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json"
+    }
+  ],
+  "count_rule": "These index rows are not final campaign denominators or necessarily eligible method comparisons. Forty immutable slots/eighty arms are protocol counts; attempts/critics/helpers/reviews do not add logical comparisons."
+}

@@ -1,0 +1,89 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T20:43:54.646613+00:00",
+  "case_id": "D-M14-A",
+  "arm": "control",
+  "stage": "narrative_full_final",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/INPUT_MAP.json",
+      "sha256": "b4df1de9617ea848e212086f89afc7b02267b1b41c11d0ed2fa84f6e55e4e730",
+      "bytes": 3446
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/dispatch-receipt.json",
+      "sha256": "affe5e38ad6a249e7debbf19cfaaa574b7cbf99dc63e1f23207d81400c088e70",
+      "bytes": 1061
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/dispatch-request.json",
+      "sha256": "20e425ee4446c81d24b63007964c3d06f4c95b46abcf45557589c2ae538026c7",
+      "bytes": 4546
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/dispatch.json",
+      "sha256": "7716c92c095bfc5b94a77ce4f7ee361b2983ab9f6208769ab11b8a633a3ebbb5",
+      "bytes": 1467
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/final.md",
+      "sha256": "0ea2d5d5a4088d56ec4bc077be287fc10761be587e68a064e6f7a93b8d9ae14c",
+      "bytes": 5338
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/passive-active-capture-cost.json",
+      "sha256": "d5ebbf56c5e4fef4741b66af002ff8273bd498c9a8c212a01760b9bc6938dfb2",
+      "bytes": 1292
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/passive-active.json",
+      "sha256": "96e31632de7e32314ba4d85fa4ade5a8dd1b7e4d9f8c5405bb154560fd1aad58",
+      "bytes": 11287
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/passive-terminal-capture-cost.json",
+      "sha256": "acac368d4f3d6baf12550fee3a0c6b531c37f479425eb44280cdf9cadd41b32f",
+      "bytes": 1294
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/passive-terminal.json",
+      "sha256": "6989cf7edd857e91f60d6a6285e43078b4c319b415080c5a58db85827801e02b",
+      "bytes": 10956
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/prospective-timing.json",
+      "sha256": "b99570af176e4ed7ec957b85e55d1d8f826461f53fd2b1c9aabd5869c2b2149c",
+      "bytes": 293
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/report.md",
+      "sha256": "b3f3f375924d4c349e27de44aef0bb71d089ea19de61310104a76f4937950ec7",
+      "bytes": 11022
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/sources/rasterio-1.3.10-_io.pyx",
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "bytes": 86415
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/sources/rasterio-1.3.10-enums.py",
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "bytes": 5550
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/task-terminal.json",
+      "sha256": "8608e14b81fe22a0c9795edafe4546e5140b50215aff35928bfb20155b348e05",
+      "bytes": 4083
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/timings.json",
+      "sha256": "839cbd17fd8981e36388b8a15859d4636928cfc895635fbf5bb39b52266e9899",
+      "bytes": 7018
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "er10.integrated.execution.v1",
+  "case_id": "I-METHOD-03",
+  "frozen_at": "2026-10-07T19:16:13.634596+00:00",
+  "recipe": {
+    "case_id": "I-METHOD-03",
+    "methods": [
+      "M11"
+    ],
+    "control": "Normal source-grounded discovery resolving releases/APIs/domains/units as it proceeds.",
+    "treatment": "Bind chosen release/API/default behavior/unit/type/applicability before dependent derivations; resolve incompatible versions rather than generalizing. Preserve full discovery and implementation/history scope.",
+    "stages": "both research20,critic10,reviser15"
+  },
+  "selection_basis": "unqualified operational diagnostic; no source-quality or speed claim",
+  "inputs": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/INPUTS.md",
+      "sha256": "6ac3ca9606f0359ad70ce8dd6c20a581a4da820584b889a692b8ce54bf4fb54d",
+      "bytes": 1927
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/brief.md",
+      "sha256": "18f0d4d44d638932060c0624b6876d21f0e33226971579f66916e8de2816853c",
+      "bytes": 5120
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/plan.md",
+      "sha256": "3451e59740282a558189908d03921dcbff4126105d788b6488ad0def90ff9f6a",
+      "bytes": 1765
+    }
+  },
+  "prepared_identity": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/prepared.json",
+    "sha256": "2ba6a590b4c77e9e6ccdab56cc81a343663535c87a45a5c6a1ac7b166437b445",
+    "bytes": 1660
+  },
+  "candidate_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "review_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "same_pair": {
+    "inputs": true,
+    "effort": true,
+    "access": true,
+    "aggregate_occupied_work_ceiling_seconds": 2700
+  },
+  "stage_seconds": {
+    "research": 1200,
+    "critic": 600,
+    "reviser": 900
+  },
+  "latency_boundary": "earliest actual T3 requestedAt for first stage through complete native terminal and T3 delivery, maximum 2700s including queue/start/retries/retrieval; stage allocation includes delivery; no clock reset",
+  "reserve_policy": "research preserves 600s critic +900s final; critic preserves 900s final; no writing-stage admission after envelope exhaustion",
+  "expiry_policy": "one lifecycle-only save/deliver steer at real expiry, at most 60s grace, owned task_cancel if live; no substantive extension",
+  "launch_order": [
+    "control",
+    "treatment"
+  ],
+  "output_scope": "FULL original O1-O6 and all in-scope plan sections; complete proposed-change artifact, options, retained/rejected dispositions, criticism dispositions, uncertainty, validation proposed/executed",
+  "quality_axes": [
+    "required brief obligations",
+    "consequential claims/conditions",
+    "bounded useful discovery",
+    "incorrect rejections/corrections",
+    "preservation",
+    "proposed versus executed validation"
+  ],
+  "output_contract": "authored artifact.md + source-map.json with immutable captured public bytes and identity metadata; alternatively full native final answer mechanically saved verbatim, never a summary substituted for full output",
+  "tool_policy": {
+    "native_public_search_read": true,
+    "writable": "own role directory only",
+    "no_nested_delegation": true,
+    "no_repo_or_account_changes": true,
+    "maps_advisory_not_firewall": true,
+    "isolation_limit": "T3 freshness excludes parent history; full-access filesystem not a security firewall; no evaluator exists until both arms quiet; forbidden sibling paths explicitly excluded",
+    "execution": "no downloaded source execution/installers on host; bounded qualified sandbox only if separately admitted"
+  },
+  "common_lifecycle_carrier": {
+    "version": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_at": "2026-10-07T19:16:13.745184+00:00",
+    "applies_to_both_arms_all_stages": true,
+    "exact_stage_versions": [
+      "I-METHOD-03/control/research-v1",
+      "I-METHOD-03/control/critic-v1",
+      "I-METHOD-03/control/reviser-v1",
+      "I-METHOD-03/treatment/research-v1",
+      "I-METHOD-03/treatment/critic-v1",
+      "I-METHOD-03/treatment/reviser-v1"
+    ],
+    "native_route": "actual Codex create_goal/get active/update complete/get terminal on same fresh Goal; <=4000char objective",
+    "activation_notice_parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "host_carrier": "one passive export per activation or terminal event; Codex actual native Goal state projection, not raw tool bodies",
+    "exporter_sha256": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8",
+    "absence_policy": "actual active/terminal state absent -> lifecycle HOLD; no fake proof",
+    "scientific_delivery": "complete artifact.md + source-map.json/captured source bytes; complete native output fallback verbatim accepted; concise path/status final after actual terminal",
+    "cost": "host export setup/invocation separate; native usage fields distinct and unknown null",
+    "scope_and_envelopes_unchanged": true
+  }
+}

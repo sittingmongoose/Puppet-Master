@@ -1,0 +1,29 @@
+{
+  "schema": "pm.er10.passive-receipts-index.v1",
+  "observed_at_utc": "2026-10-07T19:21:44.638182+00:00",
+  "entries": [
+    {
+      "stage": "I-METHOD-03/control/research-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-03--control--research-v1--876e29ebf043373a.json",
+      "sha256": "876e29ebf043373a8770a9f1efa66ffc32b2fd9a71f2352cd400e60879183b14",
+      "bytes": 10868,
+      "capture": {
+        "create_goal": "missing_actual_response",
+        "get_goal": "missing_actual_response",
+        "update_goal": "missing_actual_response"
+      }
+    },
+    {
+      "stage": "I-METHOD-03/treatment/research-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-03--treatment--research-v1--c85f84f12f063226.json",
+      "sha256": "c85f84f12f0632265b4cfefec7c508aa7d9e38ea23d3641aed9f6e18fc3e38a6",
+      "bytes": 10882,
+      "capture": {
+        "create_goal": "missing_actual_response",
+        "get_goal": "missing_actual_response",
+        "update_goal": "missing_actual_response"
+      }
+    }
+  ],
+  "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+}

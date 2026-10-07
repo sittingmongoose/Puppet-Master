@@ -1,0 +1,941 @@
+{
+  "schema": "ER10-batch006-absences-v1",
+  "cutoff": "2026-10-07T21:14:03.633270+00:00",
+  "campaign_complete": false,
+  "omissions": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/case-card.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v1.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/CASE_CARD.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v1.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/INPUT_MAP.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v1.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/READY.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v1.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/case-card.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v2.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/CASE_CARD.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v2.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/INPUT_MAP.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v2.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/READY.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v2.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/case-card.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/CASE_CARD.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/INPUT_MAP.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/READY.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/execution-overlay-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/treatment/protected_breadth_final",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/pair-freeze-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/control/normal_research_final",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M12-A/pair-freeze-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/brief.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/D-M14-A/control/finalize-v2/timings.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/sources.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/D-M14-A/control/finalize-v2/timings.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/rastermask.rst",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/D-M14-A/control/finalize-v2/timings.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/rasterresample.rst",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/D-M14-A/control/finalize-v2/timings.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/rasterwindow.rst",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/D-M14-A/control/finalize-v2/timings.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/geotransform.rst",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/D-M14-A/control/finalize-v2/timings.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/author-v2/report.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/D-M14-A/control/finalize-v2/timings.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/case-card.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v1.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/CASE_CARD.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v1.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/INPUT_MAP.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v1.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/READY.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v1.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/case-card.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v2.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/CASE_CARD.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v2.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/INPUT_MAP.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v2.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/READY.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v2.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/case-card.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/CASE_CARD.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/INPUT_MAP.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/READY.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/execution-overlay-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/treatment/semantic_render_preserve_final",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/pair-freeze-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/control/narrative_full_final",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by helpers/targeted-cohort4/D-M14-A/pair-freeze-v3.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-gauge_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-all_qc_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-issue-120.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-pr-123.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-pr-123-files.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-release-v1.0.2.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/SQLite-transactional.html",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/Rust-csv-1.4.0-Reader.html",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-schedule-reference.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-realtime-proto.proto",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-realtime-best-practices.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.10.0-matcher.java",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-pr-4066.patch",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-4066-to-v2.2.0-compare.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-issue-observed-b0c9829e-vpm.java",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-realtime-reference.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.10.0-matcher-test.java",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.10.0-polling-caller.java",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-issue-4058.html",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-pull-4066.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.2.0-release.html",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.2.0-matcher.java",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.2.0-matcher-test.java",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.2.0-polling-caller.java",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-validator-issue-2174.html",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-validator-latest-release.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-validator-v8.0.1-release.json",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/INPUTS.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/brief.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/plan.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-008.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-018.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-020.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-026.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-027.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-028.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-082.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/text_and_size_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/INPUTS.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/brief.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/plan.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-008.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-018.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-020.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-026.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-027.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-028.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-082.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/text_and_size_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/INPUTS.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/brief.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/plan.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-008.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-018.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-020.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-026.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-027.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-028.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-082.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/text_and_size_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/INPUTS.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/brief.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/plan.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-008.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-018.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-020.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-026.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-027.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-028.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-082.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/text_and_size_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/observation-manager.html",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by reviews/confirmation/C-02/treatment/source-review-v1/REVIEW_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/INPUTS.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/brief.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/plan.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-008.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-018.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-020.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-026.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-027.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-028.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-082.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/text_and_size_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/INPUTS.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/brief.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/plan.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-008.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-018.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-020.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-026.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-027.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-028.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-082.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/text_and_size_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/INPUTS.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/brief.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/plan.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-008.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-018.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-020.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-026.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-027.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-028.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-082.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/text_and_size_context.md",
+      "status": "ABSENT_OR_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact path+hash referenced by jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    }
+  ],
+  "explicit_remainders": [
+    "C01 control review not completed/frozen at cutoff; no findings read",
+    "C02 treatment O1 discovery remainder is original HOLD, not both-arm full-source assessed",
+    "METHOD02/04 LASTv2 prospective tasks/configs only; science/reviews excluded",
+    "FAST01 original control critic interrupted, no control final; paired gate incomplete; standalone treatment review separate",
+    "P27 GLM historical witness original absence remains absent; no reconstruction invented",
+    "All after-cutoff writes and all live candidates/reviewer drafts excluded",
+    "Recorded-usage live reader outputs excluded; only immutable completed root C02 telemetry supplement included",
+    "Non-selected logical slots and earlier original versions remain available in BATCH001..005 without replacement"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "observed_at": "2026-10-07T20:25:45.394988+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_a8e1792d-ac4c-4414-912f-dd4897fa071d/state.json",
+  "sha256": "6a95065937927934128021d6ee1110f6bc1938829c6b2a359757301a32f89588",
+  "bytes": 4528,
+  "actual_state": {
+    "objective": "Complete D-M12-A/treatment/protected_breadth_final-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "complete",
+    "rounds": 5,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "Ingest assignment inputs and constraints",
+        "acceptance": "Read INPUT_MAP.json plus the exact original brief/manifest in the job dir; confirm question scope, 6 obligations, brief-only source mode, 25min research + 20:36:55Z hard deadline, no-sibling/no-hints rules | verify: INPUT_MAP.json parsed and constraint notes exist (e.g. `python3 -m json.tool /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/INPUT_MAP.json`)",
+        "status": "done"
+      },
+      {
+        "id": "t2",
+        "title": "Freeze public primary sources",
+        "acceptance": "Select own public primary docs/code on retry/ack semantics (at-least-once delivery, idempotency keys, dedup, outbox, retention/TTL) and \u22651 analogy outside survey competitors; capture exact bytes under jobdir sources/ with URL, version, capture time, SHA-256, locators, index | verify: `ls <jobdir>/sources` shows frozen files; index lists each with URL/version/hash and `sha256sum -c` reproduces recorded hashes",
+        "status": "done"
+      },
+      {
+        "id": "t3",
+        "title": "Analyze mechanisms and challenge the retry-ack assumption",
+        "acceptance": "Work through distinct mechanism families (duplicate/delayed messages, acknowledgment meaning, local retention policy) against the brief's \"retry-until-ack is sufficient\" assumption; produce \u22648 material findings with accepted/amended/rejected/unresolved dispositions including \u22651 negative discovery or uncertainty | verify: findings draft enumerates \u22648 items, each disposition-tagged, obligation coverage checklist shows all 6 addressed",
+        "status": "done"
+      },
+      {
+        "id": "t4",
+        "title": "Author final.md",
+        "acceptance": "Write complete targeted retry/ack + local-retention module recommendation (~1100 words soft), bounded proposed changes with discriminating validation, executed checks vs proposed tests vs inference distinguished, no whole-application plan | verify: `wc -w <jobdir>/final.md` near \u22641100, file names \u22648 findings, all 6 obligations, and dispositions",
+        "status": "done"
+      },
+      {
+        "id": "t5",
+        "title": "Write timings.json and freeze deliverables",
+        "acceptance": "Record actual native clock, source ops, first-useful-saved-finding, output path, known usage (unknown/generated/billing fields null); final source/condition sweep, then stop editing scientific files | verify: `python3 -c \"import json;json.load(open('<jobdir>/timings.json'))\"` succeeds with required keys; final.md, sources/, timings.json all present and untouched after completion",
+        "status": "done"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791403673047,
+    "updatedAt": 1791404669482,
+    "endedReason": "all tickets done"
+  }
+}

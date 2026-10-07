@@ -1,0 +1,36 @@
+{
+  "purpose": "One bounded existing recorded-usage lookup; no synthetic spending probe",
+  "ownership_limit": "Day/account aggregates would not automatically be attributable to campaign arms or sibling work",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ok\":false,\"status\":\"outcome_unknown\",\"error\":{\"code\":\"timeout\",\"message\":\"RPC server.getUsageSummary timed out.\",\"retryable\":false,\"details\":{\"method\":\"server.getUsageSummary\"}},\"source\":{\"adapter\":\"rpc\",\"environmentId\":\"47363713-9592-474c-94b0-8191f32118eb\",\"environmentLabel\":\"ubuntuserver\",\"serverVersion\":\"0.0.46-nightly.20261007.2774\",\"upstreamMethod\":\"server.getUsageSummary\"},\"observedAt\":\"2026-10-07T20:30:52.703Z\"}"
+      }
+    ],
+    "structuredContent": {
+      "ok": false,
+      "status": "outcome_unknown",
+      "error": {
+        "code": "timeout",
+        "message": "RPC server.getUsageSummary timed out.",
+        "retryable": false,
+        "details": {
+          "method": "server.getUsageSummary"
+        }
+      },
+      "source": {
+        "adapter": "rpc",
+        "environmentId": "47363713-9592-474c-94b0-8191f32118eb",
+        "environmentLabel": "ubuntuserver",
+        "serverVersion": "0.0.46-nightly.20261007.2774",
+        "upstreamMethod": "server.getUsageSummary"
+      },
+      "observedAt": "2026-10-07T20:30:52.703Z",
+      "error_code": "INVALID_ARGUMENT"
+    },
+    "isError": true
+  },
+  "measurement_consequence": "Recorded billing/input/cache/generated unavailable from this observation. Native cumulative Goal/context counters remain separate, no cost/quota savings inferred.",
+  "retry": "Upstream reports retryable:false; no repeated probes"
+}

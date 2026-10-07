@@ -1,0 +1,30 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "mode": "async",
+  "role": "research",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "clientRequestId": "er10-I-METHOD-05-treatment-research-topic-b-v1",
+  "record_at": "2026-10-07T20:13:53.208210+00:00",
+  "prospective_stage_deadline": "2026-10-07T20:18:53.208210+00:00",
+  "prospective_arm_deadline": "2026-10-07T20:49:20.932703+00:00",
+  "stage_allowance_seconds": 300,
+  "prior_nonoverlapping_occupied_seconds": 540.734,
+  "aggregate_ceiling_seconds": 2700,
+  "carrier": "ROOT_PROSPECTIVE_CARRIER_V2"
+}

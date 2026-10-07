@@ -1,0 +1,246 @@
+{
+  "schema": "I-METHOD-05-discovery-source-map-v1",
+  "stage": "I-METHOD-05/treatment/discovery-v1",
+  "created_at_utc": "2026-10-07T20:04:46Z",
+  "stage_deadline_utc": "2026-10-07T20:14:20.932703Z",
+  "first_useful_saved_finding": {
+    "path": "sources/discovery-capture.md",
+    "saved_at_utc": "2026-10-07T20:06:47Z",
+    "sha256": "e9bf4052c38ba938949c39be257b5e5165e0c671bf2527ee843b1c39c187d39b"
+  },
+  "full_artifact": {
+    "path": "artifact.md",
+    "completed_at_utc": "2026-10-07T20:13:01Z",
+    "sha256": "4e7c8dfd06f066363dfa4352897569d89b3f37b7c3fe12c72e30d97242427bbc"
+  },
+  "input_boundary": {
+    "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/input-map.json",
+    "brief_read_first": true,
+    "frozen_plan_and_all_listed_source_copies_read_after_broad_discovery": true,
+    "input_hash_check": "sha256sum matched every map-listed input identity; no originals modified",
+    "predecessors": [],
+    "other_arm_or_campaign_inputs_read": false
+  },
+  "input_hashes_observed": {
+    "INPUTS.md": "c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae",
+    "brief.md": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+    "plan.md": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+    "source/F-008.md": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+    "source/F-018.md": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+    "source/F-020.md": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+    "source/F-026.md": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+    "source/F-027.md": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+    "source/F-028.md": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+    "source/F-082.md": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+    "source/definitions_and_transactions.md": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+    "source/editing_and_save_context.md": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+    "source/text_and_size_context.md": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+  },
+  "sources": [
+    {
+      "id": "ropey-1.6.1-source",
+      "topic": [
+        "text-storage",
+        "mixed-line-endings",
+        "large-files"
+      ],
+      "kind": "pinned package source",
+      "version": "ropey 1.6.1",
+      "upstream_commit": "d41ee247f2f097c7f9c8e4730b7dd884734f1ee5",
+      "paths_symbols": [
+        "src/rope.rs: Rope, from_reader, write_to, insert_internal, len_lines, chunks, char/byte/line index conversion",
+        "src/tree/node.rs; src/tree/node_children.rs; src/tree/node_text.rs; src/tree/text_info.rs: B-tree and subtree metrics",
+        "src/crlf.rs: is_break, seam_is_break, find_good_split"
+      ],
+      "governing_and_caller_context": "Rope is Arc<Node>; public edits/read/write call into RopeBuilder, tree nodes, chunk iterators and CRLF boundary helpers. from_reader rejects invalid UTF-8; write_to iterates chunks and may have partially written on error.",
+      "evidence_urls": [
+        "https://docs.rs/crate/ropey/1.6.1/source/src/rope.rs",
+        "https://docs.rs/crate/ropey/1.6.1/source/src/crlf.rs",
+        "https://docs.rs/crate/ropey/1.6.1/source/src/tree/",
+        "https://docs.rs/crate/ropey/1.6.1/source/.cargo_vcs_info.json",
+        "https://docs.rs/crate/ropey/1.6.1/source/Cargo.toml",
+        "https://docs.rs/crate/ropey/1.6.1/source/CHANGELOG.md",
+        "https://github.com/cessen/ropey"
+      ],
+      "limitations": "In-memory UTF-8 data structure, not encoding detection, save transaction, watcher, binary handling, UI virtualization, or F-082 nearest-boundary insertion policy. Release changelog reports a 1.5.1 len_lines RopeSlice/CRLF correction; exact issue-to-regression ancestry was not established for that older bug, so it is not used as the complete history witness."
+    },
+    {
+      "id": "zed-dirty-to-clean-history",
+      "topic": [
+        "external-changes",
+        "dirty-state",
+        "undo"
+      ],
+      "kind": "public issue, merged fix, test and release note",
+      "version": "Zed PR #51037 merged 2026-03-10; release 0.229.0",
+      "paths_symbols": [
+        "crates/language/src/buffer.rs: file_updated, did_edit, ReloadNeeded",
+        "test_dirty_buffer_reloads_after_undo"
+      ],
+      "evidence_urls": [
+        "https://github.com/zed-industries/zed/issues/48697",
+        "https://github.com/zed-industries/zed/pull/51037",
+        "https://github.com/zed-industries/zed/pull/51037/files",
+        "https://zed.dev/releases/stable"
+      ],
+      "history": "Issue describes dirty external update suppressed from reload followed by undo-to-clean leaving stale text. PR checks mtime on dirty-to-clean for present files, adds a regression test, reports 28 checks, merged commit 50aef1f, and release 0.229.0 lists the fix.",
+      "limitations": "Evidence from another editor; mtime and watcher semantics are not universal; not a product default for Puppet Master. PR author reports tests/checks; this stage did not execute them."
+    },
+    {
+      "id": "notify-8.2.0",
+      "topic": [
+        "external-changes",
+        "watchers",
+        "replacement"
+      ],
+      "kind": "versioned crate docs plus issue lead",
+      "version": "notify 8.2.0; issue #247 dates from 2020 / pre-release 5.0.0",
+      "paths_symbols": [
+        "notify crate docs: Known Problems; PollWatcher compare_contents"
+      ],
+      "evidence_urls": [
+        "https://docs.rs/notify/8.2.0/notify/",
+        "https://github.com/notify-rs/notify/issues/247",
+        "https://github.com/notify-rs/notify/releases"
+      ],
+      "limitations": "8.2.0 docs specifically describe NFS and large-watch-set event-loss constraints. Old issue is illustrative only; not evidence of a current notify defect."
+    },
+    {
+      "id": "vscode-working-copies",
+      "topic": [
+        "shared-buffer",
+        "dirty",
+        "recovery"
+      ],
+      "kind": "primary product documentation and upstream design wiki",
+      "version": "VS Code docs/wiki accessed 2026-10-07; wiki is mutable and not commit-pinned",
+      "evidence_urls": [
+        "https://github.com/microsoft/vscode/wiki/Working-Copies",
+        "https://code.visualstudio.com/docs/editing/codebasics",
+        "https://code.visualstudio.com/docs/editing/getting-started/tips-and-tricks",
+        "https://github.com/microsoft/vscode/blob/main/src/vs/workbench/services/workingCopy/electron-browser/workingCopyBackupTracker.ts"
+      ],
+      "limitations": "Analogy only. Wiki/main docs were not pinned to a source commit and do not define Puppet Master's storage or product behavior."
+    },
+    {
+      "id": "crop-alternative",
+      "topic": [
+        "text-storage",
+        "large-files",
+        "indexing"
+      ],
+      "kind": "upstream project README",
+      "version": "crop README accessed 2026-10-07; not commit-pinned",
+      "evidence_urls": [
+        "https://github.com/nomad/crop"
+      ],
+      "limitations": "Alternative lead, not an inspected immutable code implementation. README describes byte offsets, LF/CRLF line metrics and B-tree sharing; require versioned source review before adoption claims."
+    },
+    {
+      "id": "rust-filesystem-contracts",
+      "topic": [
+        "save",
+        "permissions",
+        "atomicity"
+      ],
+      "kind": "official Rust standard-library documentation",
+      "version": "std 1.99.0 docs, commit b940084d7, dated 2026-09-28",
+      "paths_symbols": [
+        "std::fs::rename",
+        "std::fs::Permissions",
+        "std::fs::File",
+        "std::fs module TOCTOU guidance"
+      ],
+      "evidence_urls": [
+        "https://doc.rust-lang.org/std/fs/fn.rename.html",
+        "https://doc.rust-lang.org/nightly/std/fs/struct.Permissions.html",
+        "https://doc.rust-lang.org/std/fs/"
+      ],
+      "limitations": "Cross-platform docs describe differing behavior; target OS/filesystem and metadata/link requirements remain unresolved."
+    },
+    {
+      "id": "tempfile-persist",
+      "topic": [
+        "save",
+        "replacement",
+        "durability"
+      ],
+      "kind": "versioned crate API docs",
+      "version": "tempfile 3.27.0 docs accessed 2026-10-07",
+      "paths_symbols": [
+        "TempPath::persist",
+        "NamedTempFile::persist",
+        "Builder::permissions"
+      ],
+      "evidence_urls": [
+        "https://docs.rs/tempfile/3.27.0/tempfile/struct.TempPath.html",
+        "https://docs.rs/tempfile/3.27.0/tempfile/struct.Builder.html"
+      ],
+      "limitations": "Docs state atomic replacement for persist but do not synchronize file or containing directory before return. Directory, metadata, permissions and target-platform behavior still require explicit decision."
+    },
+    {
+      "id": "slint-long-text-issue",
+      "topic": [
+        "ui",
+        "long-text",
+        "large-files"
+      ],
+      "kind": "upstream issue report",
+      "version": "Issue #8147 reports Slint 1.10 on Windows",
+      "evidence_urls": [
+        "https://github.com/slint-ui/slint/issues/8147"
+      ],
+      "limitations": "Reported issue is not a pinned fix history and applicability to the supplied Slint version or app adapter is unknown."
+    }
+  ],
+  "source_operations": [
+    {
+      "window_utc": "2026-10-07T20:04:46Z/2026-10-07T20:06:31Z",
+      "operation": "Read exact input-map, then full brief; broad web searches for Ropey/crop, Slint, notify, VS Code working copies, Zed external changes, Rust filesystem and tempfile APIs.",
+      "capture": "URLs and version/hash details entered into sources/discovery-capture.md; no source binary downloaded."
+    },
+    {
+      "window_utc": "2026-10-07T20:06:31Z/2026-10-07T20:07:15Z",
+      "operation": "Opened Zed issues/PR, Ropey package history and release, public Rust/notify/tempfile docs, Slint report; recorded source paths/symbols and limitations.",
+      "capture": "Public source summaries saved at 20:06:47Z; immutable Ropey package commit identified via .cargo_vcs_info.json."
+    },
+    {
+      "window_utc": "2026-10-07T20:07:15Z/2026-10-07T20:12:28Z",
+      "operation": "After discovery capture, read complete INPUTS.md, frozen plan, F-008/F-018/F-020/F-026/F-027/F-028/F-082 and all three copied prose files; hashed all map-listed original inputs; inspected versioned Ropey source and Zed release applicability.",
+      "capture": "Input hashes matched the map; comparison authored in artifact.md."
+    }
+  ],
+  "comparison_coverage": {
+    "plan_units": [
+      "F-008",
+      "F-018",
+      "F-020",
+      "F-026",
+      "F-027",
+      "F-028",
+      "F-082"
+    ],
+    "copied_prose": [
+      "definitions_and_transactions.md",
+      "editing_and_save_context.md",
+      "text_and_size_context.md"
+    ],
+    "dispositions": [
+      "retain/already covered",
+      "optional opportunity",
+      "uncertain applicability",
+      "rejected lead",
+      "negative finding"
+    ],
+    "critic_and_final_reviser": "not part of this discovery-stage assignment; remains downstream"
+  },
+  "validation": {
+    "executed_scientific_checks": [],
+    "public_upstream_check_results": "PR #51037 reports 28 checks passing; this is attributed upstream history, not a local execution",
+    "proposed_checks": "listed separately in artifact.md",
+    "build_or_application_validation_claim": false
+  },
+  "unknown_usage": null,
+  "unknown_billing": null,
+  "scientific_sourcepass_or_speed_claim": false
+}

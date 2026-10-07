@@ -1,0 +1,167 @@
+{
+  "map_version": 1,
+  "task": "I-FAST-01/treatment/research-v1",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/research-v1/input-map.json",
+  "discovery_order": {
+    "brief_read_first": true,
+    "first_useful_finding_saved_at_utc": "2026-10-07T20:12:20Z",
+    "plan_first_read_at_utc": "2026-10-07T20:12:27Z"
+  },
+  "hash_policy": "The host computes hashes for captured source bytes; researcher supplied no hash values.",
+  "source_operations": {
+    "web_search_queries": 19,
+    "web_page_open_requests": 25,
+    "web_find_requests": 3,
+    "direct_http_capture_attempts": 26,
+    "direct_http_capture_successes": 24,
+    "direct_http_capture_failures": 2,
+    "read_only_git_reference_lookups": 2,
+    "failures": [
+      {"url": "https://api.github.com/repos/maplibre/maplibre-gl-compare/commits/main", "result": "HTTP 403; not used"},
+      {"url": "https://raw.githubusercontent.com/OSGeo/gdal/226b7732b4672deaf35d6a16a39216047358f7d8/autotest/alg/test_gdaltransformer.py", "result": "HTTP 404; guessed path, not used"}
+    ]
+  },
+  "sources": [
+    {
+      "id": "qgis-georeferencer-docs",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/managing_data_source/georeferencer.html",
+      "accessed_at_utc": "2026-10-07T20:11:51Z (capture completed immediately before this clock read)",
+      "version": "QGIS documentation 3.44",
+      "captured_path": "sources/qgis-3.44-georeferencer.html",
+      "paths_symbols_ranges": [
+        {"path": "user_manual/managing_data_source/georeferencer.html", "symbol": "11.3.1.1 Entering ground control points; Save/Load GCP points", "range": "rendered lines 64-86"},
+        {"path": "user_manual/managing_data_source/georeferencer.html", "symbol": "Available Transformation algorithms; residual behavior", "range": "rendered lines 94-110"},
+        {"path": "user_manual/managing_data_source/georeferencer.html", "symbol": "resampling, output CRS and PDF report with residuals", "range": "rendered lines 111-150"}
+      ],
+      "claim_limit": "Workflow precedent, not evidence of suitability for these scans."
+    },
+    {
+      "id": "maplibre-compare-readme",
+      "url": "https://raw.githubusercontent.com/maplibre/maplibre-gl-compare/fd86addd6a666f833629ae29c4ef09ff36538662/README.md",
+      "accessed_at_utc": "2026-10-07T20:16:10Z",
+      "version": "repository commit fd86addd6a666f833629ae29c4ef09ff36538662 on main at reference lookup",
+      "captured_path": "sources/maplibre-compare-readme-fd86add.md",
+      "paths_symbols_ranges": [
+        {"path": "README.md", "symbol": "MapLibre GL Compare overview; two-map swipe", "range": "lines 180-183"},
+        {"path": "README.md", "symbol": "currentPosition, setSlider, slideend, remove", "range": "lines 209-233"}
+      ],
+      "claim_limit": "Interaction analogue only; no registration or native-desktop implementation evidence."
+    },
+    {
+      "id": "mapwarper-product-home",
+      "url": "https://mapwarper.net/",
+      "accessed_at_utc": "2026-10-07T20:16:10Z",
+      "version": "rolling hosted homepage snapshot; no release identifier exposed",
+      "captured_path": "sources/mapwarper-home-20261007.html",
+      "paths_symbols_ranges": [
+        {"path": "homepage", "symbol": "upload, rectify and download overview", "range": "rendered lines 20-40"},
+        {"path": "homepage", "symbol": "example control-point counts, source/bibliography references, KML downloads", "range": "rendered lines 61-80"}
+      ],
+      "claim_limit": "No privacy, retention or offline guarantee inferred."
+    },
+    {
+      "id": "osm-standard-tile-policy",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "accessed_at_utc": "2026-10-07T20:16:10Z",
+      "version": "rolling policy snapshot; verify at product release",
+      "captured_path": "sources/osm-tile-policy-20261007.html",
+      "paths_symbols_ranges": [
+        {"path": "Tile Usage Policy", "symbol": "attribution, headers and cache requirements", "range": "rendered lines 11-30 and 41-63"},
+        {"path": "Tile Usage Policy", "symbol": "bulk download/offline prohibition and alternatives", "range": "rendered lines 84-104"},
+        {"path": "Tile Usage Policy", "symbol": "policy scope", "range": "rendered lines 121-145"}
+      ],
+      "claim_limit": "Applies to the standard tile.openstreetmap.org service, not all map providers."
+    },
+    {
+      "id": "gdal-issue-12435",
+      "url": "https://github.com/OSGeo/gdal/issues/12435",
+      "accessed_at_utc": "2026-10-07T20:16:10Z",
+      "version": "issue opened 2025-05-21; report states GDAL 3.11",
+      "captured_path": "sources/gdal-issue-12435.html",
+      "paths_symbols_ranges": [
+        {"path": "issue #12435", "symbol": "reproducer and missing diagnostic on invalid GCP_HOMOGRAPHY", "range": "rendered lines 157-182"}
+      ],
+      "claim_limit": "User report; no independent reproduction was run."
+    },
+    {
+      "id": "gdal-pr-12438",
+      "url": "https://github.com/OSGeo/gdal/pull/12438",
+      "accessed_at_utc": "2026-10-07T20:16:10Z",
+      "version": "merged 2025-05-23; head commit eda0ae2b3f428e616d1a16b4f6733ff76f759b83; merged main commit short ef60b9b",
+      "captured_paths": ["sources/gdal-pr-12438.html", "sources/gdal-pr12438.patch"],
+      "paths_symbols_ranges": [
+        {"path": "alg/gdal_homography.cpp", "symbol": "failure diagnostics in GDALCreateHomographyTransformer, GDALGCPsToHomography, GDALInvHomography", "range": "patch hunks around source lines 110-495"},
+        {"path": "autotest/alg/gcps2homography.py", "symbol": "test_gcps2h_broken_hour_glass exception assertions", "range": "patch hunk around test lines 226-253"},
+        {"path": "autotest/alg/homography.py", "symbol": "exception expectation changes", "range": "patch hunks around test lines 43-90"}
+      ],
+      "claim_limit": "Patch and merge record; release applicability is established separately below."
+    },
+    {
+      "id": "gdal-pr-12451-backport",
+      "url": "https://github.com/OSGeo/gdal/pull/12451",
+      "accessed_at_utc": "2026-10-07T20:16:10Z",
+      "version": "merged to release/3.11 on 2025-05-23; backport head f85fcaf; merge commit short 931669d; milestone 3.11.1",
+      "captured_paths": ["sources/gdal-pr-12451.html", "sources/gdal-pr12451.patch"],
+      "paths_symbols_ranges": [
+        {"path": "PR #12451", "symbol": "branch target, merge, relation to #12438 and #12435", "range": "rendered lines 131-185"}
+      ],
+      "claim_limit": "Backport evidence plus tagged source and release notes below; merge alone is not treated as shipped."
+    },
+    {
+      "id": "gdal-v3111-release",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.11.1",
+      "accessed_at_utc": "2026-10-07T20:16:10Z",
+      "version": "v3.11.1 peeled commit 226b7732b4672deaf35d6a16a39216047358f7d8; signed release published 2025-07-01",
+      "captured_paths": ["sources/gdal-release-v3.11.1.html", "sources/gdal-news-226b7732.md"],
+      "paths_symbols_ranges": [
+        {"path": "release page", "symbol": "signed tag and bug-fix release", "range": "rendered lines 151-169"},
+        {"path": "NEWS.md", "symbol": "GDALCreateHomographyTransformer diagnostics (#12435)", "range": "line 37"},
+        {"path": "alg/gdal_homography.cpp", "symbol": "GDALCreateHomographyTransformer and GDALGCPsToHomography", "range": "lines 90-325", "capture": "sources/gdal-homography-226b7732.cpp"},
+        {"path": "alg/gdaltransformer.cpp", "symbol": "GDALCreateGenImgProjTransformer2 GCP method caller", "range": "lines 2187-2395", "capture": "sources/gdal-transformer-226b7732.cpp"},
+        {"path": "autotest/alg/gcps2homography.py", "symbol": "test_gcps2h_broken_hour_glass", "range": "lines 227-248", "capture": "sources/gdal-gcps2homography-test-226b7732.py"}
+      ],
+      "claim_limit": "Historical release inclusion; it does not show the scan app uses this version."
+    },
+    {
+      "id": "gdal-v3133-current-code",
+      "url": "https://github.com/OSGeo/gdal/tree/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "accessed_at_utc": "2026-10-07T20:18:06Z",
+      "version": "v3.13.3 peeled commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc; tag signed; current release as of 2026-10-07",
+      "captured_paths": [
+        "sources/gdal-3133-homography.cpp",
+        "sources/gdal-3133-transformer.cpp",
+        "sources/gdal-3133-gcps2homography-test.py",
+        "sources/gdal-3133-news.md"
+      ],
+      "paths_symbols_ranges": [
+        {"path": "alg/gdal_homography.cpp", "symbol": "GDALCreateHomographyTransformer, GDALGCPsToHomography, GDALCreateHomographyTransformerFromGCPs", "range": "lines 90-325 and 502-523"},
+        {"path": "alg/gdaltransformer.cpp", "symbol": "GDALCreateGenImgProjTransformer2 explicit/default GCP method dispatch and caller", "range": "lines 2187-2450; relevant dispatch around 2390-2440"},
+        {"path": "autotest/alg/gcps2homography.py", "symbol": "test_gcps2h_broken_hour_glass", "range": "lines 227-248"}
+      ],
+      "claim_limit": "Source inspection only; upstream tests were not executed here."
+    },
+    {
+      "id": "gdal-raster-window-reading",
+      "url": "https://github.com/OSGeo/gdal/blob/c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc/doc/source/tutorials/raster_api_tut.rst",
+      "accessed_at_utc": "2026-10-07T20:19:45Z",
+      "version": "GDAL v3.13.3 commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "captured_path": "sources/gdal-raster-api-c8b4c45.rst",
+      "paths_symbols_ranges": [
+        {"path": "doc/source/tutorials/raster_api_tut.rst", "symbol": "GDALRasterBand::RasterIO window reads and reduced output buffer overview use", "range": "lines 226-281"}
+      ],
+      "claim_limit": "API mechanism only; no app performance measurement."
+    },
+    {
+      "id": "gdal-current-release-record",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.13.3",
+      "accessed_at_utc": "2026-10-07T20:19:45Z",
+      "version": "v3.13.3 released 2026-08-18; signed tag commit c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc",
+      "captured_paths": ["sources/gdal-release-v3.13.3-page.html", "sources/gdal-download-page-20261007.html"],
+      "paths_symbols_ranges": [
+        {"path": "release page", "symbol": "latest release, date, signed release commit", "range": "rendered lines 130-180"},
+        {"path": "download page", "symbol": "current release and maintenance policy", "range": "rendered lines 42-46 and 92-109"}
+      ],
+      "claim_limit": "Current on the research date; check again before a real release."
+    }
+  ]
+}

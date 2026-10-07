@@ -1,0 +1,39 @@
+{
+  "stage": "D-M08-A/control/coherent-rewrite-check-final-v3",
+  "native_identity": "01a11818-6063-7311-b6c0-d251d2d0f057",
+  "native_status": "complete",
+  "t3_status": "completed",
+  "quiet": true,
+  "requestedAt": "2026-10-07T20:40:12.950Z",
+  "startedAt": "2026-10-07T20:40:13.548Z",
+  "completedAt": "2026-10-07T20:45:53.931Z",
+  "dispatch_to_delivery_seconds": 340.981,
+  "stage_ceiling_seconds": 1440,
+  "absolute_case_deadline": "2026-10-07T21:08:57.512Z",
+  "budget_delivery_eligible": true,
+  "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/final.md",
+  "output_sha256": "6077e1bc7dc277e4215bcde77a7c55a6de33f38ffd54c4ce1e6e159dac8ead72",
+  "output_bytes": 7319,
+  "scientific_files": {
+    "final.md": {
+      "sha256": "6077e1bc7dc277e4215bcde77a7c55a6de33f38ffd54c4ce1e6e159dac8ead72",
+      "bytes": 7319
+    },
+    "rewrite.md": {
+      "sha256": "6077e1bc7dc277e4215bcde77a7c55a6de33f38ffd54c4ce1e6e159dac8ead72",
+      "bytes": 7319
+    }
+  },
+  "raw_native_goal_counters": {
+    "objective_sha256": "14e0ce13e590d5a0c5405d929b571beac0203ceb90f7abd43ad8a64ef94223a0",
+    "status": "complete",
+    "tokensUsed": 82414,
+    "tokenBudget": null,
+    "timeUsedSeconds": 307
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "source_quality": "UNASSESSED",
+  "scope_audit": "incomplete_unknown; advisorymap notfirewall",
+  "frozen_at": "2026-10-07T20:46:05.832286+00:00"
+}

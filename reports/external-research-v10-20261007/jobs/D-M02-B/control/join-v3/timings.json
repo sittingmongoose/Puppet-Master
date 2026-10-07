@@ -1,0 +1,118 @@
+{
+  "case_id": "D-M02-B",
+  "arm": "control",
+  "role": "join",
+  "stage": "join-v3",
+  "dispatch_preparation_at_utc": "2026-10-07T20:35:14.456179Z",
+  "hard_stage_deadline_utc": "2026-10-07T20:45:14.456179Z",
+  "whole_arm_deadline_utc": "2026-10-07T20:50:50.176861Z",
+  "native_goal": {
+    "thread_id": "01a11813-ebfa-7193-ae79-b1789339db18",
+    "created_at_utc": "2026-10-07T20:35:36Z",
+    "created_at_epoch_seconds": 1791405336,
+    "last_preterminal_observation_at_utc": "2026-10-07T20:42:07Z",
+    "last_preterminal_status": "active"
+  },
+  "operations": [
+    {
+      "operation": "native create_goal",
+      "observed_at_utc": "2026-10-07T20:35:36Z",
+      "result": "fresh Goal created; native state active"
+    },
+    {
+      "operation": "native get_goal active-state read",
+      "observed_at_utc": "2026-10-07T20:35:36Z",
+      "result": "threadId 01a11813-ebfa-7193-ae79-b1789339db18; status active; tokensUsed 0; timeUsedSeconds 0"
+    },
+    {
+      "operation": "activation-only T3 notice",
+      "observed_at_utc_window": [
+        "2026-10-07T20:35:36Z",
+        "2026-10-07T20:35:49Z"
+      ],
+      "result": "accepted; delivery started; included stage and observed Goal identity/state only"
+    },
+    {
+      "operation": "authorized source and predecessor hash check plus first input read attempt",
+      "observed_at_utc": "2026-10-07T20:35:49Z",
+      "result": "all 3 supplied source hashes and both predecessor report hashes matched; brief, source manifest, and windowed-rw capture read; a mistyped resampling path caused the shell read to stop before remaining files; no data changed"
+    },
+    {
+      "operation": "corrected authorized input read",
+      "observed_at_utc": "2026-10-07T20:35:55Z",
+      "result": "resampling and geotransform captures plus both authorized predecessor reports read"
+    },
+    {
+      "operation": "fetch tagged Rasterio 1.3.10 primary source captures",
+      "observed_at_utc_window": [
+        "2026-10-07T20:36:23Z",
+        "2026-10-07T20:36:31Z"
+      ],
+      "result": "_io.pyx, windows.py, and enums.py saved as raw bytes under sources/; hashes and metadata recorded in sources/manifest.json"
+    },
+    {
+      "operation": "hash and text-only inspection of tagged implementation captures",
+      "observed_at_utc_window": [
+        "2026-10-07T20:36:31Z",
+        "2026-10-07T20:37:13Z"
+      ],
+      "result": "source-checked fractional rounding and mode availability; no downloaded code executed"
+    },
+    {
+      "operation": "write additional source capture manifest",
+      "observed_at_utc": "2026-10-07T20:37:13Z",
+      "result": "sources/manifest.json records raw source URLs, release, capture time window, SHA-256, and limits"
+    },
+    {
+      "operation": "write final scientific recommendation",
+      "observed_at_utc": "2026-10-07T20:37:33Z",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/join-v3/final.md",
+      "result": "complete bounded answer covers all six obligations and distinguishes executed witnesses from proposals"
+    },
+    {
+      "operation": "write complete research report",
+      "observed_at_utc": "2026-10-07T20:37:52Z",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/join-v3/report.md",
+      "result": "reconciles predecessor claims and source-checked contradictions"
+    },
+    {
+      "operation": "artifact integrity review",
+      "observed_at_utc": "2026-10-07T20:39:19Z",
+      "result": "final.md 768 words; report.md 957 words; output hashes recorded in session; source manifest parsed as JSON"
+    },
+    {
+      "operation": "latest native get_goal preterminal observation",
+      "observed_at_utc": "2026-10-07T20:42:07Z",
+      "result": "status active; tokensUsed 77133; timeUsedSeconds 373"
+    },
+    {
+      "operation": "finalize timings.json and verify requested artifacts",
+      "observed_at_utc": "2026-10-07T20:42:07Z",
+      "result": "recorded latest preterminal native snapshot; parsed timing/source manifests and recomputed output SHA-256 values before native terminal update"
+    }
+  ],
+  "elapsed_at_last_clock_observation_seconds": 391,
+  "usage": {
+    "native_goal_tokens_used_at_last_preterminal_read": 77133,
+    "native_goal_time_used_seconds_at_last_preterminal_read": 373,
+    "native_goal_final_tokens_used": null,
+    "native_goal_final_time_used_seconds": null,
+    "generated_tokens": null,
+    "billing": null,
+    "provider_token_usage": null,
+    "provider_cost": null,
+    "note": "Native cumulative goal totals are recorded separately and are not generated-token counts or billing. Final native totals were unknown when this required file was written, so they remain null."
+  },
+  "execution_status_at_write": "scientific outputs complete; native Goal still active pending terminal update and verification",
+  "executed": [
+    "SHA-256 checks of three frozen source captures and two predecessor reports",
+    "SHA-256 checks of three additional tagged source captures",
+    "text inspection of captured primary source documentation and implementation"
+  ],
+  "not_executed": [
+    "project code",
+    "raster fixtures or pixel-level checks",
+    "physical I/O measurement",
+    "proposed checks described in report.md and final.md"
+  ]
+}

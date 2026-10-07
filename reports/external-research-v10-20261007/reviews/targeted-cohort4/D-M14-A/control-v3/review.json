@@ -1,0 +1,1851 @@
+{
+  "schema": "independent.source-science-review.v1",
+  "case_id": "D-M14-A",
+  "review_role": "Ordinary fresh advisory review sub-agent under rootreviewcarrier-v2; no own Goal, receipts, delegation or scored-candidate role.",
+  "overall_grade": "FAIL",
+  "overall_grade_basis": "Full declared-scope primary checking completed; two material release/path-condition defects. This is not a localized-only DIAGNOSTIC_FAIL and is not an adoption, cost or winner judgment.",
+  "created_at_utc": "2026-10-07T21:02:41.485326+00:00",
+  "frozen_hash_verification": {
+    "expected_sha256": "0ea2d5d5a4088d56ec4bc077be287fc10761be587e68a064e6f7a93b8d9ae14c",
+    "observed_sha256": "0ea2d5d5a4088d56ec4bc077be287fc10761be587e68a064e6f7a93b8d9ae14c",
+    "matched_before_assessment": true,
+    "first_observed_check_utc": "2026-10-07T20:54:38+00:00",
+    "reverified_before_review_write": true,
+    "report_sha256": "b3f3f375924d4c349e27de44aef0bb71d089ea19de61310104a76f4937950ec7"
+  },
+  "six_axis_dispositions": [
+    {
+      "axis": 1,
+      "name": "All required obligations",
+      "disposition": "FAIL",
+      "rationale": "All six topics are present, but decision conditions and class-label preservation are incomplete because D01/D02 omit consequential released-path guards. Comparison, optional lead, open choices, validation proposals and traceability are present.",
+      "defect_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims and full release/default/type/unit/path/authority conditions",
+      "disposition": "FAIL",
+      "rationale": "All 48 material checks are recorded with exact primary locators and inference labels. D01 contradicts the released mask-selection guards; D02 leaves nearest/native-label guarantees insufficiently conditioned. Other claims are supported or appropriately bounded.",
+      "defect_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Bounded useful discovery, negative and optional yield",
+      "disposition": "PASS",
+      "rationale": "Two coherent alternatives, source limitations, independent validity/area, blockwise option and separate continuous-band lead are useful within one bounded module. Negative claims remain limited to the checked source scope.",
+      "defect_ids": []
+    },
+    {
+      "axis": 4,
+      "name": "Wrong rejection, correction or unjustified abstention",
+      "disposition": "PASS",
+      "rationale": "No preset adoption truth was used. Caller choice follows missing product semantics. The mode warning is explicitly an inference to test, not a false assertion that GDAL definitely ignores masks or a categorical rejection of mode.",
+      "defect_ids": []
+    },
+    {
+      "axis": 5,
+      "name": "Preservation, traceability, uncertainty and options across all mapped views",
+      "disposition": "PASS",
+      "rationale": "The complete mapped authored set is final.md plus report.md, with no mapped indices or other projection views. All six final items and anchors retain authored conditions, alternatives, source IDs/bindings, limits, uncertainties, options and leads through fuller evidence. Traceability does not establish factual correctness.",
+      "defect_ids": []
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed checks",
+      "disposition": "PASS",
+      "rationale": "Fixtures, raster algorithms, area branches and runtime mode behavior are plainly proposed and unexecuted. Reproduced hashes support the capture claims; candidate historical execution is only a self-report because histories are excluded. Reviewer performed source/structure/hash checks only.",
+      "defect_ids": []
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "obligation_id": "O1",
+      "text": "Give a decision with conditions, rather than a universal processing rule.",
+      "disposition": "PARTIAL",
+      "claim_ids": [
+        "C01",
+        "C05",
+        "C07",
+        "C13",
+        "C22",
+        "C31"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02"
+      ],
+      "coverage": "Entire final decision item and its corresponding frozen report evidence reviewed; no authored material view omitted."
+    },
+    {
+      "obligation_id": "O2",
+      "text": "Compare two alternatives under the same brief.",
+      "disposition": "SATISFIED",
+      "claim_ids": [
+        "C01",
+        "C03",
+        "C04",
+        "C06"
+      ],
+      "defect_ids": [],
+      "coverage": "Entire final decision item and its corresponding frozen report evidence reviewed; no authored material view omitted."
+    },
+    {
+      "obligation_id": "O3",
+      "text": "Preserve mask/nodata/class-label distinctions.",
+      "disposition": "PARTIAL",
+      "claim_ids": [
+        "C02",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C15",
+        "C16",
+        "C17",
+        "C21",
+        "C22",
+        "C26"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02"
+      ],
+      "coverage": "Entire final decision item and its corresponding frozen report evidence reviewed; no authored material view omitted."
+    },
+    {
+      "obligation_id": "O4",
+      "text": "Retain source limitations and optional continuous-band opportunity.",
+      "disposition": "SATISFIED",
+      "claim_ids": [
+        "C20",
+        "C28",
+        "C29",
+        "C31",
+        "C32",
+        "C33",
+        "C35",
+        "C38"
+      ],
+      "defect_ids": [],
+      "coverage": "Entire final decision item and its corresponding frozen report evidence reviewed; no authored material view omitted."
+    },
+    {
+      "obligation_id": "O5",
+      "text": "Include validation proposals and open product choices.",
+      "disposition": "SATISFIED",
+      "claim_ids": [
+        "C40",
+        "C41",
+        "C42",
+        "C43",
+        "C44",
+        "C45",
+        "C47"
+      ],
+      "defect_ids": [],
+      "coverage": "Entire final decision item and its corresponding frozen report evidence reviewed; no authored material view omitted."
+    },
+    {
+      "obligation_id": "O6",
+      "text": "Make every decision-view item traceable to full candidate-authored evidence without omitted meaning.",
+      "disposition": "SATISFIED",
+      "claim_ids": [
+        "C46",
+        "C48"
+      ],
+      "defect_ids": [],
+      "coverage": "Entire final decision item and its corresponding frozen report evidence reviewed; no authored material view omitted."
+    }
+  ],
+  "all_consequential_claim_checks": [
+    {
+      "claim_id": "C01",
+      "candidate_locators": [
+        "final.md:3",
+        "final.md:7-10",
+        "report.md:10-12"
+      ],
+      "claim": "Choose nearest for representative-pixel meaning and valid-only majority for footprint-frequency meaning, with explicit caller choice.",
+      "claim_kind": "conditional recommendation",
+      "source_evidence_ids": [
+        "P01",
+        "P05"
+      ],
+      "independent_assessment": "The two product meanings are coherent and compared under the same brief. The nearest implementation guarantee needs the conditions in D02.",
+      "disposition": "SUPPORTED_WITH_MATERIAL_CONDITION_DEFECT",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C02",
+      "candidate_locators": [
+        "final.md:7",
+        "report.md:10"
+      ],
+      "claim": "Nearest preserves a sampled input class ID.",
+      "claim_kind": "algorithm fact applied to pipeline",
+      "source_evidence_ids": [
+        "P01",
+        "P07",
+        "P12"
+      ],
+      "independent_assessment": "True for direct nearest selection from native labels with exact representation. A reduced GDAL read may select an overview whose labels were formed with another method. The authored set never conditions original-ID preservation on native sampling or validated class overviews.",
+      "disposition": "CONDITION_MISSING",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C03",
+      "candidate_locators": [
+        "final.md:7",
+        "report.md:10"
+      ],
+      "claim": "Nearest can omit small classes.",
+      "claim_kind": "mathematical inference",
+      "source_evidence_ids": [
+        "P01"
+      ],
+      "independent_assessment": "A representative sample can miss a minority class lying elsewhere in a footprint. This is a possibility, not a claimed empirical rate.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C04",
+      "candidate_locators": [
+        "final.md:8",
+        "report.md:10"
+      ],
+      "claim": "Valid-only majority means most frequent valid class in the footprint, excluding invalid cells before voting.",
+      "claim_kind": "defined policy and recommendation",
+      "source_evidence_ids": [
+        "P01",
+        "P02",
+        "P05"
+      ],
+      "independent_assessment": "Explicit valid-only counting is a defensible policy. It is not equated with the library mode implementation.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C05",
+      "candidate_locators": [
+        "final.md:8",
+        "report.md:10-12"
+      ],
+      "claim": "Define deterministic ties and any minimum valid coverage; the sources do not choose a read-time tie policy.",
+      "claim_kind": "policy and bounded negative source claim",
+      "source_evidence_ids": [
+        "P01",
+        "P06"
+      ],
+      "independent_assessment": "Neither the mapped enum definitions nor the Rasterio read call supplies a caller policy. The report carefully limits the tie claim to these sources/read(), rather than claiming no GDAL tie behavior exists.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C06",
+      "candidate_locators": [
+        "final.md:8",
+        "report.md:10"
+      ],
+      "claim": "Majority can remove minority classes.",
+      "claim_kind": "mathematical inference",
+      "source_evidence_ids": [
+        "P01"
+      ],
+      "independent_assessment": "A maximum frequency selection need not output any less-frequent contributor class. Exact preservation of rare classes is not promised.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C07",
+      "candidate_locators": [
+        "final.md:8",
+        "report.md:10-12"
+      ],
+      "claim": "Require a caller choice if coarse-label semantics are unspecified.",
+      "claim_kind": "policy recommendation",
+      "source_evidence_ids": [
+        "P01"
+      ],
+      "independent_assessment": "Appropriate unresolved product choice; it retains two usable alternatives and is not an unjustified rejection of both.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C08",
+      "candidate_locators": [
+        "final.md:10",
+        "report.md:12"
+      ],
+      "claim": "There is no generally correct resampling method.",
+      "claim_kind": "source fact",
+      "source_evidence_ids": [
+        "P01"
+      ],
+      "independent_assessment": "Supported as general guide advice. The candidate does not turn interpolation-quality wording into a ranking of categorical policies.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C09",
+      "candidate_locators": [
+        "final.md:10",
+        "report.md:12"
+      ],
+      "claim": "Nearest is the 1.3.10 default; enum mode is most frequent sampled value and read accepts it.",
+      "claim_kind": "release/API fact",
+      "source_evidence_ids": [
+        "P01"
+      ],
+      "independent_assessment": "Confirmed using enum values, read signature, and validate_resampling. Warp/overview enum descriptions are not used alone to assert read support.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C10",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:18-20"
+      ],
+      "claim": "Class IDs, nodata metadata and validity are separate.",
+      "claim_kind": "source-backed modeling recommendation",
+      "source_evidence_ids": [
+        "P02",
+        "P03",
+        "P13"
+      ],
+      "independent_assessment": "Explicit masks can validate stored sentinel-valued data, making value equality an insufficient validity model.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C11",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:18"
+      ],
+      "claim": "read_masks uses zero invalid and nonzero usually 255 valid.",
+      "claim_kind": "type/value convention fact",
+      "source_evidence_ids": [
+        "P02"
+      ],
+      "independent_assessment": "Confirmed including uint8 mask type and nonzero rather than exactly-255 interpretation.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C12",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:18"
+      ],
+      "claim": "NumPy mask sense is inverted.",
+      "claim_kind": "source/API fact",
+      "source_evidence_ids": [
+        "P02",
+        "P06"
+      ],
+      "independent_assessment": "Confirmed: True marks invalid; Rasterio converts GDAL mask to bool and negates it.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C13",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:18"
+      ],
+      "claim": "dataset_mask priority is .msk/alpha/internal, RGBA shadow nodata, nodata-band-OR, otherwise all-valid.",
+      "claim_kind": "documented rule asserted as release behavior",
+      "source_evidence_ids": [
+        "P04",
+        "P03"
+      ],
+      "independent_assessment": "The documentation states this summary, but released code governs via per_dataset and RGBA-like guards then unconditional OR fallback. External per-band masks are a supported case not captured by this summary.",
+      "disposition": "RELEASE_CONDITIONS_INCOMPLETE",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "claim_id": "C14",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:18"
+      ],
+      "claim": "OR means any-band-valid and may differ from class-band or all-required-band validity.",
+      "claim_kind": "source fact and mathematical inference",
+      "source_evidence_ids": [
+        "P05"
+      ],
+      "independent_assessment": "Correct when using the actual OR fallback. The report fails to disclose that this fallback can also operate without nodata (D01).",
+      "disposition": "SUPPORTED_WITH_MATERIAL_CONDITION_DEFECT",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "claim_id": "C15",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:20"
+      ],
+      "claim": "A recognized .msk can override nodata metadata without changing stored values.",
+      "claim_kind": "source fact",
+      "source_evidence_ids": [
+        "P03"
+      ],
+      "independent_assessment": "Confirmed. The per-band/shared-mask distinction affects dataset-wide selection, not this per-band precedence fact.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C16",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:18-20"
+      ],
+      "claim": "Eight-bit nodata can collide with legitimate data; do not reapply sentinel equality over an authoritative chosen mask.",
+      "claim_kind": "source fact and recommendation",
+      "source_evidence_ids": [
+        "P03"
+      ],
+      "independent_assessment": "Confirmed example and mask override. This correctly preserves valid class 0 or another sentinel-valued class where the authoritative mask validates it.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C17",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:20"
+      ],
+      "claim": "Choose class-band, dataset-wide, or all-required-band validity deliberately; normally read_masks(class_band).",
+      "claim_kind": "policy recommendation",
+      "source_evidence_ids": [
+        "P05"
+      ],
+      "independent_assessment": "Appropriate choice exposure. Defaulting the validity source to the class band is a stated recommendation, not a library default.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C18",
+      "candidate_locators": [
+        "final.md:16",
+        "report.md:22"
+      ],
+      "claim": "Rasterio resamples values and masks separately then applies the output mask.",
+      "claim_kind": "released call-path fact",
+      "source_evidence_ids": [
+        "P06"
+      ],
+      "independent_assessment": "Supported for ordinary bounded reads with non-all-valid masks. All-valid skips mask I/O and boundless windows use VRT paths, but still construct masking separately. No universal kernel outcome is established.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C19",
+      "candidate_locators": [
+        "final.md:16",
+        "report.md:22"
+      ],
+      "claim": "The value I/O call has no explicit source validity-array argument.",
+      "claim_kind": "released call-signature fact",
+      "source_evidence_ids": [
+        "P06",
+        "P14"
+      ],
+      "independent_assessment": "Confirmed. GDAL receives a handle that can supply nodata/masks internally, so lack of an array argument must not be read as proof they are ignored.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C20",
+      "candidate_locators": [
+        "final.md:16",
+        "report.md:22"
+      ],
+      "claim": "Do not assume masked=True mode excludes invalid sentinels from its vote; verify on the pinned runtime.",
+      "claim_kind": "explicit implementation-based inference",
+      "source_evidence_ids": [
+        "P06",
+        "P14"
+      ],
+      "independent_assessment": "Acceptable bounded uncertainty. It does not claim mode certainly includes invalid values or falsely reject the API. There is no supplied deployed runtime to settle its exact behavior.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C21",
+      "candidate_locators": [
+        "final.md:16",
+        "report.md:22"
+      ],
+      "claim": "For majority, filter native-resolution values with the chosen mask before aggregation.",
+      "claim_kind": "algorithm proposal",
+      "source_evidence_ids": [
+        "P02",
+        "P05",
+        "P06"
+      ],
+      "independent_assessment": "Correct by construction for the defined valid-only policy, preserving mask precedence without relying on an unverified library mode vote.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C22",
+      "candidate_locators": [
+        "final.md:16",
+        "report.md:22"
+      ],
+      "claim": "For nearest, read/sample class and mask with the same nearest policy.",
+      "claim_kind": "implementation recommendation",
+      "source_evidence_ids": [
+        "P07",
+        "P12"
+      ],
+      "independent_assessment": "Necessary geometric sampling consistency is sound, but same resampler name does not ensure native source provenance or compatible overview masks/labels.",
+      "disposition": "CONDITION_MISSING",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C23",
+      "candidate_locators": [
+        "final.md:20",
+        "report.md:28"
+      ],
+      "claim": "On aligned footprints, valid_fraction = valid_count/source_count from native mask.",
+      "claim_kind": "mathematical derivation",
+      "source_evidence_ids": [
+        "P02",
+        "P08"
+      ],
+      "independent_assessment": "For the report explicit aligned integer-factor same-area case, denominator is the complete contributing source-cell count. This is correctly separated from coarse-label validity.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C24",
+      "candidate_locators": [
+        "final.md:20",
+        "report.md:28"
+      ],
+      "claim": "Aligned equal-area valid area is sum(fraction times target area), equivalent to count times source-cell area.",
+      "claim_kind": "mathematical derivation",
+      "source_evidence_ids": [
+        "P08",
+        "P09"
+      ],
+      "independent_assessment": "If each target cell partitions N whole equal-area source cells of area a, target area is Na, hence (valid_count/N)Na=valid_count*a. Aggregation requires no overlapping/double-counted target footprints; the authored aligned-grid context provides the intended partition.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C25",
+      "candidate_locators": [
+        "final.md:20",
+        "report.md:28"
+      ],
+      "claim": "A valid nearest/modal class does not make the entire target footprint valid area.",
+      "claim_kind": "mathematical inference",
+      "source_evidence_ids": [
+        "P05",
+        "P08"
+      ],
+      "independent_assessment": "One label is not a contributor-count/coverage statistic. Supported independently of the mode runtime caveat.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C26",
+      "candidate_locators": [
+        "final.md:20",
+        "report.md:28"
+      ],
+      "claim": "Keep no-valid-contributor results invalid; partial-coverage cutoff is a choice.",
+      "claim_kind": "policy recommendation",
+      "source_evidence_ids": [
+        "P02",
+        "P05"
+      ],
+      "independent_assessment": "Explicit mask/count policy correctly distinguishes no contributors from optional coverage thresholds and output encoding.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C27",
+      "candidate_locators": [
+        "final.md:22",
+        "report.md:30"
+      ],
+      "claim": "Affine planar cell area is abs(GT1*GT5-GT2*GT4).",
+      "claim_kind": "explicit mathematical derivation",
+      "source_evidence_ids": [
+        "P08"
+      ],
+      "independent_assessment": "The source defines edge vectors (GT1,GT4) and (GT2,GT5). Their absolute determinant is parallelogram coordinate area, including rotation and negative north-up height.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C28",
+      "candidate_locators": [
+        "final.md:22",
+        "report.md:30"
+      ],
+      "claim": "The determinant is squared coordinate units, not automatically physical ground area.",
+      "claim_kind": "mathematical inference and source limitation",
+      "source_evidence_ids": [
+        "P08",
+        "P09"
+      ],
+      "independent_assessment": "Correct for geographic degrees as well as projected coordinates with a non-equal-area model. No universal square-meter claim is made.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C29",
+      "candidate_locators": [
+        "final.md:22",
+        "report.md:30"
+      ],
+      "claim": "Use an appropriate equal-area or geodesic area model for physical ground area.",
+      "claim_kind": "scientific recommendation",
+      "source_evidence_ids": [
+        "P08",
+        "P09"
+      ],
+      "independent_assessment": "Supported by primary geodesic/equal-area descriptions. Choosing ellipsoid, units and cell-edge model is expressly left open; no specific software runtime/method is promised.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C30",
+      "candidate_locators": [
+        "final.md:22",
+        "report.md:30"
+      ],
+      "claim": "For unaligned/reprojected footprints use actual overlap weighting.",
+      "claim_kind": "geometric inference",
+      "source_evidence_ids": [
+        "P08",
+        "P09"
+      ],
+      "independent_assessment": "Whole-cell counts no longer represent each contribution fraction; overlap areas are needed under the chosen physical or planar area model. Reprojection itself does not make planar area physical.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C31",
+      "candidate_locators": [
+        "final.md:22",
+        "report.md:30"
+      ],
+      "claim": "Unknown CRS/area semantics justify reporting coverage or grid units only.",
+      "claim_kind": "bounded reporting recommendation",
+      "source_evidence_ids": [
+        "P08",
+        "P09"
+      ],
+      "independent_assessment": "Useful uncertainty-preserving output, not blanket abstention. Area-model choice remains unresolved rather than silently invented.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C32",
+      "candidate_locators": [
+        "final.md:26",
+        "report.md:36"
+      ],
+      "claim": "Average is an optional mean-like continuous-band opportunity.",
+      "claim_kind": "conditional recommendation",
+      "source_evidence_ids": [
+        "P10"
+      ],
+      "independent_assessment": "Confirmed weighted-average definition and continuous-band context. This is a lead to evaluate, not a claim every external-mask/read path already implements the desired statistic.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C33",
+      "candidate_locators": [
+        "final.md:26",
+        "report.md:36"
+      ],
+      "claim": "Bilinear/cubic are optional choices for a smooth continuous surface.",
+      "claim_kind": "conditional recommendation",
+      "source_evidence_ids": [
+        "P10"
+      ],
+      "independent_assessment": "The guide explicitly considers them better suited to continuous data; smooth interpolation remains different from a conservation or band-specific statistic.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C34",
+      "candidate_locators": [
+        "final.md:26",
+        "report.md:36"
+      ],
+      "claim": "Do not apply those continuous interpolation choices to class IDs.",
+      "claim_kind": "categorical-semantics recommendation",
+      "source_evidence_ids": [
+        "P01",
+        "P10"
+      ],
+      "independent_assessment": "Linear/smooth numerical combinations of label identifiers are not the stated categorical policies. This reasoning is correct; pre-existing unsuitable overviews also need to be excluded (D02).",
+      "disposition": "SUPPORTED_WITH_MATERIAL_CONDITION_DEFECT",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C35",
+      "candidate_locators": [
+        "final.md:26",
+        "report.md:36"
+      ],
+      "claim": "Sources describe behavior but do not choose scientific band meaning, validity scope, tie rule, coverage threshold or area model.",
+      "claim_kind": "bounded negative source-scope claim",
+      "source_evidence_ids": [
+        "P01",
+        "P05",
+        "P08",
+        "P10"
+      ],
+      "independent_assessment": "Full relevant primary reading confirms these missing product definitions. This does not assert such choices are unknowable or no other primary source can exist.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C36",
+      "candidate_locators": [
+        "final.md:34",
+        "report.md:38"
+      ],
+      "claim": "Native-resolution validity/vote accumulation may be blockwise; windows can bound application memory.",
+      "claim_kind": "implementation option and source fact",
+      "source_evidence_ids": [
+        "P11"
+      ],
+      "independent_assessment": "Chunked source reads with accumulation preserve the defined counts when contributions are retained correctly. The candidate proposes parity validation and does not claim measured memory or performance.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C37",
+      "candidate_locators": [
+        "final.md:34",
+        "report.md:38"
+      ],
+      "claim": "Small reads can fetch whole storage blocks.",
+      "claim_kind": "I/O source fact",
+      "source_evidence_ids": [
+        "P11"
+      ],
+      "independent_assessment": "Confirmed. Requested window dimensions are not minimum disk/network I/O dimensions.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C38",
+      "candidate_locators": [
+        "report.md:38"
+      ],
+      "claim": "Unchunked input may require whole-dataset I/O even for a tiny window.",
+      "claim_kind": "I/O source limitation",
+      "source_evidence_ids": [
+        "P11"
+      ],
+      "independent_assessment": "Confirmed and retained in fuller linked evidence; the shorter final wording does not erase the limitation.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C39",
+      "candidate_locators": [
+        "final.md:34",
+        "report.md:38"
+      ],
+      "claim": "Block shapes can differ by band; verify shared block-window assumptions.",
+      "claim_kind": "source fact and conservative proposal",
+      "source_evidence_ids": [
+        "P11"
+      ],
+      "independent_assessment": "Confirmed. The advice concerns blockwise processing assumptions and efficiency; it is not an unsupported claim that any shared geometric window is forbidden.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C40",
+      "candidate_locators": [
+        "final.md:30",
+        "report.md:44"
+      ],
+      "claim": "Propose a fixture with valid ID 0, separate sentinel, conflicting .msk and per-band masks.",
+      "claim_kind": "validation proposal",
+      "source_evidence_ids": [
+        "P02",
+        "P03",
+        "P04",
+        "P05"
+      ],
+      "independent_assessment": "Useful mask/label discrimination test. It is not executed. It should expose D01 if it includes the supported unshared external-mask branch, but the prose does not resolve that branch today.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C41",
+      "candidate_locators": [
+        "final.md:30",
+        "report.md:44"
+      ],
+      "claim": "Propose hand-computed nearest/majority, ties, rare classes, partial coverage and all-invalid cases.",
+      "claim_kind": "validation proposal",
+      "source_evidence_ids": [
+        "P01",
+        "P02",
+        "P05"
+      ],
+      "independent_assessment": "Appropriate for label and contributor policy. No pass is claimed; stored overview provenance is not included in the proposal, leaving D02 unaddressed.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C42",
+      "candidate_locators": [
+        "final.md:30",
+        "report.md:44"
+      ],
+      "claim": "Propose exact area counts, rotated affine and geographic grids.",
+      "claim_kind": "validation proposal",
+      "source_evidence_ids": [
+        "P08",
+        "P09"
+      ],
+      "independent_assessment": "Appropriate for the determinant and physical-area branch, contingent on selecting the area model/CRS and expected values.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C43",
+      "candidate_locators": [
+        "final.md:30",
+        "report.md:44"
+      ],
+      "claim": "Propose blockwise/in-memory parity and runtime-specific mode/nodata/external-mask checks.",
+      "claim_kind": "validation proposal",
+      "source_evidence_ids": [
+        "P06",
+        "P11"
+      ],
+      "independent_assessment": "Appropriate. Exact Rasterio/GDAL runtime is still to be recorded; no tested runtime result can be inferred.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C44",
+      "candidate_locators": [
+        "final.md:34",
+        "report.md:46"
+      ],
+      "claim": "Leave point/majority, tie, coverage, mask scope and summary granularity open.",
+      "claim_kind": "product-choice record",
+      "source_evidence_ids": [
+        "P01",
+        "P05",
+        "P08"
+      ],
+      "independent_assessment": "Every listed choice is retained between the final item and evidence report; library prose does not choose these product meanings.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C45",
+      "candidate_locators": [
+        "final.md:34",
+        "report.md:46"
+      ],
+      "claim": "Leave CRS, physical-area method, units, sentinel encoding and continuous method open.",
+      "claim_kind": "product-choice record",
+      "source_evidence_ids": [
+        "P02",
+        "P03",
+        "P08",
+        "P09",
+        "P10"
+      ],
+      "independent_assessment": "Explicit scientific/output choices appropriately preserved. Sentinel encoding must accommodate valid sentinel-valued classes, as the candidate mask separation already recognizes.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C46",
+      "candidate_locators": [
+        "report.md:54-59"
+      ],
+      "claim": "S1-S6 register URLs, versions, capture paths, sizes, hashes and primary locators.",
+      "claim_kind": "provenance claim",
+      "source_evidence_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P06",
+        "P08",
+        "P10",
+        "P11"
+      ],
+      "independent_assessment": "All six full files independently byte-match their stated official tagged raw URLs and mapped SHA-256/length. Candidate-selected implementation captures were not accepted solely on their manifest. Versioned rendered-page URLs were not all availability-checked; the independently fetched raw URLs supply accessible exact bytes.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C47",
+      "candidate_locators": [
+        "final.md:30",
+        "report.md:61"
+      ],
+      "claim": "Only hashes/source captures were executed; raster algorithms and proposed fixtures were not.",
+      "claim_kind": "execution self-report",
+      "source_evidence_ids": [
+        "P01",
+        "P06"
+      ],
+      "independent_assessment": "Reviewer reproduced capture/hash consistency and found no authored claim of raster validation passing. Candidate historical operations cannot be independently attested without forbidden run-history access; this limitation is explicit.",
+      "disposition": "CONSISTENT_SELF_REPORT_WITH_PROVENANCE_LIMIT",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C48",
+      "candidate_locators": [
+        "final.md:3-34",
+        "report.md:6-61"
+      ],
+      "claim": "Every final decision item links to fuller authored evidence and primary bindings.",
+      "claim_kind": "preservation/traceability claim",
+      "source_evidence_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P08",
+        "P10",
+        "P11"
+      ],
+      "independent_assessment": "All six named anchors resolve in the frozen report and all S1-S6 IDs bind to checked primary files. Authored source conditions, alternatives, uncertainties and proposals survive the final-to-report linkage. Primary scientific errors D01/D02 remain even when traceability itself passes.",
+      "disposition": "SUPPORTED",
+      "defect_ids": []
+    }
+  ],
+  "source_evidence": [
+    {
+      "evidence_id": "P01",
+      "primary_locators": [
+        {
+          "source_id": "S2",
+          "line_start": 53,
+          "line_end": 68
+        },
+        {
+          "source_id": "S3",
+          "line_start": 48,
+          "line_end": 100
+        },
+        {
+          "source_id": "S4",
+          "line_start": 438,
+          "line_end": 485
+        },
+        {
+          "source_id": "S4",
+          "line_start": 57,
+          "line_end": 68
+        }
+      ],
+      "stated_source_facts": "The resampling guide supplies no generally correct method. Resampling enum defines nearest as default, mode as most frequent sampled value, and average as weighted non-NODATA average. read() and read_masks() default to nearest; validate_resampling accepts mode=6. The enum is framed as warp/overview algorithms; read availability is checked in released implementation.",
+      "limits": "Descriptions do not select categorical product meaning, arbitrary caller tie policy, validity scope, coverage threshold, or a physical-area model. GDAL 3.9 tutorial capture does not identify the deployed GDAL runtime."
+    },
+    {
+      "evidence_id": "P02",
+      "primary_locators": [
+        {
+          "source_id": "S1",
+          "line_start": 7,
+          "line_end": 15
+        },
+        {
+          "source_id": "S1",
+          "line_start": 49,
+          "line_end": 79
+        },
+        {
+          "source_id": "S1",
+          "line_start": 185,
+          "line_end": 216
+        },
+        {
+          "source_id": "S4",
+          "line_start": 742,
+          "line_end": 780
+        },
+        {
+          "source_id": "S4",
+          "line_start": 836,
+          "line_end": 849
+        },
+        {
+          "source_id": "A7",
+          "line_start": 24,
+          "line_end": 29
+        }
+      ],
+      "stated_source_facts": "GDAL masks are byte arrays with zero invalid and nonzero valid, usually 255. NumPy masked-array True means invalid. read_masks() uses uint8 output and the docs give the inverse-mask identity.",
+      "limits": "Resampled mask values need not be exclusively 0/255; source-native binary validity is interpreted with nonzero, not equality to 255."
+    },
+    {
+      "evidence_id": "P03",
+      "primary_locators": [
+        {
+          "source_id": "S1",
+          "line_start": 85,
+          "line_end": 92
+        },
+        {
+          "source_id": "S1",
+          "line_start": 111,
+          "line_end": 124
+        },
+        {
+          "source_id": "S1",
+          "line_start": 175,
+          "line_end": 183
+        },
+        {
+          "source_id": "A7",
+          "line_start": 75,
+          "line_end": 110
+        }
+      ],
+      "stated_source_facts": "Eight-bit data can contain legitimate values rounded to the metadata nodata sentinel. A recognized external .msk overrides nodata-derived masks without altering values or nodata metadata. RFC15 permits per-dataset one-band masks and per-band multi-band sidecars, with mask flags stored per band.",
+      "limits": "Recognized mask storage and flags matter. Existence of any .msk does not imply a single mask shared by every band."
+    },
+    {
+      "evidence_id": "P04",
+      "primary_locators": [
+        {
+          "source_id": "S1",
+          "line_start": 219,
+          "line_end": 236
+        },
+        {
+          "source_id": "S4",
+          "line_start": 1038,
+          "line_end": 1076
+        },
+        {
+          "source_id": "S3",
+          "line_start": 167,
+          "line_end": 172
+        },
+        {
+          "source_id": "A7",
+          "line_start": 56,
+          "line_end": 70
+        },
+        {
+          "source_id": "A7",
+          "line_start": 102,
+          "line_end": 110
+        }
+      ],
+      "stated_source_facts": "The topic guide documents .msk/alpha/internal-mask, RGBA shadow-nodata, nodata-OR, then all-valid precedence. Actual 1.3.10 dataset_mask() first tests MaskFlags.per_dataset on band 1 and returns read_masks(1); otherwise it tests count==4 and first color interpretation red and returns read_masks(4); otherwise it OR-reduces read_masks() for all bands. The fallback has no nodata-present test.",
+      "limits": "Documentation summary is not an exact specification of released branch guards. Per-band masks can enter the OR fallback without nodata; all-valid is a consequence of all-valid component masks, not a separately coded nodata-absence branch."
+    },
+    {
+      "evidence_id": "P05",
+      "primary_locators": [
+        {
+          "source_id": "S1",
+          "line_start": 141,
+          "line_end": 159
+        },
+        {
+          "source_id": "S1",
+          "line_start": 219,
+          "line_end": 236
+        },
+        {
+          "source_id": "S4",
+          "line_start": 1061,
+          "line_end": 1076
+        }
+      ],
+      "stated_source_facts": "A manually constructed intersection of band masks differs from the dataset-mask OR fallback. Per-band and per-dataset validity are distinct APIs and policies.",
+      "limits": "Whether any-band, class-band, or all-required-bands validity is scientifically correct is a product choice."
+    },
+    {
+      "evidence_id": "P06",
+      "primary_locators": [
+        {
+          "source_id": "S4",
+          "line_start": 120,
+          "line_end": 162
+        },
+        {
+          "source_id": "S4",
+          "line_start": 208,
+          "line_end": 215
+        },
+        {
+          "source_id": "S4",
+          "line_start": 221,
+          "line_end": 283
+        },
+        {
+          "source_id": "S4",
+          "line_start": 633,
+          "line_end": 676
+        },
+        {
+          "source_id": "S4",
+          "line_start": 678,
+          "line_end": 734
+        },
+        {
+          "source_id": "S4",
+          "line_start": 966,
+          "line_end": 978
+        }
+      ],
+      "stated_source_facts": "Ordinary bounded read resamples values through _read, reads/resamples masks separately if needed, inverts the masks and constructs a masked array. All-valid can bypass mask I/O. Boundless-window reads use VRT branches. Value calls pass a dataset/band handle and resampling arguments to GDAL; no explicit validity array is passed in this Rasterio call.",
+      "limits": "This does not prove GDAL ignores a mask or nodata known to the source handle. It does not establish mode-vote behavior on an unspecified driver, overview path, and GDAL runtime. Boundless mask paths have different defaults from the ordinary bounded path."
+    },
+    {
+      "evidence_id": "P07",
+      "primary_locators": [
+        {
+          "source_id": "S4",
+          "line_start": 438,
+          "line_end": 485
+        },
+        {
+          "source_id": "S4",
+          "line_start": 528,
+          "line_end": 578
+        },
+        {
+          "source_id": "S4",
+          "line_start": 603,
+          "line_end": 629
+        },
+        {
+          "source_id": "S4",
+          "line_start": 653,
+          "line_end": 662
+        },
+        {
+          "source_id": "S4",
+          "line_start": 742,
+          "line_end": 780
+        },
+        {
+          "source_id": "S4",
+          "line_start": 857,
+          "line_end": 903
+        }
+      ],
+      "stated_source_facts": "Rasterio uses native band dtype by default, permits output dtype/shape conversion, and passes each values/mask request onward. For ordinary bounded nearest requests, values and masks receive the same nearest argument.",
+      "limits": "Same algorithm name is not proof of original-pixel provenance, compatible stored overviews, arbitrary requested dtype exactness, or every boundless path."
+    },
+    {
+      "evidence_id": "P08",
+      "primary_locators": [
+        {
+          "source_id": "S6",
+          "line_start": 9,
+          "line_end": 32
+        }
+      ],
+      "stated_source_facts": "The geotransform maps pixel/line coordinates to projected or geographic coordinates using linear coefficients GT(1), GT(2), GT(4), GT(5); the corner is (0,0) and the first center is (0.5,0.5).",
+      "limits": "The tutorial supplies an affine coordinate transform, not physical-area units, an ellipsoid, or an equal-area guarantee. Determinant and coverage formulae are mathematical derivations by the author/reviewer."
+    },
+    {
+      "evidence_id": "P09",
+      "primary_locators": [
+        {
+          "source_id": "A1",
+          "line_start": 9,
+          "line_end": 18
+        },
+        {
+          "source_id": "A1",
+          "line_start": 70,
+          "line_end": 78
+        },
+        {
+          "source_id": "A1",
+          "line_start": 144,
+          "line_end": 152
+        },
+        {
+          "source_id": "A2",
+          "line_start": 4,
+          "line_end": 20
+        }
+      ],
+      "stated_source_facts": "PROJ describes ellipsoidal geodesics and geodesic polygon area in square meters, including pole adjustment. Its LAEA documentation identifies spherical/ellipsoidal equal-area projection forms and projected output.",
+      "limits": "Supplemental science check only. Exact ellipsoid, pixel-edge model, CRS, units and distortion treatment remain unspecified; no claim that a four-corner geodesic polygon is automatically the exact area of every geographic raster cell."
+    },
+    {
+      "evidence_id": "P10",
+      "primary_locators": [
+        {
+          "source_id": "S2",
+          "line_start": 62,
+          "line_end": 68
+        },
+        {
+          "source_id": "S3",
+          "line_start": 53,
+          "line_end": 66
+        }
+      ],
+      "stated_source_facts": "The guide recommends considering bilinear/cubic for continuous data and mentions average for retaining numerical properties. The enum calls average weighted non-NODATA average.",
+      "limits": "No band-specific scientific statistic is selected, and enum/warp wording alone does not establish the read-time handling of an arbitrary external mask."
+    },
+    {
+      "evidence_id": "P11",
+      "primary_locators": [
+        {
+          "source_id": "S5",
+          "line_start": 6,
+          "line_end": 15
+        },
+        {
+          "source_id": "S5",
+          "line_start": 57,
+          "line_end": 66
+        },
+        {
+          "source_id": "S5",
+          "line_start": 185,
+          "line_end": 191
+        },
+        {
+          "source_id": "S5",
+          "line_start": 221,
+          "line_end": 251
+        }
+      ],
+      "stated_source_facts": "Windows enable chunked application processing. Disk/network reads can fetch complete storage chunks; unchunked inputs can require whole-dataset I/O for a tiny window. Bands can have different block layouts; the guide recommends checking layout assumptions.",
+      "limits": "Bounded requested arrays do not guarantee bounded underlying I/O. Identical block shape is an efficiency/iteration assumption, not a general prohibition on accessing the same geometric window in different bands."
+    },
+    {
+      "evidence_id": "P12",
+      "primary_locators": [
+        {
+          "source_id": "A6",
+          "line_start": 124,
+          "line_end": 169
+        },
+        {
+          "source_id": "A4",
+          "line_start": 280,
+          "line_end": 289
+        },
+        {
+          "source_id": "A5",
+          "line_start": 103,
+          "line_end": 114
+        },
+        {
+          "source_id": "A5",
+          "line_start": 125,
+          "line_end": 131
+        },
+        {
+          "source_id": "S4",
+          "line_start": 120,
+          "line_end": 215
+        },
+        {
+          "source_id": "S4",
+          "line_start": 966,
+          "line_end": 978
+        }
+      ],
+      "stated_source_facts": "Released GDAL RasterIO API documentation says reduced reads can select lower-resolution overview bands, with default selection conditions and a 3.9 threshold change. gdal_translate documents independent overview selection and forcing base resolution; average is a distinct aggregation operation. Rasterio forwards reads to GDAL without an overview-provenance guard in this path.",
+      "limits": "gdal_translate CLI options are not presented as Rasterio options. GDAL 3.9 is a concrete released counterexample for source conditions, not an assertion about an observed installed runtime. Only API documentation comments from the released C++ source were retained."
+    },
+    {
+      "evidence_id": "P13",
+      "primary_locators": [
+        {
+          "source_id": "A4",
+          "line_start": 203,
+          "line_end": 215
+        },
+        {
+          "source_id": "S4",
+          "line_start": 528,
+          "line_end": 578
+        },
+        {
+          "source_id": "S4",
+          "line_start": 603,
+          "line_end": 629
+        }
+      ],
+      "stated_source_facts": "Raster bands include datatype, nodata metadata and optional masks separately. Rasterio defaults output dtype to the source band; GDAL documents limitations of some UInt64/Int64 operations using floating intermediates.",
+      "limits": "No specific candidate input dtype/range or actual precision-loss result was supplied. No independent defect is assigned for hypothetical output dtype conversions."
+    },
+    {
+      "evidence_id": "P14",
+      "primary_locators": [
+        {
+          "source_id": "A3",
+          "line_start": 25,
+          "line_end": 111
+        },
+        {
+          "source_id": "A3",
+          "line_start": 113,
+          "line_end": 129
+        }
+      ],
+      "stated_source_facts": "RFC51 documents the resampling selector in RasterIO extra arguments, relation to overview algorithms, and some palette-related fallbacks.",
+      "limits": "This API description still does not prove the mode mask/nodata behavior of a particular runtime. Palette-related fallbacks do not independently invalidate the candidate optional continuous-band lead."
+    }
+  ],
+  "primary_source_registry": [
+    {
+      "id": "S1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "version": "Rasterio 1.3.10",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "bytes": 9114,
+      "independent_exact_byte_match": true,
+      "capture_check_at_utc": "2026-10-07T20:55:39.886022+00:00",
+      "limit": "Static source identity only; no imported/executed source; immutable tag resolution/commit identity not independently resolved.",
+      "manifest_source_id": "rastermask",
+      "manifest_version_or_capture": "Rasterio 1.3.10",
+      "manifest_capture_date_utc": "2026-10-07",
+      "candidate_source_id": "S1"
+    },
+    {
+      "id": "S2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+      "version": "Rasterio 1.3.10",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "bytes": 2267,
+      "independent_exact_byte_match": true,
+      "capture_check_at_utc": "2026-10-07T20:55:39.887573+00:00",
+      "limit": "Static source identity only; no imported/executed source; immutable tag resolution/commit identity not independently resolved.",
+      "manifest_source_id": "rasterresample",
+      "manifest_version_or_capture": "Rasterio 1.3.10",
+      "manifest_capture_date_utc": "2026-10-07",
+      "candidate_source_id": "S2"
+    },
+    {
+      "id": "S5",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+      "version": "Rasterio 1.3.10",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+      "bytes": 8035,
+      "independent_exact_byte_match": true,
+      "capture_check_at_utc": "2026-10-07T20:55:39.889125+00:00",
+      "limit": "Static source identity only; no imported/executed source; immutable tag resolution/commit identity not independently resolved.",
+      "manifest_source_id": "rasterwindow",
+      "manifest_version_or_capture": "Rasterio 1.3.10",
+      "manifest_capture_date_utc": "2026-10-07",
+      "candidate_source_id": "S5"
+    },
+    {
+      "id": "S6",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version": "GDAL 3.9.0",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "bytes": 1713,
+      "independent_exact_byte_match": true,
+      "capture_check_at_utc": "2026-10-07T20:55:39.890506+00:00",
+      "limit": "Static source identity only; no imported/executed source; immutable tag resolution/commit identity not independently resolved.",
+      "manifest_source_id": "geotransform",
+      "manifest_version_or_capture": "GDAL 3.9.0",
+      "manifest_capture_date_utc": "2026-10-07",
+      "candidate_source_id": "S6"
+    },
+    {
+      "id": "S4",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/sources/rasterio-1.3.10-_io.pyx",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "version": "Rasterio 1.3.10",
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "bytes": 86415,
+      "independent_exact_byte_match": true,
+      "capture_check_at_utc": "2026-10-07T20:55:39.891638+00:00",
+      "limit": "Static source identity only; no imported/executed source; immutable tag resolution/commit identity not independently resolved.",
+      "manifest_source_id": null,
+      "manifest_version_or_capture": null,
+      "manifest_capture_date_utc": null,
+      "candidate_source_id": "S4"
+    },
+    {
+      "id": "S3",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/sources/rasterio-1.3.10-enums.py",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+      "version": "Rasterio 1.3.10",
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "bytes": 5550,
+      "independent_exact_byte_match": true,
+      "capture_check_at_utc": "2026-10-07T20:55:39.892922+00:00",
+      "limit": "Static source identity only; no imported/executed source; immutable tag resolution/commit identity not independently resolved.",
+      "manifest_source_id": null,
+      "manifest_version_or_capture": null,
+      "manifest_capture_date_utc": null,
+      "candidate_source_id": "S3"
+    },
+    {
+      "id": "A1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/proj-9.4.0-geodesic.rst",
+      "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.4.0/docs/source/geodesic.rst",
+      "version": "PROJ 9.4.0",
+      "captured_at_utc": "2026-10-07T20:56:26.818597+00:00",
+      "http_status": 200,
+      "bytes": 7738,
+      "sha256": "bc448262ca3b2bbc172d4bb574a0485c639cafa8da596711361a8a906c54d71f",
+      "elapsed_seconds": 0.16725597299955552,
+      "cache_headers": {
+        "Cache-Control": "max-age=300",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0"
+      },
+      "limit": "Static documentation; not evidence for the unspecified deployed GDAL or PROJ runtime.",
+      "retained_artifact_sha256": "bc448262ca3b2bbc172d4bb574a0485c639cafa8da596711361a8a906c54d71f",
+      "locator_basis": "Original raw primary-source lines. For A6 these are retained API documentation comments with original line numbers, not web-renderer line numbers."
+    },
+    {
+      "id": "A2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/proj-9.4.0-laea.rst",
+      "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.4.0/docs/source/operations/projections/laea.rst",
+      "version": "PROJ 9.4.0",
+      "captured_at_utc": "2026-10-07T20:56:26.987057+00:00",
+      "http_status": 200,
+      "bytes": 1923,
+      "sha256": "c61df73c56e561cd6f58f141b01a722f1eb3b8861b5feacabf36d12bbbc92a28",
+      "elapsed_seconds": 0.13780580400270992,
+      "cache_headers": {
+        "Cache-Control": "max-age=300",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0"
+      },
+      "limit": "Static documentation; not evidence for the unspecified deployed GDAL or PROJ runtime.",
+      "retained_artifact_sha256": "c61df73c56e561cd6f58f141b01a722f1eb3b8861b5feacabf36d12bbbc92a28",
+      "locator_basis": "Original raw primary-source lines. For A6 these are retained API documentation comments with original line numbers, not web-renderer line numbers."
+    },
+    {
+      "id": "A3",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-rfc51.rst",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/development/rfc/rfc51_rasterio_resampling_progress.rst",
+      "version": "GDAL 3.9.0",
+      "captured_at_utc": "2026-10-07T20:56:27.125163+00:00",
+      "http_status": 200,
+      "bytes": 10835,
+      "sha256": "6769c39a8bc5ac2c7dac90e29ac0f3cd1f5ccc2fcfebc4f8fe479db8f49c0905",
+      "elapsed_seconds": 0.13212109899905045,
+      "cache_headers": {
+        "Cache-Control": "max-age=300",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0"
+      },
+      "limit": "Static documentation; not evidence for the unspecified deployed GDAL or PROJ runtime.",
+      "retained_artifact_sha256": "6769c39a8bc5ac2c7dac90e29ac0f3cd1f5ccc2fcfebc4f8fe479db8f49c0905",
+      "locator_basis": "Original raw primary-source lines. For A6 these are retained API documentation comments with original line numbers, not web-renderer line numbers."
+    },
+    {
+      "id": "A4",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-raster_data_model.rst",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/user/raster_data_model.rst",
+      "version": "GDAL 3.9.0",
+      "captured_at_utc": "2026-10-07T20:56:27.257748+00:00",
+      "http_status": 200,
+      "bytes": 19304,
+      "sha256": "8fc2bb5fa1f23d1e1c25f5b2175b1d878d3bd973004c352dca98a8c8304db92e",
+      "elapsed_seconds": 0.16814782599976752,
+      "cache_headers": {
+        "Cache-Control": "max-age=300",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0"
+      },
+      "limit": "Static documentation; not evidence for the unspecified deployed GDAL or PROJ runtime.",
+      "retained_artifact_sha256": "8fc2bb5fa1f23d1e1c25f5b2175b1d878d3bd973004c352dca98a8c8304db92e",
+      "locator_basis": "Original raw primary-source lines. For A6 these are retained API documentation comments with original line numbers, not web-renderer line numbers."
+    },
+    {
+      "id": "A5",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-gdal_translate.rst",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/programs/gdal_translate.rst",
+      "version": "GDAL 3.9.0",
+      "captured_at_utc": "2026-10-07T20:57:22.273020+00:00",
+      "http_status": 200,
+      "bytes": 18022,
+      "sha256": "5c582ce394add555bee6593f5accef12a8b3dbe412eecff80081e1cd7cae8707",
+      "retained_artifact_sha256": "5c582ce394add555bee6593f5accef12a8b3dbe412eecff80081e1cd7cae8707",
+      "elapsed_seconds": 0.12069030200291309,
+      "cache_headers": {
+        "Cache-Control": "max-age=300",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0"
+      },
+      "limit": "Capture-pinned API documentation; not a claim about the deployed GDAL runtime.",
+      "locator_basis": "Original raw primary-source lines. For A6 these are retained API documentation comments with original line numbers, not web-renderer line numbers."
+    },
+    {
+      "id": "A6",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-rasterio-api-documentation.json",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdalrasterband.cpp",
+      "version": "GDAL 3.9.0",
+      "captured_at_utc": "2026-10-07T20:57:22.394502+00:00",
+      "http_status": 200,
+      "bytes": 329681,
+      "sha256": "984a2fb02108d2c45b05225b8afe601486dc3d559af7cbea36488a848e348797",
+      "retained_artifact_sha256": "bfb6c35af94a607a2c3a20150e4f3e19a92497f3e5befeeb2df5703e44c50bf3",
+      "elapsed_seconds": 0.1263094669993734,
+      "cache_headers": {
+        "Cache-Control": "max-age=300",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0"
+      },
+      "limit": "Capture-pinned API documentation; not a claim about the deployed GDAL runtime.",
+      "documentation_excerpt_capture_at_utc": "2026-10-07T20:58:27.733321+00:00",
+      "documentation_excerpt_refetch_elapsed_seconds": 0.0661998030009272,
+      "locator_basis": "Original raw primary-source lines. For A6 these are retained API documentation comments with original line numbers, not web-renderer line numbers."
+    },
+    {
+      "id": "A7",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-rfc15.rst",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/development/rfc/rfc15_nodatabitmask.rst",
+      "version": "GDAL 3.9.0",
+      "captured_at_utc": "2026-10-07T20:57:51.848899+00:00",
+      "http_status": 200,
+      "bytes": 7646,
+      "sha256": "4c326c13b339f243d78eabaf8d2bca12e10f07b28947a669e3984c98f7d042f4",
+      "elapsed_seconds": 0.11457679500017548,
+      "cache_headers": {
+        "Cache-Control": "max-age=300",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0"
+      },
+      "limit": "Mask storage/flags contract; no dataset fixtures executed.",
+      "retained_artifact_sha256": "4c326c13b339f243d78eabaf8d2bca12e10f07b28947a669e3984c98f7d042f4",
+      "locator_basis": "Original raw primary-source lines. For A6 these are retained API documentation comments with original line numbers, not web-renderer line numbers."
+    }
+  ],
+  "defects": [
+    {
+      "defect_id": "D01",
+      "identity": "dataset_mask_release_guards_not_preserved",
+      "severity": "material",
+      "candidate_locators": [
+        "final.md:14",
+        "report.md:18"
+      ],
+      "claim_ids": [
+        "C13",
+        "C14"
+      ],
+      "source_evidence_ids": [
+        "P03",
+        "P04",
+        "P05"
+      ],
+      "finding": "The final presents the topic-guide mask-precedence summary as the Rasterio dataset-mask rule, and the report retains only that documented summary despite also capturing the governing 1.3.10 implementation. The implementation selects a first-band shared mask only when the first mask has per_dataset, uses a count==4/first-color-red branch next, and otherwise OR-reduces all band masks without testing nodata. A .msk can contain separate per-band masks, so its existence alone does not establish a single dataset-wide mask.",
+      "consequence": "For a supported two-band dataset with no nodata and unshared external band masks, an invalid class-band pixel can be dataset-valid because another band mask is valid. A caller relying on the authored .msk/nodata guards may misunderstand when any-band OR occurs and select or summarize the wrong validity plane. This is within the brief external-mask and multiband-validity scope.",
+      "static_counterexample": {
+        "conditions": [
+          "Two bands; not the four-band/red branch",
+          "Recognized multi-band .msk with per-band flags lacking per_dataset",
+          "No nodata metadata",
+          "At one source cell class-band mask=0 and other-band mask=255"
+        ],
+        "released_call_path": "S4 lines 1061-1076 enters logical_or.reduce(read_masks()) and returns 255 at that cell.",
+        "executed": false,
+        "basis": "Direct released branch logic plus RFC15 supported external-mask contract; no fixture or downloaded source was executed."
+      },
+      "scope_of_correction": "Distinguish the documented summary from the released flag/branch guards, including per-band external masks and OR fallback regardless of nodata. The useful recommendation to select validity deliberately remains sound.",
+      "materiality_rationale": "The missing conditions govern which pixels enter class votes and valid-area counts; they are not formatting or an unrequested whole-application feature."
+    },
+    {
+      "defect_id": "D02",
+      "identity": "nearest_native_label_provenance_condition_missing",
+      "severity": "material",
+      "candidate_locators": [
+        "final.md:7",
+        "final.md:16",
+        "report.md:10",
+        "report.md:22"
+      ],
+      "claim_ids": [
+        "C01",
+        "C02",
+        "C22",
+        "C34"
+      ],
+      "source_evidence_ids": [
+        "P07",
+        "P12"
+      ],
+      "finding": "The authored set promises that nearest preserves a sampled input class ID and recommends reading class and mask with the same nearest policy, without qualifying native-resolution provenance or existing overviews. GDAL reduced reads can select an already aggregated overview; selecting nearest at read time does not undo that aggregation.",
+      "consequence": "A native class raster containing only IDs 1 and 3 can have an average overview with value 2. A nearest reduced read selecting that overview can return 2, outside the native class-ID set, and cannot establish the stated representative native-pixel semantics. This is a mathematical/static counterexample, not an executed Rasterio result. Class/mask overview provenance can also differ, so a common resampling enum alone is insufficient for a native source pair.",
+      "static_counterexample": {
+        "conditions": [
+          "Reduced RasterIO request at an available overview resolution",
+          "Source class band has an overview created by numerical averaging",
+          "Overview value is representable in the band dtype"
+        ],
+        "reasoning": "Equal contributions of native IDs 1 and 3 yield average overview value 2; nearest sampling from that overview preserves 2, not an original native class ID.",
+        "executed": false,
+        "basis": "Released RasterIO API overview-selection documentation and average semantics. The actual deployed driver/GDAL runtime was not supplied or exercised."
+      },
+      "scope_of_correction": "Make nearest/native-ID and representative-pixel guarantees conditional on native sampling or validated class-preserving overview provenance and compatible validity sampling. No specific configuration command is prescribed or executed.",
+      "materiality_rationale": "The guarantee is central to one of the two alternatives. The missing condition can create a different label and product meaning; it is not a request for optimization or application expansion."
+    }
+  ],
+  "decision_view_preservation": [
+    {
+      "decision_id": "M1",
+      "decision_locator": "final.md:5-10",
+      "authored_evidence_id": "E1",
+      "authored_evidence_locator": "report.md:6-12",
+      "source_ids": [
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "meaning_retained": [
+        "nearest versus majority semantics",
+        "invalid filtering",
+        "ties and minimum coverage",
+        "minority/rare-class loss",
+        "caller choice",
+        "no universal method and read tie prescription"
+      ],
+      "disposition": "PRESERVED"
+    },
+    {
+      "decision_id": "M2",
+      "decision_locator": "final.md:12-16",
+      "authored_evidence_id": "E2",
+      "authored_evidence_locator": "report.md:14-22",
+      "source_ids": [
+        "S1",
+        "S4"
+      ],
+      "meaning_retained": [
+        "class/nodata/validity distinction",
+        "mask sense",
+        "documented precedence and OR meaning",
+        "external-mask override",
+        "sentinel collision",
+        "deliberate validity source",
+        "separate value/mask call-path inference",
+        "native majority and matched nearest",
+        "runtime uncertainty"
+      ],
+      "disposition": "PRESERVED",
+      "science_defect_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "decision_id": "M3",
+      "decision_locator": "final.md:18-22",
+      "authored_evidence_id": "E3",
+      "authored_evidence_locator": "report.md:24-30",
+      "source_ids": [
+        "S1",
+        "S6"
+      ],
+      "meaning_retained": [
+        "native mask",
+        "aligned integer-factor same-area condition in full evidence",
+        "fractions and total area",
+        "no-valid contributors",
+        "coverage choice",
+        "affine determinant",
+        "coordinate units",
+        "physical-area limits",
+        "overlap/CRS caveats"
+      ],
+      "disposition": "PRESERVED"
+    },
+    {
+      "decision_id": "M4",
+      "decision_locator": "final.md:24-26",
+      "authored_evidence_id": "E4",
+      "authored_evidence_locator": "report.md:32-38",
+      "source_ids": [
+        "S2",
+        "S3"
+      ],
+      "meaning_retained": [
+        "continuous-band lead is optional",
+        "average versus bilinear/cubic meaning",
+        "categorical exclusion",
+        "band-specific science not supplied",
+        "source limits",
+        "window option retained via full report and M6"
+      ],
+      "disposition": "PRESERVED"
+    },
+    {
+      "decision_id": "M5",
+      "decision_locator": "final.md:28-30",
+      "authored_evidence_id": "E5",
+      "authored_evidence_locator": "report.md:40-46",
+      "source_ids": [
+        "S1",
+        "S4",
+        "S5",
+        "S6"
+      ],
+      "meaning_retained": [
+        "proposed not executed",
+        "mask/sentinel fixture",
+        "nearest/majority hand expectations",
+        "ties/rare/partial/all-invalid",
+        "exact area/rotated/geographic cases",
+        "block parity",
+        "exact runtime and mode probe",
+        "only source checks executed"
+      ],
+      "disposition": "PRESERVED"
+    },
+    {
+      "decision_id": "M6",
+      "decision_locator": "final.md:32-34",
+      "authored_evidence_id": "E5 and E4",
+      "authored_evidence_locator": "report.md:38-46",
+      "source_ids": [
+        "S5"
+      ],
+      "meaning_retained": [
+        "point versus majority",
+        "tie and threshold",
+        "validity scope",
+        "per-cell/aggregate/per-class summary",
+        "CRS/model/units",
+        "invalid encoding",
+        "continuous method",
+        "block layouts and whole-block reads",
+        "unchunked full-I/O caveat in linked fuller evidence"
+      ],
+      "disposition": "PRESERVED"
+    }
+  ],
+  "assessment_extent": {
+    "status": "FULL_DECLARED_SCOPE",
+    "primarychecking_complete": true,
+    "consequential_claim_count": 48,
+    "authored_views_checked": [
+      "final.md (all 34 lines)",
+      "report.md (all 61 lines)"
+    ],
+    "mapped_source_count": 6,
+    "mapped_capture_indices": [],
+    "required_complete_arm_artifacts_checked": [
+      "report.md"
+    ],
+    "source_read_extent": "All four mapped topic/tutorial documents; full enum capture and complete relevant released read/value/mask/dataset-mask call paths, including branches beyond candidate-selected locator ranges. Entire mapped files hashed and independently byte-compared to official tagged raw URLs. Unrelated write/statistics implementation is not a new subject of this bounded module. Supplemental primary checks cover geometry, external-mask flags and overview conditions.",
+    "unassessed_remainder": [],
+    "outside_requested_assessment": [
+      "Executing proposed raster/runtime fixtures",
+      "Observing an unspecified installed GDAL driver/runtime or actual input raster",
+      "Attesting historical candidate operation logs or billing",
+      "Unmapped drafts, predecessors, other arms/cases, helper/campaign history and reviews",
+      "Checking every unrelated API and every future scientific use of the libraries"
+    ],
+    "scope_closed_early": true,
+    "deadline_expired": false
+  },
+  "blinding_and_provenance_limits": [
+    "The control and narrative_full_final-v3 path components and method/job text are visible; this was not fully method/arm blinded. No comparison arm, cost, winner, speed target, parent analysis, grades or prior findings were read.",
+    "Only supplied brief/manifest/map, the exact frozen final/report, mapped primary captures and bounded additional official primary material were substantive inputs. T3 metadata was read solely to determine this delegated run requestedAt and parent delivery identity.",
+    "Candidate-selected source identities/locators were untrusted until independent official raw-byte comparison and released call-path checking. Hash matches alone were not treated as SourcePASS.",
+    "Tagged raw URL retrieval establishes captured content identity at the recorded time, not independent Git-tag/commit attestation or every rendered documentation URL availability.",
+    "The four-source manifest capture date is source metadata; exact bytes were verified today. Historical candidate capture/check operations cannot be independently established without forbidden histories.",
+    "Additional GDAL 3.9/PROJ 9.4 documentation is capture-pinned supplemental science evidence, not a claim that those are the actual deployed runtimes.",
+    "GDAL mode mask behavior is explicitly unresolved by the authored set; review does not turn a missing explicit mask argument into proof of mask ignorance.",
+    "No downloaded project source or raster fixture was installed, imported or executed; newly fetched C++ retained material is API documentation comments only. No accounts, purchases, third-party writes, repo/canon/WorkNode edits or global config changes occurred."
+  ],
+  "artifact_provenance": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+      "sha256": "d10480e11e371410f596396f8c8562696b41277991e3e3297b9b122bac051f0d",
+      "bytes": 1793,
+      "lines": 16
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+      "sha256": "c4cd37441e9285345615faa390d283d0284003fec14639b99e9ac3627b70e6f0",
+      "bytes": 2108,
+      "lines": 44
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/INPUT_MAP.json",
+      "sha256": "39c8cf618211f1c22a9126d4da6d3bd3b08b2ae9bca6a1a397f146e1679ae62c",
+      "bytes": 4235,
+      "lines": 72
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/final.md",
+      "sha256": "0ea2d5d5a4088d56ec4bc077be287fc10761be587e68a064e6f7a93b8d9ae14c",
+      "bytes": 5338,
+      "lines": 34
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/report.md",
+      "sha256": "b3f3f375924d4c349e27de44aef0bb71d089ea19de61310104a76f4937950ec7",
+      "bytes": 11022,
+      "lines": 61
+    }
+  ],
+  "deadline": {
+    "t3_requested_at": "2026-10-07T20:54:29.213Z",
+    "t3_started_at": "2026-10-07T20:54:29.882Z",
+    "user_deadline_utc": "2026-10-07T21:14:04.949343+00:00",
+    "requested_at_plus_20min": "2026-10-07T21:14:29.213Z",
+    "effective_deadline_utc": "2026-10-07T21:14:04.949343+00:00"
+  },
+  "delivery": {
+    "method": "T3 thread_send accepted by parent, followed by automatic delegated-task final delivery",
+    "parent_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort4-v1",
+    "pending_children": 0,
+    "explicit_delivery_status": "started",
+    "parent_message_id": "message:mcp:2f4fa5d9-eb74-4950-b10c-ff3f05021170:thread-send:er10-cohort4-D-M14-A-control-v3-review-delivery-20261007",
+    "acceptance_observed_at_utc": "2026-10-07T21:04:38+00:00"
+  },
+  "candidate_artifacts_mutated": false,
+  "candidate_grades_mutated": false,
+  "cost_or_winner_judgment": null,
+  "records_finalized_at_utc": "2026-10-07T21:05:02.111376+00:00"
+}

@@ -1,0 +1,22 @@
+{
+  "frozen_at": "2026-10-07T19:49:05.897137+00:00",
+  "hashes": {
+    "locks/confirmation-selection.json": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a",
+    "helpers/passive-receipts/ROOT_ADMISSION_V2.json": "6f0be4322b0292d7bef25b92f728435c89b29d650ca4c66a5e3f7b8ae700f4bb",
+    "helpers/passive-receipts/PROSPECTIVE_CARRIER_V2.md": "42d94f8f92aead30f4527029e534d97e016d0df24df8fd62744e44aa433ac4da",
+    "helpers/passive-receipts/export.py": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8",
+    "helpers/passive-receipts/README.md": "7e61493bd232ba69a1ab1faf56202f4c3536ff8b81c76f0331ef507aa3203519",
+    "state/review-carrier-prospective-v2.json": "6aa6da047427091780ae135e71f2caf36a9482b8b940a72d2eb03c3b095e73a9",
+    "packet/ER10_T3_EXECUTE_HANDOFF.md": "4c7ab3438c32b8fef5682f9cb718998792a233dda1b5a51fc9061778083e4787"
+  },
+  "supervisor_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+  "candidates_must_notify_exact_parent_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+  "native_evidence_policy": {
+    "projection_is_not_raw_response": true,
+    "missing_createdAt_and_API_bodies_remain_missing": true,
+    "strong_nativeThreadRef_and_actual_config_required": true,
+    "active_and_terminal_snapshots_separate": true,
+    "no_task_id_inference": true
+  },
+  "scoped_exporter_plan": "Reuse admitted passive exporter functions with only exact own dispatch authority and scoped outputs. Do not execute original main, read root checkpoint, or write global passive index."
+}

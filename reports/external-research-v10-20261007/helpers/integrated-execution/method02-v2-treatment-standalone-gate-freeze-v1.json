@@ -1,0 +1,17 @@
+{
+  "schema": "er10.standalone.complete.quiet.gate.v1",
+  "case": "I-METHOD-02",
+  "attempt": "v2",
+  "record_at": "2026-10-07T21:12:49.800415+00:00",
+  "authority": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/I-METHOD-02-v2-treatment-only-diagnostic-gate-exception-v1.json",
+  "authority_sha256": "5069c27af50bdfe75633fb310fafa4a23f6093d4847c78cf33134d5e5b282928",
+  "all_exact_pair_tasks_quiet": true,
+  "current_statuses": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-v2-standalone-diagnostic-current-quiet-v1.json",
+  "full_final_carrier_present": true,
+  "actual_final_native_terminal": "complete",
+  "final_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/frozen-delivery.json",
+  "source_judgment": null,
+  "paired_comparison": "HOLD",
+  "control_full_final": "UNASSESSED",
+  "prior_lifecycle_holds_unchanged": true
+}

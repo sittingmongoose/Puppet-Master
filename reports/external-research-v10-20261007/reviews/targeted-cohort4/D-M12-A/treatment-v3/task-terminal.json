@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M12-A-treatment-source-review-v3",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M12-A-treatment-source-review-v3",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M12-A-treatment-source-review-v3:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M12-A-treatment-source-review-v3",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M12-A-treatment-source-review-v3:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "**FAIL — full declared scope assessed.** Hash verified; 50 claim checks completed. T3 delivery accepted; no pending children.\n\n- [review.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.md)\n- [review.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/timings.json)",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M12-A-treatment-source-review-v3:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:b57d6649-cbdf-46a0-9858-7beb5c261fe6",
+  "providerInstanceId": "codex_gmail",
+  "model": "gpt-6.1-sol",
+  "summary": "**FAIL — full declared scope assessed.** Hash verified; 50 claim checks completed. T3 delivery accepted; no pending children.\n\n- [review.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.md)\n- [review.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/timings.json)",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M12-A-treatment-source-review-v3:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:b57d6649-cbdf-46a0-9858-7beb5c261fe6",
+  "waitTimedOut": false
+}

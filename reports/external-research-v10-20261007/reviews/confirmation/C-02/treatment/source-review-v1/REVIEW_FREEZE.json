@@ -1,0 +1,2018 @@
+{
+  "schema": "pm.er10.source6-review-freeze.v1",
+  "review_kind": "one fresh ordinary independent FULL declared Source6 primary-source review; finite one round",
+  "reviewer": {
+    "provider": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "service_tier": "priority",
+    "named_account": "sittingmongoose@gmail.com",
+    "identity_basis": "User-declared; no credentials inspected"
+  },
+  "final_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/artifact.md",
+  "original_scientific_grade": {
+    "status": "HOLD",
+    "reason": "Required O1 discovery ordering remains independently unassessed in admitted evidence. D-01 and D-02 are confirmed material findings ruling out PASS independently of that uncertainty.",
+    "immutable_original": true
+  },
+  "full_declared_scope_assessed": false,
+  "coverage": {
+    "six_axes_examined": true,
+    "all_plan_section_ids_compared": true,
+    "plan_section_ids": [
+      "A-P1",
+      "A-P2",
+      "A-P3",
+      "A-P4",
+      "A-P5",
+      "A-P6",
+      "A-P7"
+    ],
+    "unassessed_declared_scope": [
+      {
+        "obligation": "O1",
+        "element": "Historical discovery before narrowing to frozen-plan defects",
+        "evidence_ref": "E16",
+        "reason": "Only candidate narrative/preservation assertions admitted; no independent ordering record."
+      }
+    ],
+    "material_claims_checked": "Consequential claims in the final and scientific preservation from its sole predecessor were examined against fresh standards, pinned code/tests, schema and history."
+  },
+  "axes": [
+    {
+      "id": "S1",
+      "name": "full brief obligations",
+      "status": "HOLD",
+      "assessed_evidence_refs": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16"
+      ],
+      "defect_refs": [
+        "D-01",
+        "D-02"
+      ],
+      "unassessed_refs": [
+        "E16"
+      ]
+    },
+    {
+      "id": "S2",
+      "name": "consequential source claims and governing conditions",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E13"
+      ],
+      "defect_refs": [
+        "D-01"
+      ]
+    },
+    {
+      "id": "S3",
+      "name": "useful open discovery coverage/options/analogies/components/history",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "E02",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12"
+      ],
+      "defect_refs": [],
+      "limitation_refs": [
+        "L04",
+        "L05"
+      ]
+    },
+    {
+      "id": "S4",
+      "name": "incorrect rejection/correction",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "E05",
+        "E06",
+        "E09",
+        "E13"
+      ],
+      "defect_refs": [],
+      "caveat_refs": [
+        "N01",
+        "N02",
+        "N03"
+      ]
+    },
+    {
+      "id": "S5",
+      "name": "preservation of constraints, options, source identity, corrections and uncertainty into final",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "E01",
+        "E02",
+        "E09",
+        "E11",
+        "E12",
+        "E13",
+        "E15"
+      ],
+      "defect_refs": [
+        "D-02"
+      ]
+    },
+    {
+      "id": "S6",
+      "name": "proposed versus actually performed validation",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "E14"
+      ],
+      "defect_refs": [],
+      "limitation_refs": [
+        "L03"
+      ]
+    }
+  ],
+  "obligations": {
+    "O1": {
+      "status": "HOLD",
+      "evidence_refs": [
+        "E02",
+        "E16"
+      ],
+      "reason": "Discovery content assessed; required historical ordering remains independently unverified from admitted evidence."
+    },
+    "O2": {
+      "status": "PASS",
+      "evidence_refs": [
+        "E02",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E10",
+        "E11"
+      ],
+      "reason": "Substantially different mechanisms, competing components, analogies, trade-offs and conditions provided."
+    },
+    "O3": {
+      "status": "FAIL",
+      "evidence_refs": [
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E10",
+        "E11"
+      ],
+      "defect_refs": [
+        "D-01"
+      ]
+    },
+    "O4": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence_refs": [
+        "E08",
+        "E09",
+        "E12"
+      ],
+      "reason": "Pinned code/test/release inspection supports stated current contracts; issue fix applicability explicitly withheld. Optional WCS evidence loss is assessed under preservation.",
+      "limitation_refs": [
+        "L04",
+        "L05"
+      ]
+    },
+    "O5": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence_refs": [
+        "E15"
+      ],
+      "defect_refs": [
+        "D-01",
+        "D-02"
+      ],
+      "reason": "All exact frozen section dispositions complete; governing-condition and optional evidence defects remain."
+    },
+    "O6": {
+      "status": "FAIL",
+      "evidence_refs": [
+        "E02",
+        "E12",
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "defect_refs": [
+        "D-02"
+      ],
+      "reason": "Integrated decisions, checks and uncertainty present, but scientific preservation into final incomplete."
+    },
+    "O7": {
+      "status": "PASS",
+      "evidence_refs": [
+        "E01",
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "reason": "Required integrated workflow categories and research-only exclusions retained."
+    }
+  },
+  "material_defects": [
+    {
+      "id": "D-01",
+      "severity": "material",
+      "kind": "missing governing data-semantics condition",
+      "claim": "For FITS DATE-OBS ... do not infer UTC if absent or ambiguous.",
+      "candidate_locators": [
+        "critic-v1/artifact.md:13,39,58,90",
+        "critic-v1/preservation_check.md:O3"
+      ],
+      "plan_sections": [
+        "A-P2"
+      ],
+      "evidence_refs": [
+        "E04"
+      ],
+      "primary_source_refs": [
+        "R05"
+      ],
+      "factual_reason": "FITS 4.0 documents a missing-TIMESYS UTC default. The proposal conflates absent explicit scale with unavailable format interpretation, without labeling a stricter normalization abstention.",
+      "scope_boundary": "No scientific correctness, reliable clock or unmodified-header guarantee follows from the format default."
+    },
+    {
+      "id": "D-02",
+      "severity": "material",
+      "kind": "loss of optional scientific evidence and source identity",
+      "claim": "Full scientific preservation is asserted while the final retains only a generic optional WCS lead.",
+      "predecessor_locators": [
+        "researcher-v1/artifact.md:43-49,64,66,75,86",
+        "researcher-v1/source-map.json:S02-S09,S30"
+      ],
+      "candidate_locators": [
+        "critic-v1/artifact.md:58,60,81,93",
+        "critic-v1/source-map.json:entire source array",
+        "critic-v1/preservation_check.md:conditions/corrections and O6"
+      ],
+      "plan_sections": [
+        "A-P2",
+        "A-P4",
+        "A-P7"
+      ],
+      "evidence_refs": [
+        "E12",
+        "E15"
+      ],
+      "primary_source_refs": [
+        "R27",
+        "R28",
+        "R29",
+        "R30",
+        "R31",
+        "R32",
+        "R33",
+        "R34",
+        "R36",
+        "R37",
+        "R38",
+        "R39",
+        "R40",
+        "R41",
+        "R44"
+      ],
+      "factual_reason": "Astropy pinned identity, pixel-center/axis/origin specifics, issue identities and the unmerged PR/released-code distinction are absent from final scientific delivery without an adjudication retiring them.",
+      "scope_boundary": "Material to full declared scientific preservation; immediate non-WCS minimum workflow remains unaffected. Not a source-count requirement."
+    }
+  ],
+  "nonmaterial_caveats": [
+    {
+      "id": "N01",
+      "evidence_refs": [
+        "E05"
+      ],
+      "text": "RFC permits already-applied success but also a stricter stale-rejection policy. Final is a valid refinement, not proof prior rejection was impermissible."
+    },
+    {
+      "id": "N02",
+      "evidence_refs": [
+        "E13"
+      ],
+      "text": "Final describes prior transaction as publishing staged files; predecessor actually names publication of the import record. Journal remains useful without a proven prior cross-store guarantee."
+    },
+    {
+      "id": "N03",
+      "evidence_refs": [
+        "E06"
+      ],
+      "text": "Directory versus ZIP wrapper is a profile choice. No categorical standard prohibition of serializing a compliant directory was established. Algorithm requirements remain to be profiled; no tool selected."
+    },
+    {
+      "id": "N04",
+      "evidence_refs": [
+        "E01",
+        "E12"
+      ],
+      "text": "Source IDs are renumbered between stages despite final map calling identities stable within arm. Stage qualification resolves local citations; lost WCS evidence itself is D-02."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "blinding",
+      "text": "Paths and artifact titles expose treatment/researcher/critic stage structure. No counterpart, expected winner or earlier independent review accessed or inferred."
+    },
+    {
+      "id": "L02",
+      "kind": "unassessed declared obligation",
+      "text": "O1 historical discovery-before-plan-narrowing ordering is self-reported only; independently inspectable ordering evidence is not in admitted scientific inputs.",
+      "evidence_refs": [
+        "E16"
+      ],
+      "causes_hold": true
+    },
+    {
+      "id": "L03",
+      "kind": "execution evidence",
+      "text": "Static source and integrity inspections performed; no upstream/product tests or member files tested. Candidate execution counters unavailable beyond visible capture artifacts. Acceptance checks remain proposals.",
+      "causes_hold": false
+    },
+    {
+      "id": "L04",
+      "kind": "justified applicability abstention",
+      "text": "Issue 889 converted to discussion; complete fix-to-release applicability and a current-version same-value reproduction not established. Candidate does not claim either.",
+      "evidence_refs": [
+        "E08",
+        "E09"
+      ],
+      "causes_hold": false
+    },
+    {
+      "id": "L05",
+      "kind": "unselected/conditional options",
+      "text": "CouchDB and SQLite docs-only alternatives, current member OAL compatibility, future WCS parser and club hosting/retention choices are not selected or validated. These are disclosed conditional product decisions, not successes.",
+      "causes_hold": false
+    },
+    {
+      "id": "L06",
+      "kind": "public retrieval limitation",
+      "text": "Observation Manager direct page retrieval returned HTTP 403. Not used as governing evidence; unused HTTP error body discarded.",
+      "source_ref": "R20",
+      "causes_hold": false
+    }
+  ],
+  "evidence": {
+    "E01": {
+      "subject": "Exact scientific inputs and restrictions",
+      "candidate_locators": [
+        "F:3",
+        "P:3",
+        "both preservation checks; input map hashes"
+      ],
+      "review_evidence": [
+        "reviewed_input_sha256s",
+        "sources/CANDIDATE_CAPTURE_AUDIT.json",
+        "REPORT.md scope"
+      ],
+      "assessment": "Matched frozen bytes and scientific preservation artifacts; no runtime/history or counterpart read."
+    },
+    "E02": {
+      "subject": "Open discovery content, mechanisms, competing components and analogies",
+      "candidate_locators": [
+        "F:17-27,33-41",
+        "P:15,23-27"
+      ],
+      "primary_source_refs": [
+        "R01",
+        "R02",
+        "R04",
+        "R07",
+        "R08",
+        "R09",
+        "R16",
+        "R17",
+        "R18",
+        "R21",
+        "R22",
+        "R43"
+      ],
+      "assessment": "Central conditional revisions, offline replication/CRDT and packet exchange are materially different useful mechanisms. Extra IIIF/BagIt discovery is not an assigned component list."
+    },
+    "E03": {
+      "subject": "Annotation shape, units, origin, and target representation",
+      "candidate_locators": [
+        "F:27,60,72,93"
+      ],
+      "primary_source_refs": [
+        "R01",
+        "R02",
+        "R21",
+        "R22"
+      ],
+      "governing_locators": [
+        "Web Annotation Introduction, \u00a72, \u00a73.3, \u00a74.2.1",
+        "Media Fragments \u00a74.2.2, \u00a76.1.2",
+        "IIIF Image 3.0 \u00a74.1"
+      ],
+      "assessment": "Documented interchange and geometry boundaries verified; mapping display transforms and keeping old rendition targets remain application proposals."
+    },
+    "E04": {
+      "subject": "FITS dimensions, time semantics and omitted default",
+      "candidate_locators": [
+        "F:13,39,58-59,70,90",
+        "critic-v1 preservation check O3"
+      ],
+      "primary_source_refs": [
+        "R05"
+      ],
+      "governing_locators": [
+        "FITS 4.0 \u00a7\u00a73.3.2,3.4,4.4.2.2,9.2.1; printed pp.13,37",
+        "fits-standard40.txt:1094-1121,2734-2756"
+      ],
+      "assessment": "D-01: missing TIMESYS default not distinguished from observational uncertainty. Dimensions/release identity supported.",
+      "defect_refs": [
+        "D-01"
+      ]
+    },
+    "E05": {
+      "subject": "Strong conditional writes and already-applied exception",
+      "candidate_locators": [
+        "F:43,49,61,73,94",
+        "P:23,37,87"
+      ],
+      "primary_source_refs": [
+        "R03"
+      ],
+      "governing_locators": [
+        "RFC 9110 \u00a7\u00a78.8.3.2,13.1.1,13.2.2"
+      ],
+      "assessment": "Final qualification is correct. Operation identity is a stricter proposed safeguard. Prior policy of rejecting all mismatches also allowed."
+    },
+    "E06": {
+      "subject": "BagIt directory, validity/completeness, checksums and wrapper choice",
+      "candidate_locators": [
+        "F:23,49,63,74,96",
+        "P:39"
+      ],
+      "primary_source_refs": [
+        "R04",
+        "R43"
+      ],
+      "governing_locators": [
+        "RFC 8493 \u00a7\u00a71.1,2.1.3,2.4,3,5.4",
+        "bagit-python v1.9.0 README: configuration and validation"
+      ],
+      "assessment": "Directory choice and non-scientific integrity boundary supported; ZIP serialization not inherently prohibited. Full algorithm support remains to be profiled; no implementation selected."
+    },
+    "E07": {
+      "subject": "SQLite WAL locality and transaction boundaries",
+      "candidate_locators": [
+        "F:25,71"
+      ],
+      "primary_source_refs": [
+        "R06"
+      ],
+      "governing_locators": [
+        "SQLite WAL \u00a71 Overview, \u00a7\u00a74-5"
+      ],
+      "assessment": "Same-host, network filesystem and attached-database boundaries supported; SQLite runtime not selected."
+    },
+    "E08": {
+      "subject": "Automerge pinned implementation and release",
+      "candidate_locators": [
+        "F:22,33"
+      ],
+      "primary_source_refs": [
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R23",
+        "R24",
+        "R42"
+      ],
+      "governing_locators": [
+        "tag js/automerge-3.5.0 -> commit 4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+        "package.json version/license",
+        "implementation.ts:924-988",
+        "conflicts.ts:27-76",
+        "test/conflicts.ts:4-143",
+        "proxies.ts:267-302"
+      ],
+      "assessment": "Public API delegates to pinned conflict projection; test scenarios and release author metadata boundaries verified statically. No universal conflict or authentication guarantee inferred."
+    },
+    "E09": {
+      "subject": "Issue 889 status correction and history applicability",
+      "candidate_locators": [
+        "F:35,49,83",
+        "P:57; researcher-v1/S23 capture"
+      ],
+      "primary_source_refs": [
+        "R15",
+        "R19",
+        "R25",
+        "R26"
+      ],
+      "governing_locators": [
+        "issue body: @automerge/automerge 2.1.11",
+        "API state, closed_at; timeline element 3 converted_to_discussion, commit_id null",
+        "prior capture embedded state CLOSED"
+      ],
+      "assessment": "Final correctly corrects prior open assertion and withholds any fix claim. Reviewer timeline finds conversion to discussion; no same-value reproduction or complete fixing-release path established."
+    },
+    "E10": {
+      "subject": "CouchDB conflict/replication mechanism",
+      "candidate_locators": [
+        "F:22,37"
+      ],
+      "primary_source_refs": [
+        "R07",
+        "R08"
+      ],
+      "governing_locators": [
+        "stable docs identify Apache CouchDB 3.5",
+        "conflict model \u00a7\u00a72.3.1-2.3.4; introduction \u00a72.1.2"
+      ],
+      "assessment": "Same-node 409 differs from retained replicated leaves/deterministic winner. Documentation-only alternative appropriately disclosed."
+    },
+    "E11": {
+      "subject": "OAL schema identity, history and optional applicability",
+      "candidate_locators": [
+        "F:23,41,74,81"
+      ],
+      "primary_source_refs": [
+        "R16",
+        "R17",
+        "R18"
+      ],
+      "governing_locators": [
+        "commit 59cc9dd4ecbd7569d90f86b0313e0430578f18fb author.date",
+        "OAL21.zip members oal21.xsd and openastronomylog21/oal_Base.xsd:8,162-181,500-550; ext_Imaging.xsd"
+      ],
+      "assessment": "Dates, times and image references verified; full notebook lineage/access/history not supplied; member compatibility deliberately unresolved."
+    },
+    "E12": {
+      "subject": "Lost optional WCS semantics, component identity and history",
+      "candidate_locators": [
+        "P:43-49,64,66,75,86",
+        "researcher-v1/S02-S09,S30",
+        "F:58,60,81,93; final source-map and preservation check"
+      ],
+      "primary_source_refs": [
+        "R27",
+        "R28",
+        "R29",
+        "R30",
+        "R31",
+        "R32",
+        "R33",
+        "R34",
+        "R36",
+        "R37",
+        "R38",
+        "R39",
+        "R40",
+        "R41",
+        "R44"
+      ],
+      "governing_locators": [
+        "Astropy 8.0.1 docs Pixel Conventions and Definitions",
+        "utils.py:621-685,688 onward; test_utils.py:864 onward",
+        "PR 20473 API state/merged/milestone; patch regression and native_pixel_order sections",
+        "issues 4976 and 10468 reproduction/version fields",
+        "annotated tag object -> commit 7c5a9c124ce84c76992016e89631566ad398aff7"
+      ],
+      "assessment": "D-02: final retains deferral but loses source identity, exact center/axis/origin conventions and proposed-unmerged-versus-released history. No WCS runtime correctness asserted.",
+      "defect_refs": [
+        "D-02"
+      ]
+    },
+    "E13": {
+      "subject": "Integrated workflow, data identity, operational choices and atomicity refinement",
+      "candidate_locators": [
+        "F:7-13,55-63,79-83",
+        "P:31-39"
+      ],
+      "primary_source_refs": [
+        "R03",
+        "R04",
+        "R06",
+        "R35"
+      ],
+      "assessment": "All integrated categories present as proposals; retain raw data, logical/blob identity distinction, staging/journal, publication/access, retention/deletion, restore and copy-recall limits. Prior transaction text was import-record publication, not an explicit cross-store guarantee."
+    },
+    "E14": {
+      "subject": "Proposed versus reported/executed checks",
+      "candidate_locators": [
+        "F:85-100",
+        "P:79-93",
+        "both preservation checks"
+      ],
+      "review_evidence": [
+        "candidate capture hash audit",
+        "source index; reviewer static inspections"
+      ],
+      "assessment": "Candidate clearly marks acceptance checks proposed; no upstream/product/image test claimed executed. Reviewer performed source/integrity checks only; historical candidate counts beyond capture artifacts not exposed."
+    },
+    "E15": {
+      "subject": "Exact frozen-plan disposition completeness and preservation",
+      "candidate_locators": [
+        "PLAN.md:5-31 sections A-P1-A-P7",
+        "F:65-75",
+        "P:59-69"
+      ],
+      "assessment": "Every exact section ID covered with keep/amend/replace/defer, preserving already-covered plan choices. D-01 affects A-P2 governing condition; D-02 affects optional A-P2/A-P4/A-P7 scientific preservation.",
+      "defect_refs": [
+        "D-01",
+        "D-02"
+      ]
+    },
+    "E16": {
+      "subject": "Unassessed original O1 temporal ordering",
+      "candidate_locators": [
+        "F:17",
+        "P:15",
+        "both preservation check O1 rows"
+      ],
+      "assessment": "Useful discovery content assessed. Before-plan discovery sequence is self-reported only; independently proving that required historical ordering exceeds the admitted scientific evidence. No candidate runtime/history accessed.",
+      "unassessed": true
+    }
+  },
+  "reviewed_input_sha256s": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/artifact.md",
+      "sha256": "fc9b2b0e85eeabf75f0206aaa38aaa85bfb1d90fa49a925d417c711c5a945804",
+      "bytes": 25542,
+      "role": "own predecessor scientific preservation evidence",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/source-map.json",
+      "sha256": "afc7e98dca773cfa674dfe2758840f66c84349d838ff27be226afc94d557df8a",
+      "bytes": 21831,
+      "role": "own predecessor scientific preservation evidence",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/preservation_check.md",
+      "sha256": "e723ce58e0657c443065a9df36bb93316b1cfbfbf5cf69f95d01778ff7631a1c",
+      "bytes": 7616,
+      "role": "own predecessor scientific preservation evidence",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/artifact.md",
+      "sha256": "fdbb49ba770f3916f1b51037fd75bc6dae3bca587424c194da64538d722bc0d8",
+      "bytes": 24279,
+      "role": "final scientific artifact",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/source-map.json",
+      "sha256": "eb841ffd6c23b7ceb5e1bc770d934f02052bcba366813aa9eed5af75f017328d",
+      "bytes": 15149,
+      "role": "final scientific artifact",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/preservation_check.md",
+      "sha256": "e868abeb6eee48861f28e3db25ee5a75cf77d08090f8f6721a6f0fa3fcb4b4eb",
+      "bytes": 7522,
+      "role": "final scientific artifact",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/BRIEF.md",
+      "sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f",
+      "bytes": 6458,
+      "role": "frozen common scientific input",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/PLAN.md",
+      "sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f",
+      "bytes": 3507,
+      "role": "frozen common scientific input",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/fits-v4-standard.pdf",
+      "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "bytes": 1140821,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S01",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-wcs-8.0.1.html",
+      "sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+      "bytes": 56441,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S02",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-v8.0.1-wcs-utils.py",
+      "sha256": "ce97815fa3c2216abd6aa55d10a0d46c24ce81f7dd0dbb1c93625084dd917e57",
+      "bytes": 46913,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S03",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-v8.0.1-wcs-test-utils.py",
+      "sha256": "30e680ff7f7fb8c9702c09107e3d9a10efa188189b5dc00298d90deb3f7b9553",
+      "bytes": 58761,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S04",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-v8.0.1-release.html",
+      "sha256": "3db86a3df43023f23e73adc92856d153d32ab6493d932a3783809f71974a9bc1",
+      "bytes": 203802,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S05",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-issue-10468.html",
+      "sha256": "6454fd44c16f297b810d8d4eeef7f8fdfadb0b6330739cb5bb3ca3058b797383",
+      "bytes": 294319,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S06",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-issue-4976.html",
+      "sha256": "6c1d2fa161b038f51091e86701122c0b25bf8bda6b56045a765845ca7d8cb849",
+      "bytes": 244882,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S07",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-pr-20473.html",
+      "sha256": "9fe5d363ec9d27a3a22fa6abb1399ae9e0b9f731e55c29861cbdfab42696d9c1",
+      "bytes": 371376,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S08",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-pr-20473.patch",
+      "sha256": "c9eeb98a98c87abb1c5b24e75d00f5fad5e6f22137da8cfef5da765d78d36f96",
+      "bytes": 30610,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S09",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/w3c-annotation-model-2017.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "bytes": 284185,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S10",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/w3c-media-frags-2012.html",
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "bytes": 89887,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S11",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/rfc9110.html",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "bytes": 1187554,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S12",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/rfc8493.html",
+      "sha256": "10f326af7d87449be37a8333e2359d70ddc1064b4cfbf8a04c911061a38467e3",
+      "bytes": 306757,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S13",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/sqlite-wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S14",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/sqlite-useovernet.html",
+      "sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1",
+      "bytes": 15812,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S15",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-conflicts.html",
+      "sha256": "28612ef6b87e734290784f212926a360f1946c4114494b75179fdce2f8557746",
+      "bytes": 17063,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S16",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-release.html",
+      "sha256": "fb78727d583553baa32988bcdf9b9d139ed3cbdb5da684f1bf8d5ebcaf0a61a5",
+      "bytes": 198915,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S17",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-conflicts.ts",
+      "sha256": "6abd56faa5a8ceca10c45ce360ce723efc108a47041253d02d4f71099265c136",
+      "bytes": 4051,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S18",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-implementation.ts",
+      "sha256": "024ccf0c7615b11631552652c350dd5fed657577df2f67dfb8d911f12cf51074",
+      "bytes": 60381,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S19",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-index.ts",
+      "sha256": "83da7bd9dd0bbc8f10912e329349066f7d8686dafd4fa84eed72604cda475217",
+      "bytes": 7678,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S20",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-conflicts.test.ts",
+      "sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+      "bytes": 4933,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S21",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-package.json",
+      "sha256": "7a46879182bbaf8bdb51773c99bec5aa92764acb7904d97ed7c459a4cca35c66",
+      "bytes": 3249,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S22",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-issue-889.html",
+      "sha256": "4da8382bc2759a91d5ceb8c34a88cecff448bafcc973e83e163e2e62bbedbd94",
+      "bytes": 254673,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S23",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-repo-blog.html",
+      "sha256": "7298d1177524c277566e906be3e8cc06ec52500b999a88aeb01b3882c8bfdbf4",
+      "bytes": 36139,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S24",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-repo.html",
+      "sha256": "f025389eb5a7a405ac074933e54258a6203e01572918df8ea013874649993f11",
+      "bytes": 265759,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S25",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-repo-metadata.json",
+      "sha256": "a3b3732e29283979565aae5875a951500589d723d35f6491b5c6b944fb64fc75",
+      "bytes": 7108,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S26",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-master-commit.json",
+      "sha256": "e13b2f5f819ba6e084120369a2178e2398b22d66a2f12146c521d0a733bf740e",
+      "bytes": 6735,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S27",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-README.md",
+      "sha256": "6fcae6c20b578f5f03defab493e89364765cd6b64480802b18b0b5a77f7bde2d",
+      "bytes": 1502,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S28",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-OAL21.zip",
+      "sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+      "bytes": 13171,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S29",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-v8.0.1-wcs-test-wcs.py",
+      "sha256": "4c426da48d63da486b3ee40839a7c2dcdca1232427cbe03fffd3a256593b8363",
+      "bytes": 90035,
+      "role": "researcher-v1 primary capture",
+      "candidate_source_id": "S30",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/w3c-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "bytes": 284185,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S01",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/w3c-media-fragments.html",
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "bytes": 89887,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S02",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S03",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "bytes": 48783,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S04",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/fits-standard40.pdf",
+      "sha256": "4a5fbff1bf592ca9362a6e68e595f852ce8301c026a141f6e6ae28d4f33145e0",
+      "bytes": 1087066,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S05",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/sqlite-wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S06",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/couchdb-conflicts.html",
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "bytes": 79028,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S07",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/couchdb-replication-intro.html",
+      "sha256": "985a88b6c21b2fca9c1e5c9395badff8f363b5034a2e9eb8ce6652946ed30a3f",
+      "bytes": 21613,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S08",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-conflicts.html",
+      "sha256": "29f685d69d6506f758b2fcdd8c2915491e353af5ed2af90cc9fe309c5e35cef8",
+      "bytes": 16696,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S09",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-release.html",
+      "sha256": "3622a4e94e8e8da6a4491c153054443c925b28a37802d28ae65235c88d02a967",
+      "bytes": 198937,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S10",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-conflicts.ts",
+      "sha256": "6abd56faa5a8ceca10c45ce360ce723efc108a47041253d02d4f71099265c136",
+      "bytes": 4051,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S11",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-implementation.ts",
+      "sha256": "024ccf0c7615b11631552652c350dd5fed657577df2f67dfb8d911f12cf51074",
+      "bytes": 60381,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S12",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-conflicts.test.ts",
+      "sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+      "bytes": 4933,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S13",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-package.json",
+      "sha256": "7a46879182bbaf8bdb51773c99bec5aa92764acb7904d97ed7c459a4cca35c66",
+      "bytes": 3249,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S14",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-issue-889.json",
+      "sha256": "d018d11474782446fd032d1b3347d6da12dcb6aa07888ffff4d5a05a02c553ea",
+      "bytes": 4193,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S15",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/oal-commit.json",
+      "sha256": "e13b2f5f819ba6e084120369a2178e2398b22d66a2f12146c521d0a733bf740e",
+      "bytes": 6735,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S16",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/oal-README.md",
+      "sha256": "6fcae6c20b578f5f03defab493e89364765cd6b64480802b18b0b5a77f7bde2d",
+      "bytes": 1502,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S17",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/oal21.zip",
+      "sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+      "bytes": 13171,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S18",
+      "matches_declared_hash": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-issue-889-page.html",
+      "sha256": "207b74ec273045cb8b5156d929d6b4b7139ff70704d36c6f21ed52c8fb4f7714",
+      "bytes": 254781,
+      "role": "critic-v1 primary capture",
+      "candidate_source_id": "S19",
+      "matches_declared_hash": true
+    }
+  ],
+  "primary_sources_checked": [
+    {
+      "id": "R01",
+      "url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "resolved_url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "version": "W3C Recommendation 2017-02-23",
+      "commit": null,
+      "locator": "\u00a71.1 model and protocol boundary; \u00a73 bodies/targets and lifecycle; \u00a74.2.1 Fragment Selector; \u00a72 metadata hints for external resources",
+      "accessed_at_utc": "2026-10-07T20:37:56.083348+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/w3c-annotation-model.html",
+      "bytes": 284185,
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "candidate_ref": "critic-v1/S01",
+      "evidence_refs": [
+        "E02",
+        "E03"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R02",
+      "url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "resolved_url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "version": "W3C Recommendation 2012-09-25",
+      "commit": null,
+      "locator": "\u00a74.2.2 xywh: integer x,y,width,height; pixel default; origin top-left; percent relative to original media dimensions; \u00a76.3 source-resolution validation boundary",
+      "accessed_at_utc": "2026-10-07T20:37:56.085361+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/w3c-media-fragments.html",
+      "bytes": 89887,
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "candidate_ref": "critic-v1/S02",
+      "evidence_refs": [
+        "E02",
+        "E03"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R03",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110, June 2022",
+      "commit": null,
+      "locator": "\u00a78.8.3.2 strong entity-tag comparison; \u00a713.1.1 If-Match; \u00a713.2 precondition evaluation and allowed failure response",
+      "accessed_at_utc": "2026-10-07T20:37:56.086558+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/rfc9110.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "candidate_ref": "critic-v1/S03",
+      "evidence_refs": [
+        "E05",
+        "E13"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R04",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493, October 2018; BagIt version 1.0",
+      "commit": null,
+      "locator": "\u00a7\u00a72.1.3, 2.4, 3, 6; payload manifests, complete vs valid bags, transfer format boundary (not MIME/TAR/ZIP)",
+      "accessed_at_utc": "2026-10-07T20:37:56.087482+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/rfc8493.txt",
+      "bytes": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "candidate_ref": "critic-v1/S04",
+      "evidence_refs": [
+        "E02",
+        "E06",
+        "E13"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R05",
+      "url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa.pdf",
+      "resolved_url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa.pdf",
+      "version": "FITS Standard 4.0; published 2016-07-22, latest minor update 2017-12-01",
+      "commit": null,
+      "locator": "\u00a73.3.2 array dimensions/order; \u00a73.4 extensions; DATE-OBS keyword semantics/time scale and start-of-observation assumption; TELESCOP/INSTRUME/OBJECT keywords",
+      "accessed_at_utc": "2026-10-07T20:37:56.088481+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/fits-standard40.pdf",
+      "bytes": 1087066,
+      "sha256": "4a5fbff1bf592ca9362a6e68e595f852ce8301c026a141f6e6ae28d4f33145e0",
+      "candidate_ref": "critic-v1/S05",
+      "evidence_refs": [
+        "E04"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R06",
+      "url": "https://www.sqlite.org/wal.html",
+      "resolved_url": "https://www.sqlite.org/wal.html",
+      "version": "Vendor page captured 2026-10-07; documentation says WAL introduced in SQLite 3.7.0; no runtime version selected",
+      "commit": null,
+      "locator": "Concurrency limitations: all processes on one host; WAL unsupported over network filesystem; WAL/SHM and multi-database transaction boundaries",
+      "accessed_at_utc": "2026-10-07T20:37:56.094084+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/sqlite-wal.html",
+      "bytes": 42143,
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "candidate_ref": "critic-v1/S06",
+      "evidence_refs": [
+        "E07",
+        "E13"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R07",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "resolved_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version": "Stable docs alias captured 2026-10-07; page identifies CouchDB 3.5 documentation; used as option evidence, not a runtime selection",
+      "commit": null,
+      "locator": "\u00a72.3: same-node stale _rev returns 409; cross-database replicated edits retain conflict leaves; deterministic winner; application must inspect and resolve",
+      "accessed_at_utc": "2026-10-07T20:37:56.181521+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/couchdb-conflicts.html",
+      "bytes": 79028,
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "candidate_ref": "critic-v1/S07",
+      "evidence_refs": [
+        "E02",
+        "E10"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R08",
+      "url": "https://docs.couchdb.org/en/stable/replication/intro.html",
+      "resolved_url": "https://docs.couchdb.org/en/stable/replication/intro.html",
+      "version": "Stable docs alias captured 2026-10-07; page identifies CouchDB 3.5 documentation; used as option evidence, not a runtime selection",
+      "commit": null,
+      "locator": "Replication procedure and document transfer; source/target runs; PouchDB offline client relation",
+      "accessed_at_utc": "2026-10-07T20:37:56.205707+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/couchdb-replication-intro.html",
+      "bytes": 21613,
+      "sha256": "985a88b6c21b2fca9c1e5c9395badff8f363b5034a2e9eb8ce6652946ed30a3f",
+      "candidate_ref": "critic-v1/S08",
+      "evidence_refs": [
+        "E02",
+        "E10"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R09",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "resolved_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "version": "Current project docs captured 2026-10-07; behavior cross-checked against @automerge/automerge 3.5.0 source",
+      "commit": null,
+      "locator": "Default deterministic property winner and getConflicts resolution; docs are not a version-pinned release specification",
+      "accessed_at_utc": "2026-10-07T20:37:56.253081+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-conflicts.html",
+      "bytes": 16696,
+      "sha256": "29f685d69d6506f758b2fcdd8c2915491e353af5ed2af90cc9fe309c5e35cef8",
+      "candidate_ref": "critic-v1/S09",
+      "evidence_refs": [
+        "E02",
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R10",
+      "url": "https://github.com/automerge/automerge/releases/tag/js/automerge-3.5.0",
+      "resolved_url": "https://github.com/automerge/automerge/releases/tag/js/automerge-3.5.0",
+      "version": "@automerge/automerge 3.5.0; released 2026-09-16; commit 4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "Release notes: author metadata is opaque hex; fixes for list insertions, patches/rich text and performance; no issue-889 fix claimed",
+      "accessed_at_utc": "2026-10-07T20:37:56.259632+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-release.html",
+      "bytes": 198943,
+      "sha256": "5df804b40c7abe5096eb300178d73ebabc1c1a8dc3633e4075838e0deb743215",
+      "candidate_ref": "critic-v1/S10",
+      "evidence_refs": [
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R11",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/conflicts.ts",
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/conflicts.ts",
+      "version": "@automerge/automerge 3.5.0",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "conflictAt calls context.getAll and returns competing values indexed by operation ID; outside change callback object values are frozen plain values; inside callback proxies",
+      "accessed_at_utc": "2026-10-07T20:37:56.283956+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-conflicts.ts",
+      "bytes": 4051,
+      "sha256": "6abd56faa5a8ceca10c45ce360ce723efc108a47041253d02d4f71099265c136",
+      "candidate_ref": "critic-v1/S11",
+      "evidence_refs": [
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R12",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/implementation.ts",
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/implementation.ts",
+      "version": "@automerge/automerge 3.5.0",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "lines 924-988: deterministic but arbitrary winner wording; getConflicts delegates to conflictAt for a document property",
+      "accessed_at_utc": "2026-10-07T20:37:56.325274+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-implementation.ts",
+      "bytes": 60381,
+      "sha256": "024ccf0c7615b11631552652c350dd5fed657577df2f67dfb8d911f12cf51074",
+      "candidate_ref": "critic-v1/S12",
+      "evidence_refs": [
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R13",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/test/conflicts.ts",
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/test/conflicts.ts",
+      "version": "@automerge/automerge 3.5.0",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "Tests for conflicting object replacement, getConflicts values, map/list conflict resolution and immutable values; inspected, not run",
+      "accessed_at_utc": "2026-10-07T20:37:56.379959+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-conflicts.test.ts",
+      "bytes": 4933,
+      "sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+      "candidate_ref": "critic-v1/S13",
+      "evidence_refs": [
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R14",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/package.json",
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/package.json",
+      "version": "@automerge/automerge 3.5.0; MIT license",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "version, license, package entrypoints, test script; inspected, not installed or executed",
+      "accessed_at_utc": "2026-10-07T20:37:56.390710+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-package.json",
+      "bytes": 3249,
+      "sha256": "7a46879182bbaf8bdb51773c99bec5aa92764acb7904d97ed7c459a4cca35c66",
+      "candidate_ref": "critic-v1/S14",
+      "evidence_refs": [
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R15",
+      "url": "https://api.github.com/repos/automerge/automerge/issues/889",
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/issues/889",
+      "version": "Issue report names @automerge/automerge 2.1.11; API snapshot closed_at 2026-09-10; pull_request absent",
+      "commit": null,
+      "locator": "Report: redundant same-value assignment is not surfaced by getConflicts; no linked PR in API record; applicability to 3.5.0 not established",
+      "accessed_at_utc": "2026-10-07T20:37:56.424642+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-issue-889.json",
+      "bytes": 4193,
+      "sha256": "d018d11474782446fd032d1b3347d6da12dcb6aa07888ffff4d5a05a02c553ea",
+      "candidate_ref": "critic-v1/S15",
+      "evidence_refs": [
+        "E09"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R16",
+      "url": "https://api.github.com/repos/openastronomylog/openastronomylog/commits/59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "resolved_url": "https://api.github.com/repos/openastronomylog/openastronomylog/commits/59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "version": "Commit dated 2020-12-09; not asserted as current repository head",
+      "commit": "59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "locator": "Exact commit identity/date for README and OAL21 schema archive",
+      "accessed_at_utc": "2026-10-07T20:37:56.471106+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-commit.json",
+      "bytes": 6735,
+      "sha256": "e13b2f5f819ba6e084120369a2178e2398b22d66a2f12146c521d0a733bf740e",
+      "candidate_ref": "critic-v1/S16",
+      "evidence_refs": [
+        "E02",
+        "E11"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R17",
+      "url": "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/README.md",
+      "version": "README at commit 59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "commit": "59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "locator": "Exchange purpose, schema context and stated license",
+      "accessed_at_utc": "2026-10-07T20:37:56.475066+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-README.md",
+      "bytes": 1502,
+      "sha256": "6fcae6c20b578f5f03defab493e89364765cd6b64480802b18b0b5a77f7bde2d",
+      "candidate_ref": "critic-v1/S17",
+      "evidence_refs": [
+        "E02",
+        "E11"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R18",
+      "url": "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/OAL21.zip",
+      "resolved_url": "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/OAL21.zip",
+      "version": "OAL 2.1; nested XSD revision 2011-08-08; archived at commit 59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "commit": "59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "locator": "sessionType has begin/end and optional image references; observations have begin/end and image references; no annotation/versioning guarantee inferred",
+      "accessed_at_utc": "2026-10-07T20:37:56.518900+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip",
+      "bytes": 13171,
+      "sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+      "candidate_ref": "critic-v1/S18",
+      "evidence_refs": [
+        "E02",
+        "E11"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R19",
+      "url": "https://github.com/automerge/automerge/issues/889",
+      "resolved_url": "https://github.com/automerge/automerge/issues/889",
+      "version": "Rendered issue page captured 2026-10-07; status display showed Closed; report says @automerge/automerge 2.1.11",
+      "commit": null,
+      "locator": "Issue body and rendered status, checked against API snapshot; a comments API request separately returned HTTP 403 rate limit; events endpoint not fetched",
+      "accessed_at_utc": "2026-10-07T20:37:56.568238+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-issue-889-page.html",
+      "bytes": 254776,
+      "sha256": "c668288cd3b59e560c2a69a4d31326350225318b745e697733e786fccee89bde",
+      "candidate_ref": "critic-v1/S19",
+      "evidence_refs": [
+        "E09"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R21",
+      "url": "https://iiif.io/api/image/3.0/",
+      "resolved_url": "https://iiif.io/api/image/3.0/",
+      "version": "IIIF Image API 3.0",
+      "commit": null,
+      "locator": "\u00a74.1 region, transformations and dimensions",
+      "accessed_at_utc": "2026-10-07T20:37:56.612477+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/iiif-image-api3.html",
+      "bytes": 145643,
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E02",
+        "E03"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R22",
+      "url": "https://iiif.io/api/cookbook/recipe/0299-region/",
+      "resolved_url": "https://iiif.io/api/cookbook/recipe/0299-region/",
+      "version": "IIIF cookbook live at capture",
+      "commit": null,
+      "locator": "Addressing a Spatial Region; resource/Canvas dimensions",
+      "accessed_at_utc": "2026-10-07T20:37:56.618491+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/iiif-region-recipe.html",
+      "bytes": 20760,
+      "sha256": "e425f46ea5e7cd09fd9cec2ea29afecd3d884c6dc523a46a6f70634a952605ca",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E02",
+        "E03"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R23",
+      "url": "https://api.github.com/repos/automerge/automerge/git/ref/tags/js/automerge-3.5.0",
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/git/ref/tags/js/automerge-3.5.0",
+      "version": "Automerge tag js/automerge-3.5.0",
+      "commit": null,
+      "locator": "Tag object and SHA",
+      "accessed_at_utc": "2026-10-07T20:37:56.649841+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-tag.json",
+      "bytes": 387,
+      "sha256": "bd8fdd8b1eed9e9395444f934197947e23aed8c0bc1533ba726e3a95bca444b8",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R24",
+      "url": "https://api.github.com/repos/automerge/automerge/releases/tags/js%2Fautomerge-3.5.0",
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/releases/tags/js%2Fautomerge-3.5.0",
+      "version": "Automerge 3.5.0 release",
+      "commit": null,
+      "locator": "published_at, tag_name, release body",
+      "accessed_at_utc": "2026-10-07T20:37:56.663695+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-release.json",
+      "bytes": 3996,
+      "sha256": "8891a2711350097b98c04177f7ecf79c9e002818124aa7b29785e542c6f69af0",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R25",
+      "url": "https://api.github.com/repos/automerge/automerge/issues/889/comments",
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/issues/889/comments",
+      "version": "Automerge issue 889 history",
+      "commit": null,
+      "locator": "All returned comments and closure explanation",
+      "accessed_at_utc": "2026-10-07T20:37:56.664048+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-889-comments.json",
+      "bytes": 2200,
+      "sha256": "d2f0e16cfb315c9027ed7a3014a75fcbf58e11efdc321f2549190472c3c4d287",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E09"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R26",
+      "url": "https://api.github.com/repos/automerge/automerge/issues/889/timeline",
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/issues/889/timeline",
+      "version": "Automerge issue 889 history",
+      "commit": null,
+      "locator": "Closure event, links, commit IDs",
+      "accessed_at_utc": "2026-10-07T20:37:56.708856+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-889-timeline.json",
+      "bytes": 16527,
+      "sha256": "6e730c2b4af8fe6ee3be9112bf730bfc1e03ad6434926af637cc972ecb88d36b",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E09"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R27",
+      "url": "https://docs.astropy.org/en/v8.0.1/wcs/index.html",
+      "resolved_url": "https://docs.astropy.org/en/v8.0.1/wcs/index.html",
+      "version": "Astropy 8.0.1 docs",
+      "commit": null,
+      "locator": "Pixel Conventions and Definitions; High-Level/Low-Level API; axis-order examples",
+      "accessed_at_utc": "2026-10-07T20:37:56.713667+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-wcs-8.0.1.html",
+      "bytes": 56441,
+      "sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+      "candidate_ref": "researcher-v1/S02",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R28",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/utils.py",
+      "resolved_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/utils.py",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "skycoord_to_pixel lines 621-685; pixel_to_skycoord lines 688 onward",
+      "accessed_at_utc": "2026-10-07T20:37:56.792496+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-wcs-utils.py",
+      "bytes": 46913,
+      "sha256": "ce97815fa3c2216abd6aa55d10a0d46c24ce81f7dd0dbb1c93625084dd917e57",
+      "candidate_ref": "researcher-v1/S03",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R29",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/tests/test_utils.py",
+      "resolved_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/tests/test_utils.py",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "test_skycoord_to_pixel_swapped at line 864; no PR-added lat-before-lon case in this tag",
+      "accessed_at_utc": "2026-10-07T20:37:56.804925+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-wcs-test-utils.py",
+      "bytes": 58761,
+      "sha256": "30e680ff7f7fb8c9702c09107e3d9a10efa188189b5dc00298d90deb3f7b9553",
+      "candidate_ref": "researcher-v1/S04",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R30",
+      "url": "https://github.com/astropy/astropy/releases/tag/v8.0.1",
+      "resolved_url": "https://github.com/astropy/astropy/releases/tag/v8.0.1",
+      "version": "v8.0.1; released 2026-07-08",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "Release page tag/signature/commit; 8.0.1 changelog link",
+      "accessed_at_utc": "2026-10-07T20:37:56.817617+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-release.html",
+      "bytes": 203830,
+      "sha256": "a6b84a3dddab125f61bf402a711c634461b030703418c6a0540c6e70853adb5b",
+      "candidate_ref": "researcher-v1/S05",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R31",
+      "url": "https://github.com/astropy/astropy/issues/10468",
+      "resolved_url": "https://github.com/astropy/astropy/issues/10468",
+      "version": "Issue opened 2020-06-08; report says Astropy 4.0",
+      "commit": null,
+      "locator": "Description and reproduction: CTYPE1 DEC--TAN before CTYPE2 RA---TAN; Cutout2D example; issue status at capture",
+      "accessed_at_utc": "2026-10-07T20:37:56.831567+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-issue-10468.html",
+      "bytes": 294425,
+      "sha256": "ff5522e7b70437731873bfd04ef1d59151a921dd2addf52c958dddcc32d4f81c",
+      "candidate_ref": "researcher-v1/S06",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R32",
+      "url": "https://github.com/astropy/astropy/issues/4976",
+      "resolved_url": "https://github.com/astropy/astropy/issues/4976",
+      "version": "Issue opened 2016-05-25",
+      "commit": null,
+      "locator": "Description of reversed celestial CTYPE and skycoord_to_pixel; issue status at capture",
+      "accessed_at_utc": "2026-10-07T20:37:56.899587+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-issue-4976.html",
+      "bytes": 244984,
+      "sha256": "a643a215c77650f440954efcbcc2693e488e38bf91f0afcb80b57a3f1ba1510c",
+      "candidate_ref": "researcher-v1/S07",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R33",
+      "url": "https://github.com/astropy/astropy/pull/20473",
+      "resolved_url": "https://github.com/astropy/astropy/pull/20473",
+      "version": "PR opened 2026-09-23; milestone v8.1.0; closed 2026-10-02",
+      "commit": null,
+      "locator": "Description, linked issues, commits, status and milestone",
+      "accessed_at_utc": "2026-10-07T20:37:56.904635+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-pr-20473.html",
+      "bytes": 371479,
+      "sha256": "82322200ec4cfad3e630cd9338831453704ebcde8eb371fca2331ace55db1418",
+      "candidate_ref": "researcher-v1/S08",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R34",
+      "url": "https://github.com/astropy/astropy/pull/20473.patch",
+      "resolved_url": "https://patch-diff.githubusercontent.com/raw/astropy/astropy/pull/20473.patch",
+      "version": "Two proposed commits; not merged in PR 20473",
+      "commit": "2b7b4a51eb773f563ce40e38d922730fec8bd52e; f28d6fd48b19fa5133d3a6ee46ac98ca463d2303",
+      "locator": "test_skycoord_to_pixel_lat_lon_order; test_wcs_methods_lat_lon_order; native_pixel_order API change",
+      "accessed_at_utc": "2026-10-07T20:37:57.102966+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-pr-20473.patch",
+      "bytes": 30610,
+      "sha256": "c9eeb98a98c87abb1c5b24e75d00f5fad5e6f22137da8cfef5da765d78d36f96",
+      "candidate_ref": "researcher-v1/S09",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R35",
+      "url": "https://automerge.org/blog/automerge-repo/",
+      "resolved_url": "https://automerge.org/blog/automerge-repo/",
+      "version": "Project article dated 2023-11",
+      "commit": null,
+      "locator": "Networking/storage adapters, IndexedDB example, public test server limits, sharePolicy config",
+      "accessed_at_utc": "2026-10-07T20:37:57.242895+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-automerge-repo-blog.html",
+      "bytes": 36139,
+      "sha256": "7298d1177524c277566e906be3e8cc06ec52500b999a88aeb01b3882c8bfdbf4",
+      "candidate_ref": "researcher-v1/S24",
+      "evidence_refs": [
+        "E13"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R36",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/tests/test_wcs.py",
+      "resolved_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/tests/test_wcs.py",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "Reviewed only for WCS axis/array conventions",
+      "accessed_at_utc": "2026-10-07T20:37:57.303905+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-wcs-test-wcs.py",
+      "bytes": 90035,
+      "sha256": "4c426da48d63da486b3ee40839a7c2dcdca1232427cbe03fffd3a256593b8363",
+      "candidate_ref": "researcher-v1/S30",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R37",
+      "url": "https://api.github.com/repos/astropy/astropy/releases/tags/v8.0.1",
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/releases/tags/v8.0.1",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "release published_at and tag_name",
+      "accessed_at_utc": "2026-10-07T20:40:29.041247+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-release.json",
+      "bytes": 1964,
+      "sha256": "70f998c514e8c53bd85a60f270d8b4de5cfd9efd67b454942f6c891d1d99e1fb",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R38",
+      "url": "https://api.github.com/repos/astropy/astropy/git/ref/tags/v8.0.1",
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/git/ref/tags/v8.0.1",
+      "version": "Astropy v8.0.1",
+      "commit": null,
+      "locator": "tag SHA/type",
+      "accessed_at_utc": "2026-10-07T20:40:29.043291+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-tag.json",
+      "bytes": 329,
+      "sha256": "61876675cb63c503742da7a5788109259d3bfebbfeae36a9269c7328518eb808",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R39",
+      "url": "https://api.github.com/repos/astropy/astropy/pulls/20473",
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/pulls/20473",
+      "version": "Astropy PR 20473",
+      "commit": null,
+      "locator": "state, merged, merged_at, milestone, base/head SHA, body",
+      "accessed_at_utc": "2026-10-07T20:40:29.044557+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-pr20473.json",
+      "bytes": 22684,
+      "sha256": "e51bfc0f69a33db7cd49ee81891dc49a17df88ba39ac9a36770aa07305ac8719",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R40",
+      "url": "https://api.github.com/repos/astropy/astropy/issues/4976",
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/issues/4976",
+      "version": "Astropy issue 4976",
+      "commit": null,
+      "locator": "status and issue reproduction",
+      "accessed_at_utc": "2026-10-07T20:40:29.046020+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-4976.json",
+      "bytes": 3327,
+      "sha256": "e69524a01458214ea5e99140a254afbd017cdcdc76d53afc88d3f2a0618f7f9e",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R41",
+      "url": "https://api.github.com/repos/astropy/astropy/issues/10468",
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/issues/10468",
+      "version": "Astropy issue 10468",
+      "commit": null,
+      "locator": "status, version and Cutout2D reproduction",
+      "accessed_at_utc": "2026-10-07T20:40:29.047534+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-10468.json",
+      "bytes": 6358,
+      "sha256": "63c54f152dbfe5ed76257c47e6392603a5ee1eabbc1aa768aa2b911a41d3a719",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R42",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/proxies.ts",
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/proxies.ts",
+      "version": "Automerge 3.5.0",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "assignment handler skip/no-op and conflict handling",
+      "accessed_at_utc": "2026-10-07T20:40:29.234019+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-proxies.ts",
+      "bytes": 26006,
+      "sha256": "0b0c28b233e324480fa413bf76b0f17aa59e593df893f3092d2bd3092999ad63",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E08"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R43",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.rst",
+      "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.rst",
+      "version": "bagit-python v1.9.0",
+      "commit": "v1.9.0",
+      "locator": "public component alternative for package creation and validation",
+      "accessed_at_utc": "2026-10-07T20:40:29.234615+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/bagit-python-1.9.0-README.rst",
+      "bytes": 6875,
+      "sha256": "65572ed3f666e434bdaa5499583d7d505b8e8ccf8b482a7e5dc0f831c3493c7d",
+      "candidate_ref": null,
+      "evidence_refs": [
+        "E02",
+        "E06"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    },
+    {
+      "id": "R44",
+      "url": "https://api.github.com/repos/astropy/astropy/git/tags/980b6e36bbe9d7d2d847fcd9c94c4651c06869c0",
+      "resolved_url": null,
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "Annotated release tag object -> pinned commit; verification metadata",
+      "accessed_at_utc": "2026-10-07T20:41:23.001547+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-tag-object.json",
+      "bytes": 2630,
+      "sha256": "874d494993cd15662b08b3dbd0a2b1c7b7cee3e35dff819167d04fb9559089d8",
+      "candidate_ref": "researcher-v1/S05",
+      "evidence_refs": [
+        "E12"
+      ],
+      "method": "Fresh public HTTP retrieval and pertinent static text/code/metadata inspection; not executed."
+    }
+  ],
+  "failed_source_attempts": [
+    {
+      "id": "R20",
+      "url": "https://observation.sourceforge.net/en/",
+      "version": "Observation Manager project page",
+      "commit": null,
+      "locator": "Project description, OAL 2.1, FITS support, licensing",
+      "candidate_ref": null,
+      "file": "observation-manager.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.582377+00:00",
+      "status": 403,
+      "resolved_url": "https://observation.sourceforge.net/en/",
+      "capture_path": null,
+      "bytes": 5469,
+      "sha256": "4a6822f48bcb6f763988877930e6292e475f48184deecd95d1528d25993eefa4",
+      "response_headers": {
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "discarded_http_error_body": true
+    }
+  ],
+  "preservation": {
+    "status": "FAIL",
+    "defect_refs": [
+      "D-02"
+    ],
+    "retained": [
+      "one hypothetical small club",
+      "affordable/public portable direction; no permanent commercial-account dependency",
+      "original bytes and separate logical/byte/rendition identity",
+      "low-connectivity drafts and later collaboration",
+      "private/public distinction, conditional edits and stale draft comparison",
+      "provenance without scientific certification",
+      "annotation history and immutable target versions",
+      "ingest/recovery, retention/deletion, access and selected handoff",
+      "no control, autonomous observing, precision scientific reduction, sky-event prediction, public social networking, product build or WorkNodes"
+    ],
+    "lost": [
+      "Astropy v8.0.1 pinned commit/source identity",
+      "pixel-center, high-level/low-level origin and pixel/array axis-order conditions",
+      "specific DEC-before-RA issue identities and unmerged PR20473-versus-released-code/regression distinction"
+    ],
+    "admitted_corrections_checked": [
+      "issue 889 closed status supported; no fix implied",
+      "If-Match exception valid optional refinement",
+      "external-store journal useful; earlier transaction characterization overstated",
+      "BagIt directory a valid profile; ZIP serialization not universally invalid",
+      "OAL dates supported; club compatibility conditional"
+    ],
+    "assessment_refs": [
+      "E09",
+      "E11",
+      "E12",
+      "E13",
+      "E15"
+    ]
+  },
+  "proposed_vs_executed": {
+    "status": "PASS",
+    "candidate_proposed_only": [
+      "offline draft persistence and explicit publication",
+      "representative metadata/format support",
+      "crash/interrupted ingest and idempotent retry",
+      "identity/deduplication/lineage",
+      "region geometry and rendition replacement",
+      "concurrent edits and metadata/blob access",
+      "withdrawal/deletion/backup/restore",
+      "packet transfer and manifest verification"
+    ],
+    "candidate_reported_executed": [
+      "reading mapped scientific inputs/predecessor",
+      "public capture and SHA-256/byte recording",
+      "static code/test/docs/issue/release inspection",
+      "PDF extraction",
+      "ZIP/XSD inspection"
+    ],
+    "reviewer_actual": [
+      "open public discovery",
+      "fresh public HTTP source capture",
+      "mapped input and candidate capture hashing",
+      "static standard/doc/code/test/issue/release comparison",
+      "PDF text extraction",
+      "safe ZIP member reading",
+      "saved-artifact structural and provenance checks"
+    ],
+    "candidate_historical_operation_counts_verified": false,
+    "reviewer_product_or_upstream_test_executions": 0,
+    "astronomy_ground_truth_established": false,
+    "evidence_refs": [
+      "E01",
+      "E14"
+    ]
+  },
+  "source_operations": {
+    "reviewer_web_search_tool_calls": 3,
+    "reviewer_search_queries_requested": 11,
+    "reviewer_direct_public_http_attempts": 44,
+    "reviewer_http_successes": 43,
+    "reviewer_http_errors": 1,
+    "reviewer_candidate_capture_files_hashed": 49,
+    "reviewer_upstream_test_executions": 0,
+    "candidate_source_operations": null,
+    "underlying_search_engine_fetch_operations": null,
+    "basis": "Only directly observed operations and files; no source-count target or inferred candidate counters."
+  },
+  "usage": {
+    "input": null,
+    "cached": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "supervisor_eligibility": {
+    "lifecycle_assessed": false,
+    "time_assessed": false,
+    "economics_assessed": false,
+    "can_upgrade_scientific_grade": false
+  },
+  "provenance": {
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/INPUT_MAP.json",
+      "sha256": "36ae889f3aa502e0372323fdb323282870248a208fc54059f51e00f9c0864f50"
+    },
+    "runtime_budget_read": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/runtime-budget.json",
+      "sha256": "7c697a8dad0ac94708c2296c9b2e9c414ff7fc758232ff12fd5d51b9524ab82b"
+    },
+    "rules_read": [
+      {
+        "path": "/home/sittingmongoose/.codex/AGENTS.md",
+        "sha256": "2f99262d51ee86f0f956db7846f40bdeeae7f6d119df23e515b99e5a8ee495f9"
+      },
+      {
+        "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+        "sha256": "d827d8ff1e53bd4c49d3f6814c9937aabe8aea0580f2c31d3b3ee089244c01b8"
+      }
+    ],
+    "reviewer_source_index": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/SOURCE_INDEX.json",
+      "sha256": "649e1c2a0c7134ba0ed232d4017528c3b01f551925a2963ee8f0bc6783eb97ca"
+    },
+    "derivation_index": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/DERIVED_INDEX.json",
+      "sha256": "23824283c4f067a69a28bd785dbd46ca7d49258714961bbd43fa6385699021fd"
+    },
+    "report": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/REPORT.md",
+      "sha256": "b8627709379c6d7759937cf047d1d3066a6f0a047538c2d7fced07ca42513cba"
+    }
+  },
+  "frozen_at_utc": "2026-10-07T20:48:45.276471+00:00",
+  "no_goal_required": true,
+  "no_nested_helpers": true,
+  "no_candidate_feedback_or_rewriting": true
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "pm.er10.stage-timings.v1",
+  "case_id": "D-M02-B",
+  "arm": "control",
+  "role": "question_1",
+  "stage": "question_1-v3",
+  "dispatch_preparation_utc": "2026-10-07T20:20:50.176861Z",
+  "hard_stage_deadline_utc": "2026-10-07T20:30:50.176861Z",
+  "written_at_utc": "2026-10-07T20:28:18.657153Z",
+  "output": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/question_1-v3/report.md",
+    "sha256": "f2dad9fb43d90bff299fb5927fb91052e8f3e8fe810d5f3f9296df151e1b4ec9",
+    "bytes": 6738,
+    "words": 767
+  },
+  "operations": [
+    {
+      "operation": "create_fresh_native_goal",
+      "observed_at_utc": "2026-10-07T20:21:12Z",
+      "goal_thread_id": "01a11806-cc9d-7ea3-9e0a-65fe9af2ec1e",
+      "result_status": "active"
+    },
+    {
+      "operation": "native_get_goal_active_identity",
+      "observed_at_utc": "2026-10-07T20:21:12Z",
+      "goal_thread_id": "01a11806-cc9d-7ea3-9e0a-65fe9af2ec1e",
+      "result_status": "active"
+    },
+    {
+      "operation": "send_single_activation_only_supervisor_notice",
+      "time_bound_start_utc": "2026-10-07T20:21:12Z",
+      "time_bound_end_utc": "2026-10-07T20:22:21Z",
+      "time_precision": "bounded by adjacent clock observations; no separate clock read at the tool boundary",
+      "message_id": "message:mcp:025058cc-4d42-4c83-8c32-d3c1b1c4bd2c:thread-send:D-M02-B-control-question_1-v3-activation-2026-10-07",
+      "delivery": "started"
+    },
+    {
+      "operation": "read_authorized_brief_manifest_and_three_frozen_sources; compare_source_sha256",
+      "time_bound_start_utc": "2026-10-07T20:21:12Z",
+      "completed_before_utc": "2026-10-07T20:22:21Z",
+      "result": "all three frozen source SHA-256 values matched the supplied manifest",
+      "brief_sha256": "e07ea001f30f1aaba839bfcfe14939a85e4c2a0814472579b395e03469e1e5b3",
+      "input_manifest_sha256": "779a28bf9ec6e4aba05abb84a9288f78603f94caa6534d9645050599f78ad543"
+    },
+    {
+      "operation": "capture_tagged_rasterio_1_3_10_implementation_files",
+      "capture_records": [
+        {
+          "filename": "rasterio-base.pyx",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_base.pyx",
+          "version": "Rasterio 1.3.10 source tag",
+          "captured_at_utc": "2026-10-07T20:22:21.236099Z",
+          "sha256": "432cfcf812e2b1b5c5a154bb615f7fb45c5f5708799520fe2f578a5c038cb12f",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/question_1-v3/sources/rasterio-base.pyx",
+          "bytes": 46202,
+          "kind": "public primary raw bytes; inspected as text, not executed"
+        },
+        {
+          "filename": "rasterio-io.pyx",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+          "version": "Rasterio 1.3.10 source tag",
+          "captured_at_utc": "2026-10-07T20:22:21.283253Z",
+          "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/question_1-v3/sources/rasterio-io.pyx",
+          "bytes": 86415,
+          "kind": "public primary raw bytes; inspected as text, not executed"
+        },
+        {
+          "filename": "rasterio-windows.py",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/windows.py",
+          "version": "Rasterio 1.3.10 source tag",
+          "captured_at_utc": "2026-10-07T20:22:21.317388Z",
+          "sha256": "91659f9becc7a61cf29109f29d2388507c5df916c88ecccc5462d3864c6518d3",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/question_1-v3/sources/rasterio-windows.py",
+          "bytes": 22025,
+          "kind": "public primary raw bytes; inspected as text, not executed"
+        },
+        {
+          "filename": "rasterio-enums.py",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+          "version": "Rasterio 1.3.10 source tag",
+          "captured_at_utc": "2026-10-07T20:22:42.505497Z",
+          "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/question_1-v3/sources/rasterio-enums.py",
+          "bytes": 5550,
+          "kind": "public primary raw bytes; inspected as text, not executed"
+        }
+      ]
+    },
+    {
+      "operation": "inspect_tagged_implementation_as_text_only",
+      "time_bound_start_utc": "2026-10-07T20:22:21Z",
+      "completed_before_utc": "2026-10-07T20:22:42Z",
+      "result": "reviewed window transform, read shape/window path, and resampling enum definitions; did not execute source code"
+    },
+    {
+      "operation": "draft_report_and_review_obligations_and_source_citations",
+      "completed_by_utc": "2026-10-07T20:25:40Z",
+      "time_precision": "within interval after tagged source review and before preterminal file inspection",
+      "result": "report saved; all six brief obligations disposed; no predecessor artifacts were supplied"
+    },
+    {
+      "operation": "preterminal_report_file_inspection_and_native_usage_snapshot",
+      "observed_at_utc": "2026-10-07T20:25:40Z",
+      "report_sha256": "f2dad9fb43d90bff299fb5927fb91052e8f3e8fe810d5f3f9296df151e1b4ec9",
+      "report_words": 767,
+      "native_goal_status": "active"
+    },
+    {
+      "operation": "write_timings_json",
+      "recorded_at_utc": "2026-10-07T20:28:18.657153Z",
+      "result": "this timing record"
+    },
+    {
+      "operation": "native_goal_terminal_update_and_get",
+      "observed_result": "not yet available at timing-record write; captured directly from native tools in final handoff"
+    }
+  ],
+  "usage": {
+    "native_goal_preterminal_cumulative_tokens_used": 55159,
+    "native_goal_preterminal_time_used_seconds": 267,
+    "provider_generated_tokens": null,
+    "provider_prompt_tokens": null,
+    "provider_completion_tokens": null,
+    "billing_amount": null,
+    "billing_currency": null
+  },
+  "usage_note": "Native Goal cumulative totals are recorded separately and are not provider generated-token counts or billing. Provider usage and billing were unavailable, so those fields are null. Terminal native Goal result is exposed separately in the handoff; no postterminal work is performed.",
+  "input_manifest_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources.json",
+  "additional_source_manifest_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/control/question_1-v3/sources/manifest.json",
+  "additional_source_manifest_sha256": "ea4361e92bafd23e00b468470ebd9c8b5e12043ccebc346a3f4b67e872d95282"
+}

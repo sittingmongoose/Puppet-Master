@@ -1,0 +1,29 @@
+{
+  "first_saved_useful_finding_at": "2026-10-07T19:03:18Z",
+  "complete_draft_saved_and_checked_at": "2026-10-07 19:15:26 UTC",
+  "status": "researcher draft complete; O5 intentionally pending the fresh critic",
+  "dispatch_timing": {
+    "earliest_known_request_bound": "2026-10-07T18:56:45.843757+00:00",
+    "source": "dispatch-config.json record_at; no separate actual requestedAt field was present among admitted files",
+    "stage_deadline": "2026-10-07T19:16:45.843757+00:00",
+    "arm_deadline": "2026-10-07T19:41:45.843757+00:00"
+  },
+  "source_operations": "Recorded in source-map.json",
+  "output_paths": {
+    "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/artifact.md",
+    "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/source-map.json",
+    "native_receipts": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/native-receipts.jsonl"
+  },
+  "native_counters": {
+    "initial_observed_total_tokens_used": 0,
+    "initial_observed_time_used_seconds": 0,
+    "terminal_observed_total_tokens_used": 278525,
+    "terminal_observed_time_used_seconds": 1095,
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing_units_or_cost": null,
+    "note": "Distinct provider input/cached/generated/reasoning/billing counters were not exposed by the native Goal tools."
+  }
+}

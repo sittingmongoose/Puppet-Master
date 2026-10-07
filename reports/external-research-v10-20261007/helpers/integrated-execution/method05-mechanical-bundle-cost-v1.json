@@ -1,0 +1,23 @@
+{
+  "type": "mechanical_method05_exact_bundle_host_cost",
+  "started_at": "2026-10-07T20:28:04.752016+00:00",
+  "completed_at": "2026-10-07T20:28:04.763986+00:00",
+  "elapsed_seconds": 0.011950518997764448,
+  "both_arm_outputs": [
+    {
+      "arm": "control",
+      "bundle": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-v1",
+      "bytes": 31376,
+      "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-v1/source-map.json"
+    },
+    {
+      "arm": "treatment",
+      "bundle": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-v1",
+      "bytes": 48729,
+      "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-v1/source-map.json"
+    }
+  ],
+  "science_judgment": null,
+  "original_whole_deadlines_unchanged": true,
+  "shared_cost_not_double_counted": true
+}

@@ -1,0 +1,151 @@
+{
+  "record_at": "2026-10-07T20:46:20.699138+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/artifact.md": {
+      "sha256": "2a08cbdc82ec56955024600f106908f232e11d9cec35a3d76686b11547e038e8",
+      "bytes": 27781
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/source-map.json": {
+      "sha256": "c4b35b7475c830fbabe5cf689b3580b886948002c5ef74484d00d85037b6ad97",
+      "bytes": 14302
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/sources/first-useful-finding.md": {
+      "sha256": "05ddcc03f8eaaa28a2e98d648acffb640d86e8c844c25d5baf03d0367a37e30f",
+      "bytes": 1966
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/sources/input-captures/critic/first-useful-finding.md": {
+      "sha256": "d73c0fbec9bce82d6dacd8a6d763010ae33be952b469b32e60d245f7c83d680b",
+      "bytes": 1715
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/sources/input-captures/critic/independent-public-source-capture.md": {
+      "sha256": "5ae7b2381f46a8d420709189492e289da34459ffd11c0bd36c89713adbc306ce",
+      "bytes": 4329
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/sources/input-captures/discovery/discovery-capture.md": {
+      "sha256": "e9bf4052c38ba938949c39be257b5e5165e0c671bf2527ee843b1c39c187d39b",
+      "bytes": 6816
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/sources/input-captures/topic-a/first-useful-finding.md": {
+      "sha256": "ab336e76e0979ac404397b74809ed0bdc49663b846106ba8d7c65fc92f800006",
+      "bytes": 1028
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/sources/input-captures/topic-a/topic-a-public-sources.md": {
+      "sha256": "ee32ebd045acb1d3c8240ab561b560484b23cc8cc7cc905be09761caf715a0a5",
+      "bytes": 2358
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/sources/input-captures/topic-b/topic-b-capture.md": {
+      "sha256": "7bd969d7b9a5dbe48f356096f17f4bed7f0340729d2c0820731dccba7b2e934e",
+      "bytes": 2292
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-treatment-reviser-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:30:28.944Z",
+    "startedAt": "2026-10-07T20:30:29.891Z",
+    "completedAt": "2026-10-07T20:40:55.943Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-05/treatment/reviser-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-05--treatment--reviser-v1--cf5d272d6ce90a45.json",
+    "sha256": "cf5d272d6ce90a454f850fd07f3d2c30e97e659e506cda6de35bda22f40cbc65",
+    "bytes": 10879,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "ac2d1e6fd5c20250d147f34395ccc8566764bacf91cb84491ed5329089c5438a",
+      "status": "complete",
+      "tokensUsed": 154473,
+      "tokenBudget": null,
+      "timeUsedSeconds": 570
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-05-treatment-reviser-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a1180f-7840-7763-9322-7f6c6eee8b74",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:40:55.909Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-05-treatment-reviser-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:40:55.909Z",
+        "sha256": "fdcfcb524c66b75bbaa6e7773755c72bb0b17feebd6359be4ae1f88551647674"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a1180f-7840-7763-9322-7f6c6eee8b74",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 154473,
+  "native_elapsed_seconds": 570,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-METHOD-05-treatment-reviser-v1",
+    "record_at": "2026-10-07T20:30:17.181505+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:45:17.181505+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:49:20.932703+00:00",
+    "stage_allowance_seconds": 900,
+    "prior_nonoverlapping_occupied_seconds": 1773.159,
+    "aggregate_ceiling_seconds": 2700,
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "observed_at": "2026-10-07T20:36:50.641991+00:00",
+  "type": "actual_T3_config_and_run_projection_not_Goal_proof",
+  "actual_binding": {
+    "modelSelection": {
+      "instanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "xhigh"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "providerInstanceId": "codex_gmail",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "lineage": {
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+      "relationshipToParent": "subagent",
+      "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+    }
+  },
+  "actual_run_projection": {
+    "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-treatment-source-review-v1:ordinal:1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-source-review-v1",
+    "requestedAt": "2026-10-07T20:36:37.801Z",
+    "startedAt": "2026-10-07T20:36:39.391Z",
+    "completedAt": null,
+    "status": "running"
+  },
+  "thread_payload_sha256": "63e14a5c1f10362430d5410eb6a563a8b6b56b5272aa2eb0ec9de5a42a72a5cc"
+}

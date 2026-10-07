@@ -1,0 +1,18 @@
+{
+  "observed_at": "2026-10-07T20:10:10.065949+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_a8e1792d-ac4c-4414-912f-dd4897fa071d/state.json",
+  "actual_state": {
+    "status": "running",
+    "createdAt": 1791403673047,
+    "updatedAt": 1791403721133,
+    "rounds": 0,
+    "objective": "Complete D-M12-A/treatment/protected_breadth_final-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>"
+  },
+  "source_sha256": "75596bd5394e553260ffccac1510eab7dbd681ab8ce28b6e128284fa668c701e",
+  "source": {
+    "kind": "root exact owned assignment native driver field projection",
+    "nomination": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/m12-native-active-root-nominations.json",
+    "nomination_sha256": "118035466dbf6bd432e3d15df04375fcb473e3a024da4497806570e52605449f"
+  },
+  "limitation": "Exact fields projected by root, not raw full state response; native path and full source SHA retained. No vendorbackendGoal or ACPmapping claim."
+}

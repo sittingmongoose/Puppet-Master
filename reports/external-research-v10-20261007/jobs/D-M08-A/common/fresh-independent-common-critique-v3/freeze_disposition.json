@@ -1,0 +1,35 @@
+{
+  "stage": "D-M08-A/common/fresh-independent-common-critique-v3",
+  "native_identity": "01a11813-9dfb-7f83-8a74-693329e67205",
+  "native_status": "complete",
+  "t3_status": "completed",
+  "quiet": true,
+  "requestedAt": "2026-10-07T20:35:00.918Z",
+  "startedAt": "2026-10-07T20:35:01.642Z",
+  "completedAt": "2026-10-07T20:39:42.786Z",
+  "dispatch_to_delivery_seconds": 281.868,
+  "stage_ceiling_seconds": 480,
+  "absolute_case_deadline": "2026-10-07T21:08:57.512Z",
+  "budget_delivery_eligible": true,
+  "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/critique.md",
+  "output_sha256": "533e0caa13ec58bc374cc56c467c9c45b9e42205f6c20f89c310ef9d02b8d586",
+  "output_bytes": 6513,
+  "scientific_files": {
+    "critique.md": {
+      "sha256": "533e0caa13ec58bc374cc56c467c9c45b9e42205f6c20f89c310ef9d02b8d586",
+      "bytes": 6513
+    }
+  },
+  "raw_native_goal_counters": {
+    "objective_sha256": "c50830adc230926da1ee6d069544b46644e5975808b45a0bb0c1d563fe1c8f53",
+    "status": "complete",
+    "tokensUsed": 80316,
+    "tokenBudget": null,
+    "timeUsedSeconds": 234
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "source_quality": "UNASSESSED",
+  "scope_audit": "incomplete_unknown; advisorymap notfirewall",
+  "frozen_at": "2026-10-07T20:40:02.219690+00:00"
+}

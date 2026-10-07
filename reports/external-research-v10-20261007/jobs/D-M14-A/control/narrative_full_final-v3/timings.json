@@ -1,0 +1,121 @@
+{
+  "job": "D-M14-A/control/narrative_full_final-v3",
+  "t0_utc": "2026-10-07T20:29:08.488897Z",
+  "whole_deadline_utc": "2026-10-07T21:09:08.488897Z",
+  "goal": {
+    "id": "01a1180e-9596-77b0-ba5e-c247fd8959a9",
+    "objective": "Execute D-M14-A/control/narrative_full_final-v3 using /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/INPUT_MAP.json; one Goal through all phases, deliver complete exact job artifacts by 2026-10-07T21:09:08.488897+00:00.",
+    "counter_snapshot_at_utc": "2026-10-07T20:42:01Z",
+    "status_at_snapshot": "active",
+    "native_goal_counters": {
+      "tokens_used": 147365,
+      "time_used_seconds": 737,
+      "created_at_epoch_seconds": 1791404984
+    },
+    "counter_source": "functions.get_goal; kept distinct from missing provider usage and billing data"
+  },
+  "activation_message": {
+    "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort4-v1",
+    "message_id": "message:mcp:574b072a-726f-4f25-b784-afbfd36f0a1c:thread-send:D-M14-A-narrative_full_final-v3-activation-20261007T202944Z",
+    "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:ordinal:28",
+    "requested_mode": "auto",
+    "actual_delivery": "steered",
+    "actual_status": "running",
+    "text": "NATIVE_ACTIVE D-M14-A/control/narrative_full_final-v3",
+    "client_request_id": "D-M14-A-narrative_full_final-v3-activation-20261007T202944Z"
+  },
+  "logical_phases": {
+    "research_and_authoring": {
+      "started_at_utc": "2026-10-07T20:29:08.488897Z",
+      "completed_at_utc": "2026-10-07T20:40:23Z",
+      "elapsed_seconds": 674.511103
+    },
+    "scope_check_preservation_and_delivery": {
+      "started_at_utc": "2026-10-07T20:37:23Z",
+      "last_artifact_reviewed_at_or_before_utc": "2026-10-07T20:42:01Z",
+      "note": "Started at 20:37:23Z. Final source-condition revision and artifact checks completed before the 20:42:01Z checkpoint; work finished early."
+    }
+  },
+  "source_operations": [
+    {
+      "operation": "Read INPUT_MAP.json; then the mapped brief, source manifest, and exactly the four listed frozen primary captures.",
+      "map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/INPUT_MAP.json",
+      "observed_complete_by_utc": "2026-10-07T20:31:44Z",
+      "scope": "No predecessor, sibling, evaluator, helper, history, or unrelated case material read."
+    },
+    {
+      "operation": "Captured and inspected Rasterio 1.3.10 tagged enums.py.",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/sources/rasterio-1.3.10-enums.py",
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "observed_complete_by_utc": "2026-10-07T20:31:44Z"
+    },
+    {
+      "operation": "Verified SHA-256 of all four mapped frozen source files against the source manifest; all matched. Also re-hashed the enums.py capture.",
+      "observed_complete_by_utc": "2026-10-07T20:33:54Z",
+      "frozen_bytes_verified": 21129
+    },
+    {
+      "operation": "Captured and inspected Rasterio 1.3.10 tagged _io.pyx call path; read source only, did not execute it.",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/sources/rasterio-1.3.10-_io.pyx",
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "observed_complete_by_utc": "2026-10-07T20:35:32Z"
+    }
+  ],
+  "first_useful_finding": {
+    "observed_by_utc": "2026-10-07T20:31:44Z",
+    "finding": "The pinned docs distinguish valid masks from nodata and class values, and explicitly say resampling has no universal correct method; nearest/mode therefore require product semantics."
+  },
+  "outputs": {
+    "report_md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/report.md",
+      "final_revision_written_at_utc": "2026-10-07T20:40:23Z",
+      "reviewed_at_or_before_utc": "2026-10-07T20:42:01Z",
+      "words": 1319
+    },
+    "final_md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/final.md",
+      "final_revision_written_at_utc": "2026-10-07T20:40:23Z",
+      "reviewed_at_or_before_utc": "2026-10-07T20:42:01Z",
+      "words": 729
+    },
+    "timings_json_write_initiated_at_utc": "2026-10-07T20:42:12.360568Z"
+  },
+  "validation_status": {
+    "executed": [
+      "SHA-256 verification of the four frozen input source captures against the manifest (all matched).",
+      "Capture hashing for the two additional tagged Rasterio source files.",
+      "Artifact completeness check: mapped outputs present, timings JSON parsed, six final-to-report anchors resolved, final word ceiling met, all frozen and additional capture hashes matched."
+    ],
+    "proposed_not_executed": "Raster algorithm, nodata/mask behavior, area calculation, blockwise equivalence, and all fixture checks listed in report.md and final.md."
+  },
+  "usage_accounting": {
+    "known": {
+      "native_goal_counters": "See goal.native_goal_counters; distinct native Goal counters.",
+      "frozen_source_bytes_verified": 21129,
+      "additional_release_source_capture_bytes": 91965
+    },
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "billing": null,
+    "unknown_reason": "No per-call provider token/cache/generated-token or billing counters were exposed by available tools."
+  },
+  "treatment_cold_preparation_accounting": {
+    "known_generic_prep_lower_bound_seconds": 454.372,
+    "qualification_wall_seconds": null,
+    "charged_cold_separately_from_routine_invocation": true,
+    "basis": "Known lower bound supplied in the task instructions; qualification wall telemetry was not provided."
+  },
+  "measurement_notes": [
+    "Timestamps marked observed_complete_by_utc are upper-bound checkpoints from the UTC clock; individual source-tool calls were not separately timestamped.",
+    "The exact timestamp recorded for the timings artifact is the UTC time immediately before its direct write; no temporary output file was used.",
+    "Final Goal counter snapshot was taken while active before terminal update; terminal status was to be requested only after all mapped artifacts were written and reviewed.",
+    "Artifact completeness check completed by 2026-10-07T20:42:01Z; no raster algorithm or proposed fixture test was run."
+  ],
+  "input_scope": {
+    "generic_contract_read": false,
+    "reason": "INPUT_MAP.json lists no generic contract path; none was read."
+  }
+}

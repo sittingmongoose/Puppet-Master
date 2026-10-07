@@ -1,0 +1,1162 @@
+{
+  "schema_version": 1,
+  "case_id": "I-METHOD-03",
+  "source_judgment": "FAIL",
+  "assessment_basis": "Public primary contents, immutable source identities, governing definitions/callers, supplied brief/plan, and admitted draft/critique preservation. No comparative/lifecycle/cost judgment.",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/brief.md",
+      "sha256": "18f0d4d44d638932060c0624b6876d21f0e33226971579f66916e8de2816853c",
+      "role": "admitted input; hash identifies bytes only, not source truth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/plan.md",
+      "sha256": "3451e59740282a558189908d03921dcbff4126105d788b6488ad0def90ff9f6a",
+      "role": "admitted input; hash identifies bytes only, not source truth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/artifact.md",
+      "sha256": "429c67413f47d6a42efc9a58b5d3dbc291455a675a3deceb87660ef66452c063",
+      "role": "admitted input; hash identifies bytes only, not source truth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/source-map.json",
+      "sha256": "03ed4feed5c296664e482b0361d75266b680ce0c129a5c522b2ae39d83af009e",
+      "role": "admitted input; hash identifies bytes only, not source truth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/artifact.md",
+      "sha256": "6bb508e84ca3fab781227366e79a2f0f1f29899548aba2d2175a94e0b6f979c2",
+      "role": "admitted input; hash identifies bytes only, not source truth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/source-map.json",
+      "sha256": "20e87a5b420fc5858c392368243747f94f68e5b885482ecb9610ce6dac249087",
+      "role": "admitted input; hash identifies bytes only, not source truth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/artifact.md",
+      "sha256": "145b7bd3197a8766097e3d7c23e40567b64383551bfa52246193e2eebc959f76",
+      "role": "admitted input; hash identifies bytes only, not source truth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/source-map.json",
+      "sha256": "5c28cd5128c09e1191d650c598d90a869c69176cf7dc99caae7cf454cb1c5bc2",
+      "role": "admitted input; hash identifies bytes only, not source truth"
+    }
+  ],
+  "checks": [
+    {
+      "id": "SC01",
+      "subject": "Frozen product scope and authority",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "final_lines": "7,40,52,54,62,66,128,133",
+      "evidence": [
+        "brief.md:User brief/Frozen scope",
+        "plan.md:P1-P6"
+      ],
+      "judgment": "Two agencies, 20 stops, two selected routes, one configured transfer, read-only use, no dispatch or connection promise remain intact.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC02",
+      "subject": "Feed-scoped identity and trip-instance conditions",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "final_lines": "16,30,42,77,102",
+      "evidence": [
+        "gtfs-realtime-reference.md:89,462-490",
+        "gtfs-realtime-proto.proto:799-841",
+        "otp-v2.10.0-matcher.java:345-385",
+        "otp-v2.10.0-feed-scoped-id.java:13-29,152-170"
+      ],
+      "judgment": "Frequency start_time/start_date and repeated-stop sequence requirements are supported. Requiring more explicit identity than the standard in other cases is a conservative product restriction, not a universal GTFS requirement.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC03",
+      "subject": "Schedule/Realtime feed_version comparison",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "final_lines": "30,76,115",
+      "evidence": [
+        "gtfs-realtime-reference.md:109",
+        "gtfs-schedule-reference.md:888"
+      ],
+      "judgment": "Optional Realtime feed_version refers to Schedule feed_info.feed_version; Schedule declaration is recommended. Compare only when both supplied. Equality is a declared-version match, not proof of content integrity.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC04",
+      "subject": "FeedHeader.timestamp semantic requirement",
+      "assessment_status": "ASSESSED",
+      "result": "CONTRADICTED",
+      "final_lines": "21,36,78,112,134",
+      "evidence": [
+        "gtfs-realtime-reference.md:3-27,106-109",
+        "gtfs-realtime-proto.proto:32-37,71-79"
+      ],
+      "judgment": "The final treats protobuf optional cardinality as absence of a specification requirement. The pinned governing reference requires timestamp for GTFS Realtime 2.0+. Version 1.0 lacks these semantic requirements. A lenient consumer policy is possible but does not make a v2+ feed conforming. Critic C1 introduces this false correction.",
+      "material_defect_id": "D1"
+    },
+    {
+      "id": "SC05",
+      "subject": "FULL_DATASET/default/DIFFERENTIAL and entity disappearance",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "final_lines": "17,36,76,135",
+      "evidence": [
+        "gtfs-realtime-proto.proto:60-69",
+        "gtfs-realtime-reference.md:107,119-120",
+        "gtfs-realtime-best-practices.md:42-44"
+      ],
+      "judgment": "The wire default, unsupported DIFFERENTIAL, full replacement and absence removing current observation are supported. A v2+ producer semantically must provide incrementality; accepting its wire default is consumer tolerance, not certification of producer conformance.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC06",
+      "subject": "Service-day, timezone, Unix-time, signed-delay units",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "final_lines": "19,54,82",
+      "evidence": [
+        "gtfs-schedule-reference.md:92,196,307-308",
+        "gtfs-realtime-proto.proto:184-191,356-360",
+        "otp-v2.10.0-service-date-utils.java:19-24,48-50,61-73"
+      ],
+      "judgment": "Noon minus 12 elapsed hours and extended service-day times are supported. The plan compares resolved instants across agencies. No DST test execution is established.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC07",
+      "subject": "Freshness, optional per-trip timestamp, load-balancer caveat",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "final_lines": "20-22,34,78,112,124",
+      "evidence": [
+        "gtfs-realtime-reference.md:168",
+        "gtfs-realtime-best-practices.md:23-29,39-40,65"
+      ],
+      "judgment": "Per-trip age and 90-second/10-minute thresholds are explicitly consumer policies based on producer guidance; fetch/header/trip timestamps are correctly separated except for D1. Fresh alert header cannot prove individual alert age; final acknowledges this.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC08",
+      "subject": "Selected event, absolute-time precedence, uncertainty",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "final_lines": "42,79",
+      "evidence": [
+        "gtfs-realtime-proto.proto:168-197,230-267",
+        "gtfs-realtime-reference.md:176-189,196-209",
+        "gtfs-realtime-trip-updates.md:24-30"
+      ],
+      "judgment": "Absolute time takes precedence over delay; omitted uncertainty differs from zero; repeated stop IDs need sequence. Direct-event-only support is conservative but omits valid propagated updates. StopTimeEvent owns uncertainty, despite the final informal StopTimeUpdate wording.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC09",
+      "subject": "SKIPPED versus NO_DATA transfer fallback",
+      "assessment_status": "ASSESSED",
+      "result": "DEFECTIVE_CONTRACT",
+      "final_lines": "24,42,54,79,128",
+      "evidence": [
+        "gtfs-realtime-reference.md:220-222",
+        "gtfs-realtime-proto.proto:247-267",
+        "gtfs-realtime-trip-updates.md:26-30"
+      ],
+      "judgment": "The final groups SKIPPED and NO_DATA as no estimate and otherwise selects Schedule in P3. A fresh matched SKIPPED stop denotes known non-service, not missing prediction. No explicit eligibility/status precedence prevents a schedule-only transfer through that stop. This is a contract conflict, not an executed application result.",
+      "material_defect_id": "D2"
+    },
+    {
+      "id": "SC10",
+      "subject": "CANCELED/DELETED rider display and connection interaction",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "final_lines": "18,24,44,54,80,116",
+      "evidence": [
+        "gtfs-realtime-reference.md:167,505,509",
+        "gtfs-realtime-proto.proto:859-896"
+      ],
+      "judgment": "Rider-display distinction and experimental DELETED label are supported. Negative trip status must be reconciled with P3 schedule fallback; the final does not bind that precedence. This corroborates D2 rather than adding another material count.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC11",
+      "subject": "Alert selectors, communication/impact/legacy fields and bounds",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_LIMITS",
+      "final_lines": "22,46,80,116",
+      "evidence": [
+        "gtfs-realtime-proto.proto:623-642,739-751,982-996",
+        "gtfs-realtime-reference.md:362-365,437-446,478"
+      ],
+      "judgment": "AND within a selector, alternative selectors, route selector distinction and half-open windows are supported. The proto deprecates active_period while the reference still describes it. Volunteer-only treatment when communication_period is absent is explicit consumer policy, not a standard mandate; it can suppress legacy alerts.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC12",
+      "subject": "Transfer types, type-2 required minimum, linked trips",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "final_lines": "23,54,81,113,117",
+      "evidence": [
+        "gtfs-schedule-reference.md:696-703"
+      ],
+      "judgment": "Types 1/2/3, required type-2 minimum and same-vehicle linked-trip condition are supported. Rejecting cross-agency in-seat inference is a conservative scope choice.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC13",
+      "subject": "Maximum of two total transfer minimums",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_PRODUCT_CHOICE",
+      "final_lines": "23,54,81,94,113",
+      "evidence": [
+        "gtfs-schedule-reference.md:697",
+        "critic-v1/artifact.md:29-30"
+      ],
+      "judgment": "The Schedule minimum includes movement and schedule variance buffer. max(reviewed walk+buffer, applicable minimum) is an explicit proposed rule that avoids additive double-counting; the standard does not define this product composition.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC14",
+      "subject": "Scheduled pickup/drop-off eligibility",
+      "assessment_status": "ASSESSED",
+      "result": "MATERIAL_OMISSION",
+      "final_lines": "16,24,42,52-56,77-82",
+      "evidence": [
+        "gtfs-schedule-reference.md:309,316-317"
+      ],
+      "judgment": "The full calculator input, P3 interpretation and acceptance suite do not handle no-pickup/no-drop-off or arrangement-required stop events. A valid Schedule can contain an arriving stop that forbids alighting or a departing stop that forbids boarding; temporal slack alone is then not useful transfer advice. The no boarding guarantee does not address known feed prohibitions.",
+      "material_defect_id": "D3"
+    },
+    {
+      "id": "SC15",
+      "subject": "Selecting the applicable transfer rule across namespaces",
+      "assessment_status": "ASSESSED",
+      "result": "LIMITATION",
+      "final_lines": "30,52-56,81",
+      "evidence": [
+        "gtfs-schedule-reference.md:673-697"
+      ],
+      "judgment": "The standard ranks trip/route specificity and station-child rules within referenced IDs. Final says applicable rule but does not define specificity/conflict resolution or cross-feed ownership. No actual combined feed/rule is available; no wrong rule execution is claimed.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC16",
+      "subject": "Calendar/overnight/clock acceptance",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_PROPOSAL",
+      "final_lines": "19,74,77,82",
+      "evidence": [
+        "plan.md:P6",
+        "gtfs-schedule-reference.md:92,calendar.txt/calendar_dates.txt sections"
+      ],
+      "judgment": "Required categories are proposed, including extended hours, exceptions, service-date collisions and both DST transitions; hand-calculated fixtures are not present or executed.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC17",
+      "subject": "OTP code and governing caller/definitions",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_BOUNDED_CODE",
+      "final_lines": "66,102,114",
+      "evidence": [
+        "otp-v2.2.0-matcher.java:112-152,221-275",
+        "otp-v2.2.0-polling-caller.java:42-58,77-101",
+        "otp-v2.10.0-matcher.java:149-213,345-415",
+        "otp-v2.10.0-polling-caller.java:61-74",
+        "otp-v2.10.0-updater-runnable.java:31-44",
+        "otp-v2.10.0-feed-scoped-id.java:13-29,152-170",
+        "otp-v2.10.0-service-date-utils.java:48-73"
+      ],
+      "judgment": "Pinned OTP VehiclePosition matching uses feed-scoped lookup and timezone/service-date inference. Reviewer completed the v2.10 caller chain through the runnable. It is neither a TripUpdate predictor nor validation of product-owned logic. O2 permits an investigated alternative, so a custom parser not yet pinned is not alone an O2 failure.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC18",
+      "subject": "OTP real issue/fix/regression/release applicability",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_BOUNDED_HISTORY",
+      "final_lines": "103",
+      "evidence": [
+        "otp-issue-4058.json:$.body,created_at,closed_at",
+        "otp-issue-observed-b0c9829e-vpm.java:97-129",
+        "otp-pr-4066.patch:1,99-165,675-745,2445-2454",
+        "otp-pull-4066.json:$.merged_at,merge_commit_sha",
+        "otp-4066-to-v2.2.0-compare.json:$.status,behind_by,merge_base_commit.sha",
+        "otp-v2.2.0-tag-ref.json:$.object",
+        "otp-v2.2.0-tag-object.json:$.object",
+        "otp-v2.10.0-tag-object.json:$.object",
+        "otp-v2.2.0-matcher-test.java:43-52,168-208",
+        "otp-v2.10.0-matcher-test.java:82-93,540-559"
+      ],
+      "judgment": "Reporter deployed b0c9829e matches captured early-return code. PR merged 2022-04-22 as d9bf0bbe; compare merge base and tag objects establish v2.2.0 release containment. Released code/tests show inference and regressions; v2.10.0 preserves evolved behavior. No tests were executed, no current bug/DST correctness is inferred.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC19",
+      "subject": "Validator release and issue limits",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_METADATA_CAVEAT",
+      "final_lines": "68,126",
+      "evidence": [
+        "gtfs-validator-latest-release.json:$.tag_name,published_at",
+        "gtfs-validator-v8.0.1-release.json:$.body",
+        "gtfs-validator-issue-2174.json:$.body,state,closed_at"
+      ],
+      "judgment": "v8.0.1 latest metadata and 2026-05-12 publication match. Issue requests conditional minimum validation. Source map calling it open is inaccurate: live API says closed 2026-09-16. Final does not assert it is open or a confirmed v8.0.1 defect; no new final material error follows.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC20",
+      "subject": "Tablet, cache, accessibility and operator failure",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_PROPOSAL_WITH_LIMITS",
+      "final_lines": "32,36,40,48,62,70,83",
+      "evidence": [
+        "plan.md:P5",
+        "research-v1/artifact.md:25,51"
+      ],
+      "judgment": "Offline cache/age and accessible-interface intentions remain proposals. Feed import results and unavailable/anomaly labels provide failure evidence; dedicated operator diagnostics and visual behavior are not fully specified or tested.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC21",
+      "subject": "Review, history and comparison with later observations",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_PROPOSAL_WITH_LIMITS",
+      "final_lines": "60-62,83,95",
+      "evidence": [
+        "plan.md:P4",
+        "research-v1/artifact.md:37-39,56",
+        "gtfs-realtime-reference.md:152,159,168"
+      ],
+      "judgment": "Versioned evaluated-result snapshot plus underlying records can serve the saved-screen review purpose. A later observation comparison interaction and observed-versus-predicted classification are under-specified; I do not impose a bitmap screenshot requirement. Seven days and no rider identities are preserved.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC22",
+      "subject": "Custom architecture, OTP alternative and preflight role",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_PRODUCT_CHOICE",
+      "final_lines": "9,66-70,96,114,119",
+      "evidence": [
+        "otp-v2.10.0-docs.html:OpenTripPlanner 2 overview",
+        "research-v1/artifact.md:43-45",
+        "critic-v1/artifact.md:32-35,47"
+      ],
+      "judgment": "OTP is a broad multimodal routing platform. Choosing bounded owned logic is product judgment, not an experimentally established resource or performance win. Validator preflight is not application correctness. Lack of evaluated concrete parser remains openly unresolved.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC23",
+      "subject": "Validation proposed versus executed and witness reach",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "final_lines": "74-84,103,126-128",
+      "evidence": [
+        "research-v1/artifact.md:49-57,85",
+        "critic-v1/artifact.md:66-68"
+      ],
+      "judgment": "All original acceptance classes appear. Public retrieval, code/test-source inspection and release ancestry are supported source witnesses only. No application/OTP test, feed validation, build, benchmark or live local feed evaluation is established. D1 is embedded in a proposed acceptance expectation, not a passed test.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC24",
+      "subject": "Bounded discovery, negatives and missed optional leads",
+      "assessment_status": "ASSESSED",
+      "result": "SUFFICIENT_BOUNDED_WITH_LIMITS",
+      "final_lines": "7,34,46,60,66,68,101,135",
+      "evidence": [
+        "research-v1/artifact.md:13-45,72-74",
+        "gtfs-realtime-best-practices.md:23-29,39-44",
+        "onebusaway-sign-mode.html:Sign Mode section",
+        "waystation-announcement.html:Why Waystation/Built on the OneBusAway Ecosystem"
+      ],
+      "judgment": "Discovery spans stateless snapshots, identity, time, producer age, traceability, tool evolution and architecture alternatives. Direct display analogues such as OneBusAway Sign Mode/Waystation are useful missed optional opportunities (unattended updates/failure isolation), not an exhaustive recall test or proof of local suitability. Findings D1-D3 limit correctness/completeness.",
+      "material_defect_id": null
+    },
+    {
+      "id": "SC25",
+      "subject": "Criticism and draft-to-final preservation",
+      "assessment_status": "ASSESSED",
+      "result": "FAITHFUL_WITH_LIMITS",
+      "final_lines": "108-120,124,131-136",
+      "evidence": [
+        "research-v1/artifact.md:7-81",
+        "critic-v1/artifact.md:15-64"
+      ],
+      "judgment": "All nine criticism entries C1-C3/P1-P6 have visible final dispositions. C1 is faithfully preserved but scientifically incorrect. C2 resolved as a product choice; C3 applicability limit is retained without pretending TripUpdate validation. Two original open decisions (schedule-only usefulness and mapping/feed approval authority) are no longer explicit. Family identity/procedural timing are not source judgments.",
+      "material_defect_id": null
+    }
+  ],
+  "counts": {
+    "consequential_checks_total": 25,
+    "consequential_checks_assessed": 25,
+    "consequential_checks_unassessed": 0,
+    "material_error_count": 3,
+    "successful_public_retrievals": 35,
+    "failed_public_retrievals": 1,
+    "linked_capture_identity_checks": 42,
+    "linked_capture_identity_matches": 42
+  },
+  "captures": [
+    {
+      "filename": "gtfs-schedule-reference.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+      "version": "immutable commit 3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "requested_at_utc": "2026-10-07T20:06:25.163507+00:00",
+      "capture_path": "sources/gtfs-schedule-reference.md",
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+      "bytes": 138481,
+      "http_status": 200
+    },
+    {
+      "filename": "gtfs-realtime-reference.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+      "version": "immutable commit 3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "requested_at_utc": "2026-10-07T20:06:25.165946+00:00",
+      "capture_path": "sources/gtfs-realtime-reference.md",
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+      "bytes": 90262,
+      "http_status": 200
+    },
+    {
+      "filename": "gtfs-realtime-proto.proto",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/proto/gtfs-realtime.proto",
+      "version": "immutable commit 3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "requested_at_utc": "2026-10-07T20:06:25.167357+00:00",
+      "capture_path": "sources/gtfs-realtime-proto.proto",
+      "sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299",
+      "bytes": 65237,
+      "http_status": 200
+    },
+    {
+      "filename": "gtfs-realtime-best-practices.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/best-practices/best-practices.md",
+      "version": "immutable commit 3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "requested_at_utc": "2026-10-07T20:06:25.168534+00:00",
+      "capture_path": "sources/gtfs-realtime-best-practices.md",
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe",
+      "bytes": 17511,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.10.0-docs.html",
+      "url": "https://docs.opentripplanner.org/en/v2.10.0/",
+      "version": "OpenTripPlanner documentation release v2.10.0",
+      "requested_at_utc": "2026-10-07T20:06:25.171373+00:00",
+      "capture_path": "sources/otp-v2.10.0-docs.html",
+      "sha256": "5a6b4a498ef0e9a28ad1fea2456ff9355d05d2e13c1b40a0836a2af8917f4c23",
+      "bytes": 50216,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.10.0-release.html",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/releases/tag/v2.10.0",
+      "version": "tag v2.10.0, commit 521cd5d8acaae628878f43bf5946f4942c118548; tag object 35d23ad9b23321685bdc49351c744004044611be",
+      "requested_at_utc": "2026-10-07T20:06:25.174200+00:00",
+      "capture_path": "sources/otp-v2.10.0-release.html",
+      "sha256": "3456a9c4d34748704e158619a272d654a5e0b695b20c54b74624b8b23fd5ae05",
+      "bytes": 199123,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.10.0-matcher.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/521cd5d8acaae628878f43bf5946f4942c118548/application/src/main/java/org/opentripplanner/updater/vehicle_position/RealtimeVehiclePatternMatcher.java",
+      "version": "immutable commit 521cd5d8acaae628878f43bf5946f4942c118548",
+      "requested_at_utc": "2026-10-07T20:06:25.176907+00:00",
+      "capture_path": "sources/otp-v2.10.0-matcher.java",
+      "sha256": "f584f5ceebbc649eb05943f4bde8f0cc0da3c855220ada7012ca6633008841f3",
+      "bytes": 17458,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.10.0-matcher-test.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/521cd5d8acaae628878f43bf5946f4942c118548/application/src/test/java/org/opentripplanner/updater/vehicle_position/RealtimeVehicleMatcherTest.java",
+      "version": "immutable commit 521cd5d8acaae628878f43bf5946f4942c118548",
+      "requested_at_utc": "2026-10-07T20:06:25.178832+00:00",
+      "capture_path": "sources/otp-v2.10.0-matcher-test.java",
+      "sha256": "2ec4bc86d684b933c23245a6cd4993e45569d15d3e83b5890129a38f326ea079",
+      "bytes": 21302,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.10.0-polling-caller.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/521cd5d8acaae628878f43bf5946f4942c118548/application/src/main/java/org/opentripplanner/updater/vehicle_position/PollingVehiclePositionUpdater.java",
+      "version": "immutable commit 521cd5d8acaae628878f43bf5946f4942c118548",
+      "requested_at_utc": "2026-10-07T20:06:25.247744+00:00",
+      "capture_path": "sources/otp-v2.10.0-polling-caller.java",
+      "sha256": "ab64b1f6385f8f6987c02c54dd8db1ff5c95dba6f7d52f9605ec5b2cb95f02b2",
+      "bytes": 2572,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-issue-4058.html",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/issues/4058",
+      "version": "Issue opened 2022-04-01; reporter states OTP commit b0c9829e3bfe10daddae72485a09a7f48b0be8ff; issue closed via PR #4066",
+      "requested_at_utc": "2026-10-07T20:06:25.261006+00:00",
+      "capture_path": "sources/otp-issue-4058.html",
+      "sha256": "09ac2a42835356f32996f82c2e027ceb15ea0e711c0cf08daa0baf306f37b57d",
+      "bytes": 277876,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-pr-4066.patch",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/pull/4066.patch",
+      "version": "PR #4066 patch; initial implementation commit 64306687c2094b56d126bab1217bbfaff416ff22; merged change later recorded as d9bf0bbec860c66591a993ee62760447b9f00537",
+      "requested_at_utc": "2026-10-07T20:06:25.273480+00:00",
+      "capture_path": "sources/otp-pr-4066.patch",
+      "sha256": "9421d9d505b4d3eef504d4bfd494130cd7ac18a676003fed6e8092fa4be48923",
+      "bytes": 107509,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-pull-4066.json",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/pulls/4066",
+      "version": "GitHub public pull request metadata",
+      "requested_at_utc": "2026-10-07T20:06:25.289632+00:00",
+      "capture_path": "sources/otp-pull-4066.json",
+      "sha256": "d8df6c70313173c707d2a22d417026226738238838f97b5469f3f677cbe3c5a6",
+      "bytes": 22015,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.2.0-release.html",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/releases/tag/v2.2.0",
+      "version": "tag v2.2.0, commit 0e15511b630347df581f1f230de7f470db1b7b26; tag object ae7df694026e0166becde592897267a917c9b7c2",
+      "requested_at_utc": "2026-10-07T20:06:25.295259+00:00",
+      "capture_path": "sources/otp-v2.2.0-release.html",
+      "sha256": "0960ee5625c0b7f68874fc2fe63b4d6e6a805d1cdb4f8fe7de65ef2866719254",
+      "bytes": 198232,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.2.0-matcher.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/0e15511b630347df581f1f230de7f470db1b7b26/src/main/java/org/opentripplanner/updater/vehicle_position/VehiclePositionPatternMatcher.java",
+      "version": "immutable commit 0e15511b630347df581f1f230de7f470db1b7b26",
+      "requested_at_utc": "2026-10-07T20:06:25.329145+00:00",
+      "capture_path": "sources/otp-v2.2.0-matcher.java",
+      "sha256": "ebee32d0fb6db5b41056ae000752a1457e202a3ff364ae0c895ea184e4b9714b",
+      "bytes": 10364,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.2.0-matcher-test.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/0e15511b630347df581f1f230de7f470db1b7b26/src/test/java/org/opentripplanner/updater/vehicle_position/VehiclePositionsMatcherTest.java",
+      "version": "immutable commit 0e15511b630347df581f1f230de7f470db1b7b26",
+      "requested_at_utc": "2026-10-07T20:06:25.342204+00:00",
+      "capture_path": "sources/otp-v2.2.0-matcher-test.java",
+      "sha256": "bfda3f6fa0448775da0b47f517207b09c51f48cd2ff93e9a989d961274c42d0c",
+      "bytes": 7929,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.2.0-polling-caller.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/0e15511b630347df581f1f230de7f470db1b7b26/src/main/java/org/opentripplanner/updater/vehicle_position/PollingVehiclePositionUpdater.java",
+      "version": "immutable commit 0e15511b630347df581f1f230de7f470db1b7b26",
+      "requested_at_utc": "2026-10-07T20:06:25.372996+00:00",
+      "capture_path": "sources/otp-v2.2.0-polling-caller.java",
+      "sha256": "0fe98c6e2a65153fde26fd25a1b08c251cae64449bcd6edd6803dfc381ef21ff",
+      "bytes": 3441,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-4066-to-v2.2.0-compare.json",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/compare/d9bf0bbec860c66591a993ee62760447b9f00537...0e15511b630347df581f1f230de7f470db1b7b26",
+      "version": "PR merge commit d9bf0bbec860c66591a993ee62760447b9f00537 compared with release commit 0e15511b630347df581f1f230de7f470db1b7b26",
+      "requested_at_utc": "2026-10-07T20:06:25.399940+00:00",
+      "capture_path": "sources/otp-4066-to-v2.2.0-compare.json",
+      "sha256": "fbd99d01d3494fc6a0269daf10016b1dc735765b23b6c3dc3f63e744c1fe34b2",
+      "bytes": 2085188,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-b2c0e9a-vpm.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/b2c0e9a317d7c098d86f614a28ad2f476eb1be29/src/main/java/org/opentripplanner/updater/vehicle_positions/VehiclePositionPatternMatcher.java",
+      "version": "immutable commit b2c0e9a317d7c098d86f614a28ad2f476eb1be29",
+      "requested_at_utc": "2026-10-07T20:06:25.433528+00:00",
+      "capture_path": "sources/otp-b2c0e9a-vpm.java",
+      "sha256": "c9e7144944b1bc27293ecd9e9b5fa511a3d902922464a2969942e27469643611",
+      "bytes": 8483,
+      "http_status": 200
+    },
+    {
+      "filename": "gtfs-validator-issue-2174.html",
+      "url": "https://github.com/MobilityData/gtfs-validator/issues/2174",
+      "version": "Issue opened 2026-08-20; status shown open in search/page at research time",
+      "requested_at_utc": "2026-10-07T20:06:25.467779+00:00",
+      "capture_path": "sources/gtfs-validator-issue-2174.html",
+      "sha256": "9e341a6ae0e1658bb24f03c05b62781e35b5b3c57096e537df463916120302f2",
+      "bytes": 249926,
+      "http_status": 200
+    },
+    {
+      "filename": "gtfs-validator-latest-release.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/latest",
+      "version": "Endpoint returned v8.0.1, published 2026-05-12T13:35:43Z",
+      "requested_at_utc": "2026-10-07T20:06:25.519351+00:00",
+      "capture_path": "sources/gtfs-validator-latest-release.json",
+      "sha256": "273820b221ef43cffae99e49b51456d97827db344f9e6c24ca925baa0ebef663",
+      "bytes": 21187,
+      "http_status": 200
+    },
+    {
+      "filename": "gtfs-validator-v8.0.1-release.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/tags/v8.0.1",
+      "version": "release v8.0.1, published 2026-05-12T13:35:43Z",
+      "requested_at_utc": "2026-10-07T20:06:25.558478+00:00",
+      "capture_path": "sources/gtfs-validator-v8.0.1-release.json",
+      "sha256": "273820b221ef43cffae99e49b51456d97827db344f9e6c24ca925baa0ebef663",
+      "bytes": 21187,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-issue-observed-b0c9829e-vpm.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/b0c9829e3bfe10daddae72485a09a7f48b0be8ff/src/main/java/org/opentripplanner/updater/vehicle_positions/VehiclePositionPatternMatcher.java",
+      "version": "immutable commit b0c9829e3bfe10daddae72485a09a7f48b0be8ff",
+      "requested_at_utc": "2026-10-07T20:06:25.631800+00:00",
+      "capture_path": "sources/otp-issue-observed-b0c9829e-vpm.java",
+      "sha256": "c9e7144944b1bc27293ecd9e9b5fa511a3d902922464a2969942e27469643611",
+      "bytes": 8483,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.2.0-tag-ref.json",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/ref/tags/v2.2.0",
+      "version": "Public API state captured at reviewer retrieval time",
+      "requested_at_utc": "2026-10-07T20:06:25.639960+00:00",
+      "capture_path": "sources/otp-v2.2.0-tag-ref.json",
+      "sha256": "25e04d1265003f49531ad9cc42ecbc3d5ce7dc9a920c565e6f5ac65efea05d29",
+      "bytes": 361,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.2.0-tag-object.json",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/tags/ae7df694026e0166becde592897267a917c9b7c2",
+      "version": "Public API state captured at reviewer retrieval time",
+      "requested_at_utc": "2026-10-07T20:06:25.674744+00:00",
+      "capture_path": "sources/otp-v2.2.0-tag-object.json",
+      "sha256": "aa5ca22909a9a781557d9e5d2915b6c2f08c251c5dd46d91638f44573a4367f9",
+      "bytes": 687,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.10.0-tag-ref.json",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/ref/tags/v2.10.0",
+      "version": "Public API state captured at reviewer retrieval time",
+      "requested_at_utc": "2026-10-07T20:06:25.727872+00:00",
+      "capture_path": "sources/otp-v2.10.0-tag-ref.json",
+      "sha256": "5ad175ea6659af2c86569d29544cdedf2a9ff419bbaef999dcf60c6e68109f0c",
+      "bytes": 367,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.10.0-tag-object.json",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/tags/35d23ad9b23321685bdc49351c744004044611be",
+      "version": "Public API state captured at reviewer retrieval time",
+      "requested_at_utc": "2026-10-07T20:06:25.730720+00:00",
+      "capture_path": "sources/otp-v2.10.0-tag-object.json",
+      "sha256": "fb4905799593bbf1769bff1efa90d34d907920454e14fd6bc7f1ca39f69acc2d",
+      "bytes": 695,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-issue-4058.json",
+      "url": "https://api.github.com/repos/opentripplanner/OpenTripPlanner/issues/4058",
+      "version": "Public API state captured at reviewer retrieval time",
+      "requested_at_utc": "2026-10-07T20:06:25.821771+00:00",
+      "capture_path": "sources/otp-issue-4058.json",
+      "sha256": "32b4109be0632eca52ee2408ee13995377759110fd3a1ec1da40b7b4fb402ec4",
+      "bytes": 5883,
+      "http_status": 200
+    },
+    {
+      "filename": "gtfs-validator-issue-2174.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2174",
+      "version": "Public API state captured at reviewer retrieval time",
+      "requested_at_utc": "2026-10-07T20:06:25.846632+00:00",
+      "capture_path": "sources/gtfs-validator-issue-2174.json",
+      "sha256": "11456ed004dbf1a1234bdf01152ccf7eb2e55fc36c2b092595fbf59cd9df0aed",
+      "bytes": 6217,
+      "http_status": 200
+    },
+    {
+      "filename": "otp-v2.10.0-updater-runnable.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/521cd5d8acaae628878f43bf5946f4942c118548/application/src/main/java/org/opentripplanner/updater/vehicle_position/VehiclePositionUpdaterRunnable.java",
+      "requested_at_utc": "2026-10-07T20:10:09.019447+00:00",
+      "capture_path": "sources/otp-v2.10.0-updater-runnable.java",
+      "sha256": "13547b89775a57fb250a3f7c6aadc4aacd66647193fa9d4e759cc6b6e1185b15",
+      "bytes": 1795,
+      "http_status": 200,
+      "version": "immutable commit 521cd5d8acaae628878f43bf5946f4942c118548"
+    },
+    {
+      "filename": "otp-v2.10.0-service-date-utils.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/521cd5d8acaae628878f43bf5946f4942c118548/utils/src/main/java/org/opentripplanner/utils/time/ServiceDateUtils.java",
+      "requested_at_utc": "2026-10-07T20:10:09.021344+00:00",
+      "capture_path": "sources/otp-v2.10.0-service-date-utils.java",
+      "sha256": "dfe459f5c43acf5e39856c220977c34443240619f23674d4af56f54dd1e89d7c",
+      "bytes": 7906,
+      "http_status": 200,
+      "version": "immutable commit 521cd5d8acaae628878f43bf5946f4942c118548"
+    },
+    {
+      "filename": "otp-v2.10.0-feed-scoped-id.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/521cd5d8acaae628878f43bf5946f4942c118548/core/src/main/java/org/opentripplanner/core/model/id/FeedScopedId.java",
+      "requested_at_utc": "2026-10-07T20:10:09.022011+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "version": "immutable commit 521cd5d8acaae628878f43bf5946f4942c118548"
+    },
+    {
+      "filename": "gtfs-realtime-trip-updates.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+      "requested_at_utc": "2026-10-07T20:10:09.022719+00:00",
+      "capture_path": "sources/gtfs-realtime-trip-updates.md",
+      "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+      "bytes": 9502,
+      "http_status": 200,
+      "version": "immutable commit 3c9e7b904b5035349622f03e11851e25c16d1d99"
+    },
+    {
+      "filename": "protobuf-proto2-guide.html",
+      "url": "https://protobuf.dev/programming-guides/proto2/",
+      "requested_at_utc": "2026-10-07T20:10:09.024666+00:00",
+      "capture_path": "sources/protobuf-proto2-guide.html",
+      "sha256": "c88c78923b58cb863f0b0ed2b807230b1b46c19f74d13fccfc0a4e6dbb7e2b09",
+      "bytes": 284379,
+      "http_status": 200,
+      "version": "live proto2 guide; no immutable site revision exposed"
+    },
+    {
+      "filename": "otp-v2.10.0-feed-scoped-id.java",
+      "url": "https://raw.githubusercontent.com/opentripplanner/OpenTripPlanner/521cd5d8acaae628878f43bf5946f4942c118548/domain-core/src/main/java/org/opentripplanner/core/model/id/FeedScopedId.java",
+      "version": "immutable commit 521cd5d8acaae628878f43bf5946f4942c118548",
+      "requested_at_utc": "2026-10-07T20:11:23.120271+00:00",
+      "capture_path": "sources/otp-v2.10.0-feed-scoped-id.java",
+      "sha256": "cddfcca9d6cc691e4c57dc6950d20050be1319e2db56afbfa0cb1343b90ab061",
+      "bytes": 5498,
+      "http_status": 200
+    },
+    {
+      "filename": "onebusaway-sign-mode.html",
+      "url": "https://developer.onebusaway.org/features/sign-mode",
+      "version": "Live primary documentation; no immutable version declared; access time pinned here",
+      "requested_at_utc": "2026-10-07T20:13:03.593372+00:00",
+      "capture_path": "sources/onebusaway-sign-mode.html",
+      "sha256": "8fc5c811820cecb09d0186d6db39c176a9da65fbe70bff88f708fbacf944765d",
+      "bytes": 30247,
+      "http_status": 200
+    },
+    {
+      "filename": "waystation-announcement.html",
+      "url": "https://opentransitsoftwarefoundation.org/2026/09/waystation-goes-live-at-uc-san-diego/",
+      "version": "Live primary documentation; no immutable version declared; access time pinned here",
+      "requested_at_utc": "2026-10-07T20:13:03.595416+00:00",
+      "capture_path": "sources/waystation-announcement.html",
+      "sha256": "9ae91dcbb95442176072d7e4be7f915438ab22193989d687e6f0a5ea9b99ef2f",
+      "bytes": 30574,
+      "http_status": 200
+    }
+  ],
+  "capture_metadata": "sources/capture-metadata.json",
+  "linked_capture_integrity": [
+    {
+      "stage": "research-v1",
+      "id": "S01",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/gtfs-schedule-reference.md",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/gtfs-schedule-reference.md",
+      "same_bytes": true,
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S02",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/gtfs-realtime-reference.md",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/gtfs-realtime-reference.md",
+      "same_bytes": true,
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S03",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/gtfs-realtime-proto.proto",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/gtfs-realtime-proto.proto",
+      "same_bytes": true,
+      "sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S04",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/gtfs-realtime-best-practices.md",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/gtfs-realtime-best-practices.md",
+      "same_bytes": true,
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S05",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.10.0-docs.html",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.10.0-docs.html",
+      "same_bytes": true,
+      "sha256": "5a6b4a498ef0e9a28ad1fea2456ff9355d05d2e13c1b40a0836a2af8917f4c23"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S06",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.10.0-release.html",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.10.0-release.html",
+      "same_bytes": true,
+      "sha256": "1faea9f67f34b7f944e201632b4b1237f1acaee178fea89e9498a47a9db71a2d"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S07",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.10.0-matcher.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.10.0-matcher.java",
+      "same_bytes": true,
+      "sha256": "f584f5ceebbc649eb05943f4bde8f0cc0da3c855220ada7012ca6633008841f3"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S08",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.10.0-matcher-test.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.10.0-matcher-test.java",
+      "same_bytes": true,
+      "sha256": "2ec4bc86d684b933c23245a6cd4993e45569d15d3e83b5890129a38f326ea079"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S09",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.10.0-polling-caller.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.10.0-polling-caller.java",
+      "same_bytes": true,
+      "sha256": "ab64b1f6385f8f6987c02c54dd8db1ff5c95dba6f7d52f9605ec5b2cb95f02b2"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S10",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-issue-4058.html",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-issue-4058.html",
+      "same_bytes": true,
+      "sha256": "3851107940b4be7e54bb9ef47624d4c74d3fde1cade31dcd1f72b8fdeee60b55"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S11",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-pr-4066.patch",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-pr-4066.patch",
+      "same_bytes": true,
+      "sha256": "9421d9d505b4d3eef504d4bfd494130cd7ac18a676003fed6e8092fa4be48923"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S12",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-pull-4066.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-pull-4066.json",
+      "same_bytes": true,
+      "sha256": "d8df6c70313173c707d2a22d417026226738238838f97b5469f3f677cbe3c5a6"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S13",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.2.0-release.html",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.2.0-release.html",
+      "same_bytes": true,
+      "sha256": "b0a0e350d4794629d04a969a9b328a88f4c0ec846e90b6528730e926d8b6d9ae"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S14",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.2.0-matcher.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.2.0-matcher.java",
+      "same_bytes": true,
+      "sha256": "ebee32d0fb6db5b41056ae000752a1457e202a3ff364ae0c895ea184e4b9714b"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S15",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.2.0-matcher-test.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.2.0-matcher-test.java",
+      "same_bytes": true,
+      "sha256": "bfda3f6fa0448775da0b47f517207b09c51f48cd2ff93e9a989d961274c42d0c"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S16",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.2.0-polling-caller.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.2.0-polling-caller.java",
+      "same_bytes": true,
+      "sha256": "0fe98c6e2a65153fde26fd25a1b08c251cae64449bcd6edd6803dfc381ef21ff"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S17",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-4066-to-v2.2.0-compare.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-4066-to-v2.2.0-compare.json",
+      "same_bytes": true,
+      "sha256": "fbd99d01d3494fc6a0269daf10016b1dc735765b23b6c3dc3f63e744c1fe34b2"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S18",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.2.0-tree.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.2.0-tree.json",
+      "same_bytes": true,
+      "sha256": "c2364af430fbfe68193d22a7efa3bc8cca4e2af5a9082f6fd891d3251a059715"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S19",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-v2.10.0-tree.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-v2.10.0-tree.json",
+      "same_bytes": true,
+      "sha256": "8d57eed65d6d2896075bd85779c45b8dc1516cb57ccf30ed0042bcdd01806606"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S20",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/otp-b2c0e9a-vpm.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/otp-b2c0e9a-vpm.java",
+      "same_bytes": true,
+      "sha256": "c9e7144944b1bc27293ecd9e9b5fa511a3d902922464a2969942e27469643611"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S21",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/gtfs-validator-issue-2174.html",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/gtfs-validator-issue-2174.html",
+      "same_bytes": true,
+      "sha256": "2215aedd449b79f5090d9bb60afa5fa92ed05e2add8f3dfb748fdd3aa948e36a"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S22",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/gtfs-validator-latest-release.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/gtfs-validator-latest-release.json",
+      "same_bytes": true,
+      "sha256": "a441d980ffb65ac45ffa0bf4459a7a36b0e9117a9fa3068e87f4a71facca6c50"
+    },
+    {
+      "stage": "research-v1",
+      "id": "S23",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/research-v1/sources/gtfs-validator-v8.0.1-release.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/research-v1/sources/gtfs-validator-v8.0.1-release.json",
+      "same_bytes": true,
+      "sha256": "a441d980ffb65ac45ffa0bf4459a7a36b0e9117a9fa3068e87f4a71facca6c50"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "E01",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/gtfs-schedule-reference.md",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-schedule-reference.md",
+      "same_bytes": true,
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "E02",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/gtfs-realtime-proto.proto",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-realtime-proto.proto",
+      "same_bytes": true,
+      "sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "E03",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/gtfs-realtime-best-practices.md",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-realtime-best-practices.md",
+      "same_bytes": true,
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "E04",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-v2.10.0-matcher.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.10.0-matcher.java",
+      "same_bytes": true,
+      "sha256": "f584f5ceebbc649eb05943f4bde8f0cc0da3c855220ada7012ca6633008841f3"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "E05",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-pr-4066.patch",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-pr-4066.patch",
+      "same_bytes": true,
+      "sha256": "9421d9d505b4d3eef504d4bfd494130cd7ac18a676003fed6e8092fa4be48923"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "E06",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-4066-to-v2.2.0-compare.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-4066-to-v2.2.0-compare.json",
+      "same_bytes": true,
+      "sha256": "fbd99d01d3494fc6a0269daf10016b1dc735765b23b6c3dc3f63e744c1fe34b2"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "E07",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-issue-observed-b0c9829e-vpm.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-issue-observed-b0c9829e-vpm.java",
+      "same_bytes": true,
+      "sha256": "c9e7144944b1bc27293ecd9e9b5fa511a3d902922464a2969942e27469643611"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S02",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/gtfs-realtime-reference.md",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-realtime-reference.md",
+      "same_bytes": true,
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S08",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-v2.10.0-matcher-test.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.10.0-matcher-test.java",
+      "same_bytes": true,
+      "sha256": "2ec4bc86d684b933c23245a6cd4993e45569d15d3e83b5890129a38f326ea079"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S09",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-v2.10.0-polling-caller.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.10.0-polling-caller.java",
+      "same_bytes": true,
+      "sha256": "ab64b1f6385f8f6987c02c54dd8db1ff5c95dba6f7d52f9605ec5b2cb95f02b2"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S10",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-issue-4058.html",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-issue-4058.html",
+      "same_bytes": true,
+      "sha256": "3851107940b4be7e54bb9ef47624d4c74d3fde1cade31dcd1f72b8fdeee60b55"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S12",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-pull-4066.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-pull-4066.json",
+      "same_bytes": true,
+      "sha256": "d8df6c70313173c707d2a22d417026226738238838f97b5469f3f677cbe3c5a6"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S13",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-v2.2.0-release.html",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.2.0-release.html",
+      "same_bytes": true,
+      "sha256": "b0a0e350d4794629d04a969a9b328a88f4c0ec846e90b6528730e926d8b6d9ae"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S14",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-v2.2.0-matcher.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.2.0-matcher.java",
+      "same_bytes": true,
+      "sha256": "ebee32d0fb6db5b41056ae000752a1457e202a3ff364ae0c895ea184e4b9714b"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S15",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-v2.2.0-matcher-test.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.2.0-matcher-test.java",
+      "same_bytes": true,
+      "sha256": "bfda3f6fa0448775da0b47f517207b09c51f48cd2ff93e9a989d961274c42d0c"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S16",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/otp-v2.2.0-polling-caller.java",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.2.0-polling-caller.java",
+      "same_bytes": true,
+      "sha256": "0fe98c6e2a65153fde26fd25a1b08c251cae64449bcd6edd6803dfc381ef21ff"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S21",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/gtfs-validator-issue-2174.html",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-validator-issue-2174.html",
+      "same_bytes": true,
+      "sha256": "2215aedd449b79f5090d9bb60afa5fa92ed05e2add8f3dfb748fdd3aa948e36a"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S22",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/gtfs-validator-latest-release.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-validator-latest-release.json",
+      "same_bytes": true,
+      "sha256": "a441d980ffb65ac45ffa0bf4459a7a36b0e9117a9fa3068e87f4a71facca6c50"
+    },
+    {
+      "stage": "critic-v1",
+      "id": "R-S23",
+      "final_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/critic-v1/sources/gtfs-validator-v8.0.1-release.json",
+      "admitted_predecessor_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-validator-v8.0.1-release.json",
+      "same_bytes": true,
+      "sha256": "a441d980ffb65ac45ffa0bf4459a7a36b0e9117a9fa3068e87f4a71facca6c50"
+    }
+  ],
+  "executed_checks": [
+    "primary-source retrieval",
+    "source/content/version/caller/test-presence review",
+    "release tag dereference and ancestry inspection",
+    "admitted capture byte-identity comparison",
+    "full final/draft/critique textual preservation review"
+  ],
+  "not_executed": [
+    "application execution",
+    "downloaded-code execution",
+    "OTP tests",
+    "validator run",
+    "local agency feed validation",
+    "build",
+    "browser/device run",
+    "performance benchmark"
+  ],
+  "usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null
+  },
+  "limitations": [
+    "arm visible in paths",
+    "method/Goal references visible in authored inputs; ignored for source judgment",
+    "initial source-map read exposed timing/counter prose; no judgment drawn from it",
+    "model-family identity and procedural chronology not independently established or graded",
+    "no exhaustive opportunity recall claimed",
+    "no local feeds/device supplied"
+  ],
+  "delivery_consistency_check": {
+    "executed": true,
+    "scope": "Review artifact structure, count agreement, local link existence and retained source digests only; no candidate/application behavior witness.",
+    "verified": [
+      "52 enumerated obligation records",
+      "31 frozen-plan clauses",
+      "15 owner decisions",
+      "6 axes",
+      "25 consequential groups",
+      "9 visible criticism dispositions",
+      "3 unique material defect identities",
+      "all 42 final/admitted linked-capture identities",
+      "all 35 successful retrieval capture digests",
+      "all local judgment links"
+    ],
+    "delivered_files": {
+      "judgment.md": {
+        "bytes": 27521,
+        "sha256": "f550e78b6c940e2f7ea1c07f10033e1ee41757c299e05e418f0564e13cbb20b4"
+      },
+      "coverage.json": {
+        "bytes": 18382,
+        "sha256": "c02ebd729a95b5cfee824deac035bc3220e7b1a967aec1c27f09abb932ce12e9"
+      }
+    }
+  }
+}

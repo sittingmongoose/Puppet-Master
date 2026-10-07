@@ -1,0 +1,23 @@
+{
+  "type": "prospective_carrier_admission",
+  "record_at": "2026-10-07T19:10:19.299629+00:00",
+  "policy": "ROOT_PROSPECTIVE_CARRIER_V2",
+  "policy_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/ROOT_ADMISSION_V2.json",
+      "sha256": "6f0be4322b0292d7bef25b92f728435c89b29d650ca4c66a5e3f7b8ae700f4bb",
+      "bytes": 2576
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/PROSPECTIVE_CARRIER_V2.md",
+      "sha256": "42d94f8f92aead30f4527029e534d97e016d0df24df8fd62744e44aa433ac4da",
+      "bytes": 3283
+    }
+  ],
+  "applicability": "Only unstarted exact matched pair versions; I-METHOD-01 entire running pair retains original contract including future critic/reviser stages. No retrofit, no rescue, no rewritten scores or clocks.",
+  "scientific_scope_change": false,
+  "candidate_family_effort_change": false,
+  "allowance_change": false,
+  "next_action": "Prioritize running I-METHOD-01 finalization and independent assessments; next new pair receives common v2 overlay frozen before either dispatch.",
+  "current_status": "Both research tasks running, no pending children; native-active raw receipts preserved; scientific drafts not yet delivered; no semantic reviews."
+}

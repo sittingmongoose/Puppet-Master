@@ -1,0 +1,30 @@
+{
+  "projection": {
+    "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-researcher-v1:ordinal:1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-researcher-v1",
+    "providerInstanceId": "codex_gmail",
+    "model": null,
+    "modelSelection": {
+      "instanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "status": "running",
+    "requestedAt": "2026-10-07T19:57:41.678Z",
+    "startedAt": "2026-10-07T19:57:42.489Z",
+    "completedAt": null,
+    "providerThreadId": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A68211e58-8957-484a-b1a0-473740607b99%25253Adelegate-task%25253Aer10-confirmation-C-01-treatment-researcher-v1%3Aordinal%3A1"
+  },
+  "type": "T3_run_projection",
+  "observed_at": "2026-10-07T19:59:44.666804+00:00",
+  "not_native_goal_proof": true
+}

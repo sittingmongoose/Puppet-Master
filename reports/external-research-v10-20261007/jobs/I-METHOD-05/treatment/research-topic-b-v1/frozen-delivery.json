@@ -1,0 +1,127 @@
+{
+  "record_at": "2026-10-07T20:19:39.676626+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/artifact.md": {
+      "sha256": "1b668a826cca9729d065c1072cb0eb906968ffeeaa70ff33b500d77103feb0ea",
+      "bytes": 17835
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json": {
+      "sha256": "0c7d4dc53799bb8d63c11f2b58af988222842a672da9d8cbfb9d219bfa474bf2",
+      "bytes": 8565
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/sources/topic-b-capture.md": {
+      "sha256": "7bd969d7b9a5dbe48f356096f17f4bed7f0340729d2c0820731dccba7b2e934e",
+      "bytes": 2292
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-treatment-research-topic-b-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:13:53.736Z",
+    "startedAt": "2026-10-07T20:13:54.708Z",
+    "completedAt": "2026-10-07T20:19:28.422Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-05/treatment/research-topic-b-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-05--treatment--research-topic-b-v1--0b8dd491fe407b3e.json",
+    "sha256": "0b8dd491fe407b3e200848a5af3e313bbf024a3ce171cc1931e20673478ca5ae",
+    "bytes": 10942,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "463e4c84188168c06e2d767ce428ee1e5d11bc01ca544c92db069d6444ec3eb0",
+      "status": "complete",
+      "tokensUsed": 143604,
+      "tokenBudget": null,
+      "timeUsedSeconds": 298
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-05-treatment-research-topic-b-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a11800-4902-73d0-95a5-1fb0ea903d29",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:19:28.330Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-05-treatment-research-topic-b-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:19:28.330Z",
+        "sha256": "787e51f92023ab373a85bcf3c4b08164b4419efb78def7ed00e4b1fd56f85b6c"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a11800-4902-73d0-95a5-1fb0ea903d29",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 143604,
+  "native_elapsed_seconds": 298,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "research",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-METHOD-05-treatment-research-topic-b-v1",
+    "record_at": "2026-10-07T20:13:53.208210+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:18:53.208210+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:49:20.932703+00:00",
+    "stage_allowance_seconds": 300,
+    "prior_nonoverlapping_occupied_seconds": 540.734,
+    "aggregate_ceiling_seconds": 2700,
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2"
+  },
+  "t3_delivery_in_prefrozen_deadline": false,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "carrier": "PASSIVE_NATIVE_STATE_V2_NOT_RAW_API",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T20:40:01.917909+00:00",
+    "entries": [
+      {
+        "stage": "D-M08-A/common/fresh-independent-common-critique-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M08-A--common--fresh-independent-common-critique-v3--d6b0e24b4a6e7ed4.json",
+        "sha256": "d6b0e24b4a6e7ed41b2284663feeb213ab4cc34ff7140a0a922e52f33ee7c1bd",
+        "bytes": 11039,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "raw_api_bodies": null,
+  "createdAt": null,
+  "host_capture_wall_seconds": 0.088962888
+}

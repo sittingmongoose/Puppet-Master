@@ -1,0 +1,329 @@
+{
+  "schema": "independent-review-timings.v1",
+  "actual_t3_requested_at_utc": "2026-10-07T20:54:48.802Z",
+  "actual_t3_started_at_utc": "2026-10-07T20:54:49.412Z",
+  "first_recorded_clock_utc": "2026-10-07T20:55:00+00:00",
+  "artifact_validation_completed_at_utc": "2026-10-07T21:07:50.923860+00:00",
+  "elapsed_seconds": 782.12186,
+  "elapsed_seconds_since_t3_started": 781.51186,
+  "elapsed_end_definition": "Actual UTC wall time from T3 requestedAt through final artifact validation; final terminal-delivery timestamp is not yet observable.",
+  "declared_review_deadline_utc": "2026-10-07T21:14:04.949343+00:00",
+  "requested_at_plus_20_minutes_utc": "2026-10-07T21:14:48.802000+00:00",
+  "effective_deadline_utc": "2026-10-07T21:14:04.949343+00:00",
+  "deadline_expired": false,
+  "deadline_expiry_notice_at_utc": null,
+  "partial": false,
+  "source_operations": [
+    {
+      "operation": "Local permitted brief, manifest and frozen artifacts reads/hashes",
+      "extent": "Original brief + original source manifest + INPUT_MAP; final and all three mapped companion artifacts; frozen render receipt and semantic freeze",
+      "exact_low_level_file_open_count": null,
+      "elapsed_seconds": null,
+      "limit": "Some reads/hash opens were repeated; per-open timing was not instrumented. An early aggregate display was truncated, so complete source and semantic reads were subsequently made separately."
+    },
+    {
+      "operation": "Full local mapped-primary textual reads and hashes",
+      "files": 5,
+      "raw_lines": 824,
+      "elapsed_seconds": null,
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/sources/rasterio-1.3.10-enums.py"
+      ]
+    },
+    {
+      "operation": "Official release-tag direct HTTP GET exact-byte identity checks",
+      "attempts": 5,
+      "successes": 5,
+      "per_request_actual_operations": [
+        {
+          "source_id": "rastermask",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+          "version": "Rasterio 1.3.10",
+          "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+          "declared_sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+          "started_at_utc": "2026-10-07T20:56:41.580665+00:00",
+          "operation": "HTTPS GET byte-identity verification; bytes not executed or saved as code",
+          "http_status": 200,
+          "resolved_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+          "http_etag": "\"00e723c2197a5980759a18949254438566dcfa1e8dcfbb9468fe4e44cb66b596\"",
+          "http_date": "Wed, 07 Oct 2026 20:56:41 GMT",
+          "http_age": null,
+          "http_cache_control": "max-age=300",
+          "remote_bytes": 9114,
+          "remote_sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+          "matches_declared": true,
+          "matches_local_exactly": true,
+          "line_count": 250,
+          "limits": "Official tag-scoped current HTTP response matched frozen bytes. ETag is not a signature; repository tag immutability and historical HTTP capture times are not independently attested.",
+          "completed_at_utc": "2026-10-07T20:56:41.647302+00:00",
+          "elapsed_seconds": 0.06659836100152461
+        },
+        {
+          "source_id": "rasterresample",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+          "version": "Rasterio 1.3.10",
+          "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+          "declared_sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+          "started_at_utc": "2026-10-07T20:56:41.582609+00:00",
+          "operation": "HTTPS GET byte-identity verification; bytes not executed or saved as code",
+          "http_status": 200,
+          "resolved_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+          "http_etag": "\"8a63be7670557e810d315b8e5ee203cac358bdb9479f8e6d1496f70396cffeb0\"",
+          "http_date": "Wed, 07 Oct 2026 20:56:41 GMT",
+          "http_age": null,
+          "http_cache_control": "max-age=300",
+          "remote_bytes": 2267,
+          "remote_sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+          "matches_declared": true,
+          "matches_local_exactly": true,
+          "line_count": 68,
+          "limits": "Official tag-scoped current HTTP response matched frozen bytes. ETag is not a signature; repository tag immutability and historical HTTP capture times are not independently attested.",
+          "completed_at_utc": "2026-10-07T20:56:41.643794+00:00",
+          "elapsed_seconds": 0.061200993000966264
+        },
+        {
+          "source_id": "rasterwindow",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+          "version": "Rasterio 1.3.10",
+          "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+          "declared_sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+          "started_at_utc": "2026-10-07T20:56:41.583789+00:00",
+          "operation": "HTTPS GET byte-identity verification; bytes not executed or saved as code",
+          "http_status": 200,
+          "resolved_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+          "http_etag": "\"ca0bc33cb95785b9dc9cf6e3c2b145463585b817d68e8fc665842b25df2a58a0\"",
+          "http_date": "Wed, 07 Oct 2026 20:56:41 GMT",
+          "http_age": null,
+          "http_cache_control": "max-age=300",
+          "remote_bytes": 8035,
+          "remote_sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+          "matches_declared": true,
+          "matches_local_exactly": true,
+          "line_count": 251,
+          "limits": "Official tag-scoped current HTTP response matched frozen bytes. ETag is not a signature; repository tag immutability and historical HTTP capture times are not independently attested.",
+          "completed_at_utc": "2026-10-07T20:56:41.646868+00:00",
+          "elapsed_seconds": 0.06308610099949874
+        },
+        {
+          "source_id": "geotransform",
+          "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+          "version": "GDAL 3.9.0",
+          "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+          "declared_sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+          "started_at_utc": "2026-10-07T20:56:41.584641+00:00",
+          "operation": "HTTPS GET byte-identity verification; bytes not executed or saved as code",
+          "http_status": 200,
+          "resolved_url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+          "http_etag": "\"e200c2ac996b72decad8ff7465bb10410f941e2a2f2d699a040f29b68ed8c602\"",
+          "http_date": "Wed, 07 Oct 2026 20:56:41 GMT",
+          "http_age": null,
+          "http_cache_control": "max-age=300",
+          "remote_bytes": 1713,
+          "remote_sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+          "matches_declared": true,
+          "matches_local_exactly": true,
+          "line_count": 38,
+          "limits": "Official tag-scoped current HTTP response matched frozen bytes. ETag is not a signature; repository tag immutability and historical HTTP capture times are not independently attested.",
+          "completed_at_utc": "2026-10-07T20:56:41.654353+00:00",
+          "elapsed_seconds": 0.06971087100100704
+        },
+        {
+          "source_id": "rasterio-enums-1.3.10",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+          "version": "Rasterio 1.3.10 release source",
+          "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/sources/rasterio-1.3.10-enums.py",
+          "declared_sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+          "started_at_utc": "2026-10-07T20:56:41.585691+00:00",
+          "operation": "HTTPS GET byte-identity verification; bytes not executed or saved as code",
+          "http_status": 200,
+          "resolved_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+          "http_etag": "\"a7dfc524f68069d0bfee64dfe426b20ba5ef09a6a4b70ccf45bae21fa6fea62a\"",
+          "http_date": "Wed, 07 Oct 2026 20:56:41 GMT",
+          "http_age": null,
+          "http_cache_control": "max-age=300",
+          "remote_bytes": 5550,
+          "remote_sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+          "matches_declared": true,
+          "matches_local_exactly": true,
+          "line_count": 217,
+          "limits": "Official tag-scoped current HTTP response matched frozen bytes. ETag is not a signature; repository tag immutability and historical HTTP capture times are not independently attested.",
+          "completed_at_utc": "2026-10-07T20:56:41.649252+00:00",
+          "elapsed_seconds": 0.06356183899697498
+        }
+      ]
+    },
+    {
+      "operation": "Direct HTTP read-only release implementation checking",
+      "attempts": 2,
+      "successes": 2,
+      "source_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "full_response_sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "first_started_at_utc": "2026-10-07T21:01:37.061759+00:00",
+      "first_completed_at_utc": "2026-10-07T21:01:37.183456+00:00",
+      "followup_completed_at_utc": "2026-10-07T21:02:44.478817+00:00",
+      "elapsed_seconds": null,
+      "executable_code_saved_or_executed": false
+    },
+    {
+      "operation": "Additional direct HTTP official docs/metadata retrieval",
+      "attempts": 3,
+      "successes": 1,
+      "http_403": 2,
+      "operations": [
+        {
+          "url": "https://numpy.org/doc/1.26/reference/generated/numpy.ma.getmaskarray.html",
+          "operation": "direct raw HTTP GET",
+          "status": "HTTP_403",
+          "capture_path": null,
+          "raw_hash": null,
+          "limit": "Normalized web tool primary read used instead."
+        },
+        {
+          "url": "https://numpy.org/doc/1.26/reference/maskedarray.generic.html",
+          "operation": "direct raw HTTP GET",
+          "status": "HTTP_403",
+          "capture_path": null,
+          "raw_hash": null,
+          "limit": "Normalized web tool primary read used instead."
+        },
+        {
+          "url": "https://pypi.org/pypi/rasterio/1.3.10/json",
+          "operation": "direct raw HTTP GET",
+          "status": "HTTP_200",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/rasterio-1.3.10-pypi.json",
+          "sha256": "21d196562c38ea5efff5b7cb00999f4a1f303a53f012d738a32c03e9315ff8ba",
+          "bytes": 32984,
+          "exact_request_timestamp": null,
+          "observed_file_mtime_utc": "2026-10-07T21:02:24.202564+00:00",
+          "primary_locator": "/info/version, /info/requires_dist"
+        }
+      ],
+      "elapsed_seconds": null
+    },
+    {
+      "operation": "Web tool official primary page reads/finds",
+      "tool_calls": 4,
+      "open_actions": 10,
+      "find_actions": 3,
+      "underlying_http_request_count": null,
+      "elapsed_seconds": null,
+      "cache_hit": null,
+      "limits": "Service can normalize/cache content. No hit/billing/input-token inference is made."
+    },
+    {
+      "operation": "Local review coverage, source-evidence file hashes and frozen integrity validation",
+      "status": "completed",
+      "elapsed_seconds": null
+    }
+  ],
+  "checks": {
+    "source_identity_comparisons": 5,
+    "consequential_authored_string_assessments": 60,
+    "source_binding_assessments": 10,
+    "primary_fact_records": 22,
+    "independent_structural_checks": 93,
+    "structural_checks_passed": 93,
+    "material_defects": 1,
+    "minor_nonmaterial_defects": 3,
+    "raster_or_product_tests_executed": 0,
+    "renderer_or_downloaded_project_code_executions": 0
+  },
+  "unknown_metering": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "billing": null,
+    "reason": "No token/cache/billing totals are exposed in the reviewer context; no campaign/candidate usage or cost artifacts were opened."
+  },
+  "native_counters": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "output_tokens": null,
+    "billing": null,
+    "source": "Unavailable; separate from measured elapsed/source operations and artifact bytes."
+  },
+  "generated_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/dispatch-receipt.json",
+      "bytes": 1042,
+      "sha256": "db8899c09a607a3e26ea7167f74ea57d9a8c2b67a89fbf187ec40f32ea037cd4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/dispatch-request.json",
+      "bytes": 4135,
+      "sha256": "be5214775565a827933e7a759cad7ece8b630925e94c5e485ff8f9fbb0e3d481"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/prospective-timing.json",
+      "bytes": 156,
+      "sha256": "0f06e7b2d9cfdf1005e92bcb6faf3b109dfeb556f6d18e29a846f3e4c370764a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/review.json",
+      "bytes": 235073,
+      "sha256": "8f3ecb14ece2ca9158b2d6ef9665f3f1300bc71282e1d769830ff5d35c8b74fa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/review.md",
+      "bytes": 30816,
+      "sha256": "8ac75c6a27b8f8396f68ed93ad179ddb66266b4573e32f32849a2ad854b138ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/additional_implementation_check.json",
+      "bytes": 12528,
+      "sha256": "fab126162822e40215d7dd4759264ba03ab4b54168460b09f3051bc3cb12bc3c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/additional_primary_captures.json",
+      "bytes": 1877,
+      "sha256": "1ea52e78e42f7d6995baef04e8b515140b06c5b80a18a2a8cd9f69f5cb1db587"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/consequential_claim_checks.json",
+      "bytes": 160570,
+      "sha256": "4b952bab5ac29ac18e9da4f447cd7b144245328b8de685847245df91b81c3f8e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/numpy-1.26-normalized-web.json",
+      "bytes": 29406,
+      "sha256": "64c1817c643962ea8ef9b5105c64de7cc154483171de3651e87531dd66e3102e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/preservation_checks.json",
+      "bytes": 13890,
+      "sha256": "d946854f6abdd7f1f77256f9b138dd5646d90210d6ed541f3a0ea90dfc01e67f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/primary_facts.json",
+      "bytes": 9711,
+      "sha256": "995f18055ecaa422026c9d480435643e4f357f35c342a08872e1bbd2b78e1767"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/primary_identity_checks.json",
+      "bytes": 7358,
+      "sha256": "927a03b2546dd5b97a1d7ed66cf9bb03b72aa2d0aac113988502dd20053c569d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/rasterio-1.3.10-pypi.json",
+      "bytes": 32984,
+      "sha256": "21d196562c38ea5efff5b7cb00999f4a1f303a53f012d738a32c03e9315ff8ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/sources/reviewer_lifecycle_metadata.json",
+      "bytes": 616,
+      "sha256": "779fea0de43b4e73236334a1bc69bb015b75e07156a0eeed8a10b77cee4085ae"
+    }
+  ],
+  "t3_delivery": {
+    "channel": "Existing delegated reviewer thread final response with artifact paths/status",
+    "terminal_result_delivery_time_utc": null,
+    "pending_children": 0,
+    "children_spawned": 0,
+    "source": "No delegation calls were made."
+  },
+  "lifecycle_metadata_capture_sha256": "779fea0de43b4e73236334a1bc69bb015b75e07156a0eeed8a10b77cee4085ae"
+}

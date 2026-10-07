@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "schema": "er10.source-capture.v1",
+    "arm": "D-M12-A/control/normal_research_final-v3",
+    "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+    "captured_by": "zcode GLM-5.3-Flash thread (this arm only)",
+    "index": "index.json",
+    "checksums": "checksums.txt",
+    "failed_routes": [
+      "kafka.apache.org/documentation and /_print/documentation/ are JS-assembled shells (20 KB, no content) - rejected",
+      "raw.githubusercontent.com apache/kafka docs/design.md (trunk and 3.9.1/4.0.x/4.1.x tags) 404; apache/kafka-site paths 404; api.github.com rate-limited 403 - Kafka dropped",
+      "microservices.io/patterns/data/idempotent-consumer.html 404 at capture (outbox page covers duplicate detection)",
+      "rabbitmq.com/docs/publisher-confirms and /docs/reliability 403 to direct fetch; /confirms.html 301 -> /docs/confirms 200 captured instead"
+    ],
+    "counts": {
+      "files": 8,
+      "mechanism_families": 5,
+      "analogy_families": 2
+    }
+  },
+  "sources": [
+    {
+      "id": "mqtt5-spec",
+      "file": "mqtt-v5.0-os.html",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "version": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "captured_at": "2026-10-07T20:12:44Z",
+      "http_status": 200,
+      "locators": [
+        "section 4.3 Quality of Service levels and protocol flows (QoS 0/1/2, PUBACK/PUBREC/PUBREL/PUBCOMP)",
+        "section 4.4 Message delivery retry (no retransmit within a connection; retry only on reconnect)"
+      ],
+      "family": "broker ack/QoS protocol",
+      "role": "mechanism",
+      "why": "canonical acknowledgment semantics for QoS1 (at-least-once, DUP, packet identifiers, session state)",
+      "bytes": 1436465,
+      "sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce"
+    },
+    {
+      "id": "sqs-standard-queues",
+      "file": "sqs-standard-queues.html",
+      "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues.html",
+      "version": "Amazon SQS Developer Guide, current at capture",
+      "captured_at": "2026-10-07T20:15:23Z",
+      "http_status": 200,
+      "locators": [
+        "Standard queues: at-least-once delivery, occasionally more than one copy of a message is delivered"
+      ],
+      "family": "managed queue at-least-once delivery",
+      "role": "mechanism",
+      "why": "primary statement that transport-level at-least-once implies duplicates regardless of sender care",
+      "bytes": 14250,
+      "sha256": "ddc9c32ef9654fed493a1a61d05d05896214e32d6012e6be4658558ce65058b2"
+    },
+    {
+      "id": "rabbitmq-confirms",
+      "file": "rabbitmq-confirms.html",
+      "url": "https://www.rabbitmq.com/confirms.html",
+      "final_url": "https://www.rabbitmq.com/docs/confirms",
+      "version": "RabbitMQ documentation, current at capture",
+      "captured_at": "2026-10-07T20:15Z (approx., same batch as sqs-standard-queues)",
+      "http_status": 200,
+      "locators": [
+        "Publisher confirms",
+        "Consumer Acknowledgements and Publisher Confirms sections: redelivery when a consumer dies without ack; duplicate delivery possible"
+      ],
+      "family": "message-broker ack/redelivery",
+      "role": "mechanism",
+      "why": "broker-native redelivery rules and duplicate-delivery guidance for consumers",
+      "bytes": 121173,
+      "sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951"
+    },
+    {
+      "id": "transactional-outbox",
+      "file": "transactional-outbox.html",
+      "url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "version": "microservices.io pattern page (Chris Richardson), current at capture",
+      "captured_at": "2026-10-07T20:12:44Z",
+      "http_status": 200,
+      "locators": [
+        "Solution: order/message relay reading local outbox table",
+        "duplicate detection / idempotent consumer discussion"
+      ],
+      "family": "local-write + reliable relay (outbox)",
+      "role": "mechanism",
+      "why": "queue-the-work-with-the-state pattern: local durable write first, then relay with at-least-once + downstream dedup",
+      "bytes": 25474,
+      "sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb"
+    },
+    {
+      "id": "couchdb-replication-protocol",
+      "file": "couchdb-replication-protocol.html",
+      "url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "version": "Apache CouchDB 3.5 documentation (stable), Replication Protocol",
+      "captured_at": "2026-10-07T20:12:45Z",
+      "http_status": 200,
+      "locators": [
+        "Synchronization Protocol (documents/changes feed)",
+        "Checkpoints (replication history to avoid resending)",
+        "Conflicts (sibling revisions retained)"
+      ],
+      "family": "offline-first state-based replication with checkpoints/conflicts",
+      "role": "mechanism",
+      "why": "offline-first local store sync: checkpointed resume after interruption and merge-with-conflicts instead of ack-per-item",
+      "bytes": 185155,
+      "sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a"
+    },
+    {
+      "id": "rfc9110",
+      "file": "rfc9110.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110, HTTP Semantics, June 2022 (STD 97)",
+      "captured_at": "2026-10-07T20:12:45Z",
+      "http_status": 200,
+      "locators": [
+        "section 9.2.2 Idempotent Methods (line 3861 in capture): retry safety of idempotent methods after connection failure"
+      ],
+      "family": "retry-safety semantics (idempotency)",
+      "role": "mechanism",
+      "why": "formal definition of idempotency as the property that makes blind retry safe",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+    },
+    {
+      "id": "rfc5321",
+      "file": "rfc5321.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "version": "RFC 5321, Simple Mail Transfer Protocol, October 2008",
+      "captured_at": "2026-10-07T20:12:45Z",
+      "http_status": 200,
+      "locators": [
+        "section 4.5.4.1 Sending Strategy (line 3685): retry transient failures, minimum ~30 min, SHOULD give up after days and return (bounce) = bounded retention with eventual expiry notification",
+        "section 4.5.4.2 Receiving Strategy"
+      ],
+      "family": "analogy: store-and-forward mail queues",
+      "role": "analogy",
+      "why": "mail queues: retry schedule + bounded retention + explicit failure return mirrors survey queue aging",
+      "bytes": 225929,
+      "sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634"
+    },
+    {
+      "id": "rfc4838",
+      "file": "rfc4838.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc4838.txt",
+      "version": "RFC 4838, Delay-Tolerant Networking Architecture, April 2007",
+      "captured_at": "2026-10-07T20:12:45Z",
+      "http_status": 200,
+      "locators": [
+        "section 3.10 Reliability and Custody Transfer (TOC, p.19)",
+        "section 4.2 Custody Transfer State",
+        "Custody Transfer Requested flag (line ~631): hop-by-hop ack of storage responsibility"
+      ],
+      "family": "analogy: DTN custody transfer / store-carry-forward",
+      "role": "analogy",
+      "why": "custody transfer: acknowledgment means 'I now hold durable responsibility', not 'final delivery' - key semantic distinction for survey sync",
+      "bytes": 89265,
+      "sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790"
+    }
+  ]
+}

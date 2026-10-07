@@ -1,0 +1,174 @@
+{
+  "case_id": "D-M12-A",
+  "target": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    }
+  },
+  "account": "explicit provider instance; provider authentication not independently inferred",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "hashes": {
+    "case-card.json": "ffa53c849238284901cb0eb66eff603ea3bf333df39b7705e763dd2ab7d3c8f5",
+    "CASE_CARD.md": "d9db327c445db79437bf5fce8aef20a1e8607a30578b19a3e6f2ea147b6d68ba",
+    "INPUT_MAP.json": "48de1a5a593c33d4258b8481c01b304644d83201d4b994d0992ba009b3d9f81d",
+    "READY.json": "51cedc719571d6c29e37193a2901885e4a6989e86f628e6a4802e2f8e4a47294"
+  },
+  "input_hashes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/case-card.json",
+      "sha256": "ffa53c849238284901cb0eb66eff603ea3bf333df39b7705e763dd2ab7d3c8f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/CASE_CARD.md",
+      "sha256": "d9db327c445db79437bf5fce8aef20a1e8607a30578b19a3e6f2ea147b6d68ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/INPUT_MAP.json",
+      "sha256": "48de1a5a593c33d4258b8481c01b304644d83201d4b994d0992ba009b3d9f81d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/brief.md",
+      "sha256": "dac98c2bfdf5944bc4b0a6ce92037085e01e90dd4178e48c7cd3dee049f493e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/sources.json",
+      "sha256": "50a7a429431407d7d59529fe82f54ab133b6255902092f3addf395c98d019bb2"
+    }
+  ],
+  "sources": [],
+  "stages": {
+    "control": [
+      {
+        "stage": "open_discovery",
+        "candidate_minutes": 12,
+        "procedure": "Competent brief-only native research chooses primary docs/code freely without a diversity-specific recipe.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/control/open_discovery.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/open_discovery-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/open_discovery-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/open_discovery-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/open_discovery-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/open_discovery-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/open_discovery-v1/sources"
+      },
+      {
+        "stage": "finalize",
+        "candidate_minutes": 3,
+        "procedure": "Deliver at most eight distinct source-supported findings and bounded recommendation.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/control/finalize.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/finalize-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/finalize-v1/final.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/finalize-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/finalize-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/finalize-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/finalize-v1/sources"
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "breadth_and_assumptions",
+        "candidate_minutes": 9,
+        "procedure": "Explore distinct mechanism families, challenge product assumptions, and seek relevant analogies beyond direct competitors; sources selected by candidate.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/treatment/breadth_and_assumptions.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/breadth_and_assumptions-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/breadth_and_assumptions-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/breadth_and_assumptions-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/breadth_and_assumptions-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/breadth_and_assumptions-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/breadth_and_assumptions-v1/sources"
+      },
+      {
+        "stage": "reconcile",
+        "candidate_minutes": 3,
+        "procedure": "Check redundancy, negative discoveries, uncertainty, and applicable conditions.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/treatment/reconcile.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/reconcile-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/reconcile-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/reconcile-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/reconcile-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/reconcile-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/reconcile-v1/sources"
+      },
+      {
+        "stage": "finalize",
+        "candidate_minutes": 3,
+        "procedure": "Deliver identical bounded finding and recommendation scope.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/treatment/finalize.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/finalize-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/finalize-v1/final.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/finalize-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/finalize-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/finalize-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/finalize-v1/sources"
+      }
+    ]
+  },
+  "original_budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "open_discovery",
+          "candidate_minutes": 12,
+          "procedure": "Competent brief-only native research chooses primary docs/code freely without a diversity-specific recipe.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/control/open_discovery.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 3,
+          "procedure": "Deliver at most eight distinct source-supported findings and bounded recommendation.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/control/finalize.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "breadth_and_assumptions",
+          "candidate_minutes": 9,
+          "procedure": "Explore distinct mechanism families, challenge product assumptions, and seek relevant analogies beyond direct competitors; sources selected by candidate.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/treatment/breadth_and_assumptions.md"
+        },
+        {
+          "stage": "reconcile",
+          "candidate_minutes": 3,
+          "procedure": "Check redundancy, negative discoveries, uncertainty, and applicable conditions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/treatment/reconcile.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 3,
+          "procedure": "Deliver identical bounded finding and recommendation scope.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/treatment/finalize.md"
+        }
+      ]
+    }
+  },
+  "arm_order": [
+    "treatment",
+    "control"
+  ],
+  "access": "Only brief, input map/source manifest and listed sources; own predecessors only; no sibling arms/cases, reviews, campaign history or helper corpus. Advisory scope is not a filesystem firewall.",
+  "native_goal": "Fresh actual create_goal/get_goal activation and update_goal/get_goal terminal per substantive stage; objective <=4000 chars; no inherited goals or nested agents.",
+  "final_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/finalize-v1/final.md",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/finalize-v1/final.md"
+  }
+}

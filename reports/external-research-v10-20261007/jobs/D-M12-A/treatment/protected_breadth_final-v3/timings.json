@@ -1,0 +1,54 @@
+{
+  "schema": "pm.er10.arm-timings.v1",
+  "arm": "D-M12-A/treatment/protected_breadth_final-v3",
+  "recorded_at_utc": "2026-10-07T20:22:16Z",
+  "native_clock": {
+    "prepared_at": "2026-10-07T20:06:55.171353+00:00",
+    "first_dispatch": "2026-10-07T20:06:55.171353+00:00",
+    "research_deadline": "2026-10-07T20:31:55.171353+00:00",
+    "hard_arm_deadline": "2026-10-07T20:36:55.171353+00:00",
+    "recorded_at": "2026-10-07T20:22:16Z",
+    "note": "host clock read via date -u at record time; completed before research boundary"
+  },
+  "source_ops": {
+    "http_fetch_attempts": 11,
+    "useful_captures_frozen": 6,
+    "failed_or_discarded": 5,
+    "first_capture_at": "2026-10-07T20:12:06Z",
+    "last_capture_at": "2026-10-07T20:12:28Z",
+    "hash_verification": "sha256sum -c sources/checksums.sha256: 6/6 OK at 2026-10-07T20:22Z",
+    "detail": "failed: SQS developer-guide page returned JS redirect stub; two /dg/ SQS URLs HTTP 404; docs.couchdb.apache.org DNS failure x2 (adjacent PouchDB guide captured instead)"
+  },
+  "first_useful_saved_finding": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/findings-draft.md",
+    "saved_at": "2026-10-07T20:18:11Z",
+    "summary": "8 disposition-tagged findings incl. ack-ambiguity, duplicate-by-design, exactly-once impossibility, transactional delete-on-ack, jittered bounded retry, no-silent-expiry retention, reorder/immunability question, source-coverage gap"
+  },
+  "output": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/final.md",
+    "saved_at": "2026-10-07T20:20:35Z",
+    "words": 1086,
+    "sha256": "f7068c5cf13266b787121bcb9f65fa97b2c270ca0f03f7acbc809815b899b1f1",
+    "sources_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources",
+    "frozen": true
+  },
+  "known_usage": {
+    "web_fetches": 11,
+    "files_written_in_jobdir": 11,
+    "code_executed_from_sources": 0,
+    "downloads_run": 0,
+    "repos_cloned": 0,
+    "delegation_used": false
+  },
+  "unknown_fields": {
+    "input_tokens": null,
+    "cache": null,
+    "generated": null,
+    "billing": null
+  },
+  "native_goal_counters": {
+    "note": "separate: captured passively by host, not agent-visible",
+    "goal_activations": null,
+    "goal_completions": null
+  }
+}

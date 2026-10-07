@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-control-critic-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-control-critic-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-control-critic-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-control-critic-v1\",\"status\":\"interrupted\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-control-critic-v1:ordinal:1\",\"latestTerminalStatus\":\"interrupted\",\"latestTerminalSummary\":\"The Goal is active under identity `01a1180c-fa9b-7de2-99c0-e84f4ff5abbe`; the activation-only send returned `steered`. I’m now reading the declared map and its referenced materials, with about 9 minutes 35 seconds until the fixed stage deadline.\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:58c72b4d-27b5-4f85-9971-2c1d6e78997b\",\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":\"The Goal is active under identity `01a1180c-fa9b-7de2-99c0-e84f4ff5abbe`; the activation-only send returned `steered`. I’m now reading the declared map and its referenced materials, with about 9 minutes 35 seconds until the fixed stage deadline.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:58c72b4d-27b5-4f85-9971-2c1d6e78997b\",\"waitTimedOut\":false}"
+    }
+  ],
+  "structuredContent": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-control-critic-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-control-critic-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-control-critic-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-FAST-01-control-critic-v1",
+    "status": "interrupted",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-control-critic-v1:ordinal:1",
+    "latestTerminalStatus": "interrupted",
+    "latestTerminalSummary": "The Goal is active under identity `01a1180c-fa9b-7de2-99c0-e84f4ff5abbe`; the activation-only send returned `steered`. I’m now reading the declared map and its referenced materials, with about 9 minutes 35 seconds until the fixed stage deadline.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:58c72b4d-27b5-4f85-9971-2c1d6e78997b",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "summary": "The Goal is active under identity `01a1180c-fa9b-7de2-99c0-e84f4ff5abbe`; the activation-only send returned `steered`. I’m now reading the declared map and its referenced materials, with about 9 minutes 35 seconds until the fixed stage deadline.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:58c72b4d-27b5-4f85-9971-2c1d6e78997b",
+    "waitTimedOut": false
+  },
+  "isError": false
+}

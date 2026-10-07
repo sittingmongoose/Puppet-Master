@@ -1,0 +1,59 @@
+{
+  "schema": "ER10-publication-batch005-actual-GitHub-verification-v1",
+  "verified_at": "2026-10-07T20:44:32.229799+00:00",
+  "repository": "sittingmongoose/Puppet-Master",
+  "research_branch": "t3/research/er10-research-efficiency-campaign",
+  "commit": "5041f3a0d8dfc3494be5f07b7de5d8103c1a49ec",
+  "github_commit_url": "https://github.com/sittingmongoose/Puppet-Master/commit/5041f3a0d8dfc3494be5f07b7de5d8103c1a49ec",
+  "github_branch_ref_equals_commit": true,
+  "github_commit_exists": true,
+  "verification": "Actual GitHub REST commit/ref plus exact selected blob bytes, not NAS origin mirror. All761 new local targets and956 manifest entries previously checked against frozen identities.",
+  "new_files": 761,
+  "new_bytes": 7381581,
+  "manifest_sha256": "e1b1636c8d0f8c6763dfa6ec02df68e10862f1616588ce9603051835521b90e2",
+  "checks": [
+    {
+      "path": "reports/external-research-v10-20261007/BATCH005_MANIFEST.json",
+      "github_blob_sha": "2ecf6b98de219db6df20a5880a87f3d37f383ba0",
+      "sha256": "e1b1636c8d0f8c6763dfa6ec02df68e10862f1616588ce9603051835521b90e2",
+      "bytes": 812467,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/INDEX_BATCH005.md",
+      "github_blob_sha": "8175b8f112e832996effa990f5eb361b46fbb3f0",
+      "sha256": "47bf0a8149a5c57a6a01513a08325a1688fff1219c23c7e107bd8bc52753d858",
+      "bytes": 6350,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/anchors/I-ANCHOR-GLM/COMPARISON.json",
+      "github_blob_sha": "26d20d171cd8a32d4e4bf0ab95d282959d38ecef",
+      "sha256": "33a971013bc585e072795c7eda85cbd75a5bd476efdf773c8e9fb368a2cb919e",
+      "bytes": 32827,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/final-finite-prospective-admissions-v3.json",
+      "github_blob_sha": "83dc1913a0a20f961ad9f268300e4065726d1754",
+      "sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+      "bytes": 21569,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch004-frozen-originals/locks/confirmation-selection.json",
+      "github_blob_sha": "11c55306752dd7c78b0f4d7edc18e3f5c51942b8",
+      "sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a",
+      "bytes": 4896,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json",
+      "github_blob_sha": "a6a5990771efca85d87ca6e3a26140b4bc83a98e",
+      "sha256": "2a4ba86a1591f122104694ab888ac8066d0941f2b06752a38044145dc1a26dad",
+      "bytes": 51689,
+      "actual_github_equals_local": true
+    }
+  ],
+  "scope": "Point-time evidence only; campaign remains active and cleanup not performed."
+}

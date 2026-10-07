@@ -1,0 +1,16 @@
+{
+  "event": "linked_original_stage_expiry_annotation",
+  "record_at": "2026-10-07T20:15:43.859744+00:00",
+  "actual_native_terminal": "complete",
+  "T3_terminal": "interrupted",
+  "stage_delivery_in_deadline": false,
+  "actual_lifecycle_notice_at": "2026-10-07T20:14:26.598Z",
+  "actual_cancel_record_at": "2026-10-07T20:15:15.228Z",
+  "actual_notice_to_cancel_seconds": 48.63,
+  "max_lifecycle_grace_seconds": 60,
+  "cancel_within_60s_max": true,
+  "planned_short_grace_seconds": 30,
+  "clock_guard": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/clock-guard-cancel-v1.json",
+  "no_substantive_extension_or_reset": true,
+  "source_judgment": null
+}

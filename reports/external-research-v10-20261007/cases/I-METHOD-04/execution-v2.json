@@ -1,0 +1,174 @@
+{
+  "schema": "er10.integrated.execution.v1",
+  "case_id": "I-METHOD-04",
+  "frozen_at": "2026-10-07T20:47:52.249474+00:00",
+  "recipe": {
+    "case_id": "I-METHOD-04",
+    "methods": [
+      "M14"
+    ],
+    "control": "One competent narrative research proposal with normal references and full scope.",
+    "treatment": "Single candidate-authored authoritative semantic finding set, generic qualified m14-renderer projections, fresh same-family critic then reviser checks source identity/full meaning and delivers full semantic set + complete views. Renderer does not rank/write science.",
+    "stages": "both research20,critic10,reviser15; all rendering and preservation inside allowance"
+  },
+  "selection_basis": "DIAGNOSTIC_UNQUALIFIED; new60min last matched retest, never old45min result",
+  "inputs": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/INPUTS.md",
+      "sha256": "c18f6a3d3093131e7a9e7f9fc7e9c5dc81cdca766a0ac4efa539781df04a6142",
+      "bytes": 1927
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/brief.md",
+      "sha256": "c609c2ea956f269df5fbab3694b7a9425f72f24b65279e12aab3b5c1d727a1ab",
+      "bytes": 5140
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/plan.md",
+      "sha256": "c3da0fde53189778a3685ff4dae7f8c9cca2bd3a5d5a0f8614bc666c21a01a59",
+      "bytes": 1718
+    }
+  },
+  "prepared_identity": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/prepared.json",
+    "sha256": "5af28107873bdc23a9c100f80df7a960aa8b29704dbd23b313f75ea7ec1837e7",
+    "bytes": 1659
+  },
+  "candidate_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "review_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "same_pair": {
+    "inputs": true,
+    "effort": true,
+    "access": true,
+    "aggregate_occupied_work_ceiling_seconds": 2700
+  },
+  "stage_seconds": {
+    "control": {
+      "research": 1500,
+      "critic": 900,
+      "reviser": 1200
+    },
+    "treatment": {
+      "research": 1500,
+      "critic": 900,
+      "reviser": 1200
+    }
+  },
+  "latency_boundary": "New60min inclusive earliest percase scientificjobprep T0/request through artifacts/native terminal/T3delivery; metadata/admin priorpreparation separately recorded; no reset",
+  "reserve_policy": "25min research preserves15critic+20final; critic15 preserves20final; aggregateoccupied60inclusive coldstartup/handoffs/renderer operations",
+  "expiry_policy": "one lifecycle-only save/deliver steer at real expiry, at most 60s grace, owned task_cancel if live; no substantive extension",
+  "launch_order": [
+    "treatment",
+    "control"
+  ],
+  "output_scope": "FULL original O1-O6 and all in-scope plan sections; complete proposed-change artifact, options, retained/rejected dispositions, criticism dispositions, uncertainty, validation proposed/executed",
+  "quality_axes": [
+    "required brief obligations",
+    "consequential claims/conditions",
+    "bounded useful discovery",
+    "incorrect rejections/corrections",
+    "preservation",
+    "proposed versus executed validation"
+  ],
+  "output_contract": "authored artifact.md + source-map.json with immutable captured public bytes and identity metadata; alternatively full native final answer mechanically saved verbatim, never a summary substituted for full output",
+  "tool_policy": {
+    "native_public_search_read": true,
+    "writable": "own role directory only",
+    "no_nested_delegation": true,
+    "no_repo_or_account_changes": true,
+    "maps_advisory_not_firewall": true,
+    "isolation_limit": "T3 freshness excludes parent history; full-access filesystem not a security firewall; no evaluator exists until both arms quiet; forbidden sibling paths explicitly excluded",
+    "execution": "no downloaded source execution/installers on host; bounded qualified sandbox only if separately admitted"
+  },
+  "common_lifecycle_carrier": {
+    "version": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_at": "2026-10-07T20:47:52.249474+00:00",
+    "applies_to_both_arms_all_stages": true,
+    "exact_stage_versions": [
+      "I-METHOD-04/control/research-v2",
+      "I-METHOD-04/control/critic-v2",
+      "I-METHOD-04/control/reviser-v2",
+      "I-METHOD-04/treatment/research-v2",
+      "I-METHOD-04/treatment/critic-v2",
+      "I-METHOD-04/treatment/reviser-v2"
+    ],
+    "native_route": "actual Codex create_goal/get active/update complete/get terminal on same fresh Goal; <=4000char objective",
+    "activation_notice_parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "host_carrier": "one passive export per activation or terminal event; Codex actual native Goal state projection, not raw tool bodies",
+    "exporter_sha256": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8",
+    "absence_policy": "actual active/terminal state absent -> lifecycle HOLD; no fake proof",
+    "scientific_delivery": "complete artifact.md + source-map.json/captured source bytes; complete native output fallback verbatim accepted; concise path/status final after actual terminal",
+    "cost": "host export setup/invocation separate; native usage fields distinct and unknown null",
+    "scope_and_envelopes_unchanged": true,
+    "activation_notice_transport": {
+      "mode": "auto",
+      "frozen_at": "2026-10-07T20:47:52.249474+00:00"
+    }
+  },
+  "renderer_binding": {
+    "version": "m14-renderer-1.0.0",
+    "renderer_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py",
+    "sha256": "80e925fe69e7ccc2d58297fd48ab857795545d6d94572b653bffc5803ace9ef0",
+    "generic_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/m14-generic-contract-v1.md",
+    "contract_sha256": "992952c865ffe571651ef2b1241c77ec7ca62b475094315bb8f0be01eaa01fd8",
+    "root_qualification": "four focused checks previously qualified by root, structural only; no SourcePASS",
+    "control_output": "one competent narrative artifact.md, normal source-map full scope",
+    "treatment_outputs": {
+      "research-v2": {
+        "authoritative_semantic_set": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/semantic.json",
+        "projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/artifact.md",
+        "candidate_preservation_check": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/preservation_check.md"
+      },
+      "reviser-v2": {
+        "authoritative_semantic_set": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+        "projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/artifact.md",
+        "candidate_preservation_check": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/preservation_check.md"
+      }
+    },
+    "critic": "fresh critic checks full semantic set/projection/source meaning, narrative critique",
+    "cost": "helper preparation/qualification/invocation and all retries included; cold + amortized separate, existing root qualification cost unknown until root supplies"
+  },
+  "version": "v2",
+  "root_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/I-METHOD-04-prospective-v2-root-binding.json",
+    "sha256": "02fbdb71e99318f3da413ccecce91b71321d1898c4fb32ab3f0ab32d50619e78"
+  },
+  "original_v1_retained": true,
+  "aggregate_occupied_work_ceiling_seconds": {
+    "control": 3600,
+    "treatment": 3600
+  },
+  "original_cold_clock_start": "2026-10-07T20:47:52.249474+00:00",
+  "prospective_arm_deadline": "2026-10-07T21:47:52.249474+00:00",
+  "renderer_setup_cost": {
+    "generic_preparation_seconds": 454.056,
+    "reported_qualification_seconds": 0.316,
+    "known_lowerbound_seconds": 454.372,
+    "unexposed_qualification_wall_seconds": null,
+    "billing": null,
+    "cold_and_amortized_separate": true,
+    "prior_and_v2_costs_retained": true
+  },
+  "activation_registration_policy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/prospective-activation-notice-registration-order-v1.json"
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T20:54:04.751027+00:00",
+  "case_id": "D-M14-A",
+  "arm": "treatment",
+  "stage": "semantic_render_preserve_final",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "structural_check": "UTF8 JSON parses; final/projection byte-identical only. Preservation and source truth independently unassessed.",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/INPUT_MAP.json",
+      "sha256": "68b3e3c293afd58c09da35acf49040af632ee682232173151c020cd7da5ac29d",
+      "bytes": 4371
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/dispatch-receipt.json",
+      "sha256": "20d32967071a5ed8a205555c8d92ce739abcc3e051be5ff4e21516dc4b44c7ad",
+      "bytes": 1109
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/dispatch-request.json",
+      "sha256": "5760f9e277419ba9667234e546e7d45cee610540235afd7eac19bfdf427fed09",
+      "bytes": 6081
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/dispatch.json",
+      "sha256": "adcfb587c4b766370d00eefddfadeaf3ea2d3eed4547c1c843606921d30df2f7",
+      "bytes": 1539
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/final.md",
+      "sha256": "8e4a129b2cd486629201d1448bedcd9291339ab2ce89d68f1fb5448f01d4ae2a",
+      "bytes": 53056
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/mechanical_projection.md",
+      "sha256": "8e4a129b2cd486629201d1448bedcd9291339ab2ce89d68f1fb5448f01d4ae2a",
+      "bytes": 53056
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/passive-active-capture-cost.json",
+      "sha256": "1e9ca213894fce73a19aee730739fe2189c1ac2e4e591f3f366df0fd8497aebb",
+      "bytes": 1339
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/passive-active.json",
+      "sha256": "6f0dab1a811190320dff554a0f71f5f04b78215ec32884f4726df92336383324",
+      "bytes": 11035
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/passive-terminal-capture-cost.json",
+      "sha256": "aaaf0c8c757443d164cfafc04a86ef94295c7dd2d5a0ac9a47ba9a30aea45ba4",
+      "bytes": 1342
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/passive-terminal.json",
+      "sha256": "26b8a614bd099fc502a06a0187b12d9d3589a60562a93f684e79bfa4a1f067fc",
+      "bytes": 11041
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/preservation_check.md",
+      "sha256": "76b8e323f19bd64d8604e23f2015e576b4c8e555d3f7fc23115f8650752357f3",
+      "bytes": 2879
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/prospective-timing.json",
+      "sha256": "63fd6d03740d636d6932b6266824833387bdfd401d6631ad48a7d27cc40f4b9f",
+      "bytes": 300
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/render-receipt.json",
+      "sha256": "210135bb29056a1e1781d5dbe836fbb53fdbd81833d60aecd723fcfed3425a2e",
+      "bytes": 1521
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/semantic-freeze.json",
+      "sha256": "c86454095e61801b101afa5dbbc99e0da1ed7da16a63012d7101674f447db330",
+      "bytes": 451
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/semantic_findings.md",
+      "sha256": "22c8ca760be00ae27abdd9f5a226144efd81fef16b00eea339334b01a324ef90",
+      "bytes": 15469
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/sources/rasterio-1.3.10-enums.py",
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "bytes": 5550
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/task-terminal.json",
+      "sha256": "d453abce3b27298227c020b2b5ed7110831ba0542155bf5796b94ee8b37a4bb0",
+      "bytes": 6155
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/timings.json",
+      "sha256": "0c3755bbe9b056c3f30bd798261f9e6ad9a52e18d3a519a1de404769fae08d26",
+      "bytes": 8453
+    }
+  ]
+}

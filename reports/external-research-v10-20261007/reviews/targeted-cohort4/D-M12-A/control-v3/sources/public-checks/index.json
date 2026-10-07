@@ -1,0 +1,442 @@
+{
+  "scope": "12 bounded public primary GETs; no retries; no downloaded code executed",
+  "captures": [
+    {
+      "id": "mqtt5-spec",
+      "requested_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "started_at": "2026-10-07T20:32:31.492659+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Content-Type": "text/html",
+        "last-modified": "Tue, 21 Apr 2026 10:58:17 GMT"
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/mqtt5-spec.html",
+      "sha256": "0989788706e3812e53c0f3da44a2b58b0991bda70b7bc0865803a10f34f89736",
+      "bytes": 1436832,
+      "finished_at": "2026-10-07T20:32:31.662987+00:00",
+      "elapsed_seconds": 0.170275,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/mqtt5-spec.lines.txt",
+      "derived_sha256": "53872a62fc8459f561fa56d2f3fd9b5765a0247246372c654b048591b5154fe6",
+      "normalized_text_matches_candidate": true,
+      "observed_version_authority": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E01",
+          "primary_locator": "\u00a74.3.2 [MQTT-4.3.2-3/4/5], flow note; \u00a74.3.3 [MQTT-4.3.3-3/4/5/8/10/11/12/13]; \u00a74.4 [MQTT-4.4.0-2]",
+          "derived_lines": "11691-11742,11789-11792,11813-11883,11898-11900,11997-12004"
+        },
+        {
+          "evidence_id": "E02",
+          "primary_locator": "\u00a74.1.1 Storing Session State; \u00a74.1.2 non-normative examples",
+          "derived_lines": "11527-11566"
+        },
+        {
+          "evidence_id": "E03",
+          "primary_locator": "\u00a73.1.2.11.2 Session Expiry Interval; \u00a74.4 [MQTT-4.4.0-1]; \u00a74.3.3 [MQTT-4.3.3-6]",
+          "derived_lines": "4271-4296,11836-11840,11887-11900"
+        },
+        {
+          "evidence_id": "E04",
+          "primary_locator": "\u00a74.6 [MQTT-4.6.0-1..6]; \u00a73.1.2.11.3 Receive Maximum; \u00a74.9 [MQTT-4.9.0-1/2/3]",
+          "derived_lines": "12026-12088,4385-4404,12575-12630"
+        },
+        {
+          "evidence_id": "E05",
+          "primary_locator": "\u00a73.3.2.3.3 [MQTT-3.3.2-5/6]; \u00a74.3.3 [MQTT-4.3.3-7/13]",
+          "derived_lines": "6712-6738,11836-11840,11882-11883"
+        }
+      ]
+    },
+    {
+      "id": "sqs-standard-queues",
+      "requested_url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues.html",
+      "started_at": "2026-10-07T20:32:31.494630+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues.html",
+      "headers": {
+        "Content-Type": "text/html",
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Last-Modified": "Wed, 07 Oct 2026 09:56:20 GMT",
+        "ETag": "\"GRtYvjPtjomo1nTiM+oFWZhzD0A=\""
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/sqs-standard-queues.html",
+      "sha256": "ddc9c32ef9654fed493a1a61d05d05896214e32d6012e6be4658558ce65058b2",
+      "bytes": 14250,
+      "finished_at": "2026-10-07T20:32:31.699675+00:00",
+      "elapsed_seconds": 0.20504,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/sqs-standard-queues.lines.txt",
+      "derived_sha256": "8813e06ccd2e3d6198abc7402ba4f0533a201739e8ee9d6e55e6aa02b9d52096",
+      "normalized_text_matches_candidate": true,
+      "observed_version_authority": "AWS SQS Developer Guide, Standard queue type, rolling current-at-capture page",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E06",
+          "primary_locator": "#standard-queues, opening paragraphs",
+          "derived_lines": "33-43,48-63"
+        }
+      ]
+    },
+    {
+      "id": "rabbitmq-confirms",
+      "requested_url": "https://www.rabbitmq.com/confirms.html",
+      "started_at": "2026-10-07T20:32:31.495865+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://www.rabbitmq.com/docs/confirms",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"e85a99e8923aebe8c3c85144445cdf96\""
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-confirms.html",
+      "sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951",
+      "bytes": 121173,
+      "finished_at": "2026-10-07T20:32:31.648800+00:00",
+      "elapsed_seconds": 0.152943,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-confirms.lines.txt",
+      "derived_sha256": "eb998fd3faa052887cd1bae76e8dec3592dd2b465ba972259dc2b1762cee389b",
+      "normalized_text_matches_candidate": true,
+      "observed_version_authority": "RabbitMQ documentation Version 4.3; AMQP 0-9-1 acknowledgements and publisher-confirm extension",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E07",
+          "primary_locator": "#relation; #acknowledgement-modes; #automatic-requeueing",
+          "derived_lines": "115-140,177-229,674-689"
+        },
+        {
+          "evidence_id": "E08",
+          "primary_locator": "#consumer-acks-delivery-tags; #when-publishes-are-confirmed; #publisher-confirms-ordering; #publisher-confirms-and-guaranteed-delivery",
+          "derived_lines": "155-175,703-755,761-832"
+        }
+      ]
+    },
+    {
+      "id": "transactional-outbox",
+      "requested_url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "started_at": "2026-10-07T20:32:31.496969+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Wed, 07 Oct 2026 15:20:09 GMT",
+        "ETag": "\"6ac66329-6382\"",
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT"
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/transactional-outbox.html",
+      "sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "bytes": 25474,
+      "finished_at": "2026-10-07T20:32:31.613738+00:00",
+      "elapsed_seconds": 0.116782,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/transactional-outbox.lines.txt",
+      "derived_sha256": "6a01b5e20fa910d9719c89cf0d76dc713b3f523e68edfee74306d05a87efbd89",
+      "normalized_text_matches_candidate": true,
+      "observed_version_authority": "Chris Richardson, Transactional Outbox pattern, unversioned current-at-capture page",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E09",
+          "primary_locator": "#solution; #result-context",
+          "derived_lines": "45-83,85-116"
+        }
+      ]
+    },
+    {
+      "id": "couchdb-replication-protocol",
+      "requested_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "started_at": "2026-10-07T20:32:31.613829+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"822645decb030e7c4eef5fbeea1d164a\"",
+        "Last-Modified": "Thu, 14 May 2026 20:50:51 GMT"
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-replication-protocol.html",
+      "sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "bytes": 185155,
+      "finished_at": "2026-10-07T20:32:31.827977+00:00",
+      "elapsed_seconds": 0.214161,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-replication-protocol.lines.txt",
+      "derived_sha256": "7337c7e1097523ed342d70c80778b22ea1a23d072ef374f5d276b58be09df9ef",
+      "normalized_text_matches_candidate": true,
+      "observed_version_authority": "Apache CouchDB 3.5 documentation; Replication Protocol document Version 3",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E11",
+          "primary_locator": "#definitions; #generate-replication-id; #compare-replication-logs; #listen-to-changes-feed",
+          "derived_lines": "205-245,270-281,644-681,820-835,900-919"
+        },
+        {
+          "evidence_id": "E12",
+          "primary_locator": "#ensure-in-commit; #record-replication-checkpoint; #upload-batch-of-changed-documents",
+          "derived_lines": "1420-1437,1651-1695"
+        },
+        {
+          "evidence_id": "E13",
+          "primary_locator": "#protocol-robustness; #optimisations",
+          "derived_lines": "1821-1829,1948-1970"
+        },
+        {
+          "evidence_id": "E14",
+          "primary_locator": "#definitions; #listen-to-changes-feed; #upload-batch-of-changed-documents; #upload-document-with-attachments",
+          "derived_lines": "215-222,900-919,1420-1437,1544-1553"
+        }
+      ]
+    },
+    {
+      "id": "rfc9110",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "started_at": "2026-10-07T20:32:31.648875+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Content-Type": "text/plain;charset=utf-8",
+        "ETag": "W/\"7c9fc097e78bd883e559172c885e074c\""
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "finished_at": "2026-10-07T20:32:31.835794+00:00",
+      "elapsed_seconds": 0.186934,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc9110.lines.txt",
+      "derived_sha256": "6830382374cace4c847b40c20f99f9857a272bf4cef79dcdd75bd3dc9e26f00f",
+      "normalized_text_matches_candidate": true,
+      "observed_version_authority": "RFC 9110, STD 97, Standards Track, June 2022",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E10",
+          "primary_locator": "\u00a79.2.2 Idempotent Methods, original TXT lines",
+          "derived_lines": "3861-3904"
+        },
+        {
+          "evidence_id": "E21",
+          "primary_locator": "\u00a710.2.3 Retry-After, original TXT lines",
+          "derived_lines": "4799-4824"
+        }
+      ]
+    },
+    {
+      "id": "rfc5321",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "started_at": "2026-10-07T20:32:31.663522+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Content-Type": "text/plain;charset=utf-8",
+        "ETag": "W/\"aac26df32182c0d2b9afb6d9ba7525c4\""
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc5321.txt",
+      "sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "bytes": 225929,
+      "finished_at": "2026-10-07T20:32:31.807757+00:00",
+      "elapsed_seconds": 0.144248,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc5321.lines.txt",
+      "derived_sha256": "f5eea1abbf26961a51e252e3a8113cb16582e88629b3e584199d521456262bb6",
+      "normalized_text_matches_candidate": true,
+      "observed_version_authority": "RFC 5321, Standards Track, October 2008",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E15",
+          "primary_locator": "\u00a74.5.4.1 Sending Strategy, original TXT lines",
+          "derived_lines": "3750-3809"
+        },
+        {
+          "evidence_id": "E16",
+          "primary_locator": "\u00a74.2.5; \u00a76.1 Reliable Delivery and Replies by Email, original TXT lines",
+          "derived_lines": "2993-3040,4030-4082"
+        }
+      ]
+    },
+    {
+      "id": "rfc4838",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc4838.txt",
+      "started_at": "2026-10-07T20:32:31.699769+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc4838.txt",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Content-Type": "text/plain;charset=utf-8",
+        "ETag": "W/\"2b73d00e296e12ff24e037d16d3e4e6e\""
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc4838.txt",
+      "sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790",
+      "bytes": 89265,
+      "finished_at": "2026-10-07T20:32:31.840256+00:00",
+      "elapsed_seconds": 0.140495,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc4838.lines.txt",
+      "derived_sha256": "d5d9bf891a1afbca443c80ab1d58c74c98579c9dc6036caa462d15ca55b47cfa",
+      "normalized_text_matches_candidate": true,
+      "observed_version_authority": "RFC 4838, Informational architecture, April 2007",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E17",
+          "primary_locator": "\u00a73.6.1 Delivery Options; \u00a73.10 Reliability and Custody Transfer; \u00a74.2 Custody Transfer State, original TXT lines",
+          "derived_lines": "634-660,1052-1158,1432-1446"
+        }
+      ]
+    },
+    {
+      "id": "couchdb-conflicts",
+      "requested_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "started_at": "2026-10-07T20:32:31.807847+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"95b445c6955552a93476bae521c1d426\"",
+        "Last-Modified": "Thu, 14 May 2026 20:50:51 GMT"
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-conflicts.html",
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "bytes": 79028,
+      "finished_at": "2026-10-07T20:32:31.906289+00:00",
+      "elapsed_seconds": 0.098464,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-conflicts.lines.txt",
+      "derived_sha256": "582232013f31c819a676e7d9e3644984de95018e9738f32b436fad333e678384",
+      "observed_version_authority": "Apache CouchDB 3.5 documentation, chapter 2.3",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E18",
+          "primary_locator": "#couchdb-replication; #working-with-conflicting-documents",
+          "derived_lines": "183-212,295-355"
+        }
+      ]
+    },
+    {
+      "id": "rabbitmq-reliability",
+      "requested_url": "https://www.rabbitmq.com/docs/reliability",
+      "started_at": "2026-10-07T20:32:31.828061+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://www.rabbitmq.com/docs/reliability",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"40f1ac35ae06c2168467e87674790764\""
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-reliability.html",
+      "sha256": "452ba2b6dcfd48492356e3abe45e878c93bc55a2ec55e14c2de15de03d549b63",
+      "bytes": 42707,
+      "finished_at": "2026-10-07T20:32:31.963504+00:00",
+      "elapsed_seconds": 0.135465,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-reliability.lines.txt",
+      "derived_sha256": "bfac226792d217b178b61ea4964e7d0c329250d219c597c76f8f230677a5899e",
+      "observed_version_authority": "RabbitMQ documentation Version 4.3",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E19",
+          "primary_locator": "#publisher-side; #consumer-side; #confirms",
+          "derived_lines": "143-174,225-278"
+        }
+      ]
+    },
+    {
+      "id": "kafka-documentation-route",
+      "requested_url": "https://kafka.apache.org/documentation/",
+      "started_at": "2026-10-07T20:32:31.835873+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Public primary identity/condition corroboration; not candidate execution evidence",
+      "http_status": 200,
+      "final_url": "https://kafka.apache.org/documentation/",
+      "headers": {
+        "Last-Modified": "Wed, 30 Sep 2026 20:37:13 GMT",
+        "ETag": "\"4e3d-65cb943a42022\"",
+        "Content-Type": "text/html",
+        "Date": "Wed, 07 Oct 2026 20:32:31 GMT"
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/kafka-documentation-route.html",
+      "sha256": "6ed5593a781e0363156c1ce3cbc9b498e340c1fd1f91930990fdc9db6c0ed152",
+      "bytes": 20029,
+      "finished_at": "2026-10-07T20:32:31.878664+00:00",
+      "elapsed_seconds": 0.042803,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/kafka-documentation-route.lines.txt",
+      "derived_sha256": "a74395ddd2f1f28e70a26c177f3b0406954f120b28e7a28c00c80b3337fdd972",
+      "observed_version_authority": "Kafka documentation redirect route at 2026-10-07 reviewer capture",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E22",
+          "primary_locator": "HTML title Documentation Redirect; raw UTF-8 byte offsets 16657-17019; derived route text",
+          "derived_lines": "1-3,144-157"
+        }
+      ]
+    },
+    {
+      "id": "idempotent-consumer-author",
+      "requested_url": "https://microservices.io/post/microservices/patterns/2020/10/16/idempotent-consumer.html",
+      "started_at": "2026-10-07T20:35:51.033019+00:00",
+      "limit_seconds": 18,
+      "limit_bytes": 3000000,
+      "purpose": "Check governing atomicity of key tracking with business update; author primary explanation, not adopted implementation",
+      "http_status": 200,
+      "final_url": "https://microservices.io/post/microservices/patterns/2020/10/16/idempotent-consumer.html",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Wed, 07 Oct 2026 15:20:09 GMT",
+        "ETag": "\"6ac66329-7088\"",
+        "Date": "Wed, 07 Oct 2026 20:35:51 GMT"
+      },
+      "truncated": false,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/idempotent-consumer-author.html",
+      "sha256": "d48518392f5e3635c200c8f635403688dc744381bc38774be7bfa80cf4361769",
+      "bytes": 28808,
+      "finished_at": "2026-10-07T20:35:51.139646+00:00",
+      "elapsed_seconds": 0.106639,
+      "derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/idempotent-consumer-author.lines.txt",
+      "derived_sha256": "1b204bfc9c1483c7708f3c37bd57617f9e471b54e41100fd24a73256fbf4887f",
+      "version": "Chris Richardson, unversioned article at dated /2020/10/16/ URL; current page at reviewer capture 2026-10-07; publication date not shown in captured body",
+      "observed_version_authority": "Chris Richardson, unversioned article at dated /2020/10/16/ URL; current page at reviewer capture 2026-10-07; publication date not shown in captured body",
+      "assessed_primary_locators": [
+        {
+          "evidence_id": "E20",
+          "primary_locator": "#idempotency-is-important; #save-messages-in-a-processed_message-table; #store-message-ids-in-the-business-entities-created-or-updated-by-message-handlers",
+          "derived_lines": "73-87,99-131"
+        }
+      ]
+    }
+  ]
+}

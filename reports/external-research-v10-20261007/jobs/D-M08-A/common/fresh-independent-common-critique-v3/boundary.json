@@ -1,0 +1,18 @@
+{
+  "recentRuns": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-common-fresh-independent-common-critique-v3:ordinal:1",
+      "ordinal": 1,
+      "status": "starting",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T20:35:00.918Z",
+      "startedAt": null,
+      "completedAt": null
+    }
+  ],
+  "stage_ceiling_seconds": 480,
+  "absolute_common_T0": "2026-10-07T20:28:57.512Z",
+  "absolute_case_deadline": "2026-10-07T21:08:57.512Z",
+  "clock_basis": "earliestactualfreshpreparationT3requestedAt immutable; allstartup/queue/native/T3delivery included noreset"
+}

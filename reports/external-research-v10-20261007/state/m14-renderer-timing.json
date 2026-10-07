@@ -1,0 +1,32 @@
+{
+  "observed_by": "root",
+  "recentRuns": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-m14-renderer-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "requestedAt": "2026-10-07T18:37:40.052Z",
+      "startedAt": "2026-10-07T18:37:40.550Z",
+      "completedAt": "2026-10-07T18:45:14.108Z"
+    }
+  ],
+  "thread": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-m14-renderer-v1",
+    "model": "gpt-6.1-sol",
+    "providerInstanceId": "codex_gmail",
+    "status": "completed",
+    "settled": true
+  },
+  "usage": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning_subset": null,
+    "native_goal_counters": null,
+    "billing": null,
+    "note": "Helper had no native Goal; no provider token/billing usage exposed by this thread_read."
+  },
+  "qualification": "Root actual four focused checks passed at previously saved recovery tool output; see state/m14-renderer-root-qualification.json"
+}

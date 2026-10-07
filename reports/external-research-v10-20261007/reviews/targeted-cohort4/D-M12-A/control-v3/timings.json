@@ -1,0 +1,72 @@
+{
+  "schema": "independent-review-timings.v1",
+  "actual_t3_requested_at": "2026-10-07T20:30:38.033Z",
+  "actual_t3_started_at": "2026-10-07T20:30:40.838Z",
+  "first_observed_source_operation_at": "2026-10-07T20:30:48.677764672Z",
+  "effective_deadline": "2026-10-07T20:50:25.427292+00:00",
+  "budget_origin_derived_from_supplied_deadline": "2026-10-07T20:30:25.427292+00:00",
+  "budget_origin_note": "Derived 20-minute origin, not claimed to be an observed parent requestedAt; own current-run metadata was the only thread metadata read.",
+  "artifact_finalized_at": "2026-10-07T20:45:07.956561+00:00",
+  "elapsed_seconds_from_actual_t3_request": 869.923561,
+  "elapsed_seconds_from_supplied_budget_origin": 882.529269,
+  "elapsed_seconds_from_first_observed_source_operation": 859.278797,
+  "completed_before_deadline": true,
+  "deadline_expired": false,
+  "source_operations": {
+    "unique_declared_raw_sources_read_hashed_and_semantically_checked": 8,
+    "unique_allowed_candidate_input_files_read": 14,
+    "candidate_final_hash_verified_before_assessment": true,
+    "candidate_final_hash_rechecked_after_assessment": true,
+    "candidate_source_index_hash_verified": true,
+    "candidate_source_checksum_entries_checked": 8,
+    "map_index_source_records_field_crosschecks": 8,
+    "public_primary_GET_requests": 12,
+    "public_primary_GET_HTTP_200": 12,
+    "public_primary_retries": 0,
+    "public_primary_truncations": 0,
+    "public_primary_byte_limit_each": 3000000,
+    "public_primary_timeout_seconds_each": 18,
+    "public_primary_captured_bytes": 2771591,
+    "public_request_elapsed_seconds_sum_overlapping": 1.714249,
+    "public_request_elapsed_note": "Actual per-request recorded durations are summed; requests overlap and this is not wall-clock review time.",
+    "historical_candidate_HTTP_failures_reproduced": false,
+    "downloads_executed": 0,
+    "application_tests_executed": 0,
+    "public_capture_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/index.json"
+  },
+  "checks": {
+    "consequential_claim_records": 46,
+    "primary_evidence_records": 22,
+    "findings": 8,
+    "proposed_changes": 4,
+    "proposed_test_oracles": 4,
+    "obligations": 6,
+    "axes": 6,
+    "material_defects": 6,
+    "artifact_internal_reference_and_hash_validation": "Passed; does not stand in for semantic primary checking."
+  },
+  "input": null,
+  "cache": null,
+  "generated": null,
+  "billing": null,
+  "native_counters": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_tokens": null,
+    "billing": null,
+    "availability": "Provider usage/billing counters were not exposed; no token or price estimate is substituted."
+  },
+  "delivery": {
+    "channel": "Normal terminal assistant result through this T3 delegated task lifecycle",
+    "delivery_completed_at": null,
+    "note": "Terminal delivery timestamp is not observable from inside the still-running turn; artifact save time includes review, source checking, writing and final artifact verification. Final response immediately follows this save.",
+    "pending_children": 0
+  },
+  "scope": "No cost/winner/speed target comparisons; elapsed time and source-operation records only.",
+  "artifact_hashes": {
+    "review.md": "3f85ea6b2094bcecca24924f6072beb29e9bc348e62d6a4c5a4899e484bc7bb7",
+    "review.json": "60cc7f36b72afa52b5c16b5e389863b613b615f43f77b73bfd4b3b4550f61a9b",
+    "sources/public-checks/index.json": "dc4a4f29cd83a62b0dce814775c5abd0d3bfbd20e6454ee1297f6db24106d86b",
+    "sources/derived-provenance.json": "1090277496611732418f26f1e8addb9a24e4f5d4c5381c8240a1970e8dca3381"
+  }
+}

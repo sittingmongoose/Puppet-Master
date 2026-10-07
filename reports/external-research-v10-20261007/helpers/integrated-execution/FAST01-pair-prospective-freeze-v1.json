@@ -1,0 +1,16 @@
+{
+  "record_at": "2026-10-07T20:09:54.092539+00:00",
+  "root_recipe": "ER10-LUNA-TWO-STAGE-LOCKED-V1",
+  "card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01/execution-v1.json",
+  "all_stage_maps_configs_policies_frozen": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/prospective-config-v1.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/critic-v1/prospective-config-v1.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/reviser-v1/prospective-config-v1.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/research-v1/prospective-config-v1.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/prospective-config-v1.json"
+  ],
+  "neither_arm_dispatched": true,
+  "budget_unchanged": true,
+  "host_freeze_preparation_cost_seconds": null,
+  "unknown_cost_not_zero": true
+}

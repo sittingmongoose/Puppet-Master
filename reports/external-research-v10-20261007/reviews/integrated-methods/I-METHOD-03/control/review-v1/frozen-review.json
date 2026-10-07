@@ -1,0 +1,1024 @@
+{
+  "record_at": "2026-10-07T20:30:47.213709+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-03-control-independent-review-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T20:03:15.806Z",
+    "startedAt": "2026-10-07T20:03:16.592Z",
+    "completedAt": "2026-10-07T20:30:29.414Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "schema_version": 1,
+    "case": "I-METHOD-03",
+    "arm": "control",
+    "source_judgment": "FAIL",
+    "counting_rule": "Assessment coverage and fulfillment are separate. Complete scope count = 6 original O obligations + 29 atomic decisions from the six frozen plan paragraphs + 15 expressly open/final product decisions. Parent P1-P6 rows and six axes are rollups, not extra denominator items. Source checks and preservation counts are separate inventories.",
+    "counts": {
+      "complete_scope_count": 50,
+      "assessed_count": 50,
+      "unassessed_count": 0,
+      "original_obligations": {
+        "complete_scope_count": 6,
+        "assessed_count": 6,
+        "unassessed_count": 0
+      },
+      "plan_decisions": {
+        "complete_scope_count": 29,
+        "assessed_count": 29,
+        "unassessed_count": 0
+      },
+      "owner_product_decisions": {
+        "complete_scope_count": 15,
+        "assessed_count": 15,
+        "unassessed_count": 0
+      },
+      "axes": {
+        "complete_scope_count": 6,
+        "assessed_count": 6,
+        "unassessed_count": 0
+      },
+      "consequential_check_groups": {
+        "complete_scope_count": 28,
+        "assessed_count": 28,
+        "unassessed_count": 0
+      },
+      "scientific_critic_findings": {
+        "complete_scope_count": 7,
+        "assessed_count": 7,
+        "unassessed_count": 0,
+        "preserved_count": 7
+      },
+      "material_error_count": 2,
+      "nonmaterial_citation_limitations": 3
+    },
+    "axes": [
+      {
+        "id": "A1",
+        "axis": "Original scope and all plan/owner obligations",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "material_defect_ids": [
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "id": "A2",
+        "axis": "Consequential claims, governing conditions and versions",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "material_defect_ids": [
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "id": "A3",
+        "axis": "Bounded useful discovery, mechanisms, alternatives and negative/opportunity coverage",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "material_defect_ids": [
+          "M1",
+          "M2"
+        ]
+      },
+      {
+        "id": "A4",
+        "axis": "Incorrect corrections/rejections and false already-covered dispositions",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "material_defect_ids": []
+      },
+      {
+        "id": "A5",
+        "axis": "Research-to-critique-to-final preservation",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED_SCIENTIFICALLY",
+        "material_defect_ids": []
+      },
+      {
+        "id": "A6",
+        "axis": "Proposed versus executed validation and witness applicability",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "material_defect_ids": [
+          "M1",
+          "M2"
+        ]
+      }
+    ],
+    "O1_O6": [
+      {
+        "id": "O1",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "rationale": "Useful primary discovery beyond the initial plan is present; M1/M2 show necessary interpretation mechanisms not covered. No exhaustive opportunity-recall claim. Discovery chronology is not independently certified."
+      },
+      {
+        "id": "O2",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "rationale": "Immutable released source, governing interval definition/cache, and metadata caller support the bounded component behavior. Runtime parser need not be selected to satisfy this obligation."
+      },
+      {
+        "id": "O3",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "rationale": "Pertinent issue, merged fix, regression test text, published release and ancestry checked; only service-window metadata applicability is supported."
+      },
+      {
+        "id": "O4",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED_WITH_LIMITATIONS",
+        "rationale": "Every original P1-P6 paragraph and all 29 atomic decisions compared. Structural dispositions are present, but M1/M2 limit the adequacy of proposed additions."
+      },
+      {
+        "id": "O5",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED_SCIENTIFICALLY",
+        "rationale": "Seven substantive critic findings retained with dispositions, options and uncertainty. Requested critic family/dispatch is host metadata, not independently certified from source maps."
+      },
+      {
+        "id": "O6",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "rationale": "One coherent replacement plan, alternatives, retained/rejected matters, criticism, validation and uncertainty delivered; M1/M2 prevent complete behavioral adequacy."
+      }
+    ],
+    "plan_decisions": [
+      {
+        "id": "P1.1",
+        "obligation": "Import operator/user-selected public Schedule archives",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "19-25",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P1.2",
+        "obligation": "Poll agency RT where available",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "final_lines": "19-23,86",
+        "material_defect_ids": [
+          "M2"
+        ]
+      },
+      {
+        "id": "P1.3",
+        "obligation": "Every result retains feed identity and acquisition time",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "20-21,70",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P1.4",
+        "obligation": "Source selection is a deployment decision",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "24-25,146",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P2.1",
+        "obligation": "Upcoming departures at twenty selected stops",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED_WITH_DETAIL_LIMITATION",
+        "final_lines": "29-33,111",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P2.2",
+        "obligation": "One selected transfer between two routes",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "29-31,60",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P2.3",
+        "obligation": "Visible schedule/realtime distinction",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "33,64-66",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P2.4",
+        "obligation": "Unavailable observation is not a confirmed departure",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "7-9,33,66",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P3.1",
+        "obligation": "Scheduled arrival/departure and user-configured walking allowance",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "final_lines": "39-54",
+        "material_defect_ids": [
+          "M1"
+        ]
+      },
+      {
+        "id": "P3.2",
+        "obligation": "Observation overlay where supported",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "final_lines": "64-66",
+        "material_defect_ids": [
+          "M2"
+        ]
+      },
+      {
+        "id": "P3.3",
+        "obligation": "No occupancy/accessibility-availability/dispatch promise",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "13,66",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P4.1",
+        "obligation": "Inspect feed versions/input records behind displayed transfer",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "70-74",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P4.2",
+        "obligation": "Compare saved screen with later observations",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "70-72",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P4.3",
+        "obligation": "Public history seven days",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "70-72,103",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P4.4",
+        "obligation": "No rider identity tracking",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "31,70,103",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P5.1",
+        "obligation": "Runtime feed parser remains a component decision",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "25,78,146",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P5.2",
+        "obligation": "Timestamp interpretation remains a versioned component decision",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "78,84,146",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P5.3",
+        "obligation": "Limited calculator remains a component decision",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "78,119,146",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P5.4",
+        "obligation": "Tablet usability",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "29,88,104,146",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P5.5",
+        "obligation": "Intermittent connectivity usability",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "33,88,103",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P5.6",
+        "obligation": "Explicit acquisition age",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "20-21,86-88",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P5.7",
+        "obligation": "Operator-readable failure state",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "31,33,88",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P6.1",
+        "obligation": "Propose feed-replacement validation",
+        "assessment": "ASSESSED",
+        "result": "PARTIAL",
+        "final_lines": "94",
+        "material_defect_ids": [
+          "M2"
+        ]
+      },
+      {
+        "id": "P6.2",
+        "obligation": "Propose absent-RT validation",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "95-96",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P6.3",
+        "obligation": "Propose inconsistent-identifier validation",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "94-96,99",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P6.4",
+        "obligation": "Propose overnight-service validation",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "101",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P6.5",
+        "obligation": "Propose clock-change validation",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "101",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P6.6",
+        "obligation": "Propose performance validation at twenty stops",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "104",
+        "material_defect_ids": []
+      },
+      {
+        "id": "P6.7",
+        "obligation": "No implied reliability validation; pin only supported component evidence",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "final_lines": "80,92,100,146,150",
+        "material_defect_ids": []
+      }
+    ],
+    "owner_product_decisions": [
+      {
+        "id": "D01",
+        "decision": "Feed URLs, access and terms",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "24,72,146"
+      },
+      {
+        "id": "D02",
+        "decision": "Merged-feed versus curated crosswalk",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "60,136,146"
+      },
+      {
+        "id": "D03",
+        "decision": "Station/platform mapping",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "60,99,146"
+      },
+      {
+        "id": "D04",
+        "decision": "Trip-pair selection",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "31,60,136,146"
+      },
+      {
+        "id": "D05",
+        "decision": "Default/editable walking allowance",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "43,146"
+      },
+      {
+        "id": "D06",
+        "decision": "Frequency-service scope",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "58,98,135,146"
+      },
+      {
+        "id": "D07",
+        "decision": "Linked-trip type 4/5 admission",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "54,134,146"
+      },
+      {
+        "id": "D08",
+        "decision": "Service Alerts removed from MVP, bounded later option",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "22,102,137,146"
+      },
+      {
+        "id": "D09",
+        "decision": "Per-feed freshness thresholds",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "86,146"
+      },
+      {
+        "id": "D10",
+        "decision": "Runtime parser selection",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "25,78,146"
+      },
+      {
+        "id": "D11",
+        "decision": "Agency-time conversion/DST library and policy",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "84,101,146"
+      },
+      {
+        "id": "D12",
+        "decision": "Tablet/browser/network target",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "88,104,146"
+      },
+      {
+        "id": "D13",
+        "decision": "Performance acceptance threshold",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "104,146"
+      },
+      {
+        "id": "D14",
+        "decision": "History content and raw/parsed replay permissions",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "70-72,139,146"
+      },
+      {
+        "id": "D15",
+        "decision": "Optional uncertainty display",
+        "assessment": "ASSESSED",
+        "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+        "final_lines": "64,96,140"
+      }
+    ],
+    "plan_rollups": [
+      {
+        "id": "P1",
+        "assessment": "ASSESSED",
+        "decision_count": 4
+      },
+      {
+        "id": "P2",
+        "assessment": "ASSESSED",
+        "decision_count": 4
+      },
+      {
+        "id": "P3",
+        "assessment": "ASSESSED",
+        "decision_count": 3
+      },
+      {
+        "id": "P4",
+        "assessment": "ASSESSED",
+        "decision_count": 4
+      },
+      {
+        "id": "P5",
+        "assessment": "ASSESSED",
+        "decision_count": 7
+      },
+      {
+        "id": "P6",
+        "assessment": "ASSESSED",
+        "decision_count": 7
+      }
+    ],
+    "external_owner_documents": {
+      "declared_count": 0,
+      "unassessed_count": 0,
+      "note": "Only the supplied bounded brief and frozen plan define product authority here; no outside owner docs/cross-references were supplied or inferred."
+    },
+    "unassessed_obligation_ids": [],
+    "material_defect_ids": [
+      "M1",
+      "M2"
+    ],
+    "candidate_unknowns_not_treated_as_reviewer_unassessed": [
+      "actual agencies/feeds/terms",
+      "runtime parser and calculator",
+      "timezone library and feed conventions",
+      "tablet/network/performance threshold",
+      "future optional feature choices"
+    ],
+    "limitations": [
+      "Scientific review cannot verify the prospective family allocation or execution/discovery chronology without forbidden host records.",
+      "No application, upstream test suite, agency feed, target device, or real source-term validation was executed.",
+      "Public opportunity discovery is bounded, not exhaustive.",
+      "Visible arm paths and procedure prose weaken blinding; timing/counter/lifecycle fields were ignored for judgment."
+    ],
+    "usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "cache_tokens": null,
+      "reasoning_tokens": null,
+      "total_tokens": null,
+      "billing_amount": null,
+      "billing_currency": null
+    }
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/coverage.json",
+      "bytes": 16361,
+      "sha256": "99cfe89602fdb48f2dca2c704cbe38db23c24317fac8a5e82e3533f17708397e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/judgment.md",
+      "bytes": 33265,
+      "sha256": "f03c7b270885adc3a46ae74f1c3951d02f07944cafd1a71029330582d0f77e80"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/source-checks.json",
+      "bytes": 123246,
+      "sha256": "f642c6ab5da65a455b86e7a0d4d661cffe02376d312cbd00c1acec44620433db"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/cases/I-METHOD-03/brief.md",
+      "bytes": 5120,
+      "sha256": "18f0d4d44d638932060c0624b6876d21f0e33226971579f66916e8de2816853c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/cases/I-METHOD-03/plan.md",
+      "bytes": 1765,
+      "sha256": "3451e59740282a558189908d03921dcbff4126105d788b6488ad0def90ff9f6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/critic-v1/artifact.md",
+      "bytes": 10355,
+      "sha256": "349f8bbf3d0a0bb710f1ed4bfd91568e18d2c92297db7418c95fd198c0952174"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/critic-v1/source-map.json",
+      "bytes": 7008,
+      "sha256": "a1dfc664f13a32ea33237b246f25f1f2d640e134eb22a919a31aa3caae88cf1c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/critic-v1/sources/primary-checks.md",
+      "bytes": 5242,
+      "sha256": "ce0168958ed32efea40cd920c3dc8f0a3e2fa4c6584b8c8ed1ee9f37003cb548"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/artifact.md",
+      "bytes": 21514,
+      "sha256": "32036cb32a0df8761d1ff25f631e0366cc11170720c2da33342077d642521b20"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/source-map.json",
+      "bytes": 13944,
+      "sha256": "5962ba1004266e6d1c660ae28805fd592c0e7bd5833fc82f71cf3c279473c853"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_proposal_16.json",
+      "bytes": 21326,
+      "sha256": "d00694fc4daa9f09f5739775c93c0ff37e8153f70444bc980a6582e8ab7295ef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_best_practices.md",
+      "bytes": 17511,
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_entities.md",
+      "bytes": 2388,
+      "sha256": "52ad9cacf820924f88744cfab99a63ba588bf4f919475d1c983bd6af328980e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_reference.md",
+      "bytes": 90262,
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_trip_updates.md",
+      "bytes": 9502,
+      "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_schedule_reference.md",
+      "bytes": 138481,
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/issue_2017.json",
+      "bytes": 9197,
+      "sha256": "848b6a5cf89b3cad11f298f58bc8cec5906c7b168e3c2d4c25ff561ef2f6dbe6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/issue_2099.json",
+      "bytes": 9672,
+      "sha256": "d2b15e7dde44bc12b04e2fe56e5d4c89ba6c47e20201518f6cea368a298af252"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/mobility_validator_v8_0_1_readme.md",
+      "bytes": 15192,
+      "sha256": "7e78048de0a82203c7324019b2b1fc5acf64acd84758582505622842d1963994"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/oba_issue_162.json",
+      "bytes": 5049,
+      "sha256": "2511dc0a0e0481e3b7c79aa58984568dbf6605515488ebdd1236976bfac7fdb4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/oba_pull_160.json",
+      "bytes": 21882,
+      "sha256": "836f0cc729444a804ecdd7a1ac71ecf10f1cac4cd6803d5056c4f53bd2ff7155"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/oba_server_validator_readme.md",
+      "bytes": 7655,
+      "sha256": "8890bb18a1e465e0bccbb666d96a00cd196f392c54904377b2f904d4518e2489"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/oba_v2_7_1_readme.md",
+      "bytes": 12818,
+      "sha256": "827c0670ca41dbf813c377d6f772dcd1af83d2317dbc675f3b9230ad96e905dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/pull_2029.json",
+      "bytes": 22490,
+      "sha256": "f25d6a0721ee1c513787adc7b31b2e114d4c60ded275ca0018b10e00eb1f563f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/release_v8_0_0.json",
+      "bytes": 37508,
+      "sha256": "39f823b385dab6473b55ad06ae803e8da36b502fd7714ce17c41f5ab79abba82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/release_v8_0_1.json",
+      "bytes": 24902,
+      "sha256": "24938b618dfe3f15eb185c40d50140930e876d4ccfd28eb89ce008a5f98eda3d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_tree_v8_0_1.json",
+      "bytes": 388345,
+      "sha256": "867637ef405d870453f3dc29e8738ae3086b852a34c06d9a9caeed37dd22dd52"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval.java",
+      "bytes": 10318,
+      "sha256": "1850cec463bb16ac150b17e84de66c6e3cc76c192e366846ff512d724d7787bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval_cache.java",
+      "bytes": 4568,
+      "sha256": "3e9f8e735731d6bb6f4a34ede4308302fb3d11ec70a303abf08ebd15c3583869"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval_test.java",
+      "bytes": 12475,
+      "sha256": "f1cb2f2c0ddcb4cfb0fe49bcb96013fe277bf7535bdd87db5065a94e4e608ab1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_window.java",
+      "bytes": 1970,
+      "sha256": "1cffefc70e6317fb1ae679d6331e5659ddacc05963e77dc5abef68700c33dcd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_window_test.java",
+      "bytes": 36197,
+      "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/artifact.md",
+      "bytes": 25713,
+      "sha256": "21fee974c20d3e2164ecabb07b80af8aa041f1535b83c7bcbf8341ff802dc90b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/source-map.json",
+      "bytes": 8143,
+      "sha256": "7e567c61f5fa344705b3b5ce98d2a4d4138de5802e896117b72addacd200aa4a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_proposal_16.json",
+      "bytes": 21326,
+      "sha256": "d00694fc4daa9f09f5739775c93c0ff37e8153f70444bc980a6582e8ab7295ef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_best_practices.md",
+      "bytes": 17511,
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_reference.md",
+      "bytes": 90262,
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_trip_updates.md",
+      "bytes": 9502,
+      "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_schedule_reference.md",
+      "bytes": 138481,
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/issue_2017.json",
+      "bytes": 9197,
+      "sha256": "848b6a5cf89b3cad11f298f58bc8cec5906c7b168e3c2d4c25ff561ef2f6dbe6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/issue_2099.json",
+      "bytes": 9672,
+      "sha256": "d2b15e7dde44bc12b04e2fe56e5d4c89ba6c47e20201518f6cea368a298af252"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/mobility_validator_v8_0_1_readme.md",
+      "bytes": 15192,
+      "sha256": "7e78048de0a82203c7324019b2b1fc5acf64acd84758582505622842d1963994"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/oba_issue_162.json",
+      "bytes": 5049,
+      "sha256": "2511dc0a0e0481e3b7c79aa58984568dbf6605515488ebdd1236976bfac7fdb4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/oba_pull_160.json",
+      "bytes": 21882,
+      "sha256": "836f0cc729444a804ecdd7a1ac71ecf10f1cac4cd6803d5056c4f53bd2ff7155"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/oba_server_validator_readme.md",
+      "bytes": 7655,
+      "sha256": "8890bb18a1e465e0bccbb666d96a00cd196f392c54904377b2f904d4518e2489"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/oba_v2_7_1_readme.md",
+      "bytes": 12818,
+      "sha256": "827c0670ca41dbf813c377d6f772dcd1af83d2317dbc675f3b9230ad96e905dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/primary-checks.md",
+      "bytes": 5242,
+      "sha256": "ce0168958ed32efea40cd920c3dc8f0a3e2fa4c6584b8c8ed1ee9f37003cb548"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/pull_2029.json",
+      "bytes": 22490,
+      "sha256": "f25d6a0721ee1c513787adc7b31b2e114d4c60ded275ca0018b10e00eb1f563f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/release_v8_0_0.json",
+      "bytes": 37508,
+      "sha256": "39f823b385dab6473b55ad06ae803e8da36b502fd7714ce17c41f5ab79abba82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/release_v8_0_1.json",
+      "bytes": 24902,
+      "sha256": "24938b618dfe3f15eb185c40d50140930e876d4ccfd28eb89ce008a5f98eda3d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval.java",
+      "bytes": 10318,
+      "sha256": "1850cec463bb16ac150b17e84de66c6e3cc76c192e366846ff512d724d7787bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval_cache.java",
+      "bytes": 4568,
+      "sha256": "3e9f8e735731d6bb6f4a34ede4308302fb3d11ec70a303abf08ebd15c3583869"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval_test.java",
+      "bytes": 12475,
+      "sha256": "f1cb2f2c0ddcb4cfb0fe49bcb96013fe277bf7535bdd87db5065a94e4e608ab1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_window.java",
+      "bytes": 1970,
+      "sha256": "1cffefc70e6317fb1ae679d6331e5659ddacc05963e77dc5abef68700c33dcd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_window_test.java",
+      "bytes": 36197,
+      "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/gtfs_proposal_16.json",
+      "bytes": 18549,
+      "sha256": "44d913ddca02ab6ea2530fb50a6c0ff1a76c7ca446937de43115f3419edf6597"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/gtfs_rt_best_practices_correct_path.md",
+      "bytes": 17511,
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/gtfs_rt_live_best_practices.html",
+      "bytes": 130903,
+      "sha256": "eecd032fb6006a7180e394a558003b7c835911f016ee597faf9174eb012ba5c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/gtfs_rt_proto.proto",
+      "bytes": 65237,
+      "sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/gtfs_rt_reference.md",
+      "bytes": 90262,
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/gtfs_rt_trip_updates.md",
+      "bytes": 9502,
+      "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/gtfs_schedule_reference.md",
+      "bytes": 138481,
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/issue_2017.json",
+      "bytes": 8087,
+      "sha256": "f80f9dda380e5ce7b61af90a4a895d7b16a6121d5ad15bf6b0adaf76d8fa6dd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/issue_2099.json",
+      "bytes": 9014,
+      "sha256": "cd59deb79be16ebaaded5dbc2559a17b1f7beeb76598c42f3af7b0097638aefb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/mobility_validator_v8_0_1_readme.md",
+      "bytes": 15192,
+      "sha256": "7e78048de0a82203c7324019b2b1fc5acf64acd84758582505622842d1963994"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/oba_issue_162.json",
+      "bytes": 4590,
+      "sha256": "e20f7543874b30b9d992de58326b66bdabd9f5e17ac10f99df6b2ebd2f197f7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/oba_pull_160.json",
+      "bytes": 19058,
+      "sha256": "c0ecee8cd8afcb9223f4cca0a6a49250189c0cbc67b701c457471a3e80a8ce2b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/oba_server_validator_correct_repo.md",
+      "bytes": 7655,
+      "sha256": "8890bb18a1e465e0bccbb666d96a00cd196f392c54904377b2f904d4518e2489"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/oba_v2_7_1_readme.md",
+      "bytes": 12818,
+      "sha256": "827c0670ca41dbf813c377d6f772dcd1af83d2317dbc675f3b9230ad96e905dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/pull_2029.json",
+      "bytes": 19589,
+      "sha256": "c487be513fd843a0733c1620a942a5f49878aa74406305ce25280652f6808512"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/release_v8_0_0.json",
+      "bytes": 33726,
+      "sha256": "6b88299d304c977dd4dd9e7f73d4abee169b700da8e4ec2e59e7101ac5b2bd7e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/release_v8_0_1.json",
+      "bytes": 21187,
+      "sha256": "273820b221ef43cffae99e49b51456d97827db344f9e6c24ca925baa0ebef663"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/transit_tree.json",
+      "bytes": 27562,
+      "sha256": "4d3a72b60299567387bfda02ad550a3e3502a519eddba9b174038de74865e2eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_commit.json",
+      "bytes": 30079,
+      "sha256": "8c0d9849d062886e3ea6fa0351b59223ae3e45f7d4abd216267942e1998c0d03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_fix_commit.json",
+      "bytes": 69509,
+      "sha256": "fa4c661b3f8714a9ee4785d3f7743405b4c03708ad414736468079e6aa311c91"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_fix_service_window.java",
+      "bytes": 7805,
+      "sha256": "415c1663e4b46f45f48209eb1a8effba9b6c5e436d5eb8e43b11a984619675aa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_fix_service_window_test.java",
+      "bytes": 36197,
+      "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_fix_to_release.json",
+      "bytes": 300328,
+      "sha256": "66faed224ffa466fa1b60165dae8e75a590a58f9f59a0c66a283847bdb83cb1f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_pr2029_commits.json",
+      "bytes": 88989,
+      "sha256": "e6d85245c14f02d13d8a8b87edd62d6119d24dccbe8f9da7e71cc341ca9e2707"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_pr2029_files.json",
+      "bytes": 64946,
+      "sha256": "07845a9801146b22458e69aeda6fa5f55d40a1b7a21a64d2f001940e07142cb7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_pre_fix_feed_metadata_correct_parent.java",
+      "bytes": 39444,
+      "sha256": "ca0ada538b7d71996ac8410f33845bdd011353ce38d233851dec080738daeab4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_tag.json",
+      "bytes": 363,
+      "sha256": "403004a49e4786abd5c6f46af903d0a2f130c800d48ceb604c3c66f1f229697d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_tree_v8_0_1.json",
+      "bytes": 324324,
+      "sha256": "a115d00e4904d43c4a198737432ec52854ced5f795daf383ed33a0d6115a8013"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_v8_0_1_feed_metadata.java",
+      "bytes": 36377,
+      "sha256": "438dc1eb9dd70a3da41c15fce573f80cef91f2726f8b139dd7f0a6df134d542f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_v8_0_1_service_interval.java",
+      "bytes": 10318,
+      "sha256": "1850cec463bb16ac150b17e84de66c6e3cc76c192e366846ff512d724d7787bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_v8_0_1_service_interval_cache.java",
+      "bytes": 4568,
+      "sha256": "3e9f8e735731d6bb6f4a34ede4308302fb3d11ec70a303abf08ebd15c3583869"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_v8_0_1_service_interval_test.java",
+      "bytes": 12475,
+      "sha256": "f1cb2f2c0ddcb4cfb0fe49bcb96013fe277bf7535bdd87db5065a94e4e608ab1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_v8_0_1_service_window.java",
+      "bytes": 1970,
+      "sha256": "1cffefc70e6317fb1ae679d6331e5659ddacc05963e77dc5abef68700c33dcd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_v8_0_1_service_window_test.java",
+      "bytes": 36197,
+      "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method03-pair-freeze.json"
+}

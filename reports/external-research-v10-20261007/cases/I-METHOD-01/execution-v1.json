@@ -1,0 +1,97 @@
+{
+  "schema": "er10.integrated.execution.v1",
+  "case_id": "I-METHOD-01",
+  "frozen_at": "2026-10-07T18:55:34.243754+00:00",
+  "recipe": {
+    "case_id": "I-METHOD-01",
+    "methods": [
+      "M03"
+    ],
+    "control": "Ordinary competent native search/read workflow.",
+    "treatment": "Progressive repository-guided retrieval: navigate available sections/symbols/definitions, read bounded governing evidence, expand call/condition paths when decision requires; protect open discovery, avoid whole repository scans.",
+    "stages": "both research20,critic10,reviser15"
+  },
+  "selection_basis": "unqualified operational diagnostic; no source-quality or speed claim",
+  "inputs": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01/INPUTS.md",
+      "sha256": "f33cd23399deb8d450426c6346b1f8cc7a0a5992e56df45e84889ebe96ebbce7",
+      "bytes": 1927
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01/brief.md",
+      "sha256": "d47b145147b0b0e58ded1a585bd004014268471b5d7da66587028c5a242176f9",
+      "bytes": 5231
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01/plan.md",
+      "sha256": "3e41046c9f0ea6e7ff7223d6ba1d949190e42b36e72914c2720c152bc316c822",
+      "bytes": 1863
+    }
+  },
+  "prepared_identity": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01/prepared.json",
+    "sha256": "3d0c274eafb65e69c306ab8f4e21cbd47f54719db1af65f73f96d9ed27a955a8",
+    "bytes": 1672
+  },
+  "candidate_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "review_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "same_pair": {
+    "inputs": true,
+    "effort": true,
+    "access": true,
+    "aggregate_occupied_work_ceiling_seconds": 2700
+  },
+  "stage_seconds": {
+    "research": 1200,
+    "critic": 600,
+    "reviser": 900
+  },
+  "latency_boundary": "earliest actual T3 requestedAt for first stage through complete native terminal and T3 delivery, maximum 2700s including queue/start/retries/retrieval; stage allocation includes delivery; no clock reset",
+  "reserve_policy": "research preserves 600s critic +900s final; critic preserves 900s final; no writing-stage admission after envelope exhaustion",
+  "expiry_policy": "one lifecycle-only save/deliver steer at real expiry, at most 60s grace, owned task_cancel if live; no substantive extension",
+  "launch_order": [
+    "control",
+    "treatment"
+  ],
+  "output_scope": "FULL original O1-O6 and all in-scope plan sections; complete proposed-change artifact, options, retained/rejected dispositions, criticism dispositions, uncertainty, validation proposed/executed",
+  "quality_axes": [
+    "required brief obligations",
+    "consequential claims/conditions",
+    "bounded useful discovery",
+    "incorrect rejections/corrections",
+    "preservation",
+    "proposed versus executed validation"
+  ],
+  "output_contract": "authored artifact.md + source-map.json with immutable captured public bytes and identity metadata; alternatively full native final answer mechanically saved verbatim, never a summary substituted for full output",
+  "tool_policy": {
+    "native_public_search_read": true,
+    "writable": "own role directory only",
+    "no_nested_delegation": true,
+    "no_repo_or_account_changes": true,
+    "maps_advisory_not_firewall": true,
+    "isolation_limit": "T3 freshness excludes parent history; full-access filesystem not a security firewall; no evaluator exists until both arms quiet; forbidden sibling paths explicitly excluded",
+    "execution": "no downloaded source execution/installers on host; bounded qualified sandbox only if separately admitted"
+  }
+}

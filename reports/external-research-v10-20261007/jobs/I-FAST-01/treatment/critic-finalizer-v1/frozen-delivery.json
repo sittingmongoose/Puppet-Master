@@ -1,0 +1,288 @@
+{
+  "record_at": "2026-10-07T20:32:42.793300+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/artifact.md": {
+      "sha256": "9f033e26c2a88da284fd7372a78a5f7b0c4458f403749ac4d6febc8364c5d596",
+      "bytes": 26700
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/source-map.json": {
+      "sha256": "9e8104e516b86013e43c29864bf69438a34a4dd0dff520758658c5a8b3f3d14f",
+      "bytes": 20291
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/frozen-input/INPUTS.md": {
+      "sha256": "a20b549073d5026e97900433055f986585b1986465baa5f780c6eee323fb7e4a",
+      "bytes": 1917
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/frozen-input/brief.md": {
+      "sha256": "6dd2544d34fd845067a74914ec5b87767c2fdc447981616f0b231f887d53a40c",
+      "bytes": 5140
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/frozen-input/plan.md": {
+      "sha256": "6e511c3749bfa87d7ddb0abc0dc616e854c898feb2bdc65cf6f4b15e24993651",
+      "bytes": 1751
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-3133-gcps2homography-test.py": {
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "bytes": 6988
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-3133-homography.cpp": {
+      "sha256": "837910cf3a0ab4dcb4f31aa486b173a8d91752abcea124cc403849d9a0dd8f21",
+      "bytes": 25561
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-3133-transformer.cpp": {
+      "sha256": "25b515c14f18010b3b0a23dd2741bc388d83254c82d028e8432ed83ab861e3a0",
+      "bytes": 213134
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-issue-12435.html": {
+      "sha256": "51a45aea2af5e399b6beecff9b088e40314c2700745e9392ab5c5e77e0c68005",
+      "bytes": 254643
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-pr-12438.html": {
+      "sha256": "90b4e65d7413b033afedee60510f64e53db5c250c47611e5cc69a880f625927c",
+      "bytes": 300035
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-pr-12451.html": {
+      "sha256": "df9236b417b016fc10ee3c01e4b99e98fd8e72d07610d03680b1fee01d850800",
+      "bytes": 308220
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-raster-api-c8b4c45.rst": {
+      "sha256": "56115dd6642b1eb5e3e5908c49ead45e266cf5e6d24882d330e767a1b5d4915d",
+      "bytes": 23864
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-release-v3.11.1-page.html": {
+      "sha256": "e2cea10d6b5267ab4f2f50433f6824f537be48afd364f405e8c4e49fde0de9ef",
+      "bytes": 197293
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/gdal-release-v3.13.3-page.html": {
+      "sha256": "aaaa79763edd0d64e7e4229786b948da06c08a7b6bda45c0de474e4e1c5e4a6b",
+      "bytes": 205152
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/independent-capture-log.json": {
+      "sha256": "1249d477277d3a8ef622c53d853854257215ef692fca664d9f71872c2b7ce770",
+      "bytes": 4451
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-3133-gcps2homography-test.py": {
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "bytes": 6988
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-3133-homography.cpp": {
+      "sha256": "837910cf3a0ab4dcb4f31aa486b173a8d91752abcea124cc403849d9a0dd8f21",
+      "bytes": 25561
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-3133-news.md": {
+      "sha256": "209b7dd36ccefe09c2c01cdc945b6782bc29dda81363e68857bd6ba2575a1a9f",
+      "bytes": 568172
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-3133-transformer.cpp": {
+      "sha256": "25b515c14f18010b3b0a23dd2741bc388d83254c82d028e8432ed83ab861e3a0",
+      "bytes": 213134
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-download-page-20261007.html": {
+      "sha256": "24ef1cee884beda29d2ddad2767725f21224d787e9f6079ab10270e659f1eb11",
+      "bytes": 40693
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-gcps2homography-test-226b7732.py": {
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "bytes": 6988
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-homography-226b7732.cpp": {
+      "sha256": "470b2958d5c52ed89ac6bfe5420dae5728b5cde40efa0714221cf026b733b984",
+      "bytes": 25561
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-homography-test-226b7732.py": {
+      "sha256": "d0b91fada46826ed17596495f61bf33bdf2cce5e4c113412681d620a49537881",
+      "bytes": 2650
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-issue-12435.html": {
+      "sha256": "f2cd661dc2b6b6b8ff00e54c3fa4e58083297fce4de2cfbcc77fba19e3d43da6",
+      "bytes": 254643
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-news-226b7732.md": {
+      "sha256": "df8b26c84bc66073785cdc13d0d8af2da29f2bf1444b0ddcd3353f9d41617cbc",
+      "bytes": 462242
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-pr-12438.html": {
+      "sha256": "b7e3856532f7632b0c92a08e765f711dcd1f63e041bf522e17b9d27d0f0b292b",
+      "bytes": 300035
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-pr-12451.html": {
+      "sha256": "b73910108d60779f2102221c9b9c3364042e72d3eae390a1808a4aacbe6d35f3",
+      "bytes": 308214
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-pr12438.patch": {
+      "sha256": "d6fe01ea3bc86c63f0a87e8243224d8a3609f206606d82549b8082ff3bcc2cd0",
+      "bytes": 8328
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-pr12451.patch": {
+      "sha256": "d326b34e320c4ee665d6ec51608d510d1f53d32b19c6ec9438f93b1e668c70f3",
+      "bytes": 8328
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-raster-api-226b7732.rst": {
+      "sha256": "b79d3437a2d82c426164d55803241e79f9c9c5d07ae8a3fb0137c779fb2f469d",
+      "bytes": 23673
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-raster-api-c8b4c45.rst": {
+      "sha256": "56115dd6642b1eb5e3e5908c49ead45e266cf5e6d24882d330e767a1b5d4915d",
+      "bytes": 23864
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-release-v3.11.1.html": {
+      "sha256": "a6f43d284889c5a6d5008d1924100190875a3ee9b1913e9a8fc697f1b51c335b",
+      "bytes": 197288
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-release-v3.13.3-page.html": {
+      "sha256": "519cd8ba5284560af845cc0d0128d32271373e9b24e0df9ea7868eb6da3d561f",
+      "bytes": 205152
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/gdal-transformer-226b7732.cpp": {
+      "sha256": "aa2552e67b8d53628c2ff366f3a0bd152cdbb0d79a234f900e356a08c866139d",
+      "bytes": 210561
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/maplibre-compare-readme-fd86add.md": {
+      "sha256": "8e62cfd5fa81afdccaec2169680a877f0e2df0bfd77e23188256205d090f71e9",
+      "bytes": 7320
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/mapwarper-home-20261007.html": {
+      "sha256": "b6bdc3c004a247d095d39fadda52068e4b9e6ca41faf640046852cae9d826a59",
+      "bytes": 22280
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/osm-tile-policy-20261007.html": {
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/inherited-research-v1/qgis-3.44-georeferencer.html": {
+      "sha256": "888298d0b7959723ccc20b41848e5724b29ca46d129c484b31b10847f72636da",
+      "bytes": 56918
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/maplibre-compare-readme-fd86add.md": {
+      "sha256": "8e62cfd5fa81afdccaec2169680a877f0e2df0bfd77e23188256205d090f71e9",
+      "bytes": 7320
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/osm-tile-policy-20261007.html": {
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/predecessor-research-artifact.md": {
+      "sha256": "eeddb4b35cf846175c9d69aa3cb557f57db1a71403e2083eaedfc4c527183efc",
+      "bytes": 19153
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/predecessor-source-map.json": {
+      "sha256": "cc97ba351e2451db9cbaa0af4cb37a11bf5d64178d5a71375b94010a7f7a8f22",
+      "bytes": 10562
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/sources/qgis-3.44-georeferencer.html": {
+      "sha256": "f58e068c96b0dbba3b15c79573cfa9e6c723f86becaa9d378504301a78d97dda",
+      "bytes": 57285
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-01-treatment-critic-finalizer-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:23:38.136Z",
+    "startedAt": "2026-10-07T20:23:38.684Z",
+    "completedAt": "2026-10-07T20:32:18.623Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-FAST-01/treatment/critic-finalizer-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-FAST-01--treatment--critic-finalizer-v1--d24dc304eeaca1fa.json",
+    "sha256": "d24dc304eeaca1fa45e88fcc8431a8fc657cd14a2edb404c1387f14664222d4f",
+    "bytes": 10928,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "69d9f25c4dfc0d0688f14cb5274590774a9d48d01f2b7fac95c8a11badf9fe7d",
+      "status": "complete",
+      "tokensUsed": 160413,
+      "tokenBudget": null,
+      "timeUsedSeconds": 498
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-FAST-01-treatment-critic-finalizer-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a11809-323f-7ee1-b83c-c08acf2ddf9a",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:32:18.572Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-FAST-01-treatment-critic-finalizer-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:32:18.572Z",
+        "sha256": "747c96e0fa056a7a8601fb1965b878ed539dbea238e2e6ccd00d7cf152cb321b"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a11809-323f-7ee1-b83c-c08acf2ddf9a",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 160413,
+  "native_elapsed_seconds": 498,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-FAST-01-treatment-critic-finalizer-v1",
+    "record_at": "2026-10-07T20:23:24.865974+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:32:24.427682+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:32:24.427682+00:00",
+    "stage_allowance_seconds": 600,
+    "aggregate_ceiling_seconds": 1350,
+    "prior_nonoverlapping_occupied_seconds": 771.851,
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_stage_config": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/prospective-config-v1.json"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

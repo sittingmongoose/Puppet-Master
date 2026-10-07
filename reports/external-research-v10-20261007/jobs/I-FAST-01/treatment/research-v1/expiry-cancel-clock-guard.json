@@ -1,0 +1,7 @@
+{
+  "chunk_id": "23cb62",
+  "wall_time_seconds": 0.00003216,
+  "exit_code": 0,
+  "original_token_count": 162,
+  "output": "{\n  \"schema\": \"ER10-readonly-clock-guard-v1\",\n  \"observed_at\": \"2026-10-07T20:23:15.406820+00:00\",\n  \"original_deadline\": \"2026-10-07T20:22:24.427682+00:00\",\n  \"seconds_remaining\": -50.979138,\n  \"deadline_elapsed\": true,\n  \"prior_notice_at\": \"2026-10-07T20:22:34+00:00\",\n  \"prior_notice_was_early\": false,\n  \"actual_notice_grace_end\": \"2026-10-07T20:23:04+00:00\",\n  \"grace_elapsed\": true,\n  \"policy\": \"lifecycle_notice\",\n  \"decision\": \"OWNED_CANCEL_IF_STILL_LIVE\",\n  \"limitation\": \"Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline.\"\n}\n"
+}

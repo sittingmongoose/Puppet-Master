@@ -1,0 +1,396 @@
+{
+  "schema": "independent-declared-source-review.v1",
+  "review_id": "J1",
+  "case_id": "D-M08-A",
+  "verdict": "FullSourcePASS",
+  "scope": {
+    "six_original_obligations": "all assessed",
+    "material_critique_findings": 8,
+    "consequential_final_claims": "all assessed",
+    "authored_intermediate_to_final": "byte-identical",
+    "unassessed_declared_scientific_items": [],
+    "native_lifecycle_budget": "not assessed; not supplied"
+  },
+  "started_at_utc": "2026-10-07T20:48:45Z",
+  "completed_at_utc": "2026-10-07T20:53:44Z",
+  "timestamp_note": "UTC clock observations for operation batches; initial map timestamp observed immediately after the read.",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J1/INPUT_MAP.json",
+  "declared_files_read": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/critique.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/final.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/rewrite.md"
+  ],
+  "sources": [
+    {
+      "source_id": "httpsem",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110 June 2022 exact frozen text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "hash_matched": true,
+      "visible_ranges": [
+        [
+          1,
+          62
+        ],
+        [
+          719,
+          753
+        ],
+        [
+          2370,
+          2411
+        ],
+        [
+          2928,
+          3134
+        ],
+        [
+          3201,
+          3275
+        ],
+        [
+          3362,
+          3740
+        ],
+        [
+          5525,
+          5618
+        ],
+        [
+          5668,
+          5750
+        ],
+        [
+          6109,
+          6695
+        ],
+        [
+          6697,
+          6788
+        ],
+        [
+          6915,
+          6967
+        ],
+        [
+          7066,
+          7229
+        ],
+        [
+          7755,
+          7786
+        ]
+      ]
+    },
+    {
+      "source_id": "httpcache",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version": "RFC 9111 June 2022 exact frozen text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "hash_matched": true,
+      "visible_ranges": [
+        [
+          1,
+          55
+        ],
+        [
+          338,
+          452
+        ],
+        [
+          526,
+          580
+        ]
+      ]
+    }
+  ],
+  "actual_checks": [
+    {
+      "id": "mapped_scientific_hashes",
+      "result": "8 of 8 matched; includes brief, manifest, predecessors, final, rewrite and both RFCs"
+    },
+    {
+      "id": "release_identity",
+      "result": "both RFC titles, issue dates and numbers inspected in frozen headers"
+    },
+    {
+      "id": "rewrite_final_preservation",
+      "result": "byte-identical; SHA-256 6077e1bc7dc277e4215bcde77a7c55a6de33f38ffd54c4ce1e6e159dac8ead72; 7319 bytes; 1058 whitespace-delimited words"
+    },
+    {
+      "id": "source_adjudication",
+      "result": "all six obligations and eight critique findings independently traced to relevant RFC conditions, including range/date/identity/coding/metadata dependencies"
+    },
+    {
+      "id": "proposed_executed_separation",
+      "result": "candidate explicitly calls behavioral tests proposed and unexecuted; historical author tool actions not independently attested"
+    },
+    {
+      "id": "judgment_structure",
+      "result": "saved judgment read back; all six axis headings and one FullSourcePASS verdict present"
+    }
+  ],
+  "operations": [
+    {
+      "utc": "2026-10-07T20:48:45Z",
+      "op": "read_input_map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J1/INPUT_MAP.json",
+      "reported_output_approx_tokens": 810
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+      "reported_output_approx_tokens": 457
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+      "reported_output_approx_tokens": 314
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/draft.md",
+      "reported_output_approx_tokens": 965
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/critique.md",
+      "reported_output_approx_tokens": 1685
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/final.md",
+      "reported_output_approx_tokens": 1897
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/rewrite.md",
+      "reported_output_approx_tokens": 1897
+    },
+    {
+      "utc": "2026-10-07T20:49:10Z",
+      "op": "hashes_and_identity",
+      "reported_output_approx_tokens": 697
+    },
+    {
+      "utc": "2026-10-07T20:49:10Z",
+      "op": "httpsem_section_discovery",
+      "reported_output_approx_tokens": 277
+    },
+    {
+      "utc": "2026-10-07T20:49:10Z",
+      "op": "httpcache_section_discovery",
+      "reported_output_approx_tokens": 55
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "3.2",
+        "7.1",
+        "8.3",
+        "8.4",
+        "8.6"
+      ],
+      "reported_output_approx_tokens": 4987,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "8.8",
+        "12.5.3",
+        "12.5.5"
+      ],
+      "reported_output_approx_tokens": 6852,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "13.1.5",
+        "13.2.1",
+        "13.2.2",
+        "14.1",
+        "14.2",
+        "14.3",
+        "14.4"
+      ],
+      "reported_output_approx_tokens": 6697,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "15.3.1",
+        "15.3.7",
+        "15.5.17"
+      ],
+      "reported_output_approx_tokens": 3510,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+      "sections": [
+        "3.1",
+        "3.2",
+        "3.3",
+        "3.4",
+        "4.1"
+      ],
+      "reported_output_approx_tokens": 2430,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:33Z",
+      "op": "read_primary_validator_selection_sections_visible",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "ranges": [
+        [
+          3362,
+          3714
+        ],
+        [
+          5525,
+          5618
+        ],
+        [
+          5668,
+          5732
+        ]
+      ],
+      "reported_output_approx_tokens": 6899,
+      "note": "Prior grouped read output truncated; reread visibly. nl in this output numbers concatenated extract, source locators retain listed original ranges."
+    },
+    {
+      "utc": "2026-10-07T20:49:49Z",
+      "op": "read_primary_range_precondition_sections_visible",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "ranges": [
+        [
+          3680,
+          3740
+        ],
+        [
+          6109,
+          6307
+        ],
+        [
+          6308,
+          6466
+        ],
+        [
+          6467,
+          6585
+        ],
+        [
+          6586,
+          6695
+        ]
+      ],
+      "reported_output_approx_tokens": 7637
+    },
+    {
+      "utc": "2026-10-07T20:50:07Z",
+      "op": "read_primary_response_encoding_metadata_sections_visible",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "8.4",
+        "8.6",
+        "14.6",
+        "15.3.1",
+        "15.3.7",
+        "15.5.17"
+      ],
+      "reported_output_approx_tokens": 6505
+    },
+    {
+      "utc": "2026-10-07T20:50:23Z",
+      "op": "read_exact_release_identity_and_cache_update_conditions",
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt"
+      ],
+      "ranges": {
+        "httpsem": [
+          [
+            1,
+            62
+          ],
+          [
+            5680,
+            5750
+          ]
+        ],
+        "httpcache": [
+          [
+            1,
+            55
+          ],
+          [
+            369,
+            452
+          ]
+        ]
+      },
+      "reported_output_approx_tokens": 3461
+    },
+    {
+      "utc": "2026-10-07T20:53:05Z",
+      "op": "write_requested_judgment",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J1/judgment.md"
+    },
+    {
+      "utc": "2026-10-07T20:53:44Z",
+      "op": "read_back_authored_judgment",
+      "reported_output_approx_tokens": 71
+    },
+    {
+      "utc": "2026-10-07T20:53:44Z",
+      "op": "write_requested_checks_json"
+    }
+  ],
+  "network_source_ops": [],
+  "live_server_tests": [],
+  "client_library_tests": [],
+  "downloaded_code_executed": false,
+  "descendants_created": false,
+  "blinding_limit": "Mapped control/coherent-rewrite-check-final-v3 method-bearing path visible; no sibling/other-arm/parent/campaign history consulted.",
+  "limitations": [
+    "Selected client library and runtime byte exposure unknown; no live behavior tested.",
+    "Author's historical source-read/hash/extract actions and boundary read not independently attested by the allowed scientific artifacts.",
+    "Review covers declared scientific claims, not exhaustive unknown-issue recall or native lifecycle/budget."
+  ],
+  "output_volume": {
+    "reported_command_output_approx_tokens": 58103,
+    "note": "Backend-reported approximate command output, including truncated extraction and rereads; not billing or model token usage.",
+    "judgment_utf8_bytes": 15360,
+    "judgment_sha256": "ae3f088b97e87251979fb78ae2b2604b3f7fee80b01c20f2931cf84d175c952e"
+  },
+  "billing": null,
+  "input_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null
+}

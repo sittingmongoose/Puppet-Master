@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-10-07T20:26:54.215674+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_b8e18276-8c0f-40f6-a556-62530e829c6f/state.json",
+  "sha256": "ba1fd862a82efbd861479504c417fa260b35ebfc42ca36b73ddadcefe8713618",
+  "bytes": 4377,
+  "actual_state": {
+    "objective": "Complete D-M12-A/control/normal_research_final-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "complete",
+    "rounds": 4,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "[Ingest brief and scaffold job workspace]",
+        "acceptance": "Read /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/INPUT_MAP.json plus its brief/source manifest; create sources/ skeleton and a scope note listing all 6 obligations, time bounds (deadline 2026-10-07T20:36:55Z), and exclusions (no siblingarm/oldv1-v2/helpers). Verify: files read, `ls` shows sources/ exists, scope note enumerates 6 obligations from assignment.md.",
+        "status": "done"
+      },
+      {
+        "id": "t2",
+        "title": "[Discover and freeze public primary sources on retry/ack + retention]",
+        "acceptance": "Brief-only open discovery: select public primary docs/code (e.g., MQTT spec QoS/ack semantics, NATS/Kafka at-least-once + dedup, outbox/idempotent-consumer patterns, offline-first store designs) plus at least one non-survey analogy family (e.g., DTN/store-and-forward, mail queues); capture exact bytes under sources/, write index with URL, version, capture time, SHA-256, locators; no code execution or repo clones. Verify: `sha256sum -c` over the sources manifest passes and every frozen file has an index entry with hash and locator.",
+        "status": "done"
+      },
+      {
+        "id": "t3",
+        "title": "[Author final.md with bounded findings and full obligation coverage]",
+        "acceptance": "Write final.md: module-only recommendation, at most 8 distinct material findings spanning multiple mechanism families and the analogy, a challenged brief assumption where supported, bounded proposed changes + discriminating validation, executed-vs-proposed-vs-inferred labeling, alternatives/negatives/uncertainty, accepted/amended/rejected/unresolved dispositions, versions/source identities, soft ~1100 words. Verify: `wc -w final.md` near/below 1100, findings count \u22648, checklist grep shows each obligation addressed and all four disposition labels present where used.",
+        "status": "done"
+      },
+      {
+        "id": "t4",
+        "title": "[Write timings.json and close out within deadline]",
+        "acceptance": "Record actual native clock readings, source operations, first useful saved finding, output path, known usage; null for unknown input/cache/generated/billing; confirm only-this-arm sources, no post-completion edits to scientific files, deliver path + status. Verify: `python3 -m json.tool timings.json` parses, referenced files exist, timestamps show delivery inside the hard deadline.",
+        "status": "done"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791403708071,
+    "updatedAt": 1791404722821,
+    "endedReason": "all tickets done"
+  }
+}

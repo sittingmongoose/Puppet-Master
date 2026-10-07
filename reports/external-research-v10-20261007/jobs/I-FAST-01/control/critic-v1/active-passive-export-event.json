@@ -1,0 +1,7 @@
+{
+  "chunk_id": "8e266b",
+  "wall_time_seconds": 0.013781503,
+  "exit_code": 0,
+  "original_token_count": 195,
+  "output": "{\n  \"schema\": \"pm.er10.passive-receipts-index.v1\",\n  \"observed_at_utc\": \"2026-10-07T20:28:11.917504+00:00\",\n  \"entries\": [\n    {\n      \"stage\": \"I-FAST-01/control/critic-v1\",\n      \"path\": \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-FAST-01--control--critic-v1--48e295e73a6302fe.json\",\n      \"sha256\": \"48e295e73a6302fe55f9796205ea4bc5ad326e69c4b40db0069b32c9623358bc\",\n      \"bytes\": 10838,\n      \"capture\": {\n        \"create_goal\": \"missing_actual_response\",\n        \"get_goal\": \"missing_actual_response\",\n        \"update_goal\": \"missing_actual_response\"\n      }\n    }\n  ],\n  \"policy\": \"Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim.\"\n}\n"
+}

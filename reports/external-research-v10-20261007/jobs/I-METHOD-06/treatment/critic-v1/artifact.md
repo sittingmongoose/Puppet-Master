@@ -1,0 +1,54 @@
+# I-METHOD-06 fresh candidate critique
+
+**Stage:** I-METHOD-06/treatment/critic-v1  
+**Predecessor reviewed:** treatment/research-v1  
+**Disposition:** The draft is substantially supported and is a useful proposed-change artifact. The #4467 evidence does not invalidate its central warning that a partial snapshot must not become a complete recovery claim. Two contract/evidence clarifications are required before finalization; the frozen plan comparison otherwise preserves the main authority and recovery boundaries. This is critique only, not a rewrite.
+
+## Recommendation-invalidating checks first
+
+### 1. Restore as New must keep the shared BRS-023 prerequisite
+
+The proposed Restore as New section tells the reader to retain the BRS-023 recovery receipt or its narrow emergency alternative “before any destructive/in-place operation.” The actual frozen BRS-006 contract says every mutating restore mode requires that prerequisite; BRS-023 defines it for every RestoreRun phase. Restore as New is one of the four mutating modes, even when the destination is disposable and the source Project remains untouched. The proposed isolated drill therefore must say how its target satisfies the same prerequisite (or its exact authorized exception); isolation and non-destruction of the source are not substitutes. This is the clearest contract correction for the final reviser.
+
+Evidence: copied frozen source BRS-006.md and BRS-023.md; researcher artifact section “Restore as New workflow for this slice,” final paragraph. First useful finding was saved at 2026-10-07T20:32:48.761963Z.
+
+### 2. Bind full-data evidence to the actual Restic read scope
+
+The draft correctly separates structural, sampled, full-data, and restore-drill claims, and correctly says a drill comes from a separate operation. Its full-data proposal also binds a receipt to an immutable backup/snapshot. The cited Restic implementation needs one extra adapter-level sentence: cmd_check’s --read-data selects every pack in the pack set it receives; the checker has a snapshot-filter path that can map referenced blobs to containing packs when filtering is active. The artifact does not say whether its requested snapshot uses that filtered path or a repository-wide read. Preserve exact target binding, but do not label repository-wide evidence snapshot-scoped unless the manifest/tree/reference check establishes the covered snapshot’s required packs. Record performed scope and byte/object coverage at the level the adapter can actually prove.
+
+Evidence: R15/R16 (checker and check command) and R05/R22 (versioned Restic guidance), copied under sources/. This is a boundary requiring an explicit mapping, not evidence that the proposed architecture is wrong.
+
+## Issue, fix, regression, and release trace
+
+The consequential Restic claim checks out with limits. The issue capture describes the old top-level missing-source case: usable paths were snapshotted while the command returned success. The v0.19.0 tag resolves to commit 12875cc48ed34111f71fe94a24a47ad11660f3a4; the release notes name #4467 and say missing backup source paths now exit 3. In that code, collectTargets returns ErrInvalidSourceData with the surviving targets; runBackup records non-success, proceeds with the backup path, and returns ErrInvalidSourceData after that work. For zero surviving targets, ErrNoSourceData returns before the backup work. The distinction supports the draft’s “a partial snapshot may exist” caution and its separate all-missing case.
+
+Tighten the evidence wording: the v0.19.0 mixed/all-missing tests assert the returned errors, but the cited TestBackupNonExistingFile does not itself assert that the mixed case left a snapshot or verify its contents. That partial-write conclusion is a code-path inference combined with the issue report; label it as such, and do not call those assertions a test of persisted partial contents. The PR/patch, caller, scripting exit-code documentation, exact tag, and release provide a credible issue-to-fix-to-release chain. The researcher correctly reports that tests were inspected, not executed, and makes no Puppet Master shipped-binary claim.
+
+The v0.19.1 follow-up is also appropriately bounded as source evidence, with one wording limit: filterExisting now skips every Lstat error and returns incomplete/no-source outcomes. TestFilterExistingUnreadable is marked for #5667 but its cases are ENOTDIR and an invalid NUL path; it does not directly test permission-denied or all runtime unreadability conditions. Keep the code behavior and test coverage distinct.
+
+## Complete frozen-plan comparison and dispositions
+
+- **Scope/non-goals and BRS-001 — retain.** The four product split, distinct Move/Duplicate semantics, Backup & Restore ownership, Rust + Slint boundary, no Full Server implementation expansion, and retained Storage/Settings/credential/security/command/runtime owners are preserved. The draft appropriately records absent adjacent-owner documents as dependencies rather than claiming whole-project coverage.
+- **BRS-004 — retain, clarify independence.** The exact per-destination attempt, immutable IDs, verification and retention separation, and no scalar green state are supported. BRS-004 explicitly says shared destination, bucket, account, credential, or RecoverySet does not merge repository authority, locks, retention, corruption fate, or recovery identity; BRS-017 also requires each Project to have an independently recoverable repository/set. Keep those requirements as the floor. The draft’s open choice should be limited to stronger physical/control-plane fault-domain separation (credentials/delete authority, account/provider/region/offline media). Distinct IDs alone do not prove that stronger property; the user threat/cost choice remains unresolved.
+- **BRS-005 — retain, add source-failure mapping.** Independent capture, destination, verification, and drill axes; journaled phases; and last-good protection are all preserved. The #4467 example justifies an adapter test for surviving data plus incomplete status. The PM contract still needs to map required-source failure and engine result into partial/failed states and per-destination evidence; do not infer that Restic’s exit code alone proves the full PM source-closure contract.
+- **BRS-006 and BRS-023 — retain with correction 1.** The identity rewrite, quarantine, compatibility, derived rebuild, approval, rollback truth, and four modes remain intact. Explicitly apply the shared prerequisite to as_new too.
+- **BRS-010 — retain.** The proposal labels the acceptance matrix as future checks, calls out two-destination failures, exact snapshot binding, crash/restart, drill per destination, and residual proof boundaries. It does not claim a build or runtime validation.
+- **BRS-017 — retain and keep version selection deferred.** One coordinator/adapter, staging barrier, source closure, independent repository authority, and no live sync/custom crypto are retained. The tagged Restic versions are reproducible research baselines, not the chosen product binary or release admission.
+- **BRS-019 — retain.** Untrusted browse content, exact immutable snapshot selection, protected recovery-key path, isolated target, quarantine, file safety, leases, retention, and honest rollback remain. Restic extraction and AWS recovery guidance are correctly analogies, not PM identity/readiness/activation implementations.
+- **BRS-030 — retain with correction 2.** Explicit depth/admission, exact requested/performed mapping, no silent downgrade/retarget, and separate test_restore receipt remain. Define how Restic’s repository or snapshot read scope backs the requested full_data receipt.
+- **Rejected/deferred decisions — retain.** No basis was found to reopen live replication, remote canonical state, default raw credentials, provider/SLA/RPO/RTO claims, fixed schedule seeds, or destructive operations from static plans. Borg remains a later comparison lead, not an endorsed replacement.
+
+## Discovery, alternatives, and unresolved objections
+
+The researcher retains useful negative findings: Restic copy moves snapshots but is not PM verification or a Restore as New drill; encryption-key differences can change transfer work; hashes/structure are weaker than full reads; AWS restore-test workflows have service-specific IAM, cleanup, cost, and resource semantics; Borg’s verification and repair cautions do not establish adapter fit. These are useful and do not overreach into adoption.
+
+The evidence set covers Restic issue/fix/release/code/tests plus AWS and Borg analogies. The source-map lists capture times and source IDs, but not a timestamped search-to-plan chronology; the statement that discovery preceded comparison is therefore the researcher’s reported process, not something this critic could independently establish from the handoff. No new web/HTTP query was made in this critic stage; I independently read the admitted exact copies, source-map, full draft, and pinned-code captures. The candidate/source selection remains plausible because BRS-017 names Restic as reference engine, but there is no comparative performance or platform experiment and none should be inferred.
+
+Open product choices to preserve: required physical/control-plane independence tier; direct dual backups versus repository copy; verification depth/cadence and cost; the drill’s meaningful project-data oracle and isolated environment; source closure owned by Storage/source owners; and version/platform/release admission. The draft correctly leaves those undecided. No material disagreement with the Restic partial-capture recommendation remains after distinguishing the code inference from what the tests assert.
+
+## Validation/accounting disposition
+
+**Executed here:** read the exact admitted brief, frozen plan, INPUTS.md, all nine named BRS copies plus scope/non-goals, the complete researcher artifact and source-map; inspected the relevant captured Restic definitions/callers/tests and copied the researcher’s 26 public-source captures into this stage’s sources/.  
+**Not executed:** no tests, build, backup, restore, destination check, application/runtime operation, new web query, canon/repository edit, or destructive action. All future checks in the proposal remain proposed; the inspected Restic test source is not a test result.
+
+**Procedure:** the declared bundle procedure (bounded implementation/issue-fix-regression-release trace, invalidation-first critic, then amendment-first final repair/checks) is coherent for this task. It supports only a bundle-level diagnostic; no isolated causal claim is made. The final reviser should amend these two corrections and the evidence-limit wording, then recheck each consequential claim and affected dependency before issuing the final proposed-change artifact.

@@ -1,0 +1,552 @@
+{
+  "schema_version": 1,
+  "case": "I-METHOD-03",
+  "arm": "control",
+  "source_judgment": "FAIL",
+  "counting_rule": "Assessment coverage and fulfillment are separate. Complete scope count = 6 original O obligations + 29 atomic decisions from the six frozen plan paragraphs + 15 expressly open/final product decisions. Parent P1-P6 rows and six axes are rollups, not extra denominator items. Source checks and preservation counts are separate inventories.",
+  "counts": {
+    "complete_scope_count": 50,
+    "assessed_count": 50,
+    "unassessed_count": 0,
+    "original_obligations": {
+      "complete_scope_count": 6,
+      "assessed_count": 6,
+      "unassessed_count": 0
+    },
+    "plan_decisions": {
+      "complete_scope_count": 29,
+      "assessed_count": 29,
+      "unassessed_count": 0
+    },
+    "owner_product_decisions": {
+      "complete_scope_count": 15,
+      "assessed_count": 15,
+      "unassessed_count": 0
+    },
+    "axes": {
+      "complete_scope_count": 6,
+      "assessed_count": 6,
+      "unassessed_count": 0
+    },
+    "consequential_check_groups": {
+      "complete_scope_count": 28,
+      "assessed_count": 28,
+      "unassessed_count": 0
+    },
+    "scientific_critic_findings": {
+      "complete_scope_count": 7,
+      "assessed_count": 7,
+      "unassessed_count": 0,
+      "preserved_count": 7
+    },
+    "material_error_count": 2,
+    "nonmaterial_citation_limitations": 3
+  },
+  "axes": [
+    {
+      "id": "A1",
+      "axis": "Original scope and all plan/owner obligations",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "material_defect_ids": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "A2",
+      "axis": "Consequential claims, governing conditions and versions",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "material_defect_ids": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "A3",
+      "axis": "Bounded useful discovery, mechanisms, alternatives and negative/opportunity coverage",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "material_defect_ids": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "A4",
+      "axis": "Incorrect corrections/rejections and false already-covered dispositions",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "material_defect_ids": []
+    },
+    {
+      "id": "A5",
+      "axis": "Research-to-critique-to-final preservation",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED_SCIENTIFICALLY",
+      "material_defect_ids": []
+    },
+    {
+      "id": "A6",
+      "axis": "Proposed versus executed validation and witness applicability",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "material_defect_ids": [
+        "M1",
+        "M2"
+      ]
+    }
+  ],
+  "O1_O6": [
+    {
+      "id": "O1",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "rationale": "Useful primary discovery beyond the initial plan is present; M1/M2 show necessary interpretation mechanisms not covered. No exhaustive opportunity-recall claim. Discovery chronology is not independently certified."
+    },
+    {
+      "id": "O2",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "rationale": "Immutable released source, governing interval definition/cache, and metadata caller support the bounded component behavior. Runtime parser need not be selected to satisfy this obligation."
+    },
+    {
+      "id": "O3",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "rationale": "Pertinent issue, merged fix, regression test text, published release and ancestry checked; only service-window metadata applicability is supported."
+    },
+    {
+      "id": "O4",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED_WITH_LIMITATIONS",
+      "rationale": "Every original P1-P6 paragraph and all 29 atomic decisions compared. Structural dispositions are present, but M1/M2 limit the adequacy of proposed additions."
+    },
+    {
+      "id": "O5",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED_SCIENTIFICALLY",
+      "rationale": "Seven substantive critic findings retained with dispositions, options and uncertainty. Requested critic family/dispatch is host metadata, not independently certified from source maps."
+    },
+    {
+      "id": "O6",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "rationale": "One coherent replacement plan, alternatives, retained/rejected matters, criticism, validation and uncertainty delivered; M1/M2 prevent complete behavioral adequacy."
+    }
+  ],
+  "plan_decisions": [
+    {
+      "id": "P1.1",
+      "obligation": "Import operator/user-selected public Schedule archives",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "19-25",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P1.2",
+      "obligation": "Poll agency RT where available",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "final_lines": "19-23,86",
+      "material_defect_ids": [
+        "M2"
+      ]
+    },
+    {
+      "id": "P1.3",
+      "obligation": "Every result retains feed identity and acquisition time",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "20-21,70",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P1.4",
+      "obligation": "Source selection is a deployment decision",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "24-25,146",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P2.1",
+      "obligation": "Upcoming departures at twenty selected stops",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED_WITH_DETAIL_LIMITATION",
+      "final_lines": "29-33,111",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P2.2",
+      "obligation": "One selected transfer between two routes",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "29-31,60",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P2.3",
+      "obligation": "Visible schedule/realtime distinction",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "33,64-66",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P2.4",
+      "obligation": "Unavailable observation is not a confirmed departure",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "7-9,33,66",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P3.1",
+      "obligation": "Scheduled arrival/departure and user-configured walking allowance",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "final_lines": "39-54",
+      "material_defect_ids": [
+        "M1"
+      ]
+    },
+    {
+      "id": "P3.2",
+      "obligation": "Observation overlay where supported",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "final_lines": "64-66",
+      "material_defect_ids": [
+        "M2"
+      ]
+    },
+    {
+      "id": "P3.3",
+      "obligation": "No occupancy/accessibility-availability/dispatch promise",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "13,66",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P4.1",
+      "obligation": "Inspect feed versions/input records behind displayed transfer",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "70-74",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P4.2",
+      "obligation": "Compare saved screen with later observations",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "70-72",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P4.3",
+      "obligation": "Public history seven days",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "70-72,103",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P4.4",
+      "obligation": "No rider identity tracking",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "31,70,103",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P5.1",
+      "obligation": "Runtime feed parser remains a component decision",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "25,78,146",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P5.2",
+      "obligation": "Timestamp interpretation remains a versioned component decision",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "78,84,146",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P5.3",
+      "obligation": "Limited calculator remains a component decision",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "78,119,146",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P5.4",
+      "obligation": "Tablet usability",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "29,88,104,146",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P5.5",
+      "obligation": "Intermittent connectivity usability",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "33,88,103",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P5.6",
+      "obligation": "Explicit acquisition age",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "20-21,86-88",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P5.7",
+      "obligation": "Operator-readable failure state",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "31,33,88",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P6.1",
+      "obligation": "Propose feed-replacement validation",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "final_lines": "94",
+      "material_defect_ids": [
+        "M2"
+      ]
+    },
+    {
+      "id": "P6.2",
+      "obligation": "Propose absent-RT validation",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "95-96",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P6.3",
+      "obligation": "Propose inconsistent-identifier validation",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "94-96,99",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P6.4",
+      "obligation": "Propose overnight-service validation",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "101",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P6.5",
+      "obligation": "Propose clock-change validation",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "101",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P6.6",
+      "obligation": "Propose performance validation at twenty stops",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "104",
+      "material_defect_ids": []
+    },
+    {
+      "id": "P6.7",
+      "obligation": "No implied reliability validation; pin only supported component evidence",
+      "assessment": "ASSESSED",
+      "result": "SATISFIED",
+      "final_lines": "80,92,100,146,150",
+      "material_defect_ids": []
+    }
+  ],
+  "owner_product_decisions": [
+    {
+      "id": "D01",
+      "decision": "Feed URLs, access and terms",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "24,72,146"
+    },
+    {
+      "id": "D02",
+      "decision": "Merged-feed versus curated crosswalk",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "60,136,146"
+    },
+    {
+      "id": "D03",
+      "decision": "Station/platform mapping",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "60,99,146"
+    },
+    {
+      "id": "D04",
+      "decision": "Trip-pair selection",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "31,60,136,146"
+    },
+    {
+      "id": "D05",
+      "decision": "Default/editable walking allowance",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "43,146"
+    },
+    {
+      "id": "D06",
+      "decision": "Frequency-service scope",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "58,98,135,146"
+    },
+    {
+      "id": "D07",
+      "decision": "Linked-trip type 4/5 admission",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "54,134,146"
+    },
+    {
+      "id": "D08",
+      "decision": "Service Alerts removed from MVP, bounded later option",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "22,102,137,146"
+    },
+    {
+      "id": "D09",
+      "decision": "Per-feed freshness thresholds",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "86,146"
+    },
+    {
+      "id": "D10",
+      "decision": "Runtime parser selection",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "25,78,146"
+    },
+    {
+      "id": "D11",
+      "decision": "Agency-time conversion/DST library and policy",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "84,101,146"
+    },
+    {
+      "id": "D12",
+      "decision": "Tablet/browser/network target",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "88,104,146"
+    },
+    {
+      "id": "D13",
+      "decision": "Performance acceptance threshold",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "104,146"
+    },
+    {
+      "id": "D14",
+      "decision": "History content and raw/parsed replay permissions",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "70-72,139,146"
+    },
+    {
+      "id": "D15",
+      "decision": "Optional uncertainty display",
+      "assessment": "ASSESSED",
+      "result": "EXPLICIT_CHOICE_OR_UNRESOLVED_DECISION_PRESERVED",
+      "final_lines": "64,96,140"
+    }
+  ],
+  "plan_rollups": [
+    {
+      "id": "P1",
+      "assessment": "ASSESSED",
+      "decision_count": 4
+    },
+    {
+      "id": "P2",
+      "assessment": "ASSESSED",
+      "decision_count": 4
+    },
+    {
+      "id": "P3",
+      "assessment": "ASSESSED",
+      "decision_count": 3
+    },
+    {
+      "id": "P4",
+      "assessment": "ASSESSED",
+      "decision_count": 4
+    },
+    {
+      "id": "P5",
+      "assessment": "ASSESSED",
+      "decision_count": 7
+    },
+    {
+      "id": "P6",
+      "assessment": "ASSESSED",
+      "decision_count": 7
+    }
+  ],
+  "external_owner_documents": {
+    "declared_count": 0,
+    "unassessed_count": 0,
+    "note": "Only the supplied bounded brief and frozen plan define product authority here; no outside owner docs/cross-references were supplied or inferred."
+  },
+  "unassessed_obligation_ids": [],
+  "material_defect_ids": [
+    "M1",
+    "M2"
+  ],
+  "candidate_unknowns_not_treated_as_reviewer_unassessed": [
+    "actual agencies/feeds/terms",
+    "runtime parser and calculator",
+    "timezone library and feed conventions",
+    "tablet/network/performance threshold",
+    "future optional feature choices"
+  ],
+  "limitations": [
+    "Scientific review cannot verify the prospective family allocation or execution/discovery chronology without forbidden host records.",
+    "No application, upstream test suite, agency feed, target device, or real source-term validation was executed.",
+    "Public opportunity discovery is bounded, not exhaustive.",
+    "Visible arm paths and procedure prose weaken blinding; timing/counter/lifecycle fields were ignored for judgment."
+  ],
+  "usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null,
+    "reasoning_tokens": null,
+    "total_tokens": null,
+    "billing_amount": null,
+    "billing_currency": null
+  }
+}

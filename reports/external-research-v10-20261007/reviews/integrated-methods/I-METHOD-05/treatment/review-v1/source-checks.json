@@ -1,0 +1,1283 @@
+{
+  "schema": "independent-six-axis-source-checks-v1",
+  "review_type": "independent semantic source review",
+  "source_judgment": "FAIL",
+  "input_manifest": "sources/input-manifest.json",
+  "public_retrieval_manifest": "sources/public/retrieval-manifest.json",
+  "pins": {
+    "frozen_plan_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+    "ropey": "1.6.1/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5",
+    "zed_fix_merge": "50aef1f115493aab506df9d5b33da5435dc36bfc",
+    "zed_release": "v0.229.0/7c07887d9555953bca7fe78417602114092ef8c8",
+    "notify": "8.2.0",
+    "tempfile": "3.27.0",
+    "rust_live_docs": "std 1.99.0 (b940084d7 2026-09-28)",
+    "slint_issue_report": "Windows/Slint 1.10; current app applicability unknown",
+    "crop": "mutable upstream README only",
+    "vscode": "mutable official wiki; analogy only"
+  },
+  "checks": [
+    {
+      "id": "S01",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "Ropey 1.6.1 package and immutable commit identity",
+      "candidate_locations": "final 92, 129, 157, 171",
+      "evidence": [
+        {
+          "path": "sources/public/ropey-Cargo.toml",
+          "range_or_key": "1-26",
+          "sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/Cargo.toml",
+          "retrieved_at_utc": "2026-10-07T20:48:33.563507+00:00",
+          "raw_bytes_path": "sources/public/ropey-Cargo.toml",
+          "raw_bytes_sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd"
+        },
+        {
+          "path": "sources/public/ropey-package-vcs.html.txt",
+          "range_or_key": "50-55",
+          "sha256": "43bb5cdf22c90bb393f450b899b022142e998e106346f32b7e08e0e5386ee451",
+          "url": "https://docs.rs/crate/ropey/1.6.1/source/.cargo_vcs_info.json",
+          "retrieved_at_utc": "2026-10-07T20:48:33.840234+00:00",
+          "raw_bytes_path": "sources/public/ropey-package-vcs.html",
+          "raw_bytes_sha256": "e4e73292acecc61baf502cf0320e44f769c274191dff82cd122d8ed676e3a5ff"
+        }
+      ],
+      "conclusion": "Package source VCS metadata and Cargo package version independently agree; manifests alone were not accepted as behavior evidence."
+    },
+    {
+      "id": "S02",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "Shared Arc tree, cheap clones and qualified complexity",
+      "candidate_locations": "final 92",
+      "evidence": [
+        {
+          "path": "sources/public/ropey-src-rope.rs",
+          "range_or_key": "17-84, 334-357",
+          "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.572757+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-rope.rs",
+          "raw_bytes_sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee"
+        },
+        {
+          "path": "sources/public/ropey-src-tree-node.rs",
+          "range_or_key": "13-21, 94-109",
+          "sha256": "a591c350ee59617fea969e9ee5e4361fb351e41126e96e1ef844054ce044bd65",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/tree/node.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.823268+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-tree-node.rs",
+          "raw_bytes_sha256": "a591c350ee59617fea969e9ee5e4361fb351e41126e96e1ef844054ce044bd65"
+        }
+      ],
+      "conclusion": "General complexity statement is attributed to upstream documentation. Arbitrary insertion is O(M + log N), not O(log N) independent of inserted text; final does not state that stronger bound."
+    },
+    {
+      "id": "S03",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "Streaming UTF-8 construction through governing builder",
+      "candidate_locations": "final 92, 94",
+      "evidence": [
+        {
+          "path": "sources/public/ropey-src-rope.rs",
+          "range_or_key": "107-192",
+          "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.572757+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-rope.rs",
+          "raw_bytes_sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee"
+        },
+        {
+          "path": "sources/public/ropey-src-rope_builder.rs",
+          "range_or_key": "189-245",
+          "sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope_builder.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.574261+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-rope_builder.rs",
+          "raw_bytes_sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398"
+        }
+      ],
+      "conclusion": "Reader validates UTF-8, retains valid raw text, and constructs through RopeBuilder. Streaming construction is not a bounded-file-preview contract."
+    },
+    {
+      "id": "S04",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "Chunked output can fail after partial emission",
+      "candidate_locations": "final 92, 119, 142",
+      "evidence": [
+        {
+          "path": "sources/public/ropey-src-rope.rs",
+          "range_or_key": "197-222",
+          "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.572757+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-rope.rs",
+          "raw_bytes_sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee"
+        }
+      ],
+      "conclusion": "write_to calls write_all on chunk bytes and returns writer errors; it is not an atomic file-save protocol."
+    },
+    {
+      "id": "S05",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "CRLF seam helper and governing callers are lower-level than F-082",
+      "candidate_locations": "final 92, 94, 110",
+      "evidence": [
+        {
+          "path": "sources/public/ropey-src-crlf.rs",
+          "range_or_key": "1-24, 97-150",
+          "sha256": "2705a577d31e5efecd95b81bf63339dc1c9d009085fe346685cf36703fb938cb",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/crlf.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.575563+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-crlf.rs",
+          "raw_bytes_sha256": "2705a577d31e5efecd95b81bf63339dc1c9d009085fe346685cf36703fb938cb"
+        },
+        {
+          "path": "sources/public/ropey-src-rope_builder.rs",
+          "range_or_key": "202-222",
+          "sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope_builder.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.574261+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-rope_builder.rs",
+          "raw_bytes_sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398"
+        },
+        {
+          "path": "sources/public/ropey-src-rope.rs",
+          "range_or_key": "1227-1241",
+          "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.572757+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-rope.rs",
+          "raw_bytes_sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee"
+        },
+        {
+          "path": "sources/public/ropey-src-lib.rs",
+          "range_or_key": "149-150",
+          "sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/lib.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.823766+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-lib.rs",
+          "raw_bytes_sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a"
+        }
+      ],
+      "conclusion": "Safe chunk seams prevent split scalars/CRLF; slicing may still split CRLF. No nearest-newline insertion or persistence policy follows."
+    },
+    {
+      "id": "S06",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "Default CR feature, scalar indexing and byte/UTF-16 adapters",
+      "candidate_locations": "final 73, 92, 131",
+      "evidence": [
+        {
+          "path": "sources/public/ropey-Cargo.toml",
+          "range_or_key": "14-18",
+          "sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/Cargo.toml",
+          "retrieved_at_utc": "2026-10-07T20:48:33.563507+00:00",
+          "raw_bytes_path": "sources/public/ropey-Cargo.toml",
+          "raw_bytes_sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd"
+        },
+        {
+          "path": "sources/public/ropey-src-str_utils.rs",
+          "range_or_key": "7-22",
+          "sha256": "24953d555cb567c31c8ea456550ca02feefb77573dbd5df0e11691c1663bdb65",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/str_utils.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.709457+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-str_utils.rs",
+          "raw_bytes_sha256": "24953d555cb567c31c8ea456550ca02feefb77573dbd5df0e11691c1663bdb65"
+        },
+        {
+          "path": "sources/public/ropey-src-tree-text_info.rs",
+          "range_or_key": "6-32",
+          "sha256": "94e484dd73c0bb67cd2ccccbdc81d7b1ec09c92b943f0a139d72b006c6484e84",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/tree/text_info.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.739553+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-tree-text_info.rs",
+          "raw_bytes_sha256": "94e484dd73c0bb67cd2ccccbdc81d7b1ec09c92b943f0a139d72b006c6484e84"
+        },
+        {
+          "path": "sources/public/ropey-src-rope.rs",
+          "range_or_key": "334-357, 620-728",
+          "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.572757+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-rope.rs",
+          "raw_bytes_sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee"
+        },
+        {
+          "path": "sources/public/ropey-src-lib.rs",
+          "range_or_key": "119-150",
+          "sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/lib.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.823766+00:00",
+          "raw_bytes_path": "sources/public/ropey-src-lib.rs",
+          "raw_bytes_sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a"
+        }
+      ],
+      "conclusion": "unicode_lines implies cr_lines; build features select line-count implementation. Public edits use scalar indices. UTF-16 interior indices round down to the containing scalar, so round trips require valid boundary preconditions."
+    },
+    {
+      "id": "S07",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "Ropey 1.5.1 CRLF slice-count history",
+      "candidate_locations": "final 132",
+      "evidence": [
+        {
+          "path": "sources/public/ropey-CHANGELOG.md",
+          "range_or_key": "22-31",
+          "sha256": "cb39bd9b0d622a83d18a4ada0f384e9067a07c57023cf5058a842d35e1bbec63",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/CHANGELOG.md",
+          "retrieved_at_utc": "2026-10-07T20:48:33.567261+00:00",
+          "raw_bytes_path": "sources/public/ropey-CHANGELOG.md",
+          "raw_bytes_sha256": "cb39bd9b0d622a83d18a4ada0f384e9067a07c57023cf5058a842d35e1bbec63"
+        }
+      ],
+      "conclusion": "Changelog supports the historical fix description. Neither candidate nor reviewer establishes exact issue/fix-test ancestry. Final correctly does not offer it as a complete history witness."
+    },
+    {
+      "id": "S08",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "Zed issue, merged fix and governing dirty/file context",
+      "candidate_locations": "final 46-48, 133, 158",
+      "evidence": [
+        {
+          "path": "sources/public/zed-issue-48697.json",
+          "range_or_key": "title/body",
+          "sha256": "77af8fb1a3caea9eed622cd7fb866a87328a17b1f188ed60b8ab90e0446ac218",
+          "url": "https://api.github.com/repos/zed-industries/zed/issues/48697",
+          "retrieved_at_utc": "2026-10-07T20:48:34.022651+00:00",
+          "raw_bytes_path": "sources/public/zed-issue-48697.json",
+          "raw_bytes_sha256": "77af8fb1a3caea9eed622cd7fb866a87328a17b1f188ed60b8ab90e0446ac218"
+        },
+        {
+          "path": "sources/public/zed-pr-51037.json",
+          "range_or_key": "merged_at/merge_commit_sha/body",
+          "sha256": "6d15dfcb46ab8d2410fa1a6cb887f60d39391cecc25dd7431c6e84f7193ec80b",
+          "url": "https://api.github.com/repos/zed-industries/zed/pulls/51037",
+          "retrieved_at_utc": "2026-10-07T20:48:34.028966+00:00",
+          "raw_bytes_path": "sources/public/zed-pr-51037.json",
+          "raw_bytes_sha256": "6d15dfcb46ab8d2410fa1a6cb887f60d39391cecc25dd7431c6e84f7193ec80b"
+        },
+        {
+          "path": "sources/public/zed-pr-51037-files.json",
+          "range_or_key": "buffer.rs patch",
+          "sha256": "4c006c0c3f2a6847754d91cdae1597329ba6d32c72c137bbfbbfd718ae17cf94",
+          "url": "https://api.github.com/repos/zed-industries/zed/pulls/51037/files",
+          "retrieved_at_utc": "2026-10-07T20:48:34.042976+00:00",
+          "raw_bytes_path": "sources/public/zed-pr-51037-files.json",
+          "raw_bytes_sha256": "4c006c0c3f2a6847754d91cdae1597329ba6d32c72c137bbfbbfd718ae17cf94"
+        },
+        {
+          "path": "sources/public/zed-merge-buffer.rs",
+          "range_or_key": "384-398, 429-455, 1674-1707, 2348-2388, 2847-2876, 3131-3143",
+          "sha256": "5638f1aaa760dafb44a69b43f6a76b97096a5658bbeecb41a2e702645915ccf9",
+          "url": "https://raw.githubusercontent.com/zed-industries/zed/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/language/src/buffer.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.850882+00:00",
+          "raw_bytes_path": "sources/public/zed-merge-buffer.rs",
+          "raw_bytes_sha256": "5638f1aaa760dafb44a69b43f6a76b97096a5658bbeecb41a2e702645915ccf9"
+        }
+      ],
+      "conclusion": "Actual undo calls did_edit; dirty-to-clean, an extant File, Present DiskState and differing cached last-known mtime are required. This is not fresh filesystem IO or a universal conflict detector."
+    },
+    {
+      "id": "S09",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "Named regression covers external write while dirty followed by undo",
+      "candidate_locations": "final 48, 133, 158",
+      "evidence": [
+        {
+          "path": "sources/public/zed-merge-project_tests.rs",
+          "range_or_key": "5690-5757",
+          "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742",
+          "url": "https://raw.githubusercontent.com/zed-industries/zed/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/project/tests/integration/project_tests.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.855605+00:00",
+          "raw_bytes_path": "sources/public/zed-merge-project_tests.rs",
+          "raw_bytes_sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742"
+        },
+        {
+          "path": "sources/public/zed-pr-51037-files.json",
+          "range_or_key": "project_tests.rs patch",
+          "sha256": "4c006c0c3f2a6847754d91cdae1597329ba6d32c72c137bbfbbfd718ae17cf94",
+          "url": "https://api.github.com/repos/zed-industries/zed/pulls/51037/files",
+          "retrieved_at_utc": "2026-10-07T20:48:34.042976+00:00",
+          "raw_bytes_path": "sources/public/zed-pr-51037-files.json",
+          "raw_bytes_sha256": "4c006c0c3f2a6847754d91cdae1597329ba6d32c72c137bbfbbfd718ae17cf94"
+        }
+      ],
+      "conclusion": "FakeFs integration test asserts stale dirty content before undo and external content/clean state afterward. Test source was inspected, not executed. It does not validate real NFS, filesystem races, Slint or Puppet Master."
+    },
+    {
+      "id": "S10",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "Fix present in released v0.229.0 and upstream 28-check attribution",
+      "candidate_locations": "final 48, 130, 133, 150, 158",
+      "evidence": [
+        {
+          "path": "sources/public/zed-release-v0.229.0.html.txt",
+          "range_or_key": "86-108",
+          "sha256": "409b04efbe55202a0ec6ba18f928ccd4a18f5c6d3d9721414c174da3b05ce744",
+          "url": "https://github.com/zed-industries/zed/releases/tag/v0.229.0",
+          "retrieved_at_utc": "2026-10-07T20:49:19.669783+00:00",
+          "raw_bytes_path": "sources/public/zed-release-v0.229.0.html",
+          "raw_bytes_sha256": "f162cb8667f01136a747169dc16fd6d2212ee0ed9364be8c83026f0e742f5e30"
+        },
+        {
+          "path": "sources/public/zed-release-pinned-buffer.rs",
+          "range_or_key": "2857-2886",
+          "sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b",
+          "url": "https://raw.githubusercontent.com/zed-industries/zed/7c07887d9555953bca7fe78417602114092ef8c8/crates/language/src/buffer.rs",
+          "retrieved_at_utc": "2026-10-07T20:51:10.504586+00:00",
+          "raw_bytes_path": "sources/public/zed-release-pinned-buffer.rs",
+          "raw_bytes_sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b"
+        },
+        {
+          "path": "sources/public/zed-release-pinned-project_tests.rs",
+          "range_or_key": "5781-5848",
+          "sha256": "fe9ec4fdff3b68f63ea09ed54ffe2cedcb5718dcabeaa562b96c69cd239765ab",
+          "url": "https://raw.githubusercontent.com/zed-industries/zed/7c07887d9555953bca7fe78417602114092ef8c8/crates/project/tests/integration/project_tests.rs",
+          "retrieved_at_utc": "2026-10-07T20:51:10.856696+00:00",
+          "raw_bytes_path": "sources/public/zed-release-pinned-project_tests.rs",
+          "raw_bytes_sha256": "fe9ec4fdff3b68f63ea09ed54ffe2cedcb5718dcabeaa562b96c69cd239765ab"
+        },
+        {
+          "path": "sources/public/zed-pr-51037.html.txt",
+          "range_or_key": "163-169",
+          "sha256": "0b9e5f2e3883aef743b37d8442cb21fb53fa30318e5b53e04c327828de0a34be",
+          "url": "https://github.com/zed-industries/zed/pull/51037",
+          "retrieved_at_utc": "2026-10-07T20:48:34.181834+00:00",
+          "raw_bytes_path": "sources/public/zed-pr-51037.html",
+          "raw_bytes_sha256": "287a037fb9c25cda22aaca79bec80d4050794fdd2c469487902bf99c0a21fe33"
+        }
+      ],
+      "conclusion": "Release HTML resolves commit 7c07887d9555953bca7fe78417602114092ef8c8. Tag and commit-addressed code bytes agree. Presence in this release is established, not first affected/fixed release. Release notes do not themselves list #51037; final uses released source instead of the draft redirect claim. 28 checks is upstream PR page evidence only."
+    },
+    {
+      "id": "S11",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "notify event-loss conditions and polling alternatives",
+      "candidate_locations": "final 42-44, 167, 173",
+      "evidence": [
+        {
+          "path": "sources/public/notify-8.2.0.html.txt",
+          "range_or_key": "127-160",
+          "sha256": "844fbfbbcf2ed818ff44a95983c637f0eb5ba4703260196064856a8314a17a03",
+          "url": "https://docs.rs/notify/8.2.0/notify/",
+          "retrieved_at_utc": "2026-10-07T20:48:34.193782+00:00",
+          "raw_bytes_path": "sources/public/notify-8.2.0.html",
+          "raw_bytes_sha256": "1f2def8b150833b5f6238364c84d8f8c45c5819a7e5ef84e83b4a9d46df6dc0a"
+        }
+      ],
+      "conclusion": "Versioned docs support NFS no-events, large-watch-set loss, editor replacement event differences, PollWatcher and compare_contents options. No current defect inferred from an old issue."
+    },
+    {
+      "id": "S12",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "TempPath persist atomic replacement differs from durability",
+      "candidate_locations": "final 31-36, 142, 167",
+      "evidence": [
+        {
+          "path": "sources/public/tempfile-3.27.0-TempPath.html.txt",
+          "range_or_key": "160-178",
+          "sha256": "b4d504e2367e94f27345d9792f58042674ef6ca518bbcfb514c51acc6c2d45c9",
+          "url": "https://docs.rs/tempfile/3.27.0/tempfile/struct.TempPath.html",
+          "retrieved_at_utc": "2026-10-07T20:48:34.257202+00:00",
+          "raw_bytes_path": "sources/public/tempfile-3.27.0-TempPath.html",
+          "raw_bytes_sha256": "de9798a15f1b3b93b8f17bc4d7cd4b5a6a7f0b4157db966f3dd8dbe89df55aea"
+        }
+      ],
+      "conclusion": "Versioned API documents replacement, cross-filesystem limit and absence of file/directory synchronization. Final leaves protocol and platform selection open. API security conditions remain in captured bytes; no deployed implementation claimed."
+    },
+    {
+      "id": "S13",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "Rust permissions, rename and direct-write failure conditions",
+      "candidate_locations": "final 27, 31-36, 167",
+      "evidence": [
+        {
+          "path": "sources/public/rust-rename.html.txt",
+          "range_or_key": "1-33",
+          "sha256": "a9ca5e9f33e94b4d2f2ba309789cbab81fbdffec1f41b3dc31bd1bdda3221b73",
+          "url": "https://doc.rust-lang.org/std/fs/fn.rename.html",
+          "retrieved_at_utc": "2026-10-07T20:48:34.257644+00:00",
+          "raw_bytes_path": "sources/public/rust-rename.html",
+          "raw_bytes_sha256": "5c05d50ff2ade3b75bb8b05c049d35f6541bf9d412671a707c35e565e50b231d"
+        },
+        {
+          "path": "sources/public/rust-Permissions.html.txt",
+          "range_or_key": "46-69",
+          "sha256": "b627ab2b005489ea0eb47149b70a5a928fa09ada0f1890006a5a07ab86f8ebed",
+          "url": "https://doc.rust-lang.org/std/fs/struct.Permissions.html",
+          "retrieved_at_utc": "2026-10-07T20:48:34.353345+00:00",
+          "raw_bytes_path": "sources/public/rust-Permissions.html",
+          "raw_bytes_sha256": "9b155b401b5a20abfaa2b54d554378560417720509217408ba8d7e36277045cc"
+        },
+        {
+          "path": "sources/public/rust-File-create.html.txt",
+          "range_or_key": "172-175",
+          "sha256": "9b10f560f79cbed07bd2081706ef627516ee6046a8dac8dc759974fa9082ea80",
+          "url": "https://doc.rust-lang.org/std/fs/struct.File.html",
+          "retrieved_at_utc": "2026-10-07T20:49:21.007559+00:00",
+          "raw_bytes_path": "sources/public/rust-File-create.html",
+          "raw_bytes_sha256": "12a7ef0cbfff6ef095673182218c8957dce5061c6a84ca5ee3f4ad0d5508d455"
+        }
+      ],
+      "conclusion": "Observed live docs identify std 1.99.0 (b940084d7, 2026-09-28). Metadata cannot predict effective write permission, rename differs by platform/mount, create truncates. Does not authorize bypassing product read-only Save block."
+    },
+    {
+      "id": "S14",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "VS Code working-copy and backup lifecycle analogy",
+      "candidate_locations": "final 98, 156, 173",
+      "evidence": [
+        {
+          "path": "sources/public/vscode-working-copies.html.txt",
+          "range_or_key": "90-124",
+          "sha256": "1df74bcd179d1da7b5482d88f5a819f66090fbc3a50e819ee463427e1f50e613",
+          "url": "https://github.com/microsoft/vscode/wiki/Working-Copies",
+          "retrieved_at_utc": "2026-10-07T20:48:34.405047+00:00",
+          "raw_bytes_path": "sources/public/vscode-working-copies.html",
+          "raw_bytes_sha256": "529ec002cbab87b9333191c27802fae42919181651f1b7c04118325247bf62ff"
+        }
+      ],
+      "conclusion": "Mutable official wiki distinguishes resource/type and central lifecycle, restores backup as dirty and removes backups after clean save. Final only uses analogy, not exact native product or API equivalence."
+    },
+    {
+      "id": "S15",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "Slint TextEdit long-text focus issue as conditional lead",
+      "candidate_locations": "final 98, 165, 173",
+      "evidence": [
+        {
+          "path": "sources/public/slint-issue-8147.html.txt",
+          "range_or_key": "99-127",
+          "sha256": "459c00f63ae691621fbddf2f4ff3d4ed108df98370c473ceedee792fda02659e",
+          "url": "https://github.com/slint-ui/slint/issues/8147",
+          "retrieved_at_utc": "2026-10-07T20:49:20.287375+00:00",
+          "raw_bytes_path": "sources/public/slint-issue-8147.html",
+          "raw_bytes_sha256": "c1f1a24e9e1b2a9261a14a99d18efb368fd1903eb15a9385159f405b7cf8a91a"
+        }
+      ],
+      "conclusion": "Reporter gives Windows/1.10 and a TextEdit with wrap and key callback. No app version/control or current released defect is established. Final correctly retains unknown applicability."
+    },
+    {
+      "id": "S16",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "Bounded unranked alternative representation tradeoffs",
+      "candidate_locations": "final 96, 167",
+      "evidence": [
+        {
+          "path": "sources/public/crop-README.md",
+          "range_or_key": "12-28, 143-154",
+          "sha256": "a9f7ff059682bbc70133b4298e15b1efcd8f004136a0746f7b982ee2bfbab457",
+          "url": "https://raw.githubusercontent.com/nomad/crop/master/README.md",
+          "retrieved_at_utc": "2026-10-07T20:48:34.434870+00:00",
+          "raw_bytes_path": "sources/public/crop-README.md",
+          "raw_bytes_sha256": "a9f7ff059682bbc70133b4298e15b1efcd8f004136a0746f7b982ee2bfbab457"
+        },
+        {
+          "path": "sources/public/rust-String.html.txt",
+          "range_or_key": "921-944",
+          "sha256": "01fd43966d3fff665c741a861fb08dc55346c8496b6d7cc7badcc5e8d9f4931e",
+          "url": "https://doc.rust-lang.org/std/string/struct.String.html",
+          "retrieved_at_utc": "2026-10-07T20:49:21.055140+00:00",
+          "raw_bytes_path": "sources/public/rust-String.html",
+          "raw_bytes_sha256": "a3cd9eaa72f1283dda4da4b23ed5dfd9ba53f6a43fc450a38b96a08d3c54dda6"
+        },
+        {
+          "path": "sources/public/emacs-gap.html.txt",
+          "range_or_key": "3-11",
+          "sha256": "13f88d6920892a141bd738326f7560f7962b3391841ed3a577a9c207acad80c4",
+          "url": "https://www.gnu.org/software/emacs/manual/html_node/elisp/Buffer-Gap.html",
+          "retrieved_at_utc": "2026-10-07T20:49:21.120695+00:00",
+          "raw_bytes_path": "sources/public/emacs-gap.html",
+          "raw_bytes_sha256": "fdcebcccd6262020b379692bdc6a5020c1018b891d0a132480979caa98faf691"
+        }
+      ],
+      "conclusion": "Upstream crop README, std String byte-index/insertion docs and Emacs gap description support stated general tradeoffs. Piece-table/mapped options are expressly uninspected categories, not recommendations or benchmarks."
+    },
+    {
+      "id": "S17",
+      "assessment": "assessed",
+      "status": "supported",
+      "claim": "Outside-update-to-undo edge is a useful proposal, not a current PM defect",
+      "candidate_locations": "final 40-48, 107, 143",
+      "evidence": [
+        {
+          "path": "sources/inputs/frozen/source/F-026.md",
+          "range_or_key": "8-10, 37-49",
+          "sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea"
+        },
+        {
+          "path": "sources/inputs/frozen/source/text_and_size_context.md",
+          "range_or_key": "3-7",
+          "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+        },
+        {
+          "path": "sources/public/zed-merge-project_tests.rs",
+          "range_or_key": "5690-5757",
+          "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742",
+          "url": "https://raw.githubusercontent.com/zed-industries/zed/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/project/tests/integration/project_tests.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.855605+00:00",
+          "raw_bytes_path": "sources/public/zed-merge-project_tests.rs",
+          "raw_bytes_sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742"
+        }
+      ],
+      "conclusion": "Existing Save/focus prompt retained; no implication that every transition was already covered, no automatic reload imported."
+    },
+    {
+      "id": "S18",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "Valid remaining owner questions and limited mechanism fit",
+      "candidate_locations": "final 21, 36, 58, 71, 86, 94, 165",
+      "evidence": [
+        {
+          "path": "sources/inputs/frozen/source/definitions_and_transactions.md",
+          "range_or_key": "14-27",
+          "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608"
+        },
+        {
+          "path": "sources/inputs/frozen/source/text_and_size_context.md",
+          "range_or_key": "15-26",
+          "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+        },
+        {
+          "path": "sources/inputs/frozen/source/F-082.md",
+          "range_or_key": "19-26",
+          "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f"
+        },
+        {
+          "path": "sources/public/ropey-README.md",
+          "range_or_key": "57-66",
+          "sha256": "c9265d7a9eb4b3569b3fbb58cd953af6f12e44ab87848a682ab84190a6c1c90c",
+          "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/README.md",
+          "retrieved_at_utc": "2026-10-07T20:48:33.565757+00:00",
+          "raw_bytes_path": "sources/public/ropey-README.md",
+          "raw_bytes_sha256": "c9265d7a9eb4b3569b3fbb58cd953af6f12e44ab87848a682ab84190a6c1c90c"
+        }
+      ],
+      "conclusion": "Alias identity, platform save guarantees, recovery persistence, encoding/BOM, index units, distance/ties/no-surviving-boundary, decimal MB/MiB and stricter preview byte budget remain legitimate bounded unknowns. This does not excuse the already-fixed survivor, paste-off and cap-scope conditions in D01-D03."
+    },
+    {
+      "id": "S19",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "Criticism corrections and useful options visibly survive",
+      "candidate_locations": "final 125-135 and proposal sections",
+      "evidence": [
+        {
+          "path": "sources/inputs/authored/critic-v1/artifact.md",
+          "range_or_key": "13-22, 28-45, 51-56",
+          "sha256": "eb5910e3983a0f1d98896aa499addcf0cc6e65afc31a3926294b20ba6296ce5c"
+        },
+        {
+          "path": "sources/inputs/authored/research-v1/artifact.md",
+          "range_or_key": "whole authored draft",
+          "sha256": "952744f6d848284cdcf581876f72b3cbee1bd864df2f7902838c08c633d037d7"
+        },
+        {
+          "path": "sources/inputs/authored/reviser-v1/artifact.md",
+          "range_or_key": "whole authored final",
+          "sha256": "2a08cbdc82ec56955024600f106908f232e11d9cec35a3d76686b11547e038e8"
+        }
+      ],
+      "conclusion": "All admitted criticism families assessed. Corrected Ropey locator/default features, released-source locator, limited history, options and uncertainty survive. Contract-compression defects are separately counted, not excused by the critic accepting them."
+    },
+    {
+      "id": "S20",
+      "assessment": "assessed",
+      "status": "supported_with_stated_limit",
+      "claim": "Validation proposals are separated from actual execution",
+      "candidate_locations": "final 137-150",
+      "evidence": [
+        {
+          "path": "sources/inputs/authored/reviser-v1/artifact.md",
+          "range_or_key": "137-150",
+          "sha256": "2a08cbdc82ec56955024600f106908f232e11d9cec35a3d76686b11547e038e8"
+        },
+        {
+          "path": "sources/inputs/authored/reviser-v1/source-map.json",
+          "range_or_key": "validation",
+          "sha256": "c4b35b7475c830fbabe5cf689b3580b886948002c5ef74484d00d85037b6ad97"
+        },
+        {
+          "path": "sources/inputs/authored/critic-v1/artifact.md",
+          "range_or_key": "58-62",
+          "sha256": "eb5910e3983a0f1d98896aa499addcf0cc6e65afc31a3926294b20ba6296ce5c"
+        },
+        {
+          "path": "sources/public/zed-merge-project_tests.rs",
+          "range_or_key": "5690-5757",
+          "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742",
+          "url": "https://raw.githubusercontent.com/zed-industries/zed/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/project/tests/integration/project_tests.rs",
+          "retrieved_at_utc": "2026-10-07T20:48:33.855605+00:00",
+          "raw_bytes_path": "sources/public/zed-merge-project_tests.rs",
+          "raw_bytes_sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742"
+        }
+      ],
+      "conclusion": "Eight later-validation groups; no PM build/test/benchmark/application witness is claimed. Source inspection and identities do not establish runtime acceptance. Host execution identity is not part of source judgment."
+    },
+    {
+      "id": "D01",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "claim": "False unresolved disposition of nearest surviving newline after replacement",
+      "candidate_locations": "final 67, 71, 110, 146, 165",
+      "evidence": [
+        {
+          "path": "sources/inputs/frozen/source/F-082.md",
+          "range_or_key": "19-20",
+          "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f"
+        },
+        {
+          "path": "sources/inputs/authored/reviser-v1/artifact.md",
+          "range_or_key": "64-71, 110, 146, 165",
+          "sha256": "2a08cbdc82ec56955024600f106908f232e11d9cec35a3d76686b11547e038e8"
+        },
+        {
+          "path": "sources/inputs/authored/critic-v1/artifact.md",
+          "range_or_key": "34, 42",
+          "sha256": "eb5910e3983a0f1d98896aa499addcf0cc6e65afc31a3926294b20ba6296ce5c"
+        },
+        {
+          "path": "sources/inputs/authored/research-v1/artifact.md",
+          "range_or_key": "180, 232",
+          "sha256": "952744f6d848284cdcf581876f72b3cbee1bd864df2f7902838c08c633d037d7"
+        }
+      ],
+      "conclusion": "When a replacement removes the nearest original separator but another separator survives, the frozen acceptance criterion already limits inheritance to surviving boundaries. Final drops that selection condition and treats removed-neighbor behavior as unselected. Genuine ties/distance/no-survivor questions remain open, but removed separators are not eligible."
+    },
+    {
+      "id": "D02",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "claim": "Paste-normalization-off byte preservation lost under unconditional new-boundary rule",
+      "candidate_locations": "final 67-68, 110, 146",
+      "evidence": [
+        {
+          "path": "sources/inputs/frozen/source/F-082.md",
+          "range_or_key": "23-24",
+          "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f"
+        },
+        {
+          "path": "sources/inputs/authored/reviser-v1/artifact.md",
+          "range_or_key": "64-69, 110, 146",
+          "sha256": "2a08cbdc82ec56955024600f106908f232e11d9cec35a3d76686b11547e038e8"
+        },
+        {
+          "path": "sources/inputs/authored/research-v1/artifact.md",
+          "range_or_key": "31, 164, 180, 240",
+          "sha256": "952744f6d848284cdcf581876f72b3cbee1bd864df2f7902838c08c633d037d7"
+        },
+        {
+          "path": "sources/inputs/authored/critic-v1/artifact.md",
+          "range_or_key": "34, 42",
+          "sha256": "eb5910e3983a0f1d98896aa499addcf0cc6e65afc31a3926294b20ba6296ce5c"
+        }
+      ],
+      "conclusion": "For CRLF pasted next to LF with normalization off, frozen F-082 explicitly preserves pasted CRLF. Final says a newly inserted boundary inherits nearest, without the paste-off exception; limiting normalization to inserted text and testing on/off locality does not require off to preserve pasted endings. This is an authored-policy ambiguity/loss, not an observed PM data corruption claim."
+    },
+    {
+      "id": "D03",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "claim": "Hard-cap scope weakened from every single buffer to editable full buffers",
+      "candidate_locations": "final 81-82, 86, 109, 148",
+      "evidence": [
+        {
+          "path": "sources/inputs/frozen/source/text_and_size_context.md",
+          "range_or_key": "24-26",
+          "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+        },
+        {
+          "path": "sources/inputs/frozen/source/F-028.md",
+          "range_or_key": "8-10, 34-49",
+          "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65"
+        },
+        {
+          "path": "sources/inputs/authored/reviser-v1/artifact.md",
+          "range_or_key": "75-88, 109, 148",
+          "sha256": "2a08cbdc82ec56955024600f106908f232e11d9cec35a3d76686b11547e038e8"
+        },
+        {
+          "path": "sources/inputs/authored/research-v1/artifact.md",
+          "range_or_key": "172-176",
+          "sha256": "952744f6d848284cdcf581876f72b3cbee1bd864df2f7902838c08c633d037d7"
+        },
+        {
+          "path": "sources/inputs/authored/critic-v1/artifact.md",
+          "range_or_key": "33",
+          "sha256": "eb5910e3983a0f1d98896aa499addcf0cc6e65afc31a3926294b20ba6296ce5c"
+        }
+      ],
+      "conclusion": "With the active cap at 5 MB, a larger full read-only buffer also violates the frozen never-load-more-than rule. Final protects editable full loading and makes preview byte budget open without retaining that absolute upper bound. Numeric values/visible alternatives are retained, but that narrower formulation is not unchanged cap scope."
+    }
+  ],
+  "counts": {
+    "declared": 23,
+    "complete": 23,
+    "assessed": 23,
+    "unassessed": 0,
+    "supported_or_appropriately_limited": 20,
+    "material_error_count": 3
+  },
+  "execution": {
+    "reviewer_executed_source_code": false,
+    "reviewer_executed_application_checks": false,
+    "candidate_executed_application_checks_claimed": false,
+    "reviewer_actions": [
+      "read admitted inputs in full",
+      "inspect captured source summaries",
+      "retrieve public primary bytes",
+      "inspect code definitions/callers/test source/released source",
+      "compare source and authored text",
+      "compute evidence hashes and serialize review files"
+    ],
+    "upstream_test_source_inspected_not_run": true,
+    "upstream_pr_check_count": 28,
+    "runtime_proof_from_hashes_or_exit_codes": false
+  },
+  "unknown_usage": null,
+  "unknown_billing": null,
+  "scientific_judgment_uses_candidate_timing_identity_or_quota_fields": false,
+  "owner_decision_checks": [
+    {
+      "id": "B01",
+      "decision": "Rust + Slint product boundary; no removed Iced app",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "brief.md:16-18",
+      "final_lines": "7, 9, 98"
+    },
+    {
+      "id": "B02",
+      "decision": "Read-only proposal, no canon/WorkNodes/runtime/readiness authority",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "brief.md:70-75; F-082.md:35-44; all seven unit acceptance/compile metadata",
+      "final_lines": "3, 7-11, 135, 150"
+    },
+    {
+      "id": "A01",
+      "decision": "One buffer/path; edits remain in memory until Save",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:3; F-008.md:8-10",
+      "final_lines": "17-19"
+    },
+    {
+      "id": "A02",
+      "decision": "Per-group tab identity, active tab/group lists, shared global model",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:4-5; text_and_size_context.md:3; F-026.md:8-10",
+      "final_lines": "17, 104, 111"
+    },
+    {
+      "id": "A03",
+      "decision": "Dirty compares memory with last-saved content, not current disk",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:6; text_and_size_context.md:4",
+      "final_lines": "17, 27, 42, 107"
+    },
+    {
+      "id": "A04",
+      "decision": "Preset definition remains language/framework run/debug configuration",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:7",
+      "final_lines": "11, 111"
+    },
+    {
+      "id": "A05",
+      "decision": "redb remains selected durable settings/session/project/editor store",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:8; text_and_size_context.md:26",
+      "final_lines": "11, 58, 83, 111-113"
+    },
+    {
+      "id": "A06",
+      "decision": "seglog remains canonical append-only ledger; editor analytics events optional",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:9",
+      "final_lines": "11, 111"
+    },
+    {
+      "id": "A07",
+      "decision": "FileSafe remains agent patch/apply/verify guards, adjacent owner",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:10,27; F-008.md:52-56",
+      "final_lines": "19, 21, 123"
+    },
+    {
+      "id": "A08",
+      "decision": "Every named mutation source enters typed transaction before state changes",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:14; F-008.md:8-10",
+      "final_lines": "17-19, 56, 104, 141"
+    },
+    {
+      "id": "A09",
+      "decision": "Read-only/write-lock/active recovery replay constrain user and preview mutation",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:16",
+      "final_lines": "19, 25, 62, 111, 141"
+    },
+    {
+      "id": "A10",
+      "decision": "Agent/FileSafe/LSP paths record operation class and do not merge user undo",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:17",
+      "final_lines": "19, 104, 111, 141"
+    },
+    {
+      "id": "A11",
+      "decision": "Restore/recovery confirmation/context, applied-version authority and undo explanation",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:18",
+      "final_lines": "19, 56, 104, 111, 141"
+    },
+    {
+      "id": "A12",
+      "decision": "One dirty/saved version/save-retry authority across panes and mutation flows",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:19; F-008.md:36-41",
+      "final_lines": "17-19, 27, 117-120"
+    },
+    {
+      "id": "A13",
+      "decision": "Typing/paste/delete, preview patches, LSP/FileSafe, restore, disk resolution, agent stream source classes",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:20",
+      "final_lines": "19, 104, 111, 141"
+    },
+    {
+      "id": "A14",
+      "decision": "No new restore/dirty branches or bypass; quit/later recovery; legacy unsaved-content alias",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:20; F-008.md:50-51",
+      "final_lines": "17-19, 52, 104, 111"
+    },
+    {
+      "id": "A15",
+      "decision": "Undo/restore/git histories remain distinct; runtime safe points are not restore points",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:21; F-008.md:46-49",
+      "final_lines": "19, 104, 111, 141"
+    },
+    {
+      "id": "A16",
+      "decision": "In-place single-buffer preview/LSP group eligibility; multi-file/rename/hunk/repo/conflict broader flow",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:22",
+      "final_lines": "19, 104, 111, 141"
+    },
+    {
+      "id": "A17",
+      "decision": "Assistant one-file undo group; multi-file receipt and one undo/file; no global Ctrl+Z",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:23",
+      "final_lines": "19, 104, 141"
+    },
+    {
+      "id": "A18",
+      "decision": "Stage/unstage/discard are git; conflict choices edit result until resolve/stage",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:23",
+      "final_lines": "19, 104, 111, 141"
+    },
+    {
+      "id": "A19",
+      "decision": "Tree/targets, previews and diff share source authority; SSH changes capabilities, not buffer model",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:24",
+      "final_lines": "17-21, 104, 111, 117-123"
+    },
+    {
+      "id": "A20",
+      "decision": "Accessibility/IME/selection/caret/clipboard/drift/paste/wrapper/input acceptance",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:25",
+      "final_lines": "73, 111, 147"
+    },
+    {
+      "id": "A21",
+      "decision": "Normal/truncated/load-full/too-large/binary/decode/disk-read-only/degraded effective modes",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "definitions_and_transactions.md:25",
+      "final_lines": "25, 62, 75-88, 111, 147-148"
+    },
+    {
+      "id": "A22",
+      "decision": "Named adjacent owner contracts/owner hints are dependencies; absence not a whole-project defect",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "definitions_and_transactions.md:27; editing_and_save_context.md:8,14,23; F-082.md:45-48",
+      "final_lines": "21, 58, 104-113, 123, 134"
+    },
+    {
+      "id": "A23",
+      "decision": "Orthogonal dirty/conflict/read-only/degraded/change/write-lock/stale/error/recovery facts",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "F-018.md:8-10; editing_and_save_context.md:6",
+      "final_lines": "25, 105, 119-120"
+    },
+    {
+      "id": "A24",
+      "decision": "Explicit Save and visible success feedback; no auto-save",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:4,6; text_and_size_context.md:17",
+      "final_lines": "25-27, 38, 62, 105, 112"
+    },
+    {
+      "id": "A25",
+      "decision": "Failure retains buffer/dirty/prior saved state; disk/permission/path/read-only/remote reason and Retry/Save As",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "editing_and_save_context.md:4; F-018.md:8-10,46-47",
+      "final_lines": "27, 105, 142"
+    },
+    {
+      "id": "A26",
+      "decision": "Per-tab dirty indicator plus other stable shell location under crowded strip",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:5-6",
+      "final_lines": "38, 112"
+    },
+    {
+      "id": "A27",
+      "decision": "Chat/tree/quick-open OpenFile callers converge on common open path",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:6",
+      "final_lines": "11, 112"
+    },
+    {
+      "id": "A28",
+      "decision": "Backend recovery/history refresh via BufferReverted events",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:6",
+      "final_lines": "19, 38, 112, 141"
+    },
+    {
+      "id": "A29",
+      "decision": "Disk Revert distinct from chat-owned cmd.chat.revert; editor never fabricates restore",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:10",
+      "final_lines": "19, 38, 112, 141"
+    },
+    {
+      "id": "A30",
+      "decision": "Omitted target_message_id selects latest mutating assistant turn; full-turn multi-file restore and refresh",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:11",
+      "final_lines": "19, 38, 112, 141"
+    },
+    {
+      "id": "A31",
+      "decision": "Restore to/History fetch backend restore points; editor/document pane use same pipeline and create none",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:12",
+      "final_lines": "19, 38, 112, 141"
+    },
+    {
+      "id": "A32",
+      "decision": "Required MVP recovery for local and remote-backed buffers",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "F-020.md:8-10; editing_and_save_context.md:16,21",
+      "final_lines": "52-58, 106, 144"
+    },
+    {
+      "id": "A33",
+      "decision": "Remote recovery is local unsaved memory; exact banner, never remote write receipt",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "F-020.md:36-42; editing_and_save_context.md:17-18",
+      "final_lines": "52-56, 106, 144"
+    },
+    {
+      "id": "A34",
+      "decision": "Reconnect or destination revalidation before remote Save/flush success",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "editing_and_save_context.md:19,21,29; F-020.md:8-10",
+      "final_lines": "56, 106, 144"
+    },
+    {
+      "id": "A35",
+      "decision": "Remote editing MVP does not imply remote terminal/run-debug availability",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:20; F-020.md:43-46",
+      "final_lines": "11, 38, 112"
+    },
+    {
+      "id": "A36",
+      "decision": "Exact Work offline (cached files only); validated cached snapshot; old label compatibility only",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:27",
+      "final_lines": "38, 112"
+    },
+    {
+      "id": "A37",
+      "decision": "No cache means disabled/no-cached-files state; no full-project offline implication",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:29",
+      "final_lines": "38, 112"
+    },
+    {
+      "id": "A38",
+      "decision": "Connected/reconnecting/unavailable/pending/read-only states; retain buffers; block unconfirmed round-trips unless queued",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:31",
+      "final_lines": "38, 112"
+    },
+    {
+      "id": "A39",
+      "decision": "Disconnected listings/search/diff/git/shell/LSP/write unavailable or pending, never fake-live",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "editing_and_save_context.md:31",
+      "final_lines": "38, 112"
+    },
+    {
+      "id": "A40",
+      "decision": "Dirty disk-Revert confirmation Discard/Cancel; reload clears dirty",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "text_and_size_context.md:5; F-026.md:8-10,37-40",
+      "final_lines": "11, 19, 38, 107, 113, 141"
+    },
+    {
+      "id": "A41",
+      "decision": "Save before overwrite and editor/window/tab focus checks; not every keystroke",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "text_and_size_context.md:7; F-026.md:8-10,41-49",
+      "final_lines": "42, 107, 143"
+    },
+    {
+      "id": "A42",
+      "decision": "Single combined dirty+changed prompt Reload/Overwrite/Cancel and Show diff; no two dialogs",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "text_and_size_context.md:7; editing_and_save_context.md:6; F-026.md:41-49",
+      "final_lines": "38, 42, 46, 107, 143"
+    },
+    {
+      "id": "A43",
+      "decision": "Per-buffer undo/redo; Ctrl+Z/Ctrl+Shift+Z or Ctrl+Y; no cross-file undo",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "text_and_size_context.md:11; F-027.md:35-38",
+      "final_lines": "19, 62, 108, 141"
+    },
+    {
+      "id": "A44",
+      "decision": "Copy/Cut/Paste keyboard/context menu/system clipboard; optional paste normalization",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "text_and_size_context.md:12; F-027.md:39",
+      "final_lines": "62, 68, 108, 147"
+    },
+    {
+      "id": "A45",
+      "decision": "Code wrap off by default, optional toggle; monospace/theme or editor font settings",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "text_and_size_context.md:13-14; F-027.md:8-10",
+      "final_lines": "62, 108, 113"
+    },
+    {
+      "id": "A46",
+      "decision": "UTF-8 editable; invalid decode read-only with reason until external repair/revert",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "text_and_size_context.md:15; F-027.md:40-41",
+      "final_lines": "62, 108, 147"
+    },
+    {
+      "id": "A47",
+      "decision": "Preserve CRLF/LF/CR; explicit Save only; no auto-save",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "text_and_size_context.md:16-17; F-027.md:8-10,46-48",
+      "final_lines": "62, 64-69, 108, 145"
+    },
+    {
+      "id": "A48",
+      "decision": "Binary read-only with clear reason; no hex view MVP",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "text_and_size_context.md:18; F-027.md:43,48",
+      "final_lines": "62, 108, 147"
+    },
+    {
+      "id": "A49",
+      "decision": "OS/Git read-only indicator/reason, block Save, allow Save As; no metadata bypass",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "text_and_size_context.md:19; F-027.md:44-45",
+      "final_lines": "25-27, 62, 108, 113, 142"
+    },
+    {
+      "id": "A50",
+      "decision": "Configurable 10,000-line default, settings editor labels/ranges and redb persistence",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "text_and_size_context.md:25-26; F-028.md:8-10,34-43",
+      "final_lines": "79, 83, 109, 148"
+    },
+    {
+      "id": "A51",
+      "decision": "Above line threshold truncated read-only by default; explicit full load subject to active cap",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "text_and_size_context.md:24-25; F-028.md:8-10",
+      "final_lines": "80, 86, 109, 148"
+    },
+    {
+      "id": "A52",
+      "decision": "Active 5 MB hard cap is an absolute single-buffer load cap, not editable-only",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "frozen_locator": "text_and_size_context.md:26; F-028.md:8-10",
+      "final_lines": "81-82, 86, 109, 148",
+      "defect": "D03"
+    },
+    {
+      "id": "A53",
+      "decision": "Above cap File too large to edit, View read-only (truncated), Open in system editor",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "text_and_size_context.md:26; F-028.md:34-41",
+      "final_lines": "82, 86, 109, 148"
+    },
+    {
+      "id": "A54",
+      "decision": "Read-only virtualized editing not MVP unless needed; no threshold changes from library capacity",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "text_and_size_context.md:24; F-028.md:45-46",
+      "final_lines": "84, 94, 109, 167"
+    },
+    {
+      "id": "A55",
+      "decision": "Insertion/replacement inherit nearest surviving existing boundary per new newline",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "frozen_locator": "F-082.md:19-20",
+      "final_lines": "67, 71, 110, 146, 165",
+      "defect": "D01"
+    },
+    {
+      "id": "A56",
+      "decision": "Surviving CRLF/LF/CR boundaries outside edit remain exact bytes",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "F-082.md:9-11,19-22",
+      "final_lines": "66, 68-69, 110, 121, 145"
+    },
+    {
+      "id": "A57",
+      "decision": "No-op Save preserves entire ending sequence; local edit Save changes no surviving outside boundary",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "F-082.md:21-22",
+      "final_lines": "66-69, 110, 121, 145"
+    },
+    {
+      "id": "A58",
+      "decision": "Paste normalization OFF preserves pasted endings",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "frozen_locator": "F-082.md:23",
+      "final_lines": "67-68, 110, 146",
+      "defect": "D02"
+    },
+    {
+      "id": "A59",
+      "decision": "Paste normalization ON follows nearest policy for new normalized boundaries and never surrounding buffer",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "F-082.md:23-24",
+      "final_lines": "67-68, 110, 146"
+    },
+    {
+      "id": "A60",
+      "decision": "F-082 changes no shared undo, explicit Save, failed-save dirty state, encoding or FileSafe authority",
+      "assessment": "assessed",
+      "status": "retained",
+      "frozen_locator": "F-082.md:25-26",
+      "final_lines": "19, 25-27, 62-69, 104-110, 117-123"
+    },
+    {
+      "id": "A61",
+      "decision": "F-082 dependencies/owner hints retained; no runtime/event/storage/activation/readiness proof",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "F-082.md:14-16,35-48",
+      "final_lines": "3, 11, 21, 123, 150"
+    },
+    {
+      "id": "A62",
+      "decision": "All seven accepted units owner/classification/risk/dependency/metadata stay frozen; no conversion or compilation claim",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "all seven unit metadata",
+      "final_lines": "3, 11, 100-113, 135, 150"
+    },
+    {
+      "id": "A63",
+      "decision": "Source lineage, exact tokens/negatives/compatibility and static validation references stay available; no gate commands executed",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation",
+      "frozen_locator": "all seven unit acceptance/source-lineage/validation metadata; plan.md",
+      "final_lines": "3, 11, 100-113, 150"
+    }
+  ]
+}

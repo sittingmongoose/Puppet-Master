@@ -1,0 +1,15 @@
+{
+  "event": "linked_stage_expiry_annotation",
+  "record_at": "2026-10-07T19:53:21.972697+00:00",
+  "linked_original": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/critic-v1/frozen-delivery.json",
+  "deadline": "2026-10-07T19:50:21.088917+00:00",
+  "t3_completedAt": "2026-10-07T19:52:58.649Z",
+  "native_terminal": "complete",
+  "stage_delivery_in_deadline": false,
+  "lifecycle_only_steer": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/critic-v1/expiry-save-deliver-steer.json",
+  "cancel_not_needed": "actual completed/quiet within lifecycle grace",
+  "native_elapsed_seconds": 708,
+  "source_scope_not_graded": true,
+  "remaining_final_deadline": "2026-10-07T20:05:21.088917+00:00",
+  "no_reset_or_substantive_extension": true
+}

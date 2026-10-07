@@ -1,0 +1,442 @@
+{
+  "case_id": "I-FAST-01",
+  "stage_id": "control/research-v1",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/input-map.json",
+  "output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1",
+  "source_capture_policy": "Public primary-source bytes fetched directly and stored verbatim. Code sources are commit-pinned; release and documentation pages include the exact access interval and identified version/snapshot.",
+  "research_timing": {
+    "first_useful_finding_saved_at": "2026-10-07T20:11:20Z",
+    "complete_draft_saved_at": "2026-10-07T20:23:10.152480+00:00",
+    "researcher_stage_deadline": "2026-10-07T20:29:54.263060+00:00",
+    "whole_arm_deadline": "2026-10-07T20:54:54.263060+00:00"
+  },
+  "source_operation_counts": {
+    "web_tool_calls": 8,
+    "search_queries": 16,
+    "page_opens_or_clicks": 17,
+    "git_ls_remote_reference_lookups": 3,
+    "direct_http_fetch_attempts": 33,
+    "saved_successful_http_responses": 30,
+    "failed_http_responses": {
+      "403_api_rate_limit": 1,
+      "404_documentation_urls": 2
+    }
+  },
+  "native_goal_initial_projection": {
+    "identity": "01a117fc-d384-7200-815a-77a906a3cf67",
+    "create_status": "active",
+    "get_status": "active",
+    "tokensUsed_initial": 0,
+    "timeUsedSeconds_initial": 0,
+    "input_tokens": null,
+    "cached_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null
+  },
+  "sources": [
+    {
+      "source_id": "gdal-v3.11.4-gdal_homography",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/dde6141aeec6e3e823b8af9a930f9bb096bfbda2/alg/gdal_homography.cpp",
+      "access_started_at": "2026-10-07T20:14:43.771056+00:00",
+      "access_completed_at": "2026-10-07T20:14:43.907821+00:00",
+      "version_or_snapshot": "GDAL 3.11.4; commit dde6141aeec6e3e823b8af9a930f9bb096bfbda2",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.11.4-gdal_homography.cpp",
+      "bytes": 25561,
+      "sha256": "470b2958d5c52ed89ac6bfe5420dae5728b5cde40efa0714221cf026b733b984",
+      "symbols_and_ranges": [
+        "GDALGCPsToHomography lines 121-320",
+        "GDALCreateHomographyTransformer lines 90-118",
+        "GDALCreateHomographyTransformerFromGCPs lines 516-526"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.11.4-gdaltransformer",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/dde6141aeec6e3e823b8af9a930f9bb096bfbda2/alg/gdaltransformer.cpp",
+      "access_started_at": "2026-10-07T20:14:43.908510+00:00",
+      "access_completed_at": "2026-10-07T20:14:44.057360+00:00",
+      "version_or_snapshot": "GDAL 3.11.4; commit dde6141aeec6e3e823b8af9a930f9bb096bfbda2",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.11.4-gdaltransformer.cpp",
+      "bytes": 211786,
+      "sha256": "a0cde8a8528657fa5d6879367107f57747e109e2b4d3a722280b1ec6d32043d3",
+      "symbols_and_ranges": [
+        "GDALCreateGenImgProjTransformer2 homography branch lines 2391-2425"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.11.4-gdal_alg",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/dde6141aeec6e3e823b8af9a930f9bb096bfbda2/alg/gdal_alg.h",
+      "access_started_at": "2026-10-07T20:14:44.059464+00:00",
+      "access_completed_at": "2026-10-07T20:14:44.179762+00:00",
+      "version_or_snapshot": "GDAL 3.11.4; commit dde6141aeec6e3e823b8af9a930f9bb096bfbda2",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.11.4-gdal_alg.h",
+      "bytes": 30291,
+      "sha256": "b6c159ec1a60271ee46608654d31a998ed35d3b742dc89796c901af9956df853",
+      "symbols_and_ranges": [
+        "GDALCreateGenImgProjTransformer2 API lines 119-121",
+        "GCP and homography API lines 153-178"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.11.4-gcps2homography",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/dde6141aeec6e3e823b8af9a930f9bb096bfbda2/autotest/alg/gcps2homography.py",
+      "access_started_at": "2026-10-07T20:14:44.180427+00:00",
+      "access_completed_at": "2026-10-07T20:14:44.283649+00:00",
+      "version_or_snapshot": "GDAL 3.11.4; commit dde6141aeec6e3e823b8af9a930f9bb096bfbda2",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.11.4-gcps2homography.py",
+      "bytes": 6988,
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "symbols_and_ranges": [
+        "test_gcps2h_broken_hour_glass lines 223-251"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.11.4-homography",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/dde6141aeec6e3e823b8af9a930f9bb096bfbda2/autotest/alg/homography.py",
+      "access_started_at": "2026-10-07T20:14:44.284184+00:00",
+      "access_completed_at": "2026-10-07T20:14:44.412429+00:00",
+      "version_or_snapshot": "GDAL 3.11.4; commit dde6141aeec6e3e823b8af9a930f9bb096bfbda2",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.11.4-homography.py",
+      "bytes": 2650,
+      "sha256": "d0b91fada46826ed17596495f61bf33bdf2cce5e4c113412681d620a49537881",
+      "symbols_and_ranges": [
+        "test_homography_1 failure expectations lines 23-59"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.11.4-gdalalg_raster_reproject",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/dde6141aeec6e3e823b8af9a930f9bb096bfbda2/apps/gdalalg_raster_reproject.cpp",
+      "access_started_at": "2026-10-07T20:14:44.412830+00:00",
+      "access_completed_at": "2026-10-07T20:14:44.541285+00:00",
+      "version_or_snapshot": "GDAL 3.11.4; commit dde6141aeec6e3e823b8af9a930f9bb096bfbda2",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.11.4-gdalalg_raster_reproject.cpp",
+      "bytes": 8518,
+      "sha256": "ddeb5354251755cb6799eecfca8a0695aa499dda03ecbf9613c9420c8a1e2c78",
+      "symbols_and_ranges": [
+        "raster reproject forwarding transformer options and calling GDALWarp lines 227-248"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.11.4-NEWS",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/dde6141aeec6e3e823b8af9a930f9bb096bfbda2/NEWS.md",
+      "access_started_at": "2026-10-07T20:14:44.541698+00:00",
+      "access_completed_at": "2026-10-07T20:14:44.743915+00:00",
+      "version_or_snapshot": "GDAL 3.11.4; commit dde6141aeec6e3e823b8af9a930f9bb096bfbda2",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.11.4-NEWS.md",
+      "bytes": 468998,
+      "sha256": "9ba1a23ceb4da4216aca12aeda8f146b82672d7b69dbe1c401bf13ce39e4e629",
+      "symbols_and_ranges": [
+        "GDAL 3.11.1 Algorithms release note and #12435 line 266"
+      ]
+    },
+    {
+      "source_id": "qgis-3.44-georeferencer",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/managing_data_source/georeferencer.html",
+      "access_started_at": "2026-10-07T20:14:45.577948+00:00",
+      "access_completed_at": "2026-10-07T20:14:46.035300+00:00",
+      "version_or_snapshot": "QGIS Documentation 3.44",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/qgis-3.44-georeferencer.html",
+      "bytes": 57285,
+      "sha256": "f58e068c96b0dbba3b15c79573cfa9e6c723f86becaa9d378504301a78d97dda",
+      "symbols_and_ranges": [
+        "GCP workflow and saved point fields lines 362-388",
+        "Available transformation algorithms and residual behavior lines 396-443",
+        "output/report/GCP settings lines 444-490",
+        "Residual Units setting lines 560-570"
+      ]
+    },
+    {
+      "source_id": "usgs-hro",
+      "url": "https://www.usgs.gov/centers/eros/science/usgs-eros-archive-aerial-photography-high-resolution-orthoimagery-hro",
+      "access_started_at": "2026-10-07T20:14:46.036248+00:00",
+      "access_completed_at": "2026-10-07T20:14:47.695298+00:00",
+      "version_or_snapshot": "USGS HRO archive page; captured 2026-10-07",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/usgs-hro.html",
+      "bytes": 127756,
+      "sha256": "4227d030f88831824b853a31d8ba2f0734c6893bd22218e48d6a208f5d9366fa",
+      "symbols_and_ranges": [
+        "Orthorectification definition and inputs line 1177"
+      ]
+    },
+    {
+      "source_id": "usgs-doq-orthoimage-faq",
+      "url": "https://www.usgs.gov/faqs/what-a-digital-orthophoto-quadrangle-doq-or-orthoimage",
+      "access_started_at": "2026-10-07T20:14:47.696728+00:00",
+      "access_completed_at": "2026-10-07T20:14:51.005148+00:00",
+      "version_or_snapshot": "USGS DOQ/orthoimage FAQ; captured 2026-10-07",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/usgs-doq-orthoimage-faq.html",
+      "bytes": 179512,
+      "sha256": "b16f53892cb61a5352f0745ce646eb0a61fc0ee319668ddf145563abea42ec60",
+      "symbols_and_ranges": [
+        "Orthoimage definition and relief/tilt lines 1116,1138,1406"
+      ]
+    },
+    {
+      "source_id": "mapwarper-1d56d8e-README",
+      "url": "https://raw.githubusercontent.com/timwaters/mapwarper/1d56d8ea681a30bbde89033b4abab7a0ebf462ad/README.md",
+      "access_started_at": "2026-10-07T20:14:51.006404+00:00",
+      "access_completed_at": "2026-10-07T20:14:51.150951+00:00",
+      "version_or_snapshot": "MapWarper repository HEAD commit 1d56d8ea681a30bbde89033b4abab7a0ebf462ad; ref resolved 2026-10-07",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/mapwarper-1d56d8e-README.md",
+      "bytes": 6884,
+      "sha256": "6de9be43a015ac932fa54a0daf19c681174552bbf56990078f8e0c638610ebba",
+      "symbols_and_ranges": [
+        "Product/workflow lines 3-22",
+        "Features including CSV import/export and hosting lines 24-47"
+      ]
+    },
+    {
+      "source_id": "mapwarper-1d56d8e-README_API",
+      "url": "https://raw.githubusercontent.com/timwaters/mapwarper/1d56d8ea681a30bbde89033b4abab7a0ebf462ad/README_API.md",
+      "access_started_at": "2026-10-07T20:14:51.151266+00:00",
+      "access_completed_at": "2026-10-07T20:14:51.278548+00:00",
+      "version_or_snapshot": "MapWarper repository HEAD commit 1d56d8ea681a30bbde89033b4abab7a0ebf462ad; ref resolved 2026-10-07",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/mapwarper-1d56d8e-README_API.md",
+      "bytes": 153937,
+      "sha256": "f0de03ebd8bde88563870419f747c5ba29cfadc4b9517bbaefa4345586e11bcc",
+      "symbols_and_ranges": [
+        "Add-many GCP API lines 2032-2052",
+        "Authenticated rectify method and transform options/errors lines 2273-2342"
+      ]
+    },
+    {
+      "source_id": "gdal-issue-12435",
+      "url": "https://github.com/OSGeo/gdal/issues/12435",
+      "access_started_at": "2026-10-07T20:14:51.279741+00:00",
+      "access_completed_at": "2026-10-07T20:14:51.938670+00:00",
+      "version_or_snapshot": "GDAL issue #12435; issue report opened 2025-05-21; page snapshot 2026-10-07",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-issue-12435.html",
+      "bytes": 254641,
+      "sha256": "0f2536fd9ee9ae25c04973f0914b3989b6c2e6e0a761cae1e17aaaa3570b7076",
+      "symbols_and_ranges": [
+        "Issue body: GCP_HOMOGRAPHY switched-corner failure/no-output report; issue metadata/status"
+      ]
+    },
+    {
+      "source_id": "gdal-pr-12438",
+      "url": "https://github.com/OSGeo/gdal/pull/12438",
+      "access_started_at": "2026-10-07T20:14:51.940160+00:00",
+      "access_completed_at": "2026-10-07T20:14:52.586121+00:00",
+      "version_or_snapshot": "GDAL PR #12438; commit eda0ae2; merged 2025-05-23",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-pr-12438.html",
+      "bytes": 300034,
+      "sha256": "42b91b2fbcb15cf294922641ae895a2bc6c1d87b3d5ec503a89b0c279c45e2ca",
+      "symbols_and_ranges": [
+        "PR summary/merge metadata",
+        "Changed files and regression assertions in PR diff"
+      ]
+    },
+    {
+      "source_id": "gdal-pr-12451",
+      "url": "https://github.com/OSGeo/gdal/pull/12451",
+      "access_started_at": "2026-10-07T20:14:52.588742+00:00",
+      "access_completed_at": "2026-10-07T20:14:53.402226+00:00",
+      "version_or_snapshot": "GDAL maintenance backport PR #12451; commit 931669d; merged to release/3.11 2025-05-23",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-pr-12451.html",
+      "bytes": 308214,
+      "sha256": "907a5bc9d1b9539ce0f01f9bc33e614237989d10607622d470946f070bb87fbb",
+      "symbols_and_ranges": [
+        "Backport merge, 3.11.1 milestone and commit metadata"
+      ]
+    },
+    {
+      "source_id": "gdal-commit-eda0ae2",
+      "url": "https://github.com/OSGeo/gdal/commit/eda0ae2",
+      "access_started_at": "2026-10-07T20:14:53.404927+00:00",
+      "access_completed_at": "2026-10-07T20:14:53.979376+00:00",
+      "version_or_snapshot": "GDAL commit eda0ae2; PR #12438 fix",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-commit-eda0ae2.html",
+      "bytes": 660000,
+      "sha256": "f6e8b9c404baff16df6a78a7fcac7f13b16efa189063172be5854ba4184afc63",
+      "symbols_and_ranges": [
+        "Diff for alg/gdal_homography.cpp and test changes in autotest/alg/gcps2homography.py and homography.py"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.13.2-gdal_homography",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/b40672525acf3f5c4f29d8541aa7dcff1e18eb92/alg/gdal_homography.cpp",
+      "access_started_at": "2026-10-07T20:18:19.179543+00:00",
+      "access_completed_at": "2026-10-07T20:18:19.335141+00:00",
+      "version_or_snapshot": "GDAL 3.13.2; release commit b40672525acf3f5c4f29d8541aa7dcff1e18eb92",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.13.2-gdal_homography.cpp",
+      "bytes": 25561,
+      "sha256": "837910cf3a0ab4dcb4f31aa486b173a8d91752abcea124cc403849d9a0dd8f21",
+      "symbols_and_ranges": [
+        "GDALGCPsToHomography lines 121-320",
+        "GDALCreateHomographyTransformer lines 90-118",
+        "GDALCreateHomographyTransformerFromGCPs lines 516-526"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.13.2-gdaltransformer",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/b40672525acf3f5c4f29d8541aa7dcff1e18eb92/alg/gdaltransformer.cpp",
+      "access_started_at": "2026-10-07T20:18:19.335621+00:00",
+      "access_completed_at": "2026-10-07T20:18:19.517539+00:00",
+      "version_or_snapshot": "GDAL 3.13.2; release commit b40672525acf3f5c4f29d8541aa7dcff1e18eb92",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.13.2-gdaltransformer.cpp",
+      "bytes": 213134,
+      "sha256": "25b515c14f18010b3b0a23dd2741bc388d83254c82d028e8432ed83ab861e3a0",
+      "symbols_and_ranges": [
+        "GDALCreateGenImgProjTransformer2 GCP/homography selection/caller lines 2409-2445"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.13.2-gdal_alg",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/b40672525acf3f5c4f29d8541aa7dcff1e18eb92/alg/gdal_alg.h",
+      "access_started_at": "2026-10-07T20:18:19.519627+00:00",
+      "access_completed_at": "2026-10-07T20:18:19.645859+00:00",
+      "version_or_snapshot": "GDAL 3.13.2; release commit b40672525acf3f5c4f29d8541aa7dcff1e18eb92",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.13.2-gdal_alg.h",
+      "bytes": 31457,
+      "sha256": "17eaab31a35a09851bb79d63bbe0b43ba49a23f6de1474529893ede074f1fa27",
+      "symbols_and_ranges": [
+        "GDALCreateGenImgProjTransformer2 API lines 119-121",
+        "GCP/homography APIs lines 153-178"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.13.2-gdalalg_raster_reproject",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/b40672525acf3f5c4f29d8541aa7dcff1e18eb92/apps/gdalalg_raster_reproject.cpp",
+      "access_started_at": "2026-10-07T20:18:19.646531+00:00",
+      "access_completed_at": "2026-10-07T20:18:19.753095+00:00",
+      "version_or_snapshot": "GDAL 3.13.2; release commit b40672525acf3f5c4f29d8541aa7dcff1e18eb92",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.13.2-gdalalg_raster_reproject.cpp",
+      "bytes": 15378,
+      "sha256": "2509645416e6dbd8c946b5709495685b4cd65ec09ed9d4634b272b0c0ab1fae4",
+      "symbols_and_ranges": [
+        "GDALWarpAppOptions transformer-option forwarding and GDALWarp caller lines 410-438"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.13.2-gcps2homography",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/b40672525acf3f5c4f29d8541aa7dcff1e18eb92/autotest/alg/gcps2homography.py",
+      "access_started_at": "2026-10-07T20:18:19.753645+00:00",
+      "access_completed_at": "2026-10-07T20:18:19.867563+00:00",
+      "version_or_snapshot": "GDAL 3.13.2; release commit b40672525acf3f5c4f29d8541aa7dcff1e18eb92",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.13.2-gcps2homography.py",
+      "bytes": 6988,
+      "sha256": "8db443c04566917440fbca77a462111be9bc92516a505d2e0cd7551c3833f278",
+      "symbols_and_ranges": [
+        "test_gcps2h_broken_hour_glass lines 223-251"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.13.2-homography",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/b40672525acf3f5c4f29d8541aa7dcff1e18eb92/autotest/alg/homography.py",
+      "access_started_at": "2026-10-07T20:18:19.867968+00:00",
+      "access_completed_at": "2026-10-07T20:18:20.025959+00:00",
+      "version_or_snapshot": "GDAL 3.13.2; release commit b40672525acf3f5c4f29d8541aa7dcff1e18eb92",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.13.2-homography.py",
+      "bytes": 2650,
+      "sha256": "d0b91fada46826ed17596495f61bf33bdf2cce5e4c113412681d620a49537881",
+      "symbols_and_ranges": [
+        "test_homography_1 failure assertions lines 23-59"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.13.2-NEWS",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/b40672525acf3f5c4f29d8541aa7dcff1e18eb92/NEWS.md",
+      "access_started_at": "2026-10-07T20:18:20.026327+00:00",
+      "access_completed_at": "2026-10-07T20:18:20.302756+00:00",
+      "version_or_snapshot": "GDAL 3.13.2; release commit b40672525acf3f5c4f29d8541aa7dcff1e18eb92",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.13.2-NEWS.md",
+      "bytes": 567102,
+      "sha256": "5312ca606c3b57a77c8fc779a47cd5f7b40e4beaf23c4a9f334cbf4127b275f1",
+      "symbols_and_ranges": [
+        "Release history; #12435 / 3.11.1 entry"
+      ]
+    },
+    {
+      "source_id": "gdal-v3.13.2-release",
+      "url": "https://github.com/OSGeo/gdal/releases/tag/v3.13.2",
+      "access_started_at": "2026-10-07T20:18:20.307359+00:00",
+      "access_completed_at": "2026-10-07T20:18:20.845458+00:00",
+      "version_or_snapshot": "GDAL v3.13.2 signed release tag; commit b40672525acf3f5c4f29d8541aa7dcff1e18eb92",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-v3.13.2-release.html",
+      "bytes": 204720,
+      "sha256": "29014907d3172af895a69347912ab30577e94afae7a52051e74e7b7be5f8d8f4",
+      "symbols_and_ranges": [
+        "Release tag identity and release metadata"
+      ]
+    },
+    {
+      "source_id": "gdal-stable-download_past",
+      "url": "https://gdal.org/en/stable/download_past.html",
+      "access_started_at": "2026-10-07T20:18:20.847404+00:00",
+      "access_completed_at": "2026-10-07T20:18:20.972185+00:00",
+      "version_or_snapshot": "GDAL official release list; current stable listed as 3.13.2 on 2026-10-07",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-stable-download_past.html",
+      "bytes": 56185,
+      "sha256": "5961a8c8c48ddc1764d307591e148ccd0d89111a96531a3ea624b76869f078bb",
+      "symbols_and_ranges": [
+        "3.13.2 release date row line 130"
+      ]
+    },
+    {
+      "source_id": "gdal-stable-gdalwarp",
+      "url": "https://gdal.org/en/stable/programs/gdalwarp.html",
+      "access_started_at": "2026-10-07T20:18:20.972985+00:00",
+      "access_completed_at": "2026-10-07T20:18:21.078549+00:00",
+      "version_or_snapshot": "GDAL stable docs associated with 3.13.2 as of 2026-10-07",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-stable-gdalwarp.html",
+      "bytes": 95012,
+      "sha256": "3e35f49b2b319df14fd5a246cd2e3450a3a0ded88bb9f4dad20c330de1764403",
+      "symbols_and_ranges": [
+        "GCP/polynomial/TPS options, resampling, memory and output behavior"
+      ]
+    },
+    {
+      "source_id": "gdal-stable-gdal_alg",
+      "url": "https://gdal.org/en/stable/api/gdal_alg.html",
+      "access_started_at": "2026-10-07T20:18:21.079771+00:00",
+      "access_completed_at": "2026-10-07T20:18:21.249639+00:00",
+      "version_or_snapshot": "GDAL stable API docs associated with 3.13.2 as of 2026-10-07",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/gdal-stable-gdal_alg.html",
+      "bytes": 385828,
+      "sha256": "cfb22a255387c875a6f49f3c31f3ec4763038b6ad3b96aae60e9ab7a1a2878b1",
+      "symbols_and_ranges": [
+        "Transformer/GCP/TPS API descriptions"
+      ]
+    },
+    {
+      "source_id": "qgis-pinned-qgsgeorefmainwindow",
+      "url": "https://raw.githubusercontent.com/qgis/QGIS/ffb31addd7f4d62e61dac7e44a23be6b34e402d6/src/app/georeferencer/qgsgeorefmainwindow.cpp",
+      "access_started_at": "2026-10-07T20:19:07.660821+00:00",
+      "access_completed_at": "2026-10-07T20:19:07.817913+00:00",
+      "version_or_snapshot": "QGIS commit ffb31addd7f4d62e61dac7e44a23be6b34e402d6",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/qgis-pinned-qgsgeorefmainwindow.cpp",
+      "bytes": 89703,
+      "sha256": "d1d3bfc17bc87445ffd5f47a5ff0d6425963abaaa412c9bf612d4209812249f5",
+      "symbols_and_ranges": [
+        "QgsGeoreferencerMainWindow::calculateMeanError lines 1745-1787",
+        "Per-GCP residual totals lines 2045-2060"
+      ]
+    },
+    {
+      "source_id": "qgis-pinned-qgsgcplist",
+      "url": "https://raw.githubusercontent.com/qgis/QGIS/ffb31addd7f4d62e61dac7e44a23be6b34e402d6/src/app/georeferencer/qgsgcplist.cpp",
+      "access_started_at": "2026-10-07T20:19:07.819155+00:00",
+      "access_completed_at": "2026-10-07T20:19:07.935684+00:00",
+      "version_or_snapshot": "QGIS commit ffb31addd7f4d62e61dac7e44a23be6b34e402d6",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/qgis-pinned-qgsgcplist.cpp",
+      "bytes": 7831,
+      "sha256": "75f6b009428f46681eeda404a0b17eedc0fb3e159c741728d86928297baf63d7",
+      "symbols_and_ranges": [
+        "GCP point-tip/table residual magnitude calculation lines 160-162"
+      ]
+    },
+    {
+      "source_id": "qgis-issue-8659",
+      "url": "https://github.com/qgis/QGIS-Documentation/issues/8659",
+      "access_started_at": "2026-10-07T20:19:07.936122+00:00",
+      "access_completed_at": "2026-10-07T20:19:08.448350+00:00",
+      "version_or_snapshot": "QGIS-Documentation issue #8659; issue opened 2023-11-26; open at capture",
+      "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/control/research-v1/sources/qgis-issue-8659.html",
+      "bytes": 244874,
+      "sha256": "520a174c6c365abc8baf0602fc6ea45d679ed92f361f4e949b2aa8215e4aa479",
+      "symbols_and_ranges": [
+        "Issue body/status and references to pinned QGIS calculation"
+      ]
+    }
+  ]
+}

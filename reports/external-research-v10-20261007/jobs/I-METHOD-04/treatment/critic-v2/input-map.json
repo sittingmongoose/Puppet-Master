@@ -1,0 +1,36 @@
+{
+  "own_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2",
+  "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/artifact.md",
+  "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/source-map.json",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/source-map.json"
+  ],
+  "source_directories": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources"
+  ],
+  "input_boundary": "full original brief/plan + own admitted predecessor drafts/source map only",
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/brief.md",
+  "plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/plan.md",
+  "input_identities": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/INPUTS.md",
+      "sha256": "c18f6a3d3093131e7a9e7f9fc7e9c5dc81cdca766a0ac4efa539781df04a6142",
+      "bytes": 1927
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/brief.md",
+      "sha256": "c609c2ea956f269df5fbab3694b7a9425f72f24b65279e12aab3b5c1d727a1ab",
+      "bytes": 5140
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/plan.md",
+      "sha256": "c3da0fde53189778a3685ff4dae7f8c9cca2bd3a5d5a0f8614bc666c21a01a59",
+      "bytes": 1718
+    }
+  },
+  "generic_renderer_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/m14-generic-contract-v1.md",
+  "renderer": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py",
+  "authoritative_predecessor_semantic_set": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/semantic.json",
+  "predecessor_preservation_check": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/preservation_check.md"
+}

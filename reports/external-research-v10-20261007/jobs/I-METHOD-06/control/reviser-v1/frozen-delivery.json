@@ -1,0 +1,224 @@
+{
+  "record_at": "2026-10-07T20:51:16.704702+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/artifact.md": {
+      "sha256": "33727f1c8524cc3f4ea5cb18dee3ca9458a3ee35a78069e3bc19cc71dc11b82f",
+      "bytes": 28103
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/source-map.json": {
+      "sha256": "707b4dcedf40abfde78e5934b3f84810b6917f611fe8ae3b6613b1cada1640fe",
+      "bytes": 13177
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-5667-issue.html": {
+      "sha256": "c19f2bbfff6c01869792db61827803465b3aa19666c44043b1bcef9d7797339f",
+      "bytes": 426423
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-checker.go": {
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+      "bytes": 9003
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-cmd_backup.go": {
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+      "bytes": 21681
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-cmd_backup_test.go": {
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+      "bytes": 4442
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-cmd_check.go": {
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+      "bytes": 17364
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-6aa3-working_with_repos.rst": {
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6",
+      "bytes": 28606
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-pr-21852.html": {
+      "sha256": "43b928b5859f681add5af6a3a533d904a0faca86ce7ca585707158a1ef8c19ba",
+      "bytes": 515022
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/critic/restic-v0.19.1-release.html": {
+      "sha256": "55a95d75b7a67a2b8f90de2d6015fff1f509f720f4ccb875fb7445eaa4aa871b",
+      "bytes": 217012
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/borg-check.html": {
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b",
+      "bytes": 25422
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/cisa-stopransomware-guide.pdf": {
+      "sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44",
+      "bytes": 1047655
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/cisa-stopransomware-resource.html": {
+      "sha256": "52097742990c8e38c6e81c89fd365d55ad976f5d8f4212e535603b4bfd372592",
+      "bytes": 56374
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/kopia-consistency.html": {
+      "sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64",
+      "bytes": 32457
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/kopia-issue-3605.html": {
+      "sha256": "9dc7dc0ffeffeb60176966d61e6827762c8b2d4e3063d6c17db740643058bf0d",
+      "bytes": 232329
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/kopia-snapshot-verify-docs.html": {
+      "sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d",
+      "bytes": 25795
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/nist-sp800-34r1.pdf": {
+      "sha256": "476f04d4c60b0770c1ac8b2720551972074ce78e936a3e7a535048416111d0df",
+      "bytes": 952921
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/rclone-copy-docs.html": {
+      "sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc",
+      "bytes": 51621
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/rclone-sync-docs.html": {
+      "sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d",
+      "bytes": 53053
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-backup-docs.html": {
+      "sha256": "c26df1ab47454f6d252fa300ec1371eefaa273b2cb92269186610f0a22ae5ee0",
+      "bytes": 71760
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-issue-5667.html": {
+      "sha256": "31098dfbf1a12f4b8840d478417e5ed8af81823dcc7142bb9e0b1d43c5571358",
+      "bytes": 426417
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-pr-21852.html": {
+      "sha256": "c6a6bfded29d4e34d1130001e4e5296b55b38f7a7b6c6b0f04af2081765b522a",
+      "bytes": 515016
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-release-v0.19.1.html": {
+      "sha256": "e04438d9195e16362c18990e55d7a9f09212a6d05df9927b3420471149c01009",
+      "bytes": 217007
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-v0.19.1-checker.go": {
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+      "bytes": 9003
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-v0.19.1-cmd_backup.go": {
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+      "bytes": 21681
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-v0.19.1-cmd_backup_test.go": {
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+      "bytes": 4442
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-v0.19.1-cmd_check.go": {
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+      "bytes": 17364
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/sources/research/restic-working-with-repos.html": {
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0",
+      "bytes": 61216
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-06-control-reviser-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:37:40.410Z",
+    "startedAt": "2026-10-07T20:37:40.978Z",
+    "completedAt": "2026-10-07T20:48:46.094Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-06/control/reviser-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-06--control--reviser-v1--753cbf513db7aa9e.json",
+    "sha256": "753cbf513db7aa9e83df39a36a82bc0169144088196dc23f20f53931f91b9423",
+    "bytes": 10865,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "c1eea48f16da0b5760ba383097113bd69e11d9325599f0f4eca5d1346d4255cd",
+      "status": "complete",
+      "tokensUsed": 129675,
+      "tokenBudget": null,
+      "timeUsedSeconds": 638
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-06-control-reviser-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a11816-0c76-7631-9743-0395ce923436",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:48:45.852Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-06-control-reviser-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:48:45.852Z",
+        "sha256": "bb9d1f388aec4799bab7de4427ea6af3d32731b8a0d780e981205a130eaf0ab6"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a11816-0c76-7631-9743-0395ce923436",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 129675,
+  "native_elapsed_seconds": 638,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "record_at": "2026-10-07T20:37:31.776842+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:52:31.776842+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:57:01.289900+00:00",
+    "clientRequestId": "er10-I-METHOD-06-control-reviser-v1",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "registration_order_policy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/prospective-activation-notice-registration-order-v1.json"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

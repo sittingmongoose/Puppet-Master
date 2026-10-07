@@ -1,0 +1,80 @@
+{
+  "stage": "I-METHOD-05/control/critic-v1",
+  "goal_identity": "01a11803-c94a-7151-871f-b8f5f55981cc",
+  "goal_status_before_science": "active; verified by get_goal after create_goal",
+  "activation_notice": {
+    "sent_once": true,
+    "parent_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "client_request_id": "er10-I-METHOD-05-control-critic-v1-active",
+    "delivery": "steered",
+    "status_at_response": "running",
+    "message_id": "message:mcp:3bcf8a3f-62ff-4411-a94f-34e9daa9aeee:thread-send:er10-I-METHOD-05-control-critic-v1-active"
+  },
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/critic-v1/input-map.json",
+    "sha256": "32a880d154007eb8a05ec4fb6b5bfe8c3f8dd542629e07bf7947ebd2e79a606d"
+  },
+  "original_inputs": [
+    {"id":"INPUTS","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/INPUTS.md","bytes":2113,"sha256":"c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae"},
+    {"id":"brief","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/brief.md","bytes":5605,"sha256":"9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d"},
+    {"id":"plan","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/plan.md","bytes":2932,"sha256":"9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4"},
+    {"id":"F-008","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-008.md","bytes":2828,"sha256":"228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254"},
+    {"id":"F-018","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-018.md","bytes":2233,"sha256":"2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146"},
+    {"id":"F-020","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-020.md","bytes":2235,"sha256":"0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874"},
+    {"id":"F-026","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-026.md","bytes":2399,"sha256":"3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea"},
+    {"id":"F-027","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-027.md","bytes":2090,"sha256":"770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c"},
+    {"id":"F-028","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-028.md","bytes":2001,"sha256":"dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65"},
+    {"id":"F-082","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-082.md","bytes":2294,"sha256":"b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f"},
+    {"id":"definitions_and_transactions","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/definitions_and_transactions.md","bytes":5313,"sha256":"322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608"},
+    {"id":"editing_and_save_context","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/editing_and_save_context.md","bytes":4948,"sha256":"e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440"},
+    {"id":"text_and_size_context","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/text_and_size_context.md","bytes":3663,"sha256":"44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"}
+  ],
+  "predecessors": [
+    {"role":"topic A artifact","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/artifact.md","bytes":15715,"sha256":"f49b9f6a0a17c0bbc5050229627ffb1f4ac17bf073bc827a8db722b2cb5825ee"},
+    {"role":"topic A source map","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/source-map.json","bytes":9319,"sha256":"891cd7381bebd59a2c758956b768bcf0ed3e970be7d7ebeb23df62cd9de20aa9"},
+    {"role":"topic A first finding","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/sources/first-useful-finding.md","bytes":1559,"sha256":"7c009e93b209cb444df0d1401d8ed2ee3ab9fff0103ff4ec396d9a8256f532f4"},
+    {"role":"topic A source capture","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/sources/zed-buffer-undo-reload.md","bytes":4409,"sha256":"b50235c2e2dc54e4120705740fd1807427fe8d32c3517a31a9dfd0ce9d655185"},
+    {"role":"topic B artifact","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/artifact.md","bytes":15567,"sha256":"0ff7f9277193197e5d0ab36f19d8d5eb772d58b4c79d1d56479843497d312b20"},
+    {"role":"topic B source map","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/source-map.json","bytes":11133,"sha256":"a68c42593264c5a6a5069ff205d85b8d373c1b4b71413c33bb41466e71ed65f5"},
+    {"role":"topic B first finding","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources/first-finding.md","bytes":963,"sha256":"95c447904322024cdeca949de80097bfb5db438dd050caf18667e8d166423425"},
+    {"role":"topic B evidence","path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources/public-evidence.md","bytes":3316,"sha256":"4ca5c029facab16de0ef1675394e42c9ec65122c957b016e278945ef86fe85b8"}
+  ],
+  "public_sources": [
+    {"id":"Z1","version":"issue opened 2026-02-07","url":"https://github.com/zed-industries/zed/issues/48697","locator":"dirty external write then undo-to-clean stale buffer; root-cause report","capture_utc":"2026-10-07 20:18–20:24"},
+    {"id":"Z2","version":"merged 2026-03-10","url":"https://github.com/zed-industries/zed/pull/51037","locator":"fix, no-double-reload rationale, test plan, release-note text, merge checks","capture_utc":"2026-10-07 20:18–20:24"},
+    {"id":"Z3","version":"commit 426a5666dc12e37b2441f135388b683be8ade481","url":"https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/language/src/buffer.rs","locator":"saved_mtime/DiskState definitions; did_edit; undo caller"},
+    {"id":"Z4","version":"commit 426a5666dc12e37b2441f135388b683be8ade481","url":"https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/project/tests/integration/project_tests.rs","locator":"test_dirty_buffer_reloads_after_undo, lines 5324–5386"},
+    {"id":"Z5","version":"release version unresolved","url":"https://zed.dev/releases/preview/0.192.5","locator":"search result includes #51037; direct open redirected to stable channel; not used to claim exact shipped tag"},
+    {"id":"R1","version":"Ropey v1.6.1","url":"https://raw.githubusercontent.com/cessen/ropey/v1.6.1/Cargo.toml","locator":"package/version/default unicode_lines and simd features"},
+    {"id":"R2","version":"Ropey v1.6.1","url":"https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/rope.rs","locator":"from_reader, write_to, len_bytes/chars/lines, insert"},
+    {"id":"R3","version":"Ropey v1.6.1","url":"https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/rope_builder.rs","locator":"incremental append, builder buffer and finish"},
+    {"id":"R4","version":"Ropey v1.6.1","url":"https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/crlf.rs","locator":"valid UTF-8/CRLF splitting seams"},
+    {"id":"R5","version":"Ropey v1.6.1","url":"https://raw.githubusercontent.com/cessen/ropey/v1.6.1/tests/crlf.rs","locator":"randomized insertion/removal seam tests"},
+    {"id":"R6","version":"Ropey v1.6.1","url":"https://raw.githubusercontent.com/cessen/ropey/v1.6.1/CHANGELOG.md","locator":"1.5.1 RopeSlice.len_lines CRLF-split defect; 1.6.1 release history"},
+    {"id":"S1","version":"Slint v1.12.0","url":"https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/compiler/widgets/material/textedit.slint","locator":"TextEdit text/read-only public properties"},
+    {"id":"S2","version":"Slint v1.12.0","url":"https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/compiler/widgets/common/textedit-base.slint","locator":"read-only/text bindings; public paste caller"},
+    {"id":"S3","version":"Slint v1.12.0","url":"https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/core/items/text.rs","locator":"keyboard guards, Undo/Redo dispatch, paste implementation"},
+    {"id":"S4","version":"Slint issue report, Slint 1.12 environment","url":"https://github.com/slint-ui/slint/issues/8877","locator":"closed duplicate; Windows 11 23H2/wint+Skia report and size wording"}
+  ],
+  "authored_outputs": [
+    {"path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/critic-v1/artifact.md","bytes":12278,"sha256":"4ee82161cc9f6620ca2c3b893fb8395590424373922497ca4aeb758a6ab557f5"},
+    {"path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/critic-v1/sources/first-useful-finding.md","bytes":1392,"sha256":"e354244da3c64282c369d9f1bf2885ef3eeee456b96b40c8033433eb0f17c342","saved_utc":"2026-10-07T20:20:02Z"},
+    {"path":"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/critic-v1/sources/primary-source-evidence.md","bytes":6523,"sha256":"92bec3c6264561351abec78d4de460358d207141286b0994b5e698bd2af03281"}
+  ],
+  "source_operations": {
+    "local_reads": "Exact input-map and its 13 listed originals; full A/B artifacts and maps; all four files under the two mapped predecessor source directories. Host SHA-256 recheck at approximately 2026-10-07T20:24:15Z matched declared original hashes and predecessor identities.",
+    "candidate_inventory": "No separate inventory file declared by input-map; only mapped predecessors admitted/read.",
+    "public_research": "web__run search_query/open/find on primary GitHub issues/PRs/release notes, immutable raw Zed and Slint sources/tests, and version-tagged Ropey source/changelog; capture window 2026-10-07T20:18:08Z–20:24:15Z.",
+    "local_writes": "first-useful-finding.md saved at 20:20:02Z; primary-source-evidence.md and artifact.md authored under own_output_directory; source-map.json records output hashes.",
+    "not_performed": ["application tests","benchmarks","builds","source execution","repository/canonical edits","external operations","nested delegation","other-case/arm access"]
+  },
+  "timing": {
+    "goal_created": "2026-10-07T20:17:56Z approximate from create_goal output timestamp",
+    "goal_active_verified": "get_goal returned same identity 01a11803-c94a-7151-871f-b8f5f55981cc with status active before map read",
+    "first_useful_finding_saved_utc": "2026-10-07T20:20:02Z",
+    "full_artifact_completion_utc": "2026-10-07T20:26:04Z",
+    "usage": null,
+    "billing": null
+  },
+  "stage_disposition": "Complete critic stage only; final not rewritten."
+}

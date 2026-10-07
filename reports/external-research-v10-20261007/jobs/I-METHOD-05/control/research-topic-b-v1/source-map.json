@@ -1,0 +1,264 @@
+{
+  "stage": "I-METHOD-05/control/research-topic-b-v1",
+  "topic": {
+    "id": "B",
+    "title": "Text representation, read-only and size behavior",
+    "owner_refs": [
+      "F-027",
+      "F-028",
+      "F-082",
+      "text_and_size_context"
+    ]
+  },
+  "goal_identity": "01a117f7-545e-7162-ba35-8e028b461629",
+  "inputs": {
+    "map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/input-map.json",
+    "predecessors": [],
+    "files": [
+      {
+        "name": "INPUTS.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/INPUTS.md",
+        "bytes": 2113,
+        "sha256": "c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "brief.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/brief.md",
+        "bytes": 5605,
+        "sha256": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "plan.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/plan.md",
+        "bytes": 2932,
+        "sha256": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/F-008.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-008.md",
+        "bytes": 2828,
+        "sha256": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/F-018.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-018.md",
+        "bytes": 2233,
+        "sha256": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/F-020.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-020.md",
+        "bytes": 2235,
+        "sha256": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/F-026.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-026.md",
+        "bytes": 2399,
+        "sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/F-027.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-027.md",
+        "bytes": 2090,
+        "sha256": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/F-028.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-028.md",
+        "bytes": 2001,
+        "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/F-082.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-082.md",
+        "bytes": 2294,
+        "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/definitions_and_transactions.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/definitions_and_transactions.md",
+        "bytes": 5313,
+        "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/editing_and_save_context.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/editing_and_save_context.md",
+        "bytes": 4948,
+        "sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      },
+      {
+        "name": "source/text_and_size_context.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/text_and_size_context.md",
+        "bytes": 3663,
+        "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7",
+        "disposition": "read in full before public scientific discovery; mapped in artifact"
+      }
+    ]
+  },
+  "public_sources": [
+    {
+      "id": "P1",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/crate/ropey/1.6.1/source/Cargo.toml",
+      "locator": "version and default line/SIMD features",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web search/open"
+    },
+    {
+      "id": "P2",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/crate/ropey/1.6.1/source/src/rope.rs",
+      "locator": "Rope::from_reader, write_to, len_bytes, len_chars, len_lines, insert, slice",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web search/open; rendered source identified crate 1.6.1"
+    },
+    {
+      "id": "P3",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/crate/ropey/1.6.1/source/src/crlf.rs",
+      "locator": "is_break, seam_is_break; UTF-8 and CRLF seam boundaries",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web search/open"
+    },
+    {
+      "id": "P4",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/crate/ropey/1.6.1/source/src/rope_builder.rs",
+      "locator": "RopeBuilder::append incremental construction",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web open"
+    },
+    {
+      "id": "P5",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/crate/ropey/1.6.1/source/tests/crlf.rs",
+      "locator": "crlf_inserts randomized CRLF seam checks",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web click/open"
+    },
+    {
+      "id": "P6",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/crate/ropey/1.6.1/source/tests/from_reader.rs",
+      "locator": "from_reader validity and malformed UTF-8 tests",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web click/find"
+    },
+    {
+      "id": "P7",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/crate/ropey/1.6.1/source/tests/proptest_tests.rs",
+      "locator": "RopeSlice and line iterator property tests",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web click/find"
+    },
+    {
+      "id": "P8",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/crate/ropey/1.6.1/source/CHANGELOG.md",
+      "locator": "1.5.1 CRLF-splitting RopeSlice len_lines fix; later 1.6.1 package",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web search/open"
+    },
+    {
+      "id": "P9",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/ropey/1.6.1/ropey/",
+      "locator": "UTF-8 scalar model, line feature definitions, CRLF behavior",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web open"
+    },
+    {
+      "id": "P10",
+      "component": "Ropey",
+      "version": "1.6.1",
+      "url": "https://docs.rs/ropey/1.6.1/ropey/struct.RopeBuilder.html",
+      "locator": "incremental construction docs",
+      "capture_utc": "2026-10-07 20:07:06\u201320:10:56",
+      "method": "web open"
+    },
+    {
+      "id": "P11",
+      "component": "Slint",
+      "version": "latest docs at capture; mutable URL",
+      "url": "https://docs.slint.dev/latest/docs/slint/reference/std-widgets/views/textedit/",
+      "locator": "TextEdit text in-out string; read-only does not prevent programmatic edits",
+      "capture_utc": "2026-10-07 20:10:56\u201320:11:35",
+      "method": "web search"
+    },
+    {
+      "id": "P12",
+      "component": "Slint",
+      "version": "1.12 reporter environment",
+      "url": "https://github.com/slint-ui/slint/issues/8877",
+      "locator": "large-text interaction lag; duplicate #2306; no fix established",
+      "capture_utc": "2026-10-07 20:06:23\u201320:10:56",
+      "method": "web search/open"
+    },
+    {
+      "id": "P13",
+      "component": "Slint",
+      "version": "1.17.0 reporter environment",
+      "url": "https://github.com/slint-ui/slint/discussions/12343",
+      "locator": "CRLF paste concern; not deeply verified",
+      "capture_utc": "2026-10-07 20:06:53\u201320:10:56",
+      "method": "web search"
+    }
+  ],
+  "authored_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources/first-finding.md",
+      "sha256": "95c447904322024cdeca949de80097bfb5db438dd050caf18667e8d166423425"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources/public-evidence.md",
+      "sha256": "4ca5c029facab16de0ef1675394e42c9ec65122c957b016e278945ef86fe85b8"
+    }
+  ],
+  "artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/artifact.md",
+    "sha256": "0ff7f9277193197e5d0ab36f19d8d5eb772d58b4c79d1d56479843497d312b20"
+  },
+  "source_operations": {
+    "local_reads": "input-map, brief, plan, INPUTS.md, all listed source copies via read-only cat",
+    "public_research": "web__run search_query/open/click/find on public docs/code/tests/changelog/issues",
+    "local_writes": "first-finding.md, public-evidence.md, artifact.md, source-map.json under declared output path",
+    "not_performed": [
+      "tests",
+      "benchmarks",
+      "builds",
+      "application validation",
+      "source execution",
+      "repository/canonical edits",
+      "raw downloads"
+    ]
+  },
+  "timing": {
+    "first_useful_finding_saved_utc": "2026-10-07T20:07:06Z",
+    "artifact_completion_utc": "pending immediate clock record",
+    "usage": null,
+    "billing": null
+  }
+}\n

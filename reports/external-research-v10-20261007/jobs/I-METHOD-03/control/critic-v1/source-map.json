@@ -1,0 +1,131 @@
+{
+  "artifact": "artifact.md",
+  "evidence_directory": "sources/",
+  "critic_identity": "01a117e1-f788-7513-83e7-179ecb288832",
+  "parent_notice": {
+    "count": 1,
+    "delivery": "steered",
+    "clientRequestId": "er10-I-METHOD-03-control-critic-v1-active",
+    "content": "Activation-only; no scientific findings included."
+  },
+  "input_boundary": {
+    "admitted_local_inputs": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/critic-v1/input-map.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/brief.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/plan.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/artifact.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/source-map.json"
+    ],
+    "other_case_or_campaign_material_read": false,
+    "researcher_boundary_discrepancy": "Researcher artifact self-reports additionally reading dispatch configuration and INPUTS.md; critic did not open those files."
+  },
+  "timing": {
+    "first_useful_saved_finding_at_utc": "2026-10-07T19:46:27Z",
+    "complete_artifact_write_observed_at_utc": "2026-10-07T19:50:31Z",
+    "fixed_stage_deadline_utc": "2026-10-07T19:50:21.088917Z",
+    "stage_deadline_overrun_seconds_observed": 9.911083,
+    "whole_arm_deadline_utc": "2026-10-07T20:05:21.088917Z",
+    "note": "The artifact write completed just after the fixed stage deadline. After cutoff, work was limited to delivery metadata and native lifecycle."
+  },
+  "source_operations": {
+    "public_web_batches": 10,
+    "search_query_strings": 4,
+    "open_find_click_operations": 48,
+    "total_public_web_operations": 52,
+    "web_errors_or_timeouts": 9,
+    "local_http_capture_attempts": 0,
+    "source_cache_read": false,
+    "local_code_execution": false,
+    "tests_run": false,
+    "builds_run": false,
+    "agency_feed_fetches": 0
+  },
+  "native_goal_counters": {
+    "snapshot_time_utc": "2026-10-07T19:51:06Z",
+    "identity": "01a117e1-f788-7513-83e7-179ecb288832",
+    "status_at_snapshot": "active",
+    "aggregate_goal_tokens_used": 146807,
+    "goal_time_used_seconds": 604,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null,
+    "reasoning_tokens": null,
+    "critic_arm_attributable_tokens": null,
+    "billing_amount": null,
+    "billing_estimate": null,
+    "note": "Aggregate native Goal counters only; no arm-specific or billing estimate is exposed."
+  },
+  "sources": [
+    {
+      "id": "C1",
+      "kind": "public primary specification",
+      "title": "GTFS Schedule reference at pinned commit",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+      "evidence": "Service-day and Time definitions; agency_timezone; transfers.txt specificity and transfer_type 0–5; frequencies.txt exact_times semantics. See sources/primary-checks.md."
+    },
+    {
+      "id": "C2",
+      "kind": "public primary specification",
+      "title": "GTFS Realtime Trip Updates and reference at pinned commit",
+      "urls": [
+        "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+        "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+        "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/best-practices.md",
+        "https://gtfs.org/documentation/realtime/realtime-best-practices/"
+      ],
+      "evidence": "Missing TripUpdate, early stop update retention, NO_DATA, source timestamps, and freshness recommendations. See sources/primary-checks.md."
+    },
+    {
+      "id": "C3",
+      "kind": "public immutable component source and tests",
+      "title": "MobilityData GTFS Validator v8.0.1 at d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "urls": [
+        "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+        "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/main/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalCache.java",
+        "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/main/src/test/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindowTest.java"
+      ],
+      "evidence": "ServiceWindow.get and ServiceIntervalCache behavior/callers; optional calendar tables, exception handling, and tests. Tests inspected, not executed. See sources/primary-checks.md."
+    },
+    {
+      "id": "C4",
+      "kind": "public issue, fix commit, and release",
+      "title": "GTFS Validator service-window issue history",
+      "urls": [
+        "https://github.com/MobilityData/gtfs-validator/issues/2017",
+        "https://github.com/MobilityData/gtfs-validator/issues/2099",
+        "https://github.com/MobilityData/gtfs-validator/commit/f65221e9908f5db0daa81ab8ce94168a5062151b",
+        "https://github.com/MobilityData/gtfs-validator/releases/tag/v8.0.0",
+        "https://github.com/MobilityData/gtfs-validator/releases/tag/v8.0.1"
+      ],
+      "evidence": "Issue #2017 links to #2029; separate #2099 report has no linked PR. v8.0.0 release notes identify the fix and v8.0.1 contains pinned code/tests. Scope is service-window metadata."
+    },
+    {
+      "id": "C5",
+      "kind": "public primary repository issue and pull request",
+      "title": "OneBusAway early-arrival case and rejected mitigation",
+      "urls": [
+        "https://github.com/OneBusAway/onebusaway-application-modules/issues/162",
+        "https://github.com/OneBusAway/onebusaway-application-modules/pull/160"
+      ],
+      "evidence": "Issue #162 describes ETA switching from RT to schedule; PR #160 is closed and unmerged."
+    },
+    {
+      "id": "C6",
+      "kind": "public primary specification pull request",
+      "title": "GTFS Realtime early-arrival clarification",
+      "url": "https://github.com/google/transit/pull/16",
+      "evidence": "Merged as e401275; supports early StopTimeUpdate retention guidance."
+    },
+    {
+      "id": "C7",
+      "kind": "bounded unresolved product/terms issue",
+      "title": "Public history retention and redistribution conditions",
+      "source_files": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/brief.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/plan.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/artifact.md"
+      ],
+      "evidence": "No actual agency feeds or source terms were supplied. This is a decision to preserve as unresolved, not a legal conclusion."
+    }
+  ]
+}

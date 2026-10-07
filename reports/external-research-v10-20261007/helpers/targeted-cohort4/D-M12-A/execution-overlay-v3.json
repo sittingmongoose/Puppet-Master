@@ -1,0 +1,124 @@
+{
+  "case_id": "D-M12-A",
+  "version": "v3",
+  "frozen_at": "2026-10-07T20:06:55.171353+00:00",
+  "root_binding": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M12-A-prospective-v3-root-binding.json",
+  "root_binding_sha256": "2a7a56d46208d830e0e86c60ce7abedbe29707e7c166f1092a82a1c903118645",
+  "target": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    }
+  },
+  "root_model_serialization_note": "Root JSON uses doubled literal backslash; livecatalog exact Flash identifier has single separator; identical installed Flash family, no route/model rebind",
+  "hashes": {
+    "case-card.json": "ffa53c849238284901cb0eb66eff603ea3bf333df39b7705e763dd2ab7d3c8f5",
+    "CASE_CARD.md": "d9db327c445db79437bf5fce8aef20a1e8607a30578b19a3e6f2ea147b6d68ba",
+    "INPUT_MAP.json": "48de1a5a593c33d4258b8481c01b304644d83201d4b994d0992ba009b3d9f81d",
+    "READY.json": "51cedc719571d6c29e37193a2901885e4a6989e86f628e6a4802e2f8e4a47294"
+  },
+  "input_hashes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/case-card.json",
+      "sha256": "ffa53c849238284901cb0eb66eff603ea3bf333df39b7705e763dd2ab7d3c8f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/CASE_CARD.md",
+      "sha256": "d9db327c445db79437bf5fce8aef20a1e8607a30578b19a3e6f2ea147b6d68ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/INPUT_MAP.json",
+      "sha256": "48de1a5a593c33d4258b8481c01b304644d83201d4b994d0992ba009b3d9f81d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/brief.md",
+      "sha256": "dac98c2bfdf5944bc4b0a6ce92037085e01e90dd4178e48c7cd3dee049f493e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/sources.json",
+      "sha256": "50a7a429431407d7d59529fe82f54ab133b6255902092f3addf395c98d019bb2"
+    }
+  ],
+  "sources": [],
+  "source_mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+  "original_v1_v2_preserved": true,
+  "native_goal_per_arm": 1,
+  "logical_phases_minutes": [
+    25,
+    5
+  ],
+  "arm_ceiling_seconds": 1800,
+  "not_original_15min_benchmark": true,
+  "arm_order": [
+    "treatment",
+    "control"
+  ],
+  "overlap_authorized": true,
+  "carrier": "qualified passive-v2 actual installed GoalLoopDriver state, not vendorbackendtarget; no inferred nativecomplete",
+  "stages": {
+    "treatment": [
+      {
+        "stage": "protected_breadth_final",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/final.md",
+        "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/assignment.md",
+        "candidate_minutes": 30,
+        "logical_phases_minutes": [
+          25,
+          5
+        ],
+        "input_map_sha256": "12398f0f73bcdcac9bfe6b2d691b6ea47bde8994c0d85ccac5bcf3e01a66e5d4",
+        "assignment_sha256": "239738e169fb70b6a6e4d8d82b751405c91ce5228c391534e5e74450ec93a743",
+        "request_sha256": "09cd40901d53c255cb593e8489f20a2d29865818ebe0055a6496ae2f5c630b13",
+        "timing": {
+          "prepared_at": "2026-10-07T20:06:55.171353+00:00",
+          "first_dispatch": "2026-10-07T20:06:55.171353+00:00",
+          "research_deadline": "2026-10-07T20:31:55.171353+00:00",
+          "stage_deadline": "2026-10-07T20:36:55.171353+00:00",
+          "arm_deadline": "2026-10-07T20:36:55.171353+00:00",
+          "native_goals": 1
+        }
+      }
+    ],
+    "control": [
+      {
+        "stage": "normal_research_final",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/final.md",
+        "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/assignment.md",
+        "candidate_minutes": 30,
+        "logical_phases_minutes": [
+          25,
+          5
+        ],
+        "input_map_sha256": "4ebe45a271fe861876384a5fe709fd86de7d52fcca3d53057be65260983e25ec",
+        "assignment_sha256": "f709cc85c189d6da71c819f8a53cd41ebfd3284bbf919f589e44a2a6ff1c8018",
+        "request_sha256": "ea65067f08da560aea44e00b9cf1467951600281482ac9a0c37290489edec9b2",
+        "timing": {
+          "prepared_at": "2026-10-07T20:06:55.171353+00:00",
+          "first_dispatch": "2026-10-07T20:06:55.171353+00:00",
+          "research_deadline": "2026-10-07T20:31:55.171353+00:00",
+          "stage_deadline": "2026-10-07T20:36:55.171353+00:00",
+          "arm_deadline": "2026-10-07T20:36:55.171353+00:00",
+          "native_goals": 1
+        }
+      }
+    ]
+  },
+  "final_by_arm": {
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/final.md",
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/final.md"
+  },
+  "scope": "A small field-survey tool queues photo metadata and short observations offline on phones, then syncs when a connection returns. Current sandbox assumption: retrying each queued item until acknowledged is sufficient. Discover useful mechanisms or risks that could change only the retry/acknowledgment and local-retention module. Select public primary docs/code yourself; do not design a whole survey application.",
+  "obligations": [
+    "Address offline persistence and interrupted sync.",
+    "Address acknowledgment/retry meaning under duplicate or delayed messages.",
+    "Investigate distinct mechanism families and at least one relevant analogy beyond direct survey competitors.",
+    "Challenge a brief assumption when supported.",
+    "Return at most eight distinct material findings, including useful negative discoveries or uncertainty.",
+    "Give bounded proposed changes and discriminating validation, without claiming exhaustive discovery."
+  ]
+}

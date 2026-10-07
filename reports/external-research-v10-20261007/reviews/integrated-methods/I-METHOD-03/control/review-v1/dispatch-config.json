@@ -1,0 +1,28 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "xhigh"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ]
+  },
+  "mode": "async",
+  "role": "review",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "clientRequestId": "er10-I-METHOD-03-control-independent-review-v1",
+  "record_at": "2026-10-07T20:03:14.920070+00:00",
+  "review_max_seconds": 1800,
+  "prospective_review_deadline": "2026-10-07T20:33:14.920070+00:00",
+  "native_goal_required": false,
+  "carrier": "prospective_review_v2",
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method03-pair-freeze.json"
+}

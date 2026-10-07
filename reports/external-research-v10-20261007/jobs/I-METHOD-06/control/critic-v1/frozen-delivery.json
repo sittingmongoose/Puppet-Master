@@ -1,0 +1,151 @@
+{
+  "record_at": "2026-10-07T20:37:31.692062+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/artifact.md": {
+      "sha256": "c292910d80a50013f42510c886d2d796cdbbbf559179928d430468555fd52061",
+      "bytes": 11908
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/source-map.json": {
+      "sha256": "bf92264268e6840a2df7be4cb36b417a0d033f5c77ff3634b539d23abd961dc6",
+      "bytes": 7829
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-5667-issue.html": {
+      "sha256": "c19f2bbfff6c01869792db61827803465b3aa19666c44043b1bcef9d7797339f",
+      "bytes": 426423
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-checker.go": {
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+      "bytes": 9003
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-cmd_backup.go": {
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+      "bytes": 21681
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-cmd_backup_test.go": {
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+      "bytes": 4442
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-cmd_check.go": {
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+      "bytes": 17364
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-6aa3-working_with_repos.rst": {
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6",
+      "bytes": 28606
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-pr-21852.html": {
+      "sha256": "43b928b5859f681add5af6a3a533d904a0faca86ce7ca585707158a1ef8c19ba",
+      "bytes": 515022
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources/restic-v0.19.1-release.html": {
+      "sha256": "55a95d75b7a67a2b8f90de2d6015fff1f509f720f4ccb875fb7445eaa4aa871b",
+      "bytes": 217012
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-06-control-critic-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:28:29.026Z",
+    "startedAt": "2026-10-07T20:28:29.623Z",
+    "completedAt": "2026-10-07T20:36:07.424Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-06/control/critic-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-06--control--critic-v1--81a179cc0f23c0a6.json",
+    "sha256": "81a179cc0f23c0a6bf6014fc88204026015a5781590d140ce74090e6f6b5c122",
+    "bytes": 10858,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "459f5aa75eaea6dca407fac6941fbb120443adc7b13e7068b42f69125fcf968b",
+      "status": "complete",
+      "tokensUsed": 151269,
+      "tokenBudget": null,
+      "timeUsedSeconds": 422
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-06-control-critic-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a1180d-a29d-7621-8151-8b784b02317c",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:36:07.375Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-06-control-critic-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:36:07.375Z",
+        "sha256": "f591d9c3c96195198df3b68060a51ae6ec85fdccbf598497efe3bd997159f194"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a1180d-a29d-7621-8151-8b784b02317c",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 151269,
+  "native_elapsed_seconds": 422,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "record_at": "2026-10-07T20:28:23.988476+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:38:23.988476+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:57:01.289900+00:00",
+    "clientRequestId": "er10-I-METHOD-06-control-critic-v1",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

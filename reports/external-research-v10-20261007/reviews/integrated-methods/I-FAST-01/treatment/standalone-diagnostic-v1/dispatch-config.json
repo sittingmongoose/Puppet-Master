@@ -1,0 +1,29 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "xhigh"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ]
+  },
+  "mode": "async",
+  "role": "review",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "clientRequestId": "er10-I-FAST-01-treatment-standalone-fullscience-diagnostic-v1",
+  "record_at": "2026-10-07T20:44:48.805594+00:00",
+  "review_max_seconds": 1200,
+  "prospective_review_deadline": "2026-10-07T21:04:48.805594+00:00",
+  "native_goal_required": false,
+  "carrier": "ordinary_review_v2",
+  "host_gate_authority": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/I-FAST-01-treatment-only-diagnostic-gate-exception-v1.json",
+  "host_gate_sha256": "fb29422e7d3fee3987fa253e181713771da65a99881f0053167994b4f6147a55"
+}

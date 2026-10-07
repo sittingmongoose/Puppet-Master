@@ -1,0 +1,58 @@
+{
+  "schema": "er10.exact-mechanical-predecessor-bundle.v1",
+  "scope": "Verbatim candidate-authored inventory/topic drafts and exact original source-map references; no host scientific synthesis or quality judgment",
+  "stage_order": [
+    "discovery",
+    "research-topic-a",
+    "research-topic-b"
+  ],
+  "exact_original_files": [
+    {
+      "role": "discovery",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/artifact.md",
+      "sha256": "4e7c8dfd06f066363dfa4352897569d89b3f37b7c3fe12c72e30d97242427bbc",
+      "bytes": 18550
+    },
+    {
+      "role": "discovery",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source-map.json",
+      "sha256": "7f5d2cfa38ec47b586f89a9074c652a14aeb9c47b08a9b65cda93e7005b465b6",
+      "bytes": 11620
+    },
+    {
+      "role": "research-topic-a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/artifact.md",
+      "sha256": "2ae9cab6bd061b92300ded762cdf7625094f9094b5ec321596584a12465c10d5",
+      "bytes": 12210
+    },
+    {
+      "role": "research-topic-a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json",
+      "sha256": "f1b75d5a76776d7c18766d2892d4244a277f044038a6ee1951233a591dabbf45",
+      "bytes": 8207
+    },
+    {
+      "role": "research-topic-b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/artifact.md",
+      "sha256": "1b668a826cca9729d065c1072cb0eb906968ffeeaa70ff33b500d77103feb0ea",
+      "bytes": 17835
+    },
+    {
+      "role": "research-topic-b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json",
+      "sha256": "0c7d4dc53799bb8d63c11f2b58af988222842a672da9d8cbfb9d219bfa474bf2",
+      "bytes": 8565
+    }
+  ],
+  "captured_source_directories": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/sources"
+  ],
+  "assembly_started_at": "2026-10-07T20:28:04.752016+00:00",
+  "assembly_completed_at": "2026-10-07T20:28:04.763097+00:00",
+  "output_sha256": "952744f6d848284cdcf581876f72b3cbee1bd864df2f7902838c08c633d037d7",
+  "output_bytes": 48729,
+  "originals_unchanged": true,
+  "not_additional_candidate_work": true
+}

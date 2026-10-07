@@ -1,0 +1,23 @@
+{
+  "case": "D-M02-B",
+  "frozen_at": "2026-10-07T19:50:11.973346+00:00",
+  "root_binding": "literal SAMEAUTHOR: ONE fresh delegated native Goal spans batch12 and same-context finalization3; single native terminal after full final. Control separate question Goals plus fresh synthesizer.",
+  "prior_carrier_declaration_retained": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/carrier-D-M02-B-v2.json",
+    "sha256": "52289c7fc91c147f4d94442728d416d2b036cb39a3c84792348c7dfa0d6a958b"
+  },
+  "supersedes_field": "same_author_batch and second treatment phase Goal requirement only; prior carrier declaration incorrect on2sequentialGoals, preserved unchanged",
+  "treatment_actual_candidate_goals": 1,
+  "treatment_logical_phases": [
+    "batch-v2",
+    "finalize-v2"
+  ],
+  "stage_minutes": [
+    12,
+    3
+  ],
+  "total_minutes": 15,
+  "scope_and_tools_unchanged": true,
+  "native_startup_saved_is_declared_method": true,
+  "no_automatic_quality_or_economics_credit": true
+}

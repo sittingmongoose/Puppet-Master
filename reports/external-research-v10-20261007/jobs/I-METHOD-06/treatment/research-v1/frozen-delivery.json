@@ -1,0 +1,223 @@
+{
+  "record_at": "2026-10-07T20:24:33.392639+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/artifact.md": {
+      "sha256": "7bfb5ceeab2718caf972fd22cbfa044d6489fe46f154828ce53a78790c498d86",
+      "bytes": 30681
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/source-map.json": {
+      "sha256": "265a50983275681ad94bea255efd1ee879af79e1ca2f8d874aa88b9d537fa829",
+      "bytes": 14205
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/aws_backup_restore_resource.capture": {
+      "sha256": "5474bab0601b2c5311c8514949909467c78d70ace3fb99641ac4df958fa4a164",
+      "bytes": 29106
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/aws_backup_restore_testing.capture": {
+      "sha256": "e0ba4b8d0eb56da2e56045e59e891a5e02b4df5d9c5b103950e50fcdbd4a9b21",
+      "bytes": 64921
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/aws_rel09_bp04.capture": {
+      "sha256": "079a90dea69545a78b14703dbbb75b7b20d76fb4a4e055bc4e028e08d11f228d",
+      "bytes": 29259
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/borg_check_v145.capture": {
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b",
+      "bytes": 25422
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_docs_v0191_check.capture": {
+      "sha256": "7f0014e635f9dc0bb0c712eb769e7099cf64f5f12a78f468c5b766e807d25a75",
+      "bytes": 22138
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_docs_v0191_copy.capture": {
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0",
+      "bytes": 61216
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_docs_v0191_restore.capture": {
+      "sha256": "667c478b576b4e28e7e813ae96b4402562a5db26bef098115004afdd6043639a",
+      "bytes": 35336
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_issue_4467.capture": {
+      "sha256": "9f46c7f9d55548c5cd9821d989a639d3a2c2cc7e9b5f39201edf8c84ef9a18f5",
+      "bytes": 287551
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_pr_5347_patch.capture": {
+      "sha256": "ec41516004eda1fa8739000682d64180d2072ed4dc0608c9c28d7cb9cb26687d",
+      "bytes": 13294
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_release_v0190.capture": {
+      "sha256": "f33772110422856d515b72e6db0a0fbea0658be57b0ca95238c54f1203519b51",
+      "bytes": 259756
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_backup_go.capture": {
+      "sha256": "726855a56bc03a182406e7fcb575c6e67e1d22b79576109391d555cd47373627",
+      "bytes": 21529
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_backup_integration_test.capture": {
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d",
+      "bytes": 23033
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_backup_test_go.capture": {
+      "sha256": "391e3c291b65414cd5ea0b9ffb0ceaaa71e7f9b8b396747932e169b5b6cb48d9",
+      "bytes": 3385
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_check_test_go.capture": {
+      "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01",
+      "bytes": 7966
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_checker_go.capture": {
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a",
+      "bytes": 9003
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_cmd_check_go.capture": {
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163",
+      "bytes": 17364
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_cmd_copy_go.capture": {
+      "sha256": "b80ad974a067ae2e443fb4d36de22b2aa6cf3da3c9949d8b60a615e08af6b7eb",
+      "bytes": 10700
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_repo_working_doc.capture": {
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6",
+      "bytes": 28606
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_restore_doc.capture": {
+      "sha256": "72e437a7a40a9aa17e818f6f6c0f3682f6baff3195452a8d9a0460a03796e19e",
+      "bytes": 13558
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_scripting_doc.capture": {
+      "sha256": "922289a229d7026fb23f0d9f857a84a952a217548af05b0d8d3406a759834917",
+      "bytes": 58070
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_tag_ref.txt": {
+      "sha256": "b528aa634a9ca131753f67a0f3fd28fcf57535a713a494398877cef68198e7d4",
+      "bytes": 121
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_troubleshooting_doc.capture": {
+      "sha256": "a0445df4f769ab0610defd1bf867e4d1a4e11e81cb47c848095e4ea5ea903373",
+      "bytes": 8415
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0191_backup_go.capture": {
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805",
+      "bytes": 21681
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0191_backup_integration_test.capture": {
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d",
+      "bytes": 23033
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0191_backup_test_go.capture": {
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c",
+      "bytes": 4442
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0191_tag_ref.txt": {
+      "sha256": "ebfdc9ec870f643861d2a16adeb9f1cf9f5fb890cc1e07a706990fa4c6b461fd",
+      "bytes": 121
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-06-treatment-research-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:06:46.100Z",
+    "startedAt": "2026-10-07T20:06:46.833Z",
+    "completedAt": "2026-10-07T20:24:15.604Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-06/treatment/research-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-06--treatment--research-v1--d5ecf2aa80d3db68.json",
+    "sha256": "d5ecf2aa80d3db68a471f87db65efcde212bffdbcfccbdd360bc3a79565d39d4",
+    "bytes": 10887,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "02f5ac4caa337434fd821373ae6bea1c28a50615dafba17084b4e82ad5361ffe",
+      "status": "complete",
+      "tokensUsed": 273928,
+      "tokenBudget": null,
+      "timeUsedSeconds": 1026
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-06-treatment-research-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a117f9-c1bf-7ed1-85e4-9e6f6a0dc1e6",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:24:15.046Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-06-treatment-research-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:24:15.046Z",
+        "sha256": "8cb7817f9fe57982587af781e0786eb3ae0795a9af5ac70a8439ecf5834b2ca1"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a117f9-c1bf-7ed1-85e4-9e6f6a0dc1e6",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 273928,
+  "native_elapsed_seconds": 1026,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "record_at": "2026-10-07T20:06:45.651929+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:26:45.651929+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:51:45.651929+00:00",
+    "clientRequestId": "er10-I-METHOD-06-treatment-research-v1",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "mode": "async",
+    "role": "research",
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

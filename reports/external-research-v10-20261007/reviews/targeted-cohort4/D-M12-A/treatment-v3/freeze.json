@@ -1,0 +1,114 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T20:43:54.646613+00:00",
+  "case_id": "D-M12-A",
+  "arm": "treatment",
+  "stage": "source-review",
+  "version": "v3",
+  "native_disposition": "NOT_REQUIRED_REVIEW_CARRIER_V2",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "IMMUTABLE_INDEPENDENT_REVIEW",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/INPUT_MAP.json",
+      "sha256": "f1cdd3ba74f3a42f0b5102cc3f0602eeb4eb4846cffd1f1b866344767bac5c64",
+      "bytes": 7242
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/dispatch-receipt.json",
+      "sha256": "c4507b00f80b5f5b2e101860f99c401f23968c03f406759b99264b9a0b4b27fe",
+      "bytes": 1042
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/dispatch-request.json",
+      "sha256": "2d7d92fc9bf1cb356d3647e7dfa81f5771361dea5d44d5c94a352d414565bd31",
+      "bytes": 4216
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/prospective-timing.json",
+      "sha256": "25bb52705cc97e95547e7cd6021dffa3c1c5a9a451f879bb319ab6887cf4e79f",
+      "bytes": 156
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.json",
+      "sha256": "23e13bc63e0ff7e8a38e27dbb71355ba66e779d86b393ab4779a6fad214ec2f5",
+      "bytes": 88801
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.md",
+      "sha256": "516de4ffa30b296772b6b547c87dd57349a0185810ccc6bf7b6fc7640350303d",
+      "bytes": 57683
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/additional-primary-captures.json",
+      "sha256": "612d0b521304d169181df04f8521ac475d4e4bbb3b29b2d67498666dc1998811",
+      "bytes": 3124
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/aws-retries-jitter.review-text.txt",
+      "sha256": "196a447b00fd0bb1d82b0b6c9b6ef13694fbbb55865ad24c70b46df1831aab9e",
+      "bytes": 15077
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-aws-idempotent-apis.html",
+      "sha256": "c9cbf74baf969017bf7305cfc9b15923e63636ea1de931bdd5fdecb575f1da04",
+      "bytes": 453689
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-aws-idempotent-apis.review-text.txt",
+      "sha256": "f25f3241603c6bd1ca96f4d5aa2165a5c34c61e642d44390792f0fb4dd443100",
+      "bytes": 25921
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-rifl.pdf",
+      "sha256": "f609f9508beaf936027f31428a8f06dc86d8201faadc5b340ffead7706863969",
+      "bytes": 313458
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-rifl.review-text.txt",
+      "sha256": "1582331104007909cb624aa6a62b6d2fdefbb79beeb154f64eb68af8d031c826",
+      "bytes": 83492
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/integrity-and-extraction.json",
+      "sha256": "c97ce9aed69fb41d52e29e588aeaa7d0fbabf03581d761dacb9f532da789db5e",
+      "bytes": 7609
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/mqtt-v5.0-os.review-text.txt",
+      "sha256": "3e2c431c4f330c89e8e19d7f5f14b2d0c8ff38ae6d82801f02d4e4e63e0a0bc6",
+      "bytes": 301342
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/pouchdb-conflicts.review-text.txt",
+      "sha256": "518b84b66b5ad45e74c65561feedf9cfac142cce9d0e35a9724d0c94f8aa1ba1",
+      "bytes": 7407
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/sqlite-atomiccommit.review-text.txt",
+      "sha256": "08e859c0d598b1e60279292432d572ba8ce63eee7ef137ee12f54cf14186be42",
+      "bytes": 61644
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/stripe-idempotency.review-text.txt",
+      "sha256": "04eaa2a09f4f11321835b961b232124da2150877d67a122964e85dadc5e47abd",
+      "bytes": 10106
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/transactional-outbox.review-text.txt",
+      "sha256": "f333435be0fa3a3dbaa5bfd0ad70f30124a6400626177038469bf1769a626f1f",
+      "bytes": 8262
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/task-terminal.json",
+      "sha256": "99bcc176d328ac70b88a8116a6c0a8d8efccd0ed54fda2ed7905fad808c031c6",
+      "bytes": 3063
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/timings.json",
+      "sha256": "5c07b675d0132aa943d6ce288afce4536705680f9fd49b9088375a4fa1780e89",
+      "bytes": 7242
+    }
+  ]
+}

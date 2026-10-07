@@ -1,0 +1,63 @@
+{
+  "record_at": "2026-10-07T20:14:26.598Z",
+  "deadline": "2026-10-07T20:14:06.812150Z",
+  "actual_clock_guard": {
+    "schema": "ER10-readonly-clock-guard-v1",
+    "observed_at": "2026-10-07T20:14:26.136174+00:00",
+    "original_deadline": "2026-10-07T20:14:06.812150+00:00",
+    "seconds_remaining": -19.324024,
+    "deadline_elapsed": true,
+    "prior_notice_at": null,
+    "prior_notice_was_early": null,
+    "actual_notice_grace_end": null,
+    "grace_elapsed": null,
+    "policy": "lifecycle_notice",
+    "decision": "LIFECYCLE_DELIVERY_NOTICE_IF_LIVE",
+    "limitation": "Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline."
+  },
+  "pre_status": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-05-control-research-topic-b-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-05-control-research-topic-b-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-control-research-topic-b-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-05-control-research-topic-b-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-05-control-research-topic-b-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-05-control-research-topic-b-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-control-research-topic-b-v1:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-05-control-research-topic-b-v1",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "isError": false
+  },
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-05-control-research-topic-b-v1\",\"messageId\":\"message:mcp:c9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f:thread-send:er10-I-METHOD-05-control-research-topic-b-v1-expiry-save-only\",\"runId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-control-research-topic-b-v1:ordinal:1\",\"status\":\"running\",\"delivery\":\"steered\"}"
+      }
+    ],
+    "structuredContent": {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-05-control-research-topic-b-v1",
+      "messageId": "message:mcp:c9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f:thread-send:er10-I-METHOD-05-control-research-topic-b-v1-expiry-save-only",
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-control-research-topic-b-v1:ordinal:1",
+      "status": "running",
+      "delivery": "steered"
+    },
+    "isError": false
+  },
+  "grace_seconds": 30,
+  "max_grace_seconds": 60
+}

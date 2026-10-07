@@ -1,0 +1,30 @@
+[
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01/brief.md",
+    "expected_sha256": "6dd2544d34fd845067a74914ec5b87767c2fdc447981616f0b231f887d53a40c",
+    "sha256": "6dd2544d34fd845067a74914ec5b87767c2fdc447981616f0b231f887d53a40c",
+    "bytes": 5140,
+    "matches": true
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01/plan.md",
+    "expected_sha256": "6e511c3749bfa87d7ddb0abc0dc616e854c898feb2bdc65cf6f4b15e24993651",
+    "sha256": "6e511c3749bfa87d7ddb0abc0dc616e854c898feb2bdc65cf6f4b15e24993651",
+    "bytes": 1751,
+    "matches": true
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/artifact.md",
+    "expected_sha256": "9f033e26c2a88da284fd7372a78a5f7b0c4458f403749ac4d6febc8364c5d596",
+    "sha256": "9f033e26c2a88da284fd7372a78a5f7b0c4458f403749ac4d6febc8364c5d596",
+    "bytes": 26700,
+    "matches": true
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-01/treatment/critic-finalizer-v1/source-map.json",
+    "expected_sha256": "9e8104e516b86013e43c29864bf69438a34a4dd0dff520758658c5a8b3f3d14f",
+    "sha256": "9e8104e516b86013e43c29864bf69438a34a4dd0dff520758658c5a8b3f3d14f",
+    "bytes": 20291,
+    "matches": true
+  }
+]

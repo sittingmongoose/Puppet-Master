@@ -1,0 +1,82 @@
+{
+  "case_id": "D-M02-B",
+  "arm": "treatment",
+  "role": "batch",
+  "stage": "D-M02-B/treatment/batch-v3",
+  "dispatch_preparation_at_utc": "2026-10-07T20:13:12.044035Z",
+  "stage_deadline_at_utc": "2026-10-07T20:43:12.044035Z",
+  "batch_phase_deadline_at_utc": "2026-10-07T20:38:12.044035Z",
+  "phases": {
+    "batch25": {
+      "started_at_utc": "2026-10-07T20:13:12.044035Z",
+      "operations": [
+        {
+          "operation": "create fresh native Goal; expose native tool result in conversation",
+          "actual_timestamp_utc": "2026-10-07T20:13:29Z"
+        },
+        {
+          "operation": "native get_goal readback; expose native tool result in conversation",
+          "confirmed_no_later_than_utc": "2026-10-07T20:13:43Z"
+        },
+        {
+          "operation": "send the one activation-only supervisor notice; tool result delivery=steered",
+          "confirmed_no_later_than_utc": "2026-10-07T20:13:43Z"
+        },
+        {
+          "operation": "read brief and source manifest; recompute and compare all three capture SHA-256 digests",
+          "confirmed_no_later_than_utc": "2026-10-07T20:13:43Z"
+        },
+        {
+          "operation": "read all three source captures with line numbers",
+          "confirmed_no_later_than_utc": "2026-10-07T20:15:02Z"
+        },
+        {
+          "operation": "write complete 736-word batch answer",
+          "actual_timestamp_utc": "2026-10-07T20:15:20.927592Z"
+        },
+        {
+          "operation": "check batch answer word count: 736",
+          "confirmed_no_later_than_utc": "2026-10-07T20:15:36Z"
+        }
+      ],
+      "report_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/treatment/batch-v3/report.md",
+      "report_word_count": 736
+    },
+    "same_author_finalize5": {
+      "operations": [
+        {
+          "operation": "search run-level filenames for shared-condition map patterns while excluding cases/ and jobs/ trees; no match",
+          "confirmed_no_later_than_utc": "2026-10-07T20:19:41Z"
+        },
+        {
+          "operation": "copy the complete scientific scope to final.md and verify byte identity with batch report",
+          "actual_timestamp_utc": "2026-10-07T20:20:00.304960Z",
+          "sha256": "ce98f0d3f37b6e195f440f8dbae2bd00448d6385a3730c91758be1dc67629956"
+        },
+        {
+          "operation": "write finalization report with map limitation and executed/proposed distinction",
+          "actual_timestamp_utc": "2026-10-07T20:20:00.305099Z"
+        },
+        {
+          "operation": "save complete phase timings to both required directories",
+          "started_at_utc": "2026-10-07T20:20:00.305180Z"
+        }
+      ],
+      "scope_byte_identical_to_batch_report": true,
+      "shared_condition_map_status": "unresolved; no path found in the allowed inputs or run-level filename search; contents not inspected",
+      "final_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/treatment/finalize-v3/final.md",
+      "final_report_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-B/treatment/finalize-v3/report.md",
+      "final_scope_sha256": "ce98f0d3f37b6e195f440f8dbae2bd00448d6385a3730c91758be1dc67629956",
+      "finalization_report_sha256_of_scope_prefix": "ce98f0d3f37b6e195f440f8dbae2bd00448d6385a3730c91758be1dc67629956"
+    }
+  },
+  "usage": {
+    "generated_token_count": null,
+    "billing_amount_usd": null,
+    "provider_usage_detail": null,
+    "native_goal_cumulative_token_count": null,
+    "native_goal_cumulative_time_seconds": null,
+    "note": "Unknown usage values are null. Native cumulative goal counters are separate and are not generated-token or billing measurements."
+  },
+  "timings_recorded_at_utc": "2026-10-07T20:20:00.305180Z"
+}

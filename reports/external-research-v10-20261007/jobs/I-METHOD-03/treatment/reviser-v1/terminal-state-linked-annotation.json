@@ -1,0 +1,67 @@
+{
+  "event": "linked_terminal_state_annotation",
+  "record_at": "2026-10-07T20:00:40.823133+00:00",
+  "original_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/frozen-delivery.json",
+  "actual_export": {
+    "stage": "I-METHOD-03/treatment/reviser-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-03--treatment--reviser-v1--866d0e03777c8c5f.json",
+    "sha256": "866d0e03777c8c5fe5ba3612e38d2106a97647c0e836696f918b710f6236ceb0",
+    "bytes": 10879,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "actual_binding": {
+    "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-treatment-reviser-v1%3Aordinal%3A1",
+    "driver": "codex",
+    "providerInstanceId": "codex_gmail",
+    "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+    "nativeThreadRef": {
+      "driver": "codex",
+      "nativeId": "01a117e8-49c9-7540-90ff-6af9bd265e39",
+      "strength": "strong"
+    },
+    "status": "idle",
+    "updatedAt": "2026-10-07T20:00:13.201Z",
+    "contextUsage": null,
+    "source": {
+      "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+      "type": "t3_provider_thread_projection",
+      "version": "statev2",
+      "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-treatment-reviser-v1%3Aordinal%3A1",
+      "call_id": null,
+      "time": "2026-10-07T20:00:13.201Z",
+      "sha256": "dd8d689f59727967bc7ca2eaa919f1fd942a4a84bfba4e155b63b6721adb1028"
+    }
+  },
+  "actual_terminal_state_projection": {
+    "source": {
+      "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+      "type": "t3_native_goal_projection",
+      "version": "statev2",
+      "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-treatment-reviser-v1%3Aordinal%3A1",
+      "call_id": null,
+      "time": "2026-10-07T20:00:13.201Z",
+      "sha256": "dd8d689f59727967bc7ca2eaa919f1fd942a4a84bfba4e155b63b6721adb1028"
+    },
+    "tool": null,
+    "native_response": {
+      "objective_sha256": "f234b4b3608497d5e60592a632ed62fe8233dc48b8e84981b66430d7b4c23677",
+      "status": "complete",
+      "tokensUsed": 186672,
+      "tokenBudget": null,
+      "timeUsedSeconds": 722
+    },
+    "response_sha256": "cc53f4f7b0e6fc469f0b6b35b05346396d0046aa06f8afb3d38fed301eb59c20",
+    "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+  },
+  "native_identity": "01a117e8-49c9-7540-90ff-6af9bd265e39",
+  "native_terminal": "complete",
+  "native_active_state_observed": false,
+  "native_createdAt": null,
+  "raw_create_get_update_responses": "missing_actual_response",
+  "lifecycle_hold": "no accepted activation notice/actualactive snapshot; exact terminal projection observed, no retrospective rescue",
+  "not_raw_API_response": true
+}

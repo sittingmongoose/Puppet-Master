@@ -1,0 +1,16 @@
+{
+  "own_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2",
+  "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/artifact.md",
+  "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/source-map.json",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v2/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v2/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v2/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v2/source-map.json"
+  ],
+  "source_directories": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v2/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v2/sources"
+  ],
+  "input_boundary": "exact candidate draft/critique/source bytes only"
+}

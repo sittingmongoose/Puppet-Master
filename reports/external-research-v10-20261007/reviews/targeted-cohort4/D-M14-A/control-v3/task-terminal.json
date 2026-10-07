@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-control-source-review-v3",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-control-source-review-v3",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-control-source-review-v3:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-control-source-review-v3",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-control-source-review-v3:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "**FAIL — full scope assessed; two material findings.** Frozen hash verified; candidate artifacts unchanged.\n\n[Review](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/review.md) · [JSON](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/review.json) · [Timings](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/timings.json)\n\nT3 delivery accepted. No pending children.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-control-source-review-v3:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:8fc4cd57-e51d-4dd8-b42f-01b0929c8212",
+  "providerInstanceId": "codex_gmail",
+  "model": "gpt-6.1-sol",
+  "summary": "**FAIL — full scope assessed; two material findings.** Frozen hash verified; candidate artifacts unchanged.\n\n[Review](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/review.md) · [JSON](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/review.json) · [Timings](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/timings.json)\n\nT3 delivery accepted. No pending children.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-control-source-review-v3:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:8fc4cd57-e51d-4dd8-b42f-01b0929c8212",
+  "waitTimedOut": false
+}

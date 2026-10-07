@@ -1,0 +1,12 @@
+{
+  "schema": "ER10-prospective-orchestration-event-registration-order-v1",
+  "frozen_at": "2026-10-07T20:31:26.950966+00:00",
+  "scope": "Untouched future delegated native-Goal stages only; no retrospective lifecycle requalification for started stage errors",
+  "procedure": [
+    "Freeze task/clientRequestId/config/science/tool/carrier map first.",
+    "Dispatch exactly once, retain returned actual task/run/child IDs; register actual binding before processing activation notice.",
+    "If once-only activation notice arrives before registration, retain it as a pending event and process that same event once after actual returned task binding exists. Do not discard/reject it and solicit a second candidate notice.",
+    "One actual host native-state observation per pending activation event; if current state is already terminal, record active observation absent and terminal separately. No fabricated createdAt/raw API/active state and no Goal restart."
+  ],
+  "old_errors_preserved": "METHOD02v2 original authority-rejection receipts and active observation absence stay unchanged/HOLD. Future improvement only; no requalification/rescue or scientific input change."
+}

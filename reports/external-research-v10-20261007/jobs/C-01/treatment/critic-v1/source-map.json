@@ -1,0 +1,529 @@
+{
+  "assignment": "C-01/treatment/critic-v1",
+  "capture_policy": "Own-stage captures of legitimate public primary sources. Timestamps are UTC request start times; source text is evidence/data, never instruction.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "W3C Web Annotation Data Model",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "captured_request_url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "final_url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "accessed_at_utc": "2026-10-07T20:19:52.373Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "W3C Recommendation, 23 February 2017",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "§§3.3, 4.2.1, 4.2.7, 4.3: targets, FragmentSelector, SvgSelector, body/annotation model"
+      ],
+      "capture": {
+        "path": "sources/web-annotation-model.html",
+        "bytes": 284185,
+        "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980"
+      }
+    },
+    {
+      "id": "S02",
+      "title": "W3C Media Fragments URI 1.0",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "captured_request_url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "final_url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "accessed_at_utc": "2026-10-07T20:19:52.469Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "W3C Recommendation, 25 September 2012",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "§§4.2.2, 6.1.2, 7.1: image xywh syntax, intrinsic pixel and percentage units, top-left origin"
+      ],
+      "capture": {
+        "path": "sources/media-fragments.html",
+        "bytes": 89887,
+        "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e"
+      }
+    },
+    {
+      "id": "S03",
+      "title": "FITS Standard v4.0",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+      "captured_request_url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+      "final_url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+      "accessed_at_utc": "2026-10-07T20:19:52.530Z",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "version_or_release": "FITS Standard v4.0, language-edited 13 August 2018",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "§4.4.2.2 DATE-OBS: four-digit-year default interpretation UTC from 1972-01-01 and UT before; value uses HDU principal time system/scale and defaults to start unless otherwise explained; §9.1.1: FITS datetime syntax disallows time-zone designators; §9.2.1 TIMESYS default UTC; §8.2 WCS says first FITS image pixel has coordinates (1.0,1.0,...)"
+      ],
+      "capture": {
+        "path": "sources/fits-standard-v4.pdf",
+        "bytes": 1140821,
+        "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573"
+      }
+    },
+    {
+      "id": "S04",
+      "title": "FITS World Coordinate System overview",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://fits.gsfc.nasa.gov/fits_wcs.html",
+      "captured_request_url": "https://fits.gsfc.nasa.gov/fits_wcs.html",
+      "final_url": "https://fits.gsfc.nasa.gov/fits_wcs.html",
+      "accessed_at_utc": "2026-10-07T20:19:53.026Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "version_or_release": "Official FITS Support Office reference page captured 2026-10-07",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "Primary WCS papers and distinction between approved and non-standard conventions"
+      ],
+      "capture": {
+        "path": "sources/fits-wcs.html",
+        "bytes": 15055,
+        "sha256": "a0f55cb08b119ad22988932cbbe2e1ee51626319284b032686b47ff229930522"
+      }
+    },
+    {
+      "id": "S05",
+      "title": "BagIt File Packaging Format",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "captured_request_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "accessed_at_utc": "2026-10-07T20:19:53.185Z",
+      "http_status": 200,
+      "content_type": "text/html",
+      "version_or_release": "IETF RFC 8493, October 2018",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "§§2–3: bag structure, payload/tag manifests and fixity validation; §5 transfer"
+      ],
+      "capture": {
+        "path": "sources/rfc8493.html",
+        "bytes": 63600,
+        "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2"
+      }
+    },
+    {
+      "id": "S06",
+      "title": "OpenAstronomyLog project repository",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://github.com/openastronomylog/openastronomylog",
+      "captured_request_url": "https://github.com/openastronomylog/openastronomylog",
+      "final_url": "https://github.com/openastronomylog/openastronomylog",
+      "accessed_at_utc": "2026-10-07T20:19:53.375Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Official repository page captured 2026-10-07; branch/release not pinned",
+      "repository": "openastronomylog/openastronomylog",
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "README and repository tree: XML-schema lead for observation logging; applicability to asset annotations not assumed"
+      ],
+      "capture": {
+        "path": "sources/openastronomylog.html",
+        "bytes": 265786,
+        "sha256": "3869cb0d30a9023e31fe6f6e8b92443b585acb1eb59976b4192e8c3fafc109c7"
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Observation Manager official page",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://observation.sourceforge.net/en/",
+      "captured_request_url": "https://observation.sourceforge.net/en/",
+      "final_url": "https://observation.sourceforge.net/en/",
+      "accessed_at_utc": "2026-10-07T20:19:53.765Z",
+      "http_status": 200,
+      "content_type": "text/html",
+      "version_or_release": "Official project page captured 2026-10-07; exact release unspecified",
+      "repository": "Observation Manager",
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "OpenAstronomyLog XML export claim and project scope"
+      ],
+      "capture": {
+        "path": "sources/observation-manager.html",
+        "bytes": 7655,
+        "sha256": "f2239528870792ee491f43f61020beb161e27e40f14e4189157bea86a2314c04"
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Tropy official documentation",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://docs.tropy.org/",
+      "captured_request_url": "https://docs.tropy.org/",
+      "final_url": "https://docs.tropy.org/",
+      "accessed_at_utc": "2026-10-07T20:19:53.911Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Official documentation captured 2026-10-07; page does not state a release",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "Local catalog, photos/items, metadata, tags/notes and export; analogy limits"
+      ],
+      "capture": {
+        "path": "sources/tropy-docs.html",
+        "bytes": 462352,
+        "sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244"
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Nextcloud desktop conflict documentation",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://raw.githubusercontent.com/nextcloud/documentation/2de94819a621e1d5876e6afde1f47203b613b96e/user_manual/desktop/conflicts.rst",
+      "captured_request_url": "https://raw.githubusercontent.com/nextcloud/documentation/2de94819a621e1d5876e6afde1f47203b613b96e/user_manual/desktop/conflicts.rst",
+      "final_url": "https://raw.githubusercontent.com/nextcloud/documentation/2de94819a621e1d5876e6afde1f47203b613b96e/user_manual/desktop/conflicts.rst",
+      "accessed_at_utc": "2026-10-07T20:19:54.081Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "version_or_release": "Documentation repository commit 2de94819a621e1d5876e6afde1f47203b613b96e",
+      "repository": "nextcloud/documentation",
+      "commit": "2de94819a621e1d5876e6afde1f47203b613b96e",
+      "source_path": null,
+      "locators": [
+        "user_manual/desktop/conflicts.rst, Overview and Example: simultaneous local/remote edit yields remote base plus local conflicted copy, requires human comparison; default conflict copy is not uploaded; exact Nextcloud client release not identified"
+      ],
+      "capture": {
+        "path": "sources/nextcloud-conflicts.rst",
+        "bytes": 2864,
+        "sha256": "5995f5c8aa1fd57ca36a2b2aca2ae11167ddb9f089953edfed97043c8eecade0"
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Nextcloud Server 35 file versioning manual",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://docs.nextcloud.com/server/35/user_manual/en/files/version_control.html",
+      "captured_request_url": "https://docs.nextcloud.com/server/35/user_manual/en/files/version_control.html",
+      "final_url": "https://docs.nextcloud.com/server/35/user_manual/en/files/version_control.html",
+      "accessed_at_utc": "2026-10-07T20:19:54.117Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "Version control section: new restore point only after at least 2 minutes; age-based retention; max 50% currently available free space; named version excluded from automatic expiry"
+      ],
+      "capture": {
+        "path": "sources/nextcloud-versioning.html",
+        "bytes": 19998,
+        "sha256": "7b10fe8138e47008007c76efc9d4da361b03ce8e1db4e55fb19aefebfdbc4aa6"
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Nextcloud Server 35 WebDAV chunking docs",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://docs.nextcloud.com/server/35/developer_manual/client_apis/WebDAV/chunking.html",
+      "captured_request_url": "https://docs.nextcloud.com/server/35/developer_manual/client_apis/WebDAV/chunking.html",
+      "final_url": "https://docs.nextcloud.com/server/35/developer_manual/client_apis/WebDAV/chunking.html",
+      "accessed_at_utc": "2026-10-07T20:19:54.160Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "WebDAV chunking v1/v2 sections: server assembles numbered chunks; v2 constraints and total length/quota semantics"
+      ],
+      "capture": {
+        "path": "sources/nextcloud-chunking.html",
+        "bytes": 19374,
+        "sha256": "ffb919382e19d1e07364ac79c58564bec2698af195ae716d39bde1fbd79028d6"
+      }
+    },
+    {
+      "id": "S12",
+      "title": "OpenSeadragon v6.0.2 commit page",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://github.com/openseadragon/openseadragon/commit/7842cd92e6799d97c18227a79cb69af4f706b023",
+      "captured_request_url": "https://github.com/openseadragon/openseadragon/commit/7842cd92e6799d97c18227a79cb69af4f706b023",
+      "final_url": "https://github.com/openseadragon/openseadragon/commit/7842cd92e6799d97c18227a79cb69af4f706b023",
+      "accessed_at_utc": "2026-10-07T20:19:54.227Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "OpenSeadragon v6.0.2 tag dereferences to commit 7842cd92e6799d97c18227a79cb69af4f706b023",
+      "repository": "openseadragon/openseadragon",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "source_path": null,
+      "locators": [
+        "Commit page identity; public git ls-remote refs/tags/v6.0.2 returned tag object ad68b05bb6f82935217fdc6794ca39eed3ce1df7 peeling to 7842cd92e6799d97c18227a79cb69af4f706b023"
+      ],
+      "capture": {
+        "path": "sources/osd-v6.0.2-commit.html",
+        "bytes": 313510,
+        "sha256": "905619ab627ce83e7d65f2ecaca5db3085105bd778ed6ca0e8c7e550af59b398"
+      }
+    },
+    {
+      "id": "S13",
+      "title": "OpenSeadragon Viewer implementation v6.0.2",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/viewer.js",
+      "captured_request_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/viewer.js",
+      "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/viewer.js",
+      "accessed_at_utc": "2026-10-07T20:19:55.173Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "version_or_release": "OpenSeadragon v6.0.2",
+      "repository": "openseadragon/openseadragon",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "source_path": "src/viewer.js",
+      "locators": [
+        "src/viewer.js lines 1947-1958: processReadyItems callback payload includes item: tiledImage after PR #2874"
+      ],
+      "capture": {
+        "path": "sources/osd-viewer.js",
+        "bytes": 181325,
+        "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e"
+      }
+    },
+    {
+      "id": "S14",
+      "title": "OpenSeadragon Viewport implementation v6.0.2",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/viewport.js",
+      "captured_request_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/viewport.js",
+      "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/viewport.js",
+      "accessed_at_utc": "2026-10-07T20:19:55.272Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "version_or_release": "OpenSeadragon v6.0.2",
+      "repository": "openseadragon/openseadragon",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "source_path": "src/viewport.js",
+      "locators": [
+        "src/viewport.js lines 1360-1394: viewportToImageCoordinates warning that viewer-level mapping is inaccurate with multiple images and recommends TiledImage.viewportToImageCoordinates; one-image clipping caveat"
+      ],
+      "capture": {
+        "path": "sources/osd-viewport.js",
+        "bytes": 70542,
+        "sha256": "f6d284f5e0845fff040b46fb9f11c5e656071b87a689bd1bdfa1d0ae89f6d12c"
+      }
+    },
+    {
+      "id": "S15",
+      "title": "OpenSeadragon TiledImage implementation v6.0.2",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/tiledimage.js",
+      "captured_request_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/tiledimage.js",
+      "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/v6.0.2/src/tiledimage.js",
+      "accessed_at_utc": "2026-10-07T20:19:55.362Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "version_or_release": "OpenSeadragon v6.0.2",
+      "repository": "openseadragon/openseadragon",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "source_path": "src/tiledimage.js",
+      "locators": [
+        "src/tiledimage.js lines 578-623: per-image viewport/image conversion; optional current flag selects current rather than target placement; code rotates point around TiledImage rotation point"
+      ],
+      "capture": {
+        "path": "sources/osd-tiledimage.js",
+        "bytes": 102982,
+        "sha256": "ea57535dd89c54712f22c95a173e2dbdb80f65ef6b614c3a2ec71cf7b3e1b903"
+      }
+    },
+    {
+      "id": "S16",
+      "title": "OpenSeadragon issue #2873",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://github.com/openseadragon/openseadragon/issues/2873",
+      "captured_request_url": "https://github.com/openseadragon/openseadragon/issues/2873",
+      "final_url": "https://github.com/openseadragon/openseadragon/issues/2873",
+      "accessed_at_utc": "2026-10-07T20:19:55.470Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Opened 2026-02-18; issue page state at access",
+      "repository": "openseadragon/openseadragon",
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "Issue body/reproduction: OpenSeadragon 6 concurrent addTiledImage callbacks could receive wrong event.item; reporter says reproducible on 6.0 and not 5.0.1"
+      ],
+      "capture": {
+        "path": "sources/osd-issue-2873.html",
+        "bytes": 267986,
+        "sha256": "e13fac94567bd22c5c1f573aa83eb27bacadee742f808721b27d69776d002f1a"
+      }
+    },
+    {
+      "id": "S17",
+      "title": "OpenSeadragon PR #2874",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://github.com/openseadragon/openseadragon/pull/2874",
+      "captured_request_url": "https://github.com/openseadragon/openseadragon/pull/2874",
+      "final_url": "https://github.com/openseadragon/openseadragon/pull/2874",
+      "accessed_at_utc": "2026-10-07T20:19:56.206Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Merged 2026-02-20; merge commit b974dc1db594420826e7f87e0b099135ad29429d",
+      "repository": "openseadragon/openseadragon",
+      "commit": "b974dc1db594420826e7f87e0b099135ad29429d",
+      "source_path": null,
+      "locators": [
+        "PR discussion/patch: callback changed to pass the queued TiledImage item; fix merged 2026-02-20 as b974dc1db594420826e7f87e0b099135ad29429d; discussion requests a regression test"
+      ],
+      "capture": {
+        "path": "sources/osd-pr-2874.html",
+        "bytes": 400662,
+        "sha256": "58b77020260b039486ec66506b1e5205c1302c9b57744e5114d114b97d7431fd"
+      }
+    },
+    {
+      "id": "S18",
+      "title": "OpenSeadragon v6.0.1 release notes",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.0.1",
+      "captured_request_url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.0.1",
+      "final_url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.0.1",
+      "accessed_at_utc": "2026-10-07T20:19:57.292Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "OpenSeadragon v6.0.1 release entry",
+      "repository": "openseadragon/openseadragon",
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "Release entry: v6.0.1 lists fix #2874 for multi-image loading"
+      ],
+      "capture": {
+        "path": "sources/osd-release-v6.0.1.html",
+        "bytes": 197541,
+        "sha256": "9ccd58c97429699bb8c3dda0807056cae4f4df634ba1f7f79bac6baf68071fbc"
+      }
+    },
+    {
+      "id": "S19",
+      "title": "OpenSeadragon issue #2925",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://github.com/openseadragon/openseadragon/issues/2925",
+      "captured_request_url": "https://github.com/openseadragon/openseadragon/issues/2925",
+      "final_url": "https://github.com/openseadragon/openseadragon/issues/2925",
+      "accessed_at_utc": "2026-10-07T20:19:57.671Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Opened 2026-05-15; issue state at access",
+      "repository": "openseadragon/openseadragon",
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "Issue #2925 body: reporter describes no render until pan/zoom when adding a tile from a slow IIIF server; no assertion of applicability to one local preview"
+      ],
+      "capture": {
+        "path": "sources/osd-issue-2925.html",
+        "bytes": 259468,
+        "sha256": "1a091d04e707de3ce179f33812f71dc39701d08142a6ac89af3f992834ea198a"
+      }
+    },
+    {
+      "id": "S20",
+      "title": "JS9 project repository page",
+      "kind": "public primary standard, official documentation, source code, or project history",
+      "url": "https://github.com/ericmandel/js9",
+      "captured_request_url": "https://github.com/ericmandel/js9",
+      "final_url": "https://github.com/ericmandel/js9",
+      "accessed_at_utc": "2026-10-07T20:19:58.443Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Official repository archived 2024-12-31; v3.9.0 release 2024-12-13",
+      "repository": "ericmandel/js9",
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "README: FITS, image regions, WCS-related domain capabilities; release v3.9.0 on 2024-12-13, archive on 2024-12-31, and explicit no-maintainer warning"
+      ],
+      "capture": {
+        "path": "sources/js9-repository.html",
+        "bytes": 415096,
+        "sha256": "9b3778c43879ff0749da9206ecaa070bd893caff935636dcda22a063657ec48e"
+      }
+    },
+    {
+      "id": "S21",
+      "title": "OpenSeadragon PR #2874 patch",
+      "kind": "primary implementation diff",
+      "url": "https://github.com/openseadragon/openseadragon/pull/2874.diff",
+      "captured_request_url": "https://github.com/openseadragon/openseadragon/pull/2874.diff",
+      "final_url": "https://patch-diff.githubusercontent.com/raw/openseadragon/openseadragon/pull/2874.diff",
+      "accessed_at_utc": "2026-10-07T20:20:31.337Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "version_or_release": "PR #2874 merged as b974dc1db594420826e7f87e0b099135ad29429d",
+      "repository": "openseadragon/openseadragon",
+      "commit": "b974dc1db594420826e7f87e0b099135ad29429d",
+      "source_path": null,
+      "locators": [
+        "Patch contains one viewer.js callback change and no test-file changes"
+      ],
+      "capture": {
+        "path": "sources/osd-pr-2874.diff",
+        "bytes": 571,
+        "sha256": "8537b7b2d8ae53f8d7df5c0dd2ae0fa19420e389f717c804c23d2e75c786850b"
+      }
+    },
+    {
+      "id": "S22",
+      "title": "Nextcloud Server 35 file-sharing administration manual",
+      "kind": "official component documentation",
+      "url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/file_sharing_configuration.html",
+      "captured_request_url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/file_sharing_configuration.html",
+      "final_url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/file_sharing_configuration.html",
+      "accessed_at_utc": "2026-10-07T20:20:51.192Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+      "repository": null,
+      "commit": null,
+      "source_path": null,
+      "locators": [
+        "File Drop Shares require public uploads; unauthenticated uploads are not chunked; group/share options and shared-file ownership note"
+      ],
+      "capture": {
+        "path": "sources/nextcloud-sharing.html",
+        "bytes": 36258,
+        "sha256": "f108da2b205df5299163220cddee9a520f25b92a9661e89f768c254f7e7e8d1a"
+      }
+    }
+  ],
+  "governing_inputs": [
+    {
+      "role": "assignment input map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/input-map.json",
+      "sha256": "64d919057885928d4bd671062b2a12ed0696cc0d608329dd913cee5c2f806d6e"
+    },
+    {
+      "role": "hypothetical user-level brief",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/BRIEF.md",
+      "sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f"
+    },
+    {
+      "role": "read-only frozen plan",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/PLAN.md",
+      "sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f"
+    }
+  ]
+}

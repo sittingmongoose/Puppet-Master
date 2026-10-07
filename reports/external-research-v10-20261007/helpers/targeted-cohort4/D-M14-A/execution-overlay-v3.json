@@ -1,0 +1,200 @@
+{
+  "case_id": "D-M14-A",
+  "version": "v3",
+  "frozen_at": "2026-10-07T20:29:08.488897+00:00",
+  "root_binding": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-finite-prospective-admissions-v3.json",
+  "root_binding_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "root_schedule": {
+    "owner": "targeted-cohort4",
+    "family": "Luna",
+    "new_version": 3,
+    "common_stages": [],
+    "control": [
+      {
+        "assignment": "same-author-narrative-full-final",
+        "native_goals": 1,
+        "minutes": 40,
+        "logical_phases": [
+          30,
+          10
+        ],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "same-author-semantic-render-preserve-full-final",
+        "native_goals": 1,
+        "minutes": 40,
+        "logical_phases": [
+          24,
+          2,
+          14
+        ],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 40,
+    "common_absolute_pair_wall_minutes": 40,
+    "arm_overlap": true,
+    "helper_accounting": "Cold full generic prep454.056+reportedqualification0.316=454.372s knownlowerbound added, unexposed qualificationwall/usage null, routine render separately measured. Fullcold eligibility unresolved until total known; no freecoldsetup or SourcePASS from render. Same author stays in ONE native Goal, actual mechanical rendering on sameowned semanticbytes, fullSource evaluator covers authority+ALLviews/preservation.",
+    "original_case_card_sha256": "67bc9697bc4abc6bc6b0169e5fee607444d326646eaccf308b7c9ce2587084e3",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "treatment",
+      "control"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "hashes": {
+    "case-card.json": "67bc9697bc4abc6bc6b0169e5fee607444d326646eaccf308b7c9ce2587084e3",
+    "CASE_CARD.md": "a4c7a5767df339bc079c1d5d2426cb141a20a597a27d4dd846e11fa9ad33e3dd",
+    "INPUT_MAP.json": "d4d2d080347e39a13a63ea50aed387fae0cb2aeb74f2ec295155c6062292cfd9",
+    "READY.json": "b7a14a11a4d03183c32b046c826a7cf95adb3dadb5341a772824541c2e72a2f9"
+  },
+  "input_hashes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/case-card.json",
+      "sha256": "67bc9697bc4abc6bc6b0169e5fee607444d326646eaccf308b7c9ce2587084e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/CASE_CARD.md",
+      "sha256": "a4c7a5767df339bc079c1d5d2426cb141a20a597a27d4dd846e11fa9ad33e3dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/INPUT_MAP.json",
+      "sha256": "d4d2d080347e39a13a63ea50aed387fae0cb2aeb74f2ec295155c6062292cfd9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+      "sha256": "d10480e11e371410f596396f8c8562696b41277991e3e3297b9b122bac051f0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+      "sha256": "c4cd37441e9285345615faa390d283d0284003fec14639b99e9ac3627b70e6f0"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "rastermask",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterresample",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterwindow",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "old_v1_v2_immutable": true,
+  "scope": "A Rasterio 1.3.10 pipeline needs one decision module for class-ID downsampling and valid-area summaries. Inputs may contain nodata values and external masks. Compare two bounded processing alternatives, state source conditions, retain one optional continuous-band lead, and propose validation. Delivery should let a reviewer find the source behind each material recommendation.",
+  "obligations": [
+    "Give a decision with conditions, rather than a universal processing rule.",
+    "Compare two alternatives under the same brief.",
+    "Preserve mask/nodata/class-label distinctions.",
+    "Retain source limitations and optional continuous-band opportunity.",
+    "Include validation proposals and open product choices.",
+    "Make every decision-view item traceable to full candidate-authored evidence without omitted meaning."
+  ],
+  "wordscope": {
+    "final_path_by_arm": {
+      "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/control/final.md",
+      "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/treatment/final.md"
+    },
+    "carrier": "Complete authored native final or exact file export to declared final path; root verifies full byte identity/readability. Native terminal status is separate.",
+    "max_material_findings": 8,
+    "soft_word_ceiling": 1400,
+    "deliverable": "One complete bounded answer/recommendation with source conditions, full obligation dispositions, justified uncertainty, retained optional leads where requested, and discriminating proposed checks. Any carried draft/critique remains a legitimate input, not source truth.",
+    "intermediate_scope": "Only method-required bounded stage outputs. Do not impose four synchronized catalogs or an integrated application plan.",
+    "preservation": "Final must distinguish accepted, amended, rejected and unresolved claims; executed witnesses and proposed tests remain distinct."
+  },
+  "cold_helper_prep_known_lowerbound_seconds": 454.372,
+  "qualification_wall_seconds": null,
+  "native_goals_per_arm": 1,
+  "arm_deadline": "2026-10-07T21:09:08.488897+00:00",
+  "common_absolute_T0": "2026-10-07T20:29:08.488897+00:00",
+  "stages": {
+    "treatment": [
+      {
+        "stage": "semantic_render_preserve_final",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/final.md",
+        "files": {
+          "semantic_findings.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/semantic_findings.md",
+          "mechanical_projection.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/mechanical_projection.md",
+          "preservation_check.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/preservation_check.md",
+          "final.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/final.md",
+          "timings.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/timings.json"
+        },
+        "request_sha256": "5760f9e277419ba9667234e546e7d45cee610540235afd7eac19bfdf427fed09",
+        "map_sha256": "68b3e3c293afd58c09da35acf49040af632ee682232173151c020cd7da5ac29d",
+        "logical_phases_minutes": [
+          24,
+          2,
+          14
+        ],
+        "native_goals": 1
+      }
+    ],
+    "control": [
+      {
+        "stage": "narrative_full_final",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/final.md",
+        "files": {
+          "report.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/report.md",
+          "final.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/final.md",
+          "timings.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/timings.json"
+        },
+        "request_sha256": "20e425ee4446c81d24b63007964c3d06f4c95b46abcf45557589c2ae538026c7",
+        "map_sha256": "b4df1de9617ea848e212086f89afc7b02267b1b41c11d0ed2fa84f6e55e4e730",
+        "logical_phases_minutes": [
+          30,
+          10
+        ],
+        "native_goals": 1
+      }
+    ]
+  },
+  "final_by_arm": {
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/final.md",
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/final.md"
+  },
+  "mode_auto_notice_parent": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort4-v1"
+}

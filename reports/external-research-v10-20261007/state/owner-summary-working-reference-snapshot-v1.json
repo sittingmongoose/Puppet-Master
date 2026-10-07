@@ -1,0 +1,72 @@
+{
+  "schema": "ER10-working-owner-summary-reference-snapshot-v1",
+  "observed_at": "2026-10-07T20:34:24.764836+00:00",
+  "not_final": true,
+  "summaries": [
+    {
+      "path": "helpers/targeted-supervisor/COMPARISONS.json",
+      "sha256": "fc8ec4451d83c20431b5ff2a12e18075553711e2d276308e746bf68c50ef6bb1",
+      "mtime": "2026-10-07T20:13:40.769068+00:00",
+      "counts": {
+        "planned_slots": 6,
+        "terminal_slots": 5,
+        "assessable_comparisons": 0,
+        "source_assessed_pairs": 4,
+        "structured_source_assessment_partial_delivery_pairs": 0,
+        "source_unassessed_pairs": 0,
+        "original_partial_delivery_attempts": 1,
+        "qualified_method_comparisons": 0,
+        "science_paired_assessments_including_diagnostic": 4,
+        "diagnostic_partial_final_pairs": 1
+      }
+    },
+    {
+      "path": "helpers/targeted-cohort2/COMPARISONS.json",
+      "sha256": "8e4341a5a492b70561bace7a2f6b3b95c9901f74473e0cc579b2507163714ff7",
+      "mtime": "2026-10-07T20:02:40.862582+00:00",
+      "counts": {
+        "fully_assessed_pairs": 4,
+        "fully_assessed_arms": 8,
+        "source_pass_arms": 3,
+        "terminal_dispositions": 6,
+        "noncomparable_seed_overrun_slots": 2,
+        "held_route_slots": 0,
+        "queued_capacity_slots": 0
+      }
+    },
+    {
+      "path": "reviews/targeted-cohort3/COMPARISONS.json",
+      "sha256": "876eaabbfcc2741353e117bdb71aafa180c8bc593a9372d6a81fd1c33329c72e",
+      "mtime": "2026-10-07T20:12:33.758067+00:00",
+      "completion": "IN_PROGRESS_HELD_GLM_CAPACITY_NO_NEW_SEED_RETRY_AUTHORIZATION"
+    },
+    {
+      "path": "helpers/targeted-cohort4/COMPARISONS.json",
+      "sha256": "ee713bda9c95ca9cb40bb48a1c949d43ade69de53d697903c7d5e2d4c3ac0f48",
+      "mtime": "2026-10-07T20:00:51.053845+00:00",
+      "counts": {
+        "cases": 6,
+        "full_pairs": 2,
+        "reviewed_pairs": 2,
+        "terminal_case_dispositions": 3
+      }
+    },
+    {
+      "path": "helpers/integrated-execution/COMPARISONS.json",
+      "sha256": "dd0e6e2bacfbe532a0468232188cd81d66632378f742c2ab5a400b91b41981ea",
+      "mtime": "2026-10-07T20:33:03.775463+00:00",
+      "assessed_pairs": 2,
+      "assessed_arms": 4,
+      "terminal_pair_dispositions": 4,
+      "complete_pairs": 4,
+      "unassessed_pairs": 4
+    },
+    {
+      "path": "reviews/anchors/COMPARISONS.json",
+      "sha256": "8694786338d3a5b310cbb86d26fe3c38bcd0d9f78c792ba631717ba91d5a4256",
+      "mtime": "2026-10-07T20:07:15.395021+00:00",
+      "complete_assessed_pairs": 3
+    }
+  ],
+  "normalization_warning": "Owner terminal and assessed counters have different definitions, versions and historical diagnostic gates. Do not sum into completed methodcomparisons. Logical40/80 index is independent. Final counts require per-version authored source coverage, both-final, lifecycle and eligibility dispositions."
+}

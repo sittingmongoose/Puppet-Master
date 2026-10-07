@@ -1,0 +1,335 @@
+{
+  "schema": "er10.integrated.execution.v1",
+  "case_id": "I-METHOD-05",
+  "frozen_at": "2026-10-07T19:54:32.107377+00:00",
+  "recipe": {
+    "case_id": "I-METHOD-05",
+    "methods": [
+      "M16"
+    ],
+    "control": "Two fresh same-family researchers each independently discover/compare one of two declared related frozen PM plan-topic groups,10min each, then fresh critic10 and finalreviser15.",
+    "treatment": "One broad shared discovery inventory10min, two fresh topic comparisons5min each using exact inventory+topic inputs, then fresh critic10 and finalreviser15; all scope/interaction/unknowns retained. Parallel topic stage workers permitted in BOTH arms with cap2; costs aggregate all stages, phase dependencies frozen.",
+    "stages": "both total candidate occupied ceiling45; actual critical path can be shorter from parallel topics; no uncharged sharing across arms"
+  },
+  "selection_basis": "unqualified operational diagnostic; no source-quality or speed claim",
+  "inputs": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/INPUTS.md",
+      "sha256": "c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae",
+      "bytes": 2113
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/brief.md",
+      "sha256": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+      "bytes": 5605
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/plan.md",
+      "sha256": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+      "bytes": 2932
+    },
+    "source/F-008.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-008.md",
+      "sha256": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+      "bytes": 2828
+    },
+    "source/F-018.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-018.md",
+      "sha256": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+      "bytes": 2233
+    },
+    "source/F-020.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-020.md",
+      "sha256": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+      "bytes": 2235
+    },
+    "source/F-026.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-026.md",
+      "sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+      "bytes": 2399
+    },
+    "source/F-027.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-027.md",
+      "sha256": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+      "bytes": 2090
+    },
+    "source/F-028.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-028.md",
+      "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+      "bytes": 2001
+    },
+    "source/F-082.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-082.md",
+      "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+      "bytes": 2294
+    },
+    "source/definitions_and_transactions.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/definitions_and_transactions.md",
+      "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+      "bytes": 5313
+    },
+    "source/editing_and_save_context.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/editing_and_save_context.md",
+      "sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+      "bytes": 4948
+    },
+    "source/text_and_size_context.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/text_and_size_context.md",
+      "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7",
+      "bytes": 3663
+    }
+  },
+  "prepared_identity": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/prepared.json",
+    "sha256": "1e111c9f28f7d247443f3dc1f88fa8485ff4dac3ffd5dd9d0f30ff86a1f84690",
+    "bytes": 11028
+  },
+  "candidate_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "review_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "same_pair": {
+    "inputs": true,
+    "effort": true,
+    "access": true,
+    "aggregate_occupied_work_ceiling_seconds": 2700
+  },
+  "stage_seconds": {
+    "control": {
+      "research-topic-a": 600,
+      "research-topic-b": 600,
+      "critic": 600,
+      "reviser": 900
+    },
+    "treatment": {
+      "discovery": 600,
+      "research-topic-a": 300,
+      "research-topic-b": 300,
+      "critic": 600,
+      "reviser": 900
+    }
+  },
+  "latency_boundary": "earliest actual T3 requestedAt for first stage through complete native terminal and T3 delivery, maximum 2700s including queue/start/retries/retrieval; stage allocation includes delivery; no clock reset",
+  "reserve_policy": "research preserves 600s critic +900s final; critic preserves 900s final; no writing-stage admission after envelope exhaustion",
+  "expiry_policy": "one lifecycle-only save/deliver steer at real expiry, at most 60s grace, owned task_cancel if live; no substantive extension",
+  "launch_order": [
+    "control",
+    "treatment"
+  ],
+  "output_scope": "FULL original O1-O6 and all in-scope plan sections; complete proposed-change artifact, options, retained/rejected dispositions, criticism dispositions, uncertainty, validation proposed/executed",
+  "quality_axes": [
+    "required brief obligations",
+    "consequential claims/conditions",
+    "bounded useful discovery",
+    "incorrect rejections/corrections",
+    "preservation",
+    "proposed versus executed validation"
+  ],
+  "output_contract": "authored artifact.md + source-map.json with immutable captured public bytes and identity metadata; alternatively full native final answer mechanically saved verbatim, never a summary substituted for full output",
+  "tool_policy": {
+    "native_public_search_read": true,
+    "writable": "own role directory only",
+    "no_nested_delegation": true,
+    "no_repo_or_account_changes": true,
+    "maps_advisory_not_firewall": true,
+    "isolation_limit": "T3 freshness excludes parent history; full-access filesystem not a security firewall; no evaluator exists until both arms quiet; forbidden sibling paths explicitly excluded",
+    "execution": "no downloaded source execution/installers on host; bounded qualified sandbox only if separately admitted"
+  },
+  "topic_subdivision": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method05-topic-subdivision-v1.json",
+    "sha256": "057e58ea06bac579f69b2b9f2be53bf1a4ad212fd932a75efe4aee8ff8991dff",
+    "contract": {
+      "schema": "er10.method5.topic-subdivision.v1",
+      "frozen_at": "2026-10-07T19:41:43.678899+00:00",
+      "status": "prospective, no Method05 arm/common seed dispatched",
+      "basis": "Existing userbrief/Frozen scope and exact source unit headings only; no scientific findings/components/recommendations authored by Sol",
+      "topic_groups": [
+        {
+          "id": "A",
+          "title": "Shared buffer, save and recovery state",
+          "owner_refs": [
+            "F-008",
+            "F-018",
+            "F-020",
+            "F-026",
+            "definitions_and_transactions",
+            "editing_and_save_context"
+          ],
+          "obligations": "Existing shared-authority transaction/dirty/save/unsaved-recovery/changed-on-disk comparison requirements; preserve original selected choices and absent adjacent-owner boundaries"
+        },
+        {
+          "id": "B",
+          "title": "Text representation, read-only and size behavior",
+          "owner_refs": [
+            "F-027",
+            "F-028",
+            "F-082",
+            "text_and_size_context"
+          ],
+          "obligations": "Existing UTF-8/mixed line-endings/text identity/read-only/large-file constraints and source-canonical save/recovery interactions; preserve original choices/modes"
+        }
+      ],
+      "shared_seam": "Both receive whole original brief/plan/source copies; groups are primary comparison ownership, not input removal. Both retain cross-topic dependencies and unknowns; full fresh critic/final must reconcile union and entire O1-O6/F scope.",
+      "control": {
+        "stages": [
+          {
+            "role": "research-topic-a-v1",
+            "seconds": 600,
+            "task": "Independent brief-led open discovery and topic A comparison"
+          },
+          {
+            "role": "research-topic-b-v1",
+            "seconds": 600,
+            "task": "Independent brief-led open discovery and topic B comparison"
+          },
+          {
+            "role": "critic-v1",
+            "seconds": 600,
+            "task": "Fresh full original brief/plan + exact complete two topic drafts/source maps; full union critique"
+          },
+          {
+            "role": "reviser-v1",
+            "seconds": 900,
+            "task": "Fresh complete final, union preservation and cross-topic interactions"
+          }
+        ],
+        "topic_parallelism_cap": 2,
+        "candidate_occupied_work_ceiling_seconds": 2700
+      },
+      "treatment": {
+        "stages": [
+          {
+            "role": "discovery-v1",
+            "seconds": 600,
+            "task": "One broad brief-led public discovery inventory across original whole obligations; candidate-authored code/history/alternatives/conditions/unknowns"
+          },
+          {
+            "role": "research-topic-a-v1",
+            "seconds": 300,
+            "task": "Fresh topic A comparison receives exact inventory/sourcebytes + original own topic input; independent unknowns protected"
+          },
+          {
+            "role": "research-topic-b-v1",
+            "seconds": 300,
+            "task": "Fresh topic B comparison receives exact inventory/sourcebytes + original own topic input; independent unknowns protected"
+          },
+          {
+            "role": "critic-v1",
+            "seconds": 600,
+            "task": "Fresh full original brief/plan + complete inventory/two topic drafts/source maps, full union critique"
+          },
+          {
+            "role": "reviser-v1",
+            "seconds": 900,
+            "task": "Fresh complete final, union preservation and cross-topic interactions"
+          }
+        ],
+        "topic_parallelism_cap": 2,
+        "topic_dependency": "both topic workers only AFTER shared discovery terminal/frozen; critic only after both topic workers terminal/frozen",
+        "candidate_occupied_work_ceiling_seconds": 2700
+      },
+      "same_pair": "45min aggregate occupied ceiling INCLUDING all stages/queue/service/retries/retrieval/output/delivery, all fresh same LunaMax/account/effort/access/inputs; no cross-arm sharing",
+      "merge_policy": "Host may concatenate exact candidate-authored drafts/source maps mechanically, never synthesize findings; candidate critic/reviser handles science and reconciliation",
+      "input_identities": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/brief.md": {
+          "sha256": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+          "bytes": 5605
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/plan.md": {
+          "sha256": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+          "bytes": 2932
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-008.md": {
+          "sha256": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+          "bytes": 2828
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-018.md": {
+          "sha256": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+          "bytes": 2233
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-020.md": {
+          "sha256": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+          "bytes": 2235
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-026.md": {
+          "sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+          "bytes": 2399
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-027.md": {
+          "sha256": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+          "bytes": 2090
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-028.md": {
+          "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+          "bytes": 2001
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/F-082.md": {
+          "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+          "bytes": 2294
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/definitions_and_transactions.md": {
+          "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+          "bytes": 5313
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/editing_and_save_context.md": {
+          "sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+          "bytes": 4948
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/source/text_and_size_context.md": {
+          "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7",
+          "bytes": 3663
+        }
+      }
+    }
+  },
+  "aggregate_bound": "occupied total across parallel topic children <=2700 seconds; actualearliest requestedAt->delivery wholearm<=2700, both limits, no overlap doublecount; research occupied<=1200 including discovery",
+  "host_orchestration": "sole supervisor dispatches all fresh topic/discovery/critic/reviser stages; candidate no descendants; exact mechanical concatenation only; no Sol science",
+  "common_lifecycle_carrier": {
+    "version": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_at": "2026-10-07T19:54:32.455507+00:00",
+    "applies_to_both_arms_all_stages": true,
+    "exact_stage_versions": [
+      "I-METHOD-05/control/research-topic-a-v1",
+      "I-METHOD-05/control/research-topic-b-v1",
+      "I-METHOD-05/control/critic-v1",
+      "I-METHOD-05/control/reviser-v1",
+      "I-METHOD-05/treatment/discovery-v1",
+      "I-METHOD-05/treatment/research-topic-a-v1",
+      "I-METHOD-05/treatment/research-topic-b-v1",
+      "I-METHOD-05/treatment/critic-v1",
+      "I-METHOD-05/treatment/reviser-v1"
+    ],
+    "native_route": "actual Codex create_goal/get active/update complete/get terminal on same fresh Goal; <=4000char objective",
+    "activation_notice_parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "host_carrier": "one passive export per activation or terminal event; Codex actual native Goal state projection, not raw tool bodies",
+    "exporter_sha256": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8",
+    "absence_policy": "actual active/terminal state absent -> lifecycle HOLD; no fake proof",
+    "scientific_delivery": "complete artifact.md + source-map.json/captured source bytes; complete native output fallback verbatim accepted; concise path/status final after actual terminal",
+    "cost": "host export setup/invocation separate; native usage fields distinct and unknown null",
+    "scope_and_envelopes_unchanged": true,
+    "activation_notice_transport": {
+      "mode": "auto",
+      "reason": "prospective before eitherarm dispatch; deliver once even if parent idle; no candidate scientificsteers or additional notices",
+      "frozen_at": "2026-10-07T19:55:05.412743+00:00"
+    }
+  }
+}

@@ -1,0 +1,518 @@
+{
+  "schema": "ER10-actual-Codex-session-usage-observation-v1",
+  "observed_at": "2026-10-07T21:05:00.120786+00:00",
+  "purpose": "Read-only bounded own already completed confirmation pair telemetry after recorded T3 usage-summary service timeout. No synthetic work, provider profile changes or raw transcript retention.",
+  "original_comparison_unchanged": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/COMPARISON.json",
+    "sha256": "3491ff06146f1549089390bf20fd6da91d765f857614fd70211e238dd9f7ee22"
+  },
+  "sessions": [
+    {
+      "case": "C-02",
+      "arm": "control",
+      "role": "researcher-v1",
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-researcher-v1",
+      "binding_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/host/terminal-dbeac2283cba86bf.json",
+      "binding_sha256": "dbeac2283cba86bf5b3165c2d401d45a4c0ed933c70b50428aab371c8b2b8119",
+      "native_id": "01a117f1-e750-7d41-8762-facacb512e85",
+      "T3_model_selection": {
+        "instanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "options": [
+          {
+            "id": "reasoningEffort",
+            "value": "max"
+          },
+          {
+            "id": "serviceTier",
+            "value": "priority"
+          }
+        ]
+      },
+      "raw_session_meta": {
+        "id": "01a117f1-e750-7d41-8762-facacb512e85",
+        "timestamp": "2026-10-07T19:58:11.813Z",
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+        "originator": "T3 Code",
+        "cli_version": "0.160.1",
+        "source": "vscode",
+        "model_provider": "openai"
+      },
+      "raw_session_path": "/home/sittingmongoose/.codex/sessions/2026/10/07/rollout-2026-10-07T19-58-11-01a117f1-e750-7d41-8762-facacb512e85.jsonl",
+      "raw_session_snapshot_sha256": "3e27fa54a6bcb8b6c50a1ae64362b7a7439eff6660663cb26e91d2037a2bd9d1",
+      "snapshot_bytes": 2119205,
+      "turn_context_models": [
+        "gpt-6-luna"
+      ],
+      "token_count_event_count": 48,
+      "first_token_count_event": {
+        "timestamp": "2026-10-07T19:58:23.074Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 24604,
+            "cached_input_tokens": 11008,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 305,
+            "reasoning_output_tokens": 218,
+            "total_tokens": 24909
+          },
+          "last_token_usage": {
+            "input_tokens": 24604,
+            "cached_input_tokens": 11008,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 305,
+            "reasoning_output_tokens": 218,
+            "total_tokens": 24909
+          },
+          "model_context_window": 258400
+        }
+      },
+      "last_token_count_event": {
+        "timestamp": "2026-10-07T20:14:00.116Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 5822023,
+            "cached_input_tokens": 5603584,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 59617,
+            "reasoning_output_tokens": 37619,
+            "total_tokens": 5881640
+          },
+          "last_token_usage": {
+            "input_tokens": 205598,
+            "cached_input_tokens": 203520,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 528,
+            "reasoning_output_tokens": 317,
+            "total_tokens": 206126
+          },
+          "model_context_window": 258400
+        }
+      },
+      "reported_total_token_usage": {
+        "input_tokens": 5822023,
+        "cached_input_tokens": 5603584,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 59617,
+        "reasoning_output_tokens": 37619,
+        "total_tokens": 5881640
+      },
+      "violations": [],
+      "requestedAt": "2026-10-07T19:58:11.705Z",
+      "completedAt": "2026-10-07T20:14:00.368Z",
+      "billing": null,
+      "remaining_quota": null,
+      "interpretation": "Provider-reported raw Codex session usage fields; no billing estimate. One terminal cumulative total per distinct fresh session only; reasoning is output subset, cache is input subset. Native Goal aggregate counters not used."
+    },
+    {
+      "case": "C-02",
+      "arm": "control",
+      "role": "critic-v1",
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-critic-v1",
+      "binding_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/host/terminal-9fbeb42a88f9035f.json",
+      "binding_sha256": "9fbeb42a88f9035fc1a610d34f323ce62e3678bca1381464cf209768df939b86",
+      "native_id": "01a11801-f8f4-78e2-bac9-aac19ee3bf75",
+      "T3_model_selection": {
+        "instanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "options": [
+          {
+            "id": "reasoningEffort",
+            "value": "max"
+          },
+          {
+            "id": "serviceTier",
+            "value": "priority"
+          }
+        ]
+      },
+      "raw_session_meta": {
+        "id": "01a11801-f8f4-78e2-bac9-aac19ee3bf75",
+        "timestamp": "2026-10-07T20:15:44.904Z",
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+        "originator": "T3 Code",
+        "cli_version": "0.160.1",
+        "source": "vscode",
+        "model_provider": "openai"
+      },
+      "raw_session_path": "/home/sittingmongoose/.codex/sessions/2026/10/07/rollout-2026-10-07T20-15-44-01a11801-f8f4-78e2-bac9-aac19ee3bf75.jsonl",
+      "raw_session_snapshot_sha256": "98eef2195c6088e730296f7046406e46c781e5338673e8249a38aa99f81dca11",
+      "snapshot_bytes": 1712555,
+      "turn_context_models": [
+        "gpt-6-luna"
+      ],
+      "token_count_event_count": 19,
+      "first_token_count_event": {
+        "timestamp": "2026-10-07T20:15:57.738Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 24620,
+            "cached_input_tokens": 23296,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 798,
+            "reasoning_output_tokens": 543,
+            "total_tokens": 25418
+          },
+          "last_token_usage": {
+            "input_tokens": 24620,
+            "cached_input_tokens": 23296,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 798,
+            "reasoning_output_tokens": 543,
+            "total_tokens": 25418
+          },
+          "model_context_window": 258400
+        }
+      },
+      "last_token_count_event": {
+        "timestamp": "2026-10-07T20:23:22.051Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 1354374,
+            "cached_input_tokens": 1204480,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 27671,
+            "reasoning_output_tokens": 14742,
+            "total_tokens": 1382045
+          },
+          "last_token_usage": {
+            "input_tokens": 115819,
+            "cached_input_tokens": 114432,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 481,
+            "reasoning_output_tokens": 237,
+            "total_tokens": 116300
+          },
+          "model_context_window": 258400
+        }
+      },
+      "reported_total_token_usage": {
+        "input_tokens": 1354374,
+        "cached_input_tokens": 1204480,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 27671,
+        "reasoning_output_tokens": 14742,
+        "total_tokens": 1382045
+      },
+      "violations": [],
+      "requestedAt": "2026-10-07T20:15:44.793Z",
+      "completedAt": "2026-10-07T20:23:22.176Z",
+      "billing": null,
+      "remaining_quota": null,
+      "interpretation": "Provider-reported raw Codex session usage fields; no billing estimate. One terminal cumulative total per distinct fresh session only; reasoning is output subset, cache is input subset. Native Goal aggregate counters not used."
+    },
+    {
+      "case": "C-02",
+      "arm": "control",
+      "role": "reviser-v1",
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-reviser-v1",
+      "binding_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/host/terminal-ee348767f2373256.json",
+      "binding_sha256": "ee348767f2373256b7ebdb1fb77ff7e8dfa7e57592498e3ec32af9e9558cbbee",
+      "native_id": "01a11809-c893-7463-8bca-e27ff90b7e1b",
+      "T3_model_selection": {
+        "instanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "options": [
+          {
+            "id": "reasoningEffort",
+            "value": "max"
+          },
+          {
+            "id": "serviceTier",
+            "value": "priority"
+          }
+        ]
+      },
+      "raw_session_meta": {
+        "id": "01a11809-c893-7463-8bca-e27ff90b7e1b",
+        "timestamp": "2026-10-07T20:24:16.807Z",
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+        "originator": "T3 Code",
+        "cli_version": "0.160.1",
+        "source": "vscode",
+        "model_provider": "openai"
+      },
+      "raw_session_path": "/home/sittingmongoose/.codex/sessions/2026/10/07/rollout-2026-10-07T20-24-16-01a11809-c893-7463-8bca-e27ff90b7e1b.jsonl",
+      "raw_session_snapshot_sha256": "8cdd817a29c5a16264e972d0d3f5d9635ec0758607de341c9985f1bd8a382b8e",
+      "snapshot_bytes": 2860528,
+      "turn_context_models": [
+        "gpt-6-luna"
+      ],
+      "token_count_event_count": 41,
+      "first_token_count_event": {
+        "timestamp": "2026-10-07T20:24:35.554Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 24609,
+            "cached_input_tokens": 15104,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 434,
+            "reasoning_output_tokens": 208,
+            "total_tokens": 25043
+          },
+          "last_token_usage": {
+            "input_tokens": 24609,
+            "cached_input_tokens": 15104,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 434,
+            "reasoning_output_tokens": 208,
+            "total_tokens": 25043
+          },
+          "model_context_window": 258400
+        }
+      },
+      "last_token_count_event": {
+        "timestamp": "2026-10-07T20:35:08.585Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 4641458,
+            "cached_input_tokens": 4457472,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 67475,
+            "reasoning_output_tokens": 41854,
+            "total_tokens": 4708933
+          },
+          "last_token_usage": {
+            "input_tokens": 185921,
+            "cached_input_tokens": 184064,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 375,
+            "reasoning_output_tokens": 164,
+            "total_tokens": 186296
+          },
+          "model_context_window": 258400
+        }
+      },
+      "reported_total_token_usage": {
+        "input_tokens": 4641458,
+        "cached_input_tokens": 4457472,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 67475,
+        "reasoning_output_tokens": 41854,
+        "total_tokens": 4708933
+      },
+      "violations": [],
+      "requestedAt": "2026-10-07T20:24:16.119Z",
+      "completedAt": "2026-10-07T20:35:08.731Z",
+      "billing": null,
+      "remaining_quota": null,
+      "interpretation": "Provider-reported raw Codex session usage fields; no billing estimate. One terminal cumulative total per distinct fresh session only; reasoning is output subset, cache is input subset. Native Goal aggregate counters not used."
+    },
+    {
+      "case": "C-02",
+      "arm": "treatment",
+      "role": "researcher-v1",
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-researcher-v1",
+      "binding_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/host/terminal-b08791279b20d9a6.json",
+      "binding_sha256": "b08791279b20d9a6b64a29cc5299304b095fe76c9ac9febcc27fa2b336f898f0",
+      "native_id": "01a117f1-ab43-7391-a3f9-4cd1c0d61989",
+      "T3_model_selection": {
+        "instanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "options": [
+          {
+            "id": "reasoningEffort",
+            "value": "max"
+          },
+          {
+            "id": "serviceTier",
+            "value": "priority"
+          }
+        ]
+      },
+      "raw_session_meta": {
+        "id": "01a117f1-ab43-7391-a3f9-4cd1c0d61989",
+        "timestamp": "2026-10-07T19:57:56.436Z",
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+        "originator": "T3 Code",
+        "cli_version": "0.160.1",
+        "source": "vscode",
+        "model_provider": "openai"
+      },
+      "raw_session_path": "/home/sittingmongoose/.codex/sessions/2026/10/07/rollout-2026-10-07T19-57-56-01a117f1-ab43-7391-a3f9-4cd1c0d61989.jsonl",
+      "raw_session_snapshot_sha256": "7c315d9fce215d2ef222bb083905db6b7dbcc639e353500f5eb4a1ba3fe5e07b",
+      "snapshot_bytes": 2760878,
+      "turn_context_models": [
+        "gpt-6-luna"
+      ],
+      "token_count_event_count": 47,
+      "first_token_count_event": {
+        "timestamp": "2026-10-07T19:58:07.022Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 24121,
+            "cached_input_tokens": 15104,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 671,
+            "reasoning_output_tokens": 488,
+            "total_tokens": 24792
+          },
+          "last_token_usage": {
+            "input_tokens": 24121,
+            "cached_input_tokens": 15104,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 671,
+            "reasoning_output_tokens": 488,
+            "total_tokens": 24792
+          },
+          "model_context_window": 258400
+        }
+      },
+      "last_token_count_event": {
+        "timestamp": "2026-10-07T20:11:31.160Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 6688887,
+            "cached_input_tokens": 6437120,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 69473,
+            "reasoning_output_tokens": 45973,
+            "total_tokens": 6758360
+          },
+          "last_token_usage": {
+            "input_tokens": 238481,
+            "cached_input_tokens": 237312,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 391,
+            "reasoning_output_tokens": 183,
+            "total_tokens": 238872
+          },
+          "model_context_window": 258400
+        }
+      },
+      "reported_total_token_usage": {
+        "input_tokens": 6688887,
+        "cached_input_tokens": 6437120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 69473,
+        "reasoning_output_tokens": 45973,
+        "total_tokens": 6758360
+      },
+      "violations": [],
+      "requestedAt": "2026-10-07T19:57:55.969Z",
+      "completedAt": "2026-10-07T20:11:31.283Z",
+      "billing": null,
+      "remaining_quota": null,
+      "interpretation": "Provider-reported raw Codex session usage fields; no billing estimate. One terminal cumulative total per distinct fresh session only; reasoning is output subset, cache is input subset. Native Goal aggregate counters not used."
+    },
+    {
+      "case": "C-02",
+      "arm": "treatment",
+      "role": "critic-v1",
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-critic-v1",
+      "binding_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/host/terminal-7b3876d548c800ae.json",
+      "binding_sha256": "7b3876d548c800aef28ecd8591677f479c3da00b06ceca8f12aba8c79dc50044",
+      "native_id": "01a11800-2dc9-7fb1-a41b-ce25d384d24e",
+      "T3_model_selection": {
+        "instanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "options": [
+          {
+            "id": "reasoningEffort",
+            "value": "max"
+          },
+          {
+            "id": "serviceTier",
+            "value": "priority"
+          }
+        ]
+      },
+      "raw_session_meta": {
+        "id": "01a11800-2dc9-7fb1-a41b-ce25d384d24e",
+        "timestamp": "2026-10-07T20:13:47.357Z",
+        "cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+        "originator": "T3 Code",
+        "cli_version": "0.160.1",
+        "source": "vscode",
+        "model_provider": "openai"
+      },
+      "raw_session_path": "/home/sittingmongoose/.codex/sessions/2026/10/07/rollout-2026-10-07T20-13-47-01a11800-2dc9-7fb1-a41b-ce25d384d24e.jsonl",
+      "raw_session_snapshot_sha256": "acb845f4d3c7d7947fc59458a6526cf109657e0180e7ac4bf2e27273439474b2",
+      "snapshot_bytes": 2716594,
+      "turn_context_models": [
+        "gpt-6-luna"
+      ],
+      "token_count_event_count": 40,
+      "first_token_count_event": {
+        "timestamp": "2026-10-07T20:14:02.444Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 24617,
+            "cached_input_tokens": 15104,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 576,
+            "reasoning_output_tokens": 474,
+            "total_tokens": 25193
+          },
+          "last_token_usage": {
+            "input_tokens": 24617,
+            "cached_input_tokens": 15104,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 576,
+            "reasoning_output_tokens": 474,
+            "total_tokens": 25193
+          },
+          "model_context_window": 258400
+        }
+      },
+      "last_token_count_event": {
+        "timestamp": "2026-10-07T20:27:57.418Z",
+        "info": {
+          "total_token_usage": {
+            "input_tokens": 4761048,
+            "cached_input_tokens": 4558848,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 56407,
+            "reasoning_output_tokens": 32601,
+            "total_tokens": 4817455
+          },
+          "last_token_usage": {
+            "input_tokens": 195968,
+            "cached_input_tokens": 194304,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 395,
+            "reasoning_output_tokens": 195,
+            "total_tokens": 196363
+          },
+          "model_context_window": 258400
+        }
+      },
+      "reported_total_token_usage": {
+        "input_tokens": 4761048,
+        "cached_input_tokens": 4558848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 56407,
+        "reasoning_output_tokens": 32601,
+        "total_tokens": 4817455
+      },
+      "violations": [],
+      "requestedAt": "2026-10-07T20:13:47.234Z",
+      "completedAt": "2026-10-07T20:27:57.817Z",
+      "billing": null,
+      "remaining_quota": null,
+      "interpretation": "Provider-reported raw Codex session usage fields; no billing estimate. One terminal cumulative total per distinct fresh session only; reasoning is output subset, cache is input subset. Native Goal aggregate counters not used."
+    }
+  ],
+  "recorded_session_field_sums_by_arm": {
+    "control": {
+      "input_tokens": 11817855,
+      "cached_input_tokens": 11265536,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 154763,
+      "reasoning_output_tokens": 94215,
+      "total_tokens": 11972618
+    },
+    "treatment": {
+      "input_tokens": 11449935,
+      "cached_input_tokens": 10995968,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 125880,
+      "reasoning_output_tokens": 78574,
+      "total_tokens": 11575815
+    }
+  },
+  "no_financial_or_quality_preserving_quota_claim": true,
+  "not_goal_counter_sum": true,
+  "billing_unknown": true,
+  "profile_account_and_native_binding": "Exact T3 terminal receipts bind each strong native session ref to codex_gmail/Luna Max priority; raw Codex session metadata itself does not assert account identity."
+}

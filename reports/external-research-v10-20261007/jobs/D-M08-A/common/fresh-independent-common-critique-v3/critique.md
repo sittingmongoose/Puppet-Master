@@ -1,0 +1,32 @@
+# D-M08-A common draft critique v3
+
+**Legitimate test input — candidate critique, not evaluator truth**
+
+Scope: independent review of the exact mapped `fresh-common-draft-v3/draft.md` against the bounded brief and the two frozen primary RFC captures. Verdicts below are this candidate's evidence-based judgments, not an evaluator key.
+
+1. **AMEND — representation identity and selectors (obligations 2, 5).** Accept the core: retain the effective target, relevant request-selection context, coding, and a strong validator; the draft correctly warns that an ETag alone does not identify a representation across resources. RFC 9110 §8.8.1 scopes strong-tag uniqueness to a resource and says a shared tag across different resources does not imply equivalent data. Clarify that `Vary: *` signals selection factors the client cannot fully reconstruct from request fields; do not treat a selector snapshot as proof of identity. Content coding is part of the representation (§8.4), and `Vary` names request fields that might select it (§12.5.5). Revisit any same-tag or byte-offset conclusion if the target or coding changes.
+
+2. **AMEND; REJECT unconditional overwrite — failed `If-Range` (obligations 2, 3, 5).** The validator rules are sound: no weak entity tag, and use a date only when no entity tag exists and the date is strong (RFC 9110 §13.1.5). A false condition makes the recipient ignore `Range`; it avoids a 412 and falls back to ordinary GET handling. Do not imply every such exchange is necessarily a successful `200` containing the full representation. Replace/truncate the partial file on an actual full `200`; on a redirect or error response, do not append it or overwrite usable bytes as though it were a full representation. This qualifies, rather than removes, the draft's safe `200` replacement rule.
+
+3. **ACCEPT with a fail-closed detail — `206` handling (obligation 3).** The draft correctly requires inspection of status, `Content-Type`, and `Content-Range`, permits a server to return only part of the requested ranges, and distinguishes message `Content-Length` from total representation length (RFC 9110 §§15.3.7–15.3.7.3). State explicitly that an unexpected multipart response, unknown range unit, invalid range, or body whose octet count disagrees with the described interval is not appended or recombined. A valid `Content-Range` may use `*` when total length is unknown (§14.4); do not reject that solely for lacking a total.
+
+4. **ACCEPT with qualification — `416` (obligation 3).** The draft correctly treats its body as non-payload and says `Content-Range: bytes */N`, when present, is information rather than proof that local bytes are current. RFC 9110 §§14.4 and 15.5.17 say a server *should* send that field, so absence is valid; `416` can also reject excessive or overlapping range sets, not only an offset beyond a shortened representation. A server can ignore `Range` and return `200`, so keep that case separate. Never infer prefix validity from `N` alone.
+
+5. **ACCEPT — coding and length caveats (obligation 4).** The byte-form rule is supported: `Content-Encoding` describes the coded representation, and range offsets address that selected representation (RFC 9110 §§8.4, 14.1.2). For a `206`, `Content-Length` describes that message's content, while `Content-Range` carries interval and possible total-length information (§15.3.7). Keep identity encoding/decompression advice optional and require checking the response actually received.
+
+6. **AMEND — combining bytes also affects metadata (obligations 1, 2, 5).** Same strong validator on the same target is the right combination condition (RFC 9110 §15.3.7.3); a validator or selector amendment must therefore trigger re-evaluation of every downstream append decision. The draft stores response metadata but does not say which fields to refresh when combining. RFC 9110 §15.3.7.3 specifies header-field precedence, including for an incomplete `200`; RFC 9111 §3.4 requires a cache combining partial content to update stored fields from the new response. If this sidecar is not intended to be an HTTP cache, define which metadata is retained or replaced rather than silently keeping stale fields.
+
+7. **ACCEPT with added checks — uncertainty and test coverage (obligations 1, 6).** The conservative full-GET fallback and the listed unchanged, changed-tag, `416`, malformed/short `206`, and decompression tests are useful. Add cases for weak-tag refusal and a qualifying strong `Last-Modified` date; missing `Content-Range` on `416`; failed `If-Range` followed by a non-`200`; unexpected multipart/unknown-unit `206`; changed `Vary`/coding; and metadata refresh after combination. The optional `Accept-Encoding: identity` advice should remain advice, not a guarantee about server choice or client byte exposure.
+
+8. **UNRESOLVED — client-library byte exposure (obligations 4, 6).** RFCs define the coded representation and ranges but do not identify the desktop client's HTTP library or whether its response API transparently decompresses. The final implementation choice must test the exact library path used to write partial bytes and record the observed coding/byte form. Until then, the proposal can recommend consistent coded or decoded storage, but cannot claim that a particular `Accept-Encoding` setting makes the byte stream safe to resume.
+
+## Source basis and limits
+
+- RFC 9110, *HTTP Semantics*, June 2022, frozen exact text at <https://www.rfc-editor.org/rfc/rfc9110.txt>; SHA-256 `21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a`. Relevant sections are cited above.
+- RFC 9111, *HTTP Caching*, June 2022, frozen exact text at <https://www.rfc-editor.org/rfc/rfc9111.txt>; SHA-256 `aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e`. Used only for §3.4's cache metadata update rule.
+
+Both local source hashes matched the map. No additional sources or live server/library behavior were checked; the library-specific byte-exposure point remains unresolved.
+
+## Run record
+
+T3 requestedAt: `2026-10-07T20:35:00.918Z`; boundary T0: `2026-10-07T20:28:57.512Z`; the earlier deadline is stage ceiling `2026-10-07T20:43:00.918Z` (480 seconds after requestedAt). Read the map and its six listed artifacts only; performed 13 targeted section extracts, 3 section-discovery searches, and verified both source hashes. T3 control metadata was queried only to establish the originating run timestamp. Billing, input/cache/generated usage: unknown/null.

@@ -1,0 +1,21 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-researcher-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-researcher-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-researcher-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-researcher-v1",
+  "status": "running",
+  "workState": "working",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": null,
+  "latestTerminalStatus": null,
+  "latestTerminalSummary": null,
+  "latestTerminalResultContextTransferId": null,
+  "providerInstanceId": "codex_gmail",
+  "model": "gpt-6-luna",
+  "summary": null,
+  "resultContextTransferId": null,
+  "waitTimedOut": false,
+  "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1",
+  "request_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/request.json",
+  "saved_at": "2026-10-07T19:57:41.970045+00:00"
+}

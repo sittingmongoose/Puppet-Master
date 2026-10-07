@@ -1,0 +1,74 @@
+{
+  "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+  "original_source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+  "required_sources": [
+    {
+      "source_id": "rastermask",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterresample",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterwindow",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/sources/rasterio-1.3.10-enums.py",
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "kind": "Frozen candidate source capture; source identity/provenance untrusted, independently check against authored bindings",
+      "url": null
+    }
+  ],
+  "arm_source_indices": [],
+  "frozen_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/final.md",
+  "frozen_output_sha256": "8e4a129b2cd486629201d1448bedcd9291339ab2ce89d68f1fb5448f01d4ae2a",
+  "obligations": [
+    "Give a decision with conditions, rather than a universal processing rule.",
+    "Compare two alternatives under the same brief.",
+    "Preserve mask/nodata/class-label distinctions.",
+    "Retain source limitations and optional continuous-band opportunity.",
+    "Include validation proposals and open product choices.",
+    "Make every decision-view item traceable to full candidate-authored evidence without omitted meaning."
+  ],
+  "scope_limit": "Only originalbrief, sources/captureindices, THIS exactfrozenfinal; no candidatesdrafts/timing/otherarm/history/reviews/campaign/helpers. Method/path visible blindinglimit; advisory scope not filesystemfirewall.",
+  "required_complete_arm_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/semantic_findings.md",
+      "sha256": "22c8ca760be00ae27abdd9f5a226144efd81fef16b00eea339334b01a324ef90"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/mechanical_projection.md",
+      "sha256": "8e4a129b2cd486629201d1448bedcd9291339ab2ce89d68f1fb5448f01d4ae2a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/preservation_check.md",
+      "sha256": "76b8e323f19bd64d8604e23f2015e576b4c8e555d3f7fc23115f8650752357f3"
+    }
+  ]
+}

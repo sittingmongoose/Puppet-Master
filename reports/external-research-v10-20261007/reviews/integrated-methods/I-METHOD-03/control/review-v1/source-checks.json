@@ -1,0 +1,2295 @@
+{
+  "schema_version": 1,
+  "source_judgment": "FAIL",
+  "scientific_material_error_count": 2,
+  "basis": "Direct semantic comparison of complete admitted authored artifacts and independently retrieved public primary bytes. Hashes establish byte identity only, not truth. No hosted lifecycle/cost/selection data is used.",
+  "versions": {
+    "gtfs_spec": "google/transit@3c9e7b904b5035349622f03e11851e25c16d1d99",
+    "validator": "MobilityData/gtfs-validator@d74d7177f9f7c6bc7adc69508bb939362f2cf770 (v8.0.1)",
+    "validator_fix": "f65221e9908f5db0daa81ab8ce94168a5062151b",
+    "oba_product": "OneBusAway/onebusaway-application-modules@095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a (v2.7.1)",
+    "oba_report_analogue": "OneBusAway/server-validator@7e59c818574422ee30fc449b8b42adba3e6ac238",
+    "live_docs": "GTFS.org best practices: access timestamp/headers in retrieval rows; immutable equivalent also checked"
+  },
+  "checks": [
+    {
+      "id": "SC01",
+      "claim": "Bounded read-only product scope and exclusions",
+      "candidate_lines": "7,13,29,66,70,108-115",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [],
+      "note": "Authoritative user evidence: admitted brief lines 5-13; frozen plan lines 7-27.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC02",
+      "claim": "Missing TripUpdate is not on-time; early-drop schedule fallback",
+      "candidate_lines": "9,33,95,129",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_rt_trip_updates.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.830913+00:00",
+          "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+          "range_or_pointer": "5,13-30"
+        }
+      ],
+      "note": "Early-drop fixture applies to the cited Stop 4/Stop 5 configuration, not every omitted stop despite an upstream propagated prediction.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC03",
+      "claim": "Acquisition/header/entity times differ; stricter unknown-age gate",
+      "candidate_lines": "21,33,66,86",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_rt_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.827989+00:00",
+          "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+          "range_or_pointer": "108,168-169"
+        },
+        {
+          "path": "sources/public/gtfs_rt_best_practices_correct_path.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/best-practices/best-practices.md",
+          "accessed_at_utc": "2026-10-07T20:09:39.548704+00:00",
+          "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe",
+          "range_or_pointer": "23-24,65"
+        }
+      ],
+      "note": "TripUpdate timestamp is optional; withholding when its age cannot be established is a conservative product policy, not a specification requirement.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC04",
+      "claim": "Feed-scoped identifiers and explicit cross-feed location mapping",
+      "candidate_lines": "19,60,99",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_schedule_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.826594+00:00",
+          "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+          "range_or_pointer": "80,92,215,222,673-698"
+        }
+      ],
+      "note": "Identifiers are dataset keys; namespace isolation does not itself create a physical stop crosswalk.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC05",
+      "claim": "Transfer specificity, type 2 minimum, type 3 prohibition and tie error",
+      "candidate_lines": "43,97",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_schedule_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.826594+00:00",
+          "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+          "range_or_pointer": "669-698"
+        }
+      ],
+      "note": "The tie error is a defensible consumer policy for an invalid/ambiguous input, not a mandated GTFS UI.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC06",
+      "claim": "Transfer types 0-5 and review-only linked-trip exclusions",
+      "candidate_lines": "45-54,134",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_schedule_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.826594+00:00",
+          "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+          "range_or_pointer": "696-710"
+        }
+      ],
+      "note": "Types 4 and 5 are distinct; excluding them from computed ordinary transfers is explicitly a scope choice.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC07",
+      "claim": "Frequency exact_times 0 lacks fixed times; exact_times 1 expansion deferred",
+      "candidate_lines": "58,98,135",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_schedule_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.826594+00:00",
+          "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+          "range_or_pointer": "655-668"
+        },
+        {
+          "path": "sources/public/gtfs_rt_trip_updates.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.830913+00:00",
+          "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+          "range_or_pointer": "65-98"
+        }
+      ],
+      "note": "Both defaults and repeat-instance identity are governed by the primary specifications; no claim that all realtime frequency predictions are impossible.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC08",
+      "claim": "Cross-feed and trip-pair choices remain open; unmapped margin withheld",
+      "candidate_lines": "31,60,136,146",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_schedule_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.826594+00:00",
+          "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+          "range_or_pointer": "196,673-698"
+        }
+      ],
+      "note": "Merged datasets require a common agency_timezone. An open merge option is not evidence that arbitrary unlike-zone feeds can simply be concatenated.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC09",
+      "claim": "Repeated stops, delay propagation, NO_DATA and SKIPPED semantics",
+      "candidate_lines": "64,96,140",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_rt_trip_updates.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.830913+00:00",
+          "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+          "range_or_pointer": "22-49"
+        },
+        {
+          "path": "sources/public/gtfs_rt_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.827989+00:00",
+          "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+          "range_or_pointer": "204-224"
+        }
+      ],
+      "note": "NO_DATA propagates; SKIPPED does not stop an earlier delay from propagating. A directly omitted stop is not automatically timing-unknown if applicable propagation supplies timing.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC10",
+      "claim": "Uncertainty is optional; no confidence claim without policy",
+      "candidate_lines": "64,96,140",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_rt_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.827989+00:00",
+          "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+          "range_or_pointer": "180-189"
+        },
+        {
+          "path": "sources/public/gtfs_rt_trip_updates.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.830913+00:00",
+          "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+          "range_or_pointer": "101-105"
+        }
+      ],
+      "note": "The precise statistical meaning of uncertainty is undefined. No guarantee is inferred from it.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC11",
+      "claim": "ServiceWindow is a report envelope, not active-day or trip selection",
+      "candidate_lines": "80,119",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/validator_v8_0_1_service_window.java",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+          "accessed_at_utc": "2026-10-07T20:06:09.968553+00:00",
+          "sha256": "1cffefc70e6317fb1ae679d6331e5659ddacc05963e77dc5abef68700c33dcd0",
+          "range_or_pointer": "11-55"
+        },
+        {
+          "path": "sources/public/validator_v8_0_1_feed_metadata.java",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/FeedMetadata.java",
+          "accessed_at_utc": "2026-10-07T20:09:39.552798+00:00",
+          "sha256": "438dc1eb9dd70a3da41c15fce573f80cef91f2726f8b139dd7f0a6df134d542f",
+          "range_or_pointer": "750-789"
+        }
+      ],
+      "note": "Version: v8.0.1 commit d74d7177f9f7c6bc7adc69508bb939362f2cf770. Caller writes summary metadata.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC12",
+      "claim": "Cache applies calendar weekday intervals then additions/removals",
+      "candidate_lines": "80,119",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/validator_v8_0_1_service_interval_cache.java",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalCache.java",
+          "accessed_at_utc": "2026-10-07T20:06:09.973163+00:00",
+          "sha256": "3e9f8e735731d6bb6f4a34ede4308302fb3d11ec70a303abf08ebd15c3583869",
+          "range_or_pointer": "57-123"
+        },
+        {
+          "path": "sources/public/validator_v8_0_1_service_interval.java",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/core/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceInterval.java",
+          "accessed_at_utc": "2026-10-07T20:06:10.006266+00:00",
+          "sha256": "1850cec463bb16ac150b17e84de66c6e3cc76c192e366846ff512d724d7787bc",
+          "range_or_pointer": "43-151,217-228"
+        }
+      ],
+      "note": "Inspected actual loops and interval mutation; did not infer behavior from comments or source-map labels alone.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC13",
+      "claim": "Inspected tests cover optional tables, partial/all boundary removal and empty service",
+      "candidate_lines": "80,100,123",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/validator_v8_0_1_service_window_test.java",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/test/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindowTest.java",
+          "accessed_at_utc": "2026-10-07T20:06:09.979928+00:00",
+          "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063",
+          "range_or_pointer": "97-190,221-306,335-436,566-599,716-751"
+        },
+        {
+          "path": "sources/public/validator_v8_0_1_service_interval_test.java",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/core/src/test/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalTest.java",
+          "accessed_at_utc": "2026-10-07T20:06:10.110570+00:00",
+          "sha256": "f1cb2f2c0ddcb4cfb0fe49bcb96013fe277bf7535bdd87db5065a94e4e608ab1",
+          "range_or_pointer": "174-324"
+        }
+      ],
+      "note": "Source tests were inspected, not executed. ServiceWindowTest is byte-identical at the original fix and v8.0.1.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC14",
+      "claim": "MobilityData validator optional static preflight, not runtime transfer/RT component",
+      "candidate_lines": "25,78-82,119",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/mobility_validator_v8_0_1_readme.md",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/README.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.967032+00:00",
+          "sha256": "7e78048de0a82203c7324019b2b1fc5acf64acd84758582505622842d1963994",
+          "range_or_pointer": "5-10,30-44,70-80"
+        }
+      ],
+      "note": "A component can satisfy O2 without selecting the future runtime parser; no application correctness follows.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC15",
+      "claim": "Issue 2017 -> merged 2029 addresses exceptions and optional calendar tables",
+      "candidate_lines": "82,123,138",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/issue_2017.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2017",
+          "accessed_at_utc": "2026-10-07T20:06:10.260407+00:00",
+          "sha256": "f80f9dda380e5ce7b61af90a4a895d7b16a6121d5ad15bf6b0adaf76d8fa6dd0",
+          "range_or_pointer": "/title,/body,/state"
+        },
+        {
+          "path": "sources/public/pull_2029.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029",
+          "accessed_at_utc": "2026-10-07T20:06:10.271020+00:00",
+          "sha256": "c487be513fd843a0733c1620a942a5f49878aa74406305ce25280652f6808512",
+          "range_or_pointer": "/body,/merged,/merged_at,/merge_commit_sha"
+        },
+        {
+          "path": "sources/public/validator_fix_commit.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/commits/f65221e9908f5db0daa81ab8ce94168a5062151b",
+          "accessed_at_utc": "2026-10-07T20:07:51.640975+00:00",
+          "sha256": "fa4c661b3f8714a9ee4785d3f7743405b4c03708ad414736468079e6aa311c91",
+          "range_or_pointer": "/parents,/files"
+        },
+        {
+          "path": "sources/public/validator_pre_fix_feed_metadata_correct_parent.java",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/82e5d6b6b87af09c8d57fbe918318539405b4b2c/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/FeedMetadata.java",
+          "accessed_at_utc": "2026-10-07T20:11:43.313039+00:00",
+          "sha256": "ca0ada538b7d71996ac8410f33845bdd011353ce38d233851dec080738daeab4",
+          "range_or_pointer": "736-821"
+        },
+        {
+          "path": "sources/public/validator_fix_service_window.java",
+          "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/f65221e9908f5db0daa81ab8ce94168a5062151b/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+          "accessed_at_utc": "2026-10-07T20:09:39.553974+00:00",
+          "sha256": "415c1663e4b46f45f48209eb1a8effba9b6c5e436d5eb8e43b11a984619675aa",
+          "range_or_pointer": "11-186"
+        }
+      ],
+      "note": "Old global-bound adjustment was replaced by per-service active-date combination. Pertinent history is report metadata, not kiosk transfer correctness.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC16",
+      "claim": "Fix released in 8.0.0; later 8.0.1 code/tests and ancestor relationship",
+      "candidate_lines": "123",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/release_v8_0_0.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/317379777",
+          "accessed_at_utc": "2026-10-07T20:06:10.307586+00:00",
+          "sha256": "6b88299d304c977dd4dd9e7f73d4abee169b700da8e4ec2e59e7101ac5b2bd7e",
+          "range_or_pointer": "/tag_name,/published_at,/draft,/prerelease,/body"
+        },
+        {
+          "path": "sources/public/release_v8_0_1.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/321169212",
+          "accessed_at_utc": "2026-10-07T20:06:10.384857+00:00",
+          "sha256": "273820b221ef43cffae99e49b51456d97827db344f9e6c24ca925baa0ebef663",
+          "range_or_pointer": "/tag_name,/published_at,/body"
+        },
+        {
+          "path": "sources/public/validator_tag.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/git/ref/tags/v8.0.1",
+          "accessed_at_utc": "2026-10-07T20:07:51.638397+00:00",
+          "sha256": "403004a49e4786abd5c6f46af903d0a2f130c800d48ceb604c3c66f1f229697d",
+          "range_or_pointer": "/object"
+        },
+        {
+          "path": "sources/public/validator_fix_to_release.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/compare/f65221e9908f5db0daa81ab8ce94168a5062151b...d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+          "accessed_at_utc": "2026-10-07T20:07:51.644629+00:00",
+          "sha256": "66faed224ffa466fa1b60165dae8e75a590a58f9f59a0c66a283847bdb83cb1f",
+          "range_or_pointer": "/status,/merge_base_commit/sha,/ahead_by,/behind_by"
+        }
+      ],
+      "note": "f65221e9908f5db0daa81ab8ce94168a5062151b is an ancestor of d74d7177f9f7c6bc7adc69508bb939362f2cf770 (21 commits ahead, none behind). Release notes also identify later cache evolution #2130; final correctly says later implementation rather than identical fix code.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC17",
+      "claim": "Separate 2099 report is not asserted individually fixed by 2029",
+      "candidate_lines": "82,123,138",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/issue_2099.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2099",
+          "accessed_at_utc": "2026-10-07T20:06:10.268795+00:00",
+          "sha256": "cd59deb79be16ebaaded5dbc2559a17b1f7beeb76598c42f3af7b0097638aefb",
+          "range_or_pointer": "/title,/body"
+        },
+        {
+          "path": "sources/public/pull_2029.json",
+          "url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029",
+          "accessed_at_utc": "2026-10-07T20:06:10.271020+00:00",
+          "sha256": "c487be513fd843a0733c1620a942a5f49878aa74406305ce25280652f6808512",
+          "range_or_pointer": "/body"
+        }
+      ],
+      "note": "No negative conclusion about all possible issue relationships is proved by a missing link. The final makes the narrower appropriate non-claim.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC18",
+      "claim": "OneBusAway early-drop case; hide-negative PR closed and unmerged",
+      "candidate_lines": "9,129",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/oba_issue_162.json",
+          "url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/issues/162",
+          "accessed_at_utc": "2026-10-07T20:06:10.126964+00:00",
+          "sha256": "e20f7543874b30b9d992de58326b66bdabd9f5e17ac10f99df6b2ebd2f197f7c",
+          "range_or_pointer": "/body,/state"
+        },
+        {
+          "path": "sources/public/oba_pull_160.json",
+          "url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/pulls/160",
+          "accessed_at_utc": "2026-10-07T20:06:10.131697+00:00",
+          "sha256": "c0ecee8cd8afcb9223f4cca0a6a49250189c0cbc67b701c457471a3e80a8ce2b",
+          "range_or_pointer": "/body,/state,/merged,/merged_at"
+        }
+      ],
+      "note": "This is historical mechanism evidence, not proof of a current released OneBusAway defect. Hiding negative times may help a separate late/on-time UX case; it does not supply absent early-stop timing.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC19",
+      "claim": "GTFS PR 16 merged; guidance is present in immutable spec",
+      "candidate_lines": "9,129",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED_WITH_CITATION_LIMITATION",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_proposal_16.json",
+          "url": "https://api.github.com/repos/google/transit/pulls/16",
+          "accessed_at_utc": "2026-10-07T20:06:10.137362+00:00",
+          "sha256": "44d913ddca02ab6ea2530fb50a6c0ff1a76c7ca446937de43115f3419edf6597",
+          "range_or_pointer": "/merged,/merged_at,/merge_commit_sha"
+        },
+        {
+          "path": "sources/public/gtfs_rt_trip_updates.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.830913+00:00",
+          "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+          "range_or_pointer": "13-20"
+        }
+      ],
+      "note": "Critic notes E21 call e401275 the merge commit. Independent API gives 51197f6f2ee56d4a852efcce9b9a4b207e47dbed. Final repeats merged status but not the incorrect hash; this is nonmaterial to its behavior conclusion.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC20",
+      "claim": "OneBusAway analogue separates static and realtime setup and recommends quality review",
+      "candidate_lines": "127",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/oba_v2_7_1_readme.md",
+          "url": "https://raw.githubusercontent.com/OneBusAway/onebusaway-application-modules/095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a/README.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.831737+00:00",
+          "sha256": "827c0670ca41dbf813c377d6f772dcd1af83d2317dbc675f3b9230ad96e905dc",
+          "range_or_pointer": "17,26-30,78-134"
+        }
+      ],
+      "note": "Commit 095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a. Not a comparative size, cost, or performance benchmark; declining the full suite is a product choice.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC21",
+      "claim": "Server-validator report analogy separates report verdict from execution success",
+      "candidate_lines": "74,128",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED_WITH_CITATION_LIMITATION",
+      "evidence": [
+        {
+          "path": "sources/public/oba_server_validator_correct_repo.md",
+          "url": "https://raw.githubusercontent.com/OneBusAway/server-validator/7e59c818574422ee30fc449b8b42adba3e6ac238/README.md",
+          "accessed_at_utc": "2026-10-07T20:09:39.551639+00:00",
+          "sha256": "8890bb18a1e465e0bccbb666d96a00cd196f392c54904377b2f904d4518e2489",
+          "range_or_pointer": "1-17,56-69,142-160"
+        }
+      ],
+      "note": "Actual repository OneBusAway/server-validator at 7e59c818574422ee30fc449b8b42adba3e6ac238; captured bytes match exactly. Research S14 incorrectly names onebusaway-application-modules, whose URL returns 404. This independently supports the claim but does not repair the frozen candidate source map.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC22",
+      "claim": "GTFS service-day values, >24:00, agency timezone, noon-minus-12 and same-zone dataset",
+      "candidate_lines": "84,101",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_schedule_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.826594+00:00",
+          "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+          "range_or_pointer": "59,82,196,222,307-308"
+        }
+      ],
+      "note": "Choice of conversion library and actual feed conventions is openly deferred. No midnight-based conversion or exact fold/gap implementation is validated.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC23",
+      "claim": "Immutable seven-day evidence/screen history, no identity, conditional raw replay",
+      "candidate_lines": "70-74,103,139",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED_AS_PRODUCT_POLICY",
+      "evidence": [],
+      "note": "User scope: plan line 19; final raw-term precondition is uncertainty, not a legal finding about unnamed feeds. Hash-only replay is expressly disclaimed.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC24",
+      "claim": "Tablet/offline/failure states and performance claims remain unvalidated",
+      "candidate_lines": "29-33,86-88,104,146",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED_AS_PRODUCT_POLICY",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_rt_best_practices_correct_path.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/best-practices/best-practices.md",
+          "accessed_at_utc": "2026-10-07T20:09:39.548704+00:00",
+          "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe",
+          "range_or_pointer": "23-24"
+        }
+      ],
+      "note": "Explicitly proposed states and future performance measurements. No guarantee based on a producer recommendation.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC25",
+      "claim": "Acceptance proposals versus executed checks",
+      "candidate_lines": "90-104,146,150",
+      "assessment": "ASSESSED",
+      "result": "PARTIAL",
+      "evidence": [],
+      "note": "All eleven groups are proposals; none is falsely called executed. Coverage lacks the two conditional gates M1/M2, and future thresholds/devices remain product choices.",
+      "material_defect_ids": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "SC26",
+      "claim": "Necessary/optional/retained/rejected dispositions and no false already-covered claim",
+      "candidate_lines": "106-146",
+      "assessment": "ASSESSED",
+      "result": "SUPPORTED",
+      "evidence": [],
+      "note": "Compared complete brief and all six original plan paragraphs, research alternatives and all seven numbered critic findings. See judgment preservation table. Scientific dispositions are retained; host-only provenance objection is excluded from scientific grading.",
+      "material_defect_ids": []
+    },
+    {
+      "id": "SC27",
+      "claim": "Scheduled transfer eligibility contract omits passenger pickup/drop-off restrictions",
+      "candidate_lines": "39-54,66,94-101,112,146",
+      "assessment": "ASSESSED",
+      "result": "MATERIAL_CONDITIONAL_OMISSION",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_schedule_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.826594+00:00",
+          "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+          "range_or_pointer": "307-308,316-317"
+        }
+      ],
+      "note": "Valid fixed-time trip/stop pairs can have outgoing pickup_type=1 or incoming drop_off_type=1. All stated numeric/map/date gates can pass while the passenger cannot make the transfer. No admission restriction or acceptance fixture addresses this.",
+      "material_defect_ids": [
+        "M1"
+      ]
+    },
+    {
+      "id": "SC28",
+      "claim": "RT delay application after static-feed replacement lacks explicit schedule-version association",
+      "candidate_lines": "19-21,64-66,70,94-96,110,146",
+      "assessment": "ASSESSED",
+      "result": "MATERIAL_CONDITIONAL_OMISSION",
+      "evidence": [
+        {
+          "path": "sources/public/gtfs_rt_reference.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.827989+00:00",
+          "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+          "range_or_pointer": "109,169,174-189"
+        },
+        {
+          "path": "sources/public/gtfs_rt_proto.proto",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/proto/gtfs-realtime.proto",
+          "accessed_at_utc": "2026-10-07T20:09:39.550512+00:00",
+          "sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299",
+          "range_or_pointer": "76-79"
+        },
+        {
+          "path": "sources/public/gtfs_rt_trip_updates.md",
+          "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+          "accessed_at_utc": "2026-10-07T20:06:09.830913+00:00",
+          "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+          "range_or_pointer": "24"
+        }
+      ],
+      "note": "An RT FeedHeader.feed_version can identify static A while active schedule B reuses trip/stop IDs and date with changed times. Fresh timestamps and ID agreement do not make a delay relative to A valid against B. Candidate names snapshot provenance but no explicit coherence rule or test.",
+      "material_defect_ids": [
+        "M2"
+      ]
+    }
+  ],
+  "counts": {
+    "complete_check_groups": 28,
+    "assessed_check_groups": 28,
+    "unassessed_check_groups": 0,
+    "public_capture_attempts": 42,
+    "public_capture_successes": 34,
+    "public_capture_errors": 8
+  },
+  "retrievals": [
+    {
+      "id": "gtfs_schedule_reference.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+      "accessed_at_utc": "2026-10-07T20:06:09.826594+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "138481",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"1b0684eec94c61a6f88e5c79055a9db39e7e42486fbec69ee4752b5bf19f7224\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "5CB4:342AFA:61A6:8AD3:6AC6A631",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740024-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.888667,VS0,VE299",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "bf9624d72d62bce3f97303595753b8d8839293e0",
+        "Expires": "Wed, 07 Oct 2026 20:11:10 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/gtfs_schedule_reference.md",
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+      "bytes": 138481
+    },
+    {
+      "id": "gtfs_rt_reference.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+      "accessed_at_utc": "2026-10-07T20:06:09.827989+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "90262",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"4df2f193bd73c73f5f02d2173174511fe1c94a4e7dccd9ef8d1640659d3ed168\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "EB52:5E7CF:4A0C9:6E040:6AC69D02",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740071-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.883302,VS0,VE72",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "4b2d6ad3d0a5371da29ba2e2b90f0e345f260bb6",
+        "Expires": "Wed, 07 Oct 2026 20:11:09 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/gtfs_rt_reference.md",
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+      "bytes": 90262
+    },
+    {
+      "id": "gtfs_rt_entities.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/gtfs-realtime.md",
+      "accessed_at_utc": "2026-10-07T20:06:09.829337+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "gtfs_rt_best_practices.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/best-practices.md",
+      "accessed_at_utc": "2026-10-07T20:06:09.830068+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "gtfs_rt_trip_updates.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+      "accessed_at_utc": "2026-10-07T20:06:09.830913+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "9502",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"a270cf8d2100ad9fb5ad211cfba4c791e658bdd52329435955828e983e7b05b1\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "F3E2:19F0CB:65A0A:8B4FB:6AC69EAA",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740050-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.888350,VS0,VE90",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "a0a0cb70a37c21314dd5e6e4ca9bbd76f5c622d3",
+        "Expires": "Wed, 07 Oct 2026 20:11:09 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/gtfs_rt_trip_updates.md",
+      "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+      "bytes": 9502
+    },
+    {
+      "id": "oba_v2_7_1_readme.md",
+      "url": "https://raw.githubusercontent.com/OneBusAway/onebusaway-application-modules/095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a/README.md",
+      "accessed_at_utc": "2026-10-07T20:06:09.831737+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/OneBusAway/onebusaway-application-modules/095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a/README.md",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "12818",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"6f769c0ff0ca0bd6d490db7e151eae5dddc21f33197a99f860e3686536ff2e08\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "D88A:8D278:65CD:8E97:6AC6A631",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740082-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.884429,VS0,VE120",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "57705e57a4af1619a932b5f2767fd89f03b10558",
+        "Expires": "Wed, 07 Oct 2026 20:11:10 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/oba_v2_7_1_readme.md",
+      "sha256": "827c0670ca41dbf813c377d6f772dcd1af83d2317dbc675f3b9230ad96e905dc",
+      "bytes": 12818
+    },
+    {
+      "id": "mobility_validator_v8_0_1_readme.md",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/README.md",
+      "accessed_at_utc": "2026-10-07T20:06:09.967032+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/README.md",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "15192",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"d85792059afa6712650bfd4c9cdf6501fa14a899c70f8fad23e12f34b2761abf\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "281E:1A3E68:6A80:9474:6AC6A632",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740080-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.002180,VS0,VE135",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "6b9ef663d84fadade3e26f449ce99d5b6a810380",
+        "Expires": "Wed, 07 Oct 2026 20:11:10 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/mobility_validator_v8_0_1_readme.md",
+      "sha256": "7e78048de0a82203c7324019b2b1fc5acf64acd84758582505622842d1963994",
+      "bytes": 15192
+    },
+    {
+      "id": "validator_v8_0_1_service_window.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+      "accessed_at_utc": "2026-10-07T20:06:09.968553+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "1970",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"c0ff070eefa2f7187453563dc54503b928eee76b3fa2711ca4d8c62e70a4a264\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "34AC:1A3E68:6A7E:9472:6AC6A632",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740044-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.004773,VS0,VE122",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "951dd309e0f0e70744c57321814c8784014b8748",
+        "Expires": "Wed, 07 Oct 2026 20:11:10 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_v8_0_1_service_window.java",
+      "sha256": "1cffefc70e6317fb1ae679d6331e5659ddacc05963e77dc5abef68700c33dcd0",
+      "bytes": 1970
+    },
+    {
+      "id": "validator_v8_0_1_service_interval_cache.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalCache.java",
+      "accessed_at_utc": "2026-10-07T20:06:09.973163+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalCache.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "4568",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"460343b303f4198d251d665bb87d219bbbbef26fbaf4bbc747c9c10677b22b1b\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "1C40:20F863:5D38:86D5:6AC6A632",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740096-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.006068,VS0,VE131",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "ea646ab17368988dbe5923d6cf3e40a466727ab9",
+        "Expires": "Wed, 07 Oct 2026 20:11:10 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_v8_0_1_service_interval_cache.java",
+      "sha256": "3e9f8e735731d6bb6f4a34ede4308302fb3d11ec70a303abf08ebd15c3583869",
+      "bytes": 4568
+    },
+    {
+      "id": "validator_v8_0_1_service_window_test.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/test/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindowTest.java",
+      "accessed_at_utc": "2026-10-07T20:06:09.979928+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/test/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindowTest.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "36197",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"e53365617c4fdf9fcbbb62ba1e0d4cc49da5ece68d448a1d177bb29c52ebd9ec\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "C802:229EB2:645A:8E13:6AC6A631",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740057-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.011779,VS0,VE116",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "0af257ec1912fbe3bd26d89146ab77a8edc3e7a2",
+        "Expires": "Wed, 07 Oct 2026 20:11:10 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_v8_0_1_service_window_test.java",
+      "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063",
+      "bytes": 36197
+    },
+    {
+      "id": "validator_v8_0_1_service_interval.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/core/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceInterval.java",
+      "accessed_at_utc": "2026-10-07T20:06:10.006266+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/core/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceInterval.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "10318",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"9bc9cd18098d2a8aab19ec210fff428b1ff60bcc4ef64f2c38c7c7dd43f0ee42\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "3010:121520:764A:A0FF:6AC6A631",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740045-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.042778,VS0,VE66",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "d1df10f0ad79a2f247277281033dd842d9bbb764",
+        "Expires": "Wed, 07 Oct 2026 20:11:10 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_v8_0_1_service_interval.java",
+      "sha256": "1850cec463bb16ac150b17e84de66c6e3cc76c192e366846ff512d724d7787bc",
+      "bytes": 10318
+    },
+    {
+      "id": "validator_v8_0_1_service_interval_test.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/core/src/test/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalTest.java",
+      "accessed_at_utc": "2026-10-07T20:06:10.110570+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/core/src/test/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalTest.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "12475",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"95de0e076f3c5939f44b15ed77f24affeff9ba6494968c14f13aadd03fe7e162\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "92D6:20F863:5D40:86E0:6AC6A632",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740022-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403570.139660,VS0,VE116",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "ba2627b885442d9067862f756d11e877f417e937",
+        "Expires": "Wed, 07 Oct 2026 20:11:10 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_v8_0_1_service_interval_test.java",
+      "sha256": "f1cb2f2c0ddcb4cfb0fe49bcb96013fe277bf7535bdd87db5065a94e4e608ab1",
+      "bytes": 12475
+    },
+    {
+      "id": "oba_issue_162.json",
+      "url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/issues/162",
+      "accessed_at_utc": "2026-10-07T20:06:10.126964+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/issues/162",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"faa965e4f7f07c8b2fe9f63820c73813c3628014e6da7cea0033cc7cb3e14d6d\"",
+        "Last-Modified": "Sun, 04 Oct 2026 02:15:26 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "45",
+        "X-RateLimit-Used": "15",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "Content-Length": "4590",
+        "X-GitHub-Request-Id": "CF34:A627A:920B9:1DF73F:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/oba_issue_162.json",
+      "sha256": "e20f7543874b30b9d992de58326b66bdabd9f5e17ac10f99df6b2ebd2f197f7c",
+      "bytes": 4590
+    },
+    {
+      "id": "oba_pull_160.json",
+      "url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/pulls/160",
+      "accessed_at_utc": "2026-10-07T20:06:10.131697+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/pulls/160",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Content-Length": "19058",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "ETag": "\"1e1aa21c6290db984a03010c8410a52db6cf2d282ee2c5bd140c1d190a5bf4ea\"",
+        "Last-Modified": "Tue, 24 Feb 2026 23:49:50 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept, Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-github-api-version-selected": "2022-11-28",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "46",
+        "X-RateLimit-Used": "14",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "X-GitHub-Request-Id": "CF3E:1072E3:8F19D:1D531A:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/oba_pull_160.json",
+      "sha256": "c0ecee8cd8afcb9223f4cca0a6a49250189c0cbc67b701c457471a3e80a8ce2b",
+      "bytes": 19058
+    },
+    {
+      "id": "gtfs_proposal_16.json",
+      "url": "https://api.github.com/repos/google/transit/pulls/16",
+      "accessed_at_utc": "2026-10-07T20:06:10.137362+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/google/transit/pulls/16",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Content-Length": "18549",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "ETag": "\"6c4438f0de0575b14d78e76c74095695e39967abc9aed9aa9c3924271f222604\"",
+        "Last-Modified": "Sun, 04 Oct 2026 02:15:26 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept, Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-github-api-version-selected": "2022-11-28",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "44",
+        "X-RateLimit-Used": "16",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "X-GitHub-Request-Id": "CF4A:20236:8C66A:1CAA64:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/gtfs_proposal_16.json",
+      "sha256": "44d913ddca02ab6ea2530fb50a6c0ff1a76c7ca446937de43115f3419edf6597",
+      "bytes": 18549
+    },
+    {
+      "id": "oba_server_validator_readme.md",
+      "url": "https://raw.githubusercontent.com/OneBusAway/onebusaway-application-modules/7e59c818574422ee30fc449b8b42adba3e6ac238/README.md",
+      "accessed_at_utc": "2026-10-07T20:06:10.138234+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "issue_2017.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2017",
+      "accessed_at_utc": "2026-10-07T20:06:10.260407+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2017",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"a4d53e26abfcacb702e55ea51e5672631e84c1a194c60f9da91da8aa6b77522f\"",
+        "Last-Modified": "Wed, 02 Sep 2026 00:30:00 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "43",
+        "X-RateLimit-Used": "17",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "Content-Length": "8087",
+        "X-GitHub-Request-Id": "CF64:100F6D:8E2C0:1D3BA1:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/issue_2017.json",
+      "sha256": "f80f9dda380e5ce7b61af90a4a895d7b16a6121d5ad15bf6b0adaf76d8fa6dd0",
+      "bytes": 8087
+    },
+    {
+      "id": "issue_2099.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2099",
+      "accessed_at_utc": "2026-10-07T20:06:10.268795+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2099",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"9d3d98259f1ee2e5dfc1b2df69f66be999f3d225055d4a5b9289cfda42d485a1\"",
+        "Last-Modified": "Sun, 30 Aug 2026 23:16:08 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "41",
+        "X-RateLimit-Used": "19",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "Content-Length": "9014",
+        "X-GitHub-Request-Id": "CF54:5A3E5:91563:1DBB24:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/issue_2099.json",
+      "sha256": "cd59deb79be16ebaaded5dbc2559a17b1f7beeb76598c42f3af7b0097638aefb",
+      "bytes": 9014
+    },
+    {
+      "id": "pull_2029.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029",
+      "accessed_at_utc": "2026-10-07T20:06:10.271020+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Content-Length": "19589",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "ETag": "\"c2398118344b77a657e42cdd4eff485f0fdc83de03750ecf3ab011a2e5b2e303\"",
+        "Last-Modified": "Thu, 17 Sep 2026 23:10:25 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept, Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-github-api-version-selected": "2022-11-28",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "42",
+        "X-RateLimit-Used": "18",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "X-GitHub-Request-Id": "CF4C:49B66:7EB72:1A09B8:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pull_2029.json",
+      "sha256": "c487be513fd843a0733c1620a942a5f49878aa74406305ce25280652f6808512",
+      "bytes": 19589
+    },
+    {
+      "id": "release_v8_0_0.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/317379777",
+      "accessed_at_utc": "2026-10-07T20:06:10.307586+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/317379777",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"713487e5c01eae39e7d661205312131734a6ebd62b216b9d320560ed49504b70\"",
+        "Last-Modified": "Wed, 13 May 2026 16:14:00 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "40",
+        "X-RateLimit-Used": "20",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "CF6A:431E5:98851:1F01DF:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/release_v8_0_0.json",
+      "sha256": "6b88299d304c977dd4dd9e7f73d4abee169b700da8e4ec2e59e7101ac5b2bd7e",
+      "bytes": 33726
+    },
+    {
+      "id": "release_v8_0_1.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/321169212",
+      "accessed_at_utc": "2026-10-07T20:06:10.384857+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/321169212",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"0086c5d55beca920bef4508360f3d0bcfca61b544cfc14ff7de0f3ff21556ce8\"",
+        "Last-Modified": "Tue, 12 May 2026 20:44:11 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "39",
+        "X-RateLimit-Used": "21",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "Content-Length": "21187",
+        "X-GitHub-Request-Id": "CF7A:208434:7CA40:194B7C:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/release_v8_0_1.json",
+      "sha256": "273820b221ef43cffae99e49b51456d97827db344f9e6c24ca925baa0ebef663",
+      "bytes": 21187
+    },
+    {
+      "id": "validator_tree_v8_0_1.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/git/trees/20338457c2b7fbfeb034b6d0990a91e49fba746c?recursive=1",
+      "accessed_at_utc": "2026-10-07T20:06:10.414835+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/git/trees/20338457c2b7fbfeb034b6d0990a91e49fba746c?recursive=1",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:06:10 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"35119fe9fa7aee50016e42741673e1a65085a927cf2ad535ab0dc40e8354f070\"",
+        "Last-Modified": "Tue, 06 Oct 2026 20:48:33 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "38",
+        "X-RateLimit-Used": "22",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791405749",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "CF88:70F1C:94225:1E93CD:6AC6A632",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/validator_tree_v8_0_1.json",
+      "sha256": "a115d00e4904d43c4a198737432ec52854ced5f795daf383ed33a0d6115a8013",
+      "bytes": 324324
+    },
+    {
+      "id": "validator_tag.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/git/ref/tags/v8.0.1",
+      "accessed_at_utc": "2026-10-07T20:07:51.638397+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/git/ref/tags/v8.0.1",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:07:51 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"3b83fa2b303c1dee4f05882ca685517d0651e9a7fb23a5643f3b32f89d257479\"",
+        "Last-Modified": "Tue, 06 Oct 2026 20:48:33 GMT",
+        "X-Poll-Interval": "300",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "6",
+        "X-RateLimit-Used": "54",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791404296",
+        "Content-Length": "363",
+        "X-GitHub-Request-Id": "8A74:2A75CE:CB548:29B279:6AC6A697",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/validator_tag.json",
+      "sha256": "403004a49e4786abd5c6f46af903d0a2f130c800d48ceb604c3c66f1f229697d",
+      "bytes": 363
+    },
+    {
+      "id": "validator_commit.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/commits/d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "accessed_at_utc": "2026-10-07T20:07:51.639712+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/commits/d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:07:51 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"c8d447cb5aa22f7e0620011d69ae3e92a11bf51cd00ac02c6d74028d8beed624\"",
+        "Last-Modified": "Tue, 12 May 2026 13:33:43 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "7",
+        "X-RateLimit-Used": "53",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791404296",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "8A70:28C605:B2939:245501:6AC6A697",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/validator_commit.json",
+      "sha256": "8c0d9849d062886e3ea6fa0351b59223ae3e45f7d4abd216267942e1998c0d03",
+      "bytes": 30079
+    },
+    {
+      "id": "validator_fix_commit.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/commits/f65221e9908f5db0daa81ab8ce94168a5062151b",
+      "accessed_at_utc": "2026-10-07T20:07:51.640975+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/commits/f65221e9908f5db0daa81ab8ce94168a5062151b",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:07:51 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"83dbd7b32f044efc3a6dbf29047bce28e67163e7e448ed40c3746f132f964756\"",
+        "Last-Modified": "Thu, 05 Mar 2026 19:12:55 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "5",
+        "X-RateLimit-Used": "55",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791404296",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "8A8A:74542:D9897:2C82CD:6AC6A697",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/validator_fix_commit.json",
+      "sha256": "fa4c661b3f8714a9ee4785d3f7743405b4c03708ad414736468079e6aa311c91",
+      "bytes": 69509
+    },
+    {
+      "id": "validator_pr2029_files.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029/files?per_page=100",
+      "accessed_at_utc": "2026-10-07T20:07:51.642384+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029/files?per_page=100",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:07:51 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"4a588ffccb25861f76e3f7559073f84f661daf7e4e7a946a9fd98269b5c5b3dc\"",
+        "Last-Modified": "Thu, 17 Sep 2026 23:10:25 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "2",
+        "X-RateLimit-Used": "58",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791404296",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "8A9E:BE5A4:DE3FF:2DD5CF:6AC6A697",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/validator_pr2029_files.json",
+      "sha256": "07845a9801146b22458e69aeda6fa5f55d40a1b7a21a64d2f001940e07142cb7",
+      "bytes": 64946
+    },
+    {
+      "id": "validator_pr2029_commits.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029/commits?per_page=100",
+      "accessed_at_utc": "2026-10-07T20:07:51.643607+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029/commits?per_page=100",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:07:51 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"bc99789edf495ec91240cb232ed41a3ab05f2b143ab7389bfe1d106093062fdb\"",
+        "Last-Modified": "Thu, 17 Sep 2026 23:10:25 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "4",
+        "X-RateLimit-Used": "56",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791404296",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "8A80:135DF4:E1538:2E00B0:6AC6A697",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/validator_pr2029_commits.json",
+      "sha256": "e6d85245c14f02d13d8a8b87edd62d6119d24dccbe8f9da7e71cc341ca9e2707",
+      "bytes": 88989
+    },
+    {
+      "id": "validator_fix_to_release.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/compare/f65221e9908f5db0daa81ab8ce94168a5062151b...d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "accessed_at_utc": "2026-10-07T20:07:51.644629+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/MobilityData/gtfs-validator/compare/f65221e9908f5db0daa81ab8ce94168a5062151b...d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:07:52 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"d7082a8e6a13b91f76b4cfe0a57fdf828aae6baab09070320453f0fc664fea53\"",
+        "Last-Modified": "Tue, 12 May 2026 13:33:43 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "3",
+        "X-RateLimit-Used": "57",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791404296",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "8A9A:1796D6:FA4A0:3338BA:6AC6A697",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/validator_fix_to_release.json",
+      "sha256": "66faed224ffa466fa1b60165dae8e75a590a58f9f59a0c66a283847bdb83cb1f",
+      "bytes": 300328
+    },
+    {
+      "id": "gtfs_rt_live_best_practices.html",
+      "url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "accessed_at_utc": "2026-10-07T20:07:51.836829+00:00",
+      "status": 200,
+      "final_url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:07:52 GMT",
+        "Content-Type": "text/html",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "CF-Ray": "a46f88d55bd94337-EWR",
+        "CF-Cache-Status": "DYNAMIC",
+        "Last-Modified": "Thu, 01 Oct 2026 14:47:39 GMT",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+        "Vary": "accept-encoding",
+        "X-Content-Type-Options": "nosniff",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=4O9P90O8WmC7MOa5yW1ioP9FmebxsLNWNyMOg9eIMx6VKVq85f1P26MbLBjQ%2BMi5Crfibm%2FSkaWo%2F0r202G%2BUNK3rJgLxz10ySXsYRhA7xDQYo%2Bo8m1K4MZFzw%3D%3D\"}]}",
+        "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+      },
+      "path": "sources/public/gtfs_rt_live_best_practices.html",
+      "sha256": "eecd032fb6006a7180e394a558003b7c835911f016ee597faf9174eb012ba5c0",
+      "bytes": 130903
+    },
+    {
+      "id": "transit_tree.json",
+      "url": "https://api.github.com/repos/google/transit/git/trees/3c9e7b904b5035349622f03e11851e25c16d1d99?recursive=1",
+      "accessed_at_utc": "2026-10-07T20:07:51.919417+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/google/transit/git/trees/3c9e7b904b5035349622f03e11851e25c16d1d99?recursive=1",
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:07:52 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"39e87e03bd4137ceebab910bdb537ba4e181809bcaff3e749e5b7bbc07108dfe\"",
+        "Last-Modified": "Wed, 07 Oct 2026 14:31:58 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "1",
+        "X-RateLimit-Used": "59",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791404296",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "8AA4:342593:CB2E0:2981D6:6AC6A697",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/transit_tree.json",
+      "sha256": "4d3a72b60299567387bfda02ad550a3e3502a519eddba9b174038de74865e2eb",
+      "bytes": 27562
+    },
+    {
+      "id": "oba_api_validator_readme.md",
+      "url": "https://raw.githubusercontent.com/OneBusAway/api-validator/7e59c818574422ee30fc449b8b42adba3e6ac238/README.md",
+      "accessed_at_utc": "2026-10-07T20:07:51.935015+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "oba_api_validator_commit.json",
+      "url": "https://api.github.com/repos/OneBusAway/api-validator/commits/7e59c818574422ee30fc449b8b42adba3e6ac238",
+      "accessed_at_utc": "2026-10-07T20:07:51.948305+00:00",
+      "error": "HTTP Error 422: Unprocessable Entity"
+    },
+    {
+      "id": "gtfs_proposal16_files.json",
+      "url": "https://api.github.com/repos/google/transit/pulls/16/files?per_page=100",
+      "accessed_at_utc": "2026-10-07T20:07:51.968628+00:00",
+      "error": "HTTP Error 403: rate limit exceeded"
+    },
+    {
+      "id": "oba_issue162_comments.json",
+      "url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/issues/162/comments?per_page=100",
+      "accessed_at_utc": "2026-10-07T20:07:52.015944+00:00",
+      "error": "HTTP Error 403: rate limit exceeded"
+    },
+    {
+      "id": "gtfs_rt_best_practices_correct_path.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/best-practices/best-practices.md",
+      "accessed_at_utc": "2026-10-07T20:09:39.548704+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/best-practices/best-practices.md",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "17511",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"dee8aeca6fa548d57ed174c8701dbd6c1c11ee3c68810a86d76a040a01e8cf9d\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "6DBA:1FD4B0:414C5:6515A:6AC69D02",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:09:39 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740025-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403780.628164,VS0,VE1",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "f3b0299e8956cafd821a5ee9058a4aff73aebbaa",
+        "Expires": "Wed, 07 Oct 2026 20:14:39 GMT",
+        "Source-Age": "194"
+      },
+      "path": "sources/public/gtfs_rt_best_practices_correct_path.md",
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe",
+      "bytes": 17511
+    },
+    {
+      "id": "gtfs_rt_proto.proto",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/proto/gtfs-realtime.proto",
+      "accessed_at_utc": "2026-10-07T20:09:39.550512+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/proto/gtfs-realtime.proto",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "65237",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"bcdbfaed17d533fda30c54ee340edb266cce84fc55302723ef2cc57966c17d04\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "1A54:275D91:46BBC:6AA45:6AC69D02",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:09:39 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740061-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403780.618612,VS0,VE2",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "bd185b3de92a704c765f76526d4406033c721ca8",
+        "Expires": "Wed, 07 Oct 2026 20:14:39 GMT",
+        "Source-Age": "194"
+      },
+      "path": "sources/public/gtfs_rt_proto.proto",
+      "sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299",
+      "bytes": 65237
+    },
+    {
+      "id": "oba_server_validator_correct_repo.md",
+      "url": "https://raw.githubusercontent.com/OneBusAway/server-validator/7e59c818574422ee30fc449b8b42adba3e6ac238/README.md",
+      "accessed_at_utc": "2026-10-07T20:09:39.551639+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/OneBusAway/server-validator/7e59c818574422ee30fc449b8b42adba3e6ac238/README.md",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "7655",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"30ff44a9315de29b94b89797ce29c9af85a440d3e40d94c5ef0b5598634fe33e\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "813A:5B54:3F171:63D1B:6AC69E88",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:09:39 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740093-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403780.612779,VS0,VE48",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "7814fd6ad0268947eb16a3ea7a8cf09c9457fa5e",
+        "Expires": "Wed, 07 Oct 2026 20:14:39 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/oba_server_validator_correct_repo.md",
+      "sha256": "8890bb18a1e465e0bccbb666d96a00cd196f392c54904377b2f904d4518e2489",
+      "bytes": 7655
+    },
+    {
+      "id": "validator_v8_0_1_feed_metadata.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/FeedMetadata.java",
+      "accessed_at_utc": "2026-10-07T20:09:39.552798+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/d74d7177f9f7c6bc7adc69508bb939362f2cf770/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/FeedMetadata.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "36377",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"3c42b05d944ff39f5b4ac3079f475a95eb916cb5b039c723416f7b13058c0a9a\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "9588:9D251:A601:ED4F:6AC6A702",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:09:39 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740098-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403780.612702,VS0,VE97",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "addd8c3715da11a14599c5f5fcd23d2dd906d092",
+        "Expires": "Wed, 07 Oct 2026 20:14:39 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_v8_0_1_feed_metadata.java",
+      "sha256": "438dc1eb9dd70a3da41c15fce573f80cef91f2726f8b139dd7f0a6df134d542f",
+      "bytes": 36377
+    },
+    {
+      "id": "validator_fix_service_window.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/f65221e9908f5db0daa81ab8ce94168a5062151b/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+      "accessed_at_utc": "2026-10-07T20:09:39.553974+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/f65221e9908f5db0daa81ab8ce94168a5062151b/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "7805",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"e6fe270604c3d7b772c6800f262e70e4376be48d9cd8544da382af5f2ef52a2a\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "B1FA:594F9:AD69:F561:6AC6A703",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:09:39 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740041-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403780.612587,VS0,VE90",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "2b883dbeea1e3215c07cc8ab4e033a30915cbf91",
+        "Expires": "Wed, 07 Oct 2026 20:14:39 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_fix_service_window.java",
+      "sha256": "415c1663e4b46f45f48209eb1a8effba9b6c5e436d5eb8e43b11a984619675aa",
+      "bytes": 7805
+    },
+    {
+      "id": "validator_fix_service_window_test.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/f65221e9908f5db0daa81ab8ce94168a5062151b/main/src/test/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindowTest.java",
+      "accessed_at_utc": "2026-10-07T20:09:39.555136+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/f65221e9908f5db0daa81ab8ce94168a5062151b/main/src/test/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindowTest.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "36197",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"e53365617c4fdf9fcbbb62ba1e0d4cc49da5ece68d448a1d177bb29c52ebd9ec\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "F0A0:74A81:A5AD:EE92:6AC6A703",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:09:39 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740054-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403780.614774,VS0,VE133",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "7878b46b54c36dbae5bd9ae5fd20a014bc1c8459",
+        "Expires": "Wed, 07 Oct 2026 20:14:39 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_fix_service_window_test.java",
+      "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063",
+      "bytes": 36197
+    },
+    {
+      "id": "validator_pre_fix_feed_metadata.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/3b0b970ae53033a160a882f87cbfc10049b87b680/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/FeedMetadata.java",
+      "accessed_at_utc": "2026-10-07T20:09:39.638143+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "validator_pre_fix_feed_metadata_correct_parent.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/82e5d6b6b87af09c8d57fbe918318539405b4b2c/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/FeedMetadata.java",
+      "accessed_at_utc": "2026-10-07T20:11:43.313039+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/82e5d6b6b87af09c8d57fbe918318539405b4b2c/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/FeedMetadata.java",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "39444",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"989bf55a18282305d546175344de39bdd445fa6160f185d2a60713ba87f2e294\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "F232:224DEB:7438:DEFB:6AC6A77E",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 20:11:43 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740034-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791403903.372372,VS0,VE96",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "0c81289233698a67686034eeafa9336c8afbd566",
+        "Expires": "Wed, 07 Oct 2026 20:16:43 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/validator_pre_fix_feed_metadata_correct_parent.java",
+      "sha256": "ca0ada538b7d71996ac8410f33845bdd011353ce38d233851dec080738daeab4",
+      "bytes": 39444
+    }
+  ],
+  "admitted_input_inventory": [
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/brief.md",
+      "path": "sources/admitted/cases/I-METHOD-03/brief.md",
+      "sha256": "18f0d4d44d638932060c0624b6876d21f0e33226971579f66916e8de2816853c",
+      "bytes": 5120
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/plan.md",
+      "path": "sources/admitted/cases/I-METHOD-03/plan.md",
+      "sha256": "3451e59740282a558189908d03921dcbff4126105d788b6488ad0def90ff9f6a",
+      "bytes": 1765
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/artifact.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/artifact.md",
+      "sha256": "32036cb32a0df8761d1ff25f631e0366cc11170720c2da33342077d642521b20",
+      "bytes": 21514
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/source-map.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/source-map.json",
+      "sha256": "5962ba1004266e6d1c660ae28805fd592c0e7bd5833fc82f71cf3c279473c853",
+      "bytes": 13944
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/gtfs_proposal_16.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_proposal_16.json",
+      "sha256": "d00694fc4daa9f09f5739775c93c0ff37e8153f70444bc980a6582e8ab7295ef",
+      "bytes": 21326
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_best_practices.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_best_practices.md",
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe",
+      "bytes": 17511
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_entities.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_entities.md",
+      "sha256": "52ad9cacf820924f88744cfab99a63ba588bf4f919475d1c983bd6af328980e8",
+      "bytes": 2388
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_reference.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_reference.md",
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+      "bytes": 90262
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_trip_updates.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_rt_trip_updates.md",
+      "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+      "bytes": 9502
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/gtfs_schedule_reference.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/gtfs_schedule_reference.md",
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+      "bytes": 138481
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/issue_2017.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/issue_2017.json",
+      "sha256": "848b6a5cf89b3cad11f298f58bc8cec5906c7b168e3c2d4c25ff561ef2f6dbe6",
+      "bytes": 9197
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/issue_2099.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/issue_2099.json",
+      "sha256": "d2b15e7dde44bc12b04e2fe56e5d4c89ba6c47e20201518f6cea368a298af252",
+      "bytes": 9672
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/mobility_validator_v8_0_1_readme.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/mobility_validator_v8_0_1_readme.md",
+      "sha256": "7e78048de0a82203c7324019b2b1fc5acf64acd84758582505622842d1963994",
+      "bytes": 15192
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/oba_issue_162.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/oba_issue_162.json",
+      "sha256": "2511dc0a0e0481e3b7c79aa58984568dbf6605515488ebdd1236976bfac7fdb4",
+      "bytes": 5049
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/oba_pull_160.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/oba_pull_160.json",
+      "sha256": "836f0cc729444a804ecdd7a1ac71ecf10f1cac4cd6803d5056c4f53bd2ff7155",
+      "bytes": 21882
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/oba_server_validator_readme.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/oba_server_validator_readme.md",
+      "sha256": "8890bb18a1e465e0bccbb666d96a00cd196f392c54904377b2f904d4518e2489",
+      "bytes": 7655
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/oba_v2_7_1_readme.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/oba_v2_7_1_readme.md",
+      "sha256": "827c0670ca41dbf813c377d6f772dcd1af83d2317dbc675f3b9230ad96e905dc",
+      "bytes": 12818
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/pull_2029.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/pull_2029.json",
+      "sha256": "f25d6a0721ee1c513787adc7b31b2e114d4c60ded275ca0018b10e00eb1f563f",
+      "bytes": 22490
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/release_v8_0_0.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/release_v8_0_0.json",
+      "sha256": "39f823b385dab6473b55ad06ae803e8da36b502fd7714ce17c41f5ab79abba82",
+      "bytes": 37508
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/release_v8_0_1.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/release_v8_0_1.json",
+      "sha256": "24938b618dfe3f15eb185c40d50140930e876d4ccfd28eb89ce008a5f98eda3d",
+      "bytes": 24902
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/validator_tree_v8_0_1.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_tree_v8_0_1.json",
+      "sha256": "867637ef405d870453f3dc29e8738ae3086b852a34c06d9a9caeed37dd22dd52",
+      "bytes": 388345
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval.java",
+      "sha256": "1850cec463bb16ac150b17e84de66c6e3cc76c192e366846ff512d724d7787bc",
+      "bytes": 10318
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval_cache.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval_cache.java",
+      "sha256": "3e9f8e735731d6bb6f4a34ede4308302fb3d11ec70a303abf08ebd15c3583869",
+      "bytes": 4568
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval_test.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_interval_test.java",
+      "sha256": "f1cb2f2c0ddcb4cfb0fe49bcb96013fe277bf7535bdd87db5065a94e4e608ab1",
+      "bytes": 12475
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_window.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_window.java",
+      "sha256": "1cffefc70e6317fb1ae679d6331e5659ddacc05963e77dc5abef68700c33dcd0",
+      "bytes": 1970
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_window_test.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/research-v1/sources/validator_v8_0_1_service_window_test.java",
+      "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063",
+      "bytes": 36197
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/critic-v1/artifact.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/critic-v1/artifact.md",
+      "sha256": "349f8bbf3d0a0bb710f1ed4bfd91568e18d2c92297db7418c95fd198c0952174",
+      "bytes": 10355
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/critic-v1/source-map.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/critic-v1/source-map.json",
+      "sha256": "a1dfc664f13a32ea33237b246f25f1f2d640e134eb22a919a31aa3caae88cf1c",
+      "bytes": 7008
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/critic-v1/sources/primary-checks.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/critic-v1/sources/primary-checks.md",
+      "sha256": "ce0168958ed32efea40cd920c3dc8f0a3e2fa4c6584b8c8ed1ee9f37003cb548",
+      "bytes": 5242
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/artifact.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/artifact.md",
+      "sha256": "21fee974c20d3e2164ecabb07b80af8aa041f1535b83c7bcbf8341ff802dc90b",
+      "bytes": 25713
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/source-map.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/source-map.json",
+      "sha256": "7e567c61f5fa344705b3b5ce98d2a4d4138de5802e896117b72addacd200aa4a",
+      "bytes": 8143
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_proposal_16.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_proposal_16.json",
+      "sha256": "d00694fc4daa9f09f5739775c93c0ff37e8153f70444bc980a6582e8ab7295ef",
+      "bytes": 21326
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_best_practices.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_best_practices.md",
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe",
+      "bytes": 17511
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_reference.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_reference.md",
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+      "bytes": 90262
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_trip_updates.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_rt_trip_updates.md",
+      "sha256": "059a2adc41e90c908e5c8786076b514797139a74d804204318c6d164e9bd7e83",
+      "bytes": 9502
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_schedule_reference.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/gtfs_schedule_reference.md",
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+      "bytes": 138481
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/issue_2017.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/issue_2017.json",
+      "sha256": "848b6a5cf89b3cad11f298f58bc8cec5906c7b168e3c2d4c25ff561ef2f6dbe6",
+      "bytes": 9197
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/issue_2099.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/issue_2099.json",
+      "sha256": "d2b15e7dde44bc12b04e2fe56e5d4c89ba6c47e20201518f6cea368a298af252",
+      "bytes": 9672
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/mobility_validator_v8_0_1_readme.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/mobility_validator_v8_0_1_readme.md",
+      "sha256": "7e78048de0a82203c7324019b2b1fc5acf64acd84758582505622842d1963994",
+      "bytes": 15192
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/oba_issue_162.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/oba_issue_162.json",
+      "sha256": "2511dc0a0e0481e3b7c79aa58984568dbf6605515488ebdd1236976bfac7fdb4",
+      "bytes": 5049
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/oba_pull_160.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/oba_pull_160.json",
+      "sha256": "836f0cc729444a804ecdd7a1ac71ecf10f1cac4cd6803d5056c4f53bd2ff7155",
+      "bytes": 21882
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/oba_server_validator_readme.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/oba_server_validator_readme.md",
+      "sha256": "8890bb18a1e465e0bccbb666d96a00cd196f392c54904377b2f904d4518e2489",
+      "bytes": 7655
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/oba_v2_7_1_readme.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/oba_v2_7_1_readme.md",
+      "sha256": "827c0670ca41dbf813c377d6f772dcd1af83d2317dbc675f3b9230ad96e905dc",
+      "bytes": 12818
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/primary-checks.md",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/primary-checks.md",
+      "sha256": "ce0168958ed32efea40cd920c3dc8f0a3e2fa4c6584b8c8ed1ee9f37003cb548",
+      "bytes": 5242
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/pull_2029.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/pull_2029.json",
+      "sha256": "f25d6a0721ee1c513787adc7b31b2e114d4c60ded275ca0018b10e00eb1f563f",
+      "bytes": 22490
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/release_v8_0_0.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/release_v8_0_0.json",
+      "sha256": "39f823b385dab6473b55ad06ae803e8da36b502fd7714ce17c41f5ab79abba82",
+      "bytes": 37508
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/release_v8_0_1.json",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/release_v8_0_1.json",
+      "sha256": "24938b618dfe3f15eb185c40d50140930e876d4ccfd28eb89ce008a5f98eda3d",
+      "bytes": 24902
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval.java",
+      "sha256": "1850cec463bb16ac150b17e84de66c6e3cc76c192e366846ff512d724d7787bc",
+      "bytes": 10318
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval_cache.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval_cache.java",
+      "sha256": "3e9f8e735731d6bb6f4a34ede4308302fb3d11ec70a303abf08ebd15c3583869",
+      "bytes": 4568
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval_test.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_interval_test.java",
+      "sha256": "f1cb2f2c0ddcb4cfb0fe49bcb96013fe277bf7535bdd87db5065a94e4e608ab1",
+      "bytes": 12475
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_window.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_window.java",
+      "sha256": "1cffefc70e6317fb1ae679d6331e5659ddacc05963e77dc5abef68700c33dcd0",
+      "bytes": 1970
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_window_test.java",
+      "path": "sources/admitted/jobs/I-METHOD-03/control/reviser-v1/sources/validator_v8_0_1_service_window_test.java",
+      "sha256": "e442e789ba450ae1db1cbf2efe83aa79b4c080c4a48efb5672e6e8b610c53063",
+      "bytes": 36197
+    }
+  ],
+  "validation": {
+    "candidate_application_checks_executed": false,
+    "candidate_validator_tests_executed": false,
+    "reviewer_downloaded_code_execution": false,
+    "reviewer_application_build_or_test": false,
+    "reviewer_agency_feed_fetch": false,
+    "reviewer_witness": "Primary-source inspection plus conceptual conditional examples in judgment; no measured application result."
+  },
+  "usage_billing": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null,
+    "reasoning_tokens": null,
+    "billing_amount": null
+  }
+}

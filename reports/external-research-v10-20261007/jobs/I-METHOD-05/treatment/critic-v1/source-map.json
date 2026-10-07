@@ -1,0 +1,75 @@
+{
+  "schema": "I-METHOD-05-critic-source-map-v1",
+  "stage": "I-METHOD-05/treatment/critic-v1",
+  "goal_identity": "01a11805-bd8b-72a2-9ad7-4e81a3fb4373",
+  "stage_deadline_utc": "2026-10-07T20:29:46.175911Z",
+  "whole_arm_deadline_utc": "2026-10-07T20:49:20.932703Z",
+  "input_boundary": {
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/input-map.json",
+      "bytes": 5282,
+      "sha256": "49f9c7368bdf63381da79a24bad974188475afbc9efe2d84ffc6e1a05696f87d"
+    },
+    "brief_plan_and_all_source_copies_read": true,
+    "all_predecessor_artifacts_maps_and_declared_source_bytes_read": true,
+    "full_same_arm_candidate_inventory_read": true,
+    "original_input_hashes_match_map": true,
+    "original_inputs_modified": false,
+    "other_arm_or_campaign_material_read": false
+  },
+  "original_input_sha256": {
+    "INPUTS.md": "c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae",
+    "brief.md": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+    "plan.md": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+    "source/F-008.md": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+    "source/F-018.md": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+    "source/F-020.md": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+    "source/F-026.md": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+    "source/F-027.md": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+    "source/F-028.md": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+    "source/F-082.md": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+    "source/definitions_and_transactions.md": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+    "source/editing_and_save_context.md": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+    "source/text_and_size_context.md": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+  },
+  "predecessors": [
+    {"stage": "discovery-v1", "artifact": {"path": "../discovery-v1/artifact.md", "bytes": 18550, "sha256": "4e7c8dfd06f066363dfa4352897569d89b3f37b7c3fe12c72e30d97242427bbc"}, "source_map": {"path": "../discovery-v1/source-map.json", "bytes": 11620, "sha256": "7f5d2cfa38ec47b586f89a9074c652a14aeb9c47b08a9b65cda93e7005b465b6"}, "sources": [{"path": "../discovery-v1/sources/discovery-capture.md", "bytes": 6816, "sha256": "e9bf4052c38ba938949c39be257b5e5165e0c671bf2527ee843b1c39c187d39b"}]},
+    {"stage": "research-topic-a-v1", "artifact": {"path": "../research-topic-a-v1/artifact.md", "bytes": 12210, "sha256": "2ae9cab6bd061b92300ded762cdf7625094f9094b5ec321596584a12465c10d5"}, "source_map": {"path": "../research-topic-a-v1/source-map.json", "bytes": 8207, "sha256": "f1b75d5a76776d7c18766d2892d4244a277f044038a6ee1951233a591dabbf45"}, "sources": [{"path": "../research-topic-a-v1/sources/first-useful-finding.md", "bytes": 1028, "sha256": "ab336e76e0979ac404397b74809ed0bdc49663b846106ba8d7c65fc92f800006"}, {"path": "../research-topic-a-v1/sources/topic-a-public-sources.md", "bytes": 2358, "sha256": "ee32ebd045acb1d3c8240ab561b560484b23cc8cc7cc905be09761caf715a0a5"}]},
+    {"stage": "research-topic-b-v1", "artifact": {"path": "../research-topic-b-v1/artifact.md", "bytes": 17835, "sha256": "1b668a826cca9729d065c1072cb0eb906968ffeeaa70ff33b500d77103feb0ea"}, "source_map": {"path": "../research-topic-b-v1/source-map.json", "bytes": 8565, "sha256": "0c7d4dc53799bb8d63c11f2b58af988222842a672da9d8cbfb9d219bfa474bf2"}, "sources": [{"path": "../research-topic-b-v1/sources/topic-b-capture.md", "bytes": 2292, "sha256": "7bd969d7b9a5dbe48f356096f17f4bed7f0340729d2c0820731dccba7b2e934e"}]}
+  ],
+  "first_useful_saved_finding": {
+    "path": "sources/first-useful-finding.md",
+    "saved_at_utc": "2026-10-07T20:22:25Z",
+    "bytes": 1715,
+    "sha256": "d73c0fbec9bce82d6dacd8a6d763010ae33be952b469b32e60d245f7c83d680b"
+  },
+  "independent_public_source_capture": {
+    "path": "sources/independent-public-source-capture.md",
+    "saved_at_utc": "2026-10-07T20:27:44Z",
+    "bytes": 4329,
+    "sha256": "5ae7b2381f46a8d420709189492e289da34459ffd11c0bd36c89713adbc306ce"
+  },
+  "full_artifact": {
+    "path": "artifact.md",
+    "completed_at_utc": "2026-10-07T20:28:14Z",
+    "bytes": 17607,
+    "sha256": "eb5910e3983a0f1d98896aa499addcf0cc6e65afc31a3926294b20ba6296ce5c"
+  },
+  "sources": [
+    {"id": "ropey-1.6.1", "version": "1.6.1", "commit": "d41ee247f2f097c7f9c8e4730b7dd884734f1ee5", "paths": ["src/rope.rs::Rope/from_reader/write_to", "src/rope_builder.rs::find_good_split caller", "src/crlf.rs::seam helpers/tests", "Cargo.toml::features", "CHANGELOG.md::1.5.1 len_lines"], "reviewed_utc": "2026-10-07T20:22:25Z/2026-10-07T20:26:02Z"},
+    {"id": "zed-issue-48697-pr-51037-release", "issue": "https://github.com/zed-industries/zed/issues/48697", "pr": "https://github.com/zed-industries/zed/pull/51037", "merge_commit": "50aef1f115493aab506df9d5b33da5435dc36bfc", "regression": "crates/project/tests/integration/project_tests.rs::test_dirty_buffer_reloads_after_undo", "release": "v0.229.0", "release_source": "https://github.com/zed-industries/zed/blob/v0.229.0/crates/language/src/buffer.rs", "reviewed_utc": "2026-10-07T20:22:25Z/2026-10-07T20:26:02Z", "upstream_reported_checks": 28},
+    {"id": "notify-8.2.0", "url": "https://docs.rs/notify/8.2.0/notify/", "reviewed_utc": "2026-10-07T20:22:25Z/2026-10-07T20:26:02Z"},
+    {"id": "tempfile-3.27.0", "url": "https://docs.rs/tempfile/3.27.0/tempfile/struct.TempPath.html", "reviewed_utc": "2026-10-07T20:22:25Z/2026-10-07T20:26:02Z"},
+    {"id": "slint-issue-8147", "url": "https://github.com/slint-ui/slint/issues/8147", "reviewed_utc": "2026-10-07T20:22:25Z/2026-10-07T20:26:02Z"},
+    {"id": "vscode-working-copies", "url": "https://github.com/microsoft/vscode/wiki/Working-Copies", "reviewed_utc": "2026-10-07T20:22:25Z/2026-10-07T20:26:02Z", "mutable_analogy_only": true}
+  ],
+  "source_operations": [
+    {"window_utc": "2026-10-07T20:20:22Z/2026-10-07T20:22:25Z", "operation": "Read exact critic input-map, full original INPUTS/brief/plan and all ten source copies; read full discovery inventory/map/capture and both complete topic artifacts/maps/all declared source bytes. Independently SHA-256 checked the original inputs and predecessor/source bytes."},
+    {"window_utc": "2026-10-07T20:22:25Z/2026-10-07T20:26:02Z", "operation": "Independently opened/searched primary upstream code, issue, PR diff/regression, immutable release-tag code, versioned crate docs, Slint issue and VS Code design wiki; details and direct URLs are in sources/independent-public-source-capture.md."},
+    {"window_utc": "2026-10-07T20:27:44Z/2026-10-07T20:28:14Z", "operation": "Saved independent source capture and complete critic artifact with evidence/dispositions; no tests, builds, benchmarks, application checks, or source-code execution."}
+  ],
+  "validation": {"executed_scientific_checks": [], "executed_builds_or_application_tests": [], "input_hash_check": "all map-listed original input SHA-256 values matched; declared predecessor/source SHA-256 values matched", "application_validated": false},
+  "unknown_usage": null,
+  "unknown_billing": null,
+  "sourcepass_or_speed_claim": false
+}

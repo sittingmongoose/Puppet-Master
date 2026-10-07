@@ -1,0 +1,79 @@
+{
+  "case": "D-M08-A",
+  "version": "v3",
+  "is_method_comparison": true,
+  "disposition": "COMPLETE_FULL_SOURCE_PAIR",
+  "control": "FullSourcePASS",
+  "treatment": "FullSourceFAIL",
+  "six_axes": "Full declared scope independently assessed each arm; no weighted rubric",
+  "conclusion": "This exact trial favors coherent rewrite for source quality. Amendment-first loses the coded-byte coordinate/storage-count condition, and treatment final stage is longer. No treatment speed/quality win or general causal estimate.",
+  "review_freezes": {
+    "J2": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J2/freeze_disposition.json",
+    "J1": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J1/freeze_disposition.json"
+  },
+  "pair_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/V3_PAIR_FREEZE.json",
+  "economics": {
+    "new_upper_bound_minutes_each_cold": 40,
+    "original_15min_success_claim": false,
+    "shared_stage_dispatch_to_delivery_seconds_fully_charged_each_arm": 591.591,
+    "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 1370.881,
+    "paired_critical_wall_seconds": 1114.876,
+    "arms": {
+      "control": {
+        "occupied_dispatch_to_delivery_seconds_including_full_shared": 932.572,
+        "actual_common_T0_to_final_delivery_seconds": 1016.419,
+        "final_stage_seconds": 340.981,
+        "queue_and_host_handoff_seconds_before_final": 83.84699999999998,
+        "native_goal_raw_counters": {
+          "objective_sha256": "14e0ce13e590d5a0c5405d929b571beac0203ceb90f7abd43ad8a64ef94223a0",
+          "status": "complete",
+          "tokensUsed": 82414,
+          "tokenBudget": null,
+          "timeUsedSeconds": 307
+        },
+        "final_bytes": 7319
+      },
+      "treatment": {
+        "occupied_dispatch_to_delivery_seconds_including_full_shared": 1029.9,
+        "actual_common_T0_to_final_delivery_seconds": 1114.876,
+        "final_stage_seconds": 438.309,
+        "queue_and_host_handoff_seconds_before_final": 84.976,
+        "native_goal_raw_counters": {
+          "objective_sha256": "4d1dd99b6852371df6f41faf786c8e9d92de5d5486ddb6036ffa83fb869ab48c",
+          "status": "complete",
+          "tokensUsed": 89053,
+          "tokenBudget": null,
+          "timeUsedSeconds": 392
+        },
+        "final_bytes": 6456
+      }
+    },
+    "shared_native_goal_raw_counters": [
+      {
+        "objective_sha256": "5acd35f9a09a9ecf66904d4a0b488014630a62019422dd283d9415aa12aaa446",
+        "status": "complete",
+        "tokensUsed": 88430,
+        "tokenBudget": null,
+        "timeUsedSeconds": 266
+      },
+      {
+        "objective_sha256": "c50830adc230926da1ee6d069544b46644e5975808b45a0bb0c1d563fe1c8f53",
+        "status": "complete",
+        "tokensUsed": 80316,
+        "tokenBudget": null,
+        "timeUsedSeconds": 234
+      }
+    ],
+    "overlap": "Root-authorized finals overlap; occupied stage sum is not wall time; service contention inseparable. Parent orchestration is not additionally counted as worker occupied time.",
+    "billing": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "old_failure_costs": "All original/v2 failed attempts retained and charged inclusively to each arm cold and once campaign aggregate; separate immutable receipts. Missing old delivery/counter fields remain unknown; v3 numbers are additional costs, not failure-inclusive totals.",
+    "host_capture_cost": "Exact individual activation/terminal receipts retained; no synthesized total when unknown."
+  },
+  "eligibility": "All v3 candidate stages qualified native-active/native-complete, quiet and new-budget delivery. Original/v2 dispositions unchanged.",
+  "provenance": "Advisory path maps, no firewall. Method paths and embedded timing reduce blinding. Candidate source exposure audit incomplete; source grade, timing and provenance separate. No behavioral server/library tests executed.",
+  "frozen_at": "2026-10-07T20:56:59.168575+00:00"
+}

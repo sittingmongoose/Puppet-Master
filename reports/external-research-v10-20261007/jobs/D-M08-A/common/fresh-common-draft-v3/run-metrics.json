@@ -1,0 +1,36 @@
+{
+  "stage_requested_at_utc": "2026-10-07T20:28:57.512Z",
+  "absolute_common_t0_utc": "2026-10-07T20:28:57.512Z",
+  "stage_deadline_utc": "2026-10-07T20:36:57.512Z",
+  "absolute_case_deadline_utc": "2026-10-07T21:08:57.512Z",
+  "measurement_time_utc": "2026-10-07T20:33:10Z",
+  "elapsed_from_t0_seconds_at_measurement": 252.488,
+  "stage_ceiling_seconds": 480,
+  "cold_aggregate_budget_minutes_per_arm": 40,
+  "shared_seed_cold_charge_rule": "charge full shared seed per cold run, once per campaign; actual attribution unknown",
+  "source_operations": [
+    {"operation": "read", "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/INPUT_MAP.json"},
+    {"operation": "read", "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md"},
+    {"operation": "read", "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json"},
+    {"operation": "read", "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/boundary.json"},
+    {"operation": "search and targeted line reads", "paths": ["/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt", "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt"], "note": "RFC 9110 passages read; RFC 9111 was included only in a focused term search, not read by section"}
+  ],
+  "fresh_predecessor_paths_listed": [],
+  "draft": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/draft.md",
+    "word_count": 529,
+    "bytes": 3727,
+    "sha256": "f78d2c266f386e3c4a7bef78d21771af0938b2111d619c8172bbb375ef8e40b4"
+  },
+  "billing": null,
+  "input_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "goal_raw_cumulative_counters_snapshot_before_completion": {
+    "threadId": "01a1180e-12f0-7691-898c-fae6374e20da",
+    "tokensUsed": 78094,
+    "timeUsedSeconds": 182,
+    "observation_time": "after draft creation, before metrics write; exact clock time not returned by get_goal"
+  },
+  "non_source_data_exposure": "A read-only t3_thread_get on the exact supplied target thread returned a durable metadata projection including current and seven recent run IDs, requested/completed timestamps, statuses, provider/model/options, runtime mode, branch/worktree, title, parent relationship, item counts, and subagent count. No thread transcript/messages were read. This exceeded the intended scientific source set; the broader metadata was not used in the proposal."
+}

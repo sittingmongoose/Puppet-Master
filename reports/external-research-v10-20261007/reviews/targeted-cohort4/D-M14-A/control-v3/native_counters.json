@@ -1,0 +1,15 @@
+{
+  "schema": "independent.review-native-counters.v1",
+  "source": "T3 durable current-run metadata only; billing/token counters not exposed",
+  "thread_id": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-control-source-review-v3",
+  "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-control-source-review-v3:ordinal:1",
+  "requested_at_utc": "2026-10-07T20:54:29.213Z",
+  "started_at_utc": "2026-10-07T20:54:29.882Z",
+  "input_tokens": null,
+  "cached_input_tokens": null,
+  "generated_output_tokens": null,
+  "reasoning_tokens": null,
+  "billing": null,
+  "reported_provider_elapsed_seconds": null,
+  "limit": "No estimates substituted for native counters; local source-operation elapsed is tracked separately."
+}

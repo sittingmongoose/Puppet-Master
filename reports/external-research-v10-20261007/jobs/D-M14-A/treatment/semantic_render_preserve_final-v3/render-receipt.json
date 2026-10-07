@@ -1,0 +1,33 @@
+{
+  "invocation": {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/semantic_findings.md",
+      "--output",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/mechanical_projection.md"
+    ],
+    "start_utc": "2026-10-07T20:40:27.517306+00:00",
+    "end_utc": "2026-10-07T20:40:27.634246+00:00",
+    "elapsed_seconds": 0.11689909299821011,
+    "stdout": "",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "renderer": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py",
+    "sha256": "80e925fe69e7ccc2d58297fd48ab857795545d6d94572b653bffc5803ace9ef0",
+    "version": "m14-renderer-1.0.0"
+  },
+  "input": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/semantic_findings.md",
+    "sha256": "22c8ca760be00ae27abdd9f5a226144efd81fef16b00eea339334b01a324ef90",
+    "bytes": 15469
+  },
+  "output": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/mechanical_projection.md",
+    "sha256": "8e4a129b2cd486629201d1448bedcd9291339ab2ce89d68f1fb5448f01d4ae2a",
+    "bytes": 53056
+  },
+  "structural_renderer_only": true
+}

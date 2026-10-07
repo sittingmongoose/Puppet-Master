@@ -1,0 +1,83 @@
+{
+  "case_id": "D-M02-B",
+  "arm": "control",
+  "role": "question_2",
+  "stage": "question_2-v3",
+  "timezone": "UTC",
+  "stage_deadline_utc": "2026-10-07 20:39:00.047566 UTC",
+  "operations": [
+    {
+      "operation": "native Goal create",
+      "observed_at_utc": "2026-10-07 20:29:15 UTC",
+      "outcome": "created fresh; threadId 01a1180e-2b16-79e1-a021-c6ead980d595; active"
+    },
+    {
+      "operation": "native Goal get active",
+      "observed_at_utc": "2026-10-07 20:29:15 UTC",
+      "outcome": "same threadId; status active; tokensUsed 0; timeUsedSeconds 0"
+    },
+    {
+      "operation": "activation-only T3 notice",
+      "submitted_after_utc": "2026-10-07 20:29:15 UTC",
+      "accepted_before_utc": "2026-10-07 20:29:32 UTC",
+      "outcome": "delivery started; status starting; messageId message:mcp:fa815a70-4844-40bc-9b8a-25ac7a2bcd46:thread-send:er10-D-M02-B-control-question_2-v3-activation"
+    },
+    {
+      "operation": "read authorized brief, source manifest, and three supplied captures",
+      "started_at_utc": "2026-10-07 20:29:32 UTC",
+      "completed_at_utc": "2026-10-07 20:29:32 UTC",
+      "outcome": "read only listed inputs"
+    },
+    {
+      "operation": "SHA-256 supplied captures and inputs",
+      "started_at_utc": "2026-10-07 20:29:32 UTC",
+      "completed_at_utc": "2026-10-07 20:29:32 UTC",
+      "outcome": "all three source hashes match sources.json; brief and manifest also hashed"
+    },
+    {
+      "operation": "fetch and inspect Rasterio tagged implementation",
+      "started_at_utc": "2026-10-07 20:32:32 UTC",
+      "completed_at_utc": "2026-10-07 20:32:33 UTC",
+      "outcome": "raw _io.pyx preserved under stage/sources; hash recorded; read-only, not executed"
+    },
+    {
+      "operation": "write report.md",
+      "started_at_utc": "2026-10-07 20:33:46 UTC",
+      "completed_checkpoint_at_utc": "2026-10-07 20:33:46 UTC",
+      "outcome": "report written; word count and output hash checked"
+    },
+    {
+      "operation": "write source capture metadata",
+      "completed_checkpoint_at_utc": "2026-10-07 20:33:46 UTC",
+      "outcome": "JSON metadata saved next to preserved implementation bytes"
+    },
+    {
+      "operation": "proposed checks",
+      "outcome": "specified in report; none executed"
+    },
+    {
+      "operation": "add imports to report example and refresh output verification",
+      "started_at_utc": "2026-10-07 20:34:17 UTC",
+      "completed_at_utc": "2026-10-07 20:34:17 UTC",
+      "outcome": "report remains below 1100 words; report and preserved source capture hashes recorded"
+    }
+  ],
+  "output_verification": {
+    "report_word_count": 1022,
+    "report_sha256": "ba9f3117294e3127537ee74aba1cbc4aed9ff8c863b04203345c273130f07489",
+    "source_capture_sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+    "metadata_json_parseable": true
+  },
+  "actual_stage_elapsed_seconds_at_checkpoint": 324,
+  "usage": {
+    "generated_tokens": null,
+    "billed_tokens": null,
+    "native_goal_tokens_used_at_activation": 0,
+    "native_goal_time_used_seconds_at_activation": 0,
+    "native_goal_cumulative_tokens_at_terminal": null,
+    "native_goal_cumulative_time_seconds_at_terminal": null,
+    "note": "Native Goal totals are app-reported cumulative fields, not generated-token or billing measures. Terminal values are unknown until native terminal observation."
+  },
+  "native_goal_terminal_observation": null,
+  "timings_preterminal_checkpoint_at_utc": "2026-10-07 20:34:39 UTC"
+}

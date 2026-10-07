@@ -1,0 +1,910 @@
+{
+  "record_at": "2026-10-07T21:01:59.580685+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-treatment-independent-review-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T20:46:56.631Z",
+    "startedAt": "2026-10-07T20:46:57.311Z",
+    "completedAt": "2026-10-07T21:01:27.488Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "schema": "independent-six-axis-coverage-v1",
+    "source_judgment": "FAIL",
+    "assessment_complete": true,
+    "count_definition": "complete counts completed assessments, not candidate satisfaction. assessed + unassessed = declared. Domains overlap and must not be added as distinct obligations.",
+    "axes": [
+      {
+        "axis": 1,
+        "assessment": "assessed",
+        "outcome": "fail",
+        "scope": "O1-O6, all ten copied scope inputs and 65 owner-decision/boundary atoms",
+        "findings": [
+          "D01",
+          "D02",
+          "D03"
+        ]
+      },
+      {
+        "axis": 2,
+        "assessment": "assessed",
+        "outcome": "upstream_claims_supported; three plan-interpretation defects",
+        "scope": "23 consequential checks; immutable source, governing contexts, versions and conditions"
+      },
+      {
+        "axis": 3,
+        "assessment": "assessed",
+        "outcome": "satisfied_bounded",
+        "scope": "Useful working-copy/recovery, outside-write, watcher, save, text-buffer, UI, negative and alternative findings; no exhaustive opportunity-recall assertion"
+      },
+      {
+        "axis": 4,
+        "assessment": "assessed",
+        "outcome": "fail",
+        "scope": "Reject/retain/optional/uncertain dispositions; D01 is false unresolved treatment; D02-D03 weaken supposedly retained rules"
+      },
+      {
+        "axis": 5,
+        "assessment": "assessed",
+        "outcome": "mostly_preserved_with_material_condition_loss",
+        "scope": "Whole draft, full critique, final and captured evidence; 17 preservation families",
+        "findings": [
+          "D01",
+          "D02",
+          "D03"
+        ]
+      },
+      {
+        "axis": 6,
+        "assessment": "assessed",
+        "outcome": "honest_execution_separation; acceptance proposals inherit contract gaps",
+        "scope": "All eight validation groups, inspected upstream FakeFs witness and version applicability"
+      }
+    ],
+    "obligations": {
+      "O1": {
+        "assessment": "assessed",
+        "outcome": "satisfied_semantically",
+        "basis": "Brief-led bounded discoveries, options and negative leads beyond a plan defect checklist; chronological/procedural identity not inferred from source maps."
+      },
+      "O2": {
+        "assessment": "assessed",
+        "outcome": "satisfied",
+        "basis": "Pinned Ropey code, definitions, builder callers and feature/index context independently checked."
+      },
+      "O3": {
+        "assessment": "assessed",
+        "outcome": "satisfied",
+        "basis": "Zed issue/fix, governing code, FakeFs regression and released commit source verified; no first-fixed-version or local test inference."
+      },
+      "O4": {
+        "assessment": "assessed",
+        "outcome": "unsatisfied",
+        "basis": "All scope compared; D01-D03 compromise three frozen qualifications despite retain labels."
+      },
+      "O5": {
+        "assessment": "assessed",
+        "outcome": "satisfied_semantically",
+        "basis": "Full substantive critique and all dispositions assessed. Flash-family/actor authenticity is a host field, not inferred from scientific text."
+      },
+      "O6": {
+        "assessment": "assessed",
+        "outcome": "unsatisfied",
+        "basis": "Coherent full sections/options/validation delivered, but replacement fidelity has material errors D01-D03."
+      }
+    },
+    "plan_scope_units": {
+      "F-008": "assessed_retained",
+      "F-018": "assessed_retained",
+      "F-020": "assessed_retained",
+      "F-026": "assessed_retained",
+      "F-027": "assessed_retained",
+      "F-028": "assessed_with_material_defect_D03",
+      "F-082": "assessed_with_material_defects_D01_D02",
+      "definitions_and_transactions": "assessed_retained_with_incorporation",
+      "editing_and_save_context": "assessed_retained_with_incorporation",
+      "text_and_size_context": "assessed_with_material_defect_D03"
+    },
+    "owner_decisions": {
+      "B01": {
+        "decision": "Rust + Slint product boundary; no removed Iced app",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "B02": {
+        "decision": "Read-only proposal, no canon/WorkNodes/runtime/readiness authority",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A01": {
+        "decision": "One buffer/path; edits remain in memory until Save",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A02": {
+        "decision": "Per-group tab identity, active tab/group lists, shared global model",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A03": {
+        "decision": "Dirty compares memory with last-saved content, not current disk",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A04": {
+        "decision": "Preset definition remains language/framework run/debug configuration",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A05": {
+        "decision": "redb remains selected durable settings/session/project/editor store",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A06": {
+        "decision": "seglog remains canonical append-only ledger; editor analytics events optional",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A07": {
+        "decision": "FileSafe remains agent patch/apply/verify guards, adjacent owner",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A08": {
+        "decision": "Every named mutation source enters typed transaction before state changes",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A09": {
+        "decision": "Read-only/write-lock/active recovery replay constrain user and preview mutation",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A10": {
+        "decision": "Agent/FileSafe/LSP paths record operation class and do not merge user undo",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A11": {
+        "decision": "Restore/recovery confirmation/context, applied-version authority and undo explanation",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A12": {
+        "decision": "One dirty/saved version/save-retry authority across panes and mutation flows",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A13": {
+        "decision": "Typing/paste/delete, preview patches, LSP/FileSafe, restore, disk resolution, agent stream source classes",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A14": {
+        "decision": "No new restore/dirty branches or bypass; quit/later recovery; legacy unsaved-content alias",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A15": {
+        "decision": "Undo/restore/git histories remain distinct; runtime safe points are not restore points",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A16": {
+        "decision": "In-place single-buffer preview/LSP group eligibility; multi-file/rename/hunk/repo/conflict broader flow",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A17": {
+        "decision": "Assistant one-file undo group; multi-file receipt and one undo/file; no global Ctrl+Z",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A18": {
+        "decision": "Stage/unstage/discard are git; conflict choices edit result until resolve/stage",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A19": {
+        "decision": "Tree/targets, previews and diff share source authority; SSH changes capabilities, not buffer model",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A20": {
+        "decision": "Accessibility/IME/selection/caret/clipboard/drift/paste/wrapper/input acceptance",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A21": {
+        "decision": "Normal/truncated/load-full/too-large/binary/decode/disk-read-only/degraded effective modes",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A22": {
+        "decision": "Named adjacent owner contracts/owner hints are dependencies; absence not a whole-project defect",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A23": {
+        "decision": "Orthogonal dirty/conflict/read-only/degraded/change/write-lock/stale/error/recovery facts",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A24": {
+        "decision": "Explicit Save and visible success feedback; no auto-save",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A25": {
+        "decision": "Failure retains buffer/dirty/prior saved state; disk/permission/path/read-only/remote reason and Retry/Save As",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A26": {
+        "decision": "Per-tab dirty indicator plus other stable shell location under crowded strip",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A27": {
+        "decision": "Chat/tree/quick-open OpenFile callers converge on common open path",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A28": {
+        "decision": "Backend recovery/history refresh via BufferReverted events",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A29": {
+        "decision": "Disk Revert distinct from chat-owned cmd.chat.revert; editor never fabricates restore",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A30": {
+        "decision": "Omitted target_message_id selects latest mutating assistant turn; full-turn multi-file restore and refresh",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A31": {
+        "decision": "Restore to/History fetch backend restore points; editor/document pane use same pipeline and create none",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A32": {
+        "decision": "Required MVP recovery for local and remote-backed buffers",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A33": {
+        "decision": "Remote recovery is local unsaved memory; exact banner, never remote write receipt",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A34": {
+        "decision": "Reconnect or destination revalidation before remote Save/flush success",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A35": {
+        "decision": "Remote editing MVP does not imply remote terminal/run-debug availability",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A36": {
+        "decision": "Exact Work offline (cached files only); validated cached snapshot; old label compatibility only",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A37": {
+        "decision": "No cache means disabled/no-cached-files state; no full-project offline implication",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A38": {
+        "decision": "Connected/reconnecting/unavailable/pending/read-only states; retain buffers; block unconfirmed round-trips unless queued",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A39": {
+        "decision": "Disconnected listings/search/diff/git/shell/LSP/write unavailable or pending, never fake-live",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A40": {
+        "decision": "Dirty disk-Revert confirmation Discard/Cancel; reload clears dirty",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A41": {
+        "decision": "Save before overwrite and editor/window/tab focus checks; not every keystroke",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A42": {
+        "decision": "Single combined dirty+changed prompt Reload/Overwrite/Cancel and Show diff; no two dialogs",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A43": {
+        "decision": "Per-buffer undo/redo; Ctrl+Z/Ctrl+Shift+Z or Ctrl+Y; no cross-file undo",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A44": {
+        "decision": "Copy/Cut/Paste keyboard/context menu/system clipboard; optional paste normalization",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A45": {
+        "decision": "Code wrap off by default, optional toggle; monospace/theme or editor font settings",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A46": {
+        "decision": "UTF-8 editable; invalid decode read-only with reason until external repair/revert",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A47": {
+        "decision": "Preserve CRLF/LF/CR; explicit Save only; no auto-save",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A48": {
+        "decision": "Binary read-only with clear reason; no hex view MVP",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A49": {
+        "decision": "OS/Git read-only indicator/reason, block Save, allow Save As; no metadata bypass",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A50": {
+        "decision": "Configurable 10,000-line default, settings editor labels/ranges and redb persistence",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A51": {
+        "decision": "Above line threshold truncated read-only by default; explicit full load subject to active cap",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A52": {
+        "decision": "Active 5 MB hard cap is an absolute single-buffer load cap, not editable-only",
+        "assessment": "assessed",
+        "status": "material_defect",
+        "defect": "D03"
+      },
+      "A53": {
+        "decision": "Above cap File too large to edit, View read-only (truncated), Open in system editor",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A54": {
+        "decision": "Read-only virtualized editing not MVP unless needed; no threshold changes from library capacity",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A55": {
+        "decision": "Insertion/replacement inherit nearest surviving existing boundary per new newline",
+        "assessment": "assessed",
+        "status": "material_defect",
+        "defect": "D01"
+      },
+      "A56": {
+        "decision": "Surviving CRLF/LF/CR boundaries outside edit remain exact bytes",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A57": {
+        "decision": "No-op Save preserves entire ending sequence; local edit Save changes no surviving outside boundary",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A58": {
+        "decision": "Paste normalization OFF preserves pasted endings",
+        "assessment": "assessed",
+        "status": "material_defect",
+        "defect": "D02"
+      },
+      "A59": {
+        "decision": "Paste normalization ON follows nearest policy for new normalized boundaries and never surrounding buffer",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A60": {
+        "decision": "F-082 changes no shared undo, explicit Save, failed-save dirty state, encoding or FileSafe authority",
+        "assessment": "assessed",
+        "status": "retained"
+      },
+      "A61": {
+        "decision": "F-082 dependencies/owner hints retained; no runtime/event/storage/activation/readiness proof",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A62": {
+        "decision": "All seven accepted units owner/classification/risk/dependency/metadata stay frozen; no conversion or compilation claim",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      },
+      "A63": {
+        "decision": "Source lineage, exact tokens/negatives/compatibility and static validation references stay available; no gate commands executed",
+        "assessment": "assessed",
+        "status": "retained_by_incorporation"
+      }
+    },
+    "counts": {
+      "axes": {
+        "declared": 6,
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "O1_O6": {
+        "declared": 6,
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0,
+        "satisfied": 4,
+        "unsatisfied": 2
+      },
+      "plan_scope_units": {
+        "declared": 10,
+        "complete": 10,
+        "assessed": 10,
+        "unassessed": 0
+      },
+      "owner_decisions": {
+        "declared": 65,
+        "complete": 65,
+        "assessed": 65,
+        "unassessed": 0,
+        "retained_or_incorporated": 62,
+        "materially_defective": 3
+      },
+      "consequential_checks": {
+        "declared": 23,
+        "complete": 23,
+        "assessed": 23,
+        "unassessed": 0,
+        "supported_or_appropriately_limited": 20,
+        "materially_defective": 3
+      },
+      "preservation_families": {
+        "declared": 17,
+        "complete": 17,
+        "assessed": 17,
+        "unassessed": 0
+      },
+      "validation_groups": {
+        "declared": 8,
+        "complete": 8,
+        "assessed": 8,
+        "unassessed": 0
+      }
+    },
+    "material_error_count": 3,
+    "material_error_ids": [
+      "D01",
+      "D02",
+      "D03"
+    ],
+    "unassessed_obligations": [],
+    "unknown_usage": null,
+    "unknown_billing": null,
+    "family_actor_authentication": null,
+    "opportunity_recall_exhaustive": false,
+    "blinding_limits": [
+      "Admitted paths visibly identify the arm.",
+      "Artifact/component/procedure structure can reveal method.",
+      "Source maps expose lifecycle, timing, counters and quota/accounting assertions; ignored for scientific judgment.",
+      "No other-arm output/grade, comparative winner/cost/speed target, parent analysis or evaluator answers were read."
+    ],
+    "source_checks": "source-checks.json",
+    "judgment": "judgment.md",
+    "owner_decision_locators": "source-checks.json:owner_decision_checks"
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/coverage.json",
+      "bytes": 18136,
+      "sha256": "7ca68f8c06fdfb43edf8ed3b1964457fed1b7fcec03da051cf288721031fd53a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/judgment.md",
+      "bytes": 39182,
+      "sha256": "496a2bb87e6d7583a102c15fc821bcd1a76370e1a19f3c9e972a7eb6c78a7451"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/source-checks.json",
+      "bytes": 60911,
+      "sha256": "97b445524dd3a5e1d21917fc7187c89b7ec5a7197e8419269c0e79d1b0a60fd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/input-manifest.json",
+      "bytes": 11525,
+      "sha256": "7b1c248991ba86897d138eaef458498592043b4a9f1deb6502b6446b98a36177"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/artifact.md",
+      "bytes": 17607,
+      "sha256": "eb5910e3983a0f1d98896aa499addcf0cc6e65afc31a3926294b20ba6296ce5c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json",
+      "bytes": 7402,
+      "sha256": "0155455acf04fbbffc1cf32519561b8e685f74d07a5e8e7658eb25889d4bb2cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/sources/first-useful-finding.md",
+      "bytes": 1715,
+      "sha256": "d73c0fbec9bce82d6dacd8a6d763010ae33be952b469b32e60d245f7c83d680b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/sources/independent-public-source-capture.md",
+      "bytes": 4329,
+      "sha256": "5ae7b2381f46a8d420709189492e289da34459ffd11c0bd36c89713adbc306ce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/research-v1/artifact.md",
+      "bytes": 48729,
+      "sha256": "952744f6d848284cdcf581876f72b3cbee1bd864df2f7902838c08c633d037d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/research-v1/source-map.json",
+      "bytes": 2754,
+      "sha256": "d8aee787518aa797bd74c7d0436fc0bd7f6e792eadb08165c1adcedf3abce843"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/artifact.md",
+      "bytes": 27781,
+      "sha256": "2a08cbdc82ec56955024600f106908f232e11d9cec35a3d76686b11547e038e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/source-map.json",
+      "bytes": 14302,
+      "sha256": "c4b35b7475c830fbabe5cf689b3580b886948002c5ef74484d00d85037b6ad97"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/sources/first-useful-finding.md",
+      "bytes": 1966,
+      "sha256": "05ddcc03f8eaaa28a2e98d648acffb640d86e8c844c25d5baf03d0367a37e30f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/sources/input-captures/critic/first-useful-finding.md",
+      "bytes": 1715,
+      "sha256": "d73c0fbec9bce82d6dacd8a6d763010ae33be952b469b32e60d245f7c83d680b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/sources/input-captures/critic/independent-public-source-capture.md",
+      "bytes": 4329,
+      "sha256": "5ae7b2381f46a8d420709189492e289da34459ffd11c0bd36c89713adbc306ce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/sources/input-captures/discovery/discovery-capture.md",
+      "bytes": 6816,
+      "sha256": "e9bf4052c38ba938949c39be257b5e5165e0c671bf2527ee843b1c39c187d39b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/sources/input-captures/topic-a/first-useful-finding.md",
+      "bytes": 1028,
+      "sha256": "ab336e76e0979ac404397b74809ed0bdc49663b846106ba8d7c65fc92f800006"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/sources/input-captures/topic-a/topic-a-public-sources.md",
+      "bytes": 2358,
+      "sha256": "ee32ebd045acb1d3c8240ab561b560484b23cc8cc7cc905be09761caf715a0a5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/reviser-v1/sources/input-captures/topic-b/topic-b-capture.md",
+      "bytes": 2292,
+      "sha256": "7bd969d7b9a5dbe48f356096f17f4bed7f0340729d2c0820731dccba7b2e934e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/brief.md",
+      "bytes": 5605,
+      "sha256": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/plan.md",
+      "bytes": 2932,
+      "sha256": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/F-008.md",
+      "bytes": 2828,
+      "sha256": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/F-018.md",
+      "bytes": 2233,
+      "sha256": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/F-020.md",
+      "bytes": 2235,
+      "sha256": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/F-026.md",
+      "bytes": 2399,
+      "sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/F-027.md",
+      "bytes": 2090,
+      "sha256": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/F-028.md",
+      "bytes": 2001,
+      "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/F-082.md",
+      "bytes": 2294,
+      "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/definitions_and_transactions.md",
+      "bytes": 5313,
+      "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/editing_and_save_context.md",
+      "bytes": 4948,
+      "sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/frozen/source/text_and_size_context.md",
+      "bytes": 3663,
+      "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/crop-README.md",
+      "bytes": 6506,
+      "sha256": "a9f7ff059682bbc70133b4298e15b1efcd8f004136a0746f7b982ee2bfbab457"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/emacs-gap.html",
+      "bytes": 3021,
+      "sha256": "fdcebcccd6262020b379692bdc6a5020c1018b891d0a132480979caa98faf691"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/emacs-gap.html.txt",
+      "bytes": 998,
+      "sha256": "13f88d6920892a141bd738326f7560f7962b3391841ed3a577a9c207acad80c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/notify-8.2.0.html",
+      "bytes": 40537,
+      "sha256": "1f2def8b150833b5f6238364c84d8f8c45c5819a7e5ef84e83b4a9d46df6dc0a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/notify-8.2.0.html.txt",
+      "bytes": 6938,
+      "sha256": "844fbfbbcf2ed818ff44a95983c637f0eb5ba4703260196064856a8314a17a03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/retrieval-manifest.json",
+      "bytes": 70358,
+      "sha256": "a1bf215221fd2b7495941cd15664d900fd149ea6054bba7f6739d8866d30bbf4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-CHANGELOG.md",
+      "bytes": 15390,
+      "sha256": "cb39bd9b0d622a83d18a4ada0f384e9067a07c57023cf5058a842d35e1bbec63"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-Cargo.toml",
+      "bytes": 1410,
+      "sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-README.md",
+      "bytes": 6232,
+      "sha256": "c9265d7a9eb4b3569b3fbb58cd953af6f12e44ab87848a682ab84190a6c1c90c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-package-vcs.html",
+      "bytes": 19921,
+      "sha256": "e4e73292acecc61baf502cf0320e44f769c274191dff82cd122d8ed676e3a5ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-package-vcs.html.txt",
+      "bytes": 646,
+      "sha256": "43bb5cdf22c90bb393f450b899b022142e998e106346f32b7e08e0e5386ee451"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-src-crlf.rs",
+      "bytes": 6199,
+      "sha256": "2705a577d31e5efecd95b81bf63339dc1c9d009085fe346685cf36703fb938cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-src-lib.rs",
+      "bytes": 14151,
+      "sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-src-rope.rs",
+      "bytes": 104334,
+      "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-src-rope_builder.rs",
+      "bytes": 12592,
+      "sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-src-str_utils.rs",
+      "bytes": 17528,
+      "sha256": "24953d555cb567c31c8ea456550ca02feefb77573dbd5df0e11691c1663bdb65"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-src-tree-node.rs",
+      "bytes": 42390,
+      "sha256": "a591c350ee59617fea969e9ee5e4361fb351e41126e96e1ef844054ce044bd65"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-src-tree-text_info.rs",
+      "bytes": 1869,
+      "sha256": "94e484dd73c0bb67cd2ccccbdc81d7b1ec09c92b943f0a139d72b006c6484e84"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-File-create.html",
+      "bytes": 196174,
+      "sha256": "12a7ef0cbfff6ef095673182218c8957dce5061c6a84ca5ee3f4ad0d5508d455"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-File-create.html.txt",
+      "bytes": 40825,
+      "sha256": "9b10f560f79cbed07bd2081706ef627516ee6046a8dac8dc759974fa9082ea80"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-Permissions.html",
+      "bytes": 44308,
+      "sha256": "9b155b401b5a20abfaa2b54d554378560417720509217408ba8d7e36277045cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-Permissions.html.txt",
+      "bytes": 8043,
+      "sha256": "b627ab2b005489ea0eb47149b70a5a928fa09ada0f1890006a5a07ab86f8ebed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-String.html",
+      "bytes": 667290,
+      "sha256": "a3cd9eaa72f1283dda4da4b23ed5dfd9ba53f6a43fc450a38b96a08d3c54dda6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-String.html.txt",
+      "bytes": 135856,
+      "sha256": "01fd43966d3fff665c741a861fb08dc55346c8496b6d7cc7badcc5e8d9f4931e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-rename.html",
+      "bytes": 6802,
+      "sha256": "5c05d50ff2ade3b75bb8b05c049d35f6541bf9d412671a707c35e565e50b231d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-rename.html.txt",
+      "bytes": 1442,
+      "sha256": "a9ca5e9f33e94b4d2f2ba309789cbab81fbdffec1f41b3dc31bd1bdda3221b73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/slint-issue-8147.html",
+      "bytes": 263402,
+      "sha256": "c1f1a24e9e1b2a9261a14a99d18efb368fd1903eb15a9385159f405b7cf8a91a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/slint-issue-8147.html.txt",
+      "bytes": 4079,
+      "sha256": "459c00f63ae691621fbddf2f4ff3d4ed108df98370c473ceedee792fda02659e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/tempfile-3.27.0-TempPath.html",
+      "bytes": 155647,
+      "sha256": "de9798a15f1b3b93b8f17bc4d7cd4b5a6a7f0b4157db966f3dd8dbe89df55aea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/tempfile-3.27.0-TempPath.html.txt",
+      "bytes": 35500,
+      "sha256": "b4d504e2367e94f27345d9792f58042674ef6ca518bbcfb514c51acc6c2d45c9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/vscode-working-copies.html",
+      "bytes": 443413,
+      "sha256": "529ec002cbab87b9333191c27802fae42919181651f1b7c04118325247bf62ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/vscode-working-copies.html.txt",
+      "bytes": 16438,
+      "sha256": "1df74bcd179d1da7b5482d88f5a819f66090fbc3a50e819ee463427e1f50e613"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-issue-48697.json",
+      "bytes": 5411,
+      "sha256": "77af8fb1a3caea9eed622cd7fb866a87328a17b1f188ed60b8ab90e0446ac218"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-merge-buffer.rs",
+      "bytes": 225042,
+      "sha256": "5638f1aaa760dafb44a69b43f6a76b97096a5658bbeecb41a2e702645915ccf9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-merge-buffer_store.rs",
+      "bytes": 65831,
+      "sha256": "57e2ebe0cb4ae24412b7954757625695711567e689994be4a3b6bc5bf4467cd2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-merge-project_tests.rs",
+      "bytes": 400358,
+      "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037-files.json",
+      "bytes": 4431,
+      "sha256": "4c006c0c3f2a6847754d91cdae1597329ba6d32c72c137bbfbbfd718ae17cf94"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037.html",
+      "bytes": 361236,
+      "sha256": "287a037fb9c25cda22aaca79bec80d4050794fdd2c469487902bf99c0a21fe33"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037.html.txt",
+      "bytes": 11130,
+      "sha256": "0b9e5f2e3883aef743b37d8442cb21fb53fa30318e5b53e04c327828de0a34be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037.json",
+      "bytes": 17762,
+      "sha256": "6d15dfcb46ab8d2410fa1a6cb887f60d39391cecc25dd7431c6e84f7193ec80b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-buffer.rs",
+      "bytes": 225371,
+      "sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-pinned-buffer.rs",
+      "bytes": 225371,
+      "sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-pinned-project_tests.rs",
+      "bytes": 403284,
+      "sha256": "fe9ec4fdff3b68f63ea09ed54ffe2cedcb5718dcabeaa562b96c69cd239765ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-project_tests.rs",
+      "bytes": 403284,
+      "sha256": "fe9ec4fdff3b68f63ea09ed54ffe2cedcb5718dcabeaa562b96c69cd239765ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-v0.229.0.html",
+      "bytes": 232340,
+      "sha256": "f162cb8667f01136a747169dc16fd6d2212ee0ed9364be8c83026f0e742f5e30"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-v0.229.0.html.txt",
+      "bytes": 15933,
+      "sha256": "409b04efbe55202a0ec6ba18f928ccd4a18f5c6d3d9721414c174da3b05ce744"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-05-pair-freeze-v1.json"
+}

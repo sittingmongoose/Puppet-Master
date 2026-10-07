@@ -1,0 +1,148 @@
+{
+  "schema": "pm.er10.passive-receipts.v1",
+  "stage": "C-01/control/critic-v1",
+  "observed_at_utc": "2026-10-07T20:24:36.318409+00:00",
+  "thread_id": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-critic-v1",
+  "task_id": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-critic-v1",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/control/critic-v1/dispatch.json",
+    "type": "stage_dispatch",
+    "version": null,
+    "record_id": null,
+    "call_id": null,
+    "time": null,
+    "sha256": "3345d632c3353c1b01cec9c28ef875185527d42c9871ee03bcc23432e4ca0a51"
+  },
+  "authority_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/control/critic-v1/dispatch.json",
+      "type": "own_exact_dispatch_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "3345d632c3353c1b01cec9c28ef875185527d42c9871ee03bcc23432e4ca0a51"
+    }
+  ],
+  "binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A68211e58-8957-484a-b1a0-473740607b99%25253Adelegate-task%25253Aer10-confirmation-C-01-control-critic-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a11803-f129-7c72-8d7a-b2786e9db3e5",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:24:07.983Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A68211e58-8957-484a-b1a0-473740607b99%25253Adelegate-task%25253Aer10-confirmation-C-01-control-critic-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:24:07.983Z",
+        "sha256": "70dd2b96c28c9479682fcad0dac0805c332f6dfee408a1a1c5a3ae53d645d255"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_native_goal_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A68211e58-8957-484a-b1a0-473740607b99%25253Adelegate-task%25253Aer10-confirmation-C-01-control-critic-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:24:07.983Z",
+        "sha256": "70dd2b96c28c9479682fcad0dac0805c332f6dfee408a1a1c5a3ae53d645d255"
+      },
+      "tool": null,
+      "native_response": {
+        "objective_sha256": "f197606ae77ce7eb3657dec7f9db51ae79c24405f485a757be3a73abc686ab45",
+        "status": "complete",
+        "tokensUsed": 114762,
+        "tokenBudget": null,
+        "timeUsedSeconds": 340
+      },
+      "response_sha256": "8acc9cd41ff1fd24c5c6270233a5517a7c7ff88130d3cb2a4d2b3c02407a1cf9",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    }
+  ],
+  "limitations": [
+    "No generated/cached/provider billing fields exposed by selected sources; bounded absence only. No additional quota probes.",
+    "No continuous Goal reasoning certification. Fresh native state plus binding is an observed state, never a replacement create receipt.",
+    "SQLite record hashes identify observed payloads, not immutable whole DB snapshots. Source can change immediately after observation.",
+    "File access names/hashes not harvested on this route; scope audit remains incomplete_unknown."
+  ],
+  "usage": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning_subset": null,
+    "provider_billing": null,
+    "semantics": "Unknown unless explicitly exposed. Native cumulative Goal/context counters remain in their original states; no sums or billing estimates."
+  },
+  "scope_audit": "incomplete_unknown; advisory map is not a filesystem firewall",
+  "thread_metadata": {
+    "modelSelection": {
+      "instanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "providerInstanceId": "codex_gmail",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "lineage": {
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+      "relationshipToParent": "subagent",
+      "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+    }
+  },
+  "parent_in_campaign_authority": true,
+  "native_timestamp_units": {
+    "*_ms": "milliseconds_since_unix_epoch",
+    "createdAt/updatedAt_in_GLM_driver": "milliseconds_since_unix_epoch",
+    "Codex_goal_createdAt/updatedAt": "seconds_since_unix_epoch",
+    "T3_source_times": "ISO-8601; native values preserved"
+  },
+  "lifecycle_observations": {
+    "states_in_source_order": [
+      "complete"
+    ],
+    "active_get_response": false,
+    "terminal_get_response": false,
+    "meaning": "Observed source fields only; no order adjudication or inferred lifecycle transition."
+  },
+  "capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "actual_run_projection": {
+    "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-critic-v1:ordinal:1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-critic-v1",
+    "providerInstanceId": "codex_gmail",
+    "status": "completed",
+    "requestedAt": "2026-10-07T20:17:53.784Z",
+    "startedAt": "2026-10-07T20:17:54.357Z",
+    "completedAt": "2026-10-07T20:24:08.059Z",
+    "providerThreadId": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A68211e58-8957-484a-b1a0-473740607b99%25253Adelegate-task%25253Aer10-confirmation-C-01-control-critic-v1%3Aordinal%3A1"
+  },
+  "phase": "terminal",
+  "host_elapsed_seconds": 0.02965894500084687,
+  "missing_createdAt_policy": "Absent timestamp remains null/absent; do not infer from task or dispatch",
+  "actual_api_body_policy": "Codex projection is state only; actual create/get/update API bodies absent unless explicitly observed"
+}

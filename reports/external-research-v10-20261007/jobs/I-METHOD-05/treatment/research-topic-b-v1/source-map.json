@@ -1,0 +1,133 @@
+{
+  "schema": "I-METHOD-05-topic-source-map-v1",
+  "stage": "I-METHOD-05/treatment/research-topic-b-v1",
+  "created_at_utc": "2026-10-07T20:18:22Z",
+  "time_constraints": {
+    "stage_deadline_utc": "2026-10-07T20:18:53.208210Z",
+    "stage_allowance_seconds_max": 300,
+    "whole_arm_deadline_utc": "2026-10-07T20:49:20.932703Z"
+  },
+  "first_useful_saved_finding": {
+    "path": "sources/topic-b-capture.md",
+    "saved_at_utc": "2026-10-07T20:16:17Z",
+    "sha256": "7bd969d7b9a5dbe48f356096f17f4bed7f0340729d2c0820731dccba7b2e934e"
+  },
+  "full_artifact": {
+    "path": "artifact.md",
+    "completed_at_utc": "2026-10-07T20:18:22Z",
+    "sha256": "1b668a826cca9729d065c1072cb0eb906968ffeeaa70ff33b500d77103feb0ea"
+  },
+  "input_boundary": {
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/input-map.json",
+      "sha256": "2b4b54a48037c3cfb8a3c0400be275cd9e0a380e90fcb732b8ebfd7db7783f79"
+    },
+    "brief_plan_and_all_map_listed_source_copies_read_before_public_research": true,
+    "same_arm_predecessor": {
+      "artifact": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/artifact.md",
+        "sha256": "4e7c8dfd06f066363dfa4352897569d89b3f37b7c3fe12c72e30d97242427bbc"
+      },
+      "source_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source-map.json",
+        "sha256": "7f5d2cfa38ec47b586f89a9074c652a14aeb9c47b08a9b65cda93e7005b465b6"
+      },
+      "first_capture": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/sources/discovery-capture.md",
+        "sha256": "e9bf4052c38ba938949c39be257b5e5165e0c671bf2527ee843b1c39c187d39b"
+      }
+    },
+    "observed_sha256": {
+      "INPUTS.md": "c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae",
+      "brief.md": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+      "plan.md": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+      "source/F-008.md": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+      "source/F-018.md": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+      "source/F-020.md": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+      "source/F-026.md": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+      "source/F-027.md": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+      "source/F-028.md": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+      "source/F-082.md": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+      "source/definitions_and_transactions.md": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+      "source/editing_and_save_context.md": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+      "source/text_and_size_context.md": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+    },
+    "hash_check": "Every map-listed original hash matched; original inputs were not modified.",
+    "other_arm_or_campaign_material_read": false
+  },
+  "sources": [
+    {
+      "id": "ropey-1.6.1-pinned-source",
+      "kind": "primary versioned source code and release history",
+      "version": "ropey 1.6.1",
+      "upstream_commit": "d41ee247f2f097c7f9c8e4730b7dd884734f1ee5",
+      "paths_symbols_and_callers": [
+        "src/rope.rs: Rope { root: Arc<Node> }, Clone, from_reader -> RopeBuilder, write_to -> chunks, UTF-8 validation, char/byte/UTF-16 index conversions, edits and line queries",
+        "src/rope_builder.rs: streamed construction and caller of CRLF-safe chunk splitting",
+        "src/crlf.rs: is_break, seam_is_break, find_good_split and CRLF seam tests",
+        "src/tree/node.rs, src/tree/node_children.rs, src/tree/node_text.rs, src/tree/text_info.rs: tree nodes and per-subtree byte/char/line-break metrics",
+        "CHANGELOG.md 1.5.1: RopeSlice::len_lines CRLF-splitting count bug fix; 1.6.1 package source has current CRLF invariant/seam code"
+      ],
+      "governing_context": "Rope methods delegate construction to RopeBuilder, edits/splitting to tree nodes and crlf helpers, and output to chunk iteration. Data-structure behavior is distinct from save transaction, file-mode and UI contracts.",
+      "evidence_urls": [
+        "https://github.com/cessen/ropey/blob/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/src/rope.rs",
+        "https://github.com/cessen/ropey/blob/d41ee247f2f097c7f9c8f4730b7dd884734f1ee5/src/crlf.rs",
+        "https://docs.rs/crate/ropey/1.6.1/source/src/crlf.rs",
+        "https://docs.rs/crate/ropey/1.6.1/source/src/rope_builder.rs",
+        "https://github.com/cessen/ropey/blob/master/CHANGELOG.md",
+        "https://docs.rs/crate/ropey/1.6.1/source/.cargo_vcs_info.json",
+        "https://docs.rs/crate/ropey/1.6.1/source/Cargo.toml"
+      ],
+      "history_limit": "Release notes name the RopeSlice/CRLF len_lines defect and pinned 1.6.1 code has seam tests/invariants, but this bounded capture did not identify the exact issue ID or the fix-specific regression test and ancestry. Do not claim complete issue-to-regression lineage."
+    },
+    {
+      "id": "zed-dirty-to-clean-external-update",
+      "kind": "primary public issue, merged fix, regression and release-note evidence for adjacent F-026 seam",
+      "version": "issue 48697; PR 51037 merged 2026-03-10 as 50aef1f; PR reports 28 checks and release note",
+      "paths_symbols": [
+        "crates/language/src/buffer.rs: file_updated, did_edit, ReloadNeeded",
+        "test_dirty_buffer_reloads_after_undo"
+      ],
+      "evidence_urls": [
+        "https://github.com/zed-industries/zed/issues/48697",
+        "https://github.com/zed-industries/zed/pull/51037",
+        "https://github.com/zed-industries/zed/pull/51037/files"
+      ],
+      "limitations": "Cross-editor evidence supporting a validation edge only; upstream checks were not run here and mtime behavior is not universal."
+    },
+    {
+      "id": "same-arm-discovery-evidence-reused",
+      "kind": "admitted predecessor source inventory and capture; consulted as reusable evidence",
+      "evidence_paths": [
+        "../discovery-v1/artifact.md",
+        "../discovery-v1/source-map.json",
+        "../discovery-v1/sources/discovery-capture.md"
+      ],
+      "reused_topics": ["Ropey mechanism and limitations", "Zed dirty-to-clean history", "notify watcher limits", "Rust filesystem permission and replacement cautions", "crop alternative", "Slint long-text applicability unknown"],
+      "limitation": "The candidate independently reopened Ropey pinned source and Zed issue/PR; other predecessor leads are retained as context and are not promoted to new independently verified recommendations."
+    }
+  ],
+  "source_operations": [
+    {
+      "window_utc": "2026-10-07T20:14:21Z/2026-10-07T20:18:22Z",
+      "operations": "Read exact input map; read full original brief, frozen plan and every map-listed source copy; read the complete same-arm discovery artifact, source map and discovery-capture bytes; verified all original input hashes; independently opened/search-checked pinned Ropey 1.6.1 code, CRLF tests, release notes, and Zed issue/PR history; saved the first useful finding and complete topic artifact.",
+      "capture": "sources/topic-b-capture.md; direct URLs and exact package/commit/release identities recorded above. No source binaries or code were downloaded."
+    }
+  ],
+  "comparison_coverage": {
+    "primary_topic_units": ["F-027", "F-028", "F-082", "text_and_size_context"],
+    "cross_topic_units": ["F-008", "F-018", "F-020", "F-026", "definitions_and_transactions", "editing_and_save_context"],
+    "dispositions": ["retain", "clarify before implementation", "optional validation", "reject unsupported adoption", "uncertain applicability", "owner dependency"],
+    "critic_and_final_reviser": "downstream; not claimed as completed in this topic stage"
+  },
+  "validation": {
+    "executed_scientific_checks": [],
+    "executed_builds_or_application_tests": [],
+    "mechanical_provenance_check": "sha256sum matched all input-map identities and same-arm predecessor capture identities listed here",
+    "proposed_checks": "listed separately in artifact.md",
+    "application_validated": false
+  },
+  "unknown_usage": null,
+  "unknown_billing": null,
+  "sourcepass_or_speed_claim": false
+}

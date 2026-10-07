@@ -1,0 +1,12 @@
+{
+  "type": "host_capture_cost",
+  "record_at": "2026-10-07T19:23:05.121417+00:00",
+  "stages": [
+    "I-METHOD-03/control/research-v1",
+    "I-METHOD-03/treatment/research-v1"
+  ],
+  "elapsed_seconds": 0.080928432,
+  "scope": "one exec_command including prior method02 binding inspection plus one method03 two-stage export; not per-arm additive",
+  "method02_two_stage_export_seconds": 0.021624593,
+  "billing": null
+}

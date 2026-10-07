@@ -1,0 +1,195 @@
+{
+  "record_at": "2026-10-07T19:47:41.302100+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/artifact.md": {
+      "sha256": "6bb508e84ca3fab781227366e79a2f0f1f29899548aba2d2175a94e0b6f979c2",
+      "bytes": 12145
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/source-map.json": {
+      "sha256": "20e87a5b420fc5858c392368243747f94f68e5b885482ecb9610ce6dac249087",
+      "bytes": 18051
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-realtime-best-practices.md": {
+      "sha256": "db9d4c2a63d25f98fdc4acff0b419cacc566ac081765b04ab99e7142cfe6dffe",
+      "bytes": 17511
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-realtime-proto.proto": {
+      "sha256": "8feff2c5499e0ff08777e203e49ef702e07be0a8376b8bb2126add311a709299",
+      "bytes": 65237
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-realtime-reference.md": {
+      "sha256": "810b50a96e5a158b13bc968cc77a3ab782cd1971ee10bbc3481e3ae2eb48170d",
+      "bytes": 90262
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-schedule-reference.md": {
+      "sha256": "1ff40b8001b180bd023dd6f1899907aecbcb4600c8dbcb6fc6c841a50839b147",
+      "bytes": 138481
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-validator-issue-2174.html": {
+      "sha256": "2215aedd449b79f5090d9bb60afa5fa92ed05e2add8f3dfb748fdd3aa948e36a",
+      "bytes": 249932
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-validator-latest-release.json": {
+      "sha256": "a441d980ffb65ac45ffa0bf4459a7a36b0e9117a9fa3068e87f4a71facca6c50",
+      "bytes": 21187
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/gtfs-validator-v8.0.1-release.json": {
+      "sha256": "a441d980ffb65ac45ffa0bf4459a7a36b0e9117a9fa3068e87f4a71facca6c50",
+      "bytes": 21187
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-4066-to-v2.2.0-compare.json": {
+      "sha256": "fbd99d01d3494fc6a0269daf10016b1dc735765b23b6c3dc3f63e744c1fe34b2",
+      "bytes": 2085188
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-issue-4058.html": {
+      "sha256": "3851107940b4be7e54bb9ef47624d4c74d3fde1cade31dcd1f72b8fdeee60b55",
+      "bytes": 277886
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-issue-observed-b0c9829e-vpm.java": {
+      "sha256": "c9e7144944b1bc27293ecd9e9b5fa511a3d902922464a2969942e27469643611",
+      "bytes": 8483
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-pr-4066.patch": {
+      "sha256": "9421d9d505b4d3eef504d4bfd494130cd7ac18a676003fed6e8092fa4be48923",
+      "bytes": 107509
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-pull-4066.json": {
+      "sha256": "d8df6c70313173c707d2a22d417026226738238838f97b5469f3f677cbe3c5a6",
+      "bytes": 22015
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.10.0-matcher-test.java": {
+      "sha256": "2ec4bc86d684b933c23245a6cd4993e45569d15d3e83b5890129a38f326ea079",
+      "bytes": 21302
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.10.0-matcher.java": {
+      "sha256": "f584f5ceebbc649eb05943f4bde8f0cc0da3c855220ada7012ca6633008841f3",
+      "bytes": 17458
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.10.0-polling-caller.java": {
+      "sha256": "ab64b1f6385f8f6987c02c54dd8db1ff5c95dba6f7d52f9605ec5b2cb95f02b2",
+      "bytes": 2572
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.2.0-matcher-test.java": {
+      "sha256": "bfda3f6fa0448775da0b47f517207b09c51f48cd2ff93e9a989d961274c42d0c",
+      "bytes": 7929
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.2.0-matcher.java": {
+      "sha256": "ebee32d0fb6db5b41056ae000752a1457e202a3ff364ae0c895ea184e4b9714b",
+      "bytes": 10364
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.2.0-polling-caller.java": {
+      "sha256": "0fe98c6e2a65153fde26fd25a1b08c251cae64449bcd6edd6803dfc381ef21ff",
+      "bytes": 3441
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/critic-v1/sources/otp-v2.2.0-release.html": {
+      "sha256": "b0a0e350d4794629d04a969a9b328a88f4c0ec846e90b6528730e926d8b6d9ae",
+      "bytes": 198238
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-03-treatment-critic-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T19:39:28.782Z",
+    "startedAt": "2026-10-07T19:39:29.624Z",
+    "completedAt": "2026-10-07T19:47:18.026Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-03/treatment/critic-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-03--treatment--critic-v1--145e29e176904c4d.json",
+    "sha256": "145e29e176904c4d1d98e054133216bccd78b513a436a98d9bcf559950e56ea4",
+    "bytes": 10872,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "fe9632b9408f9cdaa135e9076f7ea1fd75b712365c1d44edd11c598fa3426cd7",
+      "status": "complete",
+      "tokensUsed": 124061,
+      "tokenBudget": null,
+      "timeUsedSeconds": 443
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-treatment-critic-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a117e0-c66e-70d3-a746-0bc649378a66",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T19:47:17.962Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-treatment-critic-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T19:47:17.962Z",
+        "sha256": "d2838d74c3d94b76283844bf4fc052cf2192f3dbb723b4760055ecf5ceee9a3d"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a117e0-c66e-70d3-a746-0bc649378a66",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 124061,
+  "native_elapsed_seconds": 443,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "record_at": "2026-10-07T19:39:21.007396+00:00",
+    "prospective_stage_deadline": "2026-10-07T19:49:21.007396+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:05:22.484372+00:00",
+    "clientRequestId": "er10-I-METHOD-03-treatment-critic-v1",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

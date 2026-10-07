@@ -1,0 +1,33 @@
+{
+  "case_id": "D-M14-A",
+  "version": "v3",
+  "at": "2026-10-07T20:54:04.949343+00:00",
+  "stages": {
+    "treatment/semantic_render_preserve_final": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/freeze.json",
+      "sha256": "a3122a3299204c473f50b64a0ae023df32100c0949150277ab651809a7548108",
+      "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-treatment-semantic_render_preserve_final-v3",
+      "children_quiet": true,
+      "native_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/passive-terminal.json"
+    },
+    "control/narrative_full_final": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/freeze.json",
+      "sha256": "eb85d337fe72202c7c74ecd49d808d221c54f6e511964a90b01771604f18a125",
+      "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-control-narrative_full_final-v3",
+      "children_quiet": true,
+      "native_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/passive-terminal.json"
+    }
+  },
+  "finals": {
+    "treatment": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_render_preserve_final-v3/final.md",
+      "sha256": "8e4a129b2cd486629201d1448bedcd9291339ab2ce89d68f1fb5448f01d4ae2a",
+      "bytes": 53056
+    },
+    "control": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/narrative_full_final-v3/final.md",
+      "sha256": "0ea2d5d5a4088d56ec4bc077be287fc10761be587e68a064e6f7a93b8d9ae14c",
+      "bytes": 5338
+    }
+  }
+}

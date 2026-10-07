@@ -1,0 +1,67 @@
+{
+  "event": "linked_terminal_state_annotation",
+  "record_at": "2026-10-07T20:02:58.366588+00:00",
+  "original_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/control/reviser-v1/frozen-delivery.json",
+  "actual_export": {
+    "stage": "I-METHOD-03/control/reviser-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-03--control--reviser-v1--1968c88c52b68ca5.json",
+    "sha256": "1968c88c52b68ca5eb2952ce9446a0ac610f2d41c9e3d4c78282f6f971dcb76a",
+    "bytes": 10865,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "actual_binding": {
+    "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-control-reviser-v1%3Aordinal%3A1",
+    "driver": "codex",
+    "providerInstanceId": "codex_gmail",
+    "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+    "nativeThreadRef": {
+      "driver": "codex",
+      "nativeId": "01a117ed-78c9-79d2-bff4-92e0ee4f389e",
+      "strength": "strong"
+    },
+    "status": "idle",
+    "updatedAt": "2026-10-07T20:02:43.747Z",
+    "contextUsage": null,
+    "source": {
+      "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+      "type": "t3_provider_thread_projection",
+      "version": "statev2",
+      "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-control-reviser-v1%3Aordinal%3A1",
+      "call_id": null,
+      "time": "2026-10-07T20:02:43.747Z",
+      "sha256": "6396726d8a74e1755c05a4f19514bd4b16b1139a39f2500a5465b7e71e1932cf"
+    }
+  },
+  "actual_terminal_state_projection": {
+    "source": {
+      "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+      "type": "t3_native_goal_projection",
+      "version": "statev2",
+      "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-03-control-reviser-v1%3Aordinal%3A1",
+      "call_id": null,
+      "time": "2026-10-07T20:02:43.747Z",
+      "sha256": "6396726d8a74e1755c05a4f19514bd4b16b1139a39f2500a5465b7e71e1932cf"
+    },
+    "tool": null,
+    "native_response": {
+      "objective_sha256": "95372766b459d477842fd7c0b3de34ad770b5ec858cb23d75f9d93d4338f8816",
+      "status": "complete",
+      "tokensUsed": 136285,
+      "tokenBudget": null,
+      "timeUsedSeconds": 529
+    },
+    "response_sha256": "af4e83578f1858cc5aa65ec769300a721121edb9d0f9b9099842d0354301a700",
+    "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+  },
+  "native_identity": "01a117ed-78c9-79d2-bff4-92e0ee4f389e",
+  "native_terminal": "complete",
+  "native_active_state_observed": false,
+  "native_createdAt": null,
+  "raw_create_get_update_responses": "missing_actual_response",
+  "lifecycle_hold": "no accepted activation notice/actualactive snapshot; exact terminal projection observed, no retrospective rescue",
+  "not_raw_API_response": true
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "pm.er10.frozen-source-index.v1",
+  "arm": "D-M12-A/treatment/protected_breadth_final-v3",
+  "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+  "captured_by": "zcode treatment arm (this arm only; never shared with counterpart)",
+  "capture_window_utc": "2026-10-07T20:12:06Z/2026-10-07T20:12:28Z",
+  "capture_tool": "curl -sSL (exact response bytes frozen unmodified)",
+  "note_on_versions": "All six sources are living web documents, not release-pinned artifacts; identity recorded as site+path at capture time. MQTT v5.0 is a dated OASIS standard (os edition).",
+  "sources": [
+    {
+      "file": "mqtt-v5.0-os.html",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "identity": "MQTT Version 5.0, OASIS Standard, 07 March 2019 (os edition)",
+      "capture_time_utc": "2026-10-07T20:12:06Z",
+      "sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "bytes": 1436465,
+      "mechanism_family": "messaging-protocol delivery semantics (IoT/pub-sub analogy, not a survey competitor)",
+      "locators": [
+        "Section 4.3 Quality of Service levels and protocol flows (QoS 0/1/2, at-least-once vs exactly-once handshakes)",
+        "Section 3.3.1 DUP flag (server MUST set DUP=1 on redelivery; 'DUP flag set to 0' on first send)",
+        "Section 3.3.2.3 Message Expiry Interval (broker-side retention/TTL of undelivered messages)",
+        "Section 4.4 (client processing of retries)"
+      ],
+      "used_for": "ack meaning per QoS level; duplicates are normal under retry; retry resumption after reconnect; message expiry analogy"
+    },
+    {
+      "file": "aws-retries-jitter.html",
+      "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+      "identity": "AWS Builders' Library article 'Timeouts, retries, and backoff with jitter' (Marc Brooker, AWS; living web page)",
+      "capture_time_utc": "2026-10-07T20:12:06Z",
+      "sha256": "bff72c61f7dae855aeb35bb2834b2ac9839390f86d1132ab1ae1fb722e729def",
+      "bytes": 127198,
+      "mechanism_family": "retry policy design (backoff/jitter/retry budgets)",
+      "locators": [
+        "Sections on backoff with jitter and retry budgets; full-page search 'jitter', 'retry budget'"
+      ],
+      "used_for": "bounded exponential backoff + jitter; retry budget idea; retry storm risk"
+    },
+    {
+      "file": "stripe-idempotency.html",
+      "url": "https://docs.stripe.com/api/idempotent_requests",
+      "identity": "Stripe API Reference, 'Idempotent requests' (living web doc, React shell with embedded doc text)",
+      "capture_time_utc": "2026-10-07T20:12:06Z",
+      "sha256": "a93f0ffb31a6adcc917168ac576201bc7946276322921e932d0357ee6ef95150",
+      "bytes": 1375297,
+      "mechanism_family": "client-supplied idempotency keys (payments API analogy)",
+      "locators": [
+        "Header 'Idempotency-Key'; text nodes containing 'Idempotency-Key'/'idempoten*' in embedded doc data"
+      ],
+      "used_for": "client-generated stable key so replay of an unacknowledged request is safe; key tied to request payload"
+    },
+    {
+      "file": "pouchdb-conflicts.html",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "identity": "PouchDB guide 'Conflicts' (living web doc; PouchDB = CouchDB replication client used offline-first on phones)",
+      "capture_time_utc": "2026-10-07T20:12:28Z",
+      "sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "bytes": 28467,
+      "mechanism_family": "offline-first local persistence + sync with revision/tree conflict handling (database replication analogy)",
+      "locators": [
+        "Guide sections on conflicts, deterministic winner, merging/leader election"
+      ],
+      "used_for": "alternative to retry-until-ack: persistent local store + deterministic merge; conflicts instead of dedup"
+    },
+    {
+      "file": "sqlite-atomiccommit.html",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "identity": "SQLite documentation 'Atomic Commit In SQLite' (version-of-record is the live sqlite.org page; stable doc)",
+      "capture_time_utc": "2026-10-07T20:12:07Z",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968,
+      "mechanism_family": "durable local persistence under power loss (embedded database)",
+      "locators": [
+        "Sections: transaction boundary, hardware/OS/power failure assumptions, journal/WAL commit sequence"
+      ],
+      "used_for": "queue durability on phones: commit ordering vs fsync; item must survive crash before any ack of local enqueue"
+    },
+    {
+      "file": "transactional-outbox.html",
+      "url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "identity": "microservices.io 'Pattern: Transactional outbox' (Chris Richardson; living web page)",
+      "capture_time_utc": "2026-10-07T20:12:07Z",
+      "sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "bytes": 25474,
+      "mechanism_family": "outbox / delete-after-ack relay pattern",
+      "locators": [
+        "Pattern sections: Problem, Forces, Solution, 'idempotent' consumer note"
+      ],
+      "used_for": "making the local queue itself transactional with state; relay + consumer idempotency"
+    }
+  ],
+  "failed_capture_attempts": [
+    {"url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagededuplicationid.html", "result": "200 but body was a JS redirect stub to welcome.html; discarded, not frozen"},
+    {"url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/dg/using-messagededuplicationid.html", "result": "HTTP 404"},
+    {"url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/dg/sqs-configure-message-retention-period.html", "result": "HTTP 404"},
+    {"url": "https://docs.couchdb.apache.org/en/stable/replication/protocol.html", "result": "DNS resolution failure (twice); CouchDB protocol doc not captured; PouchDB guide captured as adjacent source"}
+  ],
+  "integrity_check": "sha256sum -c checksums.sha256"
+}
