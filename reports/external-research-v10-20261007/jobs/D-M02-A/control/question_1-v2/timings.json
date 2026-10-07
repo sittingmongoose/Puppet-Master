@@ -1,0 +1,66 @@
+{
+  "case_id": "D-M02-A",
+  "arm": "control",
+  "role": "question_1",
+  "dispatch_prepared_at_utc": "2026-10-07T19:36:58.812973+00:00",
+  "hard_stage_deadline_utc": "2026-10-07T19:42:58.812973+00:00",
+  "operations": [
+    {
+      "operation": "native Goal creation and active-state readback",
+      "started_at_utc": null,
+      "completed_at_utc": null,
+      "timestamp_note": "Native tool results exposed in thread; no operation timestamp was returned."
+    },
+    {
+      "operation": "single activation-only supervisor notice",
+      "started_at_utc": null,
+      "completed_at_utc": null,
+      "timestamp_note": "T3 tool result exposed in thread; no operation timestamp was returned."
+    },
+    {
+      "operation": "read brief and source manifest; verify source SHA-256 values",
+      "started_at_utc": "2026-10-07T19:37:47.922192340Z",
+      "completed_at_utc": "2026-10-07T19:37:47.960478388Z",
+      "result": "Both raw source hashes matched manifest."
+    },
+    {
+      "operation": "inspect relevant RFC 9111 and RFC 9110 sections",
+      "started_at_utc": null,
+      "completed_at_utc": null,
+      "observed_complete_no_later_than_utc": "2026-10-07T19:39:08Z",
+      "timestamp_note": "Section-read calls did not expose timestamps; completion was followed by this UTC clock observation."
+    },
+    {
+      "operation": "write report.md",
+      "started_at_utc": "2026-10-07T19:40:03.139096Z",
+      "completed_at_utc": "2026-10-07T19:40:03.139385Z",
+      "sha256": "5aaebc18d27f2f13bd22d6c99bf040d2c4c635b0917c9191b828268514c165e8",
+      "word_count": 852
+    },
+    {
+      "operation": "write timings.json",
+      "started_at_utc": "2026-10-07T19:40:03.139585Z",
+      "completed_at_utc": null,
+      "timestamp_note": "Start recorded; completion time is not embedded to avoid claiming a timestamp unavailable before serialization."
+    },
+    {
+      "operation": "tighten qualified no-cache dispositions and update report",
+      "started_at_utc": "2026-10-07T19:42:28.816046Z",
+      "completed_at_utc": "2026-10-07T19:42:28.817537Z",
+      "sha256": "5aaebc18d27f2f13bd22d6c99bf040d2c4c635b0917c9191b828268514c165e8",
+      "word_count": 852
+    },
+    {
+      "operation": "rewrite timings.json with final report digest and revision event",
+      "started_at_utc": "2026-10-07T19:42:28.817999Z",
+      "completed_at_utc": null,
+      "timestamp_note": "Start recorded; completion time not available before serialization."
+    }
+  ],
+  "usage": {
+    "generated_tokens": null,
+    "billed_tokens": null,
+    "native_goal_cumulative_tokens_at_activation": 0,
+    "note": "Native cumulative Goal tokens are a separate counter and are not generated-token or billing usage."
+  }
+}

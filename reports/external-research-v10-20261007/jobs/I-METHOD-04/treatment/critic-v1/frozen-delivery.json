@@ -1,0 +1,119 @@
+{
+  "record_at": "2026-10-07T20:11:23.653338+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v1/artifact.md": {
+      "sha256": "7a3eb4231de50050cf361f50d2b5e02140c59b21e1e86df0bcfe45a9be8e7348",
+      "bytes": 8285
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v1/sources/review-evidence.md": {
+      "sha256": "65f6fb25275e7e7613672d474de20af78c8cbe2db5afd34fae637858208bd247",
+      "bytes": 3501
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-04-treatment-critic-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "interrupted",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T19:59:45.366Z",
+    "startedAt": "2026-10-07T19:59:46.182Z",
+    "completedAt": "2026-10-07T20:11:01.995Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-04/treatment/critic-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-04--treatment--critic-v1--7fb21b5f9ea2a66f.json",
+    "sha256": "7fb21b5f9ea2a66f77b4e1ec14807ce391eee575adab3317d60056aecb070f60",
+    "bytes": 10868,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "912b7dda05bc43c04277a6d16a11849ec94fa3f0eb8248f455671e92992e9d0a",
+      "status": "paused",
+      "tokensUsed": 152092,
+      "tokenBudget": null,
+      "timeUsedSeconds": 660
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-04-treatment-critic-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a117f3-568c-7ad1-9570-c3cf5c815860",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:11:01.995Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-04-treatment-critic-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:11:01.995Z",
+        "sha256": "41c4111d9df1f1ed8763123085f34eb769c5ee70a6d07b0ecd54a46d5f9e20b1"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": null,
+  "native_terminal": null,
+  "same_identity": false,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": null,
+  "native_elapsed_seconds": null,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "record_at": "2026-10-07T19:59:39.347134+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:09:39.347134+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:25:06.072109+00:00",
+    "clientRequestId": "er10-I-METHOD-04-treatment-critic-v1",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "t3_delivery_in_prefrozen_deadline": false,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

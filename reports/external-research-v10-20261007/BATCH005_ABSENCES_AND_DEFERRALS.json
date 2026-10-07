@@ -1,0 +1,84 @@
+{
+  "schema": "er10.publication.batch005.absences.v1",
+  "cutoff": "2026-10-07T20:29:41+00:00",
+  "absences_and_limits": [
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/freeze_disposition.json",
+      "locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/change_dependency_check.md",
+      "expected_sha256": null,
+      "expected_bytes": 0,
+      "identity_pointer": "/files/change_dependency_check.md",
+      "status": "FROZEN_ABSENCE",
+      "present_at_selection": false
+    },
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/freeze_disposition.json",
+      "locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/final.md",
+      "expected_sha256": null,
+      "expected_bytes": 0,
+      "identity_pointer": "/files/final.md",
+      "status": "FROZEN_ABSENCE",
+      "present_at_selection": false
+    },
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/freeze_disposition.json",
+      "locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/timings.json",
+      "expected_sha256": null,
+      "expected_bytes": 0,
+      "identity_pointer": "/files/timings.json",
+      "status": "FROZEN_ABSENCE",
+      "present_at_selection": false
+    },
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/research-v2/freeze_disposition.json",
+      "locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/research-v2/timings.json",
+      "expected_sha256": null,
+      "expected_bytes": 0,
+      "identity_pointer": "/files/timings.json",
+      "status": "FROZEN_ABSENCE",
+      "present_at_selection": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v2/final.md",
+      "status": "EXPLICIT_ORIGINAL_ABSENCE",
+      "why": "original control final absent; final obligations unassessed in original diagnostic review"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v1/source-map.json",
+      "status": "EXPLICIT_ORIGINAL_ABSENCE",
+      "why": "original failed treatment partial missing source map; native PAUSED remains distinct from T3 interruption"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v1/source-map.json",
+      "status": "EXPLICIT_ORIGINAL_ABSENCE",
+      "why": "original failed treatment critic missing source map"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v1/artifact.md",
+      "status": "EXPLICIT_ORIGINAL_ABSENCE",
+      "why": "original treatment final not dispatched; no method comparison"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/control/finalizer-v2/timings.json",
+      "status": "EXPLICIT_ORIGINAL_ABSENCE",
+      "why": "candidate timing file absent; host/native receipts retained separately"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/critic-v2/native_activation_receipt.json",
+      "status": "EXPLICIT_ORIGINAL_ABSENCE",
+      "why": "required actual host active criticstate absent; terminal projection is not activation proof"
+    }
+  ],
+  "deferred_scope": [
+    "M02B live outputs/reviews",
+    "M02A final-v3 scientific jobs",
+    "M08A/B and M10A final-v3 scientific seeds/arms",
+    "METHOD02-v2 and METHOD04-v2 live jobs",
+    "METHOD03/05/06 and FAST live scientific jobs/reviews",
+    "C scientific outputs/reviews",
+    "all writes after initial cutoff",
+    "full source articles/vendor code/corpora and native full history/profile/provider databases",
+    "out-of-scope identity links in original administrative aggregates"
+  ],
+  "campaign_complete": false
+}

@@ -1,0 +1,133 @@
+{
+  "id": "P19-dompurify-code",
+  "requested_url": "https://raw.githubusercontent.com/cure53/DOMPurify/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/src/purify.ts",
+  "retrieved_started_utc": "2026-10-07T19:44:25.692526+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/cure53/DOMPurify/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/src/purify.ts",
+  "http_status": 200,
+  "response_bytes": 121644,
+  "response_sha256": "8989c72ac4a4286b98f432f083a466266c976873c4382632fd60faaaaf1bfd98",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"c9efd3b58428f44ae3dc5d922da07ca9011ae653e3feb4dd5780583369f84516\"",
+    "Date": "Wed, 07 Oct 2026 19:44:25 GMT"
+  },
+  "response_text_lines": 3279,
+  "normalization": "text",
+  "selection_patterns": [
+    "IN_PLACE",
+    "raw.text",
+    "FORBID_TAGS",
+    "ownerDocument",
+    "_sanitizeElements"
+  ],
+  "context_before": 2,
+  "context_after": 18,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      287,
+      308
+    ],
+    [
+      312,
+      332
+    ],
+    [
+      471,
+      490
+    ],
+    [
+      575,
+      594
+    ],
+    [
+      780,
+      799
+    ],
+    [
+      806,
+      825
+    ],
+    [
+      952,
+      971
+    ],
+    [
+      1214,
+      1235
+    ],
+    [
+      1248,
+      1267
+    ],
+    [
+      1283,
+      1302
+    ],
+    [
+      1425,
+      1444
+    ],
+    [
+      1464,
+      1511
+    ],
+    [
+      1658,
+      1686
+    ],
+    [
+      1705,
+      1739
+    ],
+    [
+      1808,
+      1827
+    ],
+    [
+      1974,
+      1993
+    ],
+    [
+      1996,
+      2015
+    ],
+    [
+      2081,
+      2100
+    ],
+    [
+      2126,
+      2153
+    ],
+    [
+      2185,
+      2204
+    ],
+    [
+      2720,
+      2739
+    ],
+    [
+      2937,
+      2956
+    ],
+    [
+      2985,
+      3004
+    ],
+    [
+      3060,
+      3079
+    ],
+    [
+      3143,
+      3162
+    ]
+  ],
+  "bounded_evidence_file": "P19-dompurify-code.txt",
+  "bounded_evidence_sha256": "6ad98d278688bc26236816b33f9a2544e301a6f51e66a817b83bf98c2680dbf1",
+  "bounded_evidence_bytes": 30087,
+  "retrieved_finished_utc": "2026-10-07T19:44:25.867631+00:00"
+}

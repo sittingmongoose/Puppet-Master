@@ -1,0 +1,58 @@
+505:         for f in get_files(self):
+506:             self.zip_test_writestr_permissions(f, zipfile.ZIP_STORED)
+507: 
+508:     def test_absolute_arcnames(self):
+509:         with zipfile.ZipFile(TESTFN2, "w", zipfile.ZIP_STORED) as zipfp:
+510:             zipfp.write(TESTFN, "/absolute")
+511: 
+512:         with zipfile.ZipFile(TESTFN2, "r", zipfile.ZIP_STORED) as zipfp:
+513:             self.assertEqual(zipfp.namelist(), ["absolute"])
+514: 
+515:     def test_append_to_zip_file(self):
+516:         """Test appending to an existing zipfile."""
+517:         with zipfile.ZipFile(TESTFN2, "w", zipfile.ZIP_STORED) as zipfp:
+518:             zipfp.write(TESTFN, TESTFN)
+519: 
+872:             self.large_file_exception_test(f, zipfile.ZIP_STORED)
+873:             self.large_file_exception_test2(f, zipfile.ZIP_STORED)
+874: 
+875:     def test_absolute_arcnames(self):
+876:         with zipfile.ZipFile(TESTFN2, "w", zipfile.ZIP_STORED,
+877:                              allowZip64=True) as zipfp:
+878:             zipfp.write(TESTFN, "/absolute")
+879: 
+880:         with zipfile.ZipFile(TESTFN2, "r", zipfile.ZIP_STORED) as zipfp:
+881:             self.assertEqual(zipfp.namelist(), ["absolute"])
+1725:         # Passing pathsep in allows this test to work regardless of platform.
+1726:         self.assertEqual(san(r',,?,C:,foo,bar/z', ','), r'_,C_,foo,bar/z')
+1727:         self.assertEqual(san(r'a\b,c<d>e|f"g?h*i', ','), r'a\b,c_d_e_f_g_h_i')
+1728:         self.assertEqual(san('../../foo../../ba..r', '/'), r'foo/ba..r')
+1729:         self.assertEqual(san('  /  /foo  /  /ba  r', '/'), r'foo/ba  r')
+1730:         self.assertEqual(san(' . /. /foo ./ . /. ./ba .r', '/'), r'foo/ba .r')
+1731: 
+1732:     def test_extract_hackers_arcnames_common_cases(self):
+1733:         common_hacknames = [
+1734:             ('../foo/bar', 'foo/bar'),
+1735:             ('foo/../bar', 'foo/bar'),
+1736:             ('foo/../../bar', 'foo/bar'),
+1737:             ('foo/bar/..', 'foo/bar'),
+1738:             ('./../foo/bar', 'foo/bar'),
+1739:             ('/foo/bar', 'foo/bar'),
+1740:             ('/foo/../bar', 'foo/bar'),
+1741:             ('/foo/../../bar', 'foo/bar'),
+1742:         ]
+1743:         self._test_extract_hackers_arcnames(common_hacknames)
+1744: 
+1745:     @unittest.skipIf(os.path.sep != '\\', 'Requires \\ as path separator.')
+1746:     def test_extract_hackers_arcnames_windows_only(self):
+1747:         """Test combination of path fixing and windows name sanitization."""
+1764:             (r'\\?\C:\foo\bar', 'foo/bar'),
+1765:             (r'C:/../C:/foo/bar', 'C_/foo/bar'),
+1766:             (r'a:b\c<d>e|f"g?h*i', 'b/c_d_e_f_g_h_i'),
+1767:             ('../../foo../../ba..r', 'foo/ba..r'),
+1768:         ]
+1769:         self._test_extract_hackers_arcnames(windows_hacknames)
+1770: 
+1771:     @unittest.skipIf(os.path.sep != '/', r'Requires / as path separator.')
+1772:     def test_extract_hackers_arcnames_posix_only(self):
+1773:         posix_hacknames = [

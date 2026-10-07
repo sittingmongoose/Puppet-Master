@@ -1,0 +1,65 @@
+{
+  "case_id": "D-M02-A",
+  "arm": "control",
+  "role": "question_2",
+  "stage": "question_2-v2",
+  "dispatch_preparation_utc": "2026-10-07T19:43:49.904507Z",
+  "hard_stage_deadline_utc": "2026-10-07T19:49:49.904507Z",
+  "operations": [
+    {
+      "operation": "native Goal create, active get, and one supervisor activation notice",
+      "observed_utc": "2026-10-07T19:44:12Z",
+      "result_note": "create/get succeeded; notice delivery was steered/running, but message contained identity-not-returned/status-not-returned placeholders; no second notice sent"
+    },
+    {
+      "operation": "read allowed brief and source manifest",
+      "observed_utc": "2026-10-07T19:44:38Z"
+    },
+    {
+      "operation": "verify supplied RFC SHA-256 values and locate relevant sections",
+      "observed_utc": "2026-10-07T19:44:46Z",
+      "result": "both hashes matched the manifest"
+    },
+    {
+      "operation": "inspect relevant RFC 9111 and RFC 9110 source sections",
+      "observed_utc": "2026-10-07T19:44:53Z"
+    },
+    {
+      "operation": "inspect 304 update and Authorization provisions",
+      "observed_utc": "2026-10-07T19:45:16Z"
+    },
+    {
+      "operation": "inspect stored-header update and directive provisions",
+      "observed_utc": "2026-10-07T19:45:20Z"
+    },
+    {
+      "operation": "report preparation checkpoint",
+      "observed_utc": "2026-10-07T19:46:30Z"
+    },
+    {
+      "operation": "write report.md",
+      "observed_utc": "2026-10-07T19:46:48Z",
+      "filesystem_mtime_utc": "2026-10-07T19:46:48.950528Z"
+    },
+    {
+      "operation": "read report metadata and count words",
+      "observed_utc": "2026-10-07T19:47:13Z",
+      "result": "906 words; 7254 bytes"
+    },
+    {
+      "operation": "native active get before closeout",
+      "observed_utc": "2026-10-07T19:47:13Z"
+    }
+  ],
+  "usage": {
+    "assistant_generated_tokens": null,
+    "billing_tokens": null,
+    "billing_cost_usd": null,
+    "native_goal_tokens_used_initial": 0,
+    "native_goal_elapsed_seconds_initial": 0,
+    "native_goal_tokens_used_before_closeout": 67993,
+    "native_goal_elapsed_seconds_before_closeout": 180,
+    "note": "Native cumulative counters are recorded separately and are not generated-token or billing totals."
+  },
+  "timings_file_prewrite_utc": "2026-10-07T19:49:57.588Z"
+}

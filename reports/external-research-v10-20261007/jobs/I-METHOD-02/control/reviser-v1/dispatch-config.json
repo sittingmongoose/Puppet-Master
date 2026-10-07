@@ -1,0 +1,26 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ]
+  },
+  "record_at": "2026-10-07T19:44:06.470854+00:00",
+  "prospective_stage_deadline": "2026-10-07T19:59:06.470854+00:00",
+  "prospective_arm_deadline": "2026-10-07T20:05:19.489127+00:00",
+  "clientRequestId": "er10-I-METHOD-02-control-reviser-v1",
+  "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+  "mode": "async",
+  "role": "general",
+  "runtimeMode": "full-access",
+  "interactionMode": "default"
+}

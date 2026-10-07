@@ -1,0 +1,39 @@
+{
+  "id": "P37-libzim-api",
+  "requested_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/include/zim/archive.h",
+  "retrieved_started_utc": "2026-10-07T19:47:46.359814+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/include/zim/archive.h",
+  "http_status": 200,
+  "response_bytes": 28880,
+  "response_sha256": "0b8fce74e812df962087c7bdbeb3f257915c2bd017c88599311fbc377f966050",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"a1d350f9b2a315670277d45ba28e260fbd5aa3d7a9abf5820c783ebdf8c2a872\"",
+    "Date": "Wed, 07 Oct 2026 19:47:46 GMT"
+  },
+  "response_text_lines": 800,
+  "normalization": "text",
+  "selection_patterns": [
+    "getEntryByPath",
+    "url",
+    "encoded"
+  ],
+  "context_before": 2,
+  "context_after": 75,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      70,
+      166
+    ],
+    [
+      271,
+      365
+    ]
+  ],
+  "bounded_evidence_file": "P37-libzim-api.txt",
+  "bounded_evidence_sha256": "b9d0e8cae92b8431e5e13a08d8e4710acd76c20ad25686752dd77b6a076d1ceb",
+  "bounded_evidence_bytes": 8722,
+  "retrieved_finished_utc": "2026-10-07T19:47:46.691046+00:00"
+}

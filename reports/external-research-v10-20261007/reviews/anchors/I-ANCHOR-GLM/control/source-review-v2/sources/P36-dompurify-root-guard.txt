@@ -1,0 +1,77 @@
+L3111:          future root-kill reason in one check, on both the attribute and text
+L3112:          axes. */
+L3113:       let rootWasRemoved = false;
+L3114:       arrayForEach(DOMPurify.removed, (entry) => {
+L3115:         if (entry.element) {
+L3116:           if (entry.element === dirty) {
+L3117:             rootWasRemoved = true;
+L3118:           }
+L3119: 
+L3120:           _neutralizeSubtree(entry.element as Node);
+L3121:         }
+L3122:       });
+L3123: 
+L3124:       if (rootWasRemoved) {
+L3125:         throw typeErrorCreate(
+L3126:           'a node selected for removal could not be safely returned; ' +
+L3127:             'refusing to sanitize in place'
+L3128:         );
+L3129:       }
+L3130: 
+L3131:       if (SAFE_FOR_TEMPLATES) {
+L3132:         _scrubTemplateExpressions(dirty as Element);
+L3133:       }
+L3134: 
+L3135:       return dirty;
+L3136:     }
+L3137: 
+L3138:     /* Return sanitized string or DOM */
+L3139:     if (RETURN_DOM) {
+L3140:       if (SAFE_FOR_TEMPLATES) {
+L3141:         _scrubTemplateExpressions(body);
+L3142:       }
+L3143: 
+L3144:       if (RETURN_DOM_FRAGMENT) {
+L3145:         returnNode = createDocumentFragment.call(body.ownerDocument);
+L3146: 
+L3147:         while (body.firstChild) {
+L3148:           // eslint-disable-next-line unicorn/prefer-dom-node-append
+L3149:           returnNode.appendChild(body.firstChild);
+L3150:         }
+L3151:       } else {
+L3152:         returnNode = body;
+L3153:       }
+L3154: 
+L3155:       if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) {
+L3156:         /*
+L3157:           AdoptNode() is not used because internal state is not reset
+L3158:           (e.g. the past names map of a HTMLFormElement), this is safe
+L3159:           in theory but we would rather not risk another attack vector.
+L3160:           The state that is cloned by importNode() is explicitly defined
+L3161:           by the specs.
+L3162:         */
+L3163:         returnNode = importNode.call(originalDocument, returnNode, true);
+L3164:       }
+L3165: 
+L3166:       return returnNode;
+L3167:     }
+L3168: 
+L3169:     let serializedHTML = WHOLE_DOCUMENT ? body.outerHTML : body.innerHTML;
+L3170: 
+L3171:     /* Serialize doctype if allowed */
+L3172:     if (
+L3173:       WHOLE_DOCUMENT &&
+L3174:       ALLOWED_TAGS['!doctype'] &&
+L3175:       body.ownerDocument &&
+L3176:       body.ownerDocument.doctype &&
+L3177:       body.ownerDocument.doctype.name &&
+L3178:       regExpTest(EXPRESSIONS.DOCTYPE_NAME, body.ownerDocument.doctype.name)
+L3179:     ) {
+L3180:       serializedHTML =
+L3181:         '<!DOCTYPE ' + body.ownerDocument.doctype.name + '>\n' + serializedHTML;
+L3182:     }
+L3183: 
+L3184:     /* Sanitize final string template-safe */
+L3185:     if (SAFE_FOR_TEMPLATES) {
+L3186:       serializedHTML = _stripTemplateExpressions(serializedHTML);
+L3187:     }

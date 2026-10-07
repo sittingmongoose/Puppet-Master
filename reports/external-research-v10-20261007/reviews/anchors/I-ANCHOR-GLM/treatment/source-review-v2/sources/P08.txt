@@ -1,0 +1,40 @@
+25: Using composefs with OSTree
+26: Using Linux IMA with OSTree
+27: Related Projects
+28: Bootloaders
+29: Contributing
+30: OSTree Contributing Tutorial
+31: Historical OSTree README
+32: This site uses Just the Docs, a documentation theme for Jekyll.
+33: OSTree on GitHub
+34: libostree
+52: As implied above, libostree is both a shared library and suite of command line
+53: tools that combines a “git-like” model for committing and downloading bootable
+54: filesystem trees, along with a layer for deploying them and managing the
+55: bootloader configuration.
+56: The core OSTree model is like git in that it checksums individual files and has
+57: a content-addressed-object store. It’s unlike git in that it “checks out” the
+58: files via hardlinks, and they thus need to be immutable to prevent corruption.
+59: Therefore, another way to think of OSTree is that it’s just a more polished
+60: version of
+61: Linux VServer hardlinks.
+62: Features:
+63: Transactional upgrades and rollback for the system
+64: Replicating content incrementally over HTTP via GPG signatures and “pinned TLS” support
+65: Support for parallel installing more than just 2 bootable roots
+66: Binary history on the server side (and client)
+67: Introspectable shared library API for build and deployment systems
+68: Flexible support for multiple branches and repositories, supporting
+69: projects like Flatpak which
+70: use libostree for applications, rather than hosts.
+71: Operating systems and distributions using OSTree
+128: on EndlessOS.
+129: Flatpak uses libostree for desktop
+130: application containers. Unlike most of the other systems here, Flatpak does not
+131: use the “libostree host system” aspects (e.g. bootloader management), just the
+132: “git-like hardlink dedup”. For example, Flatpak supports a per-user OSTree
+133: repository.
+134: aktualizr is an
+135: Uptane-conformant software update client library
+136: intended for use in automotive and other security-sensitive embedded devices.
+137: It uses OSTree to manage the OS of the host device by default.

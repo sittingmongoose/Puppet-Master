@@ -1,0 +1,65 @@
+532: Recommended practices
+533: Testing and development environment
+534: Frequently asked questions
+535: Multi-resume
+536: Activity launch policy
+537: Display support
+538: System decorations support
+539: Lock screen
+540: Input method editor support
+541: Input routing
+976: Build OTA packages
+977: Sign builds for release
+978: Reduce OTA size
+979: Virtual A/B
+980: Overview
+981: Implement Virtual A/B
+982: Implement Virtual A/B - patches
+983: Legacy A/B system updates
+984: Overview
+985: Implement A/B updates
+986: Frequently asked questions
+987: (Deprecated) Non-A/B system updates
+988: Overview
+999: Time zone rules
+1000: User Data Checkpoint
+1001: Dynamic System Updates
+1002: Resume-on-Reboot
+1003: Mainline
+1004: Overview
+1005: AdServices
+1006: adbd
+1007: Android Health
+1008: AppSearch
+1111: A/B (seamless) system updates
+1112: Stay organized with collections
+1113: Save and categorize content based on your preferences.
+1114: Note: Virtual A/B updates have
+1115: replaced Legacy A/B system updates in Android 10.
+1116: Legacy A/B system updates, also known as seamless updates , ensure a workable booting system
+1117: remains on the disk during an
+1118: over-the-air (OTA) update. This approach reduces the
+1119: likelihood of an inactive device after an update, which means fewer device replacements and
+1120: device reflashes at repair and warranty centers. Other commercial-grade operating systems such
+1121: as ChromeOS also use A/B updates
+1190: A/B system updates use two sets of partitions referred to as
+1191: slots (normally slot A and slot B). The system runs from the current slot
+1192: while the partitions in the unused slot are not accessed by the running system during
+1193: normal operation. This approach makes updates fault resistant by keeping the unused slot as a
+1194: fallback: If an error occurs during or immediately after an update, the system can rollback to
+1195: the old slot and continue to have a working system. To achieve this goal, no partition used by
+1196: the current slot should be updated as part of the OTA update (including partitions
+1197: for which there is only one copy).
+1198: Each slot has a bootable attribute that states whether the slot contains a correct
+1199: system from which the device can boot. The current slot is bootable when the system is
+1200: running, but the other slot may have an old (still correct) version of the system, a newer
+1392: After reboot
+1393: After rebooting, update_verifier triggers the integrity check using dm-verity.
+1394: This check starts before zygote to avoid Java services making any irreversible changes that
+1395: would prevent a safe rollback. During this process, bootloader and kernel may also trigger a
+1396: reboot if verified boot or dm-verity detect any corruption. After the check completes,
+1397: update_verifier
+1398: marks the boot successful.
+1399: update_verifier will read only the blocks listed in
+1400: /data/ota_package/care_map.txt, which is included in an A/B OTA package when
+1401: using the AOSP code. The Java system update client, such as GmsCore, extracts

@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-treatment-finalizer-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-treatment-finalizer-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-treatment-finalizer-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-treatment-finalizer-v2\",\"status\":\"interrupted\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-treatment-finalizer-v2:ordinal:1\",\"latestTerminalStatus\":\"interrupted\",\"latestTerminalSummary\":\"The Goal is active and the activation message was sent to the exact parent ID. The case clock is at 19:39:14 UTC, so the absolute deadline leaves about 127 seconds; I’m keeping the source review and outputs tightly bounded.\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-treatment-finalizer-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:9768d86c-c33c-4d81-9660-7ea9fe86b308\",\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":\"The Goal is active and the activation message was sent to the exact parent ID. The case clock is at 19:39:14 UTC, so the absolute deadline leaves about 127 seconds; I’m keeping the source review and outputs tightly bounded.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-treatment-finalizer-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:9768d86c-c33c-4d81-9660-7ea9fe86b308\",\"waitTimedOut\":false}"
+    }
+  ],
+  "structuredContent": {
+    "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-treatment-finalizer-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-treatment-finalizer-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-treatment-finalizer-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-treatment-finalizer-v2",
+    "status": "interrupted",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-treatment-finalizer-v2:ordinal:1",
+    "latestTerminalStatus": "interrupted",
+    "latestTerminalSummary": "The Goal is active and the activation message was sent to the exact parent ID. The case clock is at 19:39:14 UTC, so the absolute deadline leaves about 127 seconds; I’m keeping the source review and outputs tightly bounded.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-treatment-finalizer-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:9768d86c-c33c-4d81-9660-7ea9fe86b308",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "summary": "The Goal is active and the activation message was sent to the exact parent ID. The case clock is at 19:39:14 UTC, so the absolute deadline leaves about 127 seconds; I’m keeping the source review and outputs tightly bounded.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-treatment-finalizer-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:9768d86c-c33c-4d81-9660-7ea9fe86b308",
+    "waitTimedOut": false
+  },
+  "isError": false
+}

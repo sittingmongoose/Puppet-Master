@@ -1,0 +1,90 @@
+{
+  "id": "P14-sqlite-tokenizers",
+  "requested_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.34.0/ext/fts5/fts5_tokenize.c",
+  "retrieved_started_utc": "2026-10-07T19:42:46.932245+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.34.0/ext/fts5/fts5_tokenize.c",
+  "http_status": 200,
+  "response_bytes": 38035,
+  "response_sha256": "e456059ed3af8cb57bd570fed345cab23942b122b3cc699d8c39b990ff02531b",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"02df7b4b59ce1ead8206031ff010f615053bf4a247ba3d011ec15cc21d97a432\"",
+    "Date": "Wed, 07 Oct 2026 19:42:47 GMT"
+  },
+  "response_text_lines": 1415,
+  "normalization": "text",
+  "selection_patterns": [
+    "fts5UnicodeTokenize",
+    "fts5TrigramTokenize",
+    "remove_diacritics",
+    "fts5TrigramCreate",
+    "nChar",
+    "trigram"
+  ],
+  "context_before": 3,
+  "context_after": 12,
+  "max_hits_per_pattern": 20,
+  "selected_line_ranges": [
+    [
+      22,
+      60
+    ],
+    [
+      78,
+      95
+    ],
+    [
+      129,
+      143
+    ],
+    [
+      231,
+      263
+    ],
+    [
+      267,
+      286
+    ],
+    [
+      341,
+      355
+    ],
+    [
+      367,
+      381
+    ],
+    [
+      387,
+      412
+    ],
+    [
+      435,
+      458
+    ],
+    [
+      473,
+      498
+    ],
+    [
+      509,
+      533
+    ],
+    [
+      1259,
+      1297
+    ],
+    [
+      1312,
+      1335
+    ],
+    [
+      1370,
+      1410
+    ]
+  ],
+  "bounded_evidence_file": "P14-sqlite-tokenizers.txt",
+  "bounded_evidence_sha256": "f96355bd9e770d33c5deff997908efa2df500642bf7cb3b449c0e1799990d5bc",
+  "bounded_evidence_bytes": 12995,
+  "retrieved_finished_utc": "2026-10-07T19:42:47.260411+00:00"
+}

@@ -1,0 +1,74 @@
+{
+  "version": "M08A-v2-passive-carrier-qualified",
+  "admission": "AUTHORIZED_READY",
+  "original_overlay": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/BINDING_CARRIER_OVERLAY.json",
+  "original_overlay_sha256": "8d8779fe2769dc9fd4ad09058986199e0b8459a7e460e077b647451afca65319",
+  "binding": {
+    "providerInstanceId": "codex_gmail",
+    "account": "sittingmongoose@gmail.com",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "original_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/case-card.json": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/INPUT_MAP.json": "35da6031fb7c1bad0e0046c551cf5ba952cdabac5d5464f48ead74f98f11d239",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/SEED_INPUT_MAP.json": "8dba42375d482542c94f92ff79705152faa3022fda18bedcb3c32ec8f8438132",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md": "0e629a9f8ec08c16675db47304b6f31c022f4a98d563121e93010f75ae99ea27",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json": "88f51a4eb5429e3d41e050063967bf4477450171e93f96cd5399375244dad2cd",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/PREDECESSOR.md": "c714196c866a0c77adee07a1f5c24f1575830d933dba04a0d56ad6f72a9be36f"
+  },
+  "question_and_sources": "unchanged exact originals; no original seed reuse as v2 input",
+  "cold_candidate_work_ceiling_seconds": 900,
+  "stage_ceiling_seconds": {
+    "fresh_common_draft": 300,
+    "fresh_common_critic": 240,
+    "arm_final": 360
+  },
+  "arm_order": [
+    "control",
+    "treatment"
+  ],
+  "control": "coherent final rewrite then normal final check/delivery inside6min",
+  "treatment": "actual local amendment, every changed consequential claim and affected dependency checked, then render inside6min",
+  "carrier_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/PROSPECTIVE_CARRIER_V2.md",
+  "prior_failed_seed_cost": {
+    "original_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/research-v1/freeze_disposition.json",
+    "inclusive_each_arm_cold": true,
+    "campaign_aggregate_count": 1,
+    "native_terminal_elapsed_seconds": 403.626,
+    "goal_tokens_raw": 46365,
+    "billing": null,
+    "generated_tokens": null
+  },
+  "attempt_limit": 1,
+  "same_blocker_recurrence": "hold after actual failure; no identical retries",
+  "evaluation": "fresh blind source review only after both exact pair finals/native terminals frozen/quiet; no grade overwrite/bestof/freshness claim",
+  "frozen_at": "2026-10-07T19:07:08.183056+00:00",
+  "root_admission": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/ROOT_ADMISSION_V2.json",
+  "carrier_hashes": {
+    "ROOT_ADMISSION_V2.json": "6f0be4322b0292d7bef25b92f728435c89b29d650ca4c66a5e3f7b8ae700f4bb",
+    "PROSPECTIVE_CARRIER_V2.md": "42d94f8f92aead30f4527029e534d97e016d0df24df8fd62744e44aa433ac4da",
+    "export.py": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8"
+  },
+  "stage_directories": {
+    "common_draft": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/research-v2",
+    "common_critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/critic-v2",
+    "control_final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/finalizer-v2",
+    "treatment_final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/treatment/finalizer-v2"
+  },
+  "seed_path_mapping": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/draft.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/research-v2/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/critique.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/critic-v2/critique.md"
+  },
+  "accepted_delivery": "Exact authored draft/critique/final.md source files + concise native-status T3 final; actual active+terminal nativeGoalprojection snapshots distinct from missing raw API responses",
+  "passive_capture": "once per lifecycle event; one activation-only notice; no polling/ordinary live candidate steering",
+  "frozen_carrier_at": "2026-10-07T19:11:51.767647+00:00"
+}

@@ -1,0 +1,214 @@
+L35: 4.1. The UNINDEXED column option
+L36: 4.2. Prefix Indexes
+L37: 4.3. Tokenizers
+L38: 4.3.1. Unicode61 Tokenizer
+L39: 4.3.2. Ascii Tokenizer
+L40: 4.3.3. Porter Tokenizer
+L41: 4.3.4. The Trigram Tokenizer
+L42: 4.4. External Content and Contentless Tables
+L43: 4.4.1. Contentless Tables
+L44: 4.4.2. Contentless-Delete Tables
+L45: 4.4.3. External Content Tables
+L46: 4.4.4. External Content Table Pitfalls
+L47: 4.4.4.1. Updates and Deletes on Contentless Tables
+L48: 4.5. The Columnsize Option
+L49: 4.6. The Detail Option
+L178: full query syntax is described here.
+L179: 2. Compiling and Using FTS5
+L180: 2.1. Building FTS5 as part of SQLite
+L181: As of version 3.9.0 (2015-10-14),
+L182: FTS5 is included as part of the SQLite amalgamation.
+L183: If using the canonical source tree, FTS5 is
+L184: enabled by specifying the "--enable-fts5" option when running the configure
+L185: script. (FTS5 is currently disabled by default for the
+L186: source-tree configure script and enabled by default for
+L187: the amalgamation configure script, but these defaults might
+L188: change in the future.)
+L189: Or, if sqlite3.c is compiled using some other build system, by arranging for
+L190: the SQLITE_ENABLE_FTS5 pre-processor symbol to be defined.
+L191: 2.2. Building a Loadable Extension
+L192: Alternatively, FTS5 may be built as a loadable extension.
+L193: The canonical FTS5 source code consists of a series of *.c and other files
+L194: in the "ext/fts5" directory of the SQLite source tree. A build process reduces
+L195: this to just two files - "fts5.c" and "fts5.h" - which may be used to build an
+L196: SQLite loadable extension.
+L197: Obtain the latest SQLite code from fossil.
+L198: Create a Makefile as described in How To Compile SQLite.
+L473: CREATE VIRTUAL TABLE ft USING fts5(x, tokenize = 'porter' 'ascii');
+L474: FTS5 features four built-in tokenizer modules, described in subsequent
+L475: sections:
+L476: The unicode61 tokenizer, based on the Unicode 6.1 standard. This
+L477: is the default.
+L478: The ascii tokenizer, which assumes all characters outside of
+L479: the ASCII codepoint range (0-127) are to be treated as token characters.
+L480: The porter tokenizer, which implements the
+L481: porter stemming algorithm.
+L482: The trigram tokenizer, which treats each contiguous sequence of
+L483: three characters as a token, allowing FTS5 to support more general substring matching.
+L484: It is also possible to create custom tokenizers for FTS5. The API for doing so is described here.
+L485: 4.3.1. Unicode61 Tokenizer
+L486: The unicode tokenizer classifies all unicode characters as either
+L487: "separator" or "token" characters. By default all space and punctuation
+L488: characters, as defined by Unicode 6.1, are considered separators, and all
+L489: other characters as token characters. More specifically, all unicode
+L490: characters assigned to a
+L491: general category beginning with "L" or "N" (letters and numbers,
+L492: specifically) or to category "Co" ("other, private use") are considered tokens.
+L493: All other characters are separators.
+L501: as a list of alternating option names and values. Unicode61 supports the
+L502: following options:
+L503: Option Usage
+L504: remove_diacritics
+L505: This option should be set to "0", "1" or "2". The default value is "1".
+L506: If it is set to "1" or "2", then diacritics are removed from Latin script
+L507: characters as described above. However, if it is set to "1", then diacritics
+L508: are not removed in the fairly uncommon case where a single unicode codepoint
+L509: is used to represent a character with more that one diacritic. For example,
+L510: diacritics are not removed from codepoint 0x1ED9 ("LATIN SMALL LETTER O WITH
+L511: CIRCUMFLEX AND DOT BELOW"). This is technically a bug, but cannot be fixed
+L512: without creating backwards compatibility problems. If this option is set to
+L533: -- script characters, and that considers hyphens and underscore characters
+L534: -- to be part of tokens.
+L535: CREATE VIRTUAL TABLE ft USING fts5(a, b,
+L536: tokenize = "unicode61 remove_diacritics 0 tokenchars '-_'"
+L537: );
+L538: or:
+L539: -- Create an FTS5 table that, as well as the default token character classes,
+L540: -- considers characters in class "Mn" to be token characters.
+L541: CREATE VIRTUAL TABLE ft USING fts5(a, b,
+L542: tokenize = "unicode61 categories 'L* N* Co Mn'"
+L543: );
+L544: The fts5 unicode61 tokenizer is byte-for-byte compatible with the fts3/4
+L545: unicode61 tokenizer.
+L546: 4.3.2. Ascii Tokenizer
+L547: The Ascii tokenizer is similar to the Unicode61 tokenizer, except that:
+L548: All non-ASCII characters (those with codepoints greater than 127) are
+L549: always considered token characters. If any non-ASCII characters are specified
+L550: as part of the separators option, they are ignored.
+L551: Case-folding is only performed for ASCII characters. So while "A" and
+L552: "a" are considered to be equivalent, "Ã" and "ã" are distinct.
+L553: The remove_diacritics option is not supported.
+L554: For example:
+L555: -- Create an FTS5 table that uses the ascii tokenizer, but does not
+L556: -- consider numeric characters to be part of tokens.
+L557: CREATE VIRTUAL TABLE ft USING fts5(a, b,
+L558: tokenize = "ascii separators '0123456789'"
+L559: );
+L560: 4.3.3. Porter Tokenizer
+L561: The porter tokenizer is a wrapper tokenizer. It takes the output of some
+L573: -- stem the output of the default tokenizer (unicode61).
+L574: CREATE VIRTUAL TABLE ft USING fts5(x, tokenize = porter);
+L575: CREATE VIRTUAL TABLE ft USING fts5(x, tokenize = 'porter unicode61');
+L576: -- A porter tokenizer used to stem the output of the unicode61 tokenizer,
+L577: -- with diacritics removed before stemming.
+L578: CREATE VIRTUAL TABLE ft USING fts5(x, tokenize = 'porter unicode61 remove_diacritics 1');
+L579: 4.3.4. The Trigram Tokenizer
+L580: The trigram tokenizer extends FTS5 to support substring
+L581: matching in general, instead of the usual token matching. When using the
+L582: trigram tokenizer, a query or phrase token may match any sequence of characters
+L583: within a row, not just a complete token. For example:
+L584: CREATE VIRTUAL TABLE tri USING fts5(a, tokenize="trigram");
+L585: INSERT INTO tri VALUES('abcdefghij KLMNOPQRST uvwxyz');
+L586: -- The following queries all match the single row in the table
+L587: SELECT * FROM tri('cdefg');
+L588: SELECT * FROM tri('cdefg AND pqr');
+L589: SELECT * FROM tri('"hij klm" NOT stuv');
+L590: The trigram tokenizer supports the following options:
+L591: Option Usage
+L592: case_sensitive
+L593: This value may be set to 1 or 0 (the default). If it is set to 1,
+L594: then matching is case sensitive. Otherwise, if this option is set to
+L595: 0, matching is case insensitive.
+L596: remove_diacritics
+L597: This value may also be set to 1 or 0 (the default). It may only
+L598: be set to 1 if the case_sensitive options is set to 0 - setting both
+L599: options to 1 is an error. If this option is set, then diacritics are
+L600: removed from the text before matching (e.g. so that "á" matches "a").
+L601: -- A case-sensitive trigram index
+L602: CREATE VIRTUAL TABLE tri USING fts5(a, tokenize="trigram case_sensitive 1");
+L603: Unless the remove_diacritics option is set, FTS5 tables that use the trigram
+L604: tokenizer also support indexed GLOB and LIKE pattern matching. For example:
+L605: SELECT * FROM tri WHERE a LIKE '%cdefg%';
+L606: SELECT * FROM tri WHERE a GLOB '*ij klm*xyz';
+L607: If an FTS5 trigram tokenizer is created with the case_sensitive option set to 1,
+L608: it may only index GLOB queries, not LIKE.
+L609: Notes:
+L610: Substrings consisting of fewer than 3 unicode characters do not match any
+L611: rows when used with a full-text query. If a LIKE or GLOB pattern does not
+L612: contain at least one sequence of non-wildcard unicode characters, FTS5
+L613: falls back to a linear scan of the entire table.
+L614: If the FTS5 table is created with the detail=none or detail=column option
+L615: specified, full-text queries may not contain any tokens longer than 3
+L616: unicode characters. LIKE and GLOB pattern matching may be slightly slower,
+L617: but still works. If the index is to be used only for LIKE and/or GLOB
+L618: pattern matching, these options are worth experimenting with to reduce
+L921: 4.8. The Locale Option
+L922: This option is only useful to applications that implement
+L923: custom tokenizers. If an fts5 table is created
+L924: with the "locale=1" option specified, then the fts5_locale() SQL function may
+L925: be used to associate a locale value (e.g. "th_TH" or "en_US") with strings
+L926: passed to FTS5. FTS5 itself does not use locale values, but makes them
+L927: available to the tokenizer implementation whenever the string is tokenized.
+L928: The tokenizer may then adjust its behavior based on the locale.
+L929: -- The following statement creates an fts5 table with locale support.
+L930: -- The "tokenizer=..." option below must be replaced with a real tokenizer
+L931: -- specification for a tokenizer that supports locales.
+L932: CREATE VIRTUAL TABLE ft USING fts5(a, b, locale=1, tokenizer=...);
+L934: -- column "a" uses locale "th_TH", the value written to column "b" uses the
+L935: -- tokenizer's default locale
+L936: INSERT INTO ft(a, b) VALUES(
+L937: fts5_locale('th_TH', 'Tokenize this in Thai locale'),
+L938: 'Tokenize this in the default locale.'
+L939: );
+L940: -- The "en_US" locale is used to tokenize the query terms in the
+L941: --following query.
+L942: SELECT * FROM ft( fts5_locale('en_US', 'query terms') );
+L943: Attempting to pass an fts5_locale() string to an fts5 table that was not
+L944: created with the locale=1 option is an error.
+L945: When an fts5_locale() string is stored in a normal content table (i.e. not a
+L946: contentless or external content table), the attached locale is stored along
+L947: with it. If the string is tokenized by FTS5 again, for example because its
+L948: row is being deleted or as part of an auxiliary function evaluation, the
+L949: attached locale is again passed to the tokenizer implementation.
+L950: In order to support locales, an FTS5 external-content table may use an SQL
+L951: view that returns fts5_locale() values as the content table. For example:
+L952: -- Each row of this table contains a string and its locale.
+L953: CREATE TABLE t1(val, locale);
+L954: INSERT INTO t1 VALUES('a text value', 'en_US');
+L955: -- A view to combine the string and locale from table t1.
+L956: CREATE VIEW v1 AS SELECT rowid, fts5_locale(val, locale) AS val FROM t1;
+L957: -- An FTS5 table to read locale-enabled strings from view v1.
+L958: CREATE VIRTUAL TABLE ft USING fts5(val, locale=1, content=v1, tokenize=...);
+L959: If an fts5_locale() value is written to an UNINDEXED column of an fts5
+L960: table, the locale value is discarded and the string stored by itself.
+L961: The fts5_get_locale() function may be used to retreive
+L962: the locale of a value stored in an FTS5 table.
+L963: 4.9. The Contentless-Unindexed Option
+L964: Usually, UNINDEXED columns
+L965: belonging to contentless tables are not very
+L966: useful. Values written to them are not indexed or stored, and reading from such
+L967: an UNINDEXED column always returns NULL. However, if the
+L982: 5. Auxiliary Functions
+L983: Auxiliary functions are similar to SQL scalar functions,
+L984: except that they may only be used within full-text queries (those that use
+L985: the MATCH operator, or LIKE/GLOB with the trigram tokenizer) on an FTS5 table.
+L986: Their results are calculated based not only on the arguments passed to them,
+L987: but also on the current match and matched row. For example, an auxiliary
+L988: function may return a numeric value indicating the accuracy of the match (see
+L989: the bm25() function), or a fragment of text from the matched row
+L990: that contains one or more instances of the search terms (see the snippet() function).
+L991: To invoke an auxiliary function, the name of the FTS5 table should be
+L992: specified as the first argument. Other arguments may follow the first,
+L993: depending on the specific auxiliary function being invoked. For example, to
+L1840: FTS5 divides documents inserted into an fts5 table into tokens. These are
+L1841: usually just words, perhaps folded to either upper or lower case and with any
+L1842: punctuation removed. For example, the default
+L1843: unicode61 tokenizer tokenizes the text "The
+L1844: tokenizer is case-insensitive" to a list of 5 tokens - "the", "tokenizer", is",
+L1845: "case" and "insensitive". Exactly how tokens are extracted from text is
+L1846: determined by the tokenizer.
+L1847: The auxiliary functions API provides functions to query for both the number
+L1848: of tokens in a specified column of the current row (the
+L1849: xColumnSize API), or for the number of tokens in a
+L1850: specified column of all rows of the table (the xColumnTotalSize API). For the example at the
+L1851: top of this section, when visiting row 1, xColumnSize returns 2 for column 0

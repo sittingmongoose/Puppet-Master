@@ -1,0 +1,361 @@
+{
+  "case_id": "I-METHOD-04",
+  "stage_id": "control/research-v1",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/input-map.json",
+  "dispatch_config": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/dispatch-config.json",
+  "output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1",
+  "first_useful_finding_saved_at": "2026-10-07T19:41:23Z",
+  "complete_draft_saved_at": "2026-10-07T19:56:58Z",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/brief.md",
+      "sha256_from_input_map": "c609c2ea956f269df5fbab3694b7a9425f72f24b65279e12aab3b5c1d727a1ab",
+      "bytes": 5140,
+      "read_first": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/plan.md",
+      "sha256_from_input_map": "c3da0fde53189778a3685ff4dae7f8c9cca2bd3a5d5a0f8614bc666c21a01a59",
+      "bytes": 1718,
+      "read_after_initial_public_discovery": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/INPUTS.md",
+      "sha256_from_input_map": "c18f6a3d3093131e7a9e7f9fc7e9c5dc81cdca766a0ac4efa539781df04a6142",
+      "bytes": 1927
+    }
+  ],
+  "obligations": {
+    "O1": "completed",
+    "O2": "completed",
+    "O3": "completed",
+    "O4": "completed",
+    "O5": "pending fresh same-family critic; no criticism invented",
+    "O6": "complete researcher proposal"
+  },
+  "public_source_operations": {
+    "web_tool_calls": 6,
+    "web_search_queries": 16,
+    "web_open_actions": 3,
+    "direct_http_get_attempts": 46,
+    "direct_http_2xx": 44,
+    "direct_http_404": 2,
+    "discarded_duplicate_tag_captures": 2,
+    "retained_captured_source_files": 25,
+    "total_individual_public_source_actions": 65,
+    "failed_fetches": [
+      {
+        "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/README.md",
+        "at": "2026-10-07T19:44:17Z",
+        "status": 404,
+        "reason": "No README.md at this immutable tree path; used official LOC product overview instead."
+      },
+      {
+        "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/.gitmodules",
+        "at": "2026-10-07T19:46:03Z",
+        "status": 404,
+        "reason": "No .gitmodules at this immutable tree path; CriticalSection definition was captured from the same repository tree."
+      }
+    ],
+    "discarded_captures": [
+      {
+        "filename": "ffmpeg-7.1.1-cli-doc.texi",
+        "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n7.1.1/doc/ffmpeg.texi",
+        "accessed_at": "2026-10-07T19:44:17Z",
+        "reason": "Deleted after resolving n7.1.1 to full commit db69d06eeeab4f46da15030a80d539efb4503ca8; pinned copy retained."
+      },
+      {
+        "filename": "ffmpeg-7.1.1-doc-muxers.texi",
+        "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n7.1.1/doc/muxers.texi",
+        "accessed_at": "2026-10-07T19:44:18Z",
+        "reason": "Deleted after resolving n7.1.1 to full commit db69d06eeeab4f46da15030a80d539efb4503ca8; pinned copy retained."
+      }
+    ]
+  },
+  "native_goal_observations": {
+    "identity": "01a117e1-5ea2-7d33-a6d8-45c16817306a",
+    "initial_create_and_immediate_get": {
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "created_at_epoch": 1791402027
+    },
+    "active_snapshot_at": "2026-10-07T19:53:14Z",
+    "aggregate_goal_counters": {
+      "status": "active",
+      "tokensUsed": 206789,
+      "timeUsedSeconds": 766
+    },
+    "distinct_counters_unknown": {
+      "input_tokens": null,
+      "cache_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    },
+    "note": "Native Goal counters are aggregate tool projection values and are separate from source-operation counts. No raw native API body or receipt file was written."
+  },
+  "activation_notice": {
+    "target_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "client_request_id": "er10-I-METHOD-04-control-research-v1-active",
+    "mode": "steer",
+    "delivery": "steered",
+    "status": "running",
+    "message": "Native active: I-METHOD-04/control/research-v1, identity 01a117e1-5ea2-7d33-a6d8-45c16817306a",
+    "scientific_facts_in_notice": false
+  },
+  "source_hashes": "Not computed by researcher; captured bytes are retained for host-computed hashes.",
+  "sources": [
+    {
+      "ref": "S01",
+      "title": "Archivematica 1.17 transfer documentation",
+      "version": "Documentation for Archivematica 1.17.1",
+      "url": "https://archivematica.org/en/docs/archivematica-1.17/user-manual/transfer/transfer/",
+      "accessed_at": "2026-10-07T19:44:17Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/archivematica-1.17-transfer.html",
+      "locator": "Create transfer with existing checksums; Processing a transfer; Start a transfer; microservices list including UUID/checksum assignment, checksum verification, METS order, and transfer structure report."
+    },
+    {
+      "ref": "S02",
+      "title": "Library of Congress Broadcast WAVE Format description",
+      "version": "Format Description Document FDD000356; page version not stated",
+      "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000356.shtml",
+      "accessed_at": "2026-10-07T19:44:17Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/loc-bwf-fdd000356.html",
+      "locator": "Adoption/use and technical/self-documentation sections; BWF use described for specific Library of Congress units."
+    },
+    {
+      "ref": "S03",
+      "title": "FADGI Guidelines: Embedding Metadata in Broadcast WAVE Files",
+      "version": "Version 3, approved 2021-04-26",
+      "url": "https://www.digitizationguidelines.gov/guidelines/digitize-embedding.html",
+      "accessed_at": "2026-10-07T19:48:55Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-fadgi-embedding.html",
+      "locator": "Current Version section, BEXT/INFO/Cue/ADTL guidance and organization/item identifiers."
+    },
+    {
+      "ref": "S03",
+      "title": "FADGI Guidelines for Embedding Metadata in Broadcast WAVE Files",
+      "version": "PDF Version 3 (2021)",
+      "url": "https://www.digitizationguidelines.gov/audio-visual/documents/BWF_Embed_Guideline_v3_2021.pdf",
+      "accessed_at": "2026-10-07T19:48:56Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-fadgi-guideline-v3.pdf",
+      "locator": "Whole normative/implementation guidance document."
+    },
+    {
+      "ref": "S04",
+      "title": "Library of Congress The Signal: FADGI/BWF MetaEdit update",
+      "version": "2021-09-09 article",
+      "url": "https://blogs.loc.gov/thesignal/2021/09/fadgi-updates-wave-bwf/",
+      "accessed_at": "2026-10-07T19:49:41Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/loc-bwf-metaedit-overview.html",
+      "locator": "BWF MetaEdit feature bullets: import/edit/embed/export; batch CSV/XML export; MD5 applies to WAV data chunk/audio bitstream."
+    },
+    {
+      "ref": "S05",
+      "title": "BWF MetaEdit v20.05 immutable source snapshot",
+      "version": "Release v20.05; commit 43e603dc93108f7075ad91fa83c5802f18ef2ae2 (contains fix commit 5cddd1e795788be7f86449e82251ee3030afd233)",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/tree/43e603dc93108f7075ad91fa83c5802f18ef2ae2",
+      "accessed_at": "2026-10-07T19:49:41Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-mediaarea-repository.html",
+      "locator": "Release source tree snapshot."
+    },
+    {
+      "ref": "S05",
+      "title": "BWF MetaEdit v20.05 source files",
+      "version": "Commit 43e603dc93108f7075ad91fa83c5802f18ef2ae2",
+      "files": [
+        {
+          "path": "Source/Riff/Riff_Handler.cpp",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/Riff/Riff_Handler.cpp",
+          "captured_at": "2026-10-07T19:44:16Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-riff-handler.cpp",
+          "symbols_and_ranges": [
+            "Riff_Handler::Open and Open_Internal, 148-266",
+            "Riff_Handler::Save, 270-398",
+            "Riff_Handler::Get/Get_Internal and Set/Set_Internal, 426-490"
+          ]
+        },
+        {
+          "path": "Source/Riff/Riff_Handler.h",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/Riff/Riff_Handler.h",
+          "captured_at": "2026-10-07T19:44:16Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-riff-handler.h",
+          "symbols_and_ranges": [
+            "class Riff_Handler public API, 31-90",
+            "private CriticalSection CS member, 153-162"
+          ]
+        },
+        {
+          "path": "Source/ZenLib/CriticalSection.h",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/ZenLib/CriticalSection.h",
+          "captured_at": "2026-10-07T19:48:53Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-critical-section.h",
+          "symbols_and_ranges": [
+            "ZenLib::CriticalSection, 31-44",
+            "CriticalSectionLocker enter/leave lifetime, 50-66"
+          ]
+        },
+        {
+          "path": "Source/Riff/Riff_Base.h",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/Riff/Riff_Base.h",
+          "captured_at": "2026-10-07T19:46:03Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-Source-Riff-Riff_Base-h",
+          "symbols_and_ranges": [
+            "ZenLib/CriticalSection.h include, 13-20"
+          ]
+        },
+        {
+          "path": "Source/Common/Core.cpp",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/Common/Core.cpp",
+          "captured_at": "2026-10-07T19:46:03Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-Source-Common-Core-cpp",
+          "symbols_and_ranges": [
+            "Core::Entry, 165-179",
+            "Core::Menu_File_Save_Middle_Threaded/Menu_File_Save_Middle, 774-785",
+            "Core::Batch_Launch_Start/Middle, 1347-1382",
+            "Core::Batch_Launch_Write, 1639-1649"
+          ]
+        },
+        {
+          "path": "Source/Common/Core.h",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/Common/Core.h",
+          "captured_at": "2026-10-07T19:46:03Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-Source-Common-Core-h",
+          "symbols_and_ranges": [
+            "Core declaration and Thread base, 30 onward",
+            "save methods, 57-61"
+          ]
+        },
+        {
+          "path": "Source/GUI/Qt/GUI_Main_Menu.cpp",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/GUI/Qt/GUI_Main_Menu.cpp",
+          "captured_at": "2026-10-07T19:46:03Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-Source-GUI-Qt-GUI_Main_Menu-cpp",
+          "symbols_and_ranges": [
+            "GUI_Main::OnMenu_File_Save_All, 435-443"
+          ]
+        },
+        {
+          "path": "Source/GUI/Qt/GUI_Main_PerFile.cpp",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/GUI/Qt/GUI_Main_PerFile.cpp",
+          "captured_at": "2026-10-07T19:44:16Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-gui-main-perfile.cpp",
+          "symbols_and_ranges": [
+            "PerFileModel::saveFile, 166-169"
+          ]
+        },
+        {
+          "path": "Source/GUI/Qt/GUI_Main.cpp",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/GUI/Qt/GUI_Main.cpp",
+          "captured_at": "2026-10-07T19:44:16Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-gui-main.cpp",
+          "symbols_and_ranges": [
+            "GUI main/thread setup file captured as surrounding context"
+          ]
+        },
+        {
+          "path": "History_GUI.txt",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/History_GUI.txt",
+          "captured_at": "2026-10-07T19:44:17Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-history-gui.txt",
+          "symbols_and_ranges": [
+            "Version 20.05 and Issue #71 fix, 7-20"
+          ]
+        }
+      ]
+    },
+    {
+      "ref": "S06",
+      "title": "BWF MetaEdit issue #71",
+      "version": "Issue opened 2019-11-06; report on v1.3.1; snapshot retest 2020-04-26",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/issues/71",
+      "accessed_at": "2026-10-07T19:48:54Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-issue-71.html",
+      "locator": "Description/reproduction steps and comments with maintainer snapshot request and reporter retest."
+    },
+    {
+      "ref": "S07",
+      "title": "BWF MetaEdit PR #112",
+      "version": "Merged 2020-04-27; merge commit 1b47484fcc466685cb405786569b87866e298550; repair commit 5cddd1e795788be7f86449e82251ee3030afd233",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/pull/112",
+      "accessed_at": "2026-10-07T19:48:55Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-pr-112.html",
+      "locator": "PR title/body, merge metadata, file list; only Riff_Handler.cpp and .h changed."
+    },
+    {
+      "ref": "S07",
+      "title": "BWF MetaEdit repair commit patch",
+      "version": "Commit 5cddd1e795788be7f86449e82251ee3030afd233",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/commit/5cddd1e795788be7f86449e82251ee3030afd233.patch",
+      "accessed_at": "2026-10-07T19:49:42Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-fix-112.patch",
+      "locator": "Patch adds handler CriticalSection and locked public/helper wrappers in Riff_Handler.cpp/h; no test file changed."
+    },
+    {
+      "ref": "S08",
+      "title": "BWF MetaEdit release v20.05",
+      "version": "Published 2020-05-28; release commit 43e603dc93108f7075ad91fa83c5802f18ef2ae2",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/releases/tag/v20.05",
+      "accessed_at": "2026-10-07T19:48:55Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bwf-release-20.05.html",
+      "locator": "Release note explicitly lists Issue #71 large-save crash fix."
+    },
+    {
+      "ref": "S09",
+      "title": "FFmpeg CLI and ffprobe documentation",
+      "version": "Tag n7.1.1 resolved to commit db69d06eeeab4f46da15030a80d539efb4503ca8",
+      "files": [
+        {
+          "path": "doc/ffmpeg.texi",
+          "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/db69d06eeeab4f46da15030a80d539efb4503ca8/doc/ffmpeg.texi",
+          "captured_at": "2026-10-07T19:49:41Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/ffmpeg-7.1.1-commit-cli-doc.texi",
+          "symbols_and_ranges": [
+            "Stream selection/manual selection, 264-333",
+            "Metadata mapping defaults and negative dummy mapping, 1919-1955",
+            "Audio conversion and libmp3lame build condition, 2780-2813"
+          ]
+        },
+        {
+          "path": "doc/muxers.texi",
+          "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/db69d06eeeab4f46da15030a80d539efb4503ca8/doc/muxers.texi",
+          "captured_at": "2026-10-07T19:49:42Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/ffmpeg-7.1.1-commit-muxers.texi",
+          "symbols_and_ranges": [
+            "MP3 muxer example near line 3006"
+          ]
+        },
+        {
+          "path": "doc/ffprobe.texi",
+          "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/db69d06eeeab4f46da15030a80d539efb4503ca8/doc/ffprobe.texi",
+          "captured_at": "2026-10-07T19:50:35Z",
+          "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/ffmpeg-7.1.1-commit-ffprobe-doc.texi",
+          "symbols_and_ranges": [
+            "JSON writer and audio stream selection, 87-112",
+            "container info, 135-150",
+            "stream info, 221-227"
+          ]
+        }
+      ]
+    },
+    {
+      "ref": "S10",
+      "title": "RFC 8493 BagIt File Packaging Format v1.0",
+      "version": "RFC 8493, October 2018",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "accessed_at": "2026-10-07T19:48:55Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/bagit-rfc8493.html",
+      "locator": "Sections 2.1.2-2.1.3 payload/manifests, 2.2.1 tag manifest, 2.4 SHA-256/SHA-512, 3 complete/valid bags, 5.1 safe paths."
+    },
+    {
+      "ref": "S11",
+      "title": "Library of Congress PREMIS Data Dictionary",
+      "version": "PREMIS 3.0, 2015 PDF",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "accessed_at": "2026-10-07T19:48:56Z",
+      "captured_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources/premis-v3.0.pdf",
+      "locator": "Event entity and mandatory eventIdentifier/eventType/eventDateTime plus optional outcome and agent/object links, pp. 136-138."
+    }
+  ]
+}

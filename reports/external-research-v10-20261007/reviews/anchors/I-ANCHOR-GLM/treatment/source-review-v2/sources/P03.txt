@@ -1,0 +1,20 @@
+52: by an IN operator.
+53: The BEGIN IMMEDIATE and BEGIN EXCLUSIVE commands now work even
+54: if one or more attached database files are read-only.
+55: Enhanced FTS5 to support trigram indexes.
+56: Improved performance of WAL mode locking primitives in cases where
+57: there are hundreds of connections all accessing the same database file
+58: at once.
+59: Enhanced the carray() table-valued function to include a single-argument
+60: form that is bound using the auxiliary sqlite3_carray_bind() interface.
+61: The substr() SQL function can now also be called "substring()" for
+64: Pikchr scripts and rendered
+65: as SVG for improved legibility and ease of maintenance.
+66: Hashes:
+67: SQLITE_SOURCE_ID: 2020-12-01 16:14:00 a26b6597e3ae272231b96f9982c3bcc17ddec2f2b6eb4df06a224b91089fed5b
+68: SHA3-256 for sqlite3.c: fbd895b0655a337b2cd657675f314188a4e9fe614444cc63dfeb3f066f674514
+69: A complete list of SQLite releases
+70: in a single page and a chronology are both also available.
+71: A detailed history of every
+72: check-in is available at
+73: SQLite version control site.

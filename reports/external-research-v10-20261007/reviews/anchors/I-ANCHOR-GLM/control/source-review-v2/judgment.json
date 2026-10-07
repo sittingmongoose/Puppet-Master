@@ -1,0 +1,725 @@
+{
+  "schema": "source-review-v2-independent-diagnostic",
+  "subject": "I-ANCHOR-GLM/control/reviser-v2 frozen final proposal",
+  "review_kind": "first independent declared-scope source/science review for this arm",
+  "decision": "NO_FULL_POSITIVE",
+  "assessment_mode": "FULL_DECLARED_OBLIGATION_REVIEW_WITH_EXPLICIT_UNVERIFIED_SOURCE_REMAINDER",
+  "failed_screen": false,
+  "source_correctness": {
+    "grade": "FAIL_ON_ASSESSED_MATERIAL_CLAIMS",
+    "scope": "checked consequential final claims; R1 remains unverified",
+    "reason": "M1 unsupported crash guarantee; M2 inaccurate NFS governing condition; M3 incorrect release applicability. Most core source selections and facts are correct.",
+    "defects": [
+      "M1",
+      "M2",
+      "M3"
+    ]
+  },
+  "completeness": {
+    "grade": "PARTIAL",
+    "reason": "All original obligations examined, but no completed pinned-component/regression investigation in candidate artifact; product gaps M1,M4-M6 and preservation gap M7.",
+    "not_penalized": "Proposed tests need not be executed in this research-only task."
+  },
+  "planning_usefulness": {
+    "grade": "SUBSTANTIAL_BUT_INCOMPLETE",
+    "reason": "Concrete corrections, explicit choices, source constraints and prioritized test families improve the thin plan materially; durability, consistency, trust binding, preview parity and short-query behavior remain essential open contracts."
+  },
+  "breadth": {
+    "grade": "MODERATE_TO_BROAD_TOPIC_COVERAGE_WITH_SHALLOW_INTEGRATION",
+    "bounded_supported_yield": [
+      "contained staging and atomic symlink activation as a namespace mechanism",
+      "authenticated monotonic editions as a trust principle",
+      "sanitizer hardening history and upgrade caution",
+      "indexed search with Latin diacritic and trigram constraints",
+      "WCAG 2.2 A/AA baseline and kiosk-relevant criteria",
+      "ZIM immutable-container alternative and TUF role-based alternative"
+    ],
+    "limits": "Breadth credited by distinct supported mechanisms and relevance, not eight source IDs, file existence or citation count. Direct mechanisms span all six thin-plan gaps; editor workflow, renderer compatibility and short-script query policy are shallow."
+  },
+  "covered_obligations": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h"
+  ],
+  "covered_obligations_meaning": "All eight original integrated obligations were examined; covered does not mean passed.",
+  "per_obligation_evidence_assessment": [
+    {
+      "id": "a",
+      "obligation": "Real primary public-source selection from the user brief",
+      "assessment": "SUBSTANTIALLY_MET_WITH_SOURCE_ACCESS_LIMIT",
+      "candidate_evidence": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:3-7",
+        "research-v2/sources/SOURCES.md:7-13"
+      ],
+      "primary_evidence": [
+        "S1-S8 source-family checks in sources/PRIMARY-CHECKS.json"
+      ],
+      "finding": "Sources are genuine upstream/public authorities selected for container, search, sanitizer, accessibility, activation, extraction and trust needs. Independent content checking confirms most central facts. Original openZIM wiki content was inaccessible and is not passed based on URL/manifest existence."
+    },
+    {
+      "id": "b",
+      "obligation": "Materially different mechanisms and useful alternatives",
+      "assessment": "MET_AT_CONCEPTUAL_LEVEL; INTEGRATION_COMPARISON_PARTIAL",
+      "candidate_evidence": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:12-15",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:19-25",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:38-44"
+      ],
+      "primary_evidence": [
+        "P21-P29,P37-P38",
+        "P05/P43",
+        "P07/P10/P17"
+      ],
+      "finding": "ZIP versus ZIM, custom signature versus TUF, symlink versus exchange, and Latin tokenizer versus CJK trigram are material mechanisms. ZIP retention and explicit deferral of ZIM costs are reasonable. TUF losses are acknowledged; no actual minisign component/version or deployment adaptation is researched in candidate evidence."
+    },
+    {
+      "id": "c",
+      "obligation": "Actual component/code behavior at a pinned version",
+      "assessment": "PARTIAL",
+      "candidate_evidence": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:8",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:23",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:29-31"
+      ],
+      "primary_evidence": [
+        "P34 CPython v3.14.8 extraction",
+        "P35 SQLite 3.34.0 tokenizer",
+        "P36 DOMPurify 3.4.16 root guard"
+      ],
+      "finding": "Version-specific documented extraction and tokenizer behaviors are mostly correct, but the candidate inspected documentation/release notes, not recorded pinned code paths or configurations. DOMPurify configuration/DOM backend, actual deployed SQLite version and selected webview are unresolved. Reviewer static code checks verify facts but are not credited as candidate inspections. Local execution was not required and is not penalized for being absent."
+    },
+    {
+      "id": "d",
+      "obligation": "Pertinent issue/fix/regression test and release applicability or justified equivalent history",
+      "assessment": "PARTIAL_WITH_MATERIAL_RELEASE_ERROR",
+      "candidate_evidence": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:27-33",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:40",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/critique.md:10"
+      ],
+      "primary_evidence": [
+        "P11 compare, P20 tests, P30/P31 releases, P36 guard, P39 PR1636"
+      ],
+      "finding": "The 3.4.7-3.4.16 history and unicode61 backward-compatibility precedent are real and pertinent. The candidate names no issue/fix commit or inspected regression fixture and does not clearly justify release notes as a complete equivalent. V3 is a proposal. Reviewer confirms the 3.4.16 rawtext root fail-closed test and child control but M3 defeats the blanket release rule."
+    },
+    {
+      "id": "e",
+      "obligation": "Every relevant discovery compared with the frozen sandbox plan",
+      "assessment": "BROAD_COMPARISON_WITH_MATERIAL_UNRESOLVED_REQUIREMENTS",
+      "candidate_evidence": [
+        "cases/I-ANCHOR-GLM/plan.md:3",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:12-25",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:37-44"
+      ],
+      "primary_evidence": [
+        "P05/P09/P43",
+        "P07/P10/P17",
+        "P02/P41",
+        "P04/P25"
+      ],
+      "finding": "All six explicit unspecified areas and the existing ZIP/webview/search/server choices are mapped. Corrections address them substantially. Power-cut durability/coherent reader snapshots, signed content binding, short CJK queries and complete remote preview parity remain incomplete (M1,M4,M5,M6)."
+    },
+    {
+      "id": "f",
+      "obligation": "Preserve supported corrections, product choices, covered dispositions, optional leads, uncertainties and validations",
+      "assessment": "SUBSTANTIALLY_PRESERVED; NOT_COMPLETE",
+      "candidate_evidence": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:12-40",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/critique-dispositions.md:7-61"
+      ],
+      "primary_evidence": [
+        "sources/claim-assessments.json",
+        "M7"
+      ],
+      "finding": "C1-C6, four product decisions, three covered dispositions, O1/O2/O4 with O3 withdrawal, U1-U4 and V1-V5 are retained. U1 resolution is sound; U2 promotion is honest but incomplete; remaining bounded uncertainties are preserved. All F/D labels are accounted; semantic source-condition preservation is incomplete and the critic’s incorrect conditions were inherited."
+    },
+    {
+      "id": "g",
+      "obligation": "Required same-family criticism and final proposal, preserving critique",
+      "assessment": "CRITIQUE_AND_FINAL_PRESENT; PRESERVATION_PARTIAL",
+      "candidate_evidence": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/critique.md:1-48",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/critique-dispositions.md:1-61",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:1-48"
+      ],
+      "primary_evidence": [
+        "sources/input-identities.json",
+        "M2,M3,M7"
+      ],
+      "finding": "Supplied own-arm criticism and final were fully read. No route/model-family verification is attempted. The original accepted/SATISFIED verdicts are preserved as prior authored grades, not adopted as this review’s grades. Frozen final does address each named F1-F8 and D1-D6, but those dispositions do not prove scientific correctness."
+    },
+    {
+      "id": "h",
+      "obligation": "Distinguish executed checks from proposals",
+      "assessment": "MET_IN_AUTHORING; EXECUTION_PROVENANCE_LIMITED",
+      "candidate_evidence": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:5-8",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md:40",
+        "reviser-v2/sources/SOURCES.md:27-29"
+      ],
+      "primary_evidence": [
+        "independent retrieval identities in sources/RETRIEVALS.json"
+      ],
+      "finding": "Candidate claims only fetches and bounded rereads executed and clearly labels architecture/runtime mapping/V1-V5 proposed. Independent reviewer confirms source content; original fetch execution cannot be authenticated from authored summaries alone. No candidate native receipts/counters were read. Reviewer did not run implementation/regression/power-cut tests."
+    }
+  ],
+  "material_defects": [
+    {
+      "id": "M1",
+      "kind": "unsupported durability guarantee",
+      "severity": "high",
+      "exact_claim": "activation is a plain `rename()` of a freshly created symlink over it — exactly the documented path-replacement case, crash-atomic",
+      "locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 20
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 19
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 25
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/critique-dispositions.md",
+          "line": 26
+        }
+      ],
+      "primary_counterevidence": {
+        "id": "P09",
+        "evidence_files": [
+          "sources/P09-fsync.txt:27-39",
+          "sources/P43-rename-description.txt:31-50"
+        ],
+        "primary_urls": [
+          "https://man7.org/linux/man-pages/man2/fsync.2.html",
+          "https://man7.org/linux/man-pages/man2/rename.2.html"
+        ],
+        "assessment": "rename documents atomic namespace replacement; fsync documents separate persistence of directory entries. C1 fsyncs before activation and never specifies flushing the directory containing active after the rename. It also does not define durable publication of staging under editions/<n> or recovery."
+      },
+      "impact": "The central power-loss requirement is asserted as solved without a complete persistence protocol or pinned filesystem/recovery assumptions. V1 is useful but only proposed.",
+      "inference_limits": "No crash test was run; this is an unsupported general guarantee and missing persistence step, not a demonstrated failure on a particular filesystem. A prior edition may survive, but that does not establish the promised always-valid active path."
+    },
+    {
+      "id": "M2",
+      "kind": "incorrect source governing condition",
+      "severity": "medium",
+      "exact_claim": "S5’s guarantees are Linux `rename(2)` with a brief both-resolve window and no NFS atomicity",
+      "locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 31
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 20
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/critique.md",
+          "line": 23
+        }
+      ],
+      "primary_counterevidence": {
+        "id": "P43",
+        "evidence_files": [
+          "sources/P43-rename-description.txt:233-239"
+        ],
+        "primary_urls": [
+          "https://man7.org/linux/man-pages/man2/rename.2.html"
+        ],
+        "assessment": "The NFS BUGS paragraph says a failed RPC can follow a rename that already happened after server crash/retransmission. It does not state that NFS makes replacement non-atomic."
+      },
+      "impact": "Misstates the source limitation and preserves an incorrect critic condition. Local storage remains a defensible product restriction.",
+      "inference_limits": "This does not certify all NFS deployments or their crash semantics; it rejects the blanket attribution to this primary page."
+    },
+    {
+      "id": "M3",
+      "kind": "incorrect release applicability",
+      "severity": "medium",
+      "exact_claim": "a pin below 3.4.16 misses the raw-text-root and XML-clobbering fixes",
+      "locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 29
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/critique-dispositions.md",
+          "line": 10
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/critique.md",
+          "line": 10
+        }
+      ],
+      "primary_counterevidence": {
+        "id": "P30/P31/P11",
+        "evidence_files": [
+          "sources/P30-dompurify-xml-release.txt",
+          "sources/P31-dompurify-rawtext-release.txt",
+          "sources/P11-dompurify-compare.txt"
+        ],
+        "primary_urls": [
+          "https://github.com/cure53/DOMPurify/releases/tag/3.4.15",
+          "https://github.com/cure53/DOMPurify/releases/tag/3.4.16",
+          "https://github.com/cure53/DOMPurify/compare/3.4.15...3.4.16"
+        ],
+        "assessment": "3.4.15 already contains XML-clobbering hardening. The rawtext-root guard and matching regression additions belong to 3.4.16. Version 3.4.15 is therefore a counterexample to the conjunctive blanket claim."
+      },
+      "impact": "The required affected/fixed release analysis is wrong even though the recommendation to keep the sanitizer current is useful.",
+      "inference_limits": "This does not claim 3.4.15 is generally safe; it distinguishes two different fixes and their applicable versions."
+    },
+    {
+      "id": "M4",
+      "kind": "unresolved multilingual behavior and overgeneralized condition",
+      "severity": "medium",
+      "exact_claim": "trigram substrings of fewer than 3 characters never match",
+      "locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 23
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 15
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 38
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 40
+        }
+      ],
+      "primary_counterevidence": {
+        "id": "P41/P35",
+        "evidence_files": [
+          "sources/P41-fts5-conditions.txt:609-620",
+          "sources/P41-fts5-conditions.txt:921-944",
+          "sources/P35-sqlite-unicode-trigram.txt:1317-1364"
+        ],
+        "primary_urls": [
+          "https://www.sqlite.org/fts5.html",
+          "https://github.com/sqlite/sqlite/blob/version-3.34.0/ext/fts5/fts5_tokenize.c"
+        ],
+        "assessment": "The fewer-than-three condition is for full-text queries; LIKE/GLOB may use a linear scan. fts5_locale supplies locale values to a custom tokenizer and is not a segmenter. Candidate chooses trigram for CJK but never chooses short-query fallback or a minimum-query product policy."
+      },
+      "impact": "Common one- and two-character CJK searches have no completed product behavior, and the optional locale lead omits its essential dependency. V4 can expose this but supplies no acceptance outcome.",
+      "inference_limits": "The candidate correctly discloses the MATCH limitation; no hidden runtime bug is alleged. Restricting short queries could be a legitimate product choice if explicitly chosen."
+    },
+    {
+      "id": "M5",
+      "kind": "underdefined security and approval contract",
+      "severity": "high",
+      "exact_claim": "Activation requires: signature verifies, edition strictly newer than the last activated, sizes match, not expired.",
+      "locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 21
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 13
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 37
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 44
+        }
+      ],
+      "primary_counterevidence": {
+        "id": "P07/P10/P17",
+        "evidence_files": [
+          "sources/P07-tuf.txt:117-143",
+          "sources/P10-minisign.txt:20-35,113-121",
+          "sources/P17-tuf-spec.txt:759-798"
+        ],
+        "primary_urls": [
+          "https://theupdateframework.io/docs/security/",
+          "https://jedisct1.github.io/minisign/",
+          "https://theupdateframework.github.io/specification/latest/"
+        ],
+        "assessment": "TUF binds target content using hashes in authenticated metadata; minisign signs a selected file’s bytes. The proposal specifies a content signature in a manifest and sizes but no exact signed object, canonical encoding, detached signature or authenticated content-hash mapping. Highest previously activated differs from S7 highest previously seen. Persistence, rollback interaction, clock trust and preview-to-signed-byte identity are not defined."
+      },
+      "impact": "Cannot establish complete integrity, anti-rollback or remote approval semantics from this contract. If only the manifest plus sizes is authenticated, equal-length substituted files are not excluded; if the whole immutable bundle is signed, that case can be excluded, but the proposal does not choose the contract.",
+      "inference_limits": "This is a completeness gap, not a proven signature bypass. It does not require adopting all of TUF or rescind the legitimate lightweight-scheme choice."
+    },
+    {
+      "id": "M6",
+      "kind": "coherence claim exceeds single-path atomicity",
+      "severity": "high",
+      "exact_claim": "rollback is flipping `active` back one edition — a single rename — which is the direct answer to the brief’s power-loss coherence requirement",
+      "locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 25
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 44
+        }
+      ],
+      "primary_counterevidence": {
+        "id": "P43/P02",
+        "evidence_files": [
+          "sources/P43-rename-description.txt:31-50",
+          "sources/P41-fts5-conditions.txt:637-643"
+        ],
+        "primary_urls": [
+          "https://man7.org/linux/man-pages/man2/rename.2.html",
+          "https://www.sqlite.org/fts5.html"
+        ],
+        "assessment": "rename gives one-path atomicity and leaves already-open descriptors unchanged; it provides no multi-open document/image/index snapshot. FTS5 also requires consistency with external content when that mode is used. Proposal does not pin a reader/session, asset URLs and search index to one edition or define a recovery fallback."
+      },
+      "impact": "A page opened through active before the flip and an image opened through active after it can use different editions. A pointer flip alone does not establish the museum’s coherent-edition requirement.",
+      "inference_limits": "The mixed-open example is a static interleaving inference, not an executed reproduction. An edition-qualified routing policy could prevent it, but none is supplied."
+    },
+    {
+      "id": "M7",
+      "kind": "false critique-preservation completeness statement",
+      "severity": "medium",
+      "exact_claim": "the §2 source conditions are embedded in the rows above via their S-locators (MD5 integrity-only and the namespaces note under the container/trust rows",
+      "locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/critique-dispositions.md",
+          "line": 61
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/critique.md",
+          "line": 19
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 12
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "line": 38
+        }
+      ],
+      "primary_counterevidence": {
+        "id": "P37 and exact authorized text audit",
+        "evidence_files": [
+          "sources/P37-libzim-api.txt:275-291",
+          "sources/input-identities.json"
+        ],
+        "primary_urls": [
+          "https://github.com/openzim/libzim/blob/f421088da622c3a1e0fc6a6ced737b10d4fa5502/include/zim/archive.h"
+        ],
+        "assessment": "Pinned official API distinguishes old/new namespace path contracts. Neither the final nor the claimed container/trust disposition rows contains the namespace condition or an explicit reason for not carrying it. Local full-text audit finds namespace only in this completeness assertion."
+      },
+      "impact": "F1-F8 and named lists are substantially accounted, but the assertion that every source condition was preserved is not true. Keeping ZIM optional makes the missing condition peripheral to ZIP deployment, not a reason to call it preserved.",
+      "inference_limits": "The exact 2021 wiki history and URL-decoding instruction remain unverified due source access; the preservation mismatch itself is directly assessed from the authorized texts."
+    }
+  ],
+  "unassessed_remainder": [
+    {
+      "id": "R1",
+      "exact_unassessed_claims": [
+        "S1-zim-format.md:4 / SOURCES.md S1: wiki last edited 2026-09-12 and its exact tie to libzim 9.3.0",
+        "S1-zim-format.md:10: approximate 1 MB cluster size on the fetched wiki page",
+        "S1-zim-format.md:12 / critique.md:19: namespaces hidden since 2021 and exact wiki instruction to HTTP-URL-decode before libzim",
+        "S1-zim-format.md:13: blanket older-reader compatibility with newer files"
+      ],
+      "reason": "Original wiki returned Anubis bot challenge on web and direct GET, including action=raw. Official pinned libzim/zim-tools verify associated header, checksum, codecs, split and path behavior but do not establish these precise historical/metadata/universal claims.",
+      "evidence": [
+        "P01-zim.json",
+        "P42-zim-challenge.json"
+      ],
+      "effect": "No full positive source grade; these claims remain unverified, not declared false."
+    },
+    {
+      "id": "R2",
+      "exact_unassessed_claims": [
+        "Authenticity/completeness of the candidate’s original retrieval execution beyond the supplied authored notes"
+      ],
+      "reason": "Only authorized scientific inputs were read. Candidate lifecycle/usage/terminal receipts and raw orchestration records are excluded by user.",
+      "effect": "Content was independently checked; execution provenance is not inferred or scientifically scored as proven."
+    }
+  ],
+  "primary_sources_checked": [
+    {
+      "source": "S1 / openZIM alternative",
+      "status": "original wiki inaccessible; substantive claims partially checked by official pinned implementation",
+      "primary_urls": [
+        "https://wiki.openzim.org/wiki/ZIM_file_format",
+        "https://github.com/openzim/libzim/tree/f421088da622c3a1e0fc6a6ced737b10d4fa5502",
+        "https://github.com/openzim/zim-tools/blob/8aa4d38090e4029c0307584f39ca6c995dcdb617/src/zimsplit.cpp"
+      ],
+      "version": "libzim 9.3.0=f421088da622c3a1e0fc6a6ced737b10d4fa5502; zim-tools immutable review snapshot 8aa4d38090e4029c0307584f39ca6c995dcdb617",
+      "checked_ranges": [
+        "fileheader.cpp:41-75,98-107",
+        "fileimpl.cpp:219-220,534-618",
+        "archive.cpp:226-258",
+        "include/zim/archive.h:275-291",
+        "cluster.cpp:51-72",
+        "zimsplit.cpp:121-144",
+        "README.md:121-123,234-238"
+      ],
+      "findings": "Header 6.3, final 16-byte checksum and MD5 verification, namespace-aware path API, LZMA/Zstd codec dispatch, cluster-aligned official splitter, GPL and Xapian build dependency checked. Exact wiki metadata/history and universal older-reader compatibility not established.",
+      "evidence_ids": [
+        "P01",
+        "P15",
+        "P21",
+        "P22",
+        "P23",
+        "P24",
+        "P26",
+        "P28",
+        "P29",
+        "P37",
+        "P38",
+        "P42"
+      ]
+    },
+    {
+      "source": "S2 / SQLite FTS5",
+      "status": "checked with governing conditions",
+      "primary_urls": [
+        "https://www.sqlite.org/fts5.html",
+        "https://github.com/sqlite/sqlite/blob/version-3.34.0/ext/fts5/fts5_tokenize.c"
+      ],
+      "version": "live official FTS5 manual captured and hashed; tokenizer code version-3.34.0",
+      "checked_ranges": [
+        "manual sections 2.1-2.2,4.3.1-4.3.4,4.8",
+        "fts5_tokenize.c:438-512,1317-1364,1391-1399"
+      ],
+      "findings": "unicode61 U+1ED9 and remove_diacritics=2 confirmed; contiguous token behavior and three-character tokenizer confirmed statically. Short-string limit applies to full-text queries; LIKE/GLOB can scan. Locale API supplies custom tokenizers and does not segment by itself. FTS5 may also be loaded as an extension.",
+      "evidence_ids": [
+        "P02",
+        "P14",
+        "P35",
+        "P41"
+      ]
+    },
+    {
+      "source": "S3 / DOMPurify history and code",
+      "status": "checked; erroneous release applicability rule",
+      "primary_urls": [
+        "https://github.com/cure53/DOMPurify/releases",
+        "https://github.com/cure53/DOMPurify/releases/tag/3.4.7",
+        "https://github.com/cure53/DOMPurify/releases/tag/3.4.15",
+        "https://github.com/cure53/DOMPurify/releases/tag/3.4.16",
+        "https://github.com/cure53/DOMPurify/compare/3.4.15...3.4.16",
+        "https://github.com/cure53/DOMPurify/pull/1636",
+        "https://github.com/cure53/DOMPurify/blob/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/src/purify.ts",
+        "https://github.com/cure53/DOMPurify/blob/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/test/test-suite.js",
+        "https://github.com/cure53/DOMPurify/blob/3.4.16/README.md"
+      ],
+      "version": "3.4.16=b9b9d80f7e401771c2ccaef5f45def7eec8f27d7; 3.4.15=1d7460c4f8a27be825c11b1c9d346d79db32c1e5; range 3.4.7-3.4.16",
+      "checked_ranges": [
+        "release notes 3.4.7-3.4.16",
+        "3.4.15...3.4.16 src/purify.ts and test/test-suite.js diffs",
+        "src/purify.ts:3113-3135",
+        "test/test-suite.js:1391-1454",
+        "README.md server-side use and IN_PLACE sections"
+      ],
+      "findings": "Named history real; 3.4.15 already includes XML hardening. Rawtext-root fix adds a fail-closed throw in 3.4.16; regression fixtures distinguish removed root from removed child and cover hook sites. Server DOM dependency and sanitize-before-attachment conditions matter. None of these tests executed here.",
+      "evidence_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P18",
+        "P19",
+        "P20",
+        "P30",
+        "P31",
+        "P32",
+        "P33",
+        "P36",
+        "P39"
+      ]
+    },
+    {
+      "source": "S4 / WCAG 2.2",
+      "status": "checked; baseline valid, acceptance detail incomplete",
+      "primary_urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/TR/2024/REC-WCAG22-20241212/"
+      ],
+      "version": "W3C Recommendation edition 2024-12-12, identical captured body at live and dated URL",
+      "checked_ranges": [
+        "SC 1.1.1,2.1.1-2.1.2,2.2.1,2.4.11,2.4.13,2.5.7-2.5.8,3.1.1-3.1.2,3.2.6,3.3.7-3.3.8,4.1.1-4.1.2; conformance 5.2.1-5.2.5"
+      ],
+      "findings": "Removed Parsing and AAA Focus Appearance correctly handled. AA includes all A/AA criteria and whole pages/processes; sampled audit alone is not a conformance claim. Timing and target-size exceptions exist. Language identification and image alternatives are relevant but not concretely planned.",
+      "evidence_ids": [
+        "P04",
+        "P25"
+      ]
+    },
+    {
+      "source": "S5 / rename and independent durability countercheck",
+      "status": "checked; atomic path replacement supported, crash guarantee unsupported",
+      "primary_urls": [
+        "https://man7.org/linux/man-pages/man2/rename.2.html",
+        "https://man7.org/linux/man-pages/man2/fsync.2.html"
+      ],
+      "version": "Linux man-pages 6.19; pages dated 2026-02-08; HTML 2026-09-09",
+      "checked_ranges": [
+        "rename DESCRIPTION, renameat2 flags, EXDEV, BUGS",
+        "fsync DESCRIPTION and ERRORS"
+      ],
+      "findings": "Symlink replacement supported; nonempty directory replacement prohibited by plain rename; exchange available. Directory fsync needed to persist namespace mutations. NFS caveat is ambiguous outcome after failed RPC, not the asserted blanket loss of atomicity.",
+      "evidence_ids": [
+        "P05",
+        "P09",
+        "P43"
+      ]
+    },
+    {
+      "source": "S6 / Python zipfile",
+      "status": "checked at exact claimed runtime version",
+      "primary_urls": [
+        "https://docs.python.org/3.14/library/zipfile.html",
+        "https://github.com/python/cpython/blob/v3.14.8/Lib/zipfile/__init__.py"
+      ],
+      "version": "CPython 3.14.8 documentation; source v3.14.8",
+      "checked_ranges": [
+        "ZipFile.extract/extractall, Path warning, decompression pitfalls",
+        "Lib/zipfile/__init__.py:1885-1901,1918-1975"
+      ],
+      "findings": "Sanitization, unsanitized Path, overwrite and incomplete extraction warnings confirmed; code strips components and writes with wb. Fresh staging and extra caller caps are reasonable proposals; no built-in complete hostile-bundle policy inferred.",
+      "evidence_ids": [
+        "P06",
+        "P13",
+        "P34"
+      ]
+    },
+    {
+      "source": "S7 / TUF and lighter signature alternative",
+      "status": "checked; source supports principles, selected custom protocol underdefined",
+      "primary_urls": [
+        "https://theupdateframework.io/docs/security/",
+        "https://theupdateframework.github.io/specification/latest/",
+        "https://jedisct1.github.io/minisign/"
+      ],
+      "version": "TUF security page modified 2024-10-12; live specification snapshot hashed, no numeric spec version asserted; live minisign documentation snapshot hashed",
+      "checked_ranges": [
+        "security trust/integrity/freshness/implementation-safety",
+        "specification 4.5 target-length/hash format and 5.1-5.2 update-time/trust-root conditions",
+        "minisign signing/verifying and signature format"
+      ],
+      "findings": "Signature trust, version freshness, expiry, size limits and key risk established. TUF binds target bytes with hashes, minisign signs selected file bytes. Candidate does not define signed-byte or content-digest contract, durable freshness floor, trusted offline clock or preview parity. These are planning limits rather than an executed exploit finding.",
+      "evidence_ids": [
+        "P07",
+        "P10",
+        "P17",
+        "P40"
+      ]
+    },
+    {
+      "source": "S8 / SQLite release history",
+      "status": "checked",
+      "primary_urls": [
+        "https://www.sqlite.org/changes.html"
+      ],
+      "version": "3.34.0 released 2020-12-01",
+      "checked_ranges": [
+        "3.34.0 entry Enhanced FTS5 to support trigram indexes"
+      ],
+      "findings": "Trigram introducing release supported; no candidate SQLite deployment pin thereby established.",
+      "evidence_ids": [
+        "P08"
+      ]
+    }
+  ],
+  "original_grades_and_failures": {
+    "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/critique.md",
+    "scope": "Prior critic’s grades of predecessor research draft; preserved verbatim in substance, not substituted for the independent final review",
+    "grades": {
+      "a": "SATISFIED by the predecessor with two locator-support exceptions",
+      "b": "SATISFIED",
+      "c": "SATISFIED and honestly labeled",
+      "d": "SATISFIED",
+      "e": "SATISFIED",
+      "f": "SATISFIED",
+      "g": "this file provides the criticism; the reviser must write the proposal fresh",
+      "h": "SATISFIED",
+      "boundary": "RESPECTED"
+    },
+    "verdict": "The predecessor research-v2 draft is accepted as the required foundation",
+    "retained_findings": [
+      "F1 unsupported O3 locator",
+      "F2 unbacked trigram version",
+      "F3 directory activation layout",
+      "F4 language pinning",
+      "F5 no-CVE severity limitation",
+      "F6 ZIM integration costs unexamined",
+      "F7 integer version format",
+      "F8 durability ordering"
+    ],
+    "independent_response": "Prior grades remain part of the frozen record. This reviewer does not erase them, and independently finds M1-M7 in the final or preserved source interpretation."
+  },
+  "blinding_limits": {
+    "visible_method_clues": [
+      "I-ANCHOR-GLM/control paths and CONTROL final/critic headings reveal arm label",
+      "Authored final explicitly names research-v2 -> critic-v2 -> reviser-v2 same-family chain, S1-S8 and F1-F8",
+      "Final/critique/dispositions boundary prose mentions Goal/native receipt filenames and integration driver; receipt files were not opened",
+      "Allowed source maps contain retrieval times and stage naming; these were used only for source identities, not candidate duration or cost"
+    ],
+    "not_read": [
+      "counterpart artifact",
+      "other arm review or partial review",
+      "other grader",
+      "parent/root/historical analysis",
+      "candidate costs or duration/counter inputs",
+      "native Goal/terminal/lifecycle receipts",
+      "accounts/provider settings"
+    ],
+    "method_eligibility": "Excluded separate coordinator axis; no route, lifecycle or quiet-terminal eligibility conclusion drawn.",
+    "nested_delegation": false,
+    "reviewer_native_goal_created": false,
+    "identity": "Runtime supplied by harness: gpt-6.1-sol xhigh; requested codex_gmail and priority binding are not independently inspectable without excluded coordinator records."
+  },
+  "grade_scope": {
+    "original_integrated_scope_assessed": true,
+    "all_source_claims_verified": false,
+    "full_positive_permitted": false,
+    "numeric_or_composite_grade": null,
+    "why_no_composite_grade": "Categorical diagnostic axes only; no full positive or invented full numerical grade from the limited original-wiki verification.",
+    "early_screen_closure": false,
+    "scope_excludes": [
+      "pair comparison/winner",
+      "cost/latency/counters",
+      "candidate lifecycle/method eligibility",
+      "executed implementation readiness",
+      "scientific rescue or follow-up candidate"
+    ]
+  },
+  "proposed_vs_executed": {
+    "candidate_executed_self_report": "S1-S7 fetches, S8 fetch and bounded S2/S5 rereads only",
+    "candidate_proposed": [
+      "architecture",
+      "runtime mapping",
+      "V1 power-cut",
+      "V2 hostile bundles",
+      "V3 sanitizer regressions",
+      "V4 language search",
+      "V5 accessibility"
+    ],
+    "reviewer_executed": [
+      "authorized file reads and hashes",
+      "independent primary HTTPS retrievals",
+      "static pinned source/diff/fixture inspection",
+      "exact text/disposition audit",
+      "review-output JSON and consistency validation"
+    ],
+    "reviewer_not_executed": [
+      "downloaded source code",
+      "installer",
+      "component tests",
+      "power-cut tests",
+      "product implementation"
+    ]
+  }
+}

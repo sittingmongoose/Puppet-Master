@@ -1,0 +1,86 @@
+37: 4.4 URL parsing
+38: 4.5 URL serializing
+39: 4.6 URL equivalence
+40: 4.7 Origin
+41: 4.8 URL rendering
+42: 4.8.1 Simplify non-human-readable or irrelevant components
+43: 4.8.2 Elision
+44: 4.8.3 Internationalization and special characters
+45: 5 application/x-www-form-urlencoded
+46: 5.1 application/x-www-form-urlencoded parsing
+71: practice a single algorithm is used for both so keeping them distinct is
+72: not helping anyone. URL also easily wins the
+73: search result popularity contest.
+74: Supplanting Origin of a URI [sic].
+75: [RFC6454]
+76: Define URL’s existing JavaScript API in full detail and add
+77: enhancements to make it easier to work with. Add a new URL
+78: object as well for URL manipulation without usage of HTML elements. (Useful
+79: for JavaScript worker environments.)
+80: Ensure the combination of parser, serializer, and API guarantee idempotence. For example, a
+611: [2001:0db8:85a3:0000:0000:8a2e:0370:7334]
+612: null
+613: null
+614: Specifications should prefer the origin concept
+615: for security decisions. The notion of "public suffix" and
+616: "registrable domain" cannot be relied-upon to provide a hard security boundary, as
+617: the public suffix list will diverge from client to client. Specifications which ignore this advice
+618: are encouraged to carefully consider whether URLs' schemes ought to be incorporated into any
+619: decisions made, i.e. whether to use the same site or schemelessly same site
+620: concepts.
+1135: blob URL entry that is either null or a
+1136: blob URL entry. It is initially null.
+1137: This is used to support caching the object a "blob" URL refers to as well
+1138: as its origin. It is important that these are cached as the URL might be removed from
+1139: the blob URL store between parsing and fetching, while fetching will still need to succeed.
+1140: The following table lists how valid URL strings, when parsed, map
+1141: to a URL’s components. Username, password, and
+1142: blob URL entry are omitted; in the examples below they are the empty string, the
+1143: empty string, and null, respectively.
+1144: Input
+1907: Specifications should prefer the origin concept for security
+1908: decisions. Treating a URL path as covering the URL paths it contains is a
+1909: form of path-based authority that is discordant with the rest of the web platform. It is needed for
+1910: legacy features, such as cookies, and is best avoided elsewhere.
+1911: 4.7. Origin
+1912: See origin’s definition in HTML for the necessary background
+1913: information. [HTML]
+1914: The origin of a URL url
+1915: is the origin returned by running these steps, switching on url’s
+1916: scheme:
+1917: "blob"
+1918: If url’s blob URL entry is non-null, then return
+1919: url’s blob URL entry’s environment’s
+1920: origin.
+1921: Let pathURL be the result of parsing the result of
+1922: URL path serializing url.
+1923: If pathURL is failure, then return a new opaque origin.
+1924: If pathURL’s scheme is "http",
+1925: "https", or "file", then return pathURL’s
+1926: origin.
+1927: Return a new opaque origin.
+1928: The origin of
+1929: blob:https://whatwg.org/d0360e2f-caee-469f-9a2f-87d5b0456f6f is the
+1930: tuple origin ("https", "whatwg.org", null, null).
+1931: "ftp"
+1932: "http"
+1933: "https"
+1934: "ws"
+1935: "wss"
+1936: Return the tuple origin (url’s scheme,
+1937: url’s host, url’s port, null).
+1938: "file"
+1939: Unfortunate as it is, this is left as an exercise to the reader. When in doubt,
+1940: return a new opaque origin.
+1941: Otherwise
+1942: Return a new opaque origin.
+2808: same site
+2809: schemelessly same site
+2810: serialization of an origin
+2811: tuple origin
+2812: [INFRA] defines the following terms:
+2813: 128-bit unsigned integer
+2814: 16-bit unsigned integer
+2815: 32-bit unsigned integer
+2816: append
+2817: ASCII alpha

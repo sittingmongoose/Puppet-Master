@@ -1,0 +1,678 @@
+{
+  "schema": "ER10-final-finite-prospective-operational-admissions-v3",
+  "frozen_at": "2026-10-07T20:22:44.800286+00:00",
+  "original_proposal_sha256": "35c187bfe80fbe5955b5c014a2dd6cc3eb837dd145b2dd103bcf564dcdd78d35",
+  "proposal_helper_status": "interruptedafterbound; proposal saved validJSON/MD; actual helperoverrun/cancel cost retained, notsciencecomparison",
+  "fixed_existing_root_bindings": [
+    "state/D-M12-A-prospective-v3-root-binding.json",
+    "state/D-M02-B-prospective-v3-root-binding.json",
+    "state/I-METHOD-02-prospective-v2-root-binding.json"
+  ],
+  "cases": {
+    "D-M06-A": {
+      "owner": "targeted-cohort2",
+      "family": "GLM",
+      "new_version": 3,
+      "common_stages": [
+        {
+          "assignment": "fresh-untrusted-seed",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "control": [
+        {
+          "assignment": "ordinary-check-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            25,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "oracle-witness-reconcile-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            8,
+            12,
+            5,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 50,
+      "common_absolute_pair_wall_minutes": 50,
+      "arm_overlap": true,
+      "original_case_card_sha256": "2c8b81389650986a5b578de3d60db7f1df270447593e1417a66617f715067667",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M06-B": {
+      "owner": "targeted-cohort2",
+      "family": "GLM",
+      "new_version": 3,
+      "common_stages": [
+        {
+          "assignment": "fresh-untrusted-seed",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "control": [
+        {
+          "assignment": "ordinary-check-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            25,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "oracle-witness-reconcile-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            8,
+            12,
+            5,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 50,
+      "common_absolute_pair_wall_minutes": 50,
+      "arm_overlap": true,
+      "original_case_card_sha256": "21824ba1d3b0aa714ac5f285f397de742eb01f90fc964c94359efa5afc384bc3",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M07-A": {
+      "owner": "targeted-cohort3",
+      "family": "GLM",
+      "new_version": 3,
+      "common_stages": [
+        {
+          "assignment": "fresh-untrusted-seed",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "control": [
+        {
+          "assignment": "document-order-review-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            25,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "critical-first-protected-breadth-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            12,
+            13,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 50,
+      "common_absolute_pair_wall_minutes": 50,
+      "arm_overlap": true,
+      "original_case_card_sha256": "fb096d7c87a0cfda8fd4cfd37c5a3d01a76005d92bb160e22c6e935711a3f54c",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M07-B": {
+      "owner": "targeted-cohort3",
+      "family": "GLM",
+      "new_version": 3,
+      "common_stages": [
+        {
+          "assignment": "fresh-untrusted-seed",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "control": [
+        {
+          "assignment": "document-order-review-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            25,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "critical-first-protected-breadth-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            12,
+            13,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 50,
+      "common_absolute_pair_wall_minutes": 50,
+      "arm_overlap": true,
+      "original_case_card_sha256": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M09-A": {
+      "owner": "targeted-cohort3",
+      "family": "GLM",
+      "new_version": 3,
+      "common_stages": [
+        {
+          "assignment": "fresh-untrusted-proposal",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "control": [
+        {
+          "assignment": "single-full-critic-final",
+          "native_goals": 1,
+          "minutes": 60,
+          "logical_phases": [
+            45,
+            15
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "independent-evidence-critic",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": "complementary-critics"
+        },
+        {
+          "assignment": "independent-operations-critic",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": "complementary-critics"
+        },
+        {
+          "assignment": "fresh-source-reconcile-final",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 80,
+      "common_absolute_pair_wall_minutes": 120,
+      "arm_overlap": false,
+      "whole_wall_exception_reason": "Preserves original control-first order and two genuine parallel treatment critics under globalGLM2. Each fresh GLM assignment gets >=20min rather than a12min final beneath observed13.07min native seed latency. Cold aggregate allowances equal; one common120min maximum includes counterpart wait, never claimed as original15min. Ceilings do not require spending all allotted time.",
+      "original_case_card_sha256": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M15-A": {
+      "owner": "targeted-cohort4",
+      "family": "GLM",
+      "new_version": 3,
+      "common_stages": [],
+      "control": [
+        {
+          "assignment": "whole-question-research-final",
+          "native_goals": 1,
+          "minutes": 60,
+          "logical_phases": [
+            45,
+            15
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "fresh-transport-scout",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": "scouts"
+        },
+        {
+          "assignment": "fresh-object-scout",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": "scouts"
+        },
+        {
+          "assignment": "fresh-full-synthesis-final",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 60,
+      "common_absolute_pair_wall_minutes": 100,
+      "arm_overlap": false,
+      "whole_wall_exception_reason": "Original control-first plus two truly parallel scouts then independent synthesis under globalGLM2; all three treatment fresh nativeGoals20min, aggregateequal60. Pairwall100 includes counterpartwaiting, not a15min success.",
+      "original_case_card_sha256": "06968c3c7758e0ee54378b75bdb3234a2f08b89dde4a3d12d5fa4eeacef8014e",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M16-A": {
+      "owner": "targeted-cohort4",
+      "family": "GLM",
+      "new_version": 3,
+      "common_stages": [],
+      "control": [
+        {
+          "assignment": "topic1-independent",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "topic2-independent",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-bundle-join-final",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "fresh-shared-discovery",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-topic1-comparison",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-topic2-comparison",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-bundle-join-final",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 80,
+      "common_absolute_pair_wall_minutes": 80,
+      "arm_overlap": true,
+      "context_override": "Preserve fresh topic comparison contexts (inventory only, no sibling answer) and original sequential topic stages. Reject proposal singleauthor50 treatment because it additionally changes acquisition context across comparisons. Botharms aggregate80; upperbound\u226490cold.",
+      "original_case_card_sha256": "7d42f944dffc38459640bbca41bd515c78ad235618b83b7b4b89d2b1ffe1f3de",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M08-A": {
+      "owner": "targeted-cohort3",
+      "family": "Luna",
+      "new_version": 3,
+      "common_stages": [
+        {
+          "assignment": "fresh-common-draft",
+          "native_goals": 1,
+          "minutes": 8,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-independent-common-critique",
+          "native_goals": 1,
+          "minutes": 8,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "control": [
+        {
+          "assignment": "coherent-rewrite-check-final",
+          "native_goals": 1,
+          "minutes": 24,
+          "logical_phases": [
+            18,
+            6
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "local-amendment-dependency-check-render",
+          "native_goals": 1,
+          "minutes": 24,
+          "logical_phases": [
+            8,
+            10,
+            6
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 40,
+      "common_absolute_pair_wall_minutes": 40,
+      "arm_overlap": true,
+      "original_case_card_sha256": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M08-B": {
+      "owner": "targeted-cohort3",
+      "family": "Luna",
+      "new_version": 3,
+      "common_stages": [
+        {
+          "assignment": "fresh-common-draft",
+          "native_goals": 1,
+          "minutes": 8,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-independent-common-critique",
+          "native_goals": 1,
+          "minutes": 8,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "control": [
+        {
+          "assignment": "coherent-rewrite-check-final",
+          "native_goals": 1,
+          "minutes": 24,
+          "logical_phases": [
+            18,
+            6
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "local-amendment-dependency-check-render",
+          "native_goals": 1,
+          "minutes": 24,
+          "logical_phases": [
+            8,
+            10,
+            6
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 40,
+      "common_absolute_pair_wall_minutes": 40,
+      "arm_overlap": true,
+      "original_case_card_sha256": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M14-A": {
+      "owner": "targeted-cohort4",
+      "family": "Luna",
+      "new_version": 3,
+      "common_stages": [],
+      "control": [
+        {
+          "assignment": "same-author-narrative-full-final",
+          "native_goals": 1,
+          "minutes": 40,
+          "logical_phases": [
+            30,
+            10
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "same-author-semantic-render-preserve-full-final",
+          "native_goals": 1,
+          "minutes": 40,
+          "logical_phases": [
+            24,
+            2,
+            14
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 40,
+      "common_absolute_pair_wall_minutes": 40,
+      "arm_overlap": true,
+      "helper_accounting": "Cold full generic prep454.056+reportedqualification0.316=454.372s knownlowerbound added, unexposed qualificationwall/usage null, routine render separately measured. Fullcold eligibility unresolved until total known; no freecoldsetup or SourcePASS from render. Same author stays in ONE native Goal, actual mechanical rendering on sameowned semanticbytes, fullSource evaluator covers authority+ALLviews/preservation.",
+      "original_case_card_sha256": "67bc9697bc4abc6bc6b0169e5fee607444d326646eaccf308b7c9ce2587084e3",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M02-A": {
+      "owner": "targeted-cohort1",
+      "family": "Luna",
+      "new_version": 3,
+      "common_stages": [],
+      "control": [
+        {
+          "assignment": "fresh-question1",
+          "native_goals": 1,
+          "minutes": 10,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-question2",
+          "native_goals": 1,
+          "minutes": 10,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-full-join-final",
+          "native_goals": 1,
+          "minutes": 10,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "sameauthor-coherent-batch-full-final",
+          "native_goals": 1,
+          "minutes": 30,
+          "logical_phases": [
+            25,
+            5
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 30,
+      "common_absolute_pair_wall_minutes": 30,
+      "arm_overlap": true,
+      "original_case_card_sha256": "8c340630fb5a1c66a56625c825c98cf9071bd88b000afd9f437c76c8fe0ba393",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    },
+    "D-M10-A": {
+      "owner": "targeted-cohort3",
+      "family": "Luna",
+      "new_version": 3,
+      "common_stages": [
+        {
+          "assignment": "fresh-common-untrusted-proposal",
+          "native_goals": 1,
+          "minutes": 8,
+          "logical_phases": [],
+          "parallel_group": null
+        }
+      ],
+      "control": [
+        {
+          "assignment": "proposal-first-full-check-final",
+          "native_goals": 1,
+          "minutes": 32,
+          "logical_phases": [
+            24,
+            8
+          ],
+          "parallel_group": null
+        }
+      ],
+      "treatment": [
+        {
+          "assignment": "fresh-evidence-first-answer",
+          "native_goals": 1,
+          "minutes": 12,
+          "logical_phases": [],
+          "parallel_group": null
+        },
+        {
+          "assignment": "fresh-proposal-release-reconcile-final",
+          "native_goals": 1,
+          "minutes": 20,
+          "logical_phases": [
+            14,
+            6
+          ],
+          "parallel_group": null
+        }
+      ],
+      "cold_work_minutes_per_arm": 40,
+      "common_absolute_pair_wall_minutes": 40,
+      "arm_overlap": true,
+      "withholding": "Evidence-first worker receives only originalquestion+sources, NO proposal filepath/bytes/rootgrade. Host freezes exact evidence answer/source map/native terminal/taskquiet before releasing exact newcommonproposal to freshreconcile worker; candidate handles all science, no Solkey. Control gets sameproposal at entry.",
+      "original_case_card_sha256": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+      "original_material_obligations_unchanged": true,
+      "original_source_versions_scope_and_method_card_unchanged": true,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "root_start_authorized_only_under_owner_capacity": true
+    }
+  },
+  "new_version_attempt_limit": 1,
+  "no_automatic_further_retry": true,
+  "old_failed_attempts_preserved": true,
+  "candidate_inputs_exclude_old_failed_science_and_evaluator_facts": true,
+  "both_arm_all_stage_scope_binding_carrier_tool_policy_freeze_before_any_new_seed_or_arm": true,
+  "earliest_new_preparation_request_is_absolute_T0": true,
+  "all_queue_startup_tool_native_delivery_time_included_no_resets": true,
+  "overlap_and_service_contention_measured_separately_from_normal_single_arm_use": true,
+  "source_review_carrier": "ordinary fresh explicitSol6.1xhigh priority codex_gmail v2, no reviewerGoal engineering; both exactfull artifact/native complete/quiet gate; absent/paused incomplete no qualifiedmethodcredit",
+  "candidate_carrier": "native Goal plus prospectivepassivev2 modeauto exactparentID; GLM literalshortleading/goal GENERAL no2ndGoal orroutineworkersteer; actualstateproof nottaskID inference",
+  "execution_safety": "Existing qualifiedsandbox primitive only; M06 all algorithms/fixtures/oracles/witness/science authoredbyGLM, no expected outputs injectedbySol. No host/profile/account/security changes.",
+  "cleanup_publication": "Finalall-version science/failure evidence and corrected timing retained; cannot delete until GitHub/private retentionverified."
+}

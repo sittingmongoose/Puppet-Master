@@ -1,0 +1,36 @@
+{
+  "cache_mode": "warm",
+  "elapsed_seconds": 0.0015935139999783132,
+  "ended_at": "2026-10-07T19:42:29.472550+00:00",
+  "network_requests": 0,
+  "operation": "read",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 1407,
+      "sha256": "001efd21f9b8a875422b6eaa875b3bd540782b676444db0dba22036758d0f7dc"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "1407",
+      "Content-Type": "text/plain; charset=utf-8",
+      "ETag": "W/\"001efd21f9b8a875422b6eaa875b3bd5\"",
+      "Last-Modified": null
+    },
+    "original_url": "https://github.com/openseadragon/openseadragon/commit/201d478.patch",
+    "raw": {
+      "bytes": 1407,
+      "sha256": "001efd21f9b8a875422b6eaa875b3bd540782b676444db0dba22036758d0f7dc"
+    },
+    "retrieved_at": "2026-10-07T19:23:13.049587+00:00",
+    "retrieved_url": "https://github.com/openseadragon/openseadragon/commit/201d478.patch"
+  },
+  "record_id": "8af65c4fda5b92bd7395a66d32d4797fad5835032b0eac77a8e30ab956c8b5d8",
+  "source": "8af65c4fda5b92bd7395a66d32d4797fad5835032b0eac77a8e30ab956c8b5d8",
+  "started_at": "2026-10-07T19:42:29.470938+00:00",
+  "status": "ok"
+}

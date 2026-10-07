@@ -1,0 +1,34 @@
+{
+  "receipt": "timings",
+  "arm": "I-ANCHOR-GLM CONTROL research-v2",
+  "clock_source": "UTC clock checks and on-disk mtimes read this session; all times UTC",
+  "original_start": "2026-10-07T18:50:04.842698+00:00",
+  "original_start_source": "INPUTS.md line 6 / route-owned matching-control-v2.json frozen_before_dispatch_at",
+  "first_useful_saved_finding": "2026-10-07T18:59:33.794028+00:00",
+  "first_useful_saved_finding_source": "sources/ evidence files + SOURCES.md first written at this mtime; SOURCES.md 'First useful saved finding' records the S5 atomic-rename correction discovered at 18:57:41Z fetch and persisted at this write",
+  "draft_ready": "2026-10-07T19:03:24.473100+00:00",
+  "draft_ready_source": "draft.md file mtime; draft verified complete in ticket-3 verification round",
+  "native_terminal": null,
+  "native_terminal_note": "NOT yet observed. Driver state.json (sess_fc21453a-44ec-4f62-bc07-f3f23e974af6) read read-only at timings write: status 'running', rounds 3, state updatedAt 2026-10-07T19:04:44.818000+00:00. Per assignment, this fact is recorded and the final terminal capture is left to native_terminal_receipt.json (ticket 5 / coordinator after automatic terminal). No invented terminal time.",
+  "deadlines": {
+    "researcher_deadline": "2026-10-07T19:10:04.842698+00:00",
+    "wholearm_deadline": "2026-10-07T19:35:04.842698+00:00",
+    "stage_allocations_seconds": [
+      1200,
+      600,
+      900
+    ]
+  },
+  "usage": {
+    "input_tokens": "not_exposed",
+    "cached_input_tokens": "not_exposed",
+    "output_tokens": "not_exposed",
+    "reasoning_tokens": "not_exposed",
+    "note": "Token/cache/reasoning usage is not exposed to this harness session; recorded as not_exposed rather than zero.",
+    "billing": "unknown (stays unknown; no usage data exposed)"
+  },
+  "compliance": {
+    "written_by_researcher_deadline": true,
+    "clock_at_timings_write": "2026-10-07T19:05:36.650588+00:00"
+  }
+}

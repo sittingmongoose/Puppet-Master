@@ -1,0 +1,87 @@
+{
+  "id": "P08",
+  "requested_url": "https://ostreedev.github.io/ostree/",
+  "resolved_url": "https://ostreedev.github.io/ostree/",
+  "http_status": 200,
+  "retrieved_started_at_utc": "2026-10-07T19:40:49.807869+00:00",
+  "retrieved_completed_at_utc": "2026-10-07T19:40:49.878882+00:00",
+  "response_bytes": 23807,
+  "response_sha256": "fdf92d3e7f0560a0bd7690f0b415d0d57ce616059926ff8aa2b29611224cc19d",
+  "http_headers": {
+    "Content-Type": "text/html; charset=utf-8",
+    "ETag": "\"6abd18d7-5cff\"",
+    "Last-Modified": "Wed, 30 Sep 2026 14:12:39 GMT",
+    "Date": "Wed, 07 Oct 2026 19:40:49 GMT"
+  },
+  "version_or_ref": "current overview; bounded analogy",
+  "method": "GET; response never executed; bounded excerpts only",
+  "line_coordinates": "1-based normalized HTML visible-text lines; see collector identity",
+  "response_text_line_count": 184,
+  "matched_lines": {
+    "content.addressed": [
+      57
+    ],
+    "immutable": [
+      58
+    ],
+    "checksum": [
+      56
+    ],
+    "Transactional": [
+      63
+    ],
+    "parallel": [
+      65
+    ],
+    "bootloader": [
+      28,
+      55,
+      131
+    ]
+  },
+  "retained_line_numbers": [
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137
+  ],
+  "excerpt_selection_truncated": false,
+  "excerpt_file": "P08.txt",
+  "excerpt_sha256": "d291d86bedb139aa4f02838e09831b0bdb7302312feae0484f0e2acf77fb4d65"
+}

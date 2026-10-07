@@ -1,0 +1,328 @@
+L1: {
+L2:   "sha": "f421088da622c3a1e0fc6a6ced737b10d4fa5502",
+L3:   "url": "https://api.github.com/repos/openzim/libzim/git/trees/f421088da622c3a1e0fc6a6ced737b10d4fa5502",
+L4:   "tree": [
+L5:     {
+L6:       "path": ".codecov.yml",
+L7:       "mode": "100644",
+L8:       "type": "blob",
+L9:       "sha": "21288b774b0e47f83cfeddccea55b7f5d157b7f3",
+L10:       "size": 221,
+L11:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/21288b774b0e47f83cfeddccea55b7f5d157b7f3"
+L12:     },
+L13:     {
+L14:       "path": ".github",
+L15:       "mode": "040000",
+L16:       "type": "tree",
+L17:       "sha": "7fd06defc208b13d29d6169b82769ab3d72a34b0",
+L18:       "url": "https://api.github.com/repos/openzim/libzim/git/trees/7fd06defc208b13d29d6169b82769ab3d72a34b0"
+L19:     },
+L20:     {
+L21:       "path": ".github/FUNDING.yml",
+L22:       "mode": "100644",
+L23:       "type": "blob",
+L24:       "sha": "f39dc2a96b19fa3ec937e51b5b3826f5f82d7b8c",
+L25:       "size": 677,
+L26:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/f39dc2a96b19fa3ec937e51b5b3826f5f82d7b8c"
+L27:     },
+L28:     {
+L29:       "path": ".github/script",
+L30:       "mode": "040000",
+L31:       "type": "tree",
+L32:       "sha": "c2b4c74e977e940a8092ed5731e2be1c17bdce13",
+L33:       "url": "https://api.github.com/repos/openzim/libzim/git/trees/c2b4c74e977e940a8092ed5731e2be1c17bdce13"
+L34:     },
+L35:     {
+L36:       "path": ".github/script/build_libzim.cmd",
+L37:       "mode": "100644",
+L38:       "type": "blob",
+L39:       "sha": "641e3397a4685916f4bf6f4f7a7ef076421962dd",
+L40:       "size": 359,
+L41:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/641e3397a4685916f4bf6f4f7a7ef076421962dd"
+L42:     },
+L43:     {
+L44:       "path": ".github/workflows",
+L45:       "mode": "040000",
+L46:       "type": "tree",
+L47:       "sha": "8c36c8f6a3f2cf2471fcdb5295c956759c5fadd1",
+L48:       "url": "https://api.github.com/repos/openzim/libzim/git/trees/8c36c8f6a3f2cf2471fcdb5295c956759c5fadd1"
+L49:     },
+L50:     {
+L51:       "path": ".github/workflows/ci.yml",
+L52:       "mode": "100644",
+L53:       "type": "blob",
+L54:       "sha": "939483030abcd32c9bec2f0d374c8c1a141f55e8",
+L55:       "size": 11489,
+L56:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/939483030abcd32c9bec2f0d374c8c1a141f55e8"
+L57:     },
+L58:     {
+L59:       "path": ".github/workflows/package.yml",
+L60:       "mode": "100644",
+L61:       "type": "blob",
+L62:       "sha": "436e51eca73dbfb774596ec0efd35b4d5c52320a",
+L63:       "size": 4224,
+L64:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/436e51eca73dbfb774596ec0efd35b4d5c52320a"
+L65:     },
+L66:     {
+L67:       "path": ".gitignore",
+L68:       "mode": "100644",
+L69:       "type": "blob",
+L70:       "sha": "d319a8f3df5461ec50cca3e464c64f5e05e786e9",
+L71:       "size": 340,
+L72:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/d319a8f3df5461ec50cca3e464c64f5e05e786e9"
+L73:     },
+L74:     {
+L75:       "path": ".readthedocs.yaml",
+L76:       "mode": "100644",
+L77:       "type": "blob",
+L78:       "sha": "9aeac059689a998af74d3e2a80383d8b1dcb8f03",
+L79:       "size": 551,
+L80:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/9aeac059689a998af74d3e2a80383d8b1dcb8f03"
+L81:     },
+L82:     {
+L83:       "path": "AUTHORS",
+L84:       "mode": "100644",
+L85:       "type": "blob",
+L86:       "sha": "2b31fc18ab64c63d508633b5f6ca6519319ffe44",
+L87:       "size": 947,
+L88:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/2b31fc18ab64c63d508633b5f6ca6519319ffe44"
+L89:     },
+L90:     {
+L91:       "path": "COPYING",
+L92:       "mode": "100644",
+L93:       "type": "blob",
+L94:       "sha": "e2683b59c4c65640f751142007bc541ba187b1cd",
+L95:       "size": 15132,
+L96:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/e2683b59c4c65640f751142007bc541ba187b1cd"
+L97:     },
+L98:     {
+L99:       "path": "ChangeLog",
+L100:       "mode": "100644",
+L101:       "type": "blob",
+L102:       "sha": "d53246f355d676aa626dbc55babc47add0135b91",
+L103:       "size": 25239,
+L104:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/d53246f355d676aa626dbc55babc47add0135b91"
+L105:     },
+L106:     {
+L107:       "path": "README.md",
+L108:       "mode": "100644",
+L109:       "type": "blob",
+L110:       "sha": "f4c237c208c3c95d284634bba3a1ad3f6d6a1e85",
+L111:       "size": 8611,
+L112:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/f4c237c208c3c95d284634bba3a1ad3f6d6a1e85"
+L113:     },
+L114:     {
+L115:       "path": "debian",
+L116:       "mode": "040000",
+L117:       "type": "tree",
+L118:       "sha": "bec0c580bfde4b83754326dc9fe46bcd15bb6bf0",
+L119:       "url": "https://api.github.com/repos/openzim/libzim/git/trees/bec0c580bfde4b83754326dc9fe46bcd15bb6bf0"
+L120:     },
+L121:     {
+L122:       "path": "debian/changelog",
+L123:       "mode": "100644",
+L124:       "type": "blob",
+L125:       "sha": "fc2761e0124202ae7440726c61e97af3b42147d6",
+L126:       "size": 284,
+L127:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/fc2761e0124202ae7440726c61e97af3b42147d6"
+L128:     },
+L129:     {
+L130:       "path": "debian/control",
+L131:       "mode": "100644",
+L132:       "type": "blob",
+L133:       "sha": "d4da226633f319868ad1cce5fa3e4cf31c2500cf",
+L134:       "size": 2064,
+L135:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/d4da226633f319868ad1cce5fa3e4cf31c2500cf"
+L136:     },
+L137:     {
+L138:       "path": "debian/copyright",
+L139:       "mode": "100644",
+L140:       "type": "blob",
+L141:       "sha": "ff463664248415c641b92427d6610ce7069e8429",
+L142:       "size": 36,
+L143:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/ff463664248415c641b92427d6610ce7069e8429"
+L144:     },
+L145:     {
+L146:       "path": "debian/libzim-dev.install",
+L147:       "mode": "100644",
+L148:       "type": "blob",
+L149:       "sha": "1c1f0c56b263e8120793bbb37bd2cc0cb6c62f4c",
+L150:       "size": 55,
+L151:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/1c1f0c56b263e8120793bbb37bd2cc0cb6c62f4c"
+L152:     },
+L153:     {
+L154:       "path": "debian/libzim9.install",
+L155:       "mode": "100644",
+L156:       "type": "blob",
+L157:       "sha": "146d0ad9ca917f5a45ffadd26f16e1dfdf473e59",
+L158:       "size": 16,
+L159:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/146d0ad9ca917f5a45ffadd26f16e1dfdf473e59"
+L160:     },
+L290:       "url": "https://api.github.com/repos/openzim/libzim/git/trees/8cd3a93183be0ea934b94e1d334bc31d9e12a087"
+L291:     },
+L292:     {
+L293:       "path": "include/zim/archive.h",
+L294:       "mode": "100644",
+L295:       "type": "blob",
+L296:       "sha": "a5985d1d92fb9610ecbf75507ac69aff853497f5",
+L297:       "size": 28880,
+L298:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/a5985d1d92fb9610ecbf75507ac69aff853497f5"
+L299:     },
+L300:     {
+L301:       "path": "include/zim/blob.h",
+L302:       "mode": "100644",
+L303:       "type": "blob",
+L304:       "sha": "23f2fdcad9ee1d5659f9d5c154f91dde804d1cf8",
+L495:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/e6ee14457d661e2e1db02782f99aad10fc1d542f"
+L496:     },
+L497:     {
+L498:       "path": "src/archive.cpp",
+L499:       "mode": "100644",
+L500:       "type": "blob",
+L501:       "sha": "e370a9bf2387f6b784388bf922117714709e14ad",
+L502:       "size": 18392,
+L503:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/e370a9bf2387f6b784388bf922117714709e14ad"
+L504:     },
+L505:     {
+L506:       "path": "src/blob.cpp",
+L507:       "mode": "100644",
+L508:       "type": "blob",
+L509:       "sha": "39716c45b01d008698e138198b56e325bee19263",
+L551:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/18f198221571164d51b93e0804243ff9a4cee106"
+L552:     },
+L553:     {
+L554:       "path": "src/cluster.cpp",
+L555:       "mode": "100644",
+L556:       "type": "blob",
+L557:       "sha": "214af0e38fa3e80773f64563cf239d5e96564f2b",
+L558:       "size": 5773,
+L559:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/214af0e38fa3e80773f64563cf239d5e96564f2b"
+L560:     },
+L561:     {
+L562:       "path": "src/cluster.h",
+L563:       "mode": "100644",
+L564:       "type": "blob",
+L565:       "sha": "db1be37c16784af2409ef92d3a8b02b92aafc1cb",
+L566:       "size": 3297,
+L567:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/db1be37c16784af2409ef92d3a8b02b92aafc1cb"
+L568:     },
+L569:     {
+L570:       "path": "src/compression.cpp",
+L571:       "mode": "100644",
+L572:       "type": "blob",
+L573:       "sha": "f5d3352c87205566928301cf1b35f3e8b1c79972",
+L679:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/966e29ea347f10d4592bb6a9c22f0d131fc79bdc"
+L680:     },
+L681:     {
+L682:       "path": "src/file_compound.cpp",
+L683:       "mode": "100644",
+L684:       "type": "blob",
+L685:       "sha": "a08283ed97bbb0241c63daa5199f3ad7707f53ba",
+L686:       "size": 3820,
+L687:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/a08283ed97bbb0241c63daa5199f3ad7707f53ba"
+L688:     },
+L689:     {
+L690:       "path": "src/file_compound.h",
+L691:       "mode": "100644",
+L692:       "type": "blob",
+L693:       "sha": "ab9a21b0b8e721f2531104ce280bf614045c13ad",
+L694:       "size": 3620,
+L695:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/ab9a21b0b8e721f2531104ce280bf614045c13ad"
+L696:     },
+L697:     {
+L698:       "path": "src/file_part.h",
+L699:       "mode": "100644",
+L700:       "type": "blob",
+L701:       "sha": "c2733423fa1f2b839421b6cfcef1c7fc48d82d4c",
+L719:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/817e24c313f4f05e14024309cecd4be4803a4f42"
+L720:     },
+L721:     {
+L722:       "path": "src/fileheader.cpp",
+L723:       "mode": "100644",
+L724:       "type": "blob",
+L725:       "sha": "c95eda7a63a6796e5a6650df9e20f47bee0d1ec7",
+L726:       "size": 5492,
+L727:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/c95eda7a63a6796e5a6650df9e20f47bee0d1ec7"
+L728:     },
+L729:     {
+L730:       "path": "src/fileheader.h",
+L731:       "mode": "100644",
+L732:       "type": "blob",
+L733:       "sha": "14a19ea3a7ff5c0b76631afa647edc7bbb43e35c",
+L734:       "size": 4311,
+L735:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/14a19ea3a7ff5c0b76631afa647edc7bbb43e35c"
+L736:     },
+L737:     {
+L738:       "path": "src/fileimpl.cpp",
+L739:       "mode": "100644",
+L740:       "type": "blob",
+L741:       "sha": "50a638c7d3adfb02468546ea8d2e6c57ecbcf468",
+L974:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/47baec9e32738287d820243134464a7eb8bc6ead"
+L975:     },
+L976:     {
+L977:       "path": "src/writer/cluster.cpp",
+L978:       "mode": "100644",
+L979:       "type": "blob",
+L980:       "sha": "1ef6de228083eb5801a92a8456d9e574e6f4052a",
+L981:       "size": 6315,
+L982:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/1ef6de228083eb5801a92a8456d9e574e6f4052a"
+L983:     },
+L984:     {
+L985:       "path": "src/writer/cluster.h",
+L986:       "mode": "100644",
+L987:       "type": "blob",
+L988:       "sha": "c4f9634cd73e6f4f6d068e2229d44e7a90cc1953",
+L989:       "size": 3262,
+L990:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/c4f9634cd73e6f4f6d068e2229d44e7a90cc1953"
+L991:     },
+L992:     {
+L993:       "path": "src/writer/clusterWorker.cpp",
+L994:       "mode": "100644",
+L995:       "type": "blob",
+L996:       "sha": "c10e5b044ef4f509df0e251c0312068bbc363dbb",
+L997:       "size": 1002,
+L998:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/c10e5b044ef4f509df0e251c0312068bbc363dbb"
+L999:     },
+L1000:     {
+L1001:       "path": "src/writer/clusterWorker.h",
+L1002:       "mode": "100644",
+L1003:       "type": "blob",
+L1004:       "sha": "37b0458cf87b3a8f4893ddd76cb0d856637d30d1",
+L1005:       "size": 1350,
+L1006:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/37b0458cf87b3a8f4893ddd76cb0d856637d30d1"
+L1007:     },
+L1008:     {
+L1009:       "path": "src/writer/contentProvider.cpp",
+L1010:       "mode": "100644",
+L1011:       "type": "blob",
+L1012:       "sha": "48f0c2d9a54a588655768ba41c2308067827fb2b",
+L1769:       "url": "https://api.github.com/repos/openzim/libzim/git/trees/a20757df43b24fafe898ed7ef4bb52a412968984"
+L1770:     },
+L1771:     {
+L1772:       "path": "test/archive.cpp",
+L1773:       "mode": "100644",
+L1774:       "type": "blob",
+L1775:       "sha": "4d7c63ff1e2c59751506060e8d53660cc96da17b",
+L1776:       "size": 33701,
+L1777:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/4d7c63ff1e2c59751506060e8d53660cc96da17b"
+L1778:     },
+L1779:     {
+L1780:       "path": "test/bufferstreamer.cpp",
+L1781:       "mode": "100644",
+L1782:       "type": "blob",
+L1783:       "sha": "4c7a9f8a17aaac217f86e5c49844d63fba7b5b00",
+L1785:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/4c7a9f8a17aaac217f86e5c49844d63fba7b5b00"
+L1786:     },
+L1787:     {
+L1788:       "path": "test/cluster.cpp",
+L1789:       "mode": "100644",
+L1790:       "type": "blob",
+L1791:       "sha": "f97b83aa016ca70c6b7450e766a46da8336f901b",
+L1792:       "size": 11201,
+L1793:       "url": "https://api.github.com/repos/openzim/libzim/git/blobs/f97b83aa016ca70c6b7450e766a46da8336f901b"
+L1794:     },
+L1795:     {
+L1796:       "path": "test/compression.cpp",
+L1797:       "mode": "100644",
+L1798:       "type": "blob",
+L1799:       "sha": "ff8183e198aa6e21101c3553fa288610857c985d",

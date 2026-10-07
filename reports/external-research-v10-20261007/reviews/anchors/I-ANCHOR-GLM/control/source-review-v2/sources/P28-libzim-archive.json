@@ -1,0 +1,62 @@
+{
+  "id": "P28-libzim-archive",
+  "requested_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/src/archive.cpp",
+  "retrieved_started_utc": "2026-10-07T19:46:01.331225+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/src/archive.cpp",
+  "http_status": 200,
+  "response_bytes": 18392,
+  "response_sha256": "bd75fde9bf550796098f7bc9d0400012ac236e8a3ae33bc07a94b0eac7955175",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"0aea407aa143ae96eb4b92a9aa360e282916688ff5baa1beefd1c0533c3f616e\"",
+    "Date": "Wed, 07 Oct 2026 19:46:01 GMT"
+  },
+  "response_text_lines": 609,
+  "normalization": "text",
+  "selection_patterns": [
+    "namespace",
+    "url",
+    "checksum",
+    "checkIntegrity",
+    "decode",
+    "isNewNamespaceScheme"
+  ],
+  "context_before": 2,
+  "context_after": 20,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      32,
+      53
+    ],
+    [
+      87,
+      127
+    ],
+    [
+      133,
+      155
+    ],
+    [
+      226,
+      280
+    ],
+    [
+      388,
+      411
+    ],
+    [
+      480,
+      508
+    ],
+    [
+      582,
+      609
+    ]
+  ],
+  "bounded_evidence_file": "P28-libzim-archive.txt",
+  "bounded_evidence_sha256": "70e91ded9de645a440359d25e0ac9843be9487bdb25d5d6cd31644f0c7cfbbfa",
+  "bounded_evidence_bytes": 7768,
+  "retrieved_finished_utc": "2026-10-07T19:46:01.514196+00:00"
+}

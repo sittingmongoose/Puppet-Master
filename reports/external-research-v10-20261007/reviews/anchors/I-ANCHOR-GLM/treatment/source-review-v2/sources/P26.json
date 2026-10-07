@@ -1,0 +1,95 @@
+{
+  "id": "P26",
+  "requested_url": "https://docs.python.org/3.14/library/zipfile.html",
+  "resolved_url": "https://docs.python.org/3.14/library/zipfile.html",
+  "http_status": 200,
+  "retrieved_started_at_utc": "2026-10-07T19:48:43.970371+00:00",
+  "retrieved_completed_at_utc": "2026-10-07T19:48:44.079003+00:00",
+  "response_bytes": 139782,
+  "response_sha256": "f97967454b81483a7f0765821bf72c8b046e794c14f5d4c5b04365c2936612f5",
+  "http_headers": {
+    "Content-Type": "text/html",
+    "ETag": "\"6ac60ec7-22206\"",
+    "Last-Modified": "Wed, 07 Oct 2026 09:20:07 GMT",
+    "Date": "Wed, 07 Oct 2026 19:48:44 GMT"
+  },
+  "version_or_ref": "CPython 3.14 zipfile docs",
+  "method": "GET; response never executed; bounded excerpts only",
+  "line_coordinates": "1-based normalized HTML visible-text lines; see collector identity",
+  "response_text_line_count": 710,
+  "matched_lines": {
+    "Decompression pitfalls": [
+      14,
+      642,
+      671
+    ],
+    "Resources limitations": [
+      17,
+      651,
+      674
+    ],
+    "zip bomb": [
+      653
+    ],
+    "disk volume": [
+      652,
+      654
+    ],
+    "extraction.*fail": [
+      643
+    ]
+  },
+  "retained_line_numbers": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    639,
+    640,
+    641,
+    642,
+    643,
+    644,
+    645,
+    646,
+    647,
+    648,
+    649,
+    650,
+    651,
+    652,
+    653,
+    654,
+    655,
+    656,
+    657,
+    658,
+    659,
+    660,
+    668,
+    669,
+    670,
+    671,
+    672,
+    673,
+    674,
+    675,
+    676,
+    677,
+    678,
+    679,
+    680
+  ],
+  "excerpt_selection_truncated": false,
+  "excerpt_file": "P26.txt",
+  "excerpt_sha256": "9cd2d7ca89f85d6d9bda67295369249af25e8df96f003dc689edd49405689769"
+}

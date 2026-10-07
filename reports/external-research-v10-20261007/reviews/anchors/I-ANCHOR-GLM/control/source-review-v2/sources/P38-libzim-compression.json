@@ -1,0 +1,36 @@
+{
+  "id": "P38-libzim-compression",
+  "requested_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/src/cluster.cpp",
+  "retrieved_started_utc": "2026-10-07T19:47:46.423855+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/src/cluster.cpp",
+  "http_status": 200,
+  "response_bytes": 5773,
+  "response_sha256": "62a5f36447e34ad7cb22ac2eae649b90e30c5e880384acd89c889c539f72652d",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"bdca645d94c8dfb38300a62a8cbdceef9d7427bc01d223e969dbd65fb0724a89\"",
+    "Date": "Wed, 07 Oct 2026 19:47:46 GMT"
+  },
+  "response_text_lines": 182,
+  "normalization": "text",
+  "selection_patterns": [
+    "Compression::",
+    "Zstd",
+    "Lzma",
+    "1[0-9]*00000"
+  ],
+  "context_before": 2,
+  "context_after": 75,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      51,
+      144
+    ]
+  ],
+  "bounded_evidence_file": "P38-libzim-compression.txt",
+  "bounded_evidence_sha256": "5f09d55686b42b4010ed2f7d18b0a718a8767245e0df3d5f3f6bd21fbe998a8e",
+  "bounded_evidence_bytes": 3895,
+  "retrieved_finished_utc": "2026-10-07T19:47:46.568225+00:00"
+}

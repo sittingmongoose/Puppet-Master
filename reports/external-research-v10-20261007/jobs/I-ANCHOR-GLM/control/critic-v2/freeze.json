@@ -1,0 +1,85 @@
+{
+  "frozen_at": "2026-10-07T19:20:18.428900+00:00",
+  "required": [
+    "critique.md",
+    "native_goal_receipt.json",
+    "integration-state-expiry-terminal-001.json",
+    "expiry-disposition-001.json",
+    "task-terminal-tool-receipt.json"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "5f5c1a07f7c428fc4ce07f20f0e6fa7c98235ebb6cc0465645a27ae2251e5f92",
+      "bytes": 1042
+    },
+    "assignment.md": {
+      "sha256": "803a781580c027fbd01750710c1d4b4064727a961bb3de6126eae8112e0ac5ca",
+      "bytes": 3234
+    },
+    "config.json": {
+      "sha256": "a4a480df99fe9f61e661198c6e9db50476d9d4f2dbad37994d087d9468be7fff",
+      "bytes": 149
+    },
+    "critique.md": {
+      "sha256": "bbb83e4d6b99b5d1d91b15ece3e27b74886991bd71b8603dcdd6c1ebaa723758",
+      "bytes": 12705
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "ab918eb50f5f14c6e1e2a488fc54d8763ca4f0cc04647f4c32679dd246ee1f27",
+      "bytes": 2166
+    },
+    "expiry-disposition-001.json": {
+      "sha256": "92fc0973e9075a2b30cb7e89e65caccce7ae4d4a6551a05832da7b3eb28587c8",
+      "bytes": 600
+    },
+    "expiry-file-observation-pre-stop-001.json": {
+      "sha256": "39e6e77bae26ae343aa11cfe20095879faab3b14686e3c81268a1f5a137da050",
+      "bytes": 2564
+    },
+    "expiry-stop-tool-receipt.json": {
+      "sha256": "7ebf321685d042e5eb60249c268db509a4ab317df009a5c41811aeb0919126a8",
+      "bytes": 476
+    },
+    "integration-state-active-001.json": {
+      "sha256": "bb2d8e76f75796050478ed8cc2ce1a3620da9c3754f2e989b655069d01e14ea9",
+      "bytes": 6392
+    },
+    "integration-state-expiry-decision-001.json": {
+      "sha256": "96dd250d7a4d20956d8e258d6c2187570841732e633cf99765cd83643867d60b",
+      "bytes": 6392
+    },
+    "integration-state-expiry-pre-stop-001.json": {
+      "sha256": "1c68f7a26c0f60a8583f48abeb210f72e435cd84df9dd73aeab862c035f9c1ae",
+      "bytes": 6392
+    },
+    "integration-state-expiry-terminal-001.json": {
+      "sha256": "50b04260a436ff23f830dd403de6d48dd4ba371541a0d86519585251925ae592",
+      "bytes": 6431
+    },
+    "native_goal_receipt.json": {
+      "sha256": "1f433ae1977acb0783cc6b8fa2af0b32686825828aadd5c9e0e7edada3361c66",
+      "bytes": 6663
+    },
+    "prepared.json": {
+      "sha256": "ee98ff00d9ba8a19e743eff99da35941ded19a36bbae985cea19d068f2fbd75c",
+      "bytes": 1088
+    },
+    "t3-configuration-observation-001.json": {
+      "sha256": "29df911b53d16774f5ba91716bb89a619eee9573ead54d8bf018a66453d3ee14",
+      "bytes": 1028
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "3006e4d80106aa23e7f0755f88475956ce8f1bf9452ac782bafd8c266f77fabd",
+      "bytes": 4288
+    },
+    "task.txt": {
+      "sha256": "3c9beda32f6ef1598ed2da173eaa425b9032a918075d726861924d2608e1d420",
+      "bytes": 399
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "b2ab14b4258ea11890e01eae4434bfbd23980f3c666add3cf8c97eb4881d0922",
+      "bytes": 6922
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

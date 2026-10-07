@@ -1,0 +1,70 @@
+{
+  "case_id": "D-M02-A",
+  "arm": "treatment",
+  "role": "batch",
+  "logical_phase": "same_author_finalize3",
+  "preparation_at_utc": "2026-10-07T19:53:28.434013+00:00",
+  "finalization_deadline_at_utc": "2026-10-07T20:08:28.434013+00:00",
+  "goal": {
+    "native_thread_id": "01a117ed-9749-76b0-942a-2cc07e1e734b",
+    "same_goal_as_batch": true,
+    "status_observed_before_terminal": "active",
+    "native_tokens_used_preterminal": 109652,
+    "native_time_used_seconds_preterminal": 426,
+    "native_updated_at_epoch_preterminal": 1791403253,
+    "note": "Native cumulative Goal totals are not generated-token or billing usage."
+  },
+  "shared_condition_map_check": {
+    "result": "complete",
+    "checked_at_utc": "2026-10-07T20:00:53Z",
+    "map": [
+      "URI, method, Vary selectors, and authenticated principal gate reuse independently of freshness.",
+      "No-store blocks storage/use as applicable; no-cache requires validation for response reuse; private controls shared storage scope.",
+      "Freshness, stale permission, and shared Authorization directives must all permit reuse together.",
+      "304 freshening is validator- and eligible-variant-specific; updated Cache-Control and Vary do not bypass the full reuse gate.",
+      "Conflicting freshness directives resolve to the most restrictive rule; ambiguous post-304 variant scope fails closed."
+    ]
+  },
+  "operations": [
+    {
+      "started_at_utc": "2026-10-07T20:00:18Z",
+      "finished_at_utc": "2026-10-07T20:00:19Z",
+      "operation": "Amend shared scope for conflicting freshness directives and associated fixture."
+    },
+    {
+      "started_at_utc": "2026-10-07T20:00:53Z",
+      "finished_at_utc": "2026-10-07T20:00:53Z",
+      "operation": "Same-author cross-condition pass; write final shared scope."
+    },
+    {
+      "started_at_utc": "2026-10-07T20:01:10Z",
+      "finished_at_utc": "2026-10-07T20:01:10Z",
+      "operation": "Copy identical complete scope to finalize-v2 final.md, finalize-v2 report.md, and declared treatment output final.md."
+    },
+    {
+      "started_at_utc": "2026-10-07T20:01:26Z",
+      "finished_at_utc": "2026-10-07T20:01:26Z",
+      "operation": "Read all four markdown artifacts; verify UTF-8 readability, 1050 words, required scope headings, and byte identity."
+    }
+  ],
+  "final_artifact": {
+    "bytes": 8129,
+    "words": 1050,
+    "sha256": "4525479502b381cd8b93b1bf56a3e44158bfc4bb822730d43b7ede6714902b1c",
+    "all_four_markdown_artifacts_byte_identical": true
+  },
+  "output_paths": {
+    "batch_report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/batch-v2/report.md",
+    "finalizer_final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/finalize-v2/final.md",
+    "finalizer_report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/finalize-v2/report.md",
+    "declared_treatment_final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/outputs/treatment/final.md"
+  },
+  "usage": {
+    "generated_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "billing_amount": null,
+    "billing_units": null,
+    "native_goal_cumulative_tokens_preterminal": 109652
+  }
+}

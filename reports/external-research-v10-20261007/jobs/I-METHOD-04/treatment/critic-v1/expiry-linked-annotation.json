@@ -1,0 +1,17 @@
+{
+  "event": "linked_expiry_timing_annotation",
+  "record_at": "2026-10-07T20:12:01.104866+00:00",
+  "original_deadline": "2026-10-07T20:09:39.347134Z",
+  "first_actual_notice_at": "2026-10-07T20:09:55.233Z",
+  "actual_cancel_record_at": "2026-10-07T20:11:01.803Z",
+  "actual_notice_to_cancel_seconds": 66.57,
+  "max_grace_seconds": 60,
+  "host_cancellation_late_seconds": 6.569999999999993,
+  "clock_guard": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v1/clock-guard-cancel-v1.json",
+  "actual_native_state": "paused",
+  "raw_create_get_update": "missing_actual_response",
+  "source_map_present": false,
+  "substantive_extension_authorized": false,
+  "final_admission_hold": "required exact critic source-map missing; no fullnativefallback; no hostfabricatedmap or scientificrescue",
+  "science_judgment": null
+}

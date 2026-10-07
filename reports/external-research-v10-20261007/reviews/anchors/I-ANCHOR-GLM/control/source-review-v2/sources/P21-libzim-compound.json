@@ -1,0 +1,41 @@
+{
+  "id": "P21-libzim-compound",
+  "requested_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/src/file_compound.cpp",
+  "retrieved_started_utc": "2026-10-07T19:44:25.693988+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/src/file_compound.cpp",
+  "http_status": 200,
+  "response_bytes": 3820,
+  "response_sha256": "6affe60b30006dffeb31989e33f15d36d46b1e27d4fd279759aa19dbd2d1210f",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"bf9bbc85a4c0f27a3eab380110e16d8fd6e77c8e27db519eaf65cd073ef62605\"",
+    "Date": "Wed, 07 Oct 2026 19:44:25 GMT"
+  },
+  "response_text_lines": 149,
+  "normalization": "text",
+  "selection_patterns": [
+    "part",
+    "read",
+    "size",
+    "offset",
+    "zimaa"
+  ],
+  "context_before": 2,
+  "context_after": 18,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      10,
+      29
+    ],
+    [
+      35,
+      129
+    ]
+  ],
+  "bounded_evidence_file": "P21-libzim-compound.txt",
+  "bounded_evidence_sha256": "47b6249ba97821cf90fafa4a5aece7d8f6af670614204a07ca5e7cd83b781979",
+  "bounded_evidence_bytes": 3541,
+  "retrieved_finished_utc": "2026-10-07T19:44:25.860934+00:00"
+}

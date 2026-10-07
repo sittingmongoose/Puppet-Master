@@ -1,0 +1,1694 @@
+# Mechanical finding views
+
+Renderer: m14-renderer-1.0.0
+
+Input SHA-256: dffda106c602e6357d153f4d8df573b23a990d32a5e0bb3e3b881dbd0b777288
+
+Candidate-authored content; no substantive adjudication by renderer.
+
+
+## Decision view
+
+
+### DISCOVERY_EXTERNAL
+
+[Complete record](#finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb)
+
+
+Summary
+
+```
+Move received removable-media content into controlled inventory and verify copies while treating source protection as a separately observable condition.
+```
+
+
+Disposition
+
+```
+Supported addition to P1; the frozen plan already includes copy/no-edit, and this finding specifies custody and copy-integrity behavior.
+```
+
+
+Governing conditions (complete)
+
+```json
+[
+  "One archivist; up to 100 files; removable drives; source interviews may be personal.",
+  "Software alone cannot prove a drive was hardware write-protected or guarantee no write occurred."
+]
+```
+
+
+### INSPECTION_BWF
+
+[Complete record](#finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0)
+
+
+Summary
+
+```
+BWF MetaEdit provides a focused BWF metadata and validation reference, with a current PCM sample-alignment warning implementation that is narrower than the ingest desk’s WAV/FLAC/MP3 scope.
+```
+
+
+Disposition
+
+```
+Use as an optional BWF specialist workflow or validation reference; do not make it the only generic parser or write metadata during ordinary display.
+```
+
+
+Governing conditions (complete)
+
+```json
+[
+  "Pinned version is v26.08, immutable commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec.",
+  "The inspected rule is specific to PCM WAVE, not FLAC/MP3 or every WAVE codec.",
+  "Current code reports a warning for alignment; it does not establish preservation quality or a universal validity policy."
+]
+```
+
+
+### REGRESSION_HISTORY
+
+[Complete record](#finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6)
+
+
+Summary
+
+```
+A real 24-bit mono regression was reported after BWF MetaEdit’s new PCM alignment check; the fix changed the arithmetic, received a manual CLI retest, and is present in the inspected current release code.
+```
+
+
+Disposition
+
+```
+Use the issue as concrete evidence for P6’s synthetic 24-bit mono regression case; describe manual evidence and release limits without claiming an automated test or shipped v21.07 tag.
+```
+
+
+Governing conditions (complete)
+
+```json
+[
+  "Issue statements are user reports, not an independent laboratory reproduction.",
+  "The fix’s code path applies to the noted PCM alignment condition; other malformed metadata still needs dedicated cases."
+]
+```
+
+
+### DERIVATIVE_TOOLING
+
+[Complete record](#finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184)
+
+
+Summary
+
+```
+FFmpeg/ffprobe documentation offers broad-format probing and explicit stream control, while its documented defaults make implicit selection and metadata copying unsuitable for an unreviewed archival derivative workflow.
+```
+
+
+Disposition
+
+```
+Shortlist FFmpeg/ffprobe conditionally for multi-format inspection and listening derivatives; pin and review an exact release before implementation.
+```
+
+
+Governing conditions (complete)
+
+```json
+[
+  "P3 preserves an explicit archivist request, preview, and failed/interrupted disposition.",
+  "Offline Windows/Linux operation and no upload remain product constraints.",
+  "No exact FFmpeg release, source code, issue history, or binary was inspected in this stage."
+]
+```
+
+
+### PACKAGE_BAGIT
+
+[Complete record](#finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86)
+
+
+Summary
+
+```
+BagIt 1.0 supplies a portable file inventory and checksum validation model that complements, but does not replace, the app’s original-to-derivative provenance record.
+```
+
+
+Disposition
+
+```
+Adopt BagIt 1.0 as a conditional interchange package if the receiving repository benefits; keep an app-authored event sidecar either way.
+```
+
+
+Governing conditions (complete)
+
+```json
+[
+  "Packages remain local/offline; do not use remote fetch payloads.",
+  "Reopen must expose missing, changed and unexpected content and connect problems to file/event records."
+]
+```
+
+
+### ANALOGUES_OPTIONS
+
+[Complete record](#finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da)
+
+
+Summary
+
+```
+Existing products offer distinct workflow layers: BWF MetaEdit for BWF metadata, Archivematica for broad preservation processing, BagIt for package integrity, and FFmpeg for codec/probe operations.
+```
+
+
+Disposition
+
+```
+Keep these as bounded component/architecture options; reject treating any one as the entire ingest desk.
+```
+
+
+Governing conditions (complete)
+
+```json
+[
+  "The user asks for a small offline desktop desk and no public publishing or speech transcription.",
+  "Do not change the product scope to fit a component."
+]
+```
+
+
+### PLAN_CROSSWALK
+
+[Complete record](#finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4)
+
+
+Summary
+
+```
+All frozen P1-P6 intent is retained, with implementation detail added where source evidence supports it and choices left open where the sources do not decide the product.
+```
+
+
+Disposition
+
+```
+P1/P2/P3/P4: retain and refine; P5: retain constraints and shortlist components conditionally; P6: retain and extend. Exact crosswalk and replacement text appear in proposed_change_document.
+```
+
+
+Governing conditions (complete)
+
+```json
+[
+  "Brief scope remains P1-P6, up to 100 files and one archivist.",
+  "Do not infer whole-project coverage beyond this exact supplied plan slice."
+]
+```
+
+
+### CRITIC_DELIVERABLE
+
+[Complete record](#finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0)
+
+
+Summary
+
+```
+O5 requires independent fresh same-family criticism and remains pending; the replacement plan is complete as a research proposal, with O6 validation and uncertainty stated.
+```
+
+
+Disposition
+
+```
+Do not simulate or invent criticism. Coordinator must obtain the separately assigned critic result and preserve each objection and disposition in the final plan.
+```
+
+
+Governing conditions (complete)
+
+```json
+[
+  "No critique was supplied in the admitted inputs; parent history and other arms are out of scope.",
+  "O5 is not satisfied until the independent critic stage completes."
+]
+```
+
+
+## Evidence view
+
+
+### DISCOVERY_EXTERNAL
+
+[Complete record](#finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb)
+
+```json
+[
+  "LOC guidance states that external-media content should be moved into approved inventory systems and placed under inventory control. It describes the risk of leaving it on removable carriers and references write-blockers or other safeguards for media that can be overwritten. Direct HTML returned 403; the official LOC JSON rendition was captured.",
+  "The plan already preserves original names/folders and forbids source editing (plan.md P1, lines 5-7); proposed source/copy digests make that intent observable."
+]
+```
+
+
+### INSPECTION_BWF
+
+[Complete record](#finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0)
+
+```json
+[
+  "The official product site describes metadata embedding, editing, exporting and rule enforcement for BWF files.",
+  "At v26.08, Riff_Handler::Open calls Open_Internal (Source/Riff/Riff_Handler.cpp 499-507). Data-size check lines 848-867 handles PCM and a recognized extensible-PCM subtype, computes sizeInBits=Size*8, tests modulo channelCount*bitsPerSample, and records a warning.",
+  "Riff_WAVE_fmt_::Read_Internal parses format type, channel count, sample rate and bits per sample (Source/Riff/Riff_Chunks_WAVE_fmt_.cpp 19-67); global::chunk_fmt_ defines those fields (Riff_Base.h 227-246), and the WAVE data parser fills the header-excluded Size (Riff_Chunks_WAVE_data.cpp 20-38; Riff_Base.h 528-545)."
+]
+```
+
+
+### REGRESSION_HISTORY
+
+[Complete record](#finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6)
+
+```json
+[
+  "PR #207 merged the sample-alignment check on 2021-04-13. Issue #214 reported valid 24-bit mono files, including FFmpeg-generated examples, falsely rejected in build 20.08.20210501 after #207.",
+  "PR #218 changed the check from a bytesPerSample value multiplied from bits to bit arithmetic: data bytes*8 modulo channels*bitsPerSample. The issue reporter commented that CLI testing on Ubuntu 20.04 solved the reported case. The PR changes one C++ file and shows no automated regression test.",
+  "The captured v26.08 History_GUI.txt records Version 21.07 (2021-07-09) and “Fixes to data size validation (Issue #214)” at line 88. The GitHub v21.07 release-tag URL returned 404, so this history file is not treated as proof of a particular published binary. The current verified v26.08 release and actual v26.08 source code establish current code applicability."
+]
+```
+
+
+### DERIVATIVE_TOOLING
+
+[Complete record](#finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184)
+
+```json
+[
+  "ffprobe documents stream/format/error output and JSON formatting. ffmpeg documents manual -map control and automatic selection when mapping is omitted; global metadata defaults to the first input and stream/chapter metadata follows mapped streams.",
+  "Those behaviors support a UI that records explicit stream selection and metadata-copy policy; documentation alone does not prove a particular build’s format coverage or preservation quality."
+]
+```
+
+
+### PACKAGE_BAGIT
+
+[Complete record](#finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86)
+
+```json
+[
+  "RFC 8493 defines data/ payload, manifests that list each payload path and checksum, completeness/validity, and required support for SHA-256/SHA-512; it recommends SHA-512 by default for new bags.",
+  "BagIt treats payload files as opaque octets, so it does not explain whether a file is original or derivative or what transformation produced it."
+]
+```
+
+
+### ANALOGUES_OPTIONS
+
+[Complete record](#finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da)
+
+```json
+[
+  "BWF MetaEdit’s product site identifies BWF metadata work.",
+  "Archivematica 1.16 documentation separates transfer, ingest, preservation planning, archival storage and access, and includes BagIt transfer support.",
+  "RFC 8493 covers packaging/fixity but not audio interpretation. FFmpeg documentation covers stream probing/mapping and conversion but not archival custody."
+]
+```
+
+
+### PLAN_CROSSWALK
+
+[Complete record](#finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4)
+
+```json
+[
+  "P1 plan.md lines 5-7 already covers supported formats, copying, fixity intent, original names/folders and no source edits; LOC guidance supports inventory/copy practice.",
+  "P2 lines 9-11 already covers duration/channels/encoding/metadata/notes/listening and separate corrections; BWF MetaEdit applies to only part of that format scope.",
+  "P3 lines 13-15 already requires explicit request, preview, preservation source and failed/interrupted disposition; FFmpeg docs show stream and metadata defaults must be made explicit.",
+  "P4 lines 17-19 already lists package objects, provenance, fixity, tool version and reopen checks; RFC 8493 supports package integrity but requires an app event record.",
+  "P5 lines 21-23 already binds components undecided, offline Windows/Linux, no upload and no display-time metadata edits; the product analogues justify conditional options.",
+  "P6 lines 25-27 already asks synthetic interruption, malformed metadata, unusual channels, conversion and package-fixity tests; issue #214 adds a real 24-bit mono edge."
+]
+```
+
+
+### CRITIC_DELIVERABLE
+
+[Complete record](#finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0)
+
+```json
+[
+  "The brief requires a flash-family candidate critic and says the coordinator selects family and handoff. The input map reports no predecessors. No critic output was admitted to this researcher.",
+  "The proposed_change_document includes a coherent revised P1-P6 plan, evidence IDs, alternatives, choices, already-covered matters, rejected scope leads, validation proposals, and uncertainty."
+]
+```
+
+
+## Conditions view
+
+
+### DISCOVERY_EXTERNAL
+
+[Complete record](#finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb)
+
+```json
+[
+  "One archivist; up to 100 files; removable drives; source interviews may be personal.",
+  "Software alone cannot prove a drive was hardware write-protected or guarantee no write occurred."
+]
+```
+
+
+### INSPECTION_BWF
+
+[Complete record](#finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0)
+
+```json
+[
+  "Pinned version is v26.08, immutable commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec.",
+  "The inspected rule is specific to PCM WAVE, not FLAC/MP3 or every WAVE codec.",
+  "Current code reports a warning for alignment; it does not establish preservation quality or a universal validity policy."
+]
+```
+
+
+### REGRESSION_HISTORY
+
+[Complete record](#finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6)
+
+```json
+[
+  "Issue statements are user reports, not an independent laboratory reproduction.",
+  "The fix’s code path applies to the noted PCM alignment condition; other malformed metadata still needs dedicated cases."
+]
+```
+
+
+### DERIVATIVE_TOOLING
+
+[Complete record](#finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184)
+
+```json
+[
+  "P3 preserves an explicit archivist request, preview, and failed/interrupted disposition.",
+  "Offline Windows/Linux operation and no upload remain product constraints.",
+  "No exact FFmpeg release, source code, issue history, or binary was inspected in this stage."
+]
+```
+
+
+### PACKAGE_BAGIT
+
+[Complete record](#finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86)
+
+```json
+[
+  "Packages remain local/offline; do not use remote fetch payloads.",
+  "Reopen must expose missing, changed and unexpected content and connect problems to file/event records."
+]
+```
+
+
+### ANALOGUES_OPTIONS
+
+[Complete record](#finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da)
+
+```json
+[
+  "The user asks for a small offline desktop desk and no public publishing or speech transcription.",
+  "Do not change the product scope to fit a component."
+]
+```
+
+
+### PLAN_CROSSWALK
+
+[Complete record](#finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4)
+
+```json
+[
+  "Brief scope remains P1-P6, up to 100 files and one archivist.",
+  "Do not infer whole-project coverage beyond this exact supplied plan slice."
+]
+```
+
+
+### CRITIC_DELIVERABLE
+
+[Complete record](#finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0)
+
+```json
+[
+  "No critique was supplied in the admitted inputs; parent history and other arms are out of scope.",
+  "O5 is not satisfied until the independent critic stage completes."
+]
+```
+
+
+## Options view
+
+
+### DISCOVERY_EXTERNAL
+
+[Complete record](#finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb)
+
+```json
+[
+  "Use hardware/OS read-only support when available and report observed state.",
+  "Where unavailable, preserve source and record the limitation; require verified staged copy before completion."
+]
+```
+
+
+### INSPECTION_BWF
+
+[Complete record](#finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0)
+
+```json
+[
+  "Display its BWF-specific technical/warning output through a read-only adapter if the project accepts its deployment and license conditions.",
+  "Keep a generic probe candidate for FLAC/MP3 and define an archivist warning workflow separately."
+]
+```
+
+
+### REGRESSION_HISTORY
+
+[Complete record](#finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6)
+
+```json
+[
+  "If adoption is considered, repeat a synthetic 24-bit mono test against the exact packaged component version and retain its result.",
+  "Keep current release source as implementation evidence, not as an assertion that all supported formats are validated."
+]
+```
+
+
+### DERIVATIVE_TOOLING
+
+[Complete record](#finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184)
+
+```json
+[
+  "Use FFmpeg CLI behind a constrained wrapper with explicit stream/settings and separate playback controls.",
+  "Compare a linked library or another codec tool only after OS packaging, license, update and synthetic failure checks."
+]
+```
+
+
+### PACKAGE_BAGIT
+
+[Complete record](#finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86)
+
+```json
+[
+  "BagIt 1.0 folder plus tagged app manifest/history.",
+  "App-native folder with equivalent explicit manifest and fixity semantics if downstream compatibility is not required."
+]
+```
+
+
+### ANALOGUES_OPTIONS
+
+[Complete record](#finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da)
+
+```json
+[
+  "FFmpeg/ffprobe candidate for broad audio streams and conversion; BWF MetaEdit optional BWF specialist; BagIt conditional interchange; Archivematica only downstream when already operated.",
+  "Native or linked playback/probe libraries remain alternatives pending version, update, license and platform review."
+]
+```
+
+
+### PLAN_CROSSWALK
+
+[Complete record](#finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4)
+
+```json
+[
+  "Keep the plan as the proposed revised sandbox plan in this artifact; product-owner choices are listed explicitly."
+]
+```
+
+
+### CRITIC_DELIVERABLE
+
+[Complete record](#finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0)
+
+```json
+[
+  "After critic delivery, append each substantive objection, disagreement, accepted correction or unresolved issue and rerender the full semantic set."
+]
+```
+
+
+## Optional leads view
+
+
+### DISCOVERY_EXTERNAL
+
+[Complete record](#finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb)
+
+```json
+[
+  "A later repository handoff may export the custody and fixity record as a BagIt-compatible package."
+]
+```
+
+
+### INSPECTION_BWF
+
+[Complete record](#finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0)
+
+```json
+[
+  "Add synthetic PCM 24-bit mono/stereo regression fixtures to the app’s acceptance suite."
+]
+```
+
+
+### REGRESSION_HISTORY
+
+[Complete record](#finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6)
+
+```json
+[
+  "Add regression cases for odd-size or malformed PCM payloads and channel layouts while preserving clear warning semantics."
+]
+```
+
+
+### DERIVATIVE_TOOLING
+
+[Complete record](#finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184)
+
+```json
+[
+  "Offer a user-visible metadata allowlist or deliberate strip policy for listening copies."
+]
+```
+
+
+### PACKAGE_BAGIT
+
+[Complete record](#finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86)
+
+```json
+[
+  "Export a repository-compatible BagIt package if the archive later names a receiving preservation system."
+]
+```
+
+
+### ANALOGUES_OPTIONS
+
+[Complete record](#finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da)
+
+```json
+[
+  "A later export adapter could feed an existing Archivematica installation without making it a local runtime requirement."
+]
+```
+
+
+### PLAN_CROSSWALK
+
+[Complete record](#finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4)
+
+```json
+[
+  "Check any broader project plan only if later supplied as an admitted input."
+]
+```
+
+
+### CRITIC_DELIVERABLE
+
+[Complete record](#finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0)
+
+```json
+[
+  "Fresh critic should inspect the exact immutable code/version and full user scope independently."
+]
+```
+
+
+## Validation view
+
+
+### DISCOVERY_EXTERNAL
+
+[Complete record](#finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb)
+
+```json
+[
+  "Proposed: synthetic interruption, write-protection-unavailable, changed-source, low-disk-space and copy-digest mismatch cases.",
+  "Executed: read LOC primary API page and captured its bytes; no copy workflow/application test run."
+]
+```
+
+
+### INSPECTION_BWF
+
+[Complete record](#finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0)
+
+```json
+[
+  "Proposed: compare known-valid PCM bit alignment and deliberately malformed payload alignment; confirm warning/no mutation, parser version recorded.",
+  "Executed: source-only code inspection at captured release; no binary run."
+]
+```
+
+
+### REGRESSION_HISTORY
+
+[Complete record](#finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6)
+
+```json
+[
+  "Proposed: test original failing 24-bit mono fixture class, valid 24-bit PCM, invalid alignment, and current supported component build on Windows and Linux.",
+  "Executed: public issue/PR/history inspection; no test fixture or component execution."
+]
+```
+
+
+### DERIVATIVE_TOOLING
+
+[Complete record](#finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184)
+
+```json
+[
+  "Proposed: multi-stream and unusual-channel fixtures, metadata privacy fixture, interrupted output, tool-version record, and Windows/Linux offline packaging.",
+  "Executed: read and captured current FFmpeg/ffprobe documentation; no command was run."
+]
+```
+
+
+### PACKAGE_BAGIT
+
+[Complete record](#finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86)
+
+```json
+[
+  "Proposed: test missing, changed, unexpected, duplicate-name payloads and tag sidecar changes; validate every hash on reopen.",
+  "Executed: RFC read/capture only; no bag was generated."
+]
+```
+
+
+### ANALOGUES_OPTIONS
+
+[Complete record](#finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da)
+
+```json
+[
+  "Proposed: evaluate each candidate with the same synthetic files, offline use, warning behavior, package round-trip, version reproducibility and two-OS packaging.",
+  "Executed: public docs and current source snapshots inspected only."
+]
+```
+
+
+### PLAN_CROSSWALK
+
+[Complete record](#finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4)
+
+```json
+[
+  "Proposed: use the crosswalk checklist and synthetic suite in the revised P6.",
+  "Executed: read the exact frozen plan and recorded each section reference."
+]
+```
+
+
+### CRITIC_DELIVERABLE
+
+[Complete record](#finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0)
+
+```json
+[
+  "Proposed: critic checks each P decision, source applicability, issue/fix/retest/release chain, and all O1-O6 obligations.",
+  "Executed: semantic-set and projection preservation checks will be performed; no application or audio fixture checks."
+]
+```
+
+
+## Uncertainty view
+
+
+### DISCOVERY_EXTERNAL
+
+[Complete record](#finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb)
+
+```json
+[
+  "LOC institutional practice is an analogy, not a universal mandate.",
+  "Filesystem and media-level write protection differs by hardware and OS."
+]
+```
+
+
+### INSPECTION_BWF
+
+[Complete record](#finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0)
+
+```json
+[
+  "No usability, packaging, licensing, or cross-platform integration test was run.",
+  "Source comments and implementation do not define this archive’s acceptance policy."
+]
+```
+
+
+### REGRESSION_HISTORY
+
+[Complete record](#finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6)
+
+```json
+[
+  "No automated regression test evidence is visible in PR #218.",
+  "The release list did not resolve v21.07, but v26.08 is an exact verified release containing corrected code."
+]
+```
+
+
+### DERIVATIVE_TOOLING
+
+[Complete record](#finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184)
+
+```json
+[
+  "Live docs were not pinned to a release; exact defaults can change.",
+  "Codec, rate, channel mapping, metadata policy, and listening quality require product decision and archivist audition."
+]
+```
+
+
+### PACKAGE_BAGIT
+
+[Complete record](#finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86)
+
+```json
+[
+  "No recipient profile, BagIt library, or institutional metadata schema is specified.",
+  "A checksum only detects difference from its recorded value; it does not prove source authenticity or event correctness."
+]
+```
+
+
+### ANALOGUES_OPTIONS
+
+[Complete record](#finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da)
+
+```json
+[
+  "No full comparison of binary size, licenses, current OS support, and update cadence was run."
+]
+```
+
+
+### PLAN_CROSSWALK
+
+[Complete record](#finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4)
+
+```json
+[
+  "No surrounding project documents were admitted or read; conclusions apply only to this bounded plan."
+]
+```
+
+
+### CRITIC_DELIVERABLE
+
+[Complete record](#finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0)
+
+```json
+[
+  "No candidate criticism can be described until the critic stage is performed."
+]
+```
+
+
+## Sources view
+
+
+### DISCOVERY_EXTERNAL
+
+[Complete record](#finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb)
+
+```json
+[
+  "S-LOC-EXT",
+  "S-BWF-USER"
+]
+```
+
+
+### INSPECTION_BWF
+
+[Complete record](#finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0)
+
+```json
+[
+  "S-BWF-USER",
+  "S-BWF-RELEASE",
+  "S-BWF-HANDLER",
+  "S-BWF-HANDLER-H",
+  "S-BWF-FMT",
+  "S-BWF-BASE",
+  "S-BWF-DATA"
+]
+```
+
+
+### REGRESSION_HISTORY
+
+[Complete record](#finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6)
+
+```json
+[
+  "S-BWF-207",
+  "S-BWF-214",
+  "S-BWF-218",
+  "S-BWF-FIX",
+  "S-BWF-HISTORY",
+  "S-BWF-RELEASE",
+  "S-BWF-HANDLER"
+]
+```
+
+
+### DERIVATIVE_TOOLING
+
+[Complete record](#finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184)
+
+```json
+[
+  "S-FFMPEG",
+  "S-FFPROBE"
+]
+```
+
+
+### PACKAGE_BAGIT
+
+[Complete record](#finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86)
+
+```json
+[
+  "S-RFC8493",
+  "S-ARCH-116"
+]
+```
+
+
+### ANALOGUES_OPTIONS
+
+[Complete record](#finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da)
+
+```json
+[
+  "S-BWF-USER",
+  "S-ARCH-116",
+  "S-RFC8493",
+  "S-FFMPEG",
+  "S-FFPROBE"
+]
+```
+
+
+### PLAN_CROSSWALK
+
+[Complete record](#finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4)
+
+```json
+[
+  "S-LOC-EXT",
+  "S-BWF-USER",
+  "S-BWF-HANDLER",
+  "S-BWF-218",
+  "S-BWF-HISTORY",
+  "S-BWF-RELEASE",
+  "S-FFMPEG",
+  "S-FFPROBE",
+  "S-RFC8493",
+  "S-ARCH-116"
+]
+```
+
+
+### CRITIC_DELIVERABLE
+
+[Complete record](#finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0)
+
+```json
+[
+  "S-BWF-RELEASE",
+  "S-BWF-HANDLER",
+  "S-BWF-HISTORY"
+]
+```
+
+
+## Complete record detail view
+
+
+<a id="finding-6caf430193819a5abc8434bbe4aeec422a12067331ab65453fe233b4c880a0cb"></a>
+
+
+### DISCOVERY_EXTERNAL
+
+```json
+{
+  "id": "DISCOVERY_EXTERNAL",
+  "summary": "Move received removable-media content into controlled inventory and verify copies while treating source protection as a separately observable condition.",
+  "disposition": "Supported addition to P1; the frozen plan already includes copy/no-edit, and this finding specifies custody and copy-integrity behavior.",
+  "evidence": [
+    "LOC guidance states that external-media content should be moved into approved inventory systems and placed under inventory control. It describes the risk of leaving it on removable carriers and references write-blockers or other safeguards for media that can be overwritten. Direct HTML returned 403; the official LOC JSON rendition was captured.",
+    "The plan already preserves original names/folders and forbids source editing (plan.md P1, lines 5-7); proposed source/copy digests make that intent observable."
+  ],
+  "conditions": [
+    "One archivist; up to 100 files; removable drives; source interviews may be personal.",
+    "Software alone cannot prove a drive was hardware write-protected or guarantee no write occurred."
+  ],
+  "options": [
+    "Use hardware/OS read-only support when available and report observed state.",
+    "Where unavailable, preserve source and record the limitation; require verified staged copy before completion."
+  ],
+  "optional_leads": [
+    "A later repository handoff may export the custody and fixity record as a BagIt-compatible package."
+  ],
+  "validation": [
+    "Proposed: synthetic interruption, write-protection-unavailable, changed-source, low-disk-space and copy-digest mismatch cases.",
+    "Executed: read LOC primary API page and captured its bytes; no copy workflow/application test run."
+  ],
+  "uncertainty": [
+    "LOC institutional practice is an analogy, not a universal mandate.",
+    "Filesystem and media-level write protection differs by hardware and OS."
+  ],
+  "sources": [
+    "S-LOC-EXT",
+    "S-BWF-USER"
+  ]
+}
+```
+
+
+<a id="finding-736f3a4bfb9b3aaef6771b2618412702475df51f56ebcdff481e76920ec1edf0"></a>
+
+
+### INSPECTION_BWF
+
+```json
+{
+  "id": "INSPECTION_BWF",
+  "summary": "BWF MetaEdit provides a focused BWF metadata and validation reference, with a current PCM sample-alignment warning implementation that is narrower than the ingest desk’s WAV/FLAC/MP3 scope.",
+  "disposition": "Use as an optional BWF specialist workflow or validation reference; do not make it the only generic parser or write metadata during ordinary display.",
+  "evidence": [
+    "The official product site describes metadata embedding, editing, exporting and rule enforcement for BWF files.",
+    "At v26.08, Riff_Handler::Open calls Open_Internal (Source/Riff/Riff_Handler.cpp 499-507). Data-size check lines 848-867 handles PCM and a recognized extensible-PCM subtype, computes sizeInBits=Size*8, tests modulo channelCount*bitsPerSample, and records a warning.",
+    "Riff_WAVE_fmt_::Read_Internal parses format type, channel count, sample rate and bits per sample (Source/Riff/Riff_Chunks_WAVE_fmt_.cpp 19-67); global::chunk_fmt_ defines those fields (Riff_Base.h 227-246), and the WAVE data parser fills the header-excluded Size (Riff_Chunks_WAVE_data.cpp 20-38; Riff_Base.h 528-545)."
+  ],
+  "conditions": [
+    "Pinned version is v26.08, immutable commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec.",
+    "The inspected rule is specific to PCM WAVE, not FLAC/MP3 or every WAVE codec.",
+    "Current code reports a warning for alignment; it does not establish preservation quality or a universal validity policy."
+  ],
+  "options": [
+    "Display its BWF-specific technical/warning output through a read-only adapter if the project accepts its deployment and license conditions.",
+    "Keep a generic probe candidate for FLAC/MP3 and define an archivist warning workflow separately."
+  ],
+  "optional_leads": [
+    "Add synthetic PCM 24-bit mono/stereo regression fixtures to the app’s acceptance suite."
+  ],
+  "validation": [
+    "Proposed: compare known-valid PCM bit alignment and deliberately malformed payload alignment; confirm warning/no mutation, parser version recorded.",
+    "Executed: source-only code inspection at captured release; no binary run."
+  ],
+  "uncertainty": [
+    "No usability, packaging, licensing, or cross-platform integration test was run.",
+    "Source comments and implementation do not define this archive’s acceptance policy."
+  ],
+  "sources": [
+    "S-BWF-USER",
+    "S-BWF-RELEASE",
+    "S-BWF-HANDLER",
+    "S-BWF-HANDLER-H",
+    "S-BWF-FMT",
+    "S-BWF-BASE",
+    "S-BWF-DATA"
+  ]
+}
+```
+
+
+<a id="finding-f83182de05a5f01e5064cd7364f30bc37084911b9826f00309e5e008b58057e6"></a>
+
+
+### REGRESSION_HISTORY
+
+```json
+{
+  "id": "REGRESSION_HISTORY",
+  "summary": "A real 24-bit mono regression was reported after BWF MetaEdit’s new PCM alignment check; the fix changed the arithmetic, received a manual CLI retest, and is present in the inspected current release code.",
+  "disposition": "Use the issue as concrete evidence for P6’s synthetic 24-bit mono regression case; describe manual evidence and release limits without claiming an automated test or shipped v21.07 tag.",
+  "evidence": [
+    "PR #207 merged the sample-alignment check on 2021-04-13. Issue #214 reported valid 24-bit mono files, including FFmpeg-generated examples, falsely rejected in build 20.08.20210501 after #207.",
+    "PR #218 changed the check from a bytesPerSample value multiplied from bits to bit arithmetic: data bytes*8 modulo channels*bitsPerSample. The issue reporter commented that CLI testing on Ubuntu 20.04 solved the reported case. The PR changes one C++ file and shows no automated regression test.",
+    "The captured v26.08 History_GUI.txt records Version 21.07 (2021-07-09) and “Fixes to data size validation (Issue #214)” at line 88. The GitHub v21.07 release-tag URL returned 404, so this history file is not treated as proof of a particular published binary. The current verified v26.08 release and actual v26.08 source code establish current code applicability."
+  ],
+  "conditions": [
+    "Issue statements are user reports, not an independent laboratory reproduction.",
+    "The fix’s code path applies to the noted PCM alignment condition; other malformed metadata still needs dedicated cases."
+  ],
+  "options": [
+    "If adoption is considered, repeat a synthetic 24-bit mono test against the exact packaged component version and retain its result.",
+    "Keep current release source as implementation evidence, not as an assertion that all supported formats are validated."
+  ],
+  "optional_leads": [
+    "Add regression cases for odd-size or malformed PCM payloads and channel layouts while preserving clear warning semantics."
+  ],
+  "validation": [
+    "Proposed: test original failing 24-bit mono fixture class, valid 24-bit PCM, invalid alignment, and current supported component build on Windows and Linux.",
+    "Executed: public issue/PR/history inspection; no test fixture or component execution."
+  ],
+  "uncertainty": [
+    "No automated regression test evidence is visible in PR #218.",
+    "The release list did not resolve v21.07, but v26.08 is an exact verified release containing corrected code."
+  ],
+  "sources": [
+    "S-BWF-207",
+    "S-BWF-214",
+    "S-BWF-218",
+    "S-BWF-FIX",
+    "S-BWF-HISTORY",
+    "S-BWF-RELEASE",
+    "S-BWF-HANDLER"
+  ]
+}
+```
+
+
+<a id="finding-8b0a7d3bad90201777d99b35ade51e582cb4563ce3bca514930f2b88167b8184"></a>
+
+
+### DERIVATIVE_TOOLING
+
+```json
+{
+  "id": "DERIVATIVE_TOOLING",
+  "summary": "FFmpeg/ffprobe documentation offers broad-format probing and explicit stream control, while its documented defaults make implicit selection and metadata copying unsuitable for an unreviewed archival derivative workflow.",
+  "disposition": "Shortlist FFmpeg/ffprobe conditionally for multi-format inspection and listening derivatives; pin and review an exact release before implementation.",
+  "evidence": [
+    "ffprobe documents stream/format/error output and JSON formatting. ffmpeg documents manual -map control and automatic selection when mapping is omitted; global metadata defaults to the first input and stream/chapter metadata follows mapped streams.",
+    "Those behaviors support a UI that records explicit stream selection and metadata-copy policy; documentation alone does not prove a particular build’s format coverage or preservation quality."
+  ],
+  "conditions": [
+    "P3 preserves an explicit archivist request, preview, and failed/interrupted disposition.",
+    "Offline Windows/Linux operation and no upload remain product constraints.",
+    "No exact FFmpeg release, source code, issue history, or binary was inspected in this stage."
+  ],
+  "options": [
+    "Use FFmpeg CLI behind a constrained wrapper with explicit stream/settings and separate playback controls.",
+    "Compare a linked library or another codec tool only after OS packaging, license, update and synthetic failure checks."
+  ],
+  "optional_leads": [
+    "Offer a user-visible metadata allowlist or deliberate strip policy for listening copies."
+  ],
+  "validation": [
+    "Proposed: multi-stream and unusual-channel fixtures, metadata privacy fixture, interrupted output, tool-version record, and Windows/Linux offline packaging.",
+    "Executed: read and captured current FFmpeg/ffprobe documentation; no command was run."
+  ],
+  "uncertainty": [
+    "Live docs were not pinned to a release; exact defaults can change.",
+    "Codec, rate, channel mapping, metadata policy, and listening quality require product decision and archivist audition."
+  ],
+  "sources": [
+    "S-FFMPEG",
+    "S-FFPROBE"
+  ]
+}
+```
+
+
+<a id="finding-1a8316a022c042b1a8dc29f3821707663010f518d0f4b306edd455455c843d86"></a>
+
+
+### PACKAGE_BAGIT
+
+```json
+{
+  "id": "PACKAGE_BAGIT",
+  "summary": "BagIt 1.0 supplies a portable file inventory and checksum validation model that complements, but does not replace, the app’s original-to-derivative provenance record.",
+  "disposition": "Adopt BagIt 1.0 as a conditional interchange package if the receiving repository benefits; keep an app-authored event sidecar either way.",
+  "evidence": [
+    "RFC 8493 defines data/ payload, manifests that list each payload path and checksum, completeness/validity, and required support for SHA-256/SHA-512; it recommends SHA-512 by default for new bags.",
+    "BagIt treats payload files as opaque octets, so it does not explain whether a file is original or derivative or what transformation produced it."
+  ],
+  "conditions": [
+    "Packages remain local/offline; do not use remote fetch payloads.",
+    "Reopen must expose missing, changed and unexpected content and connect problems to file/event records."
+  ],
+  "options": [
+    "BagIt 1.0 folder plus tagged app manifest/history.",
+    "App-native folder with equivalent explicit manifest and fixity semantics if downstream compatibility is not required."
+  ],
+  "optional_leads": [
+    "Export a repository-compatible BagIt package if the archive later names a receiving preservation system."
+  ],
+  "validation": [
+    "Proposed: test missing, changed, unexpected, duplicate-name payloads and tag sidecar changes; validate every hash on reopen.",
+    "Executed: RFC read/capture only; no bag was generated."
+  ],
+  "uncertainty": [
+    "No recipient profile, BagIt library, or institutional metadata schema is specified.",
+    "A checksum only detects difference from its recorded value; it does not prove source authenticity or event correctness."
+  ],
+  "sources": [
+    "S-RFC8493",
+    "S-ARCH-116"
+  ]
+}
+```
+
+
+<a id="finding-a5c4eb5a7ada84f1714f8e12812f4ce5c6a0e66d4e1560b90ee4bb185cdf14da"></a>
+
+
+### ANALOGUES_OPTIONS
+
+```json
+{
+  "id": "ANALOGUES_OPTIONS",
+  "summary": "Existing products offer distinct workflow layers: BWF MetaEdit for BWF metadata, Archivematica for broad preservation processing, BagIt for package integrity, and FFmpeg for codec/probe operations.",
+  "disposition": "Keep these as bounded component/architecture options; reject treating any one as the entire ingest desk.",
+  "evidence": [
+    "BWF MetaEdit’s product site identifies BWF metadata work.",
+    "Archivematica 1.16 documentation separates transfer, ingest, preservation planning, archival storage and access, and includes BagIt transfer support.",
+    "RFC 8493 covers packaging/fixity but not audio interpretation. FFmpeg documentation covers stream probing/mapping and conversion but not archival custody."
+  ],
+  "conditions": [
+    "The user asks for a small offline desktop desk and no public publishing or speech transcription.",
+    "Do not change the product scope to fit a component."
+  ],
+  "options": [
+    "FFmpeg/ffprobe candidate for broad audio streams and conversion; BWF MetaEdit optional BWF specialist; BagIt conditional interchange; Archivematica only downstream when already operated.",
+    "Native or linked playback/probe libraries remain alternatives pending version, update, license and platform review."
+  ],
+  "optional_leads": [
+    "A later export adapter could feed an existing Archivematica installation without making it a local runtime requirement."
+  ],
+  "validation": [
+    "Proposed: evaluate each candidate with the same synthetic files, offline use, warning behavior, package round-trip, version reproducibility and two-OS packaging.",
+    "Executed: public docs and current source snapshots inspected only."
+  ],
+  "uncertainty": [
+    "No full comparison of binary size, licenses, current OS support, and update cadence was run."
+  ],
+  "sources": [
+    "S-BWF-USER",
+    "S-ARCH-116",
+    "S-RFC8493",
+    "S-FFMPEG",
+    "S-FFPROBE"
+  ]
+}
+```
+
+
+<a id="finding-abc699cf3b3c64a2912b12a220771e843c9251dd0b53b9759ff9be3cc6efa5e4"></a>
+
+
+### PLAN_CROSSWALK
+
+```json
+{
+  "id": "PLAN_CROSSWALK",
+  "summary": "All frozen P1-P6 intent is retained, with implementation detail added where source evidence supports it and choices left open where the sources do not decide the product.",
+  "disposition": "P1/P2/P3/P4: retain and refine; P5: retain constraints and shortlist components conditionally; P6: retain and extend. Exact crosswalk and replacement text appear in proposed_change_document.",
+  "evidence": [
+    "P1 plan.md lines 5-7 already covers supported formats, copying, fixity intent, original names/folders and no source edits; LOC guidance supports inventory/copy practice.",
+    "P2 lines 9-11 already covers duration/channels/encoding/metadata/notes/listening and separate corrections; BWF MetaEdit applies to only part of that format scope.",
+    "P3 lines 13-15 already requires explicit request, preview, preservation source and failed/interrupted disposition; FFmpeg docs show stream and metadata defaults must be made explicit.",
+    "P4 lines 17-19 already lists package objects, provenance, fixity, tool version and reopen checks; RFC 8493 supports package integrity but requires an app event record.",
+    "P5 lines 21-23 already binds components undecided, offline Windows/Linux, no upload and no display-time metadata edits; the product analogues justify conditional options.",
+    "P6 lines 25-27 already asks synthetic interruption, malformed metadata, unusual channels, conversion and package-fixity tests; issue #214 adds a real 24-bit mono edge."
+  ],
+  "conditions": [
+    "Brief scope remains P1-P6, up to 100 files and one archivist.",
+    "Do not infer whole-project coverage beyond this exact supplied plan slice."
+  ],
+  "options": [
+    "Keep the plan as the proposed revised sandbox plan in this artifact; product-owner choices are listed explicitly."
+  ],
+  "optional_leads": [
+    "Check any broader project plan only if later supplied as an admitted input."
+  ],
+  "validation": [
+    "Proposed: use the crosswalk checklist and synthetic suite in the revised P6.",
+    "Executed: read the exact frozen plan and recorded each section reference."
+  ],
+  "uncertainty": [
+    "No surrounding project documents were admitted or read; conclusions apply only to this bounded plan."
+  ],
+  "sources": [
+    "S-LOC-EXT",
+    "S-BWF-USER",
+    "S-BWF-HANDLER",
+    "S-BWF-218",
+    "S-BWF-HISTORY",
+    "S-BWF-RELEASE",
+    "S-FFMPEG",
+    "S-FFPROBE",
+    "S-RFC8493",
+    "S-ARCH-116"
+  ]
+}
+```
+
+
+<a id="finding-a2e5d13d151f1beb08a00c3d1511aec756ecd090ac8857e8c19098de97e66ab0"></a>
+
+
+### CRITIC_DELIVERABLE
+
+```json
+{
+  "id": "CRITIC_DELIVERABLE",
+  "summary": "O5 requires independent fresh same-family criticism and remains pending; the replacement plan is complete as a research proposal, with O6 validation and uncertainty stated.",
+  "disposition": "Do not simulate or invent criticism. Coordinator must obtain the separately assigned critic result and preserve each objection and disposition in the final plan.",
+  "evidence": [
+    "The brief requires a flash-family candidate critic and says the coordinator selects family and handoff. The input map reports no predecessors. No critic output was admitted to this researcher.",
+    "The proposed_change_document includes a coherent revised P1-P6 plan, evidence IDs, alternatives, choices, already-covered matters, rejected scope leads, validation proposals, and uncertainty."
+  ],
+  "conditions": [
+    "No critique was supplied in the admitted inputs; parent history and other arms are out of scope.",
+    "O5 is not satisfied until the independent critic stage completes."
+  ],
+  "options": [
+    "After critic delivery, append each substantive objection, disagreement, accepted correction or unresolved issue and rerender the full semantic set."
+  ],
+  "optional_leads": [
+    "Fresh critic should inspect the exact immutable code/version and full user scope independently."
+  ],
+  "validation": [
+    "Proposed: critic checks each P decision, source applicability, issue/fix/retest/release chain, and all O1-O6 obligations.",
+    "Executed: semantic-set and projection preservation checks will be performed; no application or audio fixture checks."
+  ],
+  "uncertainty": [
+    "No candidate criticism can be described until the critic stage is performed."
+  ],
+  "sources": [
+    "S-BWF-RELEASE",
+    "S-BWF-HANDLER",
+    "S-BWF-HISTORY"
+  ]
+}
+```
+
+
+## Exact authored input
+
+The fenced payload retains the complete UTF-8 input text, including unknown fields. The separator newline before the closing fence is renderer framing.
+
+```json
+{
+  "case_id": "I-METHOD-04",
+  "stage": "treatment/research-v1",
+  "authorship": "Candidate-authored semantic findings and complete replacement plan. The M14 renderer is mechanical and performs no scientific selection or ranking.",
+  "input_bindings": {
+    "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v1/input-map.json",
+    "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/brief.md",
+    "frozen_plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/plan.md",
+    "brief_sha256_from_map": "c609c2ea956f269df5fbab3694b7a9425f72f24b65279e12aab3b5c1d727a1ab",
+    "plan_sha256_from_map": "c3da0fde53189778a3685ff4dae7f8c9cca2bd3a5d5a0f8614bc666c21a01a59",
+    "order": "Brief and public-source discovery preceded reading/comparison of the frozen plan."
+  },
+  "run_observation": {
+    "first_useful_saved_finding_at": "2026-10-07T19:43:03Z",
+    "complete_draft_at": "2026-10-07T19:55:08Z",
+    "deadlines_from_dispatch_config": {
+      "research_stage": "2026-10-07T20:00:06.072109+00:00",
+      "whole_arm": "2026-10-07T20:25:06.072109+00:00"
+    },
+    "public_source_operations": {
+      "web_calls": 10,
+      "search_calls": 5,
+      "search_queries": 20,
+      "page_opens_or_clicks": 18,
+      "direct_http_retrieval_attempts": 25,
+      "successful_http_200": 20,
+      "failed_http": {
+        "403": 1,
+        "406": 4
+      },
+      "captured_source_byte_files": 20
+    },
+    "native_goal_projection_snapshots": [
+      {
+        "observed_at": "2026-10-07T19:40:21Z",
+        "thread_id": "01a117e1-5906-7a21-9456-b6a11a79a512",
+        "status": "active",
+        "tokens_used": 0,
+        "time_used_seconds": null,
+        "note": "Immediate post-activation get_goal response; time counter not present."
+      },
+      {
+        "observed_at": "2026-10-07T19:43:03Z",
+        "thread_id": "01a117e1-5906-7a21-9456-b6a11a79a512",
+        "status": "active",
+        "tokens_used": 84082,
+        "time_used_seconds": 161
+      },
+      {
+        "observed_at": "2026-10-07T19:43:29Z",
+        "thread_id": "01a117e1-5906-7a21-9456-b6a11a79a512",
+        "status": "active",
+        "tokens_used": 101737,
+        "time_used_seconds": 187
+      },
+      {
+        "observed_at": "2026-10-07T19:50:12Z",
+        "thread_id": "01a117e1-5906-7a21-9456-b6a11a79a512",
+        "status": "active",
+        "tokens_used": 178192,
+        "time_used_seconds": 590
+      },
+      {
+        "observed_at": "2026-10-07T19:57:20Z",
+        "thread_id": "01a117e1-5906-7a21-9456-b6a11a79a512",
+        "status": "active",
+        "tokens_used": 243043,
+        "time_used_seconds": 1010
+      }
+    ],
+    "native_goal_counters_are_aggregate_not_stage_local": true,
+    "unknown_usage_counters": {
+      "input_tokens": null,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    },
+    "source_operations_at_first_useful_saved_finding": {
+      "web_calls": 6,
+      "search_calls": 3,
+      "search_queries": 12,
+      "page_opens_or_clicks": 8,
+      "direct_http_retrieval_attempts": 0
+    }
+  },
+  "proposed_change_document": "# Proposed replacement plan — Community oral-history ingest desk\n\n## Purpose and limits\nA local desktop ingest desk for one archivist handling batches of up to 100 files from removable drives. In the first supported scope it accepts WAV/BWF, FLAC, and MP3. It preserves source bytes, makes a separately identified listening copy only when requested, and records each operation. It is technical workflow software: it does not decide rights, make access decisions, transcribe speech, publish recordings, or upload interview audio. Research and validation use public information and synthetic audio only.\n\n## P1 — Batch capture\nShow a preflight inventory before copy: source-relative name, format recognition, size, estimated destination space, and unsupported or unreadable items. Preserve source filenames and relative-folder strings as provenance and assign an internal stable file ID so a cross-platform path collision never causes silent overwrite or rename. Read from the source; use hardware or OS write protection where available. If that protection is unavailable, say plainly that the app cannot guarantee the removable device was not written. Record the protection state as observed, not as a guarantee.\n\nCopy into a unique staging area, calculate a fixity digest for each source file and its staged copy, compare size and digest, and record pass/fail before the item can be marked ingested. A partial, interrupted, or out-of-space copy remains visibly incomplete and cannot be treated as an original in a completed accession. Resume only after rechecking staged bytes; never delete or modify source files. Conflicting names, invalid platform paths, symlinks, special files, and unreadable inputs require an explicit item disposition rather than a silent skip.\n\n## P2 — Inspection\nFor each original, show duration, container/encoding, codec, sample rate, bit depth where defined, channel count/layout, embedded metadata, and parser warnings. Record technical observations with the parser name/version and link them to the original's fixity record. Keep accession notes and archivist corrections in separate fields from extracted metadata; display is read-only and never writes tags into originals. Offer local waveform and listening inspection; no speech-to-text path exists.\n\nUse a generic probe candidate for WAV/BWF, FLAC, and MP3, subject to source review, pinned version selection, and synthetic coverage. Treat BWF MetaEdit as a BWF-specific metadata/validation reference or optional specialist tool, not a universal parser: its stated role is BWF metadata and validation, and its current source's sampled alignment check applies to PCM WAVE cases. Preserve warning/error text and let the archivist decide whether to continue; do not auto-repair.\n\n## P3 — Listening derivatives\nA derivative is a separate object created only after an explicit request. Before processing, show the input file, chosen output format/codec/rate/channel treatment, metadata policy, and an output preview or short synthetic/sample preview; the archivist confirms the intended transformation. Require explicit stream selection and settings; do not rely on a tool's default stream mapping. Choose and show a policy for metadata copied to the derivative, with an allowlist or deliberate strip option so private embedded fields are not carried unnoticed. Record exact effective settings, tool name/version, input/output IDs and digests, timestamp, operator confirmation, and result.\n\nThe derivative never replaces the original. On failure or interruption, show a failed/incomplete disposition and keep partial output outside the completed package or quarantine it. Reopen and inspect successful outputs before marking them complete. A portable lossy listening preset versus a lossless derivative remains a product choice and must be settled through archivist requirements and audition tests; no preservation-quality claim follows from a successful encode.\n\n## P4 — Accession package\nPackage originals, derivatives, original-to-derivative links, accession notes, technical observations, operation history, tool versions/settings, and fixity information in one portable local directory. Adopt BagIt 1.0 as an interchange option if repository compatibility is needed: its payload is opaque, its manifests establish completeness/fixity, and its tag files can carry the app's separate provenance record. Support SHA-256 and SHA-512 and default to SHA-512 if following RFC 8493's recommendation. Do not use remote fetch payloads; the workflow is offline.\n\nOn reopen, validate all declared payload and tag files, report changed, missing, and unexpected content, and show which source/derivative/event record is affected. A valid checksum manifest does not by itself explain why a derivative exists; the app's event record must connect the source digest to the derivative digest and exact transformation settings. Never edit payloads silently during validation.\n\n## P5 — Components and environment\nThe user-facing app remains offline on Windows and Linux with no audio upload. Shortlist FFmpeg/ffprobe as the broad-format probe/conversion candidate because its documented interface exposes structured stream information and controlled mapping; before adoption, pin and review a release, validate Windows/Linux packaging, licensing, update policy, format coverage, metadata behavior, and failures. Its live documentation is not evidence that an unpinned build meets this product's preservation requirements. Keep playback, file probing, conversion, package validation, and provenance serialization behind separate interfaces so components can be replaced.\n\nBWF MetaEdit is limited to BWF metadata workflows. It may be an optional archivist handoff or a source of tests for our read-only BWF observations; do not embed its editing actions in ordinary display. BagIt is packaging/interchange, not an audio validator or event-history schema. Archivematica is a broader preservation pipeline with transfer, normalization, storage, and access workflows; consider an export/handoff only if the archive already operates it, not as a new local runtime dependency. Do not decide on an OS-native player versus bundled playback until the format and offline tests are complete. Record exact component versions and licenses in every build/package manifest.\n\n## P6 — Acceptance and validation proposals\nUse synthetic fixtures only. Test interrupted copy, disk-full copy, retry/resume, source/copy digest mismatch, unexpected/missing/changed package content, duplicate and cross-platform-colliding paths, malformed/truncated metadata, unsupported media, unusual channel layouts, multi-stream files, encoding conversion, derivative metadata policy, and failed/interrupted conversion. Include PCM 24-bit mono and multichannel examples: BWF MetaEdit's real issue history shows a sample-alignment check falsely rejecting valid 24-bit mono audio and a later bit-based correction. Verify valid files remain warnings-free or correctly explained and malformed/misaligned files produce an actionable warning without source modification.\n\nRun synthetic acceptance on the supported Windows and Linux builds with a batch of up to 100 short files, including a reopen after mutation/missing/extra-file scenarios. Verify action records and digests survive application restart. Proposed checks are not executed results: this researcher did not build the application, install components, or run application fixtures.\n\n## Decision rationale, alternatives, and open product choices\nThe frozen P1, P2, P3, and P4 workflow intent is retained and made operationally testable; the stated P5 offline/no-upload/no-display-write constraints and P6 synthetic scope remain binding. LOC external-media practice supports moving data off removable media into controlled inventory but cannot guarantee a desktop app protects a source device. BagIt provides a portable manifest/completeness model but not derivative-event meaning. BWF MetaEdit covers a narrower BWF case. FFmpeg is the strongest broad-format CLI candidate in this discovery, but no exact version or conversion recipe is locked. Archivematica is a useful end-to-end analogue but materially broader than this desk.\n\nBefore implementation, the product owner must choose: default listening codec and quality; how to handle channels/sample rates; whether derivative metadata is copied or stripped by default; BagIt versus an app-native package; hash default when BagIt is not used; warning acceptance and correction fields; naming/collision policy; component builds, licenses, updates, and supported OS baselines; and staging recovery/storage location. Keep out of scope automatic rights decisions, uploading/publishing, speech transcription, metadata write-back to originals, silent normalization, and automatic source repair.\n\n## Obligation and plan crosswalk\n- O1: brief-led discovery produced LOC removable-media guidance, BWF MetaEdit, Archivematica, BagIt RFC, and FFmpeg documentation, plus the negative findings and options above.\n- O2: consequential BWF MetaEdit PCM validation was inspected at immutable v26.08 commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec; see source map entries S-BWF-HANDLER, S-BWF-FMT, S-BWF-BASE, S-BWF-DATA and S-BWF-HANDLER-H.\n- O3: PR #207, issue #214, PR #218/fix commit, the 21.07 history line, and current v26.08 source establish the reported regression, code correction, manual retest, and current code applicability. No automated regression test evidence was found in the one-file fix; the GitHub v21.07 tag URL returned 404.\n- O4: P1 at plan.md lines 5-7 — retain copy/no-edit/relative names; add per-file source/copy digest, staging, collision and interruption handling. P2 lines 9-11 — retain the listed technical/metadata/notes/listening views and separate corrections; add parser versions, warnings, and no transcript/write-back. P3 lines 13-15 — retain explicit request, preview, and failure disposition; add stream selection, metadata policy and event records. P4 lines 17-19 — retain objects, references, provenance, fixity and reopen checks; optionally use BagIt plus an event sidecar. P5 lines 21-23 — retain offline Windows/Linux/no-upload/no-display-write; keep component/version choices conditional as described. P6 lines 25-27 — retain the listed synthetic tests and add relevant history-derived edge cases. These existing plan requirements remain already-covered product constraints; the public sources support their applicability and show where operational detail is still missing.\n- O5: independent fresh same-family criticism is pending. No critic output was an admitted predecessor or available to this researcher; criticism and its disposition must be added after that stage. No criticism is invented here.\n- O6: this document is the coherent proposed replacement plan with rationale, evidence IDs, alternatives, conditions, already-covered matters, negative leads, validation proposals, and uncertainty.\n",
+  "findings": [
+    {
+      "id": "DISCOVERY_EXTERNAL",
+      "summary": "Move received removable-media content into controlled inventory and verify copies while treating source protection as a separately observable condition.",
+      "disposition": "Supported addition to P1; the frozen plan already includes copy/no-edit, and this finding specifies custody and copy-integrity behavior.",
+      "evidence": [
+        "LOC guidance states that external-media content should be moved into approved inventory systems and placed under inventory control. It describes the risk of leaving it on removable carriers and references write-blockers or other safeguards for media that can be overwritten. Direct HTML returned 403; the official LOC JSON rendition was captured.",
+        "The plan already preserves original names/folders and forbids source editing (plan.md P1, lines 5-7); proposed source/copy digests make that intent observable."
+      ],
+      "conditions": [
+        "One archivist; up to 100 files; removable drives; source interviews may be personal.",
+        "Software alone cannot prove a drive was hardware write-protected or guarantee no write occurred."
+      ],
+      "options": [
+        "Use hardware/OS read-only support when available and report observed state.",
+        "Where unavailable, preserve source and record the limitation; require verified staged copy before completion."
+      ],
+      "optional_leads": [
+        "A later repository handoff may export the custody and fixity record as a BagIt-compatible package."
+      ],
+      "validation": [
+        "Proposed: synthetic interruption, write-protection-unavailable, changed-source, low-disk-space and copy-digest mismatch cases.",
+        "Executed: read LOC primary API page and captured its bytes; no copy workflow/application test run."
+      ],
+      "uncertainty": [
+        "LOC institutional practice is an analogy, not a universal mandate.",
+        "Filesystem and media-level write protection differs by hardware and OS."
+      ],
+      "sources": [
+        "S-LOC-EXT",
+        "S-BWF-USER"
+      ]
+    },
+    {
+      "id": "INSPECTION_BWF",
+      "summary": "BWF MetaEdit provides a focused BWF metadata and validation reference, with a current PCM sample-alignment warning implementation that is narrower than the ingest desk’s WAV/FLAC/MP3 scope.",
+      "disposition": "Use as an optional BWF specialist workflow or validation reference; do not make it the only generic parser or write metadata during ordinary display.",
+      "evidence": [
+        "The official product site describes metadata embedding, editing, exporting and rule enforcement for BWF files.",
+        "At v26.08, Riff_Handler::Open calls Open_Internal (Source/Riff/Riff_Handler.cpp 499-507). Data-size check lines 848-867 handles PCM and a recognized extensible-PCM subtype, computes sizeInBits=Size*8, tests modulo channelCount*bitsPerSample, and records a warning.",
+        "Riff_WAVE_fmt_::Read_Internal parses format type, channel count, sample rate and bits per sample (Source/Riff/Riff_Chunks_WAVE_fmt_.cpp 19-67); global::chunk_fmt_ defines those fields (Riff_Base.h 227-246), and the WAVE data parser fills the header-excluded Size (Riff_Chunks_WAVE_data.cpp 20-38; Riff_Base.h 528-545)."
+      ],
+      "conditions": [
+        "Pinned version is v26.08, immutable commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec.",
+        "The inspected rule is specific to PCM WAVE, not FLAC/MP3 or every WAVE codec.",
+        "Current code reports a warning for alignment; it does not establish preservation quality or a universal validity policy."
+      ],
+      "options": [
+        "Display its BWF-specific technical/warning output through a read-only adapter if the project accepts its deployment and license conditions.",
+        "Keep a generic probe candidate for FLAC/MP3 and define an archivist warning workflow separately."
+      ],
+      "optional_leads": [
+        "Add synthetic PCM 24-bit mono/stereo regression fixtures to the app’s acceptance suite."
+      ],
+      "validation": [
+        "Proposed: compare known-valid PCM bit alignment and deliberately malformed payload alignment; confirm warning/no mutation, parser version recorded.",
+        "Executed: source-only code inspection at captured release; no binary run."
+      ],
+      "uncertainty": [
+        "No usability, packaging, licensing, or cross-platform integration test was run.",
+        "Source comments and implementation do not define this archive’s acceptance policy."
+      ],
+      "sources": [
+        "S-BWF-USER",
+        "S-BWF-RELEASE",
+        "S-BWF-HANDLER",
+        "S-BWF-HANDLER-H",
+        "S-BWF-FMT",
+        "S-BWF-BASE",
+        "S-BWF-DATA"
+      ]
+    },
+    {
+      "id": "REGRESSION_HISTORY",
+      "summary": "A real 24-bit mono regression was reported after BWF MetaEdit’s new PCM alignment check; the fix changed the arithmetic, received a manual CLI retest, and is present in the inspected current release code.",
+      "disposition": "Use the issue as concrete evidence for P6’s synthetic 24-bit mono regression case; describe manual evidence and release limits without claiming an automated test or shipped v21.07 tag.",
+      "evidence": [
+        "PR #207 merged the sample-alignment check on 2021-04-13. Issue #214 reported valid 24-bit mono files, including FFmpeg-generated examples, falsely rejected in build 20.08.20210501 after #207.",
+        "PR #218 changed the check from a bytesPerSample value multiplied from bits to bit arithmetic: data bytes*8 modulo channels*bitsPerSample. The issue reporter commented that CLI testing on Ubuntu 20.04 solved the reported case. The PR changes one C++ file and shows no automated regression test.",
+        "The captured v26.08 History_GUI.txt records Version 21.07 (2021-07-09) and “Fixes to data size validation (Issue #214)” at line 88. The GitHub v21.07 release-tag URL returned 404, so this history file is not treated as proof of a particular published binary. The current verified v26.08 release and actual v26.08 source code establish current code applicability."
+      ],
+      "conditions": [
+        "Issue statements are user reports, not an independent laboratory reproduction.",
+        "The fix’s code path applies to the noted PCM alignment condition; other malformed metadata still needs dedicated cases."
+      ],
+      "options": [
+        "If adoption is considered, repeat a synthetic 24-bit mono test against the exact packaged component version and retain its result.",
+        "Keep current release source as implementation evidence, not as an assertion that all supported formats are validated."
+      ],
+      "optional_leads": [
+        "Add regression cases for odd-size or malformed PCM payloads and channel layouts while preserving clear warning semantics."
+      ],
+      "validation": [
+        "Proposed: test original failing 24-bit mono fixture class, valid 24-bit PCM, invalid alignment, and current supported component build on Windows and Linux.",
+        "Executed: public issue/PR/history inspection; no test fixture or component execution."
+      ],
+      "uncertainty": [
+        "No automated regression test evidence is visible in PR #218.",
+        "The release list did not resolve v21.07, but v26.08 is an exact verified release containing corrected code."
+      ],
+      "sources": [
+        "S-BWF-207",
+        "S-BWF-214",
+        "S-BWF-218",
+        "S-BWF-FIX",
+        "S-BWF-HISTORY",
+        "S-BWF-RELEASE",
+        "S-BWF-HANDLER"
+      ]
+    },
+    {
+      "id": "DERIVATIVE_TOOLING",
+      "summary": "FFmpeg/ffprobe documentation offers broad-format probing and explicit stream control, while its documented defaults make implicit selection and metadata copying unsuitable for an unreviewed archival derivative workflow.",
+      "disposition": "Shortlist FFmpeg/ffprobe conditionally for multi-format inspection and listening derivatives; pin and review an exact release before implementation.",
+      "evidence": [
+        "ffprobe documents stream/format/error output and JSON formatting. ffmpeg documents manual -map control and automatic selection when mapping is omitted; global metadata defaults to the first input and stream/chapter metadata follows mapped streams.",
+        "Those behaviors support a UI that records explicit stream selection and metadata-copy policy; documentation alone does not prove a particular build’s format coverage or preservation quality."
+      ],
+      "conditions": [
+        "P3 preserves an explicit archivist request, preview, and failed/interrupted disposition.",
+        "Offline Windows/Linux operation and no upload remain product constraints.",
+        "No exact FFmpeg release, source code, issue history, or binary was inspected in this stage."
+      ],
+      "options": [
+        "Use FFmpeg CLI behind a constrained wrapper with explicit stream/settings and separate playback controls.",
+        "Compare a linked library or another codec tool only after OS packaging, license, update and synthetic failure checks."
+      ],
+      "optional_leads": [
+        "Offer a user-visible metadata allowlist or deliberate strip policy for listening copies."
+      ],
+      "validation": [
+        "Proposed: multi-stream and unusual-channel fixtures, metadata privacy fixture, interrupted output, tool-version record, and Windows/Linux offline packaging.",
+        "Executed: read and captured current FFmpeg/ffprobe documentation; no command was run."
+      ],
+      "uncertainty": [
+        "Live docs were not pinned to a release; exact defaults can change.",
+        "Codec, rate, channel mapping, metadata policy, and listening quality require product decision and archivist audition."
+      ],
+      "sources": [
+        "S-FFMPEG",
+        "S-FFPROBE"
+      ]
+    },
+    {
+      "id": "PACKAGE_BAGIT",
+      "summary": "BagIt 1.0 supplies a portable file inventory and checksum validation model that complements, but does not replace, the app’s original-to-derivative provenance record.",
+      "disposition": "Adopt BagIt 1.0 as a conditional interchange package if the receiving repository benefits; keep an app-authored event sidecar either way.",
+      "evidence": [
+        "RFC 8493 defines data/ payload, manifests that list each payload path and checksum, completeness/validity, and required support for SHA-256/SHA-512; it recommends SHA-512 by default for new bags.",
+        "BagIt treats payload files as opaque octets, so it does not explain whether a file is original or derivative or what transformation produced it."
+      ],
+      "conditions": [
+        "Packages remain local/offline; do not use remote fetch payloads.",
+        "Reopen must expose missing, changed and unexpected content and connect problems to file/event records."
+      ],
+      "options": [
+        "BagIt 1.0 folder plus tagged app manifest/history.",
+        "App-native folder with equivalent explicit manifest and fixity semantics if downstream compatibility is not required."
+      ],
+      "optional_leads": [
+        "Export a repository-compatible BagIt package if the archive later names a receiving preservation system."
+      ],
+      "validation": [
+        "Proposed: test missing, changed, unexpected, duplicate-name payloads and tag sidecar changes; validate every hash on reopen.",
+        "Executed: RFC read/capture only; no bag was generated."
+      ],
+      "uncertainty": [
+        "No recipient profile, BagIt library, or institutional metadata schema is specified.",
+        "A checksum only detects difference from its recorded value; it does not prove source authenticity or event correctness."
+      ],
+      "sources": [
+        "S-RFC8493",
+        "S-ARCH-116"
+      ]
+    },
+    {
+      "id": "ANALOGUES_OPTIONS",
+      "summary": "Existing products offer distinct workflow layers: BWF MetaEdit for BWF metadata, Archivematica for broad preservation processing, BagIt for package integrity, and FFmpeg for codec/probe operations.",
+      "disposition": "Keep these as bounded component/architecture options; reject treating any one as the entire ingest desk.",
+      "evidence": [
+        "BWF MetaEdit’s product site identifies BWF metadata work.",
+        "Archivematica 1.16 documentation separates transfer, ingest, preservation planning, archival storage and access, and includes BagIt transfer support.",
+        "RFC 8493 covers packaging/fixity but not audio interpretation. FFmpeg documentation covers stream probing/mapping and conversion but not archival custody."
+      ],
+      "conditions": [
+        "The user asks for a small offline desktop desk and no public publishing or speech transcription.",
+        "Do not change the product scope to fit a component."
+      ],
+      "options": [
+        "FFmpeg/ffprobe candidate for broad audio streams and conversion; BWF MetaEdit optional BWF specialist; BagIt conditional interchange; Archivematica only downstream when already operated.",
+        "Native or linked playback/probe libraries remain alternatives pending version, update, license and platform review."
+      ],
+      "optional_leads": [
+        "A later export adapter could feed an existing Archivematica installation without making it a local runtime requirement."
+      ],
+      "validation": [
+        "Proposed: evaluate each candidate with the same synthetic files, offline use, warning behavior, package round-trip, version reproducibility and two-OS packaging.",
+        "Executed: public docs and current source snapshots inspected only."
+      ],
+      "uncertainty": [
+        "No full comparison of binary size, licenses, current OS support, and update cadence was run."
+      ],
+      "sources": [
+        "S-BWF-USER",
+        "S-ARCH-116",
+        "S-RFC8493",
+        "S-FFMPEG",
+        "S-FFPROBE"
+      ]
+    },
+    {
+      "id": "PLAN_CROSSWALK",
+      "summary": "All frozen P1-P6 intent is retained, with implementation detail added where source evidence supports it and choices left open where the sources do not decide the product.",
+      "disposition": "P1/P2/P3/P4: retain and refine; P5: retain constraints and shortlist components conditionally; P6: retain and extend. Exact crosswalk and replacement text appear in proposed_change_document.",
+      "evidence": [
+        "P1 plan.md lines 5-7 already covers supported formats, copying, fixity intent, original names/folders and no source edits; LOC guidance supports inventory/copy practice.",
+        "P2 lines 9-11 already covers duration/channels/encoding/metadata/notes/listening and separate corrections; BWF MetaEdit applies to only part of that format scope.",
+        "P3 lines 13-15 already requires explicit request, preview, preservation source and failed/interrupted disposition; FFmpeg docs show stream and metadata defaults must be made explicit.",
+        "P4 lines 17-19 already lists package objects, provenance, fixity, tool version and reopen checks; RFC 8493 supports package integrity but requires an app event record.",
+        "P5 lines 21-23 already binds components undecided, offline Windows/Linux, no upload and no display-time metadata edits; the product analogues justify conditional options.",
+        "P6 lines 25-27 already asks synthetic interruption, malformed metadata, unusual channels, conversion and package-fixity tests; issue #214 adds a real 24-bit mono edge."
+      ],
+      "conditions": [
+        "Brief scope remains P1-P6, up to 100 files and one archivist.",
+        "Do not infer whole-project coverage beyond this exact supplied plan slice."
+      ],
+      "options": [
+        "Keep the plan as the proposed revised sandbox plan in this artifact; product-owner choices are listed explicitly."
+      ],
+      "optional_leads": [
+        "Check any broader project plan only if later supplied as an admitted input."
+      ],
+      "validation": [
+        "Proposed: use the crosswalk checklist and synthetic suite in the revised P6.",
+        "Executed: read the exact frozen plan and recorded each section reference."
+      ],
+      "uncertainty": [
+        "No surrounding project documents were admitted or read; conclusions apply only to this bounded plan."
+      ],
+      "sources": [
+        "S-LOC-EXT",
+        "S-BWF-USER",
+        "S-BWF-HANDLER",
+        "S-BWF-218",
+        "S-BWF-HISTORY",
+        "S-BWF-RELEASE",
+        "S-FFMPEG",
+        "S-FFPROBE",
+        "S-RFC8493",
+        "S-ARCH-116"
+      ]
+    },
+    {
+      "id": "CRITIC_DELIVERABLE",
+      "summary": "O5 requires independent fresh same-family criticism and remains pending; the replacement plan is complete as a research proposal, with O6 validation and uncertainty stated.",
+      "disposition": "Do not simulate or invent criticism. Coordinator must obtain the separately assigned critic result and preserve each objection and disposition in the final plan.",
+      "evidence": [
+        "The brief requires a flash-family candidate critic and says the coordinator selects family and handoff. The input map reports no predecessors. No critic output was admitted to this researcher.",
+        "The proposed_change_document includes a coherent revised P1-P6 plan, evidence IDs, alternatives, choices, already-covered matters, rejected scope leads, validation proposals, and uncertainty."
+      ],
+      "conditions": [
+        "No critique was supplied in the admitted inputs; parent history and other arms are out of scope.",
+        "O5 is not satisfied until the independent critic stage completes."
+      ],
+      "options": [
+        "After critic delivery, append each substantive objection, disagreement, accepted correction or unresolved issue and rerender the full semantic set."
+      ],
+      "optional_leads": [
+        "Fresh critic should inspect the exact immutable code/version and full user scope independently."
+      ],
+      "validation": [
+        "Proposed: critic checks each P decision, source applicability, issue/fix/retest/release chain, and all O1-O6 obligations.",
+        "Executed: semantic-set and projection preservation checks will be performed; no application or audio fixture checks."
+      ],
+      "uncertainty": [
+        "No candidate criticism can be described until the critic stage is performed."
+      ],
+      "sources": [
+        "S-BWF-RELEASE",
+        "S-BWF-HANDLER",
+        "S-BWF-HISTORY"
+      ]
+    }
+  ]
+}
+
+```

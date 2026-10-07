@@ -1,0 +1,82 @@
+{
+  "id": "P20-dompurify-tests",
+  "requested_url": "https://raw.githubusercontent.com/cure53/DOMPurify/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/test/test-suite.js",
+  "retrieved_started_utc": "2026-10-07T19:44:25.693332+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/cure53/DOMPurify/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/test/test-suite.js",
+  "http_status": 200,
+  "response_bytes": 263208,
+  "response_sha256": "3a1bd6c3a09f7890d23efdf07959a9f74abbef58f4a5004ac07ff1a8ab181700",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"2480edab2a7b03cef60f84662c94f00726b7bbfde0018e57717c04313d084dbe\"",
+    "Date": "Wed, 07 Oct 2026 19:44:25 GMT"
+  },
+  "response_text_lines": 7201,
+  "normalization": "text",
+  "selection_patterns": [
+    "raw.text",
+    "raw text",
+    "IN_PLACE.*root",
+    "in.place.*root",
+    "clobber.*XML",
+    "trusted.*policy"
+  ],
+  "context_before": 2,
+  "context_after": 18,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      1391,
+      1410
+    ],
+    [
+      1725,
+      1744
+    ],
+    [
+      1929,
+      1965
+    ],
+    [
+      1980,
+      1999
+    ],
+    [
+      2038,
+      2057
+    ],
+    [
+      5082,
+      5101
+    ],
+    [
+      6094,
+      6113
+    ],
+    [
+      6124,
+      6143
+    ],
+    [
+      6344,
+      6363
+    ],
+    [
+      6385,
+      6404
+    ],
+    [
+      6523,
+      6542
+    ],
+    [
+      6612,
+      6685
+    ]
+  ],
+  "bounded_evidence_file": "P20-dompurify-tests.txt",
+  "bounded_evidence_sha256": "65c7d105d43180ecb748444a38c5b52785709992d4618c0e45fea30fcf407118",
+  "bounded_evidence_bytes": 14519,
+  "retrieved_finished_utc": "2026-10-07T19:44:25.948853+00:00"
+}

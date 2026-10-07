@@ -1,0 +1,117 @@
+{
+  "id": "P25-wcag-pinned",
+  "requested_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+  "retrieved_started_utc": "2026-10-07T19:44:25.867121+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+  "http_status": 200,
+  "response_bytes": 512457,
+  "response_sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:44:25 GMT",
+    "Content-Type": "text/html; charset=utf-8",
+    "last-modified": "Thu, 12 Dec 2024 10:36:22 GMT"
+  },
+  "response_text_lines": 2766,
+  "normalization": "html",
+  "selection_patterns": [
+    "W3C Recommendation",
+    "Parsing",
+    "Target Size \\(Minimum",
+    "Focus Appearance",
+    "Full pages",
+    "Complete processes",
+    "Language of Page",
+    "Language of Parts",
+    "Non-text Content"
+  ],
+  "context_before": 2,
+  "context_after": 18,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      1,
+      20
+    ],
+    [
+      39,
+      76
+    ],
+    [
+      93,
+      112
+    ],
+    [
+      155,
+      187
+    ],
+    [
+      192,
+      219
+    ],
+    [
+      250,
+      313
+    ],
+    [
+      794,
+      815
+    ],
+    [
+      881,
+      902
+    ],
+    [
+      907,
+      933
+    ],
+    [
+      1076,
+      1099
+    ],
+    [
+      1113,
+      1140
+    ],
+    [
+      1312,
+      1331
+    ],
+    [
+      2085,
+      2115
+    ],
+    [
+      2206,
+      2239
+    ],
+    [
+      2304,
+      2348
+    ],
+    [
+      2356,
+      2408
+    ],
+    [
+      2483,
+      2502
+    ],
+    [
+      2512,
+      2572
+    ],
+    [
+      2667,
+      2701
+    ],
+    [
+      2754,
+      2766
+    ]
+  ],
+  "bounded_evidence_file": "P25-wcag-pinned.txt",
+  "bounded_evidence_sha256": "a8f0aa189dbb24ade6c68033a358f22bf2fd4b57605a032aaeea163c6ef708ba",
+  "bounded_evidence_bytes": 37614,
+  "retrieved_finished_utc": "2026-10-07T19:44:26.196096+00:00"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "P35-sqlite-unicode-trigram",
+  "requested_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.34.0/ext/fts5/fts5_tokenize.c",
+  "retrieved_started_utc": "2026-10-07T19:47:46.356582+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.34.0/ext/fts5/fts5_tokenize.c",
+  "http_status": 200,
+  "response_bytes": 38035,
+  "response_sha256": "e456059ed3af8cb57bd570fed345cab23942b122b3cc699d8c39b990ff02531b",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"02df7b4b59ce1ead8206031ff010f615053bf4a247ba3d011ec15cc21d97a432\"",
+    "Date": "Wed, 07 Oct 2026 19:47:46 GMT"
+  },
+  "response_text_lines": 1415,
+  "normalization": "text",
+  "selection_patterns": [
+    "static int fts5UnicodeTokenize",
+    "static int fts5TriTokenize",
+    "remove_diacritics"
+  ],
+  "context_before": 2,
+  "context_after": 75,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      235,
+      320
+    ],
+    [
+      436,
+      512
+    ],
+    [
+      1315,
+      1391
+    ]
+  ],
+  "bounded_evidence_file": "P35-sqlite-unicode-trigram.txt",
+  "bounded_evidence_sha256": "488318cd8fae3eef0e5863d46830be863b5919cc5fa2744567795d0ec214ec78",
+  "bounded_evidence_bytes": 8577,
+  "retrieved_finished_utc": "2026-10-07T19:47:46.423466+00:00"
+}

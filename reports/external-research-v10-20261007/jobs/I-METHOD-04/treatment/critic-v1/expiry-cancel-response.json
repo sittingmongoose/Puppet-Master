@@ -1,0 +1,57 @@
+{
+  "record_at": "2026-10-07T20:11:01.803Z",
+  "clock_guard": {
+    "schema": "ER10-readonly-clock-guard-v1",
+    "observed_at": "2026-10-07T20:11:00.498977+00:00",
+    "original_deadline": "2026-10-07T20:09:39.347134+00:00",
+    "seconds_remaining": -81.151843,
+    "deadline_elapsed": true,
+    "prior_notice_at": "2026-10-07T20:09:55.233000+00:00",
+    "prior_notice_was_early": false,
+    "actual_notice_grace_end": "2026-10-07T20:10:45.233000+00:00",
+    "grace_elapsed": true,
+    "policy": "lifecycle_notice",
+    "decision": "OWNED_CANCEL_IF_STILL_LIVE",
+    "limitation": "Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline."
+  },
+  "status_at_grace": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-04-treatment-critic-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-04-treatment-critic-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-04-treatment-critic-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-04-treatment-critic-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-04-treatment-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-04-treatment-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-04-treatment-critic-v1:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-04-treatment-critic-v1",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "isError": false
+  },
+  "actual_cancel_response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-04-treatment-critic-v1\",\"status\":\"cancel_requested\"}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-04-treatment-critic-v1",
+      "status": "cancel_requested"
+    },
+    "isError": false
+  }
+}

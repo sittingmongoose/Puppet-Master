@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-source-review-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-source-review-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-source-review-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-source-review-v2\",\"status\":\"interrupted\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-source-review-v2:ordinal:1\",\"latestTerminalStatus\":\"interrupted\",\"latestTerminalSummary\":\"The review, judgment, and source evidence are saved. I\u2019m checking that the files are consistent and the frozen input hashes are unchanged, then finalizing the reviewer-only timing record with billing and usage left unknown.\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-source-review-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:4feb722b-1d56-4e2e-bb27-134720ef6a5e\",\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6.1-sol\",\"summary\":\"The review, judgment, and source evidence are saved. I\u2019m checking that the files are consistent and the frozen input hashes are unchanged, then finalizing the reviewer-only timing record with billing and usage left unknown.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-source-review-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:4feb722b-1d56-4e2e-bb27-134720ef6a5e\",\"waitTimedOut\":false}"
+    }
+  ],
+  "structuredContent": {
+    "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-source-review-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-source-review-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-source-review-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-source-review-v2",
+    "status": "interrupted",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-source-review-v2:ordinal:1",
+    "latestTerminalStatus": "interrupted",
+    "latestTerminalSummary": "The review, judgment, and source evidence are saved. I\u2019m checking that the files are consistent and the frozen input hashes are unchanged, then finalizing the reviewer-only timing record with billing and usage left unknown.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-source-review-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:4feb722b-1d56-4e2e-bb27-134720ef6a5e",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": "The review, judgment, and source evidence are saved. I\u2019m checking that the files are consistent and the frozen input hashes are unchanged, then finalizing the reviewer-only timing record with billing and usage left unknown.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-source-review-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:4feb722b-1d56-4e2e-bb27-134720ef6a5e",
+    "waitTimedOut": false
+  },
+  "isError": false
+}

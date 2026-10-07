@@ -1,0 +1,315 @@
+{
+  "stage": "ER10 I-METHOD-02/control/reviser-v1",
+  "inputs_consulted": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/reviser-v1/input-map.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v1/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v1/source-map.json"
+  ],
+  "acquisition_policy": "The full researcher/critic artifacts and source maps were the only predecessor inputs read. No predecessor captured bytes were reused. Each of these 25 public source documents/code files was independently fetched by direct HTTP GET from the exact locator in the supplied maps with Cache-Control: no-cache. Retrieved code/tests were inspected as data and not executed. Hashes and byte counts below were computed mechanically from this stage's saved bytes.",
+  "operation_counts": {
+    "direct_public_http_gets": 25,
+    "source_files_saved": 25,
+    "web_discovery_queries": 0,
+    "upstream_tests_executed": 0,
+    "application_builds": 0,
+    "interoperability_runs": 0,
+    "other_validation": "Static inspection of acquired source/spec/product/release/issue/test-source bytes only.",
+    "distinct_native_counters": {
+      "input": null,
+      "cache": null,
+      "generated": null,
+      "reasoning": null,
+      "billing": null
+    },
+    "aggregate_native_goal_tokens": "Reported separately by the actual terminal native Goal lifecycle tool response; no billing estimate."
+  },
+  "milestone_times_utc": {
+    "first_useful_saved_finding": "2026-10-07T19:46:42.581505Z",
+    "first_useful_saved_finding_source": "E05 W3C Web Annotation capture; selector and SpecificResource source bytes.",
+    "complete_artifact_mark": "2026-10-07T19:52:51.372736Z"
+  },
+  "entries": [
+    {
+      "id": "E01",
+      "title": "IIIF Presentation API 3.0",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_ref": "3.0.0",
+      "local_path": "sources/iiif-presentation-3.html",
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "bytes": 385826,
+      "acquired_at_utc": "2026-10-07T19:46:42.862506Z",
+      "paths_symbols_sections": "Manifest/Canvas model, painting Annotations, rights and requiredStatement."
+    },
+    {
+      "id": "E02",
+      "title": "IIIF Presentation API 2.1 series",
+      "url": "https://iiif.io/api/presentation/2.1/",
+      "version_or_ref": "2.1.1 page for the 2.1 series",
+      "local_path": "sources/iiif-presentation-2.1.html",
+      "sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+      "bytes": 310181,
+      "acquired_at_utc": "2026-10-07T19:46:42.826506Z",
+      "paths_symbols_sections": "Canvas extent and v2 license/attribution definitions."
+    },
+    {
+      "id": "E03",
+      "title": "IIIF Image API 3.0",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_ref": "3.0.0",
+      "local_path": "sources/iiif-image-3.html",
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "bytes": 145643,
+      "acquired_at_utc": "2026-10-07T19:46:42.769623Z",
+      "paths_symbols_sections": "Service identifiers, info documents, regions/sizes, rights, CORS/authentication sections."
+    },
+    {
+      "id": "E04",
+      "title": "IIIF Image API 2.1",
+      "url": "https://iiif.io/api/image/2.1/",
+      "version_or_ref": "2.1",
+      "local_path": "sources/iiif-image-2.1.html",
+      "sha256": "54fb93e88a35da9a0c87a11558a5d51680951e8ae7141e7f2badbdf73dcaaad7",
+      "bytes": 128530,
+      "acquired_at_utc": "2026-10-07T19:46:42.801506Z",
+      "paths_symbols_sections": "Service identifiers, info documents, regions/sizes, CORS and metadata sections."
+    },
+    {
+      "id": "E05",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_ref": "W3C Recommendation, 2017-02-23",
+      "local_path": "sources/w3c-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "bytes": 284185,
+      "acquired_at_utc": "2026-10-07T19:46:42.581505Z",
+      "paths_symbols_sections": "Annotation, SpecificResource, FragmentSelector and SvgSelector."
+    },
+    {
+      "id": "E06",
+      "title": "RightsStatements.org No Copyright—Contractual Restrictions",
+      "url": "https://rightsstatements.org/page/NoC-CR/1.0/?language=en",
+      "version_or_ref": "NoC-CR 1.0",
+      "local_path": "sources/rights-noc-cr.html",
+      "sha256": "daaae0192aa50ad83731f75ceab76dd8ced5db5243fd2151944f27ef46b926c9",
+      "bytes": 12411,
+      "acquired_at_utc": "2026-10-07T19:46:43.000506Z",
+      "paths_symbols_sections": "Statement says it is not a license and other permissions may be needed."
+    },
+    {
+      "id": "E07",
+      "title": "IIIF Cookbook: Multiple Views of an Object",
+      "url": "https://iiif.io/api/cookbook/recipe/0001-mvm-image-views/",
+      "version_or_ref": "Recipe 0001, captured 2026-10-07",
+      "local_path": "sources/iiif-multiple-views.html",
+      "sha256": "bfe3c4cb972fd8ca9c64ae9da920a4644b771872657b9fe3bcfae4de2e9bc20f",
+      "bytes": 10247,
+      "acquired_at_utc": "2026-10-07T19:46:42.804419Z",
+      "paths_symbols_sections": "Multiple-Canvas pattern."
+    },
+    {
+      "id": "E08",
+      "title": "OpenSeadragon v6.1.1 tag ref",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1",
+      "version_or_ref": "v6.1.1 tag ref",
+      "local_path": "sources/osd-tag-ref.json",
+      "sha256": "ab17f3b383a0dfe0b68a58080626942496479611cce254c1ad491c567489dc18",
+      "bytes": 392,
+      "acquired_at_utc": "2026-10-07T19:46:42.683087Z",
+      "paths_symbols_sections": "Tag ref resolves to annotated tag object."
+    },
+    {
+      "id": "E09",
+      "title": "OpenSeadragon v6.1.1 annotated tag object",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/96bdae63fc78de7cfb0721480b4e0560e0ce6b96",
+      "version_or_ref": "Tag object 96bdae63fc78de7cfb0721480b4e0560e0ce6b96; commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "local_path": "sources/osd-tag-object-v6.1.1.json",
+      "sha256": "65d393cd64cc9a2a8db4da69e0cd09cc8f46ba7d3bc9b2bb2ed2b33b918c3e1d",
+      "bytes": 780,
+      "acquired_at_utc": "2026-10-07T19:46:42.677452Z",
+      "paths_symbols_sections": "Immutable tag-to-commit chain."
+    },
+    {
+      "id": "E10",
+      "title": "OpenSeadragon v6.1.1 release",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.1.1",
+      "version_or_ref": "Published 2026-09-09",
+      "local_path": "sources/osd-release-v6.1.1.json",
+      "sha256": "e9132fe33897ca96c874595be2d276a583c379ce86f1d8ee9b90f653347ed28a",
+      "bytes": 6300,
+      "acquired_at_utc": "2026-10-07T19:46:42.724690Z",
+      "paths_symbols_sections": "Release notes name fix #2963."
+    },
+    {
+      "id": "E11",
+      "title": "OpenSeadragon latest release endpoint",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/releases/latest",
+      "version_or_ref": "Resolved to v6.1.1 at capture",
+      "local_path": "sources/osd-latest-release.json",
+      "sha256": "e9132fe33897ca96c874595be2d276a583c379ce86f1d8ee9b90f653347ed28a",
+      "bytes": 6300,
+      "acquired_at_utc": "2026-10-07T19:46:42.640878Z",
+      "paths_symbols_sections": "Current-candidate check at this stage's capture time."
+    },
+    {
+      "id": "E12",
+      "title": "OpenSeadragon IIIFTileSource source",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/iiiftilesource.js",
+      "version_or_ref": "Commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "local_path": "sources/osd-iiiftilesource.js",
+      "sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "bytes": 28380,
+      "acquired_at_utc": "2026-10-07T19:46:42.632505Z",
+      "paths_symbols_sections": "Identifier/dimension normalization, tiling, empty-sizes guard and tile URL construction."
+    },
+    {
+      "id": "E13",
+      "title": "OpenSeadragon Viewer source",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewer.js",
+      "version_or_ref": "Commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "local_path": "sources/osd-viewer.js",
+      "sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "bytes": 190702,
+      "acquired_at_utc": "2026-10-07T19:46:42.661505Z",
+      "paths_symbols_sections": "TileSource resolution, sequence switching, overlay lifecycle and coordinate contract."
+    },
+    {
+      "id": "E14",
+      "title": "OpenSeadragon TiledImage source",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/tiledimage.js",
+      "version_or_ref": "Commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "local_path": "sources/osd-tiledimage.js",
+      "sha256": "c7e5285eeea807653b3ec4345faa4bf6931457b34c28922ae5694c2f4eca45bc",
+      "bytes": 105626,
+      "acquired_at_utc": "2026-10-07T19:46:42.663505Z",
+      "paths_symbols_sections": "Image-pixel/viewer coordinate conversion."
+    },
+    {
+      "id": "E15",
+      "title": "OpenSeadragon Overlay source",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/overlay.js",
+      "version_or_ref": "Commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "local_path": "sources/osd-overlay.js",
+      "sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "bytes": 20632,
+      "acquired_at_utc": "2026-10-07T19:46:42.753505Z",
+      "paths_symbols_sections": "Overlay rendering behavior; statically inspected, not executed."
+    },
+    {
+      "id": "E16",
+      "title": "OpenSeadragon IIIF regression tests",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/iiif.js",
+      "version_or_ref": "Commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "local_path": "sources/osd-test-iiif.js",
+      "sha256": "1448f149329a49912add70c82af19ff62549d7678cd5c173cd128bc3a597ce4a",
+      "bytes": 19673,
+      "acquired_at_utc": "2026-10-07T19:46:42.645505Z",
+      "paths_symbols_sections": "Empty-sizes fixture and test assertions; not run."
+    },
+    {
+      "id": "E17",
+      "title": "OpenSeadragon TiledImage coordinate tests",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/tiledimage.js",
+      "version_or_ref": "Commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "local_path": "sources/osd-test-tiledimage.js",
+      "sha256": "823f6a583b78fb34348206d1c54bf86672e71f15f3f104c6c266629c51e1fb0c",
+      "bytes": 29169,
+      "acquired_at_utc": "2026-10-07T19:46:42.647505Z",
+      "paths_symbols_sections": "Coordinate round-trip assertions; not run."
+    },
+    {
+      "id": "E18",
+      "title": "OpenSeadragon issue #2962",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2962",
+      "version_or_ref": "Reported against 6.1.0; closed 2026-08-31",
+      "local_path": "sources/osd-issue-2962.json",
+      "sha256": "d01b612bb533d5963e32bad7ff7e6d7e7a852d27c9920578931338c6a4a21a06",
+      "bytes": 8888,
+      "acquired_at_utc": "2026-10-07T19:46:42.902166Z",
+      "paths_symbols_sections": "Empty-sizes report and reporter-supplied affected-version comparison."
+    },
+    {
+      "id": "E19",
+      "title": "OpenSeadragon PR #2963",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2963",
+      "version_or_ref": "Merged 2026-08-31, merge d5efe646122631cba1afb66fb778a4d0f7351315",
+      "local_path": "sources/osd-pr-2963.json",
+      "sha256": "90fd9e9a10338a72763bdc13deffdf2e6b1812b218ea23453132e60a3ee18291",
+      "bytes": 16421,
+      "acquired_at_utc": "2026-10-07T19:46:42.778506Z",
+      "paths_symbols_sections": "Fix/test description and merge metadata."
+    },
+    {
+      "id": "E20",
+      "title": "OpenSeadragon PR #2963 changed files",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2963/files",
+      "version_or_ref": "PR #2963 merge d5efe646122631cba1afb66fb778a4d0f7351315",
+      "local_path": "sources/osd-pr-2963-files.json",
+      "sha256": "ff1a2194f6d6f3d90bbdb01c68ae855f34f0bf11419631e846727fbd62677f03",
+      "bytes": 3517,
+      "acquired_at_utc": "2026-10-07T19:46:42.789468Z",
+      "paths_symbols_sections": "Non-empty sizes guard and regression fixture/test diff."
+    },
+    {
+      "id": "E21",
+      "title": "OpenSeadragon issue locator #2710",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2710",
+      "version_or_ref": "API record returned at capture; titled “Change to getTileUrl…”",
+      "local_path": "sources/osd-issue-2710.json",
+      "sha256": "77d83afbe1cea57ebe2ba493379b4981fde7d9e83dda39b1b9e36577bf3b77ce",
+      "bytes": 4268,
+      "acquired_at_utc": "2026-10-07T19:46:42.788506Z",
+      "paths_symbols_sections": "Does not substantiate the inherited #2710 root-cause link."
+    },
+    {
+      "id": "E22",
+      "title": "OpenSeadragon commit ae500afb",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/commits/ae500afb",
+      "version_or_ref": "Commit ae500afbcb143a8af49f0f8bf7c61d8f3e1ae56f",
+      "local_path": "sources/osd-commit-ae500afb.json",
+      "sha256": "52fd6b5015f553fe478b94ecf49a1a0703f9766c46c25f99e850dc9cd7118c44",
+      "bytes": 9930,
+      "acquired_at_utc": "2026-10-07T19:46:42.864506Z",
+      "paths_symbols_sections": "Commit description associates refactor with PR #2337; attribution conflict noted."
+    },
+    {
+      "id": "E23",
+      "title": "Mirador official project page",
+      "url": "https://projectmirador.org/",
+      "version_or_ref": "Live unversioned page captured 2026-10-07",
+      "local_path": "sources/mirador-home.html",
+      "sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "bytes": 7133,
+      "acquired_at_utc": "2026-10-07T19:46:42.880337Z",
+      "paths_symbols_sections": "Comparison, workspaces, annotation plugin, import/export, IIIF v2/v3 feature leads."
+    },
+    {
+      "id": "E24",
+      "title": "Universal Viewer official project page",
+      "url": "https://universalviewer.io/",
+      "version_or_ref": "Live unversioned page captured 2026-10-07",
+      "local_path": "sources/universal-viewer-home.html",
+      "sha256": "ed416fed97e755923f88c47af5edb268568ac6cc18f91086b2d59caf459c58f2",
+      "bytes": 12215,
+      "acquired_at_utc": "2026-10-07T19:46:42.683087Z",
+      "paths_symbols_sections": "Manifest input and OpenSeadragon zoom feature lead."
+    },
+    {
+      "id": "E25",
+      "title": "Annotorious Getting Started guide",
+      "url": "https://annotorious.dev/getting-started/",
+      "version_or_ref": "Live unversioned guide captured 2026-10-07; no package release pinned",
+      "local_path": "sources/annotorious-guide.html",
+      "sha256": "677e7fc00771860a27880b2aeb5470bb119a189b19f4660b0032394acf2c1ab7",
+      "bytes": 48966,
+      "acquired_at_utc": "2026-10-07T19:46:42.819506Z",
+      "paths_symbols_sections": "OpenSeadragon/IIIF integration feature lead."
+    }
+  ],
+  "authored_artifact": {
+    "path": "artifact.md",
+    "sha256": "3c198330b49184731e4b958bd247641284f242b6d4f946f1235eea07e16257f7",
+    "bytes": 26428
+  }
+}

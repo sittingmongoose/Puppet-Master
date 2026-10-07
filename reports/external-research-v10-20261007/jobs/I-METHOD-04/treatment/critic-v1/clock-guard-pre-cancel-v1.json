@@ -1,0 +1,14 @@
+{
+  "schema": "ER10-readonly-clock-guard-v1",
+  "observed_at": "2026-10-07T20:10:25.190148+00:00",
+  "original_deadline": "2026-10-07T20:09:39.347134+00:00",
+  "seconds_remaining": -45.843014,
+  "deadline_elapsed": true,
+  "prior_notice_at": "2026-10-07T20:09:55.233000+00:00",
+  "prior_notice_was_early": false,
+  "actual_notice_grace_end": "2026-10-07T20:10:55.233000+00:00",
+  "grace_elapsed": false,
+  "policy": "lifecycle_notice",
+  "decision": "WAIT_FOR_DELIVERY_NOTIFICATION",
+  "limitation": "Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline."
+}

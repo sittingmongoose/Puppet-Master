@@ -1,0 +1,59 @@
+{
+  "id": "P18-dompurify-readme",
+  "requested_url": "https://raw.githubusercontent.com/cure53/DOMPurify/3.4.16/README.md",
+  "retrieved_started_utc": "2026-10-07T19:42:47.259885+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/cure53/DOMPurify/3.4.16/README.md",
+  "http_status": 200,
+  "response_bytes": 43198,
+  "response_sha256": "f25683308973b0b6cfaeb07df43dea47f6f8f4340e8b74c3992cc9712b3ce8dc",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"9a2bba233d69f51ea3afb991404b97d13e3c59adf64a8bc5ce8a8af75b4cb3b0\"",
+    "Date": "Wed, 07 Oct 2026 19:42:47 GMT"
+  },
+  "response_text_lines": 596,
+  "normalization": "text",
+  "selection_patterns": [
+    "server",
+    "jsdom",
+    "threat",
+    "IN_PLACE",
+    "DOMPurify.sanitize",
+    "network",
+    "trusted"
+  ],
+  "context_before": 3,
+  "context_after": 12,
+  "max_hits_per_pattern": 20,
+  "selected_line_ranges": [
+    [
+      1,
+      52
+    ],
+    [
+      59,
+      237
+    ],
+    [
+      398,
+      429
+    ],
+    [
+      460,
+      485
+    ],
+    [
+      511,
+      525
+    ],
+    [
+      551,
+      573
+    ]
+  ],
+  "bounded_evidence_file": "P18-dompurify-readme.txt",
+  "bounded_evidence_sha256": "91e9b1a55eeba328f0c3c6d55bf165cfef1948a256edded039444b2a4566b980",
+  "bounded_evidence_bytes": 27966,
+  "retrieved_finished_utc": "2026-10-07T19:42:47.369609+00:00"
+}

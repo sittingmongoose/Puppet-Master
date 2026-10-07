@@ -1,0 +1,94 @@
+{
+  "frozen_at": "2026-10-07T19:35:04.832945+00:00",
+  "required": [
+    "final.md",
+    "critique.md",
+    "sources/SOURCES.md",
+    "timings.json",
+    "native_goal_receipt.json",
+    "native_terminal_receipt.json",
+    "integration-state-terminal-001.json",
+    "terminal-identity-verification.json",
+    "coordinator-disposition-001.json",
+    "task-terminal-tool-receipt.json"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "ffbd0143cf066f8fe0e4234740b5e01eb32508093e68adaa9a4a7256c5aede91",
+      "bytes": 1339
+    },
+    "assignment.md": {
+      "sha256": "372b8aa8a77b797c68d103dbeb459370d2f7b158db424a9cfb51523dea1ad3f2",
+      "bytes": 3551
+    },
+    "config.json": {
+      "sha256": "a4a480df99fe9f61e661198c6e9db50476d9d4f2dbad37994d087d9468be7fff",
+      "bytes": 149
+    },
+    "coordinator-disposition-001.json": {
+      "sha256": "a01047b7851d6b5d76a15152e479d01044220e15d50263a2418924084fa8b777",
+      "bytes": 952
+    },
+    "critique.md": {
+      "sha256": "b88818d1b2bea7b67ca350993eccc10db8d6d2cb80d7648b7b4e06c706112b6b",
+      "bytes": 9473
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "7c192eaf48ed44f7eb1cd83c2bd6664e6be311d1c7f0737287c7e01afeadaebf",
+      "bytes": 2262
+    },
+    "final.md": {
+      "sha256": "17b5d64dd0baf92ae7ff8d8ddecb30e0b5ea6fbb2498fe8afece7ec769386c49",
+      "bytes": 7775
+    },
+    "integration-state-active-001.json": {
+      "sha256": "22ace5fd92f69c7778ddd2f470fa2fdcd7644a29ffc4fd80d475f355fffd1627",
+      "bytes": 7106
+    },
+    "integration-state-terminal-001.json": {
+      "sha256": "d02bad93d898c5796671bc007487cfd71964f5de0464a9d9f234e0b8ef65f88b",
+      "bytes": 7318
+    },
+    "native_goal_receipt.json": {
+      "sha256": "afb44d1c45895ae1cfdb88efd419310d479aca0a4f473c68a231ae415eae2510",
+      "bytes": 3728
+    },
+    "native_terminal_receipt.json": {
+      "sha256": "30625cda5f9ee6174a6dd54c73cee71fcea9477228d2aa736604911cbf4e5e41",
+      "bytes": 1972
+    },
+    "prepared.json": {
+      "sha256": "95d56953b1d35c382042e2692f1f895dcba20a02d0b1ef8354ee46ae553b5814",
+      "bytes": 1746
+    },
+    "sources/SOURCES.md": {
+      "sha256": "c4dfa834c7b02b1178e4e81aa09fc040553aaa0a5d4339a4c8c357d358adb1ed",
+      "bytes": 4139
+    },
+    "t3-configuration-observation-001.json": {
+      "sha256": "7fd273584892903e4b64206685998e8111a2b16360647ad58cc867374e47ae11",
+      "bytes": 1052
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "2a2391c164e7c343c024c611ca2f4462c4c97c4587a11595d4c7966baf9f783b",
+      "bytes": 5140
+    },
+    "task.txt": {
+      "sha256": "943850131f0aa3097de21aa4ec7be4eb20802c7cb3b4dc0490cd587a80234333",
+      "bytes": 439
+    },
+    "terminal-identity-verification.json": {
+      "sha256": "d18cf3dde72271e03a2750ca31fa8c417724ee7f6f8a2b6f40b5e4ac77362275",
+      "bytes": 196
+    },
+    "timings.json": {
+      "sha256": "e0c28f2c4a9aac3be66a43b0940da4d7846553e2521f6cd09d47536e82517cb5",
+      "bytes": 1603
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "b2ab14b4258ea11890e01eae4434bfbd23980f3c666add3cf8c97eb4881d0922",
+      "bytes": 6922
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

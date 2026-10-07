@@ -1,0 +1,163 @@
+{
+  "at": "2026-10-07T20:05:40.866668+00:00",
+  "arms": {
+    "control": {
+      "cold_v2_original_dispatch_to_required_T3_terminal_seconds": 2705.171,
+      "aggregate_union_admitted_stage_intervals_seconds": 2613.485,
+      "between_stage_handoff_seconds": 91.686,
+      "wholearm_start_including_setup": "2026-10-07T18:50:04.842698Z",
+      "wholearm_deadline": "2026-10-07T19:35:04.842698Z",
+      "cold_start_including_setup_to_T3_terminal_seconds": 2705.389,
+      "stages": [
+        {
+          "stage": "research-v2",
+          "runs": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "requestedAt": "2026-10-07T18:50:05.061Z",
+              "startedAt": "2026-10-07T18:50:09.464Z",
+              "completedAt": "2026-10-07T19:08:03.615Z"
+            }
+          ],
+          "first_requested_epoch": 1791399005.061,
+          "last_terminal_epoch": 1791400083.615,
+          "stage_span_seconds": 1078.5539999008179,
+          "union_admitted_run_intervals_seconds": 1078.5539999008179,
+          "settled": true
+        },
+        {
+          "stage": "critic-v2",
+          "runs": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1",
+              "ordinal": 1,
+              "status": "interrupted",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "requestedAt": "2026-10-07T19:09:14.159Z",
+              "startedAt": "2026-10-07T19:09:20.794Z",
+              "completedAt": "2026-10-07T19:20:08.198Z"
+            }
+          ],
+          "first_requested_epoch": 1791400154.159,
+          "last_terminal_epoch": 1791400808.198,
+          "stage_span_seconds": 654.0390000343323,
+          "union_admitted_run_intervals_seconds": 654.0390000343323,
+          "settled": true
+        },
+        {
+          "stage": "reviser-v2",
+          "runs": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:ordinal:1",
+              "ordinal": 1,
+              "status": "interrupted",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "requestedAt": "2026-10-07T19:20:29.340Z",
+              "startedAt": "2026-10-07T19:20:34.306Z",
+              "completedAt": "2026-10-07T19:35:10.232Z"
+            }
+          ],
+          "first_requested_epoch": 1791400829.34,
+          "last_terminal_epoch": 1791401710.232,
+          "stage_span_seconds": 880.8920001983643,
+          "union_admitted_run_intervals_seconds": 880.8920001983643,
+          "settled": true
+        }
+      ],
+      "aggregate_pure_active_compute_seconds": null,
+      "queue_delay_seconds": null,
+      "source_operations_seconds": null,
+      "required_resource_release_at": null,
+      "measurement_limits": "Resumed treatment researcher requested intervals overlap; union counted once within same stage, not summed. Admitted spans include queue/startup/driver checks/delivery, not pure compute. T3 original start appears later than independently observed native creation for treatmentresearcher; raw projections retained, queue semantics unknown. Source setup before treatment original dispatch unknown; exact release timing not instrumented."
+    },
+    "treatment": {
+      "cold_v2_original_dispatch_to_required_T3_terminal_seconds": 3018.137,
+      "aggregate_union_admitted_stage_intervals_seconds": 2911.187,
+      "between_stage_handoff_seconds": 106.95,
+      "wholearm_start_including_setup": "2026-10-07T18:44:18.054Z",
+      "wholearm_deadline": "2026-10-07T19:29:18.054Z",
+      "cold_start_including_setup_to_T3_terminal_seconds": 3018.137,
+      "stages": [
+        {
+          "stage": "research-v2",
+          "runs": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:3",
+              "ordinal": 3,
+              "status": "interrupted",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "requestedAt": "2026-10-07T18:55:57.438Z",
+              "startedAt": "2026-10-07T19:03:49.247Z",
+              "completedAt": "2026-10-07T19:12:51.885Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:2",
+              "ordinal": 2,
+              "status": "completed",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "requestedAt": "2026-10-07T18:55:57.009Z",
+              "startedAt": "2026-10-07T19:03:44.540Z",
+              "completedAt": "2026-10-07T19:03:45.415Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "requestedAt": "2026-10-07T18:44:18.054Z",
+              "startedAt": "2026-10-07T18:48:42.144Z",
+              "completedAt": "2026-10-07T19:03:41.521Z"
+            }
+          ],
+          "first_requested_epoch": 1791398658.054,
+          "last_terminal_epoch": 1791400371.885,
+          "stage_span_seconds": 1713.8310000896454,
+          "union_admitted_run_intervals_seconds": 1713.8310000896454,
+          "settled": true
+        },
+        {
+          "stage": "critic-finalizer-v2",
+          "runs": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "requestedAt": "2026-10-07T19:14:38.835Z",
+              "startedAt": "2026-10-07T19:14:43.551Z",
+              "completedAt": "2026-10-07T19:34:36.191Z"
+            }
+          ],
+          "first_requested_epoch": 1791400478.835,
+          "last_terminal_epoch": 1791401676.191,
+          "stage_span_seconds": 1197.3559999465942,
+          "union_admitted_run_intervals_seconds": 1197.3559999465942,
+          "settled": true
+        }
+      ],
+      "aggregate_pure_active_compute_seconds": null,
+      "queue_delay_seconds": null,
+      "source_operations_seconds": null,
+      "required_resource_release_at": null,
+      "measurement_limits": "Resumed treatment researcher requested intervals overlap; union counted once within same stage, not summed. Admitted spans include queue/startup/driver checks/delivery, not pure compute. T3 original start appears later than independently observed native creation for treatmentresearcher; raw projections retained, queue semantics unknown. Source setup before treatment original dispatch unknown; exact release timing not instrumented."
+    }
+  },
+  "original_failed_v1_route_attempt": {
+    "requested_at": "2026-10-07T18:27:49.999Z",
+    "terminal_at": "2026-10-07T18:36:16.641Z",
+    "inclusive_admitted_seconds": 506.642,
+    "credit": "failure diagnosis retained separately; prospective v2 commonrouteenvelope, no bestof or modelcredit"
+  },
+  "descriptive_control_over_treatment_T3_terminal_latency_ratio": 0.8963,
+  "source_quality_or_native_win_claim": false
+}

@@ -1,0 +1,12 @@
+{
+  "event": "linked_premature_lifecycle_steer_annotation",
+  "record_at": "2026-10-07T20:08:31.765052+00:00",
+  "original_steer": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/expiry-save-deliver-steer.json",
+  "actual_steer_record_at": "2026-10-07T20:08:09.543Z",
+  "original_stage_deadline": "2026-10-07T20:08:20.402615Z",
+  "steer_early_seconds": 10.859615,
+  "protocol_hold": "lifecycle-only steer sent before actual stage expiry; no timestampreplacement/retroactive contract repair",
+  "scientific_effect": null,
+  "no_new_substantive_steer_or_extension": true,
+  "grace_stop_latest": "2026-10-07T20:09:09.543000+00:00"
+}

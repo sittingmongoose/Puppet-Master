@@ -1,0 +1,14 @@
+{
+  "original_whole_start_utc": "2026-10-07T18:50:04.842698Z",
+  "original_whole_deadline_utc": "2026-10-07T19:35:04.842698Z",
+  "clock_reset_performed": false,
+  "budget_note": "Original allocations 1200/600/900 with nominal 900 reserve; actual remaining reduced by earlier overrun; INPUTS.md absolute deadline governs. No fresh 15 minutes; clock never reset.",
+  "stage_writes_utc": {
+    "native_goal_receipt.json": "2026-10-07T19:23:13Z",
+    "final.md": "2026-10-07T19:27Z",
+    "critique-dispositions.md": "2026-10-07T19:31Z",
+    "sources/SOURCES.md": "2026-10-07T19:34:40Z",
+    "native_terminal_receipt.json": "2026-10-07T19:34:40.065529Z"
+  },
+  "seconds_remaining_at_last_write": 24.777169
+}

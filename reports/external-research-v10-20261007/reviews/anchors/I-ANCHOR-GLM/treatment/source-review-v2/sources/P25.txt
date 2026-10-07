@@ -1,0 +1,48 @@
+1: SQLite Release 3.46.1 On 2024-08-13
+2: Small. Fast. Reliable.
+3: Choose any three.
+4: Home
+5: Menu
+6: About
+7: Documentation
+17: Purchase
+18: Search Documentation
+19: Search Changelog
+20: SQLite Release 3.46.1 On 2024-08-13
+21: Prior changes from version 3.46.0 (2024-05-23):
+22: Enhance PRAGMA optimize in multiple ways, to make it
+23: simpler to use:
+24: PRAGMA optimize automatically implements a temporary
+25: analysis limit to prevent excess runtime
+26: on large databases.
+27: Added the new 0x10000 bitmask option to check for updates on all tables.
+54: that looks like an integer it is still treated as a string, because that is what
+55: PostgreSQL does.
+56: Allow large hexadecimal literals to be used as the DEFAULT value to a table column.
+57: Changes in this specific patch release, version 3.46.1 (2024-08-13):
+58: Improved robustness while parsing the tokenize= arguments in FTS5.
+59: Forum post 171bcc2bcd.
+60: Enhancements to covering index prediction in the query planner.
+61: Add early detection of over-prediction of covering indexes so that
+62: sqlite3_prepare() will return an error rather than just generate bad bytecode.
+63: Forum post e60e4c295d22f8ce.
+64: Do not let the number of terms on a VALUES clause be limited by
+67: double-quoted string literals.
+68: Fix the window function version of group_concat() so that it returns
+69: an empty string if it has one or more empty string inputs.
+70: In FTS5 secure-delete mode, fix false-positive
+71: integrity-check reports about corrupt indexes.
+72: Syntax errors in ALTER TABLE should always return SQLITE_ERROR. In
+73: some cases, they were formerly returning SQLITE_INTERNAL.
+74: JavaScript/WASM:
+75: Fix a corruption-causing bug in the JavaScript "opfs" VFS.
+76: Work around a couple of browser-specific OPFS quirks.
+77: Other minor fixes.
+78: Hashes:
+79: SQLITE_SOURCE_ID: 2024-08-13 09:16:08 c9c2ab54ba1f5f46360f1b4f35d849cd3f080e6fc2b6c60e91b16c63f69a1e33
+80: SHA3-256 for sqlite3.c: 186a1baa476b6d546de155160ca6d30ff7b7e6ee375f0bb6445e1a3d180a7dad
+81: A complete list of SQLite releases
+82: in a single page and a chronology are both also available.
+83: A detailed history of every
+84: check-in is available at
+85: SQLite version control site.

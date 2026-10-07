@@ -1,0 +1,22 @@
+{
+  "arm": "ER10 I-ANCHOR-GLM treatment critic-finalizer v2",
+  "absolute_whole_arm_deadline_utc": "2026-10-07T19:29:18.054Z",
+  "prep_remaining_seconds_at_write": 879.571633,
+  "start_utc": "2026-10-07T19:14:38.482Z",
+  "start_note": "prepared.json 'at' and remaining_seconds 879.571633; installed goal createdAt 2026-10-07T19:14:44.941Z",
+  "first_useful_saved_finding_utc": "2026-10-07T19:16:46Z",
+  "first_useful_saved_finding": "ticket-1 scratch source-ID-to-locator map (/tmp/er10-i-anchor-glm-ticket1-source-map.md) after ingesting all six INPUTS.md paths; first in-deliverable finding: CF-01/CF-02 re-execution evidence 2026-10-07T19:26:01.523Z",
+  "final_ready_utc": "2026-10-07T19:30:35.985Z",
+  "final_ready_note": "final.md, sources/SOURCES.md and this timings.json were completed AFTER the absolute deadline; per assignment line 4 the lifecycle failure is recorded separately from the scientific content",
+  "native_terminal_utc": null,
+  "native_terminal_note": "not actual: installed GoalLoopDriver goal sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f was status running at last read-only observation; terminalization owned by the driver, see native_terminal_receipt.json",
+  "counters": {
+    "input": "unknown (no exposed token/counter interface)",
+    "cache": "unknown",
+    "output": "unknown",
+    "reasoning": "unknown",
+    "note": "counters kept separate, not summed; unknown billing remains unknown"
+  },
+  "budget_discipline": "one shared budget from prep; no fresh 1200s; researcher deadline elapsed; no extension/reset taken or available",
+  "written_at_utc_capture": "19:30:35"
+}

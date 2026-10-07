@@ -1,0 +1,36 @@
+{
+  "cache_mode": "warm",
+  "elapsed_seconds": 0.0019285189991933294,
+  "ended_at": "2026-10-07T19:42:29.476927+00:00",
+  "network_requests": 0,
+  "operation": "read",
+  "record": {
+    "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+    "commit_binding": "caller_label_unverified",
+    "extracted": {
+      "bytes": 29169,
+      "sha256": "823f6a583b78fb34348206d1c54bf86672e71f15f3f104c6c266629c51e1fb0c"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "29169",
+      "Content-Type": "text/plain; charset=utf-8",
+      "ETag": "\"e6f9b34cbc9716f514be0e0dfd09cc3e1aaf76f07cb8502b7fcd92926507ec14\"",
+      "Last-Modified": null
+    },
+    "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/tiledimage.js",
+    "raw": {
+      "bytes": 29169,
+      "sha256": "823f6a583b78fb34348206d1c54bf86672e71f15f3f104c6c266629c51e1fb0c"
+    },
+    "retrieved_at": "2026-10-07T19:25:12.769787+00:00",
+    "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/tiledimage.js"
+  },
+  "record_id": "85c3ef272b65528bce0f003afb8f0760b468e39a35518026cc6305c7e0b849b3",
+  "source": "85c3ef272b65528bce0f003afb8f0760b468e39a35518026cc6305c7e0b849b3",
+  "started_at": "2026-10-07T19:42:29.474972+00:00",
+  "status": "ok"
+}

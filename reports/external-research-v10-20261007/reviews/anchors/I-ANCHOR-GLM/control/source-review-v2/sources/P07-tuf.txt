@@ -1,0 +1,100 @@
+L27: Create documentation issue
+L28: Attacks and Weaknesses
+L29: Security Design Principles
+L30: Trust
+L31: Mitigating Key Risk (Compromise-Resilience)
+L32: Integrity
+L33: Freshness
+L34: Implementation Safety
+L35: Docs
+L36: Security
+L37: Security
+L38: Security properties of TUF repositories
+L39: We can think of a software update system as “secure” if:
+L40: it knows about the latest available updates in a timely manner
+L41: any files it downloads are the correct files, and,
+L64: maximum possible version number, the perpetrator could use a number so high
+L65: that the system would never be able to match it with the one in the snapshot
+L66: metadata, and thus new updates could never be downloaded.
+L67: Indefinite freeze attacks. An attacker continues to present files to a
+L68: software update system files that the client has already seen. As a result,
+L69: the client is kept unaware of new files.
+L70: Endless data attacks. An attacker responds to a file download request with
+L71: an endless stream of data, causing harm to clients (e.g. a disk partition
+L72: filling up or memory exhaustion).
+L73: Extraneous dependencies attacks. An attacker indicates to clients that, in
+L74: order to install the software they want, they also need to install unrelated
+L75: software. This extra software may be from a trusted source, but could still
+L76: have known vulnerabilities that are exploitable by the attacker.
+L77: Mix-and-match attacks. An attacker presents clients with a view of a
+L78: repository that includes files that did not exist there together at the same
+L79: time. This can result in outdated versions of dependencies being installed,
+L80: and other complications.
+L81: Wrong software installation. An attacker provides a client with a trusted
+L82: file that is just not the one the client wanted.
+L83: Malicious mirrors preventing updates. An attacker controls one repository
+L84: mirror and is able to use it to prevent clients from obtaining updates from
+L85: other, non-malicious mirrors.
+L86: Vulnerability to key compromises. An attacker who can compromise the one
+L87: key in a single key system, or less than a given threshold of keys, can
+L88: compromise clients. These attacks can occur whether the client relies on a
+L89: single online key (if only being protected by SSL) or a single offline key (if
+L90: protected by most software update systems that use keysigning).
+L91: Security Design Principles
+L92: To ensure systems are secure against all of the above attacks, the design and
+L93: implementation of TUF relies on a few basic concepts. For details of how TUF
+L94: conveys the information discussed below, see
+L95: Roles and metadata.
+L96: Trust
+L97: Trusting downloaded files really means assuming the files were provided by party
+L98: without malicious designs. Two frequently overlooked aspects of trust in a
+L99: secure software update system are:
+L100: Trust should not be granted forever. Trust should expire if it is not renewed.
+L101: Trust should not be granted equally to all parties. This type of
+L102: compartmentalized trust means a party is only to be trusted for the files that
+L103: the root role stipulates it is to provide.
+L104: Mitigating Key Risk (Compromise-Resilience)
+L105: Cryptographic signatures are a necessary component in securing a software update
+L106: system. The safety of the keys used to create these signatures directly affects
+L107: the security of the clients the system protects. Rather than naively assume that
+L108: private keys are always safe from compromise, a secure software update system
+L109: must anticipate how to keep clients as safe as possible when a compromise of
+L110: those keys occurs. This is the basic principle of compromise resilience.
+L111: Keeping clients safe despite a key compromise involves:
+L112: Fast and secure key replacement and revocation.
+L113: Minimal trust placed in keys that are at high risk. Keys that are kept online
+L114: or used in an automated fashion should not pose an immediate risk to clients
+L115: if compromised.
+L116: Multiple key usage and a threshold/quorum of signatures.
+L117: Integrity
+L118: Ensuring integrity in TUF not only refers to single files, but also to
+L119: repository as a whole. It’s fairly obvious that clients must verify that
+L120: individual downloaded files are correct. It’s not as obvious, but still very
+L121: important for clients to be certain that their entire view of a repository is
+L122: correct. For example, if a trusted party is providing two files, a software
+L123: update system should see the latest versions of both files, not just one, and
+L124: not versions of the two files that were never provided together.
+L125: Freshness
+L126: Since software updates often fix security bugs, it is important for software
+L127: update systems to obtain the latest versions available of these files. An
+L128: attacker may want to trick a client into installing outdated versions of
+L129: software or even just convince a client that no updates are available.
+L130: Ensuring freshness means:
+L131: Never accepting files older than those that have been seen previously.
+L132: Recognizing when there may be a problem obtaining updates.
+L133: Note that it won’t always be possible for a client to successfully update if an
+L134: attacker is responding to their requests. However, a client should be able to
+L135: recognize that updates may exist that they haven’t been able to obtain.
+L136: Implementation Safety
+L137: In addition to a secure design, TUF also works to be secure against
+L138: implementation vulnerabilities, including those common to software update
+L139: systems. In some cases this is assisted by the inclusion of additional
+L140: information in metadata. For example, knowing the expected size of a target file
+L141: that is to be downloaded allows TUF to limit the amount of data it will download
+L142: when retrieving the file. As a result, TUF is secure against endless data
+L143: attacks (discussed above).
+L144: Security audits
+L145: Reporting issues
+L146: Last modified October 12, 2024: New and improved Docsy-based version of the website (#105) (2856e69)
+L147: ©
+L148: 2026

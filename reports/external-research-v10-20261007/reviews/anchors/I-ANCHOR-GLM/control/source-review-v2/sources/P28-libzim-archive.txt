@@ -1,0 +1,222 @@
+L32: log_define("zim.archive")
+L33: 
+L34: namespace zim
+L35: {
+L36:   Archive::Archive(const std::string& fname)
+L37:     : m_impl(new FileImpl(fname))
+L38:     { }
+L39: 
+L40: #ifndef _WIN32
+L41:   Archive::Archive(int fd)
+L42:     : m_impl(new FileImpl(fd))
+L43:     { }
+L44: 
+L45:   Archive::Archive(FdInput fd)
+L46:     : m_impl(new FileImpl(fd))
+L47:     { }
+L48: 
+L49:   Archive::Archive(int fd, offset_type offset, size_type size)
+L50:     : Archive(FdInput(fd, offset, size))
+L51:   {}
+L52: 
+L53:   Archive::Archive(const std::vector<FdInput>& fds)
+L87:         );
+L88:       } catch(const EntryNotFound& e) {
+L89:         const char articleNs = m_impl->hasNewNamespaceScheme() ? 'C' : 'A';
+L90:         return m_impl->getNamespaceEntryCount(articleNs).v;
+L91:       }
+L92:     }
+L93:   }
+L94: 
+L95:   entry_index_type Archive::getMediaCount() const
+L96:   {
+L97:     try {
+L98:       return countMimeType(
+L99:         getMetadata("Counter"),
+L100:         [](const std::string& mimetype) {
+L101:           return mimetype.find("image/") == 0 ||
+L102:                  mimetype.find("video/") == 0 ||
+L103:                  mimetype.find("audio/") == 0;
+L104:         }
+L105:       );
+L106:     } catch(const EntryNotFound& e) {
+L107:       return (m_impl->getNamespaceEntryCount('I').v
+L108:             + m_impl->getNamespaceEntryCount('J').v);
+L109:     }
+L110:   }
+L111: 
+L112:   Uuid Archive::getUuid() const
+L113:   {
+L114:     return m_impl->getFileheader().getUuid();
+L115:   }
+L116: 
+L117:   Item Archive::getMetadataItem(const std::string& name) const
+L118:   {
+L119:     auto r = m_impl->findx('M', name);
+L120:     if (!r.first) {
+L121:       throw EntryNotFound("Cannot find metadata");
+L122:     }
+L123:     auto entry = Entry(m_impl, entry_index_type(r.second));
+L124:     return entry.getItem(true);
+L125:   }
+L126: 
+L127:   std::string Archive::getMetadata(const std::string& name) const
+L133:   std::vector<std::string> Archive::getMetadataKeys() const {
+L134:     std::vector<std::string> ret;
+L135:     auto start = m_impl->getNamespaceBeginOffset('M');
+L136:     auto end = m_impl->getNamespaceEndOffset('M');
+L137:     for (auto idx=start; idx!=end; idx++) {
+L138:       auto dirent = m_impl->getDirent(idx);
+L139:       ret.push_back(dirent->getPath());
+L140:     }
+L141:     return ret;
+L142:   }
+L143: 
+L144:   zim::FileImpl::FindxResult findFavicon(FileImpl& impl)
+L145:   {
+L146:     for(auto ns:{'-', 'I'}) {
+L147:       for (auto& path:{"favicon", "favicon.png"}) {
+L148:         auto r = impl.findx(ns, path);
+L149:         if (r.first) {
+L150:           return r;
+L151:         }
+L152:       }
+L153:     }
+L154:     throw EntryNotFound("No favicon found.");
+L155:   }
+L226:   Entry Archive::getEntryByPath(const std::string& path) const
+L227:   {
+L228:     if (m_impl->hasNewNamespaceScheme()) {
+L229:       // Get path in user content.
+L230:       auto r = m_impl->findx('C', path);
+L231:       if (r.first) {
+L232:         return Entry(m_impl, entry_index_type(r.second));
+L233:       }
+L234:       try {
+L235:         // Path may come from a already stored from a old zim archive (bookmark),
+L236:         // and so contains a namespace.
+L237:         // We have to adapt the path to use the C namespace.
+L238:         r = m_impl->findx('C', std::get<1>(parseLongPath(path)));
+L239:         if (r.first) {
+L240:           return Entry(m_impl, entry_index_type(r.second));
+L241:         }
+L242:       } catch (std::runtime_error&) {}
+L243:     } else {
+L244:       // Path should contains the namespace.
+L245:       auto r = m_impl->findx(path);
+L246:       if (r.first) {
+L247:         return Entry(m_impl, entry_index_type(r.second));
+L248:       }
+L249:       // If not (bookmark) from a recent zim archive.
+L250:       for (auto ns:{'A', 'I', 'J', '-'}) {
+L251:         r = m_impl->findx(ns, path);
+L252:         if (r.first) {
+L253:           return Entry(m_impl, entry_index_type(r.second));
+L254:         }
+L255:       }
+L256:     }
+L257: 
+L258:     throw EntryNotFound("Cannot find entry");
+L259:   }
+L260: 
+L261:   Entry Archive::getEntryByPathWithNamespace(char ns, const std::string& path) const
+L262:   {
+L263:     auto r = m_impl->findx(ns, path);
+L264:     if (r.first) {
+L265:       return Entry(m_impl, entry_index_type(r.second));
+L266:     }
+L267:     throw EntryNotFound("Cannot find entry");
+L268:   }
+L269: 
+L270:   Entry Archive::getEntryByTitle(entry_index_type idx) const
+L271:   {
+L272:     return Entry(m_impl, entry_index_type(m_impl->getIndexByTitle(title_index_t(idx))));
+L273:   }
+L274: 
+L275:   Entry Archive::getEntryByTitle(const std::string& title) const
+L276:   {
+L277:     for (auto ns:{'C', 'A', 'I', 'J', '-'}) {
+L278:       log_trace("File::getArticleByTitle('" << ns << "', \"" << title << ')');
+L279:       auto r = m_impl->findxByTitle(ns, title);
+L280:       if (r.first)
+L388:   Archive::EntryRange<EntryOrder::pathOrder> Archive::findByPath(std::string path) const
+L389:   {
+L390:     // "url order" means that the entries are stored by long url ("NS/url)".
+L391:     //
+L392:     // If we really want to search by url whatever is the namespace, we would have to
+L393:     // search in all "content" (A, I, J, -) namespaces and then merge the results.
+L394:     //
+L395:     // It would be pretty complex as we would need to have iterate hover several ranges
+L396:     // in the same time. Let's enforce that path is the full path and search in whatever
+L397:     // namespace is in it.
+L398: 
+L399:     // We have to return two iterator for a range of entry where `path` is a prefix.
+L400:     // - The begin iterator is a iterator to the first entry with `path`  as a prefix (or (range) end if none)
+L401:     // - The end iterator is the iterator pass the last entry with `path` as a prefix (or (global) end)
+L402:     //
+L403:     // The findx return a iterator for the exact match or the one just after.
+L404:     // So, for the begin iterator, we can simply use the index returned by findx
+L405:     // For the end iterator we have to do the same but with a prefix "just after" the queried `path`
+L406:     // So the end index will always be just after the prefix range. If there is no prefix range, both
+L407:     // begin and end will be just after where it would be.
+L408:     //
+L409:     // Suposing a list of title :
+L410:     // 0. aaaaaa
+L411:     // 1. aaaaab
+L480:   }
+L481: 
+L482:   bool Archive::hasChecksum() const
+L483:   {
+L484:     return m_impl->getFileheader().hasChecksum();
+L485:   }
+L486: 
+L487:   std::string Archive::getChecksum() const
+L488:   {
+L489:     return m_impl->getChecksum();
+L490:   }
+L491: 
+L492:   bool Archive::check() const
+L493:   {
+L494:     return m_impl->verify();
+L495:   }
+L496: 
+L497:   bool Archive::isMultiPart() const
+L498:   {
+L499:     return m_impl->is_multiPart();
+L500:   }
+L501: 
+L502:   bool Archive::hasNewNamespaceScheme() const
+L503:   {
+L504:     return m_impl->hasNewNamespaceScheme();
+L505:   }
+L506: 
+L507:   size_t Archive::getClusterCacheMaxSize() const
+L508:   {
+L582:   }
+L583: 
+L584:   bool Archive::checkIntegrity(IntegrityCheck checkType)
+L585:   {
+L586:     return m_impl->checkIntegrity(checkType);
+L587:   }
+L588: 
+L589:   bool validate(const std::string& zimPath, IntegrityCheckList checksToRun)
+L590:   {
+L591:     try
+L592:     {
+L593:       Archive a(zimPath);
+L594:       for ( size_t i = 0; i < checksToRun.size(); ++i )
+L595:       {
+L596:         if ( checksToRun.test(i) && !a.checkIntegrity(IntegrityCheck(i)) )
+L597:           return false;
+L598:       }
+L599:     }
+L600:     catch(ZimFileFormatError &exception)
+L601:     {
+L602:       std::cerr << exception.what() << std::endl;
+L603:       return false;
+L604:     }
+L605: 
+L606:     return true;
+L607:   }
+L608: 
+L609: } // namespace zim

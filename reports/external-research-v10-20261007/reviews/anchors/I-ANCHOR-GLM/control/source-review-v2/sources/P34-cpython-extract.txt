@@ -1,0 +1,110 @@
+L1883:         return self._extract_member(member, path, pwd)
+L1884: 
+L1885:     def extractall(self, path=None, members=None, pwd=None):
+L1886:         """Extract all members from the archive to the current working
+L1887:            directory. 'path' specifies a different directory to extract to.
+L1888:            'members' is optional and must be a subset of the list returned
+L1889:            by namelist(). You can specify the password to decrypt all files
+L1890:            using 'pwd'.
+L1891:         """
+L1892:         if members is None:
+L1893:             members = self.namelist()
+L1894: 
+L1895:         if path is None:
+L1896:             path = os.getcwd()
+L1897:         else:
+L1898:             path = os.fspath(path)
+L1899: 
+L1900:         for zipinfo in members:
+L1901:             self._extract_member(zipinfo, path, pwd)
+L1902: 
+L1903:     @classmethod
+L1904:     def _sanitize_windows_name(cls, arcname, pathsep):
+L1905:         """Replace bad characters and remove trailing dots from parts."""
+L1906:         table = cls._windows_illegal_name_trans_table
+L1907:         if not table:
+L1908:             illegal = ':<>|"?*'
+L1909:             table = str.maketrans(illegal, '_' * len(illegal))
+L1910:             cls._windows_illegal_name_trans_table = table
+L1911:         arcname = arcname.translate(table)
+L1912:         # remove trailing dots and spaces
+L1913:         arcname = (x.rstrip(' .') for x in arcname.split(pathsep))
+L1914:         # rejoin, removing empty parts.
+L1915:         arcname = pathsep.join(x for x in arcname if x)
+L1916:         return arcname
+L1917: 
+L1918:     def _extract_member(self, member, targetpath, pwd):
+L1919:         """Extract the ZipInfo object 'member' to a physical
+L1920:            file on the path targetpath.
+L1921:         """
+L1922:         if not isinstance(member, ZipInfo):
+L1923:             member = self.getinfo(member)
+L1924: 
+L1925:         # build the destination pathname, replacing
+L1926:         # forward slashes to platform specific separators.
+L1927:         arcname = member.filename
+L1928:         if os.path.sep != '/':
+L1929:             arcname = arcname.replace('/', os.path.sep)
+L1930:         if os.path.altsep and os.path.altsep != '/':
+L1931:             arcname = arcname.replace(os.path.altsep, os.path.sep)
+L1932:         # interpret absolute pathname as relative, remove drive letter or
+L1933:         # UNC path, redundant separators, "." and ".." components.
+L1934:         drive, root, arcname = os.path.splitroot(arcname)
+L1935:         if self._ignore_invalid_names and (drive or root):
+L1936:             return None
+L1937:         if self._ignore_invalid_names and os.path.pardir in arcname.split(os.path.sep):
+L1938:             return None
+L1939:         invalid_path_parts = ('', os.path.curdir, os.path.pardir)
+L1940:         arcname = os.path.sep.join(x for x in arcname.split(os.path.sep)
+L1941:                                    if x not in invalid_path_parts)
+L1942:         if os.path.sep == '\\':
+L1943:             # filter illegal characters on Windows
+L1944:             arcname2 = self._sanitize_windows_name(arcname, os.path.sep)
+L1945:             if self._ignore_invalid_names and arcname2 != arcname:
+L1946:                 return None
+L1947:             arcname = arcname2
+L1948: 
+L1949:         if not arcname and not member.is_dir():
+L1950:             if self._ignore_invalid_names:
+L1951:                 return None
+L1952:             raise ValueError("Empty filename.")
+L1953: 
+L1954:         targetpath = os.path.join(targetpath, arcname)
+L1955:         targetpath = os.path.normpath(targetpath)
+L1956: 
+L1957:         # Create all upper directories if necessary.
+L1958:         upperdirs = os.path.dirname(targetpath)
+L1959:         if upperdirs and not os.path.exists(upperdirs):
+L1960:             os.makedirs(upperdirs, exist_ok=True)
+L1961: 
+L1962:         if member.is_dir():
+L1963:             if not os.path.isdir(targetpath):
+L1964:                 try:
+L1965:                     os.mkdir(targetpath)
+L1966:                 except FileExistsError:
+L1967:                     if not os.path.isdir(targetpath):
+L1968:                         raise
+L1969:             return targetpath
+L1970: 
+L1971:         with self.open(member, pwd=pwd) as source, \
+L1972:              open(targetpath, "wb") as target:
+L1973:             shutil.copyfileobj(source, target)
+L1974: 
+L1975:         return targetpath
+L1976: 
+L1977:     def _writecheck(self, zinfo):
+L1978:         """Check for errors before writing a file to the archive."""
+L1979:         if zinfo.filename in self.NameToInfo:
+L1980:             import warnings
+L1981:             warnings.warn('Duplicate name: %r' % zinfo.filename, stacklevel=3)
+L1982:         if self.mode not in ('w', 'x', 'a'):
+L1983:             raise ValueError("write() requires mode 'w', 'x', or 'a'")
+L1984:         if not self.fp:
+L1985:             raise ValueError(
+L1986:                 "Attempt to write ZIP archive that was already closed")
+L1987:         _check_compression(zinfo.compress_type)
+L1988:         if not self._allowZip64:
+L1989:             requires_zip64 = None
+L1990:             if len(self.filelist) >= ZIP_FILECOUNT_LIMIT:
+L1991:                 requires_zip64 = "Files count"
+L1992:             elif zinfo.file_size > ZIP64_LIMIT:

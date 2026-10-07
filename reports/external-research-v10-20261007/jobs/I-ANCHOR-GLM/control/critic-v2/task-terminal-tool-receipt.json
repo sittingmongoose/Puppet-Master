@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"status\":\"interrupted\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1\",\"latestTerminalStatus\":\"interrupted\",\"latestTerminalSummary\":\"\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9004db4e-f344-4599-a12e-6e1cb4b7e0ce\",\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":\"\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9004db4e-f344-4599-a12e-6e1cb4b7e0ce\",\"waitTimedOut\":false}"
+    }
+  ],
+  "structuredContent": {
+    "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+    "status": "interrupted",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1",
+    "latestTerminalStatus": "interrupted",
+    "latestTerminalSummary": "\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9004db4e-f344-4599-a12e-6e1cb4b7e0ce",
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "summary": "\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9004db4e-f344-4599-a12e-6e1cb4b7e0ce",
+    "waitTimedOut": false
+  },
+  "isError": false
+}

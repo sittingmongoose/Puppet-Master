@@ -1,0 +1,45 @@
+{
+  "id": "P26-zimsplit",
+  "requested_url": "https://raw.githubusercontent.com/openzim/zim-tools/8aa4d38090e4029c0307584f39ca6c995dcdb617/src/zimsplit.cpp",
+  "retrieved_started_utc": "2026-10-07T19:46:01.327715+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/openzim/zim-tools/8aa4d38090e4029c0307584f39ca6c995dcdb617/src/zimsplit.cpp",
+  "http_status": 200,
+  "response_bytes": 6793,
+  "response_sha256": "72a165939b671528715b3efd28e1bdba522fe6e3f5dff46959945f43ce4bb727",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"237e093460a5e9040509f8d793fe1205bc7de5a03bfa589b38a0a0c4674d308e\"",
+    "Date": "Wed, 07 Oct 2026 19:46:01 GMT"
+  },
+  "response_text_lines": 227,
+  "normalization": "text",
+  "selection_patterns": [
+    "split",
+    "cluster",
+    "read",
+    "write",
+    "size"
+  ],
+  "context_before": 2,
+  "context_after": 20,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      13,
+      144
+    ],
+    [
+      156,
+      205
+    ],
+    [
+      208,
+      227
+    ]
+  ],
+  "bounded_evidence_file": "P26-zimsplit.txt",
+  "bounded_evidence_sha256": "e506b6e744192f1122852e3e39fd4b318ea630e0a51d4a67e404f33171e1baf5",
+  "bounded_evidence_bytes": 7069,
+  "retrieved_finished_utc": "2026-10-07T19:46:01.503018+00:00"
+}

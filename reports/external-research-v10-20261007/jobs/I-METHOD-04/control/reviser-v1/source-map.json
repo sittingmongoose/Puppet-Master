@@ -1,0 +1,480 @@
+{
+  "case_id": "I-METHOD-04",
+  "stage_id": "control/reviser-v1",
+  "identity": "01a117fc-32b2-7aa0-9880-ca670352f3ef",
+  "identity_type": "native Goal threadId",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/input-map.json",
+  "input_boundary": "exact researcher draft/source-map, exact critic artifact/source-map, and captured source bytes named by the supplied input map",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/source-map.json"
+  ],
+  "source_directories": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources"
+  ],
+  "own_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1",
+  "first_useful_finding_saved_at": "2026-10-07T20:11:44Z",
+  "complete_artifact_saved_at": "2026-10-07T20:14:10.414365Z",
+  "source_map_generation_observed_at": "2026-10-07T20:16:31.353871Z",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/input-map.json",
+      "bytes": 1357,
+      "sha256": "1afef0106b3eac506aef98772a1e51e47580f4e1510ff0c8b1456cfc6fd7419a",
+      "predecessor_map_sha256": null,
+      "matches_predecessor_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/artifact.md",
+      "bytes": 17076,
+      "sha256": "138b7b6df14823bf14c78712535c1e8e69f32ebbc9029e0d7ac9a3caa68eba80",
+      "predecessor_map_sha256": "138b7b6df14823bf14c78712535c1e8e69f32ebbc9029e0d7ac9a3caa68eba80",
+      "matches_predecessor_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/source-map.json",
+      "bytes": 19462,
+      "sha256": "65e2d8aa68c8709ac9da9a052123f58aed04529998e7ea3a593e56e93ea82e3b",
+      "predecessor_map_sha256": "65e2d8aa68c8709ac9da9a052123f58aed04529998e7ea3a593e56e93ea82e3b",
+      "matches_predecessor_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/artifact.md",
+      "bytes": 15585,
+      "sha256": "a6342a37c3c931bc15957e9abad697e4c6b36da479acf1030aa87b0d98bbbaca",
+      "predecessor_map_sha256": "a6342a37c3c931bc15957e9abad697e4c6b36da479acf1030aa87b0d98bbbaca",
+      "matches_predecessor_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/source-map.json",
+      "bytes": 12532,
+      "sha256": "61b74e55b89b1ef02c27c4a201d5533b1bd4d48cf9e4f6908fc2bc1bbe09d636",
+      "predecessor_map_sha256": null,
+      "matches_predecessor_map": true
+    }
+  ],
+  "outputs": {
+    "artifact": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/artifact.md",
+      "bytes": 26534,
+      "sha256": "ce2782853f43c189fd14a092456387cd33fa871701e9210300d31c6ec594e619"
+    },
+    "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/source-map.json",
+    "evidence_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/sources"
+  },
+  "artifact_link_check": {
+    "unique_source_links": 19,
+    "missing_links": [],
+    "all_links_exist": true
+  },
+  "source_operations": {
+    "boundary_file_read_operations_before_hashing": {
+      "input_map": 1,
+      "predecessor_read_counts": {
+        "researcher_artifact.md": 1,
+        "researcher_source-map.json": 2,
+        "critic_artifact.md": 2,
+        "critic_source-map.json": 2
+      }
+    },
+    "host_hash_passes_for_boundary_inputs": 1,
+    "host_hash_file_read_operations": {
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/input-map.json": 2,
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/artifact.md": 2,
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/source-map.json": 3,
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/artifact.md": 3,
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/source-map.json": 4
+    },
+    "captured_source_content_review": {
+      "distinct_files": 6,
+      "source_review_operations": [
+        {
+          "path": "sources/bwf-release-riff-handler.cpp",
+          "operations": 1,
+          "method": "targeted source excerpt"
+        },
+        {
+          "path": "sources/bwf-release-critical-section.h",
+          "operations": 1,
+          "method": "full captured header read"
+        },
+        {
+          "path": "sources/ffmpeg-7.1.1-libmp3lame.c",
+          "operations": 2,
+          "method": "targeted source excerpts and symbol search"
+        },
+        {
+          "path": "sources/ffmpeg-7.1.1-commit-cli-doc.texi",
+          "operations": 1,
+          "method": "targeted documentation excerpts"
+        },
+        {
+          "path": "sources/bagit-rfc8493.html",
+          "operations": 2,
+          "method": "term search and targeted source excerpts"
+        },
+        {
+          "path": "sources/loc-bwf-metaedit-overview.html",
+          "operations": 1,
+          "method": "targeted term search"
+        }
+      ],
+      "total_review_operations": 8
+    },
+    "captured_evidence_copy_operations": 22,
+    "captured_evidence_host_hash_passes": 2,
+    "captured_evidence_hashes_match_critic_map": true,
+    "public_source_actions_by_reviser": 0,
+    "other_input_files_read": [],
+    "source_bytes_executed": false
+  },
+  "evidence_files": [
+    {
+      "path": "sources/archivematica-1.17-transfer.html",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/archivematica-1.17-transfer.html",
+      "bytes": 79311,
+      "sha256": "8562db174ab55d98b37488041dae1a0b554fb4dc52e491d11331caf5f3456adc",
+      "predecessor_map_sha256": "8562db174ab55d98b37488041dae1a0b554fb4dc52e491d11331caf5f3456adc",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C19",
+          "url": "https://archivematica.org/en/docs/archivematica-1.17/user-manual/transfer/transfer/"
+        }
+      ]
+    },
+    {
+      "path": "sources/bagit-rfc8493.html",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bagit-rfc8493.html",
+      "bytes": 63600,
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "predecessor_map_sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C14",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-fadgi-embedding.html",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-fadgi-embedding.html",
+      "bytes": 14886,
+      "sha256": "3aecbcf89b6f9356e48f6a4296f4f187c5c4f24bbf9250bb2eb05daf12138b6b",
+      "predecessor_map_sha256": "3aecbcf89b6f9356e48f6a4296f4f187c5c4f24bbf9250bb2eb05daf12138b6b",
+      "matches_predecessor_map": true,
+      "source_refs": []
+    },
+    {
+      "path": "sources/bwf-fadgi-guideline-v3.pdf",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-fadgi-guideline-v3.pdf",
+      "bytes": 535236,
+      "sha256": "8072afec5ab3bfbfdf47b9625a8a983d622cb0012d744946eda0e7695e07e5bd",
+      "predecessor_map_sha256": "8072afec5ab3bfbfdf47b9625a8a983d622cb0012d744946eda0e7695e07e5bd",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C17",
+          "url": "https://www.digitizationguidelines.gov/audio-visual/documents/BWF_Embed_Guideline_v3_2021.pdf"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-fix-112.patch",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-fix-112.patch",
+      "bytes": 27982,
+      "sha256": "93859bcd7d37ac03e1e9e1bbd6a064ae34790a452e93cc98dd121ad7d5ae1627",
+      "predecessor_map_sha256": "93859bcd7d37ac03e1e9e1bbd6a064ae34790a452e93cc98dd121ad7d5ae1627",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C08",
+          "url": "https://github.com/MediaArea/BWFMetaEdit/commit/5cddd1e795788be7f86449e82251ee3030afd233.patch"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-issue-71.html",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-issue-71.html",
+      "bytes": 241938,
+      "sha256": "2c7be1eb5ea1225cce09a3810884cb5513714cb886b83e6786c27d4724a36ba2",
+      "predecessor_map_sha256": "2c7be1eb5ea1225cce09a3810884cb5513714cb886b83e6786c27d4724a36ba2",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C06",
+          "url": "https://github.com/MediaArea/BWFMetaEdit/issues/71"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-pr-112.html",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-pr-112.html",
+      "bytes": 321281,
+      "sha256": "106b2c31333a3b3ab37a26f696f67d6e1fc39aa06354780375377d66b0ed1451",
+      "predecessor_map_sha256": "106b2c31333a3b3ab37a26f696f67d6e1fc39aa06354780375377d66b0ed1451",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C07",
+          "url": "https://github.com/MediaArea/BWFMetaEdit/pull/112"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-release-20.05.html",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-20.05.html",
+      "bytes": 205732,
+      "sha256": "c50c7a93d2d07d06fc79d8506d68a48c2d85d2bffaae460da6027d8e9926721a",
+      "predecessor_map_sha256": "c50c7a93d2d07d06fc79d8506d68a48c2d85d2bffaae460da6027d8e9926721a",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C09",
+          "url": "https://github.com/MediaArea/BWFMetaEdit/releases/tag/v20.05"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-release-Source-Common-Core-cpp",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-Source-Common-Core-cpp",
+      "bytes": 60060,
+      "sha256": "b669c7ce05337d30d605936d3b335e5d32dbb703b60a46848167fadbc62beefa",
+      "predecessor_map_sha256": "b669c7ce05337d30d605936d3b335e5d32dbb703b60a46848167fadbc62beefa",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C03",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/Common/Core.cpp"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-release-Source-Common-Core-h",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-Source-Common-Core-h",
+      "bytes": 12237,
+      "sha256": "01cb6d364d6753cb7446a0aa1eec59bd4880f9621f068ca6d9e2797bc1992d90",
+      "predecessor_map_sha256": "01cb6d364d6753cb7446a0aa1eec59bd4880f9621f068ca6d9e2797bc1992d90",
+      "matches_predecessor_map": true,
+      "source_refs": []
+    },
+    {
+      "path": "sources/bwf-release-Source-GUI-Qt-GUI_Main_Menu-cpp",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-Source-GUI-Qt-GUI_Main_Menu-cpp",
+      "bytes": 55795,
+      "sha256": "529e78717d2fddeb02de78c71bd38fb9bc0338d6931816a00be6d6c9384399c4",
+      "predecessor_map_sha256": "529e78717d2fddeb02de78c71bd38fb9bc0338d6931816a00be6d6c9384399c4",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C04",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/GUI/Qt/GUI_Main_Menu.cpp"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-release-critical-section.h",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-critical-section.h",
+      "bytes": 1826,
+      "sha256": "ec55356d22b1d6018ddf200ea7f66a8f7e7960c68763f8b30b2b37b32d359891",
+      "predecessor_map_sha256": "ec55356d22b1d6018ddf200ea7f66a8f7e7960c68763f8b30b2b37b32d359891",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C02",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/ZenLib/CriticalSection.h"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-release-gui-main-perfile.cpp",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-gui-main-perfile.cpp",
+      "bytes": 20793,
+      "sha256": "3a08f7949ae679b72342b7b8e41118150175e7ece0b596c2b3dba286a0329714",
+      "predecessor_map_sha256": "3a08f7949ae679b72342b7b8e41118150175e7ece0b596c2b3dba286a0329714",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C05",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/GUI/Qt/GUI_Main_PerFile.cpp"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-release-history-gui.txt",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-history-gui.txt",
+      "bytes": 11194,
+      "sha256": "4c366e1681a810c4ee09613607e7270280146924a335580f333d6c20fa47433f",
+      "predecessor_map_sha256": "4c366e1681a810c4ee09613607e7270280146924a335580f333d6c20fa47433f",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C10",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/History_GUI.txt"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-release-riff-handler.cpp",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-riff-handler.cpp",
+      "bytes": 96714,
+      "sha256": "d37d67013f704793b3bbe6508cebc47535d794e0cb139c12278011eca5ccf75a",
+      "predecessor_map_sha256": "d37d67013f704793b3bbe6508cebc47535d794e0cb139c12278011eca5ccf75a",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C01",
+          "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/43e603dc93108f7075ad91fa83c5802f18ef2ae2/Source/Riff/Riff_Handler.cpp"
+        }
+      ]
+    },
+    {
+      "path": "sources/bwf-release-riff-handler.h",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/bwf-release-riff-handler.h",
+      "bytes": 7360,
+      "sha256": "a494c65e204a2a0383b60f17e7555a75631dd05c66e9e08fe1725d8bad0eea03",
+      "predecessor_map_sha256": "a494c65e204a2a0383b60f17e7555a75631dd05c66e9e08fe1725d8bad0eea03",
+      "matches_predecessor_map": true,
+      "source_refs": []
+    },
+    {
+      "path": "sources/ffmpeg-7.1.1-commit-cli-doc.texi",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/ffmpeg-7.1.1-commit-cli-doc.texi",
+      "bytes": 114061,
+      "sha256": "910c395b6470c3c16bccf6b07a96077e035bd11795a683f34cb6f7eb688ad105",
+      "predecessor_map_sha256": "910c395b6470c3c16bccf6b07a96077e035bd11795a683f34cb6f7eb688ad105",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C12",
+          "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/db69d06eeeab4f46da15030a80d539efb4503ca8/doc/ffmpeg.texi"
+        }
+      ]
+    },
+    {
+      "path": "sources/ffmpeg-7.1.1-commit-ffprobe-doc.texi",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/ffmpeg-7.1.1-commit-ffprobe-doc.texi",
+      "bytes": 20888,
+      "sha256": "2881683e066fe39da6c2f316323c5d7efcd0810445afdd52b9882a780fa28f88",
+      "predecessor_map_sha256": "2881683e066fe39da6c2f316323c5d7efcd0810445afdd52b9882a780fa28f88",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C13",
+          "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/db69d06eeeab4f46da15030a80d539efb4503ca8/doc/ffprobe.texi"
+        }
+      ]
+    },
+    {
+      "path": "sources/ffmpeg-7.1.1-libmp3lame.c",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/ffmpeg-7.1.1-libmp3lame.c",
+      "bytes": 12707,
+      "sha256": "db2cf045bc9f60bc72c1fcb026b65205e53a3d55023939901161e95743fb2c50",
+      "predecessor_map_sha256": "db2cf045bc9f60bc72c1fcb026b65205e53a3d55023939901161e95743fb2c50",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C11",
+          "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/db69d06eeeab4f46da15030a80d539efb4503ca8/libavcodec/libmp3lame.c"
+        }
+      ]
+    },
+    {
+      "path": "sources/loc-bwf-fdd000356.html",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/loc-bwf-fdd000356.html",
+      "bytes": 37348,
+      "sha256": "ddd6c3dc05bf6c1105a1979740106c5d6223c7b2321d33e7e36e63e1d7365680",
+      "predecessor_map_sha256": "ddd6c3dc05bf6c1105a1979740106c5d6223c7b2321d33e7e36e63e1d7365680",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C18",
+          "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000356.shtml"
+        }
+      ]
+    },
+    {
+      "path": "sources/loc-bwf-metaedit-overview.html",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/loc-bwf-metaedit-overview.html",
+      "bytes": 76360,
+      "sha256": "2406b1e3e29bfa29c9e2c24fa51bc14accf39634b846bc5fa80dfa4827641523",
+      "predecessor_map_sha256": "2406b1e3e29bfa29c9e2c24fa51bc14accf39634b846bc5fa80dfa4827641523",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C16",
+          "url": "https://blogs.loc.gov/thesignal/2021/09/fadgi-updates-wave-bwf/"
+        }
+      ]
+    },
+    {
+      "path": "sources/premis-v3.0.pdf",
+      "original_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/sources/premis-v3.0.pdf",
+      "bytes": 2176353,
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "predecessor_map_sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "matches_predecessor_map": true,
+      "source_refs": [
+        {
+          "id": "C15",
+          "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf"
+        }
+      ]
+    }
+  ],
+  "native_goal_observations": {
+    "identity": "01a117fc-32b2-7aa0-9880-ca670352f3ef",
+    "initial_create": {
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    "initial_get_goal": {
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "same_identity": true
+    },
+    "precompletion_get_goal": {
+      "status": "active",
+      "tokensUsed": 94043,
+      "timeUsedSeconds": 307,
+      "observed_at": "2026-10-07T20:15:12Z",
+      "same_identity": true
+    },
+    "aggregate_goal_counters_separate_from_source_operations": true,
+    "distinct_native_counters_unknown": {
+      "input_tokens": null,
+      "cache_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    },
+    "billing_estimate": null,
+    "token_budget_requested": false
+  },
+  "activation_notice": {
+    "target_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "client_request_id": "er10-I-METHOD-04-control-reviser-v1-active",
+    "mode": "steer",
+    "delivery": "steered",
+    "status": "running",
+    "message_id": "message:mcp:758598c0-e61f-4415-b6d6-f02d303d915c:thread-send:er10-I-METHOD-04-control-reviser-v1-active",
+    "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:ordinal:19",
+    "scientific_facts_in_notice": false
+  },
+  "validation": {
+    "application_tests_executed": false,
+    "build_or_conversion_executed": false,
+    "package_validation_executed": false,
+    "cross_platform_checks_executed": false,
+    "evidence_hashes_computed": true,
+    "artifact_sha256_computed": true,
+    "input_hash_comparisons_passed": true,
+    "evidence_hash_comparisons_passed": true
+  }
+}

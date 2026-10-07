@@ -1,0 +1,18 @@
+{
+  "schema": "pm.er10.passive-receipts-index.v1",
+  "observed_at_utc": "2026-10-07T19:40:41.736389+00:00",
+  "entries": [
+    {
+      "stage": "I-METHOD-02/treatment/research-v1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-02--treatment--research-v1--860d565461a9ae3d.json",
+      "sha256": "860d565461a9ae3d02c38ae69eea399b92a3512f95a936bf8cc11e146ab4517f",
+      "bytes": 10887,
+      "capture": {
+        "create_goal": "missing_actual_response",
+        "get_goal": "missing_actual_response",
+        "update_goal": "missing_actual_response"
+      }
+    }
+  ],
+  "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+}

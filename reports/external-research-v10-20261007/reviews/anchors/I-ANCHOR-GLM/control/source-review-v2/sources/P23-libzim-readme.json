@@ -1,0 +1,44 @@
+{
+  "id": "P23-libzim-readme",
+  "requested_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/README.md",
+  "retrieved_started_utc": "2026-10-07T19:44:25.695295+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/openzim/libzim/f421088da622c3a1e0fc6a6ced737b10d4fa5502/README.md",
+  "http_status": 200,
+  "response_bytes": 8611,
+  "response_sha256": "298d4c6a836e506580a055ef2ab31171a721490327b69e12947f2668f690e9f9",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"2ca6bf8ac61b3d39359fe4a34524d98330d2d3b41b084c4a7f72a193ad1e3791\"",
+    "Date": "Wed, 07 Oct 2026 19:44:25 GMT"
+  },
+  "response_text_lines": 238,
+  "normalization": "text",
+  "selection_patterns": [
+    "licen",
+    "search",
+    "offline",
+    "libzim"
+  ],
+  "context_before": 2,
+  "context_after": 18,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      1,
+      49
+    ],
+    [
+      119,
+      138
+    ],
+    [
+      232,
+      238
+    ]
+  ],
+  "bounded_evidence_file": "P23-libzim-readme.txt",
+  "bounded_evidence_sha256": "6c367ca0d8083fd1e7ed3c9049b01b8083444e3ad7dbcd2e7d709eb83bd74caf",
+  "bounded_evidence_bytes": 3698,
+  "retrieved_finished_utc": "2026-10-07T19:44:25.866906+00:00"
+}

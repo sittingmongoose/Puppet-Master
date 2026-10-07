@@ -1,0 +1,109 @@
+{
+  "frozen_at": "2026-10-07T19:35:28.323181+00:00",
+  "required": [
+    "final.md",
+    "critique-dispositions.md",
+    "sources/SOURCES.md",
+    "timings.json",
+    "native_goal_receipt.json",
+    "native_terminal_receipt.json",
+    "integration-state-expiry-terminal-001.json",
+    "coordinator-disposition-001.json",
+    "task-terminal-tool-receipt.json"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "f6143209454fc9da22cd8b1e1f424baeaf241df03603b13e94e39086cb95c490",
+      "bytes": 916
+    },
+    "assignment.md": {
+      "sha256": "f7a414d52a069a09b88f955d99ddb6afefe6800c79cce2535a9a4345e33ed76b",
+      "bytes": 3460
+    },
+    "config.json": {
+      "sha256": "0048877fcba375945500fd52f9e951fc6f72d0ed4a29dea1c620eebde02700d3",
+      "bytes": 150
+    },
+    "coordinator-disposition-001.json": {
+      "sha256": "d6edfc49f640bb2493d60c203ff2c9eb6682b90bdac7be0050cbc45df6c9d3d9",
+      "bytes": 650
+    },
+    "critique-dispositions.md": {
+      "sha256": "4fed44e0dec7e5127e90dc988330140a47919f61303111c35a3408076feaebd6",
+      "bytes": 12664
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "dcb681014c8efef1dd8bea8a48d7fb8e48878034e5f0b986a74388713fda749f",
+      "bytes": 2174
+    },
+    "expiry-file-observation-pre-stop-001.json": {
+      "sha256": "c73011130f98da3ee1d4a267f98da545a99d0285839d79e616f28e5f7859500c",
+      "bytes": 3468
+    },
+    "expiry-stop-tool-receipt.json": {
+      "sha256": "17b78cdca4d47b798c1304cb667752432d2c1be16a19ec98f05807ce1aa995de",
+      "bytes": 478
+    },
+    "final.md": {
+      "sha256": "8bba175ad93bcf08890607c07c074909afa5f00bd71a22b9a350bcf6999329c5",
+      "bytes": 12452
+    },
+    "integration-state-active-001.json": {
+      "sha256": "9f127231aa5a9cbcd99fa41c704ffaa86eb07508ea3d76dc742dbc1a1abd51ba",
+      "bytes": 5721
+    },
+    "integration-state-expiry-decision-001.json": {
+      "sha256": "2a7276f759aa5e7ea537678eab0a18c77118f9240545835eed0a643b38f0cfba",
+      "bytes": 5712
+    },
+    "integration-state-expiry-pre-stop-001.json": {
+      "sha256": "61d0816fc2b084de19e48acba2cc5f0c4b2f63f858534a0ff6aca7903d1cc86e",
+      "bytes": 5712
+    },
+    "integration-state-expiry-terminal-001.json": {
+      "sha256": "02684dad8f193d81b3a557b193e27457eea15cf4ae2583da2c1eef30ca8d2fdf",
+      "bytes": 5747
+    },
+    "native_goal_receipt.json": {
+      "sha256": "f6dd466bdd0e3fb035147d314a37a0bde2fbd348144b840e47ba70a8c0431c77",
+      "bytes": 5683
+    },
+    "native_terminal_receipt.json": {
+      "sha256": "a8788983e999401f08f339e3955f41c41f45e0cb990c311f88df3744ec7c8041",
+      "bytes": 5478
+    },
+    "prepared.json": {
+      "sha256": "02ef4a42109d4c924a9fc34545d701dfd3ba95cd9a165a94b593b18254efee8c",
+      "bytes": 1505
+    },
+    "sources/S8-sqlite-changes.md": {
+      "sha256": "3778b0eeb046020669eacb5ae82f2316de656fb474dddf847f3550d4fb8085d1",
+      "bytes": 996
+    },
+    "sources/SOURCES.md": {
+      "sha256": "3bd576060b62974e913a54afb4a0893e18adb0bbb5c37309fc798d99e6b53b61",
+      "bytes": 4908
+    },
+    "t3-configuration-observation-001.json": {
+      "sha256": "61c8aa15a18645d4ee5057fdeba82a33582a6300d53db78410a7a0c09d6398de",
+      "bytes": 1030
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "8bc3fa8008ae657c46c86ed28faccacb58966907879c9dda16b18d39a8ab66c9",
+      "bytes": 4302
+    },
+    "task.txt": {
+      "sha256": "ef5a84c6edc668fa9681a98867f6876c0843f46bbd1a739061209d92e7e2b243",
+      "bytes": 314
+    },
+    "timings.json": {
+      "sha256": "15633df26ae41a05075e75971128ac48caae133e1fafc97ebde8b9f29bfda087",
+      "bytes": 702
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "8dfd37dcd7e04c90984aa21a0705ea44824eaebf9e057d26c7d4f6a86ef73dc4",
+      "bytes": 350
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

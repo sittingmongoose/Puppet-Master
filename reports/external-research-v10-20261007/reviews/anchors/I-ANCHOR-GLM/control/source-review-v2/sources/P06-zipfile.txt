@@ -1,0 +1,94 @@
+L1: zipfile — Work with ZIP archives — Python 3.14.8 documentation
+L2: Theme
+L3: Auto
+L4: Light
+L5: Dark
+L6: Table of Contents
+L7: zipfile — Work with ZIP archives
+L8: ZipFile objects
+L9: Path objects
+L31: next |
+L32: previous |
+L33: Python »
+L34: 3.14.8 Documentation »
+L35: The Python standard library »
+L36: Data Compression and Archiving »
+L37: zipfile — Work with ZIP archives
+L38: |
+L39: Theme
+L40: Auto
+L41: Light
+L42: Dark
+L286: Changed in version 3.6: Calling extract() on a closed ZipFile will raise a
+L287: ValueError. Previously, a RuntimeError was raised.
+L288: Changed in version 3.6.2: The path parameter accepts a path-like object.
+L289: ZipFile.extractall(path=None, members=None, pwd=None)¶
+L290: Extract all members from the archive to the current working directory. path
+L291: specifies a different directory to extract to. members is optional and must
+L292: be a subset of the list returned by namelist(). pwd is the password
+L293: used for encrypted files as a bytes object.
+L294: Warning
+L295: Never extract archives from untrusted sources without prior inspection.
+L296: It is possible that files are created outside of path, for example, members
+L297: that have absolute filenames or filenames with “..” components.
+L298: This module attempts to prevent that.
+L299: See extract() note.
+L300: Changed in version 3.6: Calling extractall() on a closed ZipFile will raise a
+L301: ValueError. Previously, a RuntimeError was raised.
+L302: Changed in version 3.6.2: The path parameter accepts a path-like object.
+L303: ZipFile.printdir()¶
+L304: Print a table of contents for the archive to sys.stdout.
+L305: ZipFile.setpassword(pwd)¶
+L306: Set pwd (a bytes object) as default password to extract encrypted files.
+L307: ZipFile.read(name, pwd=None)¶
+L308: Return the bytes of the file name in the archive. name is the name of the
+L401: e.g. ‘dir/file.txt’, ‘dir/’, or ‘’. Defaults to the empty string,
+L402: indicating the root.
+L403: Note
+L404: The Path class does not sanitize filenames within the ZIP archive. Unlike
+L405: the ZipFile.extract() and ZipFile.extractall() methods, it is the
+L406: caller’s responsibility to validate or sanitize filenames to prevent path traversal
+L407: vulnerabilities (for example, absolute paths or paths with “..” components). When handling
+L408: untrusted archives, consider resolving filenames using os.path.abspath()
+L409: and checking against the target directory with os.path.commonpath().
+L410: Path objects expose the following features of pathlib.Path
+L411: objects:
+L412: Path objects are traversable using the / operator or joinpath.
+L413: Path.name¶
+L414: The final path component.
+L415: Path.open(mode='r', *, pwd, **)¶
+L416: Invoke ZipFile.open() on the current path.
+L417: Allows opening for read or write, text or binary
+L650: length of the pathname, size of a single file, and number of files, etc.
+L651: Resources limitations¶
+L652: The lack of memory or disk volume would lead to decompression
+L653: failed. For example, decompression bombs (aka ZIP bomb)
+L654: apply to zipfile library that can cause disk volume exhaustion.
+L655: Interruption¶
+L656: Interruption during the decompression, such as pressing control-C or killing the
+L657: decompression process may result in incomplete decompression of the archive.
+L658: Default behaviors of extraction¶
+L659: Not knowing the default extraction behaviors
+L660: can cause unexpected decompression results.
+L661: For example, when extracting the same archive twice,
+L662: it overwrites files without asking.
+L663: Table of Contents
+L664: zipfile — Work with ZIP archives
+L665: ZipFile objects
+L666: Path objects
+L667: PyZipFile objects
+L668: ZipInfo objects
+L669: Command-line interface
+L670: Command-line options
+L689: next |
+L690: previous |
+L691: Python »
+L692: 3.14.8 Documentation »
+L693: The Python standard library »
+L694: Data Compression and Archiving »
+L695: zipfile — Work with ZIP archives
+L696: |
+L697: Theme
+L698: Auto
+L699: Light
+L700: Dark

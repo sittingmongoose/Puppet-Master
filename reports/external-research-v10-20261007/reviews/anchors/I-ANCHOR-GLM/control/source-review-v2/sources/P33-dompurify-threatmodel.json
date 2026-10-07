@@ -1,0 +1,37 @@
+{
+  "id": "P33-dompurify-threatmodel",
+  "requested_url": "https://raw.githubusercontent.com/cure53/DOMPurify/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/SECURITY.md",
+  "retrieved_started_utc": "2026-10-07T19:46:01.514630+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/cure53/DOMPurify/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/SECURITY.md",
+  "http_status": 200,
+  "response_bytes": 5614,
+  "response_sha256": "d368c99b005d76e3ed83eb9394b4c11533c63902286a46eecacbdf8ff1f2b56f",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"d1deffc1cb6595dbb591a210a78091b2aff24908350b9a605b2aa13ce98a3f2d\"",
+    "Date": "Wed, 07 Oct 2026 19:46:01 GMT"
+  },
+  "response_text_lines": 111,
+  "normalization": "text",
+  "selection_patterns": [
+    "threat",
+    "source",
+    "CSS",
+    "network",
+    "trusted"
+  ],
+  "context_before": 2,
+  "context_after": 20,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      32,
+      86
+    ]
+  ],
+  "bounded_evidence_file": "P33-dompurify-threatmodel.txt",
+  "bounded_evidence_sha256": "1faa3d16535171bf6a233e6a9d19a003983b0a715fb45589e894fa6cc7d053b0",
+  "bounded_evidence_bytes": 3180,
+  "retrieved_finished_utc": "2026-10-07T19:46:01.672249+00:00"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "P32-dompurify-early-release",
+  "requested_url": "https://github.com/cure53/DOMPurify/releases/tag/3.4.7",
+  "retrieved_started_utc": "2026-10-07T19:46:01.503807+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://github.com/cure53/DOMPurify/releases/tag/3.4.7",
+  "http_status": 200,
+  "response_bytes": 206921,
+  "response_sha256": "2e10bd812a88e71e984e7d72cc1b1a18da3d6c4b80b10a6d607ce57b76ddd4d6",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:46:01 GMT",
+    "Content-Type": "text/html; charset=utf-8",
+    "ETag": "W/\"602796aa21df26a6f66a5501ef4682a4\""
+  },
+  "response_text_lines": 174,
+  "normalization": "html",
+  "selection_patterns": [
+    "3.4.7",
+    "Shadow",
+    "pollution",
+    "test"
+  ],
+  "context_before": 2,
+  "context_after": 20,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      1,
+      20
+    ],
+    [
+      107,
+      161
+    ]
+  ],
+  "bounded_evidence_file": "P32-dompurify-early-release.txt",
+  "bounded_evidence_sha256": "2087c9d1b093574aa638ab1a4ff0684ef077025e725118b12b00087178bf69cf",
+  "bounded_evidence_bytes": 2195,
+  "retrieved_finished_utc": "2026-10-07T19:46:01.985598+00:00"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "P16-zim-raw",
+  "requested_url": "https://wiki.openzim.org/w/index.php?title=ZIM_file_format&action=raw",
+  "retrieved_started_utc": "2026-10-07T19:42:47.114710+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://wiki.openzim.org/w/index.php?title=ZIM_file_format&action=raw",
+  "http_status": 200,
+  "response_bytes": 7460,
+  "response_sha256": "70f9033fc5ad278f211a7a64679e056f991a6495b980bf7ee4cc5bc57e04883b",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:42:47 GMT",
+    "Content-Type": "text/html; charset=utf-8"
+  },
+  "response_text_lines": 81,
+  "normalization": "text",
+  "selection_patterns": [
+    "checksum",
+    "cluster",
+    "split",
+    "minor",
+    "major"
+  ],
+  "context_before": 3,
+  "context_after": 12,
+  "max_hits_per_pattern": 20,
+  "selected_line_ranges": [],
+  "bounded_evidence_file": "P16-zim-raw.txt",
+  "bounded_evidence_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+  "bounded_evidence_bytes": 1,
+  "retrieved_finished_utc": "2026-10-07T19:42:47.564736+00:00",
+  "content_status": "BOT_CHALLENGE_NOT_SOURCE",
+  "claim_verification_status": "unavailable original wiki content; HTTP 200 is not verification"
+}

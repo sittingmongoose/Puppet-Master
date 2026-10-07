@@ -1,0 +1,128 @@
+L34: also unaffected.
+L35: Various restrictions determine whether or not the rename operation
+L36: succeeds: see ERRORS below.
+L37: If newpath already exists, it will be atomically replaced, so that
+L38: there is no point at which another process attempting to access
+L39: newpath will find it missing. However, there will probably be a
+L40: window in which both oldpath and newpath refer to the file being
+L41: renamed.
+L42: If oldpath and newpath are existing hard links referring to the
+L43: same file, then rename() does nothing, and returns a success
+L44: status.
+L45: If newpath exists but the operation fails for some reason,
+L46: rename() guarantees to leave an instance of newpath in place.
+L47: oldpath can specify a directory. In this case, newpath must
+L48: either not exist, or it must specify an empty directory.
+L49: If oldpath refers to a symbolic link, the link is renamed; if
+L50: newpath refers to a symbolic link, the link will be overwritten.
+L51: renameat()
+L52: The renameat() system call operates in exactly the same way as
+L53: rename(), except for the differences described here.
+L54: If the pathname given in oldpath is relative, then it is
+L55: interpreted relative to the directory referred to by the file
+L56: descriptor olddirfd (rather than relative to the current working
+L57: directory of the calling process, as is done by rename() for a
+L58: relative pathname).
+L69: with a zero flags argument is equivalent to renameat().
+L70: The flags argument is a bit mask consisting of zero or more of the
+L71: following flags:
+L72: RENAME_EXCHANGE
+L73: Atomically exchange oldpath and newpath. Both pathnames
+L74: must exist but may be of different types (e.g., one could
+L75: be a non-empty directory and the other a symbolic link).
+L76: RENAME_NOREPLACE
+L77: Don't overwrite newpath of the rename. Return an error if
+L78: newpath already exists.
+L79: RENAME_NOREPLACE can't be employed together with
+L80: RENAME_EXCHANGE.
+L81: RENAME_NOREPLACE requires support from the underlying
+L82: filesystem. Support for various filesystems was added as
+L83: follows:
+L84: • ext4 (Linux 3.15);
+L85: • btrfs, tmpfs, and cifs (Linux 3.17);
+L86: • xfs (Linux 4.0);
+L87: • Support for many other filesystems was added in Linux
+L88: 4.9, including ext2, minix, reiserfs, jfs, vfat, and
+L89: bpf.
+L107: same time, the source file needs to be "whiteouted" (so
+L108: that the version of the source file in the lower layer is
+L109: rendered invisible). The whole operation needs to be done
+L110: atomically.
+L111: When not part of a union/overlay, the whiteout appears as a
+L112: character device with a {0,0} device number. (Note that
+L113: other union/overlay implementations may employ different
+L114: methods for storing whiteout entries; specifically, BSD
+L115: union mount employs a separate inode type, DT_WHT, which,
+L116: while supported by some filesystems available in Linux,
+L117: such as CODA and XFS, is ignored by the kernel's whiteout
+L118: support code, as of Linux 4.19, at least.)
+L119: RENAME_WHITEOUT requires the same privileges as creating a
+L120: device node (i.e., the CAP_MKNOD capability).
+L121: RENAME_WHITEOUT can't be employed together with
+L122: RENAME_EXCHANGE.
+L123: RENAME_WHITEOUT requires support from the underlying
+L124: filesystem. Among the filesystems that support it are
+L125: tmpfs (since Linux 3.18), ext4 (since Linux 3.18), XFS
+L126: (since Linux 4.1), f2fs (since Linux 4.2), btrfs (since
+L127: Linux 4.7), and ubifs (since Linux 4.9).
+L128: RETURN VALUE top
+L129: On success, zero is returned. On error, -1 is returned, and errno
+L130: is set to indicate the error.
+L153: subdirectory of itself.
+L154: EISDIR newpath is an existing directory, but oldpath is not a
+L155: directory.
+L156: ELOOP Too many symbolic links were encountered in resolving
+L157: oldpath or newpath.
+L158: EMLINK oldpath already has the maximum number of links to it, or
+L159: it was a directory and the directory containing newpath has
+L160: the maximum number of links.
+L161: ENAMETOOLONG
+L162: oldpath or newpath was too long.
+L163: ENOENT The link named by oldpath does not exist; or, a directory
+L164: component in newpath does not exist; or, oldpath or newpath
+L171: not, in fact, a directory. Or, oldpath is a directory, and
+L172: newpath exists but is not a directory.
+L173: ENOTEMPTY or EEXIST
+L174: newpath is a nonempty directory, that is, contains entries
+L175: other than "." and "..".
+L176: EPERM or EACCES
+L177: The directory containing oldpath has the sticky bit
+L178: (S_ISVTX) set and the process's effective user ID is
+L179: neither the user ID of the file to be deleted nor that of
+L180: the directory containing it, and the process is not
+L181: privileged (Linux: does not have the CAP_FOWNER
+L182: capability); or newpath is an existing file and the
+L200: referring to a file other than a directory; or similar for
+L201: newpath and newdirfd
+L202: The following additional errors can occur for renameat2():
+L203: EEXIST flags contains RENAME_NOREPLACE and newpath already exists.
+L204: EINVAL An invalid flag was specified in flags.
+L205: EINVAL Both RENAME_NOREPLACE and RENAME_EXCHANGE were specified in
+L206: flags.
+L207: EINVAL Both RENAME_WHITEOUT and RENAME_EXCHANGE were specified in
+L208: flags.
+L209: EINVAL The filesystem does not support one of the flags in flags.
+L210: ENOENT flags contains RENAME_EXCHANGE and newpath does not exist.
+L211: EPERM RENAME_WHITEOUT was specified in flags, but the caller does
+L212: not have the CAP_MKNOD capability.
+L213: STANDARDS top
+L214: rename()
+L215: C11, POSIX.1-2024.
+L216: renameat()
+L217: POSIX.1-2024.
+L218: renameat2()
+L228: On older kernels where renameat() is unavailable, the glibc
+L229: wrapper function falls back to the use of rename(). When oldpath
+L230: and newpath are relative pathnames, glibc constructs pathnames
+L231: based on the symbolic links in /proc/self/fd that correspond to
+L232: the olddirfd and newdirfd arguments.
+L233: BUGS top
+L234: On NFS filesystems, you can not assume that if the operation
+L235: failed, the file was not renamed. If the server does the rename
+L236: operation and then crashes, the retransmitted RPC which will be
+L237: processed when the server is up again causes a failure. The
+L238: application is expected to deal with this. See link(2) for a
+L239: similar problem.
+L240: SEE ALSO top
+L241: mv(1), rename(1), chmod(2), link(2), symlink(2), unlink(2),
+L242: path_resolution(7), symlink(7)

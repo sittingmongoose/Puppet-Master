@@ -1,0 +1,128 @@
+{
+  "schema": "er10.integrated.execution.v1",
+  "case_id": "I-METHOD-02",
+  "frozen_at": "2026-10-07T19:16:13.554885+00:00",
+  "recipe": {
+    "case_id": "I-METHOD-02",
+    "methods": [
+      "M04"
+    ],
+    "control": "Each stage independently obtains needed public source bytes with ordinary tools; no treatment cache.",
+    "treatment": "Same-arm exact public URL/commit/extraction-version raw-byte cache shared researcher->critic->reviser; independent queries free. Cache semantic conclusions prohibited. Include cold acquisition/extraction and setup, never otherarm snapshots.",
+    "stages": "both research20,critic10,reviser15"
+  },
+  "selection_basis": "unqualified operational diagnostic; no source-quality or speed claim",
+  "inputs": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/INPUTS.md",
+      "sha256": "d617d5fa6164fa19dbf569ee93399fe09ecefd485c279e3bd7997a7af00bf61a",
+      "bytes": 1927
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/brief.md",
+      "sha256": "c9820b2b6c95b3591de0eef4dc002ccb8d8e35719c7422c11f9f4add0b5e440d",
+      "bytes": 5129
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/plan.md",
+      "sha256": "5dd8d6230f5a4be45f9b0faf0d3748e0b5df30bb90b20a05c0634cdf476c063e",
+      "bytes": 1781
+    }
+  },
+  "prepared_identity": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/prepared.json",
+    "sha256": "9b5573d67290c4c4bc2f4ccb08ab5363f8ba2ca31debd38ea0e94e947deb3840",
+    "bytes": 1665
+  },
+  "candidate_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "review_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "same_pair": {
+    "inputs": true,
+    "effort": true,
+    "access": true,
+    "aggregate_occupied_work_ceiling_seconds": 2700
+  },
+  "stage_seconds": {
+    "research": 1200,
+    "critic": 600,
+    "reviser": 900
+  },
+  "latency_boundary": "earliest actual T3 requestedAt for first stage through complete native terminal and T3 delivery, maximum 2700s including queue/start/retries/retrieval; stage allocation includes delivery; no clock reset",
+  "reserve_policy": "research preserves 600s critic +900s final; critic preserves 900s final; no writing-stage admission after envelope exhaustion",
+  "expiry_policy": "one lifecycle-only save/deliver steer at real expiry, at most 60s grace, owned task_cancel if live; no substantive extension",
+  "launch_order": [
+    "treatment",
+    "control"
+  ],
+  "output_scope": "FULL original O1-O6 and all in-scope plan sections; complete proposed-change artifact, options, retained/rejected dispositions, criticism dispositions, uncertainty, validation proposed/executed",
+  "quality_axes": [
+    "required brief obligations",
+    "consequential claims/conditions",
+    "bounded useful discovery",
+    "incorrect rejections/corrections",
+    "preservation",
+    "proposed versus executed validation"
+  ],
+  "output_contract": "authored artifact.md + source-map.json with immutable captured public bytes and identity metadata; alternatively full native final answer mechanically saved verbatim, never a summary substituted for full output",
+  "tool_policy": {
+    "native_public_search_read": true,
+    "writable": "own role directory only",
+    "no_nested_delegation": true,
+    "no_repo_or_account_changes": true,
+    "maps_advisory_not_firewall": true,
+    "isolation_limit": "T3 freshness excludes parent history; full-access filesystem not a security firewall; no evaluator exists until both arms quiet; forbidden sibling paths explicitly excluded",
+    "execution": "no downloaded source execution/installers on host; bounded qualified sandbox only if separately admitted"
+  },
+  "common_lifecycle_carrier": {
+    "version": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_at": "2026-10-07T19:16:13.744236+00:00",
+    "applies_to_both_arms_all_stages": true,
+    "exact_stage_versions": [
+      "I-METHOD-02/control/research-v1",
+      "I-METHOD-02/control/critic-v1",
+      "I-METHOD-02/control/reviser-v1",
+      "I-METHOD-02/treatment/research-v1",
+      "I-METHOD-02/treatment/critic-v1",
+      "I-METHOD-02/treatment/reviser-v1"
+    ],
+    "native_route": "actual Codex create_goal/get active/update complete/get terminal on same fresh Goal; <=4000char objective",
+    "activation_notice_parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "host_carrier": "one passive export per activation or terminal event; Codex actual native Goal state projection, not raw tool bodies",
+    "exporter_sha256": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8",
+    "absence_policy": "actual active/terminal state absent -> lifecycle HOLD; no fake proof",
+    "scientific_delivery": "complete artifact.md + source-map.json/captured source bytes; complete native output fallback verbatim accepted; concise path/status final after actual terminal",
+    "cost": "host export setup/invocation separate; native usage fields distinct and unknown null",
+    "scope_and_envelopes_unchanged": true
+  },
+  "source_cache": {
+    "helper": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/mechanical/source_cache.py",
+    "sha256": "8c95fd8d76908f6a8fd90e7fa8268cbd7a43f15b89f5a4e32001f83c45c8286b",
+    "control": "own independent public acquisitions each stage; no treatment cache or reused captured bytes",
+    "treatment": "exact own-arm URL/immutable commit/extraction-version raw-byte cache only; no semantic conclusions, critics independent query freedom; cold/setup/extraction/read costs count",
+    "cache_paths": {
+      "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v1/source-cache",
+      "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v1/source-cache"
+    }
+  }
+}

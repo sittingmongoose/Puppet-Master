@@ -1,0 +1,126 @@
+L5:  * This program is free software; you can redistribute it and/or
+L6:  * modify it under the terms of the GNU General Public License as
+L7:  * published by the Free Software Foundation; either version 2 of the
+L8:  * License, or (at your option) any later version.
+L9:  *
+L10:  * This program is distributed in the hope that it will be useful, but
+L11:  * is provided AS IS, WITHOUT ANY WARRANTY; without even the implied
+L12:  * warranty of MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, and
+L13:  * NON-INFRINGEMENT.  See the GNU General Public License for more details.
+L14:  *
+L15:  * You should have received a copy of the GNU General Public License
+L16:  * along with this program; if not, write to the Free Software
+L17:  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+L18:  *
+L19:  */
+L20: 
+L21: #include "fileheader.h"
+L22: #include <zim/error.h>
+L23: #include <iostream>
+L24: #include <algorithm>
+L25: #include "log.h"
+L40: {
+L41:   const uint32_t Fileheader::zimMagic = 0x044d495a; // ="ZIM^d"
+L42:   const uint16_t Fileheader::zimOldMajorVersion = 5;
+L43:   const uint16_t Fileheader::zimMajorVersion = 6;
+L44:   const uint16_t Fileheader::zimMinorVersion = 3;
+L45:   const offset_type Fileheader::size = 80; // This is also mimeListPos (so an offset)
+L46: 
+L47:   Fileheader::Fileheader()
+L48:     : majorVersion(zimMajorVersion),
+L49:       minorVersion(zimMinorVersion),
+L50:       articleCount(0),
+L51:       titleIdxPos(0),
+L52:       pathPtrPos(0),
+L53:       clusterCount(0),
+L54:       clusterPtrPos(0),
+L55:       mainPage(std::numeric_limits<entry_index_type>::max()),
+L56:       layoutPage(std::numeric_limits<entry_index_type>::max()),
+L57:       checksumPos(std::numeric_limits<offset_type>::max())
+L58:   {}
+L59: 
+L60:   void Fileheader::write(int out_fd) const
+L61:   {
+L62:     char header[Fileheader::size];
+L63:     toLittleEndian(Fileheader::zimMagic, header);
+L64:     toLittleEndian(getMajorVersion(), header + 4);
+L65:     toLittleEndian(getMinorVersion(), header + 6);
+L66:     std::copy(getUuid().data, getUuid().data + sizeof(Uuid), header + 8);
+L67:     toLittleEndian(getArticleCount(), header + 24);
+L68:     toLittleEndian(getClusterCount(), header + 28);
+L69:     toLittleEndian(getPathPtrPos(), header + 32);
+L70:     toLittleEndian(getTitleIdxPos(), header + 40);
+L71:     toLittleEndian(getClusterPtrPos(), header + 48);
+L72:     toLittleEndian(getMimeListPos(), header + 56);
+L73:     toLittleEndian(getMainPage(), header + 64);
+L74:     toLittleEndian(getLayoutPage(), header + 68);
+L75:     toLittleEndian(getChecksumPos(), header + 72);
+L76: 
+L77:     auto ret = _write(out_fd, header, Fileheader::size);
+L78:     if (ret != Fileheader::size) {
+L79:       std::cerr << "Error Writing" << std::endl;
+L80:       std::cerr << "Ret is " << ret << std::endl;
+L81:       perror("Error writing");
+L82:       throw std::runtime_error("Error writing");
+L83:     }
+L84:   }
+L85: 
+L86:   void Fileheader::read(const Reader& reader)
+L87:   {
+L88:     auto buffer = reader.get_buffer(offset_t(0), zsize_t(Fileheader::size));
+L89:     auto seqReader = BufferStreamer(buffer);
+L90:     uint32_t magicNumber = seqReader.read<uint32_t>();
+L91:     if (magicNumber != Fileheader::zimMagic)
+L92:     {
+L96:     }
+L97: 
+L98:     uint16_t major_version = seqReader.read<uint16_t>();
+L99:     if (major_version != zimOldMajorVersion && major_version != zimMajorVersion)
+L100:     {
+L101:       log_error("invalid zimfile major version " << major_version << " found - "
+L102:           << Fileheader::zimMajorVersion << " expected");
+L103:       throw ZimFileFormatError("Invalid version");
+L104:     }
+L105:     setMajorVersion(major_version);
+L106: 
+L107:     setMinorVersion(seqReader.read<uint16_t>());
+L108: 
+L109:     Uuid uuid;
+L110:     std::copy(seqReader.current(), seqReader.current()+16, uuid.data);
+L111:     seqReader.skip(zsize_t(16));
+L112:     setUuid(uuid);
+L113: 
+L114:     setArticleCount(seqReader.read<uint32_t>());
+L115:     setClusterCount(seqReader.read<uint32_t>());
+L116:     setPathPtrPos(seqReader.read<uint64_t>());
+L117:     setTitleIdxPos(seqReader.read<uint64_t>());
+L118:     setClusterPtrPos(seqReader.read<uint64_t>());
+L119:     setMimeListPos(seqReader.read<uint64_t>());
+L120:     setMainPage(seqReader.read<uint32_t>());
+L121:     setLayoutPage(seqReader.read<uint32_t>());
+L122:     setChecksumPos(seqReader.read<uint64_t>());
+L123: 
+L124:     sanity_check();
+L125:   }
+L126: 
+L127:   bool Fileheader::hasTitleListingV0() const {
+L128:     return titleIdxPos != offset_type(-1);
+L129:   }
+L130: 
+L131:   void Fileheader::sanity_check() const {
+L132:     if (!!articleCount != !!clusterCount) {
+L133:       throw ZimFileFormatError("No article <=> No cluster");
+L134:     }
+L135: 
+L136:     if (mimeListPos != size && mimeListPos != 72) {
+L137:       throw ZimFileFormatError("mimelistPos must be 80.");
+L138:     }
+L139: 
+L154:     }
+L155: 
+L156:     if (checksumPos != 0 && checksumPos < mimeListPos) {
+L157:       throw ZimFileFormatError("checksumPos must be > mimeListPos.");
+L158:     }
+L159:   }
+L160: 
+L161: }

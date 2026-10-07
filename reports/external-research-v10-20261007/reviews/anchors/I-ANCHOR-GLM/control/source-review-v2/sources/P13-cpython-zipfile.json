@@ -1,0 +1,91 @@
+{
+  "id": "P13-cpython-zipfile",
+  "requested_url": "https://raw.githubusercontent.com/python/cpython/v3.14.8/Lib/zipfile/__init__.py",
+  "retrieved_started_utc": "2026-10-07T19:42:46.931170+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/python/cpython/v3.14.8/Lib/zipfile/__init__.py",
+  "http_status": 200,
+  "response_bytes": 94183,
+  "response_sha256": "0e39a3dce18037f350f4d65dfc684c03a68d91bd75fcb1b03568e4d032b296a2",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"99fab3151163d43449924340345991640ccadc2e4f2d132b21097155ce4bd2e9\"",
+    "Date": "Wed, 07 Oct 2026 19:42:47 GMT"
+  },
+  "response_text_lines": 2479,
+  "normalization": "text",
+  "selection_patterns": [
+    "def _extract_member",
+    "def extractall",
+    "def _read1",
+    "def _read2",
+    "def _update_crc",
+    "file_size",
+    "commonpath"
+  ],
+  "context_before": 3,
+  "context_after": 12,
+  "max_hits_per_pattern": 20,
+  "selected_line_ranges": [
+    [
+      442,
+      456
+    ],
+    [
+      478,
+      492
+    ],
+    [
+      506,
+      558
+    ],
+    [
+      561,
+      575
+    ],
+    [
+      587,
+      603
+    ],
+    [
+      652,
+      669
+    ],
+    [
+      983,
+      997
+    ],
+    [
+      1007,
+      1021
+    ],
+    [
+      1121,
+      1135
+    ],
+    [
+      1168,
+      1182
+    ],
+    [
+      1220,
+      1234
+    ],
+    [
+      1259,
+      1278
+    ],
+    [
+      1882,
+      1896
+    ],
+    [
+      1915,
+      1929
+    ]
+  ],
+  "bounded_evidence_file": "P13-cpython-zipfile.txt",
+  "bounded_evidence_sha256": "2c8c6cffe84d656a2aad95d8b69bcb351171f0933fee6390abfd269532351a7b",
+  "bounded_evidence_bytes": 11578,
+  "retrieved_finished_utc": "2026-10-07T19:42:47.114276+00:00"
+}

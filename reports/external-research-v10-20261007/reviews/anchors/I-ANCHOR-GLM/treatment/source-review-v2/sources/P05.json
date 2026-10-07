@@ -1,0 +1,50 @@
+{
+  "id": "P05",
+  "requested_url": "https://uptane.org/",
+  "resolved_url": "https://uptane.org/",
+  "http_status": 200,
+  "retrieved_started_at_utc": "2026-10-07T19:40:49.600378+00:00",
+  "retrieved_completed_at_utc": "2026-10-07T19:40:49.729070+00:00",
+  "response_bytes": 38115,
+  "response_sha256": "9d840689846a1a96ee38aae4cf5d31d399ce76ce127bac69d2a3b250f74e2e8d",
+  "http_headers": {
+    "Content-Type": "text/html; charset=utf-8",
+    "ETag": "\"68f379a6-94e3\"",
+    "Last-Modified": "Sat, 18 Oct 2025 11:27:34 GMT",
+    "Date": "Wed, 07 Oct 2026 19:40:49 GMT"
+  },
+  "version_or_ref": "homepage, limited philosophy",
+  "method": "GET; response never executed; bounded excerpts only",
+  "line_coordinates": "1-based normalized HTML visible-text lines; see collector identity",
+  "response_text_line_count": 74,
+  "matched_lines": {
+    "hacked": [
+      24
+    ],
+    "compromise": [
+      21,
+      24
+    ],
+    "rapid recovery": [
+      24
+    ]
+  },
+  "retained_line_numbers": [
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "excerpt_selection_truncated": false,
+  "excerpt_file": "P05.txt",
+  "excerpt_sha256": "62264376d8d7b5a15d73c9efd51a594c817c2afb7fa86a3af3d098a494c1e281"
+}

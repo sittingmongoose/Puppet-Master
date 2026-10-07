@@ -1,0 +1,51 @@
+{
+  "receipt_kind": "native_goal_receipt",
+  "observed_at_utc": "2026-10-07T19:20:52Z",
+  "installed_integration": {
+    "driver": "zcode-acp GoalLoopDriver (/goal)",
+    "driver_version": "0.65.1",
+    "version_evidence": "`zcode-acp --version` printed 0.65.1 at observation",
+    "state_file": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f/state.json",
+    "state_file_sha256_at_observation": "d501a81bfa7e0adbd9815ff956ec6e8600feb17d2c13d2f0eac0e649e6208e29",
+    "state_file_bytes_at_observation": 6028
+  },
+  "unique_objective_verbatim": "Complete fresh ER10 I-ANCHOR-GLM treatment critic-finalizer v2 using exact /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md and INPUTS.md. Fullscope critique.md+final.md and actual installed integration state receipts. Original armdeadline19:29:18.054Z, no freshbudget or secondGoal; GLM5.3FlashMax; no accounts/config/externalrunner; vendorbackend notclaimed.",
+  "exact_assignment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md",
+  "backend_session": {
+    "backend_session_directory": "sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f",
+    "uniqueness_evidence": "state.json objective matches this arm's assignment exactly; the three sibling session directories (sess_f1a0d342, sess_fc21453a, sess_5efa7ef2) carry the control-critic, control-researcher and researcher objectives respectively, each read read-only and none matching this objective",
+    "created_at_epoch_ms": 1791400484941,
+    "created_at_utc": "2026-10-07T19:14:44.941Z",
+    "updated_at_epoch_ms_at_observation": 1791400755611,
+    "updated_at_utc_at_observation": "2026-10-07T19:19:15.611Z"
+  },
+  "observed_lifecycle_state_verbatim": {
+    "status": "running",
+    "rounds": 1,
+    "handoffFresh": false,
+    "tickets": [
+      {"id": "t1", "status": "done"},
+      {"id": "t2", "status": "pending"},
+      {"id": "t3", "status": "pending"},
+      {"id": "t4", "status": "pending"},
+      {"id": "t5", "status": "pending"}
+    ]
+  },
+  "delegation_chain_observed": {
+    "source": "dispatch-tool-receipt.json in this directory (short general-role dispatch result, captured 19:14)",
+    "task_id": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+    "child_thread_id": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+    "child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1",
+    "status_at_dispatch_capture": "running",
+    "work_state_at_dispatch_capture": "working",
+    "provider_instance_id": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash"
+  },
+  "earlier_observation": {
+    "file": "integration-state-active-001.json (written 19:16:26.855Z by the preparation pass)",
+    "state_json_sha256_then": "be919db78ab8e725c7f7a78f2528fc8f3d5b61a9e7a5266606a3af377d8d99e4",
+    "state_json_bytes_then": 6031
+  },
+  "claim": "Receipt records the installed zcode-acp0.65.1 GoalLoopDriver integration state as actually read. Vendor session/goal backend target NOT activated and NOT claimed; no state.json edit, no /goal reinvocation, no receipt-hint steering was performed by this stage; timestamps are those actually accessible in the state file and dispatch receipt at observation.",
+  "whole_arm_deadline_utc": "2026-10-07T19:29:18.054Z"
+}

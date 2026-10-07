@@ -1,0 +1,258 @@
+L442:         'header_offset',
+L443:         'CRC',
+L444:         'compress_size',
+L445:         'file_size',
+L446:         '_raw_time',
+L447:         '_end_offset',
+L448:     )
+L449: 
+L450:     def __init__(self, filename="NoName", date_time=(1980,1,1,0,0,0)):
+L451:         self.orig_filename = filename   # Original file name in archive
+L452: 
+L453:         # Terminate the file name at the first null byte and
+L454:         # ensure paths always use forward slashes as the directory separator.
+L455:         filename = _sanitize_filename(filename)
+L456: 
+L478:         self.internal_attr = 0          # Internal attributes
+L479:         self.external_attr = 0          # External file attributes
+L480:         self.compress_size = 0          # Size of the compressed file
+L481:         self.file_size = 0              # Size of the uncompressed file
+L482:         self._end_offset = None         # Start of the next local header or central directory
+L483:         # Other attributes are set by class ZipFile:
+L484:         # header_offset         Byte offset to the file header
+L485:         # CRC                   CRC-32 of the uncompressed file
+L486: 
+L487:     # Maintain backward compatibility with the old protected attribute name.
+L488:     @property
+L489:     def _compresslevel(self):
+L490:         return self.compress_level
+L491: 
+L492:     @_compresslevel.setter
+L506:         if lo:
+L507:             result.append(' external_attr=%#x' % lo)
+L508:         isdir = self.is_dir()
+L509:         if not isdir or self.file_size:
+L510:             result.append(' file_size=%r' % self.file_size)
+L511:         if ((not isdir or self.compress_size) and
+L512:             (self.compress_type != ZIP_STORED or
+L513:              self.file_size != self.compress_size)):
+L514:             result.append(' compress_size=%r' % self.compress_size)
+L515:         result.append('>')
+L516:         return ''.join(result)
+L517: 
+L518:     def FileHeader(self, zip64=None):
+L519:         """Return the per-file header as a bytes object.
+L520: 
+L521:         When the optional zip64 arg is None rather than a bool, we will
+L522:         decide based upon the file_size and compress_size, if known,
+L523:         False otherwise.
+L524:         """
+L525:         dt = self.date_time
+L526:         dosdate = (dt[0] - 1980) << 9 | dt[1] << 5 | dt[2]
+L527:         dostime = dt[3] << 11 | dt[4] << 5 | (dt[5] // 2)
+L528:         if self.flag_bits & _MASK_USE_DATA_DESCRIPTOR:
+L529:             # Set these to zero because we write them after the file data
+L530:             CRC = compress_size = file_size = 0
+L531:         else:
+L532:             CRC = self.CRC
+L533:             compress_size = self.compress_size
+L534:             file_size = self.file_size
+L535: 
+L536:         extra = self.extra
+L537: 
+L538:         min_version = 0
+L539:         if zip64 is None:
+L540:             # We always explicitly pass zip64 within this module.... This
+L541:             # remains for anyone using ZipInfo.FileHeader as a public API.
+L542:             zip64 = file_size > ZIP64_LIMIT or compress_size > ZIP64_LIMIT
+L543:         if zip64:
+L544:             fmt = '<HHQQ'
+L545:             extra = extra + struct.pack(fmt,
+L546:                                         1, struct.calcsize(fmt)-4, file_size, compress_size)
+L547:             file_size = 0xffffffff
+L548:             compress_size = 0xffffffff
+L549:             min_version = ZIP64_VERSION
+L550: 
+L551:         if self.compress_type == ZIP_BZIP2:
+L552:             min_version = max(BZIP2_VERSION, min_version)
+L553:         elif self.compress_type == ZIP_LZMA:
+L554:             min_version = max(LZMA_VERSION, min_version)
+L555:         elif self.compress_type == ZIP_ZSTANDARD:
+L556:             min_version = max(ZSTANDARD_VERSION, min_version)
+L557: 
+L558:         self.extract_version = max(min_version, self.extract_version)
+L561:         header = struct.pack(structFileHeader, stringFileHeader,
+L562:                              self.extract_version, self.reserved, flag_bits,
+L563:                              self.compress_type, dostime, dosdate, CRC,
+L564:                              compress_size, file_size,
+L565:                              len(filename), len(extra))
+L566:         return header + filename + extra
+L567: 
+L568:     def _encodeFilenameFlags(self):
+L569:         if self.flag_bits & _MASK_UTF_FILENAME:
+L570:             encoding = 'ascii'
+L571:         else:
+L572:             encoding = 'cp437'
+L573:         try:
+L574:             return self.filename.encode(encoding), self.flag_bits & ~_MASK_UTF_FILENAME
+L575:         except UnicodeEncodeError:
+L587:                 data = extra[4:ln+4]
+L588:                 # ZIP64 extension (large files and/or large archives)
+L589:                 try:
+L590:                     if self.file_size in (0xFFFF_FFFF_FFFF_FFFF, 0xFFFF_FFFF):
+L591:                         field = "File size"
+L592:                         self.file_size, = unpack('<Q', data[:8])
+L593:                         data = data[8:]
+L594:                     if self.compress_size == 0xFFFF_FFFF:
+L595:                         field = "Compress size"
+L596:                         self.compress_size, = unpack('<Q', data[:8])
+L597:                         data = data[8:]
+L598:                     if self.header_offset == 0xFFFF_FFFF:
+L599:                         field = "Header offset"
+L600:                         self.header_offset, = unpack('<Q', data[:8])
+L601:                 except struct.error:
+L602:                     raise BadZipFile(f"Corrupt zip64 extra field. "
+L603:                                      f"{field} not found.") from None
+L652:         zinfo = cls(arcname, date_time)
+L653:         zinfo.external_attr = (st.st_mode & 0xFFFF) << 16  # Unix attributes
+L654:         if isdir:
+L655:             zinfo.file_size = 0
+L656:             zinfo.external_attr |= 0x10  # MS-DOS directory flag
+L657:         else:
+L658:             zinfo.file_size = st.st_size
+L659: 
+L660:         return zinfo
+L661: 
+L662:     def _for_archive(self, archive):
+L663:         """Resolve suitable defaults from the archive.
+L664: 
+L665:         Resolve the date_time, compression attributes, and external attributes
+L666:         to suitable defaults as used by :method:`ZipFile.writestr`.
+L667: 
+L668:         Return self.
+L669:         """
+L983: 
+L984:         self._compress_type = zipinfo.compress_type
+L985:         self._compress_left = zipinfo.compress_size
+L986:         self._left = zipinfo.file_size
+L987: 
+L988:         self._decompressor = _get_decompressor(self._compress_type)
+L989: 
+L990:         self._eof = False
+L991:         self._readbuffer = b''
+L992:         self._offset = 0
+L993: 
+L994:         self.newlines = None
+L995: 
+L996:         self.mode = mode
+L997:         self.name = zipinfo.filename
+L1007:             if fileobj.seekable():
+L1008:                 self._orig_compress_start = fileobj.tell()
+L1009:                 self._orig_compress_size = zipinfo.compress_size
+L1010:                 self._orig_file_size = zipinfo.file_size
+L1011:                 self._orig_start_crc = self._running_crc
+L1012:                 self._orig_crc = self._expected_crc
+L1013:                 self._seekable = True
+L1014:         except AttributeError:
+L1015:             pass
+L1016: 
+L1017:         self._decrypter = None
+L1018:         if pwd:
+L1019:             if zipinfo.flag_bits & _MASK_USE_DATA_DESCRIPTOR:
+L1020:                 # compare against the file type from extended local headers
+L1021:                 check_byte = (zipinfo._raw_time >> 8) & 0xff
+L1121:             n -= len(data)
+L1122:         return buf
+L1123: 
+L1124:     def _update_crc(self, newdata):
+L1125:         # Update the CRC using the given data.
+L1126:         if self._expected_crc is None:
+L1127:             # No need to compute the CRC if we don't have a reference value
+L1128:             return
+L1129:         self._running_crc = crc32(newdata, self._running_crc)
+L1130:         # Check the CRC if we're at the end of the file
+L1131:         if self._eof and self._running_crc != self._expected_crc:
+L1132:             raise BadZipFile("Bad CRC-32 for file %r" % self.name)
+L1133: 
+L1134:     def read1(self, n):
+L1135:         """Read up to n bytes with at most one read() system call."""
+L1168:                     break
+L1169:         return buf
+L1170: 
+L1171:     def _read1(self, n):
+L1172:         # Read up to n compressed bytes with at most one read() system call,
+L1173:         # decrypt and decompress them.
+L1174:         if self._eof or n <= 0:
+L1175:             return b''
+L1176: 
+L1177:         # Read from file.
+L1178:         if self._compress_type == ZIP_DEFLATED:
+L1179:             ## Handle unconsumed data.
+L1180:             data = self._decompressor.unconsumed_tail
+L1181:             if n > len(data):
+L1182:                 data += self._read2(n - len(data))
+L1220:         self._update_crc(data)
+L1221:         return data
+L1222: 
+L1223:     def _read2(self, n):
+L1224:         if self._compress_left <= 0:
+L1225:             return b''
+L1226: 
+L1227:         n = max(n, self.MIN_READ_SIZE)
+L1228:         n = min(n, self._compress_left)
+L1229: 
+L1230:         data = self._fileobj.read(n)
+L1231:         self._compress_left -= len(data)
+L1232:         if not data:
+L1233:             raise EOFError
+L1234: 
+L1259:         elif whence == os.SEEK_CUR:
+L1260:             new_pos = curr_pos + offset
+L1261:         elif whence == os.SEEK_END:
+L1262:             new_pos = self._orig_file_size + offset
+L1263:         else:
+L1264:             raise ValueError("whence must be os.SEEK_SET (0), "
+L1265:                              "os.SEEK_CUR (1), or os.SEEK_END (2)")
+L1266: 
+L1267:         if new_pos > self._orig_file_size:
+L1268:             new_pos = self._orig_file_size
+L1269: 
+L1270:         if new_pos < 0:
+L1271:             new_pos = 0
+L1272: 
+L1273:         read_offset = new_pos - curr_pos
+L1274:         buff_offset = read_offset + self._offset
+L1275: 
+L1276:         if buff_offset >= 0 and buff_offset < len(self._readbuffer):
+L1277:             # Just move the _offset index if the new position is in the _readbuffer
+L1278:             self._offset = buff_offset
+L1882: 
+L1883:         return self._extract_member(member, path, pwd)
+L1884: 
+L1885:     def extractall(self, path=None, members=None, pwd=None):
+L1886:         """Extract all members from the archive to the current working
+L1887:            directory. 'path' specifies a different directory to extract to.
+L1888:            'members' is optional and must be a subset of the list returned
+L1889:            by namelist(). You can specify the password to decrypt all files
+L1890:            using 'pwd'.
+L1891:         """
+L1892:         if members is None:
+L1893:             members = self.namelist()
+L1894: 
+L1895:         if path is None:
+L1896:             path = os.getcwd()
+L1915:         arcname = pathsep.join(x for x in arcname if x)
+L1916:         return arcname
+L1917: 
+L1918:     def _extract_member(self, member, targetpath, pwd):
+L1919:         """Extract the ZipInfo object 'member' to a physical
+L1920:            file on the path targetpath.
+L1921:         """
+L1922:         if not isinstance(member, ZipInfo):
+L1923:             member = self.getinfo(member)
+L1924: 
+L1925:         # build the destination pathname, replacing
+L1926:         # forward slashes to platform specific separators.
+L1927:         arcname = member.filename
+L1928:         if os.path.sep != '/':
+L1929:             arcname = arcname.replace('/', os.path.sep)

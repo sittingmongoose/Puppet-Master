@@ -1,0 +1,10 @@
+{
+  "event": "linked_missing_state_projection_annotation",
+  "case": "I-METHOD-04",
+  "record_at": "2026-10-07T19:58:20.218494+00:00",
+  "reason": "armdeadline state projection absent; restored mechanically from original prefrozen research dispatch-config, no timestampreplacement or clockreset",
+  "deadlines": {
+    "control": "2026-10-07T20:25:07.397888+00:00",
+    "treatment": "2026-10-07T20:25:06.072109+00:00"
+  }
+}

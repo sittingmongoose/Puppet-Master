@@ -1,0 +1,231 @@
+{
+  "record_at": "2026-10-07T19:48:55.973278+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/artifact.md": {
+      "sha256": "2cc6f80bca6c0b979dac0e35d4140d550f06ae6622eded6e6c46f01a5d607850",
+      "bytes": 12676
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/source-map.json": {
+      "sha256": "e582d4926564b5b537f2df4e7e6fa578d4bb22eca4af72ef6d10072a81ece134",
+      "bytes": 22662
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/osd_pr_2709_patch-fetch.json": {
+      "sha256": "3a29c1d4e76818ac6f42408c8009e8821bf23cbaa48f3387446ed096009dffd9",
+      "bytes": 1239
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/osd_pr_2709_patch-warm-read.json": {
+      "sha256": "de7eb0aa795069ed425f1b8aa6fa7d93017b9cb80178362e9b801e57c391125d",
+      "bytes": 1243
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s01_presentation3-warm-read.json": {
+      "sha256": "5a16443d0c9baffd891e3269047f16caea3d9bb96db95681e72f89eab01ba224",
+      "bytes": 1185
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s02_image_api3-warm-read.json": {
+      "sha256": "24ba61dcccd02e7a5b1d9e2fb6891be54a21cf3c6d7dfe0183703d328dd117b2",
+      "bytes": 1170
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s03_web_annotation-warm-read.json": {
+      "sha256": "1af9a2c902acf47c2989c8627ca35cd22a174e2b33397112e3724e884bf8f6b5",
+      "bytes": 1167
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s04_media_fragments-warm-read.json": {
+      "sha256": "d864e38f2ceba0878a1d9ec034a36f4b2576dd4aaee4bc88e28619a748f66632",
+      "bytes": 1155
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s05_iiif_auth-warm-read.json": {
+      "sha256": "4942d32d2f9aca7fefb1e8f7ee239a04fcb2bad593471936670b62346aecb02a",
+      "bytes": 1169
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s06_osd_tag-warm-read.json": {
+      "sha256": "677b5a0a51dea0d26b86debeb7615daaff2dfaf7f52ab499d00e4e864b06956c",
+      "bytes": 1311
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s07_osd_release_patch-warm-read.json": {
+      "sha256": "a0af2180ac3b49a32b58a850b41ecab5772e0e8916617800705c83459cc6e614",
+      "bytes": 1231
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s08_osd_tiledimage-warm-read.json": {
+      "sha256": "2f5dd20d18b5cdc9d1259aa21b2c7c8ab2ef4c7c14c482da190ce374dedf1c8f",
+      "bytes": 1432
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s09_osd_tiledimage_tests-warm-read.json": {
+      "sha256": "9276945b2f926d8b39240a41a6df4ba3838fb9a3cc610ca6a29de1ea6f7721fa",
+      "bytes": 1447
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s10_osd_iiif_source-warm-read.json": {
+      "sha256": "0336f69ebe779161e36860db93747c26a5573ffc2548aa3d23c4ae259622558e",
+      "bytes": 1437
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s11_osd_viewer-warm-read.json": {
+      "sha256": "f48f06edd2024a0ceb63860f6d7f09c9f5e6f3c7fa5856c96539b4c885c7c983",
+      "bytes": 1424
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s12_osd_viewport-warm-read.json": {
+      "sha256": "bb438e08ab48f3b6cf11ade342eb5b0cdd53e73eacbd2e15746ae3fbdaab824e",
+      "bytes": 1424
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s13_osd_viewport_tests-warm-read.json": {
+      "sha256": "f9c0c904a1eb79e184cd61d794b832646d366a91d9598bb5f0854eaa782fcff6",
+      "bytes": 1443
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s14_osd_world-warm-read.json": {
+      "sha256": "56dab411e226556ac403664754ca24a629638a3d7cd9255701eb38fd766641bc",
+      "bytes": 1419
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s15_osd_world_tests-warm-read.json": {
+      "sha256": "64a6cc33baaafde294defaa49958a2aafda69b330d06274ce3cc27f3de829816",
+      "bytes": 1434
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s16_osd_issue_2708-warm-read.json": {
+      "sha256": "571a28e14a8db5fd30122d12b19e4c6c0dad55700162ed96bdd706a5cb836a4e",
+      "bytes": 1178
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s17_osd_pr_2709-warm-read.json": {
+      "sha256": "257635a707c5b94836f42716fb0a7c1aff75e7a9228a8800e6309994b75c4f79",
+      "bytes": 1173
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s18_osd_release_611-warm-read.json": {
+      "sha256": "a664dc28b21ac0d2fdd49677c4753add998b91c0c0fa6db4a6b21ec959925140",
+      "bytes": 1229
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s19_osd_release_400-warm-read.json": {
+      "sha256": "458579c0a069adbcbf9099eae781bb8a2e39838bd6fefd4cf17d26044e5a248f",
+      "bytes": 1230
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s20_osd_pr_2249-warm-read.json": {
+      "sha256": "f4b03f883f5e4e970ed80298e3f38f5d29d8e8750524386e1c43e90dbbda8681",
+      "bytes": 1209
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s21_osd_pr_2249_patch-warm-read.json": {
+      "sha256": "0773ff35aa75f9105ebc4dfbe8536e7d39780e5066c114592e730f04a883db43",
+      "bytes": 1247
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s22_mirador-warm-read.json": {
+      "sha256": "5b0373e2d8e3dca97f215b3cac96b3db9f9ad78b959c44ebe85ecdd8c39a9745",
+      "bytes": 1179
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s23_mirador_annotations-warm-read.json": {
+      "sha256": "3699e1bf51438527a04882aabd2d468ebb0ec2945afb29aebf2a18b01738b7e9",
+      "bytes": 1204
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s24_mirador_editor-warm-read.json": {
+      "sha256": "94721301c4d72d9e0927175a6ec3c10d2a4642210f9e9bbac22d450697aff84a",
+      "bytes": 1209
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s25_annotorious593-warm-read.json": {
+      "sha256": "cb39ff9f6af85efaf8644c3dcfffcedabb1320747d91eb8259ba10b656020a4c",
+      "bytes": 1167
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/sources/s26_annotorious595-warm-read.json": {
+      "sha256": "bd2b284a8dd7a9d4932a8d6f1a89824e9d6cfa8436e00b8b30a11a9fccccd8c2",
+      "bytes": 1168
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-treatment-critic-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T19:40:42.210Z",
+    "startedAt": "2026-10-07T19:40:47.247Z",
+    "completedAt": "2026-10-07T19:48:42.484Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-02/treatment/critic-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-02--treatment--critic-v1--6f475869e4c18b62.json",
+    "sha256": "6f475869e4c18b6291733fb675d8fd90007dba64cd9baed3c698cdebe81000b1",
+    "bytes": 10872,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "a7f1d311742fe8b1473c3fe8f8c0f236754bcc6f5f7012078d13108fc67d668b",
+      "status": "complete",
+      "tokensUsed": 149183,
+      "tokenBudget": null,
+      "timeUsedSeconds": 451
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-02-treatment-critic-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a117e1-f44a-7551-8d43-2ce132fdf601",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T19:48:42.371Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-02-treatment-critic-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T19:48:42.371Z",
+        "sha256": "5d2be51cab6cfca6d9b9b4494e05526ecebf02a6c051d26362c526a0a50cff82"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a117e1-f44a-7551-8d43-2ce132fdf601",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 149183,
+  "native_elapsed_seconds": 451,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "record_at": "2026-10-07T19:40:42.012582+00:00",
+    "prospective_stage_deadline": "2026-10-07T19:50:18.010596+00:00",
+    "prospective_arm_deadline": "2026-10-07T20:05:18.010596+00:00",
+    "clientRequestId": "er10-I-METHOD-02-treatment-critic-v1",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

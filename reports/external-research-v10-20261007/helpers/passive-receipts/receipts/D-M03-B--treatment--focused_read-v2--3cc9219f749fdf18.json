@@ -1,0 +1,563 @@
+{
+  "schema": "pm.er10.passive-receipts.v1",
+  "stage": "D-M03-B/treatment/focused_read-v2",
+  "observed_at_utc": "2026-10-07T19:50:37.321081+00:00",
+  "thread_id": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-focused_read-v2",
+  "task_id": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-focused_read-v2",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-B/treatment/focused_read-v2/dispatch.json",
+    "type": "stage_dispatch",
+    "version": null,
+    "record_id": null,
+    "call_id": null,
+    "time": null,
+    "sha256": "6e0e4b54e971eeffbd5ed9825b4f5770ce4e1700a78a988de693aeba3f7bf1f2"
+  },
+  "authority_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/checkpoint.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "99213e8cb2b3f1d407d541855cc9d290930cca410c8917564417dbf77a08abba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-supervisor.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "631af8f27121a93a475c69c8b67a0e8d519ee7a9d9006d4517ae8bc0e5f358d6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-supervisor.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "ad6b1c10f84bce1facbfbd102a8cad531ebf42ddf880b6ccc899d0e88f5a35dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "abc797a3302c9bbc72782245158e772608289887b05fc2b4e33416ad36b4d41f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "1b9e5d367577b0ec8f40166e8ff7feeb4d25cf1f691befd60343d1c04290b133"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "6fb206310729c1463846ac9e548bba06a6eede508970f7e2ffc16110adadef08"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "a89e8a8d6dab9b5f6c0b7fea80b2a31c0ff96379a39f4d97c7092631d068f7a5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "62d0d8de2d544172b02b90edf79ce9cd5ca34fdb995f81fbfbd81eac461412e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "34922d63bb33b71158b8411a6ce566f1e55062d30ec26f0c0254c1dbe4963dd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "2a745a2f21ebdd26dc4fb67d8d5fab5e3214e7f0e4f86d87a45e5db8a2003e89"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "6d365ea7680ccdf9b30ac8db3a8906671bf6397cfa8eb163cf5e0cd23c33dd68"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "119de32df7d4f54d7ec4c5bb2bccffcb1187e61199daf7cde1035c05774771fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "7e8b6f56c7803953829676e5e530823dc790aed13b4ea577dd2411c29cdc8e45"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "e2e2c295754dbade5da583b4ebdb3832996fb8ea4c98b40409e61c9f4391b2c7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "41dc27199369661377a09aa1d8810d7d4afb7bde004235f6699493f114c94221"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "6dcb168496db4e639cb841e2f9471955f7368b85545e71388f1d969932971e96"
+    }
+  ],
+  "binding": [
+    {
+      "id": "provider-thread:provider:acpRegistry:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%25253Adelegate-task%25253Aer10-cohort1-D-M03-B-treatment-focused_read-v2%3Aordinal%3A1",
+      "driver": "acpRegistry",
+      "providerInstanceId": "muse",
+      "providerSessionId": "provider-session:provider-instance:muse:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-B-treatment-focused_read-v2:21499913-2d9f-43de-93ff-964650db2a3f",
+      "nativeThreadRef": {
+        "driver": "acpRegistry",
+        "nativeId": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T19:50:17.120Z",
+      "contextUsage": {
+        "usedTokens": 80642,
+        "maxTokens": 1007997
+      },
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:acpRegistry:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%25253Adelegate-task%25253Aer10-cohort1-D-M03-B-treatment-focused_read-v2%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T19:50:17.120Z",
+        "sha256": "a3a816d7dd3dd910c7bb8417d37aec4410c5d098e1146fa44fb3289bab40f10c"
+      },
+      "provider_session": {
+        "id": "provider-session:provider-instance:muse:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-B-treatment-focused_read-v2:21499913-2d9f-43de-93ff-964650db2a3f",
+        "driver": "acpRegistry",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "status": "ready",
+        "createdAt": "2026-10-07T19:48:38.237Z",
+        "updatedAt": "2026-10-07T19:48:38.237Z"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_actual_native_goal_tool_response",
+        "version": "statev2",
+        "record_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Amuse%3A01a117e9-2563-7b30-bcf6-cadbd30f139c%3Atool%3Acall_01a117e939ea759ca946354c69c56d00",
+        "call_id": "call_01a117e939ea759ca946354c69c56d00",
+        "time": "2026-10-07T19:48:44.296Z",
+        "sha256": "d69ecc97d5ca0f2012d78714c08f1975bcd154c3217f78726d1f06541b29524f"
+      },
+      "tool": "create_goal",
+      "native_response": {
+        "goal": {
+          "created_at_ms": 1791402524127,
+          "current_work": null,
+          "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+          "percent_complete": 0,
+          "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+          "status": "active",
+          "token_budget": null,
+          "tokens_used": 0,
+          "updated_at_ms": 1791402524127
+        }
+      },
+      "response_sha256": "2abc77666ab8da32b529d0eb80a582606c80a6c61c6c534cc3c71abe7b31a5dd",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_actual_native_goal_tool_response",
+        "version": "statev2",
+        "record_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Amuse%3A01a117e9-2563-7b30-bcf6-cadbd30f139c%3Atool%3Acall_01a117e9432673a5a15911738ca4146d",
+        "call_id": "call_01a117e9432673a5a15911738ca4146d",
+        "time": "2026-10-07T19:48:46.249Z",
+        "sha256": "a1256041e9a4d1085f80c8561296a3da834aaf7019f331afa9112a4ee37ebcdf"
+      },
+      "tool": "get_goal",
+      "native_response": {
+        "goal": {
+          "created_at_ms": 1791402524127,
+          "current_work": null,
+          "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+          "percent_complete": 0,
+          "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+          "status": "active",
+          "token_budget": null,
+          "tokens_used": 0,
+          "updated_at_ms": 1791402526192
+        }
+      },
+      "response_sha256": "a052a5bc222ab8682c622af2b9bd4b4d5b22075d7d369e1116b6fce87099dd6d",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_actual_native_goal_tool_response",
+        "version": "statev2",
+        "record_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Amuse%3A01a117e9-2563-7b30-bcf6-cadbd30f139c%3Atool%3Acall_01a117ea477671c4a1279dd2c6cf9d9a",
+        "call_id": "call_01a117ea477671c4a1279dd2c6cf9d9a",
+        "time": "2026-10-07T19:49:53.748Z",
+        "sha256": "5fe42950017419b4940416ed0f5ef8278a8ecd2f6535e5f405981fee2392d1d2"
+      },
+      "tool": "update_goal",
+      "native_response": {
+        "goal": {
+          "created_at_ms": 1791402524127,
+          "current_work": null,
+          "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+          "percent_complete": 100,
+          "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+          "status": "complete",
+          "token_budget": null,
+          "tokens_used": 697282,
+          "updated_at_ms": 1791402593727
+        }
+      },
+      "response_sha256": "62bc050fcef4cdb9c3a363e0b70118bc1d537bd25406388e037694bdd607845a",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_actual_native_goal_tool_response",
+        "version": "statev2",
+        "record_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Amuse%3A01a117e9-2563-7b30-bcf6-cadbd30f139c%3Atool%3Acall_01a117ea51fe74bb96ffec3da7037937",
+        "call_id": "call_01a117ea51fe74bb96ffec3da7037937",
+        "time": "2026-10-07T19:49:55.558Z",
+        "sha256": "7f77747e3118934a39b2428465047d38378a401397da72a0bd65aeaf0349c5cc"
+      },
+      "tool": "get_goal",
+      "native_response": {
+        "goal": {
+          "created_at_ms": 1791402524127,
+          "current_work": null,
+          "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+          "percent_complete": 100,
+          "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+          "status": "complete",
+          "token_budget": null,
+          "tokens_used": 777326,
+          "updated_at_ms": 1791402593727
+        }
+      },
+      "response_sha256": "8ea14d9981f38db3f8701dfd5093f6ce45c362bab9f7dfce9b93dc5e3571baee",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.local/share/muse/sessions/2026/10/07/01a117e9-2563-7b30-bcf6-cadbd30f139c/session.jsonl",
+        "type": "muse_actual_native_goal_tool_response",
+        "version": "muse-session-jsonl",
+        "record_id": "75e3f9c5-481e-4165-af9d-82444dd50904",
+        "call_id": "call_01a117e939ea759ca946354c69c56d00",
+        "time": {
+          "recorded_at": 1791402524205752,
+          "unit": "microseconds_since_unix_epoch",
+          "line": 79,
+          "sequence": 80
+        },
+        "sha256": "8d1df0c1b45d38d54b09f030659e15d84ef1286403395202b843d4c8ce32d20d"
+      },
+      "tool": "create_goal",
+      "native_response": {
+        "goal": {
+          "created_at_ms": 1791402524127,
+          "current_work": null,
+          "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+          "percent_complete": 0,
+          "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+          "status": "active",
+          "token_budget": null,
+          "tokens_used": 0,
+          "updated_at_ms": 1791402524127
+        }
+      },
+      "response_sha256": "2abc77666ab8da32b529d0eb80a582606c80a6c61c6c534cc3c71abe7b31a5dd",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.local/share/muse/sessions/2026/10/07/01a117e9-2563-7b30-bcf6-cadbd30f139c/session.jsonl",
+        "type": "muse_actual_native_goal_tool_response",
+        "version": "muse-session-jsonl",
+        "record_id": "ab129b30-e19e-48ea-a332-18507e0bef60",
+        "call_id": "call_01a117e9432673a5a15911738ca4146d",
+        "time": {
+          "recorded_at": 1791402526246487,
+          "unit": "microseconds_since_unix_epoch",
+          "line": 110,
+          "sequence": 111
+        },
+        "sha256": "1b8f034d735d026a291c625bb05f599edb333f57b7b1df3489b3141da3a365a6"
+      },
+      "tool": "get_goal",
+      "native_response": {
+        "goal": {
+          "created_at_ms": 1791402524127,
+          "current_work": null,
+          "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+          "percent_complete": 0,
+          "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+          "status": "active",
+          "token_budget": null,
+          "tokens_used": 0,
+          "updated_at_ms": 1791402526192
+        }
+      },
+      "response_sha256": "a052a5bc222ab8682c622af2b9bd4b4d5b22075d7d369e1116b6fce87099dd6d",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.local/share/muse/sessions/2026/10/07/01a117e9-2563-7b30-bcf6-cadbd30f139c/session.jsonl",
+        "type": "muse_actual_native_goal_tool_response",
+        "version": "muse-session-jsonl",
+        "record_id": "7272b8dd-9d0b-450f-b4d4-8861ea2baa98",
+        "call_id": "call_01a117ea477671c4a1279dd2c6cf9d9a",
+        "time": {
+          "recorded_at": 1791402593751541,
+          "unit": "microseconds_since_unix_epoch",
+          "line": 588,
+          "sequence": 589
+        },
+        "sha256": "14092471771485acee38af2acaba96fc7b705b1214d1d2399ff960299194fd40"
+      },
+      "tool": "update_goal",
+      "native_response": {
+        "goal": {
+          "created_at_ms": 1791402524127,
+          "current_work": null,
+          "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+          "percent_complete": 100,
+          "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+          "status": "complete",
+          "token_budget": null,
+          "tokens_used": 697282,
+          "updated_at_ms": 1791402593727
+        }
+      },
+      "response_sha256": "62bc050fcef4cdb9c3a363e0b70118bc1d537bd25406388e037694bdd607845a",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.local/share/muse/sessions/2026/10/07/01a117e9-2563-7b30-bcf6-cadbd30f139c/session.jsonl",
+        "type": "muse_actual_native_goal_tool_response",
+        "version": "muse-session-jsonl",
+        "record_id": "f6ee4bdd-35ba-4853-88f9-65d5416da0c2",
+        "call_id": "call_01a117ea51fe74bb96ffec3da7037937",
+        "time": {
+          "recorded_at": 1791402595561488,
+          "unit": "microseconds_since_unix_epoch",
+          "line": 618,
+          "sequence": 619
+        },
+        "sha256": "a6f6ccd92dd8dd0044ef4c2f9d2e1905e3233895fd36a9d7de1dc4775257614f"
+      },
+      "tool": "get_goal",
+      "native_response": {
+        "goal": {
+          "created_at_ms": 1791402524127,
+          "current_work": null,
+          "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+          "percent_complete": 100,
+          "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+          "status": "complete",
+          "token_budget": null,
+          "tokens_used": 777326,
+          "updated_at_ms": 1791402593727
+        }
+      },
+      "response_sha256": "8ea14d9981f38db3f8701dfd5093f6ce45c362bab9f7dfce9b93dc5e3571baee",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.local/share/muse/sessions/2026/10/07/01a117e9-2563-7b30-bcf6-cadbd30f139c/goals.db",
+        "type": "muse_native_goal_state",
+        "version": "goals.db",
+        "record_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+        "call_id": null,
+        "time": 1791402593727,
+        "sha256": "b2a69e28505becb5c1de7f192ab86ad6749c1dfb7e7d82e1dff79dc269e7d492"
+      },
+      "tool": null,
+      "native_response": {
+        "session_id": "01a117e9-2563-7b30-bcf6-cadbd30f139c",
+        "goal_id": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+        "revision": "goal-01a117e9-3ddf-7250-8b01-1dfa41633b81",
+        "objective_sha256": "6d0227b3c5c083805cf47be6757f315b407b9877f4322db6423bd8f4f34e61a2",
+        "status": "complete",
+        "percent_complete": 100,
+        "token_budget": null,
+        "tokens_used": "938211",
+        "created_at_ms": 1791402524127,
+        "updated_at_ms": 1791402593727,
+        "llm_steps_used": "26"
+      },
+      "response_sha256": "b2a69e28505becb5c1de7f192ab86ad6749c1dfb7e7d82e1dff79dc269e7d492",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged"
+    }
+  ],
+  "limitations": [
+    "No generated/cached/provider billing fields exposed by selected sources; bounded absence only. No additional quota probes.",
+    "No continuous Goal reasoning certification. Fresh native state plus binding is an observed state, never a replacement create receipt.",
+    "SQLite record hashes identify observed payloads, not immutable whole DB snapshots. Source can change immediately after observation.",
+    "File access names/hashes not harvested on this route; scope audit remains incomplete_unknown."
+  ],
+  "usage": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning_subset": null,
+    "provider_billing": null,
+    "semantics": "Unknown unless explicitly exposed. Native cumulative Goal/context counters remain in their original states; no sums or billing estimates."
+  },
+  "scope_audit": "incomplete_unknown; advisory map is not a filesystem firewall",
+  "thread_metadata": {
+    "modelSelection": {
+      "instanceId": "muse",
+      "model": "muse-spark-1.3-contributor",
+      "options": [
+        {
+          "id": "reasoning_effort",
+          "value": "max"
+        },
+        {
+          "id": "mode",
+          "value": "default"
+        },
+        {
+          "id": "approval_mode",
+          "value": "allowAll"
+        },
+        {
+          "id": "auto_review",
+          "value": "off"
+        }
+      ]
+    },
+    "providerInstanceId": "muse",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "lineage": {
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort1-v1",
+      "relationshipToParent": "subagent",
+      "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+    }
+  },
+  "parent_in_campaign_authority": true,
+  "native_timestamp_units": {
+    "*_ms": "milliseconds_since_unix_epoch",
+    "createdAt/updatedAt_in_GLM_driver": "milliseconds_since_unix_epoch",
+    "Codex_goal_createdAt/updatedAt": "seconds_since_unix_epoch",
+    "T3_source_times": "ISO-8601; native values preserved"
+  },
+  "lifecycle_observations": {
+    "states_in_source_order": [
+      "active",
+      "active",
+      "complete",
+      "complete",
+      "active",
+      "active",
+      "complete",
+      "complete",
+      "complete"
+    ],
+    "active_get_response": true,
+    "terminal_get_response": true,
+    "meaning": "Observed source fields only; no order adjudication or inferred lifecycle transition."
+  },
+  "capture": {
+    "create_goal": "observed_actual_response",
+    "get_goal": "observed_actual_response",
+    "update_goal": "observed_actual_response"
+  }
+}

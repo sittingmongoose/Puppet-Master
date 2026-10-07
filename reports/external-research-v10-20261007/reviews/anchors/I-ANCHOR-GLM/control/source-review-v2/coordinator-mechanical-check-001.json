@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-07T20:06:19.335737+00:00",
+  "scope": "coordinator mechanical only, no scientific regrade",
+  "required_nonempty": true,
+  "input_hash_mismatches": [],
+  "judgment_json_valid": true,
+  "timings_json_valid": true,
+  "original_grade_scope": {
+    "original_integrated_scope_assessed": true,
+    "all_source_claims_verified": false,
+    "full_positive_permitted": false,
+    "numeric_or_composite_grade": null,
+    "why_no_composite_grade": "Categorical diagnostic axes only; no full positive or invented full numerical grade from the limited original-wiki verification.",
+    "early_screen_closure": false,
+    "scope_excludes": [
+      "pair comparison/winner",
+      "cost/latency/counters",
+      "candidate lifecycle/method eligibility",
+      "executed implementation readiness",
+      "scientific rescue or follow-up candidate"
+    ]
+  },
+  "original_unassessed_remainder": [
+    {
+      "id": "R1",
+      "exact_unassessed_claims": [
+        "S1-zim-format.md:4 / SOURCES.md S1: wiki last edited 2026-09-12 and its exact tie to libzim 9.3.0",
+        "S1-zim-format.md:10: approximate 1 MB cluster size on the fetched wiki page",
+        "S1-zim-format.md:12 / critique.md:19: namespaces hidden since 2021 and exact wiki instruction to HTTP-URL-decode before libzim",
+        "S1-zim-format.md:13: blanket older-reader compatibility with newer files"
+      ],
+      "reason": "Original wiki returned Anubis bot challenge on web and direct GET, including action=raw. Official pinned libzim/zim-tools verify associated header, checksum, codecs, split and path behavior but do not establish these precise historical/metadata/universal claims.",
+      "evidence": [
+        "P01-zim.json",
+        "P42-zim-challenge.json"
+      ],
+      "effect": "No full positive source grade; these claims remain unverified, not declared false."
+    },
+    {
+      "id": "R2",
+      "exact_unassessed_claims": [
+        "Authenticity/completeness of the candidate\u2019s original retrieval execution beyond the supplied authored notes"
+      ],
+      "reason": "Only authorized scientific inputs were read. Candidate lifecycle/usage/terminal receipts and raw orchestration records are excluded by user.",
+      "effect": "Content was independently checked; execution provenance is not inferred or scientifically scored as proven."
+    }
+  ],
+  "reviewer_final_consistency_check_completion": "UNKNOWN; T3 interrupted at original allowance while closing checks/timing; saved original contents retained"
+}

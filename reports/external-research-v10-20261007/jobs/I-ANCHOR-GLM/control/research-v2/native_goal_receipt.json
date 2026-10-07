@@ -1,0 +1,68 @@
+{
+  "receipt": "native_goal_receipt",
+  "role": "control researcher v2 (general)",
+  "captured_at_utc": "2026-10-07T18:53:39.428700+00:00",
+  "objective_assignment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md",
+  "objective_inputs_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/INPUTS.md",
+  "objective_binding_hashes": {
+    "assignment.md": "edcff5bee8fcc6226fa77bc48ccc0ffc7f10c6dd04f1b824017e8178efeae2d4",
+    "INPUTS.md": "4ae3c96fa8d0a3d42c675f3021d2f13d9ea3d2d30eaffe8ea3857659a8e7911d",
+    "cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+    "cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a"
+  },
+  "integration": {
+    "name": "installed zcode-acp0.65.1 provider integration GoalLoopDriver",
+    "invocation": "/goal prefix on delegated-task user message (route-owned dispatch); integration pre-invoked before this researcher started; no second Goal, no create_goal call, no nested work by this agent",
+    "vendor_backend_target": "NOT_ACTIVATED_OR_CLAIMED"
+  },
+  "backend_session_identity": {
+    "backend_session_id": "sess_fc21453a-44ec-4f62-bc07-f3f23e974af6",
+    "state_json_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json",
+    "goal_activation_item_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3Aeab354e1-e2b0-434e-b6a9-533370b934fa%3Aturn%3A1%3Aassistant%3Amessage%3Agoal-1791399012770-04yiek",
+    "goal_session_marker": "goal-1791399012770-04yiek",
+    "objective_match": "state.json objective text begins with the exact control research-v2 objective string (verified by read)"
+  },
+  "observed_driver_state": {
+    "status": "running",
+    "rounds": 0,
+    "tickets_t1_status": "pending",
+    "state_created_at_utc": "2026-10-07T18:50:12.768000+00:00",
+    "state_updated_at_utc": "2026-10-07T18:50:57.258000+00:00",
+    "terminal": false,
+    "note": "As observed at captured_at_utc the driver state was running, not terminal. Terminal capture is deferred to native_terminal_receipt.json (later round); if not terminal while authoring, that fact is recorded and final capture is left to the coordinator/driver. No invented status; authoritative state.json never edited."
+  },
+  "t3_binding": {
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "worktree_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "project_id": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "provider_instance": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "thought_option": "max",
+    "mode_option": "yolo",
+    "runtime_mode": "full-access",
+    "interaction_mode": "default",
+    "parent_thread": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-anchor-supervisor-v1",
+    "relationship_to_parent": "subagent"
+  },
+  "driver_run_observation": {
+    "child_thread_id": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2",
+    "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1",
+    "run_requested_at_utc": "2026-10-07T18:50:05.061Z",
+    "run_started_at_utc": "2026-10-07T18:50:09.464Z",
+    "run_completed_at_utc": null,
+    "observed_run_status": "running",
+    "observed_work_state": "working"
+  },
+  "observation_sources": [
+    ".zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json (read-only cat/stat; mtime 2026-10-07T18:50:57Z)",
+    "route-owned integration-state-active-001.json (observed_at 2026-10-07T18:50:16.198829+00:00)",
+    "route-owned dispatch-tool-receipt.json (status running / workState working)",
+    "route-owned integration-binding-observation-001.json (observed_at 2026-10-07T18:50:16.198829+00:00; matches: [] \u2014 direct session alias mapping unverified by that earlier observation; this receipt adds the state.json session binding)"
+  ],
+  "integrity_notes": [
+    "No Goal state.json was written or edited by this agent; only read-only cat/stat/find were issued against .zcode/scratch/goals/.",
+    "A second scratch session (sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723, treatment-arm objective, status paused/endedReason cancelled) was incidentally printed by the same read-only directory listing; it is a different objective, untouched and out of scope for this control arm.",
+    "Route-owned files in this directory (config.json, task.txt, prepared.json, matching-control-v2.json, dispatch-tool-receipt.json, tool-policy-receipt.json, integration-*.json) were read only; none modified.",
+    "No new engine/externalrunner/globalconfig/env/account changes made; no accounts or config touched."
+  ]
+}

@@ -1,0 +1,565 @@
+L287:   const getNodeName =
+L288:     Node && Node.prototype ? lookupGetter(Node.prototype, 'nodeName') : null;
+L289:   const getOwnerDocument =
+L290:     Node && Node.prototype
+L291:       ? lookupGetter(Node.prototype, 'ownerDocument')
+L292:       : null;
+L293: 
+L294:   /* Clobber-safe nodeType / nodeName reads through the cached Node.prototype
+L295:      getters, with a direct-property fallback for environments that lack
+L296:      Node.prototype. Sites that need a different fallback (e.g. _isClobbered
+L297:      returns early on a null name) intentionally keep their own reads. */
+L298:   const _readNodeType = function (node: Node): number {
+L299:     return getNodeType ? getNodeType(node) : (node as any).nodeType;
+L300:   };
+L301: 
+L302:   const _readNodeName = function (node: Node): string {
+L303:     return getNodeName ? getNodeName(node) : (node as any).nodeName;
+L304:   };
+L305: 
+L306:   // As per issue #47, the web-components registry is inherited by a
+L307:   // new document created via createHTMLDocument. As per the spec
+L308:   // (http://w3c.github.io/webcomponents/spec/custom/#creating-and-passing-registries)
+L312:   if (typeof HTMLTemplateElement === 'function') {
+L313:     const template = document.createElement('template');
+L314:     if (template.content && template.content.ownerDocument) {
+L315:       document = template.content.ownerDocument;
+L316:     }
+L317:   }
+L318: 
+L319:   let trustedTypesPolicy;
+L320:   let emptyHTML = '';
+L321: 
+L322:   // The instance's own internal Trusted Types policy. Unlike a caller-supplied
+L323:   // `TRUSTED_TYPES_POLICY`, this is created at most once — Trusted Types throws
+L324:   // on duplicate policy names — and is the only policy allowed to persist
+L325:   // across configurations and survive `clearConfig()`.
+L326:   let defaultTrustedTypesPolicy;
+L327:   let defaultTrustedTypesPolicyResolved = false;
+L328: 
+L329:   // Tracks whether we are already inside a call to the configured Trusted Types
+L330:   // policy (`createHTML` or `createScriptURL`). If a supplied policy callback
+L331:   // itself calls `DOMPurify.sanitize` (the cause of #1422), `sanitize` would
+L332:   // re-enter the policy and recurse until the stack overflows. We detect that
+L471: 
+L472:   /* Explicitly forbidden tags (overrides ALLOWED_TAGS/ADD_TAGS) */
+L473:   let FORBID_TAGS = null;
+L474: 
+L475:   /* Explicitly forbidden attributes (overrides ALLOWED_ATTR/ADD_ATTR) */
+L476:   let FORBID_ATTR = null;
+L477: 
+L478:   /* Config object to store ADD_TAGS/ADD_ATTR functions (when used as functions) */
+L479:   const EXTRA_ELEMENT_HANDLING = Object.seal(
+L480:     create(null, {
+L481:       tagCheck: {
+L482:         writable: true,
+L483:         configurable: false,
+L484:         enumerable: true,
+L485:         value: null,
+L486:       },
+L487:       attributeCheck: {
+L488:         writable: true,
+L489:         configurable: false,
+L490:         enumerable: true,
+L575:   /* If a `Node` is passed to sanitize(), then performs sanitization in-place instead
+L576:    * of importing it into a new Document and returning a sanitized copy */
+L577:   let IN_PLACE = false;
+L578: 
+L579:   /* Allow usage of profiles like html, svg and mathMl */
+L580:   let USE_PROFILES: UseProfilesConfig | false = {};
+L581: 
+L582:   /* Tags to ignore content of when KEEP_CONTENT is true */
+L583:   let FORBID_CONTENTS = null;
+L584:   const DEFAULT_FORBID_CONTENTS = addToSet({}, [
+L585:     'annotation-xml',
+L586:     'audio',
+L587:     'colgroup',
+L588:     'desc',
+L589:     'foreignobject',
+L590:     'head',
+L591:     'iframe',
+L592:     'math',
+L593:     'mi',
+L594:     'mn',
+L780:       { transform: transformCaseFunc }
+L781:     );
+L782:     FORBID_TAGS = _resolveSetOption(cfg, 'FORBID_TAGS', clone({}), {
+L783:       transform: transformCaseFunc,
+L784:     });
+L785:     FORBID_ATTR = _resolveSetOption(cfg, 'FORBID_ATTR', clone({}), {
+L786:       transform: transformCaseFunc,
+L787:     });
+L788:     USE_PROFILES = objectHasOwnProperty(cfg, 'USE_PROFILES')
+L789:       ? cfg.USE_PROFILES && typeof cfg.USE_PROFILES === 'object'
+L790:         ? clone(cfg.USE_PROFILES)
+L791:         : cfg.USE_PROFILES
+L792:       : false;
+L793: 
+L794:     ALLOW_ARIA_ATTR = cfg.ALLOW_ARIA_ATTR !== false; // Default true
+L795:     ALLOW_DATA_ATTR = cfg.ALLOW_DATA_ATTR !== false; // Default true
+L796:     ALLOW_UNKNOWN_PROTOCOLS = cfg.ALLOW_UNKNOWN_PROTOCOLS || false; // Default false
+L797:     ALLOW_SELF_CLOSE_IN_ATTR = cfg.ALLOW_SELF_CLOSE_IN_ATTR !== false; // Default true
+L798:     SAFE_FOR_TEMPLATES = cfg.SAFE_FOR_TEMPLATES || false; // Default false
+L799:     SAFE_FOR_XML = cfg.SAFE_FOR_XML !== false; // Default true
+L806:     SANITIZE_NAMED_PROPS = cfg.SANITIZE_NAMED_PROPS || false; // Default false
+L807:     KEEP_CONTENT = cfg.KEEP_CONTENT !== false; // Default true
+L808:     IN_PLACE = cfg.IN_PLACE || false; // Default false
+L809:     IS_ALLOWED_URI = isRegex(cfg.ALLOWED_URI_REGEXP)
+L810:       ? cfg.ALLOWED_URI_REGEXP
+L811:       : EXPRESSIONS.IS_ALLOWED_URI; // Default regexp
+L812: 
+L813:     NAMESPACE =
+L814:       typeof cfg.NAMESPACE === 'string' ? cfg.NAMESPACE : HTML_NAMESPACE; // Default HTML namespace
+L815: 
+L816:     MATHML_TEXT_INTEGRATION_POINTS = _resolveObjectOption(
+L817:       cfg,
+L818:       'MATHML_TEXT_INTEGRATION_POINTS',
+L819:       () => addToSet({}, DEFAULT_MATHML_TEXT_INTEGRATION_POINTS) // Default built-in map
+L820:     );
+L821: 
+L822:     HTML_INTEGRATION_POINTS = _resolveObjectOption(
+L823:       cfg,
+L824:       'HTML_INTEGRATION_POINTS',
+L825:       () => addToSet({}, DEFAULT_HTML_INTEGRATION_POINTS) // Default built-in map
+L952:     if (ALLOWED_TAGS.table) {
+L953:       addToSet(ALLOWED_TAGS, ['tbody']);
+L954:       delete FORBID_TAGS.tbody;
+L955:     }
+L956: 
+L957:     // Re-derive the active Trusted Types policy from this configuration on
+L958:     // every parse. The active policy must never be sticky closure state that
+L959:     // outlives the config that set it: a caller-supplied policy left in place
+L960:     // after `clearConfig()` — or after a later call that supplied none, or
+L961:     // `TRUSTED_TYPES_POLICY: null` — could sign a subsequent "default"
+L962:     // `RETURN_TRUSTED_TYPE` result with a foreign, possibly unsafe policy.
+L963:     // See GHSA-vxr8-fq34-vvx9.
+L964:     if (cfg.TRUSTED_TYPES_POLICY) {
+L965:       if (typeof cfg.TRUSTED_TYPES_POLICY.createHTML !== 'function') {
+L966:         throw typeErrorCreate(
+L967:           'TRUSTED_TYPES_POLICY configuration option must provide a "createHTML" hook.'
+L968:         );
+L969:       }
+L970: 
+L971:       if (typeof cfg.TRUSTED_TYPES_POLICY.createScriptURL !== 'function') {
+L1214:          .remove() is itself a spec no-op on a parentless node, so a recorded
+L1215:          "removal" would otherwise hand the caller back an intact,
+L1216:          payload-bearing node (e.g. a detached IN_PLACE root the mXSS canary or
+L1217:          the style-with-element-child rule decided to kill). Fail closed by
+L1218:          throwing — exactly as a clobbered root does at the IN_PLACE entry —
+L1219:          rather than trying to "neutralize" the node via its own methods.
+L1220:          Neutralizing would mean calling getAttributeNames()/removeAttribute()
+L1221:          on the node, both of which a <form> root can clobber via a named child
+L1222:          (and _isClobbered does not even probe getAttributeNames), so the
+L1223:          neutralize step could itself be silently defeated, leaving the payload
+L1224:          intact. A throw touches only the cached, clobber-safe remove() and
+L1225:          getParentNode(). Generalizes GHSA-r47g-fvhr-h676 (clobbered-form root)
+L1226:          to every root-kill reason. REPORT-3.
+L1227: 
+L1228:          This lives inside the catch, so it never fires for a normally-removed
+L1229:          in-tree node: those have a parent, removeChild() succeeds, and the
+L1230:          catch is not entered. Only a kept (parentless) root reaches here. */
+L1231:       remove(node);
+L1232: 
+L1233:       if (!getParentNode(node)) {
+L1234:         throw typeErrorCreate(
+L1235:           'a node selected for removal could not be detached from its tree ' +
+L1248:    * handler (e.g. `ONERROR` off an XML/XHTML import) - the same defect
+L1249:    * _removeAttribute() was fixed for, which a name-based call would reintroduce
+L1250:    * on these IN_PLACE teardown paths. Unlike _removeAttribute this does not
+L1251:    * record into DOMPurify.removed: the neutralize passes intentionally do not
+L1252:    * book-keep. A clobbered/detached node falls back to best-effort name-based
+L1253:    * removal.
+L1254:    *
+L1255:    * @param element the element to strip the attribute from
+L1256:    * @param attribute the Attr node to remove
+L1257:    * @param name the attribute's name, for the fallback path
+L1258:    */
+L1259:   const _stripAttributeNode = function (
+L1260:     element: Element,
+L1261:     attribute: Attr,
+L1262:     name: string
+L1263:   ): void {
+L1264:     try {
+L1265:       removeAttributeNode(element, attribute);
+L1266:     } catch (_) {
+L1267:       try {
+L1283:    * remove every child and every attribute, then let the caller's catch see
+L1284:    * the original error. Clobber-safe (cached `remove`/`childNodes`/`attributes`
+L1285:    * getters; the root was already clobber-pre-flighted at the IN_PLACE entry).
+L1286:    *
+L1287:    * @param root the in-place root to empty
+L1288:    */
+L1289:   const _neutralizeRoot = function (root: Node): void {
+L1290:     /* Strip every disallowed attribute (on* handlers included) off the whole
+L1291:        subtree BEFORE detaching anything. Detaching first would hand back
+L1292:        handler-bearing originals (e.g. an already-loading `<img onerror>`)
+L1293:        whose queued resource event still fires in page scope after we throw.
+L1294:        Clobber-safe reads; a doomed clobbered node's own attributes are
+L1295:        irrelevant while its non-clobbered descendants are reached and scrubbed. */
+L1296:     _neutralizeSubtree(root);
+L1297: 
+L1298:     const childNodes = getChildNodes(root);
+L1299:     if (childNodes) {
+L1300:       const snapshot: Node[] = [];
+L1301:       arrayForEach(childNodes, (child) => {
+L1302:         arrayPush(snapshot, child);
+L1425:    * move-hoist neutralises only disallowed-tag removals; clobber, mXSS-canary,
+L1426:    * namespace, comment, processing-instruction and KEEP_CONTENT:false removals
+L1427:    * all drop their subtree wholesale via `_forceRemove`. On the IN_PLACE path
+L1428:    * those dropped nodes are detached from the caller's LIVE tree but a
+L1429:    * handler-bearing original among them (an `<img onerror>`/`<video>` that was
+L1430:    * loading) keeps its queued resource event, which fires in page scope after
+L1431:    * sanitize returns. This walks a removed subtree and strips every attribute
+L1432:    * the active configuration does not allow — so `on*` handlers are cancelled
+L1433:    * through the SAME allowlist that governs kept nodes, not a separate `/^on/`
+L1434:    * blocklist. Run synchronously before sanitize returns, i.e. before any
+L1435:    * queued event can fire. Hook-free by design: these nodes leave the output,
+L1436:    * so firing attribute hooks for them would be surprising. Clobber-safe reads;
+L1437:    * a doomed clobbered node may shadow `removeAttribute` (its own attributes are
+L1438:    * irrelevant — it is discarded — while its non-clobbered descendants, e.g.
+L1439:    * the `<img>`, are reached and scrubbed).
+L1440:    *
+L1441:    * @param root the root of a removed subtree to neutralise
+L1442:    */
+L1443:   const _neutralizeSubtree = function (root: Node): void {
+L1444:     const stack: Node[] = [root];
+L1464:    * _neutralizePatchLinkage
+L1465:    *
+L1466:    * IN_PLACE entry pre-pass (declarative-partial-updates / streaming
+L1467:    * hardening, https://github.com/WICG/declarative-partial-updates).
+L1468:    *
+L1469:    * The main walk strips patch linkage (`for`/`patchsrc`) and removes range
+L1470:    * markers (PIs / markup comments) node-by-node, in document order, AS it
+L1471:    * reaches each node. On a live in-place root that leaves a window: from the
+L1472:    * moment the root is connected until the walk arrives at a given node, that
+L1473:    * node's linkage is live. A patch applied on connection/stream can fire as
+L1474:    * a microtask during the walk and inject or teleport an unsanitized DOM
+L1475:    * range into a region the iterator has already passed and will not revisit,
+L1476:    * so the post-return "tree is sanitized" contract is violated. Sweep the
+L1477:    * whole tree once up front and sever every linkage before the walk begins,
+L1478:    * closing that window.
+L1479:    *
+L1480:    * This CANNOT undo a patch that already fired before sanitize ran — that is
+L1481:    * the irreducible "do not IN_PLACE a live-connected attacker tree" caveat —
+L1482:    * but it closes everything from sanitize-start onward. Gated on SAFE_FOR_XML
+L1483:    * to group with the rest of the declarative-partial-updates handling and
+L1484:    * stay overridable, consistent with the codebase.
+L1485:    *
+L1486:    * Clobber-safe traversal (cached childNodes getter); per-node try/catch so a
+L1487:    * clobbered root cannot defeat the sweep of its non-clobbered descendants.
+L1488:    *
+L1489:    * NOTE (pending real-Chrome confirmation, see test/declarative-patch-probe
+L1490:    * .html Q1): this mirrors the existing policy of keeping `for` on
+L1491:    * <label>/<output>. If the shipping feature can drive a patch through a
+L1492:    * surviving `for`-on-label/output + `id` pair, this pre-pass and the
+L1493:    * attribute check at _isBasicCustomElement's caller must additionally drop
+L1494:    * that pair on the IN_PLACE path. Left as-is until the taxonomy is verified.
+L1495:    *
+L1496:    * @param root the in-place root to sweep
+L1497:    */
+L1498:   /**
+L1499:    * Central policy for declarative-partial-updates patch-linkage attributes,
+L1500:    * shared by the _neutralizePatchLinkage pre-pass and _isValidAttribute so
+L1501:    * the two sites cannot drift: `patchsrc` always links, `for` links
+L1502:    * everywhere except on <label>/<output>, and the whole policy is gated on
+L1503:    * SAFE_FOR_XML (see the rationale block in _isValidAttribute).
+L1504:    *
+L1505:    * @param lcName the transformCaseFunc'd attribute name
+L1506:    * @param lcTag the transformCaseFunc'd tag name of the carrying element
+L1507:    * @return true if the attribute is patch linkage and must be dropped
+L1508:    */
+L1509:   const _isPatchLinkageAttribute = function (
+L1510:     lcName: string,
+L1511:     lcTag: string
+L1658:    */
+L1659:   const _createNodeIterator = function (root: Node): NodeIterator {
+L1660:     /* Read ownerDocument through the cached Node.prototype getter, never the
+L1661:        direct property. HTMLFormElement has [LegacyOverrideBuiltIns], so a
+L1662:        clobbering child (<input name="ownerDocument"> or a form-associated
+L1663:        external input) shadows the prototype getter and makes a direct read
+L1664:        return that <input>. createNodeIterator.call(<input>, ...) then throws
+L1665:        "Illegal invocation", and on the IN_PLACE path that throw lands before
+L1666:        the walk's fail-closed barrier - leaving the caller's live tree, with
+L1667:        any already-armed handler in it, un-neutralized. The cached getter
+L1668:        returns the real Document regardless of the clobber. */
+L1669:     const doc = getOwnerDocument ? getOwnerDocument(root) : root.ownerDocument;
+L1670:     return createNodeIterator.call(
+L1671:       doc || root,
+L1672:       root,
+L1673:       // eslint-disable-next-line no-bitwise
+L1674:       NodeFilter.SHOW_ELEMENT |
+L1675:         NodeFilter.SHOW_COMMENT |
+L1676:         NodeFilter.SHOW_TEXT |
+L1677:         NodeFilter.SHOW_PROCESSING_INSTRUCTION |
+L1678:         NodeFilter.SHOW_CDATA_SECTION,
+L1679:       null
+L1680:     );
+L1681:   };
+L1682: 
+L1683:   /**
+L1684:    * Replace template expression syntax (mustache, ERB, template
+L1685:    * literal) with a space; shared by all SAFE_FOR_TEMPLATES scrub
+L1686:    * sites. Order matters: mustache, then ERB, then template literal.
+L1705:    * Walks text/comment/CDATA/processing-instruction nodes and mutates `.data`
+L1706:    * in place rather than round-tripping through innerHTML. This preserves
+L1707:    * descendant node references (important for IN_PLACE callers), avoids a
+L1708:    * serialize/reparse cycle, and reads literal character data — which means
+L1709:    * `<%...%>` in text content matches the ERB regex against its real bytes
+L1710:    * instead of the HTML-entity-escaped form innerHTML would produce.
+L1711:    *
+L1712:    * Attribute values are not visited here; SAFE_FOR_TEMPLATES handling for
+L1713:    * attributes is performed during the per-node `_sanitizeAttributes` pass.
+L1714:    *
+L1715:    * @param node The root element whose character data should be scrubbed.
+L1716:    */
+L1717:   const _scrubTemplateExpressions = function (node: Element): void {
+L1718:     node.normalize();
+L1719:     /* Clobber-safe ownerDocument read, same reasoning as _createNodeIterator:
+L1720:        under SAFE_FOR_TEMPLATES this runs on the live IN_PLACE root, which may
+L1721:        carry a form-named-getter override of ownerDocument. */
+L1722:     const doc = getOwnerDocument ? getOwnerDocument(node) : node.ownerDocument;
+L1723:     const walker = createNodeIterator.call(
+L1724:       doc || node,
+L1725:       node,
+L1726:       // eslint-disable-next-line no-bitwise
+L1727:       NodeFilter.SHOW_TEXT |
+L1728:         NodeFilter.SHOW_COMMENT |
+L1729:         NodeFilter.SHOW_CDATA_SECTION |
+L1730:         NodeFilter.SHOW_PROCESSING_INSTRUCTION,
+L1731:       null
+L1732:     );
+L1733: 
+L1734:     let currentNode = walker.nextNode() as CharacterData | null;
+L1735:     while (currentNode) {
+L1736:       currentNode.data = _stripTemplateExpressions(currentNode.data);
+L1737:       currentNode = walker.nextNode() as CharacterData | null;
+L1738:     }
+L1739: 
+L1808:       // an internal slot, no serialization cost — and removes a residual
+L1809:       // clobbering surface used by several mXSS / PI / comment branches
+L1810:       // in _sanitizeElements that compare currentNode.nodeType directly.
+L1811:       element.nodeType !== getNodeType(element) ||
+L1812:       // HTMLFormElement has [LegacyOverrideBuiltIns]: a descendant named
+L1813:       // "childNodes" shadows the prototype getter. Direct reads of
+L1814:       // form.childNodes from a clobbered form return the named child
+L1815:       // instead of the real NodeList, so any walk that reads it directly
+L1816:       // skips the form's real children. Compare the direct read to the
+L1817:       // cached Node.prototype getter — when the form's named-property
+L1818:       // getter intercepts the read, the two values differ and we flag
+L1819:       // the form. This catches every clobbering child type (input,
+L1820:       // select, etc.) regardless of whether the named child happens to
+L1821:       // carry a numeric .length, which a typeof-based probe would miss
+L1822:       // (e.g. HTMLSelectElement.length is a defined unsigned-long).
+L1823:       element.childNodes !== getChildNodes(element)
+L1824:     );
+L1825:   };
+L1826: 
+L1827:   /**
+L1974:   /**
+L1975:    * Handle a node whose tag is forbidden or not allowlisted: keep
+L1976:    * allowed custom elements (false return exits _sanitizeElements
+L1977:    * early - the namespace and fallback-tag removal checks are
+L1978:    * intentionally skipped for kept custom elements), else hoist
+L1979:    * content per KEEP_CONTENT and remove.
+L1980:    *
+L1981:    * A kept custom element is the ONLY case in which this function
+L1982:    * returns false, so the caller uses that return value to run the
+L1983:    * afterSanitizeElements hook on the kept element and keep the
+L1984:    * element-hook lifecycle consistent with normal allowlisted
+L1985:    * elements (GHSA-c2j3-45gr-mqc4).
+L1986:    *
+L1987:    * @param currentNode the disallowed node
+L1988:    * @param tagName the node's transformCaseFunc'd tag name
+L1989:    * @return true if the node was removed, false if kept
+L1990:    */
+L1991:   const _sanitizeDisallowedNode = function (
+L1992:     currentNode: any,
+L1993:     tagName: string,
+L1996:     /* Check if we have a custom element to handle */
+L1997:     if (
+L1998:       !FORBID_TAGS[tagName] &&
+L1999:       _isBasicCustomElement(tagName) &&
+L2000:       _matchesNameCheck(CUSTOM_ELEMENT_HANDLING.tagNameCheck, tagName)
+L2001:     ) {
+L2002:       return false;
+L2003:     }
+L2004: 
+L2005:     /* Keep content except for bad-listed elements.
+L2006:          Use the cached prototype getters exclusively — the previous code
+L2007:          had `|| currentNode.parentNode` / `|| currentNode.childNodes`
+L2008:          fallbacks, but the cached getters always return the canonical
+L2009:          value (or null for a real parent-less node), so the fallback
+L2010:          path was dead in safe cases and a clobbering surface in unsafe
+L2011:          ones. Falsy cached results stay falsy; the `if (childNodes &&
+L2012:          parentNode)` check already gates correctly. */
+L2013:     if (KEEP_CONTENT && !FORBID_CONTENTS[tagName]) {
+L2014:       const parentNode = getParentNode(currentNode);
+L2015:       const childNodes = getChildNodes(currentNode);
+L2081:   /**
+L2082:    * Shared guard for a node that a hook has detached from the walk tree,
+L2083:    * used after each element-hook site in _sanitizeElements. Detaching is a
+L2084:    * long-standing user pattern (issue #469; draw.io-style foreignObject
+L2085:    * filtering). Per the cached, unclobberable parentNode getter the node is
+L2086:    * genuinely out of the tree, so it can reach neither the serialized
+L2087:    * output nor an IN_PLACE live tree; treat it as removed and stop
+L2088:    * processing it. Without this guard, the unsafe-node / namespace checks
+L2089:    * would call _forceRemove on a parentless node and hit the REPORT-3
+L2090:    * fail-closed throw — which exists for nodes DOMPurify wants gone but
+L2091:    * *cannot* detach (clobbered / parentless roots), the opposite of a node
+L2092:    * that is already safely gone. The walk root is exempt: a detached
+L2093:    * IN_PLACE root is legitimate input and must still be fully sanitized,
+L2094:    * and a kill-decision on it must keep hitting the REPORT-3 throw.
+L2095:    *
+L2096:    * Nodes detached by hooks stay the hook's responsibility for placement:
+L2097:    * they are not recorded in DOMPurify.removed, so the post-walk IN_PLACE
+L2098:    * pass (which iterates DOMPurify.removed) does not reach them. But a
+L2099:    * hook-detached subtree can still hold a queued resource-event handler -
+L2100:    * e.g. an <img onload> that began loading when the caller built the live
+L2126: 
+L2127:   /**
+L2128:    * _sanitizeElements
+L2129:    *
+L2130:    * @protect nodeName
+L2131:    * @protect textContent
+L2132:    * @protect removeChild
+L2133:    * @param currentNode to check for permission to exist
+L2134:    * @return true if node was killed, false if left alive
+L2135:    */
+L2136:   const _sanitizeElements = function (currentNode: any, root: Node): boolean {
+L2137:     /* Execute a hook if present */
+L2138:     _executeHooks(hooks.beforeSanitizeElements, currentNode, null);
+L2139: 
+L2140:     /* A hook may have detached the node - treat it as removed (see
+L2141:        _handleHookDetachedNode for the full rationale). */
+L2142:     if (_handleHookDetachedNode(currentNode, root)) {
+L2143:       return true;
+L2144:     }
+L2145: 
+L2146:     /* Check if element is clobbered or can clobber */
+L2147:     if (_isClobbered(currentNode)) {
+L2148:       _forceRemove(currentNode);
+L2149:       return true;
+L2150:     }
+L2151: 
+L2152:     /* Now let's check the element's type and name */
+L2153:     const tagName = transformCaseFunc(_readNodeName(currentNode));
+L2185:     /* Remove element if anything forbids its presence */
+L2186:     if (
+L2187:       FORBID_TAGS[tagName] ||
+L2188:       (!(
+L2189:         EXTRA_ELEMENT_HANDLING.tagCheck instanceof Function &&
+L2190:         EXTRA_ELEMENT_HANDLING.tagCheck(tagName)
+L2191:       ) &&
+L2192:         !ALLOWED_TAGS[tagName])
+L2193:     ) {
+L2194:       const removed = _sanitizeDisallowedNode(currentNode, tagName, root);
+L2195: 
+L2196:       /* A false return means the node is a custom element kept via
+L2197:          CUSTOM_ELEMENT_HANDLING - the only keep path through
+L2198:          _sanitizeDisallowedNode. Run afterSanitizeElements on it so the
+L2199:          element-hook lifecycle matches normal allowlisted elements: a
+L2200:          security policy applied in this hook (e.g. stripping an attribute
+L2201:          from every surviving element) must not silently skip kept custom
+L2202:          elements (GHSA-c2j3-45gr-mqc4). This mirrors the normal-element
+L2203:          tail below - the hook runs, then the walker's subsequent
+L2204:          _sanitizeAttributes pass sanitizes the element's attributes. The
+L2720: 
+L2721:       /* Sanitize tags and elements */
+L2722:       _sanitizeElements(shadowNode, fragment);
+L2723: 
+L2724:       /* Check attributes next */
+L2725:       _sanitizeAttributes(shadowNode, fragment);
+L2726: 
+L2727:       /* Deep shadow DOM detected.
+L2728:          Realm-safe check (GHSA-hpcv-96wg-7vj8): use nodeType against the
+L2729:          DOCUMENT_FRAGMENT_NODE constant rather than instanceof, so we
+L2730:          recurse into <template>.content from foreign realms too. */
+L2731:       if (_isDocumentFragment(shadowNode.content)) {
+L2732:         _sanitizeShadowDOM(shadowNode.content);
+L2733:       }
+L2734: 
+L2735:       /* An element iterated here may itself host an attached
+L2736:          shadow root. The default NodeIterator does not enter shadow
+L2737:          trees, so a shadow root nested inside template.content was
+L2738:          previously reached by no walk at all (the pre-pass at
+L2739:          _sanitizeAttachedShadowRoots descends via childNodes, which
+L2937:       if (typeof nn === 'string') {
+L2938:         const tagName = transformCaseFunc(nn);
+L2939:         if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
+L2940:           /* Fail closed on a live root: neutralize handlers/children before
+L2941:              throwing, exactly as the mid-walk abort path does. */
+L2942:           _neutralizeRoot(dirty as Node);
+L2943: 
+L2944:           throw typeErrorCreate(
+L2945:             'root node is forbidden and cannot be sanitized in-place'
+L2946:           );
+L2947:         }
+L2948:       }
+L2949: 
+L2950:       /* Pre-flight the root through _isClobbered. The iterator-driven
+L2951:          removal path can not detach a parent-less root: _forceRemove
+L2952:          falls through to Element.prototype.remove(), which per spec
+L2953:          is a no-op on a node with no parent. A clobbered root would
+L2954:          then survive the main loop with its attributes uninspected,
+L2955:          because _sanitizeAttributes early-returns on _isClobbered. The
+L2956:          result would be an attacker-controlled form, complete with any
+L2985:          elements being stripped by the parser */
+L2986:       body = _initDocument('<!---->');
+L2987:       importedNode = body.ownerDocument.importNode(dirty, true);
+L2988:       if (
+L2989:         importedNode.nodeType === NODE_TYPE.element &&
+L2990:         importedNode.nodeName === 'BODY'
+L2991:       ) {
+L2992:         /* Node is already a body, use as is */
+L2993:         body = importedNode;
+L2994:       } else if (importedNode.nodeName === 'HTML') {
+L2995:         body = importedNode;
+L2996:       } else {
+L2997:         // eslint-disable-next-line unicorn/prefer-dom-node-append
+L2998:         body.appendChild(importedNode);
+L2999:       }
+L3000: 
+L3001:       /* Clonable shadow roots are deep-cloned by importNode(); sanitize
+L3002:          them before the main iterator runs, since the iterator does not
+L3003:          descend into shadow trees. The walk routes every read through a
+L3004:          cached prototype getter so clobbering descendants on a form root
+L3060:       while ((currentNode = nodeIterator.nextNode())) {
+L3061:         /* Sanitize tags and elements */
+L3062:         _sanitizeElements(currentNode, walkRoot);
+L3063: 
+L3064:         /* Check attributes next */
+L3065:         _sanitizeAttributes(currentNode, walkRoot);
+L3066: 
+L3067:         /* Shadow DOM detected, sanitize it.
+L3068:            Realm-safe check (GHSA-hpcv-96wg-7vj8): nodeType-based detection
+L3069:            instead of instanceof, so foreign-realm <template>.content is
+L3070:            walked correctly. */
+L3071:         if (_isDocumentFragment(currentNode.content)) {
+L3072:           _sanitizeShadowDOM(currentNode.content);
+L3073:         }
+L3074:       }
+L3075:     } catch (error) {
+L3076:       if (inPlace) {
+L3077:         _neutralizeRoot(dirty as Node);
+L3078:         /* Nodes _forceRemove'd earlier in the aborted walk are already
+L3079:            detached from the root, so _neutralizeRoot's subtree pass does not
+L3143: 
+L3144:       if (RETURN_DOM_FRAGMENT) {
+L3145:         returnNode = createDocumentFragment.call(body.ownerDocument);
+L3146: 
+L3147:         while (body.firstChild) {
+L3148:           // eslint-disable-next-line unicorn/prefer-dom-node-append
+L3149:           returnNode.appendChild(body.firstChild);
+L3150:         }
+L3151:       } else {
+L3152:         returnNode = body;
+L3153:       }
+L3154: 
+L3155:       if (ALLOWED_ATTR.shadowroot || ALLOWED_ATTR.shadowrootmode) {
+L3156:         /*
+L3157:           AdoptNode() is not used because internal state is not reset
+L3158:           (e.g. the past names map of a HTMLFormElement), this is safe
+L3159:           in theory but we would rather not risk another attack vector.
+L3160:           The state that is cloned by importNode() is explicitly defined
+L3161:           by the specs.
+L3162:         */

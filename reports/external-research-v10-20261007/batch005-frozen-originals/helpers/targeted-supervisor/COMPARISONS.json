@@ -1,0 +1,1656 @@
+{
+  "schema": "er10.cohort1.comparisons.v1",
+  "planned_slots": 6,
+  "counts": {
+    "planned_slots": 6,
+    "terminal_slots": 5,
+    "assessable_comparisons": 0,
+    "source_assessed_pairs": 4,
+    "structured_source_assessment_partial_delivery_pairs": 0,
+    "source_unassessed_pairs": 0,
+    "original_partial_delivery_attempts": 1,
+    "qualified_method_comparisons": 0,
+    "science_paired_assessments_including_diagnostic": 4,
+    "diagnostic_partial_final_pairs": 1
+  },
+  "comparisons": [
+    {
+      "case_id": "D-M01-A",
+      "method_id": "M01",
+      "family": "Luna",
+      "version": 1,
+      "disposition": "FULL_SCIENTIFIC_DIAGNOSTIC_ASSESSED_COMPARATIVE_HOLD",
+      "quality": {
+        "review_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/REVIEW.json",
+        "review_sha256": "8bb5d462a0571b5ab1f20b3e2e4ad7e21a9835e2566e9871543110ab89cfdef6",
+        "coverage": {
+          "labels": 2,
+          "declared_brief_material_obligations_per_label": 6,
+          "assessed_obligation_dispositions": 12,
+          "candidate_claim_condition_units": 76,
+          "assessed_claim_condition_units": 76,
+          "unassessed_claim_condition_units": 0,
+          "candidate_artifacts_entirely_read": 7,
+          "declared_local_files_hashed_and_read": 12,
+          "material_obligation_unassessed_remainder": [],
+          "note": "Full coverage does not mean every claim is correct or that tests were executed. Runtime feasibility and historical provenance are separately unassessed."
+        },
+        "label_mapping": {
+          "X": {
+            "arm": "control",
+            "original_final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-A/control/revision-v1/final.md",
+            "sha256": "1ba83a41171dbc26c3ba7852878a2768547b94205949574b85026da7d16f665c"
+          },
+          "Y": {
+            "arm": "treatment",
+            "original_final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-A/treatment/critic_and_final-v1/final.md",
+            "sha256": "04ff9d2e7143fbf94d15951548c69d192adaf81beecde8b70f65efded16cbade"
+          }
+        },
+        "assessments": {
+          "X": {
+            "semantic_only_conclusion": "Full declared semantic scope assessed. Most core API facts and proposed checks are supported, including a useful release-code/prose discrepancy. The success-path staging-deletion contradiction is a decisive local diagnostic defect; the missing source-read transaction condition and current-status overstatement also remain. The frozen recommendation is not internally complete enough for an unqualified semantic pass. No full numeric grade, ranking, or method/lifecycle credit is issued.",
+            "finding_ids": [
+              "C-F1",
+              "X-F1",
+              "X-F2"
+            ],
+            "claim_coverage_census": {
+              "units": 36,
+              "assessed_units": 36,
+              "unassessed_units": 0,
+              "counts_by_disposition": {
+                "supported": 10,
+                "supported policy": 3,
+                "supported policy with internal conflict": 1,
+                "missing governing condition": 1,
+                "supported with source-transaction qualification": 1,
+                "supported with normal transaction assumption": 1,
+                "supported useful discovery": 1,
+                "supported; setup cleanup underspecified": 1,
+                "proposed policy": 1,
+                "internally contradicted": 1,
+                "accurate attribution": 1,
+                "partly supported; too narrow": 1,
+                "supported proposed check": 1,
+                "supported useful condition": 1,
+                "useful proposed checks": 3,
+                "proposed application policy; ordering conflict": 1,
+                "supported optional yield": 1,
+                "appropriate uncertainty": 1,
+                "hashes verified; historical actions unassessed": 1,
+                "partly preserved; new regression": 1,
+                "not contradicted by supplied artifacts; historical delivery unassessed": 1,
+                "valid correction carried to final": 1,
+                "scope/length met; semantic completeness impaired": 1
+              },
+              "note": "A unit may group inseparable conditions; this is a coverage census, not a numeric quality grade."
+            },
+            "unassessed_semantic_remainder": []
+          },
+          "Y": {
+            "semantic_only_conclusion": "Full declared semantic scope assessed. The conditional recommendation, result gates, destination page-size restrictions and proposed tests are substantially source-supported. Existing source-read transaction, counter-concurrency and source-cleanup ownership conditions remain incomplete; the destination-file-exclusive lock statement is too broad for normal WAL mode; the predecessor-context correction is unsupported and the optional rsync exclusion rationale is refuted by primary sources. These are semantic findings on the existing artifacts, not a lifecycle determination or a comparative rank. No unqualified semantic pass or numeric grade is issued.",
+            "finding_ids": [
+              "C-F1",
+              "Y-F1",
+              "Y-F2",
+              "Y-F3",
+              "Y-F4",
+              "Y-F5"
+            ],
+            "claim_coverage_census": {
+              "units": 40,
+              "assessed_units": 40,
+              "unassessed_units": 0,
+              "counts_by_disposition": {
+                "supported": 9,
+                "supported policy": 1,
+                "accurate limitation": 1,
+                "supported but source-read state omitted": 1,
+                "missing governing condition": 1,
+                "supported with normal transaction assumption": 1,
+                "supported for this file-based setup": 1,
+                "supported with source-transaction qualification": 1,
+                "proposed policy": 1,
+                "proposed bounded scheduling policy": 1,
+                "supported release correction; logging timing needs condition": 1,
+                "supported conservative gate": 1,
+                "supported failure policy with ownership gap": 1,
+                "supported; setup cleanup underspecified": 1,
+                "accurate captured-doc attribution; release condition missing": 1,
+                "omitted": 1,
+                "useful proposed checks": 2,
+                "supported useful refinement": 1,
+                "largely preserved; incomplete completeness assertion": 1,
+                "unsupported contextual correction": 1,
+                "appropriate uncertainty": 1,
+                "supported optional yield": 1,
+                "false categorical exclusion in intermediates; unsupported final rationale": 1,
+                "verified source identity and ranges": 1,
+                "current hashes verified; historical actions unassessed": 1,
+                "changed policy; no required-content loss": 1,
+                "optional discriminating check lost": 1,
+                "supported semantic rejection; no external draft established": 1,
+                "valid correction preserved": 1,
+                "scope/length met; governing completeness impaired": 1,
+                "present frozen identity verified; original delivery unassessed": 1
+              },
+              "note": "A unit may group inseparable conditions; this is a coverage census, not a numeric quality grade."
+            },
+            "unassessed_semantic_remainder": []
+          }
+        },
+        "reviewer_conclusion": "Each label was assessed independently over the full bounded declared scope. The reports identify supported API guidance, consequential missing conditions, local policy/correction defects and preserved/dropped content. There is no winner, economic inference, invented full numeric grade, partial PASS, or lifecycle/method qualification. The root infrastructure exception remains external to these scientific findings."
+      },
+      "time": {
+        "control": {
+          "candidate_dispatch_to_t3_terminal_seconds": 1079.068,
+          "aggregate_occupied_t3_run_seconds": 979.509,
+          "includes_failed_interrupted_delivery": true,
+          "native_goal_usage_by_stage": [
+            {
+              "update_goal_receipt": {
+                "goal": {
+                  "threadId": "01a117a7-d38c-7030-a585-4d1e70f0c353",
+                  "objective": "Research Stage D-M01-A control: produce one complete bounded preliminary proposal grounded in the provided brief and listed SQLite primary sources, preserve source conditions and uncertainty, and save the required intermediate and native lifecycle receipts under the authorized stage directory.",
+                  "status": "complete",
+                  "tokensUsed": 49984,
+                  "timeUsedSeconds": 194,
+                  "createdAt": 1791398289,
+                  "updatedAt": 1791398484
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+              },
+              "final_get_goal_receipt": {
+                "goal": {
+                  "threadId": "01a117a7-d38c-7030-a585-4d1e70f0c353",
+                  "objective": "Research Stage D-M01-A control: produce one complete bounded preliminary proposal grounded in the provided brief and listed SQLite primary sources, preserve source conditions and uncertainty, and save the required intermediate and native lifecycle receipts under the authorized stage directory.",
+                  "status": "complete",
+                  "tokensUsed": 49984,
+                  "timeUsedSeconds": 194,
+                  "createdAt": 1791398289,
+                  "updatedAt": 1791398484
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": null
+              },
+              "observed_clock_before_terminal_calls": {
+                "current_time": "2026-10-07 18:41:24 UTC"
+              },
+              "observed_clock_after_final_get": {
+                "current_time": "2026-10-07 18:41:24 UTC"
+              }
+            },
+            {
+              "update_goal": {
+                "goal": {
+                  "threadId": "01a117ad-50ee-7e61-841d-5dc9ed1ac6e0",
+                  "objective": "Case D-M01-A control arm research criticism stage: inspect only the declared brief, primary source files, and predecessor draft; produce a bounded obligation-by-obligation critique with concrete dispositions and proposed discriminating checks, preserving uncertainty and source conditions, without finalizing.",
+                  "status": "complete",
+                  "tokensUsed": 46522,
+                  "timeUsedSeconds": 161,
+                  "createdAt": 1791398611,
+                  "updatedAt": 1791398773
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+              },
+              "get_goal": {
+                "goal": {
+                  "threadId": "01a117ad-50ee-7e61-841d-5dc9ed1ac6e0",
+                  "objective": "Case D-M01-A control arm research criticism stage: inspect only the declared brief, primary source files, and predecessor draft; produce a bounded obligation-by-obligation critique with concrete dispositions and proposed discriminating checks, preserving uncertainty and source conditions, without finalizing.",
+                  "status": "complete",
+                  "tokensUsed": 46522,
+                  "timeUsedSeconds": 161,
+                  "createdAt": 1791398611,
+                  "updatedAt": 1791398773
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": null
+              },
+              "observed_at_utc": "2026-10-07 18:46:13 UTC"
+            },
+            null
+          ],
+          "generated_tokens": null,
+          "input_tokens": null,
+          "cached_input_tokens": null,
+          "billing": null,
+          "queue_retry_delay": null,
+          "usable_final_elapsed_seconds": null,
+          "note": "T3 candidate run intervals, including candidate receipt engineering and interrupted revision. Complete output time not equated to T3 terminal; native Goal counters not generated/billing and not summed."
+        },
+        "treatment": {
+          "candidate_dispatch_to_t3_terminal_seconds": 732.581,
+          "aggregate_occupied_t3_run_seconds": 692.8309999999999,
+          "includes_failed_interrupted_delivery": true,
+          "native_goal_usage_by_stage": [
+            {
+              "final_get_observed_at_utc": "2026-10-07 19:01:12 UTC",
+              "final_get_response": {
+                "goal": {
+                  "threadId": "01a117ba-02d4-7d62-96f5-ce090c2c38c3",
+                  "objective": "Complete the bounded research stage for ER10 case D-M01-A treatment: read only the provided brief and primary SQLite source files, produce the required research intermediate draft in the specified stage directory, preserve exact native Goal lifecycle receipts, and record observed timing/usage within the six-minute deadline.",
+                  "status": "active",
+                  "tokensUsed": 53440,
+                  "timeUsedSeconds": 210,
+                  "createdAt": 1791399462,
+                  "updatedAt": 1791399672
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": null
+              },
+              "update_goal_requested_at_utc": "2026-10-07 19:01:12 UTC",
+              "update_goal_response": {
+                "goal": {
+                  "threadId": "01a117ba-02d4-7d62-96f5-ce090c2c38c3",
+                  "objective": "Complete the bounded research stage for ER10 case D-M01-A treatment: read only the provided brief and primary SQLite source files, produce the required research intermediate draft in the specified stage directory, preserve exact native Goal lifecycle receipts, and record observed timing/usage within the six-minute deadline.",
+                  "status": "complete",
+                  "tokensUsed": 56344,
+                  "timeUsedSeconds": 210,
+                  "createdAt": 1791399462,
+                  "updatedAt": 1791399672
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+              }
+            },
+            {
+              "update_goal": {
+                "args": {
+                  "status": "complete"
+                },
+                "response": {
+                  "goal": {
+                    "threadId": "01a117bf-8dbb-7fb0-8018-5fee22776f41",
+                    "objective": "For ER10 case D-M01-A treatment critic_and_final: read only the declared brief, source manifest, primary source files, and declared predecessor draft; verify its obligations against the exact SQLite 3.51.3 documentation/code; record bounded critique dispositions; author the complete corrected recommendation at final.md and the critique report at report.md, preserving uncertainty and distinguishing executed witnesses from proposed checks. Save observed timings and direct native Goal receipts in the declared stage directory.",
+                    "status": "complete",
+                    "tokensUsed": 69311,
+                    "timeUsedSeconds": 302,
+                    "createdAt": 1791399829,
+                    "updatedAt": 1791400131
+                  },
+                  "remainingTokens": null,
+                  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+                },
+                "error": null
+              },
+              "get_goal": {
+                "args": {},
+                "response": {
+                  "goal": {
+                    "threadId": "01a117bf-8dbb-7fb0-8018-5fee22776f41",
+                    "objective": "For ER10 case D-M01-A treatment critic_and_final: read only the declared brief, source manifest, primary source files, and declared predecessor draft; verify its obligations against the exact SQLite 3.51.3 documentation/code; record bounded critique dispositions; author the complete corrected recommendation at final.md and the critique report at report.md, preserving uncertainty and distinguishing executed witnesses from proposed checks. Save observed timings and direct native Goal receipts in the declared stage directory.",
+                    "status": "complete",
+                    "tokensUsed": 69311,
+                    "timeUsedSeconds": 302,
+                    "createdAt": 1791399829,
+                    "updatedAt": 1791400131
+                  },
+                  "remainingTokens": null,
+                  "completionBudgetReport": null
+                },
+                "error": null
+              }
+            }
+          ],
+          "generated_tokens": null,
+          "input_tokens": null,
+          "cached_input_tokens": null,
+          "billing": null,
+          "queue_retry_delay": null,
+          "usable_final_elapsed_seconds": null,
+          "note": "T3 candidate run intervals, including candidate receipt engineering and interrupted revision. Complete output time not equated to T3 terminal; native Goal counters not generated/billing and not summed."
+        }
+      },
+      "quota": {
+        "native_counters_preserved_separately": true,
+        "generated_input_cached_reasoning_billing": null,
+        "quota_advantage_established": false
+      },
+      "eligibility": {
+        "qualified_method_credit": false,
+        "lifecycle": "Control revision interrupted without native terminal; initial control research create capture missing",
+        "provenance": "Advisory maps, not filesystem firewall; no clean provenance claim",
+        "source_method_win_established": false
+      },
+      "failures_included": [
+        "control research activation receipt capture failed",
+        "control revision whole-arm overrun interrupted, native terminal absent"
+      ],
+      "gate_exception_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/m01a-diagnostic-gate-exception-v1.json"
+    },
+    {
+      "case_id": "D-M01-B",
+      "method_id": "M01",
+      "family": "Luna",
+      "version": 1,
+      "disposition": "PAIRED_SEMANTIC_REVIEW_REPAIRED_COMPARATIVE_HOLD",
+      "quality": {
+        "review_present": true,
+        "readable_report_present": false,
+        "full_review_delivery": false,
+        "qualified_pass": false,
+        "review_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/REVIEW.json",
+        "review_sha256": "78e53eba2e989b732aa5ab7e0a3a659db39f20a311ec38e074b83d6568d238cc",
+        "authored_scope": "Frozen declared brief and exact X/Y final/intermediate map only, plus independent public primary-source reads. No ranking, economics, lifecycle/provenance eligibility, rescue, rewrite, delegation or worker feedback.",
+        "authored_conclusion": "Both labels independently have a source-supported conditional recommendation and coverage of all six obligations, with separately enumerated qualifications and intermediate correction issues. No PASS/FAIL aggregate grade, numeric full grade or winner is assigned. Native eligibility is left to parent.",
+        "coverage_from_terminal_summary": {
+          "obligations_per_arm": 6,
+          "claim_condition_groups_per_arm": 29,
+          "source": "actual reviewer authored terminal summary and structured assessments; not inferred fullPASS"
+        }
+      },
+      "time": {
+        "review_overrun": true,
+        "original_review_prompt_minutes": 20,
+        "root_later_envelope_minutes": 15,
+        "candidate_run_metrics": null
+      },
+      "quota": {
+        "input_cached_generated_reasoning_billing": null,
+        "quota_advantage_established": false
+      },
+      "eligibility": {
+        "qualified_method_credit": false,
+        "source_method_win_established": false,
+        "provenance": "Advisory scope restriction only, not firewall"
+      },
+      "failures_included": [
+        "independent review exceeded envelope and bounded closeout, intentionally interrupted",
+        "readable final review absent"
+      ],
+      "original_disposition_retained": "TERMINAL_REVIEW_INTERRUPTED_PARTIAL_OR_ABSENT_HOLD",
+      "review_repair_v2": {
+        "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired",
+        "artifacts": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW_INPUT_MAP.json",
+            "sha256": "319e2e1302c31b6ec978cf7551f0b4e327f2a0384983e233964fa28f5effb0da",
+            "bytes": 3595
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/PROMPT.txt",
+            "sha256": "39646f6ae1d212ebcdd14909d927a71f876bfec7d483b493c55b260fafd80cd8",
+            "bytes": 6006
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/TASK_TERMINAL.json",
+            "sha256": "18e85c66cd52345c8756426f339377e816abdbfe3fec5381bbbdb22927e67a59",
+            "bytes": 6286
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/review.md",
+            "sha256": "a8c661b070f1154910d4caf58bab462f5cf64140acedbe72f0531d61381e2502",
+            "bytes": 15381
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/DISPATCH_RECEIPT.json",
+            "sha256": "493c6f88375d5bd6321f94126eb1c698bb638f0ca26a7a3be9472349eec14348",
+            "bytes": 2194
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/REQUEST.json",
+            "sha256": "ba53f72a5e321e1861269a1fd74a5adfb22120ea99ae67d67f1bbcc8137fc7d6",
+            "bytes": 6690
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW.json",
+            "sha256": "1f55916d08acb1bce059961dcb3ed4746af42aca308affea117bda223b1048c1",
+            "bytes": 63417
+          }
+        ],
+        "science_assessment": {
+          "coverage_census": {
+            "arms": 2,
+            "mapped_candidate_artifacts": 7,
+            "candidate_artifacts_read_completely": 7,
+            "prior_review_files_read": 1,
+            "frozen_primary_sources_identity_checked": 2,
+            "additional_independently_retrieved_primary_sources": 3,
+            "material_obligations_required": 12,
+            "material_obligations_dispositioned": 12,
+            "claim_groups_inventoried": 58,
+            "claim_groups_dispositioned": 58,
+            "semantic_claim_groups_unassessed": [],
+            "prior_findings_independently_resolved": 9,
+            "proposed_raster_fixtures_semantically_assessed": 7,
+            "proposed_raster_fixtures_executed": 0,
+            "historical_execution_fact_groups_unverified": [
+              "X-C22",
+              "X-C23",
+              "Y-C24",
+              "Y-C25"
+            ],
+            "scope_rule": "Claims are grouped across repeated artifact sentences. X intermediate-3 shares final semantics but its identity/read coverage is separately recorded. Counts describe coverage, not quality scores."
+          },
+          "overall_semantic_judgment": {
+            "status": "complete_paired_semantic_review_with_explicit_qualifications",
+            "judgment": "X and Y each supply a supported conditional nonzero all-required-band recommendation, address all six obligations and meet bounded/source-linked/proposed-check delivery requirements. Neither is established fully accurate without the named final condition/byte-identity qualifications. Intermediate overcorrection/attribution or novelty/description issues are separately resolved. No central conditional-rule failure is demonstrated by these source checks.",
+            "unresolved": [
+              "Actual tile/product inputs and deployed library/driver behavior",
+              "Historical candidate calls/nonexecution",
+              "Exact dispatch-based time compliance, because dispatch/lifecycle files are prohibited and dispatch time was not supplied in the message"
+            ],
+            "numeric_grade": null,
+            "pass_fail_grade": null,
+            "ranking": null,
+            "cost_or_native_success_conclusion": null,
+            "original_grade_policy": "Immutable original grades retained; this is prospective semantic judgment/delivery repair, not regrading."
+          }
+        },
+        "original_overrun_and_findings_retained": true
+      },
+      "time_failure_inclusive": {
+        "control": {
+          "dispatch_to_terminal_seconds": 812.586,
+          "aggregate_occupied_seconds": 593.177,
+          "actual_run_count": 3,
+          "includes_failed_attempts_and_overruns": true,
+          "native_cumulative_tokens_not_summed": true,
+          "billing": null,
+          "generated_tokens": null
+        },
+        "treatment": {
+          "dispatch_to_terminal_seconds": 921.41,
+          "aggregate_occupied_seconds": 880.417,
+          "actual_run_count": 2,
+          "includes_failed_attempts_and_overruns": true,
+          "native_cumulative_tokens_not_summed": true,
+          "billing": null,
+          "generated_tokens": null
+        }
+      },
+      "run_times_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+        "sha256": "647c1dd17d46831ef3901924b4fb467fc324feded5c1d4934d2a0d3aaf142165"
+      }
+    },
+    {
+      "case_id": "D-M03-A",
+      "method_id": "M03",
+      "family": "Muse",
+      "version": 1,
+      "disposition": "FULL_SCIENTIFIC_OWN_ARM_REVIEWS_REPAIRED_COMPARATIVE_HOLD",
+      "quality": {
+        "review_present": false,
+        "readable_report_present": false,
+        "full_review_delivery": false,
+        "qualified_pass": false,
+        "assessed_source_scope": "UNASSESSED: no authored reviewer assessment delivered",
+        "unassessed_remainder": "Entire declared scientific scope"
+      },
+      "time": {
+        "review_overrun": true,
+        "original_review_prompt_minutes": 20,
+        "root_later_envelope_minutes": 15,
+        "candidate_run_metrics": null
+      },
+      "quota": {
+        "input_cached_generated_reasoning_billing": null,
+        "quota_advantage_established": false
+      },
+      "eligibility": {
+        "qualified_method_credit": false,
+        "source_method_win_established": false,
+        "provenance": "Advisory scope restriction only, not firewall"
+      },
+      "failures_included": [
+        "independent review exceeded envelope and bounded closeout, intentionally interrupted",
+        "readable final review absent"
+      ],
+      "time_failure_inclusive": {
+        "control": {
+          "dispatch_to_terminal_seconds": 405.194,
+          "aggregate_occupied_seconds": 322.89,
+          "actual_run_count": 2,
+          "includes_failed_attempts_and_overruns": true,
+          "billing": null,
+          "generated_tokens": null,
+          "native_cumulative_counters_not_summed": true
+        },
+        "treatment": {
+          "dispatch_to_terminal_seconds": 753.641,
+          "aggregate_occupied_seconds": 537.53,
+          "actual_run_count": 4,
+          "includes_failed_attempts_and_overruns": true,
+          "billing": null,
+          "generated_tokens": null,
+          "native_cumulative_counters_not_summed": true
+        }
+      },
+      "run_times_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+        "sha256": "e8be320ca936dc01a168126f1b6ab64e70c07deba0191f2f39ed2f253006112c"
+      },
+      "original_disposition_retained": "TERMINAL_REVIEW_INTERRUPTED_PARTIAL_OR_ABSENT_HOLD",
+      "science_v2": {
+        "obligations_assessed": 12,
+        "obligations_unassessed": 0,
+        "final_findings_assessed": 14,
+        "claim_groups_assessed": 36,
+        "historical_procedural_groups_unassessed": 2,
+        "labels": {
+          "X": {
+            "semantic_conclusion": {
+              "status": "material_corrections_required",
+              "summary": "All six obligations were independently assessed and all six proposed tests reviewed. Core selectors, dotfile matching, stable descendant symlink exclusion, broken-leaf behavior, explicit link following, and case rules are largely sound. F6 wrongly equates unreadable root with failing initial stat and misses uncaught walk iterator/context errors. Completeness and symlink claims need stable-tree/access/scope qualifications; T4 needs a real-denial precondition. No candidate edits, scientific rescue, ranking, cost inference, or native success judgment.",
+              "winner_ranking": null,
+              "cost_inference": null,
+              "native_success_inference": null
+            },
+            "coverage_census": {
+              "declared_obligations": 6,
+              "obligations_assessed": 6,
+              "obligations_unassessed": 0,
+              "candidate_final_material_findings": 7,
+              "final_findings_assessed": 7,
+              "proposed_tests": 6,
+              "proposed_tests_assessed": 6,
+              "proposed_tests_executed_by_reviewer": 0,
+              "mandatory_intermediates": 2,
+              "mandatory_intermediates_read": 2,
+              "claim_groups": 20,
+              "claim_groups_assessed": 19,
+              "claim_groups_explicitly_unassessed": 1,
+              "reviewed_hashed_inputs": 10,
+              "core_primary_sources": 3,
+              "mapped_supplementary_primary_sources": 2,
+              "reviewer_OS_only_counterexamples": 1,
+              "entire_source_files_read": false
+            },
+            "timing": {
+              "actual_dispatch_utc": null,
+              "dispatch_timestamp_limitation": "Actual dispatch timestamp not supplied; lifecycle/timing files prohibited. First observed clock is a proxy, not a substituted/reset allowance.",
+              "first_observed_review_utc": "2026-10-07T19:39:40Z",
+              "artifacts_written_utc": "2026-10-07T19:45:00Z",
+              "verification_finished_utc": "2026-10-07T19:46:06Z",
+              "actual_dispatch_elapsed_seconds": null,
+              "first_observed_elapsed_seconds": 386.0,
+              "allowance_minutes": 20,
+              "includes_checks_writing_delivery": true,
+              "allowance_reset": false,
+              "original_contract_minutes": 20,
+              "root_mistake_annotation": "User reports root previously misstated a generic 15-minute reviewer limit; original 20-minute contract retained, never changed retroactively.",
+              "prior_pair_closeout": "User reports original paired review exceeded its 20-minute envelope and was interrupted without authored REVIEW.json/REVIEW.md; prior scientific scope unassessed. No prior review or lifecycle material read."
+            }
+          },
+          "Y": {
+            "conclusion": {
+              "status": "material_correction_required",
+              "summary": "All six obligations were independently assessed. The core selector, dotfile, broken-link and case analyses are mostly supported, but the unconditional unreadable-root-raises conclusion and proposed own-root chmod(0) expectation are incorrect. Iterator-error, file-type and stable-tree qualifications constrain the completeness recommendation.",
+              "scope": "Semantic assessment of Y only; no comparison, winner, cost, usage-efficiency or native-success inference.",
+              "candidate_edits_made": false,
+              "scientific_rescue_performed": false
+            },
+            "timing": {
+              "actual_dispatch_utc": null,
+              "first_observed_tool_time_utc": "2026-10-07T19:39:53.900906530Z",
+              "assessment_written_utc": "2026-10-07 19:53:23 UTC",
+              "completed_utc": "2026-10-07T19:58:07.045229+00:00",
+              "delivery_utc": null,
+              "actual_elapsed_from_dispatch_seconds": null,
+              "observed_elapsed_seconds": 1093.144,
+              "hard_deadline_from_dispatch_utc": null,
+              "limit_verification": "Actual dispatch not independently available without prohibited lifecycle material. Work and delivery were bounded to substantially less than 20 minutes after first observation; this is not a certification of dispatch-relative compliance.",
+              "usage": {
+                "input_tokens": null,
+                "output_tokens": null,
+                "total_tokens": null,
+                "cost": null
+              },
+              "ready_for_delivery_utc": "2026-10-07T19:58:07.045229+00:00",
+              "delivery_timestamp_note": "Final reply follows artifact validation; exact transport delivery time is not available to this reviewer."
+            },
+            "coverage_census": {
+              "declared_obligations": 6,
+              "obligations_assessed": 6,
+              "scientific_obligations_unassessed": 0,
+              "final_material_findings_declared": 7,
+              "final_material_findings_assessed": 7,
+              "candidate_final_files_fully_read": 1,
+              "required_intermediates_fully_read": 4,
+              "mapped_artifacts_hashed": 12,
+              "supplied_expected_hashes": 10,
+              "supplied_expected_hashes_matching": 10,
+              "primary_sources_upstream_hash_checked": 5,
+              "primary_sources_upstream_matches": 5,
+              "claim_groups_total": 18,
+              "claim_groups_semantically_assessed": 17,
+              "claim_groups_explicitly_unassessed": 1,
+              "unassessed_group_ids": [
+                "C18"
+              ],
+              "proposed_candidate_test_families": 5,
+              "proposed_candidate_test_families_assessed": 5,
+              "candidate_test_execution_verified": 0,
+              "reviewer_os_counterexample_cases_executed": 2,
+              "reviewer_release_specific_project_code_executions": 0,
+              "optional_yield_assessed": true,
+              "approximate_final_whitespace_words": 935,
+              "soft_ceiling_words": 1100,
+              "soft_ceiling_material_findings": 8
+            }
+          }
+        },
+        "original_no_artifact_review_failure_retained": true,
+        "qualified_method_credit": false
+      },
+      "review_repairs_v2": [
+        {
+          "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X",
+          "artifacts": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW_INPUT_MAP.json",
+              "sha256": "81220716ebf08dd9ada47a3a340bafeeefe404e015404892a8b7554515ca4f97",
+              "bytes": 3159
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/PROMPT.txt",
+              "sha256": "a9f87dc5e92631c88654b7e9d50e98e8c56f2f190a704ab26e94ac4e948d963f",
+              "bytes": 5359
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/TASK_TERMINAL.json",
+              "sha256": "45735492bac4f673684458a0d33b041c0c34d8c82f36bde181edcbb2bc9b42f0",
+              "bytes": 5876
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/review.md",
+              "sha256": "7cb33e92b98a930505a29dc2dc36772f1d2a0d8e4cb424bca391294ed2d25c80",
+              "bytes": 14634
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/DISPATCH_RECEIPT.json",
+              "sha256": "9264e2ff3012a8e33b152953d849e929dcf6ff4ef62a5dbd869f5ef899cb89d2",
+              "bytes": 2154
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/REQUEST.json",
+              "sha256": "8125b1d1bf9bc063a52befba2c5d8eb8d50354354d8d742d98497b466a902000",
+              "bytes": 6020
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW.json",
+              "sha256": "aff82519161b508848a8f3d11a1e221d87dc7a700bd0e358df90b7d526fa99b0",
+              "bytes": 44558
+            }
+          ],
+          "terminal_status": "completed",
+          "original_failures_retained": true
+        },
+        {
+          "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y",
+          "artifacts": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW_INPUT_MAP.json",
+              "sha256": "bc4b8b6ae53e3c9a8910276f765a09bd4a06a94dc7047a45acaa2856f1338597",
+              "bytes": 3675
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/PROMPT.txt",
+              "sha256": "b3bbff04da16ad60c10a6cd712ec176395b9624ab8744758d1b1e401cdee8a55",
+              "bytes": 5875
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/TASK_TERMINAL.json",
+              "sha256": "a3ff625c82c70e2e8bfa0ddf420884f01cb3b64e1f089b7248e537131d9011e0",
+              "bytes": 6268
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/review.md",
+              "sha256": "96f0415e1a736e0fe659f30d26e402345477b2f27cef512850bb0dbb7a847ec9",
+              "bytes": 14580
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/DISPATCH_RECEIPT.json",
+              "sha256": "f456e564b5a255b66f6e2bb91457f515b20600b8e23e60f34be773000751211c",
+              "bytes": 2154
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/REQUEST.json",
+              "sha256": "6c422ce9db08b2fb6c960dff41bbcbd4a5a19e0e57105b2f534774478f9e9e36",
+              "bytes": 6560
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW.json",
+              "sha256": "219480ef6fe9a9f3fcdce16a64c62b563db381f6df796bea4ea85759856c4210",
+              "bytes": 44380
+            }
+          ],
+          "terminal_status": "completed",
+          "original_failures_retained": true
+        }
+      ]
+    },
+    {
+      "case_id": "D-M03-B",
+      "method_id": "M03",
+      "family": "Muse",
+      "version": 2,
+      "disposition": "FULL_SOURCE_SCIENCE_ASSESSED_PROVENANCE_HOLD",
+      "quality": {
+        "scope": {
+          "temporal_gate": "User attests both trees held/quiet and outputs frozen before evaluator work; accepted as prerequisite, not independently lifecycle-verified.",
+          "reviewed": "Brief, manifest, both complete finals, all six required intermediates, all frozen source lines and the relevant released primary dependencies/data ranges listed below.",
+          "excluded": "Case cards/READY, supervisor/lifecycle/timing files, identity maps, other grades/reviews/cases, parent analysis/economics/metrics, candidate rescue/edits/feedback/new candidates.",
+          "candidate_edits": false,
+          "delegation": false,
+          "native_goal_created": false,
+          "scope_limitations": "No artifact mapped null. No scientific assertion was left unadjudicated due to missing artifact or time. Empirical runtime and candidate-process claims remain explicitly unassessed."
+        },
+        "candidates": {
+          "X": {
+            "artifact_scope_limit": null,
+            "artifact_completeness": "Complete final and every mapped required intermediate are readable and hash matched.",
+            "core_configuration_and_degree_input_call": "SUPPORTED",
+            "scientific_correctness_status": "SUPPORTED_CORE_WITH_QUALIFICATION_REQUIRED",
+            "full_artifact_scientific_pass": false,
+            "independent_conclusion": "The central constructor/call recommendation is source supported. The complete artifact requires qualification of the unit-check prediction and angular/validation boundaries; the declared metadata uncertainty is honest.",
+            "obligation_dispositions": [
+              {
+                "id": "O1",
+                "obligation": "Trace from_crs configuration into creation and transform use",
+                "claim_groups": [
+                  "G01",
+                  "G02"
+                ],
+                "disposition": "SATISFIED",
+                "evidence": [
+                  "E1",
+                  "E2",
+                  "E3"
+                ]
+              },
+              {
+                "id": "O2",
+                "obligation": "Bind caller input order separately from native CRS axes",
+                "claim_groups": [
+                  "G03",
+                  "G12"
+                ],
+                "disposition": "SATISFIED_CONDITIONAL",
+                "evidence": [
+                  "E2",
+                  "E7"
+                ]
+              },
+              {
+                "id": "O3",
+                "obligation": "Meaning and limits of always_xy",
+                "claim_groups": [
+                  "G04",
+                  "G05"
+                ],
+                "disposition": "SATISFIED",
+                "evidence": [
+                  "E2",
+                  "E3",
+                  "E5",
+                  "E9"
+                ]
+              },
+              {
+                "id": "O4",
+                "obligation": "Radians and output unit domains",
+                "claim_groups": [
+                  "G06",
+                  "G07",
+                  "G13"
+                ],
+                "disposition": "PARTIAL_DOMAIN_QUALIFICATION",
+                "evidence": [
+                  "E3",
+                  "E4",
+                  "E7"
+                ]
+              },
+              {
+                "id": "O5",
+                "obligation": "Area-of-use and invalid-input/error handling limits",
+                "claim_groups": [
+                  "G08",
+                  "G09",
+                  "G10",
+                  "G14"
+                ],
+                "disposition": "PARTIAL_LIMIT_EXPLANATION",
+                "evidence": [
+                  "E2",
+                  "E5",
+                  "E6"
+                ]
+              },
+              {
+                "id": "O6",
+                "obligation": "Boundary checks and dependency/environment uncertainty",
+                "claim_groups": [
+                  "G11",
+                  "G12",
+                  "G13",
+                  "G14",
+                  "G15",
+                  "G16"
+                ],
+                "disposition": "PARTIAL_CHECK_QUALIFICATION",
+                "evidence": [
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6",
+                  "E7",
+                  "E8"
+                ]
+              }
+            ],
+            "coverage": {
+              "material_obligations_total": 6,
+              "material_obligations_assessed": 6,
+              "material_obligations_unassessed": 0,
+              "scientific_claim_groups_total": 19,
+              "scientific_claim_groups_assessed": 19,
+              "scientific_claim_groups_unassessed": 0,
+              "process_claim_groups_unassessed": 2,
+              "all_applicable_claim_groups_total": 21,
+              "all_applicable_claim_groups_assessed": 19,
+              "all_applicable_claim_groups_unassessed": 2,
+              "empirical_runtime_groups_total": 4,
+              "empirical_runtime_groups_assessed": 0,
+              "empirical_runtime_groups_unassessed": 4
+            },
+            "issue_ids": [
+              "X-Q1",
+              "X-Q2"
+            ],
+            "runtime_validation": "UNASSESSED: no pyproj/PROJ witness executed; this is a released-source semantic assessment, not certification of an installed environment."
+          },
+          "Y": {
+            "artifact_scope_limit": null,
+            "artifact_completeness": "Complete final and every mapped required intermediate are readable and hash matched.",
+            "core_configuration_and_degree_input_call": "SUPPORTED",
+            "scientific_correctness_status": "CONSEQUENTIAL_SCIENTIFIC_ERRORS_PRESENT",
+            "full_artifact_scientific_pass": false,
+            "independent_conclusion": "The central constructor/call recommendation is source supported. The complete artifact contains a false projected-unit implication, a false axis-check prediction, and two additional defects in a required intermediate.",
+            "obligation_dispositions": [
+              {
+                "id": "O1",
+                "obligation": "Trace from_crs configuration into creation and transform use",
+                "claim_groups": [
+                  "G01",
+                  "G02"
+                ],
+                "disposition": "SATISFIED",
+                "evidence": [
+                  "E1",
+                  "E2",
+                  "E3"
+                ]
+              },
+              {
+                "id": "O2",
+                "obligation": "Bind caller input order separately from native CRS axes",
+                "claim_groups": [
+                  "G03",
+                  "G12"
+                ],
+                "disposition": "SATISFIED_CONDITIONAL",
+                "evidence": [
+                  "E2",
+                  "E7"
+                ]
+              },
+              {
+                "id": "O3",
+                "obligation": "Meaning and limits of always_xy",
+                "claim_groups": [
+                  "G04",
+                  "G05"
+                ],
+                "disposition": "SATISFIED",
+                "evidence": [
+                  "E2",
+                  "E3",
+                  "E5",
+                  "E9"
+                ]
+              },
+              {
+                "id": "O4",
+                "obligation": "Radians and output unit domains",
+                "claim_groups": [
+                  "G06",
+                  "G07",
+                  "G13"
+                ],
+                "disposition": "CONSEQUENTIAL_ERROR",
+                "evidence": [
+                  "E3",
+                  "E4",
+                  "E7"
+                ]
+              },
+              {
+                "id": "O5",
+                "obligation": "Area-of-use and invalid-input/error handling limits",
+                "claim_groups": [
+                  "G08",
+                  "G09",
+                  "G10",
+                  "G14"
+                ],
+                "disposition": "PARTIAL_LIMIT_EXPLANATION",
+                "evidence": [
+                  "E2",
+                  "E5",
+                  "E6"
+                ]
+              },
+              {
+                "id": "O6",
+                "obligation": "Boundary checks and dependency/environment uncertainty",
+                "claim_groups": [
+                  "G11",
+                  "G12",
+                  "G13",
+                  "G14",
+                  "G15",
+                  "G16"
+                ],
+                "disposition": "PARTIAL_WITH_INCORRECT_CHECKS",
+                "evidence": [
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6",
+                  "E7",
+                  "E8"
+                ]
+              }
+            ],
+            "coverage": {
+              "material_obligations_total": 6,
+              "material_obligations_assessed": 6,
+              "material_obligations_unassessed": 0,
+              "scientific_claim_groups_total": 20,
+              "scientific_claim_groups_assessed": 20,
+              "scientific_claim_groups_unassessed": 0,
+              "process_claim_groups_unassessed": 3,
+              "all_applicable_claim_groups_total": 23,
+              "all_applicable_claim_groups_assessed": 20,
+              "all_applicable_claim_groups_unassessed": 3,
+              "empirical_runtime_groups_total": 4,
+              "empirical_runtime_groups_assessed": 0,
+              "empirical_runtime_groups_unassessed": 4
+            },
+            "issue_ids": [
+              "Y-E1",
+              "Y-E2",
+              "Y-E3",
+              "Y-E4",
+              "Y-Q1"
+            ],
+            "runtime_validation": "UNASSESSED: no pyproj/PROJ witness executed; this is a released-source semantic assessment, not certification of an installed environment."
+          }
+        },
+        "issues": [
+          {
+            "id": "X-Q1",
+            "label": "X",
+            "kind": "ambiguous or overstrong check prediction",
+            "location": "final L37/P2; intermediate-1 L41; intermediate-2 embedded P2",
+            "claim_groups": [
+              "G13"
+            ],
+            "evidence": [
+              "E3",
+              "E7"
+            ],
+            "finding": "Two matched input encoding/flag combinations are valid. Only one sane needs a per-encoding qualifier and a known-value oracle; mere plausible magnitude is inadequate."
+          },
+          {
+            "id": "X-Q2",
+            "label": "X",
+            "kind": "incomplete governing-domain explanation",
+            "location": "final F5/F6; intermediate-1 F5/F6; intermediate-2 embedded findings",
+            "claim_groups": [
+              "G06",
+              "G07",
+              "G10"
+            ],
+            "evidence": [
+              "E3",
+              "E4",
+              "E5",
+              "E6"
+            ],
+            "finding": "Explicit geographic-only angular scope and selection-versus-validation limits are incomplete. The declared EPSG metadata uncertainty is honest and is not by itself a false claim."
+          },
+          {
+            "id": "Y-E1",
+            "label": "Y",
+            "kind": "consequential unit-domain error",
+            "location": "final L59-64; intermediate-1 \u00a74; intermediate-2 \u00a74; intermediate-3 E3",
+            "claim_groups": [
+              "G06",
+              "G07"
+            ],
+            "evidence": [
+              "E3",
+              "E4"
+            ],
+            "finding": "Else degrees wrongly implies non-geographic/projected output is angular. EPSG:3857 x/y are projected metre quantities for either radians flag."
+          },
+          {
+            "id": "Y-E2",
+            "label": "Y",
+            "kind": "false proposed-check prediction",
+            "location": "final L114-115; intermediate-3 L40",
+            "claim_groups": [
+              "G12"
+            ],
+            "evidence": [
+              "E2",
+              "E7"
+            ],
+            "finding": "False+(lat,lon) and True+(lon,lat) both match the known location. The uniqueness prediction would reject correct native-order behavior."
+          },
+          {
+            "id": "Y-E3",
+            "label": "Y",
+            "kind": "dropped governing source condition",
+            "location": "intermediate-3 E4 L32",
+            "claim_groups": [
+              "G15"
+            ],
+            "evidence": [
+              "E8"
+            ],
+            "finding": "The right<left antimeridian polygon rule requires a geographic destination; that antecedent was omitted for a module whose forward destination is projected."
+          },
+          {
+            "id": "Y-E4",
+            "label": "Y",
+            "kind": "unsupported scientific inference",
+            "location": "intermediate-3 E5 L36",
+            "claim_groups": [
+              "G20"
+            ],
+            "evidence": [
+              "E7"
+            ],
+            "finding": "An identity transform preserving input cannot establish order sensitivity."
+          },
+          {
+            "id": "Y-Q1",
+            "label": "Y",
+            "kind": "incomplete validation explanation",
+            "location": "final finding 6 and required area/error sections",
+            "claim_groups": [
+              "G10",
+              "G16"
+            ],
+            "evidence": [
+              "E5",
+              "E6"
+            ],
+            "finding": "Selection metadata/errcheck do not provide application-level range, finite-result or semantic input validation. Numeric ranges may remain explicitly uncertain; that uncertainty does not explain this distinction by itself."
+          }
+        ],
+        "timing": {
+          "preparation_utc": "2026-10-07T20:00:01.435065+00:00",
+          "hard_ceiling_utc": "2026-10-07T20:20:01.435065+00:00",
+          "first_observed_check_utc": "2026-10-07T20:00:10.933682+00:00",
+          "initial_complete_reports_saved_utc": "2026-10-07T20:07:47.688604+00:00",
+          "final_validation_utc": "2026-10-07T20:09:54.027488+00:00",
+          "completed_utc": "2026-10-07T20:09:54.027488+00:00",
+          "clock_reset": false,
+          "elapsed_seconds_from_preparation": 592.592423,
+          "completed_before_hard_ceiling": true
+        },
+        "remaining_uncertainty": "Released byte semantics and EPSG native axes/metre units are resolved for this review. Actual host binaries, grid/network/configuration, empirical behavior of the proposed witnesses, and candidate process/lifecycle claims are not established. No failure is attributed solely to not executing a forbidden witness or not browsing beyond the shared corpus.",
+        "empirical_runtime_unassessed": [
+          {
+            "id": "U01",
+            "scope": "Actual installed pyproj 3.6.1 / PROJ 9.3.0 coordinate, unit, inverse and array behavior"
+          },
+          {
+            "id": "U02",
+            "scope": "Actual invalid/NaN/infinity/mixed-batch/pole handling and exact exceptions"
+          },
+          {
+            "id": "U03",
+            "scope": "Actual operation identity, grid availability, network and environment defaults"
+          },
+          {
+            "id": "U04",
+            "scope": "Actual transformed bounds, wrapping and densification at antimeridian/poles"
+          }
+        ]
+      },
+      "quality_artifacts": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/REVIEW_INPUT_MAP.json",
+          "sha256": "ae4de0bc1b1d1dfb9502c60151e36df9f7bc440f61c45019c5e25733d8087996",
+          "bytes": 3676
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/dispatch-raw.json",
+          "sha256": "49ae111f13ab3e84ba6d56b23193e03901046a515013434b0021404a0510dcf6",
+          "bytes": 2138
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/PROMPT.txt",
+          "sha256": "0ae1a59724ebc7e82bfe21a5608ba718a62215f7e7fc93a9d01945d44da38106",
+          "bytes": 6252
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/TASK_TERMINAL.json",
+          "sha256": "2b6ab86da76ee8d1d6b05de8b2c08f2adaf1cd6019559d049557991112523bf9",
+          "bytes": 6300
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/review.md",
+          "sha256": "e1828dd4bc8a54b73fbff2e4aff2649c6250585776465a441714053ca483cd7e",
+          "bytes": 15345
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/DISPATCH_RECEIPT.json",
+          "sha256": "49ae111f13ab3e84ba6d56b23193e03901046a515013434b0021404a0510dcf6",
+          "bytes": 2138
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/REQUEST.json",
+          "sha256": "8141a8fe973db8e29e8e00ec71f05fff132109f9e8f4e58f075d0e5909e3ed07",
+          "bytes": 6926
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+          "sha256": "6804cb9c7e89a08cebb43d93bd80b8fd131915d234655a3c3412f754a888c550",
+          "bytes": 41
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json",
+          "sha256": "2a4ba86a1591f122104694ab888ac8066d0941f2b06752a38044145dc1a26dad",
+          "bytes": 51689
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/source-index.json",
+          "sha256": "7626a6acdea89d2b813dfdbc198c6fcac5bc784e0b3fe25d44154655cc451c13",
+          "bytes": 10187
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/analytic-counterexamples.json",
+          "sha256": "e3626beb70007d9e41f894ffecd3cc5ea033321f1f96f34aaf6a1acc3af2dbc2",
+          "bytes": 3659
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-extent.sql",
+          "sha256": "a40cc136c826de390c2e668458148e8fad508066c092d6909184a0d7610769f0",
+          "bytes": 719568
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-geodetic-crs.sql",
+          "sha256": "d86dec56da2f70bc1ceb2e527005d96617b2c7fab83ee43ee1ee5f3aa42515d8",
+          "bytes": 253205
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-c-api.cpp",
+          "sha256": "5824211de61a42df3d4ab1d09d5c266adda2e0c4a775c6a371194b546b223faf",
+          "bytes": 377950
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-crs.cpp",
+          "sha256": "9d6c5fcad3801e8ea5deb7aaee4ef57936c442a6c3b48f095b72aaf8e7ae2dba",
+          "bytes": 289534
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/pyx.pyx",
+          "sha256": "15bef90ba8ec7f45cefc243415521a70fd78d6fc513a914423cb5610a1a0ea17",
+          "bytes": 39998
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-functions.rst",
+          "sha256": "54317fb5e41d7c517891814a784df0c0f303592398a50167b61d9475de9b9a4c",
+          "bytes": 38818
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-axis.sql",
+          "sha256": "e3326ee7d15d1732886a32a8896cf32d5467e300736ddbec64a3044a96df4159",
+          "bytes": 29702
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-ellipsoid.sql",
+          "sha256": "94580c4da9a232ff038bc7d4fbfd8fb53951daad08562393c5c159e3c99f8ed4",
+          "bytes": 7123
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-schema.sql",
+          "sha256": "e8566d61bd3338741b4d939afa518bb69a314d8e91ef5c4fb0f5073771146a3f",
+          "bytes": 81959
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-unit.sql",
+          "sha256": "619e1dfcaebafb732f4308ae82d8578213abaf93f540efde0a58c9c13f996ae7",
+          "bytes": 10021
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-merc-code.cpp",
+          "sha256": "007679b914de512ada5818ac8980673a66f7544d331b2d704d1cf9732a6ac604",
+          "bytes": 2240
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/remote-projdoc.rst",
+          "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+          "bytes": 1337
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/webmerc-doc.rst",
+          "sha256": "0b77c51e435726db8c821aa42f55217c57d81de0d55f863162a97961ac4b1017",
+          "bytes": 3338
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/remote-projcode.py",
+          "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+          "bytes": 44983
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-fwd.cpp",
+          "sha256": "f323098658bbbc714353bd508f23567808192aec89fb2e989f23276bd42adcdb",
+          "bytes": 9115
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-projected-crs.sql",
+          "sha256": "d9ae3d9ace69911acaa55528abbef8a5c067a132d9f18c16251a8f429efa9f0e",
+          "bytes": 1346167
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-4.md",
+          "sha256": "ceca68c3428c61e6c4036f59aa4a4fc3dc1473e5f688d1d60fefa0a9ad16b142",
+          "bytes": 2912
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-3.md",
+          "sha256": "154d2c4198e0555628dbc59fc283cabccd47c9799598f2fadc4c6fb47459bb6e",
+          "bytes": 8712
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/final.md",
+          "sha256": "cdf6c9e9b93a950e7f09fa481937279d3f7f014257013be88988029bed49d1a6",
+          "bytes": 8271
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-1.md",
+          "sha256": "d7d434be06608c199766a0a7943e4dc6a506d31fb4c96d231a1ad8254a45198f",
+          "bytes": 6593
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-2.md",
+          "sha256": "5493bc03b12527a8c2e2d42789924235d88779183a2d433b2cc03b50d5cefc7a",
+          "bytes": 8813
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/final.md",
+          "sha256": "c6a0a9bb5bdb2ddc2bbc264199c1256b87d22349d35ebfcdbd5657858a469e0f",
+          "bytes": 6388
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/intermediate-1.md",
+          "sha256": "efbc663b19492bec983184b5c09e619d771458760bd01d9852b5b2d888a9451a",
+          "bytes": 7086
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/intermediate-2.md",
+          "sha256": "192e2574880aaa665f52740ee2b96435be590d9111ba1efc9cf6d1699f4438ec",
+          "bytes": 7179
+        }
+      ],
+      "time_failure_inclusive": {
+        "control": {
+          "dispatch_to_terminal_seconds": 257.552,
+          "aggregate_occupied_seconds": 235.48999999999998,
+          "actual_run_count": 2,
+          "billing": null,
+          "generated_tokens": null,
+          "native_totals_not_summed": true
+        },
+        "treatment": {
+          "dispatch_to_terminal_seconds": 557.925,
+          "aggregate_occupied_seconds": 442.584,
+          "actual_run_count": 4,
+          "billing": null,
+          "generated_tokens": null,
+          "native_totals_not_summed": true
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_cumulative_totals_not_summed": true
+      },
+      "provenance": [
+        {
+          "detected_at": "2026-10-07T19:55:17.842389+00:00",
+          "kind": "out_of_map_write",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/treatment/final.md",
+          "exists": true,
+          "sha256": "cdf6c9e9b93a950e7f09fa481937279d3f7f014257013be88988029bed49d1a6",
+          "matches_declared_final": true,
+          "disposition": "PROVENANCE_HOLD: candidate reported unauthorized case-output export contrary to root jobs-only binding; retain exact original, do not delete or treat as authoritative candidate carrier",
+          "science_grade_inference": null
+        },
+        {
+          "kind": "out_of_map_write",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/control/final.md",
+          "sha256": "c6a0a9bb5bdb2ddc2bbc264199c1256b87d22349d35ebfcdbd5657858a469e0f",
+          "matches_declared_final": true,
+          "disposition": "PROVENANCE_HOLD: unauthorized extra cases-output export, advisory maps not firewall; original retained, jobsfinal authoritative",
+          "science_grade_inference": null
+        },
+        {
+          "kind": "supervisor_prompt_path_conflict",
+          "detected_at": "2026-10-07T20:04:13.428240+00:00",
+          "fact": "Original v2 prompt copied frozen output_scope.final_path_by_arm cases/outputs paths while exactmap/jobs-only prohibition overrides them; actual unauthorized exports cannot be attributed solely to candidate compliance. Both original inputs/prompts preserved.",
+          "disposition": "PROVENANCE/CARRIER_HOLD and mixedinstruction limitation retained separately; no scientificgrade change or retroactive prompt rewrite"
+        }
+      ],
+      "run_times_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+        "sha256": "712dc57eddff2cd3ac71abcb35e0469fd28c562fa1feed64109ba5f2c2b9863a"
+      },
+      "qualified_method_comparison": false,
+      "science_paired_assessment": true
+    },
+    {
+      "case_id": "D-M02-A",
+      "method_id": "M02",
+      "family": "Luna",
+      "version": 2,
+      "disposition": "CONTROL_MISSING_FINAL_DIAGNOSTIC_ONLY_NO_COMPARISON",
+      "quality": {
+        "labels": {
+          "X": {
+            "scientific_correctness_status": "UNASSESSED_MISSING_COMPLETE_FINAL",
+            "independent_conclusion": "A complete scientific final is mapped null. The two required intermediates are assessed diagnostically: their core Q1/Q2 rules and conservative update inference are source-supported, with F01/F02 qualifications. This is not a complete final correctness assessment, a lifecycle judgment, or comparison evidence.",
+            "coverage": {
+              "required_intermediates_assessed": 2,
+              "required_intermediates_unassessed": 0,
+              "complete_final_assessed": false,
+              "existing_artifact_obligations_assessed": 6,
+              "existing_artifact_obligations_unassessed": 0,
+              "final_obligations_assessed": 0,
+              "final_obligations_unassessed": 6,
+              "available_scientific_claim_groups_assessed": 13,
+              "available_scientific_claim_groups_unassessed": 0,
+              "absent_final_claim_groups_unassessed": null,
+              "unverified_process_claim_groups": 3,
+              "count_basis": "Grouped semantic scope, not an atomic-assertion or score count; absent final claim count cannot be known."
+            }
+          },
+          "Y": {
+            "scientific_correctness_status": "NOT_FULLY_CORRECT_AS_UNQUALIFIED_NORMATIVE_RECOMMENDATION",
+            "independent_conclusion": "All available final/intermediate scientific scope was assessed (the files are byte-identical). Core freshness/stale, cache-key, private/shared Authorization and 304 update rules are supported. A full-source-correctness certification is withheld because response no-store omits its governing must-understand exception; validation details and Vary norm-versus-policy wording also require qualification. This does not establish an unsafe cache, an implementation failure, or any comparative result.",
+            "coverage": {
+              "required_intermediates_assessed": 1,
+              "required_intermediates_unassessed": 0,
+              "complete_final_assessed": true,
+              "final_obligations_assessed": 6,
+              "final_obligations_unassessed": 0,
+              "available_scientific_claim_groups_assessed": 13,
+              "available_scientific_claim_groups_unassessed": 0,
+              "unverified_process_claim_groups": 3,
+              "count_basis": "Final and identical intermediate share one semantic assessment; both exact artifacts were byte-checked, not double-counted as independent evidence."
+            }
+          }
+        },
+        "findings": [
+          {
+            "id": "F01",
+            "kind": "governing normative exception omitted",
+            "labels": [
+              "X_existing_artifacts",
+              "Y"
+            ],
+            "source_evidence": [
+              "E11"
+            ],
+            "locations": [
+              "X1:14",
+              "X2:5,15",
+              "YF/YI:13,15,17,21"
+            ],
+            "conclusion": "Response no-store is overbroad without the implemented-must-understand/status-conformance exception. RFC 9111 explicitly recommends ignoring no-store under those conditions. A conservative choice not to cache is still allowed; it is not a universal normative prohibition.",
+            "impact": "Can misclassify a source-permitted storage/reuse case; no unsafe reuse experiment is demonstrated.",
+            "boundary": "W05",
+            "materiality": "material source qualification; not proof of implementation failure"
+          },
+          {
+            "id": "F02",
+            "kind": "under-specified validation detail",
+            "labels": [
+              "X_existing_artifacts",
+              "Y"
+            ],
+            "source_evidence": [
+              "E07",
+              "E08"
+            ],
+            "locations": [
+              "X1:9",
+              "X2:9,17",
+              "YF/YI:5"
+            ],
+            "conclusion": "The Last-Modified/If-Modified-Since SHOULD for a single stored response and non-subrange validation is not explicitly carried. X1 preserves If-None-Match precedence; Y does not state it. Full response replacement should not be mistaken for mandatory or unconditional cache storage.",
+            "impact": "Recommendation is incomplete for a common date-only validator boundary. No assertion that date validation is prohibited or no-store full responses must be stored was found.",
+            "boundary": [
+              "W06",
+              "W07"
+            ],
+            "materiality": "completeness/interpretation qualification, not a demonstrated contrary executable behavior"
+          },
+          {
+            "id": "F03",
+            "kind": "normative claim versus optional conservative policy",
+            "labels": [
+              "Y"
+            ],
+            "source_evidence": [
+              "E03",
+              "E09",
+              "E14",
+              "E15"
+            ],
+            "locations": [
+              "YF/YI:9,15,17,21(c)"
+            ],
+            "conclusion": "Origin language-based Vary is SHOULD with permitted elision, and an explicit valid 304 Vary replacement can legitimately alter later matching. Language cannot be a blanket permanent selector once the supplied Vary changes. Discarding uncertain entries/fetching full is a permitted stronger policy, but the RFC does not categorically forbid every broadened scope.",
+            "impact": "Overrestrictive/ambiguous recommendation and fixture oracle; no unsafe fr hit is proven. Later omitted-Vary statement and fail-closed qualification mitigate a blanket reading.",
+            "boundary": [
+              "W03",
+              "W04"
+            ],
+            "materiality": "source qualification and policy labeling"
+          }
+        ],
+        "timing": {
+          "preparation_utc": "2026-10-07T20:04:13.589881+00:00",
+          "allowance_seconds": 1200,
+          "hard_ceiling_utc": "2026-10-07T20:24:13.589881+00:00",
+          "first_observed_reviewer_clock_utc": "2026-10-07T20:04:26+00:00",
+          "first_hash_and_read_checks_utc": "2026-10-07T20:04:26+00:00",
+          "all_available_artifacts_initially_read_utc": null,
+          "public_byte_checks_utc": [
+            "2026-10-07T20:04:46.116434+00:00",
+            "2026-10-07T20:04:46.137506+00:00"
+          ],
+          "toy_checks_utc": "2026-10-07T20:06:53.492088+00:00",
+          "reviewed_hash_recheck_utc": "2026-10-07T20:08:21.156815+00:00",
+          "completed_utc": "2026-10-07T20:12:32.451270+00:00",
+          "elapsed_from_preparation_seconds": 498.861389,
+          "remaining_at_completion_seconds": 701.138611,
+          "clock_reset": false,
+          "budget_exhausted": false,
+          "initial_artifact_read_window": {
+            "after_utc": "2026-10-07T20:04:26+00:00",
+            "before_utc": "2026-10-07T20:04:46.137506+00:00",
+            "note": "Bounded by observed clocks/tool sequence; no invented exact candidate-read timestamp."
+          }
+        },
+        "scope": {
+          "temporal_gate": "User attested both candidate task trees quiet/held, exact outputs frozen, no scored continuations queued before evaluator work. Accepted as authorization; lifecycle independently UNASSESSED.",
+          "no_candidate_edits_feedback_rescue_or_continuations": true,
+          "no_goal_engineering": true,
+          "no_delegates": true,
+          "access_policy": "Read only the exact brief, manifest, two pinned sources and four mapped artifacts; public RFC primary URLs; wrote only REVIEW.json and review.md in authorized review directory.",
+          "excluded": "No case cards/READY, supervisor/lifecycle/timing files, identity maps, other reviews/cases, host credentials, installations, downloaded executable code, repository changes, or unrelated filesystem scans.",
+          "parent_lifecycle_assessment": "OUT_OF_SCOPE",
+          "comparison_or_winner_inference": "NONE",
+          "economic_or_target_metric_inference": "NONE"
+        },
+        "remaining_uncertainty": [
+          "X lacks any mapped complete final; six final obligations and unknown absent claims remain UNASSESSED.",
+          "Actual origin response selection, Cache-Control/Vary correctness, validator consistency and policy changes are not inferable from RFCs.",
+          "No intended cache implementation or account-switching design exists in the allowed artifacts; runtime storage/reuse/cleanup behavior is UNASSESSED.",
+          "Support for must-understand, advisory request directives, recognized extensions and out-of-band contracts is unknown; claims must preserve those conditions.",
+          "Candidate execution, authorship/draft history and lifecycle are unverified/out of scope; all usage/economic quantities unknown null."
+        ]
+      },
+      "quality_artifacts": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/REVIEW_INPUT_MAP.json",
+          "sha256": "7460e5d30efcbb10b7c891fed2fd08b9901d4e74f99cc77ecd3f61973439256d",
+          "bytes": 2752
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/dispatch-raw.json",
+          "sha256": "b784136eb713413b6c20a56afb51ffd556ac078b012d1f933c41f1e5ff2f7939",
+          "bytes": 2138
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/PROMPT.txt",
+          "sha256": "22e7ff4029e103a95a1b593e1b6248a6dd08af116eee64bc813711bba1b62c42",
+          "bytes": 5328
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/TASK_TERMINAL.json",
+          "sha256": "85e4b3ab9aeb4134090d954ab2663fb6281cc13a669bc62859d36b3a9096694c",
+          "bytes": 6358
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/review.md",
+          "sha256": "276fb8a049b53159ccabc9e2c04d4b233a9847b9855d2b6ebe9cdb4bebdbb637",
+          "bytes": 20974
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/DISPATCH_RECEIPT.json",
+          "sha256": "b784136eb713413b6c20a56afb51ffd556ac078b012d1f933c41f1e5ff2f7939",
+          "bytes": 2138
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/REQUEST.json",
+          "sha256": "35f235034d6da0bbccc48b5925f9b99dc4cca2445cc61ee0ac85767cdc07c908",
+          "bytes": 5957
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+          "sha256": "6804cb9c7e89a08cebb43d93bd80b8fd131915d234655a3c3412f754a888c550",
+          "bytes": 41
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/REVIEW.json",
+          "sha256": "8d44f5be43fe63d5b8c2481c13f5374ed10cd2245d2393e7df487fc5ab085dae",
+          "bytes": 39097
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/frozen/Y/final.md",
+          "sha256": "4525479502b381cd8b93b1bf56a3e44158bfc4bb822730d43b7ede6714902b1c",
+          "bytes": 8129
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/frozen/Y/intermediate-1.md",
+          "sha256": "4525479502b381cd8b93b1bf56a3e44158bfc4bb822730d43b7ede6714902b1c",
+          "bytes": 8129
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/frozen/X/intermediate-1.md",
+          "sha256": "5aaebc18d27f2f13bd22d6c99bf040d2c4c635b0917c9191b828268514c165e8",
+          "bytes": 6845
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/frozen/X/intermediate-2.md",
+          "sha256": "535f45c86b3261c235c06a645993c6f45c2204d1693646210c00dca504466d1e",
+          "bytes": 7254
+        }
+      ],
+      "time_failure_inclusive": {
+        "control": {
+          "dispatch_to_task_terminal_seconds": 947.585,
+          "aggregate_occupied_seconds": 862.971,
+          "actual_run_count": 3,
+          "native_final_completion": "ABSENT control final/nativecomplete",
+          "billing": null,
+          "generated_tokens": null,
+          "failure_inclusive": true,
+          "native_totals_not_summed": true
+        },
+        "treatment": {
+          "dispatch_to_task_terminal_seconds": 581.169,
+          "aggregate_occupied_seconds": 580.65,
+          "actual_run_count": 1,
+          "native_final_completion": "actualcomplete frozen",
+          "billing": null,
+          "generated_tokens": null,
+          "failure_inclusive": true,
+          "native_totals_not_summed": true
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_totals_not_summed": true
+      },
+      "provenance": [
+        {
+          "kind": "out_of_map_write",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/outputs/treatment/final.md",
+          "sha256": "4525479502b381cd8b93b1bf56a3e44158bfc4bb822730d43b7ede6714902b1c",
+          "matches_declared_final": true,
+          "disposition": "PROVENANCE_HOLD: unauthorized extra cases-output export; original retained and jobsfinal authoritative",
+          "science_grade_inference": null
+        },
+        {
+          "kind": "supervisor_prompt_path_conflict",
+          "detected_at": "2026-10-07T20:04:13.428240+00:00",
+          "fact": "Original v2 prompt copied frozen output_scope.final_path_by_arm cases/outputs paths while exactmap/jobs-only prohibition overrides them; actual unauthorized exports cannot be attributed solely to candidate compliance. Both original inputs/prompts preserved.",
+          "disposition": "PROVENANCE/CARRIER_HOLD and mixedinstruction limitation retained separately; no scientificgrade change or retroactive prompt rewrite"
+        }
+      ],
+      "qualified_method_comparison": false,
+      "science_paired_assessment": false,
+      "control_final_obligations_unassessed": 6,
+      "treatment_final_obligations_assessed": 6,
+      "run_times_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+        "sha256": "d8cb815b090cd096a66a91c46cbbf288f6879cd5f05f9812b915a25ba93df102"
+      }
+    }
+  ],
+  "pending": [
+    "D-M02-A",
+    "D-M02-B",
+    "D-M03-B"
+  ],
+  "no_complete_cohort_claim": true,
+  "count_definitions": {
+    "assessable_comparisons": "Qualified method comparisons; old count remains0, distinct from independently assessed scientific pairs",
+    "science_paired_assessments_including_diagnostic": "Both arms independently source-assessed, includes1 failed-terminal diagnostic pair and2 prospective repaired scientific assessments; no method/lifecycle credit implied",
+    "qualified_method_comparisons": "All method/native/provenance/time eligibility requirements satisfied; currently0"
+  },
+  "pending_cases": [
+    "D-M02-B"
+  ]
+}

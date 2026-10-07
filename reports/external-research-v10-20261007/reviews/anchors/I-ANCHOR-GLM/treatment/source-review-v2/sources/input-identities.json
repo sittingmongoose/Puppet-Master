@@ -1,0 +1,61 @@
+{
+  "recorded_at_utc": "2026-10-07T19:51:11.791688+00:00",
+  "authorized_scientific_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/INPUTS.md",
+      "sha256": "257161182f148ba43f173c9a98f01f0f00a656f6e50c6dff64502a89b061e05d",
+      "bytes": 1505
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md",
+      "sha256": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+      "bytes": 1259
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md",
+      "sha256": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a",
+      "bytes": 454
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/final.md",
+      "sha256": "17b5d64dd0baf92ae7ff8d8ddecb30e0b5ea6fbb2498fe8afece7ec769386c49",
+      "bytes": 7775
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/critique.md",
+      "sha256": "b88818d1b2bea7b67ca350993eccc10db8d6d2cb80d7648b7b4e06c706112b6b",
+      "bytes": 9473
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/sources/SOURCES.md",
+      "sha256": "c4dfa834c7b02b1178e4e81aa09fc040553aaa0a5d4339a4c8c357d358adb1ed",
+      "bytes": 4139
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/index.json",
+      "sha256": "70929aa0cfd3598a3e638402a9373d04a26f98b58790c48e20c468bd8e3a2dac",
+      "bytes": 8823
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/retrieval-stamps.json",
+      "sha256": "1f811176517e4bb69bc266fde9f42643b4cf20f67c487af00c6502081a4c23dc",
+      "bytes": 3557
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/executed-checks.json",
+      "sha256": "4196a75bd1b64523db3119b39615f6e16a89393079c23ba6aea4c7347bf0dd80",
+      "bytes": 1940
+    }
+  ],
+  "actual_instructions_read": [
+    {
+      "path": "/home/sittingmongoose/.codex/AGENTS.md",
+      "sha256": "2f99262d51ee86f0f956db7846f40bdeeae7f6d119df23e515b99e5a8ee495f9"
+    },
+    {
+      "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+      "sha256": "d827d8ff1e53bd4c49d3f6814c9937aabe8aea0580f2c31d3b3ee089244c01b8"
+    }
+  ],
+  "scope_rule": "Explicit input restriction supersedes repository default Plans read. No canon, ledger, shard, git, or landing work authorized or performed. No nested delegation. T3 mailbox/extra-worker sections skipped as directed. No experiment-path AGENTS files existed among explicitly tested ancestor paths."
+}

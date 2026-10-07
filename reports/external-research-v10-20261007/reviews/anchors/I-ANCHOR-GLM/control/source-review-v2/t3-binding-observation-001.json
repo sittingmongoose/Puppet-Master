@@ -1,0 +1,28 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-source-review-v2\",\"modelSelection\":{\"instanceId\":\"codex_gmail\",\"model\":\"gpt-6.1-sol\",\"options\":[{\"id\":\"reasoningEffort\",\"value\":\"xhigh\"},{\"id\":\"serviceTier\",\"value\":\"priority\"}]},\"runtimeMode\":\"full-access\",\"interactionMode\":\"default\"}"
+    }
+  ],
+  "structuredContent": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-source-review-v2",
+    "modelSelection": {
+      "instanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "xhigh"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "isError": false
+}

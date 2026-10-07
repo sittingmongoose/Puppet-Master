@@ -1,0 +1,80 @@
+L754: }
+L755: },
+L756: "version": 1
+L757: }
+L758: }
+L759: 4.5. File formats: targets.json and delegated target roles
+L760: The "signed" portion of targets.json is as follows:
+L761: {
+L762: "_type" : "targets",
+L763: "spec_version" : SPEC_VERSION,
+L764: "version" : VERSION,
+L765: "expires" : EXPIRES,
+L766: "targets" : TARGETS,
+L767: ("delegations" : DELEGATIONS)
+L768: }
+L769: SPEC_VERSION, VERSION and EXPIRES are the same
+L770: as is described for the root.json file.
+L771: TARGETS is an object whose format is the following:
+L772: {
+L773: TARGETPATH : {
+L774: "length" : LENGTH,
+L775: "hashes" : HASHES,
+L776: ("custom" : CUSTOM) }
+L777: , ...
+L778: }
+L779: TARGETS
+L780: Each key of the TARGETS object is a TARGETPATH.
+L781: TARGETPATH
+L782: A string giving the path to a file that is relative to a mirror’s base URL
+L783: of targets. To avoid surprising behavior when resolving paths, it is
+L784: RECOMMENDED that a TARGETPATH uses the forward slash (/) as directory
+L785: separator and does not start with a directory separator. The recommendation
+L786: for TARGETPATH aligns with the "path-relative-URL string"
+L787: definition in the
+L788: WHATWG URL specification.
+L789: It is allowed to have a TARGETS object with no
+L790: TARGETPATH elements. This can be used to indicate that no target
+L791: files are available.
+L792: LENGTH
+L793: An integer length in bytes of the target file at TARGETPATH.
+L1028: 5. Detailed client workflow
+L1029: Note: If a step in the following workflow does not succeed (e.g., the update
+L1030: is aborted because a new metadata file was not signed), the client should
+L1031: still be able to update again in the future. Errors raised during the update
+L1032: process should not leave clients in an unrecoverable state.
+L1033: 5.1. Record fixed update start time
+L1034: Record the time at which the update began as the fixed update start time.
+L1035: Time is fixed at the beginning of the update workflow to allow
+L1036: an application using TUF to effectively pause time, in order to ensure that
+L1037: metadata which has a valid expiration time at the beginning of an update
+L1038: does not fail an expiration check later in the update workflow.
+L1039: 5.2. Load trusted root metadata
+L1040: Load the trusted root metadata file. We assume that a good,
+L1041: trusted copy of this file was shipped with the package manager or software
+L1042: updater using an out-of-band process. Note that the expiration of the
+L1043: trusted root metadata file does not matter, because we will attempt to update
+L1044: it in the next step.
+L1045: 5.3. Update the root role
+L1046: Since it may now be signed using entirely different keys, the client MUST
+L1047: somehow be able to establish a trusted line of continuity to the latest set
+L1048: of keys (see § 6.1 Key management and migration). To do so, the client MUST
+L1049: download intermediate root metadata files, until the latest available one is
+L1050: reached.
+L1051: Let N denote the version number of the trusted root metadata
+L1052: file.
+L1053: Try downloading version N+1 of the root metadata file, up to
+L1054: some W number of bytes (because the size is unknown). The value for W is set
+L1055: by the authors of the application using TUF. For example, W may be tens of
+L1056: kilobytes. The filename used to download the root metadata file is of the
+L1057: fixed form VERSION_NUMBER.FILENAME.EXT (e.g., 42.root.json). If this file is
+L1058: not available, or we have downloaded more than Y number of root metadata
+L1059: files (because the exact number is as yet unknown), then go to step 5.3.10.
+L1060: The value for Y is set by the authors of the application using TUF. For
+L1061: example, Y may be 2^10.
+L1062: Check for an arbitrary software attack. Version N+1 of the root
+L1063: metadata file MUST have been signed by: (1) a THRESHOLD of keys
+L1064: specified in the trusted root metadata file (version N), and (2) a
+L1065: THRESHOLD of keys specified in the new root metadata file being
+L1066: validated (version N+1). When computing the THRESHOLD each
+L1067: KEY MUST only contribute one SIGNATURE. That is, each

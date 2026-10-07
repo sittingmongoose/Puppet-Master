@@ -1,0 +1,53 @@
+{
+  "id": "P43-rename-description",
+  "requested_url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+  "retrieved_started_utc": "2026-10-07T19:49:29.273125+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+  "http_status": 200,
+  "response_bytes": 23571,
+  "response_sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:49:29 GMT",
+    "Last-Modified": "Mon, 05 Oct 2026 17:59:03 GMT",
+    "ETag": "\"5c13-65d1ba326e7c0\"",
+    "Content-Type": "text/html"
+  },
+  "response_text_lines": 289,
+  "normalization": "html",
+  "selection_patterns": [
+    "rename\\(\\) renames a file",
+    "On NFS filesystems",
+    "EXDEV",
+    "RENAME_EXCHANGE"
+  ],
+  "context_before": 5,
+  "context_after": 35,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      26,
+      65
+    ],
+    [
+      67,
+      114
+    ],
+    [
+      117,
+      156
+    ],
+    [
+      185,
+      224
+    ],
+    [
+      229,
+      268
+    ]
+  ],
+  "bounded_evidence_file": "P43-rename-description.txt",
+  "bounded_evidence_sha256": "31ce02303592d52dbf0d4ea0a56b9db0ec661981b35c19624be9ff5dc4dabb49",
+  "bounded_evidence_bytes": 10346,
+  "retrieved_finished_utc": "2026-10-07T19:49:29.765980+00:00"
+}

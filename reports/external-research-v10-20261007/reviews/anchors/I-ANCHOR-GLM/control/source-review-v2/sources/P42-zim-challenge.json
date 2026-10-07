@@ -1,0 +1,35 @@
+{
+  "id": "P42-zim-challenge",
+  "requested_url": "https://wiki.openzim.org/w/index.php?title=ZIM_file_format&action=raw",
+  "retrieved_started_utc": "2026-10-07T19:49:29.271922+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://wiki.openzim.org/w/index.php?title=ZIM_file_format&action=raw",
+  "http_status": 200,
+  "response_bytes": 7460,
+  "response_sha256": "860d2d80740be587229d6d24d6e6d918ff88835249ed481152e54b7d77b7fe7e",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:49:29 GMT",
+    "Content-Type": "text/html; charset=utf-8"
+  },
+  "response_text_lines": 12,
+  "normalization": "html",
+  "selection_patterns": [
+    "Anubis",
+    "not a bot"
+  ],
+  "context_before": 5,
+  "context_after": 35,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      1,
+      12
+    ]
+  ],
+  "bounded_evidence_file": "P42-zim-challenge.txt",
+  "bounded_evidence_sha256": "faead89c2d2f56264cb58e4759c5bf6f2771c725812843a2d2b9571c2b4f273e",
+  "bounded_evidence_bytes": 1601,
+  "retrieved_finished_utc": "2026-10-07T19:49:29.928183+00:00",
+  "content_status": "BOT_CHALLENGE_NOT_SOURCE",
+  "claim_verification_status": "unavailable original wiki content; HTTP 200 is not verification"
+}

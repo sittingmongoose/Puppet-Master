@@ -1,0 +1,71 @@
+{
+  "id": "P15-libzim-tree",
+  "requested_url": "https://api.github.com/repos/openzim/libzim/git/trees/9.3.0?recursive=1",
+  "retrieved_started_utc": "2026-10-07T19:42:46.933036+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://api.github.com/repos/openzim/libzim/git/trees/9.3.0?recursive=1",
+  "http_status": 200,
+  "response_bytes": 56970,
+  "response_sha256": "4c96a0c6764a217685ef79f807c6d4f30769197b67851dbf5b3db5c5778db1c5",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:42:47 GMT",
+    "Content-Type": "application/json; charset=utf-8",
+    "ETag": "W/\"9fa2252c238da99180ce80b8a30f884e56355c36631d1c96618d7daf50e3fe82\"",
+    "Last-Modified": "Mon, 05 Oct 2026 12:49:30 GMT"
+  },
+  "response_text_lines": 2021,
+  "normalization": "json",
+  "selection_patterns": [
+    "sha",
+    "path.*compound",
+    "path.*cluster",
+    "path.*fileheader",
+    "path.*zimfile",
+    "path.*archive"
+  ],
+  "context_before": 3,
+  "context_after": 12,
+  "max_hits_per_pattern": 20,
+  "selected_line_ranges": [
+    [
+      1,
+      160
+    ],
+    [
+      290,
+      304
+    ],
+    [
+      495,
+      509
+    ],
+    [
+      551,
+      573
+    ],
+    [
+      679,
+      701
+    ],
+    [
+      719,
+      741
+    ],
+    [
+      974,
+      1012
+    ],
+    [
+      1769,
+      1783
+    ],
+    [
+      1785,
+      1799
+    ]
+  ],
+  "bounded_evidence_file": "P15-libzim-tree.txt",
+  "bounded_evidence_sha256": "98ac9aafa27aafb67b471474b5d6bbba5854151eea6e886a6dfe3301177e14c1",
+  "bounded_evidence_bytes": 13649,
+  "retrieved_finished_utc": "2026-10-07T19:42:47.250101+00:00"
+}

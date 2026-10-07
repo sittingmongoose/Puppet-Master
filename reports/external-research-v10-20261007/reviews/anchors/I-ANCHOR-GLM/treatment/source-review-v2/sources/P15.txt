@@ -1,0 +1,20 @@
+25: created using sqlite3_prepare_v2() or sqlite3_prepare_v3(). It is no
+26: longer necessary to use sqlite3_prepare_v3() with SQLITE_PREPARE_NORMALIZE
+27: in order to use sqlite3_normalized_sql().
+28: Added the remove_diacritics=2 option to FTS3 and FTS5.
+29: Added the SQLITE_PREPARE_NO_VTAB option to sqlite3_prepare_v3().
+30: Use that option to prevent circular references to shadow tables from
+31: causing resource leaks.
+32: Enhancements to the sqlite3_deserialize() interface:
+33: Add the SQLITE_FCNTL_SIZE_LIMIT file-control for
+34: setting an upper bound on the size of the in-memory database created
+89: a table that uses an expression index.
+90: Ticket bb4bdb9f7f654b0bb9
+91: Hashes:
+92: SQLITE_SOURCE_ID: "2019-02-07 17:02:52 97744701c3bd414e6c9d7182639d8c2ce7cf124c4fce625071ae65658ac61713
+93: "
+94: SHA3-256 for sqlite3.c: ca011a10ee8515b33e5643444b98ee3d74dc45d3ac766c3700320def52bc6aba
+95: A complete list of SQLite releases
+96: in a single page and a chronology are both also available.
+97: A detailed history of every
+98: check-in is available at

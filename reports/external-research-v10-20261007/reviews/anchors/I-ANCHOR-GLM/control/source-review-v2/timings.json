@@ -1,0 +1,20 @@
+{
+  "schema": "review-carrier-v2-independent-timings",
+  "review_started_utc": "2026-10-07T19:36:21Z",
+  "evaluation_allowance_seconds": 1800,
+  "candidate_allowance_charged": false,
+  "billing": "unknown",
+  "provider_requested": "codex_gmail",
+  "model_runtime": "gpt-6.1-sol",
+  "reasoning_effort_runtime": "xhigh",
+  "service_tier_requested": "priority",
+  "service_tier_observed": null,
+  "usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "cached_input_tokens": null,
+    "reasoning_tokens": null,
+    "cost": null
+  },
+  "timing_source": "reviewer clock only; candidate timing/lifecycle inputs excluded"
+}

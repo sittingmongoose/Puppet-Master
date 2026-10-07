@@ -1,0 +1,130 @@
+33: 3.7. FTS5 Boolean Operators
+34: 4. FTS5 Table Creation and Initialization
+35: 4.1. The UNINDEXED column option
+36: 4.2. Prefix Indexes
+37: 4.3. Tokenizers
+38: 4.3.1. Unicode61 Tokenizer
+39: 4.3.2. Ascii Tokenizer
+40: 4.3.3. Porter Tokenizer
+41: 4.3.4. The Trigram Tokenizer
+42: 4.4. External Content and Contentless Tables
+413: CREATE VIRTUAL TABLE mail USING fts5(sender, title, body, tokenize = 'porter ascii');
+414: There are currently the following configuration options:
+415: The "tokenize" option, used to configure a custom tokenizer.
+416: The "prefix" option, used to add prefix indexes
+417: to an FTS5 table.
+418: The "content" option, used to make the FTS5 table an
+419: external content or contentless table.
+420: The "content_rowid" option, used to set the rowid field of an
+421: external content table.
+422: The "columnsize" option, used to configure
+432: For example, to avoid adding the contents of the "uuid" field to the FTS
+433: index:
+434: CREATE VIRTUAL TABLE customers USING fts5(name, addr, uuid UNINDEXED);
+435: 4.2. Prefix Indexes
+436: By default, FTS5 maintains a single index recording the location of each
+437: token instance within the document set. This means that querying for complete
+438: tokens is fast, as it requires a single lookup, but querying for a prefix
+439: token can be slow, as it requires a range scan. For example, to query for
+440: the prefix token "abc*" requires a range scan of all tokens greater than
+441: or equal to "abc" and less than "abd".
+442: A prefix index is a separate index that records the location of all
+443: instances of prefix tokens of a certain length in characters used to speed
+444: up queries for prefix tokens. For example, optimizing a query for prefix
+445: token "abc*" requires a prefix index of three-character prefixes.
+446: To add prefix indexes to an FTS5 table, the "prefix" option is set to
+447: either a single positive integer or a text value containing a white-space
+448: separated list of one or more positive integer values. A prefix index is
+501: as a list of alternating option names and values. Unicode61 supports the
+502: following options:
+503: Option Usage
+504: remove_diacritics
+505: This option should be set to "0", "1" or "2". The default value is "1".
+506: If it is set to "1" or "2", then diacritics are removed from Latin script
+507: characters as described above. However, if it is set to "1", then diacritics
+508: are not removed in the fairly uncommon case where a single unicode codepoint
+509: is used to represent a character with more that one diacritic. For example,
+510: diacritics are not removed from codepoint 0x1ED9 ("LATIN SMALL LETTER O WITH
+511: CIRCUMFLEX AND DOT BELOW"). This is technically a bug, but cannot be fixed
+512: without creating backwards compatibility problems. If this option is set to
+513: "2", then diacritics are correctly removed from all Latin characters.
+514: categories
+515: This option may be used to modify the set of Unicode general categories
+516: that are considered to correspond to token characters. The argument must
+533: -- script characters, and that considers hyphens and underscore characters
+534: -- to be part of tokens.
+535: CREATE VIRTUAL TABLE ft USING fts5(a, b,
+536: tokenize = "unicode61 remove_diacritics 0 tokenchars '-_'"
+537: );
+538: or:
+539: -- Create an FTS5 table that, as well as the default token character classes,
+540: -- considers characters in class "Mn" to be token characters.
+541: CREATE VIRTUAL TABLE ft USING fts5(a, b,
+542: tokenize = "unicode61 categories 'L* N* Co Mn'"
+550: as part of the separators option, they are ignored.
+551: Case-folding is only performed for ASCII characters. So while "A" and
+552: "a" are considered to be equivalent, "Ã" and "ã" are distinct.
+553: The remove_diacritics option is not supported.
+554: For example:
+555: -- Create an FTS5 table that uses the ascii tokenizer, but does not
+556: -- consider numeric characters to be part of tokens.
+557: CREATE VIRTUAL TABLE ft USING fts5(a, b,
+558: tokenize = "ascii separators '0123456789'"
+559: );
+575: CREATE VIRTUAL TABLE ft USING fts5(x, tokenize = 'porter unicode61');
+576: -- A porter tokenizer used to stem the output of the unicode61 tokenizer,
+577: -- with diacritics removed before stemming.
+578: CREATE VIRTUAL TABLE ft USING fts5(x, tokenize = 'porter unicode61 remove_diacritics 1');
+579: 4.3.4. The Trigram Tokenizer
+580: The trigram tokenizer extends FTS5 to support substring
+581: matching in general, instead of the usual token matching. When using the
+582: trigram tokenizer, a query or phrase token may match any sequence of characters
+583: within a row, not just a complete token. For example:
+584: CREATE VIRTUAL TABLE tri USING fts5(a, tokenize="trigram");
+607: If an FTS5 trigram tokenizer is created with the case_sensitive option set to 1,
+608: it may only index GLOB queries, not LIKE.
+609: Notes:
+610: Substrings consisting of fewer than 3 unicode characters do not match any
+611: rows when used with a full-text query. If a LIKE or GLOB pattern does not
+612: contain at least one sequence of non-wildcard unicode characters, FTS5
+613: falls back to a linear scan of the entire table.
+614: If the FTS5 table is created with the detail=none or detail=column option
+615: specified, full-text queries may not contain any tokens longer than 3
+616: unicode characters. LIKE and GLOB pattern matching may be slightly slower,
+617: but still works. If the index is to be used only for LIKE and/or GLOB
+618: pattern matching, these options are worth experimenting with to reduce
+619: the index size.
+620: The index cannot be used to optimize LIKE patterns if the LIKE operator
+621: has an ESCAPE clause.
+622: 4.4. External Content and Contentless Tables
+623: Normally, when a row is inserted into an FTS5 table, in addition to building
+982: 5. Auxiliary Functions
+983: Auxiliary functions are similar to SQL scalar functions,
+984: except that they may only be used within full-text queries (those that use
+985: the MATCH operator, or LIKE/GLOB with the trigram tokenizer) on an FTS5 table.
+986: Their results are calculated based not only on the arguments passed to them,
+987: but also on the current match and matched row. For example, an auxiliary
+988: function may return a numeric value indicating the accuracy of the match (see
+989: the bm25() function), or a fragment of text from the matched row
+990: that contains one or more instances of the search terms (see the snippet() function).
+991: To invoke an auxiliary function, the name of the FTS5 table should be
+1160: function directly within the query is only significant when sorting by the
+1161: returned value. In this case, using "rank" is faster than using bm25().
+1162: -- The following queries are logically equivalent. But the second may
+1163: -- be faster, particularly if the caller abandons the query before
+1164: -- all rows have been returned (or if the queries were modified to
+1165: -- include LIMIT clauses).
+1166: SELECT * FROM ft WHERE ft MATCH ? ORDER BY bm25(ft);
+1167: SELECT * FROM ft WHERE ft MATCH ? ORDER BY rank;
+1168: Instead of using bm25() with no trailing arguments, the specific auxiliary
+1169: function mapped to the rank column may be configured either on a per-query
+2742: "columnsize=0" option is equivalent.
+2743: The notindexed= option is not available. Adding UNINDEXED
+2744: to the column definition is equivalent.
+2745: The ICU tokenizer is not available.
+2746: The compress=, uncompress= and languageid= options are not available.
+2747: There is as of yet no equivalent for their functionality.
+2748: -- FTS3/4 statement
+2749: CREATE VIRTUAL TABLE ft USING fts4(
+2750: linkid INTEGER,
+2751: header CHAR(20),

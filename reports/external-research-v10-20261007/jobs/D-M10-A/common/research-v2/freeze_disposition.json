@@ -1,0 +1,61 @@
+{
+  "case": "D-M10-A",
+  "version": "passivecarrier-v2-originalbudget",
+  "disposition": "HELD_FAILED_COMMONSEED_STAGE_OVERRUN",
+  "scientific_classification": "INFRASTRUCTURE_SEED_FAILURE_NOT_METHOD_COMPARISON",
+  "is_method_comparison": false,
+  "requestedAt": "2026-10-07T20:06:20.226Z",
+  "startedAt": "2026-10-07T20:06:20.813Z",
+  "completedAt": "2026-10-07T20:10:34.149Z",
+  "dispatch_to_delivery_seconds": 253.923,
+  "stage_ceiling_seconds": 180,
+  "overrun_seconds": 73.923,
+  "arms": {
+    "treatment": "NOT_ADMITTED_FAILED_COMMONSEED",
+    "control": "NOT_ADMITTED_FAILED_COMMONSEED"
+  },
+  "evidence_withholding": "INTACT: no critic/reconciler/finalizer launched, no evidencephase receivedproposal",
+  "source_quality": "UNASSESSED",
+  "native_status": "complete",
+  "native_identity": "01a117f9-5c12-7700-bddb-960ea0c35cfa",
+  "native_goal_raw": {
+    "objective_sha256": "877cc943a183bde05d7a71dff69f997464a7e06e907459633e2ed7f6dbebed4f",
+    "status": "complete",
+    "tokensUsed": 55175,
+    "tokenBudget": null,
+    "timeUsedSeconds": 207
+  },
+  "raw_api_bodies": null,
+  "generated_tokens": null,
+  "billing": null,
+  "quiet": true,
+  "settled": true,
+  "clock_guard": {
+    "schema": "ER10-readonly-clock-guard-v1",
+    "observed_at": "2026-10-07T20:12:32.965109+00:00",
+    "original_deadline": "2026-10-07T20:09:20.226000+00:00",
+    "seconds_remaining": -192.739109,
+    "deadline_elapsed": true,
+    "prior_notice_at": null,
+    "prior_notice_was_early": null,
+    "actual_notice_grace_end": null,
+    "grace_elapsed": null,
+    "policy": "lifecycle_notice",
+    "decision": "LIFECYCLE_DELIVERY_NOTICE_IF_LIVE",
+    "limitation": "Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline."
+  },
+  "timings": "candidatefilemissing; hostactualT3timing frozen",
+  "files": {
+    "draft.md": {
+      "exists": true,
+      "sha256": "d6e93293ff56bff71519cdc451d9c7f42f984b649a4b7d8b9763d7e405cea5f7",
+      "bytes": 4629
+    },
+    "timings.json": {
+      "exists": false,
+      "sha256": null,
+      "bytes": 0
+    }
+  },
+  "frozen_at": "2026-10-07T20:12:33.755994+00:00"
+}

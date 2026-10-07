@@ -1,0 +1,33 @@
+{
+  "id": "P01-zim",
+  "requested_url": "https://wiki.openzim.org/wiki/ZIM_file_format",
+  "resolved_url": "https://wiki.openzim.org/wiki/ZIM_file_format",
+  "retrieved_started_utc": "2026-10-07T19:40:09.626742+00:00",
+  "retrieved_finished_utc": "2026-10-07T19:40:10.315561+00:00",
+  "http_status": 200,
+  "response_sha256": "3644da85bddf154716c73d4ebeb4abed6e20876cfacc3adac6e9129a916e9c4e",
+  "response_bytes": 7451,
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:40:10 GMT",
+    "Content-Type": "text/html; charset=utf-8"
+  },
+  "bounded_evidence_file": "P01-zim.txt",
+  "bounded_evidence_sha256": "faead89c2d2f56264cb58e4759c5bf6f2771c725812843a2d2b9571c2b4f273e",
+  "selected_normalized_text_line_ranges": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "retrieval_identity": "direct HTTPS GET; full response hashed; only selected text retained; no source execution",
+  "content_status": "BOT_CHALLENGE_NOT_SOURCE",
+  "claim_verification_status": "unavailable original wiki content; HTTP 200 is not verification"
+}

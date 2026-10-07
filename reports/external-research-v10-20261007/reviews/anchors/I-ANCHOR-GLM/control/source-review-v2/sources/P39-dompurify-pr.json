@@ -1,0 +1,42 @@
+{
+  "id": "P39-dompurify-pr",
+  "requested_url": "https://api.github.com/repos/cure53/DOMPurify/pulls/1636",
+  "retrieved_started_utc": "2026-10-07T19:47:46.446861+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://api.github.com/repos/cure53/DOMPurify/pulls/1636",
+  "http_status": 200,
+  "response_bytes": 16835,
+  "response_sha256": "20a48e717125b3bc98903f633a50d10165b4f5c1fbd4180b53b793fa1f4b0204",
+  "response_headers": {
+    "Content-Type": "application/json; charset=utf-8",
+    "Date": "Wed, 07 Oct 2026 19:47:46 GMT",
+    "ETag": "\"6b457752a44ecabdec2482a7082dd77116d26242bf735283d6db143a9eb63f3d\"",
+    "Last-Modified": "Wed, 23 Sep 2026 15:18:56 GMT"
+  },
+  "response_text_lines": 407,
+  "normalization": "json",
+  "selection_patterns": [
+    "html_url",
+    "title",
+    "merged",
+    "body",
+    "merge_commit_sha"
+  ],
+  "context_before": 2,
+  "context_after": 75,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      3,
+      141
+    ],
+    [
+      373,
+      407
+    ]
+  ],
+  "bounded_evidence_file": "P39-dompurify-pr.txt",
+  "bounded_evidence_sha256": "853da8de1948cb8c2749456aa019d619e2f12c04f891913b0ec4a05e8bb4f946",
+  "bounded_evidence_bytes": 8423,
+  "retrieved_finished_utc": "2026-10-07T19:47:46.721405+00:00"
+}

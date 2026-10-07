@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-07T19:35:47.596005+00:00",
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/pair-freeze.json",
+  "config": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  },
+  "input_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/final.md": "17b5d64dd0baf92ae7ff8d8ddecb30e0b5ea6fbb2498fe8afece7ec769386c49",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/sources/SOURCES.md": "c4dfa834c7b02b1178e4e81aa09fc040553aaa0a5d4339a4c8c357d358adb1ed",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/critique.md": "b88818d1b2bea7b67ca350993eccc10db8d6d2cb80d7648b7b4e06c706112b6b",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/index.json": "70929aa0cfd3598a3e638402a9373d04a26f98b58790c48e20c468bd8e3a2dac",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/retrieval-stamps.json": "1f811176517e4bb69bc266fde9f42643b4cf20f67c487af00c6502081a4c23dc",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/executed-checks.json": "4196a75bd1b64523db3119b39615f6e16a89393079c23ba6aea4c7347bf0dd80"
+  },
+  "task_sha256": "c3d31b3345740198d05863b43fe5c39c3fee37c4a3063b93f3d59129b06d711d",
+  "evaluation_allowance_seconds": 1800
+}

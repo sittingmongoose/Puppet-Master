@@ -1,0 +1,55 @@
+L32: application to allow `onerror` via a hook is still a hardening bug, because the
+L33: application allowed `onerror`. Configuration patterns that are safe by default
+L34: but become dangerous when enabled are documented in the wiki's [threat-model](https://github.com/cure53/DOMPurify/wiki/Security-Goals-&-Threat-Model) and
+L35: [attack-class](https://github.com/cure53/DOMPurify/wiki/Attack-Classes-&-Bypass-History) pages.
+L36: 
+L37: ## Supply Chain Security
+L38: 
+L39: DOMPurify is downloaded by hundreds of millions of CI runs and dependent
+L40: applications every month. We treat its supply chain accordingly.
+L41: 
+L42: ### Release integrity
+L43: 
+L44: - Every release is built and signed from a tagged commit on the `3.x` branch.
+L45: - Source archives and bundled artifacts are Sigstore-signed; `.sigstore.json`
+L46:   bundles are attached to each GitHub release.
+L47: - SLSA build provenance is generated for the bundled artifacts and attached as
+L48:   an `.intoto.jsonl` file on the release page from 3.4.3 onward.
+L49: - Git tags are annotated and GPG-signed by the maintainer. Verify with
+L50:   `git tag -v <version>`.
+L51: 
+L52: ### Publish process
+L53: 
+L54: DOMPurify is published to npm **manually from the maintainer's laptop**, not
+L55: from a GitHub Actions workflow. This is a deliberate choice:
+L56: 
+L57: - An automated publish workflow requires a long-lived npm token stored as a
+L58:   repository secret. Any actor who can land a workflow change can reach that
+L59:   token. For a package at DOMPurify's reach, the blast radius of such a
+L60:   compromise is unacceptable.
+L61: - The npm provenance attestation produced by automated publish is valuable but
+L62:   not worth the expanded attack surface. Sigstore signing of the GitHub
+L63:   release artifacts and SLSA provenance attached to the release provide the
+L64:   audit trail that consumers need.
+L65: 
+L66: If you find an issue or pull request suggesting we automate npm publish or
+L67: adopt npm "trusted publishers," please be aware that this is a deliberate
+L68: policy decision and not an oversight. We will not adopt either.
+L69: 
+L70: ### Workflow hardening
+L71: 
+L72: - All third-party GitHub Actions are pinned by full commit SHA. Tag-based
+L73:   references (`@v4`, `@main`) are not used anywhere in this repository.
+L74: - Every workflow runs under `step-security/harden-runner` for egress
+L75:   monitoring.
+L76: - `actions/checkout` uses `persist-credentials: false` everywhere, so the
+L77:   Git credential is not left available for later steps.
+L78: - `npm ci` is invoked with `--ignore-scripts` in every CI workflow. Dependency
+L79:   install scripts are the exfiltration path used by Shai-Hulud-class attacks;
+L80:   blocking them removes the most common compromise vector.
+L81: - Workflow-level `permissions` defaults to `contents: read`, with elevated
+L82:   permissions scoped to the specific jobs that need them (signing,
+L83:   attestations).
+L84: - No npm publish token exists as a repository secret. The only sensitive
+L85:   secret in the repository is `SCORECARD_TOKEN`, a fine-grained, repo-scoped,
+L86:   time-bounded PAT used by the weekly OpenSSF Scorecard run.

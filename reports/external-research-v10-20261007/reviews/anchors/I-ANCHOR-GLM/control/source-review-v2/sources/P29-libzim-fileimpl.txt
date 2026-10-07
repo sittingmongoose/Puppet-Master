@@ -1,0 +1,386 @@
+L38: #include "config.h"
+L39: #include "log.h"
+L40: #include "md5.h"
+L41: #include "tools.h"
+L42: #include "fileheader.h"
+L43: 
+L44: log_define("zim.file.impl")
+L45: 
+L46: namespace zim
+L47: {
+L48: 
+L49: namespace
+L50: {
+L51: 
+L52: offset_t readOffset(const Reader& reader, entry_index_type idx)
+L53: {
+L54:   offset_t offset(reader.read_uint<offset_type>(offset_t(sizeof(offset_type)*idx)));
+L55:   return offset;
+L56: }
+L57: 
+L58: std::unique_ptr<const Reader>
+L59: sectionSubReader(const Reader& zimReader, const std::string& sectionName,
+L60:                  offset_t offset, zsize_t size)
+L61: {
+L62:   if (!zimReader.can_read(offset, size)) {
+L63:     throw ZimFileFormatError(sectionName + " outside (or not fully inside) ZIM file.");
+L64:   }
+L65: #ifdef ENABLE_USE_BUFFER_HEADER
+L66:   const auto buf = zimReader.get_buffer(offset, size);
+L67:   return std::unique_ptr<Reader>(new BufferReader(buf));
+L68: #else
+L161: };
+L162: 
+L163: } //unnamed namespace
+L164: 
+L165:   //////////////////////////////////////////////////////////////////////
+L166:   // FileImpl
+L167:   //
+L168:   FileImpl::FileImpl(const std::string& fname)
+L169:     : FileImpl(FileCompound::openSinglePieceOrSplitZimFile(fname))
+L170:   {}
+L171: 
+L172: #ifndef _WIN32
+L173:   FileImpl::FileImpl(int fd)
+L174:     : FileImpl(std::make_shared<FileCompound>(fd))
+L175:   {}
+L176: 
+L177:   FileImpl::FileImpl(FdInput fd)
+L178:     : FileImpl(std::make_shared<FileCompound>(fd))
+L179:   {}
+L180: 
+L181:   FileImpl::FileImpl(const std::vector<FdInput>& fds)
+L182:     : FileImpl(std::make_shared<FileCompound>(fds))
+L217:     // - Zim file is embedded at beginning of another file (and we try to open the file as a zim file)
+L218:     //   If open through a FdInput, size should be set in FdInput.
+L219:     if (header.hasChecksum() && (header.getChecksumPos() + 16) != size_type(zimReader->size())) {
+L220:       throw ZimFileFormatError("Zim file(s) is of bad size or corrupted.");
+L221:     }
+L222: 
+L223:     auto pathPtrReader = sectionSubReader(*zimReader,
+L224:                                           "Dirent pointer table",
+L225:                                           offset_t(header.getPathPtrPos()),
+L226:                                           zsize_t(sizeof(offset_type)*header.getArticleCount()));
+L227: 
+L228:     mp_pathDirentAccessor.reset(
+L229:         new DirectDirentAccessor(direntReader, std::move(pathPtrReader), entry_index_t(header.getArticleCount())));
+L230: 
+L231:     clusterOffsetReader = sectionSubReader(*zimReader,
+L232:                                            "Cluster pointer table",
+L233:                                            offset_t(header.getClusterPtrPos()),
+L234:                                            zsize_t(sizeof(offset_type)*header.getClusterCount()));
+L235: 
+L236:     quickCheckForCorruptFile();
+L237: 
+L238:     DirentLookup tmpDirentLookup(mp_pathDirentAccessor.get());
+L239: 
+L240:     if (header.useNewNamespaceScheme()) {
+L241:       const_cast<entry_index_t&>(m_startUserEntry) = tmpDirentLookup.getNamespaceRangeBegin('C');
+L242:       const_cast<entry_index_t&>(m_endUserEntry) = tmpDirentLookup.getNamespaceRangeEnd('C');
+L243:     } else {
+L244:       const_cast<entry_index_t&>(m_endUserEntry) = getCountArticles();
+L245:     }
+L246: 
+L247:     auto result = tmpDirentLookup.find('X', "listing/titleOrdered/v1");
+L248:     if (result.first) {
+L249:       mp_titleDirentAccessor = getTitleAccessorV1(result.second);
+L250:     }
+L251: 
+L252:     if (!mp_titleDirentAccessor) {
+L253:       if (!header.hasTitleListingV0()) {
+L254:         throw ZimFileFormatError("Zim file doesn't contain a title ordered index");
+L255:       }
+L256:       offset_t titleOffset(header.getTitleIdxPos());
+L257:       zsize_t  titleSize(sizeof(entry_index_type)*header.getArticleCount());
+L258:       mp_titleDirentAccessor = getTitleAccessor(titleOffset, titleSize, "Title index table");
+L259:       const_cast<bool&>(m_hasFrontArticlesIndex) = false;
+L260:     }
+L261:     m_byTitleDirentLookup.reset(new ByTitleDirentLookup(mp_titleDirentAccessor.get()));
+L267:   {
+L268:     auto dirent = mp_pathDirentAccessor->getDirent(idx);
+L269:     auto cluster = getCluster(dirent->getClusterNumber());
+L270:     if (cluster->isCompressed()) {
+L271:       // This is a ZimFileFormatError.
+L272:       // Let's be tolerent and skip the entry
+L273:       return nullptr;
+L274:     }
+L275:     auto titleOffset = getClusterOffset(dirent->getClusterNumber()) + cluster->getBlobOffset(dirent->getBlobNumber());
+L276:     auto titleSize = cluster->getBlobSize(dirent->getBlobNumber());
+L277:     return getTitleAccessor(titleOffset, titleSize, "Title index v1");
+L278:   }
+L279: 
+L280:   std::unique_ptr<IndirectDirentAccessor> FileImpl::getTitleAccessor(const offset_t offset, const zsize_t size, const std::string& name)
+L281:   {
+L282:       auto titleIndexReader = sectionSubReader(*zimReader,
+L283:                                                name,
+L284:                                                offset,
+L285:                                                size);
+L286: 
+L287:       return std::unique_ptr<IndirectDirentAccessor>(
+L288:         new IndirectDirentAccessor(mp_pathDirentAccessor, std::move(titleIndexReader), title_index_t(size.v/sizeof(entry_index_type))));
+L289:   }
+L290: 
+L291:   FileImpl::DirentLookup& FileImpl::direntLookup() const
+L292:   {
+L293:     // Not using std::call_once because it is buggy.
+L294:     // 1. It doesn't play well with musl libc - an exception thrown by the
+L317:     else
+L318:     {
+L319:       offset_t lastOffset = getClusterOffset(cluster_index_t(cluster_index_type(getCountClusters()) - 1));
+L320:       log_debug("last offset=" << lastOffset.v << " file size=" << getFilesize().v);
+L321:       if (lastOffset.v > getFilesize().v)
+L322:       {
+L323:         log_fatal("last offset (" << lastOffset << ") larger than file size (" << getFilesize() << ')');
+L324:         throw ZimFileFormatError("last cluster offset larger than file size; file corrupt");
+L325:       }
+L326:     }
+L327:   }
+L328: 
+L329:   offset_type FileImpl::getMimeListEndUpperLimit() const
+L330:   {
+L331:     offset_type result(header.getPathPtrPos());
+L332:     if (header.hasTitleListingV0()) {
+L333:       result = std::min(result, header.getTitleIdxPos());
+L334:     }
+L335:     result = std::min(result, header.getClusterPtrPos());
+L336:     if ( getCountArticles().v != 0 ) {
+L337:       // assuming that dirents are placed in the zim file in the same
+L338:       // order as the corresponding entries in the dirent pointer table
+L339:       result = std::min(result, mp_pathDirentAccessor->getOffset(entry_index_t(0)).v);
+L340: 
+L341:       // assuming that clusters are placed in the zim file in the same
+L342:       // order as the corresponding entries in the cluster pointer table
+L343:       result = std::min(result, readOffset(*clusterOffsetReader, 0).v);
+L344:     }
+L345:     return result;
+L346:   }
+L347: 
+L348:   void FileImpl::readMimeTypes()
+L349:   {
+L350:     // read mime types
+L351:     // libzim write zims files two ways :
+L352:     // - The old way by putting the pathPtrPos just after the mimetype.
+L353:     // - The new way by putting the pathPtrPos at the end of the zim files.
+L354:     //   In this case, the cluster data are always at 1024 bytes offset and we
+L467:   FileImpl::ClusterHandle FileImpl::readCluster(cluster_index_t idx)
+L468:   {
+L469:     offset_t clusterOffset(getClusterOffset(idx));
+L470:     log_debug("read cluster " << idx << " from offset " << clusterOffset);
+L471:     return Cluster::read(*zimReader, clusterOffset);
+L472:   }
+L473: 
+L474:   std::shared_ptr<const Cluster> FileImpl::getCluster(cluster_index_t idx)
+L475:   {
+L476:     if (idx >= getCountClusters())
+L477:       throw ZimFileFormatError("cluster index out of range");
+L478: 
+L479:     auto cluster = clusterCache.getOrPut(idx.v, [=](){ return readCluster(idx); });
+L480: #if ENV32BIT
+L481:     // There was a bug in the way we create the zim files using ZSTD compression.
+L482:     // We were using a too hight compression level and so a window of 128Mb.
+L483:     // So at decompression, zstd reserve a 128Mb buffer.
+L484:     // While this memory is not really used (thanks to lazy allocation of OS),
+L485:     // we are still consumming address space. On 32bits this start to be a rare
+L486:     // ressource when we reserved 128Mb at once.
+L487:     // So we drop the cluster from the cache to avoid future memory allocation error.
+L488:     if (cluster->getCompression() == Cluster::Compression::Zstd) {
+L489:       // ZSTD compression starts to be used on version 5.0 of zim format.
+L490:       // Recently after, we switch to 5.1 and itegrate the fix in zstd creation.
+L491:       // 5.0 is not a perfect way to detect faulty zim file (it will generate false
+L492:       // positives) but it should be enough.
+L493:       if (header.getMajorVersion() == 5 && header.getMinorVersion() == 0) {
+L494:         clusterCache.drop(idx.v);
+L495:       }
+L496:     }
+L497: #endif
+L498:     return cluster;
+L499:   }
+L500: 
+L501:   offset_t FileImpl::getClusterOffset(cluster_index_t idx) const
+L502:   {
+L503:     return readOffset(*clusterOffsetReader, idx.v);
+L504:   }
+L505: 
+L506:   offset_t FileImpl::getBlobOffset(cluster_index_t clusterIdx, blob_index_t blobIdx)
+L507:   {
+L508:     auto cluster = getCluster(clusterIdx);
+L509:     if (cluster->isCompressed())
+L510:       return offset_t(0);
+L511:     return getClusterOffset(clusterIdx) + cluster->getBlobOffset(blobIdx);
+L512:   }
+L513: 
+L514:   entry_index_t FileImpl::getNamespaceBeginOffset(char ch) const
+L515:   {
+L516:     log_trace("getNamespaceBeginOffset(" << ch << ')');
+L517:     return direntLookup().getNamespaceRangeBegin(ch);
+L518:   }
+L519: 
+L520:   entry_index_t FileImpl::getNamespaceEndOffset(char ch) const
+L521:   {
+L522:     log_trace("getNamespaceEndOffset(" << ch << ')');
+L523:     return direntLookup().getNamespaceRangeEnd(ch);
+L524:   }
+L525: 
+L526:   const std::string& FileImpl::getMimeType(uint16_t idx) const
+L527:   {
+L528:     if (idx >= mimeTypes.size())
+L529:       throw ZimFileFormatError(Formatter() << "unknown mime type code " << idx);
+L530: 
+L531:     return mimeTypes[idx];
+L532:   }
+L533: 
+L534:   std::string FileImpl::getChecksum()
+L535:   {
+L536:     if (!header.hasChecksum())
+L537:       return std::string();
+L538: 
+L539:     try {
+L540:       auto chksum = zimReader->get_buffer(offset_t(header.getChecksumPos()), zsize_t(16));
+L541: 
+L542:       char hexdigest[33];
+L543:       hexdigest[32] = '\0';
+L544:       static const char hex[] = "0123456789abcdef";
+L545:       char* p = hexdigest;
+L546:       for (int i = 0; i < 16; ++i)
+L547:       {
+L548:         uint8_t v = chksum.at(offset_t(i));
+L549:         *p++ = hex[v >> 4];
+L550:         *p++ = hex[v & 0xf];
+L551:       }
+L552:       log_debug("chksum=" << hexdigest);
+L553:       return hexdigest;
+L554:     } catch (...)
+L555:     {
+L556:       log_warn("error reading checksum");
+L557:       return std::string();
+L558:     }
+L559:   }
+L560: 
+L561:   bool FileImpl::verify()
+L562:   {
+L563:     if (!header.hasChecksum())
+L564:       return false;
+L565: 
+L566:     struct zim_MD5_CTX md5ctx;
+L567:     zim_MD5Init(&md5ctx);
+L568: 
+L569:     unsigned char ch[CHUNK_SIZE];
+L570:     offset_type checksumPos = header.getChecksumPos();
+L571:     offset_type toRead = checksumPos;
+L572: 
+L573:     for(auto part = zimFile->begin();
+L574:         part != zimFile->end();
+L575:         part++) {
+L576:       std::ifstream stream(part->second->filename(), std::ios_base::in|std::ios_base::binary);
+L577: 
+L578:       while(toRead>=CHUNK_SIZE && stream.read(reinterpret_cast<char*>(ch),CHUNK_SIZE).good()) {
+L579:         zim_MD5Update(&md5ctx, ch, CHUNK_SIZE);
+L580:         toRead-=CHUNK_SIZE;
+L581:       }
+L582: 
+L583:       // Previous read was good, so we have exited the previous `while` because
+L584:       // `toRead<CHUNK_SIZE`. Let's try to read `toRead` chars and process them later.
+L585:       // Else, the previous `while` exited because we didn't succeed to read
+L586:       // `CHUNK_SIZE`, and we still have some data to process before changing part.
+L587:       // It reads the remaining amount of part when we reach the end of the file
+L588:       if(stream.good()){
+L589:         stream.read(reinterpret_cast<char*>(ch),toRead);
+L590:       }
+L591: 
+L592:       // It updates the checksum with the remaining amount of data when we
+L593:       // reach the end of the file or part
+L594:       zim_MD5Update(&md5ctx, ch, stream.gcount());
+L595:       toRead-=stream.gcount();
+L596: 
+L597:       if (stream.bad()) {
+L598:         perror("error while reading file");
+L599:         return false;
+L600:       }
+L601:       if (!toRead) {
+L602:         break;
+L603:       }
+L604:     }
+L605: 
+L606:     if (toRead) {
+L607:       return false;
+L608:     }
+L609: 
+L610:     unsigned char chksumCalc[16];
+L611:     auto chksumFile = zimReader->get_buffer(offset_t(header.getChecksumPos()), zsize_t(16));
+L612: 
+L613:     zim_MD5Final(chksumCalc, &md5ctx);
+L614:     if (std::memcmp(chksumFile.data(), chksumCalc, 16) != 0)
+L615:     {
+L616:       return false;
+L617:     }
+L618:     return true;
+L619:   }
+L620: 
+L621:   time_t FileImpl::getMTime() const {
+L622:     return zimFile->getMTime();
+L623:   }
+L624: 
+L625:   zim::zsize_t FileImpl::getFilesize() const {
+L626:     return zimReader->size();
+L627:   }
+L628: 
+L629:   bool FileImpl::is_multiPart() const {
+L630:     return zimFile->is_multiPart();
+L631:   }
+L632: 
+L633:   bool FileImpl::checkIntegrity(IntegrityCheck checkType) {
+L634:     switch(checkType) {
+L635:       case IntegrityCheck::CHECKSUM: return FileImpl::checkChecksum();
+L636:       case IntegrityCheck::DIRENT_PTRS: return FileImpl::checkDirentPtrs();
+L637:       case IntegrityCheck::DIRENT_ORDER: return FileImpl::checkDirentOrder();
+L638:       case IntegrityCheck::TITLE_INDEX: return FileImpl::checkTitleIndex();
+L639:       case IntegrityCheck::CLUSTER_PTRS: return FileImpl::checkClusterPtrs();
+L640:       case IntegrityCheck::CLUSTERS_OFFSETS: return FileImpl::checkClusters();
+L641:       case IntegrityCheck::DIRENT_MIMETYPES: return FileImpl::checkDirentMimeTypes();
+L642:       case IntegrityCheck::COUNT: ASSERT("shouldn't have reached here", ==, "");
+L643:     }
+L644:     return false;
+L645:   }
+L646: 
+L647:   bool FileImpl::checkChecksum() {
+L648:     if ( ! verify() ) {
+L649:         std::cerr << "Checksum doesn't match" << std::endl;
+L650:         return false;
+L651:     }
+L652:     return true;
+L653:   }
+L654: 
+L655:   bool FileImpl::checkDirentPtrs() {
+L656:     const entry_index_type articleCount = getCountArticles().v;
+L657:     const offset_t validDirentRangeStart(80); // XXX: really???
+L658:     const offset_t validDirentRangeEnd = header.hasChecksum()
+L659:                                        ? offset_t(header.getChecksumPos())
+L660:                                        : offset_t(zimReader->size().v);
+L661:     const zsize_t direntMinSize(11);
+L662:     for ( entry_index_type i = 0; i < articleCount; ++i )
+L663:     {
+L664:       const auto offset = mp_pathDirentAccessor->getOffset(entry_index_t(i));
+L665:       if ( offset < validDirentRangeStart ||
+L666:            offset + direntMinSize > validDirentRangeEnd ) {
+L791: 
+L792: 
+L793:   size_t FileImpl::getClusterCacheMaxSize() const {
+L794:     return clusterCache.getMaxSize();
+L795:   }
+L796:   size_t FileImpl::getClusterCacheCurrentSize() const {
+L797:     return clusterCache.getCurrentSize();
+L798:   }
+L799:   void FileImpl::setClusterCacheMaxSize(size_t nbClusters) {
+L800:     clusterCache.setMaxSize(nbClusters);
+L801:   }
+L802: 
+L803:   size_t FileImpl::getDirentCacheMaxSize() const {
+L804:     return mp_pathDirentAccessor->getMaxCacheSize();
+L805:   }
+L806:   size_t FileImpl::getDirentCacheCurrentSize() const {
+L807:     return mp_pathDirentAccessor->getCurrentCacheSize();
+L808:   }
+L809:   void FileImpl::setDirentCacheMaxSize(size_t nbDirents) {
+L810:     mp_pathDirentAccessor->setMaxCacheSize(nbDirents);
+L811:   }
+L812: 

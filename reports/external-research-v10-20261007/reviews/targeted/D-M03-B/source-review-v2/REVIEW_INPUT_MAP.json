@@ -1,0 +1,71 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "projdoc",
+      "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+      "version_or_capture": "pyproj 3.6.1",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources/projdoc.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "projcode",
+      "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+      "version_or_capture": "pyproj 3.6.1; underlying PROJ 9.3.0 assumed by brief, no execution implied",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources/projcode.py",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "candidates": [
+    {
+      "label": "X",
+      "final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/final.md",
+        "sha256": "c6a0a9bb5bdb2ddc2bbc264199c1256b87d22349d35ebfcdbd5657858a469e0f"
+      },
+      "method_required_intermediates": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/intermediate-1.md",
+          "sha256": "efbc663b19492bec983184b5c09e619d771458760bd01d9852b5b2d888a9451a"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/intermediate-2.md",
+          "sha256": "192e2574880aaa665f52740ee2b96435be590d9111ba1efc9cf6d1699f4438ec"
+        }
+      ],
+      "artifact_scope_limit": null
+    },
+    {
+      "label": "Y",
+      "final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/final.md",
+        "sha256": "cdf6c9e9b93a950e7f09fa481937279d3f7f014257013be88988029bed49d1a6"
+      },
+      "method_required_intermediates": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-1.md",
+          "sha256": "d7d434be06608c199766a0a7943e4dc6a506d31fb4c96d231a1ad8254a45198f"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-2.md",
+          "sha256": "5493bc03b12527a8c2e2d42789924235d88779183a2d433b2cc03b50d5cefc7a"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-3.md",
+          "sha256": "154d2c4198e0555628dbc59fc283cabccd47c9799598f2fadc4c6fb47459bb6e"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-4.md",
+          "sha256": "ceca68c3428c61e6c4036f59aa4a4fc3dc1473e5f688d1d60fefa0a9ad16b142"
+        }
+      ],
+      "artifact_scope_limit": null
+    }
+  ],
+  "writable_review_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2"
+}

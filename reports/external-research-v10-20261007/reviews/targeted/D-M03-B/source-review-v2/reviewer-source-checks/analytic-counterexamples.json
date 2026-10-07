@@ -1,0 +1,150 @@
+{
+  "check_id": "analytic-counterexamples",
+  "started_utc": "2026-10-07T20:02:48.809858+00:00",
+  "completed_utc": "2026-10-07T20:02:48.809973+00:00",
+  "method": "Reviewer-authored Python standard-library arithmetic only. No pyproj/PROJ code imported or executed, no candidate code executed. Interpretation premises come from pinned API/SQL/Cython source; mathematical formula from PROJ 9.3.0 webmerc/merc and fwd scaling.",
+  "limitation": "Analytic calculation and API contract counterexamples, not an executed pyproj 3.6.1 / PROJ 9.3.0 witness; does not certify runtime grids, error strings or environment.",
+  "axis_cases": [
+    {
+      "always_xy": true,
+      "input_order": "lon_lat",
+      "interpreted_lon_lat_deg": [
+        2.0,
+        49.0
+      ],
+      "derived_xy_m": [
+        222638.98158654713,
+        6274861.394006575
+      ],
+      "matches_reference_location": true
+    },
+    {
+      "always_xy": true,
+      "input_order": "lat_lon",
+      "interpreted_lon_lat_deg": [
+        49.0,
+        2.0
+      ],
+      "derived_xy_m": [
+        5454655.048870405,
+        222684.20850554405
+      ],
+      "matches_reference_location": false
+    },
+    {
+      "always_xy": false,
+      "input_order": "lon_lat",
+      "interpreted_lon_lat_deg": [
+        49.0,
+        2.0
+      ],
+      "derived_xy_m": [
+        5454655.048870405,
+        222684.20850554405
+      ],
+      "matches_reference_location": false
+    },
+    {
+      "always_xy": false,
+      "input_order": "lat_lon",
+      "interpreted_lon_lat_deg": [
+        2.0,
+        49.0
+      ],
+      "derived_xy_m": [
+        222638.98158654713,
+        6274861.394006575
+      ],
+      "matches_reference_location": true
+    }
+  ],
+  "unit_cases": [
+    {
+      "input_encoding": "degrees",
+      "radians_flag": false,
+      "interpreted_lon_lat_deg": [
+        2.0,
+        49.0
+      ],
+      "within_mathematical_latitude_domain": true,
+      "derived_xy_m": [
+        222638.98158654713,
+        6274861.394006575
+      ],
+      "matches_reference_location": true
+    },
+    {
+      "input_encoding": "degrees",
+      "radians_flag": true,
+      "interpreted_lon_lat_deg": [
+        114.59155902616465,
+        2807.493196141034
+      ],
+      "within_mathematical_latitude_domain": false,
+      "derived_xy_m": null,
+      "matches_reference_location": false
+    },
+    {
+      "input_encoding": "radians",
+      "radians_flag": false,
+      "interpreted_lon_lat_deg": [
+        0.03490658503988659,
+        0.8552113334772214
+      ],
+      "within_mathematical_latitude_domain": true,
+      "derived_xy_m": [
+        3885.783271972276,
+        95205.22540597939
+      ],
+      "matches_reference_location": false
+    },
+    {
+      "input_encoding": "radians",
+      "radians_flag": true,
+      "interpreted_lon_lat_deg": [
+        2.0,
+        49.0
+      ],
+      "within_mathematical_latitude_domain": true,
+      "derived_xy_m": [
+        222638.98158654713,
+        6274861.394006575
+      ],
+      "matches_reference_location": true
+    }
+  ],
+  "out_of_area_finite_example": {
+    "lon_lat_deg": [
+      0,
+      86
+    ],
+    "outside_epsg3857_area_85_06": true,
+    "derived_xy_m": [
+      0.0,
+      21396567.252405386
+    ]
+  },
+  "mismatched_units_still_finite_example": {
+    "degree_tuple": [
+      0.1,
+      0.2
+    ],
+    "radians_flag": true,
+    "interpreted_lon_lat_deg": [
+      5.729577951308233,
+      11.459155902616466
+    ],
+    "derived_xy_m": [
+      637813.7000000001,
+      1284217.6252297952
+    ]
+  },
+  "doc_example_native_lat_lon": [
+    33,
+    98
+  ],
+  "doc_example_derived_xy_m": [
+    10909310.09774081,
+    3895303.9633938945
+  ]
+}

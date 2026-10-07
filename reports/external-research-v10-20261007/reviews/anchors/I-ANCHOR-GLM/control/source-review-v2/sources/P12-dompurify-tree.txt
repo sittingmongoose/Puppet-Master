@@ -1,0 +1,470 @@
+L1: {
+L2:   "sha": "b9b9d80f7e401771c2ccaef5f45def7eec8f27d7",
+L3:   "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7",
+L4:   "tree": [
+L5:     {
+L6:       "path": ".babelrc",
+L7:       "mode": "100644",
+L8:       "type": "blob",
+L9:       "sha": "25dea00c0ebfe5dbd1f24f950f76aaf95b40d078",
+L10:       "size": 252,
+L11:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/25dea00c0ebfe5dbd1f24f950f76aaf95b40d078"
+L12:     },
+L13:     {
+L14:       "path": ".editorconfig",
+L15:       "mode": "100644",
+L16:       "type": "blob",
+L17:       "sha": "3ce9044524f901fa70fb89fa10fd4279ae316c86",
+L18:       "size": 174,
+L19:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/3ce9044524f901fa70fb89fa10fd4279ae316c86"
+L20:     },
+L21:     {
+L22:       "path": ".gitattributes",
+L23:       "mode": "100644",
+L24:       "type": "blob",
+L25:       "sha": "fcadb2cf97913f58a2523f535336e725c6b59d1f",
+L26:       "size": 14,
+L27:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/fcadb2cf97913f58a2523f535336e725c6b59d1f"
+L28:     },
+L29:     {
+L30:       "path": ".github",
+L31:       "mode": "040000",
+L32:       "type": "tree",
+L33:       "sha": "b7f494204aebd99377f1c237f896e1cb576c6895",
+L34:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/b7f494204aebd99377f1c237f896e1cb576c6895"
+L35:     },
+L36:     {
+L37:       "path": ".github/FUNDING.yml",
+L38:       "mode": "100755",
+L39:       "type": "blob",
+L40:       "sha": "a239581208074b267ae456e8b6fe59d5b6388631",
+L41:       "size": 15,
+L42:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/a239581208074b267ae456e8b6fe59d5b6388631"
+L43:     },
+L44:     {
+L45:       "path": ".github/ISSUE_TEMPLATE.md",
+L46:       "mode": "100644",
+L47:       "type": "blob",
+L48:       "sha": "0b12f699733d62cbfc61ee7eb134ae8c0935c35f",
+L49:       "size": 498,
+L50:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/0b12f699733d62cbfc61ee7eb134ae8c0935c35f"
+L51:     },
+L52:     {
+L53:       "path": ".github/PULL_REQUEST_TEMPLATE.md",
+L54:       "mode": "100644",
+L55:       "type": "blob",
+L56:       "sha": "3f1a22b5e77b336d81cb16329c688ea444910570",
+L57:       "size": 474,
+L58:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/3f1a22b5e77b336d81cb16329c688ea444910570"
+L59:     },
+L60:     {
+L61:       "path": ".github/dependabot.yml",
+L62:       "mode": "100644",
+L63:       "type": "blob",
+L64:       "sha": "58dacf882784f7d0d74761dfdd34dd014b027f50",
+L65:       "size": 3471,
+L66:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/58dacf882784f7d0d74761dfdd34dd014b027f50"
+L67:     },
+L68:     {
+L69:       "path": ".github/workflows",
+L70:       "mode": "040000",
+L71:       "type": "tree",
+L72:       "sha": "f479a5abd8b1f6d9f1c0c15d25532f49fcde6c4f",
+L73:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/f479a5abd8b1f6d9f1c0c15d25532f49fcde6c4f"
+L74:     },
+L75:     {
+L76:       "path": ".github/workflows/build-and-test-skip.yml",
+L77:       "mode": "100644",
+L78:       "type": "blob",
+L79:       "sha": "a0123ed6c8950b56064bedfc51e316d8ca3984c3",
+L80:       "size": 2651,
+L81:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/a0123ed6c8950b56064bedfc51e316d8ca3984c3"
+L82:     },
+L83:     {
+L84:       "path": ".github/workflows/build-and-test.yml",
+L85:       "mode": "100644",
+L86:       "type": "blob",
+L87:       "sha": "f13def466ee7cde304520f98eefe07be10fd577d",
+L88:       "size": 7275,
+L89:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/f13def466ee7cde304520f98eefe07be10fd577d"
+L90:     },
+L91:     {
+L92:       "path": ".github/workflows/codeql-analysis.yml",
+L93:       "mode": "100644",
+L94:       "type": "blob",
+L95:       "sha": "4f93904d71430f6608bd1be10b235dddd4929588",
+L96:       "size": 2850,
+L97:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/4f93904d71430f6608bd1be10b235dddd4929588"
+L98:     },
+L99:     {
+L100:       "path": ".github/workflows/dependency-review.yml",
+L101:       "mode": "100644",
+L102:       "type": "blob",
+L103:       "sha": "64013fbe100db39866487eaedd1d41e8de39d266",
+L104:       "size": 1617,
+L105:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/64013fbe100db39866487eaedd1d41e8de39d266"
+L106:     },
+L107:     {
+L108:       "path": ".github/workflows/fuzz.yml",
+L109:       "mode": "100644",
+L110:       "type": "blob",
+L111:       "sha": "6cd88aeb0fc9cfd04af58bb92f16e5a272924fe0",
+L112:       "size": 995,
+L113:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/6cd88aeb0fc9cfd04af58bb92f16e5a272924fe0"
+L114:     },
+L115:     {
+L116:       "path": ".github/workflows/legacy-browsers.yml",
+L117:       "mode": "100644",
+L118:       "type": "blob",
+L119:       "sha": "e94a54e488a9cccd0f973170d6995864c55cbd32",
+L120:       "size": 4537,
+L121:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/e94a54e488a9cccd0f973170d6995864c55cbd32"
+L122:     },
+L123:     {
+L124:       "path": ".github/workflows/scorecard.yml",
+L125:       "mode": "100644",
+L126:       "type": "blob",
+L127:       "sha": "4d881a37ac60e0282c84d2e1ca23da0e4f3fbfd4",
+L128:       "size": 4773,
+L129:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/4d881a37ac60e0282c84d2e1ca23da0e4f3fbfd4"
+L130:     },
+L131:     {
+L132:       "path": ".github/workflows/sign-release.yml",
+L133:       "mode": "100644",
+L134:       "type": "blob",
+L135:       "sha": "10eaca2d7796b4fac1e571b397ca7ae6b5f17ebc",
+L136:       "size": 966,
+L137:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/10eaca2d7796b4fac1e571b397ca7ae6b5f17ebc"
+L138:     },
+L139:     {
+L140:       "path": ".github/workflows/slsa-provenance.yml",
+L141:       "mode": "100644",
+L142:       "type": "blob",
+L143:       "sha": "fb52861ef6eaffaebe4c6321fa12a0fe29546026",
+L144:       "size": 1325,
+L145:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/fb52861ef6eaffaebe4c6321fa12a0fe29546026"
+L146:     },
+L147:     {
+L148:       "path": ".gitignore",
+L149:       "mode": "100644",
+L150:       "type": "blob",
+L151:       "sha": "c1f32505b42927f49d81bbe047a4b3aae0a66be4",
+L152:       "size": 367,
+L153:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/c1f32505b42927f49d81bbe047a4b3aae0a66be4"
+L154:     },
+L155:     {
+L156:       "path": ".husky",
+L157:       "mode": "040000",
+L158:       "type": "tree",
+L159:       "sha": "4ea9be4bed2bb5c0b2244d3db7be4e09c2ecfe92",
+L160:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/4ea9be4bed2bb5c0b2244d3db7be4e09c2ecfe92"
+L161:     },
+L162:     {
+L224:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/14e2f777f6c395e7e04ab4aa306bbcc4b0c1120e"
+L225:     },
+L226:     {
+L227:       "path": "README.md",
+L228:       "mode": "100644",
+L229:       "type": "blob",
+L230:       "sha": "cd506474628ba1796699d92f5095b2443e16fa17",
+L231:       "size": 43198,
+L232:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/cd506474628ba1796699d92f5095b2443e16fa17"
+L233:     },
+L234:     {
+L235:       "path": "SECURITY.md",
+L236:       "mode": "100644",
+L237:       "type": "blob",
+L238:       "sha": "839f390489194c7856a8c3313fa55bf849534ece",
+L286:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/ca10a1e2b2939c17674fb91c4dcdac51eafd0a5e"
+L287:     },
+L288:     {
+L289:       "path": "demos/README.md",
+L290:       "mode": "100644",
+L291:       "type": "blob",
+L292:       "sha": "b7140ac0bb8cd45bc33b4da0d56699cb312b4e90",
+L293:       "size": 18193,
+L294:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/b7140ac0bb8cd45bc33b4da0d56699cb312b4e90"
+L295:     },
+L296:     {
+L297:       "path": "demos/advanced-config-demo.html",
+L298:       "mode": "100644",
+L299:       "type": "blob",
+L300:       "sha": "dcdd70b844878743f765f2b00daf640f747cc73a",
+L436:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/f86c3b11be0eaf7acd8e8a69710d1919acc58e69"
+L437:     },
+L438:     {
+L439:       "path": "dist/purify.cjs.d.ts",
+L440:       "mode": "100644",
+L441:       "type": "blob",
+L442:       "sha": "eaaf92d9a654920d8c1b1c49e2a3b448eec8c1f4",
+L443:       "size": 15616,
+L444:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/eaaf92d9a654920d8c1b1c49e2a3b448eec8c1f4"
+L445:     },
+L446:     {
+L447:       "path": "dist/purify.cjs.js",
+L448:       "mode": "100644",
+L449:       "type": "blob",
+L450:       "sha": "16b5653cd32434cd9211447c0867b808e40d8ffd",
+L451:       "size": 84452,
+L452:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/16b5653cd32434cd9211447c0867b808e40d8ffd"
+L453:     },
+L454:     {
+L455:       "path": "dist/purify.cjs.js.map",
+L456:       "mode": "100644",
+L457:       "type": "blob",
+L458:       "sha": "f4d90b9984b633a6bd8f6e74c20f73cb02e1c1c0",
+L459:       "size": 45909,
+L460:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/f4d90b9984b633a6bd8f6e74c20f73cb02e1c1c0"
+L461:     },
+L462:     {
+L463:       "path": "dist/purify.es.d.mts",
+L464:       "mode": "100644",
+L465:       "type": "blob",
+L466:       "sha": "9df528b952460ad157200eb77c986c54a7c7e215",
+L467:       "size": 15614,
+L468:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/9df528b952460ad157200eb77c986c54a7c7e215"
+L469:     },
+L470:     {
+L471:       "path": "dist/purify.es.mjs",
+L472:       "mode": "100644",
+L473:       "type": "blob",
+L474:       "sha": "5b666ff5c08dd16acb48daca25fa74695e056607",
+L475:       "size": 84443,
+L476:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/5b666ff5c08dd16acb48daca25fa74695e056607"
+L477:     },
+L478:     {
+L479:       "path": "dist/purify.es.mjs.map",
+L480:       "mode": "100644",
+L481:       "type": "blob",
+L482:       "sha": "7ece9f47477113ede6eaab64947ae3c12617a908",
+L483:       "size": 45908,
+L484:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/7ece9f47477113ede6eaab64947ae3c12617a908"
+L485:     },
+L486:     {
+L487:       "path": "dist/purify.js",
+L488:       "mode": "100644",
+L489:       "type": "blob",
+L490:       "sha": "5f6dfbcd44a2a0439379f009b214c5933b4afcfc",
+L491:       "size": 87183,
+L492:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/5f6dfbcd44a2a0439379f009b214c5933b4afcfc"
+L493:     },
+L494:     {
+L495:       "path": "dist/purify.js.map",
+L496:       "mode": "100644",
+L497:       "type": "blob",
+L498:       "sha": "72c7f303fa35d24c17f284b2a25c103fab970120",
+L499:       "size": 45890,
+L500:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/72c7f303fa35d24c17f284b2a25c103fab970120"
+L501:     },
+L502:     {
+L503:       "path": "dist/purify.min.js",
+L504:       "mode": "100644",
+L505:       "type": "blob",
+L506:       "sha": "00742c47118a703f414f6a116ddff07965d8e59e",
+L507:       "size": 28885,
+L508:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/00742c47118a703f414f6a116ddff07965d8e59e"
+L509:     },
+L510:     {
+L511:       "path": "dist/purify.min.js.map",
+L512:       "mode": "100644",
+L513:       "type": "blob",
+L514:       "sha": "f4992545f701bfad81036d0a5e3e40aed39b1445",
+L515:       "size": 38354,
+L516:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/f4992545f701bfad81036d0a5e3e40aed39b1445"
+L517:     },
+L518:     {
+L519:       "path": "git",
+L520:       "mode": "100644",
+L521:       "type": "blob",
+L522:       "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+L610:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/3d7afb434595a3c8648276f763a0b5d09d361a2e"
+L611:     },
+L612:     {
+L613:       "path": "src/purify.ts",
+L614:       "mode": "100644",
+L615:       "type": "blob",
+L616:       "sha": "20b65e6f29d263d275b136641775d54562b2bdb4",
+L617:       "size": 121644,
+L618:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/20b65e6f29d263d275b136641775d54562b2bdb4"
+L619:     },
+L620:     {
+L621:       "path": "src/regexp.ts",
+L622:       "mode": "100644",
+L623:       "type": "blob",
+L624:       "sha": "4a300d024b300e0d00e3584ecf44010c216b20e2",
+L650:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/64c165c2872367be4453d94098899527d4d8008b"
+L651:     },
+L652:     {
+L653:       "path": "test",
+L654:       "mode": "040000",
+L655:       "type": "tree",
+L656:       "sha": "1b25b22159ab73768c88abf9b9edad6b6cb1b538",
+L657:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/1b25b22159ab73768c88abf9b9edad6b6cb1b538"
+L658:     },
+L659:     {
+L660:       "path": "test/bootstrap-test-suite.js",
+L661:       "mode": "100644",
+L662:       "type": "blob",
+L663:       "sha": "fee690f287c3e2b307fc1dbaf6c9f9265c8c1236",
+L664:       "size": 17329,
+L665:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/fee690f287c3e2b307fc1dbaf6c9f9265c8c1236"
+L666:     },
+L667:     {
+L668:       "path": "test/browser.spec.js",
+L669:       "mode": "100644",
+L670:       "type": "blob",
+L671:       "sha": "1bd9afa772cf42067007fa5f3e2cb2fa62fb8eb9",
+L672:       "size": 3262,
+L673:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/1bd9afa772cf42067007fa5f3e2cb2fa62fb8eb9"
+L674:     },
+L675:     {
+L676:       "path": "test/browser",
+L677:       "mode": "040000",
+L678:       "type": "tree",
+L679:       "sha": "39a6529124116a8e9d6293068d7b4de8296e6413",
+L680:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/39a6529124116a8e9d6293068d7b4de8296e6413"
+L681:     },
+L682:     {
+L683:       "path": "test/browser/entry.js",
+L684:       "mode": "100644",
+L685:       "type": "blob",
+L686:       "sha": "bddbc3d2049f636e8ba516d35ed7aa866dcb4be5",
+L687:       "size": 1448,
+L688:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/bddbc3d2049f636e8ba516d35ed7aa866dcb4be5"
+L689:     },
+L690:     {
+L691:       "path": "test/browser/index.html",
+L692:       "mode": "100644",
+L693:       "type": "blob",
+L694:       "sha": "39b5cb9333982b2ed32ec05b83783850a5d7fda0",
+L695:       "size": 1527,
+L696:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/39b5cb9333982b2ed32ec05b83783850a5d7fda0"
+L697:     },
+L698:     {
+L699:       "path": "test/browser/index.min.html",
+L700:       "mode": "100644",
+L701:       "type": "blob",
+L702:       "sha": "e60ff41a8994e37641e675978988bfe8e08ba19e",
+L703:       "size": 835,
+L704:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/e60ff41a8994e37641e675978988bfe8e08ba19e"
+L705:     },
+L706:     {
+L707:       "path": "test/browser/legacy-runner.js",
+L708:       "mode": "100644",
+L709:       "type": "blob",
+L710:       "sha": "102eb18afae24622a71067a61ac32b07bf6eb37a",
+L711:       "size": 5271,
+L712:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/102eb18afae24622a71067a61ac32b07bf6eb37a"
+L713:     },
+L714:     {
+L715:       "path": "test/browser/server.js",
+L716:       "mode": "100644",
+L717:       "type": "blob",
+L718:       "sha": "2887e887fe1a8fe9fa4c408703176eb6b05ad657",
+L719:       "size": 3225,
+L720:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/2887e887fe1a8fe9fa4c408703176eb6b05ad657"
+L721:     },
+L722:     {
+L723:       "path": "test/config",
+L724:       "mode": "040000",
+L725:       "type": "tree",
+L726:       "sha": "7ba7690b76f80036f38ca98717917052af6f7b34",
+L727:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/7ba7690b76f80036f38ca98717917052af6f7b34"
+L728:     },
+L729:     {
+L730:       "path": "test/config/setup.js",
+L731:       "mode": "100644",
+L732:       "type": "blob",
+L733:       "sha": "a0a5b64ac5ef11561904af015fd363f6cf26a7f8",
+L734:       "size": 352,
+L735:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/a0a5b64ac5ef11561904af015fd363f6cf26a7f8"
+L736:     },
+L737:     {
+L738:       "path": "test/fixtures",
+L739:       "mode": "040000",
+L740:       "type": "tree",
+L741:       "sha": "13a83c3cd8087d8e60a0de33b3dfd2babc7621a6",
+L742:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/13a83c3cd8087d8e60a0de33b3dfd2babc7621a6"
+L743:     },
+L744:     {
+L745:       "path": "test/fixtures/expect.mjs",
+L746:       "mode": "100644",
+L747:       "type": "blob",
+L748:       "sha": "e9dfe85198df934fcced4069d6908162212fca77",
+L749:       "size": 82332,
+L750:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/e9dfe85198df934fcced4069d6908162212fca77"
+L751:     },
+L752:     {
+L753:       "path": "test/fuzz",
+L754:       "mode": "040000",
+L755:       "type": "tree",
+L756:       "sha": "88ab20f6ea55102c8dd92cfcd44e1cb3840cfdcb",
+L757:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/88ab20f6ea55102c8dd92cfcd44e1cb3840cfdcb"
+L758:     },
+L759:     {
+L760:       "path": "test/fuzz/sanitize.fast-check.js",
+L761:       "mode": "100644",
+L762:       "type": "blob",
+L763:       "sha": "8bce75b70893b959a51d19cc93c1f20c4fbcd58e",
+L764:       "size": 13313,
+L765:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/8bce75b70893b959a51d19cc93c1f20c4fbcd58e"
+L766:     },
+L767:     {
+L768:       "path": "test/happydom-node-runner.js",
+L769:       "mode": "100644",
+L770:       "type": "blob",
+L771:       "sha": "e3919563f717fb71b1f95bbd2639064290ce56b4",
+L772:       "size": 480,
+L773:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/e3919563f717fb71b1f95bbd2639064290ce56b4"
+L774:     },
+L775:     {
+L776:       "path": "test/happydom-node.js",
+L777:       "mode": "100644",
+L778:       "type": "blob",
+L779:       "sha": "4a90f5bd56ff1edd5d0fd1e2ed4fd347d7e95bbe",
+L780:       "size": 2860,
+L781:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/4a90f5bd56ff1edd5d0fd1e2ed4fd347d7e95bbe"
+L782:     },
+L783:     {
+L784:       "path": "test/jsdom-node-runner.js",
+L785:       "mode": "100644",
+L786:       "type": "blob",
+L787:       "sha": "0d38c6be0a1caa22d9a39381feddffae1188506b",
+L788:       "size": 477,
+L789:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/0d38c6be0a1caa22d9a39381feddffae1188506b"
+L790:     },
+L791:     {
+L792:       "path": "test/jsdom-node.js",
+L793:       "mode": "100644",
+L794:       "type": "blob",
+L795:       "sha": "07414d8f0e70458221fd499d5fc24029afc32f46",
+L904:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/44f0253a76962642c5f715f43ab12bea95217d93"
+L905:     },
+L906:     {
+L907:       "path": "typescript/commonjs-with-no-types/types/readme.md",
+L908:       "mode": "100644",
+L909:       "type": "blob",
+L910:       "sha": "2ce15c2bfc68be4dea21bbaa6f06b7d7eb13d6ec",
+L911:       "size": 60,
+L912:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/2ce15c2bfc68be4dea21bbaa6f06b7d7eb13d6ec"
+L913:     },
+L914:     {
+L915:       "path": "typescript/commonjs-with-specific-types",
+L916:       "mode": "040000",
+L917:       "type": "tree",
+L918:       "sha": "c5cb8b647ca31c126df4c515cdfe2113a9c30834",
+L996:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/44f0253a76962642c5f715f43ab12bea95217d93"
+L997:     },
+L998:     {
+L999:       "path": "typescript/esm-with-no-types/types/readme.md",
+L1000:       "mode": "100644",
+L1001:       "type": "blob",
+L1002:       "sha": "2ce15c2bfc68be4dea21bbaa6f06b7d7eb13d6ec",
+L1003:       "size": 60,
+L1004:       "url": "https://api.github.com/repos/cure53/DOMPurify/git/blobs/2ce15c2bfc68be4dea21bbaa6f06b7d7eb13d6ec"
+L1005:     },
+L1006:     {
+L1007:       "path": "typescript/esm-with-specific-types",
+L1008:       "mode": "040000",
+L1009:       "type": "tree",
+L1010:       "sha": "bb607dc132cf7d9d64a39d16fed5758a8c5f6265",

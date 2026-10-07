@@ -1,0 +1,82 @@
+L1: Minisign by Frank Denis
+L2: Minisign
+L3: A dead simple tool to sign files and verify signatures.
+L4: View on GitHub
+L5: Download source code
+L6: Download OSX binary
+L7: Download Linux binary
+L8: Download WebAssembly binary
+L9: Download Windows binary
+L10: Minisign
+L11: Minisign is a dead simple tool to sign files and verify signatures.
+L12: It is portable, lightweight, and uses the highly secure
+L13: Ed25519
+L14: public-key signature system.
+L15: Creating a key pair
+L16: $ minisign -G
+L17: The public key is printed and put into the
+L18: minisign.pub file. The secret key is encrypted and saved as
+L19: a file named ~/.minisign/minisign.key.
+L20: Signing a file
+L21: $ minisign -Sm myfile.txt
+L22: Or to include a comment in the signature, that will be verified and
+L23: displayed when verifying the file:
+L24: $ minisign -Sm myfile.txt -t 'This comment will be signed as well'
+L25: The signature is put into myfile.txt.minisig.
+L26: Multiple files can also be signed at once:
+L27: $ minisign -Sm file1.txt file2.txt *.jpg
+L28: Verifying a file
+L29: $ minisign -Vm myfile.txt -P RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3
+L30: or
+L31: $ minisign -Vm myfile.txt -p signature.pub
+L32: This requires the signature myfile.txt.minisig to be
+L33: present in the same directory.
+L34: The public key can either reside in a file (./minisign.pub
+L35: by default) or be directly specified on the command line.
+L36: Usage
+L37: Usage:
+L38: minisign -G [-f] [-p pubkey_file] [-s seckey_file] [-W]
+L39: minisign -R [-s seckey_file] [-p pubkey_file]
+L40: minisign -C [-s seckey_file] [-W]
+L41: minisign -S [-l] [-x sig_file] [-s seckey_file] [-c untrusted_comment] [-t trusted_comment] -m file [file ...]
+L42: minisign -V [-H] [-x sig_file] [-p pubkey_file | -P pubkey] [-o] [-q] -m file
+L43: -G generate a new key pair
+L44: -R recreate a public key file from a secret key file
+L45: -C change/remove the password of the secret key
+L46: -S sign files
+L47: -V verify that a signature is valid for a given file
+L48: -H require input to be prehashed
+L49: -l sign using the legacy format
+L50: -m <file> file to sign/verify
+L51: -o combined with -V, output the file content after verification
+L52: -p <pubkey_file> public key file (default: ./minisign.pub)
+L53: -P <pubkey> public key, as a base64 string
+L54: -s <seckey_file> secret key file (default: ~/.minisign/minisign.key)
+L55: -W do not encrypt/decrypt the secret key with a password
+L56: -x <sigfile> signature file (default: <file>.minisig)
+L57: -c <comment> add a one-line untrusted comment
+L58: -t <comment> add a one-line trusted comment
+L59: -q quiet mode, suppress output
+L60: -Q pretty quiet mode, only print the trusted comment
+L61: -f force. Combined with -G, overwrite a previous key pair
+L112: base64(<global_signature>)
+L113: signature_algorithm: Ed (legacy) or
+L114: ED (hashed)
+L115: key_id: 8 random bytes, matching the public key
+L116: signature (legacy):
+L117: ed25519(<file data>)
+L118: signature (prehashed):
+L119: ed25519(Blake2b-512(<file data>))
+L120: global_signature:
+L121: ed25519(<signature> || <trusted_comment>)
+L122: New implementations must use the hashed signature format; support for
+L123: the legacy one is optional and should not be done by default.
+L124: Public key format
+L125: untrusted comment: <arbitrary text>
+L126: base64(<signature_algorithm> || <key_id> || <public_key>)
+L127: signature_algorithm: Ed
+L128: key_id: 8 random bytes
+L129: public_key: Ed25519 public key
+L130: Secret key format
+L131: untrusted comment: <arbitrary text>
+L132: base64(<signature_algorithm> || <kdf_algorithm> || <cksum_algorithm> ||

@@ -1,0 +1,32 @@
+{
+  "receipt": "native_terminal_receipt",
+  "captured_at_utc": "2026-10-07T19:06:57.164825+00:00",
+  "objective_assignment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md",
+  "backend_session_identity": {
+    "backend_session_id": "sess_fc21453a-44ec-4f62-bc07-f3f23e974af6",
+    "state_json_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json",
+    "goal_session_marker": "goal-1791399012770-04yiek"
+  },
+  "observed_state": {
+    "status": "running",
+    "terminal": false,
+    "rounds": 4,
+    "state_updated_at_utc": "2026-10-07T19:06:20.686000+00:00",
+    "endedReason": null,
+    "ticket_statuses": {
+      "t1": "done",
+      "t2": "done",
+      "t3": "done",
+      "t4": "done",
+      "t5": "pending"
+    },
+    "observed_at_utc": "2026-10-07T19:06:57.164825+00:00"
+  },
+  "honesty_statement": "The driver was NOT terminal while this receipt was authored (status 'running' as observed at captured_at_utc). Per assignment instruction, this fact is recorded as-is and the final terminal-state capture is left to the coordinator after the installed integration's automatic terminal. No terminal status is invented; the authoritative state.json was never edited or written by this agent (read-only cat/python-json reads only).",
+  "vendor_backend_target": "NOT_ACTIVATED_OR_CLAIMED",
+  "observation_sources": [
+    ".zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json (read-only)",
+    "native_goal_receipt.json (earlier observed running state, captured 18:53:39Z)",
+    "timings.json native_terminal_note (consistent: running at 19:05:36Z)"
+  ]
+}

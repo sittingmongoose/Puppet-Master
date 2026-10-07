@@ -1,0 +1,110 @@
+21: *   The user does not need (although they can) to request for an update. The
+22:     update checks happen periodically in the background.
+23: *   If the update fails to apply, the user is not affected. The user will
+24:     continue on the old version of the system and the system will attempt to
+25:     apply the update again at a later time.
+26: *   If the update applies correctly but fails to boot, the system will rollback
+27:     to the old partition and the user can still use the system as usual.
+28: *   The user does not need to reserve enough space for the update. The system
+29:     has already reserved enough space in terms of two copies (A and B) of a
+30:     partition. The system doesn’t even need any cache space on the disk,
+31:     everything happens seamlessly from network to memory to the inactive
+32:     partitions.
+33: 
+34: ## Life of an A/B Update
+35: 
+36: In A/B update capable systems, each partition, such as the kernel or root (or
+37: other artifacts like [DLC]), has two copies. We call these two copies active (A)
+38: and inactive (B). The system is booted into the active partition (depending on
+39: which copy has the higher priority at boot time) and when a new update is
+40: available, it is written into the inactive partition. After a successful reboot,
+41: the previously inactive partition becomes active and the old active partition
+42: becomes inactive.
+43: 
+44: But everything starts with generating update payloads in (Google) servers for
+45: each new system image. Once the update payloads are generated, they are signed
+46: with specific keys and stored in a location known to an update server (Omaha).
+47: 
+56: parameters like its Application ID, hardware ID, version, board, etc. Then if
+57: the update server decides to serve an update payload, it will respond with all
+58: the parameters needed to perform an update like the URLs to download the
+59: payloads, the metadata signatures, the payload size and hash, etc. The updater
+60: client continues communicating with the update server after different state
+61: changes, like reporting that it started to download the payload or it finished
+62: the update, or reports that the update failed with specific error codes, etc.
+63: 
+64: Each payload consists of two main sections: metadata and extra data. The
+65: metadata is basically a list of operations that should be performed for an
+67: operations. The updater client first downloads the metadata and
+68: cryptographically verifies it using the provided signatures from the update
+69: server’s response. Once the metadata is verified as valid, the rest of the
+70: payload can easily be verified cryptographically (mostly through SHA256 hashes).
+71: 
+72: Next, the updater client marks the inactive partition as unbootable (because it
+73: needs to write the new updates into it). At this point the system cannot
+74: rollback to the inactive partition anymore.
+75: 
+76: Then, the updater client performs the operations defined in the metadata (in the
+77: order they appear in the metadata) and the rest of the payload is gradually
+78: downloaded when these operations require their data. Once an operation is
+79: finished its data is discarded. This eliminates the need for caching the entire
+80: payload before applying it. During this process the updater client periodically
+81: checkpoints the last operation performed so in the event of failure or system
+82: shutdown, etc. it can continue from the point it missed without redoing all
+83: operations from the beginning.
+84: 
+85: During the download, the updater client hashes the downloaded bytes and when the
+86: download finishes, it checks the payload signature (located at the end of the
+87: payload). If the signature cannot be verified, the update is rejected.
+88: 
+89: After the inactive partition is updated, the entire partition is re-read, hashed
+90: and compared to a hash value passed in the metadata to make sure the update was
+91: successfully written into the partition.
+92: 
+93: In the next step, the [Postinstall] process (if any) is called. The postinstall
+94: reconstructs the dm-verity tree hash of the ROOT partition and writes it at the
+95: end of the partition (after the last block of the file system). The postinstall
+125: updates robust including but not limited to:
+126: 
+127: *   If the update engine crashes, it will restart automatically.
+128: *   During an active update it periodically checkpoints the state of the update
+129:     and if it fails to continue the update or crashes in the middle, it will
+130:     continue from the last checkpoint.
+131: *   It retries failed network communication.
+132: *   If it fails to apply a delta payload (due to bit changes on the active
+133:     partition) for a few times, it switches to full payload.
+134: 
+135: The updater clients writes its active preferences in
+136: `/var/lib/update_engine/prefs`. These preferences help with tracking changes
+137: during the lifetime of the updater client and allows properly continuing the
+138: update process after failed attempts or crashes.
+154: relates to the Chrome OS update policies should be contained within the
+155: [update_manager] directory in the source code.
+156: 
+157: ### Rollback vs. Enterprise Rollback
+158: 
+159: Chrome OS defines a concept for Rollback: Whenever a newly updated system does
+160: not work as it is intended, under certain circumstances the device can be rolled
+161: back to a previously working version. There are two types of rollback supported
+162: in Chrome OS: A (legacy, original) rollback and an enterprise rollback (I know,
+163: naming is confusing).
+164: 
+165: A normal rollback, which has existed for as long as Chrome OS had auto updater,
+253: Once update payloads are generated, their original images cannot be changed
+254: anymore otherwise the update payloads may not be able to be applied.
+255: 
+256: `delta_generator` is a tool with a wide range of options for generating
+257: different types of update payloads. Its code is located in
+258: `update_engine/payload_generator`. This directory contains all the source code
+259: related to mechanics of generating an update payload. None of the files in this
+260: directory should be included or used in any other library/executable other than
+261: the `delta_generator` which means this directory does not get compiled into the
+262: rest of the update engine tools.
+263: 
+264: However, it is not recommended to use `delta_generator` directly. To manually
+265: generate payloads easier, [`cros_generate_update_payloads`] should be used. Most
+266: of the higher level policies and tools for generating payloads reside as a
+267: library in [`chromite/lib/paygen`]. Whenever calls to the update payload
+268: generation API are needed, this library should be used instead.
+269: 
+270: ### Update Payload File Specification

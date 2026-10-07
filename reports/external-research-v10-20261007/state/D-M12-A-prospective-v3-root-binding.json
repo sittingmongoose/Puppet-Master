@@ -1,0 +1,60 @@
+{
+  "schema": "ER10-prospective-D-M12-native-single-arm-v3",
+  "frozen_at_utc": "2026-10-07 20:04:13 UTC",
+  "case": "D-M12-A",
+  "old_design_preserved": true,
+  "reason": "Observed installed GLM native seed completion784.161s exceeds six-minute stage; original15min multi-assignment envelope underfits native route. Prospective budget/topology binding for wholly unstarted matched case.",
+  "owner": "er10-targeted-cohort4-v1",
+  "provider": "zcode",
+  "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+  "options": {
+    "thought": "max",
+    "mode": "yolo"
+  },
+  "arm_budget_minutes": 30,
+  "stage_topology": {
+    "control": [
+      {
+        "assignment": "normal-research-final",
+        "native_goals": 1,
+        "logical_phases": [
+          {
+            "normal_source_research_minutes": 25
+          },
+          {
+            "full_scope_final_check_delivery_minutes": 5
+          }
+        ]
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "protected-breadth-final",
+        "native_goals": 1,
+        "logical_phases": [
+          {
+            "declared_protected_breadth_research_minutes": 25
+          },
+          {
+            "full_scope_final_check_delivery_minutes": 5
+          }
+        ]
+      }
+    ]
+  },
+  "same_original_scope_sources_method_factor": true,
+  "no_case_answers_or_evaluator_findings_supplied": true,
+  "clock": "Each arm first preparation/actual T3 request (earliest) through required full artifacts + actual native terminal + T3 delivery; all retries/startup/tool work charged. No clock resets.",
+  "capacity": {
+    "cohort2_GLM": 0,
+    "cohort3_GLM": 0,
+    "cohort4_GLM": 2,
+    "total_campaign_GLM": 2
+  },
+  "new_arms_can_overlap_if_capacity_and_memory": true,
+  "freeze_both_arm_maps_tasks_configs_before_either_dispatch": true,
+  "carrier": "qualified prospective passive-v2; GLM literal short leading /goal GENERAL scientific assignment; ordinary source review-v2 after pair quiet/full artifact/native-disposition freeze",
+  "terminal_guard": "Capture actual state/artifact availability at expiry; intentional owned cancellation after bounded<=60s lifecycle delivery grace, no ordinary GLM steering. Preserve partial/paused/missing outcome; never infer native complete.",
+  "retry_limit": "One new matched version; no automatic further retry",
+  "measurement": "Actual full scope grade, delivery/occupied time, setup and failures-inclusive costs separate; unknown billing/generated/cache null. New30min cannot be compared as if original15min benchmark."
+}

@@ -1,0 +1,311 @@
+{
+  "stage": "ER10 I-METHOD-02/control/research-v1",
+  "inputs_consulted": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/brief.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/plan.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v1/input-map.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v1/dispatch-config.json"
+  ],
+  "acquisition_policy": "All saved public bytes were independently fetched during this stage from the URLs below; no predecessor source bytes or treatment cache were read. Downloaded code was inspected as data and not executed. Host computes hashes.",
+  "operation_counts": {
+    "web_run_calls": 5,
+    "direct_public_http_gets": 28,
+    "source_files_saved": 28,
+    "tests_executed": 0,
+    "application_builds": 0,
+    "unobserved_counters": {
+      "input": null,
+      "cache": null,
+      "generated": null,
+      "reasoning": null,
+      "billing": null
+    },
+    "aggregate_goal_counters": "Kept separate; see actual terminal Goal lifecycle tool responses in the thread."
+  },
+  "milestone_times_utc": {
+    "first_useful_saved_finding": "2026-10-07T19:22:52Z",
+    "complete_draft_mark": "2026-10-07T19:33:30Z"
+  },
+  "entries": [
+    {
+      "id": "S1",
+      "title": "IIIF Presentation API 3.0",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "access_time_utc": "2026-10-07T19:23:19Z",
+      "version": "3.0.0; latest stable stated in document",
+      "immutable_ref": null,
+      "local_path": "sources/iiif-presentation-3.html",
+      "paths_symbols_sections": "§5.2 Manifest; §5.3 Canvas; §5.5 Annotation Page; §5.6 Annotation; rights and requiredStatement"
+    },
+    {
+      "id": "S2",
+      "title": "IIIF Image API 3.0",
+      "url": "https://iiif.io/api/image/3.0/",
+      "access_time_utc": "2026-10-07T19:23:19Z",
+      "version": "3.0.0; latest stable stated in document",
+      "immutable_ref": null,
+      "local_path": "sources/iiif-image-3.html",
+      "paths_symbols_sections": "§2.2 info.json; §4.1 region; §4.2 size; §5.2 technical properties; §5.6 rights; §7.1 CORS"
+    },
+    {
+      "id": "S3",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "access_time_utc": "2026-10-07T19:23:19Z",
+      "version": "W3C Recommendation, 2017-02-23",
+      "immutable_ref": null,
+      "local_path": "sources/w3c-annotation-model.html",
+      "paths_symbols_sections": "§3.2 Annotation; §3.2.4 TextualBody; §4.2.1 Fragment Selector; §4.2.7 SVG Selector; SpecificResource"
+    },
+    {
+      "id": "S4",
+      "title": "IIIF Cookbook: Multiple Views of an Object",
+      "url": "https://iiif.io/api/cookbook/recipe/0001-mvm-image-views/",
+      "access_time_utc": "2026-10-07T19:23:19Z",
+      "version": "Recipe 0001; live page captured 2026-10-07",
+      "immutable_ref": null,
+      "local_path": "sources/iiif-annotation-cookbook.html",
+      "paths_symbols_sections": "Recipe description and JSON-LD multiple-Canvas example"
+    },
+    {
+      "id": "S5",
+      "title": "OpenSeadragon sequence-mode example",
+      "url": "https://openseadragon.github.io/examples/tilesource-sequence/",
+      "access_time_utc": "2026-10-07T19:23:19Z",
+      "version": "Live documentation page captured 2026-10-07",
+      "immutable_ref": null,
+      "local_path": "sources/osd-sequence-doc.html",
+      "paths_symbols_sections": "Sequence Mode; tileSources array; sequenceMode flag"
+    },
+    {
+      "id": "S6",
+      "title": "Annotorious getting started",
+      "url": "https://annotorious.dev/getting-started/",
+      "access_time_utc": "2026-10-07T19:23:19Z",
+      "version": "Live documentation page captured 2026-10-07; no package version pinned",
+      "immutable_ref": null,
+      "local_path": "sources/annotorious-getting-started.html",
+      "paths_symbols_sections": "Overview; OpenSeadragon API; Using Annotorious; IIIF references"
+    },
+    {
+      "id": "S7",
+      "title": "OpenSeadragon v6.1.1 tag ref",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1",
+      "access_time_utc": "2026-10-07T19:22:52Z",
+      "version": "tag v6.1.1; annotated tag object 96bdae63fc78de7cfb0721480b4e0560e0ce6b96",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-tag-ref.json",
+      "paths_symbols_sections": "refs/tags/v6.1.1 resolves to tag object; dereferenced in S8"
+    },
+    {
+      "id": "S8",
+      "title": "OpenSeadragon v6.1.1 annotated tag object",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/96bdae63fc78de7cfb0721480b4e0560e0ce6b96",
+      "access_time_utc": "2026-10-07T19:23:19Z",
+      "version": "v6.1.1 commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-tag-object.json",
+      "paths_symbols_sections": "Tag target object and exact commit"
+    },
+    {
+      "id": "S9",
+      "title": "OpenSeadragon v6.1.1 repository tree",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/git/trees/201d47833e3f10e9fa55159cd4203630521926b8?recursive=1",
+      "access_time_utc": "2026-10-07T19:23:27Z",
+      "version": "v6.1.1 at commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-tree.json",
+      "paths_symbols_sections": "Locates src/iiiftilesource.js, src/viewer.js, src/tiledimage.js, src/overlay.js, test/modules/iiif.js, test/modules/tiledimage.js, test/modules/overlays.js"
+    },
+    {
+      "id": "S10",
+      "title": "OpenSeadragon v6.1.1 release notes",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.1.1",
+      "access_time_utc": "2026-10-07T19:23:27Z",
+      "version": "v6.1.1 published 2026-09-09",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-release.json",
+      "paths_symbols_sections": "Release notes; fix applicability additionally verified in tagged source and test"
+    },
+    {
+      "id": "S11",
+      "title": "OpenSeadragon IIIFTileSource source",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/iiiftilesource.js",
+      "access_time_utc": "2026-10-07T19:23:54Z",
+      "version": "v6.1.1 commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-src-iiiftilesource.js",
+      "paths_symbols_sections": "IIIFTileSource constructor 65-203; id/dimension guard 65-75; sizes logic 137-199; getTileUrl 460-520; constructLevels 618-633"
+    },
+    {
+      "id": "S12",
+      "title": "OpenSeadragon Viewer source",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewer.js",
+      "access_time_utc": "2026-10-07T19:23:54Z",
+      "version": "v6.1.1 commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-src-viewer.js",
+      "paths_symbols_sections": "Viewer.open 774-845; close overlay teardown 967-982; sequence goToPage 2572-2597; addOverlay docs/call 2600-2640; TileSource resolution 2106-2184"
+    },
+    {
+      "id": "S13",
+      "title": "OpenSeadragon Overlay source",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/overlay.js",
+      "access_time_utc": "2026-10-07T19:23:54Z",
+      "version": "v6.1.1 commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-src-overlay.js",
+      "paths_symbols_sections": "Overlay.drawHTML 253-310"
+    },
+    {
+      "id": "S14",
+      "title": "OpenSeadragon TiledImage source",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/tiledimage.js",
+      "access_time_utc": "2026-10-07T19:26:20Z",
+      "version": "v6.1.1 commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-src-tiledimage.js",
+      "paths_symbols_sections": "viewportToImageCoordinates 589-621; imageToViewportCoordinates 624-656; imageToViewportRectangle 658-688; viewportToImageRectangle 690-720"
+    },
+    {
+      "id": "S15",
+      "title": "OpenSeadragon overlay tests",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/overlays.js",
+      "access_time_utc": "2026-10-07T19:23:54Z",
+      "version": "v6.1.1 commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-test-modules-overlays.js",
+      "paths_symbols_sections": "Global/page/manual overlay tests 66-224; geometry tests later in file"
+    },
+    {
+      "id": "S16",
+      "title": "OpenSeadragon TiledImage coordinate tests",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/tiledimage.js",
+      "access_time_utc": "2026-10-07T19:26:20Z",
+      "version": "v6.1.1 commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-test-modules-tiledimage.js",
+      "paths_symbols_sections": "Coordinate round-trip assertions 54-68"
+    },
+    {
+      "id": "S17",
+      "title": "OpenSeadragon IIIF regression tests",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/iiif.js",
+      "access_time_utc": "2026-10-07T19:24:47Z",
+      "version": "v6.1.1 commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v6.1.1-test-modules-iiif.js",
+      "paths_symbols_sections": "Empty sizes fixture near 99; test 'IIIFTileSource ignores an empty sizes array' 299-310"
+    },
+    {
+      "id": "S18",
+      "title": "OpenSeadragon issue #2962",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2962",
+      "access_time_utc": "2026-10-07T19:24:47Z",
+      "version": "Reported against 6.1.0; closed 2026-08-31",
+      "immutable_ref": null,
+      "local_path": "sources/osd-issue-2962.json",
+      "paths_symbols_sections": "Valid empty sizes reproduction; affected versions; regression origin ae500afb/#2710"
+    },
+    {
+      "id": "S19",
+      "title": "OpenSeadragon PR #2963 metadata",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2963",
+      "access_time_utc": "2026-10-07T19:24:34Z",
+      "version": "Merged 2026-08-31; merge commit d5efe646122631cba1afb66fb778a4d0f7351315",
+      "immutable_ref": null,
+      "local_path": "sources/osd-pr-2963.json",
+      "paths_symbols_sections": "Fix description, issue link, tested versions, test method"
+    },
+    {
+      "id": "S20",
+      "title": "OpenSeadragon PR #2963 changed files",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2963/files",
+      "access_time_utc": "2026-10-07T19:24:34Z",
+      "version": "PR #2963 merge commit d5efe646122631cba1afb66fb778a4d0f7351315",
+      "immutable_ref": null,
+      "local_path": "sources/osd-pr-2963-files.json",
+      "paths_symbols_sections": "src/iiiftilesource.js non-empty sizes guard; test/modules/iiif.js fixture and assertions"
+    },
+    {
+      "id": "S21",
+      "title": "OpenSeadragon issue #2963 endpoint",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2963",
+      "access_time_utc": "2026-10-07T19:24:15Z",
+      "version": "PR #2963; merged 2026-08-31",
+      "immutable_ref": null,
+      "local_path": "sources/osd-issue-2963.json",
+      "paths_symbols_sections": "Issue object and pull_request linkage; PR metadata is in S19"
+    },
+    {
+      "id": "S22",
+      "title": "OpenSeadragon v4.1.0 release metadata",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v4.1.0",
+      "access_time_utc": "2026-10-07T19:22:52Z",
+      "version": "v4.1.0 published 2023-05-25",
+      "immutable_ref": null,
+      "local_path": "sources/osd-v4.1.0-release.json",
+      "paths_symbols_sections": "Secondary historical context only; not used for O3 release applicability"
+    },
+    {
+      "id": "S23",
+      "title": "OpenSeadragon PR #1865 metadata",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/1865",
+      "access_time_utc": "2026-10-07T19:22:52Z",
+      "version": "Merged 2021-04-08; merge commit ed7da66b69eb7843982aa1a1c26913f49d9e018e",
+      "immutable_ref": null,
+      "local_path": "sources/osd-pr-1865.json",
+      "paths_symbols_sections": "Overlay visibility fix; references issues #774/#1861"
+    },
+    {
+      "id": "S24",
+      "title": "OpenSeadragon PR #1865 changed files",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/1865/files",
+      "access_time_utc": "2026-10-07T19:22:52Z",
+      "version": "PR #1865 merge commit ed7da66b69eb7843982aa1a1c26913f49d9e018e",
+      "immutable_ref": null,
+      "local_path": "sources/osd-pr-1865-files.json",
+      "paths_symbols_sections": "src/overlay.js visibility condition; no test file"
+    },
+    {
+      "id": "S25",
+      "title": "OpenSeadragon issue #1861",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1861",
+      "access_time_utc": "2026-10-07T19:22:52Z",
+      "version": "Reported 2020; closed by PR #1865",
+      "immutable_ref": null,
+      "local_path": "sources/osd-issue-1861.json",
+      "paths_symbols_sections": "Sequence-mode overlays disappearing; reproducible example and source location"
+    },
+    {
+      "id": "S26",
+      "title": "Mirador official product page",
+      "url": "https://projectmirador.org/",
+      "access_time_utc": "2026-10-07T19:26:00Z",
+      "version": "Unversioned page captured 2026-10-07",
+      "immutable_ref": null,
+      "local_path": "sources/mirador-home.html",
+      "paths_symbols_sections": "Comparison workspaces; IIIF v2/v3; annotation plugin; W3C annotation display; workspace import/export"
+    },
+    {
+      "id": "S27",
+      "title": "Universal Viewer official product page",
+      "url": "https://universalviewer.io/",
+      "access_time_utc": "2026-10-07T19:26:00Z",
+      "version": "Unversioned page captured 2026-10-07",
+      "immutable_ref": null,
+      "local_path": "sources/universal-viewer-home.html",
+      "paths_symbols_sections": "IIIF Manifest input; OpenSeadragon image zoom; embeddable multi-content viewer"
+    },
+    {
+      "id": "S28",
+      "title": "RightsStatements.org No Copyright—Contractual Restrictions",
+      "url": "https://rightsstatements.org/page/NoC-CR/1.0/?language=en",
+      "access_time_utc": "2026-10-07T19:26:00Z",
+      "version": "NoC-CR 1.0",
+      "immutable_ref": null,
+      "local_path": "sources/rights-NoC-CR-1.0.html",
+      "paths_symbols_sections": "Statement explanation, restrictions, other-permission notices; statement is not a license"
+    }
+  ]
+}

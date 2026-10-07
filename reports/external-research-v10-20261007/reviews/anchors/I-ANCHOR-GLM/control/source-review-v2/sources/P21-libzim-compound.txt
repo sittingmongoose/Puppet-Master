@@ -1,0 +1,115 @@
+L10:  * This program is distributed in the hope that it will be useful, but
+L11:  * is provided AS IS, WITHOUT ANY WARRANTY; without even the implied
+L12:  * warranty of MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, and
+L13:  * NON-INFRINGEMENT.  See the GNU General Public License for more details.
+L14:  *
+L15:  * You should have received a copy of the GNU General Public License
+L16:  * along with this program; if not, write to the Free Software
+L17:  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+L18:  *
+L19:  */
+L20: 
+L21: #include "file_compound.h"
+L22: 
+L23: #include <errno.h>
+L24: #include <stdexcept>
+L25: #include <string.h>
+L26: #include <sys/stat.h>
+L27: #include <zim/tools.h>
+L28: 
+L29: #ifdef _WIN32
+L35: namespace zim {
+L36: 
+L37: void FileCompound::addPart(FilePart* fpart)
+L38: {
+L39:   const Range newRange(offset_t(_fsize.v), offset_t((_fsize+fpart->size()).v));
+L40:   emplace(newRange, fpart);
+L41:   _fsize += fpart->size();
+L42: }
+L43: 
+L44: std::shared_ptr<FileCompound> FileCompound::openSinglePieceOrSplitZimFile(const std::string& original_filename) {
+L45:   std::shared_ptr<FileCompound> fileCompound;
+L46:   bool multi_parts_asked = false;
+L47:   auto filename = original_filename;
+L48:   if (filename.size() > 6 && filename.substr(filename.size()-6) == ".zimaa") {
+L49:     filename.resize(filename.size()-2);
+L50:     multi_parts_asked = true;
+L51:   } else {
+L52:   try {
+L53:       fileCompound = std::make_shared<FileCompound>(filename);
+L54:     } catch(...) { }
+L55:   }
+L56: 
+L57:   if ( !fileCompound ) {
+L58:     fileCompound = std::make_shared<FileCompound>(filename, FileCompound::MultiPartToken::Multi);
+L59:   }
+L60: 
+L61:   if (fileCompound->empty()) {
+L62:     // We haven't found any part
+L63:     throw std::runtime_error(Formatter() << "Error opening "
+L64:                              << (multi_parts_asked ? "as a split " : "")
+L65:                              << "ZIM file: " << original_filename);
+L66:   }
+L67:   return fileCompound;
+L68: }
+L69: 
+L70: FileCompound::FileCompound(const std::string& filename):
+L71:   _filename(filename),
+L72:   _fsize(0)
+L73: {
+L74:   addPart(new FilePart(filename));
+L75: }
+L76: 
+L77: FileCompound::FileCompound(const std::string& base_filename, MultiPartToken _token):
+L78:   _filename(base_filename),
+L79:   _fsize(0)
+L80: {
+L81:   try {
+L82:     for (char ch0 = 'a'; ch0 <= 'z'; ++ch0)
+L83:     {
+L84:       const std::string fname0 = base_filename + ch0;
+L85:       for (char ch1 = 'a'; ch1 <= 'z'; ++ch1)
+L86:       {
+L87:         addPart(new FilePart(fname0 + ch1));
+L88:       }
+L89:     }
+L90:   } catch (std::runtime_error& e) {
+L91:     // This catch acts as a break for the double loop.
+L92:   }
+L93: }
+L94: 
+L95: #ifndef _WIN32
+L96: FileCompound::FileCompound(int fd):
+L97:   _filename(),
+L98:   _fsize(0)
+L99: {
+L100:   addPart(new FilePart(fd));
+L101: }
+L102: 
+L103: FileCompound::FileCompound(FdInput fd):
+L104:   _filename(),
+L105:   _fsize(0)
+L106: {
+L107:   addPart(new FilePart(fd));
+L108: }
+L109: 
+L110: FileCompound::FileCompound(const std::vector<FdInput>& fds):
+L111:   _filename(),
+L112:   _fsize(0)
+L113: {
+L114:   for (auto& fd: fds) {
+L115:     addPart(new FilePart(fd));
+L116:   }
+L117: }
+L118: #endif
+L119: 
+L120: FileCompound::~FileCompound() {
+L121:   for(auto it=begin(); it!=end(); it++) {
+L122:     auto filepart = it->second;
+L123:     delete filepart;
+L124:   }
+L125: }
+L126: 
+L127: time_t FileCompound::getMTime() const {
+L128:   if (mtime || empty())
+L129:     return mtime;

@@ -1,0 +1,638 @@
+L1: Web Content Accessibility Guidelines (WCAG) 2.2
+L2: Web Content Accessibility Guidelines (WCAG) 2.2
+L3: W3C Recommendation 12 December 2024
+L4: More details about this document
+L5: This version:
+L6: https://www.w3.org/TR/2024/REC-WCAG22-20241212/
+L7: Latest published version:
+L8: https://www.w3.org/TR/WCAG22/
+L9: Latest editor's draft:https://w3c.github.io/wcag/guidelines/22/
+L10: History:
+L11: https://www.w3.org/standards/history/WCAG22/
+L12: Commit history
+L13: Implementation report:
+L14: https://www.w3.org/WAI/WCAG22/implementation-report/
+L15: Previous Recommendation:https://www.w3.org/TR/WCAG21/
+L16: Editors:
+L17: Alastair Campbell (Nomensa)
+L18: Chuck Adams (Oracle)
+L19: Rachael Bradley Montgomery (Library of Congress)
+L20: Michael Cooper (W3C)
+L39: Web Content Accessibility Guidelines (WCAG) 2.2 covers a wide range of recommendations for making web content more accessible. Following these guidelines will make content more accessible to a wider range of people with disabilities, including accommodations for blindness and low vision, deafness and hearing loss, limited movement, speech disabilities, photosensitivity, and combinations of these, and some accommodation for learning disabilities and cognitive limitations; but will not address every user need for people with these disabilities. These guidelines address accessibility of web content on any kind of device (including desktops, laptops, kiosks, and mobile devices). Following these guidelines will also often make web content more usable to users in general.
+L40: WCAG 2.2 success criteria are written as testable statements that are not technology-specific. Guidance about satisfying the success criteria in specific technologies, as well as general information about interpreting the success criteria, is provided in separate documents. See Web Content Accessibility Guidelines (WCAG) Overview for an introduction and links to WCAG technical and educational material.
+L41: WCAG 2.2 extends Web Content Accessibility Guidelines 2.1 [WCAG21], which was published as a W3C Recommendation June 2018. Content that conforms to WCAG 2.2 also conforms to WCAG 2.0 and WCAG 2.1. The WG intends that for policies requiring conformance to WCAG 2.0 or WCAG 2.1, WCAG 2.2 can provide an alternate means of conformance. The publication of WCAG 2.2 does not deprecate or supersede WCAG 2.0 or WCAG 2.1. While WCAG 2.0 and WCAG 2.1 remain W3C Recommendations, the W3C advises the use of WCAG 2.2 to maximize future applicability of accessibility efforts. The W3C also encourages use of the most current version of WCAG when developing or updating web accessibility policies.
+L42: Status of This Document
+L43: This section describes the status of this
+L44: document at the time of its publication. A list of current W3C
+L45: publications and the latest revision of this technical report can be found
+L46: in the W3C technical reports index at
+L47: https://www.w3.org/TR/.
+L48: To comment, file an issue in the
+L49: W3C WCAG GitHub repository.
+L50: Although the proposed success criteria in this document reference issues tracking
+L51: discussion, the Working Group requests that public comments be filed as new issues,
+L52: one issue per discrete comment. It is free to create a GitHub account to file issues.
+L53: If filing issues in GitHub is not feasible, send email to public-agwg-comments@w3.org (comment archive).
+L54: This document was published by the Accessibility Guidelines Working Group as
+L55: a Recommendation using the
+L56: Recommendation track.
+L57: W3C recommends the wide deployment of this specification as a standard for
+L58: the Web.
+L59: A W3C Recommendation is a specification that, after extensive
+L60: consensus-building, is endorsed by
+L61: W3C and its Members, and
+L62: has commitments from Working Group members to
+L63: royalty-free licensing
+L64: for implementations.
+L65: This document was produced by a group
+L66: operating under the
+L67: W3C Patent
+L68: Policy.
+L69: W3C maintains a
+L70: public list of any patent disclosures
+L71: made in connection with the deliverables of
+L72: the group; that page also includes
+L73: instructions for disclosing a patent. An individual who has actual
+L74: knowledge of a patent which the individual believes contains
+L75: Essential Claim(s)
+L76: must disclose the information in accordance with
+L93: 1. Perceivable
+L94: 1.1 Text Alternatives
+L95: 1.1.1 Non-text Content
+L96: 1.2 Time-based Media
+L97: 1.2.1 Audio-only and Video-only (Prerecorded)
+L98: 1.2.2 Captions (Prerecorded)
+L99: 1.2.3 Audio Description or Media Alternative (Prerecorded)
+L100: 1.2.4 Captions (Live)
+L101: 1.2.5 Audio Description (Prerecorded)
+L102: 1.2.6 Sign Language (Prerecorded)
+L103: 1.2.7 Extended Audio Description (Prerecorded)
+L104: 1.2.8 Media Alternative (Prerecorded)
+L105: 1.2.9 Audio-only (Live)
+L106: 1.3 Adaptable
+L107: 1.3.1 Info and Relationships
+L108: 1.3.2 Meaningful Sequence
+L109: 1.3.3 Sensory Characteristics
+L110: 1.3.4 Orientation
+L111: 1.3.5 Identify Input Purpose
+L112: 1.3.6 Identify Purpose
+L155: 2.4.11 Focus Not Obscured (Minimum)
+L156: 2.4.12 Focus Not Obscured (Enhanced)
+L157: 2.4.13 Focus Appearance
+L158: 2.5 Input Modalities
+L159: 2.5.1 Pointer Gestures
+L160: 2.5.2 Pointer Cancellation
+L161: 2.5.3 Label in Name
+L162: 2.5.4 Motion Actuation
+L163: 2.5.5 Target Size (Enhanced)
+L164: 2.5.6 Concurrent Input Mechanisms
+L165: 2.5.7 Dragging Movements
+L166: 2.5.8 Target Size (Minimum)
+L167: 3. Understandable
+L168: 3.1 Readable
+L169: 3.1.1 Language of Page
+L170: 3.1.2 Language of Parts
+L171: 3.1.3 Unusual Words
+L172: 3.1.4 Abbreviations
+L173: 3.1.5 Reading Level
+L174: 3.1.6 Pronunciation
+L175: 3.2 Predictable
+L176: 3.2.1 On Focus
+L177: 3.2.2 On Input
+L178: 3.2.3 Consistent Navigation
+L179: 3.2.4 Consistent Identification
+L180: 3.2.5 Change on Request
+L181: 3.2.6 Consistent Help
+L182: 3.3 Input Assistance
+L183: 3.3.1 Error Identification
+L184: 3.3.2 Labels or Instructions
+L185: 3.3.3 Error Suggestion
+L186: 3.3.4 Error Prevention (Legal, Financial, Data)
+L187: 3.3.5 Help
+L192: 4. Robust
+L193: 4.1 Compatible
+L194: 4.1.1 Parsing (Obsolete and removed)
+L195: 4.1.2 Name, Role, Value
+L196: 4.1.3 Status Messages
+L197: 5. Conformance
+L198: 5.1 Interpreting Normative Requirements
+L199: 5.2 Conformance Requirements
+L200: 5.2.1 Conformance Level
+L201: 5.2.2 Full pages
+L202: 5.2.3 Complete processes
+L203: 5.2.4 Only Accessibility-Supported Ways of Using Technologies
+L204: 5.2.5 Non-Interference
+L205: 5.3 Conformance Claims (Optional)
+L206: 5.3.1 Required Components of a Conformance Claim
+L207: 5.3.2 Optional Components of a Conformance Claim
+L208: 5.4 Statement of Partial Conformance - Third Party Content
+L209: 5.5 Statement of Partial Conformance - Language
+L210: 5.6 Privacy Considerations
+L211: 5.7 Security Considerations
+L212: 6. Glossary
+L213: 7. Input Purposes for User Interface Components
+L214: A. Change Log
+L215: B. Acknowledgments
+L216: B.1 Participants of the AG WG active in the development of this document:
+L217: B.2 Other previously active WCAG WG participants and other contributors to WCAG 2.0, WCAG 2.1, or supporting resources
+L218: B.3 Enabling funders
+L219: C. References
+L250: Comparison with WCAG 2.1
+L251: WCAG 2.2 was initiated with the goal to continue the work of WCAG 2.1: Improving accessibility guidance for three major groups: users with cognitive or learning disabilities, users with low vision, and users with disabilities on mobile devices. Many ways to meet these needs were proposed and evaluated, and a set of these were refined by the Working Group. Structural requirements inherited from WCAG 2.0, clarity and impact of proposals, and timeline led to the final set of success criteria included in this version. The Working Group considers that WCAG 2.2 incrementally advances web content accessibility guidance for all these areas, but underscores that not all user needs are met by these guidelines.
+L252: WCAG 2.2 builds on and is backwards compatible with WCAG 2.1, meaning web pages that conform to WCAG 2.2 are at least as accessible as pages that conform to WCAG 2.1. Requirements have been added that build on 2.1 and 2.0. WCAG 2.2 has removed one success criterion, 4.1.1 Parsing. Authors that are required by policy to conform with WCAG 2.0 or 2.1 will be able to update content to WCAG 2.2, but may need to continue to test and report 4.1.1. Authors following more than one version of the guidelines should be aware of the following additions.
+L253: New Features in WCAG 2.2
+L254: WCAG 2.2 extends WCAG 2.1 by adding new success criteria, definitions to support them, and guidelines to organize the additions. This additive approach helps to make it clear that sites which conform to WCAG 2.2 also conform to WCAG 2.1. The Accessibility Guidelines Working Group recommends that sites adopt WCAG 2.2 as their new conformance target, even if formal obligations mention previous versions, to provide improved accessibility and to anticipate future policy changes.
+L255: The following success criteria are new in WCAG 2.2:
+L256: 2.4.11 Focus Not Obscured (Minimum) (AA)
+L257: 2.4.12 Focus Not Obscured (Enhanced) (AAA)
+L258: 2.4.13 Focus Appearance (AAA)
+L259: 2.5.7 Dragging Movements (AA)
+L260: 2.5.8 Target Size (Minimum) (AA)
+L261: 3.2.6 Consistent Help (A)
+L262: 3.3.7 Redundant Entry (A)
+L263: 3.3.8 Accessible Authentication (Minimum) (AA)
+L264: 3.3.9 Accessible Authentication (Enhanced) (AAA)
+L265: The new success criteria may reference new terms that have also been added to the glossary and form part of the normative requirements of the success criteria.
+L266: WCAG 2.2 also introduces new sections detailing aspects of the specification which may impact privacy and security.
+L267: Numbering in WCAG 2.2
+L268: In order to avoid confusion for implementers for whom backwards compatibility to WCAG 2 versions is important, new success criteria in WCAG 2.2 have been appended to the end of the set of success criteria within their guideline. This avoids the need to change the section number of success criteria from WCAG 2, which would be caused by inserting new success criteria between existing success criteria in the guideline, but it means success criteria in each guideline are no longer grouped by conformance level. The order of success criteria within each guideline does not imply information about conformance level; only the conformance level indicator (A / AA / AAA) on the success criterion itself indicates this. The WCAG 2.2 Quick Reference will provide a way to view success criteria grouped by conformance level, along with many other filter and sort options.
+L269: Conformance to WCAG 2.2
+L270: WCAG 2.2 uses the same conformance model as WCAG 2.0. It is intended that sites that conform to WCAG 2.2 also conform to WCAG 2.0 and WCAG 2.1, which means they meet the requirements of any policies that reference WCAG 2.0 or WCAG 2.1, while also better meeting the needs of users on the current Web.
+L271: Later Versions of Accessibility Guidelines
+L272: In parallel with WCAG 2.2, the Accessibility Guidelines Working Group is developing another major version of accessibility guidelines. The result of this work is expected to be a more substantial restructuring of web accessibility guidance than would be realistic for dot-releases of WCAG 2. The work follows a research-focused, user-centered design methodology to produce the most effective and flexible outcome, including the roles of content authoring, user agent support, and authoring tool support. This is a multi-year effort, so WCAG 2.2 is needed as an interim measure to provide updated web accessibility guidance to reflect changes on the web since the publication of WCAG 2.0. The Working Group might also develop additional interim versions, continuing with WCAG 2.2, on a similar short timeline to provide additional support while the major version is completed.
+L273: 1. Perceivable
+L274: Information and user interface components must be presentable to users in ways they can perceive.
+L275: Guideline 1.1 Text Alternatives
+L276: Understanding Text Alternatives |
+L277: How to Meet Text Alternatives
+L278: Provide text alternatives for any non-text content so that it can be changed into other forms people need, such as large print, braille, speech, symbols or simpler language.
+L279: Success Criterion 1.1.1 Non-text Content
+L280: Understanding Non-text Content |
+L281: How to Meet Non-text Content
+L282: (Level A)
+L283: All non-text content that is presented to the user has a text alternative that serves the equivalent purpose, except for the situations listed below.
+L284: Controls, Input
+L285: If non-text content is a control or accepts user input, then it has a name that describes its purpose. (Refer to Success Criterion 4.1.2 for additional requirements for controls and content that accepts user input.)
+L286: Time-Based Media
+L287: If non-text content is time-based media, then text alternatives at least provide descriptive
+L288: identification of the non-text content. (Refer to Guideline 1.2 for additional requirements for media.)
+L289: Test
+L290: If non-text content is a test or exercise that would be invalid if presented in text, then text alternatives at least provide descriptive identification of the non-text
+L291: content.
+L292: Sensory
+L293: If non-text content is primarily intended to create a specific sensory experience, then text alternatives at least provide descriptive identification of the non-text
+L294: content.
+L295: CAPTCHA
+L296: If the purpose of non-text content is to confirm that content is being accessed by
+L297: a person rather than a computer, then text alternatives that identify and describe
+L298: the purpose of the non-text content are provided, and alternative forms of CAPTCHA
+L299: using output modes for different types of sensory perception are provided to accommodate
+L300: different disabilities.
+L301: Decoration, Formatting, Invisible
+L302: If non-text content is pure decoration, is used only for visual formatting, or is not presented to users, then it is implemented
+L303: in a way that it can be ignored by assistive technology.
+L304: Guideline 1.2 Time-based Media
+L305: Understanding Time-based Media |
+L306: How to Meet Time-based Media
+L307: Provide alternatives for time-based media.
+L308: Success Criterion 1.2.1 Audio-only and Video-only (Prerecorded)
+L309: Understanding Audio-only and Video-only (Prerecorded) |
+L310: How to Meet Audio-only and Video-only (Prerecorded)
+L311: (Level A)
+L312: For prerecorded
+L313: audio-only and prerecorded video-only media, the following are true, except when the audio or video is a media alternative for text and is clearly labeled as such:
+L794: New
+L795: When a user interface component receives keyboard focus, no part of the component is hidden by author-created content.
+L796: Success Criterion 2.4.13 Focus Appearance
+L797: Understanding Focus Appearance |
+L798: How to Meet Focus Appearance
+L799: (Level AAA)
+L800: New
+L801: When the keyboard focus indicator is visible, an area of the focus indicator meets all the following:
+L802: is at least as large as the area of a 2 CSS pixel thick perimeter of the unfocused component or sub-component, and
+L803: has a contrast ratio of at least 3:1 between the same pixels in the focused and unfocused states.
+L804: Exceptions:
+L805: The focus indicator is determined by the user agent and cannot be adjusted by the author, or
+L806: The focus indicator and the indicator's background color are not modified by the author.
+L807: Note 1
+L808: What is perceived as the user interface component or sub-component (to determine the perimeter) depends on its visual presentation. The visual presentation includes the component's visible content, border, and component-specific background. It does not include shadow and glow effects outside the component's content, background, or border.
+L809: Note 2
+L810: Examples of sub-components that may receive a focus indicator are menu items in an opened drop-down menu, or focusable cells in a grid.
+L811: Note 3
+L812: Contrast calculations can be based on colors defined within the technology (such as HTML, CSS, and SVG). Pixels modified by user agent resolution enhancements and anti-aliasing can be ignored.
+L813: Guideline 2.5 Input Modalities
+L814: Understanding Input Modalities |
+L815: How to Meet Input Modalities
+L881: Note
+L882: This requirement applies to web content that interprets pointer actions (i.e., this does not apply to actions that are required to operate the user agent or assistive technology).
+L883: Success Criterion 2.5.8 Target Size (Minimum)
+L884: Understanding Target Size (Minimum) |
+L885: How to Meet Target Size (Minimum)
+L886: (Level AA)
+L887: New
+L888: The size of the target for pointer inputs is at least 24 by 24 CSS pixels, except when:
+L889: Spacing
+L890: Undersized targets (those less than 24 by 24 CSS pixels) are positioned so that if a 24 CSS pixel diameter circle is centered on the bounding box of each, the circles do not intersect another target or the circle for another undersized target;
+L891: Equivalent
+L892: The function can be achieved through a different control on the same page that meets this criterion;
+L893: Inline
+L894: The target is in a sentence or its size is otherwise constrained by the line-height of non-target text;
+L895: User Agent Control
+L896: The size of the target is determined by the user agent and is not modified by the author;
+L897: Essential
+L898: A particular presentation of the target is essential or is legally required for the information being conveyed.
+L899: Note 1
+L900: Targets that allow for values to be selected spatially based on position within the target are considered one target for the purpose of the success criterion. Examples include sliders, color pickers displaying a gradient of colors, or editable areas where you position the cursor.
+L901: Note 2
+L902: For inline targets the line-height should be interpreted as perpendicular to the flow of text. For example, in a language displayed vertically, the line-height would be horizontal.
+L907: How to Meet Readable
+L908: Make text content readable and understandable.
+L909: Success Criterion 3.1.1 Language of Page
+L910: Understanding Language of Page |
+L911: How to Meet Language of Page
+L912: (Level A)
+L913: The default human language of each web page can be programmatically determined.
+L914: Success Criterion 3.1.2 Language of Parts
+L915: Understanding Language of Parts |
+L916: How to Meet Language of Parts
+L917: (Level AA)
+L918: The human language of each passage or phrase in the content can be programmatically determined except for proper names, technical terms, words of indeterminate language, and words
+L919: or phrases that have become part of the vernacular of the immediately surrounding
+L920: text.
+L921: Success Criterion 3.1.3 Unusual Words
+L922: Understanding Unusual Words |
+L923: How to Meet Unusual Words
+L924: (Level AAA)
+L925: A mechanism is available for identifying specific definitions of words or phrases used in an unusual or restricted way, including idioms and jargon.
+L926: Success Criterion 3.1.4 Abbreviations
+L927: Understanding Abbreviations |
+L928: How to Meet Abbreviations
+L929: (Level AAA)
+L930: A mechanism for identifying the expanded form or meaning of abbreviations is available.
+L931: Success Criterion 3.1.5 Reading Level
+L932: Understanding Reading Level |
+L933: How to Meet Reading Level
+L1076: How to Meet Compatible
+L1077: Maximize compatibility with current and future user agents, including assistive technologies.
+L1078: Success Criterion 4.1.1 Parsing (Obsolete and removed)
+L1079: Understanding Parsing (Obsolete and removed) |
+L1080: How to Meet Parsing (Obsolete and removed)
+L1081: Note
+L1082: This criterion was originally adopted to address problems that assistive technology had directly parsing HTML. Assistive technology no longer has any need to directly parse HTML. Consequently, these problems either no longer exist or are addressed by other criteria. This criterion no longer has utility and is removed.
+L1083: Success Criterion 4.1.2 Name, Role, Value
+L1084: Understanding Name, Role, Value |
+L1085: How to Meet Name, Role, Value
+L1086: (Level A)
+L1087: For all user interface components (including but not limited to: form elements, links and components generated by scripts),
+L1088: the name and role can be programmatically determined; states, properties, and values that can be set by the user can be programmatically set; and notification of changes to these items is available to user agents, including assistive technologies.
+L1089: Note
+L1090: This success criterion is primarily for web authors who develop or script their own
+L1091: user interface components. For example, standard HTML controls already meet this success
+L1092: criterion when used according to specification.
+L1093: Success Criterion 4.1.3 Status Messages
+L1094: Understanding Status Messages |
+L1095: How to Meet Status Messages
+L1096: (Level AA)
+L1097: In content implemented using markup languages, status messages can be programmatically determined through role or properties such that they can be presented to the user by assistive technologies without receiving focus.
+L1098: 5. Conformance
+L1099: This section lists requirements for conformance to WCAG 2.2. It also gives information about how to make conformance claims, which are optional. Finally, it describes what it means to be accessibility supported, since only accessibility-supported ways of using technologies can be relied upon for conformance. Understanding Conformance includes further explanation of the accessibility-supported concept.
+L1113: Note 2
+L1114: It is not recommended that Level AAA conformance be required as a general policy for entire sites because it is not possible to satisfy all Level AAA success criteria for some content.
+L1115: 5.2.2 Full pages
+L1116: Conformance (and conformance level) is for full web page(s) only, and cannot be achieved if part of a web page is excluded.
+L1117: Note 1
+L1118: For the purpose of determining conformance, alternatives to part of a page's content are considered part of the page when the alternatives can be obtained directly from the page, e.g., a long description or an alternative presentation of a video.
+L1119: Note 2
+L1120: Authors of web pages that cannot conform due to content outside of the author's control may consider a Statement of Partial Conformance.
+L1121: Note 3
+L1122: A full page includes each variation of the page that is automatically presented by the page for various screen sizes (e.g. variations in a responsive web page). Each of these variations needs to conform (or needs to have a conforming alternate version) in order for the entire page to conform.
+L1123: 5.2.3 Complete processes
+L1124: When a web page is one of a series of web pages presenting a process (i.e., a sequence of steps that need to be completed in order to accomplish an activity), all web pages in the process conform at the specified level or better. (Conformance is not possible at a particular level if any page in the process does not conform at that level or better.)
+L1125: Example
+L1126: An online store has a series of pages that are used to select and purchase products. All pages in the series from start to finish (checkout) conform in order for any page that is part of the process to conform.
+L1127: 5.2.4 Only Accessibility-Supported Ways of Using Technologies
+L1128: Only accessibility-supported ways of using technologies are relied upon to satisfy the success criteria. Any information or functionality that is provided in a way that is not accessibility supported is also available in a way that is accessibility supported. (See Understanding accessibility support.)
+L1129: 5.2.5 Non-Interference
+L1130: If technologies are used in a way that is not accessibility supported, or if they are used in a non-conforming way, then they do not block the ability of users to access the rest of the page. In addition, the web page as a whole continues to meet the conformance requirements under each of the following conditions:
+L1131: when any technology that is not relied upon is turned on in a user agent,
+L1132: when any technology that is not relied upon is turned off in a user agent, and
+L1133: when any technology that is not relied upon is not supported by a user agent
+L1134: In addition, the following success criteria apply to all content on the page, including content that is not otherwise relied upon to meet conformance, because failure to meet them could interfere with any use of the page:
+L1135: 1.4.2 - Audio Control,
+L1136: 2.1.2 - No Keyboard Trap,
+L1137: 2.3.1 - Three Flashes or Below Threshold, and
+L1138: 2.2.2 - Pause, Stop, Hide.
+L1139: Note
+L1140: If a page cannot conform (for example, a conformance test page or an example page), it cannot be included in the scope of conformance or in a conformance claim.
+L1312: provided by an assistive technology is more specific and appropriate to the needs
+L1313: of its target users. The mainstream user agent may provide important functionality
+L1314: to assistive technologies like retrieving web content from program objects or parsing
+L1315: markup into identifiable bundles.
+L1316: Example
+L1317: Assistive technologies that are important in the context of this document include
+L1318: the following:
+L1319: screen magnifiers, and other visual reading assistants, which are used by people with
+L1320: visual, perceptual and physical print disabilities to change text font, size, spacing,
+L1321: color, synchronization with speech, etc. in order to improve the visual readability
+L1322: of rendered text and images;
+L1323: screen readers, which are used by people who are blind to read textual information
+L1324: through synthesized speech or braille;
+L1325: text-to-speech software, which is used by some people with cognitive, language, and
+L1326: learning disabilities to convert text into synthetic speech;
+L1327: speech recognition software, which may be used by people who have some physical disabilities;
+L1328: alternative keyboards, which are used by people with certain physical disabilities
+L1329: to simulate the keyboard (including alternate keyboards that use head pointers, single
+L1330: switches, sip/puff and other special input devices.);
+L1331: alternative pointing devices, which are used by people with certain physical disabilities
+L2085: 2020-03-30: Added Accessible Authentication (Minimum).
+L2086: 2020-05-27: Added Dragging (later renamed Dragging Movements).
+L2087: 2020-07-19: Added Findable Help (later renamed to Consistent Help), Pointer Target Spacing (later renamed Target Size (Minimum)), and Redundant Entry.
+L2088: 2020-08-04: Added Focus Appearance (Minimum) (later renamed to Focus Appearance).
+L2089: 2021-09-21: Added Accessible Authentication (No Exception) (later renamed Accessible Authentication (Enhanced)).
+L2090: 2022-03-22: Added Focus Not Obscured (Minimum).
+L2091: 2022-05-30: Added Focus Not Obscured (Enhanced).
+L2092: 2023-06-05: Added privacy and security sections within conformance.
+L2093: 2024-12-12: Republished WCAG 2.2, incorporating the following errata:
+L2094: modified the definitions of single pointer, used in an unusual or restricted way, motion animation, and programmatically determined
+L2095: modified the formatting of definitions for changes of context, general flash and red flash thresholds, cognitive function test, and structure
+L2096: removed the defunct encloses definition
+L2097: corrected typo in input purposes list
+L2098: modified the formatting of Target Size (Minimum) and Accessible Authentication (Minimum)
+L2099: modified the visual presentation for content identified as New
+L2100: modified the language covering devices in the Abstract
+L2101: made editorial changes to improve consistent use of definitions in the success criteria
+L2102: made editorial changes to improve consistent use of the terms success criteria/criterion, web, website, and web page
+L2103: B. Acknowledgments
+L2104: This section is non-normative.
+L2105: Additional information about participation in the Accessibility Guidelines Working Group (AG WG) can be found on the Working Group home page.
+L2106: B.1 Participants of the AG WG active in the development of this document:
+L2107: Jake Abma (Invited Expert)
+L2108: Shadi Abou-Zahra (Amazon)
+L2109: Chuck Adams (Oracle Corporation)
+L2110: Amani Ali (Nomensa)
+L2111: Jim Allan (Invited Expert)
+L2112: Jon Avila (Level Access)
+L2113: Bruce Bailey (U.S. Access Board)
+L2114: Renaldo Bernard (University of Southampton)
+L2115: Dan Bjorge (Deque Systems, Inc.)
+L2206: Ergonomics of human-system interaction—Part 391: Requirements, analysis and compliance test methods for the reduction of photosensitive seizures. International Standards Organization. URL: https://www.iso.org/standard/56350.html
+L2207: [pointerevents]
+L2208: Pointer Events. Jacob Rossi; Matt Brubeck. W3C. 4 April 2019. W3C Recommendation. URL: https://www.w3.org/TR/pointerevents/
+L2209: [RFC2119]
+L2210: Key words for use in RFCs to Indicate Requirement Levels. S. Bradner. IETF. March 1997. Best Current Practice. URL: https://www.rfc-editor.org/rfc/rfc2119
+L2211: [SRGB]
+L2212: Multimedia systems and equipment - Colour measurement and management - Part 2-1: Colour management - Default RGB colour space - sRGB. IEC. URL: https://webstore.iec.ch/publication/6169
+L2213: [UAAG10]
+L2214: User Agent Accessibility Guidelines 1.0. Ian Jacobs; Jon Gunderson; Eric Hansen. W3C. 17 December 2002. W3C Recommendation. URL: https://www.w3.org/TR/UAAG10/
+L2215: [UNESCO]
+L2216: International Standard Classification of Education. 2011. URL: https://unesdoc.unesco.org/ark:/48223/pf0000219109
+L2217: [WAI-WEBCONTENT]
+L2218: Web Content Accessibility Guidelines 1.0. Wendy Chisholm; Gregg Vanderheiden; Ian Jacobs. W3C. 5 May 1999. W3C Recommendation. URL: https://www.w3.org/TR/WAI-WEBCONTENT/
+L2219: [WCAG20]
+L2220: Web Content Accessibility Guidelines (WCAG) 2.0. Ben Caldwell; Michael Cooper; Loretta Guarino Reid; Gregg Vanderheiden et al. W3C. 11 December 2008. W3C Recommendation. URL: https://www.w3.org/TR/WCAG20/
+L2221: [WCAG21]
+L2222: Web Content Accessibility Guidelines (WCAG) 2.1. Michael Cooper; Andrew Kirkpatrick; Joshue O'Connor; Alastair Campbell. W3C. 21 September 2023. W3C Recommendation. URL: https://www.w3.org/TR/WCAG21/
+L2223: ↑
+L2224: Permalink
+L2225: Referenced in:
+L2226: § 3.1.4 Abbreviations
+L2227: Permalink
+L2228: Referenced in:
+L2229: § 2.5.4 Motion Actuation
+L2230: § 5. Conformance
+L2231: § 5.2.4 Only Accessibility-Supported Ways of Using Technologies
+L2232: § 5.2.5 Non-Interference
+L2233: § 5.5 Statement of Partial Conformance - Language
+L2234: § 6. Glossary
+L2235: Permalink
+L2236: Referenced in:
+L2237: § 1.2.1 Audio-only and Video-only (Prerecorded)
+L2238: § 1.2.3 Audio Description or Media Alternative (Prerecorded)
+L2239: § 1.2.8 Media Alternative (Prerecorded)
+L2304: Referenced in:
+L2305: § 5. Conformance
+L2306: § 5.2.2 Full pages
+L2307: § 6. Glossary (2) (3)
+L2308: Permalink
+L2309: Referenced in:
+L2310: § 5.2.1 Conformance Level
+L2311: Permalink
+L2312: Referenced in:
+L2313: § 2.4.13 Focus Appearance
+L2314: § 6. Glossary (2) (3) (4)
+L2315: Permalink
+L2316: Referenced in:
+L2317: § 3.3.5 Help
+L2318: Permalink
+L2319: Referenced in:
+L2320: § 1.4.3 Contrast (Minimum)
+L2321: § 1.4.6 Contrast (Enhanced)
+L2322: § 1.4.11 Non-text Contrast
+L2323: Permalink
+L2324: Referenced in:
+L2325: § 1.3.2 Meaningful Sequence
+L2326: Permalink
+L2327: Referenced in:
+L2328: § 1.4.10 Reflow (2)
+L2329: § 2.4.13 Focus Appearance
+L2330: § 2.5.5 Target Size (Enhanced)
+L2331: § 2.5.8 Target Size (Minimum)
+L2332: Permalink
+L2333: Referenced in:
+L2334: § 2.5.2 Pointer Cancellation
+L2335: § 6. Glossary
+L2336: Permalink
+L2337: Referenced in:
+L2338: § 2.5.7 Dragging Movements
+L2339: Permalink
+L2340: Referenced in:
+L2341: § 2.2.4 Interruptions
+L2342: Permalink
+L2343: Referenced in:
+L2344: § 1.3.4 Orientation
+L2345: § 1.4.5 Images of Text
+L2346: § 1.4.9 Images of Text (No Exception)
+L2347: § 1.4.11 Non-text Contrast
+L2348: § 2.2.1 Timing Adjustable
+L2356: § 2.5.6 Concurrent Input Mechanisms
+L2357: § 2.5.7 Dragging Movements
+L2358: § 2.5.8 Target Size (Minimum)
+L2359: § 3.3.7 Redundant Entry
+L2360: Permalink
+L2361: Referenced in:
+L2362: § 1.2.7 Extended Audio Description (Prerecorded)
+L2363: § 6. Glossary
+L2364: Permalink
+L2365: Referenced in:
+L2366: § 2.3.1 Three Flashes or Below Threshold
+L2367: § 2.3.2 Three Flashes
+L2368: § 6. Glossary (2)
+L2369: Permalink
+L2370: Referenced in:
+L2371: § 2.4.7 Focus Visible
+L2372: § 2.4.13 Focus Appearance
+L2373: Permalink
+L2374: Referenced in:
+L2375: § 2.1.1 Keyboard
+L2376: § 2.1.3 Keyboard (No Exception)
+L2377: § 2.5.1 Pointer Gestures
+L2378: § 2.5.2 Pointer Cancellation
+L2379: § 2.5.4 Motion Actuation
+L2380: § 2.5.7 Dragging Movements
+L2381: § 6. Glossary
+L2382: Permalink
+L2383: Referenced in:
+L2384: § 2.3.1 Three Flashes or Below Threshold
+L2385: § 6. Glossary
+L2386: § A. Change Log
+L2387: Permalink
+L2388: Referenced in:
+L2389: § 1.4.12 Text Spacing
+L2390: § 3.1.1 Language of Page
+L2391: § 3.1.2 Language of Parts
+L2392: § 6. Glossary (2) (3) (4)
+L2393: Permalink
+L2394: Referenced in:
+L2395: § 3.1.3 Unusual Words
+L2396: Permalink
+L2397: Referenced in:
+L2398: § 1.4.3 Contrast (Minimum)
+L2399: § 1.4.4 Resize Text
+L2400: § 1.4.5 Images of Text
+L2401: § 1.4.6 Contrast (Enhanced)
+L2402: § 1.4.9 Images of Text (No Exception)
+L2403: § 2.5.3 Label in Name
+L2404: § 6. Glossary
+L2405: Permalink
+L2406: Referenced in:
+L2407: § 5.1 Interpreting Normative Requirements
+L2408: § 6. Glossary
+L2483: Permalink
+L2484: Referenced in:
+L2485: § 2.5.8 Target Size (Minimum)
+L2486: § 6. Glossary
+L2487: Permalink
+L2488: Referenced in:
+L2489: § 1.1.1 Non-text Content
+L2490: § 2.5.3 Label in Name
+L2491: § 4.1.2 Name, Role, Value
+L2492: § 6. Glossary
+L2493: Permalink
+L2494: Referenced in:
+L2495: § 2.4.3 Focus Order
+L2496: Permalink
+L2497: Referenced in:
+L2498: § 1.1.1 Non-text Content
+L2499: § 3.3.8 Accessible Authentication (Minimum)
+L2500: § 6. Glossary
+L2501: Permalink
+L2502: Referenced in:
+L2512: Permalink
+L2513: Referenced in:
+L2514: § 2.4.13 Focus Appearance
+L2515: Permalink
+L2516: Referenced in:
+L2517: § 2.5.5 Target Size (Enhanced)
+L2518: § 2.5.8 Target Size (Minimum)
+L2519: Permalink
+L2520: Referenced in:
+L2521: § 1.2.1 Audio-only and Video-only (Prerecorded)
+L2522: § 1.2.2 Captions (Prerecorded)
+L2523: § 1.2.3 Audio Description or Media Alternative (Prerecorded)
+L2524: § 1.2.5 Audio Description (Prerecorded)
+L2525: § 1.2.6 Sign Language (Prerecorded)
+L2526: § 1.2.7 Extended Audio Description (Prerecorded)
+L2527: § 1.2.8 Media Alternative (Prerecorded)
+L2528: § 1.4.7 Low or No Background Audio
+L2529: Permalink
+L2530: Referenced in:
+L2531: § 1.3.1 Info and Relationships
+L2532: § 1.4.11 Non-text Contrast
+L2533: § 2.4.13 Focus Appearance
+L2534: § 2.5.5 Target Size (Enhanced)
+L2535: § 2.5.8 Target Size (Minimum)
+L2536: § 6. Glossary
+L2537: Permalink
+L2538: Referenced in:
+L2539: § 6. Glossary
+L2540: Permalink
+L2541: Referenced in:
+L2542: § 2.4.5 Multiple Ways
+L2543: § 3.3.7 Redundant Entry
+L2544: § 3.3.8 Accessible Authentication (Minimum)
+L2545: § 3.3.9 Accessible Authentication (Enhanced)
+L2546: § 5.2.3 Complete processes
+L2547: § 6. Glossary (2) (3) (4)
+L2548: Permalink
+L2549: Referenced in:
+L2550: § 1.3.1 Info and Relationships
+L2551: § 1.3.2 Meaningful Sequence
+L2552: § 1.3.5 Identify Input Purpose
+L2553: § 1.3.6 Identify Purpose
+L2554: § 3.1.1 Language of Page
+L2555: § 3.1.2 Language of Parts
+L2556: § 4.1.2 Name, Role, Value
+L2557: § 4.1.3 Status Messages
+L2558: § 6. Glossary (2) (3) (4) (5)
+L2559: § A. Change Log
+L2560: Permalink
+L2561: Referenced in:
+L2562: § 2.4.4 Link Purpose (In Context)
+L2563: Permalink
+L2564: Referenced in:
+L2565: § 4.1.2 Name, Role, Value
+L2566: Permalink
+L2567: Referenced in:
+L2568: § 1.1.1 Non-text Content
+L2569: § 1.4.3 Contrast (Minimum)
+L2570: § 1.4.6 Contrast (Enhanced)
+L2571: § 1.4.9 Images of Text (No Exception)
+L2572: Permalink
+L2667: Permalink
+L2668: Referenced in:
+L2669: § 2.4.13 Focus Appearance
+L2670: § 5.2.4 Only Accessibility-Supported Ways of Using Technologies
+L2671: § 5.2.5 Non-Interference
+L2672: § 5.3.1 Required Components of a Conformance Claim
+L2673: § 6. Glossary (2) (3)
+L2674: Permalink
+L2675: Referenced in:
+L2676: § 1.1.1 Non-text Content
+L2677: § 1.4.3 Contrast (Minimum)
+L2678: § 1.4.4 Resize Text
+L2679: § 1.4.5 Images of Text
+L2680: § 1.4.6 Contrast (Enhanced)
+L2681: § 1.4.9 Images of Text (No Exception)
+L2682: § 1.4.12 Text Spacing
+L2683: § 2.5.3 Label in Name
+L2684: § 3.1.2 Language of Parts
+L2685: § 6. Glossary (2)
+L2686: Permalink
+L2687: Referenced in:
+L2688: § 1.1.1 Non-text Content
+L2689: § 6. Glossary (2)
+L2690: Permalink
+L2691: Referenced in:
+L2692: § 2.5.2 Pointer Cancellation
+L2693: § 6. Glossary
+L2694: Permalink
+L2695: Referenced in:
+L2696: § 3.1.3 Unusual Words
+L2697: § A. Change Log
+L2698: Permalink
+L2699: Referenced in:
+L2700: § 1.4.11 Non-text Contrast
+L2701: § 1.4.13 Content on Hover or Focus
+L2754: § 2.4.3 Focus Order
+L2755: § 2.4.5 Multiple Ways
+L2756: § 3.1.1 Language of Page
+L2757: § 3.2.3 Consistent Navigation
+L2758: § 3.2.6 Consistent Help
+L2759: § 3.3.4 Error Prevention (Legal, Financial, Data)
+L2760: § 3.3.6 Error Prevention (All)
+L2761: § 5.2.1 Conformance Level
+L2762: § 5.2.2 Full pages
+L2763: § 5.2.3 Complete processes
+L2764: § 5.2.5 Non-Interference
+L2765: § 5.3 Conformance Claims (Optional)
+L2766: § 6. Glossary (2) (3) (4) (5) (6)

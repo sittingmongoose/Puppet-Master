@@ -1,0 +1,57 @@
+{
+  "id": "P11",
+  "requested_url": "https://webkitgtk.org/releases/",
+  "resolved_url": "https://webkitgtk.org/releases/",
+  "http_status": 200,
+  "retrieved_started_at_utc": "2026-10-07T19:40:50.015767+00:00",
+  "retrieved_completed_at_utc": "2026-10-07T19:40:50.899775+00:00",
+  "response_bytes": 357918,
+  "response_sha256": "0ac8c8df9f3641cbad3a1ad461be39bcba9ab1dfe1adaff646c55bee43009e8e",
+  "http_headers": {
+    "Content-Type": "text/html;charset=UTF-8",
+    "ETag": null,
+    "Last-Modified": null,
+    "Date": "Wed, 07 Oct 2026 19:40:50 GMT"
+  },
+  "version_or_ref": "directory observation only",
+  "method": "GET; response never executed; bounded excerpts only",
+  "line_coordinates": "1-based normalized HTML visible-text lines; see collector identity",
+  "response_text_line_count": 1542,
+  "matched_lines": {
+    "LATEST.STABLE": [
+      5
+    ],
+    "2.54.1": [
+      5,
+      1536,
+      1537,
+      1538,
+      1539
+    ]
+  },
+  "retained_line_numbers": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    1533,
+    1534,
+    1535,
+    1536,
+    1537,
+    1538,
+    1539,
+    1540,
+    1541,
+    1542
+  ],
+  "excerpt_selection_truncated": false,
+  "excerpt_file": "P11.txt",
+  "excerpt_sha256": "e552660441c5359903b3752ee954dcaff7083a32f0bb9154fe7a46d1fd45b8ea"
+}

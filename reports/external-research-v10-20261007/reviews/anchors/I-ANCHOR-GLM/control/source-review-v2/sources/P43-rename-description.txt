@@ -1,0 +1,208 @@
+L26: Before glibc 2.10:
+L27: _ATFILE_SOURCE
+L28: renameat2():
+L29: _GNU_SOURCE
+L30: DESCRIPTION top
+L31: rename() renames a file, moving it between directories if
+L32: required. Any other hard links to the file (as created using
+L33: link(2)) are unaffected. Open file descriptors for oldpath are
+L34: also unaffected.
+L35: Various restrictions determine whether or not the rename operation
+L36: succeeds: see ERRORS below.
+L37: If newpath already exists, it will be atomically replaced, so that
+L38: there is no point at which another process attempting to access
+L39: newpath will find it missing. However, there will probably be a
+L40: window in which both oldpath and newpath refer to the file being
+L41: renamed.
+L42: If oldpath and newpath are existing hard links referring to the
+L43: same file, then rename() does nothing, and returns a success
+L44: status.
+L45: If newpath exists but the operation fails for some reason,
+L46: rename() guarantees to leave an instance of newpath in place.
+L47: oldpath can specify a directory. In this case, newpath must
+L48: either not exist, or it must specify an empty directory.
+L49: If oldpath refers to a symbolic link, the link is renamed; if
+L50: newpath refers to a symbolic link, the link will be overwritten.
+L51: renameat()
+L52: The renameat() system call operates in exactly the same way as
+L53: rename(), except for the differences described here.
+L54: If the pathname given in oldpath is relative, then it is
+L55: interpreted relative to the directory referred to by the file
+L56: descriptor olddirfd (rather than relative to the current working
+L57: directory of the calling process, as is done by rename() for a
+L58: relative pathname).
+L59: If oldpath is relative and olddirfd is the special value AT_FDCWD,
+L60: then oldpath is interpreted relative to the current working
+L61: directory of the calling process (like rename()).
+L62: If oldpath is absolute, then olddirfd is ignored.
+L63: The interpretation of newpath is as for oldpath, except that a
+L64: relative pathname is interpreted relative to the directory
+L65: referred to by the file descriptor newdirfd.
+L67: renameat2()
+L68: renameat2() has an additional flags argument. A renameat2() call
+L69: with a zero flags argument is equivalent to renameat().
+L70: The flags argument is a bit mask consisting of zero or more of the
+L71: following flags:
+L72: RENAME_EXCHANGE
+L73: Atomically exchange oldpath and newpath. Both pathnames
+L74: must exist but may be of different types (e.g., one could
+L75: be a non-empty directory and the other a symbolic link).
+L76: RENAME_NOREPLACE
+L77: Don't overwrite newpath of the rename. Return an error if
+L78: newpath already exists.
+L79: RENAME_NOREPLACE can't be employed together with
+L80: RENAME_EXCHANGE.
+L81: RENAME_NOREPLACE requires support from the underlying
+L82: filesystem. Support for various filesystems was added as
+L83: follows:
+L84: • ext4 (Linux 3.15);
+L85: • btrfs, tmpfs, and cifs (Linux 3.17);
+L86: • xfs (Linux 4.0);
+L87: • Support for many other filesystems was added in Linux
+L88: 4.9, including ext2, minix, reiserfs, jfs, vfat, and
+L89: bpf.
+L90: RENAME_WHITEOUT (since Linux 3.18)
+L91: This operation makes sense only for overlay/union
+L92: filesystem implementations.
+L93: Specifying RENAME_WHITEOUT creates a "whiteout" object at
+L94: the source of the rename at the same time as performing the
+L95: rename. The whole operation is atomic, so that if the
+L96: rename succeeds then the whiteout will also have been
+L97: created.
+L98: A "whiteout" is an object that has special meaning in
+L99: union/overlay filesystem constructs. In these constructs,
+L100: multiple layers exist and only the top one is ever
+L101: modified. A whiteout on an upper layer will effectively
+L102: hide a matching file in the lower layer, making it appear
+L103: as if the file didn't exist.
+L104: When a file that exists on the lower layer is renamed, the
+L105: file is first copied up (if not already on the upper layer)
+L106: and then renamed on the upper, read-write layer. At the
+L107: same time, the source file needs to be "whiteouted" (so
+L108: that the version of the source file in the lower layer is
+L109: rendered invisible). The whole operation needs to be done
+L110: atomically.
+L111: When not part of a union/overlay, the whiteout appears as a
+L112: character device with a {0,0} device number. (Note that
+L113: other union/overlay implementations may employ different
+L114: methods for storing whiteout entries; specifically, BSD
+L117: such as CODA and XFS, is ignored by the kernel's whiteout
+L118: support code, as of Linux 4.19, at least.)
+L119: RENAME_WHITEOUT requires the same privileges as creating a
+L120: device node (i.e., the CAP_MKNOD capability).
+L121: RENAME_WHITEOUT can't be employed together with
+L122: RENAME_EXCHANGE.
+L123: RENAME_WHITEOUT requires support from the underlying
+L124: filesystem. Among the filesystems that support it are
+L125: tmpfs (since Linux 3.18), ext4 (since Linux 3.18), XFS
+L126: (since Linux 4.1), f2fs (since Linux 4.2), btrfs (since
+L127: Linux 4.7), and ubifs (since Linux 4.9).
+L128: RETURN VALUE top
+L129: On success, zero is returned. On error, -1 is returned, and errno
+L130: is set to indicate the error.
+L131: ERRORS top
+L132: EACCES Write permission is denied for the directory containing
+L133: oldpath or newpath, or, search permission is denied for one
+L134: of the directories in the path prefix of oldpath or
+L135: newpath, or oldpath is a directory and does not allow write
+L136: permission (needed to update the .. entry). (See also
+L137: path_resolution(7).)
+L138: EBUSY The rename fails because oldpath or newpath is a directory
+L139: that is in use by some process (perhaps as current working
+L140: directory, or as root directory, or because it was open for
+L141: reading) or is in use by the system (for example as a mount
+L142: point), while the system considers this an error. (Note
+L143: that there is no requirement to return EBUSY in such cases—
+L144: there is nothing wrong with doing the rename anyway—but it
+L145: is allowed to return EBUSY if the system cannot otherwise
+L146: handle such situations.)
+L147: EDQUOT The user's quota of disk blocks on the filesystem has been
+L148: exhausted.
+L149: EFAULT oldpath or newpath points outside your accessible address
+L150: space.
+L151: EINVAL The new pathname contained a path prefix of the old, or,
+L152: more generally, an attempt was made to make a directory a
+L153: subdirectory of itself.
+L154: EISDIR newpath is an existing directory, but oldpath is not a
+L155: directory.
+L156: ELOOP Too many symbolic links were encountered in resolving
+L185: file to be replaced nor that of the directory containing
+L186: it, and the process is not privileged (Linux: does not have
+L187: the CAP_FOWNER capability); or the filesystem containing
+L188: oldpath does not support renaming of the type requested.
+L189: EROFS The file is on a read-only filesystem.
+L190: EXDEV oldpath and newpath are not on the same mounted filesystem.
+L191: (Linux permits a filesystem to be mounted at multiple
+L192: points, but rename() does not work across different mount
+L193: points, even if the same filesystem is mounted on both.)
+L194: The following additional errors can occur for renameat() and
+L195: renameat2():
+L196: EBADF oldpath (newpath) is relative but olddirfd (newdirfd) is
+L197: not a valid file descriptor.
+L198: ENOTDIR
+L199: oldpath is relative and olddirfd is a file descriptor
+L200: referring to a file other than a directory; or similar for
+L201: newpath and newdirfd
+L202: The following additional errors can occur for renameat2():
+L203: EEXIST flags contains RENAME_NOREPLACE and newpath already exists.
+L204: EINVAL An invalid flag was specified in flags.
+L205: EINVAL Both RENAME_NOREPLACE and RENAME_EXCHANGE were specified in
+L206: flags.
+L207: EINVAL Both RENAME_WHITEOUT and RENAME_EXCHANGE were specified in
+L208: flags.
+L209: EINVAL The filesystem does not support one of the flags in flags.
+L210: ENOENT flags contains RENAME_EXCHANGE and newpath does not exist.
+L211: EPERM RENAME_WHITEOUT was specified in flags, but the caller does
+L212: not have the CAP_MKNOD capability.
+L213: STANDARDS top
+L214: rename()
+L215: C11, POSIX.1-2024.
+L216: renameat()
+L217: POSIX.1-2024.
+L218: renameat2()
+L219: Linux.
+L220: HISTORY top
+L221: rename()
+L222: C89, POSIX.1-2001, 4.3BSD.
+L223: renameat()
+L224: POSIX.1-2008. Linux 2.6.16, glibc 2.4.
+L229: wrapper function falls back to the use of rename(). When oldpath
+L230: and newpath are relative pathnames, glibc constructs pathnames
+L231: based on the symbolic links in /proc/self/fd that correspond to
+L232: the olddirfd and newdirfd arguments.
+L233: BUGS top
+L234: On NFS filesystems, you can not assume that if the operation
+L235: failed, the file was not renamed. If the server does the rename
+L236: operation and then crashes, the retransmitted RPC which will be
+L237: processed when the server is up again causes a failure. The
+L238: application is expected to deal with this. See link(2) for a
+L239: similar problem.
+L240: SEE ALSO top
+L241: mv(1), rename(1), chmod(2), link(2), symlink(2), unlink(2),
+L242: path_resolution(7), symlink(7)
+L243: COLOPHON top
+L244: This page is part of the man-pages (Linux kernel and C library
+L245: user-space interface documentation) project. Information about
+L246: the project can be found at
+L247: ⟨https://www.kernel.org/doc/man-pages/⟩. If you have a bug report
+L248: for this manual page, see
+L249: ⟨https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/tree/CONTRIBUTING⟩.
+L250: This page was obtained from the tarball man-pages-6.19.tar.gz
+L251: fetched from
+L252: ⟨https://mirrors.edge.kernel.org/pub/linux/docs/man-pages/⟩ on
+L253: 2026-09-09. If you discover any rendering problems in this HTML
+L254: version of the page, or you believe there is a better or more up-
+L255: to-date source for the page, or you have corrections or
+L256: improvements to the information in this COLOPHON (which is not
+L257: part of the original manual page), send a mail to
+L258: man-pages@man7.org
+L259: Linux man-pages 6.19 2026-02-08 rename(2)
+L260: Pages that refer to this page:
+L261: exch(1),
+L262: mv(1),
+L263: F_GETDELEG(2const),
+L264: F_NOTIFY(2const),
+L265: io_uring_enter2(2),
+L266: io_uring_enter(2),
+L267: link(2),
+L268: open(2),

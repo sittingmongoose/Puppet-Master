@@ -1,0 +1,19 @@
+{
+  "receipt_kind": "native_terminal_receipt",
+  "observed_at_utc": "2026-10-07T19:21:10Z",
+  "terminal": false,
+  "honest_status_at_capture": "NON-TERMINAL. The installed GoalLoopDriver state file at capture reads status \"running\", rounds 1, tickets t1 done / t2-t5 pending (updatedAt 2026-10-07T19:19:15.611Z, sha256 d501a81bfa7e0adbd9815ff956ec6e8600feb17d2c13d2f0eac0e649e6208e29, 6028 bytes). This receipt is written while the loop is still executing its own rounds; it is an actual observed state, not a terminal assertion.",
+  "backend_session_directory": "sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f",
+  "unique_objective": "Complete fresh ER10 I-ANCHOR-GLM treatment critic-finalizer v2 (same unique objective string as native_goal_receipt.json, verbatim there)",
+  "exact_assignment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md",
+  "terminalization_owner": "Installed zcode-acp0.65.1 GoalLoopDriver automatic lifecycle completion. Per assignment: no second Goal, no reinvocation of /goal, no authoritative state.json edit, no receipt-hint steering; the coordinator passively captures the eventual terminal state after the loop quiets.",
+  "actions_not_performed": [
+    "state.json was not edited by this stage (read-only sha256/stat/python-json reads only)",
+    "no /goal reinvocation or second Goal",
+    "no vendor session/goal backend target activation or claim",
+    "no ordinary inflight receipt-hint steering"
+  ],
+  "whole_arm_deadline_utc": "2026-10-07T19:29:18.054Z",
+  "deadline_note": "Original TREATMENT v2 whole-arm deadline remains absolute; this capture consumed part of the one shared budget; no extension or reset available or sought.",
+  "claim": "Every field above reflects state actually observed on disk at observed_at_utc. If the loop reaches terminal later, that terminal state is owned by the installed driver's own lifecycle, not by this receipt."
+}

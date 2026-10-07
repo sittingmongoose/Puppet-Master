@@ -1,0 +1,37 @@
+{
+  "id": "P11-dompurify-compare",
+  "requested_url": "https://api.github.com/repos/cure53/DOMPurify/compare/3.4.15...3.4.16",
+  "retrieved_started_utc": "2026-10-07T19:42:46.927869+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://api.github.com/repos/cure53/DOMPurify/compare/3.4.15...3.4.16",
+  "http_status": 200,
+  "response_bytes": 390410,
+  "response_sha256": "fd4fc40aff215717f64d348a44006396101fba86abdf07f0ef92c2f1e7656e25",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:42:47 GMT",
+    "Content-Type": "application/json; charset=utf-8",
+    "ETag": "W/\"d4abcb51423b5256bfc6ec69dca009a68e4317560654ddf7d422b5fe84f48aa5\"",
+    "Last-Modified": "Wed, 23 Sep 2026 15:16:36 GMT"
+  },
+  "response_text_lines": 579,
+  "normalization": "json",
+  "selection_patterns": [
+    "sha",
+    "html_url",
+    "message",
+    "filename",
+    "patch",
+    "raw.text",
+    "IN_PLACE"
+  ],
+  "context_before": 3,
+  "context_after": 12,
+  "max_hits_per_pattern": 20,
+  "selected_line_ranges": null,
+  "bounded_evidence_file": "P11-dompurify-compare.txt",
+  "bounded_evidence_sha256": "dbb6066cac927cfc6128304a3238cafe431b5f52618aa0d1a5de0c49eae99427",
+  "bounded_evidence_bytes": 18735,
+  "retrieved_finished_utc": "2026-10-07T19:42:47.588168+00:00",
+  "selection": "comparison summary, commits, and src/purify.ts / test/test-suite.js / package.json patches only; no generated dist/build/dependency patch retained",
+  "bounded_evidence_derivation_note": "Filtered summary and relevant src/purify.ts/test/test-suite.js/package.json patches were retained after a second HTTPS GET of the same comparison endpoint. Original response identity identifies first GET; retained excerpt has its own hash. No downloaded code executed."
+}

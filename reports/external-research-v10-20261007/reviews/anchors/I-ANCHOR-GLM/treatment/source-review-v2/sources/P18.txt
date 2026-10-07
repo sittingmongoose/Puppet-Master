@@ -1,0 +1,145 @@
+146: child-src Pre-request check
+147: 6.1.1.2
+148: child-src Post-request check
+149: 6.1.2 connect-src
+150: 6.1.2.1
+151: connect-src Pre-request check
+152: 6.1.2.2
+153: connect-src Post-request check
+154: 6.1.3 default-src
+155: 6.1.3.1
+156: default-src Pre-request check
+157: 6.1.3.2
+158: default-src Post-request check
+159: 6.1.3.3
+160: default-src Inline Check
+161: 6.1.4 font-src
+162: 6.1.4.1
+163: font-src Pre-request check
+164: 6.1.4.2
+165: font-src Post-request check
+166: 6.1.5 frame-src
+188: object-src Pre-request check
+189: 6.1.9.2
+190: object-src Post-request check
+191: 6.1.10 script-src
+192: 6.1.10.1
+193: script-src Pre-request check
+194: 6.1.10.2
+195: script-src Post-request check
+196: 6.1.10.3
+197: script-src Inline Check
+198: 6.1.11 script-src-elem
+199: 6.1.11.1
+200: script-src-elem Pre-request check
+201: 6.1.11.2
+202: script-src-elem Post-request check
+203: 6.1.11.3
+1631: check for the directive whose name is
+1632: name on request, response, policy, and self-origin, using this
+1633: directive’s value for the comparison.
+1634: 6.1.2. connect-src
+1635: The connect-src directive restricts the URLs which can be loaded
+1636: using script interfaces. The syntax for the directive’s name and value is
+1637: described by the following ABNF:
+1638: directive-name = "connect-src"
+1639: directive-value = serialized-source-list
+1640: This directive controls requests which transmit or receive data from
+1800: inline check for the directive whose
+1801: name is name on element, type, policy
+1802: and source, using this directive’s value for the
+1803: comparison.
+1804: 6.1.4. font-src
+1805: The font-src directive restricts the URLs from which font resources
+1806: may be loaded. The syntax for the directive’s name and value is described by
+1807: the following ABNF:
+1808: directive-name = "font-src"
+1809: directive-value = serialized-source-list
+1810: Given a page with the following Content Security Policy:
+1811: Content-Security-Policy: font-src https://example.com/
+1812: Fetches for the following code will return a network error, as the URL
+1813: provided does not match font-src’s source list:
+1814: <style>
+1815: @font-face {
+1816: font-family: "Example Font";
+1817: src: url("https://example.org/font");
+1818: }
+1819: body {
+1820: font-family: "Example Font";
+1821: }
+1822: </style>
+1823: 6.1.4.1.
+1824: font-src Pre-request check
+1825: This directive’s pre-request check is as follows:
+1826: Given a request request, a policy policy,
+1827: and an origin self-origin:
+1828: Let name be the result of executing § 6.8.1 Get the effective directive for request
+1829: on request.
+1830: If the result of executing § 6.8.4 Should fetch directive execute on name,
+1831: font-src and policy is "No", return "Allowed".
+1832: If the result of executing § 6.7.2.5 Does request match source list? on request,
+1833: this directive’s value, and self-origin, is
+1834: "Does Not Match", return "Blocked".
+1835: Return "Allowed".
+2133: script-src Inline Check
+2134: This directive’s inline check algorithm is as follows:
+2135: Given an Element element, a string type, a policy
+2136: policy and a string source:
+2137: Assert: element is not null or type is "navigation".
+2138: Let name be the result of executing § 6.8.2 Get the effective directive for inline checks
+2139: on type.
+2140: If the result of executing § 6.8.4 Should fetch directive execute on name,
+2141: script-src and policy is "No", return "Allowed".
+2142: If the result of executing § 6.7.3.3 Does element match source list for type and source? on
+2143: element, this directive’s value, type,
+2144: and source, is "Does Not Match", return "Blocked".
+2145: Return "Allowed".
+2146: 6.1.11. script-src-elem
+2147: The syntax for the directive’s name and value is described by the following ABNF:
+2148: directive-name = "script-src-elem"
+2149: directive-value = serialized-source-list
+2150: The script-src-elem directive applies to all script requests and
+2151: script blocks. Attributes that execute script (inline event handlers) are
+2152: controlled via script-src-attr.
+2153: As such, the following differences exist when comparing to script-src:
+2154: script-src-elem applies to inline checks whose |type| is "script" and
+2155: "navigation" (and is ignored for inline checks whose |type| is "script attribute").
+2156: script-src-elem’s value is not used for JavaScript
+2157: execution sink checks that are gated on the "unsafe-eval" check.
+2158: script-src-elem is not used as a fallback for the worker-src directive.
+2159: The worker-src checks still fall back on the script-src directive.
+2160: 6.1.11.1.
+2161: script-src-elem Pre-request check
+2162: This directive’s pre-request check is as follows:
+2163: Given a request request, a policy policy,
+2164: and an origin self-origin:
+2165: Let name be the result of executing § 6.8.1 Get the effective directive for request
+2460: value is described by the following ABNF:
+2461: directive-name = "base-uri"
+2462: directive-value = serialized-source-list
+2463: The following algorithm is called during HTML’s set the frozen base url
+2464: algorithm in order to monitor and enforce this directive:
+2465: 6.3.1.1.
+2466: Is base allowed for document?
+2467: Given a URL base, and a Document document, this algorithm
+2468: returns "Allowed" if base may be used as the value of a base
+2469: element’s href attribute, and "Blocked" otherwise:
+2470: Let CSP list be document’s global object’s csp list
+2471: For each policy of CSP list’s policies:
+2472: Let source list be null.
+2473: If a directive whose name is
+2474: "base-uri" is present in policy’s directive
+2475: set, set source list to that directive’s
+2476: value.
+2477: If source list is null, skip to the next policy.
+2478: If the result of executing § 6.7.2.7 Does url match source list in origin with redirect count? on base,
+2479: source list, CSP list’s self-origin, and 0 is
+2480: "Does Not Match":
+2481: Let violation be the result of executing
+2482: § 2.4.1 Create a violation object for global, policy, and directive on document’s global
+2483: object, policy, and "base-uri".
+2484: Set violation’s resource to "inline".
+2485: Execute § 5.5 Report a violation on violation.
+2486: If policy’s disposition is "enforce",
+2487: return "Blocked".
+2488: Note: We compare against the fallback base URL in order to deal correctly with things like

@@ -1,0 +1,89 @@
+1: WebKit.Settings
+2: WebKit
+3: API Version: 6.0
+4: Library Version: 2.54.1
+5: Type
+6: Settings
+7: Constructors
+8: new
+9: new_with_settings
+10: Functions
+15: get_experimental_features
+16: Instance methods
+17: apply_from_key_file
+18: get_allow_file_access_from_file_urls
+19: get_allow_modal_dialogs
+20: get_allow_top_navigation_to_data_urls
+21: get_allow_universal_access_from_file_urls
+22: get_auto_load_images
+23: get_cursive_font_family
+24: get_default_charset
+25: get_default_font_family
+26: get_default_font_size
+27: get_default_monospace_font_size
+37: get_enable_html5_database
+38: get_enable_html5_local_storage
+39: get_enable_hyperlink_auditing
+40: get_enable_javascript
+41: get_enable_javascript_markup
+42: get_enable_media
+43: get_enable_media_capabilities
+44: get_enable_media_stream
+45: get_enable_mediasource
+46: get_enable_mock_capture_devices
+47: get_enable_offline_web_application_cache
+74: get_user_agent
+75: get_webrtc_udp_ports_range
+76: get_zoom_text_only
+77: set_allow_file_access_from_file_urls
+78: set_allow_modal_dialogs
+79: set_allow_top_navigation_to_data_urls
+80: set_allow_universal_access_from_file_urls
+81: set_auto_load_images
+82: set_cursive_font_family
+83: set_default_charset
+84: set_default_font_family
+85: set_default_font_size
+86: set_default_monospace_font_size
+96: set_enable_html5_database
+97: set_enable_html5_local_storage
+98: set_enable_hyperlink_auditing
+99: set_enable_javascript
+100: set_enable_javascript_markup
+101: set_enable_media
+102: set_enable_media_capabilities
+103: set_enable_media_stream
+104: set_enable_mediasource
+105: set_enable_mock_capture_devices
+106: set_enable_offline_web_application_cache
+135: set_webrtc_udp_ports_range
+136: set_zoom_text_only
+137: Properties
+138: allow-file-access-from-file-urls
+139: allow-modal-dialogs
+140: allow-top-navigation-to-data-urls
+141: allow-universal-access-from-file-urls
+142: auto-load-images
+143: cursive-font-family
+144: default-charset
+145: default-font-family
+146: default-font-size
+147: default-monospace-font-size
+245: Reads the contents of the given group_name from the given key_file and applies the value of
+246: each key/value to the corresponding property on the settings.
+247: since: 2.46
+248: webkit_settings_get_allow_file_access_from_file_urls
+249: Get the WebKitSettings:allow-file-access-from-file-urls property.
+250: since: 2.10
+251: webkit_settings_get_allow_modal_dialogs
+252: Get the WebKitSettings:allow-modal-dialogs property.
+253: webkit_settings_get_allow_top_navigation_to_data_urls
+254: Get the WebKitSettings:allow-top-navigation-to-data-urls property.
+255: since: 2.28
+256: webkit_settings_get_allow_universal_access_from_file_urls
+257: Get the WebKitSettings:allow-universal-access-from-file-urls property.
+258: since: 2.14
+259: webkit_settings_get_auto_load_images
+260: Get the WebKitSettings:auto-load-images property.
+261: webkit_settings_get_cursive_font_family
+262: Gets the WebKitSettings:cursive-font-family property.

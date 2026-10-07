@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-07T19:35:47.596005+00:00",
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/pair-freeze.json",
+  "config": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  },
+  "input_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md": "8bba175ad93bcf08890607c07c074909afa5f00bd71a22b9a350bcf6999329c5",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/sources/SOURCES.md": "3bd576060b62974e913a54afb4a0893e18adb0bbb5c37309fc798d99e6b53b61",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/critique-dispositions.md": "4fed44e0dec7e5127e90dc988330140a47919f61303111c35a3408076feaebd6",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/critique.md": "bbb83e4d6b99b5d1d91b15ece3e27b74886991bd71b8603dcdd6c1ebaa723758",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/sources/SOURCES.md": "e16d3fbc3839b67192cf18589d80ad2e755790733f25fd9c30a0bdb9c15bc8d1"
+  },
+  "task_sha256": "b9e4c6b6361838c9fe83810add8c4143dbad7dbc4ffc28930119b47ba1c3a7df",
+  "evaluation_allowance_seconds": 1800
+}

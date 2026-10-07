@@ -1,0 +1,489 @@
+{
+  "case": "I-METHOD-02",
+  "arm": "treatment",
+  "stage": "critic-v1",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v1/input-map.json",
+  "exact_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/brief.md",
+  "frozen_plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/plan.md",
+  "predecessor_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v1/artifact.md",
+  "predecessor_source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v1/source-map.json",
+  "same_arm_source_cache": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v1/source-cache",
+  "helper": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/mechanical/source_cache.py",
+  "first_useful_saved_finding_at": "2026-10-07T19:44:50Z",
+  "complete_artifact_saved_at": "2026-10-07T19:46:23Z",
+  "native_goal": {
+    "identity": "01a117e1-f44a-7551-8d43-2ce132fdf601",
+    "objective": "Produce one bounded, full-scope independent critic deliverable for I-METHOD-02 treatment/critic-v1. Read the exact case brief and frozen plan, then input-map.json and the research-v1 artifact.md and source-map.json named there. Independently verify consequential claims and conditions against immutable code, governing definitions/callers, pertinent history or a justified equivalent, and exact admitted primary sources; compare the full plan; identify useful bounded discoveries and negative opportunities; distinguish supported material to preserve, exact corrections with evidence, omissions, disagreements, unresolved objections, rejected/uncertain points, and validation proposed or executed. Save artifact.md and source-map.json with linked evidence under this treatment's sources/ directory; do not rewrite the draft or substitute a partial summary. Use only the specified inputs and public primary technical sources, honoring the declared same-arm raw-byte source-cache recipe and stage deadlines in the input map; no other arms/cases, nested delegation, extra engineering, or edits outside this treatment output.",
+    "observed_at": "2026-10-07 19:48:20 UTC",
+    "status": "active",
+    "aggregate_tokens_used": 136540,
+    "aggregate_time_used_seconds": 400,
+    "remaining_tokens": null
+  },
+  "native_counters": {
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null
+  },
+  "deadlines": {
+    "stage_max_seconds": 600,
+    "fixed_stage_deadline": "2026-10-07T19:50:18.010596+00:00",
+    "whole_arm_deadline": "2026-10-07T20:05:18.010596+00:00",
+    "protected_final_reviser_reserve_seconds": 900,
+    "deadline_reset": false
+  },
+  "cache_policy": {
+    "raw_bytes_only": true,
+    "semantic_cache": false,
+    "other_arm_material": false,
+    "extraction_version": "identity-v1",
+    "setup_note": "Helper --help and source inspection were performed; setup seconds were not separately timed."
+  },
+  "operations": {
+    "warm_read_count": 27,
+    "warm_read_elapsed_seconds": 0.08555152399640065,
+    "warm_read_raw_bytes_verified": 4743560,
+    "cold_fetch_count": 1,
+    "cold_fetch_elapsed_seconds": 0.5185341800006427,
+    "cold_fetch_network_requests": 2,
+    "successful_operations": 28,
+    "helper_setup_seconds": null
+  },
+  "sources": [
+    {
+      "source_id": "S01",
+      "label": "IIIF Presentation API 3",
+      "exact_url": "https://iiif.io/api/presentation/3.0/",
+      "retrieved_url": "https://iiif.io/api/presentation/3.0/",
+      "record_id": "66672360858c816fcc8f6186d58047d7a6e40a558bff59dfabb9dbf6361139d5",
+      "raw_sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "raw_bytes": 385826,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s01_presentation3-warm-read.json"
+    },
+    {
+      "source_id": "S02",
+      "label": "IIIF Image API 3",
+      "exact_url": "https://iiif.io/api/image/3.0/",
+      "retrieved_url": "https://iiif.io/api/image/3.0/",
+      "record_id": "3a20d7733c1f5de95d6ae920d1fa0f73a110c5d1a358a5e9463e2955919182eb",
+      "raw_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "raw_bytes": 145643,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s02_image_api3-warm-read.json"
+    },
+    {
+      "source_id": "S03",
+      "label": "W3C Web Annotation Data Model",
+      "exact_url": "https://www.w3.org/TR/annotation-model/",
+      "retrieved_url": "https://www.w3.org/TR/annotation-model/",
+      "record_id": "0871898fe6daf535bde726a353c8e24ebc4104a64da3bfaaace9d91a5cb52404",
+      "raw_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "raw_bytes": 284185,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s03_web_annotation-warm-read.json"
+    },
+    {
+      "source_id": "S04",
+      "label": "W3C Media Fragments",
+      "exact_url": "https://www.w3.org/TR/media-frags/",
+      "retrieved_url": "https://www.w3.org/TR/media-frags/",
+      "record_id": "081c8511097cf6de7b37f95c857007e41ff41b15bc0da5cff99803bf4ad46c1e",
+      "raw_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "raw_bytes": 89887,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s04_media_fragments-warm-read.json"
+    },
+    {
+      "source_id": "S05",
+      "label": "IIIF Auth API 2",
+      "exact_url": "https://iiif.io/api/auth/2.0/",
+      "retrieved_url": "https://iiif.io/api/auth/2.0/",
+      "record_id": "fba122bc25f04dd38f20168a2604829fe4cc4976fde58ad1368676950c20efca",
+      "raw_sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+      "raw_bytes": 150767,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s05_iiif_auth-warm-read.json"
+    },
+    {
+      "source_id": "S06",
+      "label": "OpenSeadragon v6.1.1 tag target",
+      "exact_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1",
+      "record_id": "20758aab1dbf9aea5b7b1a2305ab2e4665e7f27249e8b7693d51ff48e765cad0",
+      "raw_sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569",
+      "raw_bytes": 353,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s06_osd_tag-warm-read.json"
+    },
+    {
+      "source_id": "S07",
+      "label": "OpenSeadragon v6.1.1 commit binding patch",
+      "exact_url": "https://github.com/openseadragon/openseadragon/commit/201d478.patch",
+      "retrieved_url": "https://github.com/openseadragon/openseadragon/commit/201d478.patch",
+      "record_id": "8af65c4fda5b92bd7395a66d32d4797fad5835032b0eac77a8e30ab956c8b5d8",
+      "raw_sha256": "001efd21f9b8a875422b6eaa875b3bd540782b676444db0dba22036758d0f7dc",
+      "raw_bytes": 1407,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s07_osd_release_patch-warm-read.json"
+    },
+    {
+      "source_id": "S08",
+      "label": "OpenSeadragon 6.1.1 tiledimage.js",
+      "exact_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/tiledimage.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/tiledimage.js",
+      "record_id": "45611d09f704e5ef673ba979b60eb573520cbd2465d1969faa4cd07334bb0af8",
+      "raw_sha256": "c7e5285eeea807653b3ec4345faa4bf6931457b34c28922ae5694c2f4eca45bc",
+      "raw_bytes": 105626,
+      "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s08_osd_tiledimage-warm-read.json"
+    },
+    {
+      "source_id": "S09",
+      "label": "OpenSeadragon 6.1.1 tiledimage tests",
+      "exact_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/tiledimage.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/tiledimage.js",
+      "record_id": "85c3ef272b65528bce0f003afb8f0760b468e39a35518026cc6305c7e0b849b3",
+      "raw_sha256": "823f6a583b78fb34348206d1c54bf86672e71f15f3f104c6c266629c51e1fb0c",
+      "raw_bytes": 29169,
+      "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s09_osd_tiledimage_tests-warm-read.json"
+    },
+    {
+      "source_id": "S10",
+      "label": "OpenSeadragon 6.1.1 IIIFTileSource",
+      "exact_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/iiiftilesource.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/iiiftilesource.js",
+      "record_id": "ae35b9d833222596f6c2c90256c9ad8d7766f27473adde74ab1599c085b8b6b4",
+      "raw_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "raw_bytes": 28380,
+      "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s10_osd_iiif_source-warm-read.json"
+    },
+    {
+      "source_id": "S11",
+      "label": "OpenSeadragon 6.1.1 Viewer.open",
+      "exact_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewer.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewer.js",
+      "record_id": "872b73b57256e09ed0c886db6522cf81e673d43a20fd3605726549be930204f3",
+      "raw_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "raw_bytes": 190702,
+      "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s11_osd_viewer-warm-read.json"
+    },
+    {
+      "source_id": "S12",
+      "label": "OpenSeadragon 6.1.1 viewport.js",
+      "exact_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js",
+      "record_id": "142c585adaae816899103bb6ccf22d8423d8a0f6f806440682ffb812d72cbdae",
+      "raw_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "raw_bytes": 71130,
+      "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s12_osd_viewport-warm-read.json"
+    },
+    {
+      "source_id": "S13",
+      "label": "OpenSeadragon 6.1.1 viewport tests",
+      "exact_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/viewport.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/viewport.js",
+      "record_id": "eb2dcc779ecfb350abc780be7099b67462ace92e74f6c2ef316b5b8f1692eb2f",
+      "raw_sha256": "4a708ccd320679d8b71a7f2f9a8d500beb1da7f7c4e113db228d2d38f105d008",
+      "raw_bytes": 51131,
+      "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s13_osd_viewport_tests-warm-read.json"
+    },
+    {
+      "source_id": "S14",
+      "label": "OpenSeadragon 6.1.1 world.js",
+      "exact_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/world.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/world.js",
+      "record_id": "a4d1ced74f5f94eeba8c8607265b09e915a45d37e9f4ce2c15bc3893f87a8183",
+      "raw_sha256": "7d694e291d49cdf51f08e199cf1c3e4bcb9d977efc575dca38699ac045d15d48",
+      "raw_bytes": 39889,
+      "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s14_osd_world-warm-read.json"
+    },
+    {
+      "source_id": "S15",
+      "label": "OpenSeadragon 6.1.1 World tests",
+      "exact_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/world.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/world.js",
+      "record_id": "6189f19db88fe07194bf57d3b3267f0e693ce5c96e734c3c2e2aa1b43c05f4e3",
+      "raw_sha256": "912127064167b9bdb315168d27dbccc21dedd0627cf4ded288aa9ef2dd6c86f4",
+      "raw_bytes": 9360,
+      "commit": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s15_osd_world_tests-warm-read.json"
+    },
+    {
+      "source_id": "S16",
+      "label": "OpenSeadragon issue #2708",
+      "exact_url": "https://github.com/openseadragon/openseadragon/issues/2708",
+      "retrieved_url": "https://github.com/openseadragon/openseadragon/issues/2708",
+      "record_id": "962f1c606d01947f2b08aed795c5ecd4b38fcd6541637dcfd8f12625af20790c",
+      "raw_sha256": "cb25c54f2081a756af22c503c13def96b47100c93fcf7d32ef7084b72b1d6034",
+      "raw_bytes": 243386,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s16_osd_issue_2708-warm-read.json"
+    },
+    {
+      "source_id": "S17",
+      "label": "OpenSeadragon PR #2709",
+      "exact_url": "https://github.com/openseadragon/openseadragon/pull/2709",
+      "retrieved_url": "https://github.com/openseadragon/openseadragon/pull/2709",
+      "record_id": "96b68fa9c2b363af23a62417f42b41eec05419c968d77a777a02e82f7f8ad242",
+      "raw_sha256": "b22e6fb20180361ba4b0b58bde3b28ad945af4af16dbe714c6d17c9c8bb38765",
+      "raw_bytes": 316398,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s17_osd_pr_2709-warm-read.json"
+    },
+    {
+      "source_id": "S18",
+      "label": "OpenSeadragon v6.1.1 release",
+      "exact_url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.1.1",
+      "retrieved_url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.1.1",
+      "record_id": "9ddc088c49a4f499f3980031d5d5363947eba04f94fb188f9ed1c5ad198e7c59",
+      "raw_sha256": "089a28846874a9d9ee27cc5bdc1756dfeaf5b9853070a631d5195ffa1bdc262b",
+      "raw_bytes": 204765,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s18_osd_release_611-warm-read.json"
+    },
+    {
+      "source_id": "S19",
+      "label": "OpenSeadragon v4.0.0 release",
+      "exact_url": "https://github.com/openseadragon/openseadragon/releases/tag/v4.0.0",
+      "retrieved_url": "https://github.com/openseadragon/openseadragon/releases/tag/v4.0.0",
+      "record_id": "b26d96fdbc852988eb0be7147c5e20170c519759f48c0431e1aee6e164386d84",
+      "raw_sha256": "a9f3dabe92e5db888fce01577f5200ada362547422202c5d0417c8dd08e32de0",
+      "raw_bytes": 225275,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s19_osd_release_400-warm-read.json"
+    },
+    {
+      "source_id": "S20",
+      "label": "OpenSeadragon PR #2249",
+      "exact_url": "https://github.com/openseadragon/openseadragon/pull/2249",
+      "retrieved_url": "https://github.com/openseadragon/openseadragon/pull/2249",
+      "record_id": "3c26f2e8c880393553f7b5a303f50703985c1ac42ddf589ac4157496d3675367",
+      "raw_sha256": "ef1f7bae6b1b38a2cbfe12c7e72c49eb89bae3d27ce70414ddcdc75201f24eca",
+      "raw_bytes": 613609,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s20_osd_pr_2249-warm-read.json"
+    },
+    {
+      "source_id": "S21",
+      "label": "OpenSeadragon PR #2249 patch",
+      "exact_url": "https://github.com/openseadragon/openseadragon/pull/2249.patch",
+      "retrieved_url": "https://patch-diff.githubusercontent.com/raw/openseadragon/openseadragon/pull/2249.patch",
+      "record_id": "e15fde8a0e193af727fa06929961869fa19e8c39dbab60800a9d0d3c3ea0d9c2",
+      "raw_sha256": "4598ba68d2780e99736e25712e90d7772c9fa3f41c7bfb0e046b83cacad0bef9",
+      "raw_bytes": 38682,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s21_osd_pr_2249_patch-warm-read.json"
+    },
+    {
+      "source_id": "S22",
+      "label": "Mirador repository overview",
+      "exact_url": "https://github.com/ProjectMirador/mirador",
+      "retrieved_url": "https://github.com/ProjectMirador/mirador",
+      "record_id": "a8333d6ba2d9570f7051e220a11afc1aa938f13af71b37686e15698d19faa3fd",
+      "raw_sha256": "096846a1f7dfbcf2b6f424f6c03dd61ff2d865e61ff6928c54dffcc93514b95c",
+      "raw_bytes": 357222,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s22_mirador-warm-read.json"
+    },
+    {
+      "source_id": "S23",
+      "label": "Mirador annotations repository",
+      "exact_url": "https://github.com/ProjectMirador/mirador-annotations",
+      "retrieved_url": "https://github.com/ProjectMirador/mirador-annotations",
+      "record_id": "b8bc32b650174b6d07cd140b251e17c843cd9ecaf3dd3f2dd70b0453fbb732a9",
+      "raw_sha256": "471cc0907ab6064464fe5320b1b440fb94ac3e5155511bc2d5ee332c13fa0f35",
+      "raw_bytes": 287882,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s23_mirador_annotations-warm-read.json"
+    },
+    {
+      "source_id": "S24",
+      "label": "Mirador annotation editor repository",
+      "exact_url": "https://github.com/TETRAS-IIIF/mirador-annotation-editor",
+      "retrieved_url": "https://github.com/TETRAS-IIIF/mirador-annotation-editor",
+      "record_id": "b5964a4e39621e0af4a942e71cc9184b3ebce531ede5c626c21324b129817236",
+      "raw_sha256": "a3521e122365464c97dbf7ec7d54a2d97ae5657d388a1f9b65d770c59a10c2e7",
+      "raw_bytes": 386473,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s24_mirador_editor-warm-read.json"
+    },
+    {
+      "source_id": "S25",
+      "label": "Annotorious issue #593",
+      "exact_url": "https://github.com/annotorious/annotorious/issues/593",
+      "retrieved_url": "https://github.com/annotorious/annotorious/issues/593",
+      "record_id": "6521baf01378836a2f084d0de11b38971a92d35619e26ad0922a5f31f77245f8",
+      "raw_sha256": "9410467307d728a6108892bb2614f89f4e0f4fe83f1c9c7f464bd52b400b4ca0",
+      "raw_bytes": 237114,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s25_annotorious593-warm-read.json"
+    },
+    {
+      "source_id": "S26",
+      "label": "Annotorious issue #595",
+      "exact_url": "https://github.com/annotorious/annotorious/issues/595",
+      "retrieved_url": "https://github.com/annotorious/annotorious/issues/595",
+      "record_id": "ea98da5c6a45774dc20723e47521b71bafe8954b886a6bf21ed3f536246eb21b",
+      "raw_sha256": "90d80f86113308b561b5286e8152621f03b25fbd6026917fd1292f1903fce996",
+      "raw_bytes": 248556,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/s26_annotorious595-warm-read.json"
+    },
+    {
+      "source_id": "C01",
+      "label": "OpenSeadragon PR #2709 exact patch",
+      "exact_url": "https://github.com/openseadragon/openseadragon/pull/2709.patch",
+      "retrieved_url": "https://patch-diff.githubusercontent.com/raw/openseadragon/openseadragon/pull/2709.patch",
+      "record_id": "570941d5598965cd961f6ee1f91954ea0d9b6b54dc6a4ce393d52ea56e4e1554",
+      "raw_sha256": "7b63e93486ab13bf14ea6bbab00bba5a0fd5ed89e4d2742e57d5a56f69a2859a",
+      "raw_bytes": 743,
+      "commit": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "read_receipt": "sources/osd_pr_2709_patch-warm-read.json",
+      "cold_fetch_receipt": "sources/osd_pr_2709_patch-fetch.json"
+    }
+  ]
+}

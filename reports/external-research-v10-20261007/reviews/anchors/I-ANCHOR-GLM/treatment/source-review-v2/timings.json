@@ -1,0 +1,47 @@
+{
+  "schema_version": "review-timings-v2",
+  "scope": "Independent diagnostic reviewer only; candidate allowance/lifecycle/route/timing excluded",
+  "evaluation_allowance_seconds": 1800,
+  "first_recorded_clock_utc": "2026-10-07T19:37:08+00:00",
+  "measurement_completed_at_utc": "2026-10-07T20:03:28.265233+00:00",
+  "wall_seconds_from_first_recorded_clock": 1580.265233,
+  "timing_precision_note": "Instruction/input reads began before the first untruncated clock observation. Dispatch/session start and that preceding interval are unknown; recorded elapsed is a lower bound, not a fabricated exact whole-turn runtime. No candidate timing receipt was read.",
+  "dispatch_started_at_utc": null,
+  "pre_clock_work_seconds": null,
+  "source_retrieval_window_utc": {
+    "start": "2026-10-07T19:40:49.596382+00:00",
+    "end": "2026-10-07T19:48:44.079003+00:00"
+  },
+  "reviewer_runtime_checks": 0.005578743999649305,
+  "requested_binding": {
+    "provider_instance_id": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "runtime_information_exposed": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "provider_instance_id": null,
+    "service_tier": null,
+    "note": "Model/effort are supplied runtime context; actual T3 dispatch/binding/terminal disposition recorded by coordinator, not re-audited here."
+  },
+  "usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "output_tokens": null,
+    "reasoning_tokens": null,
+    "total_tokens": null,
+    "exposed_usage_splits": {},
+    "status": "unknown; no reviewer billing/token counters exposed in authorized inputs or ordinary tool responses"
+  },
+  "billing": {
+    "amount": null,
+    "currency": null,
+    "status": "unknown"
+  },
+  "candidate_costs_timings_read": false,
+  "reviewer_native_goal_created": false,
+  "nested_delegation": false,
+  "candidate_followup_or_rescue": false
+}

@@ -1,0 +1,48 @@
+11: ZipInfo objects
+12: Command-line interface
+13: Command-line options
+14: Decompression pitfalls
+15: From file itself
+16: File system limitations
+17: Resources limitations
+18: Interruption
+19: Default behaviors of extraction
+20: Previous topic
+21: lzma — Compression using the LZMA algorithm
+22: Next topic
+23: tarfile — Read and write tar archive files
+639: Specify encoding of member names for -l, -e and
+640: -t.
+641: Added in version 3.11.
+642: Decompression pitfalls¶
+643: The extraction in zipfile module might fail due to some pitfalls listed below.
+644: From file itself¶
+645: Decompression may fail due to incorrect password / CRC checksum / ZIP format or
+646: unsupported compression method / decryption.
+647: File system limitations¶
+648: Exceeding limitations on different file systems can cause decompression failed.
+649: Such as allowable characters in the directory entries, length of the file name,
+650: length of the pathname, size of a single file, and number of files, etc.
+651: Resources limitations¶
+652: The lack of memory or disk volume would lead to decompression
+653: failed. For example, decompression bombs (aka ZIP bomb)
+654: apply to zipfile library that can cause disk volume exhaustion.
+655: Interruption¶
+656: Interruption during the decompression, such as pressing control-C or killing the
+657: decompression process may result in incomplete decompression of the archive.
+658: Default behaviors of extraction¶
+659: Not knowing the default extraction behaviors
+660: can cause unexpected decompression results.
+668: ZipInfo objects
+669: Command-line interface
+670: Command-line options
+671: Decompression pitfalls
+672: From file itself
+673: File system limitations
+674: Resources limitations
+675: Interruption
+676: Default behaviors of extraction
+677: Previous topic
+678: lzma — Compression using the LZMA algorithm
+679: Next topic
+680: tarfile — Read and write tar archive files

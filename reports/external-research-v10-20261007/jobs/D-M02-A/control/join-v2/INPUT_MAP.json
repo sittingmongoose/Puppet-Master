@@ -1,0 +1,37 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "httpcache",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpcache.txt",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "httpsem",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpsem.txt",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "predecessor_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_1-v2/report.md",
+      "sha256": "5aaebc18d27f2f13bd22d6c99bf040d2c4c635b0917c9191b828268514c165e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_2-v2/report.md",
+      "sha256": "535f45c86b3261c235c06a645993c6f45c2204d1693646210c00dca504466d1e"
+    }
+  ],
+  "writable_stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v2",
+  "stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v2/report.md",
+  "final_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v2/final.md"
+}

@@ -1,0 +1,35 @@
+25: 
+26: proc do_unicode_token_test {tn input res} {
+27:   uplevel [list do_test $tn [list \
+28:     sqlite3_fts5_tokenize -subst db "unicode61 remove_diacritics 0" $input
+29:   ] [list {*}$res]]
+30: }
+31: 
+32: proc do_unicode_token_test2 {tn input res} {
+33:   uplevel [list do_test $tn [list \
+34:     sqlite3_fts5_tokenize -subst db "unicode61" $input
+69: do_unicode_token_test2 1.9  "x\uC4x x\uD6x x\uDCx" \
+70:     "xax x\uC4x xox x\uD6x xux x\uDCx"
+71: 
+72: # Check that diacritics are removed if remove_diacritics=1 is specified.
+73: # And that they do not break tokens.
+74: do_unicode_token_test2 1.10 "xx\u0301xx" "xxxx xx\u301xx"
+75: 
+76: # Title-case mappings work
+77: do_unicode_token_test 1.11 "\u01c5" "\u01c6 \u01c5"
+78: 
+347:   "helloworld hello\u0301world helloworld helloworld"
+348: 
+349: do_unicode_token_test3 5.10 "separators \u0301" \
+350:   "remove_diacritics 0"                        \
+351:   "hello\u0301world \u0301helloworld"          \
+352:   "hello\u0301world hello\u0301world helloworld helloworld"
+353: 
+354: do_unicode_token_test3 5.11 "tokenchars \u0301" \
+355:   "remove_diacritics 0"                         \
+356:   "hello\u0301world \u0301helloworld"           \
+357:   "hello\u0301world hello\u0301world helloworld helloworld"
+358: 
+359: #-------------------------------------------------------------------------
+360: 
+361: proc do_tokenize {tokenizer txt} {

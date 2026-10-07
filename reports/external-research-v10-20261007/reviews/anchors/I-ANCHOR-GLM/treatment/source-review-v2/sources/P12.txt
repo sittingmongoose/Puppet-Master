@@ -1,0 +1,71 @@
+638:             date_time = (2107, 12, 31, 23, 59, 59)
+639:         # Create ZipInfo instance to store file information
+640:         if arcname is None:
+641:             arcname = filename
+642:         arcname = os.path.normpath(os.path.splitdrive(arcname)[1])
+643:         while arcname[0] in (os.sep, os.altsep):
+644:             arcname = arcname[1:]
+645:         if isdir:
+646:             arcname += '/'
+647:         zinfo = cls(arcname, date_time)
+648:         zinfo.external_attr = (st.st_mode & 0xFFFF) << 16  # Unix attributes
+649:         if isdir:
+650:             zinfo.file_size = 0
+1871:         """Replace bad characters and remove trailing dots from parts."""
+1872:         table = cls._windows_illegal_name_trans_table
+1873:         if not table:
+1874:             illegal = ':<>|"?*'
+1875:             table = str.maketrans(illegal, '_' * len(illegal))
+1876:             cls._windows_illegal_name_trans_table = table
+1877:         arcname = arcname.translate(table)
+1878:         # remove trailing dots and spaces
+1879:         arcname = (x.rstrip(' .') for x in arcname.split(pathsep))
+1880:         # rejoin, removing empty parts.
+1881:         arcname = pathsep.join(x for x in arcname if x)
+1882:         return arcname
+1883: 
+1884:     def _extract_member(self, member, targetpath, pwd):
+1885:         """Extract the ZipInfo object 'member' to a physical
+1886:            file on the path targetpath.
+1887:         """
+1888:         if not isinstance(member, ZipInfo):
+1889:             member = self.getinfo(member)
+1890: 
+1891:         # build the destination pathname, replacing
+1892:         # forward slashes to platform specific separators.
+1893:         arcname = member.filename.replace('/', os.path.sep)
+1894: 
+1895:         if os.path.altsep:
+1896:             arcname = arcname.replace(os.path.altsep, os.path.sep)
+1897:         # interpret absolute pathname as relative, remove drive letter or
+1898:         # UNC path, redundant separators, "." and ".." components.
+1899:         arcname = os.path.splitdrive(arcname)[1]
+1900:         invalid_path_parts = ('', os.path.curdir, os.path.pardir)
+1901:         arcname = os.path.sep.join(x for x in arcname.split(os.path.sep)
+1902:                                    if x not in invalid_path_parts)
+1903:         if os.path.sep == '\\':
+1904:             # filter illegal characters on Windows
+1905:             arcname = self._sanitize_windows_name(arcname, os.path.sep)
+1906: 
+1907:         if not arcname and not member.is_dir():
+1908:             raise ValueError("Empty filename.")
+1909: 
+1910:         targetpath = os.path.join(targetpath, arcname)
+1911:         targetpath = os.path.normpath(targetpath)
+1912: 
+1913:         # Create all upper directories if necessary.
+1914:         upperdirs = os.path.dirname(targetpath)
+1915:         if upperdirs and not os.path.exists(upperdirs):
+1916:             os.makedirs(upperdirs, exist_ok=True)
+1917: 
+1918:         if member.is_dir():
+1919:             if not os.path.isdir(targetpath):
+1920:                 try:
+1921:                     os.mkdir(targetpath)
+1922:                 except FileExistsError:
+1923:                     if not os.path.isdir(targetpath):
+1924:                         raise
+1925:             return targetpath
+1926: 
+1927:         with self.open(member, pwd=pwd) as source, \
+1928:              open(targetpath, "wb") as target:

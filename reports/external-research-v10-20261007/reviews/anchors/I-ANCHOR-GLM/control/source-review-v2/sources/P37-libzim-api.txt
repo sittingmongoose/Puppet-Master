@@ -1,0 +1,192 @@
+L70:    * Forget about the namespace and if a path has it, simply consider it as a subdirectory.
+L71:    * The only place it could be problematic is when you already have a path stored somewhere (bookmark, ...)
+L72:    * using a scheme and use it on an archive with another scheme. For this case, the method `getEntryByPath`
+L73:    * has a compatibility layer trying to transform a path to the new scheme as a fallback if the entry is not found.
+L74:    *
+L75:    * All methods of archive may throw an `ZimFileFormatError` if the file is invalid.
+L76:    */
+L77:   class LIBZIM_API Archive
+L78:   {
+L79:     public:
+L80:       template<EntryOrder order> class EntryRange;
+L81:       template<EntryOrder order> class iterator;
+L82: 
+L83:       /** Archive constructor.
+L84:        *
+L85:        *  Construct an archive from a filename.
+L86:        *  The file is open readonly.
+L87:        *
+L88:        *  The filename is the "logical" path.
+L89:        *  So if you want to open a split zim file (foo.zimaa, foo.zimab, ...)
+L90:        *  you must pass the `foo.zim` path.
+L91:        *
+L92:        *  @param fname The filename to the file to open (utf8 encoded)
+L93:        */
+L94:       explicit Archive(const std::string& fname);
+L95: 
+L96: #ifndef _WIN32
+L97:       /** Archive constructor.
+L98:        *
+L99:        *  Construct an archive from a file descriptor.
+L100:        *  Fd is used only at Archive creation.
+L101:        *  Ownership of the fd is not taken and it must be closed by caller.
+L102:        *
+L103:        *  Note: This function is not available under Windows.
+L104:        *
+L105:        *  @param fd The descriptor of a seekable file representing a ZIM archive
+L106:        */
+L107:       explicit Archive(int fd);
+L108: 
+L109:       /** Archive constructor.
+L110:        *
+L111:        *  Construct an archive from a descriptor of a file with an embedded ZIM
+L112:        *  archive inside.
+L113:        *  Fd is used only at Archive creation.
+L114:        *  Ownership of the fd is not taken and it must be closed by caller.
+L115:        *
+L116:        *  Note: This function is not available under Windows.
+L117:        *
+L118:        *  @param fd The descriptor of a seekable file with a continuous segment
+L119:        *  representing a complete ZIM archive.
+L120:        *  @param offset The offset of the ZIM archive relative to the beginning
+L121:        *  of the file (rather than the current position associated with fd).
+L122:        *  @param size The size of the ZIM archive.
+L123:        */
+L124:        Archive(int fd, offset_type offset, size_type size);
+L125: 
+L126:       /** Archive constructor.
+L127:        *
+L128:        *  Construct an archive from a descriptor of a file with an embedded ZIM
+L129:        *  archive inside.
+L130:        *  Fd is used only at Archive creation.
+L131:        *  Ownership of the fd is not taken and it must be closed by caller.
+L132:        *
+L133:        *  Note: This function is not available under Windows.
+L134:        *
+L135:        *  @param fd A FdInput (tuple) containing the fd (int), offset (offset_type) and size (size_type)
+L136:        *            referencing a continuous segment representing a complete ZIM archive.
+L137:        */
+L138:       explicit Archive(FdInput fd);
+L139: 
+L140:       /** Archive constructor.
+L141:        *
+L142:        *  Construct an archive from several file descriptors.
+L143:        *  Each part may be embedded in a file.
+L144:        *  Fds are used only at Archive creation.
+L145:        *  Ownership of the fds is not taken and they must be closed by caller.
+L146:        *  Fds (int) can be the same between FdInput if the parts belong to the same file.
+L147:        *
+L148:        *  Note: This function is not available under Windows.
+L149:        *
+L150:        *  @param fds A vector of FdInput (tuple) containing the fd (int), offset (offset_type) and size (size_type)
+L151:        *             referencing a series of segments representing a complete ZIM archive.
+L152:        */
+L153:       explicit Archive(const std::vector<FdInput>& fds);
+L154: #endif
+L155: 
+L156:       /** Return the filename of the zim file.
+L157:        *
+L158:        *  Return the filename as passed to the constructor
+L159:        *  (So foo.zim).
+L160:        *
+L161:        *  @return The logical filename of the archive.
+L162:        */
+L163:       const std::string& getFilename() const;
+L164: 
+L165:       /** Return the logical archive size.
+L166:        *
+L271:        *  @exception std::out_of_range If idx is greater than the number of entry.
+L272:        */
+L273:       Entry getEntryByPath(entry_index_type idx) const;
+L274: 
+L275:       /** Get an entry using a path.
+L276:        *
+L277:        *  Search an entry in the zim, using its path.
+L278:        *  On archive with new namespace scheme, path must not contain the namespace.
+L279:        *  On archive without new namespace scheme, path must contain the namespace.
+L280:        *  A compatibility layer exists to accept "old" path on new archive (and the opposite)
+L281:        *  to help using saved path (bookmark) on new archive.
+L282:        *  On new archive, we first search the path in `C` namespace, then try to remove the potential namespace in path
+L283:        *  and search again in `C` namespace with path "without namespace".
+L284:        *  On old archive, we first assume path contains a namespace and if not (or no entry found) search in
+L285:        *  namespaces `A`, `I`, `J` and `-`.
+L286:        *
+L287:        *  @param path The entry's path.
+L288:        *  @return The Entry.
+L289:        *  @exception EntryNotFound If no entry has the asked path.
+L290:        */
+L291:       Entry getEntryByPath(const std::string& path) const;
+L292: 
+L293:       /** Get an entry using its "title" index.
+L294:        *
+L295:        *  Use the index of the entry to get the idx'th entry
+L296:        *  (entry being sorted by title).
+L297:        *
+L298:        *  @param idx The index of the entry.
+L299:        *  @return The Entry.
+L300:        *  @exception std::out_of_range If idx is greater than the number of entry.
+L301:        */
+L302:       Entry getEntryByTitle(entry_index_type idx) const;
+L303: 
+L304:       /** Get an entry using a title.
+L305:        *
+L306:        *  Get an entry using its title.
+L307:        *
+L308:        *  @param title The entry's title.
+L309:        *  @return The Entry.
+L310:        *  @exception EntryNotFound If no entry has the asked title.
+L311:        */
+L312:       Entry getEntryByTitle(const std::string& title) const;
+L313: 
+L314:       /** Get an entry using its "cluster" index.
+L315:        *
+L316:        *  Use the index of the entry to get the idx'th entry
+L317:        *  The actual order of the entry is not really specified.
+L318:        *  It is infered from the internal way the entry are stored.
+L319:        *
+L320:        *  This method is probably not relevent and is provided for completeness.
+L321:        *  You should probably use a iterator using the `efficientOrder`.
+L322:        *
+L323:        *  @param idx The index of the entry.
+L324:        *  @return The Entry.
+L325:        *  @exception std::out_of_range If idx is greater than the number of entry.
+L326:        */
+L327:       Entry getEntryByClusterOrder(entry_index_type idx) const;
+L328: 
+L329:       /** Get the main entry of the archive.
+L330:        *
+L331:        *  @return The Main entry.
+L332:        *  @exception EntryNotFound If no main entry has been specified in the archive.
+L333:        */
+L334:       Entry getMainEntry() const;
+L335: 
+L336:       /** Get a random entry.
+L337:        *
+L338:        * The entry is picked randomly from the front artice list.
+L339:        *
+L340:        * @return A random entry.
+L341:        * @exception EntryNotFound If no valid random entry can be found.
+L342:        */
+L343:       Entry getRandomEntry() const;
+L344: 
+L345:       /** Check in an entry has path in the archive.
+L346:        *
+L347:        *  The path follows the same requirement than `getEntryByPath`.
+L348:        *
+L349:        *  @param path The entry's path.
+L350:        *  @return True if the path in the archive, false else.
+L351:        */
+L352:       bool hasEntryByPath(const std::string& path) const {
+L353:         try{
+L354:           getEntryByPath(path);
+L355:           return true;
+L356:         } catch(...) { return false; }
+L357:       }
+L358: 
+L359:       /** Check in an entry has title in the archive.
+L360:        *
+L361:        *  @param title The entry's title.
+L362:        *  @return True if the title in the archive, false else.
+L363:        */
+L364:       bool hasEntryByTitle(const std::string& title) const {
+L365:         try{

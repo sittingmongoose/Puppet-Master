@@ -1,0 +1,263 @@
+{
+  "comparisons": [
+    {
+      "case": "D-M08-A",
+      "disposition": "HELD_FAILED_SEED_STAGE_OVERRUN",
+      "source_quality": "UNASSESSED",
+      "arms": {
+        "control": "NOT_ADMITTED_FAILED_COMMON_SEED",
+        "treatment": "NOT_ADMITTED_FAILED_COMMON_SEED"
+      },
+      "actual_requestedAt": "2026-10-07T18:54:13.374Z",
+      "actual_deadline": "2026-10-07T18:57:13.374Z",
+      "draft_saved": "2026-10-07T18:57:17.526937903Z",
+      "native_terminal": "2026-10-07T19:00:57Z",
+      "native_status": "complete",
+      "delivery_status": "completed_late",
+      "draft_save_overrun_seconds": 4.153,
+      "native_terminal_elapsed_seconds": 403.626,
+      "native_terminal_overrun_seconds": 223.626,
+      "clock_annotation": "Original child receipts retained unchanged; actual T3 requestedAt supersedes child sampled18:54:29 boundary. Draft itself was also late on actual boundary.",
+      "goal_tokens_raw": 46365,
+      "generated_tokens": null,
+      "billing": null,
+      "quiet": true,
+      "pending_descendants": false,
+      "hashes": {
+        "native_terminal_receipt.json": "6c0a5d66d61e4c946081b431c32da07050433d6af1f0f3db9ae058e4bba636fc",
+        "quiet_task_receipt.json": "7bea0408ed55b128845a280ae308bbf74b061d48ffe058c590cd35df61fb999e",
+        "INPUT_MAP.json": "3aca4805d71722a3f65aef949fd5ebeb1c7b4352eea5b65558d168ed1dd54c8d",
+        "draft.md": "455eed015bee0d97839da28528b6f18c7b98277f3437dc54dc8739dd3adc305b",
+        "task.txt": "2865463bd311b2cbd05c1259b6081d402b315185c60516dbe65a38688e407a24",
+        "native_activation_receipt.json": "7033625e1ab0acb1001777b7e626f0a8c47979a137c92faae303a9a337569e6b",
+        "t3_dispatch_clock_receipt.json": "6dcf447bb861f5573b92ae3cd9bafce474273e2d6eaf100661ab0594b546aee4",
+        "timings.json": "3bd504af42ca1e7412201d6cc1846a29cdfbb131a35349285540b349fb093cd2",
+        "dispatch_response.json": "7bd33c92aba1d4751301172606bc824b3129ba25813acc2e66b3aed2676925d1"
+      },
+      "updated_at": "2026-10-07T19:02:42.314822+00:00",
+      "scientific_classification": "INFRASTRUCTURE_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "is_method_comparison": false
+    },
+    {
+      "case": "D-M08-B",
+      "version": "v1",
+      "disposition": "HELD_FAILED_SEED_DELIVERY_OVERRUN",
+      "scientific_classification": "INFRASTRUCTURE_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "is_method_comparison": false,
+      "arms": {
+        "control": "NOT_ADMITTED_FAILED_COMMON_SEED",
+        "treatment": "NOT_ADMITTED_FAILED_COMMON_SEED"
+      },
+      "source_quality": "UNASSESSED",
+      "native_goal_id": "01a117c0-b581-7262-95f2-1b9652238ff0",
+      "native_status": "complete",
+      "native_first_update_response": "NOT_PERSISTED: receipt construction TextEncoder failure; actual repeated completion response/state retained",
+      "native_tokens_raw": 23810,
+      "native_elapsed_raw_seconds": 107,
+      "generated_tokens": null,
+      "billing": null,
+      "requestedAt": "2026-10-07T19:04:27.651Z",
+      "startedAt": "2026-10-07T19:04:28.182Z",
+      "delivery_completedAt": "2026-10-07T19:08:19.578Z",
+      "dispatch_to_delivery_seconds": 231.927,
+      "delivery_overrun_seconds": 51.92699999999999,
+      "quiet": true,
+      "settled": true,
+      "hashes": {
+        "native_terminal_receipt.json": "eaefc09a351675a9e4cfbee21d190f04af6106be1125633248f4a108be083bd5",
+        "quiet_task_receipt.json": "ec11017645148590ede464d7abc12a16a8f22dd0f7ac9013ebf35a80a78e8219",
+        "INPUT_MAP.json": "22ed109311ab4420aaf72dc988e447ac537e5f72a19f66dbf32881ebe2162190",
+        "boundary.json": "f7ab52fd700bcbba13c801424d48c668b7e4810d714698b98d1f57b5b93db0b8",
+        "t3_terminal_clock_receipt.json": "f9cb0062fea5f727bfab0f67c339a90f5cc39b95f9178480de6f7bc83d498bfb",
+        "draft.md": "6b73e52c01bd15f9f2b85f676a92e2f7d0359fc30e5c7e4529f570bf39bfedae",
+        "task.txt": "cdf0ffefe5f2cd80bc1ac0a3419c825a3835db4a821107c77740ff2b1ee9e9be",
+        "native_activation_receipt.json": "59a2107e96ba1b0e254fc51773d7cf57efa4caee43fc858cdb9718d09619d581",
+        "timings.json": "b783b1a6b90c7663ffee529185bf82ca79a53ada5497d8e87b62d890c9e38a00",
+        "dispatch_response.json": "4768769acc1df3119b595d61dd7cdf1c8c43fda9108443c75998b9a1b8a7d9a0"
+      },
+      "frozen_at": "2026-10-07T19:09:57.189063+00:00"
+    },
+    {
+      "case": "D-M08-A",
+      "version": "v2",
+      "scientific_classification": "INFRASTRUCTURE_COMMON_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "is_method_comparison": false,
+      "disposition": "HOLD_VERSION_AFTER_ACTUAL_FAILURE_NO_IDENTICAL_RETRY",
+      "blockers": [
+        "critic delivered241.001sec exceeds240sec stage",
+        "required hostactive criticstate absent, snapshot complete only"
+      ],
+      "arms": {
+        "control": "NOT_ADMITTED_FAILED_COMMON_SEED",
+        "treatment": "NOT_ADMITTED_FAILED_COMMON_SEED"
+      },
+      "source_quality": "UNASSESSED",
+      "original_failure_retained": true,
+      "research_dispatch_to_delivery_seconds": 268.438,
+      "critic_dispatch_to_delivery_seconds": 241.001,
+      "native_goal_tokens_raw_separate": {
+        "research": 68209,
+        "critic": 43283
+      },
+      "billing": null,
+      "generated_tokens": null,
+      "quiet": true,
+      "hashes": {
+        "native_terminal_receipt.json": "577b5d45ec1de9dec3bcbde737a6f146f75733be95895aa813531d924d582f81",
+        "quiet_task_receipt.json": "0310c1296d1d94a661b9c6eb6bcf2cb4080f30797c747926d0325048fcb3a81d",
+        "dispatch.json": "eda4f887901e0b071d8a7954038b9721feb02353bf54fe16d5a47f0397505fc0",
+        "INPUT_MAP.json": "fcc5d00598b4e0128fbe3068595590f57cabd2d76e05e3650b53e640d8ea5598",
+        "boundary.json": "1926ab33dbee0c58dbcca3e0f20b2eceb2bac38c41ee7075ba758ba33f908f32",
+        "t3_terminal_clock_receipt.json": "341bedd2a4dfd70f0acaba99cb3d03b63dd980c8bebb71053a1bb56d28bfb3fa",
+        "task.txt": "1fa585adb526fd973957d4c0b828f96c86ffe3db4d212799f8e52908922cbb38",
+        "timings.json": "cec20d30d20274c24c592b390ec40fa26c27d8a6b70052f51306abaa9a03e667",
+        "critique.md": "2f36554b143736b6465b3818cdcbd5e35a8ac156319c3d87641479f970209bbc"
+      },
+      "frozen_at": "2026-10-07T19:25:46.323529+00:00"
+    },
+    {
+      "case": "D-M08-B",
+      "version": "v2",
+      "status": "INCOMPLETE_MATCHED_COMPARISON",
+      "control": {
+        "arm": "control",
+        "version": "v2",
+        "native_status": "complete",
+        "quiet": true,
+        "settled": true,
+        "requestedAt": "2026-10-07T19:38:32.139Z",
+        "startedAt": "2026-10-07T19:38:32.891Z",
+        "completedAt": "2026-10-07T19:41:19.107Z",
+        "dispatch_to_delivery_seconds": 166.968,
+        "cold_seed_to_delivery_seconds": 897.272,
+        "absolute_deadline_margin_seconds": 2.728,
+        "source_quality": "UNASSESSED",
+        "native_goal_tokens_raw": 34128,
+        "generated_tokens": null,
+        "billing": null,
+        "timing_file": "MISSING: optionalcandidatewritefailed; host timingcarrier records actualT3states",
+        "hashes": {
+          "native_terminal_receipt.json": "1af614244d8d515e2aef962e38fe8fc1f9b8861e7a5eb6b6addc7a1f1d4558ca",
+          "quiet_task_receipt.json": "ca7a6bf240bc27a8f8f2953000fc258988bea78042baf64d2a721f28173e1d5c",
+          "dispatch.json": "107d00dc8e1a89d9935d90b627e92b371e0eba914d6cebb353700244476ab53b",
+          "INPUT_MAP.json": "ca7183a24c5ffcb258c3b5e3c7ff654be4719d1fc43da9a9b9fd698763a19072",
+          "boundary.json": "b1dca159e7731642e7bde5c4c98a5ff787690cdd706ae0656e04c81c45d910d1",
+          "t3_terminal_clock_receipt.json": "e816a389ca6226245c21c9f0ed940645a5c023916ef9fc21a8309b7d737219bd",
+          "task.txt": "59febf1ff7f08326f941fb5205c2a117754562fa96636e2c6a4e9ee2928f57f9",
+          "native_activation_receipt.json": "a22b17598ad1f24cd80f3b5fbaf04cb0b5806606965c6432a39ef8d0833a9202",
+          "final.md": "f340a75df9cd9e204a4eedbb778f33555904f1987edc431d42d6ae62fcd2e304",
+          "rewrite.md": "f340a75df9cd9e204a4eedbb778f33555904f1987edc431d42d6ae62fcd2e304"
+        }
+      },
+      "treatment": {
+        "case": "D-M08-B",
+        "version": "v2",
+        "arm": "treatment",
+        "disposition": "EXPIRED_INTERRUPTED_MISSING_FINAL",
+        "t3_status": "interrupted",
+        "native_status": "paused",
+        "native_identity": "01a117df-e536-7c51-9238-b79427ce9fae",
+        "native_terminal_complete": false,
+        "quiet": true,
+        "settled": true,
+        "files": {
+          "amendment.md": {
+            "exists": true,
+            "sha256": "d5a3d67d91c33bdddc2dd34cb4acc7801b026fc0c560c7dc5eade46ed452cb68",
+            "bytes": 4413
+          },
+          "change_dependency_check.md": {
+            "exists": false,
+            "sha256": null,
+            "bytes": 0
+          },
+          "final.md": {
+            "exists": false,
+            "sha256": null,
+            "bytes": 0
+          },
+          "timings.json": {
+            "exists": false,
+            "sha256": null,
+            "bytes": 0
+          }
+        },
+        "native_goal_raw": {
+          "objective_sha256": "0a271d8194b6d836eaf5d3bd4f551f570ee12265dbde5740f6214c83e42b091a",
+          "status": "paused",
+          "tokensUsed": 24317,
+          "tokenBudget": null,
+          "timeUsedSeconds": 247
+        },
+        "source_quality": "UNASSESSED",
+        "no_retry": true,
+        "frozen_at": "2026-10-07T20:04:47.269066+00:00"
+      },
+      "winner": null,
+      "twofold_objective": "NOT_ESTABLISHED",
+      "source_quality": "UNASSESSED"
+    },
+    {
+      "case": "D-M10-A",
+      "version": "passivecarrier-v2-originalbudget",
+      "disposition": "HELD_FAILED_COMMONSEED_STAGE_OVERRUN",
+      "scientific_classification": "INFRASTRUCTURE_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "is_method_comparison": false,
+      "requestedAt": "2026-10-07T20:06:20.226Z",
+      "startedAt": "2026-10-07T20:06:20.813Z",
+      "completedAt": "2026-10-07T20:10:34.149Z",
+      "dispatch_to_delivery_seconds": 253.923,
+      "stage_ceiling_seconds": 180,
+      "overrun_seconds": 73.923,
+      "arms": {
+        "treatment": "NOT_ADMITTED_FAILED_COMMONSEED",
+        "control": "NOT_ADMITTED_FAILED_COMMONSEED"
+      },
+      "evidence_withholding": "INTACT: no critic/reconciler/finalizer launched, no evidencephase receivedproposal",
+      "source_quality": "UNASSESSED",
+      "native_status": "complete",
+      "native_identity": "01a117f9-5c12-7700-bddb-960ea0c35cfa",
+      "native_goal_raw": {
+        "objective_sha256": "877cc943a183bde05d7a71dff69f997464a7e06e907459633e2ed7f6dbebed4f",
+        "status": "complete",
+        "tokensUsed": 55175,
+        "tokenBudget": null,
+        "timeUsedSeconds": 207
+      },
+      "raw_api_bodies": null,
+      "generated_tokens": null,
+      "billing": null,
+      "quiet": true,
+      "settled": true,
+      "clock_guard": {
+        "schema": "ER10-readonly-clock-guard-v1",
+        "observed_at": "2026-10-07T20:12:32.965109+00:00",
+        "original_deadline": "2026-10-07T20:09:20.226000+00:00",
+        "seconds_remaining": -192.739109,
+        "deadline_elapsed": true,
+        "prior_notice_at": null,
+        "prior_notice_was_early": null,
+        "actual_notice_grace_end": null,
+        "grace_elapsed": null,
+        "policy": "lifecycle_notice",
+        "decision": "LIFECYCLE_DELIVERY_NOTICE_IF_LIVE",
+        "limitation": "Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline."
+      },
+      "timings": "candidatefilemissing; hostactualT3timing frozen",
+      "files": {
+        "draft.md": {
+          "exists": true,
+          "sha256": "d6e93293ff56bff71519cdc451d9c7f42f984b649a4b7d8b9763d7e405cea5f7",
+          "bytes": 4629
+        },
+        "timings.json": {
+          "exists": false,
+          "sha256": null,
+          "bytes": 0
+        }
+      },
+      "frozen_at": "2026-10-07T20:12:33.755994+00:00"
+    }
+  ],
+  "completion": "IN_PROGRESS_HELD_GLM_CAPACITY_NO_NEW_SEED_RETRY_AUTHORIZATION"
+}

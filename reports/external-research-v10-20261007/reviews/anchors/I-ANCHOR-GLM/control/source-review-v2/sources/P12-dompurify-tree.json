@@ -1,0 +1,65 @@
+{
+  "id": "P12-dompurify-tree",
+  "requested_url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/3.4.16?recursive=1",
+  "retrieved_started_utc": "2026-10-07T19:42:46.929844+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://api.github.com/repos/cure53/DOMPurify/git/trees/3.4.16?recursive=1",
+  "http_status": 200,
+  "response_bytes": 32976,
+  "response_sha256": "6221fcdca00f734765473fed44e3539977d19174833fa99e19c0b4feb8d822d2",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:42:47 GMT",
+    "Content-Type": "application/json; charset=utf-8",
+    "ETag": "W/\"c2c1351cb45c3144fe2d3d1009051a5024d3ec603f961b46aa96232b8df66ee5\"",
+    "Last-Modified": "Wed, 07 Oct 2026 18:25:55 GMT"
+  },
+  "response_text_lines": 1124,
+  "normalization": "json",
+  "selection_patterns": [
+    "sha",
+    "path.*test",
+    "path.*purify",
+    "path.*README"
+  ],
+  "context_before": 3,
+  "context_after": 12,
+  "max_hits_per_pattern": 20,
+  "selected_line_ranges": [
+    [
+      1,
+      162
+    ],
+    [
+      224,
+      238
+    ],
+    [
+      286,
+      300
+    ],
+    [
+      436,
+      522
+    ],
+    [
+      610,
+      624
+    ],
+    [
+      650,
+      795
+    ],
+    [
+      904,
+      918
+    ],
+    [
+      996,
+      1010
+    ]
+  ],
+  "bounded_evidence_file": "P12-dompurify-tree.txt",
+  "bounded_evidence_sha256": "3aa142e6373c3122f23fbca4b11f4209e4a362105fae49fefe1ddc34efeadd6c",
+  "bounded_evidence_bytes": 19894,
+  "retrieved_finished_utc": "2026-10-07T19:42:47.196865+00:00"
+}

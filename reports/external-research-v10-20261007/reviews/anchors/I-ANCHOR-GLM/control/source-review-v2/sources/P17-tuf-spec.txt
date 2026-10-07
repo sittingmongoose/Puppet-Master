@@ -1,0 +1,543 @@
+L49: 4.6 File formats: timestamp.json
+L50: 4.7 File formats: mirrors.json
+L51: 5 Detailed client workflow
+L52: 5.1 Record fixed update start time
+L53: 5.2 Load trusted root metadata
+L54: 5.3 Update the root role
+L55: 5.4 Update the timestamp role
+L56: 5.5 Update the snapshot role
+L57: 5.6 Update the targets role
+L58: 5.7 Fetch target
+L59: 6 Repository operations
+L60: 6.1 Key management and migration
+L61: 6.2 Consistent snapshots
+L62: 6.2.1 Writing consistent snapshots
+L63: 6.2.2 Reading consistent snapshots
+L181: Fast-forward attacks. An attacker cannot arbitrarily increase the
+L182: version numbers of metadata files, listed in the snapshot metadata, well
+L183: beyond the current value and thus tricking a software update system into
+L184: thinking any subsequent updates are trying to rollback the package to a
+L185: previous, out-of-date version. In some situations, such as those where
+L186: there is a maximum possible version number, the perpetrator cannot use a
+L187: number so high that the system would never be able to match it with the
+L188: one in the snapshot metadata, and thus new updates could never be
+L189: downloaded.
+L190: Indefinite freeze attacks. An attacker cannot respond to client
+L191: requests with the same, outdated metadata without the client being aware
+L192: of the problem.
+L193: Malicious mirrors preventing updates. A repository mirror cannot
+L194: prevent updates from good mirrors.
+L195: Mix-and-match attacks. An attacker cannot trick clients into using
+L196: a combination of metadata that never existed together on the repository
+L197: at the same time.
+L198: Rollback attacks. An attacker cannot trick clients into installing
+L199: software that is older than that which the client previously knew to be
+L200: available.
+L201: Vulnerability to key compromises. An attacker, who is able to
+L202: compromise a single key or less than a given threshold of keys, cannot
+L203: compromise clients. This includes compromising a single online key (such
+L204: as only being protected by SSL) or a single offline key (such as most
+L205: software update systems use to sign files).
+L206: Wrong software installation. An attacker cannot provide a file
+L207: (trusted or untrusted) that is not the one the client wanted.
+L208: 1.5.3. Goals for PKI (Public key infrastructure)
+L209: Software update systems using the framework’s client code interface should
+L402: target metadata files: the top-level targets.EXT and all delegated
+L403: roles.
+L404: /targets.EXT
+L405: Signed by the target role’s keys. Lists hashes and sizes of target
+L406: files. Specifies delegation information and trusted keys for delegated
+L407: target roles.
+L408: /timestamp.EXT
+L409: Signed by the timestamp role’s keys. Lists hash(es), size, and version
+L410: number of the snapshot file. This is the first and potentially only
+L411: file that needs to be downloaded when clients poll for the existence
+L412: of updates.
+L413: /mirrors.EXT (optional)
+L414: Signed by the mirrors role’s keys. Lists information about available
+L415: mirrors and the content available from each mirror.
+L416: 3.1.2.1. Metadata files for targets delegation
+L430: All of the formats described below include the ability to add more
+L431: attribute-value fields to objects for backwards-compatible format changes.
+L432: Implementers who encounter undefined attribute-value pairs in the format
+L433: must include the data when calculating hashes or verifying signatures and must
+L434: preserve the data when re-serializing. If a backwards incompatible format change
+L435: is needed, a new filename can be used.
+L436: 4.1. Metaformat
+L437: Implementers of TUF may use any data format for metadata files as long as
+L438: all fields in this specification are included and TUF clients are able to
+L439: interpret them without ambiguity. Implementers should choose a data format
+L440: that allows for canonicalization, or one that will decode data
+L441: deterministically by default so that signatures can be accurately verified.
+L442: The chosen data format should be documented in the POUF of the implementation.
+L443: The examples in this document use a subset of the JSON object format, with
+L444: floating-point numbers omitted. When calculating the digest of an
+L547: The "signed" portion of root.json is as follows:
+L548: {
+L549: "_type" : "root",
+L550: "spec_version" : SPEC_VERSION,
+L551: "consistent_snapshot": CONSISTENT_SNAPSHOT,
+L552: "version" : VERSION,
+L553: "expires" : EXPIRES,
+L554: "keys" : {
+L555: KEYID : KEY,
+L556: ...
+L557: },
+L558: "roles" : {
+L559: ROLE : {
+L560: "keyids" : [
+L561: KEYID,
+L566: ...
+L567: }
+L568: }
+L569: SPEC_VERSION
+L570: A string that contains the version number of the TUF
+L571: specification. Its format follows the Semantic Versioning 2.0.0
+L572: (semver) specification. Metadata is
+L573: written according to version "spec_version" of the specification, and
+L574: clients MUST verify that "spec_version" matches the expected version number.
+L575: Adopters are free to determine what is considered a match (e.g., the version
+L576: number exactly, or perhaps only the major version number (major.minor.fix).
+L577: CONSISTENT_SNAPSHOT
+L578: An OPTIONAL boolean indicating whether the repository supports
+L579: consistent snapshots. This field is OPTIONAL for backwards compatibility with
+L580: old metadata. New implementations SHOULD include it. Section
+L581: § 6.2 Consistent snapshots goes into more detail on the consequences of
+L582: enabling this setting on a repository.
+L583: VERSION
+L584: An integer that is greater than 0. Clients MUST NOT replace a
+L585: metadata file with a version number less than the one currently trusted.
+L615: ],
+L616: "signed": {
+L617: "_type": "root",
+L618: "spec_version": "1.0.0",
+L619: "consistent_snapshot": false,
+L620: "expires": "2030-01-01T00:00:00Z",
+L621: "keys": {
+L622: "1bf1c6e3cdd3d3a8420b19199e27511999850f4b376c4547b2f32fba7e80fca3": {
+L623: "keytype": "ed25519",
+L624: "scheme": "ed25519",
+L625: "keyval": {
+L626: "public": "72378e5bc588793e58f81c8533da64a2e8f1565c1fcc7f253496394ffc52542c"
+L627: }
+L628: },
+L629: "135c2f50e57ff11e744d234a62cebad8c38daf399604a7655661cc9199c69164": {
+L680: 4.4. File formats: snapshot.json
+L681: The snapshot.json file is signed by the snapshot role. It MUST list the
+L682: version numbers of the top-level targets metadata and all delegated targets
+L683: metadata. It MAY also list their lengths and file hashes.
+L684: The "signed" portion of snapshot.json is as follows:
+L685: {
+L686: "_type" : "snapshot",
+L687: "spec_version" : SPEC_VERSION,
+L688: "version" : VERSION,
+L689: "expires" : EXPIRES,
+L690: "meta" : METAFILES
+L691: }
+L692: SPEC_VERSION, VERSION and EXPIRES are the same
+L693: as is described for the root.json file.
+L694: METAFILES is an object whose format is the following:
+L695: {
+L696: METAPATH : {
+L697: "version" : VERSION,
+L698: ("length" : LENGTH,)
+L699: ("hashes" : HASHES)
+L700: },
+L701: ...
+L702: }
+L703: METAPATH
+L704: A string giving the file path of the metadata on the repository relative to
+L705: the metadata base URL. For snapshot.json, these are top-level targets
+L706: metadata and delegated targets metadata.
+L707: VERSION
+L708: An integer version number as shown in the metadata file at
+L709: METAPATH.
+L710: LENGTH
+L712: METAPATH. It is OPTIONAL and can be omitted to reduce
+L713: the snapshot metadata file size. In that case the client MUST use a custom
+L714: download limit for the listed metadata.
+L715: HASHES
+L716: A dictionary that specifies one or more hashes of the metadata
+L717: file at METAPATH, with the cryptographic hash
+L718: function as key and the value as HASH, the hexdigest of the
+L719: cryptographic function computed on the metadata file at
+L720: METAPATH. For example: { "sha256": HASH, ... }.
+L721: HASHES is OPTIONAL and can be omitted to reduce the
+L722: snapshot metadata file size. In that case the repository MUST guarantee
+L723: that VERSION alone unambiguously identifies
+L724: the metadata at METAPATH.
+L725: A snapshot.json example file:
+L726: {
+L727: "signatures": [
+L728: {
+L729: "keyid": "66676daa73bdfb4804b56070c8927ae491e2a6c2314f05b854dea94de8ff6bfc",
+L730: "sig": "f7f03b13e3f4a78a23561419fc0dd741a637e49ee671251be9f8f3fceedfc112e4
+L731: 4ee3aaff2278fad9164ab039118d4dc53f22f94900dae9a147aa4d35dcfc0f"
+L732: }
+L733: ],
+L734: "signed": {
+L735: "_type": "snapshot",
+L736: "spec_version": "1.0.0",
+L737: "expires": "2030-01-01T00:00:00Z",
+L738: "meta": {
+L739: "targets.json": {
+L740: "version": 1
+L741: },
+L742: "project1.json": {
+L743: "version": 1,
+L744: "hashes": {
+L745: "sha256": "f592d072e1193688a686267e8e10d7257b4ebfcf28133350dae88362d82a0c8a"
+L746: }
+L747: },
+L748: "project2.json": {
+L749: "version": 1,
+L750: "length": 604,
+L751: "hashes": {
+L752: "sha256": "1f812e378264c3085bb69ec5f6663ed21e5882bbece3c3f8a0e8479f205ffb91"
+L753: }
+L754: }
+L755: },
+L756: "version": 1
+L757: }
+L758: }
+L759: 4.5. File formats: targets.json and delegated target roles
+L760: The "signed" portion of targets.json is as follows:
+L761: {
+L762: "_type" : "targets",
+L763: "spec_version" : SPEC_VERSION,
+L764: "version" : VERSION,
+L765: "expires" : EXPIRES,
+L766: "targets" : TARGETS,
+L767: ("delegations" : DELEGATIONS)
+L768: }
+L769: SPEC_VERSION, VERSION and EXPIRES are the same
+L770: as is described for the root.json file.
+L771: TARGETS is an object whose format is the following:
+L772: {
+L773: TARGETPATH : {
+L774: "length" : LENGTH,
+L775: "hashes" : HASHES,
+L776: ("custom" : CUSTOM) }
+L777: , ...
+L778: }
+L779: TARGETS
+L780: Each key of the TARGETS object is a TARGETPATH.
+L781: TARGETPATH
+L782: A string giving the path to a file that is relative to a mirror’s base URL
+L783: of targets. To avoid surprising behavior when resolving paths, it is
+L784: RECOMMENDED that a TARGETPATH uses the forward slash (/) as directory
+L785: separator and does not start with a directory separator. The recommendation
+L786: for TARGETPATH aligns with the "path-relative-URL string"
+L791: files are available.
+L792: LENGTH
+L793: An integer length in bytes of the target file at TARGETPATH.
+L794: HASHES
+L795: A dictionary that specifies one or more hashes of the target file at
+L796: TARGETPATH, with a string describing the cryptographic hash function
+L797: as key and HASH as defined for METAFILES. For example:
+L798: { "sha256": HASH, ... }.
+L799: CUSTOM
+L800: An object. If defined, the elements and values of the CUSTOM object
+L801: will be made available to the client application. The format of the
+L802: CUSTOM object is opaque to the framework, which only needs to know
+L803: that the "custom" attribute maps to an object. The CUSTOM object
+L804: may include version numbers, dependencies, requirements, or any other data
+L805: that the application wants to include to describe the file at
+L806: TARGETPATH. The application may use this information to guide
+L899: ],
+L900: "signed": {
+L901: "_type": "targets",
+L902: "spec_version": "1.0.0",
+L903: "delegations": {
+L904: "keys": {
+L905: "f761033eb880143c52358d941d987ca5577675090e2215e856ba0099bc0ce4f6": {
+L906: "keytype": "ed25519",
+L907: "scheme": "ed25519",
+L908: "keyval": {
+L909: "public": "b6e40fb71a6041212a3d84331336ecaa1f48a0c523f80ccc762a034c727606fa"
+L910: }
+L911: }
+L912: },
+L913: "roles": [
+L926: "expires": "2030-01-01T00:00:00Z",
+L927: "targets": {
+L928: "file1.txt": {
+L929: "hashes": {
+L930: "sha256": "65b8c67f51c993d898250f40aa57a317d854900b3a04895464313e48785440da"
+L931: },
+L932: "length": 31
+L933: },
+L934: "dir/file2.txt": {
+L935: "hashes": {
+L936: "sha256": "452ce8308500d83ef44248d8e6062359211992fd837ea9e370e561efb1a4ca99"
+L937: },
+L938: "length": 39
+L939: }
+L940: },
+L941: "version": 1
+L942: }
+L943: }
+L944: 4.6. File formats: timestamp.json
+L945: The timestamp.json file is signed by the timestamp role. It indicates the latest
+L946: version of the snapshot metadata and is frequently re-signed to limit the
+L951: The "signed" portion of timestamp.json is as follows:
+L952: {
+L953: "_type" : "timestamp",
+L954: "spec_version" : SPEC_VERSION,
+L955: "version" : VERSION,
+L956: "expires" : EXPIRES,
+L957: "meta" : METAFILES
+L958: }
+L959: SPEC_VERSION, VERSION and EXPIRES are the same as is described for the root.json file.
+L960: METAFILES is the same as described for the snapshot.json file. In the case
+L961: of the timestamp.json file, this MUST only include a description of the
+L962: snapshot.json file.
+L963: A signed timestamp.json example file:
+L964: {
+L965: "signatures": [
+L966: {
+L967: "keyid": "1bf1c6e3cdd3d3a8420b19199e27511999850f4b376c4547b2f32fba7e80fca3",
+L968: "sig": "90d2a06c7a6c2a6a93a9f5771eb2e5ce0c93dd580bebc2080d10894623cfd6eaed
+L969: f4df84891d5aa37ace3ae3736a698e082e12c300dfe5aee92ea33a8f461f02"
+L970: }
+L971: ],
+L972: "signed": {
+L973: "_type": "timestamp",
+L974: "spec_version": "1.0.0",
+L975: "expires": "2030-01-01T00:00:00Z",
+L976: "meta": {
+L977: "snapshot.json": {
+L978: "hashes": {
+L979: "sha256": "c14aeb4ac9f4a8fc0d83d12482b9197452f6adf3eb710e3b1e2b79e8d14cb681"
+L980: },
+L981: "length": 1007,
+L982: "version": 1
+L983: }
+L984: },
+L985: "version": 1
+L986: }
+L987: }
+L988: 4.7. File formats: mirrors.json
+L989: The mirrors.json file is signed by the mirrors role. It indicates which
+L992: The "signed" portion of mirrors.json is as follows:
+L993: {
+L994: "_type" : "mirrors",
+L995: "spec_version" : SPEC_VERSION,
+L996: "version" : VERSION,
+L997: "expires" : EXPIRES,
+L998: "mirrors" : [
+L999: { "urlbase" : URLBASE,
+L1000: "metapath" : METAPATH,
+L1001: "targetspath" : TARGETSPATH,
+L1002: "metacontent" : [ PATHPATTERN ... ] ,
+L1003: "targetscontent" : [ PATHPATTERN ... ] ,
+L1004: ("custom" : { ... }) }
+L1005: , ... ]
+L1006: }
+L1007: SPEC_VERSION, VERSION and EXPIRES are the same
+L1008: as is described for the root.json file.
+L1009: URLBASE
+L1010: A string giving the URL of the mirror.
+L1011: METAPATH
+L1012: A string giving the location from which to retrieve metadata files.
+L1013: METAPATH will be a relative path to URLBASE.
+L1014: TARGETSPATH
+L1015: A string giving the location from which to retrieve target files.
+L1016: TARGETSPATH will be a relative path to URLBASE.
+L1017: The lists of PATHPATTERN for "metacontent" and "targetscontent" describe the
+L1018: metadata files and target files available from the mirror.
+L1030: is aborted because a new metadata file was not signed), the client should
+L1031: still be able to update again in the future. Errors raised during the update
+L1032: process should not leave clients in an unrecoverable state.
+L1033: 5.1. Record fixed update start time
+L1034: Record the time at which the update began as the fixed update start time.
+L1035: Time is fixed at the beginning of the update workflow to allow
+L1036: an application using TUF to effectively pause time, in order to ensure that
+L1037: metadata which has a valid expiration time at the beginning of an update
+L1038: does not fail an expiration check later in the update workflow.
+L1039: 5.2. Load trusted root metadata
+L1040: Load the trusted root metadata file. We assume that a good,
+L1041: trusted copy of this file was shipped with the package manager or software
+L1042: updater using an out-of-band process. Note that the expiration of the
+L1043: trusted root metadata file does not matter, because we will attempt to update
+L1044: it in the next step.
+L1045: 5.3. Update the root role
+L1046: Since it may now be signed using entirely different keys, the client MUST
+L1047: somehow be able to establish a trusted line of continuity to the latest set
+L1048: of keys (see § 6.1 Key management and migration). To do so, the client MUST
+L1049: download intermediate root metadata files, until the latest available one is
+L1050: reached.
+L1051: Let N denote the version number of the trusted root metadata
+L1052: file.
+L1053: Try downloading version N+1 of the root metadata file, up to
+L1073: If version N+1 is not signed as required, discard it, abort the update cycle,
+L1074: and report the signature failure. On the next update cycle, begin at step
+L1075: § 5.3 Update the root role and version N of the root metadata file.
+L1076: Check for a rollback attack. The version number of the new root
+L1077: metadata (version N+1) MUST be exactly the version in the trusted root
+L1078: metadata (version N) incremented by one, that is precisely N+1.
+L1079: If the version of the new root metadata file is not N+1, discard it,
+L1080: abort the update cycle, and report the rollback attack.
+L1081: Note that the expiration of the new (intermediate) root metadata
+L1082: file does not matter yet, because we will check for it in step 5.3.10.
+L1083: Set the trusted root metadata file to the new root metadata
+L1084: file.
+L1085: Persist root metadata. The client MUST write the file to
+L1086: non-volatile storage as FILENAME.EXT (e.g. root.json).
+L1087: Repeat steps 5.3.2 to 5.3.9
+L1088: Check for a freeze attack. The expiration timestamp in the
+L1089: trusted root metadata file MUST be higher than the fixed update start time.
+L1090: If the trusted root metadata file has expired, abort the update cycle,
+L1091: report the potential freeze attack.
+L1092: If the timestamp and / or snapshot keys have been rotated, then delete the
+L1093: trusted timestamp and snapshot metadata files. This is done
+L1094: in order to recover from fast-forward attacks after the repository has been
+L1095: compromised and recovered. A fast-forward attack happens when attackers
+L1096: arbitrarily increase the version numbers of: (1) the timestamp metadata, (2)
+L1097: the snapshot metadata, and / or (3) the targets, or a delegated targets,
+L1098: metadata file in the snapshot metadata. Please see the Mercury
+L1099: paper
+L1100: for more details.
+L1101: Set whether consistent snapshots are used as per the trusted
+L1102: root metadata file (see § 4.3 File formats: root.json).
+L1103: 5.4. Update the timestamp role
+L1104: Download the timestamp metadata file, up to X number of bytes
+L1116: verified SIGNATURE from that KEYID towards the
+L1117: THRESHOLD. If the new timestamp metadata file is not properly signed,
+L1118: discard it, abort the update cycle, and report the signature failure.
+L1119: Check for a rollback attack.
+L1120: The version number of the trusted timestamp metadata file, if
+L1121: any, MUST be less than the version number of the new timestamp
+L1122: metadata file. If the new timestamp metadata version is less than the trusted
+L1123: timestamp metadata version, discard it, abort the update cycle, and
+L1124: report the potential rollback attack. In case they are equal, discard the new
+L1125: timestamp metadata and abort the update cycle. This is normal and it
+L1126: shouldn’t raise any error. The reason for aborting the update process is that
+L1127: there shouldn’t be any changes in the content of this, or any other metadata
+L1128: files too, considering it has the same version as the already trusted one.
+L1129: The version number of the snapshot metadata file in the
+L1130: trusted timestamp metadata file, if any, MUST be less than or equal to its
+L1131: version number in the new timestamp metadata file. If not, discard the new
+L1132: timestamp metadata file, abort the update cycle, and report the failure.
+L1133: Check for a freeze attack. The expiration timestamp in the
+L1134: new timestamp metadata file MUST be higher than the fixed update start time.
+L1135: If so, the new timestamp metadata file becomes the trusted timestamp
+L1136: metadata file. If the new timestamp metadata file has expired, discard it,
+L1137: abort the update cycle, and report the potential freeze attack.
+L1138: Persist timestamp metadata. The client MUST write the file
+L1139: to non-volatile storage as FILENAME.EXT (e.g. timestamp.json).
+L1140: 5.5. Update the snapshot role
+L1141: Download snapshot metadata file, up to either the number of bytes
+L1142: specified in the timestamp metadata file, or some Y number of bytes. The value
+L1143: for Y is set by the authors of the application using TUF. For example, Y may be
+L1144: tens of kilobytes. If consistent snapshots are not used (see
+L1145: Section § 6.2 Consistent snapshots), then the filename used to download the
+L1146: snapshot metadata file is of the fixed form FILENAME.EXT (e.g.,
+L1148: VERSION_NUMBER.FILENAME.EXT (e.g., 42.snapshot.json), where VERSION_NUMBER is
+L1149: the version number of the snapshot metadata file listed in the timestamp
+L1150: metadata file.
+L1151: Check against timestamp role’s snapshot hash. The hashes
+L1152: of the new snapshot metadata file MUST match the hashes, if any, listed in
+L1153: the trusted timestamp metadata. This is done, in part, to prevent a
+L1154: mix-and-match attack by man-in-the-middle attackers. It is safe to check the
+L1155: hashes before the signatures, because the hashes come from the timestamp
+L1156: role, which we have already verified in the previous step; it is also a quick
+L1157: way to reject bad metadata. If the hashes do not match, discard the
+L1158: new snapshot metadata, abort the update cycle, and report the failure.
+L1159: Check for an arbitrary software attack. The new snapshot
+L1160: metadata file MUST have been signed by a THRESHOLD of keys specified in
+L1161: the trusted root metadata file. When computing the THRESHOLD each
+L1162: KEY MUST only contribute one SIGNATURE. That is, each
+L1163: SIGNATURE which is counted towards the THRESHOLD MUST have
+L1164: a unique KEYID. Even if a KEYID is listed
+L1165: more than once in the "signatures" list a client MUST NOT count more than one
+L1166: verified SIGNATURE from that KEYID towards the
+L1167: THRESHOLD. If the new snapshot metadata file is not signed as
+L1168: required, discard it, abort the update cycle, and report the signature
+L1169: failure.
+L1170: Check against timestamp role’s snapshot version. The version
+L1171: number of the new snapshot metadata file MUST match the version number listed
+L1172: in the trusted timestamp metadata. If the versions do not match, discard the
+L1173: new snapshot metadata, abort the update cycle, and report the failure.
+L1174: Check for a rollback attack. The version number of the targets
+L1175: metadata file, and all delegated targets metadata files, if any, in the
+L1176: trusted snapshot metadata file, if any, MUST be less than or equal to its
+L1177: version number in the new snapshot metadata file. Furthermore, any targets
+L1178: metadata filename that was listed in the trusted snapshot metadata file, if
+L1179: any, MUST continue to be listed in the new snapshot metadata file. If any of
+L1180: these conditions are not met, discard the new snapshot metadata file, abort
+L1181: the update cycle, and report the failure.
+L1182: Check for a freeze attack. The expiration timestamp in the
+L1183: new snapshot metadata file MUST be higher than the fixed update start time.
+L1184: If so, the new snapshot metadata file becomes the trusted snapshot metadata
+L1185: file. If the new snapshot metadata file is expired, discard it, abort the
+L1186: update cycle, and report the potential freeze attack.
+L1187: Persist snapshot metadata. The client MUST write the file to
+L1188: non-volatile storage as FILENAME.EXT (e.g. snapshot.json).
+L1189: 5.6. Update the targets role
+L1190: Download the top-level targets metadata file, up to either the
+L1191: number of bytes specified in the snapshot metadata file, or some Z number of
+L1192: bytes. The value for Z is set by the authors of the application using TUF. For
+L1193: example, Z may be tens of kilobytes. If consistent snapshots are not used (see
+L1194: § 6.2 Consistent snapshots), then the filename used to download the targets
+L1196: Otherwise, the filename is of the form VERSION_NUMBER.FILENAME.EXT (e.g.,
+L1197: 42.targets.json), where VERSION_NUMBER is the version number of the targets
+L1198: metadata file listed in the snapshot metadata file.
+L1199: Check against snapshot role’s targets hash. The hashes
+L1200: of the new targets metadata file MUST match the hashes, if any, listed in the
+L1201: trusted snapshot metadata. This is done, in part, to prevent a mix-and-match
+L1202: attack by man-in-the-middle attackers. It is safe to check the hashes before
+L1203: the signatures, because the hashes come from the snapshot role, which we have
+L1204: already verified in the previous step; it is also a quick way to reject bad
+L1205: metadata. If the new targets metadata file does not match, discard the new
+L1206: target metadata, abort the update cycle, and report the failure.
+L1207: Check for an arbitrary software attack. The new targets
+L1208: metadata file MUST have been signed by a THRESHOLD of keys specified
+L1209: in the trusted root metadata file. When computing the THRESHOLD each
+L1210: KEY MUST only contribute one SIGNATURE. That is, each
+L1218: number of the new targets metadata file MUST match the version number listed
+L1219: in the trusted snapshot metadata. If the versions do not match, discard it,
+L1220: abort the update cycle, and report the failure.
+L1221: Check for a freeze attack. The expiration timestamp in the
+L1222: new targets metadata file MUST be higher than the fixed update start time.
+L1223: If so, the new targets metadata file becomes the trusted targets metadata
+L1224: file. If the new targets metadata file is expired, discard it, abort the
+L1225: update cycle, and report the potential freeze attack.
+L1226: Persist targets metadata. The client MUST write the file to
+L1227: non-volatile storage as FILENAME.EXT (e.g. targets.json).
+L1228: Perform a pre-order depth-first search for metadata about the
+L1229: desired target, beginning with the top-level targets role. Note: If
+L1230: any metadata requested in steps 5.6.7.1 - 5.6.7.2 cannot be downloaded nor
+L1231: validated, end the search and report that the target cannot be found.
+L1232: If this role has been visited before, then skip this role
+L1233: (so that cycles in the delegation graph are avoided). Otherwise, if an
+L1294: Note that an attacker, who controls the repository, can launch freeze
+L1295: attacks by withholding new root metadata. The attacker does not need to
+L1296: compromise root keys to do so. However, these freeze attacks are limited by
+L1297: the expiration time of the latest root metadata available to the client.
+L1298: To replace a delegated developer key, the role that delegated to that key
+L1299: just replaces that key with another in the signed metadata where the
+L1300: delegation is done.
+L1301: 6.2. Consistent snapshots
+L1302: So far, we have considered a TUF repository that is relatively static (in
+L1303: terms of how often metadata and target files are updated). The problem is
+L1304: that if the repository (which may be a community repository such as PyPI,
+L1305: RubyGems, CPAN, or SourceForge) is volatile, in the sense that the
+L1306: repository is continually producing new TUF metadata as well as its targets,
+L1307: then should clients read metadata while the same metadata is being written
+L1308: to, they would effectively see denial-of-service attacks. Therefore, the
+L1441: SCHEME, in § 4.2.2
+L1442: SIGNATURE, in § 4.2.1
+L1443: snapshot.json, in § 4.4
+L1444: SPEC_VERSION, in § 4.3
+L1445: TARGETPATH, in § 4.5
+L1446: TARGETS, in § 4.5
+L1447: targets.json, in § 4.5
+L1448: TARGETSPATH, in § 4.7
+L1449: TERMINATING, in § 4.5
+L1450: THRESHOLD, in § 4.3
+L1451: timestamp.json, in § 4.6
+L1452: URLBASE, in § 4.7
+L1453: VERSION
+L1454: dfn for metapath, in § 4.4
+L1455: dfn for role, in § 4.3

@@ -1,0 +1,12 @@
+{
+  "event": "linked_expiry_timing_annotation",
+  "record_at": "2026-10-07T20:06:19.748450+00:00",
+  "fixed_stage_deadline": "2026-10-07T20:03:56.054326+00:00",
+  "lifecycle_only_steer": "2026-10-07T20:04:20.802Z",
+  "cancel_requestedAt": "2026-10-07T20:05:27.318Z",
+  "actual_steer_to_cancel_seconds": 66.516,
+  "grace_limit_seconds": 60,
+  "host_cancellation_late_seconds": 6.516000000000005,
+  "substantive_extension_authorized": false,
+  "hold": "host cancellation action later than <=60s; actualtimes retained no timestampsreset"
+}

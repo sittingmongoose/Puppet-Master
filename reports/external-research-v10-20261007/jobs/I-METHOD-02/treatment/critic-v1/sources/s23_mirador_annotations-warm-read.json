@@ -1,0 +1,36 @@
+{
+  "cache_mode": "warm",
+  "elapsed_seconds": 0.0032052229998953408,
+  "ended_at": "2026-10-07T19:42:29.545519+00:00",
+  "network_requests": 0,
+  "operation": "read",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 287882,
+      "sha256": "471cc0907ab6064464fe5320b1b440fb94ac3e5155511bc2d5ee332c13fa0f35"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": null,
+      "Content-Type": "text/html; charset=utf-8",
+      "ETag": "W/\"af06f10c29108a62fd7033e176e9bbd0\"",
+      "Last-Modified": null
+    },
+    "original_url": "https://github.com/ProjectMirador/mirador-annotations",
+    "raw": {
+      "bytes": 287882,
+      "sha256": "471cc0907ab6064464fe5320b1b440fb94ac3e5155511bc2d5ee332c13fa0f35"
+    },
+    "retrieved_at": "2026-10-07T19:25:20.927339+00:00",
+    "retrieved_url": "https://github.com/ProjectMirador/mirador-annotations"
+  },
+  "record_id": "b8bc32b650174b6d07cd140b251e17c843cd9ecaf3dd3f2dd70b0453fbb732a9",
+  "source": "b8bc32b650174b6d07cd140b251e17c843cd9ecaf3dd3f2dd70b0453fbb732a9",
+  "started_at": "2026-10-07T19:42:29.542291+00:00",
+  "status": "ok"
+}

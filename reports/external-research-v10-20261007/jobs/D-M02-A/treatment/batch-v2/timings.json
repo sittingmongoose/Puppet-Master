@@ -1,0 +1,106 @@
+{
+  "case_id": "D-M02-A",
+  "arm": "treatment",
+  "role": "batch",
+  "logical_phase": "batch12",
+  "preparation_at_utc": "2026-10-07T19:53:28.434013+00:00",
+  "batch_deadline_at_utc": "2026-10-07T20:05:28.434013+00:00",
+  "whole_arm_deadline_at_utc": "2026-10-07T20:08:28.434013+00:00",
+  "goal": {
+    "native_thread_id": "01a117ed-9749-76b0-942a-2cc07e1e734b",
+    "status_observed_at_activation": "active",
+    "native_created_at_epoch": 1791402827,
+    "native_tokens_used_at_activation": 0,
+    "note": "Native cumulative Goal total is not generated-token or billing usage."
+  },
+  "activation_notice": {
+    "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort1-v1",
+    "message_id": "message:mcp:235e0aa0-8217-48e3-907b-d4445d562ed4:thread-send:er10-D-M02-A-treatment-batch-v2-goal-activation-20261007",
+    "delivery": "started",
+    "returned_run_status": "starting",
+    "timestamp_utc": null,
+    "timestamp_note": "The send result supplied no timestamp; sent before the first scientific read."
+  },
+  "operations": [
+    {
+      "started_at_utc": "2026-10-07T19:54:08Z",
+      "finished_at_utc": "2026-10-07T19:54:08Z",
+      "operation": "Read authorized brief and source manifest."
+    },
+    {
+      "started_at_utc": "2026-10-07T19:54:19Z",
+      "finished_at_utc": "2026-10-07T19:54:19Z",
+      "operation": "Locate relevant headings in both frozen RFC texts."
+    },
+    {
+      "started_at_utc": "2026-10-07T19:54:29Z",
+      "finished_at_utc": "2026-10-07T19:54:29Z",
+      "operation": "Read RFC 9111 storage, Vary, freshness, validation, and Cache-Control sections."
+    },
+    {
+      "started_at_utc": "2026-10-07T19:54:40Z",
+      "finished_at_utc": "2026-10-07T19:54:40Z",
+      "operation": "Read RFC 9111 authorization/stale/304 rules and RFC 9110 Vary/conditional rules."
+    },
+    {
+      "started_at_utc": "2026-10-07T19:54:46Z",
+      "finished_at_utc": "2026-10-07T19:54:46Z",
+      "operation": "Read RFC 9110 Authorization and RFC 9111 age/key rules."
+    },
+    {
+      "started_at_utc": "2026-10-07T19:54:50Z",
+      "finished_at_utc": "2026-10-07T19:54:50Z",
+      "operation": "Read RFC 9111 304 update rules and confirm Authorization semantics."
+    },
+    {
+      "started_at_utc": "2026-10-07T19:56:17Z",
+      "finished_at_utc": "2026-10-07T19:56:17Z",
+      "operation": "Verify frozen source file SHA-256 values against source manifest."
+    },
+    {
+      "started_at_utc": "2026-10-07T19:58:53Z",
+      "finished_at_utc": "2026-10-07T19:58:53Z",
+      "operation": "Write initial complete bounded batch report."
+    },
+    {
+      "started_at_utc": "2026-10-07T19:59:22Z",
+      "finished_at_utc": "2026-10-07T19:59:22Z",
+      "operation": "Read back initial report; verify readability, scope headings, word count, and SHA-256."
+    }
+  ],
+  "source_hash_witness": {
+    "httpcache_sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+    "httpsem_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "matched_manifest": true
+  },
+  "report_revisions": [
+    {
+      "saved_at_utc": "2026-10-07T19:58:53Z",
+      "bytes": 7688,
+      "words": 999,
+      "sha256": "73fbfe6c60a74e514d35db1164892ed0b82843a033f4260a791a9a73bd884708",
+      "description": "Initial complete batch response."
+    },
+    {
+      "saved_at_utc": "2026-10-07T20:00:19Z",
+      "bytes": 7797,
+      "words": 1013,
+      "sha256": "611b41b4657d315f20966d55e2a5fb0d4f2629f5976bb5b6f57cd1d9ca49f4ce",
+      "description": "Added conflicting freshness-directive rule and fixture."
+    },
+    {
+      "saved_at_utc": "2026-10-07T20:00:53Z",
+      "bytes": 8129,
+      "words": 1050,
+      "sha256": "4525479502b381cd8b93b1bf56a3e44158bfc4bb822730d43b7ede6714902b1c",
+      "description": "Added same-author cross-condition pass; final shared scope."
+    }
+  ],
+  "usage": {
+    "generated_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "billing_amount": null,
+    "billing_units": null
+  }
+}

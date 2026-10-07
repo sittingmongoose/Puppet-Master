@@ -1,0 +1,41 @@
+{
+  "id": "P40-tuf-targets-update",
+  "requested_url": "https://theupdateframework.github.io/specification/latest/",
+  "retrieved_started_utc": "2026-10-07T19:49:29.268843+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://theupdateframework.github.io/specification/latest/",
+  "http_status": 200,
+  "response_bytes": 248581,
+  "response_sha256": "df63310e70e76aff548b062eb0b6b5b18e2f59844312bffe70d3c97253a8eb6a",
+  "response_headers": {
+    "Content-Type": "text/html; charset=utf-8",
+    "Last-Modified": "Mon, 10 Aug 2026 16:13:38 GMT",
+    "ETag": "\"6a79f8b2-3cb05\"",
+    "Date": "Wed, 07 Oct 2026 19:49:29 GMT"
+  },
+  "response_text_lines": 1455,
+  "normalization": "html",
+  "selection_patterns": [
+    "4.5. File formats: targets.json",
+    "5.1. Record fixed update start time",
+    "5.7. Download target files",
+    "hashes of the downloaded"
+  ],
+  "context_before": 5,
+  "context_after": 35,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      754,
+      793
+    ],
+    [
+      1028,
+      1067
+    ]
+  ],
+  "bounded_evidence_file": "P40-tuf-targets-update.txt",
+  "bounded_evidence_sha256": "f42b800e7581c3af3b0553f29fd3bdfa97d56d6bb28f5277a9a0ea089142b8cf",
+  "bounded_evidence_bytes": 4113,
+  "retrieved_finished_utc": "2026-10-07T19:49:29.466322+00:00"
+}

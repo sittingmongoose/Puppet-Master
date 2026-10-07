@@ -1,0 +1,54 @@
+{
+  "id": "P41-fts5-conditions",
+  "requested_url": "https://www.sqlite.org/fts5.html",
+  "retrieved_started_utc": "2026-10-07T19:49:29.270675+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://www.sqlite.org/fts5.html",
+  "http_status": 200,
+  "response_bytes": 210915,
+  "response_sha256": "aa965064eb7d3f5c2040edfba900e7d96ce88412fdb672176f4b3dcc8d89089c",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:49:29 GMT",
+    "Last-Modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+    "ETag": "\"m6aa3e181s337e3\"",
+    "Content-type": "text/html; charset=utf-8"
+  },
+  "response_text_lines": 2857,
+  "normalization": "html",
+  "selection_patterns": [
+    "This is technically a bug",
+    "This option is only useful",
+    "Substrings consisting of fewer",
+    "designed for use with English",
+    "Alternatively, FTS5 may be built"
+  ],
+  "context_before": 5,
+  "context_after": 35,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      187,
+      226
+    ],
+    [
+      506,
+      545
+    ],
+    [
+      561,
+      600
+    ],
+    [
+      605,
+      644
+    ],
+    [
+      893,
+      956
+    ]
+  ],
+  "bounded_evidence_file": "P41-fts5-conditions.txt",
+  "bounded_evidence_sha256": "0636b06742cde247755f76137f8dd445d18cd87f2bc39adcaa0e303cb32f1d89",
+  "bounded_evidence_bytes": 13806,
+  "retrieved_finished_utc": "2026-10-07T19:49:29.626799+00:00"
+}

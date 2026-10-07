@@ -1,0 +1,155 @@
+1: Web Content Accessibility Guidelines (WCAG) 2.2
+2: Web Content Accessibility Guidelines (WCAG) 2.2
+3: W3C Recommendation 12 December 2024
+4: More details about this document
+5: This version:
+6: https://www.w3.org/TR/2024/REC-WCAG22-20241212/
+7: Latest published version:
+8: https://www.w3.org/TR/WCAG22/
+9: Latest editor's draft:
+201: 5.1 Interpreting Normative Requirements
+202: 5.2 Conformance Requirements
+203: 5.2.1 Conformance Level
+204: 5.2.2 Full pages
+205: 5.2.3 Complete processes
+206: 5.2.4 Only Accessibility-Supported Ways of Using Technologies
+207: 5.2.5 Non-Interference
+208: 5.3 Conformance Claims (Optional)
+209: 5.3.1 Required Components of a Conformance Claim
+210: 5.3.2 Optional Components of a Conformance Claim
+211: 5.4 Statement of Partial Conformance - Third Party Content
+279: Understanding Text Alternatives |
+280: How to Meet Text Alternatives
+281: Provide text alternatives for any non-text content so that it can be changed into other forms people need, such as large print, braille, speech, symbols or simpler language.
+282: Success Criterion 1.1.1 Non-text Content
+283: Understanding Non-text Content |
+284: How to Meet Non-text Content
+285: (Level A)
+286: All non-text content that is presented to the user has a text alternative that serves the equivalent purpose, except for the situations listed below.
+287: Controls, Input
+288: If non-text content is a control or accepts user input, then it has a name that describes its purpose. (Refer to Success Criterion 4.1.2 for additional requirements for controls and content that accepts user input.)
+390: or sound.
+391: Note
+392: For requirements related to color, refer to Guideline 1.4.
+393: Success Criterion 1.3.4 Orientation
+394: Understanding Orientation |
+395: How to Meet Orientation
+396: (Level AA)
+397: Content does not restrict its view and operation to a single display orientation, such as portrait or landscape, unless a specific display orientation is essential.
+398: Note
+399: Examples where a particular display orientation may be essential are a bank check, a piano application, slides for a projector or television, or virtual reality content where content is not necessarily restricted to landscape or portrait display orientation.
+569: Understanding Keyboard Accessible |
+570: How to Meet Keyboard Accessible
+571: Make all functionality available from a keyboard.
+572: Success Criterion 2.1.1 Keyboard
+573: Understanding Keyboard |
+574: How to Meet Keyboard
+575: (Level A)
+576: All functionality of the content is operable through a keyboard interface without requiring specific timings for individual keystrokes, except where the underlying
+577: function requires input that depends on the path of the user's movement and not just
+578: the endpoints.
+780: heading to different types of content.
+781: Note 2
+782: This success criterion covers sections within writing, not user interface components. User interface components are covered under Success Criterion 4.1.2.
+783: Success Criterion 2.4.11 Focus Not Obscured (Minimum)
+784: Understanding Focus Not Obscured (Minimum) |
+785: How to Meet Focus Not Obscured (Minimum)
+786: (Level AA)
+787: New
+788: When a user interface component receives keyboard focus, the component is not entirely hidden due to author-created content.
+789: Note 1
+857: The motion is used to operate functionality through an accessibility supported interface;
+858: Essential
+859: The motion is essential for the function and doing so would invalidate the activity.
+860: Success Criterion 2.5.5 Target Size (Enhanced)
+861: Understanding Target Size (Enhanced) |
+862: How to Meet Target Size (Enhanced)
+863: (Level AAA)
+864: The size of the target for pointer inputs is at least 44 by 44 CSS pixels except when:
+865: Equivalent
+866: The target is available through an equivalent link or control on the same page that is at least 44 by 44 CSS pixels;
+867: Inline
+868: The target is in a sentence or block of text;
+869: User Agent Control
+870: The size of the target is determined by the user agent and is not modified by the author;
+871: Essential
+872: A particular presentation of the target is essential to the information being conveyed.
+883: All functionality that uses a dragging movement for operation can be achieved by a single pointer without dragging, unless dragging is essential or the functionality is determined by the user agent and not modified by the author.
+884: Note
+885: This requirement applies to web content that interprets pointer actions (i.e., this does not apply to actions that are required to operate the user agent or assistive technology).
+886: Success Criterion 2.5.8 Target Size (Minimum)
+887: Understanding Target Size (Minimum) |
+888: How to Meet Target Size (Minimum)
+889: (Level AA)
+890: New
+891: The size of the target for pointer inputs is at least 24 by 24 CSS pixels, except when:
+892: Spacing
+893: Undersized targets (those less than 24 by 24 CSS pixels) are positioned so that if a 24 CSS pixel diameter circle is centered on the bounding box of each, the circles do not intersect another target or the circle for another undersized target;
+894: Equivalent
+895: The function can be achieved through a different control on the same page that meets this criterion;
+896: Inline
+897: The target is in a sentence or its size is otherwise constrained by the line-height of non-target text;
+898: User Agent Control
+899: The size of the target is determined by the user agent and is not modified by the author;
+909: Understanding Readable |
+910: How to Meet Readable
+911: Make text content readable and understandable.
+912: Success Criterion 3.1.1 Language of Page
+913: Understanding Language of Page |
+914: How to Meet Language of Page
+915: (Level A)
+916: The default human language of each web page can be programmatically determined.
+917: Success Criterion 3.1.2 Language of Parts
+918: Understanding Language of Parts |
+1115: One of the following levels of conformance is met in full.
+1116: For Level A conformance (the minimum level of conformance), the web page
+1117: satisfies all the Level A success criteria, or a conforming alternate version is provided.
+1118: For Level AA conformance, the web page satisfies all the Level A and Level AA success criteria, or a Level AA conforming alternate version is provided.
+1119: For Level AAA conformance, the web page satisfies all the Level A, Level AA and Level AAA success criteria, or a Level AAA conforming alternate version is provided.
+1120: Note 1
+1121: Although conformance can only be achieved at the stated levels, authors are encouraged to report (in their claim) any progress toward meeting success criteria from all levels beyond the achieved level of conformance.
+1122: Note 2
+1123: It is not recommended that Level AAA conformance be required as a general policy for entire sites because it is not possible to satisfy all Level AAA success criteria for some content.
+1124: 5.2.2 Full pages
+1125: Conformance (and conformance level) is for full web page(s) only, and cannot be achieved if part of a web page is excluded.
+1126: Note 1
+1127: For the purpose of determining conformance, alternatives to part of a page's content are considered part of the page when the alternatives can be obtained directly from the page, e.g., a long description or an alternative presentation of a video.
+1128: Note 2
+1129: Authors of web pages that cannot conform due to content outside of the author's control may consider a Statement of Partial Conformance.
+1130: Note 3
+1131: A full page includes each variation of the page that is automatically presented by the page for various screen sizes (e.g. variations in a responsive web page). Each of these variations needs to conform (or needs to have a conforming alternate version) in order for the entire page to conform.
+1132: 5.2.3 Complete processes
+1133: When a web page is one of a series of web pages presenting a process (i.e., a sequence of steps that need to be completed in order to accomplish an activity), all web pages in the process conform at the specified level or better. (Conformance is not possible at a particular level if any page in the process does not conform at that level or better.)
+1134: Example
+1135: An online store has a series of pages that are used to select and purchase products. All pages in the series from start to finish (checkout) conform in order for any page that is part of the process to conform.
+1136: 5.2.4 Only Accessibility-Supported Ways of Using Technologies
+1137: Only accessibility-supported ways of using technologies are relied upon to satisfy the success criteria. Any information or functionality that is provided in a way that is not accessibility supported is also available in a way that is accessibility supported. (See Understanding accessibility support.)
+1138: 5.2.5 Non-Interference
+2312: Permalink
+2313: Referenced in:
+2314: § 5. Conformance
+2315: § 5.2.2 Full pages
+2316: § 6. Glossary (2) (3)
+2317: Permalink
+2318: Referenced in:
+2319: § 5.2.1 Conformance Level
+2320: Permalink
+2321: Referenced in:
+2552: § 3.3.7 Redundant Entry
+2553: § 3.3.8 Accessible Authentication (Minimum)
+2554: § 3.3.9 Accessible Authentication (Enhanced)
+2555: § 5.2.3 Complete processes
+2556: § 6. Glossary (2) (3) (4)
+2557: Permalink
+2558: Referenced in:
+2559: § 1.3.1 Info and Relationships
+2560: § 1.3.2 Meaningful Sequence
+2561: § 1.3.5 Identify Input Purpose
+2768: § 3.3.4 Error Prevention (Legal, Financial, Data)
+2769: § 3.3.6 Error Prevention (All)
+2770: § 5.2.1 Conformance Level
+2771: § 5.2.2 Full pages
+2772: § 5.2.3 Complete processes
+2773: § 5.2.5 Non-Interference
+2774: § 5.3 Conformance Claims (Optional)
+2775: § 6. Glossary (2) (3) (4) (5) (6)

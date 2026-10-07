@@ -1,0 +1,311 @@
+L1391:       'throws instead of returning a force-removed rawtext root (mXSS reparse)',
+L1392:       (assert) => {
+L1393:         // A <style> passed as the IN_PLACE root whose text content already
+L1394:         // carries its own end tag is force-removed by the LITERAL_TEXT_CLOSE
+L1395:         // probe: its literal serialization ("</style><img ...>") re-opens
+L1396:         // markup on an HTML reparse. _neutralizeSubtree cancels the attribute
+L1397:         // axis (the onclick below) but cannot defang rawtext text, so the
+L1398:         // detached root must not be handed back to the caller. Fail closed —
+L1399:         // assert the return contract, not merely a scrubbed textContent, so a
+L1400:         // future refactor cannot pass by defanging text while still returning.
+L1401:         const dirty = document.createElement('style');
+L1402:         dirty.setAttribute('onclick', 'alert(1)');
+L1403:         dirty.textContent = '</style><img src=x onerror=alert(1)>';
+L1404:         document.body.appendChild(dirty);
+L1405: 
+L1406:         assert.throws(
+L1407:           () => DOMPurify.sanitize(dirty, { IN_PLACE: true }),
+L1408:           /refusing to sanitize in place/,
+L1409:           'force-removed rawtext root is not returned'
+L1410:         );
+L1725:           () => DOMPurify.sanitize(root, { IN_PLACE: true }),
+L1726:           /clobbered|forbidden/i,
+L1727:           'clobbered IN_PLACE root must throw in clobbering-capable engines'
+L1728:         );
+L1729:       } else {
+L1730:         const clean = DOMPurify.sanitize(root, { IN_PLACE: true });
+L1731:         assert.ok(
+L1732:           !/on\w+=/i.test(clean.outerHTML),
+L1733:           'no on-handler survived: ' + clean.outerHTML
+L1734:         );
+L1735:       }
+L1736:     });
+L1737: 
+L1738:     QUnit.test(
+L1739:       'IN_PLACE: a clobbered ownerDocument does not skip the fail-closed scrub',
+L1740:       (assert) => {
+L1741:         // HTMLFormElement has [LegacyOverrideBuiltIns], so a child
+L1742:         // <input name="ownerDocument"> (or a form-associated external input)
+L1743:         // shadows Node.prototype.ownerDocument and a direct form.ownerDocument
+L1744:         // read returns that <input>. The iterator was built with
+L1929:       'forbidden-root preflight throw de-arms live descendants',
+L1930:       (assert) => {
+L1931:         // The early IN_PLACE preflight rejects a forbidden root before the
+L1932:         // main walk runs. On a live root that throw must not hand the caller
+L1933:         // back an un-neutralised armed descendant. No clobbering needed, so
+L1934:         // this reproduces the preflight-throw gap deterministically in every
+L1935:         // engine.
+L1936:         const root = document.createElement('div');
+L1937:         root.innerHTML = '<img id="tail" onerror="alert(1)">';
+L1938:         document.body.appendChild(root);
+L1939:         const tail = root.querySelector('#tail');
+L1940: 
+L1941:         assert.throws(
+L1942:           () =>
+L1943:             DOMPurify.sanitize(root, {
+L1944:               IN_PLACE: true,
+L1945:               FORBID_TAGS: ['div'],
+L1946:             }),
+L1947:           /forbidden/i,
+L1948:           'forbidden IN_PLACE root throws at preflight'
+L1949:         );
+L1950:         assert.strictEqual(
+L1951:           tail.getAttribute('onerror'),
+L1952:           null,
+L1953:           'onerror stripped from descendant before preflight throw'
+L1954:         );
+L1955: 
+L1956:         root.remove();
+L1957:         window.xssed = false;
+L1958:       }
+L1959:     );
+L1960: 
+L1961:     QUnit.test(
+L1962:       'clobbered-form preflight throw de-arms live descendants',
+L1963:       (assert) => {
+L1964:         // The reported Path 2. A clobbered <form> root is rejected at
+L1965:         // preflight; in clobbering-capable engines that throw must first
+L1980:             () => DOMPurify.sanitize(root, { IN_PLACE: true }),
+L1981:             /clobbered|forbidden/i,
+L1982:             'clobbered IN_PLACE root throws at preflight'
+L1983:           );
+L1984:           assert.strictEqual(
+L1985:             tail.getAttribute('onerror'),
+L1986:             null,
+L1987:             'onerror stripped from descendant before clobber throw'
+L1988:           );
+L1989:         } else {
+L1990:           DOMPurify.sanitize(root, { IN_PLACE: true });
+L1991:           assert.strictEqual(
+L1992:             tail.getAttribute('onerror'),
+L1993:             null,
+L1994:             'onerror stripped on the non-clobbering success path'
+L1995:           );
+L1996:         }
+L1997: 
+L1998:         root.remove();
+L1999:         window.xssed = false;
+L2038: 
+L2039:     QUnit.test(
+L2040:       'a kill-decision on a detached IN_PLACE root is not a silent no-op (REPORT-3)',
+L2041:       (assert) => {
+L2042:         // A detached <style> whose text breaks out of the element trips the
+L2043:         // mXSS canary. _forceRemove cannot detach a parentless root, so the
+L2044:         // node must be neutralized (or the call must throw) rather than be
+L2045:         // handed back intact while DOMPurify.removed claims a removal.
+L2046:         const style = document.createElement('style');
+L2047:         style.textContent = '</style><img onerror=alert(1)>'; // no src
+L2048:         let ret = null;
+L2049:         try {
+L2050:           ret = DOMPurify.sanitize(style, { IN_PLACE: true });
+L2051:         } catch (_) {
+L2052:           assert.ok(true, 'fail-closed by throwing is acceptable');
+L2053:           return;
+L2054:         }
+L2055: 
+L2056:         // Emulate the app-side store-and-rerender (serialize -> reparse).
+L2057:         const probe = document.createElement('div');
+L5082:         // whose text content, once entity-decoded, contains </style>
+L5083:         // followed by markup. The payload below relies on:
+L5084:         //   1. XHTML parsing — text content of <style> is NOT raw-text
+L5085:         //      mode, so &lt; / &gt; entities decode to angle brackets.
+L5086:         //   2. RETURN_DOM_FRAGMENT — serialiser hand-back skips the
+L5087:         //      string-level pre-pass that would otherwise normalise.
+L5088:         // Without the source-side check, the decoded <img> escapes
+L5089:         // the <style> on the consumer side and fires onerror.
+L5090:         //
+L5091:         // We confirm BOTH the string output is clean AND that a live
+L5092:         // round-trip does not trigger window.xssed. The async portion
+L5093:         // is important: alert() / onerror may fire from a microtask
+L5094:         // after innerHTML returns.
+L5095:         const payload =
+L5096:           '<style>&lt;/style&gt;&lt;img src=x onerror=alert(1)&gt;<a></a></style>';
+L5097: 
+L5098:         const stringOut = DOMPurify.sanitize(payload);
+L5099:         assert.notOk(
+L5100:           /<img/i.test(stringOut) || /onerror/i.test(stringOut),
+L5101:           `string sanitize output: ${stringOut}`
+L6094: 
+L6095:     QUnit.test(
+L6096:       'clobbered IN_PLACE roots throw or sanitize safely',
+L6097:       (assert) => {
+L6098:         window.__clob = 0;
+L6099:         // Disconnected roots, inert sinks: nothing loads or fires here.
+L6100:         const inPlaceSinks =
+L6101:           '<img onerror="window.__clob=1">' +
+L6102:           '<a href="javascript:window.__clob=1">x</a>' +
+L6103:           '<div onclick="window.__clob=1">z</div>';
+L6104: 
+L6105:         const failures = [];
+L6106:         for (const name of CLOBBER_NAMES) {
+L6107:           const root = document.createElement('form');
+L6108:           root.innerHTML = '<input name="' + name + '">' + inPlaceSinks;
+L6109: 
+L6110:           let threw = false;
+L6111:           let out = null;
+L6112:           try {
+L6113:             out = DOMPurify.sanitize(root, { IN_PLACE: true });
+L6124:           failures,
+L6125:           [],
+L6126:           'every clobbered IN_PLACE root threw or returned a sink-free node'
+L6127:         );
+L6128:         assert.equal(
+L6129:           window.__clob,
+L6130:           0,
+L6131:           'no payload executed during IN_PLACE matrix'
+L6132:         );
+L6133:       }
+L6134:     );
+L6135: 
+L6136:     // =======================================================================
+L6137:     // Security regression — audit-5 Finding A:
+L6138:     // IN_PLACE hoisted content must neutralise the ORIGINAL subtree
+L6139:     // =======================================================================
+L6140:     // When KEEP_CONTENT removes a disallowed element it re-parents that
+L6141:     // element's children so the sanitizer walk reaches them. The walk only
+L6142:     // protects the IN_PLACE / build-then-sanitize pattern
+L6143:     //
+L6344:         // parentless guard and throw mid-walk. Without an exception barrier the
+L6345:         // IN_PLACE walk aborts and the caller's live tree keeps everything after
+L6346:         // the wrapper unsanitized. The barrier neutralises the in-place root on
+L6347:         // any abort: nothing executable may survive (the call may still throw,
+L6348:         // which is an accepted contract).
+L6349:         if (typeof window.customElements === 'undefined') {
+L6350:           assert.ok(true, 'no custom elements in this environment; skipping');
+L6351:           return;
+L6352:         }
+L6353:         if (!window.customElements.get('x-surgeon-c3')) {
+L6354:           class XSurgeonC3 extends window.HTMLElement {
+L6355:             disconnectedCallback() {
+L6356:               const w = document.querySelector('x-wrap-c3');
+L6357:               if (w && w.parentNode) {
+L6358:                 w.remove();
+L6359:               }
+L6360:             }
+L6361:           }
+L6362:           window.customElements.define('x-surgeon-c3', XSurgeonC3);
+L6363:         }
+L6385:       'C3-F4: deep DOM-built tree sanitizes in place without failing open',
+L6386:       (assert) => {
+L6387:         // The IN_PLACE entry pre-pass (_sanitizeAttachedShadowRoots) used to
+L6388:         // recurse once per child, so a deep DOM-built tree — DOM APIs have no
+L6389:         // parser depth cap — overflowed the call stack and threw before any
+L6390:         // node was sanitized, leaving the caller's live tree 0% sanitized. The
+L6391:         // walk is now iterative. Depth 5000 overflowed the old recursion
+L6392:         // (~4500 in Chromium). The tree is never attached and never serialized
+L6393:         // here, to avoid the engine's own deep-render / serializer recursion.
+L6394:         const DEPTH = 5000;
+L6395:         const root = document.createElement('div');
+L6396:         const img = document.createElement('img');
+L6397:         img.setAttribute('onerror', 'window.xssed = true');
+L6398:         root.appendChild(img);
+L6399:         let cursor = root;
+L6400:         for (let i = 0; i < DEPTH; i++) {
+L6401:           const child = document.createElement('div');
+L6402:           cursor.appendChild(child);
+L6403:           cursor = child;
+L6404:         }
+L6523:     //
+L6524:     // Public API surface (isValidAttribute, addHook guard), the user-supplied
+L6525:     // TRUSTED_TYPES_POLICY config path (including its re-entrancy guard, #1422 /
+L6526:     // GHSA-vxr8-fq34-vvx9), the forceKeepAttr/keepAttr hook decisions, the
+L6527:     // noscript/noembed fallback-mXSS guard, and a few config permutations.
+L6528:     //
+L6529:     // Isolated: afterEach clears config and hooks so the sticky Trusted Types
+L6530:     // policy and any added hooks cannot leak into the rest of the suite.
+L6531:     // =======================================================================
+L6532: 
+L6533:     QUnit.module('Coverage - reachable branches', {
+L6534:       beforeEach() {
+L6535:         DOMPurify.clearConfig();
+L6536:       },
+L6537:       afterEach() {
+L6538:         DOMPurify.removeAllHooks();
+L6539:         DOMPurify.clearConfig();
+L6540:       },
+L6541:     });
+L6542: 
+L6612:     );
+L6613: 
+L6614:     // ---- user-supplied TRUSTED_TYPES_POLICY config ----
+L6615: 
+L6616:     QUnit.test(
+L6617:       'TRUSTED_TYPES_POLICY signs output through the policy',
+L6618:       (assert) => {
+L6619:         const policy = { createHTML: (s) => s, createScriptURL: (s) => s };
+L6620:         const out = DOMPurify.sanitize('<b>x</b>', {
+L6621:           TRUSTED_TYPES_POLICY: policy,
+L6622:           RETURN_TRUSTED_TYPE: true,
+L6623:         });
+L6624:         assert.equal(String(out), '<b>x</b>');
+L6625:       }
+L6626:     );
+L6627: 
+L6628:     QUnit.test('TRUSTED_TYPES_POLICY without createHTML throws', (assert) => {
+L6629:       assert.throws(
+L6630:         () =>
+L6631:           DOMPurify.sanitize('x', {
+L6632:             TRUSTED_TYPES_POLICY: { createScriptURL: (s) => s },
+L6633:           }),
+L6634:         /createHTML/
+L6635:       );
+L6636:     });
+L6637: 
+L6638:     QUnit.test(
+L6639:       'TRUSTED_TYPES_POLICY without createScriptURL throws',
+L6640:       (assert) => {
+L6641:         assert.throws(
+L6642:           () =>
+L6643:             DOMPurify.sanitize('x', {
+L6644:               TRUSTED_TYPES_POLICY: { createHTML: (s) => s },
+L6645:             }),
+L6646:           /createScriptURL/
+L6647:         );
+L6648:       }
+L6649:     );
+L6650: 
+L6651:     QUnit.test('TRUSTED_TYPES_POLICY null opts out for the call', (assert) => {
+L6652:       assert.equal(
+L6653:         DOMPurify.sanitize('<b>x</b>', { TRUSTED_TYPES_POLICY: null }),
+L6654:         '<b>x</b>'
+L6655:       );
+L6656:     });
+L6657: 
+L6658:     QUnit.test(
+L6659:       'a circular TRUSTED_TYPES_POLICY is rejected by the re-entrancy guard',
+L6660:       (assert) => {
+L6661:         const circular = {
+L6662:           createHTML(s) {
+L6663:             return DOMPurify.sanitize(s);
+L6664:           },
+L6665:           createScriptURL: (s) => s,
+L6666:         };
+L6667:         assert.throws(() =>
+L6668:           DOMPurify.sanitize('<b>x</b>', { TRUSTED_TYPES_POLICY: circular })
+L6669:         );
+L6670:       }
+L6671:     );
+L6672: 
+L6673:     // ---- config permutations ----
+L6674: 
+L6675:     QUnit.test('setConfig applies persistent configuration', (assert) => {
+L6676:       DOMPurify.setConfig({ ALLOWED_TAGS: ['b'] });
+L6677:       assert.equal(DOMPurify.sanitize('<b>x</b><i>y</i>'), '<b>x</b>y');
+L6678:     });
+L6679: 
+L6680:     QUnit.test('ADD_ATTR given an array allows the attribute', (assert) => {
+L6681:       const out = DOMPurify.sanitize('<a data-x="1">y</a>', {
+L6682:         ADD_ATTR: ['data-x'],
+L6683:       });
+L6684:       assert.ok(out.indexOf('data-x') > -1, `got: ${out}`);
+L6685:     });

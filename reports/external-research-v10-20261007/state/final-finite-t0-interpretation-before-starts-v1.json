@@ -1,0 +1,10 @@
+{
+  "schema": "ER10-administrative-prebinding-versus-job-clock-v1",
+  "frozen_at": "2026-10-07T20:28:01.369743+00:00",
+  "authority": "root",
+  "prior_policy": "state/final-finite-prospective-admissions-v3.json",
+  "applies_only": "Wholly unstarted prospective versions; no started case clock is reset",
+  "clock_trigger": "Earliest per-case actual scientific helper/seed/arm preparation boundary or T3 candidate dispatch requestedAt after the case receives real capacity/admission, whichever is earlier. Both arms share the conservative case T0 where common seed or pair wall is declared. Administrative metadata-only prebinding and root policy issuance before capacity are recorded separately as campaign coordination cost, not the scientific job T0. Any queue after actual job preparation/dispatch is fully included.",
+  "prior_cohort2_conservative_interpretation": "Root metadata policy frozen_at20:22:44.800286 would have started both M06 cases before capacity. Retain that metadata interpretation record; neither case scientific seed/arm started, so prospective definition is clarified before any work.",
+  "no_reset": "Existing M02B, M12, METHODS/FAST/C and any started retests keep exact original clocks. Full campaign elapsed and coordination costs are still retained."
+}

@@ -1,0 +1,120 @@
+{
+  "frozen_at": "2026-10-07T19:08:49.229831+00:00",
+  "required": [
+    "draft.md",
+    "sources/SOURCES.md",
+    "native_goal_receipt.json",
+    "native_terminal_receipt.json",
+    "timings.json",
+    "integration-state-active-002.json",
+    "integration-state-terminal-001.json",
+    "terminal-identity-verification.json"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "4ae3c96fa8d0a3d42c675f3021d2f13d9ea3d2d30eaffe8ea3857659a8e7911d",
+      "bytes": 930
+    },
+    "assignment.md": {
+      "sha256": "edcff5bee8fcc6226fa77bc48ccc0ffc7f10c6dd04f1b824017e8178efeae2d4",
+      "bytes": 3493
+    },
+    "config.json": {
+      "sha256": "a4a480df99fe9f61e661198c6e9db50476d9d4f2dbad37994d087d9468be7fff",
+      "bytes": 149
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "3c50c1c145db30b72569e495d1b3df24d7d414013f87f153a85fc853a75c314a",
+      "bytes": 2182
+    },
+    "draft.md": {
+      "sha256": "f0e0251ed5ccfe00cc0d891fc388ec4348e1f34ece9b599ecb7b5ce49d8d402a",
+      "bytes": 13364
+    },
+    "integration-binding-observation-001.json": {
+      "sha256": "a55b5881d5162ac38fd8542f0f2b7cc37fb9ea65032b51c463950b532bb3b27a",
+      "bytes": 12726
+    },
+    "integration-state-active-001.json": {
+      "sha256": "923e923418fdb1b7582f64f6a22eaeae6f55c913c471d3a28d6d367ac2d5fafb",
+      "bytes": 456
+    },
+    "integration-state-active-002.json": {
+      "sha256": "117e552e9ea818f0ea276dfe446a2ed9b9f3b8882e1d0832cd729f606346112b",
+      "bytes": 5551
+    },
+    "integration-state-terminal-001.json": {
+      "sha256": "8c0de19eb1693c3e9583926eb16894d3a60d9f46633a69318afa331212df1958",
+      "bytes": 5730
+    },
+    "matching-control-v2.json": {
+      "sha256": "6d8c0e5e15823c9104902cf2d4160d84796b86cecd8eb3d66b5156b022767a3d",
+      "bytes": 1129
+    },
+    "native_goal_receipt.json": {
+      "sha256": "328ef4ea7c6b7dbe62c95c1b7ed399986424df528d4a53f29297cf4c8b0b4e08",
+      "bytes": 5032
+    },
+    "native_terminal_receipt.json": {
+      "sha256": "1d177c5e309790397b18184830242a3cadc168c436abf6c62461a4a5e3170c59",
+      "bytes": 1737
+    },
+    "prepared.json": {
+      "sha256": "6d8c0e5e15823c9104902cf2d4160d84796b86cecd8eb3d66b5156b022767a3d",
+      "bytes": 1129
+    },
+    "sources/S1-zim-format.md": {
+      "sha256": "6437668589d90e6399533d4b66e9658883e34e2a6c29b1c341e2403e1fcd8d3f",
+      "bytes": 1218
+    },
+    "sources/S2-sqlite-fts5.md": {
+      "sha256": "673ba7b0a901750583a7dad4536e930976c50a800b48f67fbd622dd4956738fb",
+      "bytes": 1366
+    },
+    "sources/S3-dompurify-releases.md": {
+      "sha256": "a1a23237033ec6cf1b91853232a438a21190202bfc39c29dfa37267c1097c608",
+      "bytes": 1326
+    },
+    "sources/S4-wcag22.md": {
+      "sha256": "518ec49c959b832dd42228be34188e2f936cd876aff9cbb2647dc7f6c56e419e",
+      "bytes": 1093
+    },
+    "sources/S5-rename2.md": {
+      "sha256": "d0807bece9ae00fc6888afcf0c00563bde57f11f230dff012167b371fc4c17ea",
+      "bytes": 1464
+    },
+    "sources/S6-python-zipfile.md": {
+      "sha256": "249bffa3ee19896a4a657572658a8d755a62ab54b0774c5481d77443c80361a3",
+      "bytes": 1484
+    },
+    "sources/S7-tuf.md": {
+      "sha256": "22fd4ba8ba7e8e3c0f0ad5ad403bf3c09dea439bfdb4062003d368552b81b612",
+      "bytes": 1522
+    },
+    "sources/SOURCES.md": {
+      "sha256": "e16d3fbc3839b67192cf18589d80ad2e755790733f25fd9c30a0bdb9c15bc8d1",
+      "bytes": 4079
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "09870a6dee0de59074a3eee7ee291f31e5c62e7a45469725cda58fb624be0c98",
+      "bytes": 4200
+    },
+    "task.txt": {
+      "sha256": "1abaec13d462a538b227b4bc8da3964dc6544f2653fa2220af304123f67cfdc1",
+      "bytes": 459
+    },
+    "terminal-identity-verification.json": {
+      "sha256": "5ad64d4114d257316d7a6ff5a5010365e98bd3b1d61c4f08798f46a45c9603e6",
+      "bytes": 648
+    },
+    "timings.json": {
+      "sha256": "422e06504bffa81ac3e7db90e12b976c517ee4a92b7183f570be3eed4cd3f230",
+      "bytes": 1945
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "b2ab14b4258ea11890e01eae4434bfbd23980f3c666add3cf8c97eb4881d0922",
+      "bytes": 6922
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

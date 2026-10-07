@@ -1,0 +1,126 @@
+{
+  "id": "P17-tuf-spec",
+  "requested_url": "https://theupdateframework.github.io/specification/latest/",
+  "retrieved_started_utc": "2026-10-07T19:42:47.197410+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://theupdateframework.github.io/specification/latest/",
+  "http_status": 200,
+  "response_bytes": 248581,
+  "response_sha256": "df63310e70e76aff548b062eb0b6b5b18e2f59844312bffe70d3c97253a8eb6a",
+  "response_headers": {
+    "Content-Type": "text/html; charset=utf-8",
+    "Last-Modified": "Mon, 10 Aug 2026 16:13:38 GMT",
+    "ETag": "\"6a79f8b2-3cb05\"",
+    "Date": "Wed, 07 Oct 2026 19:42:47 GMT"
+  },
+  "response_text_lines": 1455,
+  "normalization": "html",
+  "selection_patterns": [
+    "SPEC_VERSION",
+    "version 1",
+    "hashes",
+    "fixed update",
+    "expiration",
+    "trusted time",
+    "seen",
+    "rollback"
+  ],
+  "context_before": 3,
+  "context_after": 12,
+  "max_hits_per_pattern": 20,
+  "selected_line_ranges": [
+    [
+      49,
+      63
+    ],
+    [
+      181,
+      209
+    ],
+    [
+      402,
+      416
+    ],
+    [
+      430,
+      444
+    ],
+    [
+      547,
+      561
+    ],
+    [
+      566,
+      585
+    ],
+    [
+      615,
+      629
+    ],
+    [
+      680,
+      710
+    ],
+    [
+      712,
+      786
+    ],
+    [
+      791,
+      806
+    ],
+    [
+      899,
+      913
+    ],
+    [
+      926,
+      946
+    ],
+    [
+      951,
+      989
+    ],
+    [
+      992,
+      1018
+    ],
+    [
+      1030,
+      1053
+    ],
+    [
+      1073,
+      1104
+    ],
+    [
+      1116,
+      1146
+    ],
+    [
+      1148,
+      1194
+    ],
+    [
+      1196,
+      1210
+    ],
+    [
+      1218,
+      1233
+    ],
+    [
+      1294,
+      1308
+    ],
+    [
+      1441,
+      1455
+    ]
+  ],
+  "bounded_evidence_file": "P17-tuf-spec.txt",
+  "bounded_evidence_sha256": "d50d6d45be7e1cb5203cf65f78bbef18fac980f22a8669f90e07b263c095c641",
+  "bounded_evidence_bytes": 27410,
+  "retrieved_finished_utc": "2026-10-07T19:42:47.446561+00:00",
+  "observed_title": "The Update Framework Specification"
+}

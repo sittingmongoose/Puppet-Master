@@ -1,0 +1,111 @@
+{
+  "version": "prospective-v2",
+  "case": "D-M03-B",
+  "frozen_at": "2026-10-07T19:36:58.686371+00:00",
+  "original_frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/case-card.json",
+      "sha256": "b2ce873e58a0cd7a2b7428b0afaf97cb57483976bd748fd698957bb5e813257b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/CASE_CARD.md",
+      "sha256": "86f46530e4225fa42e0b2887ece22298e8dee4ecea05683dbe2fe04fc5c31ca1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/INPUT_MAP.json",
+      "sha256": "a70a6845c226b67c2abea096d812e5a365bb9df61a6e9a4eff31523c7862c89a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/brief.md",
+      "sha256": "f2883527565efec006d62f4066c9578f01339eb35bbb4fcf21b6c53360230c60"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources.json",
+      "sha256": "73f74502cba5442210467e83f98a2edc08d5492161c654b574ccf8ab52030cd6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources/projdoc.rst",
+      "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources/projcode.py",
+      "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda"
+    }
+  ],
+  "both_arm_stages": {
+    "treatment": [
+      "navigate-v2",
+      "focused_read-v2",
+      "expand-v2",
+      "finalize-v2"
+    ],
+    "control": [
+      "normal_retrieval-v2",
+      "finalize-v2"
+    ]
+  },
+  "native_route": "muse/muse-spark-1.3-contributor/max/default/allowAll/auto_review=off",
+  "budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "normal_retrieval",
+          "candidate_minutes": 12,
+          "procedure": "Use ordinary native search/read of the same corpus with reasonable scope; no forced exhaustive read or navigation prescription.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/control/normal_retrieval.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 3,
+          "procedure": "Deliver all obligations with cited governing conditions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/control/finalize.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "navigate",
+          "candidate_minutes": 2,
+          "procedure": "Use actual file/symbol/section navigation to identify promising evidence; index hits are not conclusions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/treatment/navigate.md"
+        },
+        {
+          "stage": "focused_read",
+          "candidate_minutes": 5,
+          "procedure": "Read the focused implementation and relevant documentation.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/treatment/focused_read.md"
+        },
+        {
+          "stage": "expand",
+          "candidate_minutes": 5,
+          "procedure": "Follow governing definitions, callers, and dependency conditions beyond the first match until the question is supported.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/treatment/expand.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 3,
+          "procedure": "Deliver the same complete scope with unresolved conditions explicit.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/treatment/finalize.md"
+        }
+      ]
+    }
+  },
+  "scope_unchanged": true,
+  "carrier": "Actual fresh native create/get active/update terminal/get same identity; passive host exact-thread state export. Codex state projection is not raw API JSON. Missing actual state HOLD. No manual receipt engineering. Scientific files in jobs role-v2. Timings unknown fields null. Host capture costs separate. Advisory path map is not confinement.",
+  "policy_hashes": {
+    "helpers/passive-receipts/ROOT_ADMISSION_V2.json": "6f0be4322b0292d7bef25b92f728435c89b29d650ca4c66a5e3f7b8ae700f4bb",
+    "helpers/passive-receipts/PROSPECTIVE_CARRIER_V2.md": "42d94f8f92aead30f4527029e534d97e016d0df24df8fd62744e44aa433ac4da"
+  },
+  "same_author_batch": "M02 treatment batch and finalize use one delegated author with two sequential fresh native Goals; control questions use distinct tasks and no sibling input."
+}

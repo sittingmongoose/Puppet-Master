@@ -1,0 +1,66 @@
+12: 
+13: **Note that [DOMPurify v2.5.9](https://github.com/cure53/DOMPurify/releases/tag/2.5.9) is the latest version supporting MSIE. For important security updates compatible with MSIE, please use the [2.x branch](https://github.com/cure53/DOMPurify/tree/2.x).**
+14: 
+15: Our automated tests cover 9 browser/OS combinations on the current engines (Chromium, Firefox, and WebKit across Ubuntu, macOS, and Windows) on every push, and a separate matrix re-runs the suite on older engine snapshots (back to roughly Chromium 110, Firefox 108 and WebKit 16.4, around three years old) so regressions on outdated browsers get caught too. We also run Node.js v20, v22, v24, v25 and v26 with DOMPurify on [jsdom](https://github.com/jsdom/jsdom). Older Node versions are known to work as well, but hey... no guarantees.
+16: 
+17: DOMPurify is written by security people who have vast background in web attacks and XSS. Fear not. For more details please also read about our [Security Goals & Threat Model](https://github.com/cure53/DOMPurify/wiki/Security-Goals-&-Threat-Model). Please, read it. Like, really. And if you enjoy the gory details, the [Attack Classes & Bypass History](https://github.com/cure53/DOMPurify/wiki/Attack-Classes-&-Bypass-History) page catalogs the parser-mutation, namespace, clobbering, and template tricks DOMPurify defends against.
+18: 
+19: The DOMPurify project inspired the creation of the [HTML Sanitizer API](https://wicg.github.io/sanitizer-api/#sanitizer), which is already shipping in [many browsers](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API#browser_compatibility). The same capability is now being standardized directly in the [WHATWG HTML specification](https://html.spec.whatwg.org/#html-sanitization).
+20: 
+21: ## Table of Contents
+28: - [What is supported?](#what-is-supported)
+29: - [What about legacy browsers like Internet Explorer?](#what-about-legacy-browsers-like-internet-explorer)
+30: - [What about DOMPurify and Trusted Types?](#what-about-dompurify-and-trusted-types)
+31: - [Can I configure DOMPurify?](#can-i-configure-dompurify)
+32: - [Persistent Configuration](#persistent-configuration)
+33: - [Hooks](#hooks)
+34: - [Removed Configuration](#removed-configuration)
+35: - [Continuous Integration](#continuous-integration)
+36: - [Security Mailing List](#security-mailing-list)
+37: - [Who contributed?](#who-contributed)
+38: 
+39: ## What does it do?
+40: 
+41: DOMPurify sanitizes HTML and prevents XSS attacks. You can feed DOMPurify with e.g. a string full of dirty HTML and it will return a string (unless configured otherwise) with clean HTML. DOMPurify will strip out everything that contains dangerous HTML and thereby prevent XSS attacks and other nastiness. It's also damn bloody fast. We use the technologies the browser provides and turn them into an XSS filter. The faster your browser, the faster DOMPurify will be.
+42: 
+43: ## How do I use it?
+44: 
+45: It's easy. Just include DOMPurify on your website.
+46: 
+47: ### Using the unminified version (source-map available)
+79: 
+80: ### Is there any foot-gun potential?
+81: 
+82: Well, please note, if you _first_ sanitize HTML and then modify it _afterwards_, you might easily **void the effects of sanitization**. If you feed the sanitized markup to another library _after_ sanitization, please be certain that the library doesn't mess around with the HTML on its own. See the [Security Goals & Threat Model](https://github.com/cure53/DOMPurify/wiki/Security-Goals-&-Threat-Model) for safe-usage recipes and the tags/attributes worth thinking twice about, and [Attack Classes & Bypass History](https://github.com/cure53/DOMPurify/wiki/Attack-Classes-&-Bypass-History) for why post-processing and changing the markup context defeat sanitization.
+83: 
+84: ### What about passing a DOM node instead of a string?
+85: 
+86: `DOMPurify.sanitize()` also accepts a DOM node (an `Element`, `DocumentFragment` or `Document`). Since 3.4.14 that path is hardened for nodes that did not come out of the HTML parser: a node built with the DOM API or parsed as XML/XHTML (for example via `DOMParser` with `application/xhtml+xml` and `importNode()`) can carry case-preserved attribute names such as `ONERROR`, or a rawtext element like `<style>` with an element child or its own end tag inside its text. Both shapes are invisible to a string sanitizer because the HTML parser can never build them, but they break out on reparse. DOMPurify now removes attributes by their exact `Attr` node and treats these literal-text trees as unsafe, so mixing document contexts on the input side is covered. It remains your job not to mix contexts on the _output_ side, see the paragraph above.
+87: 
+88: ### Okay, makes sense, let's move on
+93: 
+94: DOMPurify technically also works server-side with Node.js. Our support strives to follow the [Node.js release cycle](https://nodejs.org/en/about/previous-releases).
+95: 
+96: Running DOMPurify on the server requires a DOM to be present, which is probably no surprise. Usually, [jsdom](https://github.com/jsdom/jsdom) is the tool of choice and we **strongly recommend** to use the latest version of _jsdom_.
+97: 
+98: Why? Because older versions of _jsdom_ are known to be buggy in ways that result in XSS _even if_ DOMPurify does everything 100% correctly. There are **known attack vectors** in, e.g. _jsdom v19.0.0_ that are fixed in _jsdom v20.0.0_ - and we really recommend to keep _jsdom_ up to date because of that.
+99: 
+100: Please also be aware that tools like [happy-dom](https://github.com/capricorn86/happy-dom) exist but **are not considered safe** at this point. Combining DOMPurify with _happy-dom_ is currently not recommended and will likely lead to XSS. For background on why the server-side DOM you choose is part of your trusted computing base, see [Attack Classes & Bypass History](https://github.com/cure53/DOMPurify/wiki/Attack-Classes-&-Bypass-History).
+101: 
+102: Other than that, you are fine to use DOMPurify on the server. Probably. This really depends on _jsdom_ or whatever DOM you utilize server-side. If you can live with that, this is how you get it to work:
+103: 
+104: ```bash
+105: npm install dompurify
+106: npm install jsdom
+107: ```
+108: 
+553: - `npm run dev` to build the unminified UMD bundle while watching sources for changes
+554: - `npm run test` to lint the sources, run tests through jsdom, and run browser tests in Chromium via Playwright
+555:   - `npm run test:jsdom` to only run tests through jsdom
+556:   - `npm run test:happydom` to run the suite through happy-dom (an unsupported environment; kept as a robustness check, not a compatibility promise)
+557:   - `npm run test:browser` to only run tests through Playwright
+558:   - `npm run test:browser:legacy` to run the suite on older browser engines (point `PW_MODULE` at a pinned old Playwright install; see `.github/workflows/legacy-browsers.yml`)
+559:   - `npm run test:ci` to run the CI test flow for jsdom and Playwright
+560:   - `npm run test:fuzz` to run a small fuzzer covering `sanitize()` and CONFIG
+561: - `npm run bench` to run the jsdom micro-benchmark over the built `dist/purify.cjs` (build first; `--json` and `--compare a.json b.json` support A/B runs across branches - results are directional, confirm user-facing claims in real browsers)
+562: - `npm run coverage` to build an instrumented bundle, run the jsdom suite, and write a local HTML line/branch coverage report to `coverage/index.html` (jsdom scope only, not run in CI)

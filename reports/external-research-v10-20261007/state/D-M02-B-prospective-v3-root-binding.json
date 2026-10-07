@@ -1,0 +1,40 @@
+{
+  "schema": "ER10-M02B-prospective-v3-adequacy-binding",
+  "frozen_at": "2026-10-07 20:05:16 UTC",
+  "case": "D-M02-B",
+  "old_design_and_versions_preserved": true,
+  "candidate_family": "Luna Max priority codex_gmail",
+  "scored_science_scope_sources_unchanged": true,
+  "arm_envelope_minutes": 30,
+  "control": {
+    "topology": "Three fresh native-Goal contexts",
+    "stages": [
+      {
+        "question_1_minutes": 10
+      },
+      {
+        "question_2_minutes": 10
+      },
+      {
+        "join_full_final_minutes": 10
+      }
+    ],
+    "sibling_question_answers_isolated": true
+  },
+  "treatment": {
+    "topology": "One fresh native Goal, SAMEAUTHOR/context across logical phases",
+    "stages": [
+      {
+        "joint_questions_batch_minutes": 25
+      },
+      {
+        "same_author_final_minutes": 5
+      }
+    ]
+  },
+  "clock": "One absolute30min first preparation/request through complete final/native complete/T3delivery, all startup/retries/queue included. No perphase resets.",
+  "output_binding": "Root jobs-only carrier; remove contradictory illustrative cases/outputs targets only in new overlays beforestarts; preserve original mixed instructions and deviations.",
+  "reason": "M02A original control's separate synthesis expired with no final. Need actual source-assessable matched comparison, not infrastructure absence credit. Whole Bpair remainsunstarted; equal prospective30 changes no method factor.",
+  "prospective_retest_limit": 1,
+  "grade_feedback_not_in_candidate_inputs": true
+}

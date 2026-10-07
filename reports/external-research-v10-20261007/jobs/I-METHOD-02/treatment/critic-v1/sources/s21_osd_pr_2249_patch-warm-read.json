@@ -1,0 +1,36 @@
+{
+  "cache_mode": "warm",
+  "elapsed_seconds": 0.0016751799994381145,
+  "ended_at": "2026-10-07T19:42:29.534664+00:00",
+  "network_requests": 0,
+  "operation": "read",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 38682,
+      "sha256": "4598ba68d2780e99736e25712e90d7772c9fa3f41c7bfb0e046b83cacad0bef9"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": null,
+      "Content-Type": "text/plain; charset=utf-8",
+      "ETag": "W/\"4598ba68d2780e99736e25712e90d777\"",
+      "Last-Modified": null
+    },
+    "original_url": "https://github.com/openseadragon/openseadragon/pull/2249.patch",
+    "raw": {
+      "bytes": 38682,
+      "sha256": "4598ba68d2780e99736e25712e90d7772c9fa3f41c7bfb0e046b83cacad0bef9"
+    },
+    "retrieved_at": "2026-10-07T19:26:35.772632+00:00",
+    "retrieved_url": "https://patch-diff.githubusercontent.com/raw/openseadragon/openseadragon/pull/2249.patch"
+  },
+  "record_id": "e15fde8a0e193af727fa06929961869fa19e8c39dbab60800a9d0d3c3ea0d9c2",
+  "source": "e15fde8a0e193af727fa06929961869fa19e8c39dbab60800a9d0d3c3ea0d9c2",
+  "started_at": "2026-10-07T19:42:29.532968+00:00",
+  "status": "ok"
+}

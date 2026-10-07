@@ -1,0 +1,28 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2\",\"modelSelection\":{\"instanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"options\":[{\"id\":\"thought\",\"value\":\"max\"},{\"id\":\"mode\",\"value\":\"yolo\"}]},\"runtimeMode\":\"full-access\",\"interactionMode\":\"default\"}"
+    }
+  ],
+  "structuredContent": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+    "modelSelection": {
+      "instanceId": "zcode",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": [
+        {
+          "id": "thought",
+          "value": "max"
+        },
+        {
+          "id": "mode",
+          "value": "yolo"
+        }
+      ]
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "isError": false
+}

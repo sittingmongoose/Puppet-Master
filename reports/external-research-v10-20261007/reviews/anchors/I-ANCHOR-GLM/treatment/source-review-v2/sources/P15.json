@@ -1,0 +1,53 @@
+{
+  "id": "P15",
+  "requested_url": "https://sqlite.org/releaselog/3_27_0.html",
+  "resolved_url": "https://sqlite.org/releaselog/3_27_0.html",
+  "http_status": 200,
+  "retrieved_started_at_utc": "2026-10-07T19:40:50.259581+00:00",
+  "retrieved_completed_at_utc": "2026-10-07T19:40:50.400318+00:00",
+  "response_bytes": 9936,
+  "response_sha256": "b18538b272392168a036b4170d047be9771bb6ee8c1226603e75c76f03364300",
+  "http_headers": {
+    "Content-Type": "text/html; charset=utf-8",
+    "ETag": "\"m6aa3e181s26d0\"",
+    "Last-Modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+    "Date": "Wed, 07 Oct 2026 19:40:50 GMT"
+  },
+  "version_or_ref": "SQLite 3.27.0 2019-02-07",
+  "method": "GET; response never executed; bounded excerpts only",
+  "line_coordinates": "1-based normalized HTML visible-text lines; see collector identity",
+  "response_text_line_count": 99,
+  "matched_lines": {
+    "remove_diacritics": [
+      28
+    ],
+    "SQLITE_SOURCE_ID": [
+      92
+    ]
+  },
+  "retained_line_numbers": [
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98
+  ],
+  "excerpt_selection_truncated": false,
+  "excerpt_file": "P15.txt",
+  "excerpt_sha256": "e76508a6b404bc7dadd07a43944e566248edf19845b617e63bd38b4b7ac7c59b"
+}

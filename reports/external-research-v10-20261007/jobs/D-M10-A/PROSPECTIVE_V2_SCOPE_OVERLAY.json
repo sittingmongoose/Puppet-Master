@@ -1,0 +1,126 @@
+{
+  "version": "M10A-passive-carrier-v2",
+  "admission": "AUTHORIZED_UNTOUCHED_BEFORE_SEED_ARMS",
+  "binding": {
+    "providerInstanceId": "codex_gmail",
+    "account": "sittingmongoose@gmail.com",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "original_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/case-card.json": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/INPUT_MAP.json": "df2c6c158a8ec9ad4e50a23fcfb9e7014716ccaeb72589abd505412a7ee48de7",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/SEED_INPUT_MAP.json": "6c08a1dcf73aa12c23863788f974c8ee59864087e64ad6f61330c54b81cfcfa8",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/PREDECESSOR.md": "357288db4d21419211ba91f9a3214e4a9c27ad1d1043467b28627c2124853a5d"
+  },
+  "budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "common_seed",
+          "candidate_minutes": 3,
+          "procedure": "Common candidate authors the proposal once; both arms eventually receive identical bytes.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/outputs/control/common_seed.md"
+        },
+        {
+          "stage": "proposal_first",
+          "candidate_minutes": 10,
+          "procedure": "Critic receives the proposal at entry, then checks sources using a competent ordinary workflow.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/outputs/control/proposal_first.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 2,
+          "procedure": "Produce source-linked dispositions and the corrected bounded answer.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/outputs/control/finalize.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "common_seed",
+          "candidate_minutes": 3,
+          "procedure": "Identical seed/cold-equivalent charge, but do not expose proposal to this critic initially.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/outputs/treatment/common_seed.md"
+        },
+        {
+          "stage": "evidence_first",
+          "candidate_minutes": 4,
+          "procedure": "Fresh critic receives only brief and original sources; save a short independent answer before proposal is released.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/outputs/treatment/evidence_first.md"
+        },
+        {
+          "stage": "release_and_reconcile",
+          "candidate_minutes": 6,
+          "procedure": "Root supplies exact common proposal only after evidence-first answer is frozen; reconcile every claim with sources and independent answer.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/outputs/treatment/release_and_reconcile.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 2,
+          "procedure": "Produce identical full-scope dispositions and corrected answer.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/outputs/treatment/finalize.md"
+        }
+      ]
+    }
+  },
+  "scientific_scope": "exact unchanged case/question/sources/familyMax/15mincold scope",
+  "carrier_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/PROSPECTIVE_CARRIER_V2.md",
+  "root_admission": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/ROOT_ADMISSION_V2.json",
+  "carrier_hashes": {
+    "ROOT_ADMISSION_V2.json": "6f0be4322b0292d7bef25b92f728435c89b29d650ca4c66a5e3f7b8ae700f4bb",
+    "PROSPECTIVE_CARRIER_V2.md": "42d94f8f92aead30f4527029e534d97e016d0df24df8fd62744e44aa433ac4da",
+    "export.py": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8"
+  },
+  "seed_path_mapping": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/seed/draft.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/research-v2/draft.md"
+  },
+  "stage_dirs": {
+    "seed": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/research-v2",
+    "evidence": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/evidence-v2",
+    "reconciliation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/reconciler-v2",
+    "treatmentfinal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/finalizer-v2",
+    "controlreview": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/critic-v2",
+    "controlfinal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/finalizer-v2"
+  },
+  "ceilings_seconds": {
+    "commonseed": 180,
+    "evidence_first": 240,
+    "release_and_reconcile": 360,
+    "treatmentfinal": 120,
+    "proposal_first": 600,
+    "controlfinal": 120
+  },
+  "absolute_latency_seconds": 900,
+  "absolute_boundary": "actual seedT3requestedAt+900seconds includes all seed/queue/latency/delivery, noreset",
+  "arm_order": [
+    "treatment",
+    "control"
+  ],
+  "withholding": "evidenceONLY boundedquestion+originalsources, no proposal/seedprompt/claims until evidencefrozen; then freshreconciler exactevidence+proposal",
+  "source_eval_gate": "both exactarmfinals/nativeterminaldispositions frozen quiet; fullblindfreshSolxhigh judgements; costs/otherarm/grades withheld",
+  "accepted_delivery": "exactscientificfiles+actualGoalactive/terminal projection passive; rawAPIs/createdAt absentexplicit",
+  "frozen_at": "2026-10-07T20:04:47.273336+00:00"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "P36-dompurify-root-guard",
+  "requested_url": "https://raw.githubusercontent.com/cure53/DOMPurify/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/src/purify.ts",
+  "retrieved_started_utc": "2026-10-07T19:47:46.358339+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://raw.githubusercontent.com/cure53/DOMPurify/b9b9d80f7e401771c2ccaef5f45def7eec8f27d7/src/purify.ts",
+  "http_status": 200,
+  "response_bytes": 121644,
+  "response_sha256": "8989c72ac4a4286b98f432f083a466266c976873c4382632fd60faaaaf1bfd98",
+  "response_headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"c9efd3b58428f44ae3dc5d922da07ca9011ae653e3feb4dd5780583369f84516\"",
+    "Date": "Wed, 07 Oct 2026 19:47:46 GMT"
+  },
+  "response_text_lines": 3279,
+  "normalization": "text",
+  "selection_patterns": [
+    "let rootWasRemoved"
+  ],
+  "context_before": 2,
+  "context_after": 75,
+  "max_hits_per_pattern": 3,
+  "selected_line_ranges": [
+    [
+      3111,
+      3187
+    ]
+  ],
+  "bounded_evidence_file": "P36-dompurify-root-guard.txt",
+  "bounded_evidence_sha256": "c9c9dea4620695a9095e9a4624f6f6289e20f50adb7c7eb63adc2567f85c9cf6",
+  "bounded_evidence_bytes": 2838,
+  "retrieved_finished_utc": "2026-10-07T19:47:46.446504+00:00"
+}

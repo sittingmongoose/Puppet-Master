@@ -1,0 +1,1714 @@
+{
+  "collected_at": "2026-10-07T19:36:06.456061+00:00",
+  "slot": "I-ANCHOR-GLM",
+  "stages": [
+    {
+      "arm": "control",
+      "stage": "critic-v2",
+      "receipts": {
+        "dispatch-tool-receipt.json": {
+          "sha256": "ab918eb50f5f14c6e1e2a488fc54d8763ca4f0cc04647f4c32679dd246ee1f27",
+          "bytes": 2166,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "latestTerminalSummary": null,
+              "latestTerminalResultContextTransferId": null,
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "summary": null,
+              "resultContextTransferId": null,
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "integration-state-active-001.json": {
+          "sha256": "bb2d8e76f75796050478ed8cc2ce1a3620da9c3754f2e989b655069d01e14ea9",
+          "bytes": 6392,
+          "value": {
+            "observed_at": "2026-10-07T19:16:26.716753+00:00",
+            "exact_objective_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/assignment.md",
+            "matches": [
+              {
+                "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_f1a0d342-3b71-45de-996a-aa760737c1da/state.json",
+                "backend_session_directory": "sess_f1a0d342-3b71-45de-996a-aa760737c1da",
+                "sha256": "2b147a78d5f19490cb07044474bd4b1551d002531245f39d8a1f6bb64d592025",
+                "bytes": 5314,
+                "actual_state": {
+                  "objective": "Complete fresh ER10 I-ANCHOR-GLM control critic v2 using exact /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/assignment.md and INPUTS.md. Full brief/source critique.md and real installed integration state receipts required; no final.md or second Goal. GLM5.3FlashMax; no config/account/externalrunner changes; vendorbackend target not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "running",
+                  "rounds": 2,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "[Ingest exact I-ANCHOR-GLM critic-v2 inputs and freeze scope]",
+                      "acceptance": "All of assignment.md, INPUTS.md, cases/I-ANCHOR-GLM/brief.md, plan.md, control/research-v2/draft.md and sources/SOURCES.md plus evidence under sources/ are read; grep critique working notes for input paths confirms no other arms/reviews/evaluator keys or parent analyses are opened; write target is only jobs/I-ANCHOR-GLM/control/critic-v2 \u2014 verify with `ls /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2` showing no final.md and no writes outside it",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "[Capture real installed-driver /goal state as native_goal_receipt.json]",
+                      "acceptance": "Locate the live zcode-acp0.65.1 GoalLoopDriver session state (.zcode/scratch/goals/<backendSessionId>/state.json) without invoking a second Goal or editing state; save critic-v2/native_goal_receipt.json quoting the observed state verbatim with backend session id \u2014 verify with `cat native_goal_receipt.json` showing only actually observed state, no invented completion, and vendorbackend/goal target left unclaimed",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "[Write complete source-grounded critique.md for the final reviser]",
+                      "acceptance": "Every original integrated brief/plan obligation, consequential source condition, mechanism/alternative, pinned-code behavior, and issue/fix/regression/release applicability is independently critiqued with exact stable locators, supported corrections, dispositions, optional discoveries, uncertainties, and proposed-versus-executed status; the frozen research-v2 draft is treated as required predecessor \u2014 verify `wc -l critique.md` covers full scope, every cited locator resolves in sources/, and predecessor IDs are never rebound",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "[Record sources/SOURCES.md with lawful bounded provenance]",
+                      "acceptance": "SOURCES.md lists each predecessor ID with its locator plus each new ID with exact primary URL, version/range, and retrieval time; no nested delegation, no frozen-predecessor edits, no installers or host-code execution \u2014 verify with `grep -c \"retrieved\" sources/SOURCES.md` matching the count of new IDs and each entry pairing ID+URL+version+timestamp",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t5",
+                      "title": "[Save honest timings.json, actual terminal receipt, and hand off to the installed driver]",
+                      "acceptance": "timings.json holds real wholearm-start-anchored times (start 18:50:04.842698Z, critic deadline 19:20:04.842698Z) for first useful finding saved, critique ready, and observed native terminal if seen, with only exposed token splits and unknowns left unknown; native_terminal_receipt.json written only for actually observed terminal state or an accurate not-terminal note; then let the existing driver verify/terminalize with no config/account/externalrunner changes \u2014 verify `cat timings.json` timestamps are real and monotonic, terminal receipt matches observed state, and the final candidate message names the exact output files and the honestly observed goal state",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791400164038,
+                  "updatedAt": 1791400536781
+                }
+              }
+            ],
+            "claim": "Installed zcode-acp0.65.1 integration GoalLoopDriver state, not vendor backend session/goal target. Unique objective association with T3 configured child; direct session alias mapping unverified unless separately observed."
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "1f433ae1977acb0783cc6b8fa2af0b32686825828aadd5c9e0e7edada3361c66",
+          "bytes": 6663,
+          "value": {
+            "receipt_type": "native_goal_receipt",
+            "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/assignment.md",
+            "backend_session_id": "sess_f1a0d342-3b71-45de-996a-aa760737c1da",
+            "driver": "zcode-acp0.65.1 integration GoalLoopDriver (already invoked by short general-role dispatch; owns automatic lifecycle)",
+            "observed_state_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_f1a0d342-3b71-45de-996a-aa760737c1da/state.json",
+            "observed_at_utc": "2026-10-07T19:14:21.254187+00:00",
+            "observed_status": "running",
+            "terminal_observed": false,
+            "honesty_note": "State read read-only at the timestamp above: status 'running', not terminal, so no completion or terminal state is claimed here. No second Goal, no /goal reinvocation, no missing-modeltools emulation, no authoritative state edits, no config/account/externalrunner changes; the vendor session/goal backend target was not activated or claimed. Terminal receipt, if any, comes later only from actual observation.",
+            "state_file_created_at_utc": "2026-10-07T19:09:24.038000+00:00",
+            "state_file_updated_at_utc": "2026-10-07T19:12:50.802000+00:00",
+            "observed_state_verbatim": {
+              "objective": "Complete fresh ER10 I-ANCHOR-GLM control critic v2 using exact /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/assignment.md and INPUTS.md. Full brief/source critique.md and real installed integration state receipts required; no final.md or second Goal. GLM5.3FlashMax; no config/account/externalrunner changes; vendorbackend target not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+              "status": "running",
+              "rounds": 1,
+              "tickets": [
+                {
+                  "id": "t1",
+                  "title": "[Ingest exact I-ANCHOR-GLM critic-v2 inputs and freeze scope]",
+                  "acceptance": "All of assignment.md, INPUTS.md, cases/I-ANCHOR-GLM/brief.md, plan.md, control/research-v2/draft.md and sources/SOURCES.md plus evidence under sources/ are read; grep critique working notes for input paths confirms no other arms/reviews/evaluator keys or parent analyses are opened; write target is only jobs/I-ANCHOR-GLM/control/critic-v2 \u2014 verify with `ls /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2` showing no final.md and no writes outside it",
+                  "status": "done"
+                },
+                {
+                  "id": "t2",
+                  "title": "[Capture real installed-driver /goal state as native_goal_receipt.json]",
+                  "acceptance": "Locate the live zcode-acp0.65.1 GoalLoopDriver session state (.zcode/scratch/goals/<backendSessionId>/state.json) without invoking a second Goal or editing state; save critic-v2/native_goal_receipt.json quoting the observed state verbatim with backend session id \u2014 verify with `cat native_goal_receipt.json` showing only actually observed state, no invented completion, and vendorbackend/goal target left unclaimed",
+                  "status": "pending"
+                },
+                {
+                  "id": "t3",
+                  "title": "[Write complete source-grounded critique.md for the final reviser]",
+                  "acceptance": "Every original integrated brief/plan obligation, consequential source condition, mechanism/alternative, pinned-code behavior, and issue/fix/regression/release applicability is independently critiqued with exact stable locators, supported corrections, dispositions, optional discoveries, uncertainties, and proposed-versus-executed status; the frozen research-v2 draft is treated as required predecessor \u2014 verify `wc -l critique.md` covers full scope, every cited locator resolves in sources/, and predecessor IDs are never rebound",
+                  "status": "pending"
+                },
+                {
+                  "id": "t4",
+                  "title": "[Record sources/SOURCES.md with lawful bounded provenance]",
+                  "acceptance": "SOURCES.md lists each predecessor ID with its locator plus each new ID with exact primary URL, version/range, and retrieval time; no nested delegation, no frozen-predecessor edits, no installers or host-code execution \u2014 verify with `grep -c \"retrieved\" sources/SOURCES.md` matching the count of new IDs and each entry pairing ID+URL+version+timestamp",
+                  "status": "pending"
+                },
+                {
+                  "id": "t5",
+                  "title": "[Save honest timings.json, actual terminal receipt, and hand off to the installed driver]",
+                  "acceptance": "timings.json holds real wholearm-start-anchored times (start 18:50:04.842698Z, critic deadline 19:20:04.842698Z) for first useful finding saved, critique ready, and observed native terminal if seen, with only exposed token splits and unknowns left unknown; native_terminal_receipt.json written only for actually observed terminal state or an accurate not-terminal note; then let the existing driver verify/terminalize with no config/account/externalrunner changes \u2014 verify `cat timings.json` timestamps are real and monotonic, terminal receipt matches observed state, and the final candidate message names the exact output files and the honestly observed goal state",
+                  "status": "pending"
+                }
+              ],
+              "handoffFresh": false,
+              "createdAt": 1791400164038,
+              "updatedAt": 1791400370802
+            }
+          }
+        },
+        "prepared.json": {
+          "sha256": "ee98ff00d9ba8a19e743eff99da35941ded19a36bbae985cea19d068f2fbd75c",
+          "bytes": 1088,
+          "value": {
+            "at": "2026-10-07T19:09:13.893295+00:00",
+            "original_allowance_start": "2026-10-07T18:50:04.842698+00:00",
+            "deadline": "2026-10-07T19:35:04.842698+00:00",
+            "critic_deadline": "2026-10-07T19:20:04.842698+00:00",
+            "input_hashes": {
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/draft.md": "f0e0251ed5ccfe00cc0d891fc388ec4348e1f34ece9b599ecb7b5ce49d8d402a",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/sources/SOURCES.md": "e16d3fbc3839b67192cf18589d80ad2e755790733f25fd9c30a0bdb9c15bc8d1"
+            },
+            "required_predecessor_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/freeze.json"
+          }
+        },
+        "task-terminal-tool-receipt.json": {
+          "sha256": "3006e4d80106aa23e7f0755f88475956ce8f1bf9452ac782bafd8c266f77fabd",
+          "bytes": 4288,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2\",\"status\":\"interrupted\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1\",\"latestTerminalStatus\":\"interrupted\",\"latestTerminalSummary\":\"\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9004db4e-f344-4599-a12e-6e1cb4b7e0ce\",\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":\"\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9004db4e-f344-4599-a12e-6e1cb4b7e0ce\",\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-critic-v2",
+              "status": "interrupted",
+              "workState": "result_available",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1",
+              "latestTerminalStatus": "interrupted",
+              "latestTerminalSummary": "\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue",
+              "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9004db4e-f344-4599-a12e-6e1cb4b7e0ce",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "summary": "\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue",
+              "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9004db4e-f344-4599-a12e-6e1cb4b7e0ce",
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        }
+      },
+      "authored_output_files": {
+        "critique.md": {
+          "bytes": 12705,
+          "sha256": "bbb83e4d6b99b5d1d91b15ece3e27b74886991bd71b8603dcdd6c1ebaa723758"
+        }
+      },
+      "source_evidence_file_count": 0
+    },
+    {
+      "arm": "control",
+      "stage": "research-v1",
+      "receipts": {},
+      "authored_output_files": {},
+      "source_evidence_file_count": 0
+    },
+    {
+      "arm": "control",
+      "stage": "research-v2",
+      "receipts": {
+        "dispatch-tool-receipt.json": {
+          "sha256": "3c50c1c145db30b72569e495d1b3df24d7d414013f87f153a85fc853a75c314a",
+          "bytes": 2182,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "latestTerminalSummary": null,
+              "latestTerminalResultContextTransferId": null,
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "summary": null,
+              "resultContextTransferId": null,
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "integration-state-active-001.json": {
+          "sha256": "923e923418fdb1b7582f64f6a22eaeae6f55c913c471d3a28d6d367ac2d5fafb",
+          "bytes": 456,
+          "value": {
+            "observed_at": "2026-10-07T18:50:16.198829+00:00",
+            "exact_objective_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md",
+            "matches": [],
+            "claim": "Installed zcode-acp0.65.1 integration GoalLoopDriver state, not vendor backend session/goal target. Unique objective association with T3 configured child; direct session alias mapping unverified unless separately observed."
+          }
+        },
+        "integration-state-active-002.json": {
+          "sha256": "117e552e9ea818f0ea276dfe446a2ed9b9f3b8882e1d0832cd729f606346112b",
+          "bytes": 5551,
+          "value": {
+            "observed_at": "2026-10-07T18:56:13.980497+00:00",
+            "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json",
+            "sha256": "843a8d0dd6371f0a2f54615818ee39f67b556b8ec41d6a08cfc9750939bd5195",
+            "bytes": 4633,
+            "backend_session_directory": "sess_fc21453a-44ec-4f62-bc07-f3f23e974af6",
+            "actual_state": {
+              "objective": "Complete fresh ER10 I-ANCHOR-GLM control researcher v2 using exact assignment /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md and INPUTS.md. Save full draft/source/timing/actual installed integration Goal state receipts there. Existing integration already invoked; no second Goal or nested work. GLM5.3FlashMax, no accounts/config/externalrunner changes; vendor backend target not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+              "status": "running",
+              "rounds": 1,
+              "tickets": [
+                {
+                  "id": "t1",
+                  "title": "[Read assignment/INPUTS/brief/plan and record native Goal receipt]",
+                  "acceptance": "cat assignment.md INPUTS.md cases/I-ANCHOR-GLM/brief.md cases/I-ANCHOR-GLM/plan.md; write native_goal_receipt.json in jobs/I-ANCHOR-GLM/control/research-v2 with objective/assignment path, timestamps, backend session identity and observed driver state only; verify with `python3 -m json.tool native_goal_receipt.json` and confirm no edits to any Goal state.json (`git status`, `find` on the integration dir)",
+                  "status": "done"
+                },
+                {
+                  "id": "t2",
+                  "title": "[Primary-source research vs frozen plan]",
+                  "acceptance": "Run public primary-source research per brief/plan (docs, issues, releases, pinned component behavior); log every source with stable ID, exact URL/version/range/retrieval metadata and bounded lawful evidence under sources/; verify sources/SOURCES.md exists and each ID cited in the draft is mapped (`grep -o 'S[0-9]*' draft.md` cross-checks SOURCES.md)",
+                  "status": "pending"
+                },
+                {
+                  "id": "t3",
+                  "title": "[Write complete draft.md]",
+                  "acceptance": "Produce draft.md covering all brief obligations with source-specific conditions, proposed-vs-executed checks separated, corrections/optional leads/uncertainties preserved and no critic verdict; verify `test -s draft.md` and that every obligation topic from brief.md appears (`grep -i <topic> draft.md` per obligation) with no second Goal or nested work",
+                  "status": "pending"
+                },
+                {
+                  "id": "t4",
+                  "title": "[Save timings.json]",
+                  "acceptance": "Write timings.json with original start (2026-10-07T18:50:04Z), first useful saved finding, draft-ready and truly observed native terminal time plus separate input/cache/output/reasoning usage when exposed, unknown billing left unknown; verify `python3 -m json.tool timings.json` and that timestamps parse and precede the 19:10:04Z researcher deadline (19:35:04Z wholearm)",
+                  "status": "pending"
+                },
+                {
+                  "id": "t5",
+                  "title": "[Final receipts and inventory]",
+                  "acceptance": "Capture native_terminal_receipt.json from actually observed driver terminal state (or record honestly that it is not yet terminal), then confirm only draft.md, sources/SOURCES.md, timings.json and the two receipts exist in research-v2 and nothing was written elsewhere; verify with `ls -la jobs/I-ANCHOR-GLM/control/research-v2`, `git status --porcelain` and `find jobs/I-ANCHOR-GLM/control/research-v2 -type f`",
+                  "status": "pending"
+                }
+              ],
+              "handoffFresh": false,
+              "createdAt": 1791399012768,
+              "updatedAt": 1791399286899
+            },
+            "binding_observation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/integration-binding-observation-001.json",
+            "claim": "Actual installed zcode-acp0.65.1 integration GoalLoopDriver state with exact unique control assignment. Vendor session/goal backend target NOT activated/claimed. No state edits.",
+            "root_corrob_receipt": "state/glm-control-v2-integration-active-observation.json"
+          }
+        },
+        "integration-state-terminal-001.json": {
+          "sha256": "8c0de19eb1693c3e9583926eb16894d3a60d9f46633a69318afa331212df1958",
+          "bytes": 5730,
+          "value": {
+            "observed_at": "2026-10-07T19:08:39.067999+00:00",
+            "exact_objective_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md",
+            "matches": [
+              {
+                "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json",
+                "backend_session_directory": "sess_fc21453a-44ec-4f62-bc07-f3f23e974af6",
+                "sha256": "50446b09cfb5a270e04b6fff1f0a793f0cc3febbd7bda1a10eb441161ed29e06",
+                "bytes": 4659,
+                "actual_state": {
+                  "objective": "Complete fresh ER10 I-ANCHOR-GLM control researcher v2 using exact assignment /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md and INPUTS.md. Save full draft/source/timing/actual installed integration Goal state receipts there. Existing integration already invoked; no second Goal or nested work. GLM5.3FlashMax, no accounts/config/externalrunner changes; vendor backend target not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "complete",
+                  "rounds": 5,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "[Read assignment/INPUTS/brief/plan and record native Goal receipt]",
+                      "acceptance": "cat assignment.md INPUTS.md cases/I-ANCHOR-GLM/brief.md cases/I-ANCHOR-GLM/plan.md; write native_goal_receipt.json in jobs/I-ANCHOR-GLM/control/research-v2 with objective/assignment path, timestamps, backend session identity and observed driver state only; verify with `python3 -m json.tool native_goal_receipt.json` and confirm no edits to any Goal state.json (`git status`, `find` on the integration dir)",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "[Primary-source research vs frozen plan]",
+                      "acceptance": "Run public primary-source research per brief/plan (docs, issues, releases, pinned component behavior); log every source with stable ID, exact URL/version/range/retrieval metadata and bounded lawful evidence under sources/; verify sources/SOURCES.md exists and each ID cited in the draft is mapped (`grep -o 'S[0-9]*' draft.md` cross-checks SOURCES.md)",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "[Write complete draft.md]",
+                      "acceptance": "Produce draft.md covering all brief obligations with source-specific conditions, proposed-vs-executed checks separated, corrections/optional leads/uncertainties preserved and no critic verdict; verify `test -s draft.md` and that every obligation topic from brief.md appears (`grep -i <topic> draft.md` per obligation) with no second Goal or nested work",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "[Save timings.json]",
+                      "acceptance": "Write timings.json with original start (2026-10-07T18:50:04Z), first useful saved finding, draft-ready and truly observed native terminal time plus separate input/cache/output/reasoning usage when exposed, unknown billing left unknown; verify `python3 -m json.tool timings.json` and that timestamps parse and precede the 19:10:04Z researcher deadline (19:35:04Z wholearm)",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t5",
+                      "title": "[Final receipts and inventory]",
+                      "acceptance": "Capture native_terminal_receipt.json from actually observed driver terminal state (or record honestly that it is not yet terminal), then confirm only draft.md, sources/SOURCES.md, timings.json and the two receipts exist in research-v2 and nothing was written elsewhere; verify with `ls -la jobs/I-ANCHOR-GLM/control/research-v2`, `git status --porcelain` and `find jobs/I-ANCHOR-GLM/control/research-v2 -type f`",
+                      "status": "done"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791399012768,
+                  "updatedAt": 1791400082537,
+                  "endedReason": "all tickets done"
+                }
+              }
+            ],
+            "claim": "Installed zcode-acp0.65.1 integration GoalLoopDriver state, not vendor backend session/goal target. Unique objective association with T3 configured child; direct session alias mapping unverified unless separately observed."
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "328ef4ea7c6b7dbe62c95c1b7ed399986424df528d4a53f29297cf4c8b0b4e08",
+          "bytes": 5032,
+          "value": {
+            "receipt": "native_goal_receipt",
+            "role": "control researcher v2 (general)",
+            "captured_at_utc": "2026-10-07T18:53:39.428700+00:00",
+            "objective_assignment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md",
+            "objective_inputs_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/INPUTS.md",
+            "objective_binding_hashes": {
+              "assignment.md": "edcff5bee8fcc6226fa77bc48ccc0ffc7f10c6dd04f1b824017e8178efeae2d4",
+              "INPUTS.md": "4ae3c96fa8d0a3d42c675f3021d2f13d9ea3d2d30eaffe8ea3857659a8e7911d",
+              "cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+              "cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a"
+            },
+            "integration": {
+              "name": "installed zcode-acp0.65.1 provider integration GoalLoopDriver",
+              "invocation": "/goal prefix on delegated-task user message (route-owned dispatch); integration pre-invoked before this researcher started; no second Goal, no create_goal call, no nested work by this agent",
+              "vendor_backend_target": "NOT_ACTIVATED_OR_CLAIMED"
+            },
+            "backend_session_identity": {
+              "backend_session_id": "sess_fc21453a-44ec-4f62-bc07-f3f23e974af6",
+              "state_json_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json",
+              "goal_activation_item_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3Aeab354e1-e2b0-434e-b6a9-533370b934fa%3Aturn%3A1%3Aassistant%3Amessage%3Agoal-1791399012770-04yiek",
+              "goal_session_marker": "goal-1791399012770-04yiek",
+              "objective_match": "state.json objective text begins with the exact control research-v2 objective string (verified by read)"
+            },
+            "observed_driver_state": {
+              "status": "running",
+              "rounds": 0,
+              "tickets_t1_status": "pending",
+              "state_created_at_utc": "2026-10-07T18:50:12.768000+00:00",
+              "state_updated_at_utc": "2026-10-07T18:50:57.258000+00:00",
+              "terminal": false,
+              "note": "As observed at captured_at_utc the driver state was running, not terminal. Terminal capture is deferred to native_terminal_receipt.json (later round); if not terminal while authoring, that fact is recorded and final capture is left to the coordinator/driver. No invented status; authoritative state.json never edited."
+            },
+            "t3_binding": {
+              "branch": "t3/research/er10-research-efficiency-campaign",
+              "worktree_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+              "project_id": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+              "provider_instance": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "thought_option": "max",
+              "mode_option": "yolo",
+              "runtime_mode": "full-access",
+              "interaction_mode": "default",
+              "parent_thread": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-anchor-supervisor-v1",
+              "relationship_to_parent": "subagent"
+            },
+            "driver_run_observation": {
+              "child_thread_id": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2",
+              "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1",
+              "run_requested_at_utc": "2026-10-07T18:50:05.061Z",
+              "run_started_at_utc": "2026-10-07T18:50:09.464Z",
+              "run_completed_at_utc": null,
+              "observed_run_status": "running",
+              "observed_work_state": "working"
+            },
+            "observation_sources": [
+              ".zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json (read-only cat/stat; mtime 2026-10-07T18:50:57Z)",
+              "route-owned integration-state-active-001.json (observed_at 2026-10-07T18:50:16.198829+00:00)",
+              "route-owned dispatch-tool-receipt.json (status running / workState working)",
+              "route-owned integration-binding-observation-001.json (observed_at 2026-10-07T18:50:16.198829+00:00; matches: [] \u2014 direct session alias mapping unverified by that earlier observation; this receipt adds the state.json session binding)"
+            ],
+            "integrity_notes": [
+              "No Goal state.json was written or edited by this agent; only read-only cat/stat/find were issued against .zcode/scratch/goals/.",
+              "A second scratch session (sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723, treatment-arm objective, status paused/endedReason cancelled) was incidentally printed by the same read-only directory listing; it is a different objective, untouched and out of scope for this control arm.",
+              "Route-owned files in this directory (config.json, task.txt, prepared.json, matching-control-v2.json, dispatch-tool-receipt.json, tool-policy-receipt.json, integration-*.json) were read only; none modified.",
+              "No new engine/externalrunner/globalconfig/env/account changes made; no accounts or config touched."
+            ]
+          }
+        },
+        "native_terminal_receipt.json": {
+          "sha256": "1d177c5e309790397b18184830242a3cadc168c436abf6c62461a4a5e3170c59",
+          "bytes": 1737,
+          "value": {
+            "receipt": "native_terminal_receipt",
+            "captured_at_utc": "2026-10-07T19:06:57.164825+00:00",
+            "objective_assignment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md",
+            "backend_session_identity": {
+              "backend_session_id": "sess_fc21453a-44ec-4f62-bc07-f3f23e974af6",
+              "state_json_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json",
+              "goal_session_marker": "goal-1791399012770-04yiek"
+            },
+            "observed_state": {
+              "status": "running",
+              "terminal": false,
+              "rounds": 4,
+              "state_updated_at_utc": "2026-10-07T19:06:20.686000+00:00",
+              "endedReason": null,
+              "ticket_statuses": {
+                "t1": "done",
+                "t2": "done",
+                "t3": "done",
+                "t4": "done",
+                "t5": "pending"
+              },
+              "observed_at_utc": "2026-10-07T19:06:57.164825+00:00"
+            },
+            "honesty_statement": "The driver was NOT terminal while this receipt was authored (status 'running' as observed at captured_at_utc). Per assignment instruction, this fact is recorded as-is and the final terminal-state capture is left to the coordinator after the installed integration's automatic terminal. No terminal status is invented; the authoritative state.json was never edited or written by this agent (read-only cat/python-json reads only).",
+            "vendor_backend_target": "NOT_ACTIVATED_OR_CLAIMED",
+            "observation_sources": [
+              ".zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json (read-only)",
+              "native_goal_receipt.json (earlier observed running state, captured 18:53:39Z)",
+              "timings.json native_terminal_note (consistent: running at 19:05:36Z)"
+            ]
+          }
+        },
+        "prepared.json": {
+          "sha256": "6d8c0e5e15823c9104902cf2d4160d84796b86cecd8eb3d66b5156b022767a3d",
+          "bytes": 1129,
+          "value": {
+            "frozen_before_dispatch_at": "2026-10-07T18:50:04.842698+00:00",
+            "version": 2,
+            "prospective": true,
+            "wholearm_ceiling_seconds": 2700,
+            "stages_seconds": [
+              1200,
+              600,
+              900
+            ],
+            "original_allowance_start": "2026-10-07T18:50:04.842698+00:00",
+            "deadline": "2026-10-07T19:35:04.842698+00:00",
+            "input_hashes": {
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a"
+            },
+            "shared_route_version": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/route-v2.json",
+            "integration": "installed zcode-acp0.65.1 GoalLoopDriver",
+            "vendor_backend_target": "NOT_ACTIVATED_OR_CLAIMED",
+            "prior_v1": "preserved root-owned route failure; no v1 control entered; failure-inclusive diagnosis separate",
+            "role": "general",
+            "dispatch_task_sha256": "1abaec13d462a538b227b4bc8da3964dc6544f2653fa2220af304123f67cfdc1"
+          }
+        },
+        "task-terminal-tool-receipt.json": {
+          "sha256": "09870a6dee0de59074a3eee7ee291f31e5c62e7a45469725cda58fb624be0c98",
+          "bytes": 4200,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2\",\"status\":\"completed\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1\",\"latestTerminalStatus\":\"completed\",\"latestTerminalSummary\":\"\u2705 goal loop complete after 5 rounds\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:2dd54bea-945e-41f8-8890-901c668c48d0\",\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":\"\u2705 goal loop complete after 5 rounds\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:2dd54bea-945e-41f8-8890-901c668c48d0\",\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-research-v2",
+              "status": "completed",
+              "workState": "result_available",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1",
+              "latestTerminalStatus": "completed",
+              "latestTerminalSummary": "\u2705 goal loop complete after 5 rounds",
+              "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:2dd54bea-945e-41f8-8890-901c668c48d0",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "summary": "\u2705 goal loop complete after 5 rounds",
+              "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:2dd54bea-945e-41f8-8890-901c668c48d0",
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "timings.json": {
+          "sha256": "422e06504bffa81ac3e7db90e12b976c517ee4a92b7183f570be3eed4cd3f230",
+          "bytes": 1945,
+          "value": {
+            "receipt": "timings",
+            "arm": "I-ANCHOR-GLM CONTROL research-v2",
+            "clock_source": "UTC clock checks and on-disk mtimes read this session; all times UTC",
+            "original_start": "2026-10-07T18:50:04.842698+00:00",
+            "original_start_source": "INPUTS.md line 6 / route-owned matching-control-v2.json frozen_before_dispatch_at",
+            "first_useful_saved_finding": "2026-10-07T18:59:33.794028+00:00",
+            "first_useful_saved_finding_source": "sources/ evidence files + SOURCES.md first written at this mtime; SOURCES.md 'First useful saved finding' records the S5 atomic-rename correction discovered at 18:57:41Z fetch and persisted at this write",
+            "draft_ready": "2026-10-07T19:03:24.473100+00:00",
+            "draft_ready_source": "draft.md file mtime; draft verified complete in ticket-3 verification round",
+            "native_terminal": null,
+            "native_terminal_note": "NOT yet observed. Driver state.json (sess_fc21453a-44ec-4f62-bc07-f3f23e974af6) read read-only at timings write: status 'running', rounds 3, state updatedAt 2026-10-07T19:04:44.818000+00:00. Per assignment, this fact is recorded and the final terminal capture is left to native_terminal_receipt.json (ticket 5 / coordinator after automatic terminal). No invented terminal time.",
+            "deadlines": {
+              "researcher_deadline": "2026-10-07T19:10:04.842698+00:00",
+              "wholearm_deadline": "2026-10-07T19:35:04.842698+00:00",
+              "stage_allocations_seconds": [
+                1200,
+                600,
+                900
+              ]
+            },
+            "usage": {
+              "input_tokens": "not_exposed",
+              "cached_input_tokens": "not_exposed",
+              "output_tokens": "not_exposed",
+              "reasoning_tokens": "not_exposed",
+              "note": "Token/cache/reasoning usage is not exposed to this harness session; recorded as not_exposed rather than zero.",
+              "billing": "unknown (stays unknown; no usage data exposed)"
+            },
+            "compliance": {
+              "written_by_researcher_deadline": true,
+              "clock_at_timings_write": "2026-10-07T19:05:36.650588+00:00"
+            }
+          }
+        }
+      },
+      "authored_output_files": {
+        "draft.md": {
+          "bytes": 13364,
+          "sha256": "f0e0251ed5ccfe00cc0d891fc388ec4348e1f34ece9b599ecb7b5ce49d8d402a"
+        }
+      },
+      "source_evidence_file_count": 8
+    },
+    {
+      "arm": "control",
+      "stage": "reviser-v2",
+      "receipts": {
+        "dispatch-tool-receipt.json": {
+          "sha256": "dcb681014c8efef1dd8bea8a48d7fb8e48878034e5f0b986a74388713fda749f",
+          "bytes": 2174,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "latestTerminalSummary": null,
+              "latestTerminalResultContextTransferId": null,
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "summary": null,
+              "resultContextTransferId": null,
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "integration-state-active-001.json": {
+          "sha256": "9f127231aa5a9cbcd99fa41c704ffaa86eb07508ea3d76dc742dbc1a1abd51ba",
+          "bytes": 5721,
+          "value": {
+            "observed_at": "2026-10-07T19:23:45.180475+00:00",
+            "exact_objective_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/assignment.md",
+            "matches": [
+              {
+                "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_6d229559-46b9-400c-ac91-116f6ed7d62b/state.json",
+                "backend_session_directory": "sess_6d229559-46b9-400c-ac91-116f6ed7d62b",
+                "sha256": "1d4515d6ef1e5dec583aba85e1c331328400a2fa462c9d59600a9065978cd297",
+                "bytes": 4657,
+                "actual_state": {
+                  "objective": "Complete ER10 I-ANCHOR-GLM control final reviser v2 per /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/assignment.md; preserve original whole deadline19:35:04.842698Z and save required complete final/dispositions/source outputs and honest lifecycle receipts.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "running",
+                  "rounds": 0,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "Read declared inputs and capture native goal state",
+                      "acceptance": "cat INPUTS.md and each declared input (brief, sandbox plan, researcher draft+source register, critique.md+evidence); observe .zcode/scratch/goals/<backendSessionId>/state.json and save native_goal_receipt.json in the job dir; verify: python3 -c \"import json;json.load(open('native_goal_receipt.json'))\" succeeds and the receipt quotes the observed state verbatim (no invented terminal).",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "Author complete final.md",
+                      "acceptance": "Write final.md in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/ incorporating justified critic corrections while preserving researcher breadth, pinned code behavior, issue/fix/regression/test/release applicability, discoveries, dispositions and proposed-vs-executed status; verify: file exists, non-empty, and a section-by-section pass against the researcher draft and critique confirms each obligation area is addressed with no silent drop.",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "Write critique-dispositions.md covering every critique item",
+                      "acceptance": "Map EVERY disposition from the frozen critique.md to a source-supported action/reason; verify: each disposition ID in critique.md appears exactly once in critique-dispositions.md (cross-check with grep of extracted IDs from both files), none marked adopted without justification, none ignored.",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "Write sources/SOURCES.md with preserved and new IDs",
+                      "acceptance": "Preserve predecessor IDs/locators and add exact new stage IDs with primary URLs, version/ranges, retrieval times; verify: no predecessor ID rebound (diff against predecessor source register IDs), every new consequential claim in final.md traceable to a source row, evidence files stored under sources/ within the job dir only.",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t5",
+                      "title": "Save timings.json and honest final receipts before deadline",
+                      "acceptance": "Record timings.json with the original 18:50:04.842698Z start and unreset 19:35:04.842698Z whole deadline, capture actual observed native state as native_terminal_receipt.json (say RUNNING honestly if not yet terminal, no invented complete), confirm final.md, critique-dispositions.md, sources/SOURCES.md all saved; verify: all files present under the job dir, json.load passes on timings.json and receipts, wall-clock check shows completion before 19:35:04Z, no edits outside the job directory.",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791400841866,
+                  "updatedAt": 1791400893244
+                }
+              }
+            ],
+            "claim": "Installed zcode-acp0.65.1 integration GoalLoopDriver state, not vendor backend session/goal target. Unique objective association with T3 configured child; direct session alias mapping unverified unless separately observed."
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "f6dd466bdd0e3fb035147d314a37a0bde2fbd348144b840e47ba70a8c0431c77",
+          "bytes": 5683,
+          "value": {
+            "receipt_type": "native_goal_receipt",
+            "written_at_utc": "2026-10-07T19:23:13.222576+00:00",
+            "backend_session_id": "sess_6d229559-46b9-400c-ac91-116f6ed7d62b",
+            "state_file_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_6d229559-46b9-400c-ac91-116f6ed7d62b/state.json",
+            "state_file_sha256": "1d4515d6ef1e5dec583aba85e1c331328400a2fa462c9d59600a9065978cd297",
+            "observed_status": "running",
+            "is_terminal": false,
+            "honesty_note": "Observed live at write time; status was 'running' (rounds 0, all tickets pending). This is NOT a terminal receipt. No terminal status is invented here; the coordinator captures the actual terminal state separately if/when the driver completes.",
+            "critic_sources_dir_note": "INPUTS.md declares critic-v2/sources as an allowed evidence directory, but it does not exist on disk; recorded honestly, nothing invented for it.",
+            "observed_state_verbatim": {
+              "objective": "Complete ER10 I-ANCHOR-GLM control final reviser v2 per /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/assignment.md; preserve original whole deadline19:35:04.842698Z and save required complete final/dispositions/source outputs and honest lifecycle receipts.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+              "status": "running",
+              "rounds": 0,
+              "tickets": [
+                {
+                  "id": "t1",
+                  "title": "Read declared inputs and capture native goal state",
+                  "acceptance": "cat INPUTS.md and each declared input (brief, sandbox plan, researcher draft+source register, critique.md+evidence); observe .zcode/scratch/goals/<backendSessionId>/state.json and save native_goal_receipt.json in the job dir; verify: python3 -c \"import json;json.load(open('native_goal_receipt.json'))\" succeeds and the receipt quotes the observed state verbatim (no invented terminal).",
+                  "status": "pending"
+                },
+                {
+                  "id": "t2",
+                  "title": "Author complete final.md",
+                  "acceptance": "Write final.md in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/ incorporating justified critic corrections while preserving researcher breadth, pinned code behavior, issue/fix/regression/test/release applicability, discoveries, dispositions and proposed-vs-executed status; verify: file exists, non-empty, and a section-by-section pass against the researcher draft and critique confirms each obligation area is addressed with no silent drop.",
+                  "status": "pending"
+                },
+                {
+                  "id": "t3",
+                  "title": "Write critique-dispositions.md covering every critique item",
+                  "acceptance": "Map EVERY disposition from the frozen critique.md to a source-supported action/reason; verify: each disposition ID in critique.md appears exactly once in critique-dispositions.md (cross-check with grep of extracted IDs from both files), none marked adopted without justification, none ignored.",
+                  "status": "pending"
+                },
+                {
+                  "id": "t4",
+                  "title": "Write sources/SOURCES.md with preserved and new IDs",
+                  "acceptance": "Preserve predecessor IDs/locators and add exact new stage IDs with primary URLs, version/ranges, retrieval times; verify: no predecessor ID rebound (diff against predecessor source register IDs), every new consequential claim in final.md traceable to a source row, evidence files stored under sources/ within the job dir only.",
+                  "status": "pending"
+                },
+                {
+                  "id": "t5",
+                  "title": "Save timings.json and honest final receipts before deadline",
+                  "acceptance": "Record timings.json with the original 18:50:04.842698Z start and unreset 19:35:04.842698Z whole deadline, capture actual observed native state as native_terminal_receipt.json (say RUNNING honestly if not yet terminal, no invented complete), confirm final.md, critique-dispositions.md, sources/SOURCES.md all saved; verify: all files present under the job dir, json.load passes on timings.json and receipts, wall-clock check shows completion before 19:35:04Z, no edits outside the job directory.",
+                  "status": "pending"
+                }
+              ],
+              "handoffFresh": false,
+              "createdAt": 1791400841866,
+              "updatedAt": 1791400893244
+            }
+          }
+        },
+        "native_terminal_receipt.json": {
+          "sha256": "a8788983e999401f08f339e3955f41c41f45e0cb990c311f88df3744ec7c8041",
+          "bytes": 5478,
+          "value": {
+            "receipt_type": "native_terminal_receipt",
+            "written_at_utc": "2026-10-07T19:34:40.065529+00:00",
+            "backend_session_id": "sess_6d229559-46b9-400c-ac91-116f6ed7d62b",
+            "state_file_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_6d229559-46b9-400c-ac91-116f6ed7d62b/state.json",
+            "state_file_sha256": "ec8450387034024a6bb129adee9c8430694743ce43f4541c5da4bd762e9c38bc",
+            "observed_status": "running",
+            "is_terminal": false,
+            "honesty_note": "Observed live at write time; status 'running'. STILL RUNNING at capture time \u2014 no complete/terminal status is invented. The coordinator separately captures the actual terminal after the driver's automatic completion.",
+            "observed_state_verbatim": {
+              "objective": "Complete ER10 I-ANCHOR-GLM control final reviser v2 per /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/assignment.md; preserve original whole deadline19:35:04.842698Z and save required complete final/dispositions/source outputs and honest lifecycle receipts.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+              "status": "running",
+              "rounds": 3,
+              "tickets": [
+                {
+                  "id": "t1",
+                  "title": "Read declared inputs and capture native goal state",
+                  "acceptance": "cat INPUTS.md and each declared input (brief, sandbox plan, researcher draft+source register, critique.md+evidence); observe .zcode/scratch/goals/<backendSessionId>/state.json and save native_goal_receipt.json in the job dir; verify: python3 -c \"import json;json.load(open('native_goal_receipt.json'))\" succeeds and the receipt quotes the observed state verbatim (no invented terminal).",
+                  "status": "done"
+                },
+                {
+                  "id": "t2",
+                  "title": "Author complete final.md",
+                  "acceptance": "Write final.md in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/ incorporating justified critic corrections while preserving researcher breadth, pinned code behavior, issue/fix/regression/test/release applicability, discoveries, dispositions and proposed-vs-executed status; verify: file exists, non-empty, and a section-by-section pass against the researcher draft and critique confirms each obligation area is addressed with no silent drop.",
+                  "status": "done"
+                },
+                {
+                  "id": "t3",
+                  "title": "Write critique-dispositions.md covering every critique item",
+                  "acceptance": "Map EVERY disposition from the frozen critique.md to a source-supported action/reason; verify: each disposition ID in critique.md appears exactly once in critique-dispositions.md (cross-check with grep of extracted IDs from both files), none marked adopted without justification, none ignored.",
+                  "status": "done"
+                },
+                {
+                  "id": "t4",
+                  "title": "Write sources/SOURCES.md with preserved and new IDs",
+                  "acceptance": "Preserve predecessor IDs/locators and add exact new stage IDs with primary URLs, version/ranges, retrieval times; verify: no predecessor ID rebound (diff against predecessor source register IDs), every new consequential claim in final.md traceable to a source row, evidence files stored under sources/ within the job dir only.",
+                  "status": "pending"
+                },
+                {
+                  "id": "t5",
+                  "title": "Save timings.json and honest final receipts before deadline",
+                  "acceptance": "Record timings.json with the original 18:50:04.842698Z start and unreset 19:35:04.842698Z whole deadline, capture actual observed native state as native_terminal_receipt.json (say RUNNING honestly if not yet terminal, no invented complete), confirm final.md, critique-dispositions.md, sources/SOURCES.md all saved; verify: all files present under the job dir, json.load passes on timings.json and receipts, wall-clock check shows completion before 19:35:04Z, no edits outside the job directory.",
+                  "status": "pending"
+                }
+              ],
+              "handoffFresh": false,
+              "createdAt": 1791400841866,
+              "updatedAt": 1791401613154
+            }
+          }
+        },
+        "prepared.json": {
+          "sha256": "02ef4a42109d4c924a9fc34545d701dfd3ba95cd9a165a94b593b18254efee8c",
+          "bytes": 1505,
+          "value": {
+            "at": "2026-10-07T19:20:19.022840+00:00",
+            "deadline": "2026-10-07T19:35:04.842698+00:00",
+            "original_allowance_start": "2026-10-07T18:50:04.842698Z",
+            "remaining_seconds": 885.819858,
+            "input_hashes": {
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/draft.md": "f0e0251ed5ccfe00cc0d891fc388ec4348e1f34ece9b599ecb7b5ce49d8d402a",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/sources/SOURCES.md": "e16d3fbc3839b67192cf18589d80ad2e755790733f25fd9c30a0bdb9c15bc8d1",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/critique.md": "bbb83e4d6b99b5d1d91b15ece3e27b74886991bd71b8603dcdd6c1ebaa723758"
+            },
+            "required_predecessor_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/freeze.json",
+            "task_sha256": "ef5a84c6edc668fa9681a98867f6876c0843f46bbd1a739061209d92e7e2b243",
+            "config": {
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "options": {
+                "thought": "max",
+                "mode": "yolo"
+              }
+            }
+          }
+        },
+        "task-terminal-tool-receipt.json": {
+          "sha256": "8bc3fa8008ae657c46c86ed28faccacb58966907879c9dda16b18d39a8ab66c9",
+          "bytes": 4302,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2\",\"status\":\"interrupted\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:ordinal:1\",\"latestTerminalStatus\":\"interrupted\",\"latestTerminalSummary\":\"\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9f420dac-01f3-478e-9d88-84299c95ad48\",\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":\"\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9f420dac-01f3-478e-9d88-84299c95ad48\",\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-control-reviser-v2",
+              "status": "interrupted",
+              "workState": "result_available",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:ordinal:1",
+              "latestTerminalStatus": "interrupted",
+              "latestTerminalSummary": "\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue",
+              "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9f420dac-01f3-478e-9d88-84299c95ad48",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "summary": "\u23f8 goal loop paused (cancelled) \u2014 /auto resume to continue",
+              "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:9f420dac-01f3-478e-9d88-84299c95ad48",
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "timings.json": {
+          "sha256": "15633df26ae41a05075e75971128ac48caae133e1fafc97ebde8b9f29bfda087",
+          "bytes": 702,
+          "value": {
+            "original_whole_start_utc": "2026-10-07T18:50:04.842698Z",
+            "original_whole_deadline_utc": "2026-10-07T19:35:04.842698Z",
+            "clock_reset_performed": false,
+            "budget_note": "Original allocations 1200/600/900 with nominal 900 reserve; actual remaining reduced by earlier overrun; INPUTS.md absolute deadline governs. No fresh 15 minutes; clock never reset.",
+            "stage_writes_utc": {
+              "native_goal_receipt.json": "2026-10-07T19:23:13Z",
+              "final.md": "2026-10-07T19:27Z",
+              "critique-dispositions.md": "2026-10-07T19:31Z",
+              "sources/SOURCES.md": "2026-10-07T19:34:40Z",
+              "native_terminal_receipt.json": "2026-10-07T19:34:40.065529Z"
+            },
+            "seconds_remaining_at_last_write": 24.777169
+          }
+        }
+      },
+      "authored_output_files": {
+        "final.md": {
+          "bytes": 12452,
+          "sha256": "8bba175ad93bcf08890607c07c074909afa5f00bd71a22b9a350bcf6999329c5"
+        },
+        "critique-dispositions.md": {
+          "bytes": 12664,
+          "sha256": "4fed44e0dec7e5127e90dc988330140a47919f61303111c35a3408076feaebd6"
+        }
+      },
+      "source_evidence_file_count": 2
+    },
+    {
+      "arm": "treatment",
+      "stage": "critic-finalizer-v2",
+      "receipts": {
+        "dispatch-tool-receipt.json": {
+          "sha256": "7c192eaf48ed44f7eb1cd83c2bd6664e6be311d1c7f0737287c7e01afeadaebf",
+          "bytes": 2262,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "latestTerminalSummary": null,
+              "latestTerminalResultContextTransferId": null,
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "summary": null,
+              "resultContextTransferId": null,
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "integration-state-active-001.json": {
+          "sha256": "22ace5fd92f69c7778ddd2f470fa2fdcd7644a29ffc4fd80d475f355fffd1627",
+          "bytes": 7106,
+          "value": {
+            "observed_at": "2026-10-07T19:16:26.855749+00:00",
+            "exact_objective_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md",
+            "matches": [
+              {
+                "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f/state.json",
+                "backend_session_directory": "sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f",
+                "sha256": "be919db78ab8e725c7f7a78f2528fc8f3d5b61a9e7a5266606a3af377d8d99e4",
+                "bytes": 6031,
+                "actual_state": {
+                  "objective": "Complete fresh ER10 I-ANCHOR-GLM treatment critic-finalizer v2 using exact /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md and INPUTS.md. Fullscope critique.md+final.md and actual installed integration state receipts. Original armdeadline19:29:18.054Z, no freshbudget or secondGoal; GLM5.3FlashMax; no accounts/config/externalrunner; vendorbackend notclaimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "running",
+                  "rounds": 0,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "Ingest allowed inputs and budget",
+                      "acceptance": "Read all six INPUTS.md paths (cases/I-ANCHOR-GLM/brief.md, plan.md, treatment/research-v2/draft.md, sources/index.json, sources/retrieval-stamps.json, sources/executed-checks.json) plus actual AGENTS/global instructions; compute remaining real seconds from \"Remaining real seconds at prep: 879.57\" against absolute deadline 2026-10-07T19:29:18.054Z, treating it as one shared budget with no fresh 1200s. Verify: every listed path opens (cat/ls succeeds for all six); a scratch note maps each source ID to its exact locator before any writing.",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "Capture actual native lifecycle receipts",
+                      "acceptance": "Observe the installed zcode-acp0.65.1 GoalLoopDriver /goal integration state as actually found (running or terminal; no state.json edit, no reinvocation, no receipt-hint steering, no vendor/backend claim) and write native_goal_receipt.json and native_terminal_receipt.json in treatment/critic-finalizer-v2 with unique objective/assignment/backend-session/timestamps actually accessible, stating non-terminal honestly if still running. Verify: `python3 -m json.tool native_goal_receipt.json` and `python3 -m json.tool native_terminal_receipt.json` exit 0; each records observed state verbatim, not asserted success.",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "Write complete critique.md",
+                      "acceptance": "Independently critique the frozen draft: consequential primary sources and conditions, materially different mechanisms and useful alternatives, actual pinned component/code behavior, issue/fix/regression/test/release applicability, corrections to plan choices, supported dispositions, optional leads, justified uncertainty, proposed-versus-executed distinction; preserve predecessor source IDs with exact locators and mint distinct stage-owned IDs never rebound; no coordinator subject answers. Verify: `wc -c critique.md` is a full document (not a stub); `grep -c` finds both preserved predecessor IDs and new stage-owned IDs with locators; sections cover each assignment.md line-2 critique axis.",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "Write complete final.md + sources/SOURCES.md + timings.json",
+                      "acceptance": "final.md incorporates justified source-supported corrections while preserving supported breadth and conditions, distinguishes proposed from executed, and identifies artifacts plus observed real lifecycle honestly; SOURCES.md carries exact primary URL/version/range/retrieval metadata for every cited source; timings.json records start / first-useful-saved-finding / final-ready / native-terminal-if-actual with separate input/cache/output/reasoning counters and unknown billing left unknown. Verify: `wc -c final.md sources/SOURCES.md` both non-trivial; `python3 -m json.tool timings.json` exits 0; final.md names the artifact paths; SOURCES.md has one entry per source ID used in critique.md and final.md.",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t5",
+                      "title": "Scope-and-deadline gate, then hand terminalization to driver",
+                      "acceptance": "All writes confined to treatment/critic-finalizer-v2 (critique.md, final.md, sources/SOURCES.md, timings.json, both receipts); frozen predecessors untouched; no nested delegation, accounts/config/env, external runner, installer execution, or canon/main edits; after saving artifacts, leave native terminalization to the installed driver's automatic completion. Verify: `find /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2 -type f | sort` lists exactly the required artifacts; `stat -c %Y` on each file is before the 19:29:18.054Z epoch (1760000000+conversion of 2026-10-07T19:29:18Z); research-v2/draft.md and sources/ files show unchanged mtimes.",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791400484941,
+                  "updatedAt": 1791400560490
+                }
+              }
+            ],
+            "claim": "Installed zcode-acp0.65.1 integration GoalLoopDriver state, not vendor backend session/goal target. Unique objective association with T3 configured child; direct session alias mapping unverified unless separately observed."
+          }
+        },
+        "integration-state-terminal-001.json": {
+          "sha256": "d02bad93d898c5796671bc007487cfd71964f5de0464a9d9f234e0b8ef65f88b",
+          "bytes": 7318,
+          "value": {
+            "observed_at": "2026-10-07T19:34:43.717757+00:00",
+            "exact_objective_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md",
+            "matches": [
+              {
+                "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f/state.json",
+                "backend_session_directory": "sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f",
+                "sha256": "ca0265e46fb1763e6d61247f99344a6b56f4b5b90cb557ee750a4ec79e5e7a1d",
+                "bytes": 6237,
+                "actual_state": {
+                  "objective": "Complete fresh ER10 I-ANCHOR-GLM treatment critic-finalizer v2 using exact /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md and INPUTS.md. Fullscope critique.md+final.md and actual installed integration state receipts. Original armdeadline19:29:18.054Z, no freshbudget or secondGoal; GLM5.3FlashMax; no accounts/config/externalrunner; vendorbackend notclaimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "impossible",
+                  "rounds": 5,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "Ingest allowed inputs and budget",
+                      "acceptance": "Read all six INPUTS.md paths (cases/I-ANCHOR-GLM/brief.md, plan.md, treatment/research-v2/draft.md, sources/index.json, sources/retrieval-stamps.json, sources/executed-checks.json) plus actual AGENTS/global instructions; compute remaining real seconds from \"Remaining real seconds at prep: 879.57\" against absolute deadline 2026-10-07T19:29:18.054Z, treating it as one shared budget with no fresh 1200s. Verify: every listed path opens (cat/ls succeeds for all six); a scratch note maps each source ID to its exact locator before any writing.",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "Capture actual native lifecycle receipts",
+                      "acceptance": "Observe the installed zcode-acp0.65.1 GoalLoopDriver /goal integration state as actually found (running or terminal; no state.json edit, no reinvocation, no receipt-hint steering, no vendor/backend claim) and write native_goal_receipt.json and native_terminal_receipt.json in treatment/critic-finalizer-v2 with unique objective/assignment/backend-session/timestamps actually accessible, stating non-terminal honestly if still running. Verify: `python3 -m json.tool native_goal_receipt.json` and `python3 -m json.tool native_terminal_receipt.json` exit 0; each records observed state verbatim, not asserted success.",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "Write complete critique.md",
+                      "acceptance": "Independently critique the frozen draft: consequential primary sources and conditions, materially different mechanisms and useful alternatives, actual pinned component/code behavior, issue/fix/regression/test/release applicability, corrections to plan choices, supported dispositions, optional leads, justified uncertainty, proposed-versus-executed distinction; preserve predecessor source IDs with exact locators and mint distinct stage-owned IDs never rebound; no coordinator subject answers. Verify: `wc -c critique.md` is a full document (not a stub); `grep -c` finds both preserved predecessor IDs and new stage-owned IDs with locators; sections cover each assignment.md line-2 critique axis.",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "Write complete final.md + sources/SOURCES.md + timings.json",
+                      "acceptance": "final.md incorporates justified source-supported corrections while preserving supported breadth and conditions, distinguishes proposed from executed, and identifies artifacts plus observed real lifecycle honestly; SOURCES.md carries exact primary URL/version/range/retrieval metadata for every cited source; timings.json records start / first-useful-saved-finding / final-ready / native-terminal-if-actual with separate input/cache/output/reasoning counters and unknown billing left unknown. Verify: `wc -c final.md sources/SOURCES.md` both non-trivial; `python3 -m json.tool timings.json` exits 0; final.md names the artifact paths; SOURCES.md has one entry per source ID used in critique.md and final.md.",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t5",
+                      "title": "Scope-and-deadline gate, then hand terminalization to driver",
+                      "acceptance": "All writes confined to treatment/critic-finalizer-v2 (critique.md, final.md, sources/SOURCES.md, timings.json, both receipts); frozen predecessors untouched; no nested delegation, accounts/config/env, external runner, installer execution, or canon/main edits; after saving artifacts, leave native terminalization to the installed driver's automatic completion. Verify: `find /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2 -type f | sort` lists exactly the required artifacts; `stat -c %Y` on each file is before the 19:29:18.054Z epoch (1760000000+conversion of 2026-10-07T19:29:18Z); research-v2/draft.md and sources/ files show unchanged mtimes.",
+                      "status": "in_progress"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791400484941,
+                  "updatedAt": 1791401675841,
+                  "endedReason": "three required artifacts were written after the absolute 19:29:18.054Z deadline that expired before their rounds ran; satisfying the mtime gate now is only possible by falsifying timestamps."
+                }
+              }
+            ],
+            "claim": "Installed zcode-acp0.65.1 integration GoalLoopDriver state, not vendor backend session/goal target. Unique objective association with T3 configured child; direct session alias mapping unverified unless separately observed."
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "afb44d1c45895ae1cfdb88efd419310d479aca0a4f473c68a231ae415eae2510",
+          "bytes": 3728,
+          "value": {
+            "receipt_kind": "native_goal_receipt",
+            "observed_at_utc": "2026-10-07T19:20:52Z",
+            "installed_integration": {
+              "driver": "zcode-acp GoalLoopDriver (/goal)",
+              "driver_version": "0.65.1",
+              "version_evidence": "`zcode-acp --version` printed 0.65.1 at observation",
+              "state_file": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f/state.json",
+              "state_file_sha256_at_observation": "d501a81bfa7e0adbd9815ff956ec6e8600feb17d2c13d2f0eac0e649e6208e29",
+              "state_file_bytes_at_observation": 6028
+            },
+            "unique_objective_verbatim": "Complete fresh ER10 I-ANCHOR-GLM treatment critic-finalizer v2 using exact /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md and INPUTS.md. Fullscope critique.md+final.md and actual installed integration state receipts. Original armdeadline19:29:18.054Z, no freshbudget or secondGoal; GLM5.3FlashMax; no accounts/config/externalrunner; vendorbackend notclaimed.",
+            "exact_assignment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md",
+            "backend_session": {
+              "backend_session_directory": "sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f",
+              "uniqueness_evidence": "state.json objective matches this arm's assignment exactly; the three sibling session directories (sess_f1a0d342, sess_fc21453a, sess_5efa7ef2) carry the control-critic, control-researcher and researcher objectives respectively, each read read-only and none matching this objective",
+              "created_at_epoch_ms": 1791400484941,
+              "created_at_utc": "2026-10-07T19:14:44.941Z",
+              "updated_at_epoch_ms_at_observation": 1791400755611,
+              "updated_at_utc_at_observation": "2026-10-07T19:19:15.611Z"
+            },
+            "observed_lifecycle_state_verbatim": {
+              "status": "running",
+              "rounds": 1,
+              "handoffFresh": false,
+              "tickets": [
+                {
+                  "id": "t1",
+                  "status": "done"
+                },
+                {
+                  "id": "t2",
+                  "status": "pending"
+                },
+                {
+                  "id": "t3",
+                  "status": "pending"
+                },
+                {
+                  "id": "t4",
+                  "status": "pending"
+                },
+                {
+                  "id": "t5",
+                  "status": "pending"
+                }
+              ]
+            },
+            "delegation_chain_observed": {
+              "source": "dispatch-tool-receipt.json in this directory (short general-role dispatch result, captured 19:14)",
+              "task_id": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+              "child_thread_id": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+              "child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1",
+              "status_at_dispatch_capture": "running",
+              "work_state_at_dispatch_capture": "working",
+              "provider_instance_id": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash"
+            },
+            "earlier_observation": {
+              "file": "integration-state-active-001.json (written 19:16:26.855Z by the preparation pass)",
+              "state_json_sha256_then": "be919db78ab8e725c7f7a78f2528fc8f3d5b61a9e7a5266606a3af377d8d99e4",
+              "state_json_bytes_then": 6031
+            },
+            "claim": "Receipt records the installed zcode-acp0.65.1 GoalLoopDriver integration state as actually read. Vendor session/goal backend target NOT activated and NOT claimed; no state.json edit, no /goal reinvocation, no receipt-hint steering was performed by this stage; timestamps are those actually accessible in the state file and dispatch receipt at observation.",
+            "whole_arm_deadline_utc": "2026-10-07T19:29:18.054Z"
+          }
+        },
+        "native_terminal_receipt.json": {
+          "sha256": "30625cda5f9ee6174a6dd54c73cee71fcea9477228d2aa736604911cbf4e5e41",
+          "bytes": 1972,
+          "value": {
+            "receipt_kind": "native_terminal_receipt",
+            "observed_at_utc": "2026-10-07T19:21:10Z",
+            "terminal": false,
+            "honest_status_at_capture": "NON-TERMINAL. The installed GoalLoopDriver state file at capture reads status \"running\", rounds 1, tickets t1 done / t2-t5 pending (updatedAt 2026-10-07T19:19:15.611Z, sha256 d501a81bfa7e0adbd9815ff956ec6e8600feb17d2c13d2f0eac0e649e6208e29, 6028 bytes). This receipt is written while the loop is still executing its own rounds; it is an actual observed state, not a terminal assertion.",
+            "backend_session_directory": "sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f",
+            "unique_objective": "Complete fresh ER10 I-ANCHOR-GLM treatment critic-finalizer v2 (same unique objective string as native_goal_receipt.json, verbatim there)",
+            "exact_assignment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/assignment.md",
+            "terminalization_owner": "Installed zcode-acp0.65.1 GoalLoopDriver automatic lifecycle completion. Per assignment: no second Goal, no reinvocation of /goal, no authoritative state.json edit, no receipt-hint steering; the coordinator passively captures the eventual terminal state after the loop quiets.",
+            "actions_not_performed": [
+              "state.json was not edited by this stage (read-only sha256/stat/python-json reads only)",
+              "no /goal reinvocation or second Goal",
+              "no vendor session/goal backend target activation or claim",
+              "no ordinary inflight receipt-hint steering"
+            ],
+            "whole_arm_deadline_utc": "2026-10-07T19:29:18.054Z",
+            "deadline_note": "Original TREATMENT v2 whole-arm deadline remains absolute; this capture consumed part of the one shared budget; no extension or reset available or sought.",
+            "claim": "Every field above reflects state actually observed on disk at observed_at_utc. If the loop reaches terminal later, that terminal state is owned by the installed driver's own lifecycle, not by this receipt."
+          }
+        },
+        "prepared.json": {
+          "sha256": "95d56953b1d35c382042e2692f1f895dcba20a02d0b1ef8354ee46ae553b5814",
+          "bytes": 1746,
+          "value": {
+            "at": "2026-10-07T19:14:38.482367+00:00",
+            "wholearm_deadline": "2026-10-07T19:29:18.054000+00:00",
+            "original_researcher_requested_at": "2026-10-07T18:44:18.054Z",
+            "remaining_seconds": 879.571633,
+            "input_hashes": {
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/draft.md": "f3955d8df36c210521e39af802a7263d229294a92f8497187b6982cadc0345ef",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/index.json": "70929aa0cfd3598a3e638402a9373d04a26f98b58790c48e20c468bd8e3a2dac",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/retrieval-stamps.json": "1f811176517e4bb69bc266fde9f42643b4cf20f67c487af00c6502081a4c23dc",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/executed-checks.json": "4196a75bd1b64523db3119b39615f6e16a89393079c23ba6aea4c7347bf0dd80"
+            },
+            "required_frozen_predecessor": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/freeze.json",
+            "predecessor_native_complete": false,
+            "lifecycle_eligibility": "HOLD",
+            "diagnostic_science_gate": "Both arms finalsciencequiet/frozen may be diagnostically assessed with declared missing-terminal exception; original qualified terminalgate retained"
+          }
+        },
+        "task-terminal-tool-receipt.json": {
+          "sha256": "2a2391c164e7c343c024c611ca2f4462c4c97c4587a11595d4c7966baf9f783b",
+          "bytes": 5140,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2\",\"status\":\"completed\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1\",\"latestTerminalStatus\":\"completed\",\"latestTerminalSummary\":\"\u26d4 goal loop judged the objective impossible: three required artifacts were written after the absolute 19:29:18.054Z deadline that expired before their rounds ran; satisfying the mtime gate now is only possible by falsifying timestamps.\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:3ff23a57-c8e6-4cd8-8a56-673ae86f31e7\",\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":\"\u26d4 goal loop judged the objective impossible: three required artifacts were written after the absolute 19:29:18.054Z deadline that expired before their rounds ran; satisfying the mtime gate now is only possible by falsifying timestamps.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:3ff23a57-c8e6-4cd8-8a56-673ae86f31e7\",\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2",
+              "status": "completed",
+              "workState": "result_available",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1",
+              "latestTerminalStatus": "completed",
+              "latestTerminalSummary": "\u26d4 goal loop judged the objective impossible: three required artifacts were written after the absolute 19:29:18.054Z deadline that expired before their rounds ran; satisfying the mtime gate now is only possible by falsifying timestamps.",
+              "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:3ff23a57-c8e6-4cd8-8a56-673ae86f31e7",
+              "providerInstanceId": "zcode",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "summary": "\u26d4 goal loop judged the objective impossible: three required artifacts were written after the absolute 19:29:18.054Z deadline that expired before their rounds ran; satisfying the mtime gate now is only possible by falsifying timestamps.",
+              "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:3ff23a57-c8e6-4cd8-8a56-673ae86f31e7",
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "timings.json": {
+          "sha256": "e0c28f2c4a9aac3be66a43b0940da4d7846553e2521f6cd09d47536e82517cb5",
+          "bytes": 1603,
+          "value": {
+            "arm": "ER10 I-ANCHOR-GLM treatment critic-finalizer v2",
+            "absolute_whole_arm_deadline_utc": "2026-10-07T19:29:18.054Z",
+            "prep_remaining_seconds_at_write": 879.571633,
+            "start_utc": "2026-10-07T19:14:38.482Z",
+            "start_note": "prepared.json 'at' and remaining_seconds 879.571633; installed goal createdAt 2026-10-07T19:14:44.941Z",
+            "first_useful_saved_finding_utc": "2026-10-07T19:16:46Z",
+            "first_useful_saved_finding": "ticket-1 scratch source-ID-to-locator map (/tmp/er10-i-anchor-glm-ticket1-source-map.md) after ingesting all six INPUTS.md paths; first in-deliverable finding: CF-01/CF-02 re-execution evidence 2026-10-07T19:26:01.523Z",
+            "final_ready_utc": "2026-10-07T19:30:35.985Z",
+            "final_ready_note": "final.md, sources/SOURCES.md and this timings.json were completed AFTER the absolute deadline; per assignment line 4 the lifecycle failure is recorded separately from the scientific content",
+            "native_terminal_utc": null,
+            "native_terminal_note": "not actual: installed GoalLoopDriver goal sess_93379c4e-0a00-4e14-b166-e6f2cbff5a7f was status running at last read-only observation; terminalization owned by the driver, see native_terminal_receipt.json",
+            "counters": {
+              "input": "unknown (no exposed token/counter interface)",
+              "cache": "unknown",
+              "output": "unknown",
+              "reasoning": "unknown",
+              "note": "counters kept separate, not summed; unknown billing remains unknown"
+            },
+            "budget_discipline": "one shared budget from prep; no fresh 1200s; researcher deadline elapsed; no extension/reset taken or available",
+            "written_at_utc_capture": "19:30:35"
+          }
+        }
+      },
+      "authored_output_files": {
+        "final.md": {
+          "bytes": 7775,
+          "sha256": "17b5d64dd0baf92ae7ff8d8ddecb30e0b5ea6fbb2498fe8afece7ec769386c49"
+        },
+        "critique.md": {
+          "bytes": 9473,
+          "sha256": "b88818d1b2bea7b67ca350993eccc10db8d6d2cb80d7648b7b4e06c706112b6b"
+        }
+      },
+      "source_evidence_file_count": 1
+    },
+    {
+      "arm": "treatment",
+      "stage": "research-v1",
+      "receipts": {
+        "dispatch.json": {
+          "sha256": "649952b48976871b4363914c9b1e904816246a451c4e3cc82e3ec8ff22f93bca",
+          "bytes": 1545,
+          "value": {
+            "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v1:ordinal:1",
+            "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v1",
+            "status": "running",
+            "workState": "working",
+            "hasPendingChildRuns": false,
+            "latestTerminalRunId": null,
+            "latestTerminalStatus": null,
+            "latestTerminalSummary": null,
+            "latestTerminalResultContextTransferId": null,
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "summary": null,
+            "resultContextTransferId": null,
+            "waitTimedOut": false,
+            "kind": "candidate",
+            "slot_id": "I-ANCHOR-GLM",
+            "arm": "treatment",
+            "stage": "research",
+            "version": 1,
+            "request": "er10-I-ANCHOR-GLM-treatment-research-v1",
+            "target": {
+              "providerInstanceId": "zcode",
+              "driverKind": "acpRegistry",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "options": [
+                {
+                  "id": "thought",
+                  "value": "max"
+                },
+                {
+                  "id": "mode",
+                  "value": "yolo"
+                }
+              ]
+            },
+            "recorded_at": "2026-10-07T18:27:50.277083+00:00"
+          }
+        },
+        "timings.json": {
+          "sha256": "0f6621a36b34e7ab297ddd79f5337300217a5bea705974a8b7b07d36706dd205",
+          "bytes": 1133,
+          "value": {
+            "arm": "I-ANCHOR-GLM/treatment/research-v1",
+            "role": "ER10 fresh candidate researcher (delegated sub-agent)",
+            "provider_model": "zcode / builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "native_goal_activated": false,
+            "start_utc": "2026-10-07T18:31:59Z",
+            "inputs_read_utc_approx": "2026-10-07T18:32Z",
+            "goal_inspection_window_utc": [
+              "2026-10-07T18:32:30Z (approx)",
+              "2026-10-07T18:33:51Z"
+            ],
+            "blocker_determined_utc": "2026-10-07T18:33:51Z",
+            "blocker_written_utc": "2026-10-07T18:35:44Z",
+            "first_useful_saved_finding_utc": null,
+            "draft_ready_utc": null,
+            "native_terminal_utc": null,
+            "notes": "Timestamps marked approx were not separately stamped for read-only steps; the others are exact `date -u` captures. first_useful_saved_finding, draft_ready and native_terminal are null because the arm is blocked before research start: no native Goal activation path exists on this harness (see BLOCKER.md), so no draft.md or sources/ were produced and nothing non-Goal is offered as an equivalent arm. There is no provider-native Goal to terminalize. Usage/billing figures remain unknown and are not asserted anywhere."
+          }
+        }
+      },
+      "authored_output_files": {},
+      "source_evidence_file_count": 0
+    },
+    {
+      "arm": "treatment",
+      "stage": "research-v2",
+      "receipts": {
+        "dispatch.json": {
+          "sha256": "a8476aa518c8cf146fdc3ec8574f4bc22989a5469713578a4f42f894bab10dcf",
+          "bytes": 1545,
+          "value": {
+            "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:1",
+            "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+            "status": "running",
+            "workState": "working",
+            "hasPendingChildRuns": false,
+            "latestTerminalRunId": null,
+            "latestTerminalStatus": null,
+            "latestTerminalSummary": null,
+            "latestTerminalResultContextTransferId": null,
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "summary": null,
+            "resultContextTransferId": null,
+            "waitTimedOut": false,
+            "kind": "candidate",
+            "slot_id": "I-ANCHOR-GLM",
+            "arm": "treatment",
+            "stage": "research",
+            "version": 2,
+            "request": "er10-I-ANCHOR-GLM-treatment-research-v2",
+            "target": {
+              "providerInstanceId": "zcode",
+              "driverKind": "acpRegistry",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "options": [
+                {
+                  "id": "thought",
+                  "value": "max"
+                },
+                {
+                  "id": "mode",
+                  "value": "yolo"
+                }
+              ]
+            },
+            "recorded_at": "2026-10-07T18:44:18.290725+00:00"
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "2915e2ad50e098956cfa7ad018f82fa6c4ba7d2f81759d4e9bd10486eceaaacf",
+          "bytes": 39123,
+          "value": {
+            "receiptType": "er10-native-goal-activation-receipt",
+            "job": "I-ANCHOR-GLM/treatment/research-v2",
+            "writtenAtUtc": "2026-10-07T18:48:15.680Z",
+            "route": {
+              "integration": "zcode-acp-server 0.65.1 (installed: /home/sittingmongoose/.local/lib/node_modules/zcode-acp-server, package version 0.65.1)",
+              "driver": "GoalLoopDriver (dist/goal-loop/driver.js), bridge-driven autonomous turn chain per ADR-0022",
+              "activationCommand": "leading /goal command in the general-role dispatch (jobs/I-ANCHOR-GLM/treatment/research-v2/task.txt begins with '/goal')",
+              "handlerEvidence": "dist/handlers/slash.js: 'Route /goal through the bridge-driven loop (ADR-0022)' importing GoalLoopDriver from ../goal-loop/driver.js",
+              "realStatusSet": [
+                "running",
+                "paused",
+                "paused-budget",
+                "paused-stall",
+                "paused-crash",
+                "complete",
+                "impossible",
+                "stopped"
+              ],
+              "persistentStatePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723/state.json",
+              "backendSessionId": "sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723",
+              "stateCreatedAtUtc": "2026-10-07T18:44:24.635Z",
+              "stateUpdatedAtUtc": "2026-10-07T18:45:07.945Z"
+            },
+            "freshnessEvidence": [
+              "state.json createdAt 2026-10-07T18:44:24.635Z precedes this worker round; objective field is verbatim this assignment's objective",
+              "no other .zcode/scratch/goals/<id>/state.json exists under /home/sittingmongoose/src/PuppetMaster or /mnt/Cursor/PuppetMaster (checked 2026-10-07T18:47:44Z); this worktree's state is the only goal state observed",
+              "state.rounds == 0 with all four tickets pending at first observation: no prior loop was resumed or borrowed"
+            ],
+            "state": {
+              "objective": "Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+              "status": "running",
+              "rounds": 0,
+              "tickets": [
+                {
+                  "id": "t1",
+                  "title": "[Activate fresh native Goal and save receipt]",
+                  "acceptance": "Via the installed zcode-acp-server0.65.1 GoalLoopDriver route, start the fresh native Goal for this assignment, observe actual driver state (running/paused/...) and persistent .zcode/scratch/goals/<backendSessionId>/state.json, then write native_goal_receipt.json with the actual returned state plus observation times in the research-v2 dir; verify with `python3 -c \"import json;d=json.load(open('native_goal_receipt.json'));assert d.get('state')\"` \u2014 no invented goalMode, no vendor-backend activation claim, and BLOCKER.md with exact tool metadata instead if activation fails",
+                  "status": "pending"
+                },
+                {
+                  "id": "t2",
+                  "title": "[Read case brief and frozen plan, capture first sourced finding]",
+                  "acceptance": "Read exactly the two INPUTS.md files (cases/I-ANCHOR-GLM/brief.md and plan.md, nothing else from the campaign), research the brief from legitimate public primary sources, record stable source IDs with exact URL/version/retrieval timestamps, save bounded permitted evidence under sources/, and save the first useful finding; verify by checking `ls sources/` has timestamped per-source evidence and that every recorded ID's URL and retrieval time are present",
+                  "status": "pending"
+                },
+                {
+                  "id": "t3",
+                  "title": "[Write complete draft.md with findings and proposed validation]",
+                  "acceptance": "Produce draft.md covering findings, proposed changes, materially different mechanisms, component/code behavior, issue/fix/regression/release chain, optional opportunities, uncertainties, source-specific conditions and proposed validation, with source IDs matching sources/ exactly; verify by grepping draft.md for each source ID and confirming all nine content areas appear (headings check) and no other arms/evaluator/history content is cited",
+                  "status": "pending"
+                },
+                {
+                  "id": "t4",
+                  "title": "[Save timings.json and terminalize the native Goal]",
+                  "acceptance": "Write timings.json with actual observable start, first-useful-finding, draft-ready and native-terminal times (usage/billing left unknown), then complete/terminalize the provider-native Goal through its real status set and record the terminal state; verify with `cat timings.json` (four timestamps present, honest unknowns) and that the driver's state.json shows a real terminal status (complete/impossible/stopped), then end with a final message listing complete files and actual native status",
+                  "status": "pending"
+                }
+              ],
+              "handoffFresh": false,
+              "createdAt": 1791398664635,
+              "updatedAt": 1791398707945
+            },
+            "observations": [
+              {
+                "at": "2026-10-07T18:48:15.680Z",
+                "rawState": {
+                  "objective": "Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "running",
+                  "rounds": 0,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "[Activate fresh native Goal and save receipt]",
+                      "acceptance": "Via the installed zcode-acp-server0.65.1 GoalLoopDriver route, start the fresh native Goal for this assignment, observe actual driver state (running/paused/...) and persistent .zcode/scratch/goals/<backendSessionId>/state.json, then write native_goal_receipt.json with the actual returned state plus observation times in the research-v2 dir; verify with `python3 -c \"import json;d=json.load(open('native_goal_receipt.json'));assert d.get('state')\"` \u2014 no invented goalMode, no vendor-backend activation claim, and BLOCKER.md with exact tool metadata instead if activation fails",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "[Read case brief and frozen plan, capture first sourced finding]",
+                      "acceptance": "Read exactly the two INPUTS.md files (cases/I-ANCHOR-GLM/brief.md and plan.md, nothing else from the campaign), research the brief from legitimate public primary sources, record stable source IDs with exact URL/version/retrieval timestamps, save bounded permitted evidence under sources/, and save the first useful finding; verify by checking `ls sources/` has timestamped per-source evidence and that every recorded ID's URL and retrieval time are present",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "[Write complete draft.md with findings and proposed validation]",
+                      "acceptance": "Produce draft.md covering findings, proposed changes, materially different mechanisms, component/code behavior, issue/fix/regression/release chain, optional opportunities, uncertainties, source-specific conditions and proposed validation, with source IDs matching sources/ exactly; verify by grepping draft.md for each source ID and confirming all nine content areas appear (headings check) and no other arms/evaluator/history content is cited",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "[Save timings.json and terminalize the native Goal]",
+                      "acceptance": "Write timings.json with actual observable start, first-useful-finding, draft-ready and native-terminal times (usage/billing left unknown), then complete/terminalize the provider-native Goal through its real status set and record the terminal state; verify with `cat timings.json` (four timestamps present, honest unknowns) and that the driver's state.json shows a real terminal status (complete/impossible/stopped), then end with a final message listing complete files and actual native status",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791398664635,
+                  "updatedAt": 1791398707945
+                },
+                "stateFileMtimeUtc": "2026-10-07T18:45:07"
+              },
+              {
+                "at": "2026-10-07T18:48:15.680Z",
+                "rawState": {
+                  "objective": "Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "running",
+                  "rounds": 0,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "[Activate fresh native Goal and save receipt]",
+                      "acceptance": "Via the installed zcode-acp-server0.65.1 GoalLoopDriver route, start the fresh native Goal for this assignment, observe actual driver state (running/paused/...) and persistent .zcode/scratch/goals/<backendSessionId>/state.json, then write native_goal_receipt.json with the actual returned state plus observation times in the research-v2 dir; verify with `python3 -c \"import json;d=json.load(open('native_goal_receipt.json'));assert d.get('state')\"` \u2014 no invented goalMode, no vendor-backend activation claim, and BLOCKER.md with exact tool metadata instead if activation fails",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "[Read case brief and frozen plan, capture first sourced finding]",
+                      "acceptance": "Read exactly the two INPUTS.md files (cases/I-ANCHOR-GLM/brief.md and plan.md, nothing else from the campaign), research the brief from legitimate public primary sources, record stable source IDs with exact URL/version/retrieval timestamps, save bounded permitted evidence under sources/, and save the first useful finding; verify by checking `ls sources/` has timestamped per-source evidence and that every recorded ID's URL and retrieval time are present",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "[Write complete draft.md with findings and proposed validation]",
+                      "acceptance": "Produce draft.md covering findings, proposed changes, materially different mechanisms, component/code behavior, issue/fix/regression/release chain, optional opportunities, uncertainties, source-specific conditions and proposed validation, with source IDs matching sources/ exactly; verify by grepping draft.md for each source ID and confirming all nine content areas appear (headings check) and no other arms/evaluator/history content is cited",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "[Save timings.json and terminalize the native Goal]",
+                      "acceptance": "Write timings.json with actual observable start, first-useful-finding, draft-ready and native-terminal times (usage/billing left unknown), then complete/terminalize the provider-native Goal through its real status set and record the terminal state; verify with `cat timings.json` (four timestamps present, honest unknowns) and that the driver's state.json shows a real terminal status (complete/impossible/stopped), then end with a final message listing complete files and actual native status",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791398664635,
+                  "updatedAt": 1791398707945
+                },
+                "stateFileMtimeUtc": "2026-10-07T18:45:07"
+              },
+              {
+                "at": "2026-10-07T18:51:01.786Z",
+                "rawState": {
+                  "objective": "Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "paused",
+                  "rounds": 0,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "[Activate fresh native Goal and save receipt]",
+                      "acceptance": "Via the installed zcode-acp-server0.65.1 GoalLoopDriver route, start the fresh native Goal for this assignment, observe actual driver state (running/paused/...) and persistent .zcode/scratch/goals/<backendSessionId>/state.json, then write native_goal_receipt.json with the actual returned state plus observation times in the research-v2 dir; verify with `python3 -c \"import json;d=json.load(open('native_goal_receipt.json'));assert d.get('state')\"` \u2014 no invented goalMode, no vendor-backend activation claim, and BLOCKER.md with exact tool metadata instead if activation fails",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "[Read case brief and frozen plan, capture first sourced finding]",
+                      "acceptance": "Read exactly the two INPUTS.md files (cases/I-ANCHOR-GLM/brief.md and plan.md, nothing else from the campaign), research the brief from legitimate public primary sources, record stable source IDs with exact URL/version/retrieval timestamps, save bounded permitted evidence under sources/, and save the first useful finding; verify by checking `ls sources/` has timestamped per-source evidence and that every recorded ID's URL and retrieval time are present",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "[Write complete draft.md with findings and proposed validation]",
+                      "acceptance": "Produce draft.md covering findings, proposed changes, materially different mechanisms, component/code behavior, issue/fix/regression/release chain, optional opportunities, uncertainties, source-specific conditions and proposed validation, with source IDs matching sources/ exactly; verify by grepping draft.md for each source ID and confirming all nine content areas appear (headings check) and no other arms/evaluator/history content is cited",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "[Save timings.json and terminalize the native Goal]",
+                      "acceptance": "Write timings.json with actual observable start, first-useful-finding, draft-ready and native-terminal times (usage/billing left unknown), then complete/terminalize the provider-native Goal through its real status set and record the terminal state; verify with `cat timings.json` (four timestamps present, honest unknowns) and that the driver's state.json shows a real terminal status (complete/impossible/stopped), then end with a final message listing complete files and actual native status",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791398664635,
+                  "updatedAt": 1791398921726,
+                  "endedReason": "cancelled"
+                },
+                "stateFileMtimeUtc": "2026-10-07T18:48:41"
+              },
+              {
+                "at": "2026-10-07T19:03:13.210Z",
+                "rawState": {
+                  "objective": "Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "paused",
+                  "rounds": 0,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "[Activate fresh native Goal and save receipt]",
+                      "acceptance": "Via the installed zcode-acp-server0.65.1 GoalLoopDriver route, start the fresh native Goal for this assignment, observe actual driver state (running/paused/...) and persistent .zcode/scratch/goals/<backendSessionId>/state.json, then write native_goal_receipt.json with the actual returned state plus observation times in the research-v2 dir; verify with `python3 -c \"import json;d=json.load(open('native_goal_receipt.json'));assert d.get('state')\"` \u2014 no invented goalMode, no vendor-backend activation claim, and BLOCKER.md with exact tool metadata instead if activation fails",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "[Read case brief and frozen plan, capture first sourced finding]",
+                      "acceptance": "Read exactly the two INPUTS.md files (cases/I-ANCHOR-GLM/brief.md and plan.md, nothing else from the campaign), research the brief from legitimate public primary sources, record stable source IDs with exact URL/version/retrieval timestamps, save bounded permitted evidence under sources/, and save the first useful finding; verify by checking `ls sources/` has timestamped per-source evidence and that every recorded ID's URL and retrieval time are present",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "[Write complete draft.md with findings and proposed validation]",
+                      "acceptance": "Produce draft.md covering findings, proposed changes, materially different mechanisms, component/code behavior, issue/fix/regression/release chain, optional opportunities, uncertainties, source-specific conditions and proposed validation, with source IDs matching sources/ exactly; verify by grepping draft.md for each source ID and confirming all nine content areas appear (headings check) and no other arms/evaluator/history content is cited",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "[Save timings.json and terminalize the native Goal]",
+                      "acceptance": "Write timings.json with actual observable start, first-useful-finding, draft-ready and native-terminal times (usage/billing left unknown), then complete/terminalize the provider-native Goal through its real status set and record the terminal state; verify with `cat timings.json` (four timestamps present, honest unknowns) and that the driver's state.json shows a real terminal status (complete/impossible/stopped), then end with a final message listing complete files and actual native status",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791398664635,
+                  "updatedAt": 1791398921726,
+                  "endedReason": "cancelled"
+                },
+                "stateFileMtimeUtc": "2026-10-07T18:48:41",
+                "context": "final observation after draft.md + timings.json saved (assignment artifacts complete)"
+              },
+              {
+                "at": "2026-10-07T19:04:22.652Z",
+                "rawState": {
+                  "objective": "Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "paused",
+                  "rounds": 0,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "[Activate fresh native Goal and save receipt]",
+                      "acceptance": "Via the installed zcode-acp-server0.65.1 GoalLoopDriver route, start the fresh native Goal for this assignment, observe actual driver state (running/paused/...) and persistent .zcode/scratch/goals/<backendSessionId>/state.json, then write native_goal_receipt.json with the actual returned state plus observation times in the research-v2 dir; verify with `python3 -c \"import json;d=json.load(open('native_goal_receipt.json'));assert d.get('state')\"` \u2014 no invented goalMode, no vendor-backend activation claim, and BLOCKER.md with exact tool metadata instead if activation fails",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "[Read case brief and frozen plan, capture first sourced finding]",
+                      "acceptance": "Read exactly the two INPUTS.md files (cases/I-ANCHOR-GLM/brief.md and plan.md, nothing else from the campaign), research the brief from legitimate public primary sources, record stable source IDs with exact URL/version/retrieval timestamps, save bounded permitted evidence under sources/, and save the first useful finding; verify by checking `ls sources/` has timestamped per-source evidence and that every recorded ID's URL and retrieval time are present",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "[Write complete draft.md with findings and proposed validation]",
+                      "acceptance": "Produce draft.md covering findings, proposed changes, materially different mechanisms, component/code behavior, issue/fix/regression/release chain, optional opportunities, uncertainties, source-specific conditions and proposed validation, with source IDs matching sources/ exactly; verify by grepping draft.md for each source ID and confirming all nine content areas appear (headings check) and no other arms/evaluator/history content is cited",
+                      "status": "pending"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "[Save timings.json and terminalize the native Goal]",
+                      "acceptance": "Write timings.json with actual observable start, first-useful-finding, draft-ready and native-terminal times (usage/billing left unknown), then complete/terminalize the provider-native Goal through its real status set and record the terminal state; verify with `cat timings.json` (four timestamps present, honest unknowns) and that the driver's state.json shows a real terminal status (complete/impossible/stopped), then end with a final message listing complete files and actual native status",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791398664635,
+                  "updatedAt": 1791398921726,
+                  "endedReason": "cancelled"
+                },
+                "stateFileMtimeUtc": "2026-10-07T18:48:41",
+                "context": "re-dispatched ticket-1 round arrived; persistent state still shows status=paused, rounds=0, updatedAt unchanged at 2026-10-07T18:48:41Z \u2014 dispatch and persistent-state revision observed out of phase, recorded as observed"
+              },
+              {
+                "at": "2026-10-07T19:11:45.786Z",
+                "rawState": {
+                  "objective": "Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+                  "status": "running",
+                  "rounds": 3,
+                  "tickets": [
+                    {
+                      "id": "t1",
+                      "title": "[Activate fresh native Goal and save receipt]",
+                      "acceptance": "Via the installed zcode-acp-server0.65.1 GoalLoopDriver route, start the fresh native Goal for this assignment, observe actual driver state (running/paused/...) and persistent .zcode/scratch/goals/<backendSessionId>/state.json, then write native_goal_receipt.json with the actual returned state plus observation times in the research-v2 dir; verify with `python3 -c \"import json;d=json.load(open('native_goal_receipt.json'));assert d.get('state')\"` \u2014 no invented goalMode, no vendor-backend activation claim, and BLOCKER.md with exact tool metadata instead if activation fails",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t2",
+                      "title": "[Read case brief and frozen plan, capture first sourced finding]",
+                      "acceptance": "Read exactly the two INPUTS.md files (cases/I-ANCHOR-GLM/brief.md and plan.md, nothing else from the campaign), research the brief from legitimate public primary sources, record stable source IDs with exact URL/version/retrieval timestamps, save bounded permitted evidence under sources/, and save the first useful finding; verify by checking `ls sources/` has timestamped per-source evidence and that every recorded ID's URL and retrieval time are present",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t3",
+                      "title": "[Write complete draft.md with findings and proposed validation]",
+                      "acceptance": "Produce draft.md covering findings, proposed changes, materially different mechanisms, component/code behavior, issue/fix/regression/release chain, optional opportunities, uncertainties, source-specific conditions and proposed validation, with source IDs matching sources/ exactly; verify by grepping draft.md for each source ID and confirming all nine content areas appear (headings check) and no other arms/evaluator/history content is cited",
+                      "status": "done"
+                    },
+                    {
+                      "id": "t4",
+                      "title": "[Save timings.json and terminalize the native Goal]",
+                      "acceptance": "Write timings.json with actual observable start, first-useful-finding, draft-ready and native-terminal times (usage/billing left unknown), then complete/terminalize the provider-native Goal through its real status set and record the terminal state; verify with `cat timings.json` (four timestamps present, honest unknowns) and that the driver's state.json shows a real terminal status (complete/impossible/stopped), then end with a final message listing complete files and actual native status",
+                      "status": "pending"
+                    }
+                  ],
+                  "handoffFresh": false,
+                  "createdAt": 1791398664635,
+                  "updatedAt": 1791400242053,
+                  "endedReason": "cancelled"
+                },
+                "stateFileMtimeUtc": "2026-10-07T19:10:42",
+                "context": "ticket-4 round: timings.json finalized; driver observed running at rounds 3 with t1-t3 done"
+              }
+            ],
+            "honestScopeNotes": [
+              "This receipt records the installed provider integration's (zcode-acp-server 0.65.1 GoalLoopDriver) native goal state only.",
+              "It does NOT establish vendor-backend session/goal target activation; no vendor-backend goal target is claimed.",
+              "No goalMode field is asserted: the handler references a backend goal mode setting (dist/config/settings.js goalModeIsBackend) but nothing about a backend goal engine was observed or activated, and none is claimed.",
+              "Observed via filesystem reads of the driver's persistent state; the worker runs inside the loop's ticket-1 dispatch turn."
+            ],
+            "lifecycleClarification": {
+              "receivedAtUtc": "2026-10-07T18:49:37Z",
+              "from": "root orchestrator (lifecycle clarification only)",
+              "content": "Root independently observed this same installed /goal driver state RUNNING (exact v2 objective, sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723) while the worker turn ran. Directives: no second/nested Goal; no vendor backend/config mutation; save/read this actual existing state as the activation receipt; proceed with the exact original assignment brief/plan only; terminal lifecycle strictly via the installed driver completion contract (no invented create/get tools or terminal status); root captures final actual state separately; original bounded v2 stage/arm deadlines continue.",
+              "postClarificationObservation": {
+                "status": "paused",
+                "endedReason": "cancelled",
+                "rounds": 0,
+                "updatedAtUtc": "2026-10-07T18:48:41"
+              },
+              "workerResponse": "No new Goal started and none will be; receipt keeps the observed actual state only; assignment proceeds under the original brief/plan and deadlines; terminal status left to the installed driver/root \u2014 worker records only what it observes."
+            },
+            "finalObservedStatus": {
+              "status": "running",
+              "rounds": 3,
+              "atUtc": "2026-10-07T19:11:45.786Z"
+            }
+          }
+        },
+        "timings.json": {
+          "sha256": "5f8f1deb26186ac9ebecbc31de53dfeabc7daed2c48fabcdbfaec18ef9e2083c",
+          "bytes": 1910,
+          "value": {
+            "armActivationStartUtc": "2026-10-07T18:44:24.635Z",
+            "armActivationSource": "createdAt of installed driver state .zcode/scratch/goals/sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723/state.json",
+            "workerStartUtc": "2026-10-07T18:46:07Z",
+            "firstUsefulFindingSavedUtc": "2026-10-07T18:57:23.890Z",
+            "firstUsefulFinding": "sources/executed-checks.json (CHK-1/CHK-2 pinned-version behavior)",
+            "draftReadyUtc": "2026-10-07T19:09:30Z",
+            "nativeGoal": {
+              "observedStatusAtTicket4": "running",
+              "rounds": 3,
+              "ticketStatuses": {
+                "t1": "done",
+                "t2": "done",
+                "t3": "done",
+                "t4": "pending"
+              },
+              "endedReasonField": "cancelled",
+              "observedAtUtc": "2026-10-07T19:11:45.786Z",
+              "terminalLifecycle": "Per root clarification (2026-10-07T18:49:37Z): the worker does NOT write the driver's terminal status and uses no invented create/get tools. The installed zcode-acp-server 0.65.1 GoalLoopDriver settles the loop itself at the round boundary after verification (real status set: running/paused/paused-budget/paused-stall/paused-crash/complete/impossible/stopped); root captures the final actual state separately. This field records the honest as-observed status at ticket-4 time, not a claimed terminal state.",
+              "statePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723/state.json",
+              "backendSessionId": "sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723"
+            },
+            "unknowns": [
+              "model usage/billing figures (no observable interface)",
+              "driver terminal status at read time (owned by driver contract/root, see nativeGoal.terminalLifecycle)"
+            ],
+            "writtenAtUtc": "2026-10-07T19:11:45.786Z",
+            "draftReadyNote": "draft.md final mtime after ticket-3 round inserted \u00a75 'Component/code behavior at pinned versions (consolidated)' and renumbered sections; initial draft saved 19:02:58Z"
+          }
+        }
+      },
+      "authored_output_files": {
+        "draft.md": {
+          "bytes": 21477,
+          "sha256": "f3955d8df36c210521e39af802a7263d229294a92f8497187b6982cadc0345ef"
+        }
+      },
+      "source_evidence_file_count": 3
+    }
+  ],
+  "measurement_policy": {
+    "billing": "UNKNOWN unless actual exposed billing record; no dollar estimates",
+    "native_counters": "Retain separate cumulative snapshots; never add enclosing samples or call them generated tokens. Stage aggregates require proven semantics.",
+    "source_operations": "UNKNOWN where no actual operation log; evidence file counts are not source operations",
+    "occupancy": "T3/native interval observations have distinct meanings; samearm sequential intervals may be accumulated only without overlap and only as labeled occupied durations",
+    "resource_release": "Only actual settled/no-pending evidence; freeze timestamp is not automatically release time",
+    "speedup": "No 2x or quality-preserving claim without both arms assessed and eligible"
+  }
+}

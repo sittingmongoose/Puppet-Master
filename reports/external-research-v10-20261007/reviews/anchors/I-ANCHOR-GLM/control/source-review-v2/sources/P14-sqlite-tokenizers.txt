@@ -1,0 +1,360 @@
+L22: ** For tokenizers with no "unicode" modifier, the set of token characters
+L23: ** is the same as the set of ASCII range alphanumeric characters. 
+L24: */
+L25: static unsigned char aAsciiTokenChar[128] = {
+L26:   0, 0, 0, 0, 0, 0, 0, 0,   0, 0, 0, 0, 0, 0, 0, 0,   /* 0x00..0x0F */
+L27:   0, 0, 0, 0, 0, 0, 0, 0,   0, 0, 0, 0, 0, 0, 0, 0,   /* 0x10..0x1F */
+L28:   0, 0, 0, 0, 0, 0, 0, 0,   0, 0, 0, 0, 0, 0, 0, 0,   /* 0x20..0x2F */
+L29:   1, 1, 1, 1, 1, 1, 1, 1,   1, 1, 0, 0, 0, 0, 0, 0,   /* 0x30..0x3F */
+L30:   0, 1, 1, 1, 1, 1, 1, 1,   1, 1, 1, 1, 1, 1, 1, 1,   /* 0x40..0x4F */
+L31:   1, 1, 1, 1, 1, 1, 1, 1,   1, 1, 1, 0, 0, 0, 0, 0,   /* 0x50..0x5F */
+L32:   0, 1, 1, 1, 1, 1, 1, 1,   1, 1, 1, 1, 1, 1, 1, 1,   /* 0x60..0x6F */
+L33:   1, 1, 1, 1, 1, 1, 1, 1,   1, 1, 1, 0, 0, 0, 0, 0,   /* 0x70..0x7F */
+L34: };
+L35: 
+L36: typedef struct AsciiTokenizer AsciiTokenizer;
+L37: struct AsciiTokenizer {
+L38:   unsigned char aTokenChar[128];
+L39: };
+L40: 
+L41: static void fts5AsciiAddExceptions(
+L42:   AsciiTokenizer *p, 
+L43:   const char *zArg, 
+L44:   int bTokenChars
+L45: ){
+L46:   int i;
+L47:   for(i=0; zArg[i]; i++){
+L48:     if( (zArg[i] & 0x80)==0 ){
+L49:       p->aTokenChar[(int)zArg[i]] = (unsigned char)bTokenChars;
+L50:     }
+L51:   }
+L52: }
+L53: 
+L54: /*
+L55: ** Delete a "ascii" tokenizer.
+L56: */
+L57: static void fts5AsciiDelete(Fts5Tokenizer *p){
+L58:   sqlite3_free(p);
+L59: }
+L60: 
+L78:     }else{
+L79:       int i;
+L80:       memset(p, 0, sizeof(AsciiTokenizer));
+L81:       memcpy(p->aTokenChar, aAsciiTokenChar, sizeof(aAsciiTokenChar));
+L82:       for(i=0; rc==SQLITE_OK && i<nArg; i+=2){
+L83:         const char *zArg = azArg[i+1];
+L84:         if( 0==sqlite3_stricmp(azArg[i], "tokenchars") ){
+L85:           fts5AsciiAddExceptions(p, zArg, 1);
+L86:         }else
+L87:         if( 0==sqlite3_stricmp(azArg[i], "separators") ){
+L88:           fts5AsciiAddExceptions(p, zArg, 0);
+L89:         }else{
+L90:           rc = SQLITE_ERROR;
+L91:         }
+L92:       }
+L93:       if( rc!=SQLITE_OK ){
+L94:         fts5AsciiDelete((Fts5Tokenizer*)p);
+L95:         p = 0;
+L129:   char aFold[64];
+L130:   int nFold = sizeof(aFold);
+L131:   char *pFold = aFold;
+L132:   unsigned char *a = p->aTokenChar;
+L133: 
+L134:   UNUSED_PARAM(iUnused);
+L135: 
+L136:   while( is<nText && rc==SQLITE_OK ){
+L137:     int nByte;
+L138: 
+L139:     /* Skip any leading divider characters. */
+L140:     while( is<nText && ((pText[is]&0x80)==0 && a[(int)pText[is]]==0) ){
+L141:       is++;
+L142:     }
+L143:     if( is==nText ) break;
+L231: 
+L232: typedef struct Unicode61Tokenizer Unicode61Tokenizer;
+L233: struct Unicode61Tokenizer {
+L234:   unsigned char aTokenChar[128];  /* ASCII range token characters */
+L235:   char *aFold;                    /* Buffer to fold text into */
+L236:   int nFold;                      /* Size of aFold[] in bytes */
+L237:   int eRemoveDiacritic;           /* True if remove_diacritics=1 is set */
+L238:   int nException;
+L239:   int *aiException;
+L240: 
+L241:   unsigned char aCategory[32];    /* True for token char categories */
+L242: };
+L243: 
+L244: /* Values for eRemoveDiacritic (must match internals of fts5_unicode2.c) */
+L245: #define FTS5_REMOVE_DIACRITICS_NONE    0
+L246: #define FTS5_REMOVE_DIACRITICS_SIMPLE  1
+L247: #define FTS5_REMOVE_DIACRITICS_COMPLEX 2
+L248: 
+L249: static int fts5UnicodeAddExceptions(
+L250:   Unicode61Tokenizer *p,          /* Tokenizer object */
+L251:   const char *z,                  /* Characters to treat as exceptions */
+L252:   int bTokenChars                 /* 1 for 'tokenchars', 0 for 'separators' */
+L253: ){
+L254:   int rc = SQLITE_OK;
+L255:   int n = (int)strlen(z);
+L256:   int *aNew;
+L257: 
+L258:   if( n>0 ){
+L259:     aNew = (int*)sqlite3_realloc64(p->aiException,
+L260:                                    (n+p->nException)*sizeof(int));
+L261:     if( aNew ){
+L262:       int nNew = p->nException;
+L263:       const unsigned char *zCsr = (const unsigned char*)z;
+L267:         int bToken;
+L268:         READ_UTF8(zCsr, zTerm, iCode);
+L269:         if( iCode<128 ){
+L270:           p->aTokenChar[iCode] = (unsigned char)bTokenChars;
+L271:         }else{
+L272:           bToken = p->aCategory[sqlite3Fts5UnicodeCategory(iCode)];
+L273:           assert( (bToken==0 || bToken==1) ); 
+L274:           assert( (bTokenChars==0 || bTokenChars==1) );
+L275:           if( bToken!=bTokenChars && sqlite3Fts5UnicodeIsdiacritic(iCode)==0 ){
+L276:             int i;
+L277:             for(i=0; i<nNew; i++){
+L278:               if( (u32)aNew[i]>iCode ) break;
+L279:             }
+L280:             memmove(&aNew[i+1], &aNew[i], (nNew-i)*sizeof(int));
+L281:             aNew[i] = iCode;
+L282:             nNew++;
+L283:           }
+L284:         }
+L285:       }
+L286:       p->aiException = aNew;
+L341:     while( *z!=' ' && *z!='\t' && *z!='\0' ) z++;
+L342:   }
+L343: 
+L344:   sqlite3Fts5UnicodeAscii(p->aCategory, p->aTokenChar);
+L345:   return SQLITE_OK;
+L346: }
+L347: 
+L348: /*
+L349: ** Create a "unicode61" tokenizer.
+L350: */
+L351: static int fts5UnicodeCreate(
+L352:   void *pUnused, 
+L353:   const char **azArg, int nArg,
+L354:   Fts5Tokenizer **ppOut
+L355: ){
+L367:       int i;
+L368:       memset(p, 0, sizeof(Unicode61Tokenizer));
+L369: 
+L370:       p->eRemoveDiacritic = FTS5_REMOVE_DIACRITICS_SIMPLE;
+L371:       p->nFold = 64;
+L372:       p->aFold = sqlite3_malloc64(p->nFold * sizeof(char));
+L373:       if( p->aFold==0 ){
+L374:         rc = SQLITE_NOMEM;
+L375:       }
+L376: 
+L377:       /* Search for a "categories" argument */
+L378:       for(i=0; rc==SQLITE_OK && i<nArg; i+=2){
+L379:         if( 0==sqlite3_stricmp(azArg[i], "categories") ){
+L380:           zCat = azArg[i+1];
+L381:         }
+L387: 
+L388:       for(i=0; rc==SQLITE_OK && i<nArg; i+=2){
+L389:         const char *zArg = azArg[i+1];
+L390:         if( 0==sqlite3_stricmp(azArg[i], "remove_diacritics") ){
+L391:           if( (zArg[0]!='0' && zArg[0]!='1' && zArg[0]!='2') || zArg[1] ){
+L392:             rc = SQLITE_ERROR;
+L393:           }else{
+L394:             p->eRemoveDiacritic = (zArg[0] - '0');
+L395:             assert( p->eRemoveDiacritic==FTS5_REMOVE_DIACRITICS_NONE
+L396:                  || p->eRemoveDiacritic==FTS5_REMOVE_DIACRITICS_SIMPLE
+L397:                  || p->eRemoveDiacritic==FTS5_REMOVE_DIACRITICS_COMPLEX
+L398:             );
+L399:           }
+L400:         }else
+L401:         if( 0==sqlite3_stricmp(azArg[i], "tokenchars") ){
+L402:           rc = fts5UnicodeAddExceptions(p, zArg, 1);
+L403:         }else
+L404:         if( 0==sqlite3_stricmp(azArg[i], "separators") ){
+L405:           rc = fts5UnicodeAddExceptions(p, zArg, 0);
+L406:         }else
+L407:         if( 0==sqlite3_stricmp(azArg[i], "categories") ){
+L408:           /* no-op */
+L409:         }else{
+L410:           rc = SQLITE_ERROR;
+L411:         }
+L412:       }
+L435:   );
+L436: }
+L437: 
+L438: static int fts5UnicodeTokenize(
+L439:   Fts5Tokenizer *pTokenizer,
+L440:   void *pCtx,
+L441:   int iUnused,
+L442:   const char *pText, int nText,
+L443:   int (*xToken)(void*, int, const char*, int nToken, int iStart, int iEnd)
+L444: ){
+L445:   Unicode61Tokenizer *p = (Unicode61Tokenizer*)pTokenizer;
+L446:   int rc = SQLITE_OK;
+L447:   unsigned char *a = p->aTokenChar;
+L448: 
+L449:   unsigned char *zTerm = (unsigned char*)&pText[nText];
+L450:   unsigned char *zCsr = (unsigned char *)pText;
+L451: 
+L452:   /* Output buffer */
+L453:   char *aFold = p->aFold;
+L454:   int nFold = p->nFold;
+L455:   const char *pEnd = &aFold[nFold-6];
+L456: 
+L457:   UNUSED_PARAM(iUnused);
+L458: 
+L473:         is = zCsr - (unsigned char*)pText;
+L474:         READ_UTF8(zCsr, zTerm, iCode);
+L475:         if( fts5UnicodeIsAlnum(p, iCode) ){
+L476:           goto non_ascii_tokenchar;
+L477:         }
+L478:       }else{
+L479:         if( a[*zCsr] ){
+L480:           is = zCsr - (unsigned char*)pText;
+L481:           goto ascii_tokenchar;
+L482:         }
+L483:         zCsr++;
+L484:       }
+L485:     }
+L486: 
+L487:     /* Run through the tokenchars. Fold them into the output buffer along
+L488:     ** the way.  */
+L489:     while( zCsr<zTerm ){
+L490: 
+L491:       /* Grow the output buffer so that there is sufficient space to fit the
+L492:       ** largest possible utf-8 character.  */
+L493:       if( zOut>pEnd ){
+L494:         aFold = sqlite3_malloc64((sqlite3_int64)nFold*2);
+L495:         if( aFold==0 ){
+L496:           rc = SQLITE_NOMEM;
+L497:           goto tokenize_done;
+L498:         }
+L509:         ** it is a token character, or break out of the loop if it is not. */
+L510:         READ_UTF8(zCsr, zTerm, iCode);
+L511:         if( fts5UnicodeIsAlnum(p,iCode)||sqlite3Fts5UnicodeIsdiacritic(iCode) ){
+L512:  non_ascii_tokenchar:
+L513:           iCode = sqlite3Fts5UnicodeFold(iCode, p->eRemoveDiacritic);
+L514:           if( iCode ) WRITE_UTF8(zOut, iCode);
+L515:         }else{
+L516:           break;
+L517:         }
+L518:       }else if( a[*zCsr]==0 ){
+L519:         /* An ascii-range separator character. End of token. */
+L520:         break; 
+L521:       }else{
+L522:  ascii_tokenchar:
+L523:         if( *zCsr>='A' && *zCsr<='Z' ){
+L524:           *zOut++ = *zCsr + 32;
+L525:         }else{
+L526:           *zOut++ = *zCsr;
+L527:         }
+L528:         zCsr++;
+L529:       }
+L530:       ie = zCsr - (unsigned char*)pText;
+L531:     }
+L532: 
+L533:     /* Invoke the token callback */
+L1259: }
+L1260: 
+L1261: /**************************************************************************
+L1262: ** Start of trigram implementation.
+L1263: */
+L1264: typedef struct TrigramTokenizer TrigramTokenizer;
+L1265: struct TrigramTokenizer {
+L1266:   int bFold;                      /* True to fold to lower-case */
+L1267: };
+L1268: 
+L1269: /*
+L1270: ** Free a trigram tokenizer.
+L1271: */
+L1272: static void fts5TriDelete(Fts5Tokenizer *p){
+L1273:   sqlite3_free(p);
+L1274: }
+L1275: 
+L1276: /*
+L1277: ** Allocate a trigram tokenizer.
+L1278: */
+L1279: static int fts5TriCreate(
+L1280:   void *pUnused,
+L1281:   const char **azArg,
+L1282:   int nArg,
+L1283:   Fts5Tokenizer **ppOut
+L1284: ){
+L1285:   int rc = SQLITE_OK;
+L1286:   TrigramTokenizer *pNew = (TrigramTokenizer*)sqlite3_malloc(sizeof(*pNew));
+L1287:   UNUSED_PARAM(pUnused);
+L1288:   if( pNew==0 ){
+L1289:     rc = SQLITE_NOMEM;
+L1290:   }else{
+L1291:     int i;
+L1292:     pNew->bFold = 1;
+L1293:     for(i=0; rc==SQLITE_OK && i<nArg; i+=2){
+L1294:       const char *zArg = azArg[i+1];
+L1295:       if( 0==sqlite3_stricmp(azArg[i], "case_sensitive") ){
+L1296:         if( (zArg[0]!='0' && zArg[0]!='1') || zArg[1] ){
+L1297:           rc = SQLITE_ERROR;
+L1312: }
+L1313: 
+L1314: /*
+L1315: ** Trigram tokenizer tokenize routine.
+L1316: */
+L1317: static int fts5TriTokenize(
+L1318:   Fts5Tokenizer *pTok,
+L1319:   void *pCtx,
+L1320:   int unusedFlags,
+L1321:   const char *pText, int nText,
+L1322:   int (*xToken)(void*, int, const char*, int, int, int)
+L1323: ){
+L1324:   TrigramTokenizer *p = (TrigramTokenizer*)pTok;
+L1325:   int rc = SQLITE_OK;
+L1326:   char aBuf[32];
+L1327:   const unsigned char *zIn = (const unsigned char*)pText;
+L1328:   const unsigned char *zEof = &zIn[nText];
+L1329:   u32 iCode;
+L1330: 
+L1331:   UNUSED_PARAM(unusedFlags);
+L1332:   while( 1 ){
+L1333:     char *zOut = aBuf;
+L1334:     int iStart = zIn - (const unsigned char*)pText;
+L1335:     const unsigned char *zNext; 
+L1370: ** indicating the style of pattern matching that the tokenizer can support.
+L1371: ** In practice, this is:
+L1372: **
+L1373: **     "trigram" tokenizer, case_sensitive=1 - FTS5_PATTERN_GLOB
+L1374: **     "trigram" tokenizer, case_sensitive=0 (the default) - FTS5_PATTERN_LIKE
+L1375: **     all other tokenizers - FTS5_PATTERN_NONE
+L1376: */
+L1377: int sqlite3Fts5TokenizerPattern(
+L1378:     int (*xCreate)(void*, const char**, int, Fts5Tokenizer**),
+L1379:     Fts5Tokenizer *pTok
+L1380: ){
+L1381:   if( xCreate==fts5TriCreate ){
+L1382:     TrigramTokenizer *p = (TrigramTokenizer*)pTok;
+L1383:     return p->bFold ? FTS5_PATTERN_LIKE : FTS5_PATTERN_GLOB;
+L1384:   }
+L1385:   return FTS5_PATTERN_NONE;
+L1386: }
+L1387: 
+L1388: /*
+L1389: ** Register all built-in tokenizers with FTS5.
+L1390: */
+L1391: int sqlite3Fts5TokenizerInit(fts5_api *pApi){
+L1392:   struct BuiltinTokenizer {
+L1393:     const char *zName;
+L1394:     fts5_tokenizer x;
+L1395:   } aBuiltin[] = {
+L1396:     { "unicode61", {fts5UnicodeCreate, fts5UnicodeDelete, fts5UnicodeTokenize}},
+L1397:     { "ascii",     {fts5AsciiCreate, fts5AsciiDelete, fts5AsciiTokenize }},
+L1398:     { "porter",    {fts5PorterCreate, fts5PorterDelete, fts5PorterTokenize }},
+L1399:     { "trigram",   {fts5TriCreate, fts5TriDelete, fts5TriTokenize}},
+L1400:   };
+L1401:   
+L1402:   int rc = SQLITE_OK;             /* Return code */
+L1403:   int i;                          /* To iterate through builtin functions */
+L1404: 
+L1405:   for(i=0; rc==SQLITE_OK && i<ArraySize(aBuiltin); i++){
+L1406:     rc = pApi->xCreateTokenizer(pApi,
+L1407:         aBuiltin[i].zName,
+L1408:         (void*)pApi,
+L1409:         &aBuiltin[i].x,
+L1410:         0

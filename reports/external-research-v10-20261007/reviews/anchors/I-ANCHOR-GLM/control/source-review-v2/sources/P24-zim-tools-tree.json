@@ -1,0 +1,47 @@
+{
+  "id": "P24-zim-tools-tree",
+  "requested_url": "https://api.github.com/repos/openzim/zim-tools/git/trees/main?recursive=1",
+  "retrieved_started_utc": "2026-10-07T19:44:25.861760+00:00",
+  "retrieval_identity": "direct HTTPS GET; complete response hashed; bounded text retained; no source execution",
+  "resolved_url": "https://api.github.com/repos/openzim/zim-tools/git/trees/main?recursive=1",
+  "http_status": 200,
+  "response_bytes": 24677,
+  "response_sha256": "2309e9370787e1ccdedfb3695939b930d9b9b204f30679ba0919aa7e3a2cd291",
+  "response_headers": {
+    "Date": "Wed, 07 Oct 2026 19:44:26 GMT",
+    "Content-Type": "application/json; charset=utf-8",
+    "ETag": "W/\"46f699b3aafb3ea2b20f78c3316566e323552922a5f9924186f96113bc3e9e0c\"",
+    "Last-Modified": "Sun, 04 Oct 2026 14:33:25 GMT"
+  },
+  "response_text_lines": 845,
+  "normalization": "json",
+  "selection_patterns": [
+    "path.*split",
+    "sha"
+  ],
+  "context_before": 2,
+  "context_after": 18,
+  "max_hits_per_pattern": 12,
+  "selected_line_ranges": [
+    [
+      1,
+      104
+    ],
+    [
+      215,
+      234
+    ],
+    [
+      491,
+      526
+    ],
+    [
+      826,
+      845
+    ]
+  ],
+  "bounded_evidence_file": "P24-zim-tools-tree.txt",
+  "bounded_evidence_sha256": "a0f861ba91ef7fbd77430cc87c276a26d7d222709d5eb05207a989f116b1b687",
+  "bounded_evidence_bytes": 7141,
+  "retrieved_finished_utc": "2026-10-07T19:44:26.194219+00:00"
+}

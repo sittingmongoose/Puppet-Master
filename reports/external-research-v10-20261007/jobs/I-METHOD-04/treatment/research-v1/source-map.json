@@ -1,0 +1,275 @@
+{
+  "case_id": "I-METHOD-04",
+  "capture_policy": "Public primary sources selected from the brief-led discovery. Captures are immutable response bytes as retrieved; candidate does not compute hashes, which are reserved for coordinator/host computation.",
+  "public_discovery_operations": {
+    "web_calls": 10,
+    "search_calls": 5,
+    "search_queries": 20,
+    "page_opens_or_clicks": 18,
+    "direct_http_retrieval_attempts": 25,
+    "direct_http_status_counts": {
+      "200": 20,
+      "403": 1,
+      "406": 4
+    },
+    "saved_successful_source_bytes": 20,
+    "failed_response_bodies_retained": false
+  },
+  "failed_retrieval_attempts": [
+    {
+      "url": "https://www.loc.gov/programs/digital-collections-management/inventory-and-custody/managing-external-media-and-digital-content/",
+      "accessed_utc": "2026-10-07T19:48:09.849820+00:00",
+      "status": 403,
+      "note": "Direct HTML fetch denied; official LOC ?fo=json copy captured as S-LOC-EXT."
+    },
+    {
+      "url": "https://github.com/MediaArea/BWFMetaEdit/pull/207",
+      "accessed_utc": "2026-10-07T19:48:10.367937+00:00",
+      "status": 406,
+      "note": "Initial request used GitHub JSON Accept header; retried successfully as HTML in S-BWF-207."
+    },
+    {
+      "url": "https://github.com/MediaArea/BWFMetaEdit/issues/214",
+      "accessed_utc": "2026-10-07T19:48:10.562240+00:00",
+      "status": 406,
+      "note": "Initial request used GitHub JSON Accept header; retried successfully as HTML in S-BWF-214."
+    },
+    {
+      "url": "https://github.com/MediaArea/BWFMetaEdit/pull/218",
+      "accessed_utc": "2026-10-07T19:48:10.727337+00:00",
+      "status": 406,
+      "note": "Initial request used GitHub JSON Accept header; retried successfully as HTML in S-BWF-218."
+    },
+    {
+      "url": "https://github.com/MediaArea/BWFMetaEdit/commit/8337405",
+      "accessed_utc": "2026-10-07T19:48:10.892256+00:00",
+      "status": 406,
+      "note": "Initial request used GitHub JSON Accept header; retried successfully as HTML in S-BWF-FIX."
+    }
+  ],
+  "input_documents": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/brief.md",
+      "sha256_from_input_map": "c609c2ea956f269df5fbab3694b7a9425f72f24b65279e12aab3b5c1d727a1ab",
+      "role": "user task and O1-O6 obligation map"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/plan.md",
+      "sha256_from_input_map": "c3da0fde53189778a3685ff4dae7f8c9cca2bd3a5d5a0f8614bc666c21a01a59",
+      "role": "frozen comparison plan; P1-P6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/INPUTS.md",
+      "sha256_from_input_map": null,
+      "role": "admitted-input boundary and provenance instructions"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v1/input-map.json",
+      "sha256_from_input_map": null,
+      "role": "exact path map, hashes, output paths, empty predecessor list"
+    }
+  ],
+  "captured_sources": [
+    {
+      "id": "S-LOC-EXT",
+      "title": "Managing External Media and Digital Content",
+      "url": "https://www.loc.gov/programs/digital-collections-management/inventory-and-custody/managing-external-media-and-digital-content/?fo=json",
+      "accessed_utc": "2026-10-07T19:48:09.893490+00:00",
+      "version": "LOC Digital Collections Management Compendium page; no page date exposed in captured API response",
+      "captured_path": "sources/loc-external-media-api.json",
+      "content_type": "application/json",
+      "locator": "content.components[0].html; moving external-media content to approved inventory and inventory control; read-only/write protection conditions described in the page text"
+    },
+    {
+      "id": "S-BWF-USER",
+      "title": "BWF MetaEdit official product site",
+      "url": "https://bwfmetaedit.sourceforge.net/",
+      "accessed_utc": "2026-10-07T19:48:07.420489+00:00",
+      "version": "Unversioned product site; accessed 2026-10-07",
+      "captured_path": "sources/bwfmetaedit-homepage.html",
+      "content_type": "text/html",
+      "locator": "About this Software; metadata embedding/editing/export; BWF-specific validation"
+    },
+    {
+      "id": "S-ARCH-116",
+      "title": "Archivematica documentation 1.16.0",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.16/",
+      "accessed_utc": "2026-10-07T19:48:07.609592+00:00",
+      "version": "1.16.0; site marked legacy at access time",
+      "captured_path": "sources/archivematica-docs-1.16.0.html",
+      "content_type": "text/html; charset=utf-8",
+      "locator": "Transfer, Bags, Ingest, Preservation planning, Archival Storage headings"
+    },
+    {
+      "id": "S-RFC8493",
+      "title": "RFC 8493: The BagIt File Packaging Format (V1.0)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "accessed_utc": "2026-10-07T19:48:08.001533+00:00",
+      "version": "RFC 8493, October 2018",
+      "captured_path": "sources/bagit-rfc8493.html",
+      "content_type": "text/html; charset=utf-8",
+      "locator": "§§2.1.3 payload manifests, 2.4 algorithms, 3 complete and valid bags; bagit.txt/data structure"
+    },
+    {
+      "id": "S-FFMPEG",
+      "title": "FFmpeg command-line documentation",
+      "url": "https://ffmpeg.org/ffmpeg.html",
+      "accessed_utc": "2026-10-07T19:48:08.333749+00:00",
+      "version": "Live documentation; no version pinned or source code inspected",
+      "captured_path": "sources/ffmpeg-user-doc.html",
+      "content_type": "text/html; charset=UTF-8",
+      "locator": "§4 stream selection and -map; metadata mapping/default copying; conversion options"
+    },
+    {
+      "id": "S-FFPROBE",
+      "title": "FFprobe documentation",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "accessed_utc": "2026-10-07T19:48:09.210370+00:00",
+      "version": "Live documentation; no version pinned or source code inspected",
+      "captured_path": "sources/ffprobe-user-doc.html",
+      "content_type": "text/html; charset=UTF-8",
+      "locator": "-show_streams, -show_format, -show_error, -of json"
+    },
+    {
+      "id": "S-BWF-207",
+      "title": "BWF MetaEdit PR #207: sample alignment check",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/pull/207",
+      "accessed_utc": "2026-10-07T19:48:50.546233+00:00",
+      "version": "Merged commit feb80d2, 2021-04-13 (abbreviated SHA as shown by GitHub)",
+      "captured_path": "sources/bwfmetaedit-issue-207.html",
+      "content_type": "text/html; charset=utf-8",
+      "locator": "PR conversation lines 129-187; merged check later identified by #214 as the source of a regression"
+    },
+    {
+      "id": "S-BWF-214",
+      "title": "BWF MetaEdit issue #214: Issues with 24bit mono",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/issues/214",
+      "accessed_utc": "2026-10-07T19:48:51.230030+00:00",
+      "version": "Issue opened 2021-05-04; report names build 20.08.20210501",
+      "captured_path": "sources/bwfmetaedit-issue-214.html",
+      "content_type": "text/html; charset=utf-8",
+      "locator": "issue body: 24-bit mono WAVs (including FFmpeg-generated examples) rejected after #207; affected embedded-MD5 verification; not an independent lab finding"
+    },
+    {
+      "id": "S-BWF-218",
+      "title": "BWF MetaEdit PR #218: Fix data size validation",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/pull/218",
+      "accessed_utc": "2026-10-07T19:48:51.783021+00:00",
+      "version": "Merged 2021-06-01; fix commit 8337405; PR head 7681f3e",
+      "captured_path": "sources/bwfmetaedit-pr-218.html",
+      "content_type": "text/html; charset=utf-8",
+      "locator": "PR lines 129-145 and 219-225; reporter says CLI retest on Ubuntu 20.04 resolved their problem; manual evidence only"
+    },
+    {
+      "id": "S-BWF-FIX",
+      "title": "BWF MetaEdit fix commit 8337405",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/commit/8337405",
+      "accessed_utc": "2026-10-07T19:48:52.536179+00:00",
+      "version": "Merge commit 8337405, 2021-06-01; full SHA not copied from page",
+      "captured_path": "sources/bwfmetaedit-commit-fix-8337405.html",
+      "content_type": "text/html; charset=utf-8",
+      "locator": "Source/Riff/Riff_Handler.cpp, Riff_Handler::Open_Internal; changed bytesPerSample test to bit-based sizeInBits modulo channelCount*bitsPerSample"
+    },
+    {
+      "id": "S-BWF-RELEASE",
+      "title": "BWF MetaEdit release v26.08",
+      "url": "https://github.com/MediaArea/BWFMetaEdit/releases/tag/v26.08",
+      "accessed_utc": "2026-10-07T19:48:11.085298+00:00",
+      "version": "v26.08 released 2026-08-27; signed/verified tag at 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/bwfmetaedit-release-v26.08.html",
+      "content_type": "text/html; charset=utf-8",
+      "locator": "Release tag and commit identity; current immutable code snapshot inspected"
+    },
+    {
+      "id": "S-BWF-HISTORY",
+      "title": "BWF MetaEdit GUI history at v26.08",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800/History_GUI.txt",
+      "accessed_utc": "2026-10-07T19:48:11.576499+00:00",
+      "version": "File captured at v26.08 commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/bwfmetaedit-history-release.txt",
+      "content_type": "text/plain; charset=utf-8",
+      "locator": "lines 61-88: Version 21.07 date and fixes including Issue #214; GitHub v21.07 release URL tested and returned 404, so no claim of that tag/package"
+    },
+    {
+      "id": "S-BWF-COMMITMETA",
+      "title": "GitHub commit metadata for v26.08",
+      "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/commits/318d800",
+      "accessed_utc": "2026-10-07T19:48:11.725124+00:00",
+      "version": "Commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/bwfmetaedit-commit-api.json",
+      "content_type": "application/json; charset=utf-8",
+      "locator": "full immutable commit SHA for release v26.08"
+    },
+    {
+      "id": "S-BWF-TREE",
+      "title": "Git tree for BWF MetaEdit v26.08",
+      "url": "https://api.github.com/repos/MediaArea/BWFMetaEdit/git/trees/318d800?recursive=1",
+      "accessed_utc": "2026-10-07T19:48:11.976592+00:00",
+      "version": "Tree for commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/bwfmetaedit-tree-api.json",
+      "content_type": "application/json; charset=utf-8",
+      "locator": "Repository paths for inspected RIFF implementation and definitions"
+    },
+    {
+      "id": "S-BWF-HANDLER",
+      "title": "RIFF behavior and warning caller",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Handler.cpp",
+      "accessed_utc": "2026-10-07T19:48:12.196135+00:00",
+      "version": "BWF MetaEdit v26.08, commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/Source__Riff__Riff_Handler.cpp",
+      "content_type": "text/plain; charset=utf-8",
+      "locator": "Riff_Handler::Open 499-504 calls Open_Internal; Open_Internal 507; Data size check 848-867"
+    },
+    {
+      "id": "S-BWF-HANDLER-H",
+      "title": "RIFF handler declaration",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Handler.h",
+      "accessed_utc": "2026-10-07T19:48:12.347630+00:00",
+      "version": "BWF MetaEdit v26.08, commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/Source__Riff__Riff_Handler.h",
+      "content_type": "text/plain; charset=utf-8",
+      "locator": "class Riff_Handler line 41; private Open_Internal declaration line 173"
+    },
+    {
+      "id": "S-BWF-CHUNKS-H",
+      "title": "RIFF/WAVE chunk identifiers and definitions",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Chunks.h",
+      "accessed_utc": "2026-10-07T19:48:12.462621+00:00",
+      "version": "BWF MetaEdit v26.08, commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/Source__Riff__Riff_Chunks.h",
+      "content_type": "text/plain; charset=utf-8",
+      "locator": "RIFF/WAVE chunk dispatch declarations; file purpose lines 1-34"
+    },
+    {
+      "id": "S-BWF-BASE",
+      "title": "RIFF chunk state definitions",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Base.h",
+      "accessed_utc": "2026-10-07T19:48:52.981666+00:00",
+      "version": "BWF MetaEdit v26.08, commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/Source__Riff__Riff_Base.h",
+      "content_type": "text/plain; charset=utf-8",
+      "locator": "global::chunk_fmt_ fields 227-246; content::Size is header-excluded 528-545"
+    },
+    {
+      "id": "S-BWF-FMT",
+      "title": "RIFF/WAVE fmt_ parser",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Chunks_WAVE_fmt_.cpp",
+      "accessed_utc": "2026-10-07T19:48:53.178587+00:00",
+      "version": "BWF MetaEdit v26.08, commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/Source__Riff__Riff_Chunks_WAVE_fmt_.cpp",
+      "content_type": "text/plain; charset=utf-8",
+      "locator": "Riff_WAVE_fmt_::Read_Internal 19-67 parses fields and checks PCM byte-rate coherence"
+    },
+    {
+      "id": "S-BWF-DATA",
+      "title": "RIFF/WAVE data chunk parser",
+      "url": "https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Chunks_WAVE_data.cpp",
+      "accessed_utc": "2026-10-07T19:48:53.314391+00:00",
+      "version": "BWF MetaEdit v26.08, commit 318d800d92c4a3cc8a814f6fdceba0ed8b3416ec",
+      "captured_path": "sources/Source__Riff__Riff_Chunks_WAVE_data.cpp",
+      "content_type": "text/plain; charset=utf-8",
+      "locator": "Riff_WAVE_data::Read_Internal 20-38 checks bounds and populates data Size"
+    }
+  ],
+  "hashes": "Not computed by candidate; coordinator/host computes SHA-256 for captured bytes."
+}

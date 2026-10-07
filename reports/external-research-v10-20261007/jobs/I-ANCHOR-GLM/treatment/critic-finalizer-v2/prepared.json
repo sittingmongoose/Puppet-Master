@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-07T19:14:38.482367+00:00",
+  "wholearm_deadline": "2026-10-07T19:29:18.054000+00:00",
+  "original_researcher_requested_at": "2026-10-07T18:44:18.054Z",
+  "remaining_seconds": 879.571633,
+  "input_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/draft.md": "f3955d8df36c210521e39af802a7263d229294a92f8497187b6982cadc0345ef",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/index.json": "70929aa0cfd3598a3e638402a9373d04a26f98b58790c48e20c468bd8e3a2dac",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/retrieval-stamps.json": "1f811176517e4bb69bc266fde9f42643b4cf20f67c487af00c6502081a4c23dc",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/sources/executed-checks.json": "4196a75bd1b64523db3119b39615f6e16a89393079c23ba6aea4c7347bf0dd80"
+  },
+  "required_frozen_predecessor": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/freeze.json",
+  "predecessor_native_complete": false,
+  "lifecycle_eligibility": "HOLD",
+  "diagnostic_science_gate": "Both arms finalsciencequiet/frozen may be diagnostically assessed with declared missing-terminal exception; original qualified terminalgate retained"
+}
