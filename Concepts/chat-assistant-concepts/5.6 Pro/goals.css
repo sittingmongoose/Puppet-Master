@@ -123,8 +123,19 @@
 .goal-compact-head{display:flex;align-items:center;gap:8px}
 .goal-objective-2{margin:0;font-size:12px;line-height:1.45;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .goal-blocker-line{margin:0;font-size:11px;color:var(--danger)}
-.goal-compact-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.goal-compact-actions .soft-button{height:24px;padding:0 9px;font-size:11px}
+/* One tidy control layout, shared by renderCompact and renderSection. */
+.goal-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.goal-actions .soft-button{height:26px;padding:0 10px;font-size:11.5px}
+.goal-actions .spacer{flex:1 1 0}
+.goal-actions .goal-cancel-btn{color:var(--danger);height:26px;padding:0 8px;margin-left:auto}
+.goal-actions .goal-cancel-btn:hover{background:color-mix(in srgb,var(--danger) 10%,transparent)}
+.goal-actions [disabled]{opacity:.45;cursor:not-allowed}
+.goal-bound{display:flex;gap:10px;flex-wrap:wrap}
+.goal-history-toggle small{margin-left:auto;margin-right:6px;color:var(--subtle);font-weight:500;font-size:11px}
+.goal-history-toggle svg{transition:transform 160ms var(--ease)}
+.goal-history-toggle[aria-expanded="true"] svg{transform:rotate(90deg)}
+@media (prefers-reduced-motion:reduce){.goal-history-toggle svg{transition:none}}
+body.pm56-reduced .goal-history-toggle svg,html[data-motion="reduced"] .goal-history-toggle svg{transition:none}
 
 .goal-section-v2{display:flex;flex-direction:column;gap:12px}
 .goal-head{display:flex;align-items:center;gap:9px}
@@ -146,13 +157,6 @@
 .goal-count.over{color:var(--danger);font-weight:600}
 .goal-note{margin:0;font-size:10.5px;color:var(--muted);line-height:1.5}
 
-.goal-lifecycle{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.goal-lifecycle .spacer{flex:1}
-.goal-lifecycle .soft-button[disabled]{opacity:.5;cursor:not-allowed}
-.goal-lifecycle .soft-button.danger{color:var(--danger)}
-
-.goal-disclosures{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-
 .goal-history,.goal-conts{display:flex;flex-direction:column;gap:7px;padding:9px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}
 .goal-history-row{display:grid;grid-template-columns:auto auto 1fr;gap:6px 9px;align-items:baseline}
 .goal-history-rev{font-size:10px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
@@ -160,6 +164,12 @@
 .goal-history-src{font-size:10px;color:var(--muted)}
 .goal-src-agent_proposed_user_approved{color:var(--warning)}
 .goal-history-text{grid-column:1/-1;margin:0;font-size:11px;line-height:1.5;color:var(--text)}
+/* The history list now also renders inside .goal-compact (inline disclosure).
+   goal-work-batch15.css scopes the readable two-column row layout to
+   .goal-section-v2 only; mirror it here so compact matches the section. */
+.goal-compact .goal-history-row{grid-template-columns:minmax(0,1fr) auto}
+.goal-compact .goal-history-row p{grid-column:1/-1;margin:2px 0;font-size:11px;line-height:1.5}
+.goal-compact .goal-history-row small{font-size:10px;color:var(--muted)}
 
 .goal-cont-row{display:grid;grid-template-columns:auto auto auto;gap:4px 9px;align-items:baseline}
 .goal-cont-result{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--positive)}
@@ -174,5 +184,4 @@
 .goal-approval-pair p{margin:0;font-size:11.5px;line-height:1.5;color:var(--text)}
 @media (max-width:590px){
   .goal-approval-pair{grid-template-columns:1fr}
-  .goal-compact-actions .soft-button{flex:1 1 auto}
 }

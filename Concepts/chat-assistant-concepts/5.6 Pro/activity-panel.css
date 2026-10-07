@@ -367,6 +367,8 @@ body:has(.activity-panel.transient) .history-flyout {
 .pmap-agent-row[data-state="attention"] .right b { color: var(--warning); }
 .pmap-agent-row[data-state="working"] .right b { color: var(--accent); }
 .pmap-agent-row[data-state="done"] .right b { color: var(--positive); }
+/* Subagent rows underline the model (panel rows, detail card, hover preview). */
+u.agent-model { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 60%, transparent); color: inherit; }
 
 /* ── concept 1 — Status Board ───────────────────────────────────────── */
 .pmap-statusboard {
