@@ -34,19 +34,19 @@
   /* ------------------------------------------------------------ spine layer */
   var SVGNS = 'http://www.w3.org/2000/svg';
   var TICKED = { work: 1, deliverable: 1, needs: 1, people: 1, time: 1 };
-  var raf = 0, ro = null, mo = null, observed = null;
-  var nodes = new Map();           // key -> element, reused across draws
+  var raf = 0;
+  var roots = new Map();           // inner element -> {tr, inner, layer, nodes, ro, mo}
 
   function el(tag, cls) { var e = document.createElementNS(SVGNS, tag); if (cls) e.setAttribute('class', cls); return e; }
   function group(svg, cls) { var g = svg.querySelector(':scope > g.' + cls); if (!g) { g = el('g', cls); svg.appendChild(g); } return g; }
-  function node(svg, key, tag, cls) {
+  function node(nodes, svg, key, tag, cls) {
     var e = nodes.get(key);
     if (!e || !e.isConnected) { e = el(tag, cls); nodes.set(key, e); group(svg, cls === 'sp-tick' ? 'sp-ticks' : 'sp-lines').appendChild(e); }
     e.__seen = true;
     return e;
   }
   function set(e, attrs) { for (var k in attrs) { var v = String(attrs[k]); if (e.getAttribute(k) !== v) e.setAttribute(k, v); } }
-  function markNode(svg, key) {
+  function markNode(nodes, svg, key) {
     var g = nodes.get(key);
     if (!g || !g.isConnected) {
       g = el('g', 'sp-mark');
@@ -64,25 +64,50 @@
   }
 
   function schedule() { if (!raf) raf = requestAnimationFrame(draw); }
+  function dispose(st) {
+    if (st.ro) st.ro.disconnect();
+    if (st.mo) st.mo.disconnect();
+    roots.delete(st.inner);
+  }
+  function watch(st) {
+    /* Births stay on the main chat. A child feed is a record of work already
+       done; unfolding its cards out of the mark would replay history. */
+    var main = st.tr.classList.contains('transcript');
+    st.ro = new ResizeObserver(schedule);
+    st.ro.observe(st.inner);
+    st.mo = new MutationObserver(function (list) { schedule(); if (main) births(list); });
+    st.mo.observe(st.inner, { childList: true, attributes: true, subtree: true, attributeFilter: ['data-streaming', 'data-turn-pos', 'data-flight', 'data-turn'] });
+  }
   function arm() {
-    var tr = document.querySelector('.transcript'), inner = tr && tr.querySelector('.transcript-inner');
-    if (!inner || inner === observed) return;
-    if (ro) ro.disconnect(); if (mo) mo.disconnect();
-    observed = inner; nodes.clear();
-    var layer = tr.querySelector('.tx-spine-layer'); if (layer) layer.textContent = '';
-    ro = new ResizeObserver(schedule); ro.observe(inner);
-    mo = new MutationObserver(function (list) { schedule(); births(list); });
-    mo.observe(inner, { childList: true, attributes: true, subtree: true, attributeFilter: ['data-streaming', 'data-turn-pos', 'data-flight', 'data-turn'] });
+    var hosts = document.querySelectorAll('.chat-stage > .transcript, .tx-feed');
+    var seen = new Set();
+    for (var i = 0; i < hosts.length; i++) {
+      var tr = hosts[i];
+      var inner = tr.querySelector(':scope > .transcript-inner, :scope > .tx-feed-inner');
+      var layer = tr.querySelector(':scope > .tx-spine-layer');
+      if (!inner || !layer) continue;
+      seen.add(inner);
+      var prev = roots.get(inner);
+      if (prev && prev.tr === tr && prev.layer === layer) continue;
+      if (prev) dispose(prev);
+      var st = { tr: tr, inner: inner, layer: layer, nodes: new Map(), ro: null, mo: null };
+      roots.set(inner, st);
+      watch(st);
+    }
+    var dead = [];
+    roots.forEach(function (st, inner) { if (!seen.has(inner) || !inner.isConnected) dead.push(st); });
+    dead.forEach(dispose);
     schedule();
   }
 
   function draw() {
     raf = 0;
-    var tr = document.querySelector('.transcript');
-    var inner = tr && tr.querySelector('.transcript-inner');
-    var layer = tr && tr.querySelector('.tx-spine-layer');
-    if (!inner || !layer) return;
-    if (inner !== observed) { arm(); return; }
+    var dead = [];
+    roots.forEach(function (st) { if (!st.inner.isConnected) dead.push(st); else drawRoot(st); });
+    dead.forEach(dispose);
+  }
+  function drawRoot(st) {
+    var tr = st.tr, inner = st.inner, layer = st.layer, nodes = st.nodes;
     if (tr.getAttribute('data-variant') !== '16') { if (layer.firstChild) { layer.textContent = ''; nodes.clear(); } return; }
     var svg = layer.firstChild;
     if (!svg || String(svg.tagName).toLowerCase() !== 'svg') {
@@ -125,12 +150,15 @@
         if (s === 'pending') pending = true;
         if ((s && s !== 'pending') || (it.classList.contains('working-card') && !it.classList.contains('is-done')) || it.querySelector(':scope > .working-card:not(.is-done)')) live = it;
       });
-      var mk = markNode(svg, 'm' + t);
+      /* A working child's feed has no streaming item. The mark still reads live
+         and the comet runs to the latest item. */
+      if (!live && tr.hasAttribute('data-feed-live')) live = list[list.length - 1];
+      var mk = markNode(nodes, svg, 'm' + t);
       set(mk, { transform: 'translate(' + x + ' ' + yMark.toFixed(1) + ')', 'data-state': pending ? 'pending' : live ? 'live' : 'rest' });
       if (list.length > 1) {
-        var line = node(svg, 'l' + t, 'path', 'sp-line');
+        var line = node(nodes, svg, 'l' + t, 'path', 'sp-line');
         set(line, { d: 'M' + x + ' ' + (yMark + 9).toFixed(1) + 'V' + yEnd.toFixed(1) });
-        var end = node(svg, 'e' + t, 'circle', 'sp-end');
+        var end = node(nodes, svg, 'e' + t, 'circle', 'sp-end');
         set(end, { cx: x, cy: yEnd.toFixed(1), r: 2.4 });
       }
       list.forEach(function (it, j) {
@@ -138,7 +166,7 @@
         var fam = it.getAttribute('data-family');
         if (!TICKED[fam]) return;
         var r = it.getBoundingClientRect();
-        var tk = node(svg, 't' + t + ':' + (it.getAttribute('data-k') || j), 'circle', 'sp-tick');
+        var tk = node(nodes, svg, 't' + t + ':' + (it.getAttribute('data-k') || j), 'circle', 'sp-tick');
         var attrs = { cx: x, cy: (r.top - tR.top + sT + 17).toFixed(1), r: 3.4, 'data-f': fam };
         if (fam === 'work') { var src = it.classList.contains('working-card') ? it : (it.querySelector('.working-card') || it); var c = getComputedStyle(src).getPropertyValue('--pm-step').trim(); attrs.style = c ? 'fill:' + c : ''; }
         set(tk, attrs);
@@ -155,7 +183,7 @@
           yLive = rc && rc.height ? rc.top + rc.height / 2 - tR.top + sT : rL.bottom - tR.top + sT - 34;
         } else yLive = rL.top - tR.top + sT + 17;
         if (yLive - yMark > 40) {
-          var cm = node(svg, 'c' + t, 'path', 'sp-comet');
+          var cm = node(nodes, svg, 'c' + t, 'path', 'sp-comet');
           set(cm, { d: 'M' + x + ' ' + (yMark + 9).toFixed(1) + 'V' + yLive.toFixed(1), pathLength: 100 });
         }
       }
@@ -186,7 +214,7 @@
   function birth(card) {
     var M = window.PM56_MOTION;
     if (M && M.reduced && M.reduced()) return;
-    var tr = document.querySelector('.transcript');
+    var tr = document.querySelector('.chat-stage > .transcript');
     var voice = tr ? tr.getAttribute('data-voice') : 'basic';
     var gutter = parseFloat(getComputedStyle(card.parentElement).getPropertyValue('--tx-gutter')) || 24;
     var ox = -(gutter - 9), oy = 10;                       /* the mark, in card coordinates */
@@ -208,7 +236,21 @@
   function boot() {
     arm();
     var root = document.getElementById('pmRoot');
-    if (root) new MutationObserver(function () { if (!observed || !observed.isConnected) arm(); }).observe(root, { childList: true, subtree: true });
+    if (root) new MutationObserver(function () {
+      var needs = false;
+      roots.forEach(function (st) { if (!st.inner.isConnected) needs = true; });
+      if (!needs) {
+        var all = document.querySelectorAll('.chat-stage > .transcript, .tx-feed');
+        if (all.length !== roots.size) needs = true;
+        else {
+          for (var i = 0; i < all.length && !needs; i++) {
+            var inner = all[i].querySelector(':scope > .transcript-inner, :scope > .tx-feed-inner');
+            if (!inner || !roots.has(inner)) needs = true;
+          }
+        }
+      }
+      if (needs) arm();
+    }).observe(root, { childList: true, subtree: true });
     window.addEventListener('resize', schedule);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(boot, 0); });

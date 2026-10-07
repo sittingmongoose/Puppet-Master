@@ -349,7 +349,7 @@
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
       followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
-    }, extra);
+    }, readOnlyRender?{readOnly:true}:{}, extra);
   }
   function extEach(name, extra, each){
     const fns = EXT._slots[name];
@@ -617,8 +617,22 @@ browser assertions  14 passed
 write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path. 2. Remove N+1 fan-out. 3. Validate the migration and browser workflow. 4. Produce durable evidence and rollback guidance.</p></article>`;
   }
 
+  /* A child thread is a read-only Turn Stage feed. It must not use .transcript:
+     the editor pane precedes the chat, and unscoped querySelector('.transcript')
+     calls would bind the chat's spine, stream and sound to this feed. */
+  let readOnlyRender=false;
+  function renderReadOnlyItems(agent){
+    readOnlyRender=true;
+    try{
+      return renderTranscriptItems({id:'agent:'+agent.id, messages:agent.messages||[], readOnly:true});
+    }finally{
+      readOnlyRender=false;
+    }
+  }
   function renderAgentEditor(agent){
-    return `<article class="editor-doc"><h1>${esc(agent.name)}</h1><div class="editor-meta"><span class="meta-pill">Read-only child thread</span><span class="meta-pill">${esc(agent.status)}</span><span class="meta-pill">${esc(agent.model)}</span><span class="meta-pill">${esc(agent.elapsed)}</span></div><p><strong>Parent:</strong> ${esc(agent.parent)} · <strong>Current:</strong> ${esc(agent.current)}</p>${agent.blocker?`<div class="event-card danger"><span class="event-icon">${icon('lock',14)}</span><div class="event-copy"><strong>Blocked</strong><p>${esc(agent.blocker)}</p></div></div>`:''}<h2>Live transcript</h2>${agent.messages.map(m=>m.type==='text'?`<div class="system-card" style="margin:8px 0"><div class="system-card-head"><span class="title">${esc(agent.name)}</span><span class="sub">${esc(agent.model)}</span></div><div class="system-card-body">${formatText(m.body)}</div></div>`:`<div class="event-card ${m.type==='blocked'?'danger':''}" style="margin:8px 0"><span class="event-icon">${icon(m.type==='blocked'?'lock':'artifact',14)}</span><div class="event-copy"><strong>${esc(m.title||m.type)}</strong><p>${esc(m.detail||'')}</p></div></div>`).join('')}<p class="chat-meta">This child transcript updates live but has no composer or mutation controls.</p></article>`;
+    const live=agent.status==='working';
+    const name=esc(agent.name);
+    return `<article class="editor-doc agent-feed-doc" data-k="agent-feed:${esc(agent.id)}"><header class="agent-feed-head"><h1>${name}</h1><span class="agent-feed-status">${statusMark(agent.status,14)}<span>${esc(lblOf('subagentStatus',agent.status))}</span><span class="agent-feed-elapsed">${esc(agent.elapsed)}</span></span><u class="agent-model">${esc(agent.model)}</u><span class="agent-feed-parent">Parent: ${esc(agent.parent)}</span><span class="meta-pill">Read-only child thread</span>${live?'<span class="meta-pill">Read-only · live</span>':''}</header><div class="tx-feed" data-variant="16" data-voice="${motionVoice()}" data-readonly="1"${live?' data-feed-live="1"':''} role="log" aria-live="polite" aria-label="${name} live transcript"><div class="tx-spine-layer" data-k="tx-spine:${esc(agent.id)}" data-pm-keep aria-hidden="true"></div><div class="tx-feed-inner">${renderReadOnlyItems(agent)}</div></div><p class="chat-meta">Read-only: this agent's work streams here; there is no composer.</p></article>`;
   }
   function renderArtifactEditor(art){
     if(art.revisions && art.kind!=='plan_document' && window.PM56_ARTIFACTS)return PM56_ARTIFACTS.editor({artifact_id:art.id,artifact_version:Number(art.version),...PM56_ARTIFACTS.scopeOf(art)});
@@ -1015,10 +1029,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const expandTip=expanded?'Collapse the response':'Expand the full response';
     const copied=state.copyFlashId===m.id;
     const copyBtn=`<button class="text-button icon-only${copied?' is-copied':''}" data-action="copy-message" data-id="${esc(m.id)}"${hoverAttrs('msg-copy-'+m.id,copied?'Copied':'Copy this message without changing the thread')}>${icon(copied?'check':'copy',13)}<span>Copy</span></button>`;
-    const editBtn=m.role==='user'&&m.eligibleForEdit?`<button class="text-button" data-action="edit-message" data-id="${esc(m.id)}"${hoverAttrs('msg-edit-'+m.id,'Edit this user message and create a new branch from here')}>${icon('edit',11)}<span>Edit & branch</span></button>`:'';
+    const editBtn=!readOnlyRender&&m.role==='user'&&m.eligibleForEdit?`<button class="text-button" data-action="edit-message" data-id="${esc(m.id)}"${hoverAttrs('msg-edit-'+m.id,'Edit this user message and create a new branch from here')}>${icon('edit',11)}<span>Edit & branch</span></button>`:'';
     const detailsBtn=`<button class="text-button icon-only" data-action="message-details" data-id="${esc(m.id)}"${hoverAttrs('msg-details-'+m.id,'Show model, provider, timing, context, cache, token, and cost details')}>${icon('info',13)}<span>More details</span></button>`;
-    const overflowBtn=extRender('messageOverflow',{message:m});
-    const overflowPanel=extRender('messageOverflowPanel',{message:m});
+    const overflowBtn=readOnlyRender?'':extRender('messageOverflow',{message:m});
+    const overflowPanel=readOnlyRender?'':extRender('messageOverflowPanel',{message:m});
     const actions=`<div class="message-actions">${copyBtn}${editBtn}${detailsBtn}${overflowBtn}</div>`;
     const overflowOpen=window.PM56_MSG_OVERFLOW&&window.PM56_MSG_OVERFLOW.isOpen(m.id);
     const chromeCls=`message-chrome${m.role==='user'?' message-chrome-user':''}${overflowOpen?' is-overflow-open':''}`;
@@ -1032,7 +1046,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const terminalHtml=(!m.streaming&&(m.terminal==='stopped'||m.terminal==='error'))
       ? `<div class="tx-terminal tx-terminal-${esc(m.terminal)}" data-k="tx-term:${esc(m.id)}">${icon(m.terminal==='error'?'warning':'stop',11)}<span>${m.terminal==='error'?esc(m.terminalNote||'Stopped by an error'):'Stopped'}</span></div>` : '';
     const streamAttr=m.streaming?` data-streaming="${esc(m.streamPhase||'pending')}"`:'';
-    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}"${streamAttr}>${extRender('messageAffordance',{message:m})}<div class="message-surface"${m.streaming?` data-k="tx-surface:${esc(m.id)}"`:''}>${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}${bodyHtml}${terminalHtml}${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
+    const afford=readOnlyRender?'':extRender('messageAffordance',{message:m});
+    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}"${streamAttr}>${afford}<div class="message-surface"${m.streaming?` data-k="tx-surface:${esc(m.id)}"`:''}>${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}${bodyHtml}${terminalHtml}${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
   }
 
   function renderMessageDetails(m){
@@ -1120,14 +1135,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const st=EVENT_STATUS[m.type];
     const glyph=st?statusMark(st,14):icon(d[0],14,'nx-r-concept');
     const actions=[];
-    if(m.type==='question-receipt') actions.push(`<button class="soft-button" data-action="open-questionnaire">Resume</button>`);
-    if(m.type==='bsd-advice') actions.push(`<button class="soft-button" data-action="open-bsd-details">${icon('eye',12)} Why?</button><button class="text-button" data-action="dismiss-event" data-id="${esc(m.id)}">Dismiss</button>`);
-    if(m.type.startsWith('context-')) actions.push(`<button class="soft-button" data-action="context-details">${icon('info',12)} Details</button>`);
-    if(m.type==='permission') actions.push(`<button class="soft-button" data-action="open-permission">Review</button>`);
-    if(m.type==='tool-error') actions.push(`<button class="soft-button" data-action="trigger-work-recovery">Recover</button>`);
-    /* The actions array is a fixed if-chain, so module-rendered system cards (restore
-       points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
-    const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
+    /* A read-only child feed keeps the card and drops every action: Recover, Resume
+       and module buttons would mutate the parent thread. */
+    if(!readOnlyRender){
+      if(m.type==='question-receipt') actions.push(`<button class="soft-button" data-action="open-questionnaire">Resume</button>`);
+      if(m.type==='bsd-advice') actions.push(`<button class="soft-button" data-action="open-bsd-details">${icon('eye',12)} Why?</button><button class="text-button" data-action="dismiss-event" data-id="${esc(m.id)}">Dismiss</button>`);
+      if(m.type.startsWith('context-')) actions.push(`<button class="soft-button" data-action="context-details">${icon('info',12)} Details</button>`);
+      if(m.type==='permission') actions.push(`<button class="soft-button" data-action="open-permission">Review</button>`);
+      if(m.type==='tool-error') actions.push(`<button class="soft-button" data-action="trigger-work-recovery">Recover</button>`);
+      /* The actions array is a fixed if-chain, so module-rendered system cards (restore
+         points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
+      const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
+    }
     return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${glyph}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p></div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
   function renderWorkingAnimation(m,ownedProjection){
