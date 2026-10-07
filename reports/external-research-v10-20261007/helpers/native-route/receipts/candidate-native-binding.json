@@ -1,0 +1,124 @@
+{
+  "observed_at_utc": "2026-10-07T18:33:13.419098+00:00",
+  "source": "/home/sittingmongoose/.t3/userdata/statev2.sqlite (mode=ro, live WAL-aware read)",
+  "rows": [
+    {
+      "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-research-v1",
+      "title": "ER10 I-ANCHOR-LUNA treatment researcher",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+        "strength": "strong"
+      },
+      "goal": {
+        "status": "active",
+        "tokensUsed": 205765,
+        "tokenBudget": null,
+        "timeUsedSeconds": 371,
+        "objective_sha256": "6e6e0483b0403cf855948aec9687393eaa799fa621fc1c06309828afa60a4956"
+      },
+      "updatedAt": "2026-10-07T18:32:44.311Z",
+      "providerSession_fields": {
+        "id": "provider-session:provider-instance:codex_gmail:shared",
+        "nativeSessionRef": null,
+        "providerInstanceId": "codex_gmail",
+        "driver": "codex",
+        "status": "ready",
+        "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-research-v1",
+      "title": "ER10 I-ANCHOR-LUNA control researcher",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+        "strength": "strong"
+      },
+      "goal": {
+        "status": "active",
+        "tokensUsed": 170336,
+        "tokenBudget": null,
+        "timeUsedSeconds": 340,
+        "objective_sha256": "eb31e806ef60ab7b93ea2272d34b7ef38f920336b3806116d5b439dcea95f6fd"
+      },
+      "updatedAt": "2026-10-07T18:32:42.411Z",
+      "providerSession_fields": {
+        "id": "provider-session:provider-instance:codex_gmail:shared",
+        "nativeSessionRef": null,
+        "providerInstanceId": "codex_gmail",
+        "driver": "codex",
+        "status": "ready",
+        "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-MUSE-treatment-research-v1",
+      "title": "ER10 I-ANCHOR-MUSE treatment researcher",
+      "providerInstanceId": "muse",
+      "providerSessionId": "provider-session:provider-instance:muse:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-MUSE-treatment-research-v1:8648c64c-48a6-44a9-b85a-c4706b909612",
+      "nativeThreadRef": {
+        "driver": "acpRegistry",
+        "nativeId": "01a1179f-2feb-7570-996c-3c180d5f902b",
+        "strength": "strong"
+      },
+      "goal": null,
+      "updatedAt": "2026-10-07T18:33:12.616Z",
+      "providerSession_fields": {
+        "id": "provider-session:provider-instance:muse:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-MUSE-treatment-research-v1:8648c64c-48a6-44a9-b85a-c4706b909612",
+        "nativeSessionRef": null,
+        "providerInstanceId": "muse",
+        "driver": "acpRegistry",
+        "status": "ready",
+        "model": "muse-spark-1.3-contributor"
+      }
+    },
+    {
+      "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v1",
+      "title": "ER10 I-ANCHOR-GLM treatment researcher",
+      "providerInstanceId": "zcode",
+      "providerSessionId": "provider-session:provider-instance:zcode:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v1:78e38f8d-baa6-4675-9d7d-9f0875ef78b9",
+      "nativeThreadRef": {
+        "driver": "acpRegistry",
+        "nativeId": "96b17a0b-60a0-46da-af70-ec838d066b8c",
+        "strength": "strong"
+      },
+      "goal": null,
+      "updatedAt": "2026-10-07T18:32:24.049Z",
+      "providerSession_fields": {
+        "id": "provider-session:provider-instance:zcode:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v1:78e38f8d-baa6-4675-9d7d-9f0875ef78b9",
+        "nativeSessionRef": null,
+        "providerInstanceId": "zcode",
+        "driver": "acpRegistry",
+        "status": "ready",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash"
+      }
+    },
+    {
+      "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-MUSE-control-research-v1",
+      "title": "ER10 I-ANCHOR-MUSE control researcher",
+      "providerInstanceId": "muse",
+      "providerSessionId": "provider-session:provider-instance:muse:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-MUSE-control-research-v1:e1da7c68-350b-4e4a-bbb6-b51102321c2e",
+      "nativeThreadRef": {
+        "driver": "acpRegistry",
+        "nativeId": "01a117a0-536b-7b32-95b7-04481ea4124d",
+        "strength": "strong"
+      },
+      "goal": null,
+      "updatedAt": "2026-10-07T18:33:09.170Z",
+      "providerSession_fields": {
+        "id": "provider-session:provider-instance:muse:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-MUSE-control-research-v1:e1da7c68-350b-4e4a-bbb6-b51102321c2e",
+        "nativeSessionRef": null,
+        "providerInstanceId": "muse",
+        "driver": "acpRegistry",
+        "status": "ready",
+        "model": "muse-spark-1.3-contributor"
+      }
+    }
+  ],
+  "boundary": "Goal/native-thread/provider-session metadata only. Activity-session identity is not substituted for nativeThreadRef."
+}

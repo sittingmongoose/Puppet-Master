@@ -1,0 +1,16 @@
+{
+  "schema": "pm.er10.confirmation-selection.v1",
+  "locked_before_confirmation_content": true,
+  "selection_rule": "Quality first. Select a fully source-reviewed eligible recipe with no material obligation/discovery loss, preferring repeated lower end-to-end candidate latency with observed lower or nonincreasing actual usage. Unknown billing/usage prevents a quota-saving claim. If no recipe is fully qualified, select the best bounded diagnosed recipe for diagnostic confirmation, keep its unresolved HOLD/FAIL and label all confirmation unqualified; do not suppress holdouts. Use one unchanged recipe/baseline in two held-out domains with two independent repetitions each, no tuning after content/results.",
+  "tie_breakers": [
+    "full source and coverage eligibility",
+    "failure-inclusive single-account cold latency",
+    "available actual usage with unknowns preserved",
+    "simpler fewer-stage recipe"
+  ],
+  "baseline": "competent researcher -> fresh same-family critic -> fresh same-family final reviser",
+  "confirmation_scope": "same integrated obligations and frozen common inputs within each pair; independently repeated work without sharing sibling answers",
+  "predeclared_at": "2026-10-07T18:30:10.448510+00:00",
+  "recipe": null,
+  "cases_opened": false
+}

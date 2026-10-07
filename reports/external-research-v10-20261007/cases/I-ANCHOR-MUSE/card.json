@@ -1,0 +1,37 @@
+{
+  "slot_id": "I-ANCHOR-MUSE",
+  "method_ids": [
+    "M01"
+  ],
+  "domain": "Community archive digital preservation",
+  "family": "muse",
+  "control": "research -> fresh critic -> fresh reviser",
+  "treatment": "research -> fresh critic authoring complete final",
+  "status": "FROZEN_BEFORE_DISPATCH",
+  "candidate_total_ceiling_seconds": 2700,
+  "stage_allocation_seconds": {
+    "control": [
+      1200,
+      600,
+      900
+    ],
+    "treatment": [
+      1500,
+      1200
+    ]
+  },
+  "launch_order": [
+    "treatment",
+    "control"
+  ],
+  "input_mode": "same thin user brief and plan, open primary-source discovery",
+  "quality_map": [
+    "required brief obligations",
+    "consequential source claims and applicability",
+    "bounded useful discovery breadth",
+    "incorrect rejection/correction",
+    "preservation into final",
+    "proposed versus executed checks"
+  ],
+  "frozen_at": "2026-10-07T18:27:49.450965+00:00"
+}

@@ -1,0 +1,15 @@
+{
+  "arm": "I-ANCHOR-GLM/treatment/research-v1",
+  "role": "ER10 fresh candidate researcher (delegated sub-agent)",
+  "provider_model": "zcode / builtin:zai-coding-plan\\GLM-5.3-Flash",
+  "native_goal_activated": false,
+  "start_utc": "2026-10-07T18:31:59Z",
+  "inputs_read_utc_approx": "2026-10-07T18:32Z",
+  "goal_inspection_window_utc": ["2026-10-07T18:32:30Z (approx)", "2026-10-07T18:33:51Z"],
+  "blocker_determined_utc": "2026-10-07T18:33:51Z",
+  "blocker_written_utc": "2026-10-07T18:35:44Z",
+  "first_useful_saved_finding_utc": null,
+  "draft_ready_utc": null,
+  "native_terminal_utc": null,
+  "notes": "Timestamps marked approx were not separately stamped for read-only steps; the others are exact `date -u` captures. first_useful_saved_finding, draft_ready and native_terminal are null because the arm is blocked before research start: no native Goal activation path exists on this harness (see BLOCKER.md), so no draft.md or sources/ were produced and nothing non-Goal is offered as an equivalent arm. There is no provider-native Goal to terminalize. Usage/billing figures remain unknown and are not asserted anywhere."
+}

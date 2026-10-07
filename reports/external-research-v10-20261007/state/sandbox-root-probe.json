@@ -1,0 +1,26 @@
+{
+  "applicability": "not_assessed",
+  "code_sha256": "c21099267d88da6857c055f9e116d6e33b5d579dcb31ba37e660b22a4d3491fc",
+  "elapsed_seconds": 0.17197380600009637,
+  "ended_at": "2026-10-07T18:37:13.574818+00:00",
+  "exit_scope": "bubblewrap wrapper; child signal exits use 128+signal",
+  "input_sha256": null,
+  "isolation": "namespace_and_seccomp_enforced",
+  "limits": {
+    "address_space_bytes": 268435456,
+    "cpu_seconds": 2,
+    "filesystem": "read-only",
+    "network": "none",
+    "output_bytes": 131072,
+    "processes": "single",
+    "wall_seconds": 5
+  },
+  "output_truncated": false,
+  "process_exit": 0,
+  "resource_released": true,
+  "started_at": "2026-10-07T18:37:13.402880+00:00",
+  "stderr": "ER10_ISOLATION_READY {\"mnt\": \"mnt:[4026533624]\", \"net\": \"net:[4026533630]\", \"pid\": \"pid:[4026533627]\", \"ipc\": \"ipc:[4026533626]\", \"uts\": \"uts:[4026533625]\", \"user\": \"user:[4026533703]\"}\n",
+  "stdout": "offline/read-only/no-fork probe passed\n",
+  "termination": null,
+  "witness_validity": "not_assessed"
+}

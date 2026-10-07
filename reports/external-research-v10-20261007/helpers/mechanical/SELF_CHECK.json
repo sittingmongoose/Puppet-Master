@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-10-07T18:36:00.086430+00:00",
+  "checks": [
+    "stage readability/output availability and frozen-byte tamper rejection",
+    "stage symlink and traversal rejection",
+    "publication absences, separate copy/original hashes, verification and byte budget",
+    "publication suspected-secret and raw-transcript rejection",
+    "numeric deltas/ratios and distinct missing/null/unknown preservation",
+    "actual namespace/seccomp probe: no host homes/run/mounts/etc, network, forks or writes",
+    "sandbox output/time/CPU/address-space enforcement and release even with closed output pipes",
+    "sandbox absence fails closed without executing code",
+    "real public cold fetch, zero-network warm reuse, exact extraction, hash tamper/private-IP rejection",
+    "credential URL rejection without persisting credential in operation receipt"
+  ],
+  "count": 10,
+  "helper_sha256": {
+    "artifacts.py": "f24fd87c3bb6a82aa9a2cf9182de4c850e905d45a3598674c69f6528c17dd84d",
+    "common.py": "0854f5b7b32ab2f92e59e6c3d847d5112f9bc0e5b494f786a8e7d4522846c357",
+    "compare_numeric.py": "c02f9b63f9cecf0aaa5c1f2c6f3efc9a88d5a5625a89ba023738dc65d2755465",
+    "sandbox.py": "bfd6c1d97f399c6818d31f1a192f499d77e8a6006918fa694522140e766f2ec8",
+    "selfcheck.py": "d3cc743e3654ce813a17be5605460f938cc81f66029b956167e49ae457dc6ca4",
+    "source_cache.py": "8c95fd8d76908f6a8fd90e7fa8268cbd7a43f15b89f5a4e32001f83c45c8286b"
+  },
+  "network_checked": true,
+  "scope": "mechanical helper engineering only; no scientific assessment",
+  "temporary_fixtures": "removed"
+}

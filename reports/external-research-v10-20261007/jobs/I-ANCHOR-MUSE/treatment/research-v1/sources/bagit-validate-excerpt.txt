@@ -1,0 +1,55 @@
+Source: S02 https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.8.1/bagit.py
+Retrieved: 2026-10-07T18:36Z. Excerpt: validate / _validate_contents / _validate_oxum / _validate_entries.
+
+    def validate(self, processes=1, fast=False, completeness_only=False):
+        """Checks the structure and contents are valid.
+
+        If you supply the parameter fast=True the Payload-Oxum (if present) will
+        be used to check that the payload files are present and accounted for,
+        instead of re-calculating fixities and comparing them against the
+        manifest. By default validate() will re-calculate fixities (fast=False).
+        """
+        self._validate_structure()
+        self._validate_bagittxt()
+        self.validate_fetch()
+        self._validate_contents(
+            processes=processes, fast=fast, completeness_only=completeness_only
+        )
+        return True
+
+    def _validate_contents(self, processes=1, fast=False, completeness_only=False):
+        if fast and not self.has_oxum():
+            raise BagValidationError(
+                _("Fast validation requires bag-info.txt to include Payload-Oxum")
+            )
+
+        # Perform the fast file count + size check so we can fail early:
+        self._validate_oxum()
+
+        if fast:
+            return
+
+        self._validate_completeness()
+
+        if completeness_only:
+            return
+
+        self._validate_entries(processes)
+
+[Behavior note: _validate_oxum() runs unconditionally, so an Oxum mismatch
+aborts full validation before per-file ChecksumMismatch details are computed.
+See S03/S04/S05 for the reported consequence and proposed fix.]
+
+    def _validate_entries(self, processes):
+        """Verify that the actual file contents match the recorded hashes..."""
+        ...recomputes hashes per manifest entry (single- or multi-process)...
+        for rel_path, f_hashes, hashes in hash_results:
+            for alg, computed_hash in f_hashes.items():
+                stored_hash = hashes[alg]
+                if stored_hash.lower() != computed_hash:
+                    e = ChecksumMismatch(
+                        rel_path, alg, stored_hash.lower(), computed_hash
+                    )
+                    ...errors.append(e)
+        if errors:
+            raise BagValidationError(_("Bag validation failed"), errors)

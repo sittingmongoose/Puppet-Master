@@ -1,0 +1,30 @@
+Source: S05 https://patch-diff.githubusercontent.com/raw/LibraryOfCongress/bagit-python/pull/174.patch
+Retrieved: 2026-10-07T18:41Z. Verbatim patch (990 bytes), fix proposal for S04.
+
+From 18f4b582c7f354418edb6f96068f91cea8d55045 Mon Sep 17 00:00:00 2001
+From: "Cass Fino-Radin (they/them)" <finoradin@gmail.com>
+Date: Thu, 14 Mar 2024 15:25:10 -0400
+Subject: [PATCH] Update bagit.py
+
+Fixing validation bug - oxum validation was outside the if fast condition, so validation was *always* defaulting to fast
+---
+ bagit.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/bagit.py b/bagit.py
+index 8c72095..c24f9df 100755
+--- a/bagit.py
++++ b/bagit.py
+@@ -781,10 +781,9 @@ def _validate_contents(self, processes=1, fast=False, completeness_only=False):
+                 _("Fast validation requires bag-info.txt to include Payload-Oxum")
+             )
+
+-        # Perform the fast file count + size check so we can fail early:
+-        self._validate_oxum()
+-
+         if fast:
++            # Perform the fast file count + size check so we can fail early:
++            self._validate_oxum()
+             return
+
+         self._validate_completeness()

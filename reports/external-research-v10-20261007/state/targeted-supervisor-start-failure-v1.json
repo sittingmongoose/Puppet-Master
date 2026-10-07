@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-supervisor-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-supervisor-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-supervisor-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-supervisor-v1",
+  "status": "failed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-supervisor-v1:ordinal:1",
+  "latestTerminalStatus": "failed",
+  "latestTerminalSummary": "The provider could not start this turn. Retry the turn; if it keeps failing, check the provider setup and server logs.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-supervisor-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:4e2f4e21-0254-431e-954f-f2ca27b7e361",
+  "providerInstanceId": "codex_gmail",
+  "model": "gpt-6.1-sol",
+  "summary": "The provider could not start this turn. Retry the turn; if it keeps failing, check the provider setup and server logs.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-supervisor-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:4e2f4e21-0254-431e-954f-f2ca27b7e361",
+  "waitTimedOut": false
+}
