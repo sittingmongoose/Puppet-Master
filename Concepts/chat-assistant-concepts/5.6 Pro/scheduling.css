@@ -151,6 +151,17 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 .pmx-sched-marker{transform:translate(var(--x,0),0);transition:transform var(--pmx-t-move) var(--pmx-ease-move);}
 .pmx-sched-marker line{stroke:var(--accent);stroke-width:1.5;}
 .pmx-sched-dot{fill:var(--accent);stroke:none;}
+/* the message track is the send-time slider: drag the marker, or press the track */
+.pmx-sched-slot[data-sched-drag]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--pmx-r, 10px);}
+.pmx-sched-slot[data-sched-drag] .pmx-plate-svg{cursor:ew-resize;touch-action:none;}
+.pmx-sched-grab,.pmx-sched-hit{fill:transparent;pointer-events:all;}
+.pmx-sched-slot[data-dragging] .pmx-sched-marker{transition:none;}
+.pmx-sched-slot[data-dragging] .pmx-sched-dot{r:5.5;}
+@media (prefers-reduced-motion: reduce){
+  .pmx-sched-marker{transition:none;}
+}
+html[data-motion="reduced"] .pmx-sched-marker,
+body.pm56-reduced .pmx-sched-marker{transition:none;}
 .pmx-sched-marker .pmx-p-glyph, .pmx-sched-once .pmx-p-glyph{stroke:var(--accent);}
 .pmx-plate text[data-state="past"]{fill:var(--warning);}
 .pmx-sched-grid{stroke:var(--pmx-line);stroke-width:1;opacity:.45;}
