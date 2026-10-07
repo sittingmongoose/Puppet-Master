@@ -4,6 +4,7 @@
 Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
   python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then publish the exact bytes as Concepts/PMConcept7.html
+  python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/x.html  # private build: lint, then write only that path
   python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current, every guard holds, and PMConcept7.html is byte-identical
 
 The base file is read-only. The legacy Product Onboarding and Guided Tour blocks are removed, the O55 modules are
@@ -86,9 +87,23 @@ def read_parts(folder: Path, suffix: str) -> str:
     return '\n'.join(out)
 
 
+def _merge_copy(base: dict, extra: dict, where: str) -> None:
+    for k, v in extra.items():
+        if isinstance(v, dict) and isinstance(base.get(k), dict):
+            _merge_copy(base[k], v, f'{where}.{k}')
+        elif k in base:
+            raise BuildError(f'copy key {where}.{k} is defined twice (copy.json and copy.d)')
+        else:
+            base[k] = v
+
+
 def copy_json() -> dict:
+    """src/copy.json, then every src/copy.d/*.json merged in filename order (a leaf key may be defined once)."""
     path = SRC / 'copy.json'
-    return json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
+    data = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
+    for extra in sorted((SRC / 'copy.d').glob('*.json')) if (SRC / 'copy.d').is_dir() else []:
+        _merge_copy(data, json.loads(extra.read_text(encoding='utf-8')), f'[{extra.name}]')
+    return data
 
 
 # Embedded font files (src/settings/nier/fonts) are inlined by settings_layer.py, never read as text.
@@ -436,6 +451,20 @@ def main() -> int:
         for p in problems:
             print('LINT:', p)
         return 1
+    if '--out' in sys.argv:
+        # a private build (parallel workers, screenshots): writes only the given path, never either published output
+        i = sys.argv.index('--out')
+        out = Path(sys.argv[i + 1]).expanduser().resolve() if i + 1 < len(sys.argv) else None
+        if out is None or out in (TARGET.resolve(), PM7_TARGET.resolve()) or '--publish-pm7' in sys.argv:
+            print('--out needs a private path (not TestOpus5.5PmConcept.html or PMConcept7.html) and no --publish-pm7', file=sys.stderr)
+            return 2
+        out.parent.mkdir(parents=True, exist_ok=True)
+        tmp = out.with_name(out.name + '.tmp')
+        tmp.write_text(built, encoding='utf-8')
+        tmp.replace(out)
+        data = built.encode('utf-8')
+        print(json.dumps({'output': str(out), 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()[:16]}))
+        return 0
     TARGET.write_text(built, encoding='utf-8')
     data = built.encode('utf-8')
     summary = {'output': str(TARGET.relative_to(CONCEPTS.parent)), 'bytes': len(data),

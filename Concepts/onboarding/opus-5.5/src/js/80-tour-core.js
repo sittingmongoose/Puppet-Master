@@ -739,5 +739,5 @@
   window.addEventListener('pm:dispatch-receipt', () => setTimeout(syncChatIcon, 0));
 
   /* keep the look in step while the tour runs */
-  new MutationObserver(() => { if (TR.running) { syncTheme(); TR.refresh(); if (st.lookOpen) renderBar(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  new MutationObserver(() => { if (TR.running) { syncTheme(); TR.refresh(); if (st.lookOpen) renderBar(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
 })();

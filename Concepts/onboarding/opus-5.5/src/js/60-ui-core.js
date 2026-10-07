@@ -49,7 +49,7 @@
     root.addEventListener('change', onInput);
     ['keydown', 'keyup', 'keypress'].forEach((ev) => root.addEventListener(ev, onKey));
     root.addEventListener('pointerdown', (e) => { if (e.target.closest('.o55-scrim')) nudge(); });
-    new MutationObserver(() => { if (S.open) syncTheme(true); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    new MutationObserver(() => { if (S.open) syncTheme(true); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
     document.addEventListener('visibilitychange', () => { root.setAttribute('data-o55-ambient', document.hidden ? 'off' : 'on'); });
     window.addEventListener('resize', () => { if (S.open) layoutClass(); });
     return root;
