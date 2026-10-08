@@ -178,21 +178,23 @@ function o55NierHoldBootDark() {
   return { release };
 }
 /* PM_THEME's themeState after the held adoption says basic / dark; give it the family and mode Settings stores (the
-   applyPaint reading). Mode first: under NieR every write paints basic-<scheme>, so both writes keep the painted value
-   (a same-value write restyles nothing), where family first would paint Basic Dark for a moment. */
+   applyPaint reading) in one write that keeps the painted value (a same-value write restyles nothing): set(slug) takes
+   family and scheme together, and Auto, which a slug cannot say, follows with the same scheme. Two separate writes
+   (setFamily, setMode) would paint a family with the old mode for a moment wherever the hook answers the family. */
 function o55NierSyncThemeState() {
   const P = window.PM_THEME, T = window.PM7_SETTINGS_TOME;
-  if (!P || typeof P.setMode !== 'function' || typeof P.setFamily !== 'function') return;
+  if (!P || typeof P.set !== 'function' || typeof P.setMode !== 'function') return;
   let project = null; try { project = T && typeof T.project === 'function' ? T.project() : null; } catch (e) { project = null; }
   const settings = (state && state.settings) || {};
   const slug = project ? String(settings['general.visual.theme'] || 'Basic Dark').trim().toLowerCase().replace(/\s+/g, '-') : 'basic-dark';
   const family = slug.split('-')[0] || 'basic', explicit = slug.split('-')[1] || 'dark';
   let mode = project ? String(settings['general.visual.theme-mode'] || explicit).toLowerCase() : 'dark';
   if (!['light', 'dark', 'auto'].includes(mode)) mode = explicit;
+  const scheme = mode === 'auto' ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : mode;
   const quiet = { persist: false, dispatch: false };
   try {
-    if (P.getMode() !== mode) P.setMode(mode, quiet);
-    if (P.getFamily() !== family) P.setFamily(family, quiet);
+    if (P.getFamily() !== family || P.getMode() !== mode) P.set(family + '-' + scheme, quiet);
+    if (mode === 'auto') P.setMode('auto', quiet);
   } catch (e) { /* applyPaint below repaints from the stored values */ }
 }
 const o55NierKeys = keys => { const want = new Set((Array.isArray(keys) ? keys : []).map(String)); return O55_NIER_PARTS.filter(p => want.has(p.key)).map(p => p.key); };
