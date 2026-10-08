@@ -25,23 +25,50 @@
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
       return true;
     },
-    /* the look chosen in onboarding becomes the saved theme (the preview used persist:false), and NieR Mode's three
-       rows, the rest of the look, are saved with it into the same Project (their preview, O55.nierLook) */
-    commitLook(S) {
-      const d = md(S), tome = window.PM7_SETTINGS_TOME;
-      let ok = false;
-      try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(d.theme_family); tome.setChromeThemeMode(d.theme_mode); ok = true; } } catch (_) {}
-      if (!ok) try { window.PM_THEME.setFamily(d.theme_family); window.PM_THEME.setMode(d.theme_mode); } catch (_) {}
-      if (O55.nierLook && O55.nierLook.commit) O55.nierLook.commit(S);
-      return ok;
+    /* The look chosen in onboarding becomes the saved theme (the preview used persist:false), and NieR Mode's three
+       rows, the rest of the look, are saved with it into the same Project (their preview, O55.nierLook).
+       Writing the theme repaints it, and the app's own theme listeners (its search width, its tab ink) then re-measure
+       the whole page under the window for most of a second (films M4: the Created moment froze). So the theme pair
+       (the NieR rows' commit repaints it too) and with o.defer both wait until the moment on screen is over: Ready's
+       curtain call and Pod line, the hand-over to the tour, any other close, or the page going away (flushLook). It is
+       written once per Project and look; a look changed meanwhile is the one written. */
+    commitLook(S, o) {
+      look = { S };
+      if (o && o.defer) return true;
+      return writeLook();
+    },
+    /* the deferred theme pair is written in ms (now without), unless a later flush comes first */
+    flushLook(ms) {
+      if (!look) return false;
+      if (lookTimer) { lookTimer.cancel(); lookTimer = null; }
+      if (!(ms > 0)) return writeLook();
+      lookTimer = O55.motion.after(ms, () => { lookTimer = null; writeLook(); });
+      return true;
     },
     openWizard() { const t = document.getElementById('tab-wizard') || document.querySelector('[data-page="wizard"]'); if (t) { t.click(); return true; } return false; }
   };
 
+  let look = null, lookTimer = null, lookWritten = '';
+  function writeLook() {
+    const S = look && look.S; look = null;
+    if (lookTimer) { lookTimer.cancel(); lookTimer = null; }
+    if (!S || !S.sess) return false;
+    if (O55.nierLook && O55.nierLook.commit) O55.nierLook.commit(S);
+    const d = md(S), tome = window.PM7_SETTINGS_TOME, key = [window.PM_ACTIVE_PROJECT_ID || '', d.theme_family, d.theme_mode].join('|');
+    if (key === lookWritten) return true;
+    lookWritten = key;
+    let ok = false;
+    try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(d.theme_family); tome.setChromeThemeMode(d.theme_mode); ok = true; } } catch (_) {}
+    if (!ok) try { window.PM_THEME.setFamily(d.theme_family); window.PM_THEME.setMode(d.theme_mode); } catch (_) {}
+    return ok;
+  }
+  /* a page that goes away still saves the look it was given */
+  window.addEventListener('pagehide', () => { if (look) writeLook(); });
+
   /* finish(S, {tour, project}) — close onboarding as done and land in the app. */
   O55.finish = function finish(S, o) {
     o = o || {};
-    O55.shell.commitLook(S);
+    O55.shell.commitLook(S, { defer: true });
     const cm = S.sess.commit || {}, d = md(S);
     const projectId = o.project || cm.projectId, name = o.projectName || (cm.projectId === projectId ? d.project_name : null) || projectId;
     if (projectId) O55.shell.selectProject(projectId, name);
@@ -56,6 +83,8 @@
     /* a tour taken at the end of an onboarding run always starts at its first step (only the resume chip continues one) */
     if (tour) O55.tour.start({ source: 'onboarding', fresh: true, project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null, handoff });
     else O55.shell.openWizard();
+    /* the theme is written once the window has handed over (the line has reached the tour), or has gone */
+    O55.shell.flushLook(handoff ? 1600 : 400);
   };
 
   function summary(S) {
@@ -76,6 +105,8 @@
     /* (under NieR's art the troupe takes a curtain call instead, and points at the next step: O55.nierWindow.ready, hero
        spec H4b; no second confetti) */
     mounted(S, layer, fresh) {
+      /* the look waiting to be saved (O55.shell.commitLook) is written once Ready's moment and Pod's line are over */
+      if (fresh) O55.shell.flushLook(4000);
       if (!fresh || (O55.nierWindow && O55.nierWindow.ready && O55.nierWindow.ready(layer, fresh))) return;
       O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true, count: 46, at: [240, 260] }); });
     },

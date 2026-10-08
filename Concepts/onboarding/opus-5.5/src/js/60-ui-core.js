@@ -132,6 +132,19 @@
     }).catch(() => {});
     vt.finished.finally(() => { if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); } });
   }
+  /* The app beneath holds still while the window is open (README Performance rule 6). A theme written under the window
+     (a Project's settings loading as it is selected, the look saved into it) has the app's own listeners announce a
+     resize that never happened, and every resize listener of the page then re-measures it under the window (films M4:
+     most of a second at Created). Such synthetic resizes wait while the window is open; one stands for them all once
+     it has closed. A real resize (the browser's own, trusted) always passes. They are held where they are sent: the
+     page's resize listeners are registered before this module, and a listener on the window itself cannot run ahead
+     of them. */
+  let heldResize = false;
+  const sendEvent = window.dispatchEvent;
+  window.dispatchEvent = function dispatchEvent(ev) {
+    if (ev && ev.type === 'resize' && !ev.isTrusted && S.open && document.documentElement.hasAttribute('data-o55-open')) { heldResize = true; return true; }
+    return sendEvent.call(this, ev);
+  };
   /* Input never waits for the look reveal. While a view transition plays, the browser hands every click to the page
      root, and on a heavy page on a slow computer the reveal outlasted a second: an early Continue was lost. A press
      during the reveal ends it at once, and the click goes to whatever was under the pointer. */
@@ -603,6 +616,8 @@
        Guided Tour, and the scrim stays until the tour's own has taken over, so the app never comes up lit between */
     const hold = skin('close', reason, handoff);
     S.railHold = null;
+    /* a look waiting to be saved into the new Project is written once the window has gone (finish() times its own) */
+    if (reason !== 'done' && O55.shell && O55.shell.flushLook) O55.shell.flushLook(400);
     const finish = () => {
       r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
       document.documentElement.removeAttribute('data-o55-open');
@@ -610,6 +625,7 @@
       if (S.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
       if (reason !== 'done' && returnFocus && document.contains(returnFocus)) { try { returnFocus.focus(); } catch (_) {} }
       O55.boot && O55.boot.chip && O55.boot.chip();
+      if (heldResize) { heldResize = false; window.dispatchEvent(new Event('resize')); }
     };
     if (typeof hold === 'number' && hold > 0) O55.motion.after(hold, finish);
     else if (O55.motion.reduced()) finish(); else O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }).then(finish);

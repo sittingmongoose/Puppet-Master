@@ -377,22 +377,30 @@
      name sign comes back stamped, the run's one confetti). No banner: the stamped sign is the goal card, and the live
      region says the Project was created. Pod reports low over the stage lip, never over the sign. In the "later"
      journey (a Server only) the banner stays, inside the pane and silent. */
+  /* (the made moment is shown once the app beneath has settled: O55.review.shownDone, 72-screens-review.js) */
+  const commitState = (s) => { const cm = s.sess.commit || {}; return cm.state === 'done' && O55.review && O55.review.shownDone && !O55.review.shownDone(s) ? 'settling' : cm.state || null; };
   function created() {
-    const s = O55.S, R = runState(), cm = s.sess.commit || {}, was = R.commit;
-    R.commit = cm.state;
-    if (s.sess.screen !== 'creating' || cm.state !== 'done' || was === 'done' || was == null) return;
+    const s = O55.S, R = runState(), state = commitState(s), was = R.commit;
+    R.commit = state;
+    if (s.sess.screen !== 'creating' || state !== 'done' || was === 'done' || was == null) return;
     const F = fx(); if (!F) return;
     const d = s.sess.drafts.main || {}, laterMode = d.project_mode === 'later';
     R.spoken.add('creating');
     if (F.pod) F.pod.hush(true);
     podUntil = 0; if (pending) { pending.cancel(); pending = null; }
-    const layer = layerNow(), saved = layer && layer.querySelector('.o55nw-saved');
-    if (saved) F.type(saved, { part: null });
+    /* (the words type on from the next frame: the operation's own refresh still follows this one in the same task, and
+       a morph would replace words being typed) */
+    const t = token;
+    M.real.raf(() => {
+      const layer = layerNow(); if (t !== token || !layer || !shown()) return;
+      const h = layer.querySelector('#o55-h'), saved = layer.querySelector('.o55nw-saved');
+      if (h) F.type(h, { part: null });
+      if (saved) F.type(saved, { part: null });
+    });
     U.announce(T(laterMode ? 'banner.serverReady' : 'banner.created'), rootEl() && rootEl().querySelector('.o55-win'));
     if (laterMode) {
       const pane = rootEl().querySelector('.o55-pane');
       const go = F.enabled('banner') ? F.banner({ kicker: O55.t('nierFx.banner.kickers.goalComplete'), title: T('banner.serverReady'), ms: 1800, within: pane, sound: false }) : Promise.resolve(false);
-      const t = token;
       go.then(() => { if (t === token) later(160, () => say(line('pod.creatingDoneLater'), { lane: 'lip' })); });
       return;
     }
@@ -423,7 +431,7 @@
     const s = O55.S, R = runState(), pr = O55.stages.progress(s, def), h = layer.querySelector('#o55-h');
     R.idx = pr.index; R.chapter = pr.current; R.pr = pr; R.title = h ? h.textContent : ''; R.layer = layer;
     R.maxIdx = Math.max(R.maxIdx, pr.index);
-    R.commit = (s.sess.commit || {}).state || null;
+    R.commit = commitState(s);
     R.errs = new Set(); layer.querySelectorAll(ERR).forEach((el) => R.errs.add(errKey(el)));
     return pr;
   }
@@ -439,7 +447,7 @@
     const F = fx(), st = stageEl(), t = token;
     if (!F || !st || !F.enabled('banner')) { railWalk(); later(760, () => podScreen(def)); return; }
     let landed = false;
-    later(reduced() ? 0 : 210, () => {
+    later(reduced() ? 0 : 150, () => {
       const go = F.banner({
         kicker: O55.t('nierFx.banner.kickers.chapterDone'), title: O55.t('chapters.' + claim.from),
         sub: T('banner.next', { chapter: O55.t('chapters.' + claim.to) }),
@@ -514,7 +522,8 @@
       if (o.chapterMove && F.enabled('wipe')) F.wipe(pane, dir === 'back' ? { dir: 'back' } : undefined);
       else if (dir !== 'open') F.slice(layer.querySelector('.o55-scroll'));
     }
-    /* 2. the title types on, with its typing ticks under the screen change */
+    /* 2. the title types on, with its typing ticks under the screen change (the cold open's release ticks first) */
+    if (dir === 'open' && o.cold) play('tap');
     if (h) F.decode(h, { sound: true });
     /* 3. the moment: the cold open's release, the act card, Ready's curtain, or the rail and Pod */
     const claim = o.claim;
@@ -524,7 +533,6 @@
         /* the screen is out: WELCOME inverts (the boxes already done draw their checks) and the counter rolls in, with
            the menu tick and the run's first music; the promise rows tick in as they step in; Pod speaks last */
         railWalk();
-        play('tap');
         const sd = O55.sound.context ? O55.sound.context() : {};
         later(90, () => play('chapter', { chapter: pr.current, depth: cold.kind === 'start' ? 0 : (sd && sd.depth) || 0, intensity: 0.4 }));
         layer.querySelectorAll('.o55-promise > li').forEach((li, i) => later(440 + 80 * i, () => play('phase', { step: i })));
@@ -574,7 +582,8 @@
     const at = (ms, fn) => M.after(ms, () => { if (handTok === tok) fn(); });
     M.quiet(2200);
     r.setAttribute('data-o55nw-hand', '');
-    /* T0 the troupe waves goodbye (its cheers start after the click's select) */
+    /* T0 the click's select; the troupe waves goodbye (its cheers start after it) */
+    play('select');
     at(80, () => { const tr = troupe(); if (st && tr && tr.wave) tr.wave(st); });
     /* T240 the content steps out (one way, two steps), leaving the frame and the header rule; the Pod lifts off */
     at(240, () => {
@@ -642,6 +651,9 @@
         return null;
       }
       cold.log = log;
+      /* the log's frame (its meter cells, its underline) shows with its kicker, not in the empty window before it */
+      const at0 = cold.kind === 'resume' ? 560 : 800;
+      if (log.el.animate) log.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: at0 - 20, fill: 'backwards' });
       layer.setAttribute('data-o55nw-cold', cold.kind);
       const st = stageEl(), tr = troupe();
       if (cold.asleep && tr && tr.wake && st) {
@@ -649,7 +661,7 @@
       } else cold.asleep = false;
       /* Pod hops into its corner at the last stamp (silent) */
       log.stamps[lines.length - 1].then(() => { if (R.cold === cold && !cold.snapped) podIn({ hops: 6, ms: 360 }); });
-      const gate = log.done.then(() => new Promise((res) => M.after(20, res))).then(() => {
+      const gate = log.done.then(() => {
         if (R.cold !== cold || cold.snapped) return false;
         const to = ruleOf(layer);
         return log.close(to ? { to, edge: 'middle' } : {});
@@ -754,12 +766,18 @@
       if (M.now() >= (R.marksAt || 0)) marks(layer);
       tint(); /* a pick under the cursor turns its tint into the chosen inversion */
       brand(true);
-      /* the heading's words changed in place (Creating finished, a retry): they type on */
+      /* the heading's words changed in place (Creating finished, a retry): they type on, from the next frame (a refresh
+         that follows in the same task would replace words being typed) */
       const h = layer.querySelector('#o55-h'), title = h ? h.textContent : '';
-      if (h && R.title && title !== R.title) { const F = fx(); if (F) F.decode(h); }
+      const retitled = !!(h && R.title && title !== R.title);
       R.title = title;
       errors(layer);
+      const wasDone = R.commit === 'done';
       created();
+      if (retitled && !(R.commit === 'done' && !wasDone)) {
+        const t = token;
+        M.real.raf(() => { const F = fx(), h2 = layerNow() && layerNow().querySelector('#o55-h'); if (F && t === token && h2 && h2.textContent === title) F.decode(h2); });
+      }
       return false;
     },
 

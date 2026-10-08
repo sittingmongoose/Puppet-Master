@@ -23,10 +23,32 @@
   const RECHECK_QUIET = { done: false };
   /* results arrive later: they sound only while the screen that shows them is still the one on screen */
   const showing = (id) => O55.S.open && O55.S.sess.screen === id;
-  /* Publication selects the new Project, and selecting it rebinds the speaker to that Project's own setting, which
-     reads as off until Settings has loaded it (fail closed). So the made moment sounds just before publication, in
-     the same frame as the done state, whenever publication cannot fail (nothing staged from another Project). */
-  const publishSure = (S, cm) => !cm.stagedSettings && md(S).settings_transfer.mode !== 'copy_from_project';
+  /* The made moment is shown once the app beneath has settled (films M4). Publication selects the new Project:
+     Settings loads it and repaints the app's theme from it, then the look is saved into it (publishProject) and
+     repainted again, and each time the app's own theme listeners re-measure the whole page, the better part of a
+     second on a slow computer. All of that runs while the screen still shows its last check done; the made moment
+     (its sound, the title, the saved line, the troupe) follows on the first idle frame after, so it never freezes.
+     The outcome is the truth at once (saved as done); only the moment waits (S.settling, never saved: a reopened
+     window shows it made). By then the speaker is bound to the new Project's own setting, which Settings can read once
+     the look has been written into it (selecting it rebinds the speaker, silent until then: fail closed), so the made
+     moment's sound plays with its picture. */
+  const shownDone = (S) => { const cm = S.sess.commit || {}; return cm.state === 'done' && O55.S.settling !== cm.key; };
+  function reveal(S, cm) {
+    S.settling = cm.key;
+    let shown = false;
+    const show = () => {
+      if (shown) return; shown = true;
+      if (S.settling !== cm.key) return;
+      S.settling = null; cm.doneAt = Date.now(); S.save();
+      if (showing('creating')) O55.sound.play('save', SND.made);
+      O55.ui.refresh();
+      made(S);
+    };
+    /* after the look's write (queued by publishProject before this), two frames, then the first idle moment */
+    const R = O55.motion.real;
+    R.setTimeout(() => R.raf(() => R.raf(() => { if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(show, { timeout: 700 }); else R.setTimeout(show, 60); })), 0);
+    R.setTimeout(show, 2400); /* a hidden page draws no frames */
+  }
 
   /* Edit from Review: the edited screen's own Continue comes straight back to Review once nothing is missing. */
   const baseGo = O55.ui.go;
@@ -194,7 +216,8 @@
     cm.receipts.project = via === 'fixture' ? 'fixture:project:' + id : cm.recovery.settled_effects.registry_publication.receipt_ref;
     if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name);
     /* the new Project starts with the look chosen here: Settings loads a new Project's own settings as it is selected
-       (after this task), so the look is saved into it once that load has run */
+       (after this task), so the look is saved into it once that load has run (its first write also makes the Project's
+       own sound setting readable: the speaker stays silent until then) */
     O55.motion.after(0, () => { if (O55.shell && O55.shell.commitLook) O55.shell.commitLook(S); });
     window.dispatchEvent(new CustomEvent('o55:project-created', { detail: { id, name: d.project_name, receipts: cm.receipts, fixture: via === 'fixture' } }));
     return id;
@@ -246,13 +269,9 @@
     cm.receipts = cm.receipts || {};
     cm.receipts.original_terminal = cm.recovery.original_terminal_result_ref;
     cm.receipts.recovery = 'recovery:' + cm.recovery.recovery_id;
-    const sure = publishSure(S, cm);
-    if (sure && showing('creating')) O55.sound.play('save', SND.made);
     if (!publishProject(S, cm.publishable.project_id, 'owner')) { cm.state = 'recovery'; cm.code = 'settings_rejected'; S.save(); O55.ui.refresh(); return; }
-    cm.state = 'done'; cm.code = null; cm.doneAt = Date.now(); S.save();
-    if (!sure && showing('creating')) O55.sound.play('save', SND.made);
-    O55.ui.refresh();
-    made(S);
+    cm.state = 'done'; cm.code = null; S.save();
+    reveal(S, cm);
   }
   /* The Project is made (hero spec H4a). Under NieR's art the stage performs the Created act in the same task as the
      refresh that turns its scene to done: the units land and bow, the name sign the person lettered comes back down
@@ -265,7 +284,7 @@
   }
   /* NieR's saved line under the meter (H4a): "Saved · 8 Oct 2026 · 10:42" in the person's own date and time format */
   function savedLine(S, cm) {
-    if (cm.state !== 'done' || !O55.theme().nier || md(S).project_mode === 'later') return '';
+    if (!shownDone(S) || !O55.theme().nier || md(S).project_mode === 'later') return '';
     const at = new Date(cm.doneAt || Date.now());
     let date = '', time = '';
     try {
@@ -318,14 +337,11 @@
       payload: { idempotency_key: cm.key, draft: d.project_draft_ref, revision: d.project_draft_revision }, sound: { done: false },
       onFail: (S2, st) => { cm.state = 'failed'; cm.code = st.code; discardStaged(S); S.save(); },
       onDone: () => {
-        const sure = publishSure(S, cm);
-        if (sure && showing('creating')) O55.sound.play('save', SND.made);
         if (!publishProject(S, cm.fixtureProjectId, 'fixture')) { cm.state = 'failed'; cm.code = 'settings_rejected'; S.save(); O55.ui.refresh(); if (showing('creating')) O55.sound.play('error'); return; }
-        cm.state = 'done'; cm.code = null; cm.doneAt = Date.now(); S.save();
-        if (!sure && showing('creating')) O55.sound.play('save', SND.made);
-        /* the Project is made: the troupe celebrates (NieR: the Created act) */
-        O55.ui.refresh();
-        made(S);
+        cm.state = 'done'; cm.code = null; S.save();
+        /* the Project is made: once the app beneath has settled, its sound and the troupe's celebration (NieR: the
+           Created act) */
+        reveal(S, cm);
       }
     });
   }
@@ -434,10 +450,10 @@
   def('creating', {
     chapter: 'project', stage: 'automatic_preparation',
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
-    scene: (S) => { const st = F.state(S, (S.sess.commit || {}).key); const done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0; return { id: 'creating', beat: S.sess.commit && S.sess.commit.state === 'done' ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },
+    scene: (S) => { const st = F.state(S, (S.sess.commit || {}).key); const done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0; return { id: 'creating', beat: shownDone(S) ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },
     eyebrow: () => T('creating.eyebrow'),
-    title: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later', nm = later ? P().serverName(S) : md(S).project_name; return cm.state === 'done' ? T(later ? 'creating.doneTitleLater' : 'creating.doneTitle', { name: nm }) : cm.state === 'failed' ? T('creating.failTitle') : T(later ? 'creating.titleLater' : 'creating.title', { name: nm }); },
-    lead: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later'; return cm.state === 'done' ? T(later ? 'creating.doneLeadLater' : 'creating.doneLead') : cm.state === 'failed' && PR().isGithubRemoteChain(md(S)) ? T('creating.recovery.failedLead') : cm.state === 'failed' ? T('creating.failLead') : T('creating.lead'); },
+    title: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later', nm = later ? P().serverName(S) : md(S).project_name; return shownDone(S) ? T(later ? 'creating.doneTitleLater' : 'creating.doneTitle', { name: nm }) : cm.state === 'failed' ? T('creating.failTitle') : T(later ? 'creating.titleLater' : 'creating.title', { name: nm }); },
+    lead: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later'; return shownDone(S) ? T(later ? 'creating.doneLeadLater' : 'creating.doneLead') : cm.state === 'failed' && PR().isGithubRemoteChain(md(S)) ? T('creating.recovery.failedLead') : cm.state === 'failed' ? T('creating.failLead') : T('creating.lead'); },
     body(S) {
       const d = md(S), cm = S.sess.commit || {}, svc = forgeName(d), github = PR().isGithubRemoteChain(d);
       const labels = { folder: T('creating.phases.folder'), device: T('creating.phases.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || P().serverName(S) }), clone: T('creating.phases.clone', { service: svc }), restore: T('creating.phases.restore'),
@@ -445,7 +461,7 @@
       let out = F.phases(S, cm.key, phasesFor(S), labels, cm.settingsCount != null ? { settings: cm.settingsCount ? cm.settingsCount + ' settings' : '' } : null) + savedLine(S, cm);
       if (github) {
         out += githubStatus(S);
-        if (cm.state === 'done') out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key]])));
+        if (shownDone(S)) out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key]])));
         return out;
       }
       if (cm.state === 'failed') {
@@ -456,7 +472,7 @@
         if (cm.code === 'name_taken' || cm.code === 'network') acts.push(cm.confirmSkip ? `<span class="o55-confirm">${U.esc(T('creating.skipConfirm'))} ${O55.ui.btn({ label: T('creating.skipOnline'), do: 'skipOnline', cls: 'o55-small' }, 'o55-primary')}</span>` : O55.ui.btn({ label: T('creating.skipOnline'), do: 'askSkip', cls: 'o55-small' }, 'o55-ghost'));
         out += `<div class="o55-actions" data-key="recover">${acts.join('')}</div>`;
       }
-      if (cm.state === 'done') out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key], ['concept fixture', 'this preview acts out the steps']])));
+      if (shownDone(S)) out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key], ['concept fixture', 'this preview acts out the steps']])));
       return out;
     },
     mounted(S) {
@@ -467,8 +483,8 @@
     },
     foot(S) {
       const cm = S.sess.commit || {};
-      if (cm.state === 'done') return { back: false, primary: { label: T('creating.continue'), do: 'next' } };
-      const reason = cm.state === 'failed' ? T('creating.failTitle') : cm.state === 'running' ? T('chrome.working') : T('creating.recovery.waiting');
+      if (shownDone(S)) return { back: false, primary: { label: T('creating.continue'), do: 'next' } };
+      const reason = cm.state === 'failed' ? T('creating.failTitle') : cm.state === 'running' || cm.state === 'done' ? T('chrome.working') : T('creating.recovery.waiting');
       return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: true, reason } };
     },
     do: {
@@ -719,5 +735,5 @@
     onBack: () => false
   });
 
-  O55.review = { routeParams, beginsAs, filesAt, whereWork };
+  O55.review = { routeParams, beginsAs, filesAt, whereWork, shownDone };
 })();
