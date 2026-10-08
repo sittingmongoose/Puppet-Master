@@ -105,7 +105,7 @@
     Head + Configure, three plain facts, the status line (plain words), then three native disclosures with
     their keys unchanged (bsd12-findings / -session / -usage, remembered in `disclosures`): Advisor notes (N),
     Session and Usage. Sentences, hairline rows; no metric-card grid and no pills. Evidence is written out as
-    sentences with the raw JSON behind "Show raw data". Raw ids and cmd.* live in one Technical details line. */
+    sentences with the raw JSON behind "Show raw data". Raw ids and cmd.* stay in the record; Technical details is only on the Back Seat Driver sheet's Advanced page (card 8, 2026-10-08). */
  const sevWord=s=>{const S=window.PM56_SHELL,t=S&&S.PMX_COPY&&S.PMX_COPY.bsdSeverity;return t&&t[s]?t[s][0]:String(s||'');};
  const sevHtml=s=>window.PM56_SHELL.pmxSeverity(s,sevWord(s));
  const CHOICE_WORD=(key,val)=>{const o=(CHOICES[key]||{options:[]}).options.find(x=>String(x.value)===String(val));return o?o.label:String(val);};
@@ -178,8 +178,7 @@
   return '<p class="pmx-bsd-say">Watching <b>'+c.esc(lowerFirst(stage))+'</b> in this chat. '+read+'</p>'+who+
    (fresh>0?'<p class="pmx-bsd-fine">Started fresh notes '+(fresh===1?'once':fresh+' times')+' (a settings save, a restart or tidying its notes).</p>':'')+
    '<div class="pmx-bsd-acts pmx-bsd-ctls">'+b('pause','Pause advisor',stopped||paused)+b('resume','Resume advisor',!canResume)+b('stop','Stop advisor',stopped)+'</div>'+
-   (refusals.get(id)&&refusals.get(id).where==='control'?refusalLine(c,id):'<p class="pmx-reason">'+reason+'</p>')+'<p class="pmx-bsd-fine">Stop ends watching for this run. Anything it was double-checking is dropped. Your main work never stops.</p>'+
-   '<p class="pmx-bsd-fine pmx-bsd-tech"><b>Technical details</b> · run <code>'+c.esc(a.id)+'</code> · restart '+a.epoch+' · settings '+(a.policy.revision?'v'+c.esc(a.policy.revision):'default')+', run binding v'+c.esc(a.bindingRevision)+' · Pause, Resume and Stop send <code>cmd.bsd.assignment.pause</code>, <code>.resume</code> (<code>.retry</code> after a safety pause) and <code>.stop</code>; Dismiss asks for <code>cmd.bsd.finding.dismiss</code>; Don’t wait asks for <code>cmd.bsd.catch_up.release</code>.</p>';
+   (refusals.get(id)&&refusals.get(id).where==='control'?refusalLine(c,id):'<p class="pmx-reason">'+reason+'</p>')+'<p class="pmx-bsd-fine">Stop ends watching for this run. Anything it was double-checking is dropped. Your main work never stops.</p>';
  }
  function usageBody(c,a){
   const u=a.usage,id=a.threadId,n=u.localEvaluations;

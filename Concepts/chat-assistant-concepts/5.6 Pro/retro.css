@@ -56,7 +56,7 @@ body[data-theme="retro-dark"] {
   /* the same shadows when the box also wears its 1 px outer ring: the offset grows by the ring */
   --rt-frame: 0 0 0 1px #4a533a; --rt-frame-hair: 0 0 0 1px #333a28;
   --rt-frame-sh: 0 0 0 1px #4a533a, 4px 4px 0 rgba(107,118,84,.55);
-  --rt-frame-lg: 0 0 0 1px #4a533a, 6px 6px 0 rgba(107,118,84,.5);
+  --rt-frame-lg: 0 0 0 1px #4a533a, 5px 5px 0 rgba(107,118,84,.5);
   --rt-hair-sh: 0 0 0 1px #333a28, 4px 4px 0 rgba(107,118,84,.55);
   --rt-lime: #86c46a; --rt-lime-ink: #1A1A1A; --rt-lime-soft: #273220; --rt-lime-55: rgba(134,196,106,.55); --rt-lime-32: rgba(134,196,106,.32);
   --rt-op-bg: rgba(134,196,106,.08); --rt-op-edge: #5c7548;
@@ -72,7 +72,7 @@ body[data-theme="retro-light"] {
   --rt-sh: 3px 3px 0 rgba(26,26,26,.30); --rt-sh-sm: 2px 2px 0 rgba(26,26,26,.22);
   --rt-frame: 0 0 0 1px #4A463F; --rt-frame-hair: 0 0 0 1px #D8D1C7;
   --rt-frame-sh: 0 0 0 1px #4A463F, 4px 4px 0 rgba(26,26,26,.30);
-  --rt-frame-lg: 0 0 0 1px #4A463F, 6px 6px 0 rgba(26,26,26,.30);
+  --rt-frame-lg: 0 0 0 1px #4A463F, 5px 5px 0 rgba(26,26,26,.30);
   --rt-hair-sh: 0 0 0 1px #D8D1C7, 4px 4px 0 rgba(26,26,26,.22);
   --rt-lime: #2F7A3D; --rt-lime-soft: #d9dfd0; --rt-lime-55: rgba(47,122,61,.55); --rt-lime-32: rgba(47,122,61,.32);
   --rt-op-bg: rgba(47,122,61,.08); --rt-op-edge: #42563e;

@@ -564,7 +564,7 @@
     var names = item.depends_on.map(function(id){ var d=findItem(list,id); return d?d.title:id; }).join(', ');
     if(item.status==='pending' && unmet.length){
       var waiting = unmet.map(function(d){ return d.title; }).join(', ');
-      return '<span class="todo-chip todo-chip-dep is-waiting" title="Pending with a dependency, not blocked.">Waiting on: '+esc(waiting)+'</span>';
+      return '<span class="todo-chip todo-chip-dep is-waiting" data-hover-key="todo-dep:'+esc(item.todo_id)+'" data-hover-tip="Pending until its dependency finishes; not blocked.">Waiting on: '+esc(waiting)+'</span>';
     }
     return '<span class="todo-chip todo-chip-dep">Depends on: '+esc(names)+'</span>';
   }
@@ -573,7 +573,7 @@
     if(!sibs.length) return '';
     var running = item.status==='in_progress' && sibs.some(function(s){ return s.status==='in_progress'; });
     var names = sibs.map(function(s){ return s.title; }).join(', ');
-    return '<span class="todo-chip todo-chip-parallel'+(running?' is-live':'')+'" title="Shares parallel_group_id '+esc(item.parallel_group_id)+' — intended concurrency, not an execution order.">'+
+    return '<span class="todo-chip todo-chip-parallel'+(running?' is-live':'')+'" data-hover-key="todo-par:'+esc(item.todo_id)+'" data-hover-tip="Meant to run at the same time as these; not an order.">'+
       (running?'Running in parallel with: ':'Parallel group with: ')+esc(names)+'</span>';
   }
 
