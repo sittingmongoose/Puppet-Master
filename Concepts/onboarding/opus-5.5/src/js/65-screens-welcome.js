@@ -69,7 +69,9 @@
          take a few hundred milliseconds on a large page; the reveal then plays from the tile. */
       pickFamily(S, f, el) {
         ack(el, '.o55-tile');
-        O55.sound.play('select', { family: f });
+        /* in the picked family's own voice; under NieR Mode the painted look (and its kit) stays NieR */
+        if (O55.theme().nier) O55.sound.play('select');
+        else O55.sound.play('select', { family: f });
         O55.ui.charm(el, T('look.families.' + f + '.name'), 'spark');
         O55.ui.applyLook(f, O55.theme().mode, el);
       },
