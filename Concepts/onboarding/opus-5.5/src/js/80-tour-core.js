@@ -31,7 +31,15 @@
      layout could not go back and the tour stays) · closed (the root has gone) · landing {lead} (hold, then the note)
      · landed {note} · unland {note} (the note's exit: a listener that returns a promise plays it; else a fade) ·
      barMove {top} (the bar moved between the bottom and the top) · missing {on, sound} (sound: the event that marks
-     it, 'missing'; a listener may change it). A listener that throws is logged and skipped. */
+     it, 'missing'; a listener may change it) · opened {from, handoff, callout, resume} once the first step stands
+     (where the families' morph from the onboarding window starts; a skin takes a handoff from here) · travel {from,
+     to, points, ms, leg, quiet} as the pointer sets off (points: where each of its held hops lands) · press {el, x, y,
+     at, kind, sound} before the press (a listener may return a promise: the press waits for it, at most 300 ms; sound
+     is the press's sound event, a listener that sounds it itself sets it to null) · released {el, kind} once the
+     action is over (a click pressed, the letters typed, the carry dropped) · interrupt {at, home} (at: where the
+     pointer stood). Show Me's start, showMe {step, takeover}, may return a promise too: the demonstration waits for
+     it, at most 300 ms. start may set d.sound (the opening's sound, 'open') and ending d.sound ('finish' or 'close')
+     to null when it sounds the moment itself. A listener that throws is logged and skipped. */
   const hooks = {};
   TR.on = (name, fn) => { (hooks[name] = hooks[name] || []).push(fn); return () => { hooks[name] = (hooks[name] || []).filter((f) => f !== fn); }; };
   function emit(name, d) {
@@ -150,8 +158,15 @@
       if (st.lookOpen) { lookMenu(false); const b = r.querySelector('.o55t-bar [data-o55t="lookMenu"]'); if (b) b.focus({ preventScroll: true }); return; }
       togglePause();
     }));
-    /* any real input during Show Me hands control back at once */
-    ['pointerdown', 'keydown', 'wheel'].forEach((ev) => document.addEventListener(ev, (e) => { if (st.show && e.isTrusted && !r.contains(e.target)) interruptShow(); }, true));
+    /* any real input during Show Me hands control back at once. A skin whose frame says "press any key to stop"
+       (st.look.anyKey) is held to it: a key pressed inside the tour stops it too (a modifier alone never does), and
+       the key that stopped it does not start the next one (Enter or Space on a focused Show Me) */
+    const MOD = /^(Shift|Control|Alt|AltGraph|Meta|CapsLock|Fn|OS)$/;
+    ['pointerdown', 'keydown', 'wheel'].forEach((ev) => document.addEventListener(ev, (e) => {
+      if (!st.show || !e.isTrusted) return;
+      if (!r.contains(e.target)) { interruptShow(); return; }
+      if (ev === 'keydown' && st.look && st.look.anyKey && !MOD.test(e.key)) { st.keyStop = M.now(); interruptShow(); }
+    }, true));
     window.addEventListener('resize', () => { if (TR.running) { st.fixed = null; place(true); } });
     document.addEventListener('visibilitychange', () => { if (st.root) st.root.toggleAttribute('data-hidden', document.hidden); });
     emit('build', { root: r });
@@ -159,10 +174,11 @@
   }
   const family = () => O55.theme().family;
   /* the tour's style for the look on screen: the spotlight's corner radius, how it glides ('spring' or 'steps'), how
-     the Show Me pointer travels and drags (null: the family's way) and the sound of its press; a skin may change it */
+     the Show Me pointer travels and drags (null: the family's way), the sound of its press, where it hovers to act
+     (hover), its arrival sound (arrive) and whether any key stops a Show Me (anyKey); a skin may change it */
   function syncTheme() {
     if (!st.root) return; const th = O55.theme(); st.root.setAttribute('data-family', th.family); st.root.setAttribute('data-mode', th.mode);
-    st.look = { radius: 14, glide: 'spring', travel: null, drag: null, press: 'tap' };
+    st.look = { radius: 14, glide: 'spring', travel: null, drag: null, press: 'tap', anyKey: false };
     emit('look', st.look);
   }
 
@@ -170,8 +186,10 @@
   /* The bar is morphed, not rewritten: the control that has focus (a look row toggled by keyboard, the look button a
      dialog will hand focus back to) is the same element after every redraw. The chapter pips hold no control and are
      rewritten whole each time (their row skips the morph), so the page's hover-tag layer binds them as it always has. */
+  /* st.barHold (a step): the bar keeps showing that step's progress until a skin lets go (a chapter's arrival walks it
+     over, 85-tour-nier.js) */
   function renderBar() {
-    const bar = st.root.querySelector('.o55t-bar'), s = st.step, ch = s ? s.chapter : 'ask';
+    const bar = st.root.querySelector('.o55t-bar'), s = st.barHold || st.step, ch = s ? s.chapter : 'ask';
     const ci = CHAPTERS.indexOf(ch), inCh = TR.defs.filter((d) => d.chapter === ch), si = inCh.indexOf(s);
     /* brand: markup a skin adds at the end of the bar's name (its short form on a narrow window) */
     const deco = { chapter: ch, ci, si, total: inCh.length, pip: {}, brand: '' };
@@ -233,6 +251,7 @@
     if (focus) M.after(80, () => { const h = c.querySelector('#o55t-h'); if (h && TR.running && !st.show) h.focus({ preventScroll: true }); });
   }
   TR.refresh = () => { if (TR.running) { renderBar(); renderCallout(false); } };
+  TR.renderBar = () => { if (TR.running) renderBar(); };
 
   /* ------------------------------------------------------------------ spotlight + placement */
   function targetEl() { const s = st.step; if (!s || !s.target) return null; try { return s.target(st); } catch (_) { return null; } }
@@ -371,10 +390,15 @@
     pos: null, anim: null,
     show(x, y) { const p = P.el(); P.pos = { x, y }; p.style.transform = `translate(${x}px, ${y}px)`; p.classList.add('o55t-on'); },
     hide() { const p = P.el(); p.classList.remove('o55t-on', 'o55t-press'); if (P.anim) { const a = P.anim; P.anim = null; a.cancel(); } },
+    /* where the pointer stands now (mid-travel too: read from the travel in flight) */
+    where() {
+      if (!P.anim) return P.pos ? Object.assign({}, P.pos) : null;
+      try { const m = new DOMMatrixReadOnly(getComputedStyle(P.el()).transform); return { x: m.m41, y: m.m42 }; } catch (_) { return P.pos ? Object.assign({}, P.pos) : null; }
+    },
     /* travel on a gentle arc; the destination is pre-cued before the pointer leaves */
     async moveTo(x, y, dur, o) {
       /* a travel still in flight (the pointer flying home as a new Show Me begins) hands over from where it is now */
-      if (P.anim) { const m = new DOMMatrixReadOnly(getComputedStyle(P.el()).transform); P.pos = { x: m.m41, y: m.m42 }; const was = P.anim; P.anim = null; was.cancel(); }
+      if (P.anim) { P.pos = P.where(); const was = P.anim; P.anim = null; was.cancel(); }
       /* the pointer emerges from the Show Me button the learner just pressed (else from the callout's middle), or
          from where a skin keeps it (pointerFrom) */
       if (!P.pos) {
@@ -385,8 +409,9 @@
       }
       const from = Object.assign({}, P.pos), dist = Math.hypot(x - from.x, y - from.y), mx = (from.x + x) / 2, my = Math.min(from.y, y) - Math.min(120, dist * 0.25);
       /* like a hand: time grows with distance (Fitts), speed up then settle into the target, in the family's manner
-         (or the skin's: st.look.travel = { n, ease, frame }) */
-      const fam = family(), tv = st.look && st.look.travel, d = dur || Math.round(Math.min(760, Math.max(420, 360 + dist * 0.32)));
+         (or the skin's: st.look.travel = { n, ease, frame, ms(dist, leg)? }; leg counts the travels of one Show Me) */
+      const fam = family(), tv = st.look && st.look.travel, leg = (o && o.leg) || 0;
+      const d = dur || (tv && tv.ms ? tv.ms(dist, leg) : 0) || Math.round(Math.min(760, Math.max(420, 360 + dist * 0.32)));
       const ease = tv ? tv.ease : fam === 'retro' ? M.ease.steps(8) : fam === 'friendly' ? M.ease.handSpring : fam === 'glass' ? M.ease.handGlide : M.ease.hand;
       const at = (t) => [(1 - t) * (1 - t) * from.x + 2 * (1 - t) * t * mx + t * t * x, (1 - t) * (1 - t) * from.y + 2 * (1 - t) * t * my + t * t * y];
       const el = P.el(), end = () => { P.pos = { x, y }; el.style.transform = `translate(${x}px, ${y}px)`; };
@@ -398,15 +423,29 @@
          thread repaints that whole page on a computer without a GPU */
       const n = tv ? tv.n : fam === 'retro' ? 8 : 28, frame = tv ? tv.frame : fam === 'retro' ? 'steps(1, end)' : 'linear', frames = [];
       for (let k = 0; k <= n; k++) { const [px, py] = at(ease(k / n)); frames.push({ transform: `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px)`, easing: frame }); }
-      const a = P.anim = el.animate(frames, { duration: fam === 'glass' && !tv ? Math.round(d * 1.12) : d, fill: 'forwards' });
+      const ms = fam === 'glass' && !tv ? Math.round(d * 1.12) : d;
+      const a = P.anim = el.animate(frames, { duration: ms, fill: 'forwards' });
+      emit('travel', { from, to: { x, y }, points: Array.from({ length: n + 1 }, (_, k) => at(ease(k / n))), ms, leg, quiet: !!quiet });
       await a.finished.catch(() => null);
       if (P.anim !== a) return; /* a newer travel took the pointer over */
       P.anim = null; end(); a.cancel();
-      if (!quiet && dist > 24 && !SM.cancelled()) O55.sound.play('arrive');
+      /* the arrival's sound (a skin whose arrival sounds otherwise sets st.look.arrive to null) */
+      const arrive = st.look && st.look.arrive !== undefined ? st.look.arrive : 'arrive';
+      if (!quiet && dist > 24 && !SM.cancelled() && arrive) O55.sound.play(arrive);
     },
     async press(on) { P.el().classList.toggle('o55t-press', on !== false); await M.delay(on === false ? 60 : 140); }
   };
   const center = (el) => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+  /* where the pointer goes to act on el (its centre c, or where a skin's hand hovers to reach it: st.look.hover) */
+  const aim = (el, c) => { const hv = st.look && st.look.hover; let to = null; try { to = hv ? hv(el, c) : null; } catch (_) { to = null; } return to && Number.isFinite(to.x) && Number.isFinite(to.y) ? to : c; };
+  const leg = () => (st.show ? (st.show.legs = (st.show.legs || 0) + 1) : 0);
+  /* the press: a skin may reach for the target first (NieR: Pod 042 lowers a string onto it, and the press is its
+     tug); the press waits for it, at most 300 ms. Returns the moment's data (its sound, which a listener may claim). */
+  async function reach(el, c, to, kind) {
+    const d = { el, x: c.x, y: c.y, at: to, kind, sound: (st.look && st.look.press) || 'tap' };
+    await settle(emit('press', d), 300);
+    return d;
+  }
   /* the next rendered frame (a hidden page renders none: then a quarter second on the motion clock) */
   const frame = () => Promise.race([new Promise((r) => requestAnimationFrame(() => r())), M.delay(250)]);
   TR.center = center;
@@ -420,13 +459,16 @@
       el.scrollIntoView && el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       /* the destination is cued as the pointer sets off, not before: the glow and the travel overlap */
       SM.cue(el); await M.delay(90); if (SM.cancelled()) return false;
-      const c = center(el); await P.moveTo(c.x, c.y); if (SM.cancelled()) return false;
-      await P.press(true); O55.sound.play((st.look && st.look.press) || 'tap'); emit('press', { el, x: c.x, y: c.y });
+      const c = center(el), to = aim(el, c), kind = o && o.noClick ? 'type' : 'click';
+      await P.moveTo(to.x, to.y, 0, { leg: leg() }); if (SM.cancelled()) return false;
+      const d = await reach(el, c, to, kind); if (SM.cancelled()) return false;
+      await P.press(true); if (d.sound) O55.sound.play(d.sound);
       const opts = { bubbles: true, cancelable: true, clientX: c.x, clientY: c.y, button: 0, pointerId: 1, pointerType: 'mouse', isPrimary: true };
       el.dispatchEvent(new PointerEvent('pointerdown', opts)); el.dispatchEvent(new MouseEvent('mousedown', opts));
       el.dispatchEvent(new PointerEvent('pointerup', opts)); el.dispatchEvent(new MouseEvent('mouseup', opts));
       if (!(o && o.noClick)) el.click();
       await P.press(false);
+      if (kind === 'click') emit('released', { el, kind });
       return true;
     },
     /* a real drag: pointerdown on the grip, a stream of pointermoves, pointerup at the destination. Each move waits for
@@ -438,7 +480,11 @@
        has. The drop sounds as the hand lets go, before the workspace's receipt sounds the step done. */
     async drag(el, to, o) {
       if (!el || SM.cancelled()) return false;
-      const a = center(el); SM.cue(el); await M.delay(90); await P.moveTo(a.x, a.y); if (SM.cancelled()) return false;
+      const a = center(el); SM.cue(el); await M.delay(90);
+      /* the hand may hover off the grip (a skin's st.look.hover): it carries the panel from there, the same way off */
+      const h0 = aim(el, a), off = { x: h0.x - a.x, y: h0.y - a.y };
+      await P.moveTo(h0.x, h0.y, 0, { leg: leg() }); if (SM.cancelled()) return false;
+      await reach(el, a, h0, 'drag'); if (SM.cancelled()) return false;
       await P.press(true); O55.sound.play('pickup');
       const base = { bubbles: true, cancelable: true, button: 0, buttons: 1, pointerId: 7, pointerType: 'mouse', isPrimary: true };
       const move = (x, y) => (document.elementFromPoint(x, y) || document).dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
@@ -452,7 +498,7 @@
       while (!SM.cancelled()) {
         const p = q = Math.min(1, (M.now() - t0) / dur, q + 1 / 16), [x, y] = at(ease(p)), k = Math.round(x) + ',' + Math.round(y);
         /* a held step (NieR, Retro) sends nothing new until the hand moves */
-        if (k !== last) { last = k; P.pos = { x, y }; P.el().style.transform = `translate(${x}px, ${y}px)`; move(x, y); }
+        if (k !== last) { last = k; P.pos = { x: x + off.x, y: y + off.y }; P.el().style.transform = `translate(${x + off.x}px, ${y + off.y}px)`; move(x, y); }
         if (p >= 1) break;
         await tick();
       }
@@ -465,7 +511,7 @@
       /* taken over mid-carry: the hand lets go where it is, as a cancel (the workspace puts the panel back); a carry
          that does not know cancel still ends there */
       if (SM.cancelled()) {
-        const p = P.pos || a, at2 = document.elementFromPoint(p.x, p.y) || document, ev = Object.assign({ clientX: p.x, clientY: p.y }, base, { buttons: 0 });
+        const p = P.pos ? { x: P.pos.x - off.x, y: P.pos.y - off.y } : a, at2 = document.elementFromPoint(p.x, p.y) || document, ev = Object.assign({ clientX: p.x, clientY: p.y }, base, { buttons: 0 });
         at2.dispatchEvent(new PointerEvent('pointercancel', ev)); at2.dispatchEvent(new PointerEvent('pointerup', ev));
         P.el().classList.remove('o55t-press');
         return false;
@@ -473,6 +519,7 @@
       O55.sound.play('drop');
       (document.elementFromPoint(to.x, to.y) || document).dispatchEvent(new PointerEvent('pointerup', Object.assign({ clientX: to.x, clientY: to.y }, base, { buttons: 0 })));
       await P.press(false);
+      emit('released', { el, kind: 'drag' });
       return true;
     },
     /* typing into a field it pressed: a letter every 18 ms, and the type tick at most every 120 ms (a chat cue's
@@ -481,13 +528,15 @@
       if (!el || SM.cancelled()) return false;
       await SM.click(el, { noClick: true }); el.focus();
       let ticked = -1e9;
-      for (const ch of text) {
-        if (SM.cancelled()) return false;
-        el.value += ch; el.dispatchEvent(new Event('input', { bubbles: true }));
-        if (/\S/.test(ch) && M.now() - ticked >= 120) { ticked = M.now(); O55.sound.play('type'); }
-        await M.delay(18);
-      }
-      return true;
+      try {
+        for (const ch of text) {
+          if (SM.cancelled()) return false;
+          el.value += ch; el.dispatchEvent(new Event('input', { bubbles: true }));
+          if (/\S/.test(ch) && M.now() - ticked >= 120) { ticked = M.now(); O55.sound.play('type'); }
+          await M.delay(18);
+        }
+        return true;
+      } finally { emit('released', { el, kind: 'type' }); }
     }
   };
   /* where a carry is at t (0..1). By default a gentle arc over the straight line. With via: down first, then across
@@ -508,9 +557,13 @@
     /* Show Me on the next step while the pointer is still flying home: this one takes the pointer from where it is */
     const takeover = homing();
     if (takeover) { st.show.cancelled = true; st.show = null; }
-    const me = st.show = { cancelled: false, step: s };
+    const me = st.show = { cancelled: false, step: s, legs: 0 };
+    st.sess.shown = (st.sess.shown || 0) + 1; /* how many demonstrations this run (a skin's debrief counts them) */
     st.root.setAttribute('data-showme', 'true');
-    emit('showMe', { step: s, takeover }); /* the pointer's travel is its sound ('pointer'), so the button itself is quiet */
+    /* the pointer's travel is its sound ('pointer'), so the button itself is quiet; a skin may play its own start
+       first (NieR: the Pod's anticipation), at most 300 ms */
+    await settle(emit('showMe', { step: s, takeover }), 300);
+    if (st.show !== me || me.cancelled) return;
     try { await s.showMe(SM, st); } catch (err) { console.warn('O55 tour: Show Me stopped', err); }
     await M.delay(600); /* settle: the result stays visible while the guide names the change */
     /* the pointer comes home (a skin may wait for the next step's callout and fly there: allow for its arrival) */
@@ -525,10 +578,10 @@
   function interruptShow() {
     if (!st.show) return;
     /* the demonstration was already over (its step done, the pointer flying home): it is put away, with no hand-back */
-    const home = homing(), s = st.show.step;
+    const home = homing(), s = st.show.step, at = P.where();
     st.show.cancelled = true; st.show = null; st.root.removeAttribute('data-showme'); P.hide();
     if (home) { emit('showMeDone', { step: s }); return; }
-    O55.sound.play('interrupt'); emit('interrupt', {});
+    O55.sound.play('interrupt'); emit('interrupt', { at, home: false });
     U.announce(T('tour.controls.interrupted'), st.root);
   }
 
@@ -635,7 +688,7 @@
     if (st.entering && (a === 'next' || a === 'showMe' || a === 'skipStep')) return; /* the new step's own controls come with it */
     if (a === 'next') { O55.sound.play('next'); if (st.step.onNext) st.step.onNext(st); return goStep(st.step.index + 1); }
     if (a === 'back') { O55.sound.play('back'); return back(); }
-    if (a === 'showMe') return showMe();
+    if (a === 'showMe') { if (st.keyStop && M.now() - st.keyStop < 400) return; return showMe(); }
     if (a === 'skip') return skip();
     if (a === 'pause') return togglePause();
     if (a === 'tips') { st.tips = arg; st.sess.tips = arg; save(); O55.sound.play('select'); renderBar(); renderCallout(false); return; }
@@ -778,14 +831,19 @@
     /* the scrim covers the page from the tour's first frame (a skin's opening moment plays over it before any step) */
     st.root.hidden = false; st.root.classList.add('o55t-opening'); st.hole = null; drawHole(null);
     M.after(700, () => st.root && st.root.classList.remove('o55t-opening'));
-    O55.sound.play('open');
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: resume ? 'resumed' : 'started' } }));
-    /* a skin may open the tour with a moment of its own before the first step (and take over the handoff) */
-    const opening = { resume: !!resume, from: o.from || null, noMorph: false };
+    /* a skin may open the tour with a moment of its own before the first step (and take over the handoff). The
+       onboarding window may hand itself over (o.handoff, also read as o.handover: NieR's ink line and Pod, see
+       85-tour-nier.js); the families' handoff is o.from, the window's rectangle the first callout grows out of. */
+    const handoff = o.handoff || o.handover || null;
+    const opening = { resume: !!resume, from: o.from || null, handoff, source: o.source || null, noMorph: false, sound: 'open' };
     const seq = st.seq;
-    await settle(emit('start', opening), 2400);
+    const held = emit('start', opening);
+    if (opening.sound) O55.sound.play(opening.sound);
+    await settle(held, 2400);
     if (!TR.running || st.seq !== seq) return true;
     await goStep(st.sess.index, { silent: true });
+    if (TR.running) emit('opened', { from: o.from || null, handoff, callout: st.root.querySelector('.o55t-callout'), resume: !!resume });
     if (o.from && !opening.noMorph) morphIn(o.from);
     return true;
   };
@@ -821,7 +879,7 @@
     /* a skin's closing moment plays while the layout goes back beneath it; it may ask for the app's own notices
        ("Widget removed", "Applied from the next turn") to stay quiet meanwhile, since its band already says what
        is happening */
-    const closing = { status, keep: !!keep, silent: !!(o && o.silent), hush: false };
+    const closing = { status, keep: !!keep, silent: !!(o && o.silent), hush: false, sound: status === 'done' ? 'finish' : 'close' };
     const ceremony = settle(emit('ending', closing), 2400);
     const res = await hushed(closing.hush, () => restore(st.snap, keep));
     await ceremony;
@@ -846,7 +904,7 @@
     const recoveryBox = document.getElementById('o55-tour-recovery'); if (recoveryBox) recoveryBox.remove();
     document.documentElement.removeAttribute('data-o55-tour');
     if (st.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
-    st.root.classList.add('o55t-closing'); if (!(o && o.silent)) O55.sound.play(status === 'done' ? 'finish' : 'close');
+    st.root.classList.add('o55t-closing'); if (!(o && o.silent) && closing.sound) O55.sound.play(closing.sound);
     emit('end', { status, keep: !!keep });
     /* (a new run started inside these 360 ms keeps its root, its step and its spotlight) */
     M.after(360, () => { st.root.classList.remove('o55t-closing'); if (TR.running) return; st.root.hidden = true; st.step = null; st.hole = null; st.target = null; emit('closed', {}); });

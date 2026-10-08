@@ -295,7 +295,7 @@ becomes in Slint:
 | `steps(n)` timing (Retro) | `floor(t * n) / n` on `animation-tick()`, or a `Timer` stepping a property (Slint easings have no steps) |
 | Springy overshoot | `easing: spring(bounce)` or an overshooting `cubic-bezier` |
 | `stroke-dasharray` / `stroke-dashoffset` (Basic lines that draw themselves on, dashed connectors, marching dashes on Retro connectors and on the Basic and Retro tour ring) | Slint's `Path` has no dash properties: dashes are segments emitted into the path's `commands`, or small elements placed with `point-at()` / `angle-at()` (new in 1.18) and shifted by `animation-tick()`; a draw-on builds the path up to a fraction of its length |
-| `clip-path: inset()` wipes (Retro title typing, the window's CRT open, scene wipes) | a clipping `Rectangle { clip: true; }` whose width or height animates |
+| `clip-path: inset()` wipes (Retro title typing, the window's CRT open, scene wipes) | a clipping `Rectangle { clip: true; }` whose width or height animates; the registered `--o55fx-cur` ink-bar slide is a child `Rectangle` whose width animates |
 | Static `clip-path: polygon()` shapes (Friendly's pennant rail nodes, the QR viewfinder's corner brackets) | `Path` shapes |
 | The circular look reveal (a View Transition from the chosen tile) | `Window::take_snapshot()` of the old and the new look shown as `Image`s; the new one grows inside a `Rectangle { clip: true; border-radius: self.width / 2; }` centred on the tile, then the overlay goes |
 | The tour's scrim with a spotlight hole, and its ring | a `Path` with `fill-rule: evenodd` and a rounded-rectangle hole; the ring is a stroked `Path` or a bordered `Rectangle`, its glow two wider faint strokes |
@@ -305,6 +305,15 @@ becomes in Slint:
 | `color-mix()` | `.mix()`, `.transparentize()`, `.brighter()`, `.darker()` |
 | Confetti (Web Animations) | per-particle properties computed from `animation-tick()` since the spawn time |
 | Synthesised sound (Web Audio) | not a Slint feature: played from Rust; nothing visual depends on it |
+| Typewriter text (`FX.type`: the untyped half transparent, a block caret over it) | a `Text` whose string is a `Timer` substring over a transparent full-string `Text`; the caret is a `Rectangle` |
+| Boot log lines (`FX.bootlog`: a paper block revealing each line in steps) | paper `Rectangle`s stepping x in `floor(t*8)/8` |
+| Fold to a line (`FX.fold`: the window or callout collapsing to its centre line) | `transform-scale-y`, or a clipping `Rectangle` |
+| Line travel and hops (`FX.lineTo`, `FX.hops`: the line moving, the Pod's held-hop flight) | a `Rectangle`'s x, y and width stepped |
+| Hung cards (`FX.banner` hang: strings, knots, the card lowered and hauled up) | a clipping `Rectangle`, 1 px `Rectangle` strings and `Path` knots |
+| Pod lanes (`FX.pod.say`: the strip placed clear of actors and subjects) | geometry from layout rects; hit tests remain only on the tour's anchor path (`covers()`, 5 points) |
+| The reboot plate's clip (the in-window cover growing from the control) | a clipping `Rectangle` stepping x, y, width and height; the compositor version is an overflow box with a counter-transformed inner |
+| Two-line clamp with balanced wrap (`line-clamp: 2`, `text-wrap: balance`) | `Text { wrap: word-wrap; overflow: elide; }` with a fixed height |
+| Glyph decode (`FX.decode`: short labels scrambling left to right) | a `Timer` stepping the shown string |
 
 ## Status
 
