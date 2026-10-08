@@ -44,12 +44,16 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/js/00–20` | Namespace, utilities, the motion clock (one time-scale for filming), synthesised sound kits, storage. |
 | `src/js/16-nier-fx.js` + `src/css/05-nier-fx.css` | `O55.nierFx`: the shared NieR effects for the onboarding window and the tour (see Settings below). |
 | `src/js/25–35` | Fixture world and scenarios, the owner command table (pre-commit discipline), the canonical setup-plan draft. |
-| `src/js/50–57` | Art: scene system, four family prop libraries (Basic blueprint, Friendly paper theatre, Glass light lab, Retro arcade), scene compositions. |
+| `src/js/50–59` | Art: scene system, five family prop libraries (Basic blueprint, Friendly paper theatre, Glass light lab, Retro arcade, and the NieR unit marionettes in `54-art-nier.js`), the marionette rig and the troupe's stage performances (`58-rig.js`, `59-cheer.js`), scene compositions. |
 | `src/js/60–62` | The window, components, flow helpers (phased owner operations, countdowns, QR drawing). |
+| `src/js/64-nier-look.js` | `O55.nierLook`: NieR Mode where a look is chosen (the Pick a look row, the look popover's row, the Adjust panel) and the preview that is committed with the look into the new Project. |
 | `src/js/65–74` | Screens by chapter: Welcome, Computer (Connect, Server, Restore), Project (begin, folder, NAS/SSH, name, start-like, keep safe, online copy, away, review, creating, protect), AI (providers, Free Models), Ready. |
+| `src/js/66-nier-window.js` + `src/css/11-window-nier.css`, `13-nier-look.css` | The NieR window (`O55.nierWindow`, NieR Mode's skin of the onboarding window) and the styles of the look row, its thumbnail and its Adjust panel. |
 | `src/js/80–84` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, Explain this reply simply), the Planning Wizard practice run, and the 18 steps; then NieR Mode's Pod 042 chat adapter. |
+| `src/js/85-tour-nier.js` + `src/css/41-tour-nier.css` | The Guided Tour's NieR skin: Pod 042 in the callout and as the Show Me pointer, the square spotlight, the hung chapter cards and the results card. |
 | `src/js/90–95` | Concept demo pill; boot, shims for the shell's existing callers, driver switches (`?o55=fresh|off|screen=<id>`, `?o55scenario=<id>`). |
 | `src/css/` | Window, components, motion, art. Colours come from the live theme tokens. |
+| `src/css/03-retro-light-readability.css` | Retro Light warning text and user-bubble text, approved 2026-10-08. |
 | `src/coverage.map.json` → `src/coverage.json` | Every setup-plan field (63) and conditional (26) mapped to the screen or control that sets it, plus screens → scenes and scenarios → drivers. |
 | `src/settings/` | The Settings layer, forked from the base's T50 Settings refresh and composed by `tools/settings_layer.py`: `kit.js` + `kit.d/*.js` (rows, controls, placement, plain pages, look settings, wizard, flows), `managers/*.js` (one per manager page), `styles.css` + `styles.d/*.css`, `data.json` + `data.d/`, `placement.json` + `o55/placement.d/*.json` (where every canonical setting id is drawn), `o55/rows.d/*.json` (per-row wording and behaviour). |
 | `src/settings/kit.d/23-nier-theme-menu.js` + `src/settings/styles.d/18-nier-theme-menu.css` | The title-bar theme menu's NieR Mode row and its Adjust button (see Settings below). |
@@ -156,22 +160,25 @@ share a kit), plus a fifth NieR kit while NieR is painted with its Menu sounds p
 NieR plays the painted Basic kit. `nierOn`, `nierOff` and `reboot` always use the NieR voice while the sounds part
 is installed, even mid-transition. An explicit `family` or `kit` option picks a kit outright.
 
-The vocabulary is 43 events. An event a kit lacks falls back to an older one: `chapter` to `next`,
-`reveal`/`sheet`/`reboot`/`nierOn` to `open`, `unsheet`/`nierOff` to `close`, `phase`/`copy`/`move`/`pod` to `tap`,
-`found`/`save` to `success`, `warn`/`missing`/`glitch` to `error`, `callout` to `spot`, `pointer` to `pickup`,
-`arrive` to `drop`, `checkpoint`/`quest` to `step`, `interrupt` to `back`, `decode` to `type`. `hover` is silent
-outside NieR; an unknown event is dropped and logged.
+The vocabulary is 49 events. An event a kit lacks falls back to an older one: `chapter` to `next`,
+`reveal`/`sheet`/`reboot`/`nierOn` to `open`, `wake` to `reveal`, `unsheet`/`nierOff` to `close`,
+`phase`/`copy`/`move`/`pod`/`string` to `tap`, `found`/`save` to `success`, `warn`/`missing`/`glitch` to `error`,
+`callout` to `spot`, `pointer` to `pickup`, `showPointer` to `pointer`, `arrive`/`land` to `drop`,
+`checkpoint`/`quest` to `step`, `interrupt`/`bow` to `back`, `showInterrupt` to `interrupt`, `decode` to `type`.
+`hover` is silent outside NieR; an unknown event is dropped and logged.
 
 Frequent events are pools of related variants drawn by a shuffle that never repeats the last one. Pitches follow
 the journey: each chapter has its chord (Welcome I, Computer IV, Project V, AI vi, Ready I up an octave; the tour's
 ask, workspace and plan chapters IV, ii and V, resolving to I at the finish; NieR its own modal chords), forward
 steps climb the chord with progress, Back descends, and choices rotate through it. The first forward move into a new
-chapter becomes a chapter sting automatically, unless the window has only just opened. `setContext` tells the music
+chapter becomes a chapter sting automatically, unless the window has only just opened or NieR's window claims the
+sting (the hung act card's `quest` is then the chapter's one sting). `setContext` tells the music
 where the journey is; `chapter: 'tour'` follows the tour's own chapter.
 
-Several events in the same moment (one task, or within 70 ms) play the most important one; three pairs layer by
-design instead: decode chatter under anything, a celebration's sparkles over commit or finish, and the Pod just
-after callout, quest, chapter or step. Very frequent events carry a minimum gap between two of the same. Nothing
+Several events in the same moment (one task, or within 70 ms) play the most important one; more layer by design
+instead: the texture ticks (decode chatter, typing, moves, the cursor's hover) and the stage's foley (a string, a
+landing, a bow) under anything, a celebration's sparkles over commit or finish, and the Pod just after callout,
+quest, chapter or step. Very frequent events carry a minimum gap between two of the same. Nothing
 plays before the first trusted gesture.
 
 The mute control mirrors the current Project's `general.interaction.sound-effects` (factory default on, DL-107); a
@@ -181,7 +188,7 @@ writes and stores nothing, and the Project's own value wins at the commit and at
 The NieR Menu sounds part plays through `O55.sound.synth`, so there is one AudioContext and the blips sit under the
 same mute and gesture rule. The blips ignore synthetic clicks and anything inside the onboarding window or the tour.
 
-`O55.sound.CATALOG` lists all 310 kit, event and variant takes with names, styles and durations; `preview` plays one
+`O55.sound.CATALOG` lists all 354 kit, event and variant takes with names, styles and durations; `preview` plays one
 entry unmuted, `renderBuffer` renders one offline, and `bars` draws its waveform. Settings › Notifications & Sounds ›
 Sounds shows them as Setup & tour groups (one look at a time) and a NieR group, all generated demonstration tones
 previewed through `O55.sound`; main takes show first and the rest sit behind Show N more takes. The event phrases
@@ -221,7 +228,78 @@ Canon check: the onboarding carries F3-520's exact eleven-stage main graph and s
 (`src/js/40-stages.js`). The full-reload resume capability in F3-521 remains unverified until the native owner can
 resolve a bounded restoration reference; scenario t4 must verify the concept's explicit recovery state instead.
 
-<!-- NIER-ONBOARDING-TOUR-ART: the lead adds the onboarding NieR row, window skin, tour and puppet sections here -->
+## NieR Mode in onboarding and the tour
+
+NieR Mode (see Settings above) has a full showpiece pass in the onboarding window and the Guided Tour: a look row, a
+window skin, a tour skin, an art family and a sound pass of its own. Every touch answers only while NieR Mode is
+painted and asks for its own installed part, so Reduced Motion and the Quiet, Still and Colors only presets fall back
+cleanly, and the four families keep every pixel outside the NieR thumbnail and the look menu's NieR row.
+
+### Where NieR Mode is chosen
+
+`O55.nierLook` (`src/js/64-nier-look.js`) puts NieR Mode where a look is chosen: a checkbox with an Adjust NieR look
+button and a NieR art thumbnail as a row of its own under the four family tiles on Pick a look
+(`src/js/65-screens-welcome.js`), the same two controls as a row in the look popover that the onboarding header's and
+the tour bar's look buttons open (`src/js/63-look-menu.js`), and the title-bar theme menu's NieR Mode row
+(`src/settings/kit.d/23-nier-theme-menu.js`).
+
+In onboarding it is a preview, never a write: `PM_NIER.preview` paints the three NieR rows over the stored values
+without writing them, `PM_NIER.previewing()` reads the preview back, and the rows are committed with the look into the
+Project selected at the commit (the new Project a first run creates), so no other Project is written and a start like
+another Project excludes the three rows as it excludes the theme pair. The Plug-in Chips editor reads and writes
+through a store from `PM_NIER.store`: `'preview'` inside the window, `'live'` after it. Closing or skipping the window
+leaves the preview painted, lingering exactly like the family preview until the next Settings write or Project load,
+and a resume (after a reload too) re-applies it from the session.
+
+The Adjust NieR look editor is `PM_NIER_CHIPS.mount` inside the onboarding window, a panel that replaces the window's
+interior instead of a nested dialog, and `PM_NIER_CHIPS.popup` everywhere else.
+
+### The NieR window
+
+`O55.nierWindow` (`src/js/66-nier-window.js`, styles in `src/css/11-window-nier.css`, words in
+`src/copy.d/45-nier-window.json`) is NieR Mode's skin of the onboarding window, called through `O55.ui.skin` at the
+window's moments: a ruled header with a chamfered brand block, a rail drawn as an ink ruler with ticks, strings and
+tabs, and chosen cards, tiles and rows inverted to ink blocks under corner brackets. Pod 042 narrates the screens from
+the stage in two lanes, just below the control bar or low over the stage lip, and never covers an actor, a hung card
+or the stage kicker. Words longer than 8 characters type on through `FX.type` behind a block caret, their final
+layout held from the first frame; `FX.decode`'s scramble stays on labels of 8 characters or fewer. No surface larger
+than 340x256 px reverses its opacity or brightness: large areas leave one way (a fold, a wipe, slats), and only small
+elements (carets, stamps, ticks) flicker.
+
+### The hero moments as built
+
+| Moment | What happens | Files |
+|---|---|---|
+| Ticking NieR | The reboot cover grows from the NieR thumbnail in six held steps, a check list types with blinking stamps to "All clear", and six slats tear away; at the reveal the `wake` choir plays, You raises the signal, and the three units are lowered in centre first on the notes of the chord. Unticking powers the units down and folds the world back into the thumbnail. | `src/js/64-nier-look.js`, `src/settings/kit.d/19-nier-parts.js`, `src/js/59-cheer.js` |
+| The cold open | The window opens empty on a line and the header assembles; a boot log types in the pane, and each of its stamps wakes the asleep puppets (the strings go taut, the units rise from their slump); the log folds onto its underline, which slides on as the title's eyebrow rule, and then the first music plays and Pod gives its first line. | `src/js/66-nier-window.js`, `src/js/16-nier-fx.js`, `src/js/59-cheer.js` |
+| The act card | At a chapter's end an ink card is lowered on two strings and lands on the chapter's chord; on landing the ink block walks the rail to the next chapter and the brand's counter rolls; the leaving troupe bows under the card, and after the haul a unit points at the question. | `src/js/66-nier-window.js`, `src/js/16-nier-fx.js` |
+| Created, and Ready's curtain call | The Project's name sign comes down on its strings stamped CREATED, with confetti fanning from it; at Ready the three bows spell the chord, the rail re-stamps every check, and a unit points at the tour button. | `src/js/72-screens-review.js`, `src/js/74-screens-ready.js`, `src/js/57-scenes-journey.js`, `src/js/59-cheer.js` |
+| The one-line hand-over | The troupe waves goodbye, the content steps out, the Pod lifts and detaches, and the window folds to an ink line that travels into the tour's first callout and slices it open while the Pod hops into the callout's dock. | `src/js/74-screens-ready.js`, `src/js/66-nier-window.js`, `src/js/80-tour-core.js`, `src/js/85-tour-nier.js` |
+| Show Me, Pod takes the strings | Pod 042 launches from its dock in the callout, travels in nine held hops with trail squares, lowers a string onto the target and tugs it; a control frame reads "Pod 042 · In control" and "Press any key to stop", and hands back with "You have control". | `src/js/85-tour-nier.js`, `src/js/80-tour-core.js`, `src/css/41-tour-nier.css` |
+| The chapter card and the HUD walk | Each new tour chapter gets a hung card on two strings while the spotlight moves on, and the bar's ink block walks from the old chapter's name to the new one's. | `src/js/85-tour-nier.js`, `src/js/16-nier-fx.js` |
+| The debrief, then home | At the finish the callout folds and a results card opens from its line: objectives done, shown by Pod 042, the layout put back or kept, and the time; the Pod flies home to its corner, and the card folds onto the landing note. | `src/js/85-tour-nier.js`, `src/js/16-nier-fx.js` |
+
+Under Reduced Motion and the Still and Colors only presets every moment stands in its end state at once and the foley
+is skipped, Quiet drops the Pod beats, low resource plays the instant paths, and input never waits: a key or a press
+snaps a running performance to its end state.
+
+### The NieR art family
+
+`src/js/54-art-nier.js` draws the fifth art family, the unit marionettes: small android units in the YoRHa spirit,
+original figures with no likeness to any game character. A shield-shaped head crossed by a rigid visor band is each
+unit's only face (a scan notch at rest, joy chevrons, rest dashes); there is a high stand collar, one coat silhouette
+per variant, square marionette pins and square hands, and hairline strings tied to ink diamond knots. You, the one
+unstrung figure, sits on a broken column and steers the Pod-like floating control unit by a stepped signal; a small
+machine lifeform watches from the snapped corner of the ruin stage. The installed NieR parts gate decoration and
+motion only, never the unit look or its visor. The stage API is one line: `A.troupe.enter`/`powerDown`/`wake`/`bow`/`rise`/`point`/`wave`/`snap`, with `A.curtainCall`, `A.createdAct` and `A.peek` around it; each performance plays its own foley and goes straight to its end state under Reduced Motion.
+
+### Sound
+
+Under NieR the window and the tour play the NieR kit through the same `O55.sound` (see Sound above): the hung cards'
+`quest` is a chapter's one sting in the window and the tour, the troupe's landings play `land` on chord tones with
+stereo pans, the name sign sings the Project's name through `string`'s step climb, and Show Me has its own
+`showPointer` and `showInterrupt` takes. Every look gained a four-note motif over the chapter chords (Basic E G B D,
+Friendly G A B D, Glass C G D A, Retro C E G C, and NieR's A C E G), one note per chapter, resolving at Ready.
 
 ## Findings for the production app (found while building the tour)
 
@@ -319,6 +397,8 @@ becomes in Slint:
 
 M1a (landed): the whole onboarding works end to end in pilot art. M2: the Guided Tour, t1–t5 passing with zero
 network requests and unchanged usage counters, reviewed in all eight themes, at 760 and 390 px, and on slow-motion
-films. Next: the onboarding review at the same depth and more, including a full logic audit (does every path work,
-is the order right, does what is shown and offered follow from earlier choices), then art, motion and sound polish,
-`REPORT.md`, `RESEARCH.md` and the hub wrapper.
+films. 2026-10-08: the NieR showpiece pass landed (the NieR checkbox and Adjust where a look is chosen, the NieR
+window, the hero moments, the NieR tour, the NieR puppets, the sound pass and library); canon in DL-145, F3-590,
+F3-591 and SSYS-043. Next: the onboarding review at the same depth and more, including a full logic audit (does every
+path work, is the order right, does what is shown and offered follow from earlier choices), then art, motion and
+sound polish, `REPORT.md`, `RESEARCH.md` and the hub wrapper.
