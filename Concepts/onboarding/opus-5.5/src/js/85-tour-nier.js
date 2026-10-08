@@ -669,7 +669,7 @@
      takes over from the window's scrim in the same frame; the first callout and the bar are built and placed, unseen.
      When the line comes (handoff.line), it travels to the callout's top edge and takes its width (a soft pointer), the
      callout slices open from it (callout), its kicker and title type on, the scrim steps to its usual dim and the bar
-     slices in just after. Meanwhile the same Pod (handoff.pod) flies in seven held hops of 100 ms, shrinking to the
+     slices in just after. Meanwhile the same Pod (handoff.pod) flies in seven held hops of 90 ms, shrinking to the
      dock's size, and docks near T1300: the travelling Pod goes and the docked one shows in one frame, with its chirp.
      No line: the callout slices open as usual; no Pod: the corner Pod flies in as usual once the callout stands. */
   let hand = null;
@@ -765,14 +765,14 @@
       else opened.then(() => { if (handLive(hd)) chirp(); });
       return;
     }
-    /* hops may start with the lift (at+240). The Pod is often not handed over until the lift ends, so a wait until
-       at+400 does not move the start, and nine hops of 100 ms then finish after the callout's long task (the dock
-       landed near T1700). Seven hops keep that 100 ms rhythm and finish near T1300, before the task. */
+    /* hops may start with the lift (at+240). The Pod is not handed over until the lift ends, and a heavy click
+       pushes that later, so nine hops of 100 ms finish into the callout's long task and the dock lands near T1700.
+       Seven even hops of 90 ms finish near T1300, before that task, on both a light click and a heavy one. */
     const wait = hd.at + 240 - M.now(); if (wait > 0) await M.delay(wait);
     const unit = root.querySelector('.o55t-callout .o55t-pod-unit');
     if (!handLive(hd) || !unit) { drop(); root.classList.remove('o55t-npodout'); return; }
-    pod.animate([{ scale: '1' }, { scale: '.75' }], { duration: 700, easing: 'steps(3, end)', fill: 'forwards' });
-    await fx.hops(pod, unit, { n: 7, ms: 700 });
+    pod.animate([{ scale: '1' }, { scale: '.75' }], { duration: 630, easing: 'steps(3, end)', fill: 'forwards' });
+    await fx.hops(pod, unit, { n: 7, ms: 630 });
     /* it lands: the travelling Pod goes and the docked one shows in the same frame, with its voice */
     drop(); root.classList.remove('o55t-npodout');
     if (handLive(hd)) chirp();
