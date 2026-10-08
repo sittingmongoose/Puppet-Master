@@ -851,13 +851,14 @@
      its constants: 23 % down the window, about 92 px tall) would sit on it where it usually goes, under the Wizard's
      heading: there it moves down past the banner's reach instead, so the two never overlap and nothing has to wait.
      It slices in and its words type on. */
+  const dropLine = (l) => { const fx = FX(); if (l && fx) fx.lineDrop(l); };
   TR.on('landing', (d) => {
     if (has('voice')) d.lead = O55.t('nierFx.pod.leads.proposal');
-    const f = fin; if (!f) return null;
-    return M.delay(Math.max(0, f.t0 + 2900 - M.now())).then(() => {
-      /* no note comes (the Planning Wizard is not there): the card still goes */
-      M.after(1800, () => { if (fin === f && !f.out) finaleOut(f, null).then((l) => { const fx = FX(); if (l && fx) fx.lineDrop(l); }); });
-    });
+    /* the note is placed at once (unseen until the card comes down onto it); if none comes (the Planning Wizard is not
+       there), the card still goes a little after its time */
+    const f = fin;
+    if (f) M.after(Math.max(0, f.t0 + 4700 - M.now()), () => { if (fin === f && !f.out) finaleOut(f, null).then(dropLine); });
+    return null;
   });
   TR.on('landed', ({ note }) => {
     if (!painted() || !note) return;
@@ -878,11 +879,12 @@
     note.style.opacity = '0';
     const page = note.closest('[id^="panel-"]') || note.parentNode, t0 = M.now(); let last = null;
     const look = () => {
-      if (!note.isConnected) { if (f) finaleOut(f, null).then((l) => { const fx = FX(); if (l && fx) fx.lineDrop(l); }); return; }
+      if (!note.isConnected) { if (f) finaleOut(f, null).then(dropLine); return; }
       const up = !page.parentElement || page.getBoundingClientRect().top - page.parentElement.getBoundingClientRect().top < 100;
       const y = Math.round(note.getBoundingClientRect().top), held = up && y === last; last = y;
       if (!(held || M.now() - t0 > 1600)) { M.after(80, look); return; }
-      if (f) finaleOut(f, note).then(open, () => open(null));
+      /* after the debrief, the card comes down onto the note at its time (about T2900) */
+      if (f) M.delay(Math.max(0, f.t0 + 2900 - M.now())).then(() => (fin === f && !f.out ? finaleOut(f, note) : null)).then(open, () => open(null));
       else { clearBanner(note); open(null); }
     };
     M.after(80, look);
