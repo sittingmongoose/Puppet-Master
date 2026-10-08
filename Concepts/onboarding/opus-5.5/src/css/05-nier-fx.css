@@ -9,6 +9,8 @@
 .o55fx-layer.o55fx-page { position: fixed; z-index: 2147482650; }
 #pm-o55-tour > .o55fx-layer { z-index: 1; }
 .o55fx-layer > * { position: absolute; pointer-events: none; box-sizing: border-box; }
+/* a banner, band or Pod line made at its call waits unseen for the read phase that places and shows it */
+.o55fx-layer > [data-wait] { visibility: hidden; }
 .o55fx-layer *, .o55fx-layer *::before, .o55fx-layer *::after { box-sizing: border-box; }
 
 /* ---- slice: the edges of the opening (a hairline with square caps, drawn across, then riding the clip apart) ---- */
