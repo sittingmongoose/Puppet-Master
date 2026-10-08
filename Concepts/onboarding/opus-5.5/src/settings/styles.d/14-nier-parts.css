@@ -35,19 +35,23 @@ html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-m
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important;
 }
-/* everything inside the bar reads in paper; a badge inside it turns over again */
+/* everything inside the bar reads in paper. That colour follows .o55np-cur-over, which kit.d/19-nier-parts.js puts on the
+   hovered item only: a :hover followed by a descendant makes Blink restyle the whole subtree of every element whose
+   hover changes. The item's own ink (the rule above) stays on :hover, which invalidates just that element. Chosen
+   items keep their own branches. A badge inside the bar turns over again. */
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon,
   .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item,
   .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
   .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item,
-  .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])):hover :where(*),
+  .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(*),
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active,
   .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active,
   .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .pm7u-navbtn.active, .pm7u-poprow.active, .orch-tab.active, .fm-row.selected,
   .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
-html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .pm7u-navbtn, .resource-row, .chat-thread-item, .fm-row, .index-link):is(:hover, .active, .is-active, .selected) :is([class*="badge"], [class*="count"], kbd) {
+html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .pm7u-navbtn, .resource-row, .chat-thread-item, .fm-row, .index-link).o55np-cur-over :is([class*="badge"], [class*="count"], kbd),
+html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .pm7u-navbtn, .resource-row, .chat-thread-item, .fm-row, .index-link):is(.active, .is-active, .selected) :is([class*="badge"], [class*="count"], kbd) {
   background: var(--o55-nier-on-ink) !important; color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink) !important;
 }
 /* the bar's own marks (index bullets, active side ticks) would double the cursor: hide them */
