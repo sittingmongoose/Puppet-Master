@@ -278,6 +278,9 @@ html[data-o55-nier="on"] .o55t-landing::before { content: ""; flex: none; width:
   background: linear-gradient(currentColor, currentColor) 0 0 / 5px 5px no-repeat, linear-gradient(color-mix(in srgb, currentColor 60%, transparent), color-mix(in srgb, currentColor 60%, transparent)) 9px 0 / 5px 5px no-repeat,
     linear-gradient(color-mix(in srgb, currentColor 30%, transparent), color-mix(in srgb, currentColor 30%, transparent)) 18px 0 / 5px 5px no-repeat; }
 .o55t-res-body { display: flex; align-items: flex-start; gap: 14px; }
+/* Show Me never used: the shown row is omitted. The shorter stack still frames the Pod, which sits in its middle. */
+.o55t-results[data-n="3"] .o55t-res-body { align-items: center; }
+.o55t-results[data-n="3"] .o55t-res-pod { margin-top: 0; }
 .o55t-res-pod { flex: none; width: 30px; height: 39px; margin: 1px 0 0 2px; }
 .o55t-res-pod svg { display: block; width: 30px; height: 39px; overflow: visible; }
 .o55t-res-rows { flex: 1; min-width: 0; display: grid; gap: 8px; margin: 0; }

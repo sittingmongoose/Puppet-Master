@@ -734,7 +734,8 @@
     const acts = TR.defs.filter((x) => x.kind === 'action'), done = acts.filter((x) => st.sess.done.includes(x.id)).length;
     let secs = 0; try { secs = Math.max(0, Math.round((Date.now() - Date.parse(st.sess.started)) / 1000)); } catch (_) {}
     const rows = [['objectives', `${done} / ${acts.length}`]];
-    if (has('pod')) rows.push(['shown', String(st.sess.shown || 0)]);
+    /* a zero is not a count: when Show Me was never used the row is left out, so the card does not say 0 */
+    if (has('pod') && (st.sess.shown || 0) > 0) rows.push(['shown', String(st.sess.shown)]);
     rows.push(['layout', T(keep ? 'results.layoutKept' : 'results.layoutBack')], ['time', `${two(Math.min(99, Math.floor(secs / 60)))}:${two(secs % 60)}`]);
     return rows;
   }
@@ -768,6 +769,7 @@
     const card = f.card = document.createElement('section');
     card.id = 'o55t-results'; card.className = 'o55t-results'; card.setAttribute('role', 'status');
     card.setAttribute('aria-label', T('results.kicker'));
+    card.setAttribute('data-n', String(f.rows.length));
     card.innerHTML = `<p class="o55t-res-kicker"><span class="o55t-res-kt">${U.esc(T('results.kicker'))}</span></p>`
       + `<div class="o55t-res-body">${pod ? `<span class="o55t-res-pod" aria-hidden="true">${podSvg()}</span>` : ''}`
       + `<dl class="o55t-res-rows">${f.rows.map(([k, v], i) => `<div class="o55t-res-row" data-i="${i}"><dt>${U.esc(T('results.' + k))}</dt><i class="o55t-res-lead" aria-hidden="true"></i><dd>${U.esc(v)}</dd></div>`).join('')}</dl></div>`;
