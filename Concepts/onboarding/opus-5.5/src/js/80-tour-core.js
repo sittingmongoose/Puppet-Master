@@ -504,7 +504,8 @@
   function watch() {
     if (st.poll) st.poll.cancel();
     const tick = () => {
-      if (!TR.running || st.paused) { st.poll = M.after(250, tick); return; }
+      if (!TR.running || !st.step) { st.poll = null; return; } /* the tour has ended (or is between runs): the loop stops */
+      if (st.paused) { st.poll = M.after(250, tick); return; }
       const s = st.step, el = targetEl();
       /* a surface being dragged is hidden by the workspace on purpose; that is never a missing target */
       if (s.target && !el && !document.body.classList.contains('pm-home-dragging')) { if (!st.missingSince) st.missingSince = performance.now(); if (!st.missing && performance.now() - st.missingSince > 1600) { st.missing = true; renderCallout(true); O55.sound.play('missing'); emit('missing', { on: true }); } }
@@ -555,7 +556,14 @@
     if (a === 'lookFamily') { O55.lookMenu.save(arg, O55.theme().mode); return; }
     if (a === 'lookMode') { O55.lookMenu.save(O55.theme().chosen, arg); return; }
     /* NieR Mode in the look menu: the checkbox and Adjust NieR look (O55.lookMenu.nier, after setup: live) */
-    if (a === 'lookNier' || a === 'lookNierAdjust') { if (O55.lookMenu && O55.lookMenu.nier) O55.lookMenu.nier(a, b); return; }
+    if (a === 'lookNier' || a === 'lookNierAdjust') {
+      if (!(O55.lookMenu && O55.lookMenu.nier)) return;
+      /* Adjust opens the Plug-in Chips dialog: the menu closes first, so the dialog returns focus to the bar's look
+         button (the redrawn one) rather than to a control the redraw removed */
+      if (a === 'lookNierAdjust') { st.lookOpen = false; renderBar(); }
+      O55.lookMenu.nier(a, (a === 'lookNierAdjust' && st.root.querySelector('.o55t-bar [data-o55t="lookMenu"]')) || b);
+      return;
+    }
     if (a === 'takeMe') { O55.sound.play('select'); if (st.step.goTo) st.step.goTo(st); st.missing = false; st.missingSince = 0; renderCallout(false); emit('missing', { on: false }); return; }
     if (a === 'skipStep') { O55.sound.play('next'); return goStep(st.step.index + 1); }
     if (a === 'finish') return finish(arg === 'keep');
@@ -714,7 +722,9 @@
     try { return await ending(status, keep, o); } finally { st.ending = false; }
   }
   async function ending(status, keep, o) {
-    if (st.poll) st.poll.cancel(); interruptShow();
+    /* a step still arriving (awaiting its page, its target or a skin's hold) stands down: it would restart the loop */
+    ++st.seq; st.entering = false;
+    if (st.poll) { st.poll.cancel(); st.poll = null; } interruptShow();
     if (st.step && st.step.leave) { try { st.step.leave(st); } catch (_) {} }
     /* a skin's closing moment plays while the layout goes back beneath it */
     const ceremony = settle(emit('ending', { status, keep: !!keep, silent: !!(o && o.silent) }), 2400);

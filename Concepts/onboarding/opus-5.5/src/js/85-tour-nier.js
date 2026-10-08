@@ -12,8 +12,8 @@
      decode     the callout's title and the Pod's words resolve from scrambled glyphs
      slice      each new callout slices open where it stands; the bar slices open at the start
      reboot     a reboot band opens the tour, and plays while the layout goes back at the end
-     quests     a quest banner names each new chapter while the spotlight moves on; the landing note waits until
-                the page's own Tour complete banner has folded, so nothing lands on top of it
+     quests     a quest banner names each new chapter while the spotlight moves on; the landing note keeps out of
+                the way of the page's own Tour complete banner, so nothing lands on top of it
      glitch     a missing target is an Alert: the callout tears
      sweep      a scan line steps down each newly locked target    ticks   map ticks on the spotlight's edges
      blocks     the bar's progress as ink blocks                     cursor  ink hover, and the menu cursor on the
@@ -280,7 +280,8 @@
     if (d.silent || !painted() || !fx || !fx.enabled('band') || still()) return null;
     const key = d.status === 'done' ? (d.keep ? 'band.keep' : 'band.restore') : 'band.skip';
     st.root.classList.add('o55t-nend');
-    return fx.band(T(key), d.status === 'done' ? 1400 : 1000, { kicker: T('band.kicker'), within: st.root });
+    /* short: the layout goes back beneath it, and the prompt on the Planning Wizard should not wait */
+    return fx.band(T(key), 900, { kicker: T('band.kicker'), within: st.root });
   });
   TR.on('end', () => {
     if (st.root) st.root.classList.remove('o55t-nend', 'o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout');
@@ -288,29 +289,22 @@
     const fx = FX(); if (fx && cued) { fx.brackets(cued, false); cued = null; }
   });
 
-  /* the landing note waits for the page's Tour complete banner (kit.d/20-nier-world.js, about 0.7 s after the tour
-     finishes, then about 3 s) to fold, so the two never sit on each other; then it slices in and its words resolve */
-  TR.on('landing', (d) => {
-    if (!painted()) return null;
-    if (has('voice')) d.lead = O55.t('nierFx.pod.leads.proposal');
-    if (!has('quests')) return null;
-    return new Promise((res) => {
-      const t0 = M.now(); let seen = false;
-      const tick = () => {
-        const q = document.getElementById('o55nw-quest'), waited = M.now() - t0;
-        if (q) seen = true;
-        if ((seen && !q) || (!seen && waited > 1600) || waited > 6500) { res(true); return; }
-        M.after(120, tick);
-      };
-      M.after(120, tick);
-    });
-  });
+  /* The landing note comes at once, in Pod's voice. The page's own Tour complete banner (kit.d/20-nier-world.js, a
+     92 px band at 23 % of the window, about 0.7 s after the tour finishes, for about 3 s) would sit on it where it
+     usually goes, under the Wizard's heading: there it moves down past the band's reach instead, so the two never
+     overlap and nothing has to wait. It slices in and its words resolve. */
+  TR.on('landing', (d) => { if (has('voice')) d.lead = O55.t('nierFx.pod.leads.proposal'); });
   TR.on('landed', ({ note }) => {
-    const fx = FX(); if (!painted() || !fx || !note) return;
+    if (!painted() || !note) return;
+    if (has('quests')) {
+      const top = innerHeight * 0.23 - 10, bottom = innerHeight * 0.23 + 92 + 12;
+      const hits = () => { const r = note.getBoundingClientRect(); return r.bottom > top && r.top < bottom; };
+      for (let next = note.nextElementSibling; hits() && next; next = note.nextElementSibling) next.after(note);
+    }
+    const fx = FX(); if (!fx) return;
     if (has('slice')) fx.slice(note, { ms: 280 });
     const span = note.lastElementChild, node = span && span.lastChild;
     if (node && node.nodeType === 3) fx.decode(node, { ms: 520 });
-    if (has('voice') || has('pod')) sound('pod');
   });
 
   /* ------------------------------------------------------------------ keyboard focus and the menu cursor */
