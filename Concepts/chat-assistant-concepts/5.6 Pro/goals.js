@@ -209,6 +209,19 @@
  function restore(){for(const t of timers.values())clearTimeout(t);timers.clear();store.generation++;for(const k of ['byId','currentByThread','cancellations','proposals','tickets','receipts'])store[k]={};RT.boundGoals.byPlan={};RT.boundGoals.seq=0;Object.assign(ui,{editing:null,draft:null,proposal:null,history:false,continuations:false});const g=clone(GOAL_FIXTURE);g.scope=scope('query')||{projectId:g.projectId,threadId:'query',worktreeId:'concept:default'};g.projectId=g.scope.projectId;g.workRef=null;g.lineage=lineageFor(g.id,g.revision,'user_request');store.byId[g.id]=g;store.currentByThread.query=g.id;D.goal=g;}
  function summary(tid){const g=get(tid);return g?{tone:tones[g.status],status:g.status,statusLine:labels[g.status],objective:g.objective,revision:g.revision,blocker:g.blockedReason}:{tone:'idle',status:'none',statusLine:'No goal',objective:''};}
  const button=(action,label,extra='')=>'<button class="soft-button" data-action="'+action+'" '+extra+'>'+esc(label)+'</button>';
+ /* One control row, shared by renderCompact and renderSection: the safe pair (Pause or Resume, then Edit) on the
+    left and Cancel Goal alone at the far edge, in danger ink, so the destructive action never sits inside the safe
+    group. Edit shows its short label in the 280px panel and widens to "Edit objective" where the row has room
+    (goals.css container query); its accessible name is always "Edit objective". The text tip is panel-only: inside
+    the Activity Bar preview a text tip would replace the preview card itself. Below the row: an optional
+    bound-Plan row and the Objective-history footer disclosure. */
+ const pauseBtn=g=>g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':'');
+ const editBtn=(g,action,surface)=>'<button class="soft-button goal-edit-btn" data-action="'+action+'" aria-label="Edit objective"'+(surface==='panel'?' data-hover-key="goal-edit-objective" data-hover-tip="Edit objective&#10;Saving records a new revision in Objective history."':'')+(g.status==='completed'?' disabled':'')+'><span class="goal-lbl">Edit<span class="goal-lbl-more"> objective</span></span></button>';
+ const cancelBtn=g=>'<button class="text-button danger goal-cancel-btn" data-action="goal-cancel" '+(g.status==='completed'?'disabled':'')+'>Cancel Goal</button>';
+ function controlRow(g,editAction,surface){return '<div class="goal-actions" role="group" aria-label="Goal controls"><span class="goal-actions-safe">'+pauseBtn(g)+(editAction?editBtn(g,editAction,surface):'')+'</span>'+cancelBtn(g)+'</div>';}
+ function boundRow(g){return g.binding?'<div class="goal-bound"><button class="text-button" data-action="goal-bound-open-plan" data-id="'+esc(g.binding.assistant_plan_id)+'">Open exact Plan · V'+g.binding.plan_version+'</button>'+(g.blockedReason?'<button class="text-button" data-action="goal-revise-plan" data-id="'+esc(g.binding.assistant_plan_id)+'">Revise Plan</button>':'')+'</div>':'';}
+ function historyToggle(c,g){return '<button class="pmap-route-action goal-history-toggle" data-action="goal-toggle-history" aria-expanded="'+!!ui.history+'"><span>Objective history</span><small>'+g.revisions.length+' revisions</small>'+c.icon('chevron',11)+'</button>';}
+ function historyList(g){return ui.history?'<div class="goal-history">'+g.revisions.slice().reverse().map(r=>'<div class="goal-history-row"><strong>Revision '+r.revision+'</strong><small>'+esc(r.source==='user_direct'?'Your direct change':'Your approved proposal')+'</small><p>'+esc(r.objective)+'</p></div>').join('')+'</div>':'';}
  function renderEditor(c){const p=store.proposals[ui.proposal];if(!p||p.state!=='pending'||p.token.goalId!==get()?.id)return '';
   return '<section class="goal-approval" data-k="goal-approval:'+p.id+'"><strong>Review objective change</strong><div class="goal-approval-pair"><div><label>Current</label><p>'+esc(p.current)+'</p></div><div><label>Proposed</label><p>'+esc(p.objective)+'</p></div></div><p class="goal-note">Nothing changes until you approve.</p><div class="plan-actions">'+button('goal-deny-proposal','Cancel')+button('goal-approve-proposal','Approve Change')+'</div></section>';
  }
@@ -219,16 +232,13 @@
    (wait?.waitKind==='quota'?'<p class="goal-note">Waiting for provider Usage. The Goal stays running; continuation requires the shared quota owner.</p>':'')+
    (g.blockedReason?'<p class="goal-blocker-line">'+esc(g.blockedReason)+'</p>':'')+
    (editing?'<div class="goal-edit"><textarea class="goal-objective-input" data-goal-input="objective" data-pm-keep rows="5">'+esc(ui.draft)+'</textarea><div class="goal-edit-foot"><span class="goal-count">'+ui.draft.length+' / 4000</span><span class="spacer"></span>'+button('goal-cancel-edit','Cancel edit')+button('goal-save','Save')+'</div></div>':'<p class="goal-objective-full">'+esc(g.objective)+'</p>')+
-   '<div class="goal-lifecycle">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-cancel','Cancel Goal',g.status==='completed'?'disabled':'')+(!editing?button('goal-edit','Edit objective',g.status==='completed'?'disabled':''):'')+'</div>'+
-   (g.binding?'<div class="goal-lifecycle">'+button('goal-bound-open-plan','Open exact Plan · V'+g.binding.plan_version,'data-id="'+esc(g.binding.assistant_plan_id)+'"')+(g.blockedReason?button('goal-revise-plan','Revise Plan','data-id="'+esc(g.binding.assistant_plan_id)+'"'):'')+'</div>':'')+
-   '<div class="goal-disclosures">'+button('goal-toggle-history','Objective history')+button('goal-request-change','Ask for a replacement',g.status==='completed'?'disabled':'')+'</div>'+
-   (ui.history?'<div class="goal-history">'+g.revisions.slice().reverse().map(r=>'<div class="goal-history-row"><strong>Revision '+r.revision+'</strong><small>'+esc(r.source==='user_direct'?'Your direct change':'Your approved proposal')+'</small><p>'+esc(r.objective)+'</p></div>').join('')+'</div>':'')+
+   controlRow(g,editing?null:'goal-edit','panel')+boundRow(g)+historyToggle(c,g)+historyList(g)+
    '</section>';
  }
- function renderCompact(c){const g=get(c.thread.id);if(!g)return '';
-  return '<section class="goal-compact" data-goal-id="'+esc(g.id)+'"><div class="goal-compact-head"><span class="goal-chip goal-chip-'+g.status+'">'+labels[g.status]+'</span><span class="goal-rev">Revision '+g.revision+'</span></div><p class="ab-objective goal-objective-2">'+esc(g.objective)+'</p><div class="goal-compact-actions">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-open-editor','Edit objective',g.status==='completed'?'disabled':'')+button('goal-cancel','Cancel',g.status==='completed'?'disabled':'')+button('goal-details','Details')+'</div></section>';
+ function renderCompact(c,surface){const g=get(c.thread.id);if(!g)return '';
+  return '<section class="goal-compact" data-goal-id="'+esc(g.id)+'"><div class="goal-compact-head"><span class="goal-chip goal-chip-'+g.status+'">'+labels[g.status]+'</span><span class="goal-rev">Revision '+g.revision+'</span></div><p class="ab-objective goal-objective-2">'+esc(g.objective)+'</p>'+controlRow(g,'goal-open-editor',surface==='panel'?'panel':'card')+boundRow(g)+historyToggle(c,g)+historyList(g)+'</section>';
  }
- function renderPanel(c){if(ui.editing||ui.proposal||ui.history)return renderSection(c);return renderCompact(c);}
+ function renderPanel(c){if(ui.editing||ui.proposal)return renderSection(c);return renderCompact(c,'panel');}
  function refresh(c,out){c.renderApp();c.renderOverlays?.();if(out?.ok===false)c.toast('No change made',out.error?.replaceAll('_',' ')||'The owner refused this action.');}
  function openGoal(c){c.state.hover=null;c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.state.menu=null;if(c.state.activity.expanded&&!c.state.activity.expanded.includes('goal'))c.state.activity.expanded.push('goal');}
  const actions={

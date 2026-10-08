@@ -517,7 +517,7 @@ await sec('live surfaces', async () => {
     let todoRows = [];
     if (await todo.count()) {
       await todo.hover({ timeout: 5000 });
-      await p.waitForTimeout(600);
+      await p.locator('.hover-card.ab-card').first().waitFor({ state: 'visible', timeout: 2500 }).catch(() => {});
       todoRows = await p.evaluate(map => [...document.querySelectorAll('.todo-hover-glyph')].map(g => {
         const st = [...g.classList].find(c => c.startsWith('todo-glyph-')).slice(11);
         return { st, want: map[st] || 'pending', ok: !!g.querySelector('.nx-st.nx-st-' + (map[st] || 'pending')) };
@@ -762,7 +762,7 @@ else await sec('hover card', async () => {
       const t = p.locator('.activity-item[data-hover-domain]').nth(i);
       if (await t.count() === 0) break;
       await t.hover({ timeout: 5000 });
-      await p.waitForTimeout(500);
+      await p.locator('.hover-card.ab-card').first().waitFor({ state: 'visible', timeout: 2500 }).catch(() => {});
       const a = await cardAnims();
       if (a && a.length) { opened = i; before = a; break; }
       if (a && !before) { opened = i; before = a; }
@@ -899,7 +899,7 @@ async function reducedSweep(p, k, route) {
       await p.waitForTimeout(2600);
       const bar = p.locator('.activity-item[data-hover-domain]').first();
       let card = false;
-      if (await bar.count()) { await bar.hover(); await p.waitForTimeout(700); card = await p.evaluate(() => !!document.querySelector('.hover-card')); } /* the card opens after a 220 ms intent delay */
+      if (await bar.count()) { await bar.hover(); await p.locator('.hover-card').first().waitFor({ state: 'visible', timeout: 2500 }).catch(() => {}); card = await p.evaluate(() => !!document.querySelector('.hover-card')); } /* the card opens after the activity-preview dwell */
       const scene = await p.evaluate(s => !!document.querySelector(s), sel);
       const r = await reducedState(p);
       /* NieR draws no halos (neon-icons.css: NieR's flat ink); there the lit state is the ink itself, so 0 is the design */

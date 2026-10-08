@@ -244,7 +244,6 @@
   }
   function goalActions(ctx) {
     return '<div class="plan-actions" data-k="pmap-goal-actions">' +
-      '<button class="soft-button" data-action="open-goal">View Goal</button>' +
       '<button class="soft-button" data-action="edit-goal">Edit</button>' +
       '<button class="soft-button" data-action="pause-goal">Pause</button>' +
       '<button class="soft-button" data-action="resume-goal">Resume</button>' +
@@ -340,6 +339,8 @@
         return {
           domain: 'subagents', id: a.id, title: a.name,
           sub: [a.model, a.blocker || a.current].filter(Boolean).join(' · '),
+          subHtml: (a.model ? '<u class="agent-model">' + esc(ctx, a.model) + '</u>' : '') +
+            ((a.blocker || a.current) ? (a.model ? ' · ' : '') + esc(ctx, a.blocker || a.current) : ''),
           right: sm.label + (a.elapsed ? ' · ' + a.elapsed : ''),
           elapsed: a.elapsed || '',
           ledger: a.elapsed || '—',
@@ -478,6 +479,10 @@
     if (value == null || value === '') return '';
     return '<div class="pmap-kv"><label>' + esc(ctx, label) + '</label><span>' + esc(ctx, value) + '</span></div>';
   }
+  function kvHtml(ctx, label, html) {
+    if (html == null || html === '') return '';
+    return '<div class="pmap-kv"><label>' + esc(ctx, label) + '</label><span>' + html + '</span></div>';
+  }
   function detailCard(ctx, domain, id) {
     if (domain === 'goal') return '<div class="pmap-detail" data-k="pmap-detail:goal">' + goalBody(ctx) + '</div>';
     var list = items(ctx, domain);
@@ -490,7 +495,8 @@
         kv(ctx, 'Blocker', r.blocker) + kv(ctx, 'Updated', r.updatedAt ? relTime(ctx, r.updatedAt, '') + ' ago' : null);
     } else if (domain === 'subagents') {
       var route = r.route && typeof r.route === 'object' ? (r.route.label || [r.route.provider, r.route.account, r.route.model].filter(Boolean).join(' · ')) : r.route;
-      body = kv(ctx, 'Status', statusMeta(r.status, agentTone(r.status)).label) + kv(ctx, 'Model', r.model) +
+      body = kv(ctx, 'Status', statusMeta(r.status, agentTone(r.status)).label) +
+        (r.model ? kvHtml(ctx, 'Model', '<u class="agent-model">' + esc(ctx, r.model) + '</u>') : '') +
         kv(ctx, 'Route', route) + kv(ctx, 'Parent', r.parent) +
         kv(ctx, 'Elapsed', r.elapsed) + kv(ctx, 'Progress', (Number(r.progress) || 0) + '%') +
         (it.meta ? kv(ctx, 'Work', it.meta) : '') + kv(ctx, 'Blocker', r.blocker);
@@ -513,7 +519,7 @@
     var open = domain === 'changes'
       ? '<button class="soft-button" data-action="open-change" data-path="' + esc(ctx, r.path) + '">' + ctx.icon('file-edit', 12) + ' Open at line ' + (r.line || 1) + '</button>'
       : domain === 'subagents'
-        ? '<button class="soft-button" data-action="open-agent" data-id="' + esc(ctx, r.id) + '">' + ctx.icon('eye', 12) + ' Open child thread</button>'
+        ? '<button class="soft-button" data-action="open-agent" data-id="' + esc(ctx, r.id) + '">' + ctx.icon('eye', 12) + ' Open live transcript</button>'
         : domain === 'artifacts'
           ? '<button class="soft-button" data-action="open-artifact" data-id="' + esc(ctx, r.id) + '" data-artifact-id="' + esc(ctx, r.id) + '">' + ctx.icon('expand', 12) + ' Open artifact</button>'
           : '';
@@ -579,7 +585,7 @@
       '" data-k="pmap-r:' + esc(ctx, it.domain + ':' + it.id) + '" data-action="' + it.action +
       '" data-domain="' + it.domain + '" data-state="' + it.tone + '"' + it.attrs + '>' +
       '<span class="copy"><strong>' + esc(ctx, it.title) + '</strong>' +
-      (it.sub ? '<span>' + esc(ctx, it.sub) + '</span>' : '') + '</span>' +
+      (it.sub ? '<span>' + (it.subHtml || esc(ctx, it.sub)) + '</span>' : '') + '</span>' +
       '<span class="right"><b>' + esc(ctx, it.state) + '</b>' +
       (it.elapsed ? '<i>' + esc(ctx, it.elapsed) + '</i>' : '') + '</span></button>' +
       (on ? detailCard(ctx, it.domain, it.id) : '');
@@ -714,7 +720,6 @@
       '<section class="pmap-records" data-k="pmap-records:' + f + '"><div class="pmap-records-head"><strong>' +
       (f === 'goal' ? 'Goal progress' : 'Recent records') + '</strong><span>' +
       (f === 'goal' ? esc(ctx, d.detail || '') : p.list.length + ' total') + '</span></div>' + records +
-      (f === 'goal' ? '<button class="pmap-route-action" data-action="open-goal"><span>View Goal</span>' + ctx.icon('chevron', 11) + '</button>' : '') +
       '</section></div>';
   }
 

@@ -315,8 +315,8 @@
         return '<button type="button" class="orbit-sat ' + tone(a.status) + '" data-k="sat:' + esc(a.id) + '"'
           + ' data-action="open-agent" data-id="' + esc(a.id) + '"'
           + ' style="--angle:' + ang.toFixed(2) + 'deg;--sat-i:' + i + '"'
-          + tipAttrs(esc, w.cardId, 'sat-' + a.id, a.name, statusLabel(c, a.status) + ' — opens the child agent thread')
-          + ' aria-label="Open child agent ' + esc(a.name) + '">'
+          + tipAttrs(esc, w.cardId, 'sat-' + a.id, a.name, statusLabel(c, a.status) + ' — opens its live transcript')
+          + ' aria-label="Open ' + esc(a.name) + ' live transcript">'
           + '<span class="orbit-sat-mark">' + esc(initials(a.name)) + '</span></button>';
       }).join('');
     }
@@ -447,7 +447,7 @@
           + list.map(function (a) {
             return '<button type="button" class="orbit-agent" data-k="oa:' + esc(a.id) + '"'
               + ' data-action="open-agent" data-id="' + esc(a.id) + '"'
-              + tipAttrs(esc, w.cardId, 'oa-' + a.id, a.name, 'Open the child agent thread')
+              + tipAttrs(esc, w.cardId, 'oa-' + a.id, a.name, 'Open its live transcript')
               + '>'
               + '<span class="orbit-agent-avatar">' + esc(initials(a.name)) + '</span>'
               + '<span class="orbit-agent-copy"><strong>' + esc(a.name) + '</strong>'

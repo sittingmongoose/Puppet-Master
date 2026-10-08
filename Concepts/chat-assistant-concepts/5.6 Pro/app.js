@@ -186,6 +186,13 @@
   let workTimer = null;
   let seqTimer = null;
   let hoverTimer = null;
+  /* Text label tips (F3-523): the pointer must reside on the anchor 1600ms AND hold still within a 5px radius for
+     the last 1100ms; continuous keyboard focus opens after 1000ms. No warm handoff. Activity previews dwell 650ms.
+     A press suppresses that anchor's tip until the pointer leaves; closes take 160ms. */
+  const TIP_RESIDE_MS=1600, TIP_STILL_MS=1100, TIP_STILL_PX=5, TIP_FOCUS_MS=1000, TIP_CLOSE_MS=160, ACT_PREVIEW_MS=650;
+  let tipSuppressKey=null;
+  /* Pending pointer dwell: motion restarts the still clock, never residence. */
+  let tipPending=null;
   let copyFlashTimer = null;
   let submenuTimer = null;
   let dragState = null;
@@ -345,7 +352,7 @@
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
       turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
       followIfSticky, holdFollow, onWorkShrink, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
-    }, extra);
+    }, readOnlyRender?{readOnly:true}:{}, extra);
   }
   function extEach(name, extra, each){
     const fns = EXT._slots[name];
@@ -517,9 +524,9 @@
       <div class="brand"><i class="brand-mark"></i><span>Puppet Master</span><small data-concept-model="5.6 Pro">Assistant Concept Lab · 5.6 Pro</small></div>
       <div class="header-spacer"></div>
       <div class="header-actions">
-        <button class="header-chip" data-action="toggle-history" title="Thread history">${icon('history',14)}<span class="optional">Threads</span></button>
-        <button class="header-chip" data-action="open-demo" title="Open the complete demo and component mixer">${icon('sliders',14)}<span class="label">Demo Studio</span></button>
-        <button class="header-chip" data-action="reset-all" title="Reset the entire concept to its stock state">${icon('reset',14)}<span class="optional">Reset</span></button>
+        <button class="header-chip" data-action="toggle-history"${hoverAttrs('header-threads','Thread history')}>${icon('history',14)}<span class="optional">Threads</span></button>
+        <button class="header-chip" data-action="open-demo"${hoverAttrs('header-demo','Open the complete demo and component mixer')}>${icon('sliders',14)}<span class="label">Demo Studio</span></button>
+        <button class="header-chip" data-action="reset-all"${hoverAttrs('header-reset','Reset the entire concept to its stock state')}>${icon('reset',14)}<span class="optional">Reset</span></button>
       </div>
     </header>`;
   }
@@ -561,9 +568,9 @@
   }
   function renderEditor() {
     return `<section class="editor-pane">
-      <div class="editor-tabs"><button class="editor-return icon-button" data-action="return-to-chat" title="Return to chat">${icon('chat',15)}</button>${state.editorTabs.map(id => {
+      <div class="editor-tabs"><button class="editor-return icon-button" data-action="return-to-chat"${hoverAttrs('editor-return','Return to chat')}>${icon('chat',15)}</button>${state.editorTabs.map(id => {
         const label=editorTabLabel(id);
-        return `<button class="editor-tab ${state.activeEditor===id?'active':''}" data-action="select-editor" data-id="${esc(id)}" title="${esc(label)}"><span class="editor-tab-label">${esc(label)}</span><span class="close" data-action="close-editor" data-id="${esc(id)}">${icon('close',12)}</span></button>`;
+        return `<button class="editor-tab ${state.activeEditor===id?'active':''}" data-action="select-editor" data-id="${esc(id)}"${hoverAttrs('editor-tab:'+id, label)}><span class="editor-tab-label">${esc(label)}</span><span class="close" data-action="close-editor" data-id="${esc(id)}">${icon('close',12)}</span></button>`;
       }).join('')}</div>
       <div class="editor-body" data-scroll-key="editor">${renderEditorBody()}</div>
     </section>`;
@@ -613,8 +620,27 @@ browser assertions  14 passed
 write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path. 2. Remove N+1 fan-out. 3. Validate the migration and browser workflow. 4. Produce durable evidence and rollback guidance.</p></article>`;
   }
 
+  /* A child thread is a read-only Turn Stage feed. It must not use .transcript:
+     the editor pane precedes the chat, and unscoped querySelector('.transcript')
+     calls would bind the chat's spine, stream and sound to this feed. Its head is
+     one row: name, status, underlined model, parent and one Read-only marker
+     ("Read-only · live" while the agent works); the marker's hover card carries
+     the "Read-only child thread" label and what read-only means here.
+     Agent-work records, which the parent transcript hides as notes, stay in this
+     feed as one quiet line between the prose. */
+  let readOnlyRender=false;
+  function renderReadOnlyItems(agent){
+    readOnlyRender=true;
+    try{
+      return renderTranscriptItems({id:'agent:'+agent.id, messages:agent.messages||[], readOnly:true});
+    }finally{
+      readOnlyRender=false;
+    }
+  }
   function renderAgentEditor(agent){
-    return `<article class="editor-doc"><h1>${esc(agent.name)}</h1><div class="editor-meta"><span class="meta-pill">Read-only child thread</span><span class="meta-pill">${esc(agent.status)}</span><span class="meta-pill">${esc(agent.model)}</span><span class="meta-pill">${esc(agent.elapsed)}</span></div><p><strong>Parent:</strong> ${esc(agent.parent)} · <strong>Current:</strong> ${esc(agent.current)}</p>${agent.blocker?`<div class="event-card danger"><span class="event-icon">${icon('lock',14)}</span><div class="event-copy"><strong>Blocked</strong><p>${esc(agent.blocker)}</p></div></div>`:''}<h2>Live transcript</h2>${agent.messages.map(m=>m.type==='text'?`<div class="system-card" style="margin:8px 0"><div class="system-card-head"><span class="title">${esc(agent.name)}</span><span class="sub">${esc(agent.model)}</span></div><div class="system-card-body">${formatText(m.body)}</div></div>`:`<div class="event-card ${m.type==='blocked'?'danger':''}" style="margin:8px 0"><span class="event-icon">${icon(m.type==='blocked'?'lock':'artifact',14)}</span><div class="event-copy"><strong>${esc(m.title||m.type)}</strong><p>${esc(m.detail||'')}</p></div></div>`).join('')}<p class="chat-meta">This child transcript updates live but has no composer or mutation controls.</p></article>`;
+    const live=agent.status==='working';
+    const name=esc(agent.name);
+    return `<article class="editor-doc agent-feed-doc" data-k="agent-feed:${esc(agent.id)}"><header class="agent-feed-head"><h1>${name}</h1><span class="agent-feed-status">${statusMark(agent.status,14)}<span>${esc(lblOf('subagentStatus',agent.status))}</span><span class="agent-feed-elapsed">${esc(agent.elapsed)}</span></span><u class="agent-model">${esc(agent.model)}</u><span class="agent-feed-parent" data-hover-key="agent-feed-parent-${esc(agent.id)}" data-hover-tip="Parent thread&#10;${esc(agent.parent)}">Parent: ${esc(agent.parent)}</span><span class="meta-pill agent-feed-ro" data-hover-key="agent-feed-ro-${esc(agent.id)}" data-hover-tip="Read-only child thread&#10;${live?'This agent\'s work streams here as it happens. ':''}There is no composer, and nothing in this feed acts on the parent thread.">Read-only${live?' · live':''}</span></header><div class="tx-feed" data-variant="16" data-voice="${motionVoice()}" data-readonly="1"${live?' data-feed-live="1"':''} role="log" aria-live="polite" aria-label="${name} live transcript"><div class="tx-spine-layer" data-k="tx-spine:${esc(agent.id)}" data-pm-keep aria-hidden="true"></div><div class="tx-feed-inner">${renderReadOnlyItems(agent)}</div></div><p class="chat-meta">Read-only: this agent's work streams here; there is no composer.</p></article>`;
   }
   function renderArtifactEditor(art){
     if(art.revisions && art.kind!=='plan_document' && window.PM56_ARTIFACTS)return PM56_ARTIFACTS.editor({artifact_id:art.id,artifact_version:Number(art.version),...PM56_ARTIFACTS.scopeOf(art)});
@@ -840,7 +866,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const items=[];
     let turn=0;
     for(const m of t.messages){
-      if(!messageVisible(m)) continue;
+      /* Parent transcript: agent-work notes stay hidden (messageVisible). The
+         read-only feed is that agent's live record, so every agent-work row
+         stays in place. Nothing else this gate hides is pulled back in. */
+      if(!messageVisible(m) && !(readOnlyRender && m.type==='agent-work')) continue;
       const html=renderMessage(m,t);
       if(!html||!String(html).trim()) continue;
       const fam=familyOf(m);
@@ -961,7 +990,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
     return true;
   }
+  /* Compact agent-work line for the read-only feed only. Glyph and wording come
+     from the work-record slot (PM56_RECORDS.feedLine); the detail is the hover
+     card, not a native title, and the row is not a control. */
+  function renderFeedWorkLine(m){
+    const line=window.PM56_RECORDS&&typeof window.PM56_RECORDS.feedLine==='function'
+      ? window.PM56_RECORDS.feedLine(m)
+      : {glyph:'document', label:m.title||'Work note', detail:m.detail||''};
+    const tip=esc(line.label)+(line.detail?'&#10;'+esc(line.detail):'');
+    const aria=line.detail?line.label+'. '+line.detail:line.label;
+    return `<div class="tx-work-line" data-hover-key="feed-work-${esc(m.id)}" data-hover-tip="${tip}" aria-label="${esc(aria)}"><span class="tx-work-glyph" aria-hidden="true">${icon(line.glyph,13)}</span><span class="tx-work-label">${esc(line.label)}</span><span class="tx-work-time">${esc(msgClock(m))}</span></div>`;
+  }
   function renderMessage(m,t){
+    if(readOnlyRender && m.type==='agent-work') return renderFeedWorkLine(m);
     /* Assistant-redesign wave: feature modules own whole transcript card families
        (Plan cards, collaborative run cards, BSD advice, attachment-bearing turns).
        They register `transcriptMessage` and return '' to decline, which falls
@@ -1011,10 +1052,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const expandTip=expanded?'Collapse the response':'Expand the full response';
     const copied=state.copyFlashId===m.id;
     const copyBtn=`<button class="text-button icon-only${copied?' is-copied':''}" data-action="copy-message" data-id="${esc(m.id)}"${hoverAttrs('msg-copy-'+m.id,copied?'Copied':'Copy this message without changing the thread')}>${icon(copied?'check':'copy',13)}<span>Copy</span></button>`;
-    const editBtn=m.role==='user'&&m.eligibleForEdit?`<button class="text-button" data-action="edit-message" data-id="${esc(m.id)}"${hoverAttrs('msg-edit-'+m.id,'Edit this user message and create a new branch from here')}>${icon('edit',11)}<span>Edit & branch</span></button>`:'';
+    const editBtn=!readOnlyRender&&m.role==='user'&&m.eligibleForEdit?`<button class="text-button" data-action="edit-message" data-id="${esc(m.id)}"${hoverAttrs('msg-edit-'+m.id,'Edit this user message and create a new branch from here')}>${icon('edit',11)}<span>Edit & branch</span></button>`:'';
     const detailsBtn=`<button class="text-button icon-only" data-action="message-details" data-id="${esc(m.id)}"${hoverAttrs('msg-details-'+m.id,'Show model, provider, timing, context, cache, token, and cost details')}>${icon('info',13)}<span>More details</span></button>`;
-    const overflowBtn=extRender('messageOverflow',{message:m});
-    const overflowPanel=extRender('messageOverflowPanel',{message:m});
+    const overflowBtn=readOnlyRender?'':extRender('messageOverflow',{message:m});
+    const overflowPanel=readOnlyRender?'':extRender('messageOverflowPanel',{message:m});
     const actions=`<div class="message-actions">${copyBtn}${editBtn}${detailsBtn}${overflowBtn}</div>`;
     const overflowOpen=window.PM56_MSG_OVERFLOW&&window.PM56_MSG_OVERFLOW.isOpen(m.id);
     const chromeCls=`message-chrome${m.role==='user'?' message-chrome-user':''}${overflowOpen?' is-overflow-open':''}`;
@@ -1028,7 +1069,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const terminalHtml=(!m.streaming&&(m.terminal==='stopped'||m.terminal==='error'))
       ? `<div class="tx-terminal tx-terminal-${esc(m.terminal)}" data-k="tx-term:${esc(m.id)}">${icon(m.terminal==='error'?'warning':'stop',11)}<span>${m.terminal==='error'?esc(m.terminalNote||'Stopped by an error'):'Stopped'}</span></div>` : '';
     const streamAttr=m.streaming?` data-streaming="${esc(m.streamPhase||'pending')}"`:'';
-    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}"${streamAttr}>${extRender('messageAffordance',{message:m})}<div class="message-surface"${m.streaming?` data-k="tx-surface:${esc(m.id)}"`:''}>${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}${bodyHtml}${terminalHtml}${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
+    const afford=readOnlyRender?'':extRender('messageAffordance',{message:m});
+    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}"${streamAttr}>${afford}<div class="message-surface"${m.streaming?` data-k="tx-surface:${esc(m.id)}"`:''}>${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}${bodyHtml}${terminalHtml}${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
   }
 
   function renderMessageDetails(m){
@@ -1116,14 +1158,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const st=EVENT_STATUS[m.type];
     const glyph=st?statusMark(st,14):icon(d[0],14,'nx-r-concept');
     const actions=[];
-    if(m.type==='question-receipt') actions.push(`<button class="soft-button" data-action="open-questionnaire">Resume</button>`);
-    if(m.type==='bsd-advice') actions.push(`<button class="soft-button" data-action="open-bsd-details">${icon('eye',12)} Why?</button><button class="text-button" data-action="dismiss-event" data-id="${esc(m.id)}">Dismiss</button>`);
-    if(m.type.startsWith('context-')) actions.push(`<button class="soft-button" data-action="context-details">${icon('info',12)} Details</button>`);
-    if(m.type==='permission') actions.push(`<button class="soft-button" data-action="open-permission">Review</button>`);
-    if(m.type==='tool-error') actions.push(`<button class="soft-button" data-action="trigger-work-recovery">Recover</button>`);
-    /* The actions array is a fixed if-chain, so module-rendered system cards (restore
-       points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
-    const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
+    /* A read-only child feed keeps the card and drops every action: Recover, Resume
+       and module buttons would mutate the parent thread. */
+    if(!readOnlyRender){
+      if(m.type==='question-receipt') actions.push(`<button class="soft-button" data-action="open-questionnaire">Resume</button>`);
+      if(m.type==='bsd-advice') actions.push(`<button class="soft-button" data-action="open-bsd-details">${icon('eye',12)} Why?</button><button class="text-button" data-action="dismiss-event" data-id="${esc(m.id)}">Dismiss</button>`);
+      if(m.type.startsWith('context-')) actions.push(`<button class="soft-button" data-action="context-details">${icon('info',12)} Details</button>`);
+      if(m.type==='permission') actions.push(`<button class="soft-button" data-action="open-permission">Review</button>`);
+      if(m.type==='tool-error') actions.push(`<button class="soft-button" data-action="trigger-work-recovery">Recover</button>`);
+      /* The actions array is a fixed if-chain, so module-rendered system cards (restore
+         points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
+      const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
+    }
     return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${glyph}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p></div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
   function renderWorkingAnimation(m,ownedProjection){
@@ -3050,15 +3096,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!root) return;
     let el=root.querySelector(':scope > [data-overlay="hover"]');
     if(!hoverCardAllowed()){
-      if(el) el.remove();
+      if(el){ el.remove(); }
       return;
     }
     const html=renderHoverCard();
-    if(!html){ if(el) el.remove(); return; }
+    if(!html){ if(el){ el.remove(); } return; }
     const wrap=document.createElement('div');
     wrap.innerHTML=html;
     const next=wrap.firstElementChild;
-    if(!next){ if(el) el.remove(); return; }
+    if(!next){ if(el){ el.remove(); } return; }
     /* Remount only when the tip identity changes. Same key with updated copy
        (e.g. live Orbit disc status) patches text in place so the card does
        not blink across work ticks. */
@@ -3080,10 +3126,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let lastPointer={x:0,y:0};
   function retainHoverAfterRender(){
     if(!state.hover||state.hover.type!=='text') return;
+    const key=state.hover.key||'';
     const under=document.elementFromPoint(lastPointer.x,lastPointer.y);
     const tip=under&&under.closest&&under.closest('[data-hover-tip]');
-    if(tip&&(tip.dataset.hoverKey||'')===(state.hover.key||'')){
-      state.hover.tip=tip.dataset.hoverTip||state.hover.tip;
+    /* A focus-opened tip has no pointer over its anchor; it survives while
+       focus stays inside the anchor. */
+    const anchor=document.querySelector(`[data-hover-key="${CSS.escape(key)}"]`);
+    const focused=!!(anchor&&anchor.contains(document.activeElement));
+    if((tip&&(tip.dataset.hoverKey||'')===key)||focused){
+      state.hover.tip=(tip&&(tip.dataset.hoverKey||'')===key?tip.dataset.hoverTip:anchor.dataset.hoverTip)||state.hover.tip;
       syncHoverCard();
       requestAnimationFrame(()=>positionHoverCard());
     } else {
@@ -3114,6 +3165,26 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       el.remove();
     }
   }
+  /* F3-523 residence gate: the residence timer fires first; the tip opens only
+     if the pointer also held still for the last TIP_STILL_MS. Drift past the
+     deadline re-arms the still remainder instead of opening, so a pointer that
+     never settles never opens a tip. */
+  function tipTryOpen(){
+    const p=tipPending;
+    if(!p) return;
+    const under=document.elementFromPoint(lastPointer.x,lastPointer.y);
+    if(!p.el.isConnected||!(under&&p.el.contains(under))){ tipPending=null; return; }
+    const held=performance.now()-p.stillSince;
+    if(held>=TIP_STILL_MS){
+      tipPending=null;
+      state.hover={type:'text',tip:p.tipText,key:p.key};
+      /* Tip-only: do not re-patch menus/drawers in #pmOverlayRoot. */
+      syncHoverCard();
+      requestAnimationFrame(()=>positionHoverCard());
+    } else {
+      hoverTimer=setTimeout(tipTryOpen,Math.max(0,TIP_STILL_MS-held));
+    }
+  }
 
   const PERSONA_CATALOG=[
     ['Product Manager','Product planning and coordination'], ['Architect','Architecture and trade-offs'],
@@ -3127,7 +3198,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!button.dataset.menuAnchor) button.dataset.menuAnchor=uid('picker');
     return button.dataset.menuAnchor;
   }
+  /* A second click on the same sheet picker (model, Persona, choice) closes it.
+     The trigger sits outside the menu, so the outside-click close never sees it,
+     and openMenu used to reopen in place. A different anchor still switches. */
+  function scopedPickerToggled(type,button){
+    const a=button&&button.dataset&&button.dataset.menuAnchor;
+    if(a&&state.menu&&state.menu.scopedPicker&&state.menu.type===type&&state.menu.anchor===a){closeMenu();return true;}
+    return false;
+  }
+  function pickerExpandedAttr(anchor){
+    const open=!!(state.menu&&state.menu.scopedPicker&&state.menu.anchor===anchor);
+    return `aria-haspopup="listbox" aria-expanded="${open?'true':'false'}"`;
+  }
   function beginScopedPicker(type,button,value,onChange){
+    if(scopedPickerToggled(type,button))return;
     scopedPicker={type,value:{model:value.model||state.model,effort:value.effort||'',fast:!!value.fast,persona:value.persona||state.persona},onChange};
     state.modelSearch=''; state.modelProvider='all';
     openMenu(type,pickerAnchor(button),{scopedPicker:true});
@@ -3164,6 +3248,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   window.PM56_PICKERS={
     openChoice(button,title,current,options,onChange){
+      if(scopedPickerToggled('choice',button))return;
       scopedPicker={type:'choice',title,current,options,onChange,value:{}};
       openMenu('choice',pickerAnchor(button),{scopedPicker:true});
     },
@@ -3172,10 +3257,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     personas:()=>PERSONA_CATALOG.map(([name,description])=>({name,description})),
     modelButton(action,anchor,modelId,extra=''){
       const m=D.models.find(x=>x.id===modelId);
-      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${extra}><span class="provider-mark">${m?providerMark(m.provider,16):icon('sparkles',16)}</span><span class="shared-picker-copy"><strong>${esc(m?m.name:'Default model')}</strong><small>${esc(m?D.accountNick(m.accountId,m.account):'Use the configured default')}</small></span>${icon('down',11)}</button>`;
+      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${pickerExpandedAttr(anchor)} ${extra}><span class="provider-mark">${m?providerMark(m.provider,16):icon('sparkles',16)}</span><span class="shared-picker-copy"><strong>${esc(m?m.name:'Default model')}</strong><small>${esc(m?D.accountNick(m.accountId,m.account):'Use the configured default')}</small></span>${icon('down',11)}</button>`;
     },
     personaButton(action,anchor,persona,extra=''){
-      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${extra}><span class="menu-icon">${icon('user',15)}</span><span class="shared-picker-copy"><strong>${esc(persona)}</strong></span>${icon('down',11)}</button>`;
+      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${pickerExpandedAttr(anchor)} ${extra}><span class="menu-icon">${icon('user',15)}</span><span class="shared-picker-copy"><strong>${esc(persona)}</strong></span>${icon('down',11)}</button>`;
     }
   };
 
@@ -3278,7 +3363,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
            modelMenuHeight() so the two cannot disagree.
        Measured, not assumed: verified in-browser that .model-scroll's
        scrollHeight exceeds its clientHeight and that it really scrolls. */
-    return `<div class="model-layout" style="height:100%;max-height:none;grid-template-rows:minmax(0,1fr)"><div class="provider-rail"><button class="provider-button ${state.modelProvider==='favorites'?'active':''}" data-action="model-provider" data-value="favorites" title="Favorites">${icon('star',14)}</button><button class="provider-button ${state.modelProvider==='all'?'active':''}" data-action="model-provider" data-value="all" title="All configured providers">${icon('users',14)}</button>${providers.map(p=>`<button class="provider-button ${state.modelProvider===p?'active':''}" data-action="model-provider" data-value="${esc(p)}" title="${esc(p)}">${providerMark(p,16)}</button>`).join('')}</div><div class="model-main"><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="model-search" value="${esc(state.modelSearch)}" placeholder="Search configured models…"></label></div><div class="model-scroll">${models.length?groupModels(models):`<div style="padding:18px;text-align:center;color:var(--muted);font-size:11px">No configured model matches this view.</div>`}</div></div></div>`;
+    return `<div class="model-layout" style="height:100%;max-height:none;grid-template-rows:minmax(0,1fr)"><div class="provider-rail"><button class="provider-button ${state.modelProvider==='favorites'?'active':''}" data-action="model-provider" data-value="favorites"${hoverAttrs('model-provider:favorites','Favorites')}>${icon('star',14)}</button><button class="provider-button ${state.modelProvider==='all'?'active':''}" data-action="model-provider" data-value="all"${hoverAttrs('model-provider:all','All configured providers')}>${icon('users',14)}</button>${providers.map(p=>`<button class="provider-button ${state.modelProvider===p?'active':''}" data-action="model-provider" data-value="${esc(p)}"${hoverAttrs('model-provider:'+p, p)}>${providerMark(p,16)}</button>`).join('')}</div><div class="model-main"><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="model-search" value="${esc(state.modelSearch)}" placeholder="Search configured models…"></label></div><div class="model-scroll">${models.length?groupModels(models):`<div style="padding:18px;text-align:center;color:var(--muted);font-size:11px">No configured model matches this view.</div>`}</div></div></div>`;
   }
   function effortWords(m){
     return `<span class="effort-words">${m.efforts.map((e,i)=>{
@@ -3288,7 +3373,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}"${hoverAttrs('model-fav:'+m.id,(isFavorite(m.id)?'Remove from':'Add to')+' favorites')}>${icon('star',12)}</button></div>`).join('')}`).join('');
   }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a
@@ -4292,6 +4377,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
 
   document.addEventListener('pointermove',e=>{
     lastPointer={x:e.clientX,y:e.clientY};
+    /* Leaving the 5px still circle restarts the stationary timer, never residence. */
+    if(tipPending){
+      const dx=e.clientX-tipPending.x,dy=e.clientY-tipPending.y;
+      if(dx*dx+dy*dy>TIP_STILL_PX*TIP_STILL_PX){ tipPending.stillSince=performance.now();tipPending.x=e.clientX;tipPending.y=e.clientY; }
+    }
     if(state.hover?.type==='text'){
       const anchor=e.target.closest?.('[data-hover-tip]');
       if(!anchor||(anchor.dataset.hoverKey||'')!==(state.hover.key||'')){
@@ -4301,21 +4391,20 @@ suggested path                    migration 0043, reversible</div></div></sectio
   },{passive:true});
   document.addEventListener('pointerover',e=>{
     /* Plain-text hover tips first so they still work inside open menus and
-       drawers (those surfaces live under state.menu / overlay root). Instant
-       tips feel twitchy while scanning dense chrome, so tip cards dwell. */
+       drawers (those surfaces live under state.menu / overlay root). Tips wait
+       for deliberate intent (F3-523): 1600ms of residence plus a still pointer. */
     const tip=e.target.closest('[data-hover-tip]');
     if(tip){
       const key=tip.dataset.hoverKey||'';
+      /* A press on this anchor dismissed its tip; keep it shut until pointerout. */
+      if(key===tipSuppressKey){ clearTimeout(hoverTimer); tipPending=null; return; }
       if(state.hover && state.hover.type==='text' && state.hover.key===key) return;
+      /* Crossing between an anchor's children must not restart residence. */
+      if(tipPending && tipPending.key===key) return;
       clearTimeout(hoverTimer);
-      const tipText=tip.dataset.hoverTip||'';
-      hoverTimer=setTimeout(()=>{
-        if(!tip.isConnected || !tip.contains(document.elementFromPoint(lastPointer.x,lastPointer.y))) return;
-        state.hover={type:'text',tip:tipText,key};
-        /* Tip-only: do not re-patch menus/drawers in #pmOverlayRoot. */
-        syncHoverCard();
-        requestAnimationFrame(()=>positionHoverCard());
-      },400);
+      const now=performance.now();
+      tipPending={key,tipText:tip.dataset.hoverTip||'',el:tip,stillSince:now,x:e.clientX,y:e.clientY};
+      hoverTimer=setTimeout(tipTryOpen,TIP_RESIDE_MS);
       return;
     }
     if(state.menu){
@@ -4337,7 +4426,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
         return;
       }
       clearTimeout(hoverTimer);
-      hoverTimer=setTimeout(()=>{ state.hover={type:'activity',domain}; syncHoverCard(); requestAnimationFrame(()=>positionHoverCard()); },220);
+      hoverTimer=setTimeout(()=>{ state.hover={type:'activity',domain}; syncHoverCard(); requestAnimationFrame(()=>positionHoverCard()); },ACT_PREVIEW_MS);
       return;
     }
   });
@@ -4348,18 +4437,53 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const act=e.target.closest('[data-hover-domain],[data-hover-tip]');
     if(act&&!act.contains(e.relatedTarget)){
       clearTimeout(hoverTimer);
+      tipPending=null;
+      if(act.hasAttribute('data-hover-tip') && (act.dataset.hoverKey||'')===tipSuppressKey) tipSuppressKey=null;
       hoverTimer=setTimeout(()=>{
         if(!document.querySelector('.hover-card:hover')){
           state.hover=null;
           syncHoverCard();
         }
-      },160);
+      },TIP_CLOSE_MS);
+    }
+  });
+  /* Keyboard focus opens a text tip after 1000ms of continuous focus (F3-523).
+     Activity-bar domain buttons keep their own immediate focus preview in
+     activity-bar.js, so focus there is left entirely alone. */
+  document.addEventListener('focusin',e=>{
+    if(!e.target||!e.target.closest||e.target.closest('[data-hover-domain]')) return;
+    const tip=e.target.closest('[data-hover-tip]');
+    clearTimeout(hoverTimer);
+    tipPending=null;
+    if(!tip) return;
+    const key=tip.dataset.hoverKey||'';
+    if(key===tipSuppressKey) return;
+    if(state.hover&&state.hover.type==='text'&&state.hover.key===key) return;
+    const tipText=tip.dataset.hoverTip||'';
+    hoverTimer=setTimeout(()=>{
+      if(!tip.isConnected||!tip.contains(document.activeElement)) return;
+      state.hover={type:'text',tip:tipText,key};
+      syncHoverCard();
+      requestAnimationFrame(()=>positionHoverCard());
+    },TIP_FOCUS_MS);
+  });
+  document.addEventListener('focusout',e=>{
+    if(!e.target||!e.target.closest||e.target.closest('[data-hover-domain]')) return;
+    const tip=e.target.closest('[data-hover-tip]');
+    if(!tip) return;
+    clearTimeout(hoverTimer);
+    tipPending=null;
+    const key=tip.dataset.hoverKey||'';
+    if(state.hover&&state.hover.type==='text'&&state.hover.key===key){
+      hoverTimer=setTimeout(()=>{ state.hover=null; syncHoverCard(); },TIP_CLOSE_MS);
     }
   });
 
   document.addEventListener('pointerdown',e=>{
     /* Send/Stop (send-stop.js): a pressed chip drops its tip, a pending one too, so no tip re-renders over the hero */
     if(e.target.closest('.sendstop')){clearTimeout(hoverTimer);if(state.hover){state.hover=null;syncHoverCard();}}
+    const ta=e.target.closest('[data-hover-tip]');
+    if(ta){clearTimeout(hoverTimer); tipPending=null; tipSuppressKey=ta.dataset.hoverKey||''; if(state.hover?.type==='text'){state.hover=null;syncHoverCard();}}
     const actBtn=e.target.closest('[data-action="open-activity"]');
     /* A preview footer must survive through click. Removing its overlay on
        pointerdown disconnects the button before click can dispatch. Bar

@@ -367,6 +367,8 @@ body:has(.activity-panel.transient) .history-flyout {
 .pmap-agent-row[data-state="attention"] .right b { color: var(--warning); }
 .pmap-agent-row[data-state="working"] .right b { color: var(--accent); }
 .pmap-agent-row[data-state="done"] .right b { color: var(--positive); }
+/* Subagent rows underline the model (panel rows, detail card, hover preview). */
+u.agent-model { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 60%, transparent); color: inherit; }
 
 /* ── concept 1 — Status Board ───────────────────────────────────────── */
 .pmap-statusboard {
@@ -662,7 +664,8 @@ body:has(.activity-panel.transient) .history-flyout {
    (.goal-compact-line, .goal-compact-list, .goal-compact-state,
    .goal-compact-blocker) are gone. goals.js's renderCompact now emits
    .goal-compact, .goal-compact-head, .goal-rev, .ab-objective
-   .goal-objective-2, .goal-blocker-line and .goal-compact-actions.
+   .goal-objective-2, .goal-blocker-line, the .goal-actions control row
+   (goals.css) and the .goal-history-toggle footer.
    The blocker rule is retargeted at the live class rather than deleted, so
    a blocked Goal keeps its warning treatment on this surface. */
 .pmap-statusboard .goal-blocker-line {
