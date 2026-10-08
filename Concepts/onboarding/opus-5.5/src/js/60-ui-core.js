@@ -86,6 +86,66 @@
 
   /* ---------------------------------------------------------------- theme */
   let lastLook = null;
+  /* Stage colours, once per look. The art asks on every mount (O55.art.tokens). Walking each custom property with
+     getPropertyValue forced a style pass per token (films M4: about 0.9 s under Reduced Motion, inside this
+     function's remount). --o55-tokpack (20-motion.css) holds every colour. One getComputedStyle reads it, and the
+     snapshot is kept until the theme, NieR Mode, its parts or the root's own variables change. A mount copies it.
+     The art's own reader stays the fallback when the pack is missing. */
+  const TOK_FIELDS = ['bg', 'surface', 'text', 'text2', 'muted', 'border', 'blue', 'magenta', 'lime', 'orange', 'warn', 'error', 'primary', 'raised', 'onInk'];
+  const tokSnaps = new Map();
+  const PREVIEW_OK = /^(dark|light)$/;
+  function tokenOwner(el) {
+    const root = document.documentElement;
+    return (el && el.closest && el.closest('[data-theme], [data-o55-nier-preview]')) || root;
+  }
+  function tokenKey(owner) {
+    const root = document.documentElement;
+    const pv = owner !== root ? owner.getAttribute('data-o55-nier-preview') : null;
+    const preview = PREVIEW_OK.test(pv || '') ? pv : null;
+    const nier = root.hasAttribute('data-o55-nier') ? 'nier:' + (root.getAttribute('data-o55-nier-parts') || '') + '|' : '';
+    return (owner === root ? 'r|' : 'o|') + nier + (preview ? 'pv:' + preview + ':' + (owner.getAttribute('data-o55-nier-parts') || '') + '|' : '')
+      + (owner.getAttribute('data-theme') || '') + '|' + (root.getAttribute('style') || '');
+  }
+  function tokenFlags(owner) {
+    const root = document.documentElement;
+    const pv = owner !== root ? owner.getAttribute('data-o55-nier-preview') : null;
+    const preview = PREVIEW_OK.test(pv || '') ? pv : null;
+    const partsAttr = (owner !== root && owner.getAttribute('data-o55-nier-parts')) || (root.hasAttribute('data-o55-nier') ? (root.getAttribute('data-o55-nier-parts') || '') : null);
+    const nier = (root.hasAttribute('data-o55-nier') && owner === root) || !!preview;
+    return {
+      nier, nierPreview: preview, root: owner === root,
+      nierParts: nier && partsAttr != null ? partsAttr.split(/\s+/).filter(Boolean) : null
+    };
+  }
+  function readStageTokens(el) {
+    const root = document.documentElement;
+    el = el || (S.root && S.root.querySelector('.o55-stage')) || root;
+    const owner = tokenOwner(el), key = tokenKey(owner), hit = tokSnaps.get(key);
+    if (hit) return Object.assign({}, hit);
+    if (tokSnaps.size > 40) tokSnaps.clear();
+    const raw = (getComputedStyle(el).getPropertyValue('--o55-tokpack') || '').trim();
+    const parts = raw.split('|').map((s) => s.trim().replace(/^["']|["']$/g, ''));
+    if (parts.length !== TOK_FIELDS.length || parts.some((s) => !s)) return null;
+    const t = tokenFlags(owner);
+    TOK_FIELDS.forEach((name, i) => { t[name] = parts[i]; });
+    tokSnaps.set(key, t);
+    return Object.assign({}, t);
+  }
+  /* every look already on the window, in one turn, before a remount replaces the nodes */
+  function warmStageTokens() {
+    if (!S.root) return;
+    const nodes = [S.root.querySelector('.o55-stage') || document.documentElement];
+    S.root.querySelectorAll('[data-theme], [data-o55-nier-preview]').forEach((n) => nodes.push(n));
+    nodes.forEach((n) => { if (n) readStageTokens(n); });
+  }
+  (function hookStageTokens() {
+    const art = O55.art;
+    if (!art || !art.tokens || art.tokens._o55Packed) return;
+    const orig = art.tokens.bind(art);
+    function tokens(el) { return readStageTokens(el) || orig(el); }
+    tokens._o55Packed = true;
+    art.tokens = tokens;
+  })();
   function syncTheme(fromObserver) {
     let th = O55.theme();
     /* While the window is open its look is the one chosen here. Settings reapplies a Project's saved theme when a
@@ -99,6 +159,8 @@
     const look = th.family + '-' + th.mode + (document.documentElement.hasAttribute('data-o55-nier') ? '-nier' : '');
     S.root.setAttribute('data-family', th.family); S.root.setAttribute('data-mode', th.mode);
     S.root.querySelector('.o55-stage').setAttribute('data-family', th.family);
+    /* after the attributes, before any mount: one read of the colours the new look already computed */
+    warmStageTokens();
     if (lastLook && lastLook !== look && fromObserver) {
       /* NieR Mode turned on or off on the look screen (O55.nierLook.busy(): its moment is playing under the reboot's
          cover): the new cast is mounted waiting in the wings (ensembleHold) and lowered in at the reveal. When only NieR
