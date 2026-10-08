@@ -114,8 +114,7 @@
   TR.on('callout', (d) => {
     if (!painted()) return;
     const s = d.step, inCh = TR.defs.filter((x) => x.chapter === s.chapter);
-    if (has('headers')) d.count = d.done ? T('complete') : two(inCh.indexOf(s) + 1) + '/' + two(inCh.length);
-    if (has('headers')) d.tryLabel = T('objective');
+    if (has('headers')) { d.count = d.done ? T('complete') : two(inCh.indexOf(s) + 1) + '/' + two(inCh.length); d.tryLabel = T('objective'); }
     const unit = has('pod'), voice = has('voice');
     if (!unit && !voice) return;
     const line = lineFor(d);
