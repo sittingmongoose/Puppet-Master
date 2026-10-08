@@ -1,0 +1,160 @@
+[
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M03-A-control-normal_retrieval-v1",
+    "arm": "control",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-control-normal_retrieval-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-A-control-normal_retrieval-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T18:37:58.792Z",
+        "startedAt": "2026-10-07T18:38:00.792Z",
+        "completedAt": "2026-10-07T18:40:43.625Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M03-A-control-finalize-v1",
+    "arm": "control",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-control-finalize-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-A-control-finalize-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T18:42:01.314Z",
+        "startedAt": "2026-10-07T18:42:03.929Z",
+        "completedAt": "2026-10-07T18:44:43.986Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M03-A-treatment-navigate-v1",
+    "arm": "treatment",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-navigate-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-A-treatment-navigate-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T18:45:56.626Z",
+        "startedAt": "2026-10-07T18:45:58.741Z",
+        "completedAt": "2026-10-07T18:48:30.092Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M03-A-treatment-focused_read-v1",
+    "arm": "treatment",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-focused_read-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-A-treatment-focused_read-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T18:50:12.250Z",
+        "startedAt": "2026-10-07T18:50:15.290Z",
+        "completedAt": "2026-10-07T18:52:21.640Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M03-A-treatment-expand-v1",
+    "arm": "treatment",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-expand-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-A-treatment-expand-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T18:52:51.539Z",
+        "startedAt": "2026-10-07T18:52:53.190Z",
+        "completedAt": "2026-10-07T18:55:24.916Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M03-A-treatment-finalize-v1",
+    "arm": "treatment",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-finalize-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-A-treatment-finalize-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T18:56:40.525Z",
+        "startedAt": "2026-10-07T18:56:42.164Z",
+        "completedAt": "2026-10-07T18:58:30.267Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "review",
+    "id": "er10-cohort1-D-M03-A-source-review-v1",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-source-review-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-A-source-review-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "interrupted",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T19:00:23.868Z",
+        "startedAt": "2026-10-07T19:00:24.338Z",
+        "completedAt": "2026-10-07T19:28:12.607Z"
+      }
+    ],
+    "threadStatus": "interrupted",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "review",
+    "id": "er10-cohort1-D-M03-A-source-review-X-v2",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-source-review-X-v2",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M03-A-source-review-X-v2:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T19:39:32.892Z",
+        "startedAt": "2026-10-07T19:39:33.503Z",
+        "completedAt": "2026-10-07T19:46:18.319Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  }
+]

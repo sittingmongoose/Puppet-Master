@@ -1,0 +1,942 @@
+{
+  "schema": "pm.er10.independent-semantic-review.v1",
+  "case_id": "D-M03-A",
+  "candidate": "X",
+  "review_kind": "one prospective independent review repair",
+  "semantic_only": true,
+  "reviewer": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "delegates": 0,
+    "native_goal_used": false,
+    "usage": null
+  },
+  "timing": {
+    "actual_dispatch_utc": null,
+    "dispatch_timestamp_limitation": "Actual dispatch timestamp not supplied; lifecycle/timing files prohibited. First observed clock is a proxy, not a substituted/reset allowance.",
+    "first_observed_review_utc": "2026-10-07T19:39:40Z",
+    "artifacts_written_utc": "2026-10-07T19:45:00Z",
+    "verification_finished_utc": "2026-10-07T19:46:06Z",
+    "actual_dispatch_elapsed_seconds": null,
+    "first_observed_elapsed_seconds": 386.0,
+    "allowance_minutes": 20,
+    "includes_checks_writing_delivery": true,
+    "allowance_reset": false,
+    "original_contract_minutes": 20,
+    "root_mistake_annotation": "User reports root previously misstated a generic 15-minute reviewer limit; original 20-minute contract retained, never changed retroactively.",
+    "prior_pair_closeout": "User reports original paired review exceeded its 20-minute envelope and was interrupted without authored REVIEW.json/REVIEW.md; prior scientific scope unassessed. No prior review or lifecycle material read."
+  },
+  "authorization_and_blinding": {
+    "scope": "Complete declared M03A brief and exact frozen candidate X final plus both mandatory intermediates; no scope reduction.",
+    "originals_modified": false,
+    "candidate_feedback_sent": false,
+    "delegation": false,
+    "prohibited_files_read": false,
+    "prior_independent_reviews_read": false,
+    "method_visibility_limits": [
+      "Final/intermediate headings explicitly reveal arm control and normal_retrieval/finalize method names.",
+      "Required intermediates expose predecessor findings and accepted/rejected/unresolved self-dispositions, plus native Goal/receipt claims; these are candidate assertions, not independent grades.",
+      "Explicitly mapped supplementary paths include treatment/expand-v1, revealing another method label. Only those primary-source file bytes were read there; no other candidate output was read.",
+      "Candidate material was read before primary adjudication, permitting anchoring; source verification was independent."
+    ],
+    "not_read": [
+      "case cards",
+      "identity maps",
+      "parent state/checkpoints",
+      "timing/lifecycle/receipt files",
+      "other reviews",
+      "other candidate outputs"
+    ],
+    "history_assertions_unverified": "Quiet/frozen task history is accepted as user-provided context, not independently reconstructed.",
+    "preexisting_output_directory_entries": "Exist; contents not read or modified. Only requested REVIEW.json and review.md authored."
+  },
+  "semantic_conclusion": {
+    "status": "material_corrections_required",
+    "summary": "All six obligations were independently assessed and all six proposed tests reviewed. Core selectors, dotfile matching, stable descendant symlink exclusion, broken-leaf behavior, explicit link following, and case rules are largely sound. F6 wrongly equates unreadable root with failing initial stat and misses uncaught walk iterator/context errors. Completeness and symlink claims need stable-tree/access/scope qualifications; T4 needs a real-denial precondition. No candidate edits, scientific rescue, ranking, cost inference, or native success judgment.",
+    "winner_ranking": null,
+    "cost_inference": null,
+    "native_success_inference": null
+  },
+  "coverage_census": {
+    "declared_obligations": 6,
+    "obligations_assessed": 6,
+    "obligations_unassessed": 0,
+    "candidate_final_material_findings": 7,
+    "final_findings_assessed": 7,
+    "proposed_tests": 6,
+    "proposed_tests_assessed": 6,
+    "proposed_tests_executed_by_reviewer": 0,
+    "mandatory_intermediates": 2,
+    "mandatory_intermediates_read": 2,
+    "claim_groups": 20,
+    "claim_groups_assessed": 19,
+    "claim_groups_explicitly_unassessed": 1,
+    "reviewed_hashed_inputs": 10,
+    "core_primary_sources": 3,
+    "mapped_supplementary_primary_sources": 2,
+    "reviewer_OS_only_counterexamples": 1,
+    "entire_source_files_read": false
+  },
+  "obligations": [
+    {
+      "id": "O1",
+      "brief_line": 7,
+      "obligation": "Trace rglob into selectors and directory scanning",
+      "status": "satisfied_with_precision_note",
+      "groups": [
+        "G01",
+        "G09",
+        "G11"
+      ],
+      "assessment": "Trace is correct; buffering wording is confined to leaf scans, and error guards require G11."
+    },
+    {
+      "id": "O2",
+      "brief_line": 8,
+      "obligation": "Distinguish dotfile matching from recursive symlink traversal",
+      "status": "addressed_missing_governing_qualification",
+      "groups": [
+        "G02",
+        "G03",
+        "G06"
+      ],
+      "assessment": "Dot matching and stable descendant-link exclusion correct; absolute never lacks root/mutation qualifications."
+    },
+    {
+      "id": "O3",
+      "brief_line": 9,
+      "obligation": "Separate broken links from followed directory links",
+      "status": "satisfied",
+      "groups": [
+        "G04",
+        "G05"
+      ],
+      "assessment": "Leaf versus intermediate behavior and explicit-segment following are correctly distinguished."
+    },
+    {
+      "id": "O4",
+      "brief_line": 10,
+      "obligation": "State platform/case-sensitivity conditions",
+      "status": "satisfied_with_minor_qualification",
+      "groups": [
+        "G07",
+        "G08",
+        "G14"
+      ],
+      "assessment": "Case/flavour/override rules correct; predicate-only error wording needs qualification, and junctions remain disclosed uncertainty."
+    },
+    {
+      "id": "O5",
+      "brief_line": 11,
+      "obligation": "Identify access-error completeness effects",
+      "status": "addressed_material_errors",
+      "groups": [
+        "G09",
+        "G10",
+        "G11",
+        "G12"
+      ],
+      "assessment": "Ordinary denied scans can silently omit results, but root-unreadable raises and only-top-level propagation are incorrect; completeness conditions incomplete."
+    },
+    {
+      "id": "O6",
+      "brief_line": 12,
+      "obligation": "Propose discriminating tests without claiming execution",
+      "status": "partially_satisfied",
+      "groups": [
+        "G15"
+      ],
+      "assessment": "All six clearly proposed; five supported under normal fixture conditions, T4 lacks effective-identity/platform denial prerequisites."
+    }
+  ],
+  "claim_groups": [
+    {
+      "id": "G01",
+      "claim_group": "F1 selector/scanning trace and multiple-** deduplication",
+      "status": "supported_with_precision_note",
+      "candidate_locations": [
+        "final:11",
+        "intermediate_1:9",
+        "intermediate_2:12-13"
+      ],
+      "assessment": "rglob prepends **; _make_selector constructs recursive then leaf wildcard selectors; select_from checks the initial root with is_dir; recursion first yields that root, then uses walk; leaf scans call _scandir/os.scandir and buffer list(scandir_it). walk separately scans incrementally, so the wording each scan buffered should be confined to leaf scans. Non-adjacent ** selects the deduplicating subclass; adjacent ** is collapsed.",
+      "source_refs": [
+        "pathcode:82-109",
+        "pathcode:151-171",
+        "pathcode:191-256",
+        "pathcode:1059-1063",
+        "pathcode:1097-1155"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G02",
+      "claim_group": "F2 matching dotfiles",
+      "status": "supported",
+      "candidate_locations": [
+        "final:13",
+        "intermediate_1:10"
+      ],
+      "assessment": "Name matching has no leading-dot exclusion. Pinned fnmatch translates *.csv to a regex equivalent to (?s:.*\\.csv)\\Z, supporting .hidden.csv, including beneath real dot-directories that are visited. This is source reasoning, not an executed 3.12.3 witness.",
+      "source_refs": [
+        "pathcode:107-109",
+        "pathcode:193-220",
+        "fnmatch:19-32",
+        "fnmatch:74-90",
+        "fnmatch:146-185"
+      ],
+      "actual_check_ids": [
+        "R2",
+        "R5"
+      ]
+    },
+    {
+      "id": "G03",
+      "claim_group": "F2 recursive symlink exclusion and blanket missing-subtree claims",
+      "status": "qualified_missing_governing_condition",
+      "candidate_locations": [
+        "final:7",
+        "final:13",
+        "final:23",
+        "intermediate_1:10,15"
+      ],
+      "assessment": "Stable descendant directory symlinks are not placed in walk dirnames, hence are not recursively entered by bare *.csv. Never is too broad: the supplied root can itself be a directory symlink because is_dir/stat/scandir follow it; a real descendant replaced by a symlink after classification can still be entered. Link aliases are omitted, but a target also reachable through a real descendant can still contribute CSV files through that real path.",
+      "source_refs": [
+        "pathcode:164-171",
+        "pathcode:835-840",
+        "pathcode:228-238",
+        "pathcode:1059-1063",
+        "pathcode:1135-1155",
+        "pathdoc:1115-1125",
+        "pathscan:1895-1903"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G04",
+      "claim_group": "F2/F4 explicit intermediate links and corpus counts",
+      "status": "supported",
+      "candidate_locations": [
+        "final:13,17",
+        "intermediate_1:10,12",
+        "intermediate_2:15"
+      ],
+      "assessment": "dironly selectors call entry.is_dir() with default follow_symlinks=True. Exact rglob fileB versus */fileB contrast is correct. test_glob_permissions creates 100 links, yields 100 for *, and 50 for */, */fileC, and */file*. Those tests are conditional on usable symlinks; reading their assertions does not mean running them.",
+      "source_refs": [
+        "pathcode:210-220",
+        "osdoc:2819-2841",
+        "pathscan:1598-1616",
+        "pathscan:1895-1903",
+        "pathscan:1980-1998"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G05",
+      "claim_group": "F3 broken links, leaf kinds, and long-target witness",
+      "status": "supported",
+      "candidate_locations": [
+        "final:15",
+        "intermediate_1:11"
+      ],
+      "assessment": "The final leaf has dironly=False and no stat gate, so matching broken links, directory links, file links, and directories can all be yielded. Broken links used as intermediate components fail the directory predicate or are skipped on OSError. The loop test includes brokenLink/brokenLinkLoop; the long-link test uses bad repeated 200 times (600 characters) and expects bad_link.",
+      "source_refs": [
+        "pathcode:155-162",
+        "pathcode:200-220",
+        "pathscan:1931-1948",
+        "pathscan:2000-2007",
+        "osdoc:2819-2841"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G06",
+      "claim_group": "F4 loop immunity and 3.12.3 API switch",
+      "status": "supported_with_stable_tree_qualification",
+      "candidate_locations": [
+        "final:17",
+        "intermediate_1:12"
+      ],
+      "assessment": "The stable descendant-link loop tests terminate because walk does not follow those links. The absolute immunity claim needs the mutation qualification in G03. No recurse_symlinks keyword exists in the pinned glob/rglob signatures; walk has follow_symlinks but rglob does not pass it. Finite explicit components may follow a directory link without turning each ** into link-following recursion.",
+      "source_refs": [
+        "pathcode:1081-1112",
+        "pathcode:228-238",
+        "pathdoc:1104-1120",
+        "pathscan:1931-1948"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G07",
+      "claim_group": "F5 platform/default/override case rules",
+      "status": "supported",
+      "candidate_locations": [
+        "final:19",
+        "final:7",
+        "intermediate_1:13"
+      ],
+      "assessment": "The implementation chooses regex case sensitivity from path flavour via normcase, not by probing each directory. Defaults are sensitive for POSIX and insensitive for Windows; explicit True/False overrides. Thus X.CSV misses *.csv by default on POSIX and matches with False, including on a POSIX filesystem that happens to permit case-insensitive lookups. Pinning the flag stabilizes matching rules, not every platform-dependent filesystem behavior.",
+      "source_refs": [
+        "pathcode:58-59",
+        "pathcode:107-109",
+        "pathcode:193-198",
+        "pathdoc:1347-1359",
+        "pathscan:1876-1886",
+        "pathscan:3060-3066",
+        "pathscan:3207-3212"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G08",
+      "claim_group": "F5 predicate error behavior",
+      "status": "supported_for_OSError_with_minor_omission",
+      "candidate_locations": [
+        "final:19",
+        "intermediate_1:13"
+      ],
+      "assessment": "Listed ignored errnos and Windows errors are correct; other OSError from exists/is_dir propagates. The word only needs an OSError qualification: these predicates also return False on ValueError for non-encodable paths, and is_dir returns False for non-directories. The F5 mechanism does not establish the later root-unreadable claim.",
+      "source_refs": [
+        "pathcode:40-59",
+        "pathcode:852-884",
+        "pathdoc:955-961"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G09",
+      "claim_group": "F6 suppression of scan-open and classification errors",
+      "status": "supported",
+      "candidate_locations": [
+        "final:21",
+        "intermediate_1:14",
+        "intermediate_2:12-13"
+      ],
+      "assessment": "Wildcard scanning suppresses OSError from opening/materializing/closing its scan. walk suppresses OSError when opening a directory with _scandir; on_error defaults to None. Entry is_dir OSError becomes False for walk classification, losing recursion into that entry; dironly wildcard entries are skipped. Ordinary access-denied opens therefore silently omit reachable results, including at the initial root after a successful is_dir check. rglob offers no on_error argument.",
+      "source_refs": [
+        "pathcode:200-215",
+        "pathcode:1112-1155",
+        "pathdoc:1098-1102"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G10",
+      "claim_group": "F6 root-unreadable raises",
+      "status": "incorrect_material",
+      "candidate_locations": [
+        "final:21",
+        "intermediate_1:14",
+        "intermediate_2:19"
+      ],
+      "assessment": "Read permission on a directory is not required merely to stat that directory when its parent is searchable. An unreadable root can pass is_dir and then have both scans fail silently, yielding no CSV hits. Only non-ignored errors from the initial stat/is_dir gate propagate in that initial-check category; an inaccessible ancestor can cause that. Reviewer OS-only check observed stat success and scandir PermissionError for a mode-000 root, and stat PermissionError for a child beneath a mode-000 parent. Pinned source establishes the rglob consequence; CPython 3.12.3 rglob was not executed.",
+      "source_refs": [
+        "pathcode:164-171",
+        "pathcode:200-207",
+        "pathcode:228-238",
+        "pathcode:870-884",
+        "pathcode:1128-1133",
+        "pathdoc:926-928"
+      ],
+      "actual_check_ids": [
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "id": "G11",
+      "claim_group": "F6 only the top-level gate can propagate / all nested scan OSError suppressed",
+      "status": "incorrect_material",
+      "candidate_locations": [
+        "final:11,21",
+        "intermediate_1:9,14",
+        "intermediate_2:13,19"
+      ],
+      "assessment": "walk catches only creation of scandir_it at line 1129. The with/for iteration at 1135-1138 is outside that handler, so OSError while entering, consuming, or exiting the opened walk scan can propagate through _iterate_directories and rglob. Leaf scan materialization does catch such OSError, making the two scan paths different. Docs generalize scan suppression, but released implementation governs this brief. This propagation is a control-flow conclusion conditional on an iterator/context operation raising; no filesystem I/O fault was injected.",
+      "source_refs": [
+        "pathcode:200-207",
+        "pathcode:228-238",
+        "pathcode:1128-1155",
+        "pathdoc:926-928",
+        "osdoc:2712-2722"
+      ],
+      "actual_check_ids": [
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "G12",
+      "claim_group": "Recommendation/F7 completeness and post-filtering",
+      "status": "partially_supported_missing_conditions",
+      "candidate_locations": [
+        "final:7,23",
+        "intermediate_1:15"
+      ],
+      "assessment": "Treating output as potentially partial is sound. Leaf results require an explicit object policy if the intended inventory includes only regular files: is_file follows file symlinks and can itself raise; lstat supplies link metadata but is not a filter by itself. Readable directories alone do not guarantee complete traversal: effective search/access rights through ancestors, no classification/scan failures, full consumption, and a stable tree matter. Two scans per visited directory provide no snapshot and can miss concurrent changes or enter replacement links. Clarify link-path versus unique-target inventory; skipping an alias need not lose a target reachable elsewhere. Candidate does not state these governing qualifications.",
+      "source_refs": [
+        "pathcode:164-171",
+        "pathcode:200-238",
+        "pathcode:835-847",
+        "pathcode:886-901",
+        "pathcode:1128-1155",
+        "pathdoc:1115-1120",
+        "osdoc:2682-2689"
+      ],
+      "actual_check_ids": [
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "id": "G13",
+      "claim_group": "Final self-dispositions and three rejected propositions",
+      "status": "not_fully_supported_as_unqualified_acceptance",
+      "candidate_locations": [
+        "final:27-29",
+        "intermediate_1:9-17",
+        "intermediate_2:19-21"
+      ],
+      "assessment": "All six obligations are addressed and all seven findings are present, but accepted all seven / amended zero does not establish correctness. Rejecting dotfiles-excluded is correct. Rejecting universal recursive directory-link following is correct for stable descendants. Rejecting unreadable-subdirs-raise is correct for scan-open access denial, but the exception phrasing and universal suppression inherit G10/G11. No grading weight is assigned to the author self-labels.",
+      "source_refs": [
+        "pathcode:200-238",
+        "pathcode:1128-1155",
+        "fnmatch:19-32"
+      ],
+      "actual_check_ids": [
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "G14",
+      "claim_group": "Declared uncertainties, corpus size, bounded reads",
+      "status": "appropriately_disclosed_with_search_limit",
+      "candidate_locations": [
+        "final:29,42",
+        "intermediate_1:17,29",
+        "intermediate_2:27"
+      ],
+      "assessment": "Windows junction traversal remains explicitly unresolved and is not treated as tested. Leading-dot behavior for the requested *.csv is supportable from pinned fnmatch; broader edge uncertainty does not invalidate that conclusion. The three core files total 6297 lines as stated. Search and an AST census found no dedicated leading-dot glob witness, but cannot certify absence of every dynamic test. Historical extent of candidate reads belongs to G20.",
+      "source_refs": [
+        "pathscan:2555-2560",
+        "pathdoc:973-978",
+        "fnmatch:19-32",
+        "fnmatch:74-185"
+      ],
+      "actual_check_ids": [
+        "R1",
+        "R2",
+        "R6"
+      ]
+    },
+    {
+      "id": "G15",
+      "claim_group": "T1-T6 proposed discriminating tests versus execution",
+      "status": "partially_supported_conditions_missing",
+      "candidate_locations": [
+        "final:33",
+        "intermediate_1:19-21",
+        "intermediate_2:21"
+      ],
+      "assessment": "All six are explicitly proposed only. T1/T2/T3/T5/T6 expectations follow from source for stable isolated fixtures and usable symlinks where relevant. T4 needs a platform/identity precondition: chmod 000 must actually deny access to the same effective test identity; privileged users and Windows chmod semantics can defeat it. A direct denial probe must qualify that expectation. No T1-T6 was run by this reviewer; R3 is a separate OS primitive counterexample. See proposed_tests for individual assessments.",
+      "source_refs": [
+        "pathcode:200-238",
+        "pathcode:1112-1155",
+        "pathscan:2779-2789",
+        "pathscan:1980-2007",
+        "osdoc:2030-2073"
+      ],
+      "actual_check_ids": [
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "id": "G16",
+      "claim_group": "Source identity, source-linking, and cited ranges",
+      "status": "verified_with_one_intermediate_range_defect",
+      "candidate_locations": [
+        "final:11-21,37-42",
+        "intermediate_1:5,25-27",
+        "intermediate_2:8,12-15"
+      ],
+      "assessment": "All mapped SHA-256 values match; final abbreviated hashes resolve to manifest/full hashes in intermediate_1. URLs pin v3.12.3. Final material ranges/test names support the mechanisms subject to G10/G11; final transparently carries some doc/test readings. intermediate_2 line 12 places _make_selector in code lines 140-256, but it is at 82-103, so that direct-read range cannot support that named function. Final F1 gives the correct range. No source authentication beyond captured bytes/released URL was attempted.",
+      "source_refs": [
+        "pathcode:82-103",
+        "pathcode:151-256"
+      ],
+      "actual_check_ids": [
+        "R1",
+        "R2",
+        "R5"
+      ]
+    },
+    {
+      "id": "G17",
+      "claim_group": "Declared brief format and non-application scope",
+      "status": "satisfied_in_visible_artifacts",
+      "candidate_locations": [
+        "final:3-42",
+        "intermediate_2:20,23-27"
+      ],
+      "assessment": "Final is one bounded source-linked recommendation, seven numbered material findings, conditions, uncertainty, and six proposed checks. Whole-file whitespace count is 921 words, below the 1100-word/eight-finding soft ceiling; source/code tokens make alternative counts variable. It does not become a full application plan. Static-only/no-install/no-execution declarations conform to the brief on their face; actual historical behavior is not verifiable from the allowed map. Missing governing conditions are assessed in G03/G10-G12/G15 and cannot be excused by the soft ceiling.",
+      "source_refs": [
+        "brief:3-16"
+      ],
+      "actual_check_ids": [
+        "R1",
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "G18",
+      "claim_group": "Preservation and corrections across mandatory intermediates",
+      "status": "preserved_with_inherited_errors",
+      "candidate_locations": [
+        "intermediate_1:9-29",
+        "intermediate_2:7,19-27",
+        "final:7-42"
+      ],
+      "assessment": "Final retains all seven predecessor findings, all six test proposals, three rejected propositions, two uncertainty topics, source pins, and static/proposed labels. It expressly records doc/test carry-forward, with amended zero, rather than silently claiming those prose/test details were re-read. No material design correction is visible; root-unreadable and universal scan-suppression errors survive the finalize claim of code re-verification. The predecessor/intermediate is untrusted candidate work, not a prior independent review.",
+      "source_refs": [
+        "final:7-42",
+        "intermediate_1:9-29",
+        "intermediate_2:7-27"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G19",
+      "claim_group": "Optional supported yield beyond minimal six obligations",
+      "status": "supported_subject_to_listed_qualifications",
+      "candidate_locations": [
+        "final:11,15,17,19",
+        "intermediate_1:11-15"
+      ],
+      "assessment": "Useful optional detail includes deduplication of multiple **, the 600-character broken-target regression, 100/50 link counts, lack of a recurse_symlinks parameter, and distinguishing file/link kinds for filtering. These are supported source additions already assessed in G01/G04-G08/G12; none compensates for G10/G11. X claims no extra captures. The mapped fnmatch/os files were reviewer evidence, not attributed to X or to any other candidate result.",
+      "source_refs": [
+        "pathcode:82-103",
+        "pathcode:241-256",
+        "pathcode:1081-1110",
+        "pathscan:1980-2007"
+      ],
+      "actual_check_ids": [
+        "R2"
+      ]
+    },
+    {
+      "id": "G20",
+      "claim_group": "Historical checks, access restrictions, native Goal and receipt assertions",
+      "status": "unassessed_historical_process",
+      "candidate_locations": [
+        "final:3,29,33,37-42",
+        "intermediate_1:3,5,27,29",
+        "intermediate_2:7-15,21,25,27"
+      ],
+      "assessment": "Candidate reports hash checks, direct code/test reads, zero executed witnesses, no additional captures, input-path restrictions, no sibling/reviewer/evaluator/parent inspection, no repo edits/worktrees/installs/purchases/messages/delegation, and native Goal activation/get_goal/receipts. Current bytes and visible labels were checked, but actual historical actions, timing, Goal status, receipts, hidden accesses, account/service usage, and original task/descendant quietness were not audited. Supporting lifecycle/log/parent files are prohibited. These statements remain self-report, neither verified success nor verified violation. Native/cost outcomes are outside this semantic review.",
+      "source_refs": [],
+      "actual_check_ids": [
+        "R2"
+      ]
+    }
+  ],
+  "proposed_tests": [
+    {
+      "id": "T1",
+      "status": "supported_proposal",
+      "expected": "Both .h.csv and v.csv are leaf matches.",
+      "conditions": "Stable readable isolated directory; consume the iterator.",
+      "source_refs": [
+        "pathcode:193-220",
+        "fnmatch:74-185"
+      ],
+      "executed_by_candidate": "reported_not_executed; history_unverified",
+      "executed_by_reviewer": false
+    },
+    {
+      "id": "T2",
+      "status": "supported_proposal",
+      "expected": "Bare x.csv yields d/x.csv; */x.csv also yields link/x.csv.",
+      "conditions": "Working directory symlinks, stable readable isolated d/link fixture; compare sets or sorted paths.",
+      "source_refs": [
+        "pathscan:1895-1903",
+        "pathcode:210-238"
+      ],
+      "executed_by_candidate": "reported_not_executed; history_unverified",
+      "executed_by_reviewer": false
+    },
+    {
+      "id": "T3",
+      "status": "supported_proposal",
+      "expected": "b.csv is yielded as a leaf; b.csv/*.csv yields nothing. d.csv may also match as a leaf directory link.",
+      "conditions": "Working symlinks; nonexistent target for b.csv; real directory target for d.csv; distinguish type policy.",
+      "source_refs": [
+        "pathcode:155-162",
+        "pathcode:200-220",
+        "pathscan:1931-1948"
+      ],
+      "executed_by_candidate": "reported_not_executed; history_unverified",
+      "executed_by_reviewer": false
+    },
+    {
+      "id": "T4",
+      "status": "underqualified_proposal",
+      "expected": "When scan access is truly denied, u.csv is omitted and direct scandir raises PermissionError.",
+      "conditions": "chmod 000 alone is not a portable denial setup; require same effective identity and an actual denial check, restore permissions. Candidate omits the effective-user/platform prerequisite.",
+      "source_refs": [
+        "pathcode:200-207",
+        "pathcode:1128-1133",
+        "pathscan:2779-2789",
+        "osdoc:2030-2073"
+      ],
+      "executed_by_candidate": "reported_not_executed; history_unverified",
+      "executed_by_reviewer": false
+    },
+    {
+      "id": "T5",
+      "status": "supported_proposal",
+      "expected": "X.CSV on POSIX misses by default and matches with case_sensitive=False.",
+      "conditions": "Pinned 3.12.3 semantics; the flag governs matching rather than filesystem lookup case behavior.",
+      "source_refs": [
+        "pathcode:58-59",
+        "pathcode:193-198",
+        "pathdoc:1347-1350"
+      ],
+      "executed_by_candidate": "reported_not_executed; history_unverified",
+      "executed_by_reviewer": false
+    },
+    {
+      "id": "T6",
+      "status": "supported_proposal",
+      "expected": "Stable l pointing to its parent directory is yielded once by rglob(*) without recursive descent through l.",
+      "conditions": "Working symlinks; stable isolated fixture, finite tree; a parent-directory link is distinct from a broken self-pointing link.",
+      "source_refs": [
+        "pathcode:228-238",
+        "pathcode:1140-1155",
+        "pathscan:1931-1948"
+      ],
+      "executed_by_candidate": "reported_not_executed; history_unverified",
+      "executed_by_reviewer": false
+    }
+  ],
+  "actual_checks": [
+    {
+      "id": "R1",
+      "kind": "byte hashing and census",
+      "executed": true,
+      "details": "Read/hash brief, manifest, three candidate artifacts, three core and two explicitly mapped supplemental sources. All 10 match supplied or first-read hashes; core corpus 6297 lines; final 921 whitespace words and seven F findings.",
+      "limitations": "Matching bytes do not independently prove prior author actions."
+    },
+    {
+      "id": "R2",
+      "kind": "read-only source and artifact assessment",
+      "executed": true,
+      "details": "Read all three candidate artifacts and full brief/manifest. Inspected raw line ranges, tests/fixtures, and full 185-line fnmatch; resolved code/docs conflicts in favor of v3.12.3 implementation.",
+      "limitations": "Selected core/os sections, not every source line; no downloaded code executed."
+    },
+    {
+      "id": "R3",
+      "kind": "bounded isolated OS primitive counterexample",
+      "executed": true,
+      "started_at_utc": "2026-10-07T19:40:47.075811Z",
+      "finished_at_utc": "2026-10-07T19:40:47.076372Z",
+      "environment": {
+        "python_version": "3.14.4",
+        "os_name": "posix",
+        "effective_uid": 1000
+      },
+      "operations": [
+        "create disposable directory and hit.csv",
+        "chmod root 000",
+        "os.stat(root) and os.scandir(root)",
+        "chmod parent 000 and os.stat(child)",
+        "restore modes and remove fixture"
+      ],
+      "observations": {
+        "stat_unreadable_root_is_directory": true,
+        "scandir_unreadable_root_error": {
+          "type": "PermissionError",
+          "errno": 13
+        },
+        "stat_child_beneath_inaccessible_parent_error": {
+          "type": "PermissionError",
+          "errno": 13
+        },
+        "temporary_fixture_removed": true
+      },
+      "limitations": "OS primitive evidence only, not a CPython 3.12.3 rglob test. No candidate or downloaded source was executed; no credentials/install. No T1-T6 run."
+    },
+    {
+      "id": "R4",
+      "kind": "static AST inspection and word count",
+      "executed": true,
+      "details": "Parsed source as data. In walk, try 1128-1133 covers only line 1129 _scandir creation; try 1139-1143 covers only line 1140 classification; iteration/context at 1135-1138 is outside both.",
+      "limitations": "No iterator/context I/O fault injected and no exact-release runtime execution."
+    },
+    {
+      "id": "R5",
+      "kind": "primary-source web inspection and in-memory byte verification",
+      "executed": true,
+      "details": "Opened released raw fnmatch.py and os.rst with web; retrieved each in memory with urllib timeout 20 seconds. HTTP 200; exact SHA-256 matches mapped supplements; no files written. Capture UTC recorded per source.",
+      "limitations": "Web parser collapses lines; citations use frozen raw numbering. No extra repository/installer."
+    },
+    {
+      "id": "R6",
+      "kind": "bounded test-source absence check",
+      "executed": true,
+      "details": "rg terms plus AST census: 63 literal-string glob/rglob calls; only three dot-prefixed patterns, all .. paths, and no hidden literal patterns. Junction test only delegates is_junction to flavour.",
+      "limitations": "No identified leading-dot witness; does not prove absence of all dynamic test cases."
+    },
+    {
+      "id": "R7",
+      "kind": "delivery integrity validation",
+      "executed": true,
+      "details": "Parsed both requested outputs; all six obligations, 20 claim groups, six proposed tests, and 10 artifacts reconciled. All claim source references are within raw file bounds. Rehashed all 10 originals after review: unchanged. Read cited osdoc:2030-2073. Authored only the two requested outputs with exclusive creation; no scratch/log/capture file remains from this reviewer.",
+      "limitations": "Checks verify output consistency and immutable input bytes, not historical author actions or exact dispatch elapsed time.",
+      "finished_at_utc": "2026-10-07T19:46:06Z",
+      "validation_note": "An initial assertion that the whole writable directory contained only these two outputs failed because other entries already exist. Their contents were not read or changed. A subsequent table-row count accidentally included its header and was corrected to count G01-G20. Final checks verify reviewer-authored outputs and preserve preexisting entries; no empty-directory condition is imposed."
+    }
+  ],
+  "governing_conditions": {
+    "release": "CPython 3.12.3 released implementation governs docs generalizations",
+    "designer_policy": "Read-only source inspection; no downloaded project code/installers; proposals only. R3 is an expressly authorized reviewer OS-only counterexample.",
+    "soft_ceiling": "1100 words/eight material findings; no omission license; final measured 921 whitespace words/seven numbered findings.",
+    "historical_policy_compliance": "Unassessed beyond visible content declarations; G20.",
+    "review_policy": "Exactly one independent repair; no delegates; no native Goal/receipt engineering; no original edits or feedback; no winner/cost/native-success inference."
+  },
+  "preservation_and_corrections": {
+    "findings_preserved": "F1-F7 all retained",
+    "proposals_preserved": "T1-T6 all retained",
+    "rejections_preserved": 3,
+    "uncertainty_topics_preserved": 2,
+    "candidate_claimed_amendments": 0,
+    "material_corrections_visible": false,
+    "qualification_changes": "Finalize explicitly labels partial doc/test carry-forward; no substantive behavioral repair visible.",
+    "inherited_defects": [
+      "root-unreadable raises",
+      "only top-level gate can propagate",
+      "unqualified never/loop immunity and completeness conditions"
+    ]
+  },
+  "unresolved_uncertainty": [
+    "Actual reviewer dispatch time/elapsed and all usage values unknown; no timing-file access.",
+    "Candidate historical tool execution, restrictions, direct-read extent, native Goal/receipts and quiet descendants unverified (G20).",
+    "No exact CPython 3.12.3 runtime or Windows witness; Windows junction traversal remains unresolved rather than assumed to match symlinks.",
+    "Uncaught iterator/context error propagation established conditionally from guard placement; frequency on a local filesystem not established.",
+    "No snapshot/race witness executed; stable-tree qualification follows pinned code/docs.",
+    "No complete proof that all dynamic tests lack dotfile coverage."
+  ],
+  "sources": {
+    "pathdoc": {
+      "source_id": "pathdoc",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/pathlib.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1eb64284f142028c3338da705d2a9e1c640bf115c189b27787301bf7ff3fc6de",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathdoc.rst",
+      "kind": "public primary raw bytes",
+      "line_numbering": "one-based frozen raw bytes; web parser line numbers differ"
+    },
+    "pathcode": {
+      "source_id": "pathcode",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/pathlib.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "dc14d8207519fb8bcdd9c7bae1d54da3ad1b339aa83d4979c16057cd552a3487",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathcode.py",
+      "kind": "public primary raw bytes",
+      "line_numbering": "one-based frozen raw bytes; web parser line numbers differ"
+    },
+    "pathscan": {
+      "source_id": "pathscan",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_pathlib.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1198a722bfbd6bd8f924f2b87b38b2d617d48358bf5498190682c077f6af5b1c",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathscan.py",
+      "kind": "public primary raw bytes",
+      "line_numbering": "one-based frozen raw bytes; web parser line numbers differ"
+    },
+    "fnmatch": {
+      "source_id": "fnmatch",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/expand-v1/sources/fnmatch-3.12.3.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/fnmatch.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "6683da36e47af523f3f41e18ad244d837783e19e98911cc0b7415dea81494ebc",
+      "reviewer_network_byte_verification_utc": "2026-10-07T19:41:20.139324Z",
+      "network_sha256_matches": true,
+      "network_capture_persisted": false,
+      "line_numbering": "one-based mapped raw bytes; web parser line numbers differ"
+    },
+    "osdoc": {
+      "source_id": "osdoc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/expand-v1/sources/os-3.12.3.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/os.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9a280ac22698e0947993ccab893cdb4d91db1cc482d45dcdc029da2a20bafd53",
+      "reviewer_network_byte_verification_utc": "2026-10-07T19:41:20.256196Z",
+      "network_sha256_matches": true,
+      "network_capture_persisted": false,
+      "line_numbering": "one-based mapped raw bytes; web parser line numbers differ"
+    }
+  },
+  "reviewed_artifacts": [
+    {
+      "id": "brief",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/brief.md",
+      "sha256": "428d85013366c5050fbbfd09b3ea21f2869ac729114b623c103b3a47a5bf503c",
+      "bytes": 1790,
+      "lines": 16,
+      "kind": "frozen input",
+      "expected_sha256": "428d85013366c5050fbbfd09b3ea21f2869ac729114b623c103b3a47a5bf503c",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "manifest",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources.json",
+      "sha256": "f3b6c1577dbdcae2bff0bd3fd50e027af1e84fd9c5dddff61d9c1f3bca87306f",
+      "bytes": 1569,
+      "lines": 35,
+      "kind": "frozen input",
+      "expected_sha256": "f3b6c1577dbdcae2bff0bd3fd50e027af1e84fd9c5dddff61d9c1f3bca87306f",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "pathdoc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathdoc.rst",
+      "sha256": "1eb64284f142028c3338da705d2a9e1c640bf115c189b27787301bf7ff3fc6de",
+      "bytes": 50247,
+      "lines": 1536,
+      "kind": "frozen public primary source",
+      "expected_sha256": "1eb64284f142028c3338da705d2a9e1c640bf115c189b27787301bf7ff3fc6de",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "pathcode",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathcode.py",
+      "sha256": "dc14d8207519fb8bcdd9c7bae1d54da3ad1b339aa83d4979c16057cd552a3487",
+      "bytes": 51105,
+      "lines": 1435,
+      "kind": "frozen public primary source",
+      "expected_sha256": "dc14d8207519fb8bcdd9c7bae1d54da3ad1b339aa83d4979c16057cd552a3487",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "pathscan",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathscan.py",
+      "sha256": "1198a722bfbd6bd8f924f2b87b38b2d617d48358bf5498190682c077f6af5b1c",
+      "bytes": 141113,
+      "lines": 3326,
+      "kind": "frozen public primary source",
+      "expected_sha256": "1198a722bfbd6bd8f924f2b87b38b2d617d48358bf5498190682c077f6af5b1c",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "fnmatch",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/expand-v1/sources/fnmatch-3.12.3.py",
+      "sha256": "6683da36e47af523f3f41e18ad244d837783e19e98911cc0b7415dea81494ebc",
+      "bytes": 5999,
+      "lines": 185,
+      "kind": "explicitly mapped additional public primary source",
+      "expected_sha256": "6683da36e47af523f3f41e18ad244d837783e19e98911cc0b7415dea81494ebc",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "osdoc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/expand-v1/sources/os-3.12.3.rst",
+      "sha256": "9a280ac22698e0947993ccab893cdb4d91db1cc482d45dcdc029da2a20bafd53",
+      "bytes": 191816,
+      "lines": 5423,
+      "kind": "explicitly mapped additional public primary source",
+      "expected_sha256": "9a280ac22698e0947993ccab893cdb4d91db1cc482d45dcdc029da2a20bafd53",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "final",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/frozen/X/final.md",
+      "sha256": "d5ace02e59d3f354ef094c9b158981ddd86fc0771b4515cbaae790bd4d0a5750",
+      "bytes": 7988,
+      "lines": 42,
+      "kind": "frozen candidate X artifact",
+      "expected_sha256": "d5ace02e59d3f354ef094c9b158981ddd86fc0771b4515cbaae790bd4d0a5750",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "intermediate_1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/frozen/X/intermediate-1.md",
+      "sha256": "e06b035f89dad46d328a32395da9cc44de471093b605835983edd5d7e3706a34",
+      "bytes": 7871,
+      "lines": 29,
+      "kind": "frozen candidate X artifact",
+      "expected_sha256": "e06b035f89dad46d328a32395da9cc44de471093b605835983edd5d7e3706a34",
+      "hash_matches_expected": true
+    },
+    {
+      "id": "intermediate_2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/frozen/X/intermediate-2.md",
+      "sha256": "77ffdca7115fd5b250a6e898eaaa23f227c4f6639fc52f5ff920b3ca6783c769",
+      "bytes": 2744,
+      "lines": 27,
+      "kind": "frozen candidate X artifact",
+      "expected_sha256": "77ffdca7115fd5b250a6e898eaaa23f227c4f6639fc52f5ff920b3ca6783c769",
+      "hash_matches_expected": true
+    }
+  ],
+  "reviewer_read_ranges": {
+    "pathcode": [
+      "1-260",
+      "820-940",
+      "1050-1165"
+    ],
+    "pathdoc": [
+      "905-980",
+      "1076-1153",
+      "1334-1359"
+    ],
+    "pathscan": [
+      "1520-1605",
+      "1598-1620",
+      "1800-2025",
+      "2555-2560 (search result)",
+      "2745-2905",
+      "3030-3085",
+      "3190-3228"
+    ],
+    "fnmatch": [
+      "1-185"
+    ],
+    "osdoc": [
+      "2030-2073",
+      "2682-2762",
+      "2819-2875",
+      "2922-2945"
+    ],
+    "note": "Additional search results and AST metadata inspected across files; ranges here describe read text, not historical candidate access."
+  },
+  "output_paths": {
+    "json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW.json",
+    "human_readable": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/review.md"
+  }
+}

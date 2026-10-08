@@ -1,0 +1,35 @@
+{
+  "aggregate_source_and_derived_bytes_recorded": 5365329,
+  "checks": [
+    "source_sha256",
+    "fragment_sha256",
+    "source_byte_range_equivalence",
+    "range_bounds_and_no_full_source_copy",
+    "derived_selection_hash_and_raw_visible_line_mapping",
+    "proposed_unmaterialized_range_hash",
+    "derived_compaction_identity",
+    "frozen_original_reviewer_pointer",
+    "private_directory_selection_membership",
+    "configured_bounds"
+  ],
+  "errors": [],
+  "finished_at": "2026-10-07T23:42:40.799053+00:00",
+  "located_source_objects_read": 27,
+  "post_validation_metadata_compaction": {
+    "all_lineage_refs_and_selection_ids_still_resolve": true,
+    "exact_duplicate_only": true,
+    "rows_after": 803,
+    "rows_before": 803,
+    "source_and_private_payload_unchanged": true
+  },
+  "private_bytes": 65535,
+  "private_files_not_in_manifest": [],
+  "schema": "ER10_SUPPLEMENT_IDENTITY_VALIDATION_V1",
+  "scientific_or_necessity_review": false,
+  "selections": 100,
+  "source_deletion_authorization": false,
+  "source_objects": 26,
+  "status": "PASS",
+  "unique_fragments": 84,
+  "validator_source_and_derived_bytes_read": 1231726
+}

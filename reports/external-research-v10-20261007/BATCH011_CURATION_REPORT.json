@@ -1,0 +1,2701 @@
+{
+  "schema": "ER10_BATCH011_FINITE_CURATION_REPORT_V1",
+  "status": "CURATED_LOCAL_PENDING_ROOT_PUBLICATION",
+  "fixed_config": {
+    "schema": "ER10_FINITE_PUBLICATION_BATCH011_V1",
+    "predispatch_at": "2026-10-07T23:52:23+00:00",
+    "cutoff": "2026-10-07T23:52:23+00:00",
+    "deadline": "2026-10-08T00:17:23+00:00",
+    "writing_reserve_seconds": 300,
+    "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+    "publication_checkout": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "prior_verified_commit": "3a3800cd7c540b6a60769b7b767547140961119e",
+    "target": {
+      "driverKind": "codex",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "options": {
+        "reasoningEffort": "high",
+        "serviceTier": "priority"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "live_science_excluded": [
+      "D-M09-A",
+      "D-M06-A",
+      "D-M06-B"
+    ],
+    "private_fragments_excluded": true,
+    "max_staged_bytes": 67108864,
+    "no_git_or_cleanup": true
+  },
+  "resolved_paths": {
+    "actual_cwd": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "global_agents": "/home/sittingmongoose/.codex/AGENTS.md",
+    "actual_cwd_agents": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+    "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+    "only_write_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch011",
+    "staging": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch011/staging/reports/external-research-v10-20261007"
+  },
+  "scope_limits": {
+    "live_science_excluded": [
+      "D-M09-A",
+      "D-M06-A",
+      "D-M06-B"
+    ],
+    "native_goal_tickets_or_raw_projections_imported": false,
+    "private_source_needles_or_fragments_opened": false,
+    "primary_source_bodies_opened": false,
+    "new_source_research": false,
+    "new_mapping_inference": false,
+    "scientific_grading_or_regrading": false,
+    "network_remote_verification": false,
+    "account_server_rollout_calls": false,
+    "git_mutations": false,
+    "checkout_created": false,
+    "cleanup_performed": false,
+    "archive_created": false,
+    "watchers_or_polls": false,
+    "own_goal_or_workers": false,
+    "working_draft_original_four_remaining_text_preserved": true,
+    "current_remaining_three_recorded_separately": true,
+    "inherited_metadata_gaps_preserved": true,
+    "report_historical_36_closed_4_held_preserved": true,
+    "retention_221_identity_census_is_not_full_condition_verification": true,
+    "retention_original_65535B_cap_and_history_unchanged": true,
+    "raw_sources_not_deleted": true,
+    "campaign_complete_claim": false,
+    "cleanup_complete_claim": false
+  },
+  "original_byte_edits": 0,
+  "report_inputs_full_materialized": 191,
+  "thin_manifest_used": false,
+  "root_remote_receipt_cited_not_reperformed": true,
+  "curation_read_identities": [
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/publication-batch010-remote-tree-v1.json",
+      "relative_path": "state/publication-batch010-remote-tree-v1.json",
+      "bytes": 2307282,
+      "sha256": "b875e30ed4222adce00062bf001990b5cc7e2593456ff933c81edb2cb4144320",
+      "mtime_ns": 1791416395968121427,
+      "role": "ROOT_SUPPLIED_PRIOR_GITHUB_TREE_IDENTITY_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/CASE_CARD.md",
+      "relative_path": "cases/D-M07-B/CASE_CARD.md",
+      "bytes": 1631,
+      "sha256": "c0b983f2c1c572605a03dc2a16c1bf92a09591467451d635981e0685ea7bfe5b",
+      "mtime_ns": 1791397997326227737,
+      "role": "M07B_FROZEN_ORIGINAL_CASE_PROTOCOL"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/INPUT_MAP.json",
+      "relative_path": "cases/D-M07-B/INPUT_MAP.json",
+      "bytes": 2388,
+      "sha256": "97c3357137b78235fe44ecdceab982c213d6a054bc3cbab57628e41b9429b73e",
+      "mtime_ns": 1791397997327227743,
+      "role": "M07B_FROZEN_ORIGINAL_CASE_PROTOCOL"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/PREDECESSOR.md",
+      "relative_path": "cases/D-M07-B/PREDECESSOR.md",
+      "bytes": 2425,
+      "sha256": "3399c1fb4de712f36d76294f64239bd1a0e417c4c800da902738a75d4c7d4533",
+      "mtime_ns": 1791397997328227749,
+      "role": "M07B_FROZEN_ORIGINAL_CASE_PROTOCOL"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/SEED_INPUT_MAP.json",
+      "relative_path": "cases/D-M07-B/SEED_INPUT_MAP.json",
+      "bytes": 1115,
+      "sha256": "c1b53de01fa55e15acf77476e68f0444bd4c9aefeb91a43c99b110bfee7b1faf",
+      "mtime_ns": 1791398040134496268,
+      "role": "M07B_FROZEN_ORIGINAL_CASE_PROTOCOL"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/case-card.json",
+      "relative_path": "cases/D-M07-B/case-card.json",
+      "bytes": 11384,
+      "sha256": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+      "mtime_ns": 1791397997325227730,
+      "role": "M07B_FROZEN_ORIGINAL_CASE_PROTOCOL"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md",
+      "relative_path": "cases/D-M07-B/inputs/brief.md",
+      "bytes": 1712,
+      "sha256": "30a8e78fbc3913556d985d909d82c0db3b61207859f8588ece1d4cef045cce2d",
+      "mtime_ns": 1791397997327227743,
+      "role": "M07B_FROZEN_ORIGINAL_CASE_PROTOCOL"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json",
+      "relative_path": "cases/D-M07-B/inputs/sources.json",
+      "bytes": 1160,
+      "sha256": "528a61f25f479c20a76c855e15541cc44f392a575ef5fc85e37d2f9b0cd6205d",
+      "mtime_ns": 1791397997328227749,
+      "role": "M07B_FROZEN_ORIGINAL_CASE_PROTOCOL"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/BINDING_CARRIER_OVERLAY.json",
+      "relative_path": "jobs/D-M07-B/BINDING_CARRIER_OVERLAY.json",
+      "bytes": 7590,
+      "sha256": "2aa31b8a64d3d4a72dfcd9210c1e881fb74aa1e5f5c9ffa4ee0f4aa3a748dce0",
+      "mtime_ns": 1791399178728617651,
+      "role": "M07B_ORIGINAL_FREEZE_OR_FAILURE_GATE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+      "relative_path": "jobs/D-M07-B/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+      "bytes": 21307,
+      "sha256": "9fb56c707391b7994d262f4c7f7c69a39c258cb2525a60314f735c45206cd9a7",
+      "mtime_ns": 1791413435488538499,
+      "role": "M07B_ORIGINAL_FREEZE_OR_FAILURE_GATE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_DIAGNOSTIC_REVIEW_EXCEPTION_GATE.json",
+      "relative_path": "jobs/D-M07-B/V3_DIAGNOSTIC_REVIEW_EXCEPTION_GATE.json",
+      "bytes": 2129,
+      "sha256": "a143b63ac3417966c730beeaef0721d2c821b3b35f2e59ab90453b2159788f52",
+      "mtime_ns": 1791416221691848144,
+      "role": "M07B_ORIGINAL_FREEZE_OR_FAILURE_GATE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_DIAGNOSTIC_SEED_CONTINUATION_GATE.json",
+      "relative_path": "jobs/D-M07-B/V3_DIAGNOSTIC_SEED_CONTINUATION_GATE.json",
+      "bytes": 1242,
+      "sha256": "f48c154815b5efb5e81b71146c9fe60e3aa91265fc12d12d24b3b92de5cc6398",
+      "mtime_ns": 1791415476432562118,
+      "role": "M07B_ORIGINAL_FREEZE_OR_FAILURE_GATE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+      "relative_path": "jobs/D-M07-B/V3_PAIR_FREEZE.json",
+      "bytes": 4623,
+      "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+      "mtime_ns": 1791416221843737767,
+      "role": "M07B_ORIGINAL_FREEZE_OR_FAILURE_GATE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/INPUT_HASH_BINDING.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/INPUT_HASH_BINDING.json",
+      "bytes": 838,
+      "sha256": "a501f00916761abb496e41c9a11bc2f4963a30925dc1de8300005b73172d3a4f",
+      "mtime_ns": 1791414853647067623,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/INPUT_MAP.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/INPUT_MAP.json",
+      "bytes": 1371,
+      "sha256": "b8d7efa2f7bbb11a6461bb187edffcd1a293e2d18194cd6dae93414bc0a75ed3",
+      "mtime_ns": 1791404878273485959,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/assignment.md",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/assignment.md",
+      "bytes": 2811,
+      "sha256": "aa90b95f36cb6f1b3a04ab5103a92ee6db07f8541492bf8abe990f4f2b28b6d3",
+      "mtime_ns": 1791412567192483105,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/boundary.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/boundary.json",
+      "bytes": 566,
+      "sha256": "4bad98691e8f8bddd2c132ee1208db6e0ece71bc7b6ae5c615521b022e1398b7",
+      "mtime_ns": 1791414853534535280,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/dispatch.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/dispatch.json",
+      "bytes": 1079,
+      "sha256": "d6b7993d5ef205016be2b0f5491441a1841e01cda135f53692ae373a91df111d",
+      "mtime_ns": 1791414854463684665,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/dispatch_original_tool_response.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/dispatch_original_tool_response.json",
+      "bytes": 2294,
+      "sha256": "14166125a57dd57ecbf3c929eadf9161ccab5d05ad0103948dc5eb46a5c78f3e",
+      "mtime_ns": 1791414854447684301,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/dispatch_task.txt",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/dispatch_task.txt",
+      "bytes": 226,
+      "sha256": "c6800c28a91de4ef293672b2e7fcf3292cd9b83c9caef1f2c138338fd55343f0",
+      "mtime_ns": 1791412567192749277,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/exact_dispatch_request.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/exact_dispatch_request.json",
+      "bytes": 691,
+      "sha256": "1049e91013b2c9e4fde5296cde790975347e841a17371399aa3112d7bb72977b",
+      "mtime_ns": 1791414853687666991,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/freeze_disposition.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/freeze_disposition.json",
+      "bytes": 1487,
+      "sha256": "beb0e6cc5e6446a8e16ce000a64dde85a9b908dc52bdb27c950e3379bcc79cbe",
+      "mtime_ns": 1791415476349858653,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/native_terminal_receipt.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/native_terminal_receipt.json",
+      "bytes": 1728,
+      "sha256": "38fb07ecbcbda780548588eab0ac34e5dadb1de6c5a7173412db4a3ed31925ad",
+      "mtime_ns": 1791415476348921954,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/quiet_task_receipt.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/quiet_task_receipt.json",
+      "bytes": 4380,
+      "sha256": "88fd32d3f97e0e8aa8eab8896cc69a659f799121ce8d3e64bfdbfcd89c78c97e",
+      "mtime_ns": 1791415367168833496,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/saved_carrier_t3_freeze.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/saved_carrier_t3_freeze.json",
+      "bytes": 1372,
+      "sha256": "6358a8cf42ebc27fe05aee3774d0640d5155bfcd2a4f700b23b2cb1d8af0141e",
+      "mtime_ns": 1791415368226842328,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/settle_receipt.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/settle_receipt.json",
+      "bytes": 168,
+      "sha256": "369e2832e9161fbee1ae5e44e2b2a855b1ab5bec396763341bd4d3e7e4d36752",
+      "mtime_ns": 1791415368122841460,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/startup_event_gate_receipt.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/startup_event_gate_receipt.json",
+      "bytes": 1556,
+      "sha256": "a2d8265db5f93455ffb29032561f6f63753dbae104b2520bf3716955d29b9666",
+      "mtime_ns": 1791414876735146350,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/startup_nomination_pending_receipt.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/startup_nomination_pending_receipt.json",
+      "bytes": 1544,
+      "sha256": "45dd792537059d81fa5be26941a5899ab47535df196cbdea96d49becc05b7411",
+      "mtime_ns": 1791414917512913868,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/t3_terminal_clock_receipt.json",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/t3_terminal_clock_receipt.json",
+      "bytes": 6763,
+      "sha256": "ed9619f6bc6245903b6356c56cb7a2732d1e9d342ff551c1ec72e7ee7eb8360f",
+      "mtime_ns": 1791415367184833630,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md",
+      "relative_path": "jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md",
+      "bytes": 5036,
+      "sha256": "8ab7b4d982574ad4f3f3b3b80bd044f41ee446e3f947bc9a2e525d99ae1897b9",
+      "mtime_ns": 1791415209825774699,
+      "role": "M07B_ORIGINAL_AUTHORED_SCIENTIFIC_OUTPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/INPUT_HASH_BINDING.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/INPUT_HASH_BINDING.json",
+      "bytes": 1063,
+      "sha256": "7bf2feb24f65e7881db57c47ff140a07e338cfac7197a7c379684194c06fb009",
+      "mtime_ns": 1791415476545645143,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/INPUT_MAP.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/INPUT_MAP.json",
+      "bytes": 1581,
+      "sha256": "bfa001b6fc43d966bd877552dfbdd88d557b11e79d6c1c7cf16789fea3dbed2d",
+      "mtime_ns": 1791404878274343065,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/assignment.md",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/assignment.md",
+      "bytes": 2795,
+      "sha256": "3c6fce2199577e499cc3ade0edb40a2d32eb8a2807da455c61786a1821eb7817",
+      "mtime_ns": 1791412567193151813,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/boundary.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/boundary.json",
+      "bytes": 566,
+      "sha256": "f26c87c76b8b026388a6c2bb954b8bd6bf88c79d2f09d2bbb629a25ab213cac1",
+      "mtime_ns": 1791414853535845166,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/dispatch.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/dispatch.json",
+      "bytes": 1111,
+      "sha256": "511369e59264d0656d91b89778f2e773f05656a4ae998757f34ded5b5653b8a7",
+      "mtime_ns": 1791415489337711511,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/dispatch_original_tool_response.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/dispatch_original_tool_response.json",
+      "bytes": 2358,
+      "sha256": "bea3a2a591d3bfc033cd553299333e1bb2b8ff20311de88463d8a49531a9e31f",
+      "mtime_ns": 1791415489323711429,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/dispatch_task.txt",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/dispatch_task.txt",
+      "bytes": 241,
+      "sha256": "2b00f8dada21fe31e8275b7a048089c2a548179a447089a01b543023516c9ae3",
+      "mtime_ns": 1791412567193392153,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/exact_dispatch_request.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/exact_dispatch_request.json",
+      "bytes": 721,
+      "sha256": "d3afeeba3b27140f0f36daf1db138879552fc6806f16c74fd2a87a734503aac2",
+      "mtime_ns": 1791415488799708367,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/freeze_disposition.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/freeze_disposition.json",
+      "bytes": 1618,
+      "sha256": "5081a5465ecfaef39a68c7997fe5ab9e09ca3032131dcef992ab32309c49373e",
+      "mtime_ns": 1791416160862515522,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/native_terminal_receipt.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/native_terminal_receipt.json",
+      "bytes": 1750,
+      "sha256": "2a11723c53479de7646a8eb8816495c0ccd19915bf5392a9de876ede25ba6556",
+      "mtime_ns": 1791416160860558266,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/quiet_task_receipt.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/quiet_task_receipt.json",
+      "bytes": 4492,
+      "sha256": "99d459c83d9a5abd96d9e90950db463184b2bd67ed9a6986eb80b294e1a98b09",
+      "mtime_ns": 1791416152833136004,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/settle_receipt.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/settle_receipt.json",
+      "bytes": 168,
+      "sha256": "a4dbc4bc7e1a782e5e8e02c2a6683f1f033a55024ec2740962f47c0214cc2359",
+      "mtime_ns": 1791416152971136483,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/startup_event_gate_receipt.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/startup_event_gate_receipt.json",
+      "bytes": 1568,
+      "sha256": "4fcb50d3319daa3e494d07506241f8bfffbfb581dcdb1bb82975ac531a9d8bf7",
+      "mtime_ns": 1791415516821368413,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/t3_terminal_clock_receipt.json",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/t3_terminal_clock_receipt.json",
+      "bytes": 6921,
+      "sha256": "78afb771a84ee24e27223abbb798629d152e5e1ceaa154922852fc27fe1c9b7c",
+      "mtime_ns": 1791416152847136052,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/review-notes.md",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/review-notes.md",
+      "bytes": 11956,
+      "sha256": "ed4191468427faebf6939339a3afc91e06c52bd7dc01cd0315804b7ce93898c2",
+      "mtime_ns": 1791415758677211943,
+      "role": "M07B_ORIGINAL_AUTHORED_SCIENTIFIC_OUTPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/final.md",
+      "relative_path": "jobs/D-M07-B/control/document-order-review-final-v3/final.md",
+      "bytes": 8839,
+      "sha256": "c4fd76d15876c747b20b1052c5f2cfa2404a9108e1b36425487532cf85dd1934",
+      "mtime_ns": 1791416039480648407,
+      "role": "M07B_ORIGINAL_AUTHORED_SCIENTIFIC_OUTPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/INPUT_HASH_BINDING.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/INPUT_HASH_BINDING.json",
+      "bytes": 1063,
+      "sha256": "7bf2feb24f65e7881db57c47ff140a07e338cfac7197a7c379684194c06fb009",
+      "mtime_ns": 1791415476649714035,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/INPUT_MAP.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/INPUT_MAP.json",
+      "bytes": 1594,
+      "sha256": "c91995f084dc92e0fa59e5869be78ef160ae73fe8b30875736e80e99ed507a95",
+      "mtime_ns": 1791404878275253335,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+      "bytes": 2960,
+      "sha256": "98d67a0ee68041799f002e9b39fd919555483a8991969984b462ad37a9350ddc",
+      "mtime_ns": 1791412567193788205,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/boundary.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/boundary.json",
+      "bytes": 566,
+      "sha256": "f26c87c76b8b026388a6c2bb954b8bd6bf88c79d2f09d2bbb629a25ab213cac1",
+      "mtime_ns": 1791414853536838040,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/dispatch.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/dispatch.json",
+      "bytes": 1163,
+      "sha256": "ff90a01120f074f752909c93958681fcf25dfe3074fdf454c871939e6a36a51d",
+      "mtime_ns": 1791415503336793328,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/dispatch_original_tool_response.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/dispatch_original_tool_response.json",
+      "bytes": 2462,
+      "sha256": "76752605f3b2e9f804ac55e872b06f9fa1e08ff76586d8f77c8b20891229b831",
+      "mtime_ns": 1791415503317793217,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/dispatch_task.txt",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/dispatch_task.txt",
+      "bytes": 265,
+      "sha256": "8f3a0ec30198df9908bb568e85983a9687460706a491dc9d74437e121d39c004",
+      "mtime_ns": 1791412567194007960,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/exact_dispatch_request.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/exact_dispatch_request.json",
+      "bytes": 769,
+      "sha256": "96e7972356acd60e97fe4929a970200d1bc055211c3955418fd7d05b9c9a399f",
+      "mtime_ns": 1791415502816790289,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/freeze_disposition.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/freeze_disposition.json",
+      "bytes": 1916,
+      "sha256": "1175f2f861fb60f2575b2d3f3fdbd50bbe09fb34d70466516d6948198f3c5662",
+      "mtime_ns": 1791416221643453233,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/native_terminal_receipt.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/native_terminal_receipt.json",
+      "bytes": 1789,
+      "sha256": "f9caae8d0145134adbb9c797bcddbf1e7e7aa8911db98635085b24d5686167b1",
+      "mtime_ns": 1791416221641346387,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/quiet_task_receipt.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/quiet_task_receipt.json",
+      "bytes": 4674,
+      "sha256": "cbd7ad711cb891d6e651a3f54bc9c81b11e6bf565256cdd6f412e66b4d900ca8",
+      "mtime_ns": 1791416205041317245,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/settle_receipt.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/settle_receipt.json",
+      "bytes": 168,
+      "sha256": "2b61d240a075edebbbd1ec0372e904b6450a11f23f89e37173f40548ba26f8ad",
+      "mtime_ns": 1791416205303318154,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/startup_event_gate_receipt.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/startup_event_gate_receipt.json",
+      "bytes": 1633,
+      "sha256": "3e198461a0c2ebc7eedab62a0a49f944657a81921fcf198d4fccea92011b0d09",
+      "mtime_ns": 1791415531569385273,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/t3_terminal_clock_receipt.json",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/t3_terminal_clock_receipt.json",
+      "bytes": 7173,
+      "sha256": "07628d0964ef5588eec43ca6587fadf775131a2e1652bbf4ed5985e3e705cafb",
+      "mtime_ns": 1791416205055317293,
+      "role": "M07B_COMPACT_ORIGINAL_PROTOCOL_LIFECYCLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/critical_check.md",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/critical_check.md",
+      "bytes": 6526,
+      "sha256": "d595a80cdb7da7b80b6c03b2faac5ad00af32e44eaf314b38ca0e1d8edbdf63f",
+      "mtime_ns": 1791415815736504179,
+      "role": "M07B_ORIGINAL_AUTHORED_SCIENTIFIC_OUTPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/source_log.md",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/source_log.md",
+      "bytes": 3069,
+      "sha256": "51b9b5c9a38ed85cbc4b584e461146e0a60452599ea2e8452d7023844bb69e73",
+      "mtime_ns": 1791415608247203848,
+      "role": "M07B_ORIGINAL_AUTHORED_SCIENTIFIC_OUTPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/reserve_check.md",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/reserve_check.md",
+      "bytes": 6844,
+      "sha256": "41da8bbc19d5888c06e634eac12c69058e9c9d16a475cf5f18523fe137afa9cc",
+      "mtime_ns": 1791415964530269942,
+      "role": "M07B_ORIGINAL_AUTHORED_SCIENTIFIC_OUTPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/final.md",
+      "relative_path": "jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/final.md",
+      "bytes": 6856,
+      "sha256": "1528bec9ff92dd23532544162a6743274e4f85e8df431bf7469b49834503ee69",
+      "mtime_ns": 1791416122607031084,
+      "role": "M07B_ORIGINAL_AUTHORED_SCIENTIFIC_OUTPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/INPUT_MAP.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/INPUT_MAP.json",
+      "bytes": 2993,
+      "sha256": "818e57aecee5e89f45fafc6f3b5c3b76950eef807230dd0eabd95231136dec74",
+      "mtime_ns": 1791416221767726899,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/assignment.md",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/assignment.md",
+      "bytes": 3076,
+      "sha256": "c388268223470734d0bdd507b51ba510b51241f558d3ccdfb1d0dbfe18141c4c",
+      "mtime_ns": 1791416221767854597,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "bytes": 15416,
+      "sha256": "89ed0cf800ea353b18e000c99bbe68cc82c51ad3aac46cd62667386d43e33b01",
+      "mtime_ns": 1791416531240763205,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/dispatch.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/dispatch.json",
+      "bytes": 986,
+      "sha256": "d3f63704efb8907067a4cd932ec5fef20e0a480ec6e4848d7bd7b95b0c9e793d",
+      "mtime_ns": 1791416231512410350,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/dispatch_original_tool_response.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/dispatch_original_tool_response.json",
+      "bytes": 2106,
+      "sha256": "fbbde7d836ca4abab56598ed81ae032b5c0c8d0919ee76a66763c382adeccbcf",
+      "mtime_ns": 1791416231498410293,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/exact_dispatch_request.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/exact_dispatch_request.json",
+      "bytes": 3523,
+      "sha256": "7e8e3c2c1dd03a7d7bd5e50f95666571f1e61e3f8eb940a1bf2b1adf51c074c9",
+      "mtime_ns": 1791416231101408652,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+      "bytes": 13013,
+      "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+      "mtime_ns": 1791416578066740766,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/judgment.md",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/judgment.md",
+      "bytes": 20240,
+      "sha256": "23417afd80c54f8b2092a7354d4c60845875b3120c6885b36960e63d8225b065",
+      "mtime_ns": 1791416465198466037,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/quiet_task_receipt.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/quiet_task_receipt.json",
+      "bytes": 5924,
+      "sha256": "d094f24309ab91e21e3f686bb1b0255fbc3fbd29f005dd90ac32a56df6551e83",
+      "mtime_ns": 1791416554308972144,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/settle_receipt.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/settle_receipt.json",
+      "bytes": 168,
+      "sha256": "ae404ebd42e0e83e7157f0b533e8cbab18a0a74c04321be0e512a46bd837a067",
+      "mtime_ns": 1791416555094976786,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/t3_terminal_clock_receipt.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/t3_terminal_clock_receipt.json",
+      "bytes": 6391,
+      "sha256": "c958321cb96e3cd949ebdfcea9ebb14221433cc22db22af981bd89128fd928f8",
+      "mtime_ns": 1791416554323972232,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/INPUT_MAP.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/INPUT_MAP.json",
+      "bytes": 3775,
+      "sha256": "722e909b06e318d99abf40964555ed2aeecc6c48b2fbe7a7e8f939e950dac0e4",
+      "mtime_ns": 1791416221769631039,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/assignment.md",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/assignment.md",
+      "bytes": 3076,
+      "sha256": "8cf9b8eb3ba64aade6045463ee532175f5baa6d956a7f25fb0b95bbecfd13883",
+      "mtime_ns": 1791416221769730051,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "bytes": 20851,
+      "sha256": "ab61acb47a6a4bd54eacbfe7e1e18ba734b2ab48bcc17fda487af010f511ad15",
+      "mtime_ns": 1791416629473798299,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/dispatch.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/dispatch.json",
+      "bytes": 986,
+      "sha256": "ec3a3dd7a694d0705a1f0c8326d8cc65be8b2e9aec3d1657d8ddac6e8f665f52",
+      "mtime_ns": 1791416246408471912,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/dispatch_original_tool_response.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/dispatch_original_tool_response.json",
+      "bytes": 2106,
+      "sha256": "fa7f85c288afb0319fc7ec09106a5bd34c2fd7729553336cfa07619ac978f62c",
+      "mtime_ns": 1791416246389471834,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/exact_dispatch_request.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/exact_dispatch_request.json",
+      "bytes": 3523,
+      "sha256": "fc2e43a6ef2b5ec6db07295ea73f456d80f9efe0ab2fdcb2f1e669050ae9d692",
+      "mtime_ns": 1791416245952470028,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+      "bytes": 28932,
+      "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+      "mtime_ns": 1791416688428501928,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/judgment.md",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/judgment.md",
+      "bytes": 24346,
+      "sha256": "fe08e5ad4f2bbc1d5fde930efd3f224979601f84f5300b6a0cdb42e0c88fee00",
+      "mtime_ns": 1791416531254188206,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/quiet_task_receipt.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/quiet_task_receipt.json",
+      "bytes": 5774,
+      "sha256": "46c2fd5ca0c6171bbd7b7bead85d40c45c340a3069fcd48b325b939b5ed677a4",
+      "mtime_ns": 1791416650528970595,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/settle_receipt.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/settle_receipt.json",
+      "bytes": 168,
+      "sha256": "22faf51fb63053c1627dde45acff5a12561560509f76d62a30dbff1aaac0bc3d",
+      "mtime_ns": 1791416650758974885,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/t3_terminal_clock_receipt.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/t3_terminal_clock_receipt.json",
+      "bytes": 6391,
+      "sha256": "5d0e61a80500463d1135516729abec63eebf5bf1e1ae3f5c4cf7b14fda44a693",
+      "mtime_ns": 1791416650542970856,
+      "role": "M07B_ORIGINAL_FIRST_FULL_REVIEW"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/PAIR_COMPARISON.json",
+      "relative_path": "reviews/targeted-cohort3/D-M07-B-v3/PAIR_COMPARISON.json",
+      "bytes": 4064,
+      "sha256": "0bdf590e6606d20951e77b8db7f183a64089bf3d19fe97f8a8047d73d9777ef8",
+      "mtime_ns": 1791416688432644661,
+      "role": "M07B_ORIGINAL_DIAGNOSTIC_PAIR"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/INPUT_IDENTITIES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/INPUT_IDENTITIES.json",
+      "bytes": 182315,
+      "sha256": "a2a2a96a20b227c18638545cd028fc30a68b1f41a8142e9a76e8dd18b9048357",
+      "mtime_ns": 1791415893080825384,
+      "role": "DECLARED_FROZEN_REPORT_INPUT_MANIFEST"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/INPUT_IDENTITIES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/INPUT_IDENTITIES.json",
+      "bytes": 216687,
+      "sha256": "8ba972e9584e24189e0bb7ced56e172c9db1cb787a40f649815a9e9d20c4538d",
+      "mtime_ns": 1791415850682316886,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/final-report/count-and-claim-contract-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/final-report/count-and-claim-contract-v1.json",
+      "bytes": 2970,
+      "sha256": "30f8d9774cdd1213e713536b4ea3daa30772af5428d4b4daa0a77a0ae19dc26b",
+      "mtime_ns": 1791415850686098776,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/COMPARISONS.json",
+      "bytes": 141743,
+      "sha256": "c8a34aec7d8fc1cda77be5e5269b45cecba53ea7b18e2f2e231db404ef52d63b",
+      "mtime_ns": 1791415850687391663,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "bytes": 3590,
+      "sha256": "0e9973d6e4369585a84c3dd004bad94a70bc83d9fc8037a393792d3bb41a408c",
+      "mtime_ns": 1791415850688650031,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/fast01-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/fast01-pair-disposition-v1.json",
+      "bytes": 2039,
+      "sha256": "879b07e9704dc70f6c9aa81295730d531416cb1a7e39595a5cbb1feb3560df48",
+      "mtime_ns": 1791415850689091492,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/fast02-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/fast02-pair-disposition-v1.json",
+      "bytes": 5971,
+      "sha256": "b883c8228ab086f1fafc0e2bbf54070a33374ddb75036362dfd6dc2620e98e3e",
+      "mtime_ns": 1791415850689533467,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/fast03-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/fast03-pair-disposition-v1.json",
+      "bytes": 6611,
+      "sha256": "f195550a5642ef8e1bbd019d96844b1beb0ee83e422dc8f2d09b4f67c231316e",
+      "mtime_ns": 1791415850689979903,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "bytes": 19719,
+      "sha256": "8a14d9eecd9e588eba5263ed2dc011a1520c9bf093a02866edf5d68c6f319e87",
+      "mtime_ns": 1791415850690485739,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method02-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method02-pair-disposition-v1.json",
+      "bytes": 3024,
+      "sha256": "eed33f60e3ae8425bd95f91d62aadedbfeba4139cac1f7d15d4868ea6efe6e34",
+      "mtime_ns": 1791415850690961421,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method02-pair-disposition-v2.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method02-pair-disposition-v2.json",
+      "bytes": 2027,
+      "sha256": "f4a3e3cdeb3a1a49ebbba361cf5f50caabe0eb4366b735e4a9db3941221002e4",
+      "mtime_ns": 1791415850691395233,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method03-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method03-pair-disposition-v1.json",
+      "bytes": 5298,
+      "sha256": "a75f221f0c8558bf844c9750f5804fbb77b7cbe6bca088c97f3f3a92321cb016",
+      "mtime_ns": 1791415850691802023,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method04-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method04-pair-disposition-v1.json",
+      "bytes": 2227,
+      "sha256": "e1584ec08b35d185c455d9a8539c9ddd59d7a129e7185725dac1fd92a60de95e",
+      "mtime_ns": 1791415850692225930,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method04-pair-disposition-v2.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method04-pair-disposition-v2.json",
+      "bytes": 7474,
+      "sha256": "b61c85e40e0457b616ec0139ec2ddfc73b0a93758c32747ae85f16fe0db9242c",
+      "mtime_ns": 1791415850692676330,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method05-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method05-pair-disposition-v1.json",
+      "bytes": 6254,
+      "sha256": "d22eb3bf93218f38023747d614a6fed7e1abe55039655d69794b809948938b37",
+      "mtime_ns": 1791415850693134109,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "bytes": 7290,
+      "sha256": "48eac1feeb0335178083b05a22d53e71ecbc205fc2872d7b678b88027d7c4ed2",
+      "mtime_ns": 1791415850693583195,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort2/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort2/COMPARISONS.json",
+      "bytes": 86980,
+      "sha256": "8e4341a5a492b70561bace7a2f6b3b95c9901f74473e0cc579b2507163714ff7",
+      "mtime_ns": 1791415850694566509,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/COMPARISONS.json",
+      "bytes": 49609,
+      "sha256": "387c096e199aa7b40e8d19cd346d22d9f33458eb5118741d01648ae78d325766",
+      "mtime_ns": 1791415850695710534,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-supervisor/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-supervisor/COMPARISONS.json",
+      "bytes": 33467,
+      "sha256": "8a6c438a03064073b3af875b636a2462bdde9dae5e0bd7a19ce8bb095f2ed6f9",
+      "mtime_ns": 1791415850696566882,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/COMPARISONS.json",
+      "bytes": 6309,
+      "sha256": "8694786338d3a5b310cbb86d26fe3c38bcd0d9f78c792ba631717ba91d5a4256",
+      "mtime_ns": 1791415850697177681,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/COMPARISONS.json",
+      "bytes": 92677,
+      "sha256": "5e224b233eb55b3348245a788469636dbb177995cf640e32c13d331f425d79d1",
+      "mtime_ns": 1791415850698076960,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/COMPARISONS.json",
+      "bytes": 26316,
+      "sha256": "b5633d8a5faf58b48a0554b631ccf5f030f4726c23c584f0dd3131e01c7b352f",
+      "mtime_ns": 1791415850699137736,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/state/logical-slot-index-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/state/logical-slot-index-v1.json",
+      "bytes": 14947,
+      "sha256": "45670c83f4bbc54a8d030ae488acc87de22a946f3113ec6d6a14148745c156a9",
+      "mtime_ns": 1791415850699721582,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/@config.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/@config.json",
+      "bytes": 594,
+      "sha256": "7eed73fa4f57ca7728f8cacbd8df9e418ab2ac75dc595956f998fd2c4406e574",
+      "mtime_ns": 1791415850700158660,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/@INPUTS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/@INPUTS.json",
+      "bytes": 12525,
+      "sha256": "339df992724855b1a19ce95906b0fb0a12bbb635c286f63c4cf151ed19e5c7a9",
+      "mtime_ns": 1791415850700608112,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-01/control/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-01/control/review-v1/coverage.json",
+      "bytes": 6980,
+      "sha256": "0d09bccbb3e19438781858b01401d08097bd089acb4fa3bc06c6b9c1430ddd41",
+      "mtime_ns": 1791415850701134554,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/coverage.json",
+      "bytes": 5280,
+      "sha256": "02aa6a0b5dec176bc7ddc9fd51fe2260aefe7cbc13b938d27bed25cdea6da03d",
+      "mtime_ns": 1791415850701630689,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-02-terminal-economics-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-02-terminal-economics-v1.json",
+      "bytes": 9462,
+      "sha256": "798c459a05a579a904a0b9192776a678e52c0779dbf515a966447b6b14d3bd4a",
+      "mtime_ns": 1791415850702119295,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-02-terminal-economics-v2.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-02-terminal-economics-v2.json",
+      "bytes": 8433,
+      "sha256": "e5f1c509b18bfdfb2a2231e2b88590276f94df143fb522392ae62b8501f71d64",
+      "mtime_ns": 1791415850702597553,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-03/control/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-03/control/review-v1/coverage.json",
+      "bytes": 16361,
+      "sha256": "99cfe89602fdb48f2dca2c704cbe38db23c24317fac8a5e82e3533f17708397e",
+      "mtime_ns": 1791415850703176154,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-03/control/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-03/control/review-v1/frozen-review.json",
+      "bytes": 46687,
+      "sha256": "bd2cce25897b1eda9c6599bb2285366fe17f26baab93ee1b3afa50c4cc7f69f7",
+      "mtime_ns": 1791415850704086184,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/coverage.json",
+      "bytes": 18382,
+      "sha256": "c02ebd729a95b5cfee824deac035bc3220e7b1a967aec1c27f09abb932ce12e9",
+      "mtime_ns": 1791415850704913837,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/frozen-review.json",
+      "bytes": 31848,
+      "sha256": "b186074cdd7bebc7f71cde63de31d8a29964136e275a4c1d2d88178b81fb3089",
+      "mtime_ns": 1791415850706145530,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-03-terminal-economics-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-03-terminal-economics-v1.json",
+      "bytes": 9568,
+      "sha256": "2cdbd2c9a524689a2988a25ff144dee4a43062f8eb228c2cf739a25dd2660ee2",
+      "mtime_ns": 1791415850706743446,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-04-terminal-economics-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-04-terminal-economics-v1.json",
+      "bytes": 8131,
+      "sha256": "e8ccd312d9247cc86b4dcc3f3f1a9b41770de0d65477dba5cc9fe05f6c30574b",
+      "mtime_ns": 1791415850707233405,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-04-terminal-economics-v2.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-04-terminal-economics-v2.json",
+      "bytes": 9765,
+      "sha256": "047c276bf4acf361bdf4127b715188981256128d6ff80e8c65c47b3f55a50ae6",
+      "mtime_ns": 1791415850707722967,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+      "bytes": 10943,
+      "sha256": "c9c1310feccae242ef4e89145f9129d10a8dc12fddaa22b5a123eebdccbe5788",
+      "mtime_ns": 1791415850708249470,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/coverage.json",
+      "bytes": 18136,
+      "sha256": "7ca68f8c06fdfb43edf8ed3b1964457fed1b7fcec03da051cf288721031fd53a",
+      "mtime_ns": 1791415850708824958,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/frozen-review.json",
+      "bytes": 42981,
+      "sha256": "141bbfec6d322b981802b7589a5176ee9e23b3f26ec847cb02047bc8b7f205f0",
+      "mtime_ns": 1791415850709601428,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-05-terminal-economics-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-05-terminal-economics-v1.json",
+      "bytes": 13743,
+      "sha256": "164497d87d6b87b80b87aff015e988996585198372f4ab433fb59a658d446177",
+      "mtime_ns": 1791415850710779564,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-06/control/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-06/control/review-v1/coverage.json",
+      "bytes": 9430,
+      "sha256": "6a5f7bbef857fd5543f9b5ac8be07b6eb3a61d9b75a087fe36eb9a81bab05574",
+      "mtime_ns": 1791415850711346509,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/coverage.json",
+      "bytes": 20578,
+      "sha256": "72411915fc490654498f0842702b4c18b46e958189b95121e95840b8a04cf743",
+      "mtime_ns": 1791415850711942456,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-06-terminal-economics-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-06-terminal-economics-v1.json",
+      "bytes": 9610,
+      "sha256": "27f14d6eb9ae89fadf85cffd357426c495289ad3b7895af29f90aad3cda5219b",
+      "mtime_ns": 1791415850712477667,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/frozen-review.json",
+      "bytes": 72692,
+      "sha256": "fc059c98a1d542e95243132c93e7b5718e718b36f43faffeb20a2f99fbc3fefd",
+      "mtime_ns": 1791415850714667628,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-06/control/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-06/control/review-v1/frozen-review.json",
+      "bytes": 51491,
+      "sha256": "3f3225d0256f7f600e7089b82803512bbf1ced5b0015bf752de07c0640b2c32d",
+      "mtime_ns": 1791415850716451526,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-01-terminal-economics-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-01-terminal-economics-v1.json",
+      "bytes": 6820,
+      "sha256": "4af86415a3916bbad02c314df054a9473c4ec048cb73ea65ab349354ae158b0b",
+      "mtime_ns": 1791415850716667639,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-04/control/review-v2/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-04/control/review-v2/frozen-review.json",
+      "bytes": 50884,
+      "sha256": "bb85277d0326f365e5e826d5c5b4322a9a7610817a6c9ea8b9e886879847ac72",
+      "mtime_ns": 1791415850718006275,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/frozen-standalone-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/frozen-standalone-review.json",
+      "bytes": 28175,
+      "sha256": "2a432734e9f2cc2888202f2930f671af98416711e41d3ce3814ea23bf0ef8eeb",
+      "mtime_ns": 1791415850718886889,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/coverage.json",
+      "bytes": 145864,
+      "sha256": "763ebe439ca2fa2e140ce7ea289946ffb6347d00086e1b53e9fd32fbbf2195db",
+      "mtime_ns": 1791415850720265143,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/frozen-standalone-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/frozen-standalone-review.json",
+      "bytes": 36587,
+      "sha256": "532f2852bb29106dc95fbdd6958812a33715263284f54ef640736caca052231c",
+      "mtime_ns": 1791415850721678207,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/coverage.json",
+      "bytes": 139987,
+      "sha256": "2ce2120b3e91528898c018212a10919f94033ef47fb6f165a94e9ce265f993c2",
+      "mtime_ns": 1791415850722920715,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-02/control/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-02/control/review-v1/frozen-review.json",
+      "bytes": 51451,
+      "sha256": "0491aedeadb711b8a206d1bbb0f125fd2042d1ea054086ce51dd9aa8f5c38383",
+      "mtime_ns": 1791415850724399436,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-03/treatment/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-03/treatment/review-v1/frozen-review.json",
+      "bytes": 46324,
+      "sha256": "0de2ea3529a1ca7f1d7e70aa45750d00dc74e5f3a4a69276054e07c47455bf63",
+      "mtime_ns": 1791415850725361809,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-02-pair-freeze-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-02-pair-freeze-v1.json",
+      "bytes": 2513,
+      "sha256": "93fc5ba218d58de6d2456fb2161925a33e147fa79d2ee38760414ead4e4863cc",
+      "mtime_ns": 1791415850726039068,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-02/control/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-02/control/review-v1/coverage.json",
+      "bytes": 16735,
+      "sha256": "3f0e2c4eee98455e80cd14940b6edb4d6a824f74b014fef1c971c604421f30ea",
+      "mtime_ns": 1791415850726601312,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-02/treatment/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-02/treatment/review-v1/coverage.json",
+      "bytes": 6298,
+      "sha256": "d78a6690278ce27f41c69e5e610c95459cbcb7bdba4b546fdaf6d264446b7eb4",
+      "mtime_ns": 1791415850727138334,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-02/treatment/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-02/treatment/review-v1/frozen-review.json",
+      "bytes": 40627,
+      "sha256": "1c80425aa8c1bb40bc8ac58f2239fb88d1354f3be14a3deeee1e3f54a87fedb6",
+      "mtime_ns": 1791415850727856378,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-02-terminal-economics-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-02-terminal-economics-v1.json",
+      "bytes": 8255,
+      "sha256": "d8a2499db69750fcf5df6d6a9fc55fa8eb9facc51c21d287f4ef48cc0aad4885",
+      "mtime_ns": 1791415850728534788,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json",
+      "bytes": 2512,
+      "sha256": "32b421c1b04bd06c28a9e76f21a4c3cc93d1e5747103e009228db80e2951b36b",
+      "mtime_ns": 1791415850728991677,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-03/control/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-03/control/review-v1/coverage.json",
+      "bytes": 16943,
+      "sha256": "928d5d105404d1354ca40e798bb49dffc64ff7152da2d24d5d1219408e9b9f0f",
+      "mtime_ns": 1791415850729518203,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-03/control/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-03/control/review-v1/frozen-review.json",
+      "bytes": 49226,
+      "sha256": "3cc3732e571de903d1208c5205d0fc5b835a34e96c8bcddde52706c8ec2c0373",
+      "mtime_ns": 1791415850730337997,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-03/treatment/review-v1/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-FAST-03/treatment/review-v1/coverage.json",
+      "bytes": 13984,
+      "sha256": "4a0f39e995b0b2884b981923fc9fd8c03268e028cb5a3e0cd7a4f9838d9708a5",
+      "mtime_ns": 1791415850731096544,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-03-terminal-economics-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-fast-03-terminal-economics-v1.json",
+      "bytes": 8264,
+      "sha256": "b92e8265fdb21306723547a80ab7e725b3eb55c8f958d41fbad29bfca4491740",
+      "mtime_ns": 1791415850731601297,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-01/control/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-01/control/review-v1/frozen-review.json",
+      "bytes": 34511,
+      "sha256": "e32bcd0ee063017bf11e5f45025099d4e5d8e6d30585e01c969f9b4bd838caaa",
+      "mtime_ns": 1791415850732279705,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/frozen-review.json",
+      "bytes": 35113,
+      "sha256": "261352845551450dd7e2ded8cba8d82fd750efb54d70e50c24c0a1bf6f43c04c",
+      "mtime_ns": 1791415850733089442,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-04-pair-freeze-v2.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-04-pair-freeze-v2.json",
+      "bytes": 2999,
+      "sha256": "29f9f6fddaeaaa47f13ba0da1da1760664acabdacbbaf201df00bb4e1ea46b3e",
+      "mtime_ns": 1791415850733714140,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-04/control/review-v2/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-04/control/review-v2/coverage.json",
+      "bytes": 18528,
+      "sha256": "d038885d01bcef967e02891308ead0516c364af3030f0010e6ceb85cf10741d6",
+      "mtime_ns": 1791415850734256283,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/coverage.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/coverage.json",
+      "bytes": 19344,
+      "sha256": "e88d2cca16475b5067c79d370d54ed5d1233411007020e65ef57bd97d535692b",
+      "mtime_ns": 1791415850734888543,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/frozen-review.json",
+      "bytes": 52866,
+      "sha256": "71c454fafedff92da9c38aa2b6275e1daa5da34cf40cb183803049a2fcc351fc",
+      "mtime_ns": 1791415850735706296,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-05-pair-freeze-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-05-pair-freeze-v1.json",
+      "bytes": 2493,
+      "sha256": "a3c41a32f21b5e769e5b3affd157b6a53d8e5cf978d8b586f89726dad27e6e84",
+      "mtime_ns": 1791415850736395452,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-05/control/review-v1/frozen-review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/integrated-methods/I-METHOD-05/control/review-v1/frozen-review.json",
+      "bytes": 66574,
+      "sha256": "171394197a5e36f7ffbe205ce28185dcb010aa11d0b75ef45802c5f6e1246dd5",
+      "mtime_ns": 1791415850737176762,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-06-pair-freeze-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/i-method-06-pair-freeze-v1.json",
+      "bytes": 2493,
+      "sha256": "9a1f324be75731d6c51e77ec8330dbc39c5543385b07079a877296229d7d7b63",
+      "mtime_ns": 1791415850737946513,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M11-A/comparison-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M11-A/comparison-v1.json",
+      "bytes": 2304,
+      "sha256": "a58c119e9a126d8e69415d1352de54fd02fe0f4c3791be98a29d3396524f5e50",
+      "mtime_ns": 1791415850738390295,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M12-A/comparison-v3.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M12-A/comparison-v3.json",
+      "bytes": 9785,
+      "sha256": "b739da8d1f9cca4a02c92b27e51e788dd4a7887019f634ef6069a778c1958829",
+      "mtime_ns": 1791415850738854770,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M13-A/comparison-v2.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M13-A/comparison-v2.json",
+      "bytes": 6011,
+      "sha256": "c30b0f2b8b0ff464cc909aa283a7977a9d1b028f6df498e13a1182c277ccc914",
+      "mtime_ns": 1791415850739373144,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M14-A/comparison-v3.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M14-A/comparison-v3.json",
+      "bytes": 10689,
+      "sha256": "b83e37fc965a4c010d8cd98f58aee1170fe3410f111c3e2723d5625e10ced276",
+      "mtime_ns": 1791415850739878477,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M14-A/paired-v2-disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M14-A/paired-v2-disposition.json",
+      "bytes": 1599,
+      "sha256": "9749a8e61f537efb39ff362a48e855dff8efd4eb09a48a4b5a6ea2c2cb9d2fbc",
+      "mtime_ns": 1791415850740321263,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json",
+      "bytes": 18056,
+      "sha256": "48d78692918bc04c12b158f3ae71b6a912b117bacd7fce1949839ea7a76afac9",
+      "mtime_ns": 1791415850740834657,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M15-A/comparison-v3.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M15-A/comparison-v3.json",
+      "bytes": 12152,
+      "sha256": "38974d6834d9a8b0aeed90da1dde910937c23c958eb676ffdd801d083bd3b8fc",
+      "mtime_ns": 1791415850741390088,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M16-A/comparison-v3.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M16-A/comparison-v3.json",
+      "bytes": 66828,
+      "sha256": "e1f938e52cae8c1b7a6e6b80269b47c0dd7ea00a6bad11bc3798a4b758780702",
+      "mtime_ns": 1791415850742258002,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M11-A/control-v1/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M11-A/control-v1/review.json",
+      "bytes": 48500,
+      "sha256": "1443744edd89e5008abebc7bcdd670b9dcb946027a3825c0fb3765284d7260ca",
+      "mtime_ns": 1791415850743315305,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M11-A/treatment-v1/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M11-A/treatment-v1/review.json",
+      "bytes": 37240,
+      "sha256": "2142ac07b0e7caf36da9bc13996ec955b397ad7e6200fc8da62cb0dbb171c6bf",
+      "mtime_ns": 1791415850744168927,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M13-A/treatment-v2/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M13-A/treatment-v2/review.json",
+      "bytes": 99157,
+      "sha256": "e301e558d9f64b9b60d0a24c0f4e70a166d80e88515de5222342d1d04f8b888e",
+      "mtime_ns": 1791415850745356258,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M13-A/treatment-v2/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M13-A/treatment-v2/freeze.json",
+      "bytes": 1887,
+      "sha256": "4e1f1fe9e47a0c5913ffc8247477d0e8318bd6c3ec9e518157c9e903ec3d6e8a",
+      "mtime_ns": 1791415850746334115,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M13-A/control-v2/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M13-A/control-v2/review.json",
+      "bytes": 50927,
+      "sha256": "b7b30b9a178a921700f70706161e161966da75bd9527d99ea641af80d8b5ec55",
+      "mtime_ns": 1791415850747008998,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M13-A/control-v2/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M13-A/control-v2/freeze.json",
+      "bytes": 2008,
+      "sha256": "45a5e706de63a3a15844f5a9e15bd98e5c6add82779112f6ce42556b33e66d1e",
+      "mtime_ns": 1791415850747723174,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M12-A/control-v3/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M12-A/control-v3/review.json",
+      "bytes": 113649,
+      "sha256": "60cc7f36b72afa52b5c16b5e389863b613b615f43f77b73bfd4b3b4550f61a9b",
+      "mtime_ns": 1791415850748742217,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M12-A/control-v3/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M12-A/control-v3/freeze.json",
+      "bytes": 11908,
+      "sha256": "05d99c7ee256b3df535011775d16b7d4891ccea8959ba13f4cd583e00ba6a0c9",
+      "mtime_ns": 1791415850749846423,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.json",
+      "bytes": 88801,
+      "sha256": "23e13bc63e0ff7e8a38e27dbb71355ba66e779d86b393ab4779a6fad214ec2f5",
+      "mtime_ns": 1791415850750790681,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M12-A/treatment-v3/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M12-A/treatment-v3/freeze.json",
+      "bytes": 5823,
+      "sha256": "5b108dfb5cfb7c9e79df17d1f63e259b7741606b108037dedc0d3101a6f8ed69",
+      "mtime_ns": 1791415850751741775,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M14-A/control-v3/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M14-A/control-v3/review.json",
+      "bytes": 75812,
+      "sha256": "b4200f6f9574cc896a18d531607ee09eaa8c96223f55ae9ed01cf16e83626e9c",
+      "mtime_ns": 1791415850752602399,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M14-A/control-v3/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M14-A/control-v3/freeze.json",
+      "bytes": 5309,
+      "sha256": "d73587df83602f6ef4fa2f4b8d19687152fa0fe1d35173d14fdfdadb76ce3bb8",
+      "mtime_ns": 1791415850753452406,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M14-A/treatment-v3/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M14-A/treatment-v3/review.json",
+      "bytes": 235073,
+      "sha256": "8f3ecb14ece2ca9158b2d6ef9665f3f1300bc71282e1d769830ff5d35c8b74fa",
+      "mtime_ns": 1791415850754667840,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M14-A/treatment-v3/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M14-A/treatment-v3/freeze.json",
+      "bytes": 4824,
+      "sha256": "96e586d1510ff3baf4e4aaebee1a0c0a71f65ca644e1f599e9ec09f94baad7ea",
+      "mtime_ns": 1791415850757018021,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M15-A/control-v3/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M15-A/control-v3/review.json",
+      "bytes": 90338,
+      "sha256": "7b33ae3f64cde8e9fa6de3c6565238ab48e800ae00d03d3210953709a5466a4e",
+      "mtime_ns": 1791415850757926064,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M15-A/control-v3/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M15-A/control-v3/freeze.json",
+      "bytes": 7313,
+      "sha256": "f00c0c490081a933d99b4f5cb5ae6b92d815f29743abeb42d767714d556f1609",
+      "mtime_ns": 1791415850758854174,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M15-A/treatment-v3/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M15-A/treatment-v3/review.json",
+      "bytes": 111541,
+      "sha256": "88555ddea3763ef7f12d1f3dba49d6108238c1de52a3c001e75c4a37106b1a2e",
+      "mtime_ns": 1791415850759987082,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M15-A/treatment-v3/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M15-A/treatment-v3/freeze.json",
+      "bytes": 8674,
+      "sha256": "d76cfadad528c8fcdc00e1e95929ab4b31b4bfb4558a70be9387fcf9a8cce342",
+      "mtime_ns": 1791415850761083893,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 5829,
+      "sha256": "647c1dd17d46831ef3901924b4fb467fc324feded5c1d4934d2a0d3aaf142165",
+      "mtime_ns": 1791415850761607407,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 6719,
+      "sha256": "e8be320ca936dc01a168126f1b6ab64e70c07deba0191f2f39ed2f253006112c",
+      "mtime_ns": 1791415850762141640,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 5910,
+      "sha256": "712dc57eddff2cd3ac71abcb35e0469fd28c562fa1feed64109ba5f2c2b9863a",
+      "mtime_ns": 1791415850762650962,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 4133,
+      "sha256": "d8cb815b090cd096a66a91c46cbbf288f6879cd5f05f9812b915a25ba93df102",
+      "mtime_ns": 1791415850763093862,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 3601,
+      "sha256": "cdb79be0493165d1446b9233f44b192ea83e39f29d3cbb58ba78c854718ae944",
+      "mtime_ns": 1791415850763588226,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-B/source-review-v2/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-B/source-review-v2/REVIEW.json",
+      "bytes": 45483,
+      "sha256": "27e47cf25856d77a7b4aef3cb381368027e751ec6cc6abd488b00aa01f8c1ed1",
+      "mtime_ns": 1791415850764265693,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-A/source-review-v3/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-A/source-review-v3/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 3601,
+      "sha256": "64717e132cd936603ddd3d5938d28cfae2a0e05a121c6c29e91d86dae3b77884",
+      "mtime_ns": 1791415850764937279,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-A/source-review-v3/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-A/source-review-v3/REVIEW.json",
+      "bytes": 55282,
+      "sha256": "19bc2d1adf621338f6ce9208536f16125b6b756b9c3d6acb17b1158700ccec56",
+      "mtime_ns": 1791415850765670998,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-supervisor/COMPARISONS-pre-final-preserved.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-supervisor/COMPARISONS-pre-final-preserved.json",
+      "bytes": 93477,
+      "sha256": "b6a6329875cdd6ed3f19cc16274754763bb8c2e922a920be97103a073eed525f",
+      "mtime_ns": 1791415850766789405,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-supervisor/COMPARISONS-full-final-preserved.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-supervisor/COMPARISONS-full-final-preserved.json",
+      "bytes": 97281,
+      "sha256": "24ffb7a4431a944f96ccb6856bbfe3eabd2f702c6f5a2dca0b38fbb52d717bbe",
+      "mtime_ns": 1791415850768094515,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/COMPARISON.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/COMPARISON.json",
+      "bytes": 27778,
+      "sha256": "337ef914d77b8682a47e5f887e88d0fd2cb602f5e5b65d962902af01414786c0",
+      "mtime_ns": 1791415850769124857,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/COMPARISON.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/COMPARISON.json",
+      "bytes": 23722,
+      "sha256": "be973dfa4b61808e5d8609f1517d8c9c9f7e02892393b16a0af48db98e819beb",
+      "mtime_ns": 1791415850769826267,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/protocol-deviation-001.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/protocol-deviation-001.json",
+      "bytes": 3050,
+      "sha256": "e3a85714a2be6f7686087491f074eef6834efb9d969598e42e590ea12a130895",
+      "mtime_ns": 1791415850770420744,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/partial-status.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/partial-status.json",
+      "bytes": 65340,
+      "sha256": "3c877cb352ae5e4c02e5cc5c07296c02886974682f0c30105e4905d13fd030cd",
+      "mtime_ns": 1791415850771181964,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/COMPARISON.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/COMPARISON.json",
+      "bytes": 32827,
+      "sha256": "33a971013bc585e072795c7eda85cbd75a5bd476efdf773c8e9fb368a2cb919e",
+      "mtime_ns": 1791415850772089147,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-01/COMPARISON.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-01/COMPARISON.json",
+      "bytes": 29417,
+      "sha256": "8695081d2f48cd66debe0d314a492834ab74f13931849f58acdde724c4f8a16d",
+      "mtime_ns": 1791415850772819333,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/COMPARISON.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/COMPARISON.json",
+      "bytes": 32177,
+      "sha256": "3491ff06146f1549089390bf20fd6da91d765f857614fd70211e238dd9f7ee22",
+      "mtime_ns": 1791415850773546397,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/COMPARISON.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/COMPARISON.json",
+      "bytes": 36939,
+      "sha256": "2afdd5d000e169e45650ef3bf2451caaccb092e8813e31713cd034c155ee066b",
+      "mtime_ns": 1791415850774331595,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/COMPARISON.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/COMPARISON.json",
+      "bytes": 39162,
+      "sha256": "04529a0e7b1620f735e27763f5fdb092cc632a0fbcee5f64091c7e278beed545",
+      "mtime_ns": 1791415850775200724,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-01/control/source-review-v1/HOST_INCOMPLETE_REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-01/control/source-review-v1/HOST_INCOMPLETE_REVIEW_FREEZE.json",
+      "bytes": 11735,
+      "sha256": "ceb9bc1a23fdc7de784d9a80d10ed96ff4ec5326593188d444feeea75f0f2e76",
+      "mtime_ns": 1791415850775893508,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "bytes": 91715,
+      "sha256": "743141f191d8b140490184fbf20ec771a347a469e2f54cd93022336e0473351e",
+      "mtime_ns": 1791415850776814477,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-01/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-01/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "bytes": 21286,
+      "sha256": "d4b4a52b299c87ff5776b51b16a1489e5271f647fb909d76753aaa3b99a526a4",
+      "mtime_ns": 1791415850777832176,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/control/source-review-v1/REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/control/source-review-v1/REVIEW_FREEZE.json",
+      "bytes": 93867,
+      "sha256": "4bdead5d7ddd3f6ec8ffaaab2e08fca7c7299752f5a0e002801ed0bade866159",
+      "mtime_ns": 1791415850778851546,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "bytes": 19251,
+      "sha256": "d5356a9f064360906732dc3f2db292e1483df2164040a0606ad40f0f5607f8bf",
+      "mtime_ns": 1791415850779863503,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "bytes": 90470,
+      "sha256": "8a7534e6e17c9fc7d2f7ca224b417cf8259115311e664766b7f6c8670d5e228e",
+      "mtime_ns": 1791415850780844103,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-02/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "bytes": 21634,
+      "sha256": "28e46537e72056346be337a08e8e02db84336b722668421d4e2bf77d65bb5648",
+      "mtime_ns": 1791415850781853625,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/control/source-review-v1/REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/control/source-review-v1/REVIEW_FREEZE.json",
+      "bytes": 75994,
+      "sha256": "ce70bed7e340db8d175f4c2a13419b50537d12d4bdbe0fd221a962375f6dcc70",
+      "mtime_ns": 1791415850782810710,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "bytes": 12583,
+      "sha256": "26f2ef8b128c5d78e4e415c400130cdc435868cb37ccd02d7c7149be461d026e",
+      "mtime_ns": 1791415850783695750,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "bytes": 75009,
+      "sha256": "eeba40176438b7034e4955f834f393f03dd1c606732e04e899ae9c5562d065c7",
+      "mtime_ns": 1791415850784651340,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-03/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "bytes": 21309,
+      "sha256": "5583d40d106c0ad1575e500b05416dc4482aa18e178f5e3d9de6b6a4a1324479",
+      "mtime_ns": 1791415850785614928,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/control/source-review-v1/REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/control/source-review-v1/REVIEW_FREEZE.json",
+      "bytes": 110803,
+      "sha256": "24796faa915a8ae8813715dcfe80c4bf9476956c109640b60499445f2a48e214",
+      "mtime_ns": 1791415850786811811,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "bytes": 19486,
+      "sha256": "31bb4a7de8d1f178a06e609dd1380c877b450cadf04191d6be9039f464218b25",
+      "mtime_ns": 1791415850787935584,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "bytes": 86846,
+      "sha256": "5b49f159b5b265ca44c9a19ced1eb9709440f18ab7ba3c8014b1246dd9932361",
+      "mtime_ns": 1791415850788937746,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/confirmation/C-04/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "bytes": 19844,
+      "sha256": "c48b57554ae5f54167f5255b997d2f7b039aaeba2c50368f4df0a647645112c6",
+      "mtime_ns": 1791415850789957021,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M08-A-v3/J2/freeze_disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M08-A-v3/J2/freeze_disposition.json",
+      "bytes": 7276,
+      "sha256": "5021b98983d20f51a46ff1945d66773e6d595b77d45295de8f4efb8f18098b7e",
+      "mtime_ns": 1791415850790611257,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M08-A-v3/J1/freeze_disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M08-A-v3/J1/freeze_disposition.json",
+      "bytes": 12659,
+      "sha256": "7a37c01cd91afd9b2c234b326f347fe0116a618a126c84f38a7d90bee067ce8d",
+      "mtime_ns": 1791415850791140782,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/jobs/D-M08-A/V3_PAIR_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/jobs/D-M08-A/V3_PAIR_FREEZE.json",
+      "bytes": 3850,
+      "sha256": "98d02c7ac96c6c9b87643225af272a9de27fbffa397852c47082d323b31e982c",
+      "mtime_ns": 1791415850791636275,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M08-B-v3/J2/freeze_disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M08-B-v3/J2/freeze_disposition.json",
+      "bytes": 12446,
+      "sha256": "57f9ddf24a406a304557f60202a3fe8fa488625eb5d309788541e4365687bee2",
+      "mtime_ns": 1791415850792161509,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M08-B-v3/J1/freeze_disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M08-B-v3/J1/freeze_disposition.json",
+      "bytes": 14824,
+      "sha256": "80bc6005b529d5441f4ccfe757dee7779f74fe9e4cf03d4f661bc7820eeb3c98",
+      "mtime_ns": 1791415850792745264,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/jobs/D-M08-B/V3_PAIR_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/jobs/D-M08-B/V3_PAIR_FREEZE.json",
+      "bytes": 3850,
+      "sha256": "63a7791a8ae93992e061d8040ff81b45e2e77db1aa99ef40d0257efc21047963",
+      "mtime_ns": 1791415850793243500,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M10-A-v3/J2/freeze_disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M10-A-v3/J2/freeze_disposition.json",
+      "bytes": 8703,
+      "sha256": "809f28479ad862880aa9f941a19acb7b32012d419a19451cb0ffb72871f49985",
+      "mtime_ns": 1791415850793778761,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M10-A-v3/J1/freeze_disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort3/D-M10-A-v3/J1/freeze_disposition.json",
+      "bytes": 11622,
+      "sha256": "c50443efc9af3db1fb6d74e4c7ef2f4e4c78a8b8ca2db959adee1b838c81ac0c",
+      "mtime_ns": 1791415850794301682,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/jobs/D-M10-A/V3_PAIR_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/jobs/D-M10-A/V3_PAIR_FREEZE.json",
+      "bytes": 5237,
+      "sha256": "3ef8b597fc2d0149bd158aab2bf737419af63463353084b1aade4957358207b2",
+      "mtime_ns": 1791415850794812580,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+      "bytes": 123986,
+      "sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+      "mtime_ns": 1791415850795890033,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M16-A/control-v3/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M16-A/control-v3/freeze.json",
+      "bytes": 13023,
+      "sha256": "4e5e3341663b232e1ed7ed8f6b48de6027e4e7297eeae29ab52e09f506994e6a",
+      "mtime_ns": 1791415850796990536,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+      "bytes": 112627,
+      "sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+      "mtime_ns": 1791415850798059761,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M16-A/treatment-v3/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted-cohort4/D-M16-A/treatment-v3/freeze.json",
+      "bytes": 8870,
+      "sha256": "fca0c3a9ef981d8e43aca2feeff465c9c37c93a864f3ca3f12e97e1a410cb230",
+      "mtime_ns": 1791415850799100084,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M01-A/source-review-v1/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M01-A/source-review-v1/REVIEW.json",
+      "bytes": 97631,
+      "sha256": "8bb5d462a0571b5ab1f20b3e2e4ad7e21a9835e2566e9871543110ab89cfdef6",
+      "mtime_ns": 1791415850800147407,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M01-B/source-review-v1/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M01-B/source-review-v1/REVIEW.json",
+      "bytes": 97761,
+      "sha256": "78e53eba2e989b732aa5ab7e0a3a659db39f20a311ec38e074b83d6568d238cc",
+      "mtime_ns": 1791415850801587111,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW.json",
+      "bytes": 63417,
+      "sha256": "1f55916d08acb1bce059961dcb3ed4746af42aca308affea117bda223b1048c1",
+      "mtime_ns": 1791415850802847188,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW.json",
+      "bytes": 44558,
+      "sha256": "aff82519161b508848a8f3d11a1e221d87dc7a700bd0e358df90b7d526fa99b0",
+      "mtime_ns": 1791415850803814195,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW.json",
+      "bytes": 44380,
+      "sha256": "219480ef6fe9a9f3fcdce16a64c62b563db381f6df796bea4ea85759856c4210",
+      "mtime_ns": 1791415850804671149,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json",
+      "bytes": 51689,
+      "sha256": "2a4ba86a1591f122104694ab888ac8066d0941f2b06752a38044145dc1a26dad",
+      "mtime_ns": 1791415850805597397,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-A/source-review-v2/REVIEW.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/targeted/D-M02-A/source-review-v2/REVIEW.json",
+      "bytes": 39097,
+      "sha256": "8d44f5be43fe63d5b8c2481c13f5374ed10cd2245d2393e7df487fc5ab085dae",
+      "mtime_ns": 1791415850806480430,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/freeze.json",
+      "bytes": 8094,
+      "sha256": "6d14e0c30408052ba7c1dd7caa4003bdeab8cc21abf065c495e1a12224f82286",
+      "mtime_ns": 1791415850807262506,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/freeze.json",
+      "bytes": 6766,
+      "sha256": "ce2b966365ae95c248c974b3d98cfaa721bba8b872d04d2a199b55ea452ea428",
+      "mtime_ns": 1791415850807760041,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/freeze.json",
+      "bytes": 16485,
+      "sha256": "1052535a2ca6bec7f6fd1528468c2093a3bdc14b95e10ba81afc2d4508a4ed99",
+      "mtime_ns": 1791415850808352822,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/freeze.json",
+      "bytes": 10287,
+      "sha256": "11cd0d1a9a1e5314471f5dfdfd24bf8fffa8c3c87ad00ee7840010304a130fb7",
+      "mtime_ns": 1791415850808938726,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method01-pair-freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method01-pair-freeze.json",
+      "bytes": 19177,
+      "sha256": "f9328c23d39e93ec6701e77ba64468ee4b4cd6440e6608a923811154c4ba0408",
+      "mtime_ns": 1791415850809518025,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method03-pair-freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/integrated-execution/method03-pair-freeze.json",
+      "bytes": 3533,
+      "sha256": "6aa7cfeb0b960c00f4a61b29c7a5d96300eec14ae0ac7fa0e91d1e34604c3902",
+      "mtime_ns": 1791415850810074517,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/pair-freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/pair-freeze.json",
+      "bytes": 1920,
+      "sha256": "3634c1c48bd2b62549289bca5df11d6cfcb8a0f77ea672f9a679f09b6b2a9b9d",
+      "mtime_ns": 1791415850810604775,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/judgment.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/judgment.json",
+      "bytes": 73419,
+      "sha256": "bbde5421a17afefe2ab193cd5d4f73de6e94acb58662cca44518e6805f8426da",
+      "mtime_ns": 1791415850811423354,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/judgment.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/judgment.json",
+      "bytes": 43634,
+      "sha256": "754b408761171f8f831bd7b6a27761cc10d3b9fe677830bba04c883912e20b7a",
+      "mtime_ns": 1791415850812538537,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/pair-freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/pair-freeze.json",
+      "bytes": 1094,
+      "sha256": "c8f3a34fafbecebb44b5fc22ef4b3a9c574ed9a5638d3f2084bfb692c5ac4a86",
+      "mtime_ns": 1791415850813181668,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/judgment.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/judgment.json",
+      "bytes": 104131,
+      "sha256": "bd513c8aaae93b65e264b6f109e3cab92b71ad4a62c9b36e45847a6cb6d6c741",
+      "mtime_ns": 1791415850814148734,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/judgment.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/judgment.json",
+      "bytes": 120747,
+      "sha256": "0bd7b14f685cd02fb785685b0dc8c97bfdc4d94d64a05e1b4ddc5e7e954d7b72",
+      "mtime_ns": 1791415850815718160,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/pair-freeze.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/pair-freeze.json",
+      "bytes": 2840,
+      "sha256": "0b751cc3070cb4432429c78781818cd3b3c24ecb8b63d88d216290e3bab59d64",
+      "mtime_ns": 1791415850816775174,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/diagnostic-gate-exception-v2.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/diagnostic-gate-exception-v2.json",
+      "bytes": 736,
+      "sha256": "05949746b58575eef9e70f5efb985ee8f39c52a7d16c2a40d6e58a121a373c8e",
+      "mtime_ns": 1791415850817229041,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/judgment.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/judgment.json",
+      "bytes": 38578,
+      "sha256": "1354c564478c4e0e6560dacba80203abbd3094439e152f130f12f107f4cf80d1",
+      "mtime_ns": 1791415850817870521,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/judgment.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/judgment.json",
+      "bytes": 123706,
+      "sha256": "41c00ec50540f0eaca7f556fbb2f8a350c2d48d1fea5be4d719085494d27f442",
+      "mtime_ns": 1791415850819095425,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/state/I-METHOD-02-v2-treatment-only-diagnostic-gate-exception-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/state/I-METHOD-02-v2-treatment-only-diagnostic-gate-exception-v1.json",
+      "bytes": 2532,
+      "sha256": "5069c27af50bdfe75633fb310fafa4a23f6093d4847c78cf33134d5e5b282928",
+      "mtime_ns": 1791415850820178047,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M14-A/original-v1-final-disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/helpers/targeted-cohort4/D-M14-A/original-v1-final-disposition.json",
+      "bytes": 12338,
+      "sha256": "d76f9147ab10216d0da286d9159d6c9cd4b3a8ea38d8090d8597597f9bb2ca2b",
+      "mtime_ns": 1791415850820721988,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/state/C-03-failed-native-diagnostic-review-gate-exception-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/state/C-03-failed-native-diagnostic-review-gate-exception-v1.json",
+      "bytes": 3492,
+      "sha256": "0a40f04ed1593d108a7806fc228ba3fb8e021744069729a10bedc5af6444b2b7",
+      "mtime_ns": 1791415850821251649,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/CLOSED_SLOT_LEDGER.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/CLOSED_SLOT_LEDGER.json",
+      "bytes": 4416988,
+      "sha256": "bc352125475e0cda85e621b521b2d9d2755796fde6c2577c98c3d11a7cf11b53",
+      "mtime_ns": 1791415850827095096,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/FIELD_MAP.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/FIELD_MAP.json",
+      "bytes": 2054698,
+      "sha256": "7a13495a1af60293d4d09818a9ac718983aa95f66cf7aa680b266ecdf1542d2a",
+      "mtime_ns": 1791415850846344268,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/INPUTS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/INPUTS.json",
+      "bytes": 12525,
+      "sha256": "339df992724855b1a19ce95906b0fb0a12bbb635c286f63c4cf151ed19e5c7a9",
+      "mtime_ns": 1791415850852720108,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/CAPTURE_MANIFEST.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/CAPTURE_MANIFEST.json",
+      "bytes": 202095,
+      "sha256": "a1d585875cc11bf341c8f7ce68c868eae75a1647fb31067f0a1d662576e2a4b5",
+      "mtime_ns": 1791415850853091124,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/ledger.py",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/ledger.py",
+      "bytes": 79044,
+      "sha256": "fc80ccc122eb37dcfc91465755d2323b7fa0dd925dc2330c68c103369956960c",
+      "mtime_ns": 1791415850854436509,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/REPORTING_NOTES.md",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/REPORTING_NOTES.md",
+      "bytes": 12090,
+      "sha256": "9060a6c871915ff490bc664eea511c142ab596d585b6f65420fc6e33995bb7de",
+      "mtime_ns": 1791415850854668369,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/historical/README.md",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/historical/README.md",
+      "bytes": 3914,
+      "sha256": "704b80ab48604a067d894560b8daa03ccd44585055c816f3239332d0c9853671",
+      "mtime_ns": 1791415850855744529,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/control/config.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/control/config.json",
+      "bytes": 814,
+      "sha256": "e437936a6c4e1cbfa444bc34fc43dea67b47f62a6acb760a184d7bab4ecfab55",
+      "mtime_ns": 1791415850856127186,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/state/logical-slot-index-v1.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/state/logical-slot-index-v1.json",
+      "bytes": 14947,
+      "sha256": "45670c83f4bbc54a8d030ae488acc87de22a946f3113ec6d6a14148745c156a9",
+      "mtime_ns": 1791415850856687520,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/targeted-supervisor/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/targeted-supervisor/COMPARISONS.json",
+      "bytes": 33467,
+      "sha256": "8a6c438a03064073b3af875b636a2462bdde9dae5e0bd7a19ce8bb095f2ed6f9",
+      "mtime_ns": 1791415850857196673,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/targeted-cohort2/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/targeted-cohort2/COMPARISONS.json",
+      "bytes": 86980,
+      "sha256": "8e4341a5a492b70561bace7a2f6b3b95c9901f74473e0cc579b2507163714ff7",
+      "mtime_ns": 1791415850857864663,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/reviews/targeted-cohort3/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/reviews/targeted-cohort3/COMPARISONS.json",
+      "bytes": 30751,
+      "sha256": "ab407fd093df03136a301c1271a536c95d5007627ebbb1aeb6fdb16266ef8a48",
+      "mtime_ns": 1791415850858982284,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/targeted-cohort4/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/targeted-cohort4/COMPARISONS.json",
+      "bytes": 49609,
+      "sha256": "387c096e199aa7b40e8d19cd346d22d9f33458eb5118741d01648ae78d325766",
+      "mtime_ns": 1791415850859668094,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/reviews/anchors/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/reviews/anchors/COMPARISONS.json",
+      "bytes": 6309,
+      "sha256": "8694786338d3a5b310cbb86d26fe3c38bcd0d9f78c792ba631717ba91d5a4256",
+      "mtime_ns": 1791415850861742416,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/integrated-execution/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/integrated-execution/COMPARISONS.json",
+      "bytes": 141743,
+      "sha256": "c8a34aec7d8fc1cda77be5e5269b45cecba53ea7b18e2f2e231db404ef52d63b",
+      "mtime_ns": 1791415850863204717,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "bytes": 3590,
+      "sha256": "0e9973d6e4369585a84c3dd004bad94a70bc83d9fc8037a393792d3bb41a408c",
+      "mtime_ns": 1791415850864266842,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_owner/reviews/confirmation/COMPARISONS.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_owner/reviews/confirmation/COMPARISONS.json",
+      "bytes": 92677,
+      "sha256": "5e224b233eb55b3348245a788469636dbb177995cf640e32c13d331f425d79d1",
+      "mtime_ns": 1791415850865657675,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_link/reviews/targeted-cohort3/D-M07-A-v3/J1/freeze_disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_link/reviews/targeted-cohort3/D-M07-A-v3/J1/freeze_disposition.json",
+      "bytes": 8353,
+      "sha256": "7405d60354df027ff5a5873733f496d9f75a7006a0a441c9db05f7f0394f5ad6",
+      "mtime_ns": 1791415892958797298,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_link/reviews/targeted-cohort3/D-M07-A-v3/J2/freeze_disposition.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_link/reviews/targeted-cohort3/D-M07-A-v3/J2/freeze_disposition.json",
+      "bytes": 8492,
+      "sha256": "67e6c48cfa914fa43fc754bf112703128b7e10d23aa902a9bce7a8dc55a850ef",
+      "mtime_ns": 1791415892959322737,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_link/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_link/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "bytes": 4505,
+      "sha256": "27c3c4694c518af0327355bc2cff6c955c2170a3de14d18003aa93d06dcee58c",
+      "mtime_ns": 1791415892959823000,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/inputs/closed_link/reviews/confirmation/FINAL_QUIET.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/inputs/closed_link/reviews/confirmation/FINAL_QUIET.json",
+      "bytes": 17813,
+      "sha256": "5ce0c502d786727f4d5b69bf289c745436b154d340b3be195d6262b0810f358f",
+      "mtime_ns": 1791415893000695610,
+      "role": "DECLARED_ORIGINAL_FROZEN_METADATA_INPUT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/ARTIFACT_HASHES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/ARTIFACT_HASHES.json",
+      "bytes": 2569,
+      "sha256": "7cc3390d8a39d9e1cf3b086175315eb34181bea4ccd42770b8d56c134c0d57e4",
+      "mtime_ns": 1791417026917903619,
+      "role": "DECLARED_REPORT_ARTIFACT_MANIFEST"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/ARTIFACT_HASHES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/ARTIFACT_HASHES.json",
+      "bytes": 2569,
+      "sha256": "7cc3390d8a39d9e1cf3b086175315eb34181bea4ccd42770b8d56c134c0d57e4",
+      "mtime_ns": 1791417026917903619,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/FINAL_INTERFACE.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/FINAL_INTERFACE.json",
+      "bytes": 5100,
+      "sha256": "2af8bb345f5daefd6ba7218fbcc57644b934067e60d1150b16408823fc1e7d5e",
+      "mtime_ns": 1791416904328636234,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/INPUT_IDENTITIES.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/INPUT_IDENTITIES.json",
+      "bytes": 182315,
+      "sha256": "a2a2a96a20b227c18638545cd028fc30a68b1f41a8142e9a76e8dd18b9048357",
+      "mtime_ns": 1791415893080825384,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/OFFLINE_REPLAY_RECEIPT.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/OFFLINE_REPLAY_RECEIPT.json",
+      "bytes": 333,
+      "sha256": "be0381acc695705806c1b6b1de9fe164833f89bec711ee0d3316121fdb1b93ea",
+      "mtime_ns": 1791416969056545609,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/README.md",
+      "relative_path": "helpers/final-report/final-schema-map-v2/README.md",
+      "bytes": 9472,
+      "sha256": "a719b87c4f2951a769cf8d9a67f901c714afc73535c8b91f633180de828ecc5f",
+      "mtime_ns": 1791416904328887912,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/ROOT_NOTIFICATION_RECEIPT.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/ROOT_NOTIFICATION_RECEIPT.json",
+      "bytes": 489,
+      "sha256": "c5aaaf26dc905059d87b19535814414000a7242079fad4dfc2110098abc71748",
+      "mtime_ns": 1791417026917436950,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/SUPPLEMENTAL_FIELD_MAP.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/SUPPLEMENTAL_FIELD_MAP.json",
+      "bytes": 4322295,
+      "sha256": "c4c2a0c952924c1fa4999102f12a23e57050b149b2e2064344839f79dc29d06f",
+      "mtime_ns": 1791416724793725145,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/SUPPLEMENTAL_LEDGER.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/SUPPLEMENTAL_LEDGER.json",
+      "bytes": 5891204,
+      "sha256": "69fe5d19dd6f6da4d1f2b645962a95e9935e8b29531a317459c7d66996d55b94",
+      "mtime_ns": 1791416725411728436,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/apply_supplement.py",
+      "relative_path": "helpers/final-report/final-schema-map-v2/apply_supplement.py",
+      "bytes": 25319,
+      "sha256": "f79c32a870b7ce73175e7146845cbd9f7fd5c532bcef8b1c4abf8f8e725f3e04",
+      "mtime_ns": 1791416817636127901,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/build_field_map.py",
+      "relative_path": "helpers/final-report/final-schema-map-v2/build_field_map.py",
+      "bytes": 43902,
+      "sha256": "eda8ed37f5307319bb1d711311359fbd6b45352df001337f1ffaebb085b87f99",
+      "mtime_ns": 1791416724237906748,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/capture_closed_links.py",
+      "relative_path": "helpers/final-report/final-schema-map-v2/capture_closed_links.py",
+      "bytes": 4666,
+      "sha256": "ddc0fa114cdaf3bc7466d65879c5f4bd9962317637b95ca755def358b0c2c8f9",
+      "mtime_ns": 1791415892892890836,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/config.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/config.json",
+      "bytes": 814,
+      "sha256": "e437936a6c4e1cbfa444bc34fc43dea67b47f62a6acb760a184d7bab4ecfab55",
+      "mtime_ns": 1791415761477230255,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/dispatch.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/dispatch.json",
+      "bytes": 2034,
+      "sha256": "82953f1f9577be2881003f929f250bd78f649798a92d220872f103db7abd0beb",
+      "mtime_ns": 1791415783443360380,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/freeze_inputs.py",
+      "relative_path": "helpers/final-report/final-schema-map-v2/freeze_inputs.py",
+      "bytes": 3570,
+      "sha256": "4a77a69f990b23295fc31f3eac03ccaeb9a4bfdee9a3fd92e4ae518b1f9f0955",
+      "mtime_ns": 1791415850626667163,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/task.txt",
+      "relative_path": "helpers/final-report/final-schema-map-v2/task.txt",
+      "bytes": 6466,
+      "sha256": "6d894597eabcfa1876bcaea4fd065d8a396deac5b36268fbd52f1897e49ef1c2",
+      "mtime_ns": 1791415761478230262,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/unresolved-critical-mappings.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/unresolved-critical-mappings.json",
+      "bytes": 521348,
+      "sha256": "0e3e71651d8aa07427d91e266abe585de3bf7fabe576af81ce62bd065108cdfa",
+      "mtime_ns": 1791416725422728495,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/validation.json",
+      "relative_path": "helpers/final-report/final-schema-map-v2/validation.json",
+      "bytes": 4042,
+      "sha256": "12054f4c08b17d4cfae2151212554886d839277f77f77d4a45c48080c9693c98",
+      "mtime_ns": 1791416818106948137,
+      "role": "ORIGINAL_REPRODUCIBLE_REPORT_BUNDLE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/config.json",
+      "relative_path": "helpers/retention-final-gap-v1/config.json",
+      "bytes": 816,
+      "sha256": "378f19e7a3e629390465719df1f113133b0370c767424732815bce890389fb6c",
+      "mtime_ns": 1791415761476230248,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/task.txt",
+      "relative_path": "helpers/retention-final-gap-v1/task.txt",
+      "bytes": 5503,
+      "sha256": "3e29a6baae8385db417fa5e7e8bfd68ebd9f9d63159f12e96df661e489faf69a",
+      "mtime_ns": 1791415761476230248,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/dispatch.json",
+      "relative_path": "helpers/retention-final-gap-v1/dispatch.json",
+      "bytes": 2058,
+      "sha256": "03876eb8fb0df467e1abafbaa5e47ea755d3fc956bce33e2ec2c5a58118c00f4",
+      "mtime_ns": 1791415771796297740,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/GAP_OBJECTS.json",
+      "relative_path": "helpers/retention-final-gap-v1/GAP_OBJECTS.json",
+      "bytes": 1495960,
+      "sha256": "4e59533c22253464c6bb19a6ec2b6c1a6e5a3647cc974314ef2b2445a57e7c7f",
+      "mtime_ns": 1791416738386797543,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/SELECTED_SUPPLEMENT.json",
+      "relative_path": "helpers/retention-final-gap-v1/SELECTED_SUPPLEMENT.json",
+      "bytes": 885984,
+      "sha256": "9ed6dd1ad16d4bf010e3ed4a00de56adcb38f1145952e0c191663c3c238d2106",
+      "mtime_ns": 1791416390110932585,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/ORIGINAL_ASSERTION_COVERAGE.json",
+      "relative_path": "helpers/retention-final-gap-v1/ORIGINAL_ASSERTION_COVERAGE.json",
+      "bytes": 1030472,
+      "sha256": "689690ccdf1e14ff936a096b15eea70cb4c1d2944bd9221b586fbcea9fba2c16",
+      "mtime_ns": 1791416738439987422,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/READ_IDENTITIES.json",
+      "relative_path": "helpers/retention-final-gap-v1/READ_IDENTITIES.json",
+      "bytes": 120900,
+      "sha256": "037f2e5734751c3e6e1d2c43e7bd1616a90c4f97a3ab11cb8ca3a33b00ae80b5",
+      "mtime_ns": 1791416621093027336,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/PARSER_READ_IDENTITIES.json",
+      "relative_path": "helpers/retention-final-gap-v1/PARSER_READ_IDENTITIES.json",
+      "bytes": 5895,
+      "sha256": "b75ff7bd1d5094f1668afc374ddea0f8980097be94acd31301cb27ca1ef1f5e2",
+      "mtime_ns": 1791415978169159051,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/OUTPUT_IDENTITIES.json",
+      "relative_path": "helpers/retention-final-gap-v1/OUTPUT_IDENTITIES.json",
+      "bytes": 31608,
+      "sha256": "d8485290e33f90188f8329ac48c457a35c505256139614d46b0323bd47f0da53",
+      "mtime_ns": 1791416765394594273,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/RESULT.json",
+      "relative_path": "helpers/retention-final-gap-v1/RESULT.json",
+      "bytes": 36011,
+      "sha256": "82547dde6ddec507fa72a9a0ab76f2dd695e7c4617c34acad365fcc922c14f1b",
+      "mtime_ns": 1791416738455767759,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/SUMMARY.json",
+      "relative_path": "helpers/retention-final-gap-v1/SUMMARY.json",
+      "bytes": 2823,
+      "sha256": "7deda8d5506ddaa64852ef304fef0473d9abfc4c6884748fcbb8cbd581c5084c",
+      "mtime_ns": 1791416738454755304,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/VALIDATION.json",
+      "relative_path": "helpers/retention-final-gap-v1/VALIDATION.json",
+      "bytes": 1146,
+      "sha256": "5345a3ee9f0f46571ddc1e4c37b8159d2b34fe153d5a69e6791649e3f63768b9",
+      "mtime_ns": 1791416738456417722,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/README.md",
+      "relative_path": "helpers/retention-final-gap-v1/README.md",
+      "bytes": 5720,
+      "sha256": "c7f95f6499369fb0ba786abd348b09da8b5b10fdee4c17c9c7e561c8fba06b99",
+      "mtime_ns": 1791416738456105786,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/index_supplement.py",
+      "relative_path": "helpers/retention-final-gap-v1/index_supplement.py",
+      "bytes": 37836,
+      "sha256": "8ec3caea5135a31e4d548a5246e2b5786f52f881a2ba8290a396986764342bad",
+      "mtime_ns": 1791416655653066181,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/validate_supplement.py",
+      "relative_path": "helpers/retention-final-gap-v1/validate_supplement.py",
+      "bytes": 9264,
+      "sha256": "342307016c9cf005ede60e43d303912b8eef1752c1b82999bf202b51daee88e8",
+      "mtime_ns": 1791416559458002552,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/run-read-journal.jsonl",
+      "relative_path": "helpers/retention-final-gap-v1/run-read-journal.jsonl",
+      "bytes": 59499,
+      "sha256": "748f46104b9ff1e6b3ee743614ff4bc624306b6ea0d64a7e8e16f554fb26562e",
+      "mtime_ns": 1791416390143092428,
+      "role": "RETENTION_ALLOWED_SOURCE_NEEDLE_FREE_METADATA_OR_GENERIC_CODE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/pack_minimal_witnesses.py",
+      "relative_path": "helpers/final-report/pack_minimal_witnesses.py",
+      "bytes": 6408,
+      "sha256": "7ffc306c8fb1cd80cb98cee1a7705bd09c298adbf6183ff5e6842a455154fb75",
+      "mtime_ns": 1791416982809958177,
+      "role": "ORIGINAL_GENERIC_RETENTION_CODE_OR_WORKING_DRAFT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/prepare_compact_supplement.py",
+      "relative_path": "helpers/final-report/prepare_compact_supplement.py",
+      "bytes": 6866,
+      "sha256": "a4fe8b849f61f6a77dc99fc8d2a6bb368f8b9739271c1703ff8d229db483b122",
+      "mtime_ns": 1791417019866106790,
+      "role": "ORIGINAL_GENERIC_RETENTION_CODE_OR_WORKING_DRAFT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/working-draft-v1/METHODS_DRAFT.md",
+      "relative_path": "helpers/final-report/working-draft-v1/METHODS_DRAFT.md",
+      "bytes": 6962,
+      "sha256": "9065ba664ce477ff85a8e986ff0a9fb9de9131350c950e814c67b53e3ac0fd19",
+      "mtime_ns": 1791416615238331974,
+      "role": "ORIGINAL_GENERIC_RETENTION_CODE_OR_WORKING_DRAFT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-root-witnesses-v2/COMPACT_SUPPLEMENT_PREVIEW.json",
+      "relative_path": "helpers/retention-root-witnesses-v2/COMPACT_SUPPLEMENT_PREVIEW.json",
+      "bytes": 314340,
+      "sha256": "5a6ce06970b3fe16f7fe9dd4054fe50dc28b922929503263ae50a0dc6a13a87b",
+      "mtime_ns": 1791417020107576900,
+      "role": "ROOT_VERIFIED_RETENTION_METADATA_ONLY"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/publication-batch010-local-commit-v1.json",
+      "relative_path": "state/publication-batch010-local-commit-v1.json",
+      "bytes": 48397,
+      "sha256": "aacc3a3f8b85f905b05d38027b8777da00342927f4c9f9a1ffcf382970605bc8",
+      "mtime_ns": 1791416380960927319,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/publication-batch010-root-validated-copy-plan-v1.json",
+      "relative_path": "state/publication-batch010-root-validated-copy-plan-v1.json",
+      "bytes": 38059,
+      "sha256": "bef3731760df945dca19793fba2ce53c4e842c7779aac8cb6ed19a4726d96cd5",
+      "mtime_ns": 1791416352565910633,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/publication-batch010-root-copy-and-index-v1.json",
+      "relative_path": "state/publication-batch010-root-copy-and-index-v1.json",
+      "bytes": 248,
+      "sha256": "fad7c380f1dbe63f4f9c8571e186b52bd26e7e6f2cbb719eb747e2f32687f6bc",
+      "mtime_ns": 1791416362796956293,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/publication-batch010-task-terminal-v1.json",
+      "relative_path": "state/publication-batch010-task-terminal-v1.json",
+      "bytes": 5734,
+      "sha256": "9fc32c954923a3a6f9187b87b016ca92796ed050db7293220a0ccb017d52fe28",
+      "mtime_ns": 1791416343380872674,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/publication-batch010.json",
+      "relative_path": "state/publication-batch010.json",
+      "bytes": 3804,
+      "sha256": "252a676f18698ee34d9a8904304d47a32b48f87c3d61daa6c22a9d5d984f44b5",
+      "mtime_ns": 1791416395983038472,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/cleanup-publication-batch010-staging-prepared-v1.json",
+      "relative_path": "state/cleanup-publication-batch010-staging-prepared-v1.json",
+      "bytes": 53627,
+      "sha256": "92462c6b3ef8548a7b4039e368d53dbf64d144924f9f57e4b32548d3157f9aaf",
+      "mtime_ns": 1791416425355605085,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/cleanup-publication-batch010-staging-v1.json",
+      "relative_path": "state/cleanup-publication-batch010-staging-v1.json",
+      "bytes": 848,
+      "sha256": "d6a2c70b5d8f11663377f4424fd0fc0d2c709d02ce1bf44ba19eacee1732e541",
+      "mtime_ns": 1791416425486641868,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-schema-map-root-reproduction-v2.json",
+      "relative_path": "state/final-schema-map-root-reproduction-v2.json",
+      "bytes": 2164,
+      "sha256": "6bdbc72a9bb1d552f19837e3cf25d4975e00e15defecf8e767bbf77b4285c24f",
+      "mtime_ns": 1791417084704328154,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/retention-final-gap-root-identity-validation-v1.json",
+      "relative_path": "state/retention-final-gap-root-identity-validation-v1.json",
+      "bytes": 8670,
+      "sha256": "c2d3a2c5b51d3cd88bb1f0dde1114864940cf787a805f2b910b635e9ea9ec487",
+      "mtime_ns": 1791416937607139792,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/retention-final-gap-task-terminal-v1.json",
+      "relative_path": "state/retention-final-gap-task-terminal-v1.json",
+      "bytes": 6058,
+      "sha256": "bafc9cb26215175ddd1444f0c49a35d61a3384474ffe2afbb075beba41633043",
+      "mtime_ns": 1791416820923237135,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-schema-map-task-terminal-v1.json",
+      "relative_path": "state/final-schema-map-task-terminal-v1.json",
+      "bytes": 5860,
+      "sha256": "ffeafebf196bf5ba548c381a284cddf8cdbb53398fbacb1587b3a1066e4ab67b",
+      "mtime_ns": 1791417084040364132,
+      "role": "EXACT_ROOT_CLOSED_ADMIN_OR_MECHANICAL_RECEIPT"
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "observed_at": "2026-10-07T21:44:36.492Z",
+  "exact_scope": [
+    "C-01",
+    "C-02",
+    "C-03",
+    "C-04"
+  ],
+  "tasks": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-researcher-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-researcher-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-researcher-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-researcher-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-researcher-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-researcher-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-researcher-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-researcher-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-treatment-researcher-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-researcher-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-researcher-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-control-researcher-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-treatment-critic-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-critic-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-control-critic-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-critic-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-reviser-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-reviser-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-control-reviser-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-reviser-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-reviser-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-reviser-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-researcher-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-researcher-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-researcher-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-researcher-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-researcher-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-treatment-researcher-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-researcher-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-researcher-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-treatment-researcher-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-researcher-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-researcher-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-researcher-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-critic-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-treatment-critic-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-critic-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-reviser-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-reviser-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-reviser-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-critic-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-critic-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-treatment-critic-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-reviser-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-reviser-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-reviser-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-control-source-review-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-treatment-source-review-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-source-review-v1:ordinal:1",
+      "status": "interrupted",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-source-review-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-source-review-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-treatment-source-review-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-source-review-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-treatment-source-review-v1:ordinal:1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false
+    }
+  ],
+  "task_count": 28,
+  "no_pending_children": true
+}

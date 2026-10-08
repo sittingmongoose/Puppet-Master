@@ -1,0 +1,25 @@
+{
+  "schema": "ER10_BATCH011_OFFLINE_REPORT_REPLAY_V1",
+  "status": "PASS",
+  "frozen_input_count": 191,
+  "frozen_input_bytes": 13245406,
+  "artifact_identities_checked": 14,
+  "mapping_entries": 4640,
+  "original_unknown_resolutions": 22,
+  "historical_snapshot": "WORKING_NOT_TERMINAL; 36 closed / 4 held",
+  "unknown_critical_arm_cells": 523,
+  "mechanical_checks": 36,
+  "byte_exact_outputs": {
+    "SUPPLEMENTAL_LEDGER.json": true,
+    "unresolved-critical-mappings.json": true,
+    "validation.json": true
+  },
+  "replay_style": "In-memory original Bundle/replay/validate functions; no original or staged artifact overwritten. All 191 declared inputs retained in full, not a thin manifest.",
+  "bundle_publication_directory": "reports/external-research-v10-20261007/helpers/final-report/final-schema-map-v2",
+  "path_changes": "Bundle container relocated from original helper to public report tree; input bundle_path values and original absolute provenance paths are unchanged. Original capture scripts and retention helpers retain absolute campaign paths and were NOT executed.",
+  "source_body_reconstruction": false,
+  "full_source_extraction_replay": false,
+  "new_mapping_inference": false,
+  "scientific_regrade": false,
+  "root_independent_receipt": "state/final-schema-map-root-reproduction-v2.json"
+}

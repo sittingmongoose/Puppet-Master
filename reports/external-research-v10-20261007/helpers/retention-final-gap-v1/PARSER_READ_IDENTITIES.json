@@ -1,0 +1,113 @@
+{
+  "reads": [
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R01-oem-feeds.html",
+      "sha256": "389edcb2f685a0f09b6d83c68d878fa3f205db38391ad73e75ef29695a7f1d12",
+      "bytes": 19036
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R01-oem-feeds.extracted.txt",
+      "sha256": "64a59bc066c9c13ee83d263397a6afbcd7c2da44a33a0f75fc27d13d88d5aea3",
+      "bytes": 3851
+    },
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R08-polars-times.html",
+      "sha256": "2ec804abd5e2082a6eaf6822468ee4f0c6ec5696c5243d1e651d37272d9ad6a1",
+      "bytes": 150358
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R08-polars-times.extracted.txt",
+      "sha256": "0d9d847b468404d660a936d42be4a55e444451d1fcd166119fab000c91c7ff45",
+      "bytes": 8154
+    },
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R04-ha-energy.html",
+      "sha256": "893e3b8498e29a5974ab7cdcb753f61c9a6794b798c2a00f089c1b84acdf9b3c",
+      "bytes": 47521
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R04-ha-energy.extracted.txt",
+      "sha256": "ce48a7a1682ea048a71881c909a4fc34400d0048914b1501aea01a039a70e647",
+      "bytes": 5439
+    },
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R06-ha-faq.html",
+      "sha256": "92cc8d380dfaa8debc35fb8fa7dfe78184d3a79f0dd000b325d2c1de8eb9da6d",
+      "bytes": 60036
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R06-ha-faq.extracted.txt",
+      "sha256": "2b82b707ec1c36ef7ffdfe6d5a55cef03b23ef356497d716f66c3c5ed2399388",
+      "bytes": 8753
+    },
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R03-oem-home-energy.html",
+      "sha256": "97a2679674bd1a5fdc462708d964b4033e6dee7d7e3ed26f3fdda1274d71a77d",
+      "bytes": 13449
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R03-oem-home-energy.extracted.txt",
+      "sha256": "544db01631b6640206f0b2532d3dbc2dcd68006f69df2dc29b5fd3a7d38095c9",
+      "bytes": 2210
+    },
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R07-polars-csv.html",
+      "sha256": "a964e12c6f1bd1b266cbd9acc09171d8b7c248c1be1788d1f77eee5f18ebe557",
+      "bytes": 129019
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R07-polars-csv.extracted.txt",
+      "sha256": "852ac74f468ec02ab3239f6596858546a151098f141ec43ff0b418ca2096272d",
+      "bytes": 3197
+    },
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R02-oem-daily-kwh.html",
+      "sha256": "b69491deb54f64d0b9a8d7e4878728541a9a6a5dde539aa6008eef2131af9d02",
+      "bytes": 17587
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R02-oem-daily-kwh.extracted.txt",
+      "sha256": "25a49a84978385ce5315a92e1a0d815741d0f0e87c19d1e5ee74969cd4993ab9",
+      "bytes": 3324
+    },
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R05-ha-lts.html",
+      "sha256": "f0018a81829f7a6e0c6373b2182b47924b6377ec68eb6b569cf1d7b16cc877bb",
+      "bytes": 62930
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R05-ha-lts.extracted.txt",
+      "sha256": "c987fb5f0bd464fd269f73b0f12b24c2bf2e554ad80009e937026c3845ec3595",
+      "bytes": 10015
+    },
+    {
+      "kind": "RAW_SOURCE",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R22-chrono-tz.html",
+      "sha256": "278bc7ffa68e9269ba0d214cd1864d796352a799d2c1448e84a519027b1b8289",
+      "bytes": 69579
+    },
+    {
+      "kind": "DERIVED_EXISTING",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R22-chrono-tz.extracted.txt",
+      "sha256": "914889851ee208efc2eb45882f59a8e65d40c637459e5c65c1a818c8f43f8bb5",
+      "bytes": 16609
+    }
+  ],
+  "raw_bytes": 569515
+}

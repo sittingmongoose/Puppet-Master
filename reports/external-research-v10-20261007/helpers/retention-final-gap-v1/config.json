@@ -1,0 +1,28 @@
+{
+  "predispatch_at": "2026-10-07T23:29:21.000Z",
+  "deadline": "2026-10-07T23:54:21.000Z",
+  "writing_reserve_seconds": 300,
+  "target": {
+    "driverKind": "codex",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  },
+  "no_goal_or_nested_workers": true,
+  "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "root_only_publication_and_cleanup": true,
+  "live_science_excluded": [
+    "D-M07-B",
+    "D-M09-A",
+    "D-M06-A",
+    "D-M06-B"
+  ],
+  "schema": "ER10_BOUNDED_ESSENTIAL_RETENTION_GAP_V1",
+  "maximum_private_fragment_bytes": 65536,
+  "maximum_additional_source_objects": 30,
+  "maximum_raw_source_bytes_read": 33554432,
+  "maximum_source_object_bytes": 4194304
+}

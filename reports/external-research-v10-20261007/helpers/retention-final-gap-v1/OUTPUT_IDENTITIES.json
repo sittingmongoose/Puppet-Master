@@ -1,0 +1,588 @@
+{
+  "archive_created": false,
+  "finalized_at": "2026-10-07T23:46:05.394200+00:00",
+  "metadata_artifacts": [
+    {
+      "bytes": 1495960,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/GAP_OBJECTS.json",
+      "private": false,
+      "sha256": "4e59533c22253464c6bb19a6ec2b6c1a6e5a3647cc974314ef2b2445a57e7c7f"
+    },
+    {
+      "bytes": 885984,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/SELECTED_SUPPLEMENT.json",
+      "private": false,
+      "sha256": "9ed6dd1ad16d4bf010e3ed4a00de56adcb38f1145952e0c191663c3c238d2106"
+    },
+    {
+      "bytes": 1030472,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/ORIGINAL_ASSERTION_COVERAGE.json",
+      "private": false,
+      "sha256": "689690ccdf1e14ff936a096b15eea70cb4c1d2944bd9221b586fbcea9fba2c16"
+    },
+    {
+      "bytes": 120900,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/READ_IDENTITIES.json",
+      "private": false,
+      "sha256": "037f2e5734751c3e6e1d2c43e7bd1616a90c4f97a3ab11cb8ca3a33b00ae80b5"
+    },
+    {
+      "bytes": 2823,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/SUMMARY.json",
+      "private": false,
+      "sha256": "7deda8d5506ddaa64852ef304fef0473d9abfc4c6884748fcbb8cbd581c5084c"
+    },
+    {
+      "bytes": 36011,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/RESULT.json",
+      "private": false,
+      "sha256": "82547dde6ddec507fa72a9a0ab76f2dd695e7c4617c34acad365fcc922c14f1b"
+    },
+    {
+      "bytes": 1146,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/VALIDATION.json",
+      "private": false,
+      "sha256": "5345a3ee9f0f46571ddc1e4c37b8159d2b34fe153d5a69e6791649e3f63768b9"
+    },
+    {
+      "bytes": 5720,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/README.md",
+      "private": false,
+      "sha256": "c7f95f6499369fb0ba786abd348b09da8b5b10fdee4c17c9c7e561c8fba06b99"
+    },
+    {
+      "bytes": 9264,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/validate_supplement.py",
+      "private": false,
+      "sha256": "342307016c9cf005ede60e43d303912b8eef1752c1b82999bf202b51daee88e8"
+    },
+    {
+      "bytes": 37836,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/index_supplement.py",
+      "private": false,
+      "sha256": "8ec3caea5135a31e4d548a5246e2b5786f52f881a2ba8290a396986764342bad"
+    },
+    {
+      "bytes": 5895,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/PARSER_READ_IDENTITIES.json",
+      "private": false,
+      "sha256": "b75ff7bd1d5094f1668afc374ddea0f8980097be94acd31301cb27ca1ef1f5e2"
+    },
+    {
+      "bytes": 59499,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/run-read-journal.jsonl",
+      "private": false,
+      "sha256": "748f46104b9ff1e6b3ee743614ff4bc624306b6ea0d64a7e8e16f554fb26562e"
+    }
+  ],
+  "private_publication_authorized": false,
+  "schema": "ER10_RETENTION_SUPPLEMENT_OUTPUT_IDENTITIES_V1",
+  "selected_private_fragments": [
+    {
+      "bytes": 8,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/02e31f51aa8b1b6a622c4f7c30fab328d711cad4c9da74b9965ada8aa15d9df2.bin",
+      "private": true,
+      "sha256": "02e31f51aa8b1b6a622c4f7c30fab328d711cad4c9da74b9965ada8aa15d9df2"
+    },
+    {
+      "bytes": 42,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/03b4f19c37aba51a020f581547e978f63b03b2d5cce1e54cc13d92b54869cdeb.bin",
+      "private": true,
+      "sha256": "03b4f19c37aba51a020f581547e978f63b03b2d5cce1e54cc13d92b54869cdeb"
+    },
+    {
+      "bytes": 40,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/03cbc0feb0371efd0d2a92fecaaa4855eb1e812c042d8c74fd7b4e5d044e944a.bin",
+      "private": true,
+      "sha256": "03cbc0feb0371efd0d2a92fecaaa4855eb1e812c042d8c74fd7b4e5d044e944a"
+    },
+    {
+      "bytes": 1486,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/07d85547c653420e4d7ce187557f03c58f4cb6d2a4e664a43dfc13df2cbcc41a.bin",
+      "private": true,
+      "sha256": "07d85547c653420e4d7ce187557f03c58f4cb6d2a4e664a43dfc13df2cbcc41a"
+    },
+    {
+      "bytes": 66,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/10687b22254680953f07ab7a0d778a2c20af378f28fa49203c4e69cb434c2ae8.bin",
+      "private": true,
+      "sha256": "10687b22254680953f07ab7a0d778a2c20af378f28fa49203c4e69cb434c2ae8"
+    },
+    {
+      "bytes": 42,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/1295563b8689505d8aa8e5c02eb4d6d20c7261894cc3b04a4ceb0deed8ab3a50.bin",
+      "private": true,
+      "sha256": "1295563b8689505d8aa8e5c02eb4d6d20c7261894cc3b04a4ceb0deed8ab3a50"
+    },
+    {
+      "bytes": 7,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/1947af0a19b62dc7053f9d79763ba80ea047fdf48263876982f44c13b703c8c0.bin",
+      "private": true,
+      "sha256": "1947af0a19b62dc7053f9d79763ba80ea047fdf48263876982f44c13b703c8c0"
+    },
+    {
+      "bytes": 99,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/1c5d4c2a2922e0bba0a6bc7221936c1feb6d6a44098e4d1c9675696897eb3f6d.bin",
+      "private": true,
+      "sha256": "1c5d4c2a2922e0bba0a6bc7221936c1feb6d6a44098e4d1c9675696897eb3f6d"
+    },
+    {
+      "bytes": 1075,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/1d54e5fed4a22cebdedb668e9413e0ab6e55545e2c1fbe6672f3c60fe560c0ac.bin",
+      "private": true,
+      "sha256": "1d54e5fed4a22cebdedb668e9413e0ab6e55545e2c1fbe6672f3c60fe560c0ac"
+    },
+    {
+      "bytes": 392,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/24d39c55b7776949e0d8dd662a23f3de6b46dc03a822df97820a59a0699d2b80.bin",
+      "private": true,
+      "sha256": "24d39c55b7776949e0d8dd662a23f3de6b46dc03a822df97820a59a0699d2b80"
+    },
+    {
+      "bytes": 1275,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/27d68ffece449a8d48ec9d540e00199b736f6e2cd9e7684a3483182852482ad0.bin",
+      "private": true,
+      "sha256": "27d68ffece449a8d48ec9d540e00199b736f6e2cd9e7684a3483182852482ad0"
+    },
+    {
+      "bytes": 1545,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/2a9fcc32bb6e70a4f864d44b8eccf08f06d51a058fa799de1c40be8045240d7a.bin",
+      "private": true,
+      "sha256": "2a9fcc32bb6e70a4f864d44b8eccf08f06d51a058fa799de1c40be8045240d7a"
+    },
+    {
+      "bytes": 929,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/2b571809ae44e55e9f7d6ac3e2571f812fe2aab0ce0d92517611b90fadb99143.bin",
+      "private": true,
+      "sha256": "2b571809ae44e55e9f7d6ac3e2571f812fe2aab0ce0d92517611b90fadb99143"
+    },
+    {
+      "bytes": 723,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/2bb15e1a75e602c517683588789ff3782bd287106e74406fff990ffbca590b0e.bin",
+      "private": true,
+      "sha256": "2bb15e1a75e602c517683588789ff3782bd287106e74406fff990ffbca590b0e"
+    },
+    {
+      "bytes": 7,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/2d01580d3f7af3b843c9ce1aae086168af4028afa1416ff099ccbaacadd96b44.bin",
+      "private": true,
+      "sha256": "2d01580d3f7af3b843c9ce1aae086168af4028afa1416ff099ccbaacadd96b44"
+    },
+    {
+      "bytes": 40,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/3049921fc37ce28454e46735cf8a4f6a13db4d6aee5153012a1680dfd1328b87.bin",
+      "private": true,
+      "sha256": "3049921fc37ce28454e46735cf8a4f6a13db4d6aee5153012a1680dfd1328b87"
+    },
+    {
+      "bytes": 6,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/35ff74aeea25311f4fe759a6b762c8cd41a79adb23dd5615b92cf215175a63e5.bin",
+      "private": true,
+      "sha256": "35ff74aeea25311f4fe759a6b762c8cd41a79adb23dd5615b92cf215175a63e5"
+    },
+    {
+      "bytes": 432,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/3615b86db043aaae692098c941ec52ccab883d5ed5e2eeccaf18bc7fae1f9819.bin",
+      "private": true,
+      "sha256": "3615b86db043aaae692098c941ec52ccab883d5ed5e2eeccaf18bc7fae1f9819"
+    },
+    {
+      "bytes": 770,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/3abdfab2acd267e40d4bd7dae8ec1c3d1ac9af4ecc07c4120ad8808355f7f9d0.bin",
+      "private": true,
+      "sha256": "3abdfab2acd267e40d4bd7dae8ec1c3d1ac9af4ecc07c4120ad8808355f7f9d0"
+    },
+    {
+      "bytes": 7,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/3b67d3d58d18866b9cfe1861648886587803da302783461efdd4e2d7f46e6c7b.bin",
+      "private": true,
+      "sha256": "3b67d3d58d18866b9cfe1861648886587803da302783461efdd4e2d7f46e6c7b"
+    },
+    {
+      "bytes": 167,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/3eb27d2e651963217403da61bb886896f2f1debc504ad926717feffdd58a0321.bin",
+      "private": true,
+      "sha256": "3eb27d2e651963217403da61bb886896f2f1debc504ad926717feffdd58a0321"
+    },
+    {
+      "bytes": 24,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/3f0c9c1bb2c6badf88aac5adb6070e2216046131340f901a8499b257a3907e07.bin",
+      "private": true,
+      "sha256": "3f0c9c1bb2c6badf88aac5adb6070e2216046131340f901a8499b257a3907e07"
+    },
+    {
+      "bytes": 409,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/404aa14686d8e29f1aa4b322a4ac8f20a20f6b6e5719ac0d2b15d826ef2a8e32.bin",
+      "private": true,
+      "sha256": "404aa14686d8e29f1aa4b322a4ac8f20a20f6b6e5719ac0d2b15d826ef2a8e32"
+    },
+    {
+      "bytes": 3065,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/4440df4570645dbf0003538f9a38244e00abe65dd0a3e20afb39cc358e4e23ee.bin",
+      "private": true,
+      "sha256": "4440df4570645dbf0003538f9a38244e00abe65dd0a3e20afb39cc358e4e23ee"
+    },
+    {
+      "bytes": 42,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/45c677645325a3523286bc710143bad70e5e36a4c00a988f06cbe69d06419cbe.bin",
+      "private": true,
+      "sha256": "45c677645325a3523286bc710143bad70e5e36a4c00a988f06cbe69d06419cbe"
+    },
+    {
+      "bytes": 1655,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/4a416376fff414edbaeb664a190ff918213848c736b5f9553e5ec644b0911585.bin",
+      "private": true,
+      "sha256": "4a416376fff414edbaeb664a190ff918213848c736b5f9553e5ec644b0911585"
+    },
+    {
+      "bytes": 567,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/501b6104cdd5d8e48d017ded79c3c8fe5d843f49804c6d52cda8e2927059ea7e.bin",
+      "private": true,
+      "sha256": "501b6104cdd5d8e48d017ded79c3c8fe5d843f49804c6d52cda8e2927059ea7e"
+    },
+    {
+      "bytes": 3540,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/5671d2fc8a4a104711b94484c98a45f436d4f31803e91a73c31e6c4401d22ae5.bin",
+      "private": true,
+      "sha256": "5671d2fc8a4a104711b94484c98a45f436d4f31803e91a73c31e6c4401d22ae5"
+    },
+    {
+      "bytes": 11,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/57aefd8046010e86f09187427e21bad3376b25a2f9a46ce20452ac7d5448298d.bin",
+      "private": true,
+      "sha256": "57aefd8046010e86f09187427e21bad3376b25a2f9a46ce20452ac7d5448298d"
+    },
+    {
+      "bytes": 139,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/6467de0853baeccd62ae5c842d56c62fc5e9b25e40f67b167e59ad6cade14ed8.bin",
+      "private": true,
+      "sha256": "6467de0853baeccd62ae5c842d56c62fc5e9b25e40f67b167e59ad6cade14ed8"
+    },
+    {
+      "bytes": 74,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/65d75b140b5d8860bbfc9f5c2c52a01aa8facabc747fa57d5011c9b3cb7f4ea3.bin",
+      "private": true,
+      "sha256": "65d75b140b5d8860bbfc9f5c2c52a01aa8facabc747fa57d5011c9b3cb7f4ea3"
+    },
+    {
+      "bytes": 243,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/6796b704722ba7dc638aa294fa429cbaaf8284e83f8eef93ac1ef3a3aa940b7a.bin",
+      "private": true,
+      "sha256": "6796b704722ba7dc638aa294fa429cbaaf8284e83f8eef93ac1ef3a3aa940b7a"
+    },
+    {
+      "bytes": 8,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/68fd8668365230081564e20f7e4f09e50cfc586ed8326807ab275a419bd08cff.bin",
+      "private": true,
+      "sha256": "68fd8668365230081564e20f7e4f09e50cfc586ed8326807ab275a419bd08cff"
+    },
+    {
+      "bytes": 2398,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/6a9a08b48621e2fe2ecac16c7e8957b2e96c834c885c5d47b74c54749031fe65.bin",
+      "private": true,
+      "sha256": "6a9a08b48621e2fe2ecac16c7e8957b2e96c834c885c5d47b74c54749031fe65"
+    },
+    {
+      "bytes": 1008,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/720937613d16a6eeceafb90a9252013fad0f5befc7d240e9df69eb2ed6167894.bin",
+      "private": true,
+      "sha256": "720937613d16a6eeceafb90a9252013fad0f5befc7d240e9df69eb2ed6167894"
+    },
+    {
+      "bytes": 1082,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/73778e7f681e2aeaa72c2447ff1c3f51d26934fa7e7c602364163a6b11205c86.bin",
+      "private": true,
+      "sha256": "73778e7f681e2aeaa72c2447ff1c3f51d26934fa7e7c602364163a6b11205c86"
+    },
+    {
+      "bytes": 682,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/74039a5dde67701a98c856c927a4b3686bb229af38d064d65aa329eadca1486a.bin",
+      "private": true,
+      "sha256": "74039a5dde67701a98c856c927a4b3686bb229af38d064d65aa329eadca1486a"
+    },
+    {
+      "bytes": 4,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b.bin",
+      "private": true,
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "bytes": 627,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/77717c010ba850246c8103c79a6a0406f97a2ac812e9cba3f2dc074a8776e658.bin",
+      "private": true,
+      "sha256": "77717c010ba850246c8103c79a6a0406f97a2ac812e9cba3f2dc074a8776e658"
+    },
+    {
+      "bytes": 8,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/78a24db9db3c3e111a297e8ebd09341d72c40ad9806257242ab51384b3e05b80.bin",
+      "private": true,
+      "sha256": "78a24db9db3c3e111a297e8ebd09341d72c40ad9806257242ab51384b3e05b80"
+    },
+    {
+      "bytes": 42,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/7d3bfb01dfbdca773368d2ed35453ac32cc3fc148477b07140b0fdec486912a5.bin",
+      "private": true,
+      "sha256": "7d3bfb01dfbdca773368d2ed35453ac32cc3fc148477b07140b0fdec486912a5"
+    },
+    {
+      "bytes": 29,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/7df036386fec4da5113a026a49b5645a22c12724aa071056d3f3ae1a3a07fc91.bin",
+      "private": true,
+      "sha256": "7df036386fec4da5113a026a49b5645a22c12724aa071056d3f3ae1a3a07fc91"
+    },
+    {
+      "bytes": 383,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/7e615146ea16044b5d2c7aba4411e36944e2f86264239358f168747f9cd9eed8.bin",
+      "private": true,
+      "sha256": "7e615146ea16044b5d2c7aba4411e36944e2f86264239358f168747f9cd9eed8"
+    },
+    {
+      "bytes": 22,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/83b0e46120f86e4e0d6e7d884315fab7ea59a58d0925cc388d45d5713d69c038.bin",
+      "private": true,
+      "sha256": "83b0e46120f86e4e0d6e7d884315fab7ea59a58d0925cc388d45d5713d69c038"
+    },
+    {
+      "bytes": 779,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/841c488d816e57d49cb6ef0d42171f427609454c50e64f265528662d26c78cf0.bin",
+      "private": true,
+      "sha256": "841c488d816e57d49cb6ef0d42171f427609454c50e64f265528662d26c78cf0"
+    },
+    {
+      "bytes": 51,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/87095c8cb3726dc7f365cb4e249b1939e90bc6d548cd3996742b1aab37f3df05.bin",
+      "private": true,
+      "sha256": "87095c8cb3726dc7f365cb4e249b1939e90bc6d548cd3996742b1aab37f3df05"
+    },
+    {
+      "bytes": 271,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/8721c36842069320282f7af0960744f85b33ab268780f6f56ad585385a27101c.bin",
+      "private": true,
+      "sha256": "8721c36842069320282f7af0960744f85b33ab268780f6f56ad585385a27101c"
+    },
+    {
+      "bytes": 54,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/926580e910b9fcbc3d2cd6596d73f89bc5aed4b9e8b01fcd578d8c65d0b0c4cb.bin",
+      "private": true,
+      "sha256": "926580e910b9fcbc3d2cd6596d73f89bc5aed4b9e8b01fcd578d8c65d0b0c4cb"
+    },
+    {
+      "bytes": 409,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/93927e7ea33450400b21e89afa0d92281d870a96bf5394ebce438c220f996882.bin",
+      "private": true,
+      "sha256": "93927e7ea33450400b21e89afa0d92281d870a96bf5394ebce438c220f996882"
+    },
+    {
+      "bytes": 385,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/96dbcee6da21b1b2b4ae776027c6dd69ae6dd678fdaf4809c825d24a23b25713.bin",
+      "private": true,
+      "sha256": "96dbcee6da21b1b2b4ae776027c6dd69ae6dd678fdaf4809c825d24a23b25713"
+    },
+    {
+      "bytes": 17,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/a24e49a4f88b5d9f8d4daef25e4a8cb395267691fca14b64680efeff0f70bb76.bin",
+      "private": true,
+      "sha256": "a24e49a4f88b5d9f8d4daef25e4a8cb395267691fca14b64680efeff0f70bb76"
+    },
+    {
+      "bytes": 5697,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/a8fcdc74ec56d6ee2d56573a518afec470e480fc89a6462d009f2c9385aba9a3.bin",
+      "private": true,
+      "sha256": "a8fcdc74ec56d6ee2d56573a518afec470e480fc89a6462d009f2c9385aba9a3"
+    },
+    {
+      "bytes": 807,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/ab1f1834df51ee3479923b40569e053a19940d12a271d8d99b5d724d0f60f31d.bin",
+      "private": true,
+      "sha256": "ab1f1834df51ee3479923b40569e053a19940d12a271d8d99b5d724d0f60f31d"
+    },
+    {
+      "bytes": 1643,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/ab66ce6d1d91f96e0954ca4a82fcfdc5461a0615f6ecc415011cebfd3c93df66.bin",
+      "private": true,
+      "sha256": "ab66ce6d1d91f96e0954ca4a82fcfdc5461a0615f6ecc415011cebfd3c93df66"
+    },
+    {
+      "bytes": 5697,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/b026d8a53122371454e9e7f2b3e1d8cf353169cd83dcd5cfdc01100c78d266bb.bin",
+      "private": true,
+      "sha256": "b026d8a53122371454e9e7f2b3e1d8cf353169cd83dcd5cfdc01100c78d266bb"
+    },
+    {
+      "bytes": 42,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/b046390013504dac49060fcc91378262365c9c69620611454ad310f56bce4c17.bin",
+      "private": true,
+      "sha256": "b046390013504dac49060fcc91378262365c9c69620611454ad310f56bce4c17"
+    },
+    {
+      "bytes": 703,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/b3c0eae08644248e00fa675a8dc07b018ce360d2a956b290ace998a7f2396c3b.bin",
+      "private": true,
+      "sha256": "b3c0eae08644248e00fa675a8dc07b018ce360d2a956b290ace998a7f2396c3b"
+    },
+    {
+      "bytes": 207,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/b72ffb91153dc7edb173532a7ffff8f1de1f92f7189580204bbebe2f7b876a0f.bin",
+      "private": true,
+      "sha256": "b72ffb91153dc7edb173532a7ffff8f1de1f92f7189580204bbebe2f7b876a0f"
+    },
+    {
+      "bytes": 379,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/b9e051c3259330c86e8769850422d318944a09ba3c194e36ab60fcee243944d2.bin",
+      "private": true,
+      "sha256": "b9e051c3259330c86e8769850422d318944a09ba3c194e36ab60fcee243944d2"
+    },
+    {
+      "bytes": 42,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/ba42685d459071956cf5e1f982fc1a815fddb6193dc7073e0614fd1155a2a417.bin",
+      "private": true,
+      "sha256": "ba42685d459071956cf5e1f982fc1a815fddb6193dc7073e0614fd1155a2a417"
+    },
+    {
+      "bytes": 723,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/bb7e285f04a709c64af73c7739ddd137b6ee61b4d40505c8bc4236dc36b419c3.bin",
+      "private": true,
+      "sha256": "bb7e285f04a709c64af73c7739ddd137b6ee61b4d40505c8bc4236dc36b419c3"
+    },
+    {
+      "bytes": 3344,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/bd08693126bd16a65d78a194c3465e3cd2abd77baf2142b78741e7c4a77e2086.bin",
+      "private": true,
+      "sha256": "bd08693126bd16a65d78a194c3465e3cd2abd77baf2142b78741e7c4a77e2086"
+    },
+    {
+      "bytes": 28,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/c4ac5d61e092bd7935cf525fccc9a10c091401fe8f196718904767bd78bda8a4.bin",
+      "private": true,
+      "sha256": "c4ac5d61e092bd7935cf525fccc9a10c091401fe8f196718904767bd78bda8a4"
+    },
+    {
+      "bytes": 66,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/c8c33078d4af1a4bda0738decee2a2daa2de720a667731ef965b3796483a5d1f.bin",
+      "private": true,
+      "sha256": "c8c33078d4af1a4bda0738decee2a2daa2de720a667731ef965b3796483a5d1f"
+    },
+    {
+      "bytes": 6057,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/caede478958667cabf6305259700861634e939083712ce3b1e8c96f574308517.bin",
+      "private": true,
+      "sha256": "caede478958667cabf6305259700861634e939083712ce3b1e8c96f574308517"
+    },
+    {
+      "bytes": 1462,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/cee5ce81daba42c2def611f4fe32d5a1c989a62ddb2e89c6a17b53709294b763.bin",
+      "private": true,
+      "sha256": "cee5ce81daba42c2def611f4fe32d5a1c989a62ddb2e89c6a17b53709294b763"
+    },
+    {
+      "bytes": 99,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/cf14f1e2c73e49d37101d085446ce48144106fabf5429c87a14af843bab5443d.bin",
+      "private": true,
+      "sha256": "cf14f1e2c73e49d37101d085446ce48144106fabf5429c87a14af843bab5443d"
+    },
+    {
+      "bytes": 935,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/d01e0cbc9ae36e844941e6f69fc348e0a7cbca2cc6b6214fe008b7334044df0d.bin",
+      "private": true,
+      "sha256": "d01e0cbc9ae36e844941e6f69fc348e0a7cbca2cc6b6214fe008b7334044df0d"
+    },
+    {
+      "bytes": 258,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/d5d1c544eca4a245379079e4d7aa52ba2f5ae6ab3e2cb297bb55f7f6809b751a.bin",
+      "private": true,
+      "sha256": "d5d1c544eca4a245379079e4d7aa52ba2f5ae6ab3e2cb297bb55f7f6809b751a"
+    },
+    {
+      "bytes": 393,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/d62768e43db8dea2e5805cb41646e73826398f931fed3ac12bf4947a02d702c6.bin",
+      "private": true,
+      "sha256": "d62768e43db8dea2e5805cb41646e73826398f931fed3ac12bf4947a02d702c6"
+    },
+    {
+      "bytes": 1282,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/d687917845b4f8a125d77abe1d742a96791aab5414a24706eaed6c9c1e64cf55.bin",
+      "private": true,
+      "sha256": "d687917845b4f8a125d77abe1d742a96791aab5414a24706eaed6c9c1e64cf55"
+    },
+    {
+      "bytes": 2873,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/dba124681ea6adcd90dd879eb24a1a35bf948bb2b03031d1643b1222e586414c.bin",
+      "private": true,
+      "sha256": "dba124681ea6adcd90dd879eb24a1a35bf948bb2b03031d1643b1222e586414c"
+    },
+    {
+      "bytes": 466,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/dcceef026401604f355e034bef309b38245f43bd1a791cd7b550efdcb2e2a8d8.bin",
+      "private": true,
+      "sha256": "dcceef026401604f355e034bef309b38245f43bd1a791cd7b550efdcb2e2a8d8"
+    },
+    {
+      "bytes": 942,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/e338fe1c7868d316dfc8094987ce4bc416747f2135112503fa4cd5f662e30f3d.bin",
+      "private": true,
+      "sha256": "e338fe1c7868d316dfc8094987ce4bc416747f2135112503fa4cd5f662e30f3d"
+    },
+    {
+      "bytes": 167,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/e6d4a7035610c6ff75777dfcc2366da3c623d2de4a5f95b0022c9ef3592321e1.bin",
+      "private": true,
+      "sha256": "e6d4a7035610c6ff75777dfcc2366da3c623d2de4a5f95b0022c9ef3592321e1"
+    },
+    {
+      "bytes": 170,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/ed2be964c580529c28d472cdae970eae0d0d064b0e554acc8811c75a4a0450be.bin",
+      "private": true,
+      "sha256": "ed2be964c580529c28d472cdae970eae0d0d064b0e554acc8811c75a4a0450be"
+    },
+    {
+      "bytes": 1041,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/f51260cc9db0223fff6572c74a217f67f310f36fca8a3bcb1e05de3abb45c196.bin",
+      "private": true,
+      "sha256": "f51260cc9db0223fff6572c74a217f67f310f36fca8a3bcb1e05de3abb45c196"
+    },
+    {
+      "bytes": 25,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/f7d2a0f1fb7696ee636ecb1ce08cd73fd4eb4589a5483feff9b207682eb51b6a.bin",
+      "private": true,
+      "sha256": "f7d2a0f1fb7696ee636ecb1ce08cd73fd4eb4589a5483feff9b207682eb51b6a"
+    },
+    {
+      "bytes": 22,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/f852872600f1eebf2b189bff9cf0e787cfe70d599a9693bea743ee04d05a3744.bin",
+      "private": true,
+      "sha256": "f852872600f1eebf2b189bff9cf0e787cfe70d599a9693bea743ee04d05a3744"
+    },
+    {
+      "bytes": 12,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/f951cac19e404876d1156e6561c54283c8bd549ef28f00ea24a2ff018dee1557.bin",
+      "private": true,
+      "sha256": "f951cac19e404876d1156e6561c54283c8bd549ef28f00ea24a2ff018dee1557"
+    },
+    {
+      "bytes": 32,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/f95aed51ea8af71b6b815c770d7ebb82bb79f5581cbcedd9b62c281fee300b84.bin",
+      "private": true,
+      "sha256": "f95aed51ea8af71b6b815c770d7ebb82bb79f5581cbcedd9b62c281fee300b84"
+    },
+    {
+      "bytes": 475,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/fbda6037725ef2bcdbaab3c6648cbb0efa2366e5370ea9c43aa37c6ddafbd920.bin",
+      "private": true,
+      "sha256": "fbda6037725ef2bcdbaab3c6648cbb0efa2366e5370ea9c43aa37c6ddafbd920"
+    },
+    {
+      "bytes": 22,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/fe0fdcce89c1c1500a73566dde6f90fa8c20ca83b71b720e32e7838033d96df4.bin",
+      "private": true,
+      "sha256": "fe0fdcce89c1c1500a73566dde6f90fa8c20ca83b71b720e32e7838033d96df4"
+    },
+    {
+      "bytes": 2238,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/private/fragments/fed2e03b23655673c380dbe3b13e3728fd209255053005037861563425b4ed1a.bin",
+      "private": true,
+      "sha256": "fed2e03b23655673c380dbe3b13e3728fd209255053005037861563425b4ed1a"
+    }
+  ],
+  "source_deletion_authorization": false,
+  "total_private_bytes": 65535
+}

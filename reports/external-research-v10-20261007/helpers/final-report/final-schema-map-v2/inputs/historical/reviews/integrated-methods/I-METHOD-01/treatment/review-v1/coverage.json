@@ -1,0 +1,224 @@
+{
+  "case_id": "I-METHOD-01",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "scope": "Complete original brief O1\u2013O6 and every frozen P1\u2013P6 content decision; all six review axes; full final plus admitted same-arm draft/critique/source evidence.",
+  "assessment_complete": true,
+  "count_semantics": "complete is the total explicitly enumerated scientific assessment scope, not a claim that every source assertion is flawless or every future implementation decision resolved.",
+  "counts": {
+    "axes": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "obligations": {
+      "complete": 12,
+      "assessed": 12,
+      "unassessed": 0,
+      "met": 10,
+      "met_with_limitations": 2
+    },
+    "consequential_checks": {
+      "complete": 30,
+      "assessed": 30,
+      "unassessed": 0
+    },
+    "critic_dispositions": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "main_named_criticisms": 5,
+      "additional_metadata_correction": 1
+    },
+    "preservation_groups": {
+      "complete": 20,
+      "assessed": 20,
+      "unassessed": 0,
+      "retained_or_corrected": 19,
+      "compressed_with_small_omission": 1
+    },
+    "bounded_opportunity_checks": {
+      "complete": 3,
+      "assessed": 3,
+      "unassessed": 0
+    },
+    "material_error_count": 0,
+    "nonmaterial_factual_or_locator_error_count": 2,
+    "nonmaterial_findings_count": 4
+  },
+  "six_axes": [
+    {
+      "id": 1,
+      "name": "Original brief and all P1\u2013P6 obligations",
+      "assessment_status": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "id": 2,
+      "name": "Consequential source claims, conditions and versions",
+      "assessment_status": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "id": 3,
+      "name": "Bounded useful discovery/mechanisms/alternatives/negative/opportunity coverage",
+      "assessment_status": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "id": 4,
+      "name": "Incorrect rejections/corrections and already-covered dispositions",
+      "assessment_status": "ASSESSED",
+      "judgment": "PASS"
+    },
+    {
+      "id": 5,
+      "name": "Draft\u2013critique\u2013final preservation",
+      "assessment_status": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "id": 6,
+      "name": "Proposed/executed validation and witness applicability",
+      "assessment_status": "ASSESSED",
+      "judgment": "PASS"
+    }
+  ],
+  "O1_O6_P1_P6": [
+    {
+      "id": "O1",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET_WITH_LIMITATIONS"
+    },
+    {
+      "id": "O2",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    },
+    {
+      "id": "O3",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET_WITH_LIMITATIONS"
+    },
+    {
+      "id": "O4",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    },
+    {
+      "id": "O5",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET_SUBSTANTIVELY"
+    },
+    {
+      "id": "O6",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    },
+    {
+      "id": "P1",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    },
+    {
+      "id": "P2",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    },
+    {
+      "id": "P3",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    },
+    {
+      "id": "P4",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    },
+    {
+      "id": "P5",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    },
+    {
+      "id": "P6",
+      "assessment_status": "ASSESSED",
+      "assessment_complete": true,
+      "fulfillment": "MET"
+    }
+  ],
+  "assessed_consequential_ids": [
+    "Q01",
+    "Q02",
+    "Q03",
+    "Q04",
+    "Q05",
+    "Q06",
+    "Q07",
+    "Q08",
+    "Q09",
+    "Q10",
+    "Q11",
+    "Q12",
+    "Q13",
+    "Q14",
+    "Q15",
+    "Q16",
+    "Q17",
+    "Q18",
+    "Q19",
+    "Q20",
+    "Q21",
+    "Q22",
+    "Q23",
+    "Q24",
+    "Q25",
+    "Q26",
+    "Q27",
+    "Q28",
+    "Q29",
+    "Q30"
+  ],
+  "unassessed_obligation_ids": [],
+  "unassessed_consequential_ids": [],
+  "material_error_count": 0,
+  "nonmaterial_finding_ids": [
+    "L01",
+    "L02",
+    "L03",
+    "L04"
+  ],
+  "exhaustive_opportunity_recall_claimed": false,
+  "excluded_host_fields": [
+    "lifecycle",
+    "native terminal dispositions",
+    "research ordering/timing proof",
+    "provider/family identity",
+    "billing",
+    "quota",
+    "comparative selection"
+  ],
+  "usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "output_tokens": null,
+    "reasoning_tokens": null,
+    "billing_usd": null
+  },
+  "unknown_quota": null,
+  "artifacts": {
+    "judgment": "judgment.md",
+    "source_checks": "source-checks.json",
+    "sources": "sources/"
+  }
+}

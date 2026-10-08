@@ -1,0 +1,675 @@
+{
+  "schema": "er10.standalone.diagnostic.review.freeze.v1",
+  "record_at": "2026-10-07T21:29:08.878706+00:00",
+  "case": "I-METHOD-02",
+  "candidate_attempt": "v2",
+  "arm": "treatment",
+  "actual_task_status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "**FAIL \u2014 two material findings.** Assessed all 6 obligations, 50 plan clauses, 16 conditions, 44 consequential claims and 45 criticism dispositions. **Unassessed: 0.**\n\n- [Judgment](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/judgment.md)\n- [Coverage](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/coverage.json)\n- [Source checks](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/source-checks.json)\n- [Primary evidence](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources)\n\nCompleted before the deadline. No application tests credited.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:312458e4-9c77-4ab4-b07a-5da8e614cef9",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": "**FAIL \u2014 two material findings.** Assessed all 6 obligations, 50 plan clauses, 16 conditions, 44 consequential claims and 45 criticism dispositions. **Unassessed: 0.**\n\n- [Judgment](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/judgment.md)\n- [Coverage](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/coverage.json)\n- [Source checks](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/source-checks.json)\n- [Primary evidence](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources)\n\nCompleted before the deadline. No application tests credited.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:312458e4-9c77-4ab4-b07a-5da8e614cef9",
+    "waitTimedOut": false
+  },
+  "actual_t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:13:04.490Z",
+    "startedAt": "2026-10-07T21:13:05.071Z",
+    "completedAt": "2026-10-07T21:28:27.926Z"
+  },
+  "all_review_descendants_quiet": true,
+  "review_sources_and_outputs": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/coverage.json": {
+      "sha256": "2ce2120b3e91528898c018212a10919f94033ef47fb6f165a94e9ce265f993c2",
+      "bytes": 139987
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/judgment.md": {
+      "sha256": "20f6876ca87a61de7d16d63a4c89144efcab9cead213d618cd248edc38d245eb",
+      "bytes": 12932
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/source-checks.json": {
+      "sha256": "375ed7b494faaf7f38b4dd7df700ed7fa38ae5af49b9fdf98b0c77fd45f1661f",
+      "bytes": 273557
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/admitted-input-integrity.json": {
+      "sha256": "6ecc5c981b880545a334fa4e9d7a8802ac5a46b00d33ad443da45f6cd299911a",
+      "bytes": 51905
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/capture-manifest.json": {
+      "sha256": "92bda962d978ef2098e7fa2d932d23970bac2344bb65cdc1b0d9cf561cc717d1",
+      "bytes": 123983
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/final-static-applicability-check.json": {
+      "sha256": "f1bcc1f84dbd98f181f039ad796c5edd358c91c328edec76425ba4102e175ba5",
+      "bytes": 481
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-annotorious-data-model.html": {
+      "sha256": "830a2fab8cc71a0e01b0426aff4e2ec96f668d8ae4dbf3913d034ef8c7508b6d",
+      "bytes": 67181
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-annotorious-issue-html.html": {
+      "sha256": "02ccdfe4299fed9ea6b07df989d8d13a3581201676664aab4d1feafed0e665fd",
+      "bytes": 301987
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-annotorious-osd-api.html": {
+      "sha256": "ce0413807bdc0b320c2e2f65893733c8d5be5412ca803c6cd925b2ef9bdd9689",
+      "bytes": 115284
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-annotorious-start.html": {
+      "sha256": "788368f063b845fda6058f4cfcc2ac0c3eb3a17ff560f4e95220b52e528eb329",
+      "bytes": 49333
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-auth2.html": {
+      "sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+      "bytes": 150767
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-canvas-size-recipe.html": {
+      "sha256": "1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504",
+      "bytes": 17599
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-content-state.html": {
+      "sha256": "32c88ed7687fe7b8a3f19aa05fcaafc98cfde086630499a321e8587d064bb489",
+      "bytes": 107404
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-image3.html": {
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "bytes": 145643
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-multicanvas-recipe.html": {
+      "sha256": "a661e3051dcdf3e4647750fc1ac5c1fa2ca5f294e8fcd22fc4154a471b49e1a8",
+      "bytes": 19197
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-presentation2.1.1.html": {
+      "sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+      "bytes": 310181
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-presentation3.html": {
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "bytes": 385826
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-rights-recipe.html": {
+      "sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e",
+      "bytes": 18867
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-simple-local-canvas.html": {
+      "sha256": "8499e908ae1e18023e71d5a5fd4b9e123d2eb4a9a932b1c9f2056c8b864794b3",
+      "bytes": 28743
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-using-resources.html": {
+      "sha256": "34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de",
+      "bytes": 25571
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-media-frags.html": {
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "bytes": 89887
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-mirador-annotation-status.html": {
+      "sha256": "cf4fd31079941d1743022426f790b78677bb22490b3fda4c95b7c5d90a19238a",
+      "bytes": 282385
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-mirador-home.html": {
+      "sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "bytes": 7133
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-mirador-release4.html": {
+      "sha256": "109bc02fed67abdebdb3e1217af034d559149e0ca5d8931ae0518149ba8f9378",
+      "bytes": 229015
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-2576-html.html": {
+      "sha256": "f42ed848f4951c550c937c1bdf582cd130cf19178777fc5544ea0c7db9cfae8c",
+      "bytes": 304300
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-issue-html.html": {
+      "sha256": "19cba3fb7d109fe316bddebc7628a1ad2760a8a40e29f65e5437b46092101ae5",
+      "bytes": 260605
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-pr-html.html": {
+      "sha256": "e5ce9752c937dbc66e20cca6dd8e44848791bc518363533e70388cf5839c37b2",
+      "bytes": 635182
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-pr2546-config.js": {
+      "sha256": "c19b04a70cc82105cb0bf286ab6d462f5c957afd441871e2934397c9e94c5a4c",
+      "bytes": 121519
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-pr2546-demo.html": {
+      "sha256": "6fb4f5dba5ced97cf2243930707e35921410e5f16f10e960bfe583a2c1a4dd21",
+      "bytes": 4256
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-pr2546-overlay.js": {
+      "sha256": "4244466318980cc2168ad8cb9bf334fe02f7d373e0aee22281afc458f60bba10",
+      "bytes": 20222
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-pr2546-viewer.js": {
+      "sha256": "fc42a025e690ef6b8d02dc3365e247762688735721b8da064d72471a7225580d",
+      "bytes": 162412
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-release500-html.html": {
+      "sha256": "009a300e38471a1bb7ccb4ea151dcb9586d1ab5a64c420793dbe21482c4dc587",
+      "bytes": 230878
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-release611-html.html": {
+      "sha256": "d7357328c2c372036cdb2d3926c69a09ffe19047f49edff50b0da9ccd3798dd9",
+      "bytes": 204786
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-selected-changelog.txt": {
+      "sha256": "f3a751d5ecf1b6156f455ca733b8380227474de95dacfa7bfd4bd3656c1b7150",
+      "bytes": 62154
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-selected-package.json": {
+      "sha256": "7b5a2369a0a15e3b43a2e660c9b66f6659aecb00fb1a65aa1f5ada47c1d38b43",
+      "bytes": 2338
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-tagged-iiif.js": {
+      "sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "bytes": 28380
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-v6.1.1-iiiftilesource.js": {
+      "sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "bytes": 28380
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-v6.1.1-openseadragon.js": {
+      "sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "bytes": 133669
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-v6.1.1-overlay-demo.html": {
+      "sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "bytes": 4257
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-v6.1.1-overlay.js": {
+      "sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "bytes": 20632
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-v6.1.1-tiledimage.js": {
+      "sha256": "c7e5285eeea807653b3ec4345faa4bf6931457b34c28922ae5694c2f4eca45bc",
+      "bytes": 105626
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-v6.1.1-viewer.js": {
+      "sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "bytes": 190702
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-osd-v6.1.1-viewport.js": {
+      "sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "bytes": 71130
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-recogito-iiif-example.html": {
+      "sha256": "c0e30c6971d945a2685d3e0e59d803c71912681ae1c2c0ac2eea717d98c017c6",
+      "bytes": 107457
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-recogito-readme.html": {
+      "sha256": "dfdf0de2ce1927f830d2d1aeff121f8ccab127a06a0e69b767db7d7058f07170",
+      "bytes": 304089
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-tropy-basics.html": {
+      "sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "bytes": 462352
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-tropy-selections.html": {
+      "sha256": "5bf39b69aede913d24bc29037aa618ade8b4d55a406bfba550d13066d8fdd3ca",
+      "bytes": 438206
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-universalviewer-home.html": {
+      "sha256": "66d4c1d94025173568626606d3cf4123d950036a74fdb4fa44db2387cc96acf1",
+      "bytes": 12215
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-web-annotation-model.html": {
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "bytes": 284185
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/inspected-iiif-auth2-excerpts.json": {
+      "sha256": "c5b73597d3efeab066661f95d1bb279a892459c76572ecd1ad657d4fc8ce5b07",
+      "bytes": 6830
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/inspected-iiif-content-state-excerpts.json": {
+      "sha256": "59905f8a03846dbebde12b892f32be6f1eaa365d9d6b5401ff38519ca00ec144",
+      "bytes": 8776
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/inspected-iiif-image3-excerpts.json": {
+      "sha256": "53b19152f67226f86a7eb57f73408fa0ef6d6df32d15577d4b792b0d45881c49",
+      "bytes": 11416
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/inspected-iiif-presentation2.1.1-excerpts.json": {
+      "sha256": "b717d8d2543d8c607279a68fa0ed2edb0d0432448587d848e3ea9f69b661e90e",
+      "bytes": 12469
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/inspected-iiif-presentation3-excerpts.json": {
+      "sha256": "9a390ed3c69a1efc71a9a201610b28b5b7d254a74e4e46ab0252dad62b9fd581",
+      "bytes": 24751
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/inspected-web-annotation-model-excerpts.json": {
+      "sha256": "8be2da51a63e7b95b85d38b35e52fc30a80e86089b69ac29571450c7049fb292",
+      "bytes": 22555
+    }
+  },
+  "source_judgment": "FAIL",
+  "exact_counts": {
+    "inventory_unique_rows": 206,
+    "original_obligations": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "dispositions": {
+        "limited": 1,
+        "satisfied_with_limitations": 2,
+        "partial": 2,
+        "scientific_dispositions_assessed_provenance_unknown": 1
+      }
+    },
+    "original_plan_decisions": {
+      "complete": 50,
+      "assessed": 50,
+      "unassessed": 0,
+      "dispositions": {
+        "partial": 3,
+        "retained": 25,
+        "retained_with_gap": 4,
+        "retained_and_conditioned": 1,
+        "retained_and_strengthened": 1,
+        "retained_with_honest_limit": 1,
+        "retained_at_record_level": 1,
+        "retained_and_specified": 1,
+        "provisional_choice": 1,
+        "proposed_choice_with_gate": 2,
+        "retained_and_extended": 1,
+        "retained_with_gate": 1,
+        "proposed_retained": 6,
+        "acknowledged_and_replaced": 1,
+        "preserved": 1
+      }
+    },
+    "original_conditions": {
+      "complete": 16,
+      "assessed": 16,
+      "unassessed": 0,
+      "dispositions": {
+        "retained": 11,
+        "retained_with_gap": 2,
+        "retained_with_uncertainty": 1,
+        "partial": 1,
+        "preserved": 1
+      }
+    },
+    "consequential_claims": {
+      "complete": 44,
+      "assessed": 44,
+      "unassessed": 0,
+      "dispositions": {
+        "supported": 17,
+        "supported_with_conditions": 6,
+        "product_choice": 1,
+        "supported_with_additional_condition": 1,
+        "corroborated_fresh_with_tag_metadata_limit": 1,
+        "supported_frozen_current_unknown": 1,
+        "supported_as_report": 1,
+        "supported_but_strict_partial_requirement_unwarranted": 1,
+        "supported_with_context": 1,
+        "supported_as_scope_constraint": 1,
+        "incorrect_source_disposition": 1,
+        "supported_bounded": 1,
+        "supported_as_report_with_conditions": 1,
+        "supported_logical_limit": 1,
+        "consistent_product_choice": 1,
+        "supported_product_design": 1,
+        "proposed_not_validated": 1,
+        "proposal_without_performance_guarantee": 1,
+        "incomplete_contract": 1,
+        "reported_unverified": 1,
+        "accurate_for_frozen_record_optional_lead_now_supported": 1,
+        "consistent_authored_evidence_not_independently_runtime_audited": 1,
+        "supported_architectural_boundary": 1
+      }
+    },
+    "criticism_correction_dispositions": {
+      "complete": 45,
+      "assessed": 45,
+      "unassessed": 0,
+      "dispositions": {
+        "accepted_preserved": 28,
+        "accepted_but_mechanism_reduced": 1,
+        "incorrectly_narrowed": 1,
+        "accepted_preserved_with_caller_limit": 1,
+        "accepted_preserved_strict_requirement_not_in_brief": 1,
+        "accepted_preserved_with_qualification": 1,
+        "accepted_preserved_with_original_input_gap": 1,
+        "accepted_preserved_with_condition": 1,
+        "accepted_open_decision": 8,
+        "accepted_open_decision_with_evidence_error": 1,
+        "accepted_preserved_hypothetical_guard": 1
+      }
+    },
+    "predecessor_preservation": {
+      "complete": 20,
+      "assessed": 20,
+      "unassessed": 0,
+      "dispositions": {
+        "preserved": 13,
+        "corrected_supported": 1,
+        "preserved_and_specified": 2,
+        "preserved_with_provenance_limit": 1,
+        "preserved_and_qualified": 1,
+        "partially_preserved_incorrect_narrowing": 1,
+        "preserved_and_extended": 1
+      }
+    },
+    "all_preservation": {
+      "complete": 86,
+      "assessed": 86,
+      "unassessed": 0,
+      "dispositions": {
+        "partial": 4,
+        "retained": 36,
+        "retained_with_gap": 6,
+        "retained_and_conditioned": 1,
+        "retained_and_strengthened": 1,
+        "retained_with_honest_limit": 1,
+        "retained_at_record_level": 1,
+        "retained_and_specified": 1,
+        "provisional_choice": 1,
+        "proposed_choice_with_gate": 2,
+        "retained_and_extended": 1,
+        "retained_with_gate": 1,
+        "proposed_retained": 6,
+        "acknowledged_and_replaced": 1,
+        "preserved": 15,
+        "retained_with_uncertainty": 1,
+        "corrected_supported": 1,
+        "preserved_and_specified": 2,
+        "preserved_with_provenance_limit": 1,
+        "preserved_and_qualified": 1,
+        "partially_preserved_incorrect_narrowing": 1,
+        "preserved_and_extended": 1
+      }
+    },
+    "bounded_discovery": {
+      "complete": 12,
+      "assessed": 12,
+      "unassessed": 0,
+      "dispositions": {
+        "optional_useful_omission": 2,
+        "retained_but_underinvestigated": 1,
+        "retained_alternative_with_useful_version_condition": 1,
+        "retained_bounded": 1,
+        "retained_analogy_negative_full_fit": 1,
+        "uncertain_optional_lead": 1,
+        "necessary_scope_mechanism_omitted": 1,
+        "useful_implementation_condition_omitted": 1,
+        "useful_history_limit": 1,
+        "already_conditioned_not_required_expansion": 1,
+        "already_covered_with_condition": 1
+      }
+    },
+    "validation": {
+      "complete": 13,
+      "assessed": 13,
+      "unassessed": 0,
+      "dispositions": {
+        "proposed_not_executed": 7,
+        "none_reported_none_credited": 2,
+        "authored_operations_supported_but_not_runtime_audited": 1,
+        "executed_static_review_check": 2,
+        "executed_review_output_check": 1
+      }
+    },
+    "six_axes": {
+      "1": {
+        "complete": 72,
+        "assessed": 72,
+        "unassessed": 0,
+        "dispositions": {
+          "limited": 1,
+          "satisfied_with_limitations": 2,
+          "partial": 6,
+          "scientific_dispositions_assessed_provenance_unknown": 1,
+          "retained": 36,
+          "retained_with_gap": 6,
+          "retained_and_conditioned": 1,
+          "retained_and_strengthened": 1,
+          "retained_with_honest_limit": 1,
+          "retained_at_record_level": 1,
+          "retained_and_specified": 1,
+          "provisional_choice": 1,
+          "proposed_choice_with_gate": 2,
+          "retained_and_extended": 1,
+          "retained_with_gate": 1,
+          "proposed_retained": 6,
+          "acknowledged_and_replaced": 1,
+          "preserved": 2,
+          "retained_with_uncertainty": 1
+        }
+      },
+      "2": {
+        "complete": 44,
+        "assessed": 44,
+        "unassessed": 0,
+        "dispositions": {
+          "supported": 17,
+          "supported_with_conditions": 6,
+          "product_choice": 1,
+          "supported_with_additional_condition": 1,
+          "corroborated_fresh_with_tag_metadata_limit": 1,
+          "supported_frozen_current_unknown": 1,
+          "supported_as_report": 1,
+          "supported_but_strict_partial_requirement_unwarranted": 1,
+          "supported_with_context": 1,
+          "supported_as_scope_constraint": 1,
+          "incorrect_source_disposition": 1,
+          "supported_bounded": 1,
+          "supported_as_report_with_conditions": 1,
+          "supported_logical_limit": 1,
+          "consistent_product_choice": 1,
+          "supported_product_design": 1,
+          "proposed_not_validated": 1,
+          "proposal_without_performance_guarantee": 1,
+          "incomplete_contract": 1,
+          "reported_unverified": 1,
+          "accurate_for_frozen_record_optional_lead_now_supported": 1,
+          "consistent_authored_evidence_not_independently_runtime_audited": 1,
+          "supported_architectural_boundary": 1
+        }
+      },
+      "3": {
+        "complete": 12,
+        "assessed": 12,
+        "unassessed": 0,
+        "dispositions": {
+          "optional_useful_omission": 2,
+          "retained_but_underinvestigated": 1,
+          "retained_alternative_with_useful_version_condition": 1,
+          "retained_bounded": 1,
+          "retained_analogy_negative_full_fit": 1,
+          "uncertain_optional_lead": 1,
+          "necessary_scope_mechanism_omitted": 1,
+          "useful_implementation_condition_omitted": 1,
+          "useful_history_limit": 1,
+          "already_conditioned_not_required_expansion": 1,
+          "already_covered_with_condition": 1
+        }
+      },
+      "4": {
+        "complete": 45,
+        "assessed": 45,
+        "unassessed": 0,
+        "dispositions": {
+          "accepted_preserved": 28,
+          "accepted_but_mechanism_reduced": 1,
+          "incorrectly_narrowed": 1,
+          "accepted_preserved_with_caller_limit": 1,
+          "accepted_preserved_strict_requirement_not_in_brief": 1,
+          "accepted_preserved_with_qualification": 1,
+          "accepted_preserved_with_original_input_gap": 1,
+          "accepted_preserved_with_condition": 1,
+          "accepted_open_decision": 8,
+          "accepted_open_decision_with_evidence_error": 1,
+          "accepted_preserved_hypothetical_guard": 1
+        }
+      },
+      "5": {
+        "complete": 86,
+        "assessed": 86,
+        "unassessed": 0,
+        "dispositions": {
+          "partial": 4,
+          "retained": 36,
+          "retained_with_gap": 6,
+          "retained_and_conditioned": 1,
+          "retained_and_strengthened": 1,
+          "retained_with_honest_limit": 1,
+          "retained_at_record_level": 1,
+          "retained_and_specified": 1,
+          "provisional_choice": 1,
+          "proposed_choice_with_gate": 2,
+          "retained_and_extended": 1,
+          "retained_with_gate": 1,
+          "proposed_retained": 6,
+          "acknowledged_and_replaced": 1,
+          "preserved": 15,
+          "retained_with_uncertainty": 1,
+          "corrected_supported": 1,
+          "preserved_and_specified": 2,
+          "preserved_with_provenance_limit": 1,
+          "preserved_and_qualified": 1,
+          "partially_preserved_incorrect_narrowing": 1,
+          "preserved_and_extended": 1
+        }
+      },
+      "6": {
+        "complete": 13,
+        "assessed": 13,
+        "unassessed": 0,
+        "dispositions": {
+          "proposed_not_executed": 7,
+          "none_reported_none_credited": 2,
+          "authored_operations_supported_but_not_runtime_audited": 1,
+          "executed_static_review_check": 2,
+          "executed_review_output_check": 1
+        }
+      }
+    },
+    "original_obligation_compliance": {
+      "fully_satisfied_without_limits": 0,
+      "satisfied_with_limitations": 2,
+      "materially_partial_or_limited": 3,
+      "critic_family_provenance_unknown": 1,
+      "note": "O2/O3 supported with limits; O1/O4/O6 have material evidence/completeness limits; O5 substantive review present but family provenance unknown and M1 criticism disposition affected. Counts describe requirement disposition, distinct from inventory completeness."
+    }
+  },
+  "material_error_count": 2,
+  "material_findings": [
+    {
+      "id": "M1",
+      "title": "Incorrect narrowing of captured Mirador advertised support",
+      "affected": [
+        "O1",
+        "O4",
+        "O5",
+        "P5.01"
+      ],
+      "status": "material_evidence_disposition_error",
+      "final_artifact_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/artifact.md",
+      "final_artifact_sha256": "1579a45fd43fc94e35d9b3f992b59196a7b8c3cbfe46d9356c829f9625abab4d",
+      "final_line": 71,
+      "primary_evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-mirador-home.html",
+          "sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+          "url": "https://projectmirador.org/",
+          "applicability": "Same SHA256 as admitted source; advertised features, not proof of workflow/implementation."
+        }
+      ],
+      "materiality": "Changes a supported critic disposition and evidence-based alternative comparison; do not infer lack of advertisement from lack of executed compatibility tests."
+    },
+    {
+      "id": "M2",
+      "title": "Canvas-only identity contract lacks local/direct-service normalization",
+      "affected": [
+        "O4",
+        "O6",
+        "P1.01",
+        "P1.03",
+        "P2.06",
+        "P2.07",
+        "P5.08"
+      ],
+      "status": "material_original_scope_completeness_gap",
+      "final_artifact_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/artifact.md",
+      "final_artifact_sha256": "1579a45fd43fc94e35d9b3f992b59196a7b8c3cbfe46d9356c829f9625abab4d",
+      "final_lines": {
+        "required_all_view_canvas": 88,
+        "canvas_target": 100,
+        "local_ids": 88,
+        "sources_preserved": 84
+      },
+      "primary_evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-image3.html",
+          "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+          "url": "https://iiif.io/api/image/3.0/",
+          "applicability": "Image-service info.json provides image identity/size, not a Presentation Manifest/Canvas."
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-presentation3.html",
+          "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+          "url": "https://iiif.io/api/presentation/3.0/",
+          "applicability": "Canvas frame and HTTP(S) identity are separate Presentation resources."
+        }
+      ],
+      "materiality": "Required original source types are retained verbally but cannot satisfy the new mandatory persistent Canvas fields/targets without an unspecified normalization/identity policy. This is a plan-completeness gap, not an observed runtime failure."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "text": "Flash-family identity and operational independence are unknown from admitted scientific files; no outside orchestration/history read."
+    },
+    {
+      "id": "L2",
+      "text": "Fresh GitHub annotated-tag API requests denied 403; frozen chain, fresh release linked commit, tagged/full-SHA equal bytes and pinned package version corroborate source/version."
+    },
+    {
+      "id": "L3",
+      "text": "Chronology, candidate operation execution, queue/setup and budget compliance cannot be authenticated from admitted authored reports alone."
+    },
+    {
+      "id": "L4",
+      "text": "No app build, usability, browser, performance, interoperability or own code execution; seven witness groups unexecuted."
+    },
+    {
+      "id": "L5",
+      "text": "Optional discovery bounded to twelve recorded mechanisms/leads; no exhaustive recall or universe of opportunity claims."
+    },
+    {
+      "id": "L6",
+      "text": "Caller-specific flip/current-position handling, aspect-ratio/framing preservation, integer selector precision and legacy rights alias mapping require explicit implementation fixtures; existing broad geometry/parser proposals are not results."
+    }
+  ],
+  "review_dispatch_to_delivery_seconds": 923.436,
+  "review_queue_service_delay_seconds": 0.581,
+  "review_delivery_within_original_deadline": true,
+  "ordinary_review_no_goal_required": true,
+  "usage": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "source_correct_usable_latency": null,
+  "original_paired_dispositions_unchanged": true,
+  "control_full_final": "UNASSESSED",
+  "matched_comparison": "HOLD",
+  "no_quality_preserving_speedup_or_output_absence_benefit": true
+}

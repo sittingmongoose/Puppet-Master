@@ -1,0 +1,1598 @@
+{
+  "schema": "independent-source-review.v1",
+  "review_carrier": "rootreviewcarrier-v2",
+  "case_id": "D-M15-A",
+  "reviewed_version": "control-v3",
+  "review_round": "first review of this frozen version; no prior findings supplied or consulted",
+  "created_at": "2026-10-07T21:29:17.736390+00:00",
+  "overall_grade": "FAIL",
+  "status": "COMPLETE_FULL_DECLARED_MATERIAL_SCOPE",
+  "grading_basis": "Full declared material scope was primary-checked; five distinct material defects prevent PASS. This is not a localized DIAGNOSTIC_FAIL with unseen remainder, nor an adoption/cost/winner judgment.",
+  "frozen_artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/final.md",
+    "expected_sha256": "6fd7b4ff379feafda1135147f69891b3c71105215709c7ec397039705eb310f0",
+    "observed_sha256": "6fd7b4ff379feafda1135147f69891b3c71105215709c7ec397039705eb310f0",
+    "verified_before_assessment": true,
+    "initial_verification_at": "2026-10-07T21:21:56.062914570+00:00",
+    "candidate_bytes_preserved": true
+  },
+  "inputs": {
+    "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/INPUT_MAP.json",
+    "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/brief.md",
+    "original_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/sources.json",
+    "original_manifest_mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+    "original_manifest_selected_sources": 0,
+    "arm_source_index": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/index.json",
+      "sha256": "b5afe2b327091b1921fc991a9f7f627b76e20676a44b259e5d88f0254129bb63"
+    },
+    "source_index_hash_verified": true
+  },
+  "blinding_limits": {
+    "method_arm_visible": true,
+    "details": "control/whole_question_research_final-v3 path and final process/content reveal arm/method. Reviewer is independent but not method/arm blind. No cost, winner, speed target, other-arm artifacts, grades, parent analysis, prior findings, drafts, predecessors or campaign helpers were read.",
+    "t3_metadata_only": "Current-thread configuration and own current-run metadata were read to establish requestedAt; timeline items were explicitly excluded. Parent thread identifiers returned as metadata were not followed."
+  },
+  "scope_and_provenance_limits": {
+    "allowed_science_inputs": "Original brief/manifest, INPUT_MAP, eight mapped raw primary captures, capture index, exact frozen final. Additional public primary GETs retained under this review sources/.",
+    "candidate_source_selection": "Candidate-chosen source identities/index labels were treated as claims; all eight hashes, actual document conditions, editions, raw anchors and public endpoints were independently checked. Hash agreement was not used as a substitute for substantive review.",
+    "public_retrieval_result": "Seven raw bodies match; draft differs only in one Cloudflare challenge script line with identical authored document text. Script not executed.",
+    "capture_limits": "Single HTML capture per source; no RFC dependency corpus or platform runtime was presumed. Current public headers corroborate claimed Last-Modified/ETag but historical capture timestamps/procedure are not independently replayable.",
+    "execution_limits": "No downloaded code, app tests, target server probes, installers, accounts, purchases, global config, repo/canon/WorkNodes or third-party writes. Reviewer performed local parsing/hashing and read-only public source GETs.",
+    "m14_projection_scope": "NOT_APPLICABLE: this is D-M15-A; no M14 authored-set/semantic/projection/preservation views are mapped. Review-created text projections are locators/evidence, not a new candidate artifact or M14 preservation claim."
+  },
+  "assessment_extent": {
+    "extent": "FULL_DECLARED_MATERIAL_SCOPE",
+    "original_brief_and_manifest_read": true,
+    "frozen_final_complete_read": true,
+    "primary_sources_substantively_checked": 8,
+    "declared_primary_sources": 8,
+    "consequential_claim_groups_checked": 40,
+    "total_claim_groups": 40,
+    "all_six_axes_assessed": true,
+    "all_six_obligations_assessed": true,
+    "source_coverage_basis": "Relevant complete governing sections across all eight sources checked, including adverse/negative conditions beyond the candidate index. This does not mean every unrelated paragraph of the whole RFC/manpage/book was interpreted.",
+    "unassessed_remainder": [],
+    "outside_scope_unknowns": [
+      "Actual app platform/implementation and target-server/upload protocol capabilities",
+      "Historical candidate execution events and capture acquisition times",
+      "Runtime behavior, Windows/macOS share modes, server ETag generation policy, browser-specific retention",
+      "All irrelevant sections and unrelated source dependencies; an exhaustive universe of mechanisms is not claimed"
+    ],
+    "localized_stop": false,
+    "deadline_expired": false
+  },
+  "six_axis_dispositions": [
+    {
+      "axis_id": "A1",
+      "axis": "All required obligations",
+      "disposition": "FAIL",
+      "assessment": "All six topics appear; O3 is substantiated, while O1/O2/O4/O5/O6 have material gaps. Appearance and the candidate coverage assertion are not fulfillment.",
+      "obligation_ids": [
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "O5",
+        "O6"
+      ]
+    },
+    {
+      "axis_id": "A2",
+      "axis": "Consequential claims and full release/default/type/unit/path/authority conditions",
+      "disposition": "FAIL",
+      "assessment": "Forty grouped claims covering the complete final were checked against the primary corpus. Source editions and authority corroborated. File SHOULD/errors, curl hard-time limits, opaque ETag semantics and GET/upload direction contradict key claims. Exact byte offsets, seconds, upload URL/MIME/header conditions and optional extensions are recorded in E01-E22.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ]
+    },
+    {
+      "axis_id": "A3",
+      "axis": "Bounded useful discovery, negative and optional yield",
+      "disposition": "PARTIAL",
+      "assessment": "Eight bounded findings, useful HTTP/tus versus object-lifecycle discovery, and relevant negative leads are present. Windows/server capabilities are correctly unresolved. Generic-HTTP impossibility and draft unshippability are overstated if read literally; checksum/termination options and capture conditions are retained in review evidence. No exhaustive unknown answer key or preferred component is assumed.",
+      "defect_ids": [
+        "D01",
+        "D03",
+        "D05"
+      ]
+    },
+    {
+      "axis_id": "A4",
+      "axis": "Wrong rejection, correction and unjustified abstention",
+      "disposition": "FAIL",
+      "assessment": "Adding reset as declared application policy and avoiding uncontracted partial PUT are reasonable. Categorically excluding every row/path identity without a digest is unsupported. Draft status justifies a stability preference, not a universal deployment ban. No unjustified abstention from the module was found.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "axis_id": "A5",
+      "axis": "Preservation, traceability, uncertainties and options",
+      "disposition": "FAIL",
+      "assessment": "Hashes, source identities and F1-F8 traceability are good and independently corroborated. Preservation is overstated for File API; F5/F8 uncertainty about ETag agreement is retained but then violated by the central reconciliation. Immutable-byte retention, descriptor lifetime and exact upload resource/current revision bindings remain consequential.",
+      "defect_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "axis_id": "A6",
+      "axis": "Proposed versus executed checks",
+      "disposition": "FAIL",
+      "assessment": "The final clearly labels target tests as proposed and makes no claim they passed. Candidate execution history cannot be authenticated within scope; source hashes/anchors/quotes were reproduced by reviewer. Validation choices are materially non-discriminating as described in D04; no target server/app/code was executed.",
+      "defect_ids": [
+        "D04"
+      ]
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "obligation_id": "O1",
+      "required": "Address interrupted transfers and bounded retries.",
+      "disposition": "PARTIAL",
+      "candidate_coverage": [
+        "final.md:11",
+        "final.md:12",
+        "F2",
+        "F3"
+      ],
+      "assessment": "Resume and retry are addressed, but the claimed wall-clock guarantee omits active-attempt bounds and failure-state reconciliation.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "obligation_id": "O2",
+      "required": "Address replacement/version identity during resume.",
+      "disposition": "PARTIAL",
+      "candidate_coverage": [
+        "final.md:9",
+        "final.md:10",
+        "final.md:17",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "assessment": "Local byte identity/retention is a useful design; web preservation and remote/version bindings are materially misstated.",
+      "defect_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "obligation_id": "O3",
+      "required": "Investigate transport-side and local-object-side mechanisms independently.",
+      "disposition": "PASS",
+      "candidate_coverage": [
+        "F1-F4",
+        "F5-F7",
+        "sources/index.json rows 0-7"
+      ],
+      "assessment": "Both transport and local-object/lifecycle source families are substantively examined. No independent claim about historical investigation order. ",
+      "defect_ids": []
+    },
+    {
+      "obligation_id": "O4",
+      "required": "Reconcile their overlap instead of concatenating two answers.",
+      "disposition": "FAIL",
+      "candidate_coverage": [
+        "final.md:17"
+      ],
+      "assessment": "The final actively reconciles the families, but through an invalid digest/ETag/snapshot equivalence and insufficient upload/version binding.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D05"
+      ]
+    },
+    {
+      "obligation_id": "O5",
+      "required": "Return at most eight supported material findings with negative leads/uncertainty retained.",
+      "disposition": "PARTIAL",
+      "candidate_coverage": [
+        "F1-F8",
+        "final.md:44"
+      ],
+      "assessment": "Eight findings and useful negative leads/uncertainties are retained, but material findings F3/F7 are not supported as stated.",
+      "defect_ids": [
+        "D01",
+        "D03"
+      ]
+    },
+    {
+      "obligation_id": "O6",
+      "required": "Give a bounded recommendation and discriminating validation without building a full sync service.",
+      "disposition": "PARTIAL",
+      "candidate_coverage": [
+        "final.md:5-13",
+        "final.md:30-44"
+      ],
+      "assessment": "Scope is appropriately bounded and checks are clearly proposed, but they do not discriminate their declared assumptions.",
+      "defect_ids": [
+        "D04"
+      ]
+    }
+  ],
+  "source_evidence": [
+    {
+      "evidence_id": "E01",
+      "source_id": "S1",
+      "primary_locator": "#section-8.8.1; #section-8.8.3.1; #section-8.8.3.2",
+      "projection_lines": "2848-2920; 3034-3062",
+      "stated_source_fact": "Strong validators change with representation data; strict revision identifiers and collision-resistant content hashes are examples. ETags are opaque and compared character by character. Strong does not mean content-derived or globally unique across resources."
+    },
+    {
+      "evidence_id": "E02",
+      "source_id": "S1",
+      "primary_locator": "#section-13.1.5; #section-13.2.2",
+      "projection_lines": "5061-5122; 5166-5203",
+      "stated_source_fact": "If-Range accompanies Range. Weak entity tags must not be generated. A strong HTTP-date is permitted only when no entity tag exists. False If-Range causes Range to be ignored and a full selected representation rather than 412 in the ordinary successful GET case."
+    },
+    {
+      "evidence_id": "E03",
+      "source_id": "S1",
+      "primary_locator": "#section-14.1.2; #section-14.2; #section-14.3",
+      "projection_lines": "5288-5323; 5361-5457",
+      "stated_source_fact": "Byte ranges use zero-based inclusive byte positions and refer to encoded representation data when content coding applies. Range is defined for GET, may be ignored, and support is optional. Accept-Ranges is advisory and cannot guarantee a future partial response."
+    },
+    {
+      "evidence_id": "E04",
+      "source_id": "S1",
+      "primary_locator": "#section-14.4; #section-15.3.7; #section-15.3.7.3; #section-15.5.17",
+      "projection_lines": "5458-5513; 5837-5874; 5944-5981; 6401-6427",
+      "stated_source_fact": "A client must inspect Content-Type/Content-Range in 206. Invalid ranges must not be recombined. Combining partial content requires a common strong validator; 206 message length is not generally whole-object length. 416 can describe current full length, but servers may send full 200 instead."
+    },
+    {
+      "evidence_id": "E05",
+      "source_id": "S1",
+      "primary_locator": "#section-13.1.1; #section-13.1.2; #section-13.2.1",
+      "projection_lines": "4797-4925; 5124-5154",
+      "stated_source_fact": "If-Match uses the current selected representation ETag with strong comparison, often for preventing lost updates; false conditions prevent the method, normally 412, with an already-applied-success exception. If-None-Match * can guard creation. Preconditions do not override redirects or ordinary failures."
+    },
+    {
+      "evidence_id": "E06",
+      "source_id": "S1",
+      "primary_locator": "#section-14.5",
+      "projection_lines": "5528-5547",
+      "stated_source_fact": "Some servers support partial PUT under private agreements. Support is inconsistent, unsupported partial PUT should be rejected, and older behavior may replace the entire representation. Other expressly defined partial update methods or subresources are possible."
+    },
+    {
+      "evidence_id": "E07",
+      "source_id": "S1",
+      "primary_locator": "#section-10.2.3; #section-9.2.2",
+      "projection_lines": "4001-4022; 3243-3284",
+      "stated_source_fact": "Retry-After can be an HTTP-date or non-negative integer seconds. Automatic retry of a non-idempotent request needs known idempotent semantics or evidence the original was not applied; absence of a response alone is insufficient."
+    },
+    {
+      "evidence_id": "E08",
+      "source_id": "S2",
+      "primary_locator": "#core-protocol; #tus-resumable; #head; #patch",
+      "projection_lines": "97-207",
+      "stated_source_fact": "Core assumes an existing upload URL. Tus-Resumable is required except OPTIONS, unsupported versions produce 412. Successful HEAD returns non-negative byte Upload-Offset, Upload-Length if known, and no-store; missing/inaccessible resources may return 404/410/403 without an offset. PATCH requires application/offset+octet-stream and an equal current offset; mismatch gives 409 with no modification; success returns the new processed/stored offset."
+    },
+    {
+      "evidence_id": "E09",
+      "source_id": "S2",
+      "primary_locator": "#options; #protocol-extensions; #creation; #post",
+      "projection_lines": "208-244; 274-312",
+      "stated_source_fact": "OPTIONS advertises Tus-Version and optional extensions/size limits. Creation is an extension; POST carries Upload-Length or deferred length and returns 201 plus an absolute or relative Location for the new resource. These are server capability and upload-resource bindings, not digest guarantees."
+    },
+    {
+      "evidence_id": "E10",
+      "source_id": "S2",
+      "primary_locator": "#checksum; #upload-checksum",
+      "projection_lines": "376-408",
+      "stated_source_fact": "Checksum is optional and must be advertised. Verification covers each entire PATCH payload, with a named algorithm and Base64 checksum. Unsupported algorithm or checksum mismatch discards that chunk without advancing the offset. Only SHA1 support is required of checksum-extension servers, not SHA-256 or a final-object checksum API."
+    },
+    {
+      "evidence_id": "E11",
+      "source_id": "S2",
+      "primary_locator": "#expiration; #upload-expires; #termination; #delete",
+      "projection_lines": "337-375; 433-451",
+      "stated_source_fact": "Unfinished uploads may expire; Upload-Expires is an HTTP date, can change, and expired 404/410 resources require a new upload. Negotiated termination permits deletion/freeing of completed or incomplete uploads. Completion rather than cancellation is not a protocol safety requirement."
+    },
+    {
+      "evidence_id": "E12",
+      "source_id": "S3",
+      "primary_locator": "#--retry; #--retry-delay",
+      "projection_lines": "2375-2382; 2398-2406",
+      "stated_source_fact": "Retry count defaults to zero. Named transient HTTP statuses are 408,429,500,502,503,504,522,524, plus timeout (and FTP 4xx). Backoff starts at one second, doubles to a ten-minute plateau; --retry-delay changes this. Curl honors Retry-After since 7.66.0. Decimal seconds for delay/max-time options are documented since 8.16.0."
+    },
+    {
+      "evidence_id": "E13",
+      "source_id": "S3",
+      "primary_locator": "#--retry-max-time; #--max-time",
+      "projection_lines": "2407-2415; 1598-1606",
+      "stated_source_fact": "Retry max time is measured in seconds and gates starting further retries, including previous attempts and sleeps. Zero disables retry timeout. An attempt already started may run beyond that limit. --max-time separately limits each transfer and resets for each retry."
+    },
+    {
+      "evidence_id": "E14",
+      "source_id": "S3",
+      "primary_locator": "#--retry-all-errors; #--retry-connrefused; #EXIT",
+      "projection_lines": "2383-2397; 3431-3450; 3481-3490",
+      "stated_source_fact": "Retry-all-errors warns of duplicate data and non-rewindable redirected IO. Connection refusal is separately opt-in. Partial file, operation timeout, sending failure, and receiving failure are distinct exit categories; a mid-body reset is not defined as just timeout."
+    },
+    {
+      "evidence_id": "E15",
+      "source_id": "S3",
+      "primary_locator": "#--continue-at",
+      "projection_lines": "631-640",
+      "stated_source_fact": "Continue-at uses a byte offset or local input/output size with -C -. It does not resume HTTP POST/PUT uploads and cannot be combined with --range. Tool resume support is not general server upload capability."
+    },
+    {
+      "evidence_id": "E16",
+      "source_id": "S4",
+      "primary_locator": "front matter Status of This Memo; #section-4; #section-4.1.1; #section-4.6; #section-4.7; #appendix-B",
+      "projection_lines": "89-133; 410-426; 643-656; 960-968",
+      "stated_source_fact": "Draft -13 is work in progress, with upload-specific temporary resource URLs, application-processed byte offsets, separate resources for separate representations, concurrency rules, offset retrieval after lost responses and a retry-count recommendation. Draft implementations use interop version 10. Draft status prevents describing it as an approved RFC; it does not declare every implementation unshippable."
+    },
+    {
+      "evidence_id": "E17",
+      "source_id": "S5",
+      "primary_locator": "#DESCRIPTION; #ERRORS; #BUGS",
+      "projection_lines": "30-50; 189-193; 234-239",
+      "stated_source_fact": "Successful rename replaces an existing pathname atomically and leaves already-open descriptors unaffected. This preserves descriptor/name relationships rather than promising immutable contents. Cross-mount rename fails with EXDEV; NFS error responses can be ambiguous about whether rename occurred."
+    },
+    {
+      "evidence_id": "E18",
+      "source_id": "S6",
+      "primary_locator": "#DESCRIPTION",
+      "projection_lines": "25-35",
+      "stated_source_fact": "After removal of the last link, an open file remains until the last referring descriptor closes. The description supplies a lifetime condition, not a promise to copy or freeze the bytes."
+    },
+    {
+      "evidence_id": "E19",
+      "source_id": "S7",
+      "primary_locator": "#blob-section; #snapshot-state; #file-section",
+      "projection_lines": "258-266; 507-520",
+      "stated_source_fact": "Blob has snapshot state. Disk-backed File snapshot state SHOULD correspond to disk state at File creation/reference time; the source explicitly says SHOULD rather than MUST because implementing it is nontrivial. Modification can make snapshot state differ from underlying storage; implementation may use timestamps."
+    },
+    {
+      "evidence_id": "E20",
+      "source_id": "S7",
+      "primary_locator": "#ErrorAndException; #dfn-error-codes",
+      "projection_lines": "1030-1084",
+      "stated_source_fact": "Moved/deleted backing files can be unavailable. SnapshotState mismatch or FileLock failure maps to NotReadableError. Snapshot-state tracking does not guarantee that an old readable byte copy is preserved."
+    },
+    {
+      "evidence_id": "E21",
+      "source_id": "S8",
+      "primary_locator": "#_objects; #_object_storage",
+      "projection_lines": "258-348; 463-495",
+      "stated_source_fact": "Git illustrates storing both old and new blob contents under content-addressed keys. Its chapter describes SHA-1 over an object-type/length header plus content, not raw-photo SHA-256, HTTP ETags, or cancellation policy."
+    },
+    {
+      "evidence_id": "E22",
+      "source_id": "S1",
+      "primary_locator": "#section-8.8.3.3; #section-8.8.2.2",
+      "projection_lines": "2924-2992; 3088-3125",
+      "stated_source_fact": "Strong validators are representation-specific, including content-coding distinctions. Last-Modified is implicitly weak unless documented comparison conditions make it strong. Equal checksum values do not establish arbitrary ETag-generation policy or preserve content-negotiation distinctions."
+    }
+  ],
+  "source_inventory": [
+    {
+      "file": "rfc9110.html",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version": "RFC 9110 'HTTP Semantics' (IETF, published June 2022; html render captured from rfc-editor.org, ETag W/\"0d9f5fb8eb38d3c08b055f9b0671d68b\")",
+      "capture_time": "2026-10-07T20:36:55+00:00",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "locator": "Section 13.1.5 If-Range; 13.1.1 If-Match; 13.1.2 If-None-Match; 14.1-14.4 Range Units/Range/Accept-Ranges/Content-Range; 14.5 Partial PUT; 10.2.3 Retry-After (anchors verified in captured bytes: id=\"section-13.1.5\", id=\"section-14.5\", id=\"section-10.2.3\"); status codes are defined in ch.15",
+      "limits": "Single HTML render of the RFC; section text quoted from captured bytes only. Whole-RFC capture (~1.19 MB); no other RFCs captured. No code executed.",
+      "role": "transport-side primary (HTTP range resume, conditional validators, Retry-After)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/rfc9110.html",
+      "actual_sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "hash_matches": true,
+      "byte_count": 1187554,
+      "derived_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/rfc9110.html.txt",
+      "derived_text_sha256": "4e638dac9fbe779b892880a7399eeb9c4d1d387528ef98265e3051c9d05863e3",
+      "text_lines": 9429,
+      "verified_raw_html_locators": {
+        "section-8.8.1": 6398,
+        "section-8.8.2.2": 6556,
+        "section-8.8.3": 6612,
+        "section-8.8.3.1": 6679,
+        "section-8.8.3.2": 6708,
+        "section-8.8.3.3": 6776,
+        "section-9.2.2": 7043,
+        "section-10.2.3": 8186,
+        "section-13.1.1": 9509,
+        "section-13.1.2": 9615,
+        "section-13.1.5": 9904,
+        "section-13.2": 10000,
+        "section-14.1.2": 10316,
+        "section-14.2": 10443,
+        "section-14.3": 10533,
+        "section-14.4": 10589,
+        "section-14.5": 10714,
+        "section-15.3.7": 11264,
+        "section-15.3.7.3": 11409,
+        "section-15.5.17": 12189
+      },
+      "anchor_check_note": "Non-null line means exact id/name is present in immutable raw HTML; named section text also reviewed.",
+      "source_id": "S1",
+      "independently_verified_version": "RFC 9110, HTTP Semantics, June 2022",
+      "authority_and_conditions": "IETF Standards Track RFC; normative HTTP semantics, optional range support.",
+      "version_locator": "Front matter; #section-8.8.1, #section-13.1.5, #section-14.5",
+      "independent_retrieval": {
+        "file": "rfc9110.html",
+        "requested_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+        "started_at": "2026-10-07T21:25:22.721456+00:00",
+        "version_in_mapped_capture": "RFC 9110 'HTTP Semantics' (IETF, published June 2022; html render captured from rfc-editor.org, ETag W/\"0d9f5fb8eb38d3c08b055f9b0671d68b\")",
+        "operation": "independent public primary GET; one attempt; no code execution",
+        "status": 200,
+        "final_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+        "headers": {
+          "Date": "Wed, 07 Oct 2026 21:25:22 GMT",
+          "Content-Type": "text/html",
+          "ETag": "W/\"0d9f5fb8eb38d3c08b055f9b0671d68b\""
+        },
+        "byte_count": 1187554,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/independent-rfc9110.html",
+        "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+        "same_bytes_as_mapped": true,
+        "error": null,
+        "elapsed_seconds": 0.30394,
+        "finished_at": "2026-10-07T21:25:23.025401+00:00"
+      },
+      "capture_time_status": "Candidate historical capture time retained as claimed; not independently replayable. Review-time public retrieval timestamp is independently recorded.",
+      "header_claim_status": "Review-time Last-Modified/ETag values match every such candidate claim where claimed; these corroborate content edition, not the historical acquisition event."
+    },
+    {
+      "file": "tus-resumable-upload-protocol.html",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "version": "tus resumable upload protocol v1.0.0 (page states 'Version: 1.0.0'; page Last-Modified 2026-10-07T11:56:15 GMT, ETag \"6ac6335f-337c4\")",
+      "capture_time": "2026-10-07T20:36:55+00:00",
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "locator": "Protocol core: POST creation with Upload-Length; HEAD returns Upload-Offset; PATCH with Content-Type application/offset+octet-stream appends at Upload-Offset; Tus-Resumable: 1.0.0 header; extensions incl. Upload-Checksum (verification of chunk); excerpt quoted in notes.md",
+      "limits": "Vendor protocol spec (tus.io), not an IETF standard; describes the 1.0.0 wire protocol only, no server implementation details captured. No code executed.",
+      "role": "transport-side primary (purpose-built resumable upload protocol)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/tus-resumable-upload-protocol.html",
+      "actual_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "hash_matches": true,
+      "byte_count": 210884,
+      "derived_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/tus-resumable-upload-protocol.html.txt",
+      "derived_text_sha256": "10d85535f1bbcd3170f00690abd44a17705966538c4c9b485e23c2ff90cfa386",
+      "text_lines": 546,
+      "verified_raw_html_locators": {
+        "about-this-version": 34,
+        "core-protocol": 98,
+        "tus-resumable": 146,
+        "head": 168,
+        "patch": 179,
+        "options": 207,
+        "creation": 232,
+        "post": 268,
+        "expiration": 337,
+        "upload-expires": 359,
+        "checksum": 376,
+        "upload-checksum": 405,
+        "termination": 431,
+        "delete": 437,
+        "concatenation": 451
+      },
+      "anchor_check_note": "Non-null line means exact id/name is present in immutable raw HTML; named section text also reviewed.",
+      "source_id": "S2",
+      "independently_verified_version": "tus protocol 1.0.0, dated 2016-03-25",
+      "authority_and_conditions": "Community-owned protocol specification; core required for tus implementations, extensions negotiated; not an IETF RFC.",
+      "version_locator": "#about-this-version; #status; #core-protocol",
+      "independent_retrieval": {
+        "file": "tus-resumable-upload-protocol.html",
+        "requested_url": "https://tus.io/protocols/resumable-upload",
+        "started_at": "2026-10-07T21:25:22.723958+00:00",
+        "version_in_mapped_capture": "tus resumable upload protocol v1.0.0 (page states 'Version: 1.0.0'; page Last-Modified 2026-10-07T11:56:15 GMT, ETag \"6ac6335f-337c4\")",
+        "operation": "independent public primary GET; one attempt; no code execution",
+        "status": 200,
+        "final_url": "https://tus.io/protocols/resumable-upload",
+        "headers": {
+          "Content-Length": "210884",
+          "Content-Type": "text/html; charset=utf-8",
+          "Last-Modified": "Wed, 07 Oct 2026 11:56:15 GMT",
+          "ETag": "\"6ac6335f-337c4\"",
+          "Cache-Control": "max-age=600",
+          "Date": "Wed, 07 Oct 2026 21:25:22 GMT",
+          "Vary": "Accept-Encoding"
+        },
+        "byte_count": 210884,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/independent-tus-resumable-upload-protocol.html",
+        "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+        "same_bytes_as_mapped": true,
+        "error": null,
+        "elapsed_seconds": 0.13525,
+        "finished_at": "2026-10-07T21:25:22.859237+00:00"
+      },
+      "capture_time_status": "Candidate historical capture time retained as claimed; not independently replayable. Review-time public retrieval timestamp is independently recorded.",
+      "header_claim_status": "Review-time Last-Modified/ETag values match every such candidate claim where claimed; these corroborate content edition, not the historical acquisition event."
+    },
+    {
+      "file": "curl-manpage.html",
+      "url": "https://curl.se/docs/manpage.html",
+      "version": "curl project live man page (Last-Modified 2026-10-05T18:05:03 GMT, ETag \"71944-65d1bb8a9d43c\"; text references curl 8.23.0-era options)",
+      "capture_time": "2026-10-07T20:36:56+00:00",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "locator": "--continue-at (-C, resume at offset / '-' auto-detect from output file); --retry <num> with 'transient error' definition (timeout, HTTP 408/429/500/502/503/504/522/524); exponential backoff starting 1s doubling; --retry-delay; --retry-max-time (bound total retry window); --retry-all-errors",
+      "limits": "Documents one client tool's behavior, not a standard; behavior of other HTTP clients (browser fetch, mobile stacks) is NOT covered by this capture. No code executed.",
+      "role": "transport-side primary evidence (client tool: resume + bounded retry composition)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/curl-manpage.html",
+      "actual_sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "hash_matches": true,
+      "byte_count": 465220,
+      "derived_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/curl-manpage.html.txt",
+      "derived_text_sha256": "f5b96b60ac343f00852f1fa5ad39c375ac1806ff62e801dac0f32e0ab184d197",
+      "text_lines": 3579,
+      "verified_raw_html_locators": {
+        "VERSION": 571,
+        "--continue-at": 784,
+        "--max-time": 1882,
+        "--retry": 2762,
+        "--retry-all-errors": 2771,
+        "--retry-connrefused": 2781,
+        "--retry-delay": 2788,
+        "--retry-max-time": 2798,
+        "EXIT": 3866
+      },
+      "anchor_check_note": "Non-null line means exact id/name is present in immutable raw HTML; named section text also reviewed.",
+      "source_id": "S3",
+      "independently_verified_version": "curl 8.23.0, explicitly stated by the captured man page",
+      "authority_and_conditions": "Official tool documentation; describes curl rather than every HTTP client. No installed or target-client release was verified.",
+      "version_locator": "#VERSION; #--retry; #--retry-max-time",
+      "independent_retrieval": {
+        "file": "curl-manpage.html",
+        "requested_url": "https://curl.se/docs/manpage.html",
+        "started_at": "2026-10-07T21:25:22.724985+00:00",
+        "version_in_mapped_capture": "curl project live man page (Last-Modified 2026-10-05T18:05:03 GMT, ETag \"71944-65d1bb8a9d43c\"; text references curl 8.23.0-era options)",
+        "operation": "independent public primary GET; one attempt; no code execution",
+        "status": 200,
+        "final_url": "https://curl.se/docs/manpage.html",
+        "headers": {
+          "Content-Length": "465220",
+          "Content-Type": "text/html",
+          "Last-Modified": "Mon, 05 Oct 2026 18:05:03 GMT",
+          "ETag": "\"71944-65d1bb8a9d43c\"",
+          "Cache-Control": "max-age=60",
+          "Date": "Wed, 07 Oct 2026 21:25:23 GMT",
+          "Vary": "Accept-Encoding"
+        },
+        "byte_count": 465220,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/independent-curl-manpage.html",
+        "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+        "same_bytes_as_mapped": true,
+        "error": null,
+        "elapsed_seconds": 0.397471,
+        "finished_at": "2026-10-07T21:25:23.122469+00:00"
+      },
+      "capture_time_status": "Candidate historical capture time retained as claimed; not independently replayable. Review-time public retrieval timestamp is independently recorded.",
+      "header_claim_status": "Review-time Last-Modified/ETag values match every such candidate claim where claimed; these corroborate content edition, not the historical acquisition event."
+    },
+    {
+      "file": "draft-ietf-httpbis-resumable-upload.html",
+      "url": "https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-resumable-upload",
+      "version": "draft-ietf-httpbis-resumable-upload-13 (IETF httpbis WG active Internet-Draft; rendered as version 13 by datatracker)",
+      "capture_time": "2026-10-07T20:36:56+00:00",
+      "sha256": "1710111b176fe87f72259d216330b375c7615d8eba2935d40ae5f9a8e9224e85",
+      "locator": "Datatracker HTML of draft -13; document status 'Active Internet-Draft (httpbis WG)'; version selector lists 00..13",
+      "limits": "Internet-Draft, work in progress: may change or expire; NOT a normative standard. Captured via datatracker render, no .txt variant captured. No code executed.",
+      "role": "transport-side primary (standards-track direction for generic HTTP resumable upload)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/draft-ietf-httpbis-resumable-upload.html",
+      "actual_sha256": "1710111b176fe87f72259d216330b375c7615d8eba2935d40ae5f9a8e9224e85",
+      "hash_matches": true,
+      "byte_count": 273421,
+      "derived_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/draft-ietf-httpbis-resumable-upload.html.txt",
+      "derived_text_sha256": "b234ebee38e0af79f3784bb73144afd31ac84b469dd29c69e62e8f1b4288f318",
+      "text_lines": 1094,
+      "verified_raw_html_locators": {
+        "section-4": 1604,
+        "section-4.1.1": 1619,
+        "section-4.1.4": 1674,
+        "section-4.3": 1879,
+        "section-4.4": 1943,
+        "section-4.5": 2042,
+        "section-4.6": 2086,
+        "section-4.7": 2097,
+        "appendix-B": 3038
+      },
+      "anchor_check_note": "Non-null line means exact id/name is present in immutable raw HTML; named section text also reviewed.",
+      "source_id": "S4",
+      "independently_verified_version": "draft-ietf-httpbis-resumable-upload-13, published 2026-10-06, expires 2027-04-09; draft interop version 10",
+      "authority_and_conditions": "Active HTTP WG Internet-Draft, intended Standards Track; work in progress, not an approved RFC.",
+      "version_locator": "#section-4; #section-4.7; #appendix-B; front matter Status of This Memo",
+      "independent_retrieval": {
+        "file": "draft-ietf-httpbis-resumable-upload.html",
+        "requested_url": "https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-resumable-upload",
+        "started_at": "2026-10-07T21:25:22.725613+00:00",
+        "version_in_mapped_capture": "draft-ietf-httpbis-resumable-upload-13 (IETF httpbis WG active Internet-Draft; rendered as version 13 by datatracker)",
+        "operation": "independent public primary GET; one attempt; no code execution",
+        "status": 200,
+        "final_url": "https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-resumable-upload",
+        "headers": {
+          "Date": "Wed, 07 Oct 2026 21:25:23 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "vary": "Cookie",
+          "Cache-Control": "public, max-age=14400"
+        },
+        "byte_count": 273421,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/independent-draft-ietf-httpbis-resumable-upload.html",
+        "sha256": "22e7d0ce3a0304df4ac3c84391163bfbbd05bce08249ada6f073f194f563d57b",
+        "same_bytes_as_mapped": false,
+        "error": null,
+        "elapsed_seconds": 0.406822,
+        "finished_at": "2026-10-07T21:25:23.132450+00:00"
+      },
+      "capture_time_status": "Candidate historical capture time retained as claimed; not independently replayable. Review-time public retrieval timestamp is independently recorded.",
+      "header_claim_status": "Review-time Last-Modified/ETag values match every such candidate claim where claimed; these corroborate content edition, not the historical acquisition event."
+    },
+    {
+      "file": "man7-rename.2.html",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "version": "Linux man-pages project rename(2) (page Last-Modified 2026-10-05T17:59:03 GMT, ETag \"5c13-65d1ba326e7c0\")",
+      "capture_time": "2026-10-07T20:41:31+00:00",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "locator": "DESCRIPTION: 'If newpath already exists, it will be atomically replaced, so that there is no point at which another process attempting to access newpath will find it missing.' and 'Open file descriptors for oldpath are also unaffected.'",
+      "limits": "Documents POSIX/Linux behavior only; Windows/macOS file-replacement semantics (share modes, replacement locks) are NOT captured. Man page, not a formal standard text.",
+      "role": "local-object side primary (atomic replacement + in-flight FD isolation)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/man7-rename.2.html",
+      "actual_sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "hash_matches": true,
+      "byte_count": 23571,
+      "derived_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/man7-rename.2.html.txt",
+      "derived_text_sha256": "4436cb1e07f559395c85689a091fd7c492bb3f637f2aefaec9fd1c048675a198",
+      "text_lines": 289,
+      "verified_raw_html_locators": {
+        "DESCRIPTION": 100,
+        "ERRORS": 233,
+        "STANDARDS": 343,
+        "COLOPHON": 382,
+        "BUGS": 370
+      },
+      "anchor_check_note": "Non-null line means exact id/name is present in immutable raw HTML; named section text also reviewed.",
+      "source_id": "S5",
+      "independently_verified_version": "Linux man-pages 6.19, rename(2) page dated 2026-02-08; HTML render 2026-09-09",
+      "authority_and_conditions": "Linux kernel/libc project documentation; rename() references C11/POSIX.1-2024. No Windows or macOS runtime verification.",
+      "version_locator": "#DESCRIPTION; #ERRORS; #STANDARDS; #COLOPHON",
+      "independent_retrieval": {
+        "file": "man7-rename.2.html",
+        "requested_url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+        "started_at": "2026-10-07T21:25:22.726333+00:00",
+        "version_in_mapped_capture": "Linux man-pages project rename(2) (page Last-Modified 2026-10-05T17:59:03 GMT, ETag \"5c13-65d1ba326e7c0\")",
+        "operation": "independent public primary GET; one attempt; no code execution",
+        "status": 200,
+        "final_url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+        "headers": {
+          "Date": "Wed, 07 Oct 2026 21:25:23 GMT",
+          "Last-Modified": "Mon, 05 Oct 2026 17:59:03 GMT",
+          "ETag": "\"5c13-65d1ba326e7c0\"",
+          "Content-Length": "23571",
+          "Vary": "Accept-Encoding",
+          "Content-Type": "text/html"
+        },
+        "byte_count": 23571,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/independent-man7-rename.2.html",
+        "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+        "same_bytes_as_mapped": true,
+        "error": null,
+        "elapsed_seconds": 0.475382,
+        "finished_at": "2026-10-07T21:25:23.201727+00:00"
+      },
+      "capture_time_status": "Candidate historical capture time retained as claimed; not independently replayable. Review-time public retrieval timestamp is independently recorded.",
+      "header_claim_status": "Review-time Last-Modified/ETag values match every such candidate claim where claimed; these corroborate content edition, not the historical acquisition event."
+    },
+    {
+      "file": "man7-unlink.2.html",
+      "url": "https://man7.org/linux/man-pages/man2/unlink.2.html",
+      "url_note": "same man-pages source family as rename(2)",
+      "version": "Linux man-pages project unlink(2) (page Last-Modified 2026-10-05T17:59:03 GMT, ETag \"4249-65d1ba326e7c0\")",
+      "capture_time": "2026-10-07T20:41:31+00:00",
+      "sha256": "54342d11f277bc670a1896301752b87abbb27261a1e84e8300f2d4c1b0fbde9b",
+      "locator": "DESCRIPTION: 'If the name was the last link to a file but any processes still have the file open, the file will remain in existence until the last file descriptor referring to it is closed.'",
+      "limits": "POSIX/Linux only; does not cover platform replacement dialogs or cloud-side tombstones. No code executed.",
+      "role": "local-object side primary (unlink-while-open lifecycle)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/man7-unlink.2.html",
+      "actual_sha256": "54342d11f277bc670a1896301752b87abbb27261a1e84e8300f2d4c1b0fbde9b",
+      "hash_matches": true,
+      "byte_count": 16969,
+      "derived_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/man7-unlink.2.html.txt",
+      "derived_text_sha256": "491030ef16258ee2bd1be95e7f2b9bf646c02a06656918cb66a59dfb52c96af9",
+      "text_lines": 182,
+      "verified_raw_html_locators": {
+        "DESCRIPTION": 94,
+        "ERRORS": 141,
+        "STANDARDS": 211,
+        "COLOPHON": 236,
+        "BUGS": 228
+      },
+      "anchor_check_note": "Non-null line means exact id/name is present in immutable raw HTML; named section text also reviewed.",
+      "source_id": "S6",
+      "independently_verified_version": "Linux man-pages 6.19, unlink(2) page dated 2026-02-08; HTML render 2026-09-09",
+      "authority_and_conditions": "Linux kernel/libc project documentation; open-unlinked lifetime conditional on retained descriptor. No other-platform verification.",
+      "version_locator": "#DESCRIPTION; #STANDARDS; #COLOPHON",
+      "independent_retrieval": {
+        "file": "man7-unlink.2.html",
+        "requested_url": "https://man7.org/linux/man-pages/man2/unlink.2.html",
+        "started_at": "2026-10-07T21:25:22.730304+00:00",
+        "version_in_mapped_capture": "Linux man-pages project unlink(2) (page Last-Modified 2026-10-05T17:59:03 GMT, ETag \"4249-65d1ba326e7c0\")",
+        "operation": "independent public primary GET; one attempt; no code execution",
+        "status": 200,
+        "final_url": "https://man7.org/linux/man-pages/man2/unlink.2.html",
+        "headers": {
+          "Date": "Wed, 07 Oct 2026 21:25:23 GMT",
+          "Last-Modified": "Mon, 05 Oct 2026 17:59:03 GMT",
+          "ETag": "\"4249-65d1ba326e7c0\"",
+          "Content-Length": "16969",
+          "Vary": "Accept-Encoding",
+          "Content-Type": "text/html"
+        },
+        "byte_count": 16969,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/independent-man7-unlink.2.html",
+        "sha256": "54342d11f277bc670a1896301752b87abbb27261a1e84e8300f2d4c1b0fbde9b",
+        "same_bytes_as_mapped": true,
+        "error": null,
+        "elapsed_seconds": 0.47256,
+        "finished_at": "2026-10-07T21:25:23.202870+00:00"
+      },
+      "capture_time_status": "Candidate historical capture time retained as claimed; not independently replayable. Review-time public retrieval timestamp is independently recorded.",
+      "header_claim_status": "Review-time Last-Modified/ETag values match every such candidate claim where claimed; these corroborate content edition, not the historical acquisition event."
+    },
+    {
+      "file": "w3c-fileapi.html",
+      "url": "https://www.w3.org/TR/FileAPI/",
+      "version": "W3C File API, Working Draft 12 September 2026 (page Last-Modified 2026-09-12T11:39:12 GMT; editor Marijn Kruisselbrink)",
+      "capture_time": "2026-10-07T20:41:31+00:00",
+      "sha256": "975b6f12f51320b7f90af2b97e38a80358b5964bc274caafb5d126b3f3881efc",
+      "locator": "Blob interface section: 'snapshot state, which must be initially set to the state of the underlying storage'; 'Further normative definition of snapshot state can be found for File s.'",
+      "limits": "Web-platform spec; relevant only if the app reads attachments through a web/HTML5 stack; Working Draft (not a finished Recommendation).",
+      "role": "local-object side primary (platform snapshot semantics for in-flight reads)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/w3c-fileapi.html",
+      "actual_sha256": "975b6f12f51320b7f90af2b97e38a80358b5964bc274caafb5d126b3f3881efc",
+      "hash_matches": true,
+      "byte_count": 567075,
+      "derived_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/w3c-fileapi.html.txt",
+      "derived_text_sha256": "e925423ddd35759e059923ef593feca713bc340fb84123a4ceed1cf0f93467a7",
+      "text_lines": 2079,
+      "verified_raw_html_locators": {
+        "title": 998,
+        "blob-section": 1414,
+        "snapshot-state": 1419,
+        "file-section": 1851,
+        "ErrorAndException": 2788,
+        "dfn-error-codes": 2812
+      },
+      "anchor_check_note": "Non-null line means exact id/name is present in immutable raw HTML; named section text also reviewed.",
+      "source_id": "S7",
+      "independently_verified_version": "W3C File API Working Draft, 2026-09-12; dated edition /TR/2026/WD-FileAPI-20260912/",
+      "authority_and_conditions": "W3C Working Draft; Blob/File snapshot-state requirements must be read with File SHOULD and normative read errors.",
+      "version_locator": "#blob-section; #file-section; #dfn-error-codes",
+      "independent_retrieval": {
+        "file": "w3c-fileapi.html",
+        "requested_url": "https://www.w3.org/TR/FileAPI/",
+        "started_at": "2026-10-07T21:25:22.731265+00:00",
+        "version_in_mapped_capture": "W3C File API, Working Draft 12 September 2026 (page Last-Modified 2026-09-12T11:39:12 GMT; editor Marijn Kruisselbrink)",
+        "operation": "independent public primary GET; one attempt; no code execution",
+        "status": 200,
+        "final_url": "https://www.w3.org/TR/FileAPI/",
+        "headers": {
+          "Date": "Wed, 07 Oct 2026 21:25:22 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "last-modified": "Sat, 12 Sep 2026 11:39:12 GMT",
+          "Cache-Control": "max-age=31536000, s-maxage=2592001",
+          "vary": "Accept-Encoding,Origin"
+        },
+        "byte_count": 567075,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/independent-w3c-fileapi.html",
+        "sha256": "975b6f12f51320b7f90af2b97e38a80358b5964bc274caafb5d126b3f3881efc",
+        "same_bytes_as_mapped": true,
+        "error": null,
+        "elapsed_seconds": 0.148725,
+        "finished_at": "2026-10-07T21:25:22.880005+00:00"
+      },
+      "capture_time_status": "Candidate historical capture time retained as claimed; not independently replayable. Review-time public retrieval timestamp is independently recorded.",
+      "header_claim_status": "Review-time Last-Modified/ETag values match every such candidate claim where claimed; these corroborate content edition, not the historical acquisition event."
+    },
+    {
+      "file": "git-internals-objects.html",
+      "url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects",
+      "version": "Pro Git 2nd Edition, section 10.2 'Git Internals - Git Objects' (git-scm.com; page Last-Modified 2026-10-05T21:59:38 GMT)",
+      "capture_time": "2026-10-07T20:41:31+00:00",
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "locator": "'Git is a content-addressable filesystem' ... 'you can insert any kind of content into a Git repository, for which Git will hand you back a unique key'; 'This is the SHA-1 hash - a checksum of the content you're storing plus a header'",
+      "limits": "A book chapter describing Git's design (SHA-1 content addressing); used as the canonical public description of content-addressed identity, not as a wire-protocol spec. No code executed.",
+      "role": "local-object side primary (content-addressed representation identity model)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/git-internals-objects.html",
+      "actual_sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "hash_matches": true,
+      "byte_count": 145608,
+      "derived_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/git-internals-objects.html.txt",
+      "derived_text_sha256": "07badb72881fb9d02b3c771c64a2569c88c2934d867d0a46f89384163034eefe",
+      "text_lines": 520,
+      "verified_raw_html_locators": {
+        "_objects": 7794,
+        "_object_storage": 8206
+      },
+      "anchor_check_note": "Non-null line means exact id/name is present in immutable raw HTML; named section text also reviewed.",
+      "source_id": "S8",
+      "independently_verified_version": "Pro Git second edition, section 10.2 Git Internals - Git Objects",
+      "authority_and_conditions": "Author/project-hosted explanatory primary book chapter; content-addressing illustration, not an HTTP or SHA-256 protocol contract.",
+      "version_locator": "#_objects; #_object_storage",
+      "independent_retrieval": {
+        "file": "git-internals-objects.html",
+        "requested_url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects",
+        "started_at": "2026-10-07T21:25:22.732373+00:00",
+        "version_in_mapped_capture": "Pro Git 2nd Edition, section 10.2 'Git Internals - Git Objects' (git-scm.com; page Last-Modified 2026-10-05T21:59:38 GMT)",
+        "operation": "independent public primary GET; one attempt; no code execution",
+        "status": 200,
+        "final_url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects",
+        "headers": {
+          "Date": "Wed, 07 Oct 2026 21:25:22 GMT",
+          "Content-Type": "text/html; charset=utf-8",
+          "last-modified": "Mon, 05 Oct 2026 21:59:38 GMT",
+          "etag": "W/\"6ac41dca-238c8\"",
+          "Cache-Control": "max-age=14400",
+          "vary": "Accept-Encoding"
+        },
+        "byte_count": 145608,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/sources/independent-git-internals-objects.html",
+        "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+        "same_bytes_as_mapped": true,
+        "error": null,
+        "elapsed_seconds": 0.114779,
+        "finished_at": "2026-10-07T21:25:22.847167+00:00"
+      },
+      "capture_time_status": "Candidate historical capture time retained as claimed; not independently replayable. Review-time public retrieval timestamp is independently recorded.",
+      "header_claim_status": "Review-time Last-Modified/ETag values match every such candidate claim where claimed; these corroborate content edition, not the historical acquisition event."
+    }
+  ],
+  "all_consequential_claim_checks": [
+    {
+      "claim_id": "C01",
+      "candidate_locator": "final.md:3",
+      "claim": "Open discovery, primary documents selected, quotes checked against captured bytes, no downloaded code executed.",
+      "disposition": "PARTLY_VERIFIABLE",
+      "claim_kind": "provenance / execution assertion",
+      "evidence_ids": [],
+      "assessment": "The original source manifest is empty. Eight source identities are corroborated independently. Hashes and quotations are reproducible; the candidate historical checking process and no-execution statement cannot be independently observed from allowed artifacts. No contrary execution claim is made.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C02",
+      "candidate_locator": "final.md:7,9",
+      "claim": "Bind each transfer to a snapshot and SHA-256 digest, transferring an identity/bytes pair.",
+      "disposition": "SUPPORTED_DESIGN_INFERENCE",
+      "claim_kind": "engineering inference",
+      "evidence_ids": [
+        "E21",
+        "E01"
+      ],
+      "assessment": "A useful design choice if bytes are really materialized or otherwise pinned and immutable for the job. Git supports the content-addressing analogy, not this particular SHA-256 wire contract. Hash exactly the bytes transferred and retain them to terminal state; do not infer preservation from File snapshot state.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C03",
+      "candidate_locator": "final.md:10,25",
+      "claim": "Every replacement mints a new digest/object name.",
+      "disposition": "CONDITIONAL",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E21"
+      ],
+      "assessment": "Changed byte content ordinarily changes content identity; byte-identical replacement reuses the content identity. A distinct user-edit revision is a separate binding if needed. This nuance is not itself a decisive defect.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C04",
+      "candidate_locator": "final.md:10,41",
+      "claim": "Superseded rather than killed; old job can complete or be abandoned, stop retries and enqueue the new object.",
+      "disposition": "SUPPORTED_DESIGN_INFERENCE",
+      "claim_kind": "engineering inference / lifecycle policy",
+      "evidence_ids": [
+        "E17",
+        "E18",
+        "E11"
+      ],
+      "assessment": "This is a permissible policy, not required by POSIX or tus. Finishing or abandoning an immutable upload can both be safe. Stopping future retries is not a bound on an already running attempt, and completing old content must not re-publish it as the current attachment.",
+      "defect_ids": [
+        "D02",
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C05",
+      "candidate_locator": "final.md:10",
+      "claim": "POSIX rename atomically replaces a pathname and open descriptors remain unaffected.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E17"
+      ],
+      "assessment": "Quotes match. Successful same-mounted-filesystem rename is the documented operation; it does not cover arbitrary in-place overwrites, cross-mount replacement or other OS share modes. Atomic namespace replacement alone is not byte immutability.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C06",
+      "candidate_locator": "final.md:10",
+      "claim": "Deleted-but-open file persists until the final referring descriptor closes.",
+      "disposition": "SUPPORTED",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E18"
+      ],
+      "assessment": "Accurately retains the open-descriptor lifetime condition. The job must retain its descriptor/object; reopening the old pathname after unlink is not promised.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C07",
+      "candidate_locator": "final.md:11",
+      "claim": "Range plus If-Range converts stale download resume into full selected representation instead of 412.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E04"
+      ],
+      "assessment": "Correct for successful GET/Range processing. A client must treat the 200 body as a replacement, never append it to old partial bytes. It is a new representation, not completion of the old digest-bound job; ordinary errors/redirects still apply.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C08",
+      "candidate_locator": "final.md:11,22",
+      "claim": "tus HEAD returns authoritative offset; PATCH appends there.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E08",
+        "E09"
+      ],
+      "assessment": "Correct for a successful, uncached query to the same upload URL. Offset is in bytes and PATCH must match the current value; otherwise 409 without mutation. Lost acknowledgments call for a fresh offset query rather than replaying a guessed offset. An offset verifies progress, not object identity.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C09",
+      "candidate_locator": "final.md:11,22",
+      "claim": "Optional per-chunk Upload-Checksum.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E10"
+      ],
+      "assessment": "Accurate optionality; requires advertised checksum extension and common algorithm. Coverage is a PATCH payload, not necessarily the whole photo; SHA-256 is not mandated by tus. A final checksum exposure API is not promised.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C10",
+      "candidate_locator": "final.md:11,22,24,43",
+      "claim": "Generic HTTP has no dependable standard resumable-upload path; reject reliance on Partial PUT.",
+      "disposition": "SUPPORTED_IF_NARROWED",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E06",
+        "E15",
+        "E16"
+      ],
+      "assessment": "Sound as a statement that HTTP Range/ordinary PUT do not give portable upload resume. RFC 9110 explicitly allows agreed partial PUT and defined partial-update alternatives. The F2 wording generic HTTP cannot do this must not be read as impossibility: tus itself uses HTTP. Avoiding private partial PUT without a known contract is a reasonable bounded choice.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C11",
+      "candidate_locator": "final.md:12,23",
+      "claim": "Count and wall-clock bounded retry using curl --retry-max-time.",
+      "disposition": "CONTRADICTED_AS_HARD_BOUND",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "assessment": "Count, retry-admission time and backoff are documented. --retry-max-time alone does not stop a running transfer, so it does not establish the claimed wall-clock bound; per-attempt timeout or an absolute application deadline is missing.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C12",
+      "candidate_locator": "final.md:12",
+      "claim": "Curl transient class is timeout plus HTTP 408/429/5xx-class.",
+      "disposition": "OVERBROAD_SOURCE_PARAPHRASE",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E12"
+      ],
+      "assessment": "The captured class names eight HTTP statuses, not every 5xx. An application can choose a broader class as policy, but must label it as such and avoid attributing all 5xx retry behavior to curl.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C13",
+      "candidate_locator": "final.md:12,23",
+      "claim": "Backoff starts at one second and doubles; honor Retry-After.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E12",
+        "E07"
+      ],
+      "assessment": "Source supports it, with a ten-minute plateau and --retry-delay override. Retry-After is an HTTP date or integer seconds and may exceed the remaining job budget. Stop or defer the job at its deadline rather than waiting without bound.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C14",
+      "candidate_locator": "final.md:12,23,42",
+      "claim": "Add mid-body connection reset; it fits only timeout in the captured class.",
+      "disposition": "MIXED",
+      "claim_kind": "source attribution plus proposed policy",
+      "evidence_ids": [
+        "E14",
+        "E07",
+        "E08"
+      ],
+      "assessment": "Explicitly adding resets as application policy is sensible and is not rejected. A reset is not just timeout in curl documentation. Retry must still account for possibly accepted bytes and non-idempotent effects. Rural-link frequency was not measured.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C15",
+      "candidate_locator": "final.md:13",
+      "claim": "Per-attachment transfer module, no full sync service, conflict merge, daemon or offline store.",
+      "disposition": "SUPPORTED_SCOPE_CHOICE",
+      "claim_kind": "scope choice",
+      "evidence_ids": [],
+      "assessment": "Fits the brief. Temporary retention of job bytes is still needed. A full application or persistent offline system is not required by this review.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C16",
+      "candidate_locator": "final.md:17",
+      "claim": "Transport strong validator and local digest are the same content-derived object; local digest is the app-side ETag.",
+      "disposition": "CONTRADICTED_AS_PROTOCOL_EQUIVALENCE",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E01",
+        "E05",
+        "E08",
+        "E22"
+      ],
+      "assessment": "ETags can be revision IDs or other opaque values. A local checksum is not automatically the current remote ETag; If-Match applies to the current target representation, not the incoming new body digest. tus defines upload URL/offset bindings without this equivalence. F5/F8 acknowledge uncertainty but the reconciliation uses the equivalence as a guarantee.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C17",
+      "candidate_locator": "final.md:17",
+      "claim": "Replacement resolves without per-case analysis: OS/platform keeps old bytes readable, including web snapshot state.",
+      "disposition": "CONTRADICTED_FOR_WEB",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E17",
+        "E18",
+        "E19",
+        "E20"
+      ],
+      "assessment": "POSIX descriptor survival is conditionally useful. W3C File snapshot tracking explicitly permits changed/deleted/unreadable backing data and requires error handling; it does not supply the old-byte retention claimed here.",
+      "defect_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C18",
+      "candidate_locator": "final.md:17",
+      "claim": "Next resume carries If-Range/If-Match; mismatch restart or 412 coincides with new local digest job.",
+      "disposition": "INCOMPLETE_BINDING",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E02",
+        "E05",
+        "E08",
+        "E04"
+      ],
+      "assessment": "If-Range is a download GET condition, whereas tus PATCH resume uses upload resource and offset. If-Match is a separate current-resource precondition where supported. Changed remote representation does not establish what new local bytes should be uploaded. A full 200 response must not be relabeled as the original digest-bound job.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C19",
+      "candidate_locator": "final.md:17,43",
+      "claim": "Path or row-ID resume without a digest is the one mechanism that must be rejected because it causes corruption.",
+      "disposition": "UNJUSTIFIED_EXCLUSIVE_REJECTION",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E01",
+        "E21",
+        "E08",
+        "E16"
+      ],
+      "assessment": "Unversioned mutable path/row identity is unsafe, but a row ID plus immutable version/revision and server validator or a unique bound upload resource can be safe without a content digest. The fault is lack of a representation binding, not omission of this specific identity mechanism.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C20",
+      "candidate_locator": "final.md:21",
+      "claim": "F1: HTTP range support optional, discovered through Accept-Ranges; If-Range needs strong validator.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E02",
+        "E03"
+      ],
+      "assessment": "Correct strength and optionality. Accept-Ranges is only advice, not proof. An actual current response and returned range metadata matter. No per-server support evidence is supplied, as acknowledged.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C21",
+      "candidate_locator": "final.md:22",
+      "claim": "F2: tus 1.0.0 upload mechanism requires server support.",
+      "disposition": "SUPPORTED",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E08",
+        "E09",
+        "E10"
+      ],
+      "assessment": "A tus-speaking server is required; existing support may be used instead of personally deploying it. Offset/checksum distinctions and optional extensions must be retained.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C22",
+      "candidate_locator": "final.md:23",
+      "claim": "F3: curl documents the full hard-bounded pattern and reset classification.",
+      "disposition": "PARTLY_CONTRADICTED",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E12",
+        "E13",
+        "E14"
+      ],
+      "assessment": "Retry admission/backoff are supported, hard job runtime and reset-as-timeout are not. This repeats C11-C14 rather than a separate defect.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C23",
+      "candidate_locator": "final.md:24,43",
+      "claim": "F4: draft -13 is active and non-normative; reject treating it as shippable.",
+      "disposition": "STATUS_SUPPORTED_REJECTION_OVERSTATED",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E16"
+      ],
+      "assessment": "Active, work-in-progress, not an approved standard is verified. It contains normative MUST/SHOULD requirements inside the draft and an interop version. Declining it for a stable recommendation is legitimate; source status alone does not prove any implementation cannot be shipped. No adoption truth is imposed.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C24",
+      "candidate_locator": "final.md:25",
+      "claim": "F5: content identity preserves old and new content; digest snapshot bytes and retain old object until job terminal.",
+      "disposition": "SUPPORTED_DESIGN_INFERENCE",
+      "claim_kind": "engineering inference",
+      "evidence_ids": [
+        "E21",
+        "E17",
+        "E18"
+      ],
+      "assessment": "Useful explicit conditions. A digest identifies content and does not itself cause storage retention. The SHA-1 Git analogy is openly identified; SHA-256 is an application choice.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C25",
+      "candidate_locator": "final.md:25",
+      "claim": "F5 negative lead: nothing guarantees server ETag equals the local digest.",
+      "disposition": "SUPPORTED",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E01",
+        "E22"
+      ],
+      "assessment": "This is an important retained uncertainty. It directly limits C16 and prevents using the local digest as an HTTP validator without a server contract.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C26",
+      "candidate_locator": "final.md:26",
+      "claim": "F6: atomic rename, FD isolation, unlink lifetime imply local replacement cannot corrupt an in-flight read.",
+      "disposition": "SUPPORTED_ONLY_UNDER_STATED_SNAPSHOT_DESIGN",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E17",
+        "E18"
+      ],
+      "assessment": "True for a completed rename onto a new object while an already-open old object stays unmodified, or for a real byte snapshot. Not a guarantee for in-place writes or an arbitrary storage API. POSIX-only and missing Windows evidence are correctly retained. No durability claim is inferred.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C27",
+      "candidate_locator": "final.md:27",
+      "claim": "F7: Working Draft snapshot state makes replaced-file reads reflect snapshot-at-transfer-start.",
+      "disposition": "CONTRADICTED",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E19",
+        "E20"
+      ],
+      "assessment": "The date/status and quoted phrase match. File snapshot timing is creation/reference time with SHOULD strength, not transfer start. State mismatch can produce NotReadableError; old bytes are not promised. Adding the condition snapshot at start does not turn a metadata snapshot into a materialized byte copy.",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "claim_id": "C28",
+      "candidate_locator": "final.md:28",
+      "claim": "F8: If-Match is a write-side twin, but server ETag strength/content derivation unresolved until probe.",
+      "disposition": "PARTLY_SUPPORTED",
+      "claim_kind": "source fact / recommendation",
+      "evidence_ids": [
+        "E05",
+        "E01"
+      ],
+      "assessment": "If-Match can prevent stale writes, using the current remote tag. Content derivation is optional and unnecessary for strength. The proposed GET/status and checksum tests cannot establish every binding or server generation policy.",
+      "defect_ids": [
+        "D02",
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C29",
+      "candidate_locator": "final.md:32",
+      "claim": "Actually verified eight hashes, extracted quotes, grepped anchors; no server/app execution.",
+      "disposition": "REPRODUCIBLE_RESULT_HISTORY_UNVERIFIED",
+      "claim_kind": "execution/provenance assertion",
+      "evidence_ids": [],
+      "assessment": "Reviewer independently reproduced eight matching capture hashes, matching source-index hash, exact anchors, quotation wording, and final hash. The candidate claimed historical operations cannot be authenticated without reading forbidden execution history. No target service or app test is evidenced.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C30",
+      "candidate_locator": "final.md:35",
+      "claim": "Capability probe GET Range/If-Range: 206 proves validator-bound resume viability.",
+      "disposition": "NOT_DISCRIMINATING_ENOUGH",
+      "claim_kind": "proposed check",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E04"
+      ],
+      "assessment": "A positive matching case does not test whether If-Range is enforced. Need a deliberately stale validator/changed representation case and response Content-Range/type/representation checks. A server ignoring the validator could still return 206 in the sole proposed case.",
+      "defect_ids": [
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C31",
+      "candidate_locator": "final.md:35",
+      "claim": "Weak ETag or unconditional 200 means not viable; choose offset protocol; probe decides F1-vs-F2.",
+      "disposition": "INVALID_DIRECTION_FORK",
+      "claim_kind": "proposed check",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E08"
+      ],
+      "assessment": "F1 is download and F2 is upload; a GET result cannot select tus upload support or replace a download mechanism. A stale If-Range full 200 is healthy behavior and must be distinguished from a server ignoring Range. Weak ETag cannot be used in If-Range, but need not determine upload capability.",
+      "defect_ids": [
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C32",
+      "candidate_locator": "final.md:36",
+      "claim": "Slow upload A then replacement B: assert A completes with A digest, B own job, no mixed bytes; decides supersede-vs-abandon.",
+      "disposition": "USEFUL_PARTIAL_CHECK",
+      "claim_kind": "proposed check",
+      "evidence_ids": [
+        "E17",
+        "E18",
+        "E08",
+        "E11"
+      ],
+      "assessment": "Good corruption test if expected digest and exact upload-resource binding are known. It exercises a selected finish-A policy rather than discriminating it from safely abandoning A. It misses late completion of A after B has been made current, interrupted acknowledgments/offset reconciliation, and local read invalidation.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C33",
+      "candidate_locator": "final.md:37",
+      "claim": "Compare server checksum and SHA-256 where available; decides F8 assumption.",
+      "disposition": "USEFUL_BUT_INSUFFICIENT",
+      "claim_kind": "proposed check",
+      "evidence_ids": [
+        "E01",
+        "E10",
+        "E22"
+      ],
+      "assessment": "A checksum match validates bytes only for the same algorithm, byte domain, complete object and representation. A per-chunk tus checksum is not a whole-object checksum; checksum agreement is not proof that ETag equals that digest or follows that rule after updates/content negotiation.",
+      "defect_ids": [
+        "D02",
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C34",
+      "candidate_locator": "final.md:41",
+      "claim": "Accepted digest, supersede policy, validator download resume and offset upload resume.",
+      "disposition": "CORE_CHOICES_REASONABLE_WITH_CORRECTIONS",
+      "claim_kind": "recommendation disposition",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E08",
+        "E21",
+        "E11"
+      ],
+      "assessment": "These choices can form a bounded module, but the source-based guarantees and missing bindings cannot be adopted unchanged. Neither completing A nor abandoning A is mandated by the primary sources.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C35",
+      "candidate_locator": "final.md:42",
+      "claim": "Amended reset classification while keeping count/time bounds.",
+      "disposition": "REASONABLE_POLICY_INCOMPLETE_BOUNDS",
+      "claim_kind": "recommendation disposition",
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E07"
+      ],
+      "assessment": "Explicit correction of the client-policy class is useful; a hard elapsed deadline and accepted-byte reconciliation are still required.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C36",
+      "candidate_locator": "final.md:43",
+      "claim": "Rejected path/row-ID identity, Partial PUT, draft as shippable.",
+      "disposition": "MIXED",
+      "claim_kind": "recommendation disposition",
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E16"
+      ],
+      "assessment": "Reject unversioned mutable names and uncontracted partial PUT; do not reject every versioned non-digest identity or claim draft status alone bans deployment.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C37",
+      "candidate_locator": "final.md:44",
+      "claim": "Unresolved server ETag strength, Windows share modes, tus-vs-draft without server control.",
+      "disposition": "SUPPORTED_LIMITS_TEST_INCOMPLETE",
+      "claim_kind": "uncertainty preservation",
+      "evidence_ids": [
+        "E01",
+        "E08",
+        "E16",
+        "E17"
+      ],
+      "assessment": "These are genuine scope limitations, with no runtime evidence to resolve them. A download GET alone cannot resolve the supported upload contract. Lack of server control means neither tus nor the draft can simply be selected without compatible endpoint support.",
+      "defect_ids": [
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C38",
+      "candidate_locator": "final.md:48",
+      "claim": "Transport and local sources were independently investigated/derived before reconciliation.",
+      "disposition": "CONTENT_COVERAGE_SUPPORTED_SEQUENCE_UNVERIFIABLE",
+      "claim_kind": "process / obligation assertion",
+      "evidence_ids": [],
+      "assessment": "The final and corpus address both families independently. Chronological derivation cannot be independently verified from this frozen artifact and is not assumed from row ordering.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C39",
+      "candidate_locator": "final.md:19-28,48",
+      "claim": "Exactly eight supported material findings with retained conditions and uncertainty.",
+      "disposition": "COUNT_SUPPORTED_SUPPORT_FAILS",
+      "claim_kind": "obligation assertion",
+      "evidence_ids": [],
+      "assessment": "There are exactly eight labeled findings; final is 1083 whitespace-separated words, within the soft ceiling. F3 and F7 have material source errors; some F6 conditions are implicit and F5/F8 uncertainty conflicts with the reconciliation guarantee.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C40",
+      "candidate_locator": "final.md:48",
+      "claim": "All six obligations fulfilled with one reconciled bounded recommendation and discriminating tests.",
+      "disposition": "PARTIAL_SUBSTANTIVE_COVERAGE",
+      "claim_kind": "obligation assertion",
+      "evidence_ids": [],
+      "assessment": "All topics appear, but the retry bound, preservation/identity reconciliation, support for all eight findings and discriminating checks fail as detailed below. A full sync service is correctly avoided.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ]
+    }
+  ],
+  "defects": [
+    {
+      "defect_id": "D01",
+      "title": "File API snapshot state is promoted to guaranteed old-byte preservation",
+      "materiality": "HIGH",
+      "candidate_locators": [
+        "final.md:17",
+        "final.md:27"
+      ],
+      "evidence_ids": [
+        "E19",
+        "E20"
+      ],
+      "source_based_defect": "The disk-backed File rule is SHOULD at creation/reference time; snapshot mismatch and deletion/readability failures are explicitly defined. The candidate instead promises readable old bytes and snapshot-at-transfer-start semantics.",
+      "consequence": "The stated cross-platform preservation guarantee can fail before a digest-bound job reads/resumes the old bytes. A correctly quoted phrase supports a materially wrong conclusion.",
+      "reviewer_inference": "This requires an actual preserved byte snapshot/object or defined failure handling; a File reference and snapshot-state metadata alone are insufficient. This is not a claim that every browser necessarily fails every rename.",
+      "overlap": "C17/C27 and the local part of C32 repeat this single defect."
+    },
+    {
+      "defect_id": "D02",
+      "title": "Local digest, remote validator and upload-resource/version bindings are conflated",
+      "materiality": "HIGH",
+      "candidate_locators": [
+        "final.md:7",
+        "final.md:17",
+        "final.md:25",
+        "final.md:28",
+        "final.md:37"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E04",
+        "E05",
+        "E08",
+        "E22"
+      ],
+      "source_based_defect": "Strong ETags need not be content-derived. If-Match tests the current target representation; tus binds a URL and current accepted offset, not the job content digest. The reconciliation treats these as one content-derived identifier despite its retained uncertainty.",
+      "consequence": "Using a new-body digest as a current ETag can falsely reject writes; treating a changed full download as the old job can violate its identity; lack of an explicit upload-job/current-attachment binding leaves old-A completion versus replacement-B publication unresolved.",
+      "reviewer_inference": "A useful bounded invariant distinguishes local snapshot digest, logical attachment revision/current pointer, server-issued validator, upload URL and confirmed byte offset. Old jobs must not become current merely because their bytes completed. This is a semantic gap, not a request for a full sync service.",
+      "overlap": "Do not separately count the incomplete checksum-to-ETag assumption, stale publication binding or download restart identity as three additional defects."
+    },
+    {
+      "defect_id": "D03",
+      "title": "Claimed wall-clock retry bound is not supplied by the cited curl mechanism",
+      "materiality": "HIGH",
+      "candidate_locators": [
+        "final.md:12",
+        "final.md:23",
+        "final.md:42"
+      ],
+      "evidence_ids": [
+        "E12",
+        "E13",
+        "E14",
+        "E07"
+      ],
+      "source_based_defect": "--retry-max-time limits admission of additional retries; an active transfer may exceed it. --max-time supplies a separate attempt limit. The final omits this governing condition while promising wall-clock bounds. It also paraphrases a named status list as 5xx-class and mislabels reset as timeout.",
+      "consequence": "An attempt on a failed rural connection can continue past the stated budget even with retry count/time options. This directly weakens obligation 1.",
+      "reviewer_inference": "A hard job deadline or per-attempt cap tied to the remaining budget is needed. Adding reset as explicit application policy is sensible, but replay remains conditional on server-accepted state/idempotency.",
+      "overlap": "Status-list/reset source inaccuracies are related supporting issues, not additional high-materiality failures."
+    },
+    {
+      "defect_id": "D04",
+      "title": "Validation does not discriminate the transport capability or identity assumptions it claims to decide",
+      "materiality": "HIGH",
+      "candidate_locators": [
+        "final.md:35",
+        "final.md:36",
+        "final.md:37"
+      ],
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E04",
+        "E08",
+        "E10",
+        "E22"
+      ],
+      "source_based_defect": "GET Range measures download behavior, not tus upload support. A lone 206 does not test stale If-Range enforcement; full 200 can be correct. Checksum agreement does not establish ETag derivation. The A/B test exercises one completion policy rather than proving the supersede/abandon choice.",
+      "consequence": "The proposed tests can approve a server that ignores validators, select the wrong-direction protocol, or leave stale completion/current attachment identity undetected.",
+      "reviewer_inference": "A bounded check set can independently test matched/stale download validators with range metadata, tus capabilities plus lost-response HEAD/PATCH offset recovery, local read invalidation and late A completion after B publication. This describes discrimination gaps rather than executing tests or feeding a candidate rescue round.",
+      "overlap": "All three proposed checks are assessed; their limitations share this one validation-design defect."
+    },
+    {
+      "defect_id": "D05",
+      "title": "Digest-free path/row identity is categorically rejected without distinguishing immutable version binding",
+      "materiality": "MEDIUM",
+      "candidate_locators": [
+        "final.md:17",
+        "final.md:43"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E08",
+        "E16",
+        "E21"
+      ],
+      "source_based_defect": "RFC strong revision identifiers and upload-specific resource identifiers support valid identity schemes that need not be content hashes. An unversioned mutable row/path is unsafe, but no source makes a digest the sole safe choice.",
+      "consequence": "The recommendation wrongly excludes feasible version/validator-bound designs and mistakes a particular implementation preference for a source-imposed safety condition.",
+      "reviewer_inference": "The acceptance condition is binding resumes to one immutable representation; digest is a reasonable recommendation, not a required universal proof. No preset component/adoption outcome is imposed.",
+      "overlap": "Related to D02, but distinct: D02 is an unsafe equivalence across bindings; D05 is a wrong rejection of alternatives."
+    }
+  ],
+  "preserved_uncertainties_and_options": [
+    "Server range/validator and upload support are unmeasured; Accept-Ranges advice alone is insufficient.",
+    "Local content digest is useful, but server-issued strong revision ETags and version-bound resource IDs remain legitimate options.",
+    "tus checksum, expiration and termination extensions need negotiation; SHA-256/final-object checksum support is not guaranteed.",
+    "A genuinely preserved snapshot is distinct from an open descriptor lifetime or web snapshot-state metadata.",
+    "Safe immutable A completion and safe A abandonment are both options; old completion must not change the current B binding.",
+    "Private partial PUT needs an explicit contract; the HTTP resumable-upload draft remains work in progress with interop version 10.",
+    "Windows/macOS and browser runtime behavior are unresolved."
+  ],
+  "executed_vs_proposed": {
+    "reviewer_executed": [
+      "Frozen-final SHA-256 verification before assessment",
+      "All eight mapped body hashes and source-index hash verified",
+      "Primary text parsing, complete-final reading, relevant source conditions/versions and raw anchors checked",
+      "Forty claim groups mapped to source facts and engineering-inference distinctions",
+      "Eight read-only public primary GETs with retained URL, headers, body hash and timestamps",
+      "Raw draft difference inspection plus script-excluding semantic text equality check"
+    ],
+    "candidate_execution_claim_status": "Hashes, quotes and anchors independently reproducible; the assertion these checks historically occurred and no code historically ran is not independently authenticated. No contrary execution inferred.",
+    "not_executed": [
+      "Target server capability probe",
+      "A/B transfer scenario",
+      "Checksum round-trip",
+      "Any app or downloaded-project code"
+    ],
+    "candidate_proposed_checks_assessment": [
+      "GET status alone does not discriminate validator enforcement or upload support",
+      "A/B bytes test is useful but misses stale publication and local read invalidation",
+      "Checksum agreement validates a matching byte domain, not universal ETag derivation"
+    ]
+  },
+  "delivery": {
+    "mode": "T3 delegated review carrier; final assistant result delivers artifact paths through normal automatic parent completion",
+    "no_delegation": true,
+    "pending_children": 0,
+    "own_goal_created": false,
+    "candidate_feedback_or_rescue_rounds": 0
+  },
+  "deadline": {
+    "provided_deadline": "2026-10-07T21:41:15.177635+00:00",
+    "actual_t3_requested_at": "2026-10-07T21:21:44.782Z",
+    "actual_t3_started_at": "2026-10-07T21:21:45.683Z",
+    "requested_at_plus_20_minutes": "2026-10-07T21:41:44.782Z",
+    "effective_deadline": "2026-10-07T21:41:15.177635+00:00",
+    "rule": "Use the earlier explicit deadline; no budget reset; complete and deliver early."
+  },
+  "final_integrity_verification": {
+    "checked_at": "2026-10-07T21:30:21.808778+00:00",
+    "frozen_final_sha256": "6fd7b4ff379feafda1135147f69891b3c71105215709c7ec397039705eb310f0",
+    "candidate_bytes_unchanged": true,
+    "review_json_cross_references_valid": true,
+    "review_md_includes_all_claim_evidence_defect_ids": true,
+    "counts": {
+      "axes": 6,
+      "obligations": 6,
+      "primary_sources": 8,
+      "claim_groups": 40,
+      "source_fact_records": 22,
+      "distinct_material_defects": 5
+    }
+  },
+  "completed_at": "2026-10-07T21:30:21.808778+00:00"
+}

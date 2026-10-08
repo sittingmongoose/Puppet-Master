@@ -1,0 +1,1013 @@
+{
+  "schema": "independent.frozen-source-science-review.v1",
+  "case_id": "D-M02-B",
+  "review_complete": true,
+  "scope": {
+    "authorized_inputs": "Exact mapped brief, manifest, three frozen primary sources, both finals and every mapped required intermediate; independent bounded public tagged-source fetches and own arithmetic.",
+    "artifact_scope_limits": {
+      "X": null,
+      "Y": null
+    },
+    "incomplete_final_diagnostic": false,
+    "scientific_scope": "All six brief obligations, every consequential content group in final and required intermediates, source identity/ranges, corrections/rejections, preservation, optional aggregation, uncertainty and proposed-versus-executed distinction.",
+    "excluded": "Lifecycle/provenance adjudication, candidate rescue/edit/feedback/new candidates, identity map, winner/rank/cost/target metrics, other reviews/cases and supervisor state.",
+    "temporal_gate_basis": "User supplied quiet/held frozen-state authorization; no independent lifecycle inference."
+  },
+  "timing": {
+    "preparation_and_allowance_start_utc": "2026-10-07T20:43:05.283110+00:00",
+    "first_local_check_utc": "2026-10-07T20:43:23.240020+00:00",
+    "hard_ceiling_utc": "2026-10-07T21:03:05.283110+00:00",
+    "assessment_written_at_utc": "2026-10-07T20:48:19.794576+00:00",
+    "elapsed_from_preparation_seconds_at_write": 314.511466,
+    "allowance_seconds": 1200,
+    "deadline_exhausted": false,
+    "reviewer_usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null,
+      "cost": null
+    },
+    "readable_review_written_at_utc": "2026-10-07T20:49:59.377097+00:00",
+    "final_consistency_check_completed_utc": "2026-10-07T20:52:10.900161+00:00",
+    "elapsed_from_preparation_seconds_at_completion": 545.617051,
+    "remaining_allowance_seconds_at_completion": 654.382949,
+    "delivery_ready_utc": "2026-10-07T20:52:10.900778+00:00"
+  },
+  "artifact_register": [
+    {
+      "artifact": "inputs/brief.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/brief.md",
+      "sha256": "e07ea001f30f1aaba839bfcfe14939a85e4c2a0814472579b395e03469e1e5b3",
+      "bytes": 1795,
+      "lines": 16,
+      "whitespace_words": 253,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "first_reviewer_inventory_rechecked"
+    },
+    {
+      "artifact": "inputs/sources.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources.json",
+      "sha256": "779a28bf9ec6e4aba05abb84a9288f78603f94caa6534d9645050599f78ad543",
+      "bytes": 1632,
+      "lines": 35,
+      "whitespace_words": 73,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "first_reviewer_inventory_rechecked"
+    },
+    {
+      "artifact": "inputs/sources/rasterwindow.rst",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/rasterwindow.rst",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+      "bytes": 8035,
+      "lines": 251,
+      "whitespace_words": 1037,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    },
+    {
+      "artifact": "inputs/sources/rasterresample.rst",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/rasterresample.rst",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "bytes": 2267,
+      "lines": 68,
+      "whitespace_words": 271,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    },
+    {
+      "artifact": "inputs/sources/geotransform.rst",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/geotransform.rst",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "bytes": 1713,
+      "lines": 38,
+      "whitespace_words": 221,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    },
+    {
+      "artifact": "X/final.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/frozen/X/final.md",
+      "sha256": "85067b2d8c885c86f3fd1314a3cb00a8341e09baf4e6cdf03cf1cb3f0d82949c",
+      "bytes": 6298,
+      "lines": 40,
+      "whitespace_words": 768,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    },
+    {
+      "artifact": "X/intermediate-1.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/frozen/X/intermediate-1.md",
+      "sha256": "f2dad9fb43d90bff299fb5927fb91052e8f3e8fe810d5f3f9296df151e1b4ec9",
+      "bytes": 6738,
+      "lines": 24,
+      "whitespace_words": 767,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    },
+    {
+      "artifact": "X/intermediate-2.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/frozen/X/intermediate-2.md",
+      "sha256": "ba9f3117294e3127537ee74aba1cbc4aed9ff8c863b04203345c273130f07489",
+      "bytes": 8141,
+      "lines": 58,
+      "whitespace_words": 1022,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    },
+    {
+      "artifact": "X/intermediate-3.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/frozen/X/intermediate-3.md",
+      "sha256": "08ef9a444ce907620c01d7106e824b89c732ca0bb8aeb249ac9af4adbe0e4b77",
+      "bytes": 7716,
+      "lines": 48,
+      "whitespace_words": 957,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    },
+    {
+      "artifact": "Y/final.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/frozen/Y/final.md",
+      "sha256": "ce98f0d3f37b6e195f440f8dbae2bd00448d6385a3730c91758be1dc67629956",
+      "bytes": 5826,
+      "lines": 21,
+      "whitespace_words": 736,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    },
+    {
+      "artifact": "Y/intermediate-1.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/frozen/Y/intermediate-1.md",
+      "sha256": "ce98f0d3f37b6e195f440f8dbae2bd00448d6385a3730c91758be1dc67629956",
+      "bytes": 5826,
+      "lines": 21,
+      "whitespace_words": 736,
+      "expected_hash_match": true,
+      "fully_read": true,
+      "expected_hash_origin": "user_frozen_map_and_or_supplied_source_manifest"
+    }
+  ],
+  "source_integrity": {
+    "status": "VERIFIED_BYTES_VERSIONS_AND_RAW_CITATION_RANGES",
+    "source_aliases": {
+      "W": "rasterwindow",
+      "R": "rasterresample",
+      "G": "geotransform",
+      "I": "Rasterio 1.3.10 rasterio/_io.pyx",
+      "T": "Rasterio 1.3.10 rasterio/windows.py",
+      "E": "Rasterio 1.3.10 rasterio/enums.py",
+      "B": "Rasterio 1.3.10 rasterio/_base.pyx"
+    },
+    "independent_public_checks": [
+      {
+        "source_id": "rasterwindow",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+        "started_at_utc": "2026-10-07T20:44:03.041641+00:00",
+        "captured_at_utc": "2026-10-07T20:44:03.206533+00:00",
+        "http_status": 200,
+        "bytes": 8035,
+        "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+        "version_or_capture": "Rasterio 1.3.10",
+        "capture_date_utc": "2026-10-07",
+        "matches_frozen_or_candidate_reported_sha256": true,
+        "limitations": "Public raw tagged source text; hash identity is not proof of candidate capture/inspection or deployed runtime behavior."
+      },
+      {
+        "source_id": "rasterresample",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+        "started_at_utc": "2026-10-07T20:44:03.043053+00:00",
+        "captured_at_utc": "2026-10-07T20:44:03.198062+00:00",
+        "http_status": 200,
+        "bytes": 2267,
+        "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+        "version_or_capture": "Rasterio 1.3.10",
+        "capture_date_utc": "2026-10-07",
+        "matches_frozen_or_candidate_reported_sha256": true,
+        "limitations": "Public raw tagged source text; hash identity is not proof of candidate capture/inspection or deployed runtime behavior."
+      },
+      {
+        "source_id": "geotransform",
+        "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+        "started_at_utc": "2026-10-07T20:44:03.044375+00:00",
+        "captured_at_utc": "2026-10-07T20:44:03.196589+00:00",
+        "http_status": 200,
+        "bytes": 1713,
+        "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+        "version_or_capture": "GDAL 3.9.0",
+        "capture_date_utc": "2026-10-07",
+        "matches_frozen_or_candidate_reported_sha256": true,
+        "limitations": "Public raw tagged source text; hash identity is not proof of candidate capture/inspection or deployed runtime behavior."
+      },
+      {
+        "source_id": "I",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+        "started_at_utc": "2026-10-07T20:44:03.046022+00:00",
+        "captured_at_utc": "2026-10-07T20:44:03.127729+00:00",
+        "http_status": 200,
+        "bytes": 86415,
+        "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+        "version_or_capture": "Rasterio 1.3.10",
+        "capture_date_utc": "2026-10-07",
+        "matches_frozen_or_candidate_reported_sha256": true,
+        "limitations": "Public raw tagged source text; hash identity is not proof of candidate capture/inspection or deployed runtime behavior."
+      },
+      {
+        "source_id": "T",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/windows.py",
+        "started_at_utc": "2026-10-07T20:44:03.128421+00:00",
+        "captured_at_utc": "2026-10-07T20:44:03.211777+00:00",
+        "http_status": 200,
+        "bytes": 22025,
+        "sha256": "91659f9becc7a61cf29109f29d2388507c5df916c88ecccc5462d3864c6518d3",
+        "version_or_capture": "Rasterio 1.3.10",
+        "capture_date_utc": "2026-10-07",
+        "matches_frozen_or_candidate_reported_sha256": true,
+        "limitations": "Public raw tagged source text; hash identity is not proof of candidate capture/inspection or deployed runtime behavior."
+      },
+      {
+        "source_id": "E",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+        "started_at_utc": "2026-10-07T20:44:03.196709+00:00",
+        "captured_at_utc": "2026-10-07T20:44:03.275002+00:00",
+        "http_status": 200,
+        "bytes": 5550,
+        "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+        "version_or_capture": "Rasterio 1.3.10",
+        "capture_date_utc": "2026-10-07",
+        "matches_frozen_or_candidate_reported_sha256": true,
+        "limitations": "Public raw tagged source text; hash identity is not proof of candidate capture/inspection or deployed runtime behavior."
+      },
+      {
+        "source_id": "B",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_base.pyx",
+        "started_at_utc": "2026-10-07T20:44:03.198355+00:00",
+        "captured_at_utc": "2026-10-07T20:44:03.316097+00:00",
+        "http_status": 200,
+        "bytes": 46202,
+        "sha256": "432cfcf812e2b1b5c5a154bb615f7fb45c5f5708799520fe2f578a5c038cb12f",
+        "version_or_capture": "Rasterio 1.3.10",
+        "capture_date_utc": "2026-10-07",
+        "matches_frozen_or_candidate_reported_sha256": true,
+        "limitations": "Public raw tagged source text; hash identity is not proof of candidate capture/inspection or deployed runtime behavior."
+      }
+    ],
+    "frozen_local_online_byte_matches": 3,
+    "distinct_additional_candidate_hash_matches": 4,
+    "raw_range_checks": {
+      "X": [
+        "T:83-98",
+        "T:343-362",
+        "I:580-598",
+        "E:48-107",
+        "I:438-486",
+        "I:584-620",
+        "I:910-982"
+      ],
+      "Y": [
+        "W:13-24,119-164",
+        "R:10-20,34-48",
+        "W:142-164",
+        "W:57-66,188-203,233-251",
+        "G:9-32",
+        "R:44-48,53-68"
+      ],
+      "result": "All declared raw-file ranges are appropriate; web-reader displayed numbering differs from raw bytes and was not used to judge citations."
+    },
+    "limitations": [
+      "Hash matches establish byte identity at the reviewer check, not candidate acquisition/reading history or capture timestamps.",
+      "Released Rasterio implementation governs rounding and read-interface claims; GDAL tutorial version 3.9.0 is not evidence of the service installed GDAL version.",
+      "Candidate-referenced stage sources/manifest.json files and predecessor dispatch maps were not opened; preservation/execution-history claims are unverified.",
+      "The supplied brief and source-manifest had no externally supplied expected digest; their exact reviewed hashes were computed here and rechecked for stability."
+    ]
+  },
+  "claim_group_definitions": [
+    {
+      "id": "C01",
+      "scope": "Q1 pixel windows, matching crop transform and written dimensions",
+      "obligations": [
+        "O1"
+      ],
+      "primary_or_check_evidence": [
+        "W:13-29,45-55,129-164",
+        "T:83-98,343-362"
+      ]
+    },
+    {
+      "id": "C02",
+      "scope": "Q2 output shape, band/row/column order, resampling and crop-to-output scale",
+      "obligations": [
+        "O2"
+      ],
+      "primary_or_check_evidence": [
+        "R:18-48",
+        "I:438-485,587-629,938-977",
+        "A1"
+      ]
+    },
+    {
+      "id": "C03",
+      "scope": "Logical pixels versus physical block I/O; per-band inspection and unknown cost",
+      "obligations": [
+        "O3"
+      ],
+      "primary_or_check_evidence": [
+        "W:57-66,188-251",
+        "B:510-532,907-929"
+      ]
+    },
+    {
+      "id": "C04",
+      "scope": "Crop versus resampled coordinates, rotation/skew, corner/center convention",
+      "obligations": [
+        "O4"
+      ],
+      "primary_or_check_evidence": [
+        "G:9-38",
+        "T:343-362",
+        "R:44-48",
+        "A1"
+      ]
+    },
+    {
+      "id": "C05",
+      "scope": "Continuous-data resamplers, default nearest and conditional numerical goals",
+      "obligations": [
+        "O5"
+      ],
+      "primary_or_check_evidence": [
+        "R:53-68",
+        "E:53-66"
+      ]
+    },
+    {
+      "id": "C06",
+      "scope": "Categorical codes, sampled-label preservation versus prevalence, interpolation risk",
+      "obligations": [
+        "O5"
+      ],
+      "primary_or_check_evidence": [
+        "E:53-66",
+        "A2"
+      ]
+    },
+    {
+      "id": "C07",
+      "scope": "Optional class aggregation, mode availability/meaning and uncertain ties/NoData",
+      "obligations": [
+        "O5"
+      ],
+      "primary_or_check_evidence": [
+        "E:65-66,86-107",
+        "I:57-68,134-160",
+        "A2"
+      ]
+    },
+    {
+      "id": "C08",
+      "scope": "Proposed geometry fixtures, nonzero offsets, nonsymmetric affine and output footprint",
+      "obligations": [
+        "O6"
+      ],
+      "primary_or_check_evidence": [
+        "G:27-38",
+        "T:343-362",
+        "A1"
+      ]
+    },
+    {
+      "id": "C09",
+      "scope": "Proposed numeric/class fixtures, rare classes, NoData/ties and acceptance criteria",
+      "obligations": [
+        "O6"
+      ],
+      "primary_or_check_evidence": [
+        "R:53-68",
+        "E:53-66",
+        "A2"
+      ]
+    },
+    {
+      "id": "C10",
+      "scope": "Proposed I/O fixtures, band differences and layout/class-label uncertainty",
+      "obligations": [
+        "O6"
+      ],
+      "primary_or_check_evidence": [
+        "W:57-66,188-251",
+        "B:510-532,907-929"
+      ]
+    },
+    {
+      "id": "C11",
+      "scope": "Effective-window guards, clipping, fractional natural shape and rounding correction",
+      "obligations": [
+        "O1",
+        "O2"
+      ],
+      "primary_or_check_evidence": [
+        "I:580-620,938-977",
+        "T:392-415,709-728",
+        "A1"
+      ]
+    },
+    {
+      "id": "C12",
+      "scope": "Pinned primary source identity, hashes, release selection and cited raw ranges",
+      "obligations": [
+        "B14"
+      ],
+      "primary_or_check_evidence": [
+        "H1",
+        "H2"
+      ]
+    },
+    {
+      "id": "C13",
+      "scope": "Accepted/amended/rejected/unresolved scientific dispositions and preservation",
+      "obligations": [
+        "B16"
+      ],
+      "primary_or_check_evidence": [
+        "C01-C11",
+        "all mapped artifact text"
+      ]
+    },
+    {
+      "id": "C14",
+      "scope": "Complete bounded deliverable, six obligations and soft size/finding limits",
+      "obligations": [
+        "B5",
+        "B16"
+      ],
+      "primary_or_check_evidence": [
+        "brief:3-16",
+        "all mapped artifact text"
+      ]
+    }
+  ],
+  "candidates": {
+    "X": {
+      "independent_semantic_conclusion": "The final is scientifically supported as a bounded integer in-bounds crop/resampling recommendation. The required artifact set is qualified: intermediate-2 contains a false round-up assertion and omits an explicit edge guard; intermediate-3 and final correct both. No unqualified whole-artifact PASS.",
+      "final_scientific_correctness_status": "SUPPORTED_WITH_STATED_CONDITIONS",
+      "required_intermediates_scientific_status": "MATERIAL_ERROR_AND_EDGE_GUARD_OMISSION_IN_X2_CORRECTED_LATER",
+      "whole_mapped_artifact_status": "QUALIFIED_SCIENTIFIC_SUPPORT_WITH_CORRECTED_INTERMEDIATE_DEFECTS",
+      "coverage": {
+        "brief_material_obligations_assessed": 6,
+        "brief_material_obligations_unassessed": 0,
+        "consequential_content_groups_assessed": 14,
+        "consequential_content_groups_unassessed": 0,
+        "process_history_groups_unverified": 1,
+        "mapped_final_artifacts_fully_read": 1,
+        "mapped_required_intermediates_fully_read": 3,
+        "total_groups": 15,
+        "groups_with_resolved_assessment": 14,
+        "groups_without_process_verification": 1
+      },
+      "artifact_semantic_statuses": {
+        "final.md": "SUPPORTED_WITH_CONDITIONS",
+        "intermediate-1.md": "SUPPORTED_WITH_CONDITIONS_AND_AXIS_WORDING_CLARIFICATION",
+        "intermediate-2.md": "MATERIAL_ROUNDING_ERROR_AND_MISSING_EXPLICIT_IN_BOUNDS_GUARD",
+        "intermediate-3.md": "SUPPORTED_WITH_CONDITIONS_AND_CORRECT_RECONCILIATION"
+      },
+      "obligations": [
+        {
+          "obligation_id": "O1",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied in final/X1/X3; X2 lacks an explicit edge guard (C11)."
+        },
+        {
+          "obligation_id": "O2",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied in final; X2 fractional natural-shape assertion is false and later corrected (C11)."
+        },
+        {
+          "obligation_id": "O3",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied; no unqualified byte/performance claim."
+        },
+        {
+          "obligation_id": "O4",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied; full affine and corner/center distinction."
+        },
+        {
+          "obligation_id": "O5",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied conditionally; mode means most frequent, not strict majority."
+        },
+        {
+          "obligation_id": "O6",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied as proposed fixtures with explicit unknowns, not executed outcomes."
+        }
+      ],
+      "claim_groups": [
+        {
+          "claim_group_id": "C01",
+          "disposition": "SUPPORTED_WITH_BOUNDARY_REPAIR",
+          "artifact_locations": [
+            "XF:3-18,22-23",
+            "X1:7-12",
+            "X2:5-29",
+            "X3:7-19"
+          ],
+          "assessment": "Final and X1/X3 bind the recommendation to an integer in-bounds crop and pair actual dimensions with its transform. X2 omits an explicit in-bounds/effective-window guard; see C11."
+        },
+        {
+          "claim_group_id": "C02",
+          "disposition": "SUPPORTED_WITH_CONDITIONS",
+          "artifact_locations": [
+            "XF:10-17,23",
+            "X1:12",
+            "X2:14-21,30",
+            "X3:7-13,19"
+          ],
+          "assessment": "Crop transform right-multiplied by independent width/height ratios is correct, including skew. The 2-D out_shape in X1 is accepted and expanded to band count by I:616-618; final uses the explicit 3-D shape and returned dimensions. Positive output sizes and the effective input window are required. X1’s phrase about the same scale in both axes should mean the same composition rule, not equal numerical factors: its explicit formula and final both use independent ratios."
+        },
+        {
+          "claim_group_id": "C03",
+          "disposition": "SUPPORTED_WITH_CONDITIONS",
+          "artifact_locations": [
+            "XF:24",
+            "X1:13",
+            "X2:31,34,49",
+            "X3:20"
+          ],
+          "assessment": "Full blocks or, for a single-block/unchunked case, the whole dataset may exceed logical pixels. Neither 1024x1024 dimensions nor output shape gives physical bytes/latency. Band-layout inspection and actual instrumentation are appropriate; cache/compression/storage remain conditions."
+        },
+        {
+          "claim_group_id": "C04",
+          "disposition": "SUPPORTED",
+          "artifact_locations": [
+            "XF:22,25,27",
+            "X1:7,14",
+            "X2:32,47",
+            "X3:7,21"
+          ],
+          "assessment": "Affine translation retains both pixel vectors; output scaling scales the corresponding column/row vectors. Corner versus center convention and non-north-up validation are correct. At zero crop offset the origin need not change; no blanket numerical change is implied."
+        },
+        {
+          "claim_group_id": "C05",
+          "disposition": "SUPPORTED_WITH_CONDITIONS",
+          "artifact_locations": [
+            "XF:26",
+            "X1:15",
+            "X2:33",
+            "X3:22"
+          ],
+          "assessment": "Nearest is the documented default; bilinear/cubic and mean-like average are candidates governed by the variable and error/statistic criteria. No universal production choice or runtime result is claimed."
+        },
+        {
+          "claim_group_id": "C06",
+          "disposition": "SUPPORTED_SEMANTIC_INFERENCE",
+          "artifact_locations": [
+            "XF:26-27",
+            "X1:15-16",
+            "X2:33,48",
+            "X3:22,31"
+          ],
+          "assessment": "Nearest retains a sampled valid code under the stated goal; this does not promise rare-class retention or area prevalence. Interpolation/averaging can synthesize codes, an arithmetic semantic inference rather than a measured service result."
+        },
+        {
+          "claim_group_id": "C07",
+          "disposition": "SUPPORTED_OPTIONAL_LEAD_WITH_TERMINOLOGY_LIMIT",
+          "artifact_locations": [
+            "XF:26,32,34",
+            "X1:15-16",
+            "X2:33,43,48",
+            "X3:22,31"
+          ],
+          "assessment": "Tagged enum exposes mode=6 and the read validator permits it. Most-frequent sampled value is supported. Majority is loose terminology: mode can be a plurality below 50% and is not proof of an area-majority result. Conditional semantics plus tie/NoData checks keep the optional lead bounded; deployed behavior remains unknown."
+        },
+        {
+          "claim_group_id": "C08",
+          "disposition": "ADEQUATE_PROPOSALS_NOT_RUNTIME_RESULTS",
+          "artifact_locations": [
+            "XF:27(a)",
+            "X1:16(a-b)",
+            "X2:47",
+            "X3:23"
+          ],
+          "assessment": "Non-origin integer crop, skew/rotation, changed output shape, corners and centers discriminate transform mistakes. X2 additionally proposes unequal factors. Reviewer A1 validates the algebra only; candidate raster fixtures are not established as executed."
+        },
+        {
+          "claim_group_id": "C09",
+          "disposition": "ADEQUATE_PROPOSALS_NOT_RUNTIME_RESULTS",
+          "artifact_locations": [
+            "XF:27(b)",
+            "X1:16(c)",
+            "X2:48",
+            "X3:23"
+          ],
+          "assessment": "Class/continuous fixtures, rare class, explicit class/numeric thresholds and NoData/tie rules address missing scientific semantics. A nearest-code check alone is not a rare-class/prevalence guarantee; the proposal separately measures retention."
+        },
+        {
+          "claim_group_id": "C10",
+          "disposition": "ADEQUATE_PROPOSALS_AND_EXPLICIT_UNCERTAINTY",
+          "artifact_locations": [
+            "XF:27(c),34",
+            "X1:13,16(d)",
+            "X2:34,49",
+            "X3:20,23,36"
+          ],
+          "assessment": "Aligned/crossing/1x1 tiled and striped tests and all-band inspection are appropriate. Instrumentation is required for physical-byte assertions. Layout, labels, target size, NoData/ties and tolerance remain declared unknown; no architecture or invented inputs."
+        },
+        {
+          "claim_group_id": "C11",
+          "disposition": "MATERIAL_INTERMEDIATE_ERROR_CORRECTED_IN_FINAL",
+          "artifact_locations": [
+            "X1:11",
+            "X2:23",
+            "X3:18,29,35",
+            "XF:22,33"
+          ],
+          "assessment": "X2 says natural fractional lengths round up, following an inaccurate nearby comment. Released read calls round_lengths; T implements floor(x+0.5): length 16.2 gives 16, not ceil 17. X3 and final correctly reject that statement. X2 also lacks an explicit clipping guard: requested col_off=-5 clips to 0, so using its requested transform is wrong. X1/X3/final correctly condition on in-bounds/effective windows. This correction does not make X2 itself correct."
+        },
+        {
+          "claim_group_id": "C12",
+          "disposition": "SOURCE_BYTES_AND_CITATIONS_VERIFIED",
+          "artifact_locations": [
+            "X1:7,11,15,22-24",
+            "X2:55-58",
+            "X3:40-46",
+            "XF:38"
+          ],
+          "assessment": "All three frozen hashes and all four distinct extra implementation hashes match independent public bytes. All explicit implementation line ranges, including windows.py 83-98/343-362 and _io.pyx 580-598, match raw-file numbering. Additional capture-manifest existence/history is not proved by these checks."
+        },
+        {
+          "claim_group_id": "C13",
+          "disposition": "SCIENTIFIC_RECONCILIATION_SUPPORTED",
+          "artifact_locations": [
+            "X1:18",
+            "X2:38-43",
+            "X3:27-36",
+            "XF:31-34"
+          ],
+          "assessment": "Final retains crop/output affine rules, physical-I/O bounds, semantic uncertainty and optional mode, and corrects the erroneous round-up premise. Rejection of blindly reusing the full transform is justified for general/non-origin crops; an origin crop is the harmless special case. Statements about what reports were supplied or hash-checked are process claims P01."
+        },
+        {
+          "claim_group_id": "C14",
+          "disposition": "COMPLETE_AND_BOUNDED",
+          "artifact_locations": [
+            "XF:1-40",
+            "X1:1-24",
+            "X2:1-58",
+            "X3:1-48"
+          ],
+          "assessment": "All six material obligations are present in each mapped text, but X2 has the scientific qualification in C11. Whitespace word counts 768/767/1022/957 are below the soft 1100 ceiling. Final has six principal material obligation findings and remains a bounded recommendation."
+        }
+      ],
+      "process_history": {
+        "id": "P01",
+        "status": "UNVERIFIED",
+        "locations": [
+          "XF:38-40",
+          "X1:3,18,22-24",
+          "X2:38,51,58",
+          "X3:5,40,46,48"
+        ],
+        "scope": "Candidate reading/fetching/hashing, predecessor availability/dispatch-map checks, capture times and stage-manifest preservation, and declarations that fixtures/code were not executed.",
+        "evidence_limit": "Scientific claims and reported digests are independently checked; the frozen narrative is not independent proof of these historical actions."
+      },
+      "candidate_usage": null
+    },
+    "Y": {
+      "independent_semantic_conclusion": "The final and identical required intermediate are scientifically supported as a complete bounded recommendation with explicit edge conditions and proposed checks. One categorical-interpolation phrase is overbroad if read as a guarantee for every input; the conditional nearest recommendation remains sound.",
+      "final_scientific_correctness_status": "SUPPORTED_WITH_STATED_CONDITIONS_AND_MINOR_WORDING_LIMIT",
+      "required_intermediates_scientific_status": "SAME_COMPLETE_SUPPORTED_CONTENT_AS_FINAL",
+      "whole_mapped_artifact_status": "SUPPORTED_WITH_CONDITIONS_AND_MINOR_WORDING_LIMIT",
+      "coverage": {
+        "brief_material_obligations_assessed": 6,
+        "brief_material_obligations_unassessed": 0,
+        "consequential_content_groups_assessed": 14,
+        "consequential_content_groups_unassessed": 0,
+        "process_history_groups_unverified": 1,
+        "mapped_final_artifacts_fully_read": 1,
+        "mapped_required_intermediates_fully_read": 1,
+        "total_groups": 15,
+        "groups_with_resolved_assessment": 14,
+        "groups_without_process_verification": 1
+      },
+      "artifact_semantic_statuses": {
+        "final.md": "SUPPORTED_WITH_CONDITIONS_AND_MINOR_WORDING_LIMIT",
+        "intermediate-1.md": "BYTE_IDENTICAL_SAME_SCIENTIFIC_ASSESSMENT"
+      },
+      "obligations": [
+        {
+          "obligation_id": "O1",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied under explicit integer/nonempty/in-bounds condition."
+        },
+        {
+          "obligation_id": "O2",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied; correctly labeled affine inference."
+        },
+        {
+          "obligation_id": "O3",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied; layout and measurements required for physical cost."
+        },
+        {
+          "obligation_id": "O4",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied; full affine and corner/center distinction."
+        },
+        {
+          "obligation_id": "O5",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied conditionally; interpolation wording has a minor universal-reading limit."
+        },
+        {
+          "obligation_id": "O6",
+          "final_disposition": "SATISFIED_WITH_STATED_CONDITIONS",
+          "assessment": "Satisfied as proposed fixtures with explicit unknowns, not executed outcomes."
+        }
+      ],
+      "claim_groups": [
+        {
+          "claim_group_id": "C01",
+          "disposition": "SUPPORTED_WITH_CONDITIONS",
+          "artifact_locations": [
+            "YF/Y1:5"
+          ],
+          "assessment": "Integer, nonempty, in-bounds source-pixel windows plus window_transform are correct. Window dimensions equal returned crop dimensions under that guard; copied metadata retains source spatial reference while dimensions/transform are updated."
+        },
+        {
+          "claim_group_id": "C02",
+          "disposition": "SUPPORTED_AFFINE_INFERENCE",
+          "artifact_locations": [
+            "YF/Y1:7"
+          ],
+          "assessment": "Changed out_shape resamples; scale the crop transform by w/W and h/H using returned dimensions. This correctly preserves crop footprint and includes unequal axis scales. The text explicitly labels the window-plus-scaling rule as inference, not an executed Rasterio check."
+        },
+        {
+          "claim_group_id": "C03",
+          "disposition": "SUPPORTED_WITH_CONDITIONS",
+          "artifact_locations": [
+            "YF/Y1:9,15(c)"
+          ],
+          "assessment": "Logical per-band crop pixels do not establish physical bytes. Full touched blocks/whole unchunked data, all-band shapes, unknown cost, and measurement before adopting block alignment are appropriately bounded."
+        },
+        {
+          "claim_group_id": "C04",
+          "disposition": "SUPPORTED",
+          "artifact_locations": [
+            "YF/Y1:11,15(a-b)"
+          ],
+          "assessment": "Cropping retains vectors and shifts the origin as appropriate; output scaling changes grid spacing. GDAL corners/centers and avoiding an extra half-pixel shift are correct. Full affine carries skew/rotation. A zero-offset crop is a valid special case of unchanged origin."
+        },
+        {
+          "claim_group_id": "C05",
+          "disposition": "SUPPORTED_WITH_CONDITIONS",
+          "artifact_locations": [
+            "YF/Y1:13"
+          ],
+          "assessment": "Continuous bilinear/cubic versus default nearest and conditional average are supported by R. No universally correct method or selected aggregation goal is asserted."
+        },
+        {
+          "claim_group_id": "C06",
+          "disposition": "SUPPORTED_SEMANTIC_GUIDANCE_WITH_MINOR_OVERSTATEMENT",
+          "artifact_locations": [
+            "YF/Y1:13"
+          ],
+          "assessment": "Conditional nearest for an existing class code is sound. The phrase that bilinear/cubic would create meaningless values is too categorical if read universally: constant fields or dtype rounding may retain existing codes. The sound general statement is that interpolation can invent codes or mix nominal semantics; this wording limitation does not invalidate the conservative recommendation."
+        },
+        {
+          "claim_group_id": "C07",
+          "disposition": "SUPPORTED_DEFERRED_OPTIONAL_AGGREGATION",
+          "artifact_locations": [
+            "YF/Y1:13,15(d)"
+          ],
+          "assessment": "The text proposes defining a majority/other rule and checking released support, NoData and ties before using it; it does not assert an API method exists or promise an area-majority outcome. Independent E/I checks show mode is an available possible lead, but the brief does not require that optional discovery."
+        },
+        {
+          "claim_group_id": "C08",
+          "disposition": "ADEQUATE_PROPOSALS_NOT_RUNTIME_RESULTS",
+          "artifact_locations": [
+            "YF/Y1:15(a-b)"
+          ],
+          "assessment": "1024x1024 row/column-coded fixture, nonsymmetric affine, non-origin crop, noninteger scale ratios and footprint/coefficient checks are discriminating geometry proposals. Candidate execution is not established; A1 is independent arithmetic only."
+        },
+        {
+          "claim_group_id": "C09",
+          "disposition": "ADEQUATE_PROPOSALS_NOT_RUNTIME_RESULTS",
+          "artifact_locations": [
+            "YF/Y1:13,15(d)"
+          ],
+          "assessment": "Continuous ramps and labeled data, configured resamplers, NoData edges and any declared majority/tie rule address semantics. Class meanings and aggregation are explicitly unknown. No rare-class or class-prevalence preservation result is claimed."
+        },
+        {
+          "claim_group_id": "C10",
+          "disposition": "ADEQUATE_PROPOSALS_AND_EXPLICIT_UNCERTAINTY",
+          "artifact_locations": [
+            "YF/Y1:9,15(c-d)"
+          ],
+          "assessment": "Known tiled 1x1 and crossing windows, conditional unchunked fixture, physical-I/O counters and all-band inspection address layout uncertainty. No invented block layout, labels or costs; actual deployment remains unknown."
+        },
+        {
+          "claim_group_id": "C11",
+          "disposition": "SUPPORTED_EDGE_SCOPE_RESTRICTION",
+          "artifact_locations": [
+            "YF/Y1:5,7"
+          ],
+          "assessment": "The recommendation explicitly restricts ordinary crops to integer nonempty in-bounds windows. Fractional/edge policy stays out of that path; no false rounding algorithm or untested clipping solution is asserted."
+        },
+        {
+          "claim_group_id": "C12",
+          "disposition": "SOURCE_BYTES_AND_CITATIONS_VERIFIED",
+          "artifact_locations": [
+            "YF/Y1:5-13,21"
+          ],
+          "assessment": "All three frozen primary hashes and stated versions match independent public bytes. All numerical raw-file ranges contain the claimed documented facts. Categorical advice is semantic inference beyond R, not evidence of tested class behavior. Source-read/hash/no-extra-source history remains P01."
+        },
+        {
+          "claim_group_id": "C13",
+          "disposition": "SCIENTIFIC_DISPOSITIONS_SUPPORTED",
+          "artifact_locations": [
+            "YF/Y1:5-15"
+          ],
+          "assessment": "Accepted crop/output coordinate rules, rejected pixel-to-byte equivalence, amended resampler policy and unresolved layout/class semantics follow the primary evidence. The output gives no unverified runtime result as a scientific conclusion."
+        },
+        {
+          "claim_group_id": "C14",
+          "disposition": "COMPLETE_AND_BOUNDED",
+          "artifact_locations": [
+            "YF/Y1:1-21"
+          ],
+          "assessment": "Complete six-obligation bounded recommendation, 736 whitespace words and six principal findings. The required intermediate is byte-identical to final and its same scientific content has been fully assessed; identity does not imply a lifecycle history."
+        }
+      ],
+      "process_history": {
+        "id": "P01",
+        "status": "UNVERIFIED",
+        "locations": [
+          "YF/Y1:19-21"
+        ],
+        "scope": "Candidate reading/hashing, no-draft/no-extra-source assertions and declarations that project code/fixtures were not executed.",
+        "evidence_limit": "Independent matching source digests establish scientific byte identity, not the candidate sequence of actions or absence of execution."
+      },
+      "candidate_usage": null
+    }
+  },
+  "executed_reviewer_checks": [
+    {
+      "id": "H1",
+      "check": "Direct full reading and SHA-256 inventory of 11 mapped files; candidate outputs, brief and sources only.",
+      "result": "All six candidate artifact digests and three frozen source digests match supplied expectations; brief/manifest digests are reviewer-recorded and stable on reread. Y final and intermediate have identical bytes.",
+      "started_at_utc": "2026-10-07T20:43:23.240020+00:00",
+      "full_mapped_text_read_complete_by_utc": "2026-10-07T20:44:35+00:00"
+    },
+    {
+      "id": "H2",
+      "time_utc": "2026-10-07T20:45:59.042098+00:00",
+      "check": "Seven independent public raw tagged-source fetches; exact comparison against three frozen byte captures and four implementation digests; raw citation-range inspection and bounded word counts.",
+      "result": "Seven HTTP 200s, all digests match; exact source ranges verified. No repository code executed."
+    },
+    {
+      "id": "A1",
+      "time_utc": "2026-10-07T20:45:18.759058+00:00",
+      "check": "Own standard-library exact rational affine arithmetic with nonzero offsets, unequal scaling, skew/rotation, four corners and two centers; full-transform, missing-scale and clipping counterexamples.",
+      "result": "Assertions passed. T_out(p)=T_source((c,r)+diag(w/W,h/H)p); proof and instance support coordinate claims, not runtime behavior."
+    },
+    {
+      "id": "A2",
+      "time_utc": "2026-10-07T20:45:18.759058+00:00",
+      "check": "Own arithmetic for fractional length 16.2, interpolation class codes and plurality versus strict majority.",
+      "result": "16.2 rounds to 16 with floor(x+0.5), not 17. A mean of codes 1 and 9 can invent 5; a constant class can remain unchanged. Most frequent count 3/7 is not a strict majority."
+    }
+  ],
+  "arithmetic_check_record": {
+    "started_at_utc": "2026-10-07T20:45:18.759058+00:00",
+    "ended_at_utc": "2026-10-07T20:45:18.760073+00:00",
+    "type": "isolated_stdlib_exact_rational_arithmetic",
+    "library_runtime_executed": false,
+    "affine": [
+      "3",
+      "1/2",
+      "100",
+      "-1/4",
+      "-2",
+      "200"
+    ],
+    "window": [
+      17,
+      23,
+      91,
+      67
+    ],
+    "output_shape": [
+      11,
+      13
+    ],
+    "corner_results": [
+      {
+        "output_pixel_corner": [
+          0,
+          0
+        ],
+        "world": [
+          "325/2",
+          "599/4"
+        ]
+      },
+      {
+        "output_pixel_corner": [
+          13,
+          0
+        ],
+        "world": [
+          "871/2",
+          "127"
+        ]
+      },
+      {
+        "output_pixel_corner": [
+          0,
+          11
+        ],
+        "world": [
+          "196",
+          "63/4"
+        ]
+      },
+      {
+        "output_pixel_corner": [
+          13,
+          11
+        ],
+        "world": [
+          "469",
+          "-7"
+        ]
+      }
+    ],
+    "checks": {
+      "four_rotated_skewed_extent_corners": "PASS",
+      "two_resampled_pixel_centers": "PASS",
+      "full_source_transform_counterexample": "PASS",
+      "unscaled_crop_transform_counterexample": "PASS",
+      "fractional_length_16_2_rounds_to_16_not_17": "PASS",
+      "clipped_window_origin_counterexample": "PASS",
+      "categorical_interpolation_can_invent_class_5_from_1_9": "PASS",
+      "categorical_constant_interpolation_can_preserve_class": "PASS",
+      "most_frequent_value_need_not_exceed_50_percent": "PASS"
+    },
+    "limitations": "Own affine and categorical arithmetic only; not Rasterio/GDAL execution, service behavior, nodata/tie implementation, I/O measurement, or candidate witness."
+  },
+  "not_executed_or_verified": [
+    "No Rasterio/GDAL import, downloaded project code, raster read/write, candidate code/witness, raster fixtures or physical-I/O/performance measurement.",
+    "No candidate-history/lifecycle/provenance verification; no installations, credentials, delegates, native Goal operations or unrelated filesystem scans."
+  ],
+  "proposed_candidate_checks_assessment": "Both artifacts explicitly present geometry, scientific-value and physical-I/O fixtures as proposals. Their suitability is assessed; the review does not certify that candidates ran them.",
+  "remaining_uncertainty": {
+    "scientific_scope_UNASSESSED": [],
+    "candidate_history_UNVERIFIED": [
+      "X:P01",
+      "Y:P01"
+    ],
+    "deployment_unknowns": [
+      "Actual source block shapes, per-band layout, compression/cache/overviews and storage I/O.",
+      "Class labels/meaning, target dimensions, numeric/class acceptance thresholds, whether plurality/mode matches the scientific aggregation goal.",
+      "Installed GDAL version and deployed NoData/tie behavior; runtime fractional/edge support beyond the bounded ordinary path."
+    ],
+    "future_runtime_checks": "Unexecuted proposals remain uncertainty, not failures to satisfy a brief asking for proposed checks."
+  },
+  "blinding": {
+    "identity_map_read": false,
+    "winner_economics_target_metrics_parent_analysis_other_reviews_read": false,
+    "limits": [
+      "X texts visibly use control, Q1, Q2 and join/predecessor reconciliation; Y visibly uses treatment. These method clues limit method blinding.",
+      "Relative cited paths and extra-source references expose method structure. No identity mapping or scientific method-win inference is made."
+    ],
+    "forbidden_files_read": false,
+    "no_ranking_or_lifecycle_inference": true
+  },
+  "final_validation": {
+    "status": "COMPLETE",
+    "checks": [
+      "11 reviewed input digests unchanged",
+      "14 unique claim groups and six material obligations covered per label",
+      "all seven primary fetch records and required hashes present",
+      "all artifact hashes present in readable report",
+      "process-history verification separated from scientific coverage",
+      "unknown usage null",
+      "completed before original ceiling"
+    ],
+    "initial_validation_failure_and_resolution": "A table-count substring assertion also matched prose cells; corrected to an anchored claim-group row pattern and all validations passed. No source/candidate scientific check failed.",
+    "temporary_files_removed": true,
+    "retained_review_files": [
+      "REVIEW.json",
+      "review.md"
+    ]
+  }
+}

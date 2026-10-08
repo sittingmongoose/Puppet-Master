@@ -1,0 +1,118 @@
+{
+  "schema": "ER10_ROOT_DIFFERENT_EXPLICIT_FROZEN_FINAL_INTERFACE_V1",
+  "working_output_status": "WORKING_NOT_TERMINAL",
+  "current_manifest_sha256": "a2a2a96a20b227c18638545cd028fc30a68b1f41a8142e9a76e8dd18b9048357",
+  "immutable_index_sha256": "45670c83f4bbc54a8d030ae488acc87de22a946f3113ec6d6a14148745c156a9",
+  "current_config_unchanged": true,
+  "no_capture_or_watch_operation": true,
+  "required_final_manifest_schema": "ER10_EXPLICIT_FROZEN_FINAL_INPUT_MANIFEST_V1",
+  "requirements": [
+    "A DIFFERENT explicitly frozen manifest after all four future cases actually quiet; current INPUT_IDENTITIES.json cannot be promoted.",
+    "Exactly original 40 ordered slots and original 80 control/treatment identities, 40 CLOSED and zero held.",
+    "Root supplies file source IDs, original paths, bundle-relative paths, SHA-256 and bytes. Every file is checked before metadata replay.",
+    "Root supplies four closure_evidence bindings, each an exact original true quiet field whose scope covers all candidate/review task trees including descendants.",
+    "Root supplies a DIFFERENT final field map with exact original future-case Source SHA/path/RFC6901 pointers; preserve original independent grade terms/object and UNKNOWN where no strong field exists.",
+    "Current 36 closed original grade terms/objects must remain identical.",
+    "No source-body, native ticket, transcript, account, rollout or live-capture operation is provided. Root writes synthesis/recommendation separately."
+  ],
+  "required_final_manifest_flags": {
+    "campaign_terminal": true,
+    "all_40_slots_actual_quiet": true,
+    "index_sha256": "45670c83f4bbc54a8d030ae488acc87de22a946f3113ec6d6a14148745c156a9",
+    "closed_slot_ids": [
+      "D-M01-A",
+      "D-M01-B",
+      "D-M02-A",
+      "D-M02-B",
+      "D-M03-A",
+      "D-M03-B",
+      "D-M04-A",
+      "D-M04-B",
+      "D-M05-A",
+      "D-M05-B",
+      "D-M06-A",
+      "D-M06-B",
+      "D-M07-A",
+      "D-M07-B",
+      "D-M08-A",
+      "D-M08-B",
+      "D-M09-A",
+      "D-M10-A",
+      "D-M11-A",
+      "D-M12-A",
+      "D-M13-A",
+      "D-M14-A",
+      "D-M15-A",
+      "D-M16-A",
+      "I-ANCHOR-LUNA",
+      "I-ANCHOR-MUSE",
+      "I-ANCHOR-GLM",
+      "I-METHOD-01",
+      "I-METHOD-02",
+      "I-METHOD-03",
+      "I-METHOD-04",
+      "I-METHOD-05",
+      "I-METHOD-06",
+      "I-FAST-01",
+      "I-FAST-02",
+      "I-FAST-03",
+      "C-01",
+      "C-02",
+      "C-03",
+      "C-04"
+    ]
+  },
+  "closure_evidence_templates": [
+    {
+      "slot_id": "D-M06-A",
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "original": {
+        "source": "ROOT_SUPPLIED_FROZEN_SOURCE_ID",
+        "original_path": "ROOT_SUPPLIED_ORIGINAL_JSON_PATH",
+        "bundle_path": "ROOT_SUPPLIED_BUNDLE_RELATIVE_JSON_PATH",
+        "sha256": "ROOT_SUPPLIED_SHA256",
+        "pointer": "ROOT_SUPPLIED_RFC6901_QUIET_FIELD"
+      },
+      "exact_value": true
+    },
+    {
+      "slot_id": "D-M06-B",
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "original": {
+        "source": "ROOT_SUPPLIED_FROZEN_SOURCE_ID",
+        "original_path": "ROOT_SUPPLIED_ORIGINAL_JSON_PATH",
+        "bundle_path": "ROOT_SUPPLIED_BUNDLE_RELATIVE_JSON_PATH",
+        "sha256": "ROOT_SUPPLIED_SHA256",
+        "pointer": "ROOT_SUPPLIED_RFC6901_QUIET_FIELD"
+      },
+      "exact_value": true
+    },
+    {
+      "slot_id": "D-M07-B",
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "original": {
+        "source": "ROOT_SUPPLIED_FROZEN_SOURCE_ID",
+        "original_path": "ROOT_SUPPLIED_ORIGINAL_JSON_PATH",
+        "bundle_path": "ROOT_SUPPLIED_BUNDLE_RELATIVE_JSON_PATH",
+        "sha256": "ROOT_SUPPLIED_SHA256",
+        "pointer": "ROOT_SUPPLIED_RFC6901_QUIET_FIELD"
+      },
+      "exact_value": true
+    },
+    {
+      "slot_id": "D-M09-A",
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "original": {
+        "source": "ROOT_SUPPLIED_FROZEN_SOURCE_ID",
+        "original_path": "ROOT_SUPPLIED_ORIGINAL_JSON_PATH",
+        "bundle_path": "ROOT_SUPPLIED_BUNDLE_RELATIVE_JSON_PATH",
+        "sha256": "ROOT_SUPPLIED_SHA256",
+        "pointer": "ROOT_SUPPLIED_RFC6901_QUIET_FIELD"
+      },
+      "exact_value": true
+    }
+  ],
+  "field_map_preparation": "Copy working SUPPLEMENTAL_FIELD_MAP.json to a DIFFERENT filename. Change ledger_template status to FINAL_EXPLICIT_FROZEN, campaign_terminal to true, denominator closed/live_held to 40/0, and closure of four future rows to CLOSED. Bind every future critical field to its exact original frozen metadata or explicitly justified UNKNOWN; add their history/remainder/cost refs. Do not edit the working edition. No code infers future science.",
+  "command": "python3 apply_supplement.py final-replay --final-manifest ROOT_FINAL_INPUT_IDENTITIES.json --final-field-map ROOT_FINAL_FIELD_MAP.json --output ROOT_FINAL_LEDGER.json",
+  "output_boundary": "This helper instance writes only its fixed helper directory; Root may retain/copy the bundle through Root authorized publication."
+}

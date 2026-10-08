@@ -1,0 +1,239 @@
+{
+  "case_id": "D-M14-A",
+  "matched_pair_version": 3,
+  "candidate_cold_arm_ceiling_seconds": 2400,
+  "old_design_ceiling_seconds": 900,
+  "new_root_bound_budget": true,
+  "arms": {
+    "control": {
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-control-narrative_full_final-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T20:29:30.491Z",
+        "startedAt": "2026-10-07T20:29:31.877Z",
+        "completedAt": "2026-10-07T20:42:59.460Z"
+      },
+      "request_to_terminal_seconds": 808.969,
+      "occupied_seconds": 807.583,
+      "queue_seconds": 1.386,
+      "common_prep_to_terminal_seconds": 830.971103,
+      "source_grade": "FAIL",
+      "review_occupied_seconds": 640.365,
+      "native_cumulative_counters_not_provider_usage": {
+        "tokensUsed": 154301,
+        "timeUsedSeconds": 758
+      },
+      "input": null,
+      "cached_input": null,
+      "generated": null,
+      "billing": null,
+      "frozen_output_bytes": 5338
+    },
+    "treatment": {
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-treatment-semantic_render_preserve_final-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T20:29:20.668Z",
+        "startedAt": "2026-10-07T20:29:21.932Z",
+        "completedAt": "2026-10-07T20:53:26.078Z"
+      },
+      "request_to_terminal_seconds": 1445.41,
+      "occupied_seconds": 1444.146,
+      "queue_seconds": 1.264,
+      "common_prep_to_terminal_seconds": 1457.589103,
+      "source_grade": "FAIL",
+      "review_occupied_seconds": 791.524,
+      "native_cumulative_counters_not_provider_usage": {
+        "tokensUsed": 157804,
+        "timeUsedSeconds": 1423
+      },
+      "input": null,
+      "cached_input": null,
+      "generated": null,
+      "billing": null,
+      "frozen_output_bytes": 53056,
+      "routine_render_seconds": 0.11689909299821011,
+      "render_time_already_inside_candidate_wall": true,
+      "cold_full_known_lower_bound_seconds": 1911.961103,
+      "cold_full_unknown_extra_wall_seconds": null,
+      "known_lower_bound_within_new2400": true,
+      "warm_wall_seconds": 1457.589103,
+      "amortized_uses_N": null,
+      "cold_full_eligibility": "Known lower bound within new2400; unexposed qualification invocation wall leaves exact cold-full total unknown. Original900 ceiling not passed; semanticFAIL independently disqualifies quality-preserving claim."
+    }
+  },
+  "reviews": {
+    "control": {
+      "grade": "FAIL",
+      "assessment_extent": {
+        "status": "FULL_DECLARED_SCOPE",
+        "primarychecking_complete": true,
+        "consequential_claim_count": 48,
+        "authored_views_checked": [
+          "final.md (all 34 lines)",
+          "report.md (all 61 lines)"
+        ],
+        "mapped_source_count": 6,
+        "mapped_capture_indices": [],
+        "required_complete_arm_artifacts_checked": [
+          "report.md"
+        ],
+        "source_read_extent": "All four mapped topic/tutorial documents; full enum capture and complete relevant released read/value/mask/dataset-mask call paths, including branches beyond candidate-selected locator ranges. Entire mapped files hashed and independently byte-compared to official tagged raw URLs. Unrelated write/statistics implementation is not a new subject of this bounded module. Supplemental primary checks cover geometry, external-mask flags and overview conditions.",
+        "unassessed_remainder": [],
+        "outside_requested_assessment": [
+          "Executing proposed raster/runtime fixtures",
+          "Observing an unspecified installed GDAL driver/runtime or actual input raster",
+          "Attesting historical candidate operation logs or billing",
+          "Unmapped drafts, predecessors, other arms/cases, helper/campaign history and reviews",
+          "Checking every unrelated API and every future scientific use of the libraries"
+        ],
+        "scope_closed_early": true,
+        "deadline_expired": false
+      },
+      "material_defects": 2,
+      "minor_defects": 0,
+      "defect_identities": [
+        {
+          "id": "D01",
+          "identity": "dataset_mask_release_guards_not_preserved",
+          "material": true
+        },
+        {
+          "id": "D02",
+          "identity": "nearest_native_label_provenance_condition_missing",
+          "material": true
+        }
+      ],
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/review.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/freeze.json",
+      "immutable": true,
+      "lifecycle": "COMPLETED_QUIET_SETTLED",
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-control-source-review-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T20:54:29.213Z",
+        "startedAt": "2026-10-07T20:54:29.882Z",
+        "completedAt": "2026-10-07T21:05:10.247Z"
+      },
+      "deadline_expired": false
+    },
+    "treatment": {
+      "grade": "FAIL",
+      "assessment_extent": {
+        "status": "FULL_DECLARED_SOURCE_SCIENCE_AND_MAPPED_ARTIFACT_SCOPE",
+        "all_original_brief_and_manifest_read": true,
+        "all_five_mapped_primary_sources_read_fully": true,
+        "mapped_source_raw_line_counts": {
+          "rastermask": 250,
+          "rasterresample": 68,
+          "rasterwindow": 251,
+          "geotransform": 38,
+          "rasterio-enums-1.3.10": 217
+        },
+        "mapped_primary_raw_lines_total": 824,
+        "authored_findings_checked": 6,
+        "substantive_authored_strings_checked": 60,
+        "authored_source_bindings_checked": 10,
+        "mapped_artifacts_assessed": [
+          "final.md",
+          "semantic_findings.md",
+          "mechanical_projection.md",
+          "preservation_check.md"
+        ],
+        "views_assessed": [
+          "Decision",
+          "Evidence",
+          "Conditions",
+          "Options",
+          "Optional leads",
+          "Validation",
+          "Uncertainty",
+          "Sources",
+          "Complete record detail",
+          "Exact authored input"
+        ],
+        "scientific_unassessed_remainder": [],
+        "declared_preservation_unassessed_remainder": [],
+        "additional_primary_scope": "Only targeted release mask-read/shape/default/precedence text, NumPy 1.26 mask API documentation and Rasterio 1.3.10 distribution requirements; no clone or downloaded-code execution.",
+        "not_claimed_as_assessed": [
+          "Actual raster processing or product acceptance on supplied data: no raster inputs or chosen runtime configuration provided.",
+          "Historical execution, renderer helper actual code hash, no-manual-edit/no-tests history: independently unverifiable under the allowed scope; receipt consistency assessed instead.",
+          "Physical-area implementation or a chosen product tie/coverage/mask/grid policy: intentionally open choices in the original brief."
+        ]
+      },
+      "material_defects": 1,
+      "minor_defects": 3,
+      "defect_identities": [
+        {
+          "id": "D04",
+          "identity": "Raw masked-array inversion omits the all-valid scalar nomask shape condition",
+          "material": true
+        },
+        {
+          "id": "D01",
+          "identity": "Resampling source line range excludes the continuous-data guidance",
+          "material": false
+        },
+        {
+          "id": "D02",
+          "identity": "Mask locators miss valid-zero ambiguity and masked-array inversion",
+          "material": false
+        },
+        {
+          "id": "D03",
+          "identity": "Window read-caveat locator points to a write example",
+          "material": false
+        }
+      ],
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/review.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/treatment-v3/freeze.json",
+      "immutable": true,
+      "lifecycle": "COMPLETED_QUIET_SETTLED",
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-treatment-source-review-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T20:54:48.802Z",
+        "startedAt": "2026-10-07T20:54:49.412Z",
+        "completedAt": "2026-10-07T21:08:00.936Z"
+      },
+      "deadline_expired": false
+    }
+  },
+  "assessment": {
+    "quality_preserving_speedup_established": false,
+    "equal_quality_established": false,
+    "conclusion": "Both full-scope independent reviews FAIL with different scientific defects. Treatment structural preservation PASS does not confer source correctness. No quality-preserving speedup or equal-quality claim."
+  },
+  "all_candidates_and_reviewers_quiet": true,
+  "candidate_all_native_complete": true,
+  "single_pair_only": true,
+  "old_versions_immutable": [
+    "original-v1-final-disposition.json",
+    "paired-v2-disposition.json"
+  ],
+  "inclusive_old_failed_costs_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json",
+  "generic_preparation": {
+    "development_dispatch_terminal_seconds": 454.056,
+    "qualification_reported_test_seconds": 0.316,
+    "cold_setup_known_lower_bound_seconds": 454.372,
+    "qualification_invocation_wall_seconds": null,
+    "classification": "Generic helper development and experimental qualification cost; separate from routine per-run rendering. All charged cold; no free ceiling extension.",
+    "amortized_distinct": "454.372/N seconds known prep lower bound plus unknown qualification wall/N for declared N uses; N unspecified, no assumed free prep."
+  },
+  "input": null,
+  "cached_input": null,
+  "generated": null,
+  "billing": null
+}

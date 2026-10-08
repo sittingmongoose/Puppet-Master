@@ -1,0 +1,68 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-METHOD-02",
+  "record_at": "2026-10-07T20:06:19.748450+00:00",
+  "status": "original_pair_terminal_delivery_lifecycle_HOLD",
+  "all_tasks_quiet": true,
+  "both_exact_full_finals_frozen": false,
+  "both_native_complete_terminal_states": false,
+  "source_judgment": null,
+  "science_assessment": "UNASSESSED; required paired-final/nativecomplete gate not met; no evaluator key written",
+  "coverage": {
+    "declared_axes_per_arm": 6,
+    "assessed_axes_per_arm": 0,
+    "unassessed_axes_per_arm": 6,
+    "declared_brief_obligations_per_arm": 6,
+    "assessed_brief_obligations_per_arm": 0,
+    "unassessed_brief_obligations_per_arm": 6,
+    "consequential_scope_count": null,
+    "material_errors": null,
+    "additional_plan_obligation_counts": null
+  },
+  "control": {
+    "T3": "complete",
+    "native_actual_terminal": "complete",
+    "native_identity": "01a117e5-2212-7911-af97-f0bdeafc147c",
+    "active_state": "missing",
+    "lifecycle": "HOLD",
+    "complete_artifact_and_source_map_frozen": true
+  },
+  "treatment": {
+    "T3": "interrupted_after_owned_cancel",
+    "native_actual_state": "paused",
+    "native_identity": "01a117e9-6e8b-7aa3-88d7-97374591210d",
+    "active_state": "missing",
+    "lifecycle": "HOLD/paused_not_complete",
+    "artifact_frozen": true,
+    "source_map_present": false,
+    "complete_native_output_fallback": false,
+    "native_aggregate_tokens": 129648,
+    "native_elapsed_counter_seconds": 959,
+    "distinct_input_cache_generated_reasoning_billing": null,
+    "stage_deadline_and_whole_deadline_exceeded": true
+  },
+  "timing_annotation": {
+    "event": "linked_expiry_timing_annotation",
+    "record_at": "2026-10-07T20:06:19.748450+00:00",
+    "fixed_stage_deadline": "2026-10-07T20:03:56.054326+00:00",
+    "lifecycle_only_steer": "2026-10-07T20:04:20.802Z",
+    "cancel_requestedAt": "2026-10-07T20:05:27.318Z",
+    "actual_steer_to_cancel_seconds": 66.516,
+    "grace_limit_seconds": 60,
+    "host_cancellation_late_seconds": 6.516000000000005,
+    "substantive_extension_authorized": false,
+    "hold": "host cancellation action later than <=60s; actualtimes retained no timestampsreset"
+  },
+  "original_delivery_freezes": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/reviser-v1/frozen-delivery.json",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v1/frozen-delivery.json"
+  },
+  "terminal_projection_annotations": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/reviser-v1/terminal-state-linked-annotation.json",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v1/terminal-state-linked-annotation.json"
+  },
+  "all_failures_costs_retained": true,
+  "successor": null,
+  "selection_basis": "DIAGNOSTIC_UNQUALIFIED",
+  "no_bestof_no_regrade_no_Sol_rescue": true
+}

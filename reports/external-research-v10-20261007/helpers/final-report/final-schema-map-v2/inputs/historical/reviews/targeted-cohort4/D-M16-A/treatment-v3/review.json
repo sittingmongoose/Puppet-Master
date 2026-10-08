@@ -1,0 +1,2166 @@
+{
+  "schema": "independent-declared-source-science-review.v1",
+  "carrier": "rootreviewcarrier-v2",
+  "review_kind": "ordinary fresh advisory reviewer; no native Goal, candidate receipt or delegation",
+  "case_id": "D-M16-A",
+  "version_reviewed": "THIS frozen final-v3 only",
+  "overall_grade": "DIAGNOSTIC_FAIL",
+  "overall_assessment": "Six material defects prevent acceptance. All consequential scientific claim groups and all 27 mapped primary entries were covered at frozen-source scope; historical execution/capture causality remains UNASSESSED. The conservative diagnostic grade makes no full SourcePASS claim for that remainder.",
+  "candidate_integrity": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/final.md",
+    "expected_sha256": "621792100eb67a49b91bcbcad3dda405487862811a7081d4b4a98c4f536bad67",
+    "observed_sha256_before_assessment": "621792100eb67a49b91bcbcad3dda405487862811a7081d4b4a98c4f536bad67",
+    "observed_sha256_at_write": "621792100eb67a49b91bcbcad3dda405487862811a7081d4b4a98c4f536bad67",
+    "verified_before_assessment": true,
+    "candidate_modified": false
+  },
+  "original_brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/brief.md",
+    "sha256": "7d15cde85d0b0fbf171f16f4d26aa6f88607ed6c1675eadd3bccd0c2dd42fa28",
+    "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+    "original_manifest_has_sources": false
+  },
+  "deadline": {
+    "provided": "2026-10-07T22:52:15.281664+00:00",
+    "actual_t3_requested_at": "2026-10-07T22:32:37.487Z",
+    "actual_t3_started_at": "2026-10-07T22:32:38.499Z",
+    "first_observed_tool_clock": "2026-10-07T22:32:47Z",
+    "effective_substance_stop": "2026-10-07T22:52:15.281664+00:00",
+    "expired": false
+  },
+  "assessment_extent": {
+    "material_scientific_claim_groups_checked": 58,
+    "mapped_source_entries_integrity_checked": 27,
+    "distinct_frozen_primary_byte_identities": 16,
+    "mapped_indices_checked": 4,
+    "all_six_obligations_assessed": true,
+    "scientific_semantic_extent": "All stated material recommendations/facts/conditions, positive/negative/optional leads, uncertainty categories, six proposed checks, identity and source version assertions in this exact final were evaluated. Relevant governing primary sections and caller/callee paths were read; irrelevant RFC/package content is not claimed comprehensively audited.",
+    "extent_class": "FULL_FROZEN_MATERIAL_SCIENCE_CHECK_WITH_UNASSESSED_HISTORICAL_PROVENANCE",
+    "full_source_pass": false,
+    "m14_semantic_projection_preservation_applicability": "NOT_APPLICABLE: this is D-M16-A and the map contains no M14 authored semantic/projection/preservation set.",
+    "unassessed_remainder": [
+      {
+        "item": "Candidate historical 10-file, 28-locator, 5-capture operation counts, actual read scope, no-code/no-tests historical assertions, body-discard claim",
+        "status": "UNASSESSED",
+        "reason": "No admissible activity/command logs; candidate reports and indices are inventory claims, not proof. Unmapped spotcheck, predecessor artifacts, timings and history are explicitly excluded."
+      },
+      {
+        "item": "Actual original tile request method/headers/User-Agent, exact denial cause, client dependence and content of discarded response bodies",
+        "status": "UNASSESSED",
+        "reason": "The two held header snapshots have no request metadata or bodies. They prove recorded header classes only; this review made no new tile request."
+      },
+      {
+        "item": "End-to-end runtime behavior of uncaptured downloader delegates, queue persistence, deployed viewer UI/storage and future provider survey",
+        "status": "UNASSESSED_OUTSIDE_FROZEN_EVIDENCE",
+        "reason": "Only bounded source inference is possible; proposed checks were not executed and no implementation was supplied."
+      }
+    ]
+  },
+  "six_axis_dispositions": [
+    {
+      "axis": 1,
+      "name": "All required obligations",
+      "disposition": "PARTIAL",
+      "reason": "All six obligations are structurally addressed; the complete source-linked recommendation has material governing-condition errors.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims and release/default/type/unit/path/authority conditions",
+      "disposition": "FAIL",
+      "reason": "58 claim groups were independently checked against exact source passages/metadata. Several material assertions and inferred requirements fail; source identities alone were not treated as answers.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Bounded useful discovery, negative and optional yield",
+      "disposition": "PARTIAL",
+      "reason": "Useful tile storage, validators, backoff, stale extensions, namespace and purge mechanisms are found; optional leads retained. Offline-provider alternatives and actual denial/fallback distinctions were lost; package-wide negative behavior is not proved.",
+      "defect_ids": [
+        "D01",
+        "D03"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong reject, correction and unjustified abstention",
+      "disposition": "PARTIAL_FAIL",
+      "reason": "The osmdroid backoff correction is right. Blanket blocking-refresh rejection and exclusive re-key requirement are not. Product retention choice and queue/source surveys appropriately remain open; HTTP freshness precedence itself is already settled by the RFC.",
+      "defect_ids": [
+        "D04",
+        "D05"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Preservation, traceability, uncertainty and options",
+      "disposition": "PARTIAL",
+      "reason": "Versions, source families, independent topic unknowns and four optional leads survive. Important option defaults, source-policy scope, capture causality, cache types and retention triggers do not. Several locators point to a constructor or adjoining section.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D05",
+        "D06"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed checks",
+      "disposition": "PARTIAL_WITH_UNASSESSED_PROVENANCE",
+      "reason": "Six proposed tests are clearly separated from self-reported static/probe work. Historical counts/commands/request headers are not authenticated by the allowed bytes; 28 versus 26+2+1 is ambiguous. This reviewer has not executed the proposed tests.",
+      "defect_ids": []
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "obligation_id": 1,
+      "obligation": "Give a separate disposition for acquisition and refresh.",
+      "candidate_locators": [
+        "final.md:5-9"
+      ],
+      "disposition": "STRUCTURALLY_MET_SUBSTANTIVELY_PARTIAL",
+      "assessment": "Acquisition and refresh are separate, but skip/policy/denial conclusions need conditions."
+    },
+    {
+      "obligation_id": 2,
+      "obligation": "Give a separate disposition for stale display and retention.",
+      "candidate_locators": [
+        "final.md:11-15"
+      ],
+      "disposition": "STRUCTURALLY_MET_SUBSTANTIVELY_PARTIAL",
+      "assessment": "Display and retention are separate, but stale authority and cleanup bounds need conditions."
+    },
+    {
+      "obligation_id": 3,
+      "obligation": "Identify shared identity/freshness dependencies and reuse invalidation.",
+      "candidate_locators": [
+        "final.md:17-18,26-27"
+      ],
+      "disposition": "PRESENT_BUT_MATERIAL_ERROR",
+      "assessment": "Shared substrate is discussed, but unsafe-method invalidation is confused with refresh and the version test is non-discriminating."
+    },
+    {
+      "obligation_id": 4,
+      "obligation": "Preserve topic-specific uncertainties instead of assuming shared evidence settles both.",
+      "candidate_locators": [
+        "final.md:6,9,15,27,30"
+      ],
+      "disposition": "MET_WITH_PROTOCOL_AUTHORITY_QUALIFIER",
+      "assessment": "Queue persistence, cross-source survey and product window/retention choices remain independently open; shared evidence does not purport to decide all."
+    },
+    {
+      "obligation_id": 5,
+      "obligation": "Return at most eight distinct material findings across the bundle.",
+      "candidate_locators": [
+        "final.md:20-27"
+      ],
+      "disposition": "MET",
+      "assessment": "Exactly eight distinct numbered findings; this review has six material defect identities, not a required alternative answer key."
+    },
+    {
+      "obligation_id": 6,
+      "obligation": "Deliver a bounded topic comparison and discriminating checks, counting shared discovery and synthesis.",
+      "candidate_locators": [
+        "final.md:29-33"
+      ],
+      "disposition": "PARTIAL_DISCRIMINATOR_AND_ACCOUNTING",
+      "assessment": "A useful six-check shared/topic comparison is delivered; check 2 has the wrong discriminant, bounds need precision, and stage counts do not authenticate whole-module execution."
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "claim_id": "C01",
+      "candidate_locator": "final.md:5,8,11,14",
+      "claim": "Separate dispositions for acquisition, refresh, stale display, and retention.",
+      "disposition": "SUPPORTED",
+      "inference_label": "artifact structure",
+      "primary_evidence": [],
+      "assessment": "All four headings have separate accepted/rejected/unresolved dispositions. Presence is checked directly, independently of their correctness.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C02",
+      "candidate_locator": "final.md:6,20",
+      "claim": "Captured clients acquire/store per tile by identity; Leaflet hasTile skip is used as an acquisition-resume precedent.",
+      "disposition": "GRANULARITY_SUPPORTED_SKIP_CONDITION_LOST",
+      "inference_label": "source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P09",
+          "locator": "84-105,206-225",
+          "stated_source_fact": "TileManager fetches a complete response blob, saves with IndexedDB put, and separately has a stored-first display helper."
+        },
+        {
+          "source_id": "P11",
+          "locator": "64-79,212-218",
+          "stated_source_fact": "The acquisition control defaults alwaysDownload to true; hasTile prevents fetching only when alwaysDownload is not true."
+        },
+        {
+          "source_id": "P05",
+          "locator": "128-152",
+          "stated_source_fact": "saveFile replaces the row keyed by tile index and provider, without checking exists."
+        },
+        {
+          "source_id": "P07",
+          "locator": "942-1006",
+          "stated_source_fact": "store_tile_async replaces the tile file and accepts coordinates/ETag, without a skip-existing test."
+        }
+      ],
+      "assessment": "The all-client claim of tile granularity is supported. The acquisition precedent still loses Leaflet’s option condition and cites its display guard; the other stores demonstrate replacement primitives, not an automatic acquisition skip. No universal skip claim beyond the actual wording is attributed to the candidate.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C03",
+      "candidate_locator": "final.md:6",
+      "claim": "Leaflet downloadTile to saveTile uses persistent per-tile identity.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "inference_label": "source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P09",
+          "locator": "13-43,84-105",
+          "stated_source_fact": "TileInfo has key/url/coordinates/createdAt; IndexedDB object store keyPath is key; download returns a Blob and put persists it."
+        },
+        {
+          "source_id": "P10",
+          "locator": "49-55,61-87",
+          "stated_source_fact": "The storage key normalizes the subdomain to the first entry; the requested network URL may use another subdomain."
+        }
+      ],
+      "assessment": "Correct persistent primitive. The key is a normalized resolved URL, not necessarily byte-for-byte the fetched URL. A key includes template/options/retina expansion.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C04",
+      "candidate_locator": "final.md:6,20,30 check 3",
+      "claim": "Leaflet hasTile/line 220 establishes skip-existing acquisition and restart behavior.",
+      "disposition": "REFUTED_AS_CITED",
+      "inference_label": "source assertion and proposed test",
+      "primary_evidence": [
+        {
+          "source_id": "P09",
+          "locator": "219-225",
+          "stated_source_fact": "Line 220 chooses the source for display, returning a blob URL on a storage hit."
+        },
+        {
+          "source_id": "P11",
+          "locator": "76,212-218",
+          "stated_source_fact": "Actual acquisition skip is conditional on disabling the true alwaysDownload default."
+        }
+      ],
+      "assessment": "The cited display helper does not prove the acquisition default or durable work-list reconstruction. A restart experiment remains proposed.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C05",
+      "candidate_locator": "final.md:6,20",
+      "claim": "osmdroid saveFile provides per-source, per-index storage/resume primitive.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "inference_label": "source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P05",
+          "locator": "128-152,181-198,499-505,533-534,559-593",
+          "stated_source_fact": "Rows use provider name plus encoded coordinates. saveFile replaces; exists is a separate operation."
+        }
+      ],
+      "assessment": "Storage and identity are real; a caller must decide when to use exists, when to refresh, and when replacement is required. It is not a default skip operation.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C06",
+      "candidate_locator": "final.md:6,20",
+      "claim": "libshumate store_tile_async supports per-tile storage; SHU:378 is its locator.",
+      "disposition": "SUPPORTED_MECHANISM_BAD_LOCATOR",
+      "inference_label": "source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P07",
+          "locator": "367-391",
+          "stated_source_fact": "Line 378 is new_full(size_limit, cache_key, cache_dir), the constructor."
+        },
+        {
+          "source_id": "P07",
+          "locator": "465-487,942-1006",
+          "stated_source_fact": "Tile filenames include cache directory, cache_key, zoom, x, y; store_tile_async starts at 957."
+        }
+      ],
+      "assessment": "The mechanism exists elsewhere in the held file. The cited constructor does not establish storage or skipping. Constructor parameter order in discovery index prose also reverses cache_key/cache_dir.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C07",
+      "candidate_locator": "final.md:6,20",
+      "claim": "Choose tile-level resumability rather than byte-range default for small raster tiles.",
+      "disposition": "REASONABLE_PRODUCT_INFERENCE",
+      "inference_label": "product recommendation, not a normative HTTP requirement",
+      "primary_evidence": [
+        {
+          "source_id": "P09",
+          "locator": "84-105",
+          "stated_source_fact": "Fetch/save operates on a whole tile Blob."
+        },
+        {
+          "source_id": "P05",
+          "locator": "128-152",
+          "stated_source_fact": "A stream is copied to a whole tile blob and row replacement."
+        },
+        {
+          "source_id": "P02",
+          "locator": "6467-6479",
+          "stated_source_fact": "Ranges can recover failed transfers and retrieve large representations; the server may ignore a Range request."
+        }
+      ],
+      "assessment": "A useful bounded recommendation. Reliable resume still needs a reconstructed/persisted list, stable identities, committed valid tile bytes, and a rule that does not skip tiles needing refresh. No implementation/restart proof is claimed here.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C08",
+      "candidate_locator": "final.md:6,20",
+      "claim": "No captured client byte-ranges small tiles.",
+      "disposition": "SUPPORTED_ONLY_AS_BOUNDED_NEGATIVE_LEAD",
+      "inference_label": "bounded absence in captured files; package-wide behavior UNASSESSED",
+      "primary_evidence": [
+        {
+          "source_id": "P09",
+          "locator": "84-89",
+          "stated_source_fact": "The shown fetch has no Range header."
+        },
+        {
+          "source_id": "P13",
+          "locator": "149-169,172-203",
+          "stated_source_fact": "MapTileDownloader delegates transfer to TileDownloader; its shown path has a URL backoff but no Range construction."
+        },
+        {
+          "source_id": "P07",
+          "locator": "1-1108",
+          "stated_source_fact": "The captured file is a filesystem cache, not the complete network downloader."
+        }
+      ],
+      "assessment": "Whole-file keyword and path inspection found no HTTP Range construction in the seven unique mapped code files. This cannot establish absence in uncaptured delegates, browser transport, entire packages, or all mainstream clients. The explicit negative-lead label is appropriate.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C09",
+      "candidate_locator": "final.md:6,46",
+      "claim": "Accept-Ranges is advertised and byte-range/If-Range remains optional for large rasters.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "inference_label": "source assertion plus optional product lead",
+      "primary_evidence": [
+        {
+          "source_id": "P15",
+          "locator": "12",
+          "stated_source_fact": "The successful tile response advertises bytes."
+        },
+        {
+          "source_id": "P16",
+          "locator": "9",
+          "stated_source_fact": "The blocked 200 response also advertises bytes."
+        },
+        {
+          "source_id": "P02",
+          "locator": "6109-6175,6562-6571",
+          "stated_source_fact": "If-Range requires an accompanying Range request and a strong entity tag or qualifying strong date; Accept-Ranges does not guarantee a later partial response."
+        }
+      ],
+      "assessment": "Advertisement is accurate; no 206/range transfer was tested. Preserve strong-validator/representation consistency and server-ignore fallback if this optional lead is pursued.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C10",
+      "candidate_locator": "final.md:6,21",
+      "claim": "osmdroid 6.1.20 has UrlBackoff.shouldWait/next; correcting a no-backoff assertion is warranted.",
+      "disposition": "SUPPORTED",
+      "inference_label": "source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P13",
+          "locator": "14,47,194-202",
+          "stated_source_fact": "The downloader owns UrlBackoff, checks shouldWait, calls next after a null result, and removes the entry after success."
+        }
+      ],
+      "assessment": "The frozen bytes directly support the correction. Public tag-tree metadata also matches the complete file blob. No prior draft or finding was read; only the correction text in this frozen final was assessed.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C11",
+      "candidate_locator": "final.md:6,21",
+      "claim": "Connectivity gating is backoff-free.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "inference_label": "bounded source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P06",
+          "locator": "22-47,51-78",
+          "stated_source_fact": "The class polls connection state; missing ACCESS_NETWORK_STATE permission assumes connectivity; deprecated route check always returns true."
+        },
+        {
+          "source_id": "P13",
+          "locator": "180-185",
+          "stated_source_fact": "The caller skips loading when a non-null network checker reports false."
+        }
+      ],
+      "assessment": "Accurate for this class, not for the entire downloader/provider. Connectivity permission/platform behavior remains a condition; availability is not proof of origin reachability.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C12",
+      "candidate_locator": "final.md:6,21",
+      "claim": "Adopt exponential delay from 1 second to 10 minutes, honor Retry-After, configure retry limits.",
+      "disposition": "SUPPORTED_AS_ANALOGY_WITH_CONDITIONS",
+      "inference_label": "explicit viewer-configured product choice",
+      "primary_evidence": [
+        {
+          "source_id": "P14",
+          "locator": "572,2762-2765,2788-2792",
+          "stated_source_fact": "The held manual identifies curl 8.23.0. Retries require a nonzero retry count (default zero); exponential waits apply when retrying, retry-delay replaces that shape, and Retry-After support was added in 7.66.0."
+        }
+      ],
+      "assessment": "The numbers/units are right as a curl policy analogy. They are proposed viewer values, not demonstrated osmdroid defaults or a mandatory tile standard. The real UrlBackoff delay shape was not captured and is not asserted here.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C13",
+      "candidate_locator": "final.md:6,21,30 check 4",
+      "claim": "The curl precedent supplies a total-time bound and retry stops at it.",
+      "disposition": "QUALIFY_TIME_BOUND",
+      "inference_label": "proposed product check; cited implementation has a weaker bound",
+      "primary_evidence": [
+        {
+          "source_id": "P14",
+          "locator": "1882-1885,2798-2802",
+          "stated_source_fact": "retry-max-time prevents starting further retries after its limit; an already-started transfer can exceed it. max-time caps an individual attempt and resets when retrying."
+        }
+      ],
+      "assessment": "Do not equate a retry-start cutoff with a hard operation deadline. A strict viewer deadline needs attempt cancellation/timeouts and its own remaining-budget enforcement. The check is proposed, not an executed result.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C14",
+      "candidate_locator": "final.md:6,22",
+      "claim": "OSMF prohibits bulk downloading and prefetch.",
+      "disposition": "SUPPORTED_SOURCE_SCOPED",
+      "inference_label": "source-scoped policy assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P04",
+          "locator": "75,169-180,251-257",
+          "stated_source_fact": "The prohibition applies to standard raster tiles on tile.openstreetmap.org. Bulk includes pre-emptive fetching beyond currently viewed tiles; other tile services have separate policies."
+        }
+      ],
+      "assessment": "Correct only for the specified OSMF service. It does not establish a universal prohibition across all permissible offline providers.",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "claim_id": "C15",
+      "candidate_locator": "final.md:6,22",
+      "claim": "Blocking happens in practice.",
+      "disposition": "SUPPORTED_CAPTURE_OBSERVATION_WITH_LIMITS",
+      "inference_label": "observed denial marker; causal attribution UNASSESSED",
+      "primary_evidence": [
+        {
+          "source_id": "P16",
+          "locator": "1-8",
+          "stated_source_fact": "The frozen response is HTTP 200 image/png with x-blocked: Access denied, no-cache, and Retry-After: 0."
+        },
+        {
+          "source_id": "P04",
+          "locator": "148,167,200",
+          "stated_source_fact": "Generic client identification and prefetch/offline usage can trigger blocking."
+        }
+      ],
+      "assessment": "A captured denial marker supports a denied response, despite status 200. The actual request headers, block cause, client identity, and body content were not preserved; the reason for this particular block is not proven.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C16",
+      "candidate_locator": "final.md:6,22",
+      "claim": "Viewport/session-bounded save lists are the OSMF-compliant acquisition pattern.",
+      "disposition": "REFUTED_AS_OFFLINE_SAVE_GUIDANCE",
+      "inference_label": "overextended policy inference",
+      "primary_evidence": [
+        {
+          "source_id": "P11",
+          "locator": "139-199",
+          "stated_source_fact": "The control computes and saves a bounds/zoom list; saveWhatYouSee can add zoom levels through maxZoom."
+        },
+        {
+          "source_id": "P04",
+          "locator": "171-198",
+          "stated_source_fact": "Save-area-for-later offline acquisition is prohibited; active interactive viewport fetch/local-cache revisits are permitted; offline needs self-hosting or a provider explicitly allowing it."
+        }
+      ],
+      "assessment": "Finite bounds do not convert offline prefetch into permitted interactive viewing. The recommendation omits the usable alternative provider/self-hosting lead and identification/cache conditions.",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "claim_id": "C17",
+      "candidate_locator": "final.md:6",
+      "claim": "Queue persistence across restarts has no captured implementation.",
+      "disposition": "SUPPORTED_AS_CAPTURE_LIMIT",
+      "inference_label": "topic-1 uncertainty",
+      "primary_evidence": [
+        {
+          "source_id": "P11",
+          "locator": "35-58,139-165,202-209",
+          "stated_source_fact": "The candidate tile list/status is in-memory and shifted during acquisition."
+        },
+        {
+          "source_id": "P13",
+          "locator": "66-75,209",
+          "stated_source_fact": "The shown downloader configures a queue in an uncaptured base class and removes loaded tiles."
+        }
+      ],
+      "assessment": "A durable queue is not established by the captured paths. This is appropriately open; it is not proof that no package can persist queues.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C18",
+      "candidate_locator": "final.md:9",
+      "claim": "Refresh with conditional GET using ETag/Last-Modified.",
+      "disposition": "SUPPORTED_WITH_PROTOCOL_CONDITIONS",
+      "inference_label": "source assertion and recommendation",
+      "primary_evidence": [
+        {
+          "source_id": "P02",
+          "locator": "5872-5902,5928-5932,5942-5961",
+          "stated_source_fact": "If-None-Match supports weak comparison for GET validation and 304 reuse; If-Modified-Since avoids body transfer and is ignored when If-None-Match is present."
+        },
+        {
+          "source_id": "P01",
+          "locator": "930-942,953-988",
+          "stated_source_fact": "304 refreshes selected matching stored metadata; a full response replaces the response used to satisfy the request."
+        }
+      ],
+      "assessment": "Sound policy. Validator presence is separate from explicit freshness availability, and a changed version may be returned at the same URI without re-keying.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C19",
+      "candidate_locator": "final.md:9,18,27",
+      "claim": "Schedule freshness by max-age or heuristics and share an age/max-age/validator record.",
+      "disposition": "SUPPORTED_WITH_GOVERNING_CONDITIONS",
+      "inference_label": "shared product abstraction with source-defined priority",
+      "primary_evidence": [
+        {
+          "source_id": "P01",
+          "locator": "652-709,719-782",
+          "stated_source_fact": "Freshness priority is applicable shared-cache s-maxage, then max-age, then Expires minus Date; heuristics cannot override explicit expiry. Current age includes upstream Age, transit and resident time."
+        },
+        {
+          "source_id": "P15",
+          "locator": "3,6,13,15",
+          "stated_source_fact": "The held successful response includes max-age, Expires, Date and Age: 11504."
+        }
+      ],
+      "assessment": "Useful abstraction if age means corrected current age and directives/Expires/variant context are also retained. A heuristic is not a coequal alternative to supplied explicit freshness. The final does not define the calculation; no wrong zero-age implementation is inferred.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C20",
+      "candidate_locator": "final.md:9,23",
+      "claim": "One held OSM response has validators/max-age/stale directives; another has no-cache/x-blocked.",
+      "disposition": "SUPPORTED",
+      "inference_label": "frozen capture observation",
+      "primary_evidence": [
+        {
+          "source_id": "P15",
+          "locator": "1-4,13,15-18",
+          "stated_source_fact": "The first response has max-age=526616, stale-while-revalidate=604800, stale-if-error=604800, ETag, and CDN age."
+        },
+        {
+          "source_id": "P16",
+          "locator": "1-10,12-17",
+          "stated_source_fact": "The second 200 response has no-cache, x-blocked, no ETag/Expires/max-age, and another CDN node."
+        }
+      ],
+      "assessment": "Exact header facts match the frozen source locators. Both are one-URL captures, and request metadata/body were not held. Units of all durations are seconds.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C21",
+      "candidate_locator": "final.md:9,23",
+      "claim": "Header emission is unstable per request/client, including withheld validators behind policy gating.",
+      "disposition": "PARTLY_SUPPORTED_CAUSAL_LIMIT",
+      "inference_label": "inference from two non-controlled captures",
+      "primary_evidence": [
+        {
+          "source_id": "P15",
+          "locator": "1-22",
+          "stated_source_fact": "First held response has normal tile cache metadata."
+        },
+        {
+          "source_id": "P16",
+          "locator": "1-18",
+          "stated_source_fact": "Second held response is explicitly denied and has different cache metadata."
+        }
+      ],
+      "assessment": "The two observed response classes differ. They do not isolate client-dependent variation, establish ordinary successful-tile validator instability, or survey an OSM-derived source class. Denial may explain the difference; actual cause is unknown.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C22",
+      "candidate_locator": "final.md:9,23",
+      "claim": "Time-based re-download must be the designed default whenever headers/validators are absent.",
+      "disposition": "UNSUPPORTED_UNCONDITIONAL_INFERENCE",
+      "inference_label": "unsupported default inferred from denied response",
+      "primary_evidence": [
+        {
+          "source_id": "P16",
+          "locator": "1-8",
+          "stated_source_fact": "The no-validator example is an access-denied response, not demonstrated usable fresh tile content."
+        },
+        {
+          "source_id": "P04",
+          "locator": "117-133,148-167",
+          "stated_source_fact": "The service requires stable valid identification and cache observance; unreadable cache metadata has a minimum seven-day caching rule."
+        },
+        {
+          "source_id": "P01",
+          "locator": "652-701,1258-1271",
+          "stated_source_fact": "Missing validators are distinct from freshness calculation; unqualified no-cache cannot be reused without successful validation."
+        }
+      ],
+      "assessment": "Fallback GET can be a product option for usable permitted resources without validators. A denial needs a separate failure/admission/identification state, not evidence that a valid tile should be periodically re-downloaded. Missing validators alone does not erase Expires/max-age or authorize bypassing them.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C23",
+      "candidate_locator": "final.md:9",
+      "claim": "stale-if-error is the offline fallback.",
+      "disposition": "SUPPORTED_WITH_BOUNDS_AND_ERROR_SCOPE",
+      "inference_label": "optional protocol mechanism",
+      "primary_evidence": [
+        {
+          "source_id": "P03",
+          "locator": "85-88,161-193,195-236",
+          "stated_source_fact": "The extension permits stale reuse on qualifying errors, supplies a delta-seconds upper staleness bound, and identifies 500/502/503/504 outcomes (network/DNS failures are examples)."
+        }
+      ],
+      "assessment": "Useful optional fallback subject to its time bound and source/cache permissions. A policy-denied HTTP 200 does not by itself meet these HTTP error conditions. Locator 159 is preceding section text; section 4 begins at 161.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C24",
+      "candidate_locator": "final.md:9",
+      "claim": "Reject wholesale scheduled re-download as primary.",
+      "disposition": "REASONABLE_SCOPED_PRODUCT_CHOICE",
+      "inference_label": "product recommendation",
+      "primary_evidence": [
+        {
+          "source_id": "P01",
+          "locator": "597-609,803-810",
+          "stated_source_fact": "Fresh reuse and validation reduce unnecessary transfers."
+        },
+        {
+          "source_id": "P04",
+          "locator": "130-133,171-198",
+          "stated_source_fact": "The OSMF source requires caching and prohibits offline prefetch."
+        }
+      ],
+      "assessment": "Reasonable for the requested bounded viewer and OSMF case; not a universal ban on scheduled refresh of a permitted private dataset.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C25",
+      "candidate_locator": "final.md:9,23",
+      "claim": "Other sources validator/max-age behavior remains open.",
+      "disposition": "SUPPORTED_UNCERTAINTY",
+      "inference_label": "topic-1 uncertainty and capture inventory check",
+      "primary_evidence": [],
+      "assessment": "The declared capture set supplies only the same OSM endpoint twice. The final explicitly keeps cross-source surveying open rather than treating shared evidence as conclusive.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C26",
+      "candidate_locator": "final.md:12,24",
+      "claim": "RFC 9111 permits stale reuse when disconnected, except applicable prohibitions.",
+      "disposition": "SUPPORTED",
+      "inference_label": "protocol assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P01",
+          "locator": "278-280,784-799,1222-1235",
+          "stated_source_fact": "Disconnected caches may serve stale in some circumstances; explicit no-cache/must-revalidate and applicable shared-cache directives still prohibit reuse."
+        }
+      ],
+      "assessment": "The disconnected exception and overriding constraints are preserved. It is permission, not an obligation to display a stale tile.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C27",
+      "candidate_locator": "final.md:12,24",
+      "claim": "no-cache/must-revalidate/s-maxage can forbid stale display.",
+      "disposition": "SUPPORTED_WITH_CACHE_TYPE_QUALIFIER",
+      "inference_label": "protocol assertion requiring cache-type binding",
+      "primary_evidence": [
+        {
+          "source_id": "P01",
+          "locator": "790-799,1258-1281,1384-1402",
+          "stated_source_fact": "Unqualified no-cache and must-revalidate constrain reuse; s-maxage applies to shared caches. Qualified no-cache may permit reuse with named headers excluded."
+        }
+      ],
+      "assessment": "For a private local viewer, s-maxage alone is not the same prohibition as for a shared cache. Preserve applicable/private/shared and qualified/unqualified distinctions; do not reject permitted private-cache stale use on s-maxage alone.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C28",
+      "candidate_locator": "final.md:12,24",
+      "claim": "Leaflet createTile is stored-first with no staleness age test.",
+      "disposition": "SUPPORTED",
+      "inference_label": "source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P10",
+          "locator": "20-40",
+          "stated_source_fact": "createTile asks getTileImageSource to choose image URL."
+        },
+        {
+          "source_id": "P09",
+          "locator": "219-225",
+          "stated_source_fact": "The helper chooses cached blob solely on hasTile."
+        },
+        {
+          "source_id": "P10",
+          "locator": "72-87",
+          "stated_source_fact": "TileInfo includes createdAt, but display does not use it to determine age."
+        }
+      ],
+      "assessment": "The absence of age gating is established across both held files. Do not confuse absence of an age check with absence of any stored timestamp.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C29",
+      "candidate_locator": "final.md:12",
+      "claim": "Record age beside the blob; libshumate mark_up_to_date is a counterpart.",
+      "disposition": "SUPPORTED_WITH_MECHANISM_PRECISION",
+      "inference_label": "product recommendation based on source mechanism",
+      "primary_evidence": [
+        {
+          "source_id": "P07",
+          "locator": "530-567,830-845,881-917",
+          "stated_source_fact": "mark_up_to_date changes filesystem mtime without data replacement, intended for a 304. Retrieval returns mtime and ETag."
+        },
+        {
+          "source_id": "P01",
+          "locator": "719-782",
+          "stated_source_fact": "HTTP current-age calculation incorporates origin/intermediary age, not just time since writing a blob."
+        }
+      ],
+      "assessment": "A sound metadata lead; filesystem confirmed-up-to-date mtime is not by itself the full HTTP age calculation or a measured visible-staleness budget.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C30",
+      "candidate_locator": "final.md:11-12,24",
+      "claim": "Reject blocking display-path refresh; revalidation is non-blocking.",
+      "disposition": "OVERBROAD_REJECTION",
+      "inference_label": "unsupported universalization of a conditional mechanism",
+      "primary_evidence": [
+        {
+          "source_id": "P03",
+          "locator": "107-110,123-159",
+          "stated_source_fact": "Nonblocking revalidation is permitted inside an indicated SWR window. After it ends without validation, ordinary handling can block."
+        },
+        {
+          "source_id": "P01",
+          "locator": "790-799,1258-1271",
+          "stated_source_fact": "Explicit prohibitions or absent stale permission can require validation before reuse."
+        }
+      ],
+      "assessment": "Rejecting blocking as the preferred in-window path is reasonable; declaring refresh universally nonblocking loses the out-of-window/forbidden-stale branch. A product can instead show unavailable/waiting state, but cannot imply RFC-authorized stale reuse after the permitted bound.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C31",
+      "candidate_locator": "final.md:12",
+      "claim": "Blocking refresh on intermittent links would blank the map.",
+      "disposition": "UNTESTED_PRODUCT_HYPOTHESIS",
+      "inference_label": "product/UI inference, not observed behavior",
+      "primary_evidence": [
+        {
+          "source_id": "P03",
+          "locator": "90-93,137-159",
+          "stated_source_fact": "The document discusses hiding validation latency and some requests blocking outside the window."
+        },
+        {
+          "source_id": "P01",
+          "locator": "647-650,1536-1568",
+          "stated_source_fact": "HTTP cache freshness does not force the application to redraw or discard its already displayed/history representation."
+        }
+      ],
+      "assessment": "No UI behavior was executed or supplied. Latency is plausible; blanking is not a fact established by the standards and should be labeled a design risk/hypothesis.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C32",
+      "candidate_locator": "final.md:12,30 check 5",
+      "claim": "Window value is a product choice because RFC 5861 is informational (SHOULD, not MUST).",
+      "disposition": "QUALIFY_AUTHORITY",
+      "inference_label": "product choice constrained by source permission",
+      "primary_evidence": [
+        {
+          "source_id": "P03",
+          "locator": "20-30,95-110,123-159,183-188",
+          "stated_source_fact": "The document is informational but defines RFC-2119 keywords. A response SWR allowance is up to its indicated seconds; expired-window continuation is SHOULD NOT absent other information."
+        },
+        {
+          "source_id": "P01",
+          "locator": "795-799,1203-1206",
+          "stated_source_fact": "Stale permission must have a basis and defined Cache-Control directives must be obeyed by a cache."
+        }
+      ],
+      "assessment": "A product can choose a narrower cap or obtain client/out-of-band permission; informational publication is not permission to enlarge an origin allowance arbitrarily. A window=max-age versus constant comparison must obey actual source permission.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C33",
+      "candidate_locator": "final.md:15,25",
+      "claim": "libshumate defaults size_limit to 100000000 and can purge asynchronously.",
+      "disposition": "SUPPORTED_WITH_BOUND_TYPE",
+      "inference_label": "source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P07",
+          "locator": "307-321,352-391,448-461,724-748",
+          "stated_source_fact": "The guint limit is in bytes, default 100000000, configurable; purge is asynchronous."
+        },
+        {
+          "source_id": "P07",
+          "locator": "1055-1072",
+          "stated_source_fact": "Automatic purge starts with no estimate or after estimated tile bytes exceed the limit plus 5000000."
+        }
+      ],
+      "assessment": "100000000 is decimal bytes (100 MB), not 100 MiB. This is an eventual tile-payload cap with slack/errors/concurrency, not an instantaneous total-filesystem cap.",
+      "defect_ids": [
+        "D06"
+      ]
+    },
+    {
+      "claim_id": "C34",
+      "candidate_locator": "final.md:15,25,30 check 6",
+      "claim": "libshumate eviction is size/rank based.",
+      "disposition": "SUPPORTED_WITH_ORDER_PRECISION",
+      "inference_label": "source assertion",
+      "primary_evidence": [
+        {
+          "source_id": "P07",
+          "locator": "239-266,641-704",
+          "stated_source_fact": "The table tracks size/popularity; reads increment popularity; purge sums sizes, selects in ascending popularity, deletes until size_limit, then adjusts popularity."
+        }
+      ],
+      "assessment": "Rank means access popularity, not FIFO/LRU or age order. Ties have no explicit secondary order. The source is sufficiently discriminating to identify this behavior; the product choice between policies remains open.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C35",
+      "candidate_locator": "final.md:15,25,46",
+      "claim": "osmdroid expires plus default startup cleanup is an expiry-based bounded-retention precedent.",
+      "disposition": "SUPPORTED_METADATA_OVERSTATED_BOUND",
+      "inference_label": "source assertion requiring trigger/eligibility binding",
+      "primary_evidence": [
+        {
+          "source_id": "P05",
+          "locator": "53-68,83-125",
+          "stated_source_fact": "cleanOnStartup is a static true default; the no-argument cleanup returns if database file length is at or below configured max bytes."
+        },
+        {
+          "source_id": "P05",
+          "locator": "128-152,660-730",
+          "stated_source_fact": "Expiration is optional. Cleanup orders non-null expiry ascending; ordinary no-argument cleanup passes includeUnexpired=true, so it may delete fresh tiles too and cannot select null-expiry rows."
+        }
+      ],
+      "assessment": "Startup invokes cleanup, not unconditional expired-tile removal. Its volume trigger and row-eligibility conditions materially constrain the claimed bound. Expiry is an ordering field here, not a guaranteed expiry-time deletion policy.",
+      "defect_ids": [
+        "D06"
+      ]
+    },
+    {
+      "claim_id": "C36",
+      "candidate_locator": "final.md:15,27",
+      "claim": "Expiry authority and eviction order remain unresolved for the viewer.",
+      "disposition": "SUPPORTED_PRODUCT_UNCERTAINTY_WITH_PROTOCOL_BOUNDARY",
+      "inference_label": "topic-2 product uncertainty",
+      "primary_evidence": [
+        {
+          "source_id": "P01",
+          "locator": "652-701",
+          "stated_source_fact": "HTTP freshness authority/heuristic precedence is specified."
+        },
+        {
+          "source_id": "P05",
+          "locator": "128-152,660-730",
+          "stated_source_fact": "osmdroid accepts externally supplied expiration and orders eligible rows by it."
+        },
+        {
+          "source_id": "P07",
+          "locator": "641-704",
+          "stated_source_fact": "libshumate uses tile payload size and access popularity."
+        }
+      ],
+      "assessment": "Viewer retention TTL/order is open and the precedents do not decide it. HTTP freshness precedence is already specified and must not be reopened as header versus heuristic preference. Separate retention expiry from HTTP validity.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C37",
+      "candidate_locator": "final.md:15",
+      "claim": "Unbounded keep-everything has no captured precedent, so reject it.",
+      "disposition": "REJECTION_REASON_NOT_ESTABLISHED",
+      "inference_label": "reasonable product rejection with unsupported absence rationale",
+      "primary_evidence": [
+        {
+          "source_id": "P09",
+          "locator": "29-46,97-105,192-216",
+          "stated_source_fact": "Leaflet persists tiles and provides explicit remove/truncate operations; no automatic size/expiry eviction is shown in this complete module."
+        },
+        {
+          "source_id": "P05",
+          "locator": "692-695",
+          "stated_source_fact": "The captured cleanup path excludes tiles whose expiration is null."
+        }
+      ],
+      "assessment": "Rejecting unbounded retention follows the original bounded brief. The corpus does not establish the stated absence of an unbounded/manual-retention pattern; browser quota and unheld code remain unknown. This weak rationale is recorded separately, not inflated into a mandatory alternative adoption.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C38",
+      "candidate_locator": "final.md:15,18,25",
+      "claim": "MBTiles 1.3 specifies no freshness/retention tile columns; viewer-owned metadata is needed.",
+      "disposition": "SUPPORTED_WITH_FORMAT_CONDITIONS",
+      "inference_label": "source assertion plus reasonable metadata recommendation",
+      "primary_evidence": [
+        {
+          "source_id": "P08",
+          "locator": "39-42,81-97,99-129",
+          "stated_source_fact": "Required tile interface has integer zoom_level/tile_column/tile_row and blob tile_data. Version metadata is optional; extra metadata rows/views are possible. Tile row is TMS, reversed from XYZ Y."
+        }
+      ],
+      "assessment": "There is no standard per-tile freshness/eviction contract. Preserve that source identity is implicit in a tileset, not an extra mandatory source column, and TMS/XYZ conversion is required if exchanging keys. The source is a moving-master document titled 1.3, frozen by hash.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C39",
+      "candidate_locator": "final.md:18,26",
+      "claim": "All stores have flat source/coordinate or resolved-URL identity.",
+      "disposition": "SUPPORTED_AS_ABSTRACTION_WITH_VARIANT_CONDITIONS",
+      "inference_label": "product abstraction",
+      "primary_evidence": [
+        {
+          "source_id": "P08",
+          "locator": "99-126",
+          "stated_source_fact": "MBTiles keys z/column/TMS-row within a tileset."
+        },
+        {
+          "source_id": "P10",
+          "locator": "49-55,72-85",
+          "stated_source_fact": "Leaflet storage keys are resolved normalized URLs."
+        },
+        {
+          "source_id": "P05",
+          "locator": "139-152,559-593,746",
+          "stated_source_fact": "SQL tile keys combine provider name and encoded coordinates."
+        },
+        {
+          "source_id": "P07",
+          "locator": "465-487",
+          "stated_source_fact": "Filesystem key includes cache_key, zoom/x/y."
+        },
+        {
+          "source_id": "P01",
+          "locator": "251-262,526-534",
+          "stated_source_fact": "HTTP reuse also depends on nominated Vary request fields."
+        }
+      ],
+      "assessment": "A useful shared abstraction. Sources do not establish one identical raw coordinate system or a universally sufficient URL-only HTTP variant key. Retain source/version namespace and any applicable Vary context.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C40",
+      "candidate_locator": "final.md:18,26-27",
+      "claim": "Freshness is metadata beside the tile blob and validators enable cheap checks.",
+      "disposition": "SUPPORTED",
+      "inference_label": "source assertion and performance-neutral qualitative inference",
+      "primary_evidence": [
+        {
+          "source_id": "P05",
+          "locator": "148-152,538-553",
+          "stated_source_fact": "Expiration is stored beside tile data."
+        },
+        {
+          "source_id": "P07",
+          "locator": "239-245,530-567,881-917",
+          "stated_source_fact": "ETag and confirmed-up-to-date mtime are retrievable independently of image bytes."
+        },
+        {
+          "source_id": "P02",
+          "locator": "3362-3385,3480-3500,3570-3612",
+          "stated_source_fact": "ETag/Last-Modified describe representation validators and reduce repeated transfer."
+        }
+      ],
+      "assessment": "Cheap means potentially avoiding a body transfer, not zero network work or guaranteed freshness. Validation still requires compatible representations and successful server response.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C41",
+      "candidate_locator": "final.md:18,26",
+      "claim": "Automatic invalidation fires only on non-GET methods; GET-only viewers get none.",
+      "disposition": "REFUTED_OR_CONFLATED",
+      "inference_label": "source assertion and invalid inference",
+      "primary_evidence": [
+        {
+          "source_id": "P01",
+          "locator": "1017-1049",
+          "stated_source_fact": "Mandatory invalidation is tied to unsafe or unknown-safety methods and successful/non-error responses, not all non-GET methods; effect is limited to traversed caches."
+        },
+        {
+          "source_id": "P01",
+          "locator": "930-942,990-1015",
+          "stated_source_fact": "Conditional GET can update/replace stored responses; HEAD can freshen or invalidate stored GET responses."
+        }
+      ],
+      "assessment": "No automatic global origin-change notification is guaranteed for GET-only clients. That narrower fact does not imply no refresh replacement, and non-GET is not the unsafe-method predicate.",
+      "defect_ids": [
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C42",
+      "candidate_locator": "final.md:18,26",
+      "claim": "Source/version change must re-key or old tiles persist until retention removes them.",
+      "disposition": "OVERSTATED_EXCLUSIVITY",
+      "inference_label": "product choice incorrectly presented as exclusive necessity",
+      "primary_evidence": [
+        {
+          "source_id": "P05",
+          "locator": "63,128-152,213-244,386-397",
+          "stated_source_fact": "Existing expired tiles are overwritten by downloads; saveFile replaces; purge by source and remove by tile are explicit alternatives."
+        },
+        {
+          "source_id": "P01",
+          "locator": "803-810,930-942",
+          "stated_source_fact": "Revalidation can obtain a changed full response at the same URI and use it instead of the prior representation."
+        },
+        {
+          "source_id": "P07",
+          "locator": "338-346,465-487",
+          "stated_source_fact": "Namespacing offers a genuine version-isolation mechanism."
+        }
+      ],
+      "assessment": "Explicit re-keying is sensible for simultaneously retained logical source versions. It is not the only correct way to invalidate/replace old data. Same-identity replacement or explicit source removal is already present in the mapped corpus.",
+      "defect_ids": [
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C43",
+      "candidate_locator": "final.md:20-27,42",
+      "claim": "At most eight distinct material findings; exactly eight numbered findings.",
+      "disposition": "SUPPORTED",
+      "inference_label": "artifact structure",
+      "primary_evidence": [],
+      "assessment": "Eight numbered findings correspond to the bundle themes. Repeated section prose/checks do not create extra distinct numbered findings. Word count is 1119 by whitespace split versus a soft ceiling of 1100; no hard word-limit violation is assigned.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C44",
+      "candidate_locator": "final.md:27,30",
+      "claim": "One shared freshness substrate has independent producer/consumer policies; shared evidence does not settle both topics.",
+      "disposition": "SUPPORTED_WITH_LIMITS",
+      "inference_label": "cross-topic synthesis",
+      "primary_evidence": [
+        {
+          "source_id": "P01",
+          "locator": "581-609,647-650,784-810,1536-1568",
+          "stated_source_fact": "HTTP transfer freshness and application presentation have distinct roles."
+        },
+        {
+          "source_id": "P07",
+          "locator": "530-567,627-748",
+          "stated_source_fact": "Freshening metadata and purging payloads are distinct operations."
+        }
+      ],
+      "assessment": "Useful synthesis and properly independent unknowns. The shared record must still carry authority/variant/error context; a valid source freshness policy does not choose UI window, restart queue, or retention ranking.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C45",
+      "candidate_locator": "final.md:30 check 1",
+      "claim": "Propose a few compliant validator/max-age endpoint probes, shared across topics.",
+      "disposition": "REASONABLE_PROPOSED_CHECK",
+      "inference_label": "proposed, not executed",
+      "primary_evidence": [
+        {
+          "source_id": "P04",
+          "locator": "117-133,148-167",
+          "stated_source_fact": "Identification, caching and source usage conditions govern requests."
+        }
+      ],
+      "assessment": "Useful discovery discriminator; do not turn a denial into usable-tile refresh evidence. Probe records should retain client headers/method, status/denial marker, Date/Age, source permissions, and response identity. This review made no new tile endpoint request.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C46",
+      "candidate_locator": "final.md:30 check 2",
+      "claim": "Change tile-source version and check old-version tiles survive purge to validate re-keying.",
+      "disposition": "NON_DISCRIMINATING_AS_WRITTEN",
+      "inference_label": "proposed check with wrong discriminant",
+      "primary_evidence": [
+        {
+          "source_id": "P05",
+          "locator": "213-244",
+          "stated_source_fact": "purgeCache can remove all rows or all rows for a source."
+        },
+        {
+          "source_id": "P07",
+          "locator": "641-704",
+          "stated_source_fact": "Size/popularity purge is independent of source version isolation."
+        }
+      ],
+      "assessment": "Survival after an unspecified purge tests the purge policy, not identity correctness. A version check should verify that old bytes are not selected for a new-version request, with replacement/removal or separate namespaces distinguished. Physical old-data survival may be deliberately allowed or deliberately forbidden.",
+      "defect_ids": [
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C47",
+      "candidate_locator": "final.md:30 check 3",
+      "claim": "Kill/restart acquisition; skip-existing completes without duplicates.",
+      "disposition": "REASONABLE_CONDITIONAL_PROPOSED_CHECK",
+      "inference_label": "proposed, not executed",
+      "primary_evidence": [
+        {
+          "source_id": "P09",
+          "locator": "29-46,97-105",
+          "stated_source_fact": "Committed tiles are persisted by key."
+        },
+        {
+          "source_id": "P11",
+          "locator": "76,139-165,212-218",
+          "stated_source_fact": "The list is in memory and skipping is disabled by default."
+        }
+      ],
+      "assessment": "Tests reconstructed/persisted list behavior plus correct acquisition options. Include an interrupted uncommitted tile and a tile requiring refresh. No such restart was executed here or proven by captures.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C48",
+      "candidate_locator": "final.md:30 check 4",
+      "claim": "Inject failures and test a URL-backoff gate/total bound.",
+      "disposition": "REASONABLE_PROPOSED_CHECK_WITH_BOUND_PRECISION",
+      "inference_label": "proposed, not executed",
+      "primary_evidence": [
+        {
+          "source_id": "P13",
+          "locator": "194-202",
+          "stated_source_fact": "Failures advance a per-URL gate."
+        },
+        {
+          "source_id": "P14",
+          "locator": "2763-2765,2798-2802",
+          "stated_source_fact": "Transient classifications/Retry-After and retry-start budget are distinct from an in-flight deadline."
+        }
+      ],
+      "assessment": "Useful test if failure classes, request timeout/cancellation, Retry-After, and total-budget semantics are specified. The captured files do not prove actual wait values or a hard total deadline.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C49",
+      "candidate_locator": "final.md:30 check 5",
+      "claim": "Compare stale window=max-age versus a fixed constant.",
+      "disposition": "REASONABLE_ONLY_WITH_SOURCE_BOUNDS",
+      "inference_label": "proposed, not executed",
+      "primary_evidence": [
+        {
+          "source_id": "P03",
+          "locator": "107-110,130-159,183-188",
+          "stated_source_fact": "SWR/SIE bounds are additional allowed staleness, not the fresh max-age duration itself."
+        },
+        {
+          "source_id": "P01",
+          "locator": "790-799",
+          "stated_source_fact": "Stale reuse needs permission and respects prohibitions."
+        }
+      ],
+      "assessment": "Can discriminate product staleness caps within permitted limits. Add boundary/denied-stale/newer-version selection checks; neither candidate numeric scheme may override source permission just because it is a product option.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C50",
+      "candidate_locator": "final.md:30 check 6",
+      "claim": "Overfill; compare size/rank versus expiry eviction by fresh-tile hit rate.",
+      "disposition": "USEFUL_BUT_NOT_COMPLETE_BOUND_VERIFICATION",
+      "inference_label": "proposed, not executed",
+      "primary_evidence": [
+        {
+          "source_id": "P07",
+          "locator": "641-704,1065-1072",
+          "stated_source_fact": "Purge uses payload size/popularity with asynchronous overshoot."
+        },
+        {
+          "source_id": "P05",
+          "locator": "115-124,692-695",
+          "stated_source_fact": "SQL cleanup uses database size trigger and excludes null expiry rows."
+        }
+      ],
+      "assessment": "A useful policy-performance discriminator. Fresh-hit rate alone does not prove bounded storage: separately observe configured trigger, payload and database bytes, null-expiry eligibility, slack, and completion/failure. Execution remains proposed.",
+      "defect_ids": [
+        "D06"
+      ]
+    },
+    {
+      "claim_id": "C51",
+      "candidate_locator": "final.md:3,33",
+      "claim": "Ten predecessor bytes were hash/size checked.",
+      "disposition": "HISTORICAL_EXECUTION_UNASSESSED",
+      "inference_label": "candidate self-report, not independently authenticated",
+      "primary_evidence": [
+        {
+          "source_id": "P15",
+          "locator": "1-22",
+          "stated_source_fact": "A held header capture exists."
+        },
+        {
+          "source_id": "P13",
+          "locator": "1-226",
+          "stated_source_fact": "A held downloader source exists."
+        }
+      ],
+      "assessment": "Topic-1 and topic-2 indices contain three and seven entries respectively, compatible with a ten-file input count. This reviewer independently checked their bytes. That does not prove what the candidate actually read or checked historically. Candidate logs/timings/predecessor artifacts are excluded.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C52",
+      "candidate_locator": "final.md:3,33",
+      "claim": "28 locator checks: 26 pass, 2 refinements, 1 refutation.",
+      "disposition": "HISTORICAL_EXECUTION_UNASSESSED_COUNT_AMBIGUITY",
+      "inference_label": "candidate self-report; no SourcePASS from counts",
+      "primary_evidence": [],
+      "assessment": "The displayed categories sum to 29 if disjoint; overlap is not explained. The referred spotcheck.md is not a mapped permitted source and was not read. No prior reviewer findings or earlier final versions were consulted. All current material claims were independently examined instead.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C53",
+      "candidate_locator": "final.md:3,33,46",
+      "claim": "Five fresh captures, including one bounded header re-probe.",
+      "disposition": "INVENTORY_SUPPORTED_EXECUTION_UNASSESSED",
+      "inference_label": "candidate self-report plus verified inventory",
+      "primary_evidence": [
+        {
+          "source_id": "P16",
+          "locator": "1-18",
+          "stated_source_fact": "A dated second header record exists."
+        },
+        {
+          "source_id": "P04",
+          "locator": "1-267",
+          "stated_source_fact": "The policy capture is identical by SHA-256 to the shared capture."
+        }
+      ],
+      "assessment": "The final-stage index has five entries, four byte-identical to earlier mapped source identities and one new denied-header record. It establishes inventory, not how many network operations occurred or whether the body was discarded.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C54",
+      "candidate_locator": "final.md:3,33",
+      "claim": "Only static reading and single probes were executed; nobody ran checks 1-6 or code.",
+      "disposition": "SEPARATION_CLEAR_HISTORICAL_NEGATIVE_UNASSESSED",
+      "inference_label": "proposed/executed distinction with provenance limit",
+      "primary_evidence": [],
+      "assessment": "The final explicitly labels six checks proposed. Permitted source bytes contain no test execution evidence. No candidate activity/command logs were supplied or read, so universal historical no-execution assertions cannot be independently verified. This reviewer executed only local metadata/document processing, not any downloaded project code/tests.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C55",
+      "candidate_locator": "final.md:45-46",
+      "claim": "Source keys/versions/capture limits resolve to held identities.",
+      "disposition": "MOSTLY_SUPPORTED_WITH_INDEX_CORRECTIONS",
+      "inference_label": "identity/provenance check, not manifest-based SourcePASS",
+      "primary_evidence": [
+        {
+          "source_id": "P14",
+          "locator": "572",
+          "stated_source_fact": "The curl manual explicitly identifies version 8.23.0."
+        },
+        {
+          "source_id": "P08",
+          "locator": "1,81-97,99-126",
+          "stated_source_fact": "The document identifies MBTiles 1.3, includes optional tileset version metadata, and uses TMS rows."
+        },
+        {
+          "source_id": "P13",
+          "locator": "14,47,194-202",
+          "stated_source_fact": "The claimed osmdroid backoff symbols are present."
+        }
+      ],
+      "assessment": "All 27 map entries and four source indices match hashes; six document re-captures match; public repository metadata matches seven code blobs at claimed tags. The indices nevertheless contain interpretive errors (notably no curl version header, downloader no-backoff, constructor locator/order, and OSM offline-use characterization). Their annotations were not accepted as source facts.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C56",
+      "candidate_locator": "final.md:46",
+      "claim": "Preserve byte-range and If-Range as optional leads.",
+      "disposition": "SUPPORTED_WITH_STRONG_VALIDATOR_LIMIT",
+      "inference_label": "optional lead",
+      "primary_evidence": [
+        {
+          "source_id": "P02",
+          "locator": "6109-6175,6467-6479,6562-6571",
+          "stated_source_fact": "Range support is optional and conditional; If-Range requires representation consistency via a strong validator."
+        }
+      ],
+      "assessment": "Optional status is preserved; successful future partial reuse remains untested. The denied response advertisement does not validate a real tile range mechanism.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C57",
+      "candidate_locator": "final.md:46",
+      "claim": "Preserve libshumate cache_key namespacing and osmdroid cleanOnStartup variant.",
+      "disposition": "SUPPORTED_WITH_DEFAULTS_AND_TRIGGER",
+      "inference_label": "optional lead",
+      "primary_evidence": [
+        {
+          "source_id": "P07",
+          "locator": "338-346,367-391,465-487",
+          "stated_source_fact": "cache_key is a tileset ID and a filename namespace, passed before cache_dir to new_full."
+        },
+        {
+          "source_id": "P05",
+          "locator": "56-93,102-124",
+          "stated_source_fact": "cleanOnStartup defaults true, is static/settable, and initiates size-triggered cleanup on first initialization."
+        }
+      ],
+      "assessment": "Real optional mechanisms; neither is proof of a completed namespace migration or pure TTL-based deletion.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C58",
+      "candidate_locator": "final.md:29-43",
+      "claim": "Deliver a bounded topic comparison and discriminating checks counting shared discovery and synthesis.",
+      "disposition": "STRUCTURE_SUPPORTED_AGGREGATE_PROVENANCE_PARTIAL",
+      "inference_label": "artifact/inventory assessment",
+      "primary_evidence": [],
+      "assessment": "The comparison binds two shared checks, two acquisition/refresh checks, and two display/retention checks. It explicitly synthesizes shared identity/freshness. The permitted indices have 12+3+7+5=27 capture entries but 16 distinct SHA-256 source identities (15 before final join; one added header observation), including provenance tree metadata. The final gives stage-local 10/5 operation self-reports, not a verified complete module operation accounting. No cost/speed/winner inference is made.",
+      "defect_ids": [
+        "D04"
+      ]
+    }
+  ],
+  "material_defects": [
+    {
+      "defect_id": "D01",
+      "title": "Viewport bounds do not authorize offline acquisition from the OSMF standard tile service",
+      "materiality": "HIGH",
+      "candidate_locators": [
+        "final.md:6",
+        "final.md:22"
+      ],
+      "claim_ids": [
+        "C14",
+        "C16"
+      ],
+      "evidence": [
+        {
+          "source_id": "P04",
+          "locator": "169-198,251-257",
+          "stated_source_fact": "The policy separates active viewport viewing/local-cache revisits from prohibited offline save/prefetch, and offers self-hosted/explicitly permitted alternatives."
+        },
+        {
+          "source_id": "P11",
+          "locator": "139-199",
+          "stated_source_fact": "The cited SaveTiles control saves a bounds/zoom list, potentially at multiple zooms."
+        }
+      ],
+      "impact": "Adopting the stated compliant offline-save pattern can violate the governing source policy and be blocked. A finite session does not settle permitted purpose.",
+      "correction": "Bind acquisition to a provider explicitly permitting offline/prefetch or self-hosted tiles. For tile.openstreetmap.org restrict to active interactive viewing/cache revisits and retain identifying User-Agent/web Referer, caching headers or the minimum seven-day unreadable-header rule. Do not generalize this service policy to every provider.",
+      "independent_inference": "Policy clauses applied to the brief’s offline-save purpose; no claim about undisclosed client intent or an actual violation by the candidate."
+    },
+    {
+      "defect_id": "D02",
+      "title": "Stored-first display was promoted into unconditional skip-existing acquisition",
+      "materiality": "HIGH",
+      "candidate_locators": [
+        "final.md:6",
+        "final.md:20",
+        "final.md:30 check 3"
+      ],
+      "claim_ids": [
+        "C02",
+        "C04",
+        "C05",
+        "C47"
+      ],
+      "evidence": [
+        {
+          "source_id": "P09",
+          "locator": "219-225",
+          "stated_source_fact": "Line 220 selects a stored image for display."
+        },
+        {
+          "source_id": "P11",
+          "locator": "76,212-218",
+          "stated_source_fact": "Acquisition defaults alwaysDownload=true; disabling it activates the hasTile guard."
+        },
+        {
+          "source_id": "P05",
+          "locator": "128-152",
+          "stated_source_fact": "saveFile replaces a tile row."
+        },
+        {
+          "source_id": "P07",
+          "locator": "957-1006",
+          "stated_source_fact": "store_tile_async replaces a tile file."
+        }
+      ],
+      "impact": "A reader implementing the cited default can repeatedly download committed tiles on restart. Conversely, an unconditional hasTile skip can suppress refresh of a tile known to have a newer version. The Leaflet display guard does not establish acquisition skipping by default; the other cited writes are replacement primitives.",
+      "correction": "Explicitly adopt/configure acquisition skipping for usable committed tiles that do not need refresh, distinguish storage replacement from download admission, and leave durable/reconstructed queue behavior to the proposed restart check.",
+      "independent_inference": "Call-site inspection distinguishes acquisition, storage, and presentation without running any library."
+    },
+    {
+      "defect_id": "D03",
+      "title": "An access-denied response was generalized into ordinary missing-validator refresh behavior",
+      "materiality": "HIGH",
+      "candidate_locators": [
+        "final.md:9",
+        "final.md:23",
+        "final.md:30 check 1"
+      ],
+      "claim_ids": [
+        "C21",
+        "C22",
+        "C23",
+        "C45"
+      ],
+      "evidence": [
+        {
+          "source_id": "P16",
+          "locator": "1-8",
+          "stated_source_fact": "The second capture is a denied HTTP 200 PNG response with no-cache/x-blocked; request metadata and body are absent."
+        },
+        {
+          "source_id": "P15",
+          "locator": "1-4",
+          "stated_source_fact": "The normal held response has validators and explicit freshness."
+        },
+        {
+          "source_id": "P04",
+          "locator": "117-133,148-167",
+          "stated_source_fact": "Identification and source cache requirements govern further requests."
+        },
+        {
+          "source_id": "P03",
+          "locator": "183-188",
+          "stated_source_fact": "stale-if-error has a staleness bound and qualifying error conditions."
+        }
+      ],
+      "impact": "A denied response may be repeatedly fetched or mistaken for replacement tile content; two different response classes do not establish usable-tile validator instability. The report lacks the governing denial/admission branch and makes fallback mandatory from non-discriminating evidence.",
+      "correction": "Retain the denial as a separate observed failure state; keep block cause/client dependence unknown. Use time-based unconditional refresh only for usable, permitted resources without validators, after honoring remaining freshness fields and source policy. Preserve known-good tile bytes subject to allowed stale bounds rather than treating a denial body as the new tile.",
+      "independent_inference": "Potential poisoning/retry consequence is a design risk inferred from the missing response-class distinction, not an observed candidate implementation defect."
+    },
+    {
+      "defect_id": "D04",
+      "title": "Unsafe-method invalidation was conflated with GET refresh, making re-keying falsely exclusive",
+      "materiality": "HIGH",
+      "candidate_locators": [
+        "final.md:18",
+        "final.md:26",
+        "final.md:30 check 2"
+      ],
+      "claim_ids": [
+        "C41",
+        "C42",
+        "C46"
+      ],
+      "evidence": [
+        {
+          "source_id": "P01",
+          "locator": "930-942,990-1049",
+          "stated_source_fact": "Conditional GET can supply replacement data; HEAD can freshen/invalidate; mandatory unsafe-method invalidation has non-error response and cache-path conditions."
+        },
+        {
+          "source_id": "P05",
+          "locator": "128-152,213-244,386-397",
+          "stated_source_fact": "The mapped store replaces data and can clear by source or remove by tile."
+        }
+      ],
+      "impact": "The report incorrectly predicts old tiles survive until eviction, and the proposed purge-survival check does not discriminate version identity correctness. It may cause unnecessary schema/namespacing changes or skip the actual update path.",
+      "correction": "State the narrower lack of guaranteed global origin-change notification. Choose explicit new-version namespacing, old-source removal, or same-key validated replacement as applicable. Test that new-version requests cannot select old bytes; physical survival after a chosen purge is a separate retention question.",
+      "independent_inference": "The recommendations are alternatives already supported by the held code, not a preset demand to adopt one scheme."
+    },
+    {
+      "defect_id": "D05",
+      "title": "Conditional stale-serving permission was turned into a blanket nonblocking rule",
+      "materiality": "MODERATE",
+      "candidate_locators": [
+        "final.md:11",
+        "final.md:12",
+        "final.md:24",
+        "final.md:30 check 5"
+      ],
+      "claim_ids": [
+        "C27",
+        "C30",
+        "C31",
+        "C32",
+        "C49"
+      ],
+      "evidence": [
+        {
+          "source_id": "P03",
+          "locator": "107-159",
+          "stated_source_fact": "Nonblocking SWR is window-bound; later requests can block when validation is required."
+        },
+        {
+          "source_id": "P01",
+          "locator": "790-799,1258-1281,1384-1402",
+          "stated_source_fact": "Stale reuse has permission/prohibition conditions; s-maxage is shared-cache specific; no-cache has qualified/unqualified forms."
+        },
+        {
+          "source_id": "P01",
+          "locator": "647-650,1536-1568",
+          "stated_source_fact": "Cache freshness does not by itself mandate a UI redraw or imply map blanking."
+        }
+      ],
+      "impact": "The final leaves the expired/forbidden-stale branch unclear while rejecting blocking universally, and its product-window/blanking rationale exceeds the cited authority. A private viewer can also wrongly reject stale use based on shared-only s-maxage.",
+      "correction": "Limit the preferred nonblocking path to permitted staleness. State how the product handles an expired or forbidden stale tile (validation/waiting/unavailable or an explicitly defined history presentation). Bind product caps to supplied SWR/SIE permission or another valid contract, distinguish private/shared caches, and label blanking as an untested UI risk.",
+      "independent_inference": "The issue is an omitted conditional branch and overbroad claim, not an assertion that every offline viewer must implement a blocking UI."
+    },
+    {
+      "defect_id": "D06",
+      "title": "Retention precedents lost their trigger, eligibility, units, and soft-bound conditions",
+      "materiality": "MODERATE",
+      "candidate_locators": [
+        "final.md:15",
+        "final.md:25",
+        "final.md:30 check 6"
+      ],
+      "claim_ids": [
+        "C33",
+        "C35",
+        "C50"
+      ],
+      "evidence": [
+        {
+          "source_id": "P05",
+          "locator": "102-124,128-152,660-730",
+          "stated_source_fact": "SQL cleanup is triggered by database size, excludes null expiry, and ordinary cleanup can include unexpired rows."
+        },
+        {
+          "source_id": "P07",
+          "locator": "307-321,641-748,1065-1072",
+          "stated_source_fact": "The limit is tile payload bytes, purge is asynchronous, and automatic trigger includes five-million-byte slack."
+        }
+      ],
+      "impact": "The viewer may treat expires as a guaranteed TTL deletion rule or either library as a hard instantaneous disk cap. A fresh-hit-rate experiment alone does not verify the required storage bound, especially for absent-expiry tiles.",
+      "correction": "Carry the precise source defaults/units, size trigger and null-expiry eligibility. Declare the viewer’s desired hard/eventual storage bound independently, and measure storage/cleanup completion as well as fresh hit rate. Keep eviction ranking as a product choice.",
+      "independent_inference": "The mapped code supports bounded-purge mechanisms with these conditions; this is not a rejection of those mechanisms."
+    }
+  ],
+  "non_material_or_qualification_notes": [
+    {
+      "id": "N01",
+      "kind": "locator precision",
+      "text": "SHU:378 is the constructor, not store_tile_async (957). RFC5861:159 is preceding text; stale-if-error begins at 161. Traceable held bytes repair the locations, not the acquisition-skip/default conclusion."
+    },
+    {
+      "id": "N02",
+      "kind": "version/index discrepancy",
+      "text": "The captured curl page has a version declaration at line 572: 8.23.0. Index descriptions saying no version header exists are false; no candidate-installed curl version was inferred."
+    },
+    {
+      "id": "N03",
+      "kind": "unsupported absence rationale",
+      "text": "Unbounded retention is properly rejected by the bounded brief, but absence of a captured manual/unbounded retention pattern is not established (Leaflet explicit remove/truncate only; browser quota unknown). This does not compel adopting an unbounded design."
+    },
+    {
+      "id": "N04",
+      "kind": "identity/format condition",
+      "text": "MBTiles source identity is implicit per tileset; TMS tile_row differs from XYZ Y. Optional tileset version metadata is already available. No concrete incompatible migration was supplied, so no separate integration defect is invented."
+    },
+    {
+      "id": "N05",
+      "kind": "time-bound condition",
+      "text": "curl retry-max-time is a retry-start cutoff; in-flight transfers may overrun. A hard proposed viewer deadline needs separate attempt timeouts/cancellation. The hypothetical viewer is not proven to use curl, so no executed timeout defect is invented."
+    },
+    {
+      "id": "N06",
+      "kind": "shared metadata conditions",
+      "text": "Use corrected current age including received Age/Date/transit/resident time, not merely time since file creation; preserve applicable Vary and cache directives, including storage/no-store eligibility. The final’s age shorthand does not prove a zero-age implementation."
+    },
+    {
+      "id": "N07",
+      "kind": "process count limit",
+      "text": "The stage categories 26 pass + 2 refinements + 1 refutation sum to 29 if exclusive, while total is 28. Overlap is possible but unexplained. This is a reporting ambiguity, not evidence of fabricated execution."
+    }
+  ],
+  "source_evidence_registry": [
+    {
+      "review_source_id": "P01",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9111-http-caching.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "declared_version": "RFC 9111 (June 2022), stable",
+      "aliases": [
+        {
+          "map_position": 0,
+          "id": "rfc9111-http-caching",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9111-http-caching.txt",
+          "topic_binding": [
+            "shared"
+          ],
+          "capture_claim": "2026-10-07T21:27:59Z",
+          "declared_locator": "lines 282/581/652/719/784/801/1017 = S3 storing, S4.2 freshness, S4.2.1 freshness lifetime, S4.2.3 Age, S4.2.4 serving stale, S4.3 validation, S4.4 invalidation; S5.2.2.1 max-age (line 1208)",
+          "capture_limits_claim": "IETF full text; stable spec; obsoletes RFC 7234; read-only capture, not executed"
+        },
+        {
+          "map_position": 16,
+          "id": "rfc9111-http-caching",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9111-http-caching.txt",
+          "topic_binding": [
+            "shared",
+            "topic2"
+          ],
+          "capture_claim": "2026-10-07T21:58:24Z",
+          "declared_locator": "S4.2.1 freshness lifetime line 652; S4.2.4 serving stale line 784 (MUST NOT generate stale response lines 790/795, explicit exception for a disconnected cache); S5.2.2.1 max-age line 1208",
+          "capture_limits_claim": "IETF full text; stable spec; read-only capture, not executed"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P02",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9110-http-semantics.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "declared_version": "RFC 9110 (June 2022), stable",
+      "aliases": [
+        {
+          "map_position": 1,
+          "id": "rfc9110-http-semantics",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9110-http-semantics.txt",
+          "topic_binding": [
+            "shared",
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:27:59Z",
+          "declared_locator": "lines 3362/3480/3570 = S8.8 validators, S8.8.2 Last-Modified, S8.8.3 ETag; S13 conditional requests (If-None-Match S13.1.2, If-Modified-Since S13.1.3, If-Range S13.1.5); line 6308 = S14.1 range units (S14 Range Requests)",
+          "capture_limits_claim": "IETF full text (~503KB); stable spec; read-only capture"
+        },
+        {
+          "map_position": 17,
+          "id": "rfc9110-http-semantics",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9110-http-semantics.txt",
+          "topic_binding": [
+            "shared"
+          ],
+          "capture_claim": "2026-10-07T21:58:25Z",
+          "declared_locator": "S8.8 validator fields line 3362; S8.8.2 Last-Modified line 3480; S8.8.3 ETag line 3570 (validators enable conditional freshness checks behind stale display)",
+          "capture_limits_claim": "IETF full text (~503KB); stable spec; read-only capture, not executed"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P03",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc5861-swr-sie.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+      "declared_version": "RFC 5861 (May 2010), informational, stable",
+      "aliases": [
+        {
+          "map_position": 2,
+          "id": "rfc5861-swr-sie",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc5861-swr-sie.txt",
+          "topic_binding": [
+            "topic2",
+            "topic1-optional"
+          ],
+          "capture_claim": "2026-10-07T21:29:32Z",
+          "declared_locator": "S3 stale-while-revalidate (S3.1 example, line 131); S4 stale-if-error",
+          "capture_limits_claim": "IETF full text; informational status (cache-hit window bounds not normatively required); read-only capture"
+        },
+        {
+          "map_position": 15,
+          "id": "rfc5861-swr-sie",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc5861-swr-sie.txt",
+          "topic_binding": [
+            "topic2",
+            "topic1-optional"
+          ],
+          "capture_claim": "2026-10-07T21:58:24Z",
+          "declared_locator": "S3 stale-while-revalidate heading line 104 (serve stale, refresh in background within window); S4 stale-if-error line 159 (offline fallback)",
+          "capture_limits_claim": "IETF full text; informational status - window bounds not normative; read-only capture, not executed"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P04",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osm-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "declared_version": "OSMF Operations tile policy web page, undated, as captured 2026-10-07",
+      "aliases": [
+        {
+          "map_position": 3,
+          "id": "osm-tile-policy",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osm-tile-policy.html",
+          "topic_binding": [
+            "topic1",
+            "shared"
+          ],
+          "capture_claim": "2026-10-07T21:28:00Z",
+          "declared_locator": "clauses: bulk downloading ('scraping') and offline use discouraged; 'cache each tile' recommendation; 'cache headers by default'; link 'Conditional Requests' (MediaWiki API conditional requests); HTTP 409 responses; block/require-app-contact sections",
+          "capture_limits_claim": "Dynamic web page, may change any time; capture frozen by hash; no version header exists"
+        },
+        {
+          "map_position": 23,
+          "id": "osmf-tile-policy-20261007",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osmf-tile-policy-20261007.html",
+          "topic_binding": [
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T22:16:00Z",
+          "declared_locator": "line 75 'Bulk download (\"scrape\") tiles or offer prefetch features' (prohibited); line 51 heavy/inappropriate use may be blocked; lines 66/117 valid identifying User-Agent required; line 79 UA masquerading prohibited",
+          "capture_limits_claim": "project web page, may change; frozen by hash; read-only; converts predecessor inherited citation [OSMP] into independently held bytes"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P05",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-sqltilewriter-6.1.20.java",
+      "sha256": "c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6",
+      "bytes": 38315,
+      "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/SqlTileWriter.java",
+      "declared_version": "tag osmdroid-parent-6.1.20",
+      "aliases": [
+        {
+          "map_position": 4,
+          "id": "osmdroid-sqltilewriter-6.1.20",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-sqltilewriter-6.1.20.java",
+          "topic_binding": [
+            "topic2",
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:28:00Z",
+          "declared_locator": "line 53 COLUMN_EXPIRES, 56 cleanOnStartup=true, 66 setCleanupOnStart, 102 runCleanupOperation, 128 saveFile(stream, expirationTime), 213/233 purgeCache, 480 getFirstExpiry, 538 getExpirationTimestamp",
+          "capture_limits_claim": "Apache-2.0 per repo (not re-verified in capture); single file, full class captured"
+        },
+        {
+          "map_position": 19,
+          "id": "osmdroid-sqltilewriter-6.1.20",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/osmdroid-sqltilewriter-6.1.20.java",
+          "topic_binding": [
+            "topic2",
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:58:25Z",
+          "declared_locator": "COLUMN_EXPIRES line 53; cleanOnStartup=true line 56; runCleanupOperation line 102; saveFile(source,index,stream,expirationTime) line 128; expiry persisted line 151",
+          "capture_limits_claim": "Apache-2.0 per repo (not re-verified in capture); single file; read-only capture, not executed"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P06",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-networkavailabilitycheck-6.1.20.java",
+      "sha256": "3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06",
+      "bytes": 2846,
+      "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/NetworkAvailabliltyCheck.java",
+      "declared_version": "tag osmdroid-parent-6.1.20",
+      "aliases": [
+        {
+          "map_position": 5,
+          "id": "osmdroid-networkavailabilitycheck-6.1.20",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-networkavailabilitycheck-6.1.20.java",
+          "topic_binding": [
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:28:00Z",
+          "declared_locator": "line 16 class, 33 getNetworkAvailable, 51 getWiFiNetworkAvailable, 62 getCellularDataNetworkAvailable, 74 getRouteToPathExists",
+          "capture_limits_claim": "Apache-2.0 per repo; single file; filename typo 'Availablilty' is upstream"
+        },
+        {
+          "map_position": 24,
+          "id": "osmdroid-networkavailabliltycheck-6.1.20",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osmdroid-networkavailabliltycheck-6.1.20.java",
+          "topic_binding": [
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T22:16:00Z",
+          "declared_locator": "line 16 class implements INetworkAvailabliltyCheck; line 33 getNetworkAvailable(); lines 51/62 wifi/cellular variants; whole-file negative check: no retry/backoff/sleep keywords",
+          "capture_limits_claim": "Apache-2.0 per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citation [OSN:33] into independently held bytes"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P07",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/libshumate-file-cache-1.7.0.c",
+      "sha256": "da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea",
+      "bytes": 32823,
+      "url": "https://gitlab.gnome.org/GNOME/libshumate/-/raw/1.7.0/shumate/shumate-file-cache.c",
+      "declared_version": "tag 1.7.0",
+      "aliases": [
+        {
+          "map_position": 6,
+          "id": "libshumate-file-cache-1.7.0",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/libshumate-file-cache-1.7.0.c",
+          "topic_binding": [
+            "topic2",
+            "topic1-optional"
+          ],
+          "capture_claim": "2026-10-07T21:28:00Z",
+          "declared_locator": "lines 378 new_full(size_limit,cache_dir,cache_key), 455 set_size_limit, 543 mark_up_to_date, 728 purge_cache_async, 803 get_tile_async, 957 store_tile_async",
+          "capture_limits_claim": "LGPL-2.1+ per file header; single file, full class captured"
+        },
+        {
+          "map_position": 18,
+          "id": "libshumate-file-cache-1.7.0",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/libshumate-file-cache-1.7.0.c",
+          "topic_binding": [
+            "topic2"
+          ],
+          "capture_claim": "2026-10-07T21:58:25Z",
+          "declared_locator": "size_limit default 100000000 line 356; new_full(size_limit,...) line 378; set_size_limit line 448; mark_up_to_date line 543 (stored freshness update); purge_cache_async line 728 (self-invocation line 1071)",
+          "capture_limits_claim": "LGPL-2.1+ per file header (not re-verified in capture); single file; read-only capture, not executed"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P08",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/mbtiles-1.3-spec.md",
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "bytes": 15807,
+      "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+      "declared_version": "MBTiles spec 1.3 (master branch as captured)",
+      "aliases": [
+        {
+          "map_position": 7,
+          "id": "mbtiles-1.3-spec",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/mbtiles-1.3-spec.md",
+          "topic_binding": [
+            "shared"
+          ],
+          "capture_claim": "2026-10-07T21:28:13Z",
+          "declared_locator": "S Tiles schema (lines 99-115): tiles(map_zoom_level,map_column,map_row,tile_data); S Metadata (48-59)",
+          "capture_limits_claim": "spec text; master branch may move; capture frozen by hash"
+        },
+        {
+          "map_position": 20,
+          "id": "mbtiles-1.3-spec",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/mbtiles-1.3-spec.md",
+          "topic_binding": [
+            "shared",
+            "topic2"
+          ],
+          "capture_claim": "2026-10-07T21:58:25Z",
+          "declared_locator": "S Tiles CREATE TABLE tiles(zoom_level,tile_column,tile_row,tile_data) line 109 - no freshness or retention columns",
+          "capture_limits_claim": "spec text; master branch may move; capture frozen by hash; read-only"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P09",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileManager.ts",
+      "sha256": "ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23",
+      "bytes": 5819,
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileManager.ts",
+      "declared_version": "tag v3.2.1",
+      "aliases": [
+        {
+          "map_position": 8,
+          "id": "leaflet-offline-TileManager",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileManager.ts",
+          "topic_binding": [
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:28:23Z",
+          "declared_locator": "lines 29 openTilesDataBase, 57 getStorageLength, 69 getStorageInfo, 84 downloadTile, 97 saveTile, 192 removeTile, 206 hasTile, 215 truncate",
+          "capture_limits_claim": "license per repo (not re-verified); single file; IndexedDB storage assumed"
+        },
+        {
+          "map_position": 26,
+          "id": "leaflet-offline-TileManager-v3.2.1",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/leaflet-offline-TileManager-v3.2.1.ts",
+          "topic_binding": [
+            "topic1",
+            "topic2"
+          ],
+          "capture_claim": "2026-10-07T22:16:00Z",
+          "declared_locator": "line 84 downloadTile(tileUrl); line 97 saveTile(...); line 206 hasTile(key); line 220 const shouldUseUrl = !(await hasTile(key)) — skip-existing on hit",
+          "capture_limits_claim": "license per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citations [LO-TM:84,97,206] into independently held bytes"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P10",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileLayerOffline.ts",
+      "sha256": "55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b",
+      "bytes": 2479,
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileLayerOffline.ts",
+      "declared_version": "tag v3.2.1",
+      "aliases": [
+        {
+          "map_position": 9,
+          "id": "leaflet-offline-TileLayerOffline",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileLayerOffline.ts",
+          "topic_binding": [
+            "topic2",
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:28:23Z",
+          "declared_locator": "lines 17 class, 20 createTile(coords,done), 37 getTileUrl, 61 getTileUrls(bounds,zoom)",
+          "capture_limits_claim": "license per repo; single file"
+        },
+        {
+          "map_position": 21,
+          "id": "leaflet-offline-TileLayerOffline",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/leaflet-offline-TileLayerOffline.ts",
+          "topic_binding": [
+            "topic2"
+          ],
+          "capture_claim": "2026-10-07T21:58:25Z",
+          "declared_locator": "createTile line 20; getTileImageSource(storageKey, networkUrl) line 37 resolves stored-first with no age/staleness check; _getStorageKey line 51 (key = resolved tile URL)",
+          "capture_limits_claim": "license per repo (not re-verified); single file; read-only capture, not executed"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P11",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-ControlSaveTiles.ts",
+      "sha256": "3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c",
+      "bytes": 6625,
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/ControlSaveTiles.ts",
+      "declared_version": "tag v3.2.1",
+      "aliases": [
+        {
+          "map_position": 10,
+          "id": "leaflet-offline-ControlSaveTiles",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-ControlSaveTiles.ts",
+          "topic_binding": [
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:28:24Z",
+          "declared_locator": "lines 95 getStorageSize, 114/139 _saveTiles, 151 _saveTile call, 230 _saveTile",
+          "capture_limits_claim": "license per repo; single file"
+        },
+        {
+          "map_position": 25,
+          "id": "leaflet-offline-ControlSaveTiles-v3.2.1",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/leaflet-offline-ControlSaveTiles-v3.2.1.ts",
+          "topic_binding": [
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T22:16:00Z",
+          "declared_locator": "line 139 _saveTiles(); line 190 this.options.bounds || this._map.getBounds() (computed viewport list); lines 15/17 imports saveTile/hasTile",
+          "capture_limits_claim": "license per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citation [LO-CS:139] into independently held bytes"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P12",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-tree.json",
+      "sha256": "5e50cae7edf2743fc0dbd47906bd6c160aafc5583b12f2dc196a6fd48b3e325d",
+      "bytes": 23309,
+      "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/v3.2.1?recursive=1",
+      "declared_version": "GitHub git/trees API for tag v3.2.1, as captured",
+      "aliases": [
+        {
+          "map_position": 11,
+          "id": "leaflet-offline-tree",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-tree.json",
+          "topic_binding": [
+            "provenance"
+          ],
+          "capture_claim": "2026-10-07T21:28:13Z",
+          "declared_locator": "src/ entries list used to pick the three .ts files above",
+          "capture_limits_claim": "API JSON provenance record for the v3.2.1 file set; rate-limited endpoint; capture frozen by hash"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P13",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osmdroid-maptiledownloader-6.1.20.java",
+      "sha256": "6b8f7c5d7a7dc1d01c00e878667bbe69613fc117f7828b3d9a73d77099a57d07",
+      "bytes": 7901,
+      "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/MapTileDownloader.java",
+      "declared_version": "tag osmdroid-parent-6.1.20",
+      "aliases": [
+        {
+          "map_position": 12,
+          "id": "osmdroid-maptiledownloader-6.1.20",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osmdroid-maptiledownloader-6.1.20.java",
+          "topic_binding": [
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:45:04Z",
+          "declared_locator": "line 49 default TileDownloader delegate, 149 TileLoader class, 154 downloadTile(pMapTileIndex, redirectCount, targetUrl), 165 delegates to TileDownloader.downloadTile, 172 loadTile, 197 call with redirectCount=0, 224 setTileDownloader",
+          "capture_limits_claim": "Apache-2.0 per repo (not re-verified); single file, full class captured; read-only, not executed"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P14",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/curl-manpage.html",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "bytes": 465220,
+      "url": "https://curl.se/docs/manpage.html",
+      "declared_version": "curl project man page (curl.se, live page as captured 2026-10-07; documents behavior current as of curl 8.x)",
+      "aliases": [
+        {
+          "map_position": 13,
+          "id": "curl-manpage",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/curl-manpage.html",
+          "topic_binding": [
+            "topic1"
+          ],
+          "capture_claim": "2026-10-07T21:45:05Z",
+          "declared_locator": "line 2764 --retry exponential backoff: first wait 1s then double each retry to a 10-minute fixed cap, --retry-delay disables it; line 2765 Retry-After header compliance (server can override delay) and --retry-max-time total bound; lines 389-392 option index; line 1884 --retry-max-time resets per transfer",
+          "capture_limits_claim": "Dynamic web page (project site), may change; capture frozen by hash; no version header exists; HTML whole-page capture; read-only"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P15",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osm-tile-headers-20261007.txt",
+      "sha256": "e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2",
+      "bytes": 794,
+      "url": "https://tile.openstreetmap.org/0/0/0.png",
+      "declared_version": "live HTTP response headers from canonical OSM tile endpoint, as returned 2026-10-07T21:45:12Z",
+      "aliases": [
+        {
+          "map_position": 14,
+          "id": "osm-tile-headers-20261007",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osm-tile-headers-20261007.txt",
+          "topic_binding": [
+            "topic1",
+            "shared"
+          ],
+          "capture_claim": "2026-10-07T21:45:12Z",
+          "declared_locator": "line 3 cache-control: max-age=526616, stale-while-revalidate=604800, stale-if-error=604800; line 4 etag \"56a14ed652b78cb85f3bfb98d883ebce\"; line 6 expires; line 12 accept-ranges: bytes; line 15 age: 11504; lines 16-18 varnish CDN x-cache HIT",
+          "capture_limits_claim": "SINGLE bounded request, one URL, no bulk; policy-compliant UA sent; headers are dynamic (CDN node, max-age, age vary per node/time) so capture is evidence for this source class at capture time only, frozen by hash; response body discarded, nothing executed"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    },
+    {
+      "review_source_id": "P16",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osm-tile-headers-probe2-20261007.txt",
+      "sha256": "45e1dfafe270826209cf19de207c64817a4b9a0cccbf6a286240015d98e714c7",
+      "bytes": 544,
+      "url": "https://tile.openstreetmap.org/0/0/0.png",
+      "declared_version": "live HTTP response headers from canonical OSM tile endpoint, as returned 2026-10-07T22:15:39Z",
+      "aliases": [
+        {
+          "map_position": 22,
+          "id": "osm-tile-headers-probe2-20261007",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osm-tile-headers-probe2-20261007.txt",
+          "topic_binding": [
+            "topic1",
+            "topic2",
+            "shared"
+          ],
+          "capture_claim": "2026-10-07T22:15:39Z",
+          "declared_locator": "line 8 x-blocked: Access denied (policy pointer https://operations.osmfoundation.org/policies/tiles/); line 4 cache-control: no-cache; line 3 retry-after: 0; line 9 accept-ranges: bytes; lines 13-14 varnish HIT",
+          "capture_limits_claim": "SINGLE bounded request, body discarded, nothing executed; response differs from predecessor OSMH capture (21:45Z: etag+max-age+stale-while-revalidate) — this probe returned an access-denied/no-cache variant, evidencing per-request/per-client header variation under the endpoint's policy gating"
+        }
+      ],
+      "primary_check": "semantic passages inspected; integrity alone is not SourcePASS"
+    }
+  ],
+  "additional_public_primary_checks": {
+    "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources",
+    "document_captures": "sources/review-capture-index.json and sources/mbtiles-provenance-check.json",
+    "version_checks": "sources/version-provenance-checks.json; sources/leaflet-captured-tree-check.json",
+    "document_gets": 6,
+    "metadata_gets": 3,
+    "new_tile_requests": 0,
+    "downloaded_code_or_test_execution": false,
+    "version_result": "Six source documents match frozen SHA-256. Public tag metadata matches all seven code files, without downloading new code. Leaflet captured tree also matches the three code git blobs.",
+    "limits": "Current corroboration cannot authenticate historic network command/request details. Tags and moving master may change; source snapshots/tree metadata are independently frozen here. GitLab tree request is one page; target file was present, not a claim of a complete recursive inventory. Web tool additionally viewed the official OSM policy and RFC9111/RFC5861 HTML for corroboration; exact retained evidence is the matching text/raw-document capture."
+  },
+  "blinding_and_scope_limits": {
+    "blind_to": [
+      "other arms/cases",
+      "costs, winner judgments, speed targets or rankings",
+      "parent analysis",
+      "prior reviewer findings/unresolved objections",
+      "candidate drafts, earlier frozen finals, timings, helpers and campaign/history"
+    ],
+    "visible": [
+      "treatment/fresh_*_v3 path names",
+      "final title/method and references to predecessor work",
+      "source indices containing candidate interpretive annotations"
+    ],
+    "limit": "Method and arm are visible; this is not fully method-blind. Only this exact final and the authorized map/brief/manifest/source bytes/indices were read, plus bounded primary-public corroboration. Index annotations and source selections were treated as untrusted assertions. Current-thread T3 run metadata was obtained for the real deadline; no parent conversation was read.",
+    "review_cycle": "First review of this version; no best-of, regrade, rescue, feedback to candidates or delegation."
+  },
+  "provenance_and_write_scope": {
+    "outputs_only_under": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3",
+    "candidate_bytes_and_grades_immutable": true,
+    "repo_canon_worknodes_third_party_writes": false,
+    "executed_project_code_tests_installers": false,
+    "accounts_purchases_global_configuration_changes": false,
+    "native_goals_created": 0,
+    "children_spawned": 0
+  },
+  "written_at": "2026-10-07T22:43:32.169929+00:00"
+}

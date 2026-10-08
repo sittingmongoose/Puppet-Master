@@ -1,0 +1,106 @@
+{
+  "version": "carrier-v1",
+  "case_id": "D-M07-B",
+  "binding": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    },
+    "admission": "HELD: zero capacity; literal short /goal + general external assignment support required"
+  },
+  "original_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/case-card.json": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/INPUT_MAP.json": "97c3357137b78235fe44ecdceab982c213d6a054bc3cbab57628e41b9429b73e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/SEED_INPUT_MAP.json": "c1b53de01fa55e15acf77476e68f0444bd4c9aefeb91a43c99b110bfee7b1faf",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md": "30a8e78fbc3913556d985d909d82c0db3b61207859f8588ece1d4cef045cce2d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json": "528a61f25f479c20a76c855e15541cc44f392a575ef5fc85e37d2f9b0cd6205d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/PREDECESSOR.md": "3399c1fb4de712f36d76294f64239bd1a0e417c4c800da902738a75d4c7d4533"
+  },
+  "seed_path_mapping": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/seed/draft.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/research-v1/draft.md"
+  },
+  "original_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/case-card.json",
+  "original_input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/INPUT_MAP.json",
+  "original_seed_input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/SEED_INPUT_MAP.json",
+  "budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "common_seed",
+          "candidate_minutes": 3,
+          "procedure": "Common predecessor candidate authors a good-faith untrusted proposal with recommendation, operational advice, uncertainty, and optional lead.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/control/common_seed.md"
+        },
+        {
+          "stage": "document_order_review",
+          "candidate_minutes": 10,
+          "procedure": "Competent full-scope critic reviews in normal document order; all obligations and the optional lead remain required review scope.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/control/document_order_review.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 2,
+          "procedure": "Produce corrected complete final and source-linked dispositions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/control/finalize.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "common_seed",
+          "candidate_minutes": 3,
+          "procedure": "Identical proposal and cold-equivalent seed charge.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/treatment/common_seed.md"
+        },
+        {
+          "stage": "critical_first",
+          "candidate_minutes": 5,
+          "procedure": "First verify assumptions that could invalidate the selected recommendation, without a designer truth ranking.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/treatment/critical_first.md"
+        },
+        {
+          "stage": "protected_breadth",
+          "candidate_minutes": 5,
+          "procedure": "Explicit protected reserve reviews remaining lower-risk advice, all obligations, and optional evidence; unchecked material stays visible.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/treatment/protected_breadth.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 2,
+          "procedure": "Produce identical final scope with all dispositions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/treatment/finalize.md"
+        }
+      ]
+    }
+  },
+  "output_scope": {
+    "final_path_by_arm": {
+      "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/control/final.md",
+      "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/outputs/treatment/final.md"
+    },
+    "carrier": "Complete authored native final or exact file export to declared final path; root verifies full byte identity/readability. Native terminal status is separate.",
+    "max_material_findings": 8,
+    "soft_word_ceiling": 1100,
+    "deliverable": "One complete bounded answer/recommendation with source conditions, full obligation dispositions, justified uncertainty, retained optional leads where requested, and discriminating proposed checks. Any carried draft/critique remains a legitimate input, not source truth.",
+    "intermediate_scope": "Only method-required bounded stage outputs. Do not impose four synchronized catalogs or an integrated application plan.",
+    "preservation": "Final must distinguish accepted, amended, rejected and unresolved claims; executed witnesses and proposed tests remain distinct."
+  },
+  "carrier": "jobs/<case>/<arm>/<role>-v1/{draft.md,critique.md,final.md,native_activation_receipt.json,native_terminal_receipt.json,timings.json}; exact original meaning unchanged"
+}

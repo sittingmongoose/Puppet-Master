@@ -1,0 +1,417 @@
+{
+  "schema": "ER10-anchor-comparison-v1",
+  "slot_id": "I-ANCHOR-MUSE",
+  "status": "BOTH_ARMS_FULL_DECLARED_SCOPE_ASSESSED",
+  "comparison_created_at": "2026-10-07T19:06:11.480520+00:00",
+  "pair_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/pair-freeze.json",
+    "sha256": "c8f3a34fafbecebb44b5fc22ef4b3a9c574ed9a5638d3f2084bfb692c5ac4a86"
+  },
+  "arms": {
+    "control": {
+      "recipe": "research -> fresh critic -> fresh reviser",
+      "binding": {
+        "provider": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "reasoning_effort": "max",
+        "mode": "default",
+        "approval_mode": "allowAll",
+        "auto_review": "off"
+      },
+      "quality": {
+        "status": "FULL_DECLARED_SCOPE_ASSESSED",
+        "overall_judgment": "NOT_FULL_POSITIVE",
+        "source_correctness": {
+          "assessment": "PARTIALLY_SUPPORTED_WITH_MATERIAL_DEFECTS",
+          "reason": "Core primary quotations/code/history mostly verify; consequential guarantees, tag-baseline sequence, auto-publication/byte-access inference, and Archivematica negative source scope do not.",
+          "material_defect_ids": [
+            "D1",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D8"
+          ]
+        },
+        "planning_usefulness": {
+          "assessment": "SUBSTANTIAL_BUT_CONDITIONAL",
+          "reason": "Many concrete corrections and useful drills; several proposed safeguards are incomplete or inaccurately guaranteed, so proposal is not ready to certify preservation/access safety."
+        },
+        "breadth": {
+          "assessment": "MODERATE_SUPPORTED_BREADTH",
+          "reason": "Multiple preservation/catalog risk domains researched; only two concrete architecture families supported. Three alternatives and media formats mostly synthesis. Same-page repeated verification is depth, not added discovery breadth.",
+          "candidate_credit_basis": "Substantive supported discoveries, not labels/files/citation counts.",
+          "independent_reviewer_sources_add_candidate_credit": false
+        },
+        "completeness": {
+          "assessment": "PARTIAL",
+          "reason": "All declared artifact sections assessed; actual proposal does not close failed-storage restoration, durable DB/tree reconciliation, or rights-change/delivery conditions. Alternatives and media-policy research shallow.",
+          "material_defect_ids": [
+            "D2",
+            "D3",
+            "D7"
+          ]
+        },
+        "grade_scope": {
+          "mode": "FULL_DECLARED_SCOPE_ASSESSED",
+          "entire_declared_scope_assessed": true,
+          "review_subject": "source-supported research proposal, planning completeness/usefulness/breadth; no relative scientific winner grade",
+          "authorized_local_inputs_only": true,
+          "notes_on_input_limit": "Applicable instruction files read as explicitly required. Initial filename-only instruction discovery disclosed.",
+          "not_assessed_or_credited": [
+            "actual ingest/restore/access/corruption test execution",
+            "component build/install or performance benchmark",
+            "deployment/legal validity",
+            "provider billing/routing receipts",
+            "all possible public-source alternatives"
+          ],
+          "no_rewritten_final": true,
+          "no_extra_candidate_critic": true,
+          "no_nested_delegation": true
+        },
+        "unassessed_remainder": [],
+        "blinding_limits": {
+          "counterpart_answers_read": false,
+          "other_arm_reviews_or_partials_read": false,
+          "other_graders_read": false,
+          "parent_root_historical_analysis_read": false,
+          "candidate_cost_timing_native_counters_read": false,
+          "visible_authored_method_clues": [
+            "control and I-ANCHOR-MUSE labels in paths/titles",
+            "research-v1,critic-v1,reviser-v1 stages and stable S/C/R IDs",
+            "critic references ~/.claude/CLAUDE.md and same-family predecessor workflow",
+            "repeated source retrievals and byte-count match claims",
+            "U1 stated time ceiling; no costs/counters read"
+          ],
+          "accidental_exposure": "Initial broad filename-only AGENTS/CLAUDE instruction search exposed unrelated historical experiment directory names. No contents were read and no grade uses them.",
+          "provenance_limits": "Stage identities/family cannot be independently certified without excluded receipts. Equal byte counts do not establish byte identity. Candidate source retrieval timestamps are authorized provenance, not allowance metrics."
+        },
+        "material_defect_count": 8,
+        "material_defect_ids": [
+          "D1",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "D6",
+          "D7",
+          "D8"
+        ],
+        "original_judgment": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/judgment.json",
+          "sha256": "bd513c8aaae93b65e264b6f109e3cab92b71ad4a62c9b36e45847a6cb6d6c741"
+        },
+        "original_review": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/REVIEW.md",
+          "sha256": "b3068d175e63d124a430f6192e3eb590c9315f46974c6114470080b784de2569"
+        }
+      },
+      "delivery": {
+        "required_outputs_nonempty": true,
+        "final": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/control/reviser-v1/final.md",
+          "sha256": "c52c41ad1bb7ca3671300ee5ab97d1ceb732d0ae519b2dfc3ce3ac6e2cb06080"
+        },
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/control/reviser-v1/freeze.json",
+          "sha256": "f2cdd272ccb44a37cf012ac2e9ef4ed65525dbbdc24e3dc5455bdafaf31b3fe5"
+        }
+      },
+      "native_lifecycle": {
+        "active_and_complete_observed": true,
+        "terminal": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/control/reviser-v1/native_terminal_receipt.json",
+          "sha256": "ca5f5016dfbc2689fff3dd8be5bafa787962bb12caff954a17df8285adf31d9c"
+        },
+        "T3_completion_not_used_as_native_proof": true
+      },
+      "time": {
+        "cold_dispatch_to_required_T3_terminal_delivery_seconds": 1185.945,
+        "aggregate_inclusive_admitted_stage_seconds": 1018.727,
+        "required_between_stage_handoff_seconds": 167.218,
+        "candidate_stage_intervals": [
+          {
+            "stage": "research",
+            "requested_at": "2026-10-07T18:29:04.035Z",
+            "T3_started_at": "2026-10-07T18:29:06.027Z",
+            "T3_turn_completed_at": "2026-10-07T18:34:02.149Z",
+            "inclusive_admitted_interval_seconds": 298.114,
+            "T3_requested_to_started_seconds": 1.992,
+            "thread_settled_observed": true,
+            "thread_observed_at": "2026-10-07T19:05:23.363Z",
+            "receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/muse-t3-timing-observations.json"
+          },
+          {
+            "stage": "critic",
+            "requested_at": "2026-10-07T18:36:12.331Z",
+            "T3_started_at": "2026-10-07T18:36:14.429Z",
+            "T3_turn_completed_at": "2026-10-07T18:42:57.085Z",
+            "inclusive_admitted_interval_seconds": 404.754,
+            "T3_requested_to_started_seconds": 2.098,
+            "thread_settled_observed": true,
+            "thread_observed_at": "2026-10-07T19:05:23.694Z",
+            "receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/muse-t3-timing-observations.json"
+          },
+          {
+            "stage": "reviser",
+            "requested_at": "2026-10-07T18:43:34.121Z",
+            "T3_started_at": "2026-10-07T18:45:52.843Z",
+            "T3_turn_completed_at": "2026-10-07T18:48:49.980Z",
+            "inclusive_admitted_interval_seconds": 315.859,
+            "T3_requested_to_started_seconds": 138.722,
+            "thread_settled_observed": true,
+            "thread_observed_at": "2026-10-07T19:05:24.450Z",
+            "receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/muse-t3-timing-observations.json"
+          }
+        ],
+        "wholearm_ceiling_seconds": 2700,
+        "within_ceiling_at_T3_final_delivery": true,
+        "aggregate_active_occupancy_seconds": null,
+        "aggregate_active_occupancy_note": "Native intervals and T3 admitted intervals differ. Admitted sums include startup/queue/required delivery and are not pure active compute. Native raw start/terminal receipts retained in metrics manifest.",
+        "queue_delay_seconds": null,
+        "queue_note": "T3 reviser startedAt18:45:52.843 is later than native create18:43:44.776; cannot interpret whole requested-to-started interval as queue. Other stage raw intervals retained.",
+        "shared_source_setup_seconds": null,
+        "shared_source_setup_note": "Case/task preparation before first dispatch not separately timed; report measured dispatch boundary rather than omit the limitation. Arm admission records retain original start for ceiling.",
+        "resource_release_at": null,
+        "resource_release_note": "Settled/no pending descendants observed; exact release UTC was not instrumented."
+      },
+      "usage": {
+        "billing": null,
+        "input": null,
+        "cached_input": null,
+        "generated_output": null,
+        "reasoning_subset": null,
+        "source_operations": null,
+        "native_counters": "Separate raw cumulative Goal samples in metrics manifest; not summed or interpreted as billing/generated tokens"
+      },
+      "evaluation_attempts": [
+        {
+          "request": "er10-I-ANCHOR-MUSE-control-source-review-v1",
+          "requested_at": "2026-10-07T18:49:34.740Z",
+          "completed_at": "2026-10-07T19:00:12.623Z",
+          "inclusive_admitted_seconds": 637.883,
+          "preserved_partial": false
+        }
+      ],
+      "failure_inclusive_evaluation_admitted_seconds": 637.883
+    },
+    "treatment": {
+      "recipe": "research -> fresh critic authoring complete final",
+      "binding": {
+        "provider": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "reasoning_effort": "max",
+        "mode": "default",
+        "approval_mode": "allowAll",
+        "auto_review": "off"
+      },
+      "quality": {
+        "status": "FULL_DECLARED_SOURCE_REVIEW_COMPLETE",
+        "overall_judgment": "NOT_FULL_POSITIVE",
+        "source_correctness": {
+          "assessment": "NOT_PASSED_AS_SUBMITTED",
+          "reason": "Core source findings mostly correct; MD1 is a material causal/repair error in the final and critic. MD6 is an additional error in the supplied critique. Compatibility/application conditions are separately flagged, not all called factual falsehoods.",
+          "material_factual_defect_ids": [
+            "MD1",
+            "MD6"
+          ]
+        },
+        "planning_usefulness": {
+          "assessment": "USEFUL_REQUIRES_CORRECTION_AND_CONDITIONS",
+          "reason": "Portable packaging, hash identity, role/provenance split, SQLite snapshots/local topology, rights modeling and restore drills offer practical improvements. The proposal is not yet a source-grounded complete recovery contract or supported minimum-cost design."
+        },
+        "breadth": {
+          "assessment": "BROAD_COMPLEMENTARY_MECHANISMS_LIMITED_ALTERNATIVE_DEPTH",
+          "supported_discovery_families": [
+            "self-verifying ingest/transfer packages",
+            "digest identity distinct from file names",
+            "recurring fixity diagnostics distinct from copying",
+            "preservation/access roles and derivation provenance",
+            "database snapshots distinct from external raw copying",
+            "local SQLite/network-locking/sidecar conditions",
+            "notice/file/embargo rights distinction",
+            "copy geography/restore and native-fidelity format choices"
+          ],
+          "bounded_alternative_checks": [
+            "OCFL 1.1 object-at-rest version/digest inventory versus per-batch BagIt",
+            "restic 0.19.1 documented snapshot/retention/full-data checks versus verified current-tree copying",
+            "sqlite3_rsync versioned remote-DB snapshot alternative versus local Backup API/VACUUM INTO"
+          ],
+          "reason": "The candidate covers multiple substantive families. Their complementary roles and a few internal choices are meaningful; they are not an exhaustive competing-stack/affordability evaluation. No particular omitted product is required; reviewer-only discoveries are not credited as candidate research."
+        },
+        "completeness": {
+          "review_coverage": "full_declared_scope_assessed",
+          "candidate_satisfaction": "PARTIAL",
+          "reason": "Substantive coverage across the original brief, but governing component/conformance, rejection/regression history, coherent backup, durable recovery, and pertinent WAL release conditions remain incomplete.",
+          "condition_defect_ids": [
+            "MD2",
+            "MD3",
+            "MD4",
+            "MD5"
+          ]
+        },
+        "grade_scope": {
+          "kind": "full_declared_source_review",
+          "artifact": "own-arm frozen final.md plus supplied critique/maps and required prior partial",
+          "every_original_integrated_obligation_assessed": true,
+          "all_candidate_groups_assessed": true,
+          "stopped_at_failed_screen": false,
+          "unassessed_remainder": [],
+          "exclusions": [
+            "No comparative winner/cost/timing/native-counter grade",
+            "No orchestration-provenance HOLD adjudication",
+            "No product implementation/security/conformance certification",
+            "No claim of historical source-read/provider/critic execution authentication"
+          ]
+        },
+        "unassessed_remainder": [],
+        "blinding_limits": [
+          "This is a new post-freeze review attempt after a protocol-timing stop. Required prior PARTIAL.md and partial-status.json were read as disclosed observations. It is not wholly fresh independent first review; their exposure and the premature review existence limit blinding.",
+          "User declares both arms/final artifacts/native terminal receipts frozen before dispatch. No receipts were opened to authenticate that declaration. No scored candidate work, messages or edits were performed.",
+          "Treatment/stage/S-C source labels and stage timestamp/receipt-filename clues are visible in authorized final/critique/maps/partial. Those cannot be unobserved. No underlying candidate costs/timings/native counters or provider/dispatch receipt contents were read.",
+          "No counterpart answer, expected winner, other graders, root/parent/historical analyses or protocol-cost files were read. No nested delegation, best-of selection or scientific rescue.",
+          "Prior scored-counterpart provenance exposure is UNKNOWN as stated in dispatch. Pair comparative/provenance HOLD remains an orchestration axis. It neither grants nor determines this source-quality judgment.",
+          "Runtime injection identifies gpt-6.1-sol with xhigh effort. Requested codex_gmail/priority service settings are recorded as requested, not independently verified through prohibited provider receipts; no settings/provider/account/global changes were made."
+        ],
+        "material_defect_count": 6,
+        "material_defect_ids": [
+          "MD1",
+          "MD2",
+          "MD3",
+          "MD4",
+          "MD5",
+          "MD6"
+        ],
+        "original_judgment": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/judgment.json",
+          "sha256": "0bd7b14f685cd02fb785685b0dc8c97bfdc4d94d64a05e1b4ddc5e7e954d7b72"
+        },
+        "original_review": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/REVIEW.md",
+          "sha256": "8eefc5382c937be4bf13bdef8bfa510db06382d8e4605dd14dea82196318b26c"
+        }
+      },
+      "delivery": {
+        "required_outputs_nonempty": true,
+        "final": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "sha256": "14c83b7ab228a151a03393144c967a14a472d5f4cc561c663f868a9789e18202"
+        },
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/freeze.json",
+          "sha256": "fb7618649f199a21b724d59b3b56585e557f4dd8c9bc1ffd6298fb3c38cbecdd"
+        }
+      },
+      "native_lifecycle": {
+        "active_and_complete_observed": true,
+        "terminal": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/native_terminal_receipt.json",
+          "sha256": "df6058e5ea6d4af25cba713598ca186891ec9906420304f8791839d0a4749109"
+        },
+        "T3_completion_not_used_as_native_proof": true
+      },
+      "time": {
+        "cold_dispatch_to_required_T3_terminal_delivery_seconds": 687.33,
+        "aggregate_inclusive_admitted_stage_seconds": 553.565,
+        "required_between_stage_handoff_seconds": 133.765,
+        "candidate_stage_intervals": [
+          {
+            "stage": "research",
+            "requested_at": "2026-10-07T18:27:49.596Z",
+            "T3_started_at": "2026-10-07T18:27:51.289Z",
+            "T3_turn_completed_at": "2026-10-07T18:33:50.519Z",
+            "inclusive_admitted_interval_seconds": 360.923,
+            "T3_requested_to_started_seconds": 1.693,
+            "thread_settled_observed": true,
+            "thread_observed_at": "2026-10-07T19:05:22.976Z",
+            "receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/muse-t3-timing-observations.json"
+          },
+          {
+            "stage": "critic-finalizer",
+            "requested_at": "2026-10-07T18:36:04.284Z",
+            "T3_started_at": "2026-10-07T18:36:05.970Z",
+            "T3_turn_completed_at": "2026-10-07T18:39:16.926Z",
+            "inclusive_admitted_interval_seconds": 192.642,
+            "T3_requested_to_started_seconds": 1.686,
+            "thread_settled_observed": true,
+            "thread_observed_at": "2026-10-07T19:05:24.694Z",
+            "receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/muse-t3-timing-observations.json"
+          }
+        ],
+        "wholearm_ceiling_seconds": 2700,
+        "within_ceiling_at_T3_final_delivery": true,
+        "aggregate_active_occupancy_seconds": null,
+        "aggregate_active_occupancy_note": "Native intervals and T3 admitted intervals differ. Admitted sums include startup/queue/required delivery and are not pure active compute. Native raw start/terminal receipts retained in metrics manifest.",
+        "queue_delay_seconds": null,
+        "queue_note": "T3 reviser startedAt18:45:52.843 is later than native create18:43:44.776; cannot interpret whole requested-to-started interval as queue. Other stage raw intervals retained.",
+        "shared_source_setup_seconds": null,
+        "shared_source_setup_note": "Case/task preparation before first dispatch not separately timed; report measured dispatch boundary rather than omit the limitation. Arm admission records retain original start for ceiling.",
+        "resource_release_at": null,
+        "resource_release_note": "Settled/no pending descendants observed; exact release UTC was not instrumented."
+      },
+      "usage": {
+        "billing": null,
+        "input": null,
+        "cached_input": null,
+        "generated_output": null,
+        "reasoning_subset": null,
+        "source_operations": null,
+        "native_counters": "Separate raw cumulative Goal samples in metrics manifest; not summed or interpreted as billing/generated tokens"
+      },
+      "evaluation_attempts": [
+        {
+          "request": "er10-I-ANCHOR-MUSE-treatment-source-review-v1",
+          "requested_at": "2026-10-07T18:40:02.895Z",
+          "completed_at": "2026-10-07T18:45:19.439Z",
+          "inclusive_admitted_seconds": 316.544,
+          "preserved_partial": true
+        },
+        {
+          "request": "er10-I-ANCHOR-MUSE-treatment-source-review-v2",
+          "requested_at": "2026-10-07T18:49:35.429Z",
+          "completed_at": "2026-10-07T19:05:01.094Z",
+          "inclusive_admitted_seconds": 925.665,
+          "preserved_partial": false
+        }
+      ],
+      "failure_inclusive_evaluation_admitted_seconds": 1242.209
+    }
+  },
+  "provenance_eligibility": {
+    "status": "HOLD",
+    "exposure": "UNKNOWN",
+    "reason": "Treatment independent review started while counterpart candidate work still scored. Original stopped partial retained, no grade; new treatment full review supplied prior observations and disclosed reduced blinding. Scoped paths do not establish filesystem firewall.",
+    "deviation": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/protocol-deviation-001.json",
+      "sha256": "e3a85714a2be6f7686087491f074eef6834efb9d969598e42e590ea12a130895"
+    },
+    "partial": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/partial-status.json",
+      "sha256": "3c877cb352ae5e4c02e5cc5c07296c02886974682f0c30105e4905d13fd030cd"
+    },
+    "candidate_feedback": "No reviewer findings supplied to candidates by coordinator"
+  },
+  "economic_observation": {
+    "descriptive_control_over_treatment_terminal_latency_ratio": 1.7254,
+    "quality_preserving_speedup_established": false,
+    "twofold_objective_established": false,
+    "affordability_established": false,
+    "reason": "Both original full reviews NOT_FULL_POSITIVE; distinct source/coverage defects cannot be treated as equal quality. Provenance HOLD independently limits comparative eligibility. Billing unknown. One matched pair is descriptive, no best-of.",
+    "single_account_recommendation": "No qualified production recipe from this pair; faster observed delivery is not a source-correct usable-result win.",
+    "experiment_fanout": "Arms overlapped under campaign capacity; normal user single-project contention/latency not independently measured."
+  },
+  "raw_metrics": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/metrics-I-ANCHOR-MUSE.json",
+    "sha256": "1680d612b64f4af4cd05da885f48ccca13fbd2a37a79d3d1393e37db1b5a3509"
+  },
+  "measurement_receipts": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/muse-t3-timing-observations.json",
+    "sha256": "4eee7734267517fb283426a4fadf533cbdc0f7f68c58c66ddbbbb05ae01b8058"
+  },
+  "preserved_failure_attempts": [
+    "treatment/source-review-v1 original premature review and safe partial",
+    "helpers/anchor-supervisor/preparation-failure-001.json",
+    "helpers/anchor-supervisor/metrics-helper-failure-001.json"
+  ],
+  "scientific_judgment_authorship": "Original independent Sol6.1 xhigh reviewers only; coordinator copies axes and computes time arithmetic, no scored answer/grade repair"
+}

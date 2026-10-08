@@ -1,0 +1,11 @@
+{
+  "schema": "ER10_GUARDED_OFFLINE_REPLAY_RECEIPT_V1",
+  "passed": true,
+  "data_reads": 195,
+  "distinct_data_paths": 195,
+  "all_data_reads_within_retained_bundle": true,
+  "live_capture_reads": 0,
+  "full_ledger_replay_equal": true,
+  "unresolved_report_replay_equal": true,
+  "source_checks_or_candidate_bodies_opened": false
+}

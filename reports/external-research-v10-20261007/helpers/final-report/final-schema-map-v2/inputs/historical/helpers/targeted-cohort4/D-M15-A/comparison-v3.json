@@ -1,0 +1,258 @@
+{
+  "case_id": "D-M15-A",
+  "matched_pair_version": 3,
+  "new_root_bound_budget": true,
+  "aggregate_candidate_allowance_seconds_per_arm": 3600,
+  "common_pair_wall_exception_seconds": 6000,
+  "common_T0": "2026-10-07T20:31:30.755788+00:00",
+  "common_deadline": "2026-10-07T22:11:30.755788+00:00",
+  "old_design_minutes": 15,
+  "arms": {
+    "control": {
+      "actual_stages": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M15-A-control-whole_question_research_final-v3:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "zcode",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "requestedAt": "2026-10-07T20:31:55.470Z",
+          "startedAt": "2026-10-07T20:32:00.331Z",
+          "completedAt": "2026-10-07T20:49:11.641Z"
+        }
+      ],
+      "request_to_final_terminal_seconds": 1036.171,
+      "common_T0_to_final_terminal_seconds": 1060.885212,
+      "counterpart_queue_before_first_request_seconds": 24.714212,
+      "aggregate_occupied_seconds": 1031.31,
+      "aggregate_queue_seconds": 4.861,
+      "all_stage_deadline_checks": [
+        {
+          "stage": "whole_question_research_final",
+          "deadline": "2026-10-07T21:31:30.755788+00:00",
+          "completedAt": "2026-10-07T20:49:11.641Z",
+          "within_frozen_stage": true
+        }
+      ],
+      "source_grade": "FAIL",
+      "no_parent_child_overlap_doublecount": true,
+      "input": null,
+      "cached_input": null,
+      "generated": null,
+      "billing": null
+    },
+    "treatment": {
+      "actual_stages": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M15-A-treatment-fresh_transport_scout-v3:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "zcode",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "requestedAt": "2026-10-07T20:50:16.296Z",
+          "startedAt": "2026-10-07T20:50:20.794Z",
+          "completedAt": "2026-10-07T21:03:04.112Z"
+        },
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M15-A-treatment-fresh_object_scout-v3:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "zcode",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "requestedAt": "2026-10-07T20:50:37.527Z",
+          "startedAt": "2026-10-07T20:50:41.879Z",
+          "completedAt": "2026-10-07T21:02:46.172Z"
+        },
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M15-A-treatment-fresh_full_synthesis_final-v3:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "zcode",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "requestedAt": "2026-10-07T21:04:00.109Z",
+          "startedAt": "2026-10-07T21:04:05.167Z",
+          "completedAt": "2026-10-07T21:20:49.687Z"
+        }
+      ],
+      "request_to_final_terminal_seconds": 1833.391,
+      "common_T0_to_final_terminal_seconds": 2958.931212,
+      "counterpart_queue_before_first_request_seconds": 1125.540212,
+      "aggregate_occupied_seconds": 2492.131,
+      "aggregate_queue_seconds": 13.908000000000001,
+      "all_stage_deadline_checks": [
+        {
+          "stage": "fresh_transport_scout",
+          "deadline": "2026-10-07T21:09:58.323108+00:00",
+          "completedAt": "2026-10-07T21:03:04.112Z",
+          "within_frozen_stage": true
+        },
+        {
+          "stage": "fresh_object_scout",
+          "deadline": "2026-10-07T21:09:58.323108+00:00",
+          "completedAt": "2026-10-07T21:02:46.172Z",
+          "within_frozen_stage": true
+        },
+        {
+          "stage": "fresh_full_synthesis_final",
+          "deadline": "2026-10-07T21:23:48.983258+00:00",
+          "completedAt": "2026-10-07T21:20:49.687Z",
+          "within_frozen_stage": true
+        }
+      ],
+      "source_grade": "FAIL",
+      "no_parent_child_overlap_doublecount": true,
+      "input": null,
+      "cached_input": null,
+      "generated": null,
+      "billing": null,
+      "actual_scout_occupied_overlap_seconds": 724.293
+    }
+  },
+  "reviews": {
+    "control": {
+      "grade": "FAIL",
+      "assessment_extent": {
+        "extent": "FULL_DECLARED_MATERIAL_SCOPE",
+        "original_brief_and_manifest_read": true,
+        "frozen_final_complete_read": true,
+        "primary_sources_substantively_checked": 8,
+        "declared_primary_sources": 8,
+        "consequential_claim_groups_checked": 40,
+        "total_claim_groups": 40,
+        "all_six_axes_assessed": true,
+        "all_six_obligations_assessed": true,
+        "source_coverage_basis": "Relevant complete governing sections across all eight sources checked, including adverse/negative conditions beyond the candidate index. This does not mean every unrelated paragraph of the whole RFC/manpage/book was interpreted.",
+        "unassessed_remainder": [],
+        "outside_scope_unknowns": [
+          "Actual app platform/implementation and target-server/upload protocol capabilities",
+          "Historical candidate execution events and capture acquisition times",
+          "Runtime behavior, Windows/macOS share modes, server ETag generation policy, browser-specific retention",
+          "All irrelevant sections and unrelated source dependencies; an exhaustive universe of mechanisms is not claimed"
+        ],
+        "localized_stop": false,
+        "deadline_expired": false
+      },
+      "material_defects": 5,
+      "defect_identities": [
+        {
+          "id": "D01",
+          "title": "File API snapshot state is promoted to guaranteed old-byte preservation"
+        },
+        {
+          "id": "D02",
+          "title": "Local digest, remote validator and upload-resource/version bindings are conflated"
+        },
+        {
+          "id": "D03",
+          "title": "Claimed wall-clock retry bound is not supplied by the cited curl mechanism"
+        },
+        {
+          "id": "D04",
+          "title": "Validation does not discriminate the transport capability or identity assumptions it claims to decide"
+        },
+        {
+          "id": "D05",
+          "title": "Digest-free path/row identity is categorically rejected without distinguishing immutable version binding"
+        }
+      ],
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/review.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/control-v3/freeze.json",
+      "immutable": true,
+      "lifecycle": "COMPLETED_QUIET_SETTLED",
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M15-A-control-source-review-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T21:21:44.782Z",
+        "startedAt": "2026-10-07T21:21:45.683Z",
+        "completedAt": "2026-10-07T21:30:36.156Z"
+      },
+      "review_occupied_seconds": 530.473,
+      "deadline_expired": false
+    },
+    "treatment": {
+      "grade": "FAIL",
+      "assessment_extent": {
+        "declared_source_scope": "Original open-discovery brief/empty manifest, 19 mapped primary capture entries (10 distinct byte sets), all 3 mapped indices, exact frozen final. Four additional bounded primary documentation pages were captured solely to resolve claim-level conditions.",
+        "all_declared_obligations_assessed": true,
+        "all_consequential_claims_assessed": true,
+        "all_mapped_primary_byte_sets_checked": true,
+        "mapped_source_entries": 19,
+        "distinct_mapped_byte_sets": 10,
+        "mapped_indices": 3,
+        "consequential_claim_check_count": 58,
+        "six_axes_assessed": 6,
+        "unassessed_remainder": [],
+        "reading_extent": "Contextual primary checking of every subject-relevant claim and its governing conditions, including both RFC renditions and both tus views, with full-text negative searches and relevant section/body reads. This is not a claim to have reviewed unrelated HTTP clauses or every linked document. Hash matches, index labels and search hits were not treated as semantic correctness. Post-write evidence QA rechecked the SQLite failure assumptions, directory flush errors, and supplementary ETag context, then expanded exact multi-range locators where a source fact spans multiple sections.",
+        "m14_applicable": false,
+        "m14_reason": "This is D-M15-A with no authored-set/semantic/projection/preservation-view task or mapped M14 views.",
+        "not_executed": "No runtime fault injection, transfer service, downloaded-code execution, installer, account, purchase, global configuration, repository/canon/WorkNode mutation or third-party write. App behavior, hardware durability and server capability remain deployment questions; proposed validation is assessed rather than fabricated."
+      },
+      "material_defects": 8,
+      "defect_identities": [
+        {
+          "id": "D01",
+          "title": "The local identity gate does not bind checked bytes to transferred bytes"
+        },
+        {
+          "id": "D02",
+          "title": "The RFC retry conclusion omits an explicit normative stopping recommendation"
+        },
+        {
+          "id": "D03",
+          "title": "fsync-before-rename is insufficient to establish durable publication"
+        },
+        {
+          "id": "D04",
+          "title": "The NFS warning is misclassified as an atomicity disclaimer"
+        },
+        {
+          "id": "D05",
+          "title": "An explicitly documented descriptor property is left as an uncaptured uncertainty"
+        },
+        {
+          "id": "D06",
+          "title": "Terminal abandonment lacks protocol capability and cleanup-confirmation conditions"
+        },
+        {
+          "id": "D07",
+          "title": "The proposed checks do not distinguish all mechanisms behind their predicted outcomes"
+        },
+        {
+          "id": "D08",
+          "title": "A page-limited missing ETag recipe becomes a false global publication negative"
+        }
+      ],
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/review.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/freeze.json",
+      "immutable": true,
+      "lifecycle": "COMPLETED_QUIET_SETTLED",
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M15-A-treatment-source-review-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T21:21:56.229Z",
+        "startedAt": "2026-10-07T21:21:56.959Z",
+        "completedAt": "2026-10-07T21:34:05.188Z"
+      },
+      "review_occupied_seconds": 728.229,
+      "deadline_expired": false
+    }
+  },
+  "assessment": {
+    "quality_preserving_speedup_established": false,
+    "equal_quality_established": false,
+    "conclusion": "Both independent full-scope reviews FAIL with differing material defects and governing conditions. Parallel latency evidence descriptive only; no quality-preserving win or equal-quality claim."
+  },
+  "all_candidates_and_reviewers_quiet": true,
+  "candidate_all_native_complete": true,
+  "single_pair_only": true,
+  "input": null,
+  "cached_input": null,
+  "generated": null,
+  "billing": null
+}

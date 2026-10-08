@@ -1,0 +1,29 @@
+{
+  "schema": "ER10_FINITE_PUBLICATION_BATCH011_V1",
+  "predispatch_at": "2026-10-07T23:52:23+00:00",
+  "cutoff": "2026-10-07T23:52:23+00:00",
+  "deadline": "2026-10-08T00:17:23+00:00",
+  "writing_reserve_seconds": 300,
+  "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "publication_checkout": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+  "prior_verified_commit": "3a3800cd7c540b6a60769b7b767547140961119e",
+  "target": {
+    "driverKind": "codex",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "high",
+      "serviceTier": "priority"
+    }
+  },
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "live_science_excluded": [
+    "D-M09-A",
+    "D-M06-A",
+    "D-M06-B"
+  ],
+  "private_fragments_excluded": true,
+  "max_staged_bytes": 67108864,
+  "no_git_or_cleanup": true
+}

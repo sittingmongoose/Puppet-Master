@@ -1,0 +1,53 @@
+{
+  "schema": "er10.exact.complete.pair.freeze.v1",
+  "case": "I-FAST-03",
+  "version": "v1",
+  "record_at": "2026-10-07T21:56:22.256685+00:00",
+  "both_finals_frozen": true,
+  "both_full_final_carriers_present": true,
+  "both_native_complete_terminal_states": true,
+  "all_tasks_quiet": true,
+  "current_actual_task_statuses": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-03-pair-current-quiet-v1.json",
+  "finals": {
+    "control": {
+      "role": "reviser",
+      "native_terminal": "complete",
+      "native_identity": "01a11855-e492-7ed1-9030-496d00691fc1",
+      "native_active_observed": true,
+      "delivery_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/frozen-delivery.json",
+      "final_files": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/artifact.md": {
+          "sha256": "d23509d1f0f75b7138994faa27e2d4589d5d29648fde0adb6d83f54e8125fa8b",
+          "bytes": 24464
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/source-map.json": {
+          "sha256": "5dba95fa1d712eb13c5317cdaf65797423d71a8779b537a38d658b304a61dbb3",
+          "bytes": 12648
+        }
+      },
+      "source_quality": null,
+      "lifecycle_hold": null
+    },
+    "treatment": {
+      "role": "critic-finalizer",
+      "native_terminal": "complete",
+      "native_identity": "01a1184d-0220-71b2-8a65-a7b70a84f94a",
+      "native_active_observed": true,
+      "delivery_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/critic-finalizer-v1/frozen-delivery.json",
+      "final_files": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/critic-finalizer-v1/artifact.md": {
+          "sha256": "fa1d2604746b0cacf9bc004819b88551885b7c8e149785ab0e70ee553854604c",
+          "bytes": 16040
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/critic-finalizer-v1/source-map.json": {
+          "sha256": "81730d832cf82a6ed0a8134f2706422ad4db249237040666bd1bcb300b4187b2",
+          "bytes": 9880
+        }
+      },
+      "source_quality": null,
+      "lifecycle_hold": null
+    }
+  },
+  "source_assessment": null,
+  "scope": "mechanical gate only; actual reviewers decide full scientific completeness/source correctness; lifecycle/time limits separate"
+}

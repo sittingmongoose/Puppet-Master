@@ -1,0 +1,33 @@
+{
+  "stage": "D-M07-B/common/fresh-untrusted-seed-v3",
+  "t3_status": "completed",
+  "quiet": true,
+  "settled": true,
+  "actual_t3_clock": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "requestedAt": "2026-10-07T23:14:14.227Z",
+    "startedAt": "2026-10-07T23:14:20.910Z",
+    "completedAt": "2026-10-07T23:22:22.548Z"
+  },
+  "dispatch_to_delivery_seconds": 488.321,
+  "stage_ceiling_seconds": 1200,
+  "budget_delivery_eligible": true,
+  "saved_scientific_files": {
+    "draft.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md",
+      "bytes": 5036,
+      "sha256": "8ab7b4d982574ad4f3f3b3b80bd044f41ee446e3f947bc9a2e525d99ae1897b9"
+    }
+  },
+  "required_draft_present": true,
+  "native_activation": "UNOBSERVED_ZERO_NOMINATION_NO_ACTIVATION_EXPORT",
+  "native_terminal_disposition": "UNOBSERVED_PENDING_EXACT_TERMINAL_NOMINATION",
+  "source_quality": "UNASSESSED",
+  "comparative_eligibility": "HOLD_MISSING_NATIVE_ACTIVE",
+  "billing": null,
+  "frozen_at": "2026-10-07T23:22:48.226964+00:00"
+}

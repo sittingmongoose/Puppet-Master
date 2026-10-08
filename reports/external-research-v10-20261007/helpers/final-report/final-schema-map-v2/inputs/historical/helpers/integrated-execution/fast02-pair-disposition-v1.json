@@ -1,0 +1,184 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-FAST-02",
+  "record_at": "2026-10-07T21:38:38.077430+00:00",
+  "status": "pair_assessed_terminal_both_FAIL",
+  "all_candidate_tasks_quiet": true,
+  "all_review_tasks_quiet": true,
+  "both_exact_full_finals_nativecomplete_frozen": true,
+  "paired_candidate_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-02-pair-freeze-v1.json",
+  "arms": {
+    "control": {
+      "source_judgment": "FAIL",
+      "material_error_count": 2,
+      "counts": {
+        "obligations": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "frozen_scope": {
+          "complete": 7,
+          "assessed": 7,
+          "unassessed": 0
+        },
+        "plan_decisions": {
+          "complete": 36,
+          "assessed": 36,
+          "unassessed": 0
+        },
+        "owner_decisions": {
+          "complete": 22,
+          "assessed": 22,
+          "unassessed": 0
+        },
+        "declared_obligation_items": {
+          "complete": 71,
+          "assessed": 71,
+          "unassessed": 0
+        },
+        "axes": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "consequential_claim_clusters": {
+          "complete": 24,
+          "assessed": 24,
+          "unassessed": 0
+        },
+        "criticism_dispositions": {
+          "complete": 16,
+          "assessed": 16,
+          "unassessed": 0
+        },
+        "validation_proposal_groups": {
+          "complete": 8,
+          "assessed": 8,
+          "unassessed": 0
+        }
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T21:23:10.699Z",
+      "review_startedAt": "2026-10-07T21:23:11.373Z",
+      "review_completedAt": "2026-10-07T21:33:45.629Z",
+      "review_seconds": 634.93,
+      "review_queue_seconds": 0.674,
+      "review_delivery_in_deadline": true,
+      "source_correct_usable_latency": null,
+      "distinct_usage": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      }
+    },
+    "treatment": {
+      "source_judgment": "FAIL",
+      "material_error_count": 1,
+      "counts": {
+        "six_axes": {
+          "total": 6,
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "O1_O6": {
+          "total": 6,
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "plan_sections": {
+          "total": 6,
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "frozen_plan_decisions": {
+          "total": 36,
+          "complete": 36,
+          "assessed": 36,
+          "unassessed": 0
+        },
+        "scope_constraints": {
+          "total": 5,
+          "complete": 5,
+          "assessed": 5,
+          "unassessed": 0
+        },
+        "authored_product_questions": {
+          "total": 8,
+          "complete": 8,
+          "assessed": 8,
+          "unassessed": 0
+        },
+        "external_owner_documents_or_decisions": {
+          "total": 0,
+          "complete": 0,
+          "assessed": 0,
+          "unassessed": 0
+        },
+        "consequential_finding_groups": {
+          "total": 27,
+          "complete": 27,
+          "assessed": 27,
+          "unassessed": 0,
+          "without_material_defect": 25,
+          "with_material_defect": 2,
+          "distinct_material_error_count": 1
+        },
+        "criticism_dispositions": {
+          "total": 7,
+          "complete": 7,
+          "assessed": 7,
+          "unassessed": 0
+        },
+        "preservation_groups": {
+          "total": 61,
+          "complete": 61,
+          "assessed": 61,
+          "unassessed": 0
+        },
+        "P6_validation_categories": {
+          "total": 8,
+          "complete": 8,
+          "assessed": 8,
+          "unassessed": 0
+        }
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/treatment/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/treatment/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T21:23:12.655Z",
+      "review_startedAt": "2026-10-07T21:23:14.247Z",
+      "review_completedAt": "2026-10-07T21:33:56.526Z",
+      "review_seconds": 643.871,
+      "review_queue_seconds": 1.592,
+      "review_delivery_in_deadline": true,
+      "source_correct_usable_latency": null,
+      "distinct_usage": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      }
+    }
+  },
+  "economics": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-02-terminal-economics-v1.json",
+  "cold_frozen_budgets_seconds": {
+    "control": 2700,
+    "treatment": 1350
+  },
+  "source_quality_preserving_comparative_win": null,
+  "limitations": [
+    "Both full-source grades FAIL; no quality-preserving speedup or usable-final latency credited.",
+    "Independent reviewers grouped inventories differently; counts overlap and are not normalized or summed.",
+    "Treatment research late T3 delivery and lifecycle-only expiry notice retained independently of Source grade.",
+    "Exact per-stage native counters remain distinct; billing/input/cache/generated/reasoning unknown null.",
+    "No exhaustive opportunity recall; no application execution or candidate evaluator feedback."
+  ],
+  "all_original_failures_costs_retained": true
+}

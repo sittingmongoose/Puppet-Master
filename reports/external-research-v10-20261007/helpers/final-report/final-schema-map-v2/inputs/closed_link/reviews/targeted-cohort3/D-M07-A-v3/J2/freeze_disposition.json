@@ -1,0 +1,199 @@
+{
+  "review": "J2",
+  "case": "D-M07-A",
+  "quiet": true,
+  "settled": true,
+  "nativeGoalrequired": false,
+  "actual_t3_clock": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-A-v3-review-J2:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T23:06:19.809Z",
+    "startedAt": "2026-10-07T23:06:20.639Z",
+    "completedAt": "2026-10-07T23:12:41.195Z"
+  },
+  "dispatch_to_delivery_seconds": 381.386,
+  "source_verdict": "FullSourceFAIL",
+  "full_declared_scope_assessed": true,
+  "six_axes_assessed": true,
+  "diagnostic_only": true,
+  "native_provenance_comparative_disposition": "HOLD_MISSING_NATIVE_ACTIVE",
+  "scientific_files": {
+    "judgment.md": {
+      "sha256": "1d85cb90e022dcfba780191bcc5d206c93d3e3244baaafd727c08d323dd144a6",
+      "bytes": 23292
+    },
+    "checks.json": {
+      "sha256": "017469ba97f10637381f15deb87bb0a0db1a8a51ef62b930110c0f788856c480",
+      "bytes": 13061
+    }
+  },
+  "performed_source_operations": {
+    "frozen_section_reads": [
+      {
+        "source_id": "sqlwal",
+        "locators": [
+          "\u00a71 lines 164\u2013180",
+          "\u00a72.2 lines 269\u2013318",
+          "\u00a72.3 lines 324\u2013393",
+          "\u00a73 lines 395\u2013465",
+          "\u00a74 lines 478\u2013492",
+          "\u00a75 lines 498\u2013520",
+          "\u00a76 lines 524\u2013597",
+          "\u00a77\u2013\u00a79 lines 599\u2013704",
+          "\u00a710 lines 709\u2013735",
+          "\u00a711 lines 739\u2013835"
+        ],
+        "operation": "Frozen primary section/code inspection using rg and line-numbered reads",
+        "started_utc": null,
+        "completed_by_utc": "2026-10-07T23:12:08.374136+00:00",
+        "limitation": "Relevant declared claims inspected; not an exhaustive whole-file unknown-defect audit. Earlier bulk outputs truncated; consequential passages reread in focused outputs."
+      },
+      {
+        "source_id": "sqlpragma",
+        "locators": [
+          "busy_timeout lines 576\u2013588",
+          "journal_mode lines 1284\u20131285",
+          "journal_size_limit lines 1286\u20131330",
+          "locking_mode lines 1376\u20131437",
+          "synchronous lines 1856\u20131976",
+          "wal_autocheckpoint lines 2260\u20132278",
+          "wal_checkpoint lines 2280\u20132356"
+        ],
+        "operation": "Frozen primary section/code inspection using rg and line-numbered reads",
+        "started_utc": null,
+        "completed_by_utc": "2026-10-07T23:12:08.374136+00:00",
+        "limitation": "Relevant declared claims inspected; not an exhaustive whole-file unknown-defect audit. Earlier bulk outputs truncated; consequential passages reread in focused outputs."
+      },
+      {
+        "source_id": "sqlwalcode",
+        "locators": [
+          "wal-index header lines 110\u2013148",
+          "walLockExclusive lines 1101\u20131125",
+          "walIndexRecover lines 1374\u20131607",
+          "mxWalSize lines 516, 1646, 1741\u20131745",
+          "walBusyLock lines 2095\u20132118",
+          "walCheckpoint lines 2170\u20132250, 2310\u20132388",
+          "walLimitSize lines 2391\u20132406",
+          "close/PERSIST_WAL lines 2533\u20132559",
+          "sqlite3WalBeginWriteTransaction lines 3680\u20133736",
+          "walRestartLog lines 3854\u20133906",
+          "WAL size truncation lines 4089\u20134115, 4207\u20134217",
+          "sqlite3WalCheckpoint lock handling lines 4282\u20134415"
+        ],
+        "operation": "Frozen primary section/code inspection using rg and line-numbered reads",
+        "started_utc": null,
+        "completed_by_utc": "2026-10-07T23:12:08.374136+00:00",
+        "limitation": "Relevant declared claims inspected; not an exhaustive whole-file unknown-defect audit. Earlier bulk outputs truncated; consequential passages reread in focused outputs."
+      }
+    ],
+    "additional_primary_fetches": [
+      {
+        "op": "primary_fetch",
+        "source_id": "lockingv3",
+        "url": "https://www.sqlite.org/lockingv3.html",
+        "resolved_url": "https://www.sqlite.org/lockingv3.html",
+        "started_utc": "2026-10-07T23:07:21.606627+00:00",
+        "completed_utc": "2026-10-07T23:07:21.808858+00:00",
+        "status": 200,
+        "bytes": 29892,
+        "sha256": "fa67031159fc0658b6e3fcfa4e446c140838c75cb813ff9fafd47fdae927936f",
+        "lines": 689,
+        "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+        "candidate_hash_match": true,
+        "version_or_capture": "Mutable SQLite documentation; reviewer capture 2026-10-07, byte-identical to candidate-declared capture; not release-pinned",
+        "executed_code": false,
+        "raw_capture_retained": false
+      },
+      {
+        "op": "primary_fetch",
+        "source_id": "uri",
+        "url": "https://www.sqlite.org/uri.html",
+        "resolved_url": "https://www.sqlite.org/uri.html",
+        "started_utc": "2026-10-07T23:07:21.811182+00:00",
+        "completed_utc": "2026-10-07T23:07:21.949123+00:00",
+        "status": 200,
+        "bytes": 15559,
+        "sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7",
+        "lines": 382,
+        "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+        "candidate_hash_match": true,
+        "version_or_capture": "Mutable SQLite documentation; reviewer capture 2026-10-07, byte-identical to candidate-declared capture; not release-pinned",
+        "executed_code": false,
+        "raw_capture_retained": false
+      },
+      {
+        "op": "primary_fetch",
+        "source_id": "unix3513",
+        "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/os_unix.c",
+        "resolved_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/os_unix.c",
+        "started_utc": "2026-10-07T23:07:21.950301+00:00",
+        "completed_utc": "2026-10-07T23:07:22.060935+00:00",
+        "status": 200,
+        "bytes": 295447,
+        "sha256": "a2cfaf55f801f7e49cbf286346b14842fdf758aba80f9d5c7638b504605776c6",
+        "lines": 8589,
+        "last_modified": null,
+        "version_or_capture": "SQLite version-3.51.3, src/os_unix.c",
+        "executed_code": false,
+        "raw_capture_retained": false
+      },
+      {
+        "op": "primary_fetch",
+        "source_id": "busy_timeout",
+        "url": "https://www.sqlite.org/c3ref/busy_timeout.html",
+        "version_or_capture": "mutable SQLite C API documentation; reviewer capture 2026-10-07, not release-pinned",
+        "started_utc": "2026-10-07T23:08:40.381646+00:00",
+        "completed_utc": "2026-10-07T23:08:40.503447+00:00",
+        "status": 200,
+        "bytes": 4889,
+        "sha256": "751a6ae8d5a18975af74dbf88f08ce99e0af11e21ba52be879ee11824025d1d1",
+        "lines": 147,
+        "executed_code": false,
+        "raw_capture_retained": false
+      },
+      {
+        "op": "primary_fetch",
+        "source_id": "busy_handler",
+        "url": "https://www.sqlite.org/c3ref/busy_handler.html",
+        "version_or_capture": "mutable SQLite C API documentation; reviewer capture 2026-10-07, not release-pinned",
+        "started_utc": "2026-10-07T23:08:40.504138+00:00",
+        "completed_utc": "2026-10-07T23:08:40.610344+00:00",
+        "status": 200,
+        "bytes": 7155,
+        "sha256": "b0f271fd9ab80375113a48958fd0e678e87ac2ffae6442219fcf1bf890cdbae3",
+        "lines": 184,
+        "executed_code": false,
+        "raw_capture_retained": false
+      }
+    ],
+    "web_text_extraction": {
+      "calls": 2,
+      "url_opens": 4,
+      "urls": [
+        "https://www.sqlite.org/lockingv3.html",
+        "https://www.sqlite.org/uri.html",
+        "https://www.sqlite.org/c3ref/busy_timeout.html",
+        "https://www.sqlite.org/c3ref/busy_handler.html"
+      ],
+      "exact_call_timestamps": null,
+      "completed_by_utc": "2026-10-07T23:12:08.374136+00:00"
+    }
+  },
+  "output_volume": {
+    "judgment_bytes": 23292,
+    "judgment_words_whitespace": 2991,
+    "judgment_sha256": "1d85cb90e022dcfba780191bcc5d206c93d3e3244baaafd727c08d323dd144a6",
+    "checks_bytes": 13061,
+    "candidate_final_bytes": 8309,
+    "candidate_final_words_whitespace": 1107,
+    "unique_declared_input_bytes": 392890,
+    "additional_fetch_bytes": 352942,
+    "tool_output_tokens": null
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "frozen_at": "2026-10-07T23:13:50.496419+00:00"
+}

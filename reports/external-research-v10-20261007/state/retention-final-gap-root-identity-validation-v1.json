@@ -1,0 +1,240 @@
+{
+  "schema": "ER10-late-retention-root-independent-identity-and-transform-check-v1",
+  "at": "2026-10-07T23:48:57.606694+00:00",
+  "status": "PASS",
+  "helper_output_identities_sha256": "d8485290e33f90188f8329ac48c457a35c505256139614d46b0323bd47f0da53",
+  "artifacts_independently_hashed": 96,
+  "ranges_independently_compared": 100,
+  "unique_fragment_count": 84,
+  "fragment_bytes": 65535,
+  "additional_located_ranges_verified": 7,
+  "derived_alternative_checks": [
+    {
+      "index": 0,
+      "source_sha256": "278bc7ffa68e9269ba0d214cd1864d796352a799d2c1448e84a519027b1b8289",
+      "fragment_sha256": "86235e9aa7bf8ef1df3b77e2aae135774f31011439a88e9dc27837c3051afa58",
+      "bytes": 1070,
+      "replace_selection_ids": [
+        "SUP-0002"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 1,
+      "source_sha256": "2ec804abd5e2082a6eaf6822468ee4f0c6ec5696c5243d1e651d37272d9ad6a1",
+      "fragment_sha256": "194d3ebf2dbd8e98df5ac4e67044e3244ca38bdc4cc64b7a834085e3365c8bf9",
+      "bytes": 1375,
+      "replace_selection_ids": [
+        "SUP-0006",
+        "SUP-0007",
+        "SUP-0008",
+        "SUP-0009",
+        "SUP-0010",
+        "SUP-0011",
+        "SUP-0012",
+        "SUP-0013"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 2,
+      "source_sha256": "389edcb2f685a0f09b6d83c68d878fa3f205db38391ad73e75ef29695a7f1d12",
+      "fragment_sha256": "42b416aa4f25ca9a70003e967403eec8f538795be3cc86b619dd936c637022cf",
+      "bytes": 1673,
+      "replace_selection_ids": [
+        "SUP-0014",
+        "SUP-0015",
+        "SUP-0016",
+        "SUP-0017",
+        "SUP-0018"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 3,
+      "source_sha256": "5577e66d438f3510ae0aab9897c8edd33490c92e9ae08bdb2f9839bb2c6bd713",
+      "fragment_sha256": "26b9b49e69550cf2aece0910a1124998b4f12cdf4095a64d9ce5528c67c897b8",
+      "bytes": 2030,
+      "replace_selection_ids": [
+        "SUP-0023",
+        "SUP-0024",
+        "SUP-0025",
+        "SUP-0026",
+        "SUP-0027"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 4,
+      "source_sha256": "893e3b8498e29a5974ab7cdcb753f61c9a6794b798c2a00f089c1b84acdf9b3c",
+      "fragment_sha256": "c3588763dcce7ccd71b382ab9766d74bf3463d96233d9d8015f0170545e59c88",
+      "bytes": 749,
+      "replace_selection_ids": [
+        "SUP-0046",
+        "SUP-0047",
+        "SUP-0048"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 5,
+      "source_sha256": "92cc8d380dfaa8debc35fb8fa7dfe78184d3a79f0dd000b325d2c1de8eb9da6d",
+      "fragment_sha256": "094951ef6ea3b9c22b41c22ac0555785b760bc333552c8f3982b97f0786962dd",
+      "bytes": 864,
+      "replace_selection_ids": [
+        "SUP-0049",
+        "SUP-0050"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 6,
+      "source_sha256": "97a2679674bd1a5fdc462708d964b4033e6dee7d7e3ed26f3fdda1274d71a77d",
+      "fragment_sha256": "bcd9707631d375634b5aad62dd5e7acf6ef0ae59a30f670ad629fbab5f0d2093",
+      "bytes": 1503,
+      "replace_selection_ids": [
+        "SUP-0051",
+        "SUP-0052",
+        "SUP-0053",
+        "SUP-0054",
+        "SUP-0055",
+        "SUP-0056",
+        "SUP-0057"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 7,
+      "source_sha256": "a964e12c6f1bd1b266cbd9acc09171d8b7c248c1be1788d1f77eee5f18ebe557",
+      "fragment_sha256": "73e7650fb3f898b8fb58340abfcc01843d963cebe3a9d801ba34bd12be69f62b",
+      "bytes": 426,
+      "replace_selection_ids": [
+        "SUP-0060",
+        "SUP-0061"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [
+        143
+      ],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 8,
+      "source_sha256": "a964e12c6f1bd1b266cbd9acc09171d8b7c248c1be1788d1f77eee5f18ebe557",
+      "fragment_sha256": "f7999c45c2fc2eb862d932aa871c3c3cef998b8a899caebb5265df932099c1cc",
+      "bytes": 351,
+      "replace_selection_ids": [
+        "SUP-0062",
+        "SUP-0063",
+        "SUP-0064",
+        "SUP-0065",
+        "SUP-0066",
+        "SUP-0067"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 9,
+      "source_sha256": "b69491deb54f64d0b9a8d7e4878728541a9a6a5dde539aa6008eef2131af9d02",
+      "fragment_sha256": "26b9b49e69550cf2aece0910a1124998b4f12cdf4095a64d9ce5528c67c897b8",
+      "bytes": 2030,
+      "replace_selection_ids": [
+        "SUP-0071",
+        "SUP-0072",
+        "SUP-0073",
+        "SUP-0074",
+        "SUP-0075"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 10,
+      "source_sha256": "f0018a81829f7a6e0c6373b2182b47924b6377ec68eb6b569cf1d7b16cc877bb",
+      "fragment_sha256": "cfd11da6b1eb31294240f0c5265fc83ff1ca29e707a75840f8c40fbc1df90c7d",
+      "bytes": 1176,
+      "replace_selection_ids": [
+        "SUP-0078",
+        "SUP-0079"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 11,
+      "source_sha256": "f0018a81829f7a6e0c6373b2182b47924b6377ec68eb6b569cf1d7b16cc877bb",
+      "fragment_sha256": "7620232908b8c6c2d08643c249ae72adf1cf70b33bff2caa17238cf87d7835d1",
+      "bytes": 687,
+      "replace_selection_ids": [
+        "SUP-0080"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    },
+    {
+      "index": 12,
+      "source_sha256": "f0018a81829f7a6e0c6373b2182b47924b6377ec68eb6b569cf1d7b16cc877bb",
+      "fragment_sha256": "8bf905663d05ea45715986ddd33bc06ec58cad50fb028f256b3c11389e27bd12",
+      "bytes": 4363,
+      "replace_selection_ids": [
+        "SUP-0081",
+        "SUP-0082",
+        "SUP-0083",
+        "SUP-0084"
+      ],
+      "each_mapped_visible_line_exact": true,
+      "whole_original_selected_visible_text_equal": true,
+      "unmapped_derived_lines": [],
+      "full_original_extraction_parser_replay_claimed": false,
+      "substitution_authorized_by_this_receipt": false
+    }
+  ],
+  "source_bodies_printed": false,
+  "original_helper_bytes_modified": false,
+  "whole_assertion_coverage_or_necessity_inferred": false,
+  "source_deletion_authorized": false,
+  "archive_created": false
+}

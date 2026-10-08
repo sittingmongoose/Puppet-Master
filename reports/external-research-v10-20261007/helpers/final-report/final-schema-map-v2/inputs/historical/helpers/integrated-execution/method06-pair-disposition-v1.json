@@ -1,0 +1,179 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-METHOD-06",
+  "record_at": "2026-10-07T21:07:27.102834+00:00",
+  "status": "pair_assessed_terminal_control_PASS_WITH_LIMITATIONS_treatment_FAIL",
+  "all_candidate_tasks_quiet": true,
+  "all_review_tasks_quiet": true,
+  "both_exact_full_finals_nativecomplete_frozen": true,
+  "paired_candidate_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-06-pair-freeze-v1.json",
+  "arms": {
+    "control": {
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "material_error_count": 0,
+      "counts": {
+        "six_axes": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "brief_O1_O6": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "additional_brief_constraints": {
+          "complete": 4,
+          "assessed": 4,
+          "unassessed": 0
+        },
+        "frozen_input_units_contexts": {
+          "complete": 11,
+          "assessed": 11,
+          "unassessed": 0
+        },
+        "owner_decision_groups": {
+          "complete": 71,
+          "assessed": 71,
+          "unassessed": 0
+        },
+        "consequential_claim_groups": {
+          "complete": 20,
+          "assessed": 20,
+          "unassessed": 0
+        },
+        "critic_disposition_groups": {
+          "complete": 27,
+          "assessed": 27,
+          "unassessed": 0
+        },
+        "draft_preservation_themes": {
+          "complete": 12,
+          "assessed": 12,
+          "unassessed": 0
+        },
+        "validation_proposal_groups": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "material_error_count": 0,
+        "nonmaterial_behavior_error_count": 1,
+        "note": "Complete means declared inventory, assessed includes insufficient/partial/qualified findings, not satisfied. Categories overlap and must not be summed."
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T20:51:35.196Z",
+      "review_startedAt": "2026-10-07T20:51:35.799Z",
+      "review_completedAt": "2026-10-07T21:05:58.773Z",
+      "review_delivery_frozenAt": "2026-10-07T21:06:51.767922+00:00",
+      "review_dispatch_to_delivery_seconds": 863.577,
+      "delivery_in_review_deadline": true,
+      "source_correct_usable_delivery_retrospectively_assessed": "2026-10-07T20:48:46.094Z",
+      "source_correct_usable_host_release_retrospectively_assessed": "2026-10-07T20:51:16.704702+00:00",
+      "source_correct_usable_latency_from_original_cold_T0_seconds": 2204.8041,
+      "source_correct_usable_host_release_from_original_cold_T0_seconds": 2355.414802,
+      "original_cold_T0_bound": "2026-10-07T20:12:01.289900+00:00",
+      "source_assessment_establishedAt": "2026-10-07T21:05:58.773Z",
+      "economic_actual_dispatch_latencies": {
+        "delivery": 2179.048,
+        "host_release": 2329.658702
+      },
+      "aggregate_nonoverlapping_occupied_seconds": 2071.2740000000003,
+      "usage_billing_unknown": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      },
+      "full_scope_assessed": true,
+      "unassessed": 0
+    },
+    "treatment": {
+      "source_judgment": "FAIL",
+      "material_error_count": 3,
+      "counts": {
+        "axes": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "original_obligations": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "plan_units": {
+          "complete": 9,
+          "assessed": 9,
+          "unassessed": 0
+        },
+        "copied_contexts": {
+          "complete": 2,
+          "assessed": 2,
+          "unassessed": 0
+        },
+        "top_level_scope": {
+          "complete": 17,
+          "assessed": 17,
+          "unassessed": 0
+        },
+        "owner_decision_groups": {
+          "complete": 73,
+          "assessed": 73,
+          "unassessed": 0
+        },
+        "consequential_claim_groups": {
+          "complete": 24,
+          "assessed": 24,
+          "unassessed": 0
+        },
+        "criticism_disposition_groups": {
+          "complete": 17,
+          "assessed": 17,
+          "unassessed": 0
+        }
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T20:51:36.365Z",
+      "review_startedAt": "2026-10-07T20:51:36.946Z",
+      "review_completedAt": "2026-10-07T21:04:20.081Z",
+      "review_delivery_frozenAt": "2026-10-07T21:04:31.945501+00:00",
+      "review_dispatch_to_delivery_seconds": 763.716,
+      "delivery_in_review_deadline": true,
+      "source_correct_usable_delivery_retrospectively_assessed": null,
+      "source_correct_usable_host_release_retrospectively_assessed": null,
+      "source_correct_usable_latency_from_original_cold_T0_seconds": null,
+      "source_correct_usable_host_release_from_original_cold_T0_seconds": null,
+      "original_cold_T0_bound": "2026-10-07T20:06:45.651929+00:00",
+      "source_assessment_establishedAt": "2026-10-07T21:04:20.081Z",
+      "economic_actual_dispatch_latencies": {
+        "delivery": 2355.873,
+        "host_release": 2412.803444
+      },
+      "aggregate_nonoverlapping_occupied_seconds": 2307.136,
+      "usage_billing_unknown": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      },
+      "full_scope_assessed": true,
+      "unassessed": 0
+    }
+  },
+  "economic_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-06-terminal-economics-v1.json",
+  "lifecycle_and_timing_limits": [
+    "Treatmentcritic T3 delivery late original600s stage; nativecomplete/fullcarrier retained, subsequentfinal withinoriginalwhole45.",
+    "Declared passive native projection actualstate/identity is carrier; rawAPI/createdAt/updateepoch missing, unknownusage/billing separate.",
+    "Independent inventories grouped71control/73treatmentowner decisions,20/24claims,27/17criticgroups; overlappingcounts not added ornormalized.",
+    "Control SourcePASS_WITH_LIMITATIONS does not certify all originalrequirements fulfilled: discovery-before-plan chronology unestablished, Rust+Slint implicit, recovery-order wording ambiguous, nonmaterialsamplingoverstatement."
+  ],
+  "selection_basis": "DIAGNOSTIC_UNQUALIFIED; treatment SourceFAIL, no quality-preserving speed/ratio or bundle component causal claim",
+  "all_original_costs_and_failures_retained": true,
+  "no_bestof_regrade_or_Sol_rescue": true,
+  "exhaustive_opportunity_recall_claimed": false
+}

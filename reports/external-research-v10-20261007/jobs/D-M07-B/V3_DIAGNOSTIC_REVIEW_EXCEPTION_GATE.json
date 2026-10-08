@@ -1,0 +1,39 @@
+{
+  "schema": "ER10_DIAGNOSTIC_FULL_SCIENCE_REVIEW_GATE_V1",
+  "case": "D-M07-B",
+  "verified_at": "2026-10-07T23:37:01.691693+00:00",
+  "authorization": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M07-B-diagnostic-seed-continuation-exception-v1.json",
+  "authorization_sha256": "e33127dcecbbef58f92004eee7cfd4670c8c2424da5f70129ffec4073449550f",
+  "seed_continuation_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_DIAGNOSTIC_SEED_CONTINUATION_GATE.json",
+  "full_pair_native_terminal_and_quiet_gate": true,
+  "stage_freezes": {
+    "D-M07-B/common/fresh-untrusted-seed-v3": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/freeze_disposition.json",
+      "sha256": "beb0e6cc5e6446a8e16ce000a64dde85a9b908dc52bdb27c950e3379bcc79cbe",
+      "native_active_observed": false,
+      "native_status": "complete",
+      "quiet": true,
+      "settled": true
+    },
+    "D-M07-B/control/document-order-review-final-v3": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/freeze_disposition.json",
+      "sha256": "5081a5465ecfaef39a68c7997fe5ab9e09ca3032131dcef992ab32309c49373e",
+      "native_active_observed": true,
+      "native_status": "complete",
+      "quiet": true,
+      "settled": true
+    },
+    "D-M07-B/treatment/critical-first-protected-breadth-final-v3": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/freeze_disposition.json",
+      "sha256": "1175f2f861fb60f2575b2d3f3fdbd50bbe09fb34d70466516d6948198f3c5662",
+      "native_active_observed": true,
+      "native_status": "complete",
+      "quiet": true,
+      "settled": true
+    }
+  },
+  "native_provenance_comparative_disposition": "HOLD_UNOBSERVED_SEED_ACTIVE_AT_TERMINAL",
+  "original_activation_pending_no_export_immutable": true,
+  "review_scope": "FIRST_FULL_DECLARED_SOURCE_SCIENCE_DIAGNOSTIC_ONLY",
+  "no_method_credit_or_requalification": true
+}

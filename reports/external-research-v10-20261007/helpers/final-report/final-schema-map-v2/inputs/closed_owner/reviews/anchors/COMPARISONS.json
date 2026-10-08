@@ -1,0 +1,85 @@
+{
+  "updated_at": "2026-10-07T20:07:15.391170+00:00",
+  "scope": "three existing topology anchor slots only",
+  "pairs": [
+    {
+      "slot_id": "I-ANCHOR-LUNA",
+      "status": "BOTH_ARMS_FULL_DECLARED_SCOPE_ASSESSED",
+      "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/COMPARISON.json",
+      "sha256": "337ef914d77b8682a47e5f887e88d0fd2cb602f5e5b65d962902af01414786c0",
+      "timing_eligibility": "HOLD_CONTROL_OVERRUN",
+      "provenance_eligibility": {
+        "status": "DISCLOSED_LIMITS",
+        "exposure": "UNKNOWN_BEYOND_OBSERVED_INPUT_SCOPE",
+        "review_timing": "Both fresh full reviews dispatched only after exact final/native frozen and candidate tasks quiet",
+        "limitations": "Authorized authored inputs reveal method/arm clues. Treatment reviewer enumerated unrelated historical AGENTS filenames, no contents opened/used, original disclosure preserved. Control researcher own metadata hash-read narrow exception retained. Paths do not prove filesystem firewall.",
+        "candidate_feedback": "No reviewer findings supplied to candidates"
+      },
+      "economic_observation": {
+        "descriptive_control_over_treatment_terminal_latency_ratio": 1.321,
+        "quality_preserving_speedup_established": false,
+        "twofold_objective_established": false,
+        "affordability_established": false,
+        "reason": "Original treatment reviewer PASS_WITH_LIMITATIONS, control full review has material completeness defect; not matched passing quality. Control original budget exceeded. Ratio descriptive only; billing unknown; no best-of or scientific rescue.",
+        "single_account_recommendation": "No qualified comparative recipe established; one overlapping campaign pair, normal-user single-project execution not independently measured"
+      }
+    },
+    {
+      "slot_id": "I-ANCHOR-MUSE",
+      "status": "BOTH_ARMS_FULL_DECLARED_SCOPE_ASSESSED",
+      "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/COMPARISON.json",
+      "sha256": "be973dfa4b61808e5d8609f1517d8c9c9f7e02892393b16a0af48db98e819beb",
+      "timing_eligibility": null,
+      "provenance_eligibility": {
+        "status": "HOLD",
+        "exposure": "UNKNOWN",
+        "reason": "Treatment independent review started while counterpart candidate work still scored. Original stopped partial retained, no grade; new treatment full review supplied prior observations and disclosed reduced blinding. Scoped paths do not establish filesystem firewall.",
+        "deviation": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/protocol-deviation-001.json",
+          "sha256": "e3a85714a2be6f7686087491f074eef6834efb9d969598e42e590ea12a130895"
+        },
+        "partial": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/partial-status.json",
+          "sha256": "3c877cb352ae5e4c02e5cc5c07296c02886974682f0c30105e4905d13fd030cd"
+        },
+        "candidate_feedback": "No reviewer findings supplied to candidates by coordinator"
+      },
+      "economic_observation": {
+        "descriptive_control_over_treatment_terminal_latency_ratio": 1.7254,
+        "quality_preserving_speedup_established": false,
+        "twofold_objective_established": false,
+        "affordability_established": false,
+        "reason": "Both original full reviews NOT_FULL_POSITIVE; distinct source/coverage defects cannot be treated as equal quality. Provenance HOLD independently limits comparative eligibility. Billing unknown. One matched pair is descriptive, no best-of.",
+        "single_account_recommendation": "No qualified production recipe from this pair; faster observed delivery is not a source-correct usable-result win.",
+        "experiment_fanout": "Arms overlapped under campaign capacity; normal user single-project contention/latency not independently measured."
+      }
+    },
+    {
+      "slot_id": "I-ANCHOR-GLM",
+      "status": "DIAGNOSTIC_ASSESSMENTS_FROZEN_WITH_LIMITED_CONTROL_SOURCE_VERIFICATION",
+      "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/COMPARISON.json",
+      "sha256": "33a971013bc585e072795c7eda85cbd75a5bd476efdf773c8e9fb368a2cb919e",
+      "timing_eligibility": "HOLD",
+      "provenance_eligibility": {
+        "status": "HOLD_METHOD_ELIGIBILITY_DIAGNOSTIC_ONLY",
+        "exposure": "UNKNOWN_BEYOND_OBSERVED_INPUT_SCOPE",
+        "review_timing": "Both review tasks fresh after both scientific final arms quiet/frozen",
+        "no_filesystem_firewall_claim": true,
+        "limits": "Authorized authored finals/source maps expose arm/method/lifecycle/deadline clues; reviewer original disclosures exclude these from science scores. Treatment candidate /tmp scratch-source-map note outside declared write directory retained, not imported. Original firstMuse broader provenance limits and GLM installed-integration/vendor-target distinction remain independent axes.",
+        "candidate_feedback": "No reviewer findings supplied to candidates"
+      },
+      "economic_observation": {
+        "descriptive_control_over_treatment_terminal_latency_ratio": 0.8963,
+        "quality_preserving_speedup_established": false,
+        "twofold_objective_established": false,
+        "affordability_established": false,
+        "reason": "Both diagnostic original assessments NO_FULL_POSITIVE/false with seven material defects each; control retains unverified R1/R2 and incomplete final review check. No matched positive quality, complete native pipeline or within-ceiling lifecycle. Treatment terminaldelivery3018.137s vs control2705.171s, ratio0.8963 descriptive only; billingunknown. No bestof/source rescue.",
+        "single_account_recommendation": "No qualified candidate recipe established; one campaignfanout pair, normaluser singleproject execution unmeasured"
+      }
+    }
+  ],
+  "complete_assessed_pairs": 3,
+  "all_three_complete": true,
+  "billing": "unknown; native counters not double summed",
+  "scientific_authorship": "Independent reviewer original judgments only; no coordinator authored scored answers"
+}

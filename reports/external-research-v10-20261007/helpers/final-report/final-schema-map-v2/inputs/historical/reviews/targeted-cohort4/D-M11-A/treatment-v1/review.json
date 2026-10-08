@@ -1,0 +1,802 @@
+{
+  "schema": "independent-frozen-source-review.v1",
+  "overall_grade": "FAIL",
+  "source_pass": false,
+  "partial": false,
+  "assessment_extent": {
+    "type": "full declared-scope independent static primary-source review",
+    "description": "Original brief, manifest, all eight required primary sources, and exact hash-verified frozen final assessed. All material final claim groups and consequential governing extraction branches checked; targeted sections and full relevant functions were used, not a whole-repository audit.",
+    "material_claim_groups_checked": 25,
+    "unassessed_declared_scope_remainder": [],
+    "limitations": [
+      "No execution of downloaded source or regression tests; static consequences are labeled inference.",
+      "No supplied3.13 or specific<3.12 runtime implementation bytes; documentation-supported transition and backport conditions assessed without certifying those builds.",
+      "Author history/read logs, predecessor preservation, and final-only process assertions unavailable. These are disclosed limits rather than assumed verified actions.",
+      "No check of unrelated shutil wrapper or other platforms beyond the supplied sources' conditional statements."
+    ]
+  },
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/treatment-v1/INPUT_MAP.json",
+  "brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/brief.md",
+    "sha256": "8ff2c3095c6505c45fd4d48e19f07f1edd0f81251e00838215d5f41a64c12eef"
+  },
+  "manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources.json",
+    "sha256": "7319f42c6303bc9b7920905120f59a7ba2f74f5de76a17825564af91bd26ccb8"
+  },
+  "frozen_output": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/final.md",
+    "expected_sha256": "ffcfa6e55b0ffb782642d8c3c284dccac70bb9fc89eb55b8a46b3524cee32129",
+    "actual_sha256": "ffcfa6e55b0ffb782642d8c3c284dccac70bb9fc89eb55b8a46b3524cee32129",
+    "hash_verified_before_assessment": true,
+    "word_count_whitespace": 808
+  },
+  "source_catalog": [
+    {
+      "source_id": "pep706",
+      "url": "https://peps.python.org/pep-0706/",
+      "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/pep706.html",
+      "kind": "public primary raw bytes",
+      "hash_verified": true
+    },
+    {
+      "source_id": "tarissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/102950",
+      "version_or_capture": "CPython issue 102950 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarissue.json",
+      "kind": "public primary raw bytes",
+      "hash_verified": true
+    },
+    {
+      "source_id": "tarpr",
+      "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+      "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarpr.json",
+      "kind": "public primary raw bytes",
+      "hash_verified": true
+    },
+    {
+      "source_id": "tardefaultissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/121999",
+      "version_or_capture": "CPython issue 121999 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "e88ab5fad57a96ff4cb0d25148ff5c1535027d2482fe616d4ee0e2a0a3b70bce",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardefaultissue.json",
+      "kind": "public primary raw bytes",
+      "hash_verified": true
+    },
+    {
+      "source_id": "tarold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarold.py",
+      "kind": "public primary raw bytes",
+      "hash_verified": true
+    },
+    {
+      "source_id": "tarnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarnew.py",
+      "kind": "public primary raw bytes",
+      "hash_verified": true
+    },
+    {
+      "source_id": "tardocnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardocnew.rst",
+      "kind": "public primary raw bytes",
+      "hash_verified": true
+    },
+    {
+      "source_id": "tartest",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/test/test_tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5149edfc9376f6d45cb95f7c914cd6b6dd205e5ef404298e655aa685a5527831",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tartest.py",
+      "kind": "public primary raw bytes",
+      "hash_verified": true
+    }
+  ],
+  "locator_convention": "tarnew/tarold/tardocnew/tartest/pep706 refer to source IDs; numeric locators are 1-based raw captured-file lines. Issue/PR locators are JSON pointers. Capture SHA and original URL/version/path resolve through source_catalog. Final locators are 1-based frozen final.md lines.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "all required brief obligations",
+      "disposition": "FAIL",
+      "basis": "All six obligations are addressed structurally; API fallback, Linux path expectations, capability-bound compatibility, and resource-bounded inspection remain defective.",
+      "defect_ids": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "consequential claims and full governing release/default/type/path conditions",
+      "disposition": "FAIL",
+      "basis": "Released default and direct filter mechanics largely correct; full API/path/platform conditions are not preserved. See 25 independent claim checks.",
+      "defect_ids": [
+        "D1",
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "bounded useful discovery/negative/optional yield",
+      "disposition": "PARTIAL",
+      "basis": "Useful bounded negative findings and optional wrapper/helper extension retained. No new capture was necessary. Proposed inspection lacks memory/CPU bounds.",
+      "defect_ids": [
+        "D4"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "wrong rejection/correction or unjustified universal abstention",
+      "disposition": "FAIL",
+      "basis": "Backport-aware capability is replaced by an unsupported categorical version exclusion. Linux rejection oracle is wrong. No universal abstention: a concrete ingest policy is offered. Overcorrection of the old warning is treated as a wording qualification, not a forced additional defect.",
+      "defect_ids": [
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "preservation/traceability/retained uncertainties and optional content within final",
+      "disposition": "PARTIAL",
+      "basis": "Source IDs, hashes and code locators allow traceability; wrapper/WASI/Windows uncertainties and optional content retained. Older-runtime uncertainty conflicts with no-support assertion; link normalization and API fallback conditions are omitted. Predecessor comparison unavailable and not performed.",
+      "defect_ids": [
+        "D1",
+        "D3"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "proposed versus actually executed checks",
+      "disposition": "PARTIAL",
+      "basis": "Execution separation PASS: final expressly reports zero executed tests and labels regressions proposed. Proposed-check correctness/conditions FAIL: Linux path oracle and missing API/version distinctions. Author execution history cannot be independently audited under the read restriction.",
+      "defect_ids": [
+        "D1",
+        "D2"
+      ]
+    }
+  ],
+  "obligations": [
+    {
+      "obligation": 1,
+      "text": "Identify the old concern, implementation/fix lineage, and released default relevant to 3.14.0.",
+      "disposition": "PASS_WITH_LIMITS",
+      "coverage": "Correct old concern, PEP/issue/PR/default-change lineage and3.14.0 default.3.13 runtime statement supported by PEP/issue, not supplied released3.13 bytes.",
+      "claim_ids": [
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "defect_ids": []
+    },
+    {
+      "obligation": 2,
+      "text": "Bind omitted versus explicit filter and errorlevel behavior.",
+      "disposition": "PARTIAL",
+      "coverage": "Correct selected-member3.14 omitted/explicit filter and errorlevel rules, but filter propagation/fallback differs between extract and extractall; older level0 semantics also differ.",
+      "claim_ids": [
+        "C06",
+        "C07",
+        "C08",
+        "C17",
+        "C23"
+      ],
+      "defect_ids": [
+        "D1"
+      ]
+    },
+    {
+      "obligation": 3,
+      "text": "Separate file/link/path domains and destination assumptions.",
+      "disposition": "FAIL",
+      "coverage": "Path/type/link rules mostly described but Linux path tests conflict, fallback selected type not covered, and tar filesystem outcomes need conditions.",
+      "claim_ids": [
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C22"
+      ],
+      "defect_ids": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "obligation": 4,
+      "text": "State residual security and resource-exhaustion limits.",
+      "disposition": "PARTIAL",
+      "coverage": "Residual DoS, quotas, mutable destination, timestamps, and cleanup retained. getmembers inspection itself lacks memory/CPU/time bounds.",
+      "claim_ids": [
+        "C15",
+        "C16",
+        "C17",
+        "C18"
+      ],
+      "defect_ids": [
+        "D1",
+        "D4"
+      ]
+    },
+    {
+      "obligation": 5,
+      "text": "Avoid projecting an older issue onto every current code path.",
+      "disposition": "PARTIAL",
+      "coverage": "Correctly distinguishes old full-trust defaults from3.14 data, but overbroad warning wording and omitted single-extract path prevent full non-projection.",
+      "claim_ids": [
+        "C02",
+        "C19"
+      ],
+      "defect_ids": [
+        "D1"
+      ]
+    },
+    {
+      "obligation": 6,
+      "text": "Propose version-discriminating regression checks and conditional compatibility policy.",
+      "disposition": "FAIL",
+      "coverage": "Concrete proposed checks and explicit data/errorlevel policy exist; Linux oracle and categorical older-version exclusion are defective. Security-relevant release deltas deserve explicit API/version tests.",
+      "claim_ids": [
+        "C20",
+        "C21",
+        "C22",
+        "C23",
+        "C24"
+      ],
+      "defect_ids": [
+        "D1",
+        "D2",
+        "D3"
+      ]
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "id": "C01",
+      "candidate_lines": [
+        7
+      ],
+      "disposition": "SUPPORTED",
+      "checked_fact": "Released v3.14.0 implementation governs runtime; PEP explicitly labels itself historical.",
+      "primary_locators": [
+        "tarnew:2370-2386",
+        "tardocnew:1045-1053",
+        "pep706:157"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C02",
+      "candidate_lines": [
+        8,
+        11
+      ],
+      "disposition": "QUALIFIED",
+      "checked_fact": "Both APIs filter the selected member; extractfile has no filter and returns readers only for data/link members, otherwise None. No disk extraction occurs there. add has a distinct one-argument creation filter. Both disk APIs are not equivalent for fallback.",
+      "primary_locators": [
+        "tarnew:2388-2420,2461-2479,2550-2580,2300-2330",
+        "tardocnew:601-607,668-679"
+      ],
+      "defect_ids": [
+        "D1",
+        "D3"
+      ]
+    },
+    {
+      "id": "C03",
+      "candidate_lines": [
+        9
+      ],
+      "disposition": "SUPPORTED",
+      "checked_fact": "With argument and extraction_filter both None, 3.14.0 returns data_filter without warning; 3.12.3 warns and returns fully_trusted. Default test actually calls extractall on directories and checks mocks, not all extraction paths.",
+      "primary_locators": [
+        "tarnew:2370-2380,1724",
+        "tarold:2217-2232",
+        "tardocnew:563-564,649-650",
+        "tartest:741-757"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C04",
+      "candidate_lines": [
+        15
+      ],
+      "disposition": "SUPPORTED_WITH_VERSION_LIMIT",
+      "checked_fact": "PEP and default-change issue describe 3.12-3.13 warning/full-trust transition; actual 3.12.3 and 3.14.0 supplied code confirm endpoints. No 3.13 implementation bytes independently certify all 3.13 patch/vendor builds.",
+      "primary_locators": [
+        "pep706:418-421",
+        "tardefaultissue:JSON /body",
+        "tarold:2217-2226",
+        "tarnew:2370-2374"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C05",
+      "candidate_lines": [
+        15,
+        36
+      ],
+      "disposition": "SUPPORTED",
+      "checked_fact": "PEP is Final and links PR102953. Issue102950 closed 2023-05-30 and lists implementation/follow-ups. PR102953 merged 2023-04-24 at af530469954e8ad49f1e071ef31c844b9bfda414. Issue121999 closed 2024-07-26 and tracks default/data warning/test changes.",
+      "primary_locators": [
+        "pep706:99,170-201,663-664",
+        "tarissue:JSON /title,/body,/closed_at",
+        "tarpr:JSON /title,/body,/merged_at,/merge_commit_sha",
+        "tardefaultissue:JSON /title,/body,/closed_at"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C06",
+      "candidate_lines": [
+        17
+      ],
+      "disposition": "SUPPORTED_WITH_TYPE_CONDITION",
+      "checked_fact": "Callables pass through; known string names resolve via _NAMED_FILTERS, unknown hashable names raise ValueError; omitted filter uses an instance/class callable. String extraction_filter raises TypeError only when consulted, not when an explicit filter overrides it. Unhashable invalid arguments can raise TypeError, so 'else ValueError' should be read as unknown string names.",
+      "primary_locators": [
+        "tarnew:864-868,2370-2386",
+        "tartest:4408-4470",
+        "pep706:412-426"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C07",
+      "candidate_lines": [
+        17,
+        25
+      ],
+      "disposition": "SUPPORTED_FOR_3_14_SELECTED_MEMBER",
+      "checked_fact": "Selected-member OSError/UnicodeEncodeError/FilterError uses fatal handling; ExtractError uses nonfatal handling. At level0 caught refusal leaves filtered=None and skips; at1 fatal raises and nonfatal skips; >1 nonfatal raises. Other exceptions and corruption are not universally suppressed; debug output requires enabled debug.",
+      "primary_locators": [
+        "tarnew:2494-2503,2531-2548,2989-2993",
+        "tardocnew:616-635",
+        "tartest:4502-4571"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C08",
+      "candidate_lines": [
+        17,
+        21
+      ],
+      "disposition": "SUPPORTED",
+      "checked_fact": "Custom filter None skips; abort can leave prior files and has no cleanup. Caller-owned disposable destination cleanup is a sound conditional recommendation.",
+      "primary_locators": [
+        "tarnew:2397-2412,2494-2503",
+        "tardocnew:1062-1072,1174-1176"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C09",
+      "candidate_lines": [
+        10,
+        19,
+        25
+      ],
+      "disposition": "PARTLY_INCORRECT",
+      "checked_fact": "data/tar strip leading separators, then test OS-specific absoluteness and resolved containment. Ordinary Linux /abs becomes abs, C:/ is not the supplied Windows absolute-path case on Linux; ../ is refused only when resolution actually escapes.",
+      "primary_locators": [
+        "tarnew:781-797",
+        "tardocnew:1090-1097",
+        "tartest:3714-3737,3999-4051"
+      ],
+      "defect_ids": [
+        "D2"
+      ]
+    },
+    {
+      "id": "C10",
+      "candidate_lines": [
+        19,
+        25
+      ],
+      "disposition": "SUPPORTED_WITH_TYPE_CONDITION",
+      "checked_fact": "With ordinary parsed numeric modes, mask0o755; regular files AND hardlinks gain0o600 and lose other execute bits when owner lacks execute; directories and symlinks mode=None; special types refused. ownership fields become None. Special-file rejection is inside mode-is-not-None branch, so these are not unconditional properties for arbitrary custom TarInfos.",
+      "primary_locators": [
+        "tarnew:799-828,1289-1304,2756-2810",
+        "tartest:4226-4337"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C11",
+      "candidate_lines": [
+        19
+      ],
+      "disposition": "INCOMPLETE_RELEASE_DELTA",
+      "checked_fact": "data tests absolute linkname; symlink target relative to member directory, hardlink target relative to root; realpath containment checked. 3.14 also normpath-normalizes returned linkname (potential semantic change through symlinks); 3.12.3 lacks normalization. Final does not retain this material release-specific behavior or corresponding regression.",
+      "primary_locators": [
+        "tarnew:829-846",
+        "tarold:802-815",
+        "tardocnew:1108-1121,1145-1147",
+        "tartest:4156-4176"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C12",
+      "candidate_lines": [
+        19,
+        21,
+        25
+      ],
+      "disposition": "SUPPORTED_WITH_EXECUTION_CONDITIONS",
+      "checked_fact": "tar performs path/mode checks and retains ownership/link-target/special-type features; fully_trusted is identity. Those filters do not guarantee successful filesystem operations: existence, capabilities and privilege still matter. Restricting permissive policies to validated trusted archives is sensible; tar is not fully faithful because it modifies paths/modes.",
+      "primary_locators": [
+        "tarnew:849-868,2677-2701,2717-2754",
+        "tartest:3952-3996,4306-4337",
+        "tardocnew:1032-1043"
+      ],
+      "defect_ids": [
+        "D2"
+      ]
+    },
+    {
+      "id": "C13",
+      "candidate_lines": [
+        10,
+        19,
+        29
+      ],
+      "disposition": "SUPPORTED_WITH_CONTAINMENT_CONDITION",
+      "checked_fact": "Filter uses current realpath(ALLOW_MISSING); archive order applies when members=None; repeated regular files use wb, overwriting prior contents. Pre-existing symlinks participate in resolution, but data/tar refuse outside destinations rather than blindly following all such links. Fresh empty destination and no concurrent attacker remain assumptions, not guarantees.",
+      "primary_locators": [
+        "tarnew:784-797,2404-2408,2653-2667,2958-2987",
+        "tardocnew:1174-1176,1190-1198"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C14",
+      "candidate_lines": [
+        19
+      ],
+      "disposition": "QUALIFIED",
+      "checked_fact": "extractall re-filters queued directories, logs/skips _FILTER_ERRORS or None, and verifies lstat directory type. Attribute-setting ExtractError still goes through errorlevel and can raise at >1. 'failures only logged' is accurate for handled re-filter refusals, not all fixup failures; other exceptions can propagate.",
+      "primary_locators": [
+        "tarnew:2426-2459,2531-2536",
+        "tartest:4179-4208"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C15",
+      "candidate_lines": [
+        21,
+        31
+      ],
+      "disposition": "SUPPORTED",
+      "checked_fact": "No count/size/quota/decompression-ratio policy in _get_filtered_attrs; released docs affirm DoS remains and recommend caller/external limits. Search hits for format/offset limits are not resource budgets. Negative finding is bounded to the named filters and reviewed tarfile docs, not every Python library.",
+      "primary_locators": [
+        "tarnew:781-868,2653-2667",
+        "tardocnew:1167-1188",
+        "pep706:487-515"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C16",
+      "candidate_lines": [
+        21
+      ],
+      "disposition": "SUPPORTED_WITH_WORDING_LIMIT",
+      "checked_fact": "data clears ownership but does not clear mtime; extraction applies mtime if not None. Ownership-nulling does not mitigate timestamp tricks. Live destination/source tampering is explicitly outside protection.",
+      "primary_locators": [
+        "tarnew:819-828,2627-2631,2800-2810",
+        "tardocnew:1196-1198"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C17",
+      "candidate_lines": [
+        21
+      ],
+      "disposition": "INCOMPLETE_API_CONDITION",
+      "checked_fact": "Fallback can copy a referenced archive member when link creation fails or a hardlink target is missing. It is not restricted to non-link platforms. extractall re-filters and reports LinkFallbackError; extract does not propagate filter.",
+      "primary_locators": [
+        "tarnew:2511-2525,2706-2754",
+        "tartest:4104-4154,3611-3625"
+      ],
+      "defect_ids": [
+        "D1"
+      ]
+    },
+    {
+      "id": "C18",
+      "candidate_lines": [
+        21
+      ],
+      "disposition": "PARTLY_SUPPORTED_POLICY",
+      "checked_fact": "getmembers performs no extracted-file writes and preserves archive order, but normally loads/caches all metadata before caps can be evaluated. Pre-scan policy needs memory/CPU/time protection in addition to stated disk quotas.",
+      "primary_locators": [
+        "tarnew:2126-2134,2870-2874,2921-2928",
+        "pep706:245-246",
+        "tardocnew:1178-1187"
+      ],
+      "defect_ids": [
+        "D4"
+      ]
+    },
+    {
+      "id": "C19",
+      "candidate_lines": [
+        23
+      ],
+      "disposition": "QUALIFIED_OVERBROAD_WORDING",
+      "checked_fact": "Rejecting projection of pre-filter as-is defaults onto3.14 data is justified. However current warning to inspect untrusted archives explicitly remains for data and every available filter. 'applies only' is defensible only if narrowly about the old full-trust mechanism, not the quoted prior-inspection warning. No universal safe/unsafe judgment is warranted; tar still permits dangerous links and D1 remains.",
+      "primary_locators": [
+        "tardocnew:545-552,583-586,1018-1022,1167-1170",
+        "tarnew:852-859",
+        "tartest:4104-4154"
+      ],
+      "defect_ids": [
+        "D1"
+      ]
+    },
+    {
+      "id": "C20",
+      "candidate_lines": [
+        25
+      ],
+      "disposition": "SUPPORTED_WITH_VERSION_LIMIT",
+      "checked_fact": "Proposed default test(a) matches supplied3.12.3/3.14.0 endpoints and PEP3.13 plan; overrides and vendor/patch changes must be held fixed. No tests are claimed executed.",
+      "primary_locators": [
+        "tarold:2217-2226",
+        "tarnew:2370-2380",
+        "pep706:418-421",
+        "tartest:741-757"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C21",
+      "candidate_lines": [
+        25
+      ],
+      "disposition": "INCORRECT",
+      "checked_fact": "Proposed path test(b) gives wrong Linux expectations and does not separate member-name stripping from link-target absolute refusal.",
+      "primary_locators": [
+        "tarnew:785-797,829-846",
+        "tartest:3714-3737"
+      ],
+      "defect_ids": [
+        "D2"
+      ]
+    },
+    {
+      "id": "C22",
+      "candidate_lines": [
+        25
+      ],
+      "disposition": "QUALIFIED",
+      "checked_fact": "Proposed tests(c)-(e) correspond to direct filter rules. Complete extraction results additionally need link existence, support/privileges, and fallback API conditions; hardlinks are in regular permission branch. Single extract FIFO fallback needs separate coverage.",
+      "primary_locators": [
+        "tarnew:799-846,2677-2701,2717-2754",
+        "tartest:3952-3996,4226-4337"
+      ],
+      "defect_ids": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "id": "C23",
+      "candidate_lines": [
+        25
+      ],
+      "disposition": "SUPPORTED_FOR_3_14_WITH_RELEASE_DELTA",
+      "checked_fact": "Proposed tests(f)-(g) match selected-member3.14 code. At3.12.3 an ignored filter exception leaves the ORIGINAL tarinfo and extraction continues, so level0 skip is not a uniform older-version oracle. A strong version-discriminating set should include this difference, link normalization, directory fixup and fallback refiltering. Cleanup remains application responsibility.",
+      "primary_locators": [
+        "tarnew:2494-2503",
+        "tarold:2311-2325",
+        "tartest:4443-4470,4502-4566",
+        "tarold:2275-2283,2505-2528",
+        "tarnew:2426-2455,2740-2754"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "C24",
+      "candidate_lines": [
+        17,
+        25
+      ],
+      "disposition": "PARTLY_INCORRECT",
+      "checked_fact": "Explicit data exists in supplied3.12.3 and3.14.0 code and staticmethod class default is valid. API availability is not identical security semantics. No-support assertion below3.12 is contradicted by backport-aware documentation; absence should be capability-bound unless a separate minimum-version policy is chosen.",
+      "primary_locators": [
+        "tarold:833-837,2217-2238",
+        "tarnew:864-868,2370-2386",
+        "tardocnew:653-658,1201-1232",
+        "pep706:597-608"
+      ],
+      "defect_ids": [
+        "D3"
+      ]
+    },
+    {
+      "id": "C25",
+      "candidate_lines": [
+        30,
+        31,
+        32,
+        36
+      ],
+      "disposition": "SUPPORTED_SCOPE_LIMITS_WITH_INTERNAL_CONTRADICTION",
+      "checked_fact": "Source identities match all supplied hashes. Wrapper/WASI/Windows/older-runtime uncertainties are legitimately retained; optional wrapper/helper discovery need not be executed for this bounded module. Claim of no downloaded-code tests is only a final self-report; no execution history is permitted. '<3.12 unverified' conflicts with categorical no-support rationale. Targeted-author-read/process claims and intentionally-empty output source directory are not independently auditable from allowed final/source bytes.",
+      "primary_locators": [
+        "INPUT_MAP:required_sources",
+        "source_manifest:/sources",
+        "tartest:3582-3592",
+        "tardocnew:1201-1207",
+        "final:25,30-36"
+      ],
+      "defect_ids": [
+        "D3"
+      ]
+    }
+  ],
+  "defects": [
+    {
+      "id": "D1",
+      "severity": "high",
+      "kind": "omitted governing API condition",
+      "candidate_lines": [
+        8,
+        19,
+        21,
+        23,
+        25
+      ],
+      "summary": "Single-member extract does not propagate the filter to link fallback in the supplied 3.14.0 implementation.",
+      "evidence": [
+        "tarnew:2461-2479",
+        "tarnew:2511-2525",
+        "tarnew:2604-2621",
+        "tarnew:2706-2754",
+        "tarnew:2881-2915",
+        "tarnew:2939-2955"
+      ],
+      "checked_fact": "extract calls _extract_one without filter_function; its default is None. If a hardlink's filesystem target does not exist, makelink_with_filter resolves an earlier archive member and, with filter_function=None, extracts that member without filtering. extractall passes filter_function and wraps fallback refusal in LinkFallbackError.",
+      "conditions": "Linux, fresh caller-controlled destination, archive contains FIFO member target before hardlink safe -> target; call extract('safe', filter='data', errorlevel=1). The link itself passes data_filter; missing destination target selects archive fallback, whose FIFO type is not re-filtered. os.mkfifo support permits creation at safe. This is a static source inference, not a runtime reproduction.",
+      "materiality": "The final authorizes both extract and extractall and presents explicit data as a uniform untrusted-call policy. Direct data_filter special-file refusal is true, but does not cover this single-member fallback path. Empty destination and errorlevel>=1 do not fix absent filtering.",
+      "required_correction": "Bind the recommendation to the actual API, exclude or separately constrain links and fallback for single-member extract, and propose paired extract/extractall fallback regressions. Do not project this finding onto extractall."
+    },
+    {
+      "id": "D2",
+      "severity": "medium",
+      "kind": "incorrect regression oracle and path/platform condition",
+      "candidate_lines": [
+        19,
+        25,
+        29,
+        30
+      ],
+      "summary": "The proposed rejection of /abs and C:/ under data is wrong for the declared Linux domain; 'allowed under tar' also needs filter-versus-operation qualification.",
+      "evidence": [
+        "tarnew:785-797",
+        "tardocnew:1090-1097",
+        "tartest:3714-3737",
+        "tartest:3952-3996",
+        "tarnew:2677-2701",
+        "tarnew:2725-2738"
+      ],
+      "checked_fact": "Leading / is stripped before the absolute-path test, so an ordinary /abs member becomes abs inside the destination. C:/foo is the code/documentation's Windows example, not a Linux absolute path. tar leaves link targets and special types unrestricted by its filter, but missing hardlink targets may raise KeyError, later writes through escaping links are rejected, and device creation depends on platform and permissions.",
+      "conditions": "Linux POSIX path semantics, otherwise ordinary regular member, empty controlled destination. Traversal ../ that actually escapes is refused; internal .. that resolves inside is not universally refused. Member.name and linkname have different absolute-path handling.",
+      "materiality": "A conforming implementation would fail the proposed /abs test. Ungated C:/ assertions mix platform domains despite Windows being declared unverified. The link/device tests must assert filter permission separately from successful filesystem extraction.",
+      "required_correction": "Expect /abs -> abs on Linux, gate drive-path refusal to Windows, test actual outside-destination traversal, and bind tar link/device outcomes to existence/capability/privilege and later-member conditions."
+    },
+    {
+      "id": "D3",
+      "severity": "medium",
+      "kind": "unsupported compatibility exclusion",
+      "candidate_lines": [
+        11,
+        25,
+        30
+      ],
+      "summary": "The categorical '<3.12 has no filter support' rationale contradicts the supplied primary documentation's backport-aware contract.",
+      "evidence": [
+        "tardocnew:1201-1207",
+        "tardocnew:1225-1232",
+        "pep706:597-608"
+      ],
+      "checked_fact": "The released 3.14.0 docs explicitly say extraction filters may be backported and recommend hasattr(tarfile, 'data_filter') rather than Python-version testing. PEP 706 also describes the backport exception and capability check.",
+      "conditions": "Specific older runtime bytes are not supplied, so the presence, security fixes, and defaults of any particular older build remain unverified. This review does not certify an older version. An independently chosen minimum supported release is legitimate; the asserted absence of capability below 3.12 is not.",
+      "materiality": "The policy can wrongly reject a feature-equipped older build and is not the requested conditional compatibility policy. The final itself retains <3.12 as unverified while stating its lack of support as fact.",
+      "required_correction": "Separate minimum-version support policy from capability. Fail closed when required filter capability or validated patch behavior is absent; do not infer absence solely from sys.version_info."
+    },
+    {
+      "id": "D4",
+      "severity": "medium",
+      "kind": "resource-bound omission in recommended inspection",
+      "candidate_lines": [
+        21,
+        31
+      ],
+      "summary": "The recommended getmembers pre-scan loads the archive before count limits can be applied, without specifying memory/CPU bounds.",
+      "evidence": [
+        "tarnew:2126-2134",
+        "tarnew:2870-2874",
+        "tarnew:2921-2928",
+        "tardocnew:1167-1187",
+        "pep706:238-249"
+      ],
+      "checked_fact": "getmembers invokes _load, which consumes all readable members and normally caches them. Primary docs recommend external disk, memory, and CPU limits, alongside count and size checks. data_filter has no resource limits.",
+      "conditions": "Untrusted archives can contain very many headers or expensive compressed input; a post-getmembers count/size decision protects later writes but does not bound the scan. A separately established process memory/CPU/time budget could make the proposal bounded, but the final only specifies OS disk/quota limits.",
+      "materiality": "The final correctly states residual denial-of-service risk, yet its proposed inspection can exhaust resources before its own caps run.",
+      "required_correction": "Apply external memory/CPU/time and input limits to inspection as well as extraction, or use an incrementally bounded scan; retain disk quotas and cleanup."
+    }
+  ],
+  "preserved_positive_findings": [
+    "3.14.0 data default with both defaults None is correct.",
+    "PEP/implementation PR/default-issue chronology and merge SHA are correct.",
+    "Fatal/nonfatal selected-member3.14 error semantics, None skip, partial extraction, and caller cleanup are correctly distinguished.",
+    "data/tar/fully_trusted direct filter rules and residual DoS are substantially accurate.",
+    "Optional wrapper/helper follow-up and explicit unexecuted regressions remain bounded."
+  ],
+  "retained_uncertainties": [
+    "No runtime reproduction of D1; high-confidence static inference from explicit propagation/default/fallback/type-dispatch branches.",
+    "Line23 old-warning phrasing could mean only old full-trust mechanics; do not count it as a separate decisive defect. Current prior-inspection warning still applies with data/tar.",
+    "No categorical security certification of filter-capable older runtimes; validate patch behavior separately.",
+    "Directory fixup 'failures only logged' interpreted narrowly as handled filter refusals; metadata errors still honor errorlevel."
+  ],
+  "blinding_and_scope": {
+    "inputs_read": "Only original input map/brief/manifest/listed primary source bytes, this frozen final, and this review's own output for validation.",
+    "prior_review_findings_received": false,
+    "other_reviews_read": false,
+    "other_arms_or_cases_read": false,
+    "author_history_or_campaign_helpers_read": false,
+    "evaluator_answer_corpus_used": false,
+    "limits": "Advisory scope map is not a filesystem firewall. Path/content visibly identifies treatment/finalize method; method/arm blindness is therefore incomplete. No cost, winner/speed, grades, parent analysis, or candidate feedback/rescue/regrading was received or used. Experiment/case identifiers are visible.",
+    "predecessor_comparison": "Unavailable; no preservation claim about predecessor drafts."
+  },
+  "checks": {
+    "candidate_reported_executed_tests": 0,
+    "candidate_execution_history_independently_verified": false,
+    "reviewer_executed_downloaded_code": false,
+    "reviewer_tests_executed": [],
+    "reviewer_actual_checks": [
+      "SHA-256 verification before substantive assessment",
+      "Primary JSON fields, captured PEP sections, released extraction/filter/error/fallback/fixup/type/path/resource functions and corresponding supplied test definitions read as text",
+      "Frozen-final line-level claim matrix and obligation mapping"
+    ],
+    "new_primary_public_checks": []
+  },
+  "native_receipts": {
+    "activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/treatment-v1/native_activation.json",
+    "terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/treatment-v1/native_terminal_receipt.json",
+    "identity": "01a117c6-2faf-7ca2-8492-6830736154ba"
+  },
+  "timings_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/treatment-v1/timings.json"
+}
+

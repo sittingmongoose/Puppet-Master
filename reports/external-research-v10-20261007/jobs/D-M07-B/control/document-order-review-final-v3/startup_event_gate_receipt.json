@@ -1,0 +1,18 @@
+{
+  "schema": "ER10_GLM_STARTUP_EVENT_GATE_RECEIPT_V1",
+  "stage": "D-M07-B/control/document-order-review-final-v3",
+  "observed_at": "2026-10-07T23:25:16.820859+00:00",
+  "registered_taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-control-document-order-review-final-v3",
+  "registered_childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-control-document-order-review-final-v3",
+  "registered_childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-B-control-document-order-review-final-v3:ordinal:1",
+  "startup_event_observed": true,
+  "event_item_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3A375cb23b-ad2a-49f0-b0d3-9ab9022c5cd9%3Aturn%3A1%3Aassistant%3Amessage%3Agoal-1791415498409-aptipq",
+  "activity_read_once": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/startup_activity_once_receipt.json",
+  "activity_receipt_sha256": "1c9a619c821de922cbc9aca9db8df45677a7598013dfc121c1b04d8705856926",
+  "native_state_activation_observed": false,
+  "state_nomination": "PENDING_ROOT_EXACT_ASSIGNMENT",
+  "actual_requestedAt": "2026-10-07T23:24:49.121Z",
+  "actual_startedAt": "2026-10-07T23:24:55.621Z",
+  "stage_deadline": "2026-10-07T23:54:49.121000+00:00",
+  "absolute_case_deadline": "2026-10-08T00:04:13.527092+00:00"
+}

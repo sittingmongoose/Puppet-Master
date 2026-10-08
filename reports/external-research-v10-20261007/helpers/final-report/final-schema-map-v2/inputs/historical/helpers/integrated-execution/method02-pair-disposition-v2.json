@@ -1,0 +1,48 @@
+{
+  "schema": "er10.integrated.pair.disposition.v2",
+  "case": "I-METHOD-02",
+  "version": "v2",
+  "record_at": "2026-10-07T21:13:58.666524+00:00",
+  "status": "terminal_infrastructure_HOLD_paired_science_UNASSESSED",
+  "all_candidate_tasks_quiet": true,
+  "actual_current_quiet_statuses": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-v2-standalone-diagnostic-current-quiet-v1.json",
+  "control": "No full final; actualcriticnative PAUSED/T3interrupted atownedexpiry; finalnotadmitted. Scientificdraftfilespreservedunassessed.",
+  "treatment": "ExactfullfinalnativeCOMPLETE frozen; own Source gradependingseparateROOTauthorizedstandalone; notpairedgrade.",
+  "paired_source_assessment": {
+    "control": {
+      "judgment": "UNASSESSED",
+      "axes": {
+        "declared": 6,
+        "complete_assessments": 0,
+        "assessed": 0,
+        "unassessed": 6
+      },
+      "original_obligations": {
+        "declared": 6,
+        "assessed": 0,
+        "unassessed": 6
+      }
+    },
+    "treatment": {
+      "judgment": "UNASSESSED",
+      "axes": {
+        "declared": 6,
+        "complete_assessments": 0,
+        "assessed": 0,
+        "unassessed": 6
+      },
+      "original_obligations": {
+        "declared": 6,
+        "assessed": 0,
+        "unassessed": 6
+      }
+    }
+  },
+  "all_original_v1_failures_costs_grades_immutable": true,
+  "original_v1_disposition": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-pair-disposition-v1.json",
+  "new_v2_economic_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-02-terminal-economics-v2.json",
+  "standalone_grade_separate_authority": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/I-METHOD-02-v2-treatment-only-diagnostic-gate-exception-v1.json",
+  "matched_method_comparison": "HOLD",
+  "new_retry_authorized": false,
+  "no_output_absence_win_speedup_or_grade_replacement": true
+}

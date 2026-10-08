@@ -1,0 +1,91 @@
+{
+  "schema": "ER10-final-schema-supplement-root-independent-replay-v1",
+  "at": "2026-10-07T23:51:24.704028+00:00",
+  "status": "PASS",
+  "original_output_status": "WORKING_NOT_TERMINAL",
+  "ordered_logical_slots": 40,
+  "original_logical_arms": 80,
+  "frozen_inputs_hashed": 191,
+  "frozen_input_bytes": 13245406,
+  "all_artifact_hashes_independently_checked": 14,
+  "mapping_entries": 4640,
+  "meaningful_mechanical_checks": 36,
+  "ledger_unresolved_validation_all_byte_identical": true,
+  "no_original_bytes_changed": true,
+  "full_scientific_grade_reassessment_performed": false,
+  "all_original_unknowns_retained": true,
+  "full_campaign_closed": false,
+  "mapping_coverage": {
+    "critical_arm_cells": 1120,
+    "resolved_critical_arm_cells": 597,
+    "unknown_critical_arm_cells": 523,
+    "mapping_entries": 4640
+  },
+  "aggregate_flag_counts": {
+    "scientific_judgment_available": {
+      "TRUE": 69,
+      "FALSE": 3,
+      "UNKNOWN": 8
+    },
+    "review_formal_output_delivery": {
+      "TRUE": 45,
+      "FALSE": 3,
+      "UNKNOWN": 32
+    },
+    "review_actual_timely_delivery": {
+      "TRUE": 15,
+      "FALSE": 1,
+      "UNKNOWN": 64
+    },
+    "full_scientific_coverage": {
+      "TRUE": 64,
+      "FALSE": 5,
+      "UNKNOWN": 11
+    },
+    "full_declared_primary_source_coverage": {
+      "TRUE": 61,
+      "FALSE": 6,
+      "UNKNOWN": 13
+    },
+    "native_pipeline_qualified": {
+      "TRUE": 8,
+      "FALSE": 2,
+      "UNKNOWN": 70
+    },
+    "time_eligible": {
+      "TRUE": 24,
+      "FALSE": 4,
+      "UNKNOWN": 52
+    },
+    "provenance_eligible": {
+      "TRUE": 0,
+      "FALSE": 4,
+      "UNKNOWN": 76
+    },
+    "method_eligible": {
+      "TRUE": 0,
+      "FALSE": 24,
+      "UNKNOWN": 56
+    },
+    "both_full_scientific_coverage": {
+      "TRUE": 30,
+      "FALSE": 5,
+      "UNKNOWN": 5
+    },
+    "both_full_declared_primary_source_coverage": {
+      "TRUE": 28,
+      "FALSE": 6,
+      "UNKNOWN": 6
+    },
+    "both_review_formal_output_delivery": {
+      "TRUE": 20,
+      "FALSE": 3,
+      "UNKNOWN": 17
+    },
+    "both_review_actual_timely_delivery": {
+      "TRUE": 6,
+      "FALSE": 1,
+      "UNKNOWN": 33
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "ER10_BATCH011_ROOT_HANDOFF_V1",
+  "status": "READY_FOR_ROOT_AFTER_FINAL_LOCAL_VALIDATION",
+  "staging_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch011/staging/reports/external-research-v10-20261007",
+  "manifest_path": "reports/external-research-v10-20261007/BATCH011_MANIFEST.json",
+  "manifest_selfhash_bound": false,
+  "exact_manifest_sha256_and_totals": "Supplied in helper READY_FOR_ROOT.json and terminal result, outside manifest to avoid circular self-hash.",
+  "required_root_actions": [
+    "Independently validate exact manifest hashes/bytes/path and absence of unmanifested staged files.",
+    "Copy only manifest NEW entries; refuse target collisions. Preserve PRIOR_PINNED_REFERENCE commit identities.",
+    "Commit/push authorized research branch and perform actual remote verification.",
+    "Retain limits and historical snapshots; no regrade, new mapping, final promotion or campaign/cleanup-complete claim.",
+    "Settle this task after actual terminal; Root alone owns cleanup."
+  ],
+  "scope_limits": {
+    "live_science_excluded": [
+      "D-M09-A",
+      "D-M06-A",
+      "D-M06-B"
+    ],
+    "native_goal_tickets_or_raw_projections_imported": false,
+    "private_source_needles_or_fragments_opened": false,
+    "primary_source_bodies_opened": false,
+    "new_source_research": false,
+    "new_mapping_inference": false,
+    "scientific_grading_or_regrading": false,
+    "network_remote_verification": false,
+    "account_server_rollout_calls": false,
+    "git_mutations": false,
+    "checkout_created": false,
+    "cleanup_performed": false,
+    "archive_created": false,
+    "watchers_or_polls": false,
+    "own_goal_or_workers": false,
+    "working_draft_original_four_remaining_text_preserved": true,
+    "current_remaining_three_recorded_separately": true,
+    "inherited_metadata_gaps_preserved": true,
+    "report_historical_36_closed_4_held_preserved": true,
+    "retention_221_identity_census_is_not_full_condition_verification": true,
+    "retention_original_65535B_cap_and_history_unchanged": true,
+    "raw_sources_not_deleted": true,
+    "campaign_complete_claim": false,
+    "cleanup_complete_claim": false
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "schema": "ER10_SUPPLEMENT_MECHANICAL_VALIDATION_V2",
+  "passed": true,
+  "checks": [
+    {
+      "check": "immutable_index_sha256",
+      "passed": true
+    },
+    {
+      "check": "40_ordered_original_slots",
+      "passed": true
+    },
+    {
+      "check": "80_original_arm_identities",
+      "passed": true
+    },
+    {
+      "check": "working_not_terminal_36_closed_4_held",
+      "passed": true
+    },
+    {
+      "check": "held_science_unopened_ungraded",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "all_frozen_file_hashes_verified",
+      "passed": true,
+      "detail": 191
+    },
+    {
+      "check": "every_mapping_replays",
+      "passed": true,
+      "detail": {
+        "entries": 4640,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "every_enum_mapping_predeclares_exact_source_scope",
+      "passed": true,
+      "detail": 188
+    },
+    {
+      "check": "no_coverage_from_counts_axes_terminals",
+      "passed": true
+    },
+    {
+      "check": "C01_null_grade_original0_unassessed_materialnull",
+      "passed": true
+    },
+    {
+      "check": "M01A_diagnostic_available_with_null_grade",
+      "passed": true
+    },
+    {
+      "check": "C02_exact_paired_source_coverage_true_false",
+      "passed": true
+    },
+    {
+      "check": "C03_science_FAIL_independent_method_HOLD",
+      "passed": true
+    },
+    {
+      "check": "C04_full_source_FAIL_and_PASS_WITH_LIMITATIONS",
+      "passed": true
+    },
+    {
+      "check": "M11T_fullscience_interrupted_delivery",
+      "passed": true
+    },
+    {
+      "check": "M13C_fullsource_late_deadline_extent_separate",
+      "passed": true
+    },
+    {
+      "check": "M02B_original_conditional_strings_unchanged",
+      "passed": true
+    },
+    {
+      "check": "FAST03_science49_process2_contractfalse_primaryflag_unknown",
+      "passed": true
+    },
+    {
+      "check": "coverage_scope_bound_for_every_mapped_boolean",
+      "passed": true
+    },
+    {
+      "check": "METHOD04v2_never_unqualified_PASS",
+      "passed": true
+    },
+    {
+      "check": "METHOD02_FAST01_standalone_zero_extra_pair_credit",
+      "passed": true
+    },
+    {
+      "check": "M07A_FAIL_FAIL_native_active_absence_hold",
+      "passed": true
+    },
+    {
+      "check": "original_baseline_terms_preserved",
+      "passed": true
+    },
+    {
+      "check": "all_history_references_resolve",
+      "passed": true
+    },
+    {
+      "check": "aggregate_members_partition_original_ids",
+      "passed": true
+    },
+    {
+      "check": "additional_capture_within_180_and_32MiB",
+      "passed": true
+    },
+    {
+      "check": "offline_input_paths_all_bundle_relative",
+      "passed": true
+    },
+    {
+      "check": "mapping_wrong_source_sha_rejected",
+      "passed": true
+    },
+    {
+      "check": "changed_original_enum_scope_rejected",
+      "passed": true
+    },
+    {
+      "check": "assessment_count_cannot_be_boolean_pass_or_coverage",
+      "passed": true
+    },
+    {
+      "check": "grade_null_preserved_as_null",
+      "passed": true
+    },
+    {
+      "check": "three_valued_unknown_never_promoted_to_true",
+      "passed": true
+    },
+    {
+      "check": "no_native_qualification_derived_from_terminal",
+      "passed": true
+    },
+    {
+      "check": "unresolved_categories_distinguish_absence_schema_gap_unverified",
+      "passed": true
+    },
+    {
+      "check": "working_manifest_cannot_be_promoted_to_FINAL",
+      "passed": true
+    },
+    {
+      "check": "no_recommendation_or_new_grade_or_ratio",
+      "passed": true
+    }
+  ],
+  "mapping_coverage": {
+    "critical_arm_cells": 1120,
+    "resolved_critical_arm_cells": 597,
+    "unknown_critical_arm_cells": 523,
+    "mapping_entries": 4640
+  },
+  "remaining_critical_gaps": {
+    "ABSENT_EXACT_FLAG": 489,
+    "COMPONENT_UNKNOWN": 61,
+    "LIVE_HELD_UNOPENED": 124,
+    "METADATA_SCHEMA_GAP": 34,
+    "UNVERIFIED_OBLIGATION": 3
+  },
+  "science_review_performed": false,
+  "input_manifest_sha256": "a2a2a96a20b227c18638545cd028fc30a68b1f41a8142e9a76e8dd18b9048357"
+}

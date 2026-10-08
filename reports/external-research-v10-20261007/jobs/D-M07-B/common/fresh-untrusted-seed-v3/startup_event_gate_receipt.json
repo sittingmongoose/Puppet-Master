@@ -1,0 +1,19 @@
+{
+  "schema": "ER10_GLM_STARTUP_EVENT_GATE_RECEIPT_V1",
+  "stage": "D-M07-B/common/fresh-untrusted-seed-v3",
+  "observed_at": "2026-10-07T23:14:36.734492+00:00",
+  "registered_taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3",
+  "registered_childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3",
+  "registered_childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3:ordinal:1",
+  "startup_event_observed": true,
+  "event_item_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3A7deda34f-26c2-43e7-a398-633749e39119%3Aturn%3A1%3Aassistant%3Amessage%3Agoal-1791414862861-arfl3m",
+  "event_created_at": null,
+  "activity_read_once": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/startup_activity_once_receipt.json",
+  "activity_receipt_sha256": "08fb2d4c8eae13386394c7617a3c9035ed91edac8706585c8df78ceebc921de1",
+  "native_state_activation_observed": false,
+  "state_nomination": "PENDING_ROOT_EXACT_ASSIGNMENT",
+  "actual_requestedAt": "2026-10-07T23:14:14.227Z",
+  "actual_startedAt": "2026-10-07T23:14:20.910Z",
+  "stage_deadline": "2026-10-07T23:34:14.227000+00:00",
+  "absolute_case_deadline": "2026-10-08T00:04:13.527092+00:00"
+}

@@ -1,0 +1,81 @@
+{
+  "schema": "ER10_BATCH011_CLOSED_TRANCHE_V1",
+  "status": "WORKING",
+  "logical_owner_dispositions": 37,
+  "remaining_logical_owners": 3,
+  "logical_denominator": 40,
+  "denominator_limit": "Owner dispositions, stage attempts and arm records do not manufacture 40 method comparisons.",
+  "M07B_original_pair": {
+    "publication_path": "reports/external-research-v10-20261007/reviews/targeted-cohort3/D-M07-B-v3/PAIR_COMPARISON.json",
+    "sha256": "0bdf590e6606d20951e77b8db7f183a64089bf3d19fe97f8a8047d73d9777ef8",
+    "disposition": "COMPLETE_DIAGNOSTIC_FULL_SOURCE_PAIR_BOTH_FAIL_COMPARATIVE_SEED_HOLD",
+    "control": "FullSourceFAIL",
+    "treatment": "FullSourceFAIL",
+    "is_method_comparison": false,
+    "native_provenance_comparative_disposition": "HOLD_UNOBSERVED_SEED_ACTIVE_AT_TERMINAL_ORIGINAL_PENDING_NO_EXPORT_UNCHANGED",
+    "original_economics": {
+      "new_upper_bound_minutes_each_cold": 50,
+      "original_15min_success_claim": false,
+      "common_T0": "2026-10-07T23:14:13.527092+00:00",
+      "absolute_case_deadline": "2026-10-08T00:04:13.527092+00:00",
+      "shared_stage_seconds_full_each_cold_once_aggregate": 488.321,
+      "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 1818.3020000000001,
+      "review_sum_seconds": 692.15,
+      "candidate_and_reviews_sum_seconds": 2510.452,
+      "arms": {
+        "control": {
+          "own_stage_dispatch_to_delivery_seconds": 649.696,
+          "full_shared_seed_seconds_charged": 488.321,
+          "occupied_dispatch_to_delivery_seconds_including_full_shared": 1138.017,
+          "actual_common_T0_to_final_delivery_seconds": 1285.289908,
+          "queue_and_host_handoff_seconds": 147.27290799999992,
+          "actual_requestedAt": "2026-10-07T23:24:49.121Z",
+          "actual_startedAt": "2026-10-07T23:24:55.621Z",
+          "actual_completedAt": "2026-10-07T23:35:38.817Z",
+          "native_createdAt_ms": 1791415498407,
+          "raw_native_counters": {
+            "rounds": 4,
+            "createdAt": 1791415498407,
+            "updatedAt": 1791416138551,
+            "tokens": null
+          },
+          "final_bytes": 8839,
+          "review_seconds": 303.282
+        },
+        "treatment": {
+          "own_stage_dispatch_to_delivery_seconds": 680.285,
+          "full_shared_seed_seconds_charged": 488.321,
+          "occupied_dispatch_to_delivery_seconds_including_full_shared": 1168.606,
+          "actual_common_T0_to_final_delivery_seconds": 1329.905908,
+          "queue_and_host_handoff_seconds": 161.29990799999996,
+          "actual_requestedAt": "2026-10-07T23:25:03.148Z",
+          "actual_startedAt": "2026-10-07T23:25:07.730Z",
+          "actual_completedAt": "2026-10-07T23:36:23.433Z",
+          "native_createdAt_ms": 1791415510052,
+          "raw_native_counters": {
+            "rounds": 4,
+            "createdAt": 1791415510052,
+            "updatedAt": 1791416181334,
+            "tokens": null
+          },
+          "final_bytes": 6856,
+          "review_seconds": 388.868
+        }
+      },
+      "old_failures_costs_grades_retained": true,
+      "host_capture_seconds": null,
+      "host_capture_cost_basis": "individual snapshots/rawoperation timings retained; total incompletely measured",
+      "billing": null,
+      "generated_tokens": null,
+      "input_tokens": null,
+      "output_tokens": null,
+      "cache_tokens": null
+    }
+  },
+  "report_adapter_history": "36 closed/4 held, unchanged historical working edition; M07B separately published without patching old adapter or old grades.",
+  "timing_limit": "Shared seed 488.321; own arm 649.696/680.285; reviews 303.282/388.868 seconds retain original label boundaries. No new sum/ratio, enclosing/nested interval double-sum, twofold or billing/affordability inference.",
+  "general_winner": null,
+  "new_SourcePASS": false,
+  "campaign_complete": false,
+  "cleanup_complete": false
+}

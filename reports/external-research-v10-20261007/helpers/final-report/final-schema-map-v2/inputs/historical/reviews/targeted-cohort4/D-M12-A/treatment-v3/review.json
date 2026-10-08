@@ -1,0 +1,1501 @@
+{
+  "schema": "independent-frozen-source-review.v1",
+  "review_role": "ordinary fresh independent review sub-agent under rootreviewcarrier-v2",
+  "case_id": "D-M12-A",
+  "reviewed_version": "treatment/protected_breadth_final-v3",
+  "overall_grade": "FAIL",
+  "assessment_status": "FULL_SCOPE_FAIL",
+  "full_pass": false,
+  "summary": "A useful bounded mechanism survey that attempts all six obligations, but its sufficient/effectively-once recommendation omits essential persistence and deduplication conditions, misbinds outbox atomicity, overstates ordering/merge behavior, and incorrectly rejects all end-to-end exactly-once protocols as impossible.",
+  "created_at_utc": "2026-10-07T20:40:41.724807+00:00",
+  "frozen_artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/final.md",
+    "expected_sha256": "f7068c5cf13266b787121bcb9f65fa97b2c270ca0f03f7acbc809815b899b1f1",
+    "verified_sha256": "f7068c5cf13266b787121bcb9f65fa97b2c270ca0f03f7acbc809815b899b1f1",
+    "exact_hash_verified_before_assessment": true,
+    "immutable_candidate_bytes_preserved": true
+  },
+  "inputs": {
+    "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/INPUT_MAP.json",
+    "input_map_sha256": "f1cdd3ba74f3a42f0b5102cc3f0602eeb4eb4846cffd1f1b866344767bac5c64",
+    "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/brief.md",
+    "original_brief_sha256": "dac98c2bfdf5944bc4b0a6ce92037085e01e90dd4178e48c7cd3dee049f493e3",
+    "original_source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/sources.json",
+    "original_source_manifest_sha256": "50a7a429431407d7d59529fe82f54ab133b6255902092f3addf395c98d019bb2",
+    "manifest_sources_empty": true,
+    "candidate_source_index": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/index.json",
+      "sha256": "4130371aa6a9d67542093c8d5a3fd85ec7a24d2ab7a4b267bd6528232bd227f5"
+    }
+  },
+  "assessment_extent": {
+    "disposition": "FULL_DECLARED_CLAIM_SCOPE_CHECKED",
+    "claim_checks_completed": 50,
+    "mapped_primary_sources_checked": 6,
+    "additional_primary_sources_checked": 2,
+    "source_check_definition": "Every consequential assertion, recommendation, condition, alternative, lead and proposed-check statement in all 100 lines of this frozen final was evaluated against original brief and relevant primary passages, including surrounding governing conditions. All six mapped byte bodies were verified and inspected; index identity claims were checked against source content. Full scope here means the declared bounded diagnostic science, not unrelated MQTT chapters or unspecified future technologies.",
+    "unassessed_remainder_within_declared_science_claim_set": [],
+    "unverifiable_claims_assessed_as_evidence_limits": [
+      "Historical failed SQS/CouchDB captures; discarded responses and DNS evidence are not retained.",
+      "Original capture-command execution and timestamps; frozen index is self-report, not an authenticated acquisition log."
+    ],
+    "not_executed": [
+      "Survey application or server code",
+      "Crash/power-loss injections",
+      "Network/load/battery measurements",
+      "Overflow/property tests",
+      "Any downloaded code or installer"
+    ],
+    "outside_declared_scope": [
+      "Unrelated protocol/security chapters and unchosen implementation releases",
+      "Exhaustive public mechanism discovery",
+      "Unpursued broker/checkpoint designs",
+      "M14 authored-set semantic/projection/preservation comparison: not applicable to this M12 brief/map; no such views are declared."
+    ],
+    "deadline_expired": false
+  },
+  "six_axis_dispositions": [
+    {
+      "axis": 1,
+      "name": "All required obligations",
+      "disposition": "PARTIAL",
+      "rationale": "All six are substantively attempted; mechanism diversity, assumption challenge, bounded eight findings and useful uncertainty are present. Initial durable capture and delayed replay safety remain incomplete.",
+      "defect_ids": [
+        "D02",
+        "D03"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims and full source conditions",
+      "disposition": "FAIL",
+      "rationale": "All consequential claims were checked. Replay guarantees omit governing conditions; impossible is overbroad; outbox and deterministic merge claims lose their mechanism boundaries.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Bounded useful discovery, negative and optional yield",
+      "disposition": "PASS",
+      "rationale": "Six actual mechanism families and relevant analogies, useful non-expiry risk, mutation uncertainty, and bounded leads. No exhaustive claim. This axis credits discovery without validating the incorrect F3 rejection.",
+      "defect_ids": []
+    },
+    {
+      "axis": 4,
+      "name": "Wrong rejection, correction or unjustified abstention",
+      "disposition": "FAIL",
+      "rationale": "End-to-end protocols are categorically rejected on an unjustified impossibility ground. Ack-evidence-plus-delete is promoted from possible bookkeeping to a necessary safety correction. F7/F8 uncertainty is justified rather than excessive abstention.",
+      "defect_ids": [
+        "D01",
+        "D04"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Preservation, traceability, uncertainties and options",
+      "disposition": "PARTIAL",
+      "rationale": "Frozen source/record identities, the brief, F1-F8 ordering, options and uncertainty survive. Source references are traceable through index, but key lifetime/payload bindings, rollback conditions, order guarantees and winner-versus-merge semantics are lost. A minor payload-size drift is recorded separately.",
+      "defect_ids": [
+        "D02",
+        "D03",
+        "D05"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed checks",
+      "disposition": "PARTIAL",
+      "rationale": "Runtime checks are honestly labeled proposed. Key naming is insufficient validation and the crash/property oracles need effect and projection definitions. Historical failed fetches and actual capture-command execution are only self-reported; the reviewer verified current bytes independently.",
+      "defect_ids": [
+        "D02",
+        "D04",
+        "D05"
+      ]
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "obligation_id": 1,
+      "text": "Address offline persistence and interrupted sync.",
+      "disposition": "PARTIAL",
+      "candidate_findings": [
+        "F4",
+        "F5",
+        "F7"
+      ],
+      "assessment": "Local ack/delete persistence is covered, but initial enqueue, restart survival and storage durability conditions are omitted."
+    },
+    {
+      "obligation_id": 2,
+      "text": "Address acknowledgment/retry meaning under duplicate or delayed messages.",
+      "disposition": "PARTIAL",
+      "candidate_findings": [
+        "F1",
+        "F2",
+        "F7"
+      ],
+      "assessment": "Duplicate/lost/delayed message risks are covered, but effect/dedup atomicity, replay horizon and stale acknowledgment/payload bindings are unspecified."
+    },
+    {
+      "obligation_id": 3,
+      "text": "Investigate distinct mechanism families and at least one relevant analogy beyond direct survey competitors.",
+      "disposition": "PASS",
+      "candidate_findings": [
+        "F1",
+        "F2",
+        "F4",
+        "F5",
+        "F7"
+      ],
+      "assessment": "Primary text supports six families and relevant IoT/payments/cloud/database analogies. No direct survey competitor is required by the brief."
+    },
+    {
+      "obligation_id": 4,
+      "text": "Challenge a brief assumption when supported.",
+      "disposition": "PASS",
+      "candidate_findings": [
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "assessment": "The processed/ack-lost and durability counterexamples legitimately challenge the thin assumption; the overbroad F3 rejection is separately defective."
+    },
+    {
+      "obligation_id": 5,
+      "text": "Return at most eight distinct material findings, including useful negative discoveries or uncertainty.",
+      "disposition": "PASS",
+      "candidate_findings": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8"
+      ],
+      "assessment": "Eight findings, useful F6 negative and F7/F8 uncertainty; overlap does not create a hidden ninth material finding."
+    },
+    {
+      "obligation_id": 6,
+      "text": "Give bounded proposed changes and discriminating validation, without claiming exhaustive discovery.",
+      "disposition": "PASS_WITH_LIMITS",
+      "candidate_findings": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8"
+      ],
+      "assessment": "Within the requested module, every finding gives a proposed check and the discovery bound is explicit. Scientific deficiencies and incomplete oracles are separately recorded."
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "claim_id": "C01",
+      "candidate_locator": "lines 5-10 and 99-100",
+      "claim": "Six selected public primary identities and exact frozen bytes; capture at 20:12Z",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "VERIFIED_WITH_PROVENANCE_LIMITS",
+      "evidence_ids": [
+        "E01",
+        "E07",
+        "E08",
+        "E09",
+        "E11",
+        "E13"
+      ],
+      "assessment": "All six primary hashes/byte counts and the mapped source-index hash match. Titles/content identify the stated sources. The original manifest selects none. Capture timestamps/tool execution are self-reported, not independently authenticated by preserved request receipts. All six byte bodies, not merely index rows, were examined for their consequential mechanisms.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C02",
+      "candidate_locator": "lines 3-5 and 93-94",
+      "claim": "Module scope is phone-local offline photo metadata and short observations; later record sizes of photos+short text",
+      "claim_kind": "brief_condition",
+      "disposition": "PARTLY_SUPPORTED",
+      "evidence_ids": [],
+      "assessment": "Brief supports offline phones, photo metadata and observations. An authoritative server and flaky link are declared assumptions. Full photo-sized records are not supplied; the final condition drifts from metadata to photos. No numeric size limit depends on it, so this is a minor scope observation, not a decisive defect.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C03",
+      "candidate_locator": "lines 14 and 25-50",
+      "claim": "Retry until ack is insufficient by itself",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED",
+      "evidence_ids": [
+        "E02",
+        "E05",
+        "E07",
+        "E08",
+        "E12",
+        "E13"
+      ],
+      "assessment": "Lost responses can leave processed work ambiguous; local state can fail before a send. The bounded assumption challenge is warranted without claiming any current implementation is broken.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C04",
+      "candidate_locator": "lines 15-16 and 27-29",
+      "claim": "Only an authoritative durable-commit ack should retire a pending record",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_DIRECTION_INCOMPLETE_CONTRACT",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E14",
+        "E15"
+      ],
+      "assessment": "Sound application requirement, not an MQTT durability guarantee. Define successful outcome and bind it to the intended immutable operation/payload or revision; a delayed receipt for an earlier change must not retire a newer change. Failure PUBACK is not success.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C05",
+      "candidate_locator": "lines 15-16 and 48-50",
+      "claim": "Ack evidence must be stored transactionally with local deletion",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "OVERSTATED_NECESSITY",
+      "evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "assessment": "A valid optional local-state design, but not proven necessary when a durable delete and idempotent receiver suffice. It cannot atomically include network ack receipt or prevent all resends.",
+      "defect_ids": [
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C06",
+      "candidate_locator": "lines 17-18 and 35-37",
+      "claim": "Stable client UUID honored by server provides idempotent replay",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_ONLY_WITH_MISSING_CONDITIONS",
+      "evidence_ids": [
+        "E03",
+        "E08",
+        "E14",
+        "E15"
+      ],
+      "assessment": "UUID key direction is sound. Persist the same operation ID/payload across restarts, enforce same-intent binding, atomically store effect/result/dedup identity, and define retention/fencing for late replay. A header occurrence alone does not establish these semantics.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C07",
+      "candidate_locator": "lines 19-20 and 55-56",
+      "claim": "Bounded backoff with jitter shared across the queue and a retry budget",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_DESIGN_INFERENCE",
+      "evidence_ids": [
+        "E07"
+      ],
+      "assessment": "AWS describes capped exponential backoff, token-bucket limiting, and avoiding stacked retries. A queue-wide scheduler is a reasonable adaptation; the source does not specify its phone parameters. Budget exhaustion should pause retained work rather than erase it; failure-classification and retry resumption require a contract.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C08",
+      "candidate_locator": "lines 19-20 and 58-63",
+      "claim": "No silent unsent-record expiry; storage pressure visible",
+      "claim_kind": "proposed_product_policy",
+      "disposition": "SUPPORTED_PRODUCT_CHOICE",
+      "evidence_ids": [
+        "E04",
+        "E05",
+        "E11"
+      ],
+      "assessment": "For valuable unsent field records, silent TTL removal is data loss. A visible retention/backpressure choice is bounded and useful. This is a value/design inference, not a broker requirement or proof that a finite store can accept unlimited observations.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C09",
+      "candidate_locator": "line 21",
+      "claim": "Net effect is at-least-once delivery and effectively-once storage",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "CONDITIONAL_PROMISE_NOT_ESTABLISHED",
+      "evidence_ids": [
+        "E05",
+        "E08",
+        "E11",
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "assessment": "At-least-once progress needs eventual usable connectivity, an accepting service, retained pending work and resumed retries. Effectively-once storage needs durable effect/identity coupling and a valid replay horizon. These are not supplied by the three additions as written.",
+      "defect_ids": [
+        "D02",
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C10",
+      "candidate_locator": "lines 25-27",
+      "claim": "QoS 1 PUBACK means received",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "QUALIFIED_SUPPORT",
+      "evidence_ids": [
+        "E02"
+      ],
+      "assessment": "On success it means accepted ownership; it need not mean onward delivery or durable application commit. The successful-path shorthand supports the intended distinction, but it omits negative reasons and is not a universal ack definition.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C11",
+      "candidate_locator": "lines 26-27 and 40",
+      "claim": "MQTT QoS 2 has four-way exactly-once transfer; guarantee is single hop",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_WITH_PROTOCOL_CONDITIONS",
+      "evidence_ids": [
+        "E01",
+        "E05"
+      ],
+      "assessment": "The four packet exchange and one-sender/one-receiver scope are verified. Retained session state and expiry/continuation rules constrain reconnect; none of this proves survey storage durability.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C12",
+      "candidate_locator": "lines 27-28",
+      "claim": "Memory-only receipt ack may stop retry and then lose data on server crash",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_CONDITIONAL_COUNTEREXAMPLE",
+      "evidence_ids": [
+        "E02",
+        "E05",
+        "E12",
+        "E13"
+      ],
+      "assessment": "Logically follows if the ack stops retry before the authoritative effect becomes durable. MQTT even distinguishes volatile-meter and nonvolatile-payment choices. No measured server behavior is claimed.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C13",
+      "candidate_locator": "line 29",
+      "claim": "Kill server between ack and write; no loss",
+      "claim_kind": "proposed_check",
+      "disposition": "PROPOSED_DISCRIMINATING_CHECK_WITH_ORACLE_LIMIT",
+      "evidence_ids": [
+        "E02",
+        "E12"
+      ],
+      "assessment": "This is a useful negative control for premature ack. The safe contract should never expose a successful durable ack before durable write. Observe both local pending state and recovered authoritative records; a client which already trusts the bad ack is not guaranteed to replay. No test was run.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C14",
+      "candidate_locator": "lines 31-34",
+      "claim": "Processed item with lost ack gets replayed and can double-record without dedup",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_COUNTEREXAMPLE",
+      "evidence_ids": [
+        "E03",
+        "E07",
+        "E13"
+      ],
+      "assessment": "The outbox source explicitly describes publish-then-crash-then-republish. Duplicates are an expected possibility, not proof of their frequency in this survey tool.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C15",
+      "candidate_locator": "lines 31-32",
+      "claim": "Duplicates are routine rather than rare",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "PLAUSIBLE_UNQUANTIFIED_INFERENCE",
+      "evidence_ids": [
+        "E03",
+        "E13"
+      ],
+      "assessment": "Allowed and unsurprising under at-least-once replay. The sources do not measure how often this phone scenario duplicates work; read as a semantic risk, not a probability estimate.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C16",
+      "candidate_locator": "lines 33-34",
+      "claim": "DUP=1 receiver cannot assume it previously saw the message",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED",
+      "evidence_ids": [
+        "E03"
+      ],
+      "assessment": "Exact source statement verified. DUP=0 can also repeat a logical application message; using a stable application UUID rather than this flag is therefore the correct direction.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C17",
+      "candidate_locator": "lines 34-35",
+      "claim": "Stripe Idempotency-Key demonstrates replay-safe client keys",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_ANALOGY_WITH_MATERIAL_LIMITS_OMITTED",
+      "evidence_ids": [
+        "E08"
+      ],
+      "assessment": "The header/example and full body are present. Replay safety is conditional on key retention and identical parameters; cached 500 responses, validation/concurrency exceptions and POST-only acceptance are in the frozen text. The exposed API selector is 2026-09-30.endive. The 24-hour pruning limit is directly relevant to offline delayed replay.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C18",
+      "candidate_locator": "lines 36-37",
+      "claim": "Brief assumption holds only for one transport hop, not end-to-end",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "OVERGENERALIZED_SHORTHAND",
+      "evidence_ids": [
+        "E01",
+        "E05",
+        "E13"
+      ],
+      "assessment": "MQTT guarantee is per-hop and replay alone does not provide global durable effects. The brief never defines the ack as a protocol-hop ack, so it is better to specify missing application conditions rather than assert a one-hop sufficiency theorem.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C19",
+      "candidate_locator": "line 37",
+      "claim": "Processed/ack-lost injection must leave exactly one stored record",
+      "claim_kind": "proposed_check",
+      "disposition": "PROPOSED_USEFUL_CHECK",
+      "evidence_ids": [
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "assessment": "A discriminating test for the identified risk. Also cover concurrent replay and restart at effect/identity commits and beyond dedup retention; one happy injection is not full proof. Nothing was executed.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C20",
+      "candidate_locator": "line 39",
+      "claim": "Exactly-once effects cannot be obtained by bare retries alone",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED",
+      "evidence_ids": [
+        "E03",
+        "E13",
+        "E15"
+      ],
+      "assessment": "Without stable intent and durable duplicate/result handling, an uncertain result can be executed again. This narrower heading is retained as useful negative discovery.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C21",
+      "candidate_locator": "line 40 and line 96",
+      "claim": "No retry scheme or end-to-end exactly-once protocol can work; two-generals",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "UNJUSTIFIED_UNCONDITIONAL_REJECTION",
+      "evidence_ids": [
+        "E01",
+        "E15"
+      ],
+      "assessment": "Single-hop MQTT does not establish this universal impossibility. RIFL supplies a conditional stateful protocol with exactly-once RPC semantics. Arbitrary permanent failure or lost client state prevents unconditional progress/knowledge, but that failure model is not stated here.",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "claim_id": "C22",
+      "candidate_locator": "line 42",
+      "claim": "Every retry path naming a dedup key is discriminating validation for F3",
+      "claim_kind": "proposed_check",
+      "disposition": "NECESSARY_BUT_INSUFFICIENT_STATIC_GATE",
+      "evidence_ids": [
+        "E08",
+        "E14",
+        "E15"
+      ],
+      "assessment": "Names alone do not validate durable effect/identity coupling, same-intent semantics or replay horizon. The gate is proposed and can catch missing keys, but cannot substantiate effectively-once storage.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C23",
+      "candidate_locator": "lines 44-46",
+      "claim": "Crash between ack and local delete causes a duplicate send after restart",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_POSSIBILITY",
+      "evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "assessment": "If deletion has not committed, the pending row can remain and be resent. It need not resurrect after a completed durable transaction; replay is compatible with safe idempotent effects.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C24",
+      "candidate_locator": "lines 45-46",
+      "claim": "Torn phone-flash delete resurrects the row; SQLite documents flash/power failure",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "PARTLY_SUPPORTED_CONDITIONAL_INFERENCE",
+      "evidence_ids": [
+        "E11",
+        "E12"
+      ],
+      "assessment": "The words and failure mechanisms occur. Correct transactional recovery produces all-or-none state under stated assumptions; bad settings/hardware can cause corruption as well as rollback. Neither SQLite presence nor the word flash proves a row-resurrection outcome.",
+      "defect_ids": [
+        "D03",
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C25",
+      "candidate_locator": "lines 47-48",
+      "claim": "Transactional outbox keeps state change and relay decision in one local transaction",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "MISBOUND_SOURCE_MECHANISM",
+      "evidence_ids": [
+        "E13"
+      ],
+      "assessment": "The primary solution couples business state with the outgoing message, and then a separate relay may republish. It does not make remote delivery or received ack atomic with local bookkeeping.",
+      "defect_ids": [
+        "D03",
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C26",
+      "candidate_locator": "lines 49-50",
+      "claim": "Alternatively derive local deletions from server state",
+      "claim_kind": "proposed_option",
+      "disposition": "CONDITIONAL_PROPOSED_OPTION",
+      "evidence_ids": [
+        "E14",
+        "E15"
+      ],
+      "assessment": "Can be sound when a query yields authoritative, durable evidence for the same operation/payload/version. A current server state or old receipt without identity binding is insufficient. The query/consistency contract is not specified.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C27",
+      "candidate_locator": "line 50",
+      "claim": "Crash each ack-to-delete step; no duplicate and no loss",
+      "claim_kind": "proposed_check",
+      "disposition": "AMBIGUOUS_PROPOSED_ORACLE",
+      "evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "assessment": "Duplicates on the wire remain possible before local receipt commits. No duplicate stored effect is the appropriate idempotency oracle. Local all-or-none recovery and no acknowledged-record loss need distinct observations. No crash injection was performed.",
+      "defect_ids": [
+        "D04"
+      ]
+    },
+    {
+      "claim_id": "C28",
+      "candidate_locator": "lines 52-54",
+      "claim": "Immediate queue retries can storm a recovering service/network",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_RISK_INFERENCE",
+      "evidence_ids": [
+        "E07"
+      ],
+      "assessment": "AWS supports retry amplification, synchronized bursts and delayed recovery. Harm is contingent on overload/correlation, not inevitable after every reconnect.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C29",
+      "candidate_locator": "lines 53-55",
+      "claim": "AWS prescribes exponential backoff, jitter and retry budgets",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_SUMMARY_WITH_AUTHORITY_LIMIT",
+      "evidence_ids": [
+        "E07"
+      ],
+      "assessment": "Frozen body describes these mechanisms including capped delays, attempt limits and local token buckets, even though retry budget need not occur literally. It is author guidance and context-specific tradeoffs, not a universal mandate or phone SDK default.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C30",
+      "candidate_locator": "line 54",
+      "claim": "Retry churn drains phone battery",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "PLAUSIBLE_UNMEASURED_INFERENCE",
+      "evidence_ids": [
+        "E07"
+      ],
+      "assessment": "Extra network/CPU work is a reasonable phone-side hypothesis, not a measured claim from this AWS article. Its inference marking is appropriate; no power figure is asserted.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C31",
+      "candidate_locator": "line 56",
+      "claim": "100 items at 30% loss must respect budget cap",
+      "claim_kind": "proposed_check",
+      "disposition": "PROPOSED_USEFUL_BUT_NOT_COMPLETE_CHECK",
+      "evidence_ids": [
+        "E07"
+      ],
+      "assessment": "Example workload and loss rate are chosen test parameters, not source facts. Define cap units/window and queue retry scheduling; test synchronized clients too if assessing jitter. Rate control alone does not prove delivery or fair retained-work resumption.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C32",
+      "candidate_locator": "lines 58-59",
+      "claim": "Silent TTL removal of unsent observations loses data and is worse than pressure",
+      "claim_kind": "inference_and_product_choice",
+      "disposition": "SUPPORTED_LOGIC_AND_VALUE_CHOICE",
+      "evidence_ids": [
+        "E04",
+        "E05"
+      ],
+      "assessment": "Deleting the only retained unsent record loses it; prioritizing preservation over silent expiry is a declared product choice. A finite queue must expose refusal/backpressure or explicit disposition rather than assume endless capacity.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C33",
+      "candidate_locator": "lines 60-61",
+      "claim": "MQTT expiry is a broker TTL on undelivered copies, analogy for attempt not record",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_WITH_LIMITS",
+      "evidence_ids": [
+        "E04"
+      ],
+      "assessment": "Server/subscriber copy expiry, seconds unit, no-expiry default and remaining-time propagation are checked. The preservation of the original survey record is the candidate application inference; MQTT actually deletes a copy, not merely a timer.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C34",
+      "candidate_locator": "line 62",
+      "claim": "Only duplicate or superseded items may age out",
+      "claim_kind": "proposed_product_policy",
+      "disposition": "CONDITIONAL_PRODUCT_POLICY_NOT_FULLY_DEFINED",
+      "evidence_ids": [
+        "E08",
+        "E09",
+        "E13"
+      ],
+      "assessment": "The terms need proof of safe equivalence/durable replacement. A losing conflict branch is not automatically redundant, and a dedup tombstone is not an expendable duplicate while late replay remains possible. The no-silent-expiry policy is useful but not a complete reclamation contract.",
+      "defect_ids": [
+        "D02",
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C35",
+      "candidate_locator": "line 63",
+      "claim": "Overflow test must show no silent disappearance",
+      "claim_kind": "proposed_check",
+      "disposition": "PROPOSED_USEFUL_CHECK",
+      "evidence_ids": [
+        "E05",
+        "E11"
+      ],
+      "assessment": "A discriminating retention check. Include storage-full enqueue failure, restarted pending data and visible rejection/explicit deletion; no overflow test was run.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C36",
+      "candidate_locator": "lines 65-66",
+      "claim": "Reconnect makes backlog arbitrary-order",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "OVERGENERALIZED_RISK",
+      "evidence_ids": [
+        "E06",
+        "E13"
+      ],
+      "assessment": "Possible for the unspecified concurrent application transport, not inherent to reconnect. MQTT has ordering defaults/resend rules and a Receive Maximum=1 option; outbox requires same-aggregate order. The brief fixes no chosen transport.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C37",
+      "candidate_locator": "line 66",
+      "claim": "Last-write-wins lets delayed old data overwrite newer state",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "CONDITIONAL_INFERENCE",
+      "evidence_ids": [
+        "E09",
+        "E15"
+      ],
+      "assessment": "Correct if latest means arrival/write order. Timestamp/version-based LWW may reject the older logical update; the candidate does not specify this condition. Duplicate re-execution can also overwrite an intervening write as the RIFL example illustrates.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C38",
+      "candidate_locator": "lines 66-67",
+      "claim": "PouchDB/CouchDB surfaces conflicts with a deterministic winner",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED_WITH_DISCLOSURE_CONDITIONS",
+      "evidence_ids": [
+        "E09"
+      ],
+      "assessment": "Deterministic arbitrary winner is verified; explicit conflicts:true and losing-revision retrieval are necessary to surface full conflict information. Replication completion conditions the same-history statement. This is not automatic semantic merge.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C39",
+      "candidate_locator": "lines 68-69",
+      "claim": "Immutable append-only records make reordering benign; mutable records need revision/conflict handling",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "USEFUL_UNCERTAINTY_WITH_MISSING_PROJECTION_CONDITION",
+      "evidence_ids": [
+        "E10",
+        "E13"
+      ],
+      "assessment": "For an append-only logical set and order-independent projection, yes. Immutability alone does not make an arrival-sequence projection commutative. Mutability is not settled by the brief and remains correctly unresolved.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C40",
+      "candidate_locator": "line 70",
+      "claim": "Any order of one backlog yields the same server state",
+      "claim_kind": "proposed_check",
+      "disposition": "PROPOSED_CHECK_NEEDS_SEMANTIC_ORACLE",
+      "evidence_ids": [
+        "E09",
+        "E10"
+      ],
+      "assessment": "Compare the intended record set and resolved projection with declared order/conflict semantics, not arbitrary physical storage/arrival history. The test is useful for a chosen order-independent contract; it is not valid for every legitimate ordered model. No property test was run.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C41",
+      "candidate_locator": "lines 72-74",
+      "claim": "SQS 404/JS stub and CouchDB DNS failed at capture; attempts logged in index",
+      "claim_kind": "historical_execution_claim",
+      "disposition": "SELF_REPORTED_HISTORY_NOT_INDEPENDENTLY_VERIFIABLE",
+      "evidence_ids": [],
+      "assessment": "The frozen index contains those four failure records. Discarded response bodies, status/redirect receipts and DNS logs are not in the declared retained set. Matching their index text does not verify actual historical failures. No current re-fetch can establish what happened at 20:12Z. This is a provenance limit, not a finding of fabrication.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C42",
+      "candidate_locator": "lines 74-77",
+      "claim": "Retention guidance relies only on MQTT, SQLite and outbox; no source supports bare retries as sufficient; all six add mechanisms",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "QUALIFIED_SUPPORT_WITH_MISSED_AVAILABLE_CONDITION",
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E07",
+        "E08",
+        "E09",
+        "E11",
+        "E13"
+      ],
+      "assessment": "The examined sources do not establish sufficiency of bare retries for the survey. Absence in this bounded corpus is not exhaustive refutation, as F8 correctly says. Stripe already contains directly relevant dedup-retention limits, so the gap cannot excuse overlooking the frozen 24-hour pruning condition.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C43",
+      "candidate_locator": "line 77",
+      "claim": "Recapture elsewhere before calling retention advice complete",
+      "claim_kind": "proposed_check",
+      "disposition": "REASONABLE_PROPOSED_FOLLOWUP_WITH_LIMIT",
+      "evidence_ids": [],
+      "assessment": "A bounded unresolved source lead, not a requirement to keep searching until an unknown answer key is found. Different-network retrieval could improve future coverage, but would not authenticate historical failure claims. The reviewer did not recapture these failed URLs.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C44",
+      "candidate_locator": "lines 81-85",
+      "claim": "Offline persistence coverage plus six distinct mechanism families/non-competitor analogies",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "FAMILIES_VERIFIED_PERSISTENCE_COVERAGE_PARTIAL",
+      "evidence_ids": [
+        "E01",
+        "E07",
+        "E08",
+        "E09",
+        "E11",
+        "E13"
+      ],
+      "assessment": "Six distinct families are grounded in actual primary text: QoS, retry control, request identity, revision conflicts, atomic local storage and transactional outbox. IoT, payments, cloud and replication analogies are relevant. Ack/delete is local persistence work but does not cover initial durable offline capture.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "claim_id": "C45",
+      "candidate_locator": "line 86",
+      "claim": "Assumption challenge is supported",
+      "claim_kind": "source_fact_or_inference",
+      "disposition": "SUPPORTED",
+      "evidence_ids": [
+        "E03",
+        "E07",
+        "E13"
+      ],
+      "assessment": "Lost acknowledgment/duplicate-effect and capture-durability mechanisms warrant challenging sufficiency. The challenge need not rely on the overly broad impossibility claim in F3.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C46",
+      "candidate_locator": "line 87 and Findings headings",
+      "claim": "At most eight distinct material findings with negative discoveries and uncertainty",
+      "claim_kind": "output_structure",
+      "disposition": "SATISFIED",
+      "evidence_ids": [],
+      "assessment": "Exactly F1-F8; 1086 whitespace-delimited words, within the stated soft 1100 ceiling by this count. F2/F3 and F1/F4 overlap but examine distinct identity/guarantee and server/local boundaries. F6 is a useful negative, F7/F8 explicit uncertainties. F3 contains D01 but is not the only negative.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C47",
+      "candidate_locator": "lines 88-89",
+      "claim": "Bounded changes/tests and no exhaustive claim",
+      "claim_kind": "output_structure",
+      "disposition": "SATISFIED_WITH_SUBSTANTIVE_LIMITS",
+      "evidence_ids": [],
+      "assessment": "No whole survey application is designed. Each finding has a proposed check; F8 explicitly bounds discovery. Some oracles cannot establish the promised effect and core missing conditions remain. These are reviewed separately, not an allegation of hidden execution.",
+      "defect_ids": []
+    },
+    {
+      "claim_id": "C48",
+      "candidate_locator": "lines 94-96",
+      "claim": "PouchDB sync engine with persistent store and deterministic merge is a heavier alternative for mutable records",
+      "claim_kind": "proposed_option_and_inference",
+      "disposition": "PARTLY_SUPPORTED_OPTION_MISCHARACTERIZED",
+      "evidence_ids": [
+        "E09",
+        "E10"
+      ],
+      "assessment": "Revision-tree replication and application-controlled resolution are real alternatives. Automatic deterministic semantic merge is not demonstrated; default winner is arbitrary and explicit resolution preserves losing revisions. Heavier is an unmeasured design judgment, not a benchmark.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "claim_id": "C49",
+      "candidate_locator": "lines 96-97",
+      "claim": "Optional broker expiry budgets, dedup tombstone windows and resumable checkpoints",
+      "claim_kind": "optional_leads",
+      "disposition": "LEADS_PRESERVED_NOT_IMPLEMENTED",
+      "evidence_ids": [
+        "E04",
+        "E08",
+        "E13",
+        "E15"
+      ],
+      "assessment": "These are explicitly unpursued leads, with no assertion that an implementation exists. Broker expiry/checkpoints may stay optional; dedup lifetime/fencing is a correctness condition whenever replay-safe effects are promised, though a particular tombstone mechanism is optional.",
+      "defect_ids": [
+        "D02"
+      ]
+    },
+    {
+      "claim_id": "C50",
+      "candidate_locator": "lines 98-100",
+      "claim": "Mutability and source coverage unresolved; runtime checks all proposed, source/hash/locator work executed",
+      "claim_kind": "execution_and_uncertainty",
+      "disposition": "PROPOSAL_EXECUTION_BOUNDARY_MOSTLY_CLEAR",
+      "evidence_ids": [
+        "E01",
+        "E07",
+        "E08",
+        "E09",
+        "E11",
+        "E13"
+      ],
+      "assessment": "The candidate does not claim to have run crash/load/property/overflow tests. Current hash and source-locator properties are independently reproduced by this reviewer; original capture/grep commands and discarded failures are not authenticated by the index alone. No unjustified abstention on the whole module; the two open uncertainties are preserved.",
+      "defect_ids": []
+    }
+  ],
+  "source_evidence": [
+    {
+      "evidence_id": "E01",
+      "source_file": "mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/mqtt-v5.0-os.html",
+      "primary_sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_locators": [
+        "Title/version block, 07 March 2019, OASIS Standard; reviewer text lines 1-110",
+        "§4.3, lines 6275-6284; §4.3.1-4.3.3, lines 6285-6420"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/mqtt-v5.0-os.review-text.txt",
+      "source_facts": "The dated OS edition defines QoS 0 at most once, QoS 1 at least once, and QoS 2 exactly once for an application-message transfer from one sender to one receiver. Outbound subscription QoS can differ from inbound QoS. QoS 2 uses PUBLISH, PUBREC, PUBREL, PUBCOMP.",
+      "limits": "This is protocol delivery, not proof of durable survey-database commit or global end-to-end effects. QoS depends on retained session state and the protocol assumptions, not an unconditional crash-proof promise."
+    },
+    {
+      "evidence_id": "E02",
+      "source_file": "mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/mqtt-v5.0-os.html",
+      "primary_sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_locators": [
+        "§4.3.2, MQTT-4.3.2-4/-5, lines 6335-6361",
+        "§3.4.2.1 Table 3-4, lines 4127-4184",
+        "§4.4 MQTT-4.4.0-2, lines 6428-6430"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/mqtt-v5.0-os.review-text.txt",
+      "source_facts": "A successful PUBACK accepts ownership and need not wait for onward application delivery. PUBACK can also carry rejection reasons, including not authorized, quota exceeded, and invalid payload. A PUBACK/PUBREC reason code >=0x80 terminates protocol retransmission of the corresponding PUBLISH.",
+      "limits": "PUBACK is not merely an unqualified received bit; successful ownership and negative acknowledgment must be distinguished. A protocol acknowledgment is not evidence that an authoritative application record was durably stored."
+    },
+    {
+      "evidence_id": "E03",
+      "source_file": "mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/mqtt-v5.0-os.html",
+      "primary_sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_locators": [
+        "§3.3.1.1 DUP, MQTT-3.3.1-1/-2/-3, lines 3493-3520",
+        "§2.2.1 Packet Identifier, MQTT-2.2.1-3/-4/-5, lines 1565-1589",
+        "§4.3.2 MQTT-4.3.2-5, lines 6340-6343"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/mqtt-v5.0-os.review-text.txt",
+      "source_facts": "DUP=1 flags a possible retransmission; the receiver need not have seen the earlier packet. An application message can repeat with DUP=0 and a different packet identifier. Two-byte packet identifiers are scoped to the session/direction and can be reused after the corresponding acknowledgment; acknowledgment packets bind to the original packet ID.",
+      "limits": "DUP and packet IDs are not stable application record identities. This supports application-level identity, not a measured assertion that duplicate observations occur at a particular frequency."
+    },
+    {
+      "evidence_id": "E04",
+      "source_file": "mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/mqtt-v5.0-os.html",
+      "primary_sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_locators": [
+        "§3.3.2.3.3 Message Expiry Interval, MQTT-3.3.2-5/-6, lines 3675-3690",
+        "§4.3.3 MQTT-4.3.3-7/-13, lines 6391-6392 and 6419-6420"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/mqtt-v5.0-os.review-text.txt",
+      "source_facts": "Message Expiry Interval is a four-byte integer lifetime in seconds. If expired before the server starts onward delivery, the server must delete that subscriber copy; if absent the application message does not expire. Forwarded expiry subtracts server waiting time. QoS 2 acknowledgment processing has separate expiry rules.",
+      "limits": "This governs broker/subscriber copies, not a phone-local survey retention policy. Keeping the authoritative record while expiring an attempt is an application design inference, not the MQTT rule itself."
+    },
+    {
+      "evidence_id": "E05",
+      "source_file": "mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/mqtt-v5.0-os.html",
+      "primary_sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_locators": [
+        "§3.1.2.11.2 Session Expiry Interval, MQTT-3.1.2-23, lines 2369-2422",
+        "§4.1-4.1.2, MQTT-4.1.0-1/-2, lines 6185-6248",
+        "§4.4 MQTT-4.4.0-1, lines 6421-6427"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/mqtt-v5.0-os.review-text.txt",
+      "source_facts": "Session expiry defaults to zero when omitted; nonzero expiry retains state after disconnection, while 0xFFFFFFFF means no expiry. Reconnect replay requires Clean Start=0 and an existing session, with original packet IDs. Other MQTT retransmission times are prohibited. Administrative policies or failures can lose stored session state. The payment example writes all data to nonvolatile memory before transmission.",
+      "limits": "MQTT retry rules cannot be copied wholesale into a generic immediate/timer retry loop. Long offline interruptions can outlast session retention, and session storage is not inherently durable local capture storage."
+    },
+    {
+      "evidence_id": "E06",
+      "source_file": "mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/mqtt-v5.0-os.html",
+      "primary_sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_locators": [
+        "§4.2, lines 6249-6274",
+        "§4.6 MQTT-4.6.0-1/-5/-6, lines 6471-6515"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/mqtt-v5.0-os.review-text.txt",
+      "source_facts": "MQTT assumes an ordered lossless byte stream. Resends preserve original send order. Non-shared subscriptions use ordered topics by default, for messages from the same client at the same QoS. QoS 1 duplicates can interleave, but setting both endpoints Receive Maximum=1 prevents an earlier message arriving after a later one even on reconnect.",
+      "limits": "Reconnect does not inherently imply arbitrary order. Ordering guarantees have sender/topic/QoS/subscription/flow conditions and do not supply order across unrelated clients or arbitrary application transports."
+    },
+    {
+      "evidence_id": "E07",
+      "source_file": "aws-retries-jitter.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/aws-retries-jitter.html",
+      "primary_sha256": "bff72c61f7dae855aeb35bb2834b2ac9839390f86d1132ab1ae1fb722e729def",
+      "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+      "primary_locators": [
+        "Visible title/author/canonical metadata; reviewer lines 28-37",
+        "Timeouts, lines 48-57",
+        "Retries and backoff, lines 58-66",
+        "Jitter and Conclusion, lines 67-75"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/aws-retries-jitter.review-text.txt",
+      "source_facts": "The frozen response identifies AWS Builder Center, author Marc (AWS employee), published 12 June 2026 and modified 15 June 2026, with a builder.aws.com canonical URL. It describes capped exponential backoff, limited retries, a single retry layer, local token-bucket limits, and jitter. Side-effecting APIs require idempotency. Timeout choices must account for network latency and covered DNS/TLS work; client errors generally will not improve with identical retries, with an eventual-consistency caveat.",
+      "limits": "The article is design guidance, not a normative prescription for this phone queue or a measured battery result. Retry-budget terminology is a reasonable summary of token-bucket/attempt limits. This is a living/reprinted document, not a release pin for any chosen SDK."
+    },
+    {
+      "evidence_id": "E08",
+      "source_file": "stripe-idempotency.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/stripe-idempotency.html",
+      "primary_sha256": "a93f0ffb31a6adcc917168ac576201bc7946276322921e932d0357ee6ef95150",
+      "url": "https://docs.stripe.com/api/idempotent_requests",
+      "primary_locators": [
+        "Idempotent requests, reviewer lines 145-160",
+        "Visible API selector, reviewer line 140: 2026-09-30.endive"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/stripe-idempotency.review-text.txt",
+      "source_facts": "Clients provide a unique key (V4 UUID suggested; maximum 255 characters). Stripe replays the first status/body, including 500 errors. Keys may be pruned after at least 24 hours, after which reuse creates a new request. Reused keys must match original parameters. Validation failures and concurrent execution conflicts are not saved until endpoint execution begins. Keys apply to POST; they have no effect on GET/DELETE, which are already idempotent.",
+      "limits": "A stable key alone is not an unlimited offline replay guarantee. The captured reference exposes 2026-09-30.endive but no survey-server/API adoption is declared. Stripe retention/method rules are limits of the analogy, not defaults that must be imposed on the custom survey service."
+    },
+    {
+      "evidence_id": "E09",
+      "source_file": "pouchdb-conflicts.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/pouchdb-conflicts.html",
+      "primary_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "primary_locators": [
+        "Guide Conflicts; Two types of conflicts and Upsert, lines 26-62",
+        "Eventual conflicts, lines 63-98",
+        "Visible download banner, line 8: v9.0.0"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/pouchdb-conflicts.review-text.txt",
+      "source_facts": "The guide says PouchDB implements CouchDB replication. Immediate conflicts are 409s on revision-sensitive operations; delta/upsert retry can handle suitable changes. Concurrent offline branches get an arbitrary deterministic winner, not a semantic merge. Replication history preserves losing branches; conflicts:true exposes _conflicts, rev retrieves losers, and explicit removal/new revision resolves them. Equal revision history assumes completed replication.",
+      "limits": "The default winner can hide a losing branch unless queried. Conflict resolution is application-controlled. The v9.0.0 download banner does not prove the living guide is a release-pinned specification, and the unavailable CouchDB protocol is not independently validated by this guide."
+    },
+    {
+      "evidence_id": "E10",
+      "source_file": "pouchdb-conflicts.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/pouchdb-conflicts.html",
+      "primary_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "primary_locators": [
+        "Accountants do not use erasers, lines 99-107"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/pouchdb-conflicts.review-text.txt",
+      "source_facts": "The append-only alternative creates new delta documents rather than updating/removing existing documents. Its balance example computes a sum of immutable changes.",
+      "limits": "The example supports an order-independent set/commutative projection when IDs are distinct. Immutability alone does not prove that every arrival-order-sensitive application state or ordered event projection is equivalent; timestamp uniqueness in the example is not adopted as a universally safe key generator."
+    },
+    {
+      "evidence_id": "E11",
+      "source_file": "sqlite-atomiccommit.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/sqlite-atomiccommit.html",
+      "primary_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "primary_locators": [
+        "Introduction, lines 70-95",
+        "Hardware Assumptions, lines 96-219",
+        "§6.2, lines 713-738",
+        "Last-update marker, line 1122: 2026-04-21 10:28:59Z"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/sqlite-atomiccommit.review-text.txt",
+      "source_facts": "Atomic commit applies all changes in one transaction or none. The described algorithm is rollback-journal mode, not WAL. Writes can remain in volatile OS cache and be reordered, so fsync/flush ordering and filesystem/VFS assumptions matter. The page discusses FULL versus NORMAL synchronous behavior, powersafe-overwrite defaults since 3.7.9, and historical 3.3.14/3.5.0 implementation details.",
+      "limits": "Atomicity alone is not unconditional power-loss durability on arbitrary phone flash or arbitrary settings. No installed SQLite version, VFS, journaling/synchronous mode, phone OS, or hardware configuration is supplied; historical details are not current runtime pins."
+    },
+    {
+      "evidence_id": "E12",
+      "source_file": "sqlite-atomiccommit.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/sqlite-atomiccommit.html",
+      "primary_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "primary_locators": [
+        "§3.5-3.11, lines 298-428",
+        "§4 Rollback, lines 451-537",
+        "§5.2, lines 573-600",
+        "§8 and §9.2-9.5, lines 967-992 and 1030-1103"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/sqlite-atomiccommit.review-text.txt",
+      "source_facts": "The rollback journal is flushed before database writes; database changes are flushed before the commit point. A crash before commit rolls back the transaction; a crash after commit preserves it under the stated assumptions. synchronous=OFF or journal_mode=MEMORY compromise power-loss integrity. Crash tests simulate incomplete/reordered writes and reopen/check all-or-none consistency; broken flushes or missing hot journals can defeat recovery.",
+      "limits": "The source explains how to avoid torn logical transactions, not that every transactional delete resurrects a row. Process-kill tests alone do not cover power-loss/write-cache behavior, and an uncommitted enqueue can legitimately vanish after rollback unless local acceptance waits for durable commit."
+    },
+    {
+      "evidence_id": "E13",
+      "source_file": "transactional-outbox.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/transactional-outbox.html",
+      "primary_sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "primary_locators": [
+        "Context, Problem and Forces, lines 18-40",
+        "Solution and Result context, lines 41-67",
+        "Creator attribution, lines 76-78"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/transactional-outbox.review-text.txt",
+      "source_facts": "The author defines a transaction that stores the outbound message together with business-state mutation, followed by a separate relay. State commit and outbound publication are coupled through durable intent; ordering for same-aggregate updates is a force. The relay can crash after publication but before recording it, publish again on restart, and therefore needs an idempotent consumer, possibly tracking message IDs.",
+      "limits": "The outbox transaction is the state-plus-message enqueue boundary; it does not atomically include remote delivery or a phone receiving a remote acknowledgment. Atomic local acknowledgment/deletion cannot eliminate the network-to-local-commit crash window."
+    },
+    {
+      "evidence_id": "E14",
+      "source_file": "external-aws-idempotent-apis.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-aws-idempotent-apis.html",
+      "primary_sha256": "c9cbf74baf969017bf7305cfc9b15923e63636ea1de931bdd5fdecb575f1da04",
+      "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+      "primary_locators": [
+        "Making retries safe with idempotent APIs, Malcolm Featonby; Reducing client complexity, lines 171-178",
+        "Retries and semantic equivalence, lines 179-181 and 225",
+        "Late arriving requests, lines 226-269",
+        "Same client request ID, different intent, lines 270-272"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-aws-idempotent-apis.review-text.txt",
+      "source_facts": "AWS describes caller-scoped request IDs; recording the token and all mutations must be one ACID operation. Replays should have semantically equivalent outcomes. The deduplication lifetime varies with service/resource and must account for late requests. Same key with different parameters returns a validation error, supported by retained request parameters.",
+      "limits": "Additional reviewer source, not part of the candidate corpus and not a required new technology. Service-specific EC2 lifetime policy does not define a universal phone offline horizon. This validates relevant missing conditions, not a demand to use AWS."
+    },
+    {
+      "evidence_id": "E15",
+      "source_file": "external-rifl.pdf",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-rifl.pdf",
+      "primary_sha256": "f609f9508beaf936027f31428a8f06dc86d8201faadc5b340ffead7706863969",
+      "url": "https://web.stanford.edu/~ouster/cgi-bin/papers/rifl.pdf",
+      "primary_locators": [
+        "Lee et al., Implementing Linearizability at Large Scale and Low Latency, SOSP 2015, DOI 10.1145/2815400.2815416; title/abstract PDF page 1",
+        "§2 end and §3, PDF page 3",
+        "§3 continuation and Figures 3-5, PDF page 4",
+        "§4.1-4.2, PDF page 5",
+        "§9, PDF pages 14-15"
+      ],
+      "reviewer_extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-rifl.review-text.txt",
+      "source_facts": "RIFL gives conditional exactly-once RPC semantics using stable request identity, atomic durable result-plus-effect records, retry rendezvous, and safe garbage collection. It assumes automatic retries, clients that retain required state, and reliable server metadata. Leases fence stale retries after reclamation and can report an ambiguous result after a partition. Section 9 discusses client state loss and layers, including client-visible identities/reconciliation at the ultimate boundary.",
+      "limits": "This does not promise delivery under arbitrary permanent failure or erase human/client uncertainty. Its datacenter/lease design is not an automatic recommendation for offline phones. It demonstrates that rejecting all end-to-end exactly-once protocols as impossible is too broad; the narrower claim that bare retries are insufficient remains correct."
+    }
+  ],
+  "source_integrity": [
+    {
+      "file": "mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/mqtt-v5.0-os.html",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "declared_identity": "MQTT Version 5.0, OASIS Standard, 07 March 2019 (os edition)",
+      "html_title": "MQTT Version 5.0 | OASIS Standard",
+      "primary_sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "declared_sha256": "e5d96188f36c6e36d5aa019b4aa99074de4159ee462996371688ddd39ead20a4",
+      "hash_match": true,
+      "bytes": 1436465,
+      "declared_bytes": 1436465,
+      "extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/mqtt-v5.0-os.review-text.txt",
+      "extraction_sha256": "3e2c431c4f330c89e8e19d7f5f14b2d0c8ff38ae6d82801f02d4e4e63e0a0bc6",
+      "extraction_lines": 8880,
+      "extraction_method": "Python stdlib HTMLParser; exclude script/style data; newline block elements; normalize whitespace/drop empty lines; declared windows-1252 decoding",
+      "capture_time_claim": "2026-10-07T20:12:06Z",
+      "encoding": "windows-1252, verified from frozen HTML meta"
+    },
+    {
+      "file": "aws-retries-jitter.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/aws-retries-jitter.html",
+      "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+      "declared_identity": "AWS Builders' Library article 'Timeouts, retries, and backoff with jitter' (Marc Brooker, AWS; living web page)",
+      "html_title": "Timeouts, retries, and backoff with jitter | AWS Builder Center",
+      "primary_sha256": "bff72c61f7dae855aeb35bb2834b2ac9839390f86d1132ab1ae1fb722e729def",
+      "declared_sha256": "bff72c61f7dae855aeb35bb2834b2ac9839390f86d1132ab1ae1fb722e729def",
+      "hash_match": true,
+      "bytes": 127198,
+      "declared_bytes": 127198,
+      "extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/aws-retries-jitter.review-text.txt",
+      "extraction_sha256": "196a447b00fd0bb1d82b0b6c9b6ef13694fbbb55865ad24c70b46df1831aab9e",
+      "extraction_lines": 88,
+      "extraction_method": "Python stdlib HTMLParser; exclude script/style data; newline block elements; normalize whitespace/drop empty lines",
+      "capture_time_claim": "2026-10-07T20:12:06Z"
+    },
+    {
+      "file": "stripe-idempotency.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/stripe-idempotency.html",
+      "url": "https://docs.stripe.com/api/idempotent_requests",
+      "declared_identity": "Stripe API Reference, 'Idempotent requests' (living web doc, React shell with embedded doc text)",
+      "html_title": "Idempotent requests | Stripe API Reference",
+      "primary_sha256": "a93f0ffb31a6adcc917168ac576201bc7946276322921e932d0357ee6ef95150",
+      "declared_sha256": "a93f0ffb31a6adcc917168ac576201bc7946276322921e932d0357ee6ef95150",
+      "hash_match": true,
+      "bytes": 1375297,
+      "declared_bytes": 1375297,
+      "extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/stripe-idempotency.review-text.txt",
+      "extraction_sha256": "04eaa2a09f4f11321835b961b232124da2150877d67a122964e85dadc5e47abd",
+      "extraction_lines": 289,
+      "extraction_method": "Python stdlib HTMLParser; exclude script/style data; newline block elements; normalize whitespace/drop empty lines",
+      "capture_time_claim": "2026-10-07T20:12:06Z"
+    },
+    {
+      "file": "pouchdb-conflicts.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/pouchdb-conflicts.html",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "declared_identity": "PouchDB guide 'Conflicts' (living web doc; PouchDB = CouchDB replication client used offline-first on phones)",
+      "html_title": "Conflicts",
+      "primary_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "declared_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "hash_match": true,
+      "bytes": 28467,
+      "declared_bytes": 28467,
+      "extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/pouchdb-conflicts.review-text.txt",
+      "extraction_sha256": "518b84b66b5ad45e74c65561feedf9cfac142cce9d0e35a9724d0c94f8aa1ba1",
+      "extraction_lines": 128,
+      "extraction_method": "Python stdlib HTMLParser; exclude script/style data; newline block elements; normalize whitespace/drop empty lines",
+      "capture_time_claim": "2026-10-07T20:12:28Z"
+    },
+    {
+      "file": "sqlite-atomiccommit.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/sqlite-atomiccommit.html",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "declared_identity": "SQLite documentation 'Atomic Commit In SQLite' (version-of-record is the live sqlite.org page; stable doc)",
+      "html_title": "Atomic Commit In SQLite",
+      "primary_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "declared_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "hash_match": true,
+      "bytes": 77968,
+      "declared_bytes": 77968,
+      "extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/sqlite-atomiccommit.review-text.txt",
+      "extraction_sha256": "08e859c0d598b1e60279292432d572ba8ce63eee7ef137ee12f54cf14186be42",
+      "extraction_lines": 1122,
+      "extraction_method": "Python stdlib HTMLParser; exclude script/style data; newline block elements; normalize whitespace/drop empty lines",
+      "capture_time_claim": "2026-10-07T20:12:07Z"
+    },
+    {
+      "file": "transactional-outbox.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/treatment/protected_breadth_final-v3/sources/transactional-outbox.html",
+      "url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "declared_identity": "microservices.io 'Pattern: Transactional outbox' (Chris Richardson; living web page)",
+      "html_title": "Pattern: Transactional outbox",
+      "primary_sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "declared_sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "hash_match": true,
+      "bytes": 25474,
+      "declared_bytes": 25474,
+      "extraction_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/transactional-outbox.review-text.txt",
+      "extraction_sha256": "f333435be0fa3a3dbaa5bfd0ad70f30124a6400626177038469bf1769a626f1f",
+      "extraction_lines": 133,
+      "extraction_method": "Python stdlib HTMLParser; exclude script/style data; newline block elements; normalize whitespace/drop empty lines",
+      "capture_time_claim": "2026-10-07T20:12:07Z"
+    }
+  ],
+  "additional_primary_captures": [
+    {
+      "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+      "final_url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+      "status": 200,
+      "headers": {
+        "Content-Type": "text/html;charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Date": "Wed, 07 Oct 2026 20:33:17 GMT",
+        "Set-Cookie": "aws-priv=eyJ2IjoxLCJldSI6MCwic3QiOjB9; Version=1; Comment=\"Anonymous cookie for privacy regulations\"; Domain=.aws.amazon.com; Max-Age=31536000; Expires=Thu, 07 Oct 2027 20:33:17 GMT; Path=/; Secure",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "Server",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "Strict-Transport-Security": "max-age=47304000; includeSubDomains",
+        "x-amz-id-1": "1C9A68724C82424088D8",
+        "Last-Modified": "Fri, 25 Sep 2026 21:27:25 GMT",
+        "vary": "accept-encoding",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 ca0fc43bc87ea655f66615a99ef77b4e.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "PHL51-P1",
+        "X-Amz-Cf-Id": "KyCRXVcbXelo9ioRhd7Cbl3JX-k4D4YysQr4-fRnpIBg51v7kwvhlQ=="
+      },
+      "capture_start_utc": "2026-10-07T20:33:17.482675+00:00",
+      "capture_end_utc": "2026-10-07T20:33:17.611948+00:00",
+      "sha256": "c9cbf74baf969017bf7305cfc9b15923e63636ea1de931bdd5fdecb575f1da04",
+      "bytes": 453689,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-aws-idempotent-apis.html",
+      "limit_bytes": 3000000,
+      "limit_reached": false,
+      "capture_method": "stdlib urllib.request HTTPS GET; follow redirects; 20 second timeout; no source code execution"
+    },
+    {
+      "url": "https://web.stanford.edu/~ouster/cgi-bin/papers/rifl.pdf",
+      "final_url": "https://web.stanford.edu/~ouster/cgi-bin/papers/rifl.pdf",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 20:33:17 GMT",
+        "Server": "Apache",
+        "Last-Modified": "Tue, 08 Jun 2021 18:08:05 GMT",
+        "ETag": "\"4c872-5c4450a1ccb40\"",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "313458",
+        "Strict-Transport-Security": "max-age=0",
+        "Connection": "close",
+        "Content-Type": "application/pdf"
+      },
+      "capture_start_utc": "2026-10-07T20:33:17.483595+00:00",
+      "capture_end_utc": "2026-10-07T20:33:18.414642+00:00",
+      "sha256": "f609f9508beaf936027f31428a8f06dc86d8201faadc5b340ffead7706863969",
+      "bytes": 313458,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/sources/external-rifl.pdf",
+      "limit_bytes": 3000000,
+      "limit_reached": false,
+      "capture_method": "stdlib urllib.request HTTPS GET; follow redirects; 20 second timeout; no source code execution"
+    }
+  ],
+  "version_and_capture_limits": [
+    {
+      "source": "mqtt-v5.0-os.html",
+      "verified_identity": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "version_limit": "Dated OS protocol edition, not an implementation pin. Corrected reviewer extraction to declared windows-1252; primary bytes unchanged."
+    },
+    {
+      "source": "aws-retries-jitter.html",
+      "verified_identity": "AWS Builder Center article, author Marc, AWS employee; published 2026-06-12, modified 2026-06-15",
+      "version_limit": "Frozen response canonical URL is https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter. Original requested AWS URL and capture time are index claims; living/reprinted edition."
+    },
+    {
+      "source": "stripe-idempotency.html",
+      "verified_identity": "Stripe API Reference Idempotent requests; visible selector 2026-09-30.endive",
+      "version_limit": "Living rendered reference; selector is observed document context, not a surveyed server release or universal key lifetime."
+    },
+    {
+      "source": "pouchdb-conflicts.html",
+      "verified_identity": "PouchDB Conflicts guide; visible download v9.0.0",
+      "version_limit": "Download banner is not a versioned replication-spec identity; CouchDB source protocol remains uncaptured."
+    },
+    {
+      "source": "sqlite-atomiccommit.html",
+      "verified_identity": "Atomic Commit In SQLite; page updated 2026-04-21T10:28:59Z",
+      "version_limit": "Rollback-mode explanation; historical 3.3.14/3.5.0/3.7.9 discussion is not a installed-library pin. WAL needs separate mechanism evidence if chosen."
+    },
+    {
+      "source": "transactional-outbox.html",
+      "verified_identity": "Chris Richardson, Pattern: Transactional outbox",
+      "version_limit": "Living author-owned pattern, no release number or normative survey-app adoption."
+    },
+    {
+      "source": "external-aws-idempotent-apis.html",
+      "verified_identity": "Malcolm Featonby, Making retries safe with idempotent APIs, Amazon Builders Library",
+      "version_limit": "Reviewer additional live HTML capture; qualitative idempotency conditions only, not EC2 adoption."
+    },
+    {
+      "source": "external-rifl.pdf",
+      "verified_identity": "Lee et al., SOSP 2015; DOI 10.1145/2815400.2815416; PDF metadata modified 2015-09-18",
+      "version_limit": "16-page author-hosted PDF; reviewed relevant abstract, §§2-4.2 and §9, with pages 3-4 visually inspected. No RAMCloud code execution or phone suitability claim."
+    }
+  ],
+  "defects": [
+    {
+      "defect_id": "D01",
+      "title": "Unconditional rejection of end-to-end exactly-once protocols",
+      "severity": "material",
+      "candidate_locators": "final.md lines 39-42 and 94-96",
+      "evidence_ids": [
+        "E01",
+        "E15"
+      ],
+      "defect_identity": "F3 moves from retries alone and single-hop MQTT to an unconditioned no-retry-scheme/impossible claim; the alternatives section explicitly rejects end-to-end exactly-once protocols on that ground. Neither the mapped MQTT text nor an unstated two-generals failure model proves this universal rejection.",
+      "materiality": "It removes a legitimate stateful/transactional mechanism family from consideration for the wrong reason. The primary RIFL paper demonstrates exactly-once RPC semantics with explicit durability, identity, client-state and retention conditions.",
+      "qualification": "Do not reject the correct narrow heading or require RIFL adoption. Exactly-once effects do not imply exactly-once packets, unconditional liveness, or certainty after arbitrary client-state loss; unsuitable complexity/lease assumptions could justify a bounded practical rejection, but the candidate did not give that reason."
+    },
+    {
+      "defect_id": "D02",
+      "title": "The replay-safe/effectively-once promise omits governing identity and deduplication conditions",
+      "severity": "material",
+      "candidate_locators": "final.md lines 15-21, 31-37, 68-70 and 96-97",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "E08",
+        "E14",
+        "E15"
+      ],
+      "defect_identity": "Stable UUID plus server dedup is a valid direction, but the promised net effect never binds the operation to its payload/revision and successful durable receipt, never states atomic durable coupling of dedup state to the stored effect, and never sets a replay/retention horizon or fences stale retries. Tombstone-based dedup windows are relegated to optional leads. The mapped Stripe body, beyond the checked header, already supplies key expiry, parameter mismatch, cached-error, concurrent-request and method conditions.",
+      "materiality": "After a processed request and lost acknowledgment, a phone can stay offline longer than a dedup cache retains the key and create a duplicate on replay. If the same record ID is reused for a revised payload, a delayed acknowledgment or key hit can retire a change never stored. Separately committed effect and dedup state can duplicate an effect or suppress a missing one after a server crash.",
+      "qualification": "These are conditional counterexamples, not claims about a nonexistent implementation. A durable unique record key plus immutable payload may satisfy the condition without a separate dedup table. Stripe 24 hours is not a required custom-server setting; it is the captured analogy limitation that must not disappear. No full authentication subsystem or global app redesign is demanded."
+    },
+    {
+      "defect_id": "D03",
+      "title": "Offline capture durability is left outside the allegedly sufficient additions",
+      "severity": "material",
+      "candidate_locators": "final.md lines 14-21, 44-50 and obligation mapping at line 81",
+      "evidence_ids": [
+        "E05",
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "defect_identity": "The sole concrete local transaction requirement concerns acknowledgment/deletion, after a send. There is no durable enqueue/ID/payload-before-local-acceptance or before-transmission condition, no restart invariant for pending records, and no stated storage/journal/flush assumptions. The mapped outbox source puts the original durable intent at enqueue; MQTT directly supplies a nonvolatile-before-send example. SQLite does not make an uncommitted enqueue survive by merely calling a later delete transactional.",
+      "materiality": "A field observation marked queued in memory can vanish on phone crash before sync even when every later server ack, dedup check, and local delete is correct. This is within the explicitly required offline persistence module and is not caught by tests only at ack-to-delete steps.",
+      "qualification": "If the sandbox queue already supplies these guarantees, the recommendation can rely on them as explicit preconditions rather than require replacing its database. No SQLite adoption or exact pragma is prescribed. The defect is the missing governing contract/validation, not an assertion that a running phone currently loses records."
+    },
+    {
+      "defect_id": "D04",
+      "title": "Outbox atomicity is moved to the wrong boundary and the crash oracle conflates sends with effects",
+      "severity": "material",
+      "candidate_locators": "final.md lines 44-50; recommendation at lines 15-16",
+      "evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "defect_identity": "The outbox source atomically stores state change plus outgoing intent, while the relay remains separate and expressly can replay. F4 treats state/relay decision as a single local transaction and declares delete-on-ack unsafe unless ack evidence commits with it. Such a transaction is a possible bookkeeping choice, but it neither spans receipt of the remote ack nor makes replay impossible. The no duplicate oracle is undefined despite the finding describing duplicate sends.",
+      "materiality": "Kill the phone after receiving an ack but before beginning or committing the local ack/delete transaction: the pending row remains and can be resent. Adding an ack-evidence table does not remove that window. Conversely a single durable queue-row deletion plus an idempotent server may be safe without separate ack evidence. As stated the proposed test can reject a safe at-least-once design or pass without checking the server effect.",
+      "qualification": "Read no duplicate charitably as no duplicate stored observation and the core crash test becomes useful. The review does not reject transactional bookkeeping; it identifies the unsupported mandatory condition, incorrect source binding, and need to distinguish allowed repeat sends from forbidden repeat effects."
+    },
+    {
+      "defect_id": "D05",
+      "title": "Ordering and replication options lose source conditions and semantic distinctions",
+      "severity": "material",
+      "candidate_locators": "final.md lines 65-70 and 94-96",
+      "evidence_ids": [
+        "E06",
+        "E09",
+        "E10",
+        "E13"
+      ],
+      "defect_identity": "A reconnect is presented as inherently arbitrary-order, although the mapped MQTT and outbox sources contain explicit ordering contracts/options. PouchDB deterministic winner is then summarized as deterministic merge in the alternatives; choosing a convergent arbitrary branch is not semantically merging edits. Immutability alone is also insufficient for arbitrary-order equivalence without an order-independent set/projection condition.",
+      "materiality": "The reader could unnecessarily require revision machinery for a transport that already serializes a given stream, or adopt a sync engine thinking concurrent field edits merge automatically. A property test comparing every server state for every delivery order can reject an intentionally ordered projection or miss a losing branch if it reads only the default winner.",
+      "qualification": "Reordering and conflicting mutable records are valid risks to investigate, and leaving the brief unresolved is correct. The missing qualification is may reorder depending on the transport/concurrency, with explicit conflict enumeration/resolution and logical projection semantics. No entire synchronization engine is required."
+    }
+  ],
+  "minor_observations": [
+    {
+      "id": "O01",
+      "identity": "Capture history provenance",
+      "assessment": "Candidate word/header hits are insufficient source checks, although this reviewer found the claimed source text and reproduced all current hashes. Failed-fetch labels and original execution remain self-reports; no dishonesty finding."
+    },
+    {
+      "id": "O02",
+      "identity": "Payload-size preservation",
+      "assessment": "The final conditions say photos+short text rather than the supplied photo metadata+short observations. No numeric queue-size advice follows, so this is a minor scope drift."
+    }
+  ],
+  "preserved_candidate_uncertainties_and_options": {
+    "findings_order": [
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7",
+      "F8"
+    ],
+    "unresolved": [
+      "F7: immutable versus mutable records",
+      "F8: bounded source acquisition gap"
+    ],
+    "alternatives": [
+      "Retain retry loop with stronger semantics",
+      "Replication engine for mutable records, conditional on explicit conflict resolution",
+      "End-to-end exactly-once protocol, incorrectly rejected universally"
+    ],
+    "optional_leads": [
+      "Broker-side expiry budgets",
+      "Tombstone-based dedup windows (mechanism optional; lifetime/fencing condition is not optional for a replay guarantee)",
+      "Resumable sync checkpoints"
+    ],
+    "no_prescribed_adoption": "This review does not mandate MQTT, Stripe, AWS, SQLite, PouchDB, outbox or RIFL adoption."
+  },
+  "blinding_and_provenance_limits": {
+    "arm_and_method_visible": true,
+    "visible_labels": [
+      "treatment-v3",
+      "protected_breadth_final-v3",
+      "zcode treatment arm in frozen source index"
+    ],
+    "first_review_of_exact_version": true,
+    "prior_findings_or_unresolved_objections_supplied": false,
+    "no_prior_reviews_read": true,
+    "no_drafts_predecessors_other_arms_cases_campaign_helpers_or_history_read": true,
+    "no_cost_winner_or_speed_judgment": true,
+    "candidate_capture_indices_treated_as_untrusted": true,
+    "advisory_map_not_firewall": true,
+    "independent_additional_primary_module_bound": "Two additional primary URLs: AWS idempotency article and author-hosted RIFL paper; no further discovery crawl.",
+    "startup_only_reads": "The repository Plans index was read for the supplied AGENTS startup instruction and the generic PDF skill was read for PDF tooling; neither supplied experiment answers or was used as science evidence.",
+    "lifecycle_metadata_only": "Current T3 configuration and current run requestedAt/parent ID read; timeline message contents and parent history were not exposed to the reviewer.",
+    "no_goal_or_receipt_engineering": true,
+    "no_delegation": true,
+    "no_pending_children": true,
+    "candidate_artifacts_or_existing_grades_changed": false
+  },
+  "validation_of_review_outputs": {
+    "json_parse_and_internal_references": "PASS: six axes, six obligations, 50 unique claim IDs, and all evidence/defect references resolve",
+    "candidate_hash_after_review": "f7068c5cf13266b787121bcb9f65fa97b2c270ca0f03f7acbc809815b899b1f1",
+    "all_mapped_primary_hashes_after_review": "PASS: all six match original declared hashes",
+    "additional_primary_hashes_after_review": "PASS: both reviewer captures match acquisition records",
+    "validated_at_utc": "2026-10-07T20:42:40.348056+00:00"
+  },
+  "completed_at_utc": "2026-10-07T20:42:40.348056+00:00",
+  "delivery": {
+    "mechanism": "T3 delegated-task terminal final plus parent-carrier completion notice",
+    "parent_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort4-v1",
+    "notice_status": "accepted",
+    "receipt": {
+      "status": "accepted",
+      "accepted_at_observed_utc": "2026-10-07T20:42:57Z",
+      "delivery": "started",
+      "message_id": "message:mcp:864e0131-063d-426b-a8d0-cac8dfe79c10:thread-send:er10-D-M12-A-treatment-v3-independent-review-delivery",
+      "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:ordinal:31",
+      "client_request_id": "er10-D-M12-A-treatment-v3-independent-review-delivery"
+    },
+    "terminal_final": "Returned immediately after lifecycle finalization; normal T3 delegated completion also carries the artifact paths."
+  }
+}

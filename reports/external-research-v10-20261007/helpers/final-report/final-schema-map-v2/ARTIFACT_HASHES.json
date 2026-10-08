@@ -1,0 +1,84 @@
+{
+  "schema": "ER10_SUPPLEMENT_ARTIFACT_SHA256_V2",
+  "status": "WORKING_NOT_TERMINAL",
+  "files": [
+    {
+      "path": "config.json",
+      "bytes": 814,
+      "sha256": "e437936a6c4e1cbfa444bc34fc43dea67b47f62a6acb760a184d7bab4ecfab55"
+    },
+    {
+      "path": "SUPPLEMENTAL_FIELD_MAP.json",
+      "bytes": 4322295,
+      "sha256": "c4c2a0c952924c1fa4999102f12a23e57050b149b2e2064344839f79dc29d06f"
+    },
+    {
+      "path": "SUPPLEMENTAL_LEDGER.json",
+      "bytes": 5891204,
+      "sha256": "69fe5d19dd6f6da4d1f2b645962a95e9935e8b29531a317459c7d66996d55b94"
+    },
+    {
+      "path": "unresolved-critical-mappings.json",
+      "bytes": 521348,
+      "sha256": "0e3e71651d8aa07427d91e266abe585de3bf7fabe576af81ce62bd065108cdfa"
+    },
+    {
+      "path": "INPUT_IDENTITIES.json",
+      "bytes": 182315,
+      "sha256": "a2a2a96a20b227c18638545cd028fc30a68b1f41a8142e9a76e8dd18b9048357"
+    },
+    {
+      "path": "apply_supplement.py",
+      "bytes": 25319,
+      "sha256": "f79c32a870b7ce73175e7146845cbd9f7fd5c532bcef8b1c4abf8f8e725f3e04"
+    },
+    {
+      "path": "build_field_map.py",
+      "bytes": 43902,
+      "sha256": "eda8ed37f5307319bb1d711311359fbd6b45352df001337f1ffaebb085b87f99"
+    },
+    {
+      "path": "freeze_inputs.py",
+      "bytes": 3570,
+      "sha256": "4a77a69f990b23295fc31f3eac03ccaeb9a4bfdee9a3fd92e4ae518b1f9f0955"
+    },
+    {
+      "path": "capture_closed_links.py",
+      "bytes": 4666,
+      "sha256": "ddc0fa114cdaf3bc7466d65879c5f4bd9962317637b95ca755def358b0c2c8f9"
+    },
+    {
+      "path": "FINAL_INTERFACE.json",
+      "bytes": 5100,
+      "sha256": "2af8bb345f5daefd6ba7218fbcc57644b934067e60d1150b16408823fc1e7d5e"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 4042,
+      "sha256": "12054f4c08b17d4cfae2151212554886d839277f77f77d4a45c48080c9693c98"
+    },
+    {
+      "path": "README.md",
+      "bytes": 9472,
+      "sha256": "a719b87c4f2951a769cf8d9a67f901c714afc73535c8b91f633180de828ecc5f"
+    },
+    {
+      "path": "OFFLINE_REPLAY_RECEIPT.json",
+      "bytes": 333,
+      "sha256": "be0381acc695705806c1b6b1de9fe164833f89bec711ee0d3316121fdb1b93ea"
+    },
+    {
+      "path": "ROOT_NOTIFICATION_RECEIPT.json",
+      "bytes": 489,
+      "sha256": "c5aaaf26dc905059d87b19535814414000a7242079fad4dfc2110098abc71748"
+    }
+  ],
+  "input_frozen_file_count": 191,
+  "additional_json_files": 13,
+  "additional_json_bytes": 499236,
+  "checks_passed": 36,
+  "critical_arm_cells": 1120,
+  "known_critical_arm_cells": 597,
+  "unknown_critical_arm_cells": 523,
+  "resolved_original_35_closed_unknowns": 22
+}

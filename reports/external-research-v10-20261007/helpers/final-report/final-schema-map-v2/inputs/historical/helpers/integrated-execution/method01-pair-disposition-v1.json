@@ -1,0 +1,606 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-METHOD-01",
+  "record_at": "2026-10-07T19:54:13.997362+00:00",
+  "status": "both_original_arms_terminal_and_full_independent_assessments_frozen",
+  "selection_basis": "DIAGNOSTIC_UNQUALIFIED",
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method01-pair-freeze.json",
+  "science": {
+    "control": {
+      "source_judgment": "FAIL",
+      "coverage": {
+        "schema_version": 1,
+        "case_id": "I-METHOD-01",
+        "artifact_under_review": "jobs/I-METHOD-01/control/reviser-v1/artifact.md",
+        "source_judgment": "FAIL",
+        "rationale": "D01 mandatory discovery not completed; D02 changed-station-metadata acceptance lost. Core source claims and actual/proposed validation distinction largely sound.",
+        "axes": [
+          {
+            "id": 1,
+            "assessment": "ASSESSED",
+            "judgment": "FAIL",
+            "findings": [
+              "F13",
+              "F14",
+              "F15",
+              "F16"
+            ],
+            "reason": "All O1-O6/P1-P6 assessed; mandatory discovery remains incomplete and one frozen P6 acceptance decision is lost."
+          },
+          {
+            "id": 2,
+            "assessment": "ASSESSED",
+            "judgment": "PASS_WITH_LIMITATIONS",
+            "findings": [
+              "F01",
+              "F02",
+              "F03",
+              "F04",
+              "F05",
+              "F06",
+              "F07",
+              "F08",
+              "F09",
+              "F10",
+              "F11",
+              "F12"
+            ],
+            "reason": "Consequential primary-source claims supported; no app statistics/performance proven, no chosen SQLite runtime or numerical dependency profile."
+          },
+          {
+            "id": 3,
+            "assessment": "ASSESSED",
+            "judgment": "FAIL",
+            "findings": [
+              "F01",
+              "F02",
+              "F03",
+              "F04",
+              "F13"
+            ],
+            "reason": "Useful mechanisms, negatives and options; required investigation of directly resembling workbench tools is not completed. Concrete plot/store comparisons remain evidence gaps, without requiring SQLite to win."
+          },
+          {
+            "id": 4,
+            "assessment": "ASSESSED",
+            "judgment": "PASS_WITH_LIMITATIONS",
+            "findings": [
+              "F14",
+              "F15",
+              "F17"
+            ],
+            "reason": "No materially incorrect rejection found; comparison mislabels draft/critique additions as retained. Critic demand for SQLite to win is stronger than the original requirement; conditional preference is not a wrong-selection defect."
+          },
+          {
+            "id": 5,
+            "assessment": "ASSESSED",
+            "judgment": "FAIL",
+            "findings": [
+              "F16",
+              "F17"
+            ],
+            "reason": "All 12 criticism groups retain dispositions/options/conditions, but changed-metadata acceptance from frozen plan and draft is omitted without disposition."
+          },
+          {
+            "id": 6,
+            "assessment": "ASSESSED",
+            "judgment": "FAIL",
+            "findings": [
+              "F09",
+              "F16",
+              "F18"
+            ],
+            "reason": "Proposed-versus-executed separation is accurate and no false witness found; required changed-metadata acceptance proposal missing."
+          }
+        ],
+        "obligations": {
+          "O1": {
+            "assessment": "ASSESSED",
+            "satisfaction": "PARTIAL",
+            "findings": [
+              "F01",
+              "F02",
+              "F03",
+              "F04",
+              "F13"
+            ]
+          },
+          "O2": {
+            "assessment": "ASSESSED",
+            "satisfaction": "SATISFIED",
+            "findings": [
+              "F05",
+              "F06",
+              "F07",
+              "F11"
+            ]
+          },
+          "O3": {
+            "assessment": "ASSESSED",
+            "satisfaction": "SATISFIED",
+            "findings": [
+              "F08",
+              "F09"
+            ]
+          },
+          "O4": {
+            "assessment": "ASSESSED",
+            "satisfaction": "PARTIAL",
+            "findings": [
+              "F14",
+              "F15",
+              "F16"
+            ]
+          },
+          "O5": {
+            "assessment": "ASSESSED",
+            "satisfaction": "SATISFIED_SCIENTIFIC_CONTENT",
+            "findings": [
+              "F17"
+            ],
+            "qualification": "Family/dispatch identity is a host provenance field, not inferred from source maps."
+          },
+          "O6": {
+            "assessment": "ASSESSED",
+            "satisfaction": "PARTIAL",
+            "findings": [
+              "F13",
+              "F15",
+              "F16",
+              "F17",
+              "F18"
+            ]
+          },
+          "P1": {
+            "assessment": "ASSESSED",
+            "satisfaction": "SATISFIED",
+            "findings": [
+              "F01",
+              "F11",
+              "F15"
+            ]
+          },
+          "P2": {
+            "assessment": "ASSESSED",
+            "satisfaction": "SATISFIED",
+            "findings": [
+              "F04",
+              "F15"
+            ]
+          },
+          "P3": {
+            "assessment": "ASSESSED",
+            "satisfaction": "SATISFIED",
+            "findings": [
+              "F02",
+              "F06",
+              "F14",
+              "F15"
+            ],
+            "qualification": "Explicit threshold/check deferral is an assessed product choice, not an undisclosed omission."
+          },
+          "P4": {
+            "assessment": "ASSESSED",
+            "satisfaction": "SATISFIED",
+            "findings": [
+              "F04",
+              "F15"
+            ]
+          },
+          "P5": {
+            "assessment": "ASSESSED",
+            "satisfaction": "SATISFIED_WITH_LIMITATIONS",
+            "findings": [
+              "F10",
+              "F11",
+              "F12",
+              "F13",
+              "F14",
+              "F15"
+            ],
+            "qualification": "Frozen undecided component choices/operation/target are addressed; O1 component comparison research remains incomplete."
+          },
+          "P6": {
+            "assessment": "ASSESSED",
+            "satisfaction": "PARTIAL",
+            "findings": [
+              "F16",
+              "F18"
+            ]
+          }
+        },
+        "counts": {
+          "declared": 12,
+          "complete": 12,
+          "assessed": 12,
+          "unassessed": 0,
+          "fully_satisfied_scientific_obligations": 8,
+          "partially_satisfied_scientific_obligations": 4,
+          "axes_declared": 6,
+          "axes_complete": 6,
+          "axes_assessed": 6,
+          "axes_unassessed": 0,
+          "consequential_findings_declared": 18,
+          "consequential_findings_complete": 18,
+          "consequential_findings_assessed": 18,
+          "consequential_findings_unassessed": 0,
+          "material_error_count": 2,
+          "non_material_error_count": 1
+        },
+        "count_definition": "complete means assessment completed; it does not mean the requirement was satisfied. O1-O6 and P1-P6 are the 12 original macro obligations; their constituent decisions are enumerated in judgment.md. Findings are this review's bounded consequential check list, not exhaustive opportunity recall.",
+        "material_defects": [
+          {
+            "id": "D01",
+            "findings": [
+              "F13"
+            ],
+            "obligations": [
+              "O1",
+              "O4",
+              "O6",
+              "P5"
+            ]
+          },
+          {
+            "id": "D02",
+            "findings": [
+              "F16"
+            ],
+            "obligations": [
+              "O4",
+              "O6",
+              "P6"
+            ]
+          }
+        ],
+        "non_material_errors": [
+          {
+            "id": "N01",
+            "findings": [
+              "F14"
+            ]
+          }
+        ],
+        "unassessed_obligations": [],
+        "unassessed_consequential_findings": [],
+        "limitations": [
+          "No exhaustive opportunity recall or complete upstream-library audit claimed.",
+          "No application, acceptance, performance or statistical tests executed.",
+          "Control arm name and method-specific prose visible; timing/counters ignored.",
+          "Candidate family/dispatch identity, lifecycle and terminal status remain host-only fields."
+        ],
+        "usage": {
+          "input_tokens": null,
+          "cached_input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "billing": null
+        },
+        "host_only": {
+          "critic_family_verified": null,
+          "candidate_lifecycle_verified": null,
+          "quota": null
+        }
+      },
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/frozen-review.json"
+    },
+    "treatment": {
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": {
+        "case_id": "I-METHOD-01",
+        "source_judgment": "PASS_WITH_LIMITATIONS",
+        "scope": "Complete original brief O1\u2013O6 and every frozen P1\u2013P6 content decision; all six review axes; full final plus admitted same-arm draft/critique/source evidence.",
+        "assessment_complete": true,
+        "count_semantics": "complete is the total explicitly enumerated scientific assessment scope, not a claim that every source assertion is flawless or every future implementation decision resolved.",
+        "counts": {
+          "axes": {
+            "complete": 6,
+            "assessed": 6,
+            "unassessed": 0
+          },
+          "obligations": {
+            "complete": 12,
+            "assessed": 12,
+            "unassessed": 0,
+            "met": 10,
+            "met_with_limitations": 2
+          },
+          "consequential_checks": {
+            "complete": 30,
+            "assessed": 30,
+            "unassessed": 0
+          },
+          "critic_dispositions": {
+            "complete": 6,
+            "assessed": 6,
+            "unassessed": 0,
+            "main_named_criticisms": 5,
+            "additional_metadata_correction": 1
+          },
+          "preservation_groups": {
+            "complete": 20,
+            "assessed": 20,
+            "unassessed": 0,
+            "retained_or_corrected": 19,
+            "compressed_with_small_omission": 1
+          },
+          "bounded_opportunity_checks": {
+            "complete": 3,
+            "assessed": 3,
+            "unassessed": 0
+          },
+          "material_error_count": 0,
+          "nonmaterial_factual_or_locator_error_count": 2,
+          "nonmaterial_findings_count": 4
+        },
+        "six_axes": [
+          {
+            "id": 1,
+            "name": "Original brief and all P1\u2013P6 obligations",
+            "assessment_status": "ASSESSED",
+            "judgment": "PASS_WITH_LIMITATIONS"
+          },
+          {
+            "id": 2,
+            "name": "Consequential source claims, conditions and versions",
+            "assessment_status": "ASSESSED",
+            "judgment": "PASS_WITH_LIMITATIONS"
+          },
+          {
+            "id": 3,
+            "name": "Bounded useful discovery/mechanisms/alternatives/negative/opportunity coverage",
+            "assessment_status": "ASSESSED",
+            "judgment": "PASS_WITH_LIMITATIONS"
+          },
+          {
+            "id": 4,
+            "name": "Incorrect rejections/corrections and already-covered dispositions",
+            "assessment_status": "ASSESSED",
+            "judgment": "PASS"
+          },
+          {
+            "id": 5,
+            "name": "Draft\u2013critique\u2013final preservation",
+            "assessment_status": "ASSESSED",
+            "judgment": "PASS_WITH_LIMITATIONS"
+          },
+          {
+            "id": 6,
+            "name": "Proposed/executed validation and witness applicability",
+            "assessment_status": "ASSESSED",
+            "judgment": "PASS"
+          }
+        ],
+        "O1_O6_P1_P6": [
+          {
+            "id": "O1",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET_WITH_LIMITATIONS"
+          },
+          {
+            "id": "O2",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          },
+          {
+            "id": "O3",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET_WITH_LIMITATIONS"
+          },
+          {
+            "id": "O4",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          },
+          {
+            "id": "O5",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET_SUBSTANTIVELY"
+          },
+          {
+            "id": "O6",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          },
+          {
+            "id": "P1",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          },
+          {
+            "id": "P2",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          },
+          {
+            "id": "P3",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          },
+          {
+            "id": "P4",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          },
+          {
+            "id": "P5",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          },
+          {
+            "id": "P6",
+            "assessment_status": "ASSESSED",
+            "assessment_complete": true,
+            "fulfillment": "MET"
+          }
+        ],
+        "assessed_consequential_ids": [
+          "Q01",
+          "Q02",
+          "Q03",
+          "Q04",
+          "Q05",
+          "Q06",
+          "Q07",
+          "Q08",
+          "Q09",
+          "Q10",
+          "Q11",
+          "Q12",
+          "Q13",
+          "Q14",
+          "Q15",
+          "Q16",
+          "Q17",
+          "Q18",
+          "Q19",
+          "Q20",
+          "Q21",
+          "Q22",
+          "Q23",
+          "Q24",
+          "Q25",
+          "Q26",
+          "Q27",
+          "Q28",
+          "Q29",
+          "Q30"
+        ],
+        "unassessed_obligation_ids": [],
+        "unassessed_consequential_ids": [],
+        "material_error_count": 0,
+        "nonmaterial_finding_ids": [
+          "L01",
+          "L02",
+          "L03",
+          "L04"
+        ],
+        "exhaustive_opportunity_recall_claimed": false,
+        "excluded_host_fields": [
+          "lifecycle",
+          "native terminal dispositions",
+          "research ordering/timing proof",
+          "provider/family identity",
+          "billing",
+          "quota",
+          "comparative selection"
+        ],
+        "usage": {
+          "input_tokens": null,
+          "cached_input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "billing_usd": null
+        },
+        "unknown_quota": null,
+        "artifacts": {
+          "judgment": "judgment.md",
+          "source_checks": "source-checks.json",
+          "sources": "sources/"
+        }
+      },
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/frozen-review.json"
+    }
+  },
+  "economics": {
+    "control": {
+      "candidate_dispatch_to_delivery_seconds": 2357.501,
+      "candidate_dispatch_to_host_release_seconds": 2415.517128,
+      "aggregate_nonoverlapping_stage_occupied_seconds": 2116.013,
+      "host_handoff_seconds": 241.488,
+      "source_correct_usable_delivery_at_retrospectively_assessed": null,
+      "source_correct_usable_host_release_at_retrospectively_assessed": null,
+      "source_assessment_established_at": "2026-10-07T19:51:24.419Z",
+      "source_assessment_delivery_frozen_at": "2026-10-07T19:53:54.272601+00:00",
+      "review_requestedAt": "2026-10-07T19:38:05.451Z",
+      "review_startedAt": "2026-10-07T19:38:05.861Z",
+      "review_completedAt": "2026-10-07T19:51:24.419Z",
+      "review_dispatch_to_delivery_seconds": 798.968,
+      "stage_delivery_deadlines_met": [
+        true,
+        false,
+        true
+      ],
+      "native_aggregate_tokens_per_stage": [
+        {
+          "role": "research",
+          "aggregate": 278525
+        },
+        {
+          "role": "critic",
+          "aggregate": 136075
+        },
+        {
+          "role": "reviser",
+          "aggregate": 116985
+        }
+      ],
+      "no_cumulative_counter_sum": true,
+      "input": null,
+      "cache": null,
+      "generated": null,
+      "reasoning": null,
+      "billing": null,
+      "all_failed_attempt_costs_retained": true,
+      "single_account_recipe": "three sequential fresh Luna native Goals; campaign fanout is separate",
+      "first_finding_latency": null,
+      "host_setup_source_operation_cost_limit": "exact stage source maps retained; no fabricated aggregate field"
+    },
+    "treatment": {
+      "candidate_dispatch_to_delivery_seconds": 2319.135,
+      "candidate_dispatch_to_host_release_seconds": 2348.38392,
+      "aggregate_nonoverlapping_stage_occupied_seconds": 1906.585,
+      "host_handoff_seconds": 412.55,
+      "source_correct_usable_delivery_at_retrospectively_assessed": "2026-10-07T19:35:56.651Z",
+      "source_correct_usable_host_release_at_retrospectively_assessed": "2026-10-07T19:36:25.899920+00:00",
+      "source_assessment_established_at": "2026-10-07T19:50:45.317Z",
+      "source_assessment_delivery_frozen_at": "2026-10-07T19:52:39.979612+00:00",
+      "review_requestedAt": "2026-10-07T19:38:06.253Z",
+      "review_startedAt": "2026-10-07T19:38:06.663Z",
+      "review_completedAt": "2026-10-07T19:50:45.317Z",
+      "review_dispatch_to_delivery_seconds": 759.064,
+      "stage_delivery_deadlines_met": [
+        true,
+        true,
+        true
+      ],
+      "native_aggregate_tokens_per_stage": [
+        {
+          "role": "research",
+          "aggregate": 233336
+        },
+        {
+          "role": "critic",
+          "aggregate": 141698
+        },
+        {
+          "role": "reviser",
+          "aggregate": 108498
+        }
+      ],
+      "no_cumulative_counter_sum": true,
+      "input": null,
+      "cache": null,
+      "generated": null,
+      "reasoning": null,
+      "billing": null,
+      "all_failed_attempt_costs_retained": true,
+      "single_account_recipe": "three sequential fresh Luna native Goals; campaign fanout is separate",
+      "first_finding_latency": null,
+      "host_setup_source_operation_cost_limit": "exact stage source maps retained; no fabricated aggregate field"
+    }
+  },
+  "comparative_qualification": "no general recipe or speed win established; one bounded pair, visible arm/method labels, unequal independently chosen bounded source check lists, control stage overrun; originals immutable",
+  "quota_or_billing_conclusion": null
+}

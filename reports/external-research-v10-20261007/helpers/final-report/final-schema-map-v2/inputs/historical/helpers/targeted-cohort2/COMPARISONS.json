@@ -1,0 +1,1820 @@
+{
+  "schema": "er10.targeted-cohort2.comparisons.v1",
+  "status": "TERMINAL_OWNED_SIX",
+  "generated_at": "2026-10-07T20:02:40.861655+00:00",
+  "owned_slots": 6,
+  "not_entire24slot_track": true,
+  "counts": {
+    "fully_assessed_pairs": 4,
+    "fully_assessed_arms": 8,
+    "source_pass_arms": 3,
+    "terminal_dispositions": 6,
+    "noncomparable_seed_overrun_slots": 2,
+    "held_route_slots": 0,
+    "queued_capacity_slots": 0
+  },
+  "comparison_rules": "Quality/time/quota separate. Both FAIL never means equal quality. No source-supported speedup established from output absence or unequal provenance; one pair descriptive. Raw native counters are not generated tokens/billing. No candidate rescue/retest.",
+  "cases": [
+    {
+      "case_id": "D-M04-A",
+      "method_id": "M04",
+      "disposition": "TERMINAL_EVALUATED",
+      "terminal_disposition": null,
+      "seed_attempt": null,
+      "arms": {
+        "control": {
+          "deliverable": "FROZEN",
+          "quality": {
+            "source_quality": "PASS",
+            "complete_scope_assessed": true,
+            "obligations": [
+              {
+                "obligation_id": "O1",
+                "obligation": "Distinguish deferred and immediate acquisition behavior.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  7
+                ],
+                "reason": "First database access controls DEFERRED; known write IMMEDIATE acquires writer position up front.",
+                "evidence": [
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      290,
+                      304
+                    ],
+                    "claim": "Multiple readers; one writer; existing read must be upgraded."
+                  },
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      330,
+                      349
+                    ],
+                    "claim": "DEFERRED first database access and first-read versus first-write; IMMEDIATE starts write up front and may be BUSY."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O2",
+                "obligation": "State where reader-to-writer transition matters.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  7,
+                  9,
+                  23
+                ],
+                "reason": "SELECT-first promotion, historic snapshot and rollback/full safe replay boundary are explicit.",
+                "evidence": [
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      308,
+                      316
+                    ],
+                    "claim": "Read snapshot remains unchanged until transaction ends."
+                  },
+                  {
+                    "source_id": "sqlwalcode",
+                    "lines": [
+                      3712,
+                      3736
+                    ],
+                    "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O3",
+                "obligation": "Bind WAL assumptions and busy/locked conditions.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  5,
+                  9,
+                  13,
+                  17,
+                  29
+                ],
+                "reason": "Actual WAL mode, same-host requirement, single writer, busy subcases and LOCKED uncertainty are retained.",
+                "evidence": [
+                  {
+                    "source_id": "sqlpragma",
+                    "lines": [
+                      1214,
+                      1224
+                    ],
+                    "claim": "Actual/returned journal mode governs; failed change returns original mode."
+                  },
+                  {
+                    "source_id": "sqlwal",
+                    "lines": [
+                      166,
+                      180
+                    ],
+                    "claim": "Reader/writer concurrency and same-host/network-filesystem boundary."
+                  },
+                  {
+                    "source_id": "sqlwal",
+                    "lines": [
+                      269,
+                      318
+                    ],
+                    "claim": "Read end mark; one writer; reader limits checkpoint progress."
+                  },
+                  {
+                    "source_id": "sqlwal",
+                    "lines": [
+                      681,
+                      704
+                    ],
+                    "claim": "Exclusive locking, last-connection cleanup and crash recovery can produce BUSY."
+                  },
+                  {
+                    "source_id": "sqlwalcode",
+                    "lines": [
+                      3712,
+                      3736
+                    ],
+                    "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O4",
+                "obligation": "Separate application retry policy from database guarantees.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  11
+                ],
+                "reason": "Application finite cap/deadline/backoff, shared wait budget and safe replay are separated from SQLite concurrency guarantees.",
+                "evidence": [
+                  {
+                    "source_id": "sqlpragma",
+                    "lines": [
+                      576,
+                      588
+                    ],
+                    "claim": "busy_timeout configures the connection's single busy handler and may overwrite an earlier one."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O5",
+                "obligation": "Address transaction cleanup after failure.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  17
+                ],
+                "reason": "State inspection and rollback before reuse apply generally; failed begin skips body; active COMMIT retries only commit; uncertain state retires connection.",
+                "evidence": [
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      378,
+                      389
+                    ],
+                    "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+                  },
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      410,
+                      440
+                    ],
+                    "claim": "Some failures roll back one statement or whole transaction; inspect state; explicit rollback normalizes state."
+                  },
+                  {
+                    "source_id": "review-vdbe-3.51.3",
+                    "lines": [
+                      4022,
+                      4044
+                    ],
+                    "claim": "Active writing statements make COMMIT BUSY; BUSY halt restores autocommit flag to prior state."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O6",
+                "obligation": "Retain one useful alternative and a discriminating test proposal.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  19,
+                  21,
+                  23,
+                  24,
+                  25
+                ],
+                "reason": "Bounded queue and optional DEFERRED alternative retained; discriminating phase/snapshot/checkpoint tests explicitly proposed.",
+                "evidence": [
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      330,
+                      349
+                    ],
+                    "claim": "DEFERRED avoids starting database access/write transaction up front; IMMEDIATE pays acquisition early."
+                  },
+                  {
+                    "source_id": "sqlwal",
+                    "lines": [
+                      293,
+                      311
+                    ],
+                    "claim": "Only one writer; checkpoint delay is separate from reader/writer concurrency."
+                  }
+                ]
+              }
+            ],
+            "defects": [],
+            "useful_deliverable": {
+              "useful": true,
+              "disposition": "YES",
+              "reason": "A usable conditional bounded recommendation with cleanup and useful proposed checks; numeric retry parameters remain application choices."
+            },
+            "unassessed_remainder": {
+              "declared_scope": [],
+              "limitations": [
+                "No production/deployed 3.51.3 runtime or binding executed.",
+                "No independent audit of candidate prior-stage/source-acquisition history.",
+                "No complete taxonomy of every SQLite/VFS error, crash behavior or application architecture claimed."
+              ]
+            }
+          },
+          "timing": {
+            "dispatch_to_terminal_stage_seconds": 454.627,
+            "candidate_cold_inclusive_seconds": 834.928,
+            "seed_seconds": 0,
+            "intervening_seed_queue_seconds": 0,
+            "within900": true,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/final.md",
+            "sha256": "c0da97f90126abfaf63a8eab002e8ce2a0c2dfbf8ecf15ea6ce70d13db434d08",
+            "bytes": 6524
+          },
+          "native_lifecycle_limit": null
+        },
+        "treatment": {
+          "deliverable": "FROZEN",
+          "quality": {
+            "source_quality": "PARTIAL",
+            "complete_scope_assessed": true,
+            "obligations": [
+              {
+                "obligation_id": "O1",
+                "obligation": "Distinguish deferred and immediate acquisition behavior.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  3,
+                  5
+                ],
+                "reason": "Acquisition order and first SELECT versus known write paths distinguished.",
+                "evidence": [
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      290,
+                      304
+                    ],
+                    "claim": "Multiple readers; one writer; existing read must be upgraded."
+                  },
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      330,
+                      349
+                    ],
+                    "claim": "DEFERRED first database access and first-read versus first-write; IMMEDIATE starts write up front and may be BUSY."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O2",
+                "obligation": "State where reader-to-writer transition matters.",
+                "disposition": "SATISFIED_WITH_NONMATERIAL_PRECISION_DEFECT",
+                "candidate_lines": [
+                  5,
+                  13,
+                  15
+                ],
+                "reason": "Restart after promotion failure is sound; exact BUSY_SNAPSHOT wording omits writer-acquisition precondition.",
+                "defect_ids": [
+                  "O2-D1"
+                ],
+                "evidence": [
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      308,
+                      316
+                    ],
+                    "claim": "Read snapshot remains unchanged until transaction ends."
+                  },
+                  {
+                    "source_id": "sqlwalcode",
+                    "lines": [
+                      3712,
+                      3736
+                    ],
+                    "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O3",
+                "obligation": "Bind WAL assumptions and busy/locked conditions.",
+                "disposition": "SATISFIED_WITH_NONMATERIAL_PRECISION_DEFECT",
+                "candidate_lines": [
+                  7,
+                  11,
+                  17
+                ],
+                "reason": "Mode/host/checkpoint/BUSY/LOCKED conditions covered, including independently verified supplemental LOCKED source.",
+                "defect_ids": [
+                  "O2-D1"
+                ],
+                "evidence": [
+                  {
+                    "source_id": "sqlpragma",
+                    "lines": [
+                      1214,
+                      1224
+                    ],
+                    "claim": "Actual/returned journal mode governs; failed change returns original mode."
+                  },
+                  {
+                    "source_id": "sqlwal",
+                    "lines": [
+                      166,
+                      180
+                    ],
+                    "claim": "Reader/writer concurrency and same-host/network-filesystem boundary."
+                  },
+                  {
+                    "source_id": "sqlwal",
+                    "lines": [
+                      269,
+                      318
+                    ],
+                    "claim": "Read end mark; one writer; reader limits checkpoint progress."
+                  },
+                  {
+                    "source_id": "sqlwal",
+                    "lines": [
+                      681,
+                      704
+                    ],
+                    "claim": "Exclusive locking, last-connection cleanup and crash recovery can produce BUSY."
+                  },
+                  {
+                    "source_id": "review-rescode",
+                    "lines": [
+                      428,
+                      453
+                    ],
+                    "claim": "LOCKED is distinct from cross-connection BUSY."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O4",
+                "obligation": "Separate application retry policy from database guarantees.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  9,
+                  17
+                ],
+                "reason": "Finite concrete envelope presented as initial application values, not SQLite guarantees.",
+                "evidence": [
+                  {
+                    "source_id": "sqlpragma",
+                    "lines": [
+                      576,
+                      588
+                    ],
+                    "claim": "busy_timeout configures the connection's single busy handler and may overwrite an earlier one."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O5",
+                "obligation": "Address transaction cleanup after failure.",
+                "disposition": "PARTIAL_MATERIAL_OMISSION",
+                "candidate_lines": [
+                  9,
+                  11,
+                  13
+                ],
+                "reason": "Body/promotion cleanup is supplied; active transaction disposition after exhausted COMMIT retries is unspecified.",
+                "defect_ids": [
+                  "O2-D2"
+                ],
+                "evidence": [
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      378,
+                      389
+                    ],
+                    "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+                  },
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      410,
+                      440
+                    ],
+                    "claim": "Some failures roll back one statement or whole transaction; inspect state; explicit rollback normalizes state."
+                  },
+                  {
+                    "source_id": "review-vdbe-3.51.3",
+                    "lines": [
+                      4022,
+                      4044
+                    ],
+                    "claim": "Active writing statements make COMMIT BUSY; BUSY halt restores autocommit flag to prior state."
+                  }
+                ]
+              },
+              {
+                "obligation_id": "O6",
+                "obligation": "Retain one useful alternative and a discriminating test proposal.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  3,
+                  15
+                ],
+                "reason": "DEFERRED for read-mostly paths is useful; proposed checks discriminate acquisition, promotion, checkpoint and fallback mode.",
+                "evidence": [
+                  {
+                    "source_id": "sqltransaction",
+                    "lines": [
+                      330,
+                      349
+                    ],
+                    "claim": "DEFERRED avoids starting database access/write transaction up front; IMMEDIATE pays acquisition early."
+                  },
+                  {
+                    "source_id": "sqlwal",
+                    "lines": [
+                      293,
+                      311
+                    ],
+                    "claim": "Only one writer; checkpoint delay is separate from reader/writer concurrency."
+                  }
+                ]
+              }
+            ],
+            "defects": [
+              {
+                "id": "O2-D1",
+                "kind": "source_condition_imprecision",
+                "materiality": "NONMATERIAL",
+                "assessment": null
+              },
+              {
+                "id": "O2-D2",
+                "kind": "declared_scope_omission",
+                "materiality": "MATERIAL",
+                "assessment": null
+              }
+            ],
+            "useful_deliverable": {
+              "useful": true,
+              "disposition": "YES_WITH_MATERIAL_INCOMPLETENESS",
+              "reason": "The source-linked recommendation and alternative/tests are useful, but terminal COMMIT cleanup is not complete enough for a full pass."
+            },
+            "unassessed_remainder": {
+              "declared_scope": [],
+              "limitations": [
+                "Missing O5 branch has been assessed and is a finding, not an unassessed remainder.",
+                "No production/deployed 3.51.3 runtime or binding executed.",
+                "No independent audit of prior draft corrections/source-acquisition history.",
+                "No measurement of the exact 100ms/four-call/1s schedule."
+              ]
+            }
+          },
+          "timing": {
+            "dispatch_to_terminal_stage_seconds": 621.337,
+            "candidate_cold_inclusive_seconds": 1040.949,
+            "seed_seconds": 0,
+            "intervening_seed_queue_seconds": 0,
+            "within900": false,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/final.md",
+            "sha256": "7ac437336bc9c472c075177d46b1577f3735c12c50c75cf3ebe4cf78d4185993",
+            "bytes": 4992
+          },
+          "native_lifecycle_limit": null
+        }
+      },
+      "quality_comparison": {
+        "quality_differences": [
+          "Output1 explicitly qualifies stale-snapshot detection on obtaining the writer lock; Output2's exact-code sentence omits that qualification.",
+          "Output1's cleanup before reuse is general; Output2 does not state cleanup when active COMMIT retry budget expires.",
+          "Output2 adds supported LOCKED semantics and explicit initial retry values; Output1 retains appropriate mapped-corpus LOCKED uncertainty and a bounded queue alternative."
+        ],
+        "basis": "Evidence-backed source/coverage comparison only; no economic or winner ranking."
+      },
+      "eligibility": {
+        "filesystem_confinement": "HOLD: explicit maps advisory, no enforced firewall established",
+        "blindness": "Method labels remain in frozen contents; independent reviewer cost/target/grade blinded",
+        "limitations": []
+      },
+      "review": {
+        "terminal": "2026-10-07T19:19:50.563Z",
+        "complete_scope_assessed_both": true,
+        "review_output_labels": {
+          "Output1": "control",
+          "Output2": "treatment"
+        },
+        "source_quality": {
+          "Output1": "PASS",
+          "Output2": "PARTIAL"
+        },
+        "native_terminal": "complete",
+        "review_status": "INDEPENDENT_FULL_SCOPE_EVALUATED",
+        "review_dispatch_to_terminal_seconds": 438.701,
+        "review_budget_seconds": 900,
+        "review_overrun_seconds": 0
+      },
+      "quota": {
+        "billing": null,
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "generated_output_tokens": null,
+        "native_counters": "Preserved in per-stage actual receipts; semantics provider dependent, no double-counting/enclosing addition"
+      }
+    },
+    {
+      "case_id": "D-M04-B",
+      "method_id": "M04",
+      "disposition": "TERMINAL_EVALUATED",
+      "terminal_disposition": null,
+      "seed_attempt": null,
+      "arms": {
+        "control": {
+          "deliverable": "FROZEN",
+          "quality": {
+            "source_quality": "PASS",
+            "complete_scope_assessed": true,
+            "obligations": [
+              {
+                "id": 1,
+                "obligation": "State per-band interpolation choices as conditional recommendations.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  3,
+                  5,
+                  7
+                ],
+                "assessment": "Nearest inherits a categorical label; bilinear/cubic or average depend on elevation measurement meaning and acceptable edges/range. Mode remains a conditional lead, not a guarantee.",
+                "primary_locators": [
+                  {
+                    "source_id": "rasterresample",
+                    "lines": "56-68",
+                    "note": "No universal method; continuous-data guidance and average caveat."
+                  },
+                  {
+                    "source_id": "rasterio_enums",
+                    "lines": "53-66,92-107",
+                    "note": "Nearest, average and mode definitions; mode is sampled frequency, not an unconditional area-majority guarantee."
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "obligation": "Preserve class-label meaning in categorical output.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  5,
+                  17
+                ],
+                "assessment": "Avoids class-ID arithmetic, recognizes minority-class loss, and proposes asserting that valid results remain source labels. Legend inspection precedes final policy.",
+                "primary_locators": [
+                  {
+                    "source_id": "rasterresample",
+                    "lines": "56-68",
+                    "note": "Method choice is conditional."
+                  },
+                  {
+                    "source_id": "rasterio_enums",
+                    "lines": "53-66",
+                    "note": "Nearest and mode preserve selected sampled identifiers; categorical meaning is a design inference, not a tile observation."
+                  }
+                ],
+                "reviewer_evidence": [
+                  "arithmetic-checks.json:class-arithmetic"
+                ]
+              },
+              {
+                "id": 3,
+                "obligation": "Address validity/nodata treatment during resampling.",
+                "disposition": "SATISFIED_WITH_NONMATERIAL_QUALIFICATION",
+                "candidate_lines": [
+                  9,
+                  11,
+                  15,
+                  17,
+                  19
+                ],
+                "assessment": "Correctly separates masks and interpolation, distinguishes mask polarity and per-band/per-dataset validity, warns about Boolean coverage loss, and requires sentinel/partial-support checks. The general read-path description has defect Output1-P01.",
+                "primary_locators": [
+                  {
+                    "source_id": "rastermask",
+                    "lines": "7-15,85-92,94-124,219-236",
+                    "note": "Mask polarity, valid-zero collision, dataset mask precedence and OR fallback."
+                  },
+                  {
+                    "source_id": "rasterio",
+                    "lines": "631-673,910-982,1935-1996",
+                    "note": "Values/masks read separately; write_mask operates with per_dataset mask flags."
+                  }
+                ],
+                "reviewer_evidence": [
+                  "arithmetic-checks.json:dataset-or-loss",
+                  "arithmetic-checks.json:mask-boolean-loss"
+                ]
+              },
+              {
+                "id": 4,
+                "obligation": "Bind output transform and resolution changes.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  13,
+                  17
+                ],
+                "assessment": "Binds actual output dimensions to affine scaling under same extent/CRS, uses a window origin for crops, and requires explicit grid changes otherwise. Both affine basis vectors and outer corners are checked. For a window, source dimensions must mean the actual selected window dimensions.",
+                "primary_locators": [
+                  {
+                    "source_id": "rasterresample",
+                    "lines": "34-48",
+                    "note": "Dimension ratios in the supplied resampling example."
+                  },
+                  {
+                    "source_id": "geotransform",
+                    "lines": "13-38",
+                    "note": "Affine equations, corner coordinates, rotation, north-up y sign."
+                  }
+                ],
+                "reviewer_evidence": [
+                  "arithmetic-checks.json:affine-outer-corners",
+                  "arithmetic-checks.json:affine-center",
+                  "arithmetic-checks.json:window-corners"
+                ]
+              },
+              {
+                "id": 5,
+                "obligation": "State what the documentation does not prove about a specific tile.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  3,
+                  7,
+                  11,
+                  15
+                ],
+                "assessment": "Clearly leaves tile-specific semantics, driver/kernel behavior, masks, nodata collisions and runtime results unresolved. Does not equate a GDAL 3.9.0 tutorial with this tile's runtime version.",
+                "primary_locators": [
+                  {
+                    "source_id": "rastermask",
+                    "lines": "85-92,242-250",
+                    "note": "Validity/storage depend on source data, format and configuration."
+                  },
+                  {
+                    "source_id": "rasterio",
+                    "lines": "101-115,208-213,631-673",
+                    "note": "Wrapper dispatch is not proof of every downstream kernel or driver result."
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "obligation": "Propose fixtures and retain any supported optional improvement.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  17,
+                  19
+                ],
+                "assessment": "Proposes categorical/tie/coverage, sentinel/valid-zero/partial/all-invalid, odd-dimension/window/grid fixtures. Retains explicit validity masks conditionally on preserving the needed per-band representation.",
+                "primary_locators": [
+                  {
+                    "source_id": "rastermask",
+                    "lines": "85-92,111-124,182-183,219-250",
+                    "note": "Supports avoiding nodata-code collision and checking representation."
+                  },
+                  {
+                    "source_id": "rasterresample",
+                    "lines": "34-48",
+                    "note": "Grid binding motivates geometry fixtures."
+                  }
+                ]
+              }
+            ],
+            "defects": [
+              {
+                "id": null,
+                "kind": null,
+                "materiality": "NONMATERIAL",
+                "assessment": "This is true for an ordinary read with non-all-valid masks, not universally. All-valid reads skip the mask read; boundless reads with a window use a different mask branch."
+              }
+            ],
+            "useful_deliverable": {
+              "value": true,
+              "reason": "A bounded, actionable conditional per-band contract with explicit validity decisions, grid binding, uncertainty, and proposed fixtures."
+            },
+            "unassessed_remainder": [
+              "Actual tile bytes, class legend, source/target CRS and dimensions, per-band mask provenance, nodata collisions, overview provenance, and desired coverage/measurement semantics: no tile was mapped or inspected.",
+              "Actual Rasterio/GDAL/driver results, modal ties in the selected read path, sentinel exclusion, and output mask round trips: runtime fixtures were not executed.",
+              "Prior draft-to-final or critic-history preservation: changes and prior_state are null; job paths embedded in candidates were not authorized and were not read.",
+              "All source material outside relevant methods and stated claims, every possible algorithm/driver, and exhaustive unknown-answer recall are not claimed."
+            ]
+          },
+          "timing": {
+            "dispatch_to_terminal_stage_seconds": 334.401,
+            "candidate_cold_inclusive_seconds": 1045.117,
+            "seed_seconds": 0,
+            "intervening_seed_queue_seconds": 0,
+            "within900": false,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/final.md",
+            "sha256": "c42b6e48bc60a1b8f7052990603adc16c19b40556511f49ef850cea8a7c2027d",
+            "bytes": 4871
+          },
+          "native_lifecycle_limit": "Critique artifact modified after native Goal terminal (terminal receipt19:11:53, critique mtime19:12); retained original, no claim all artifact authorship occurred while active."
+        },
+        "treatment": {
+          "deliverable": "FROZEN",
+          "quality": {
+            "source_quality": "PASS",
+            "complete_scope_assessed": true,
+            "obligations": [
+              {
+                "id": 1,
+                "obligation": "State per-band interpolation choices as conditional recommendations.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  7,
+                  9
+                ],
+                "assessment": "Nearest is conditional on class-coded storage; average/bilinear/cubic depend on measurement intent and edge/range checks. Modal use depends on runtime and tie policy.",
+                "primary_locators": [
+                  {
+                    "source_id": "rasterresample",
+                    "lines": "56-68",
+                    "note": "Conditional method guidance."
+                  },
+                  {
+                    "source_id": "rasterio",
+                    "lines": "438-485",
+                    "note": "Read resampling and dtype interface."
+                  },
+                  {
+                    "source_id": "rasterio_enums",
+                    "lines": "53-66,92-107",
+                    "note": "Released method definitions and availability."
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "obligation": "Preserve class-label meaning in categorical output.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  7,
+                  17
+                ],
+                "assessment": "Preserves codebook and representable dtype, requires selected labels and validity to agree, and proposes rare-label/checkerboard/tie assertions.",
+                "primary_locators": [
+                  {
+                    "source_id": "rasterio",
+                    "lines": "75-78,462-464",
+                    "note": "Dtype conversion is possible and out_dtype is explicit."
+                  },
+                  {
+                    "source_id": "rasterio_enums",
+                    "lines": "53-66",
+                    "note": "Nearest/mode select sampled labels; this is not evidence about a particular codebook."
+                  }
+                ],
+                "reviewer_evidence": [
+                  "arithmetic-checks.json:class-arithmetic"
+                ]
+              },
+              {
+                "id": 3,
+                "obligation": "Address validity/nodata treatment during resampling.",
+                "disposition": "SATISFIED_WITH_NONMATERIAL_QUALIFICATION",
+                "candidate_lines": [
+                  11,
+                  13,
+                  17,
+                  21
+                ],
+                "assessment": "Correctly treats validity as distinct from values, specifies invalid exclusion/normalization/coverage policy, protects categorical validity pairing, and requires a deliberate representation or combination policy for differing masks. General masked-read routing has defect Output2-P01.",
+                "primary_locators": [
+                  {
+                    "source_id": "rastermask",
+                    "lines": "4-15,85-92,111-124,219-250",
+                    "note": "Polarity, collision, storage/precedence."
+                  },
+                  {
+                    "source_id": "rasterio",
+                    "lines": "631-673,836-861,910-1076,1716-1725,1935-1996",
+                    "note": "Read/mask and masked-write paths; per_dataset write_mask."
+                  }
+                ],
+                "reviewer_evidence": [
+                  "arithmetic-checks.json:dataset-or-loss",
+                  "arithmetic-checks.json:mask-boolean-loss"
+                ]
+              },
+              {
+                "id": 4,
+                "obligation": "Bind output transform and resolution changes.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  15,
+                  17
+                ],
+                "assessment": "Gives the full-raster transform formula with actual dimensions, notes rotation, distinguishes crops and target-grid changes, and checks bounds/centers. Crop scaling must use the selected window dimensions.",
+                "primary_locators": [
+                  {
+                    "source_id": "rasterresample",
+                    "lines": "34-48",
+                    "note": "Actual output dimension ratios."
+                  },
+                  {
+                    "source_id": "geotransform",
+                    "lines": "9-38",
+                    "note": "Affine coefficients, corner mapping and first center."
+                  }
+                ],
+                "reviewer_evidence": [
+                  "arithmetic-checks.json:affine-outer-corners",
+                  "arithmetic-checks.json:affine-center",
+                  "arithmetic-checks.json:window-corners"
+                ]
+              },
+              {
+                "id": 5,
+                "obligation": "State what the documentation does not prove about a specific tile.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  3,
+                  9,
+                  13,
+                  17,
+                  21
+                ],
+                "assessment": "Explicitly says no tile inspected; leaves codebook, semantics, grid, mask provenance, runtime mode/ties and edge behavior unproved. Does not claim the frozen GDAL tutorial identifies the linked runtime.",
+                "primary_locators": [
+                  {
+                    "source_id": "rasterresample",
+                    "lines": "56-68",
+                    "note": "No universal method."
+                  },
+                  {
+                    "source_id": "rastermask",
+                    "lines": "242-250",
+                    "note": "Representation depends on format and configuration."
+                  },
+                  {
+                    "source_id": "rasterio",
+                    "lines": "631-673,910-982",
+                    "note": "Wrapper routing is insufficient to establish selected tile behavior."
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "obligation": "Propose fixtures and retain any supported optional improvement.",
+                "disposition": "SATISFIED",
+                "candidate_lines": [
+                  17
+                ],
+                "assessment": "Proposes class, sentinel-independence, partial-support, independent-mask round-trip, valid-zero/precedence, odd-dimension/crop/rotated-affine fixtures. Retains a valid-contributor fraction as an application-computed diagnostic, not an existing proven feature.",
+                "primary_locators": [
+                  {
+                    "source_id": "rastermask",
+                    "lines": "7-15,85-92,111-124,219-250",
+                    "note": "Validity and representation motivate tests."
+                  },
+                  {
+                    "source_id": "rasterio",
+                    "lines": "659-662",
+                    "note": "Boolean mask discards support magnitude, motivating an explicitly computed diagnostic."
+                  },
+                  {
+                    "source_id": "geotransform",
+                    "lines": "13-32",
+                    "note": "Rotation and centers motivate geometry tests."
+                  }
+                ]
+              }
+            ],
+            "defects": [
+              {
+                "id": null,
+                "kind": null,
+                "materiality": "NONMATERIAL",
+                "assessment": "This is true for an ordinary read with non-all-valid masks, not universally. All-valid reads skip the mask read; boundless reads with a window use a different mask branch."
+              }
+            ],
+            "useful_deliverable": {
+              "value": true,
+              "reason": "A bounded conditional contract with codebook/dtype preservation, validity policy, mask round-trip requirements, target-grid binding and explicit final dispositions."
+            },
+            "unassessed_remainder": [
+              "Actual tile bytes, class legend, source/target CRS and dimensions, per-band mask provenance, nodata collisions, overview provenance, and desired coverage/measurement semantics: no tile was mapped or inspected.",
+              "Actual Rasterio/GDAL/driver results, modal ties in the selected read path, sentinel exclusion, and output mask round trips: runtime fixtures were not executed.",
+              "Prior draft-to-final or critic-history preservation: changes and prior_state are null; job paths embedded in candidates were not authorized and were not read.",
+              "All source material outside relevant methods and stated claims, every possible algorithm/driver, and exhaustive unknown-answer recall are not claimed."
+            ]
+          },
+          "timing": {
+            "dispatch_to_terminal_stage_seconds": 397.239,
+            "candidate_cold_inclusive_seconds": 932.212,
+            "seed_seconds": 0,
+            "intervening_seed_queue_seconds": 0,
+            "within900": false,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/critic-v1/final.md",
+            "sha256": "dbc6e6d57fc6fbfe19fbb00c2c62d6cb815773be3e52ef93d29d6939b991f3a7",
+            "bytes": 4953
+          },
+          "native_lifecycle_limit": null
+        }
+      },
+      "quality_comparison": null,
+      "eligibility": {
+        "filesystem_confinement": "HOLD: explicit maps advisory, no enforced firewall established",
+        "blindness": "Method labels remain in frozen contents; independent reviewer cost/target/grade blinded",
+        "limitations": [
+          "Research dispatch-to-T3-terminal505.795s exceeded6min ceiling; nativeGoal terminal earlier328s cannot substitute full required delivery. No reset."
+        ]
+      },
+      "review": {
+        "terminal": "2026-10-07T19:21:27.263Z",
+        "complete_scope_assessed_both": true,
+        "review_output_labels": {
+          "Output1": "control",
+          "Output2": "treatment"
+        },
+        "source_quality": {
+          "Output1": "PASS",
+          "Output2": "PASS"
+        },
+        "native_terminal": "complete",
+        "review_status": "INDEPENDENT_FULL_SCOPE_EVALUATED",
+        "review_dispatch_to_terminal_seconds": 373.936,
+        "review_budget_seconds": 900,
+        "review_overrun_seconds": 0
+      },
+      "quota": {
+        "billing": null,
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "generated_output_tokens": null,
+        "native_counters": "Preserved in per-stage actual receipts; semantics provider dependent, no double-counting/enclosing addition"
+      }
+    },
+    {
+      "case_id": "D-M05-A",
+      "method_id": "M05",
+      "disposition": "TERMINAL_EVALUATED",
+      "terminal_disposition": null,
+      "seed_attempt": null,
+      "arms": {
+        "control": {
+          "deliverable": "FROZEN",
+          "quality": {
+            "source_quality": "FAIL",
+            "complete_scope_assessed": true,
+            "obligations": [
+              {
+                "id": "O1",
+                "obligation": "Preserve exact prior source and dependency identities.",
+                "disposition": "SATISFIED",
+                "assessment": "The source aliases, exact releases/full hashes in each sources.json, and the F1-F7 dependency family are retained. No dependency is renamed with the UI label. Identity verification is independent of the behavioral claims.",
+                "evidence_ids": [
+                  "S-01"
+                ]
+              },
+              {
+                "id": "O2",
+                "obligation": "Dispose of the no-op rename separately from semantic invalidation.",
+                "disposition": "SATISFIED",
+                "assessment": "Both explicitly separate the name-only change from 3.12.3 to 3.14.0 invalidation.",
+                "evidence_ids": [
+                  "S-02"
+                ]
+              },
+              {
+                "id": "O3",
+                "obligation": "Re-evaluate default filter/API behavior at both exact releases.",
+                "disposition": "PARTIAL",
+                "assessment": "Default resolution is correct at both exact tags. Relevant refusal behavior is wrongly retained and the new public fallback exception/conditions are missing or misclassified.",
+                "evidence_ids": [
+                  "S-03",
+                  "S-05",
+                  "D-01",
+                  "D-02"
+                ]
+              },
+              {
+                "id": "O4",
+                "obligation": "Revisit security and compatibility claims depending on that default.",
+                "disposition": "PARTIAL",
+                "assessment": "Both correctly retain the need for inspection and caller limits and update older-runtime guidance. Their error/fallback dispositions omit material conditions; additional output-specific compatibility claims are identified below.",
+                "evidence_ids": [
+                  "S-07",
+                  "S-08",
+                  "D-01",
+                  "D-02"
+                ]
+              },
+              {
+                "id": "O5",
+                "obligation": "Do not classify unresolved prior dependencies as already covered.",
+                "disposition": "SATISFIED",
+                "assessment": "U1-U6 remain open. U5 is narrowed by the new pin without falsely resolving fleet support. Already-covered is expressly separated from implemented, tested or adequate. F4's incorrect retention is a source-behavior defect, not evidence that they silently closed a U-item.",
+                "evidence_ids": []
+              },
+              {
+                "id": "O6",
+                "obligation": "Deliver retained/changed/unresolved dispositions and proposed regression checks.",
+                "disposition": "PARTIAL",
+                "assessment": "Both deliver all three disposition categories and label tests proposed-only. Incorrect retention and incorrect Linux path/mode expectations make parts of those deliverables unreliable.",
+                "evidence_ids": [
+                  "D-01",
+                  "D-02",
+                  "D-03"
+                ]
+              }
+            ],
+            "defects": [
+              {
+                "id": "D-01",
+                "kind": "incorrect retained behavior",
+                "materiality": "MATERIAL",
+                "assessment": "False for a filter refusal suppressed by errorlevel=0. In 3.12.3 the failed assignment leaves tarinfo equal to the original member, and extraction continues with that member. In 3.14.0 filtered starts as None and a suppressed refusal excludes the member. Identical handlers and identical documentation do not make these caller paths identical."
+              },
+              {
+                "id": "D-02",
+                "kind": "public API/security change misclassified or omitted",
+                "materiality": "MATERIAL",
+                "assessment": "The original five subclasses remain, but 3.14.0 adds the public LinkFallbackError and changes extractall fallback to re-filter the referenced archive member. This is a consequential change, not a renamed old class. extract() and extractall() also differ in propagation of the fallback filter in this exact file."
+              },
+              {
+                "id": "D-03",
+                "kind": "incorrect proposed rejection assertions",
+                "materiality": "MATERIAL",
+                "assessment": "Leading Linux slashes are stripped. A remaining absolute path is the conditional refusal, exemplified by Windows drive paths. A regular file's high mode bits are cleared rather than refused. Linux /safe_absolute_regular becomes safe_absolute_regular; regular mode 0o4755 becomes 0o755."
+              },
+              {
+                "id": "D-04",
+                "kind": "overbroad compatibility equivalence",
+                "materiality": "MATERIAL",
+                "assessment": "Explicit data selects the same policy name, not identical implementations. Link normalization, strict realpath behavior and suppressed-refusal handling differ. A narrowly chosen basic refusal corpus can match; that does not prove general parity."
+              },
+              {
+                "id": "D-06",
+                "kind": "imprecise primary locators",
+                "materiality": "NON_MATERIAL",
+                "assessment": "The mechanics claim is correct, but its individual anchors are inaccurate: old calls are 758, 768 and 813, not 758/771/810; new calls start at 784, 794 and 843, not 784/792/826. New normpath is 833-835, not approximately 818-820."
+              }
+            ],
+            "useful_deliverable": {
+              "useful": true,
+              "status": "USEFUL_WITH_MATERIAL_DEFECTS",
+              "standalone_reliable_recommendation": false,
+              "reason": "Provides usable source identities, default-change evidence, caller-safeguard guidance and preserved unresolved items. Material behavior/test assertions require correction before adoption; no candidate revisions were made."
+            },
+            "unassessed_remainder": {
+              "declared_obligations_unassessed": [],
+              "remaining_empirical_unknowns": [
+                "No complete CPython 3.12.3 and 3.14.0 interpreter pair was run. Reviewer execution uses the exact mapped tarfile modules on host CPython 3.14.4.",
+                "No full source review or exhaustive behavioral comparison of the two releases' os.path implementations, filesystem races, or every archive format/edge was attempted.",
+                "Concrete U1-U5 product/configuration values and operational cleanup ownership remain unknown."
+              ],
+              "boundary": "All six declared obligations and consequential candidate claims were assessed. These retained unknowns are not blanket abstention or an exhaustive unknown-answer recall claim."
+            }
+          },
+          "timing": {
+            "dispatch_to_terminal_stage_seconds": 269.022,
+            "candidate_cold_inclusive_seconds": 431.904,
+            "seed_seconds": 113.238,
+            "intervening_seed_queue_seconds": 49.644,
+            "within900": true,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/control/refresh-v1/final.md",
+            "sha256": "6f554580d65186229e795ca87ab46cfd699bff4214ececf39bf61595d17db85c",
+            "bytes": 8852
+          },
+          "native_lifecycle_limit": "Initial create/get active, pre-terminal get paused, update and fresh get complete. Continuous active state eligibility HOLD; no cause inferred. Exact native outputs retained."
+        },
+        "treatment": {
+          "deliverable": "FROZEN",
+          "quality": {
+            "source_quality": "FAIL",
+            "complete_scope_assessed": true,
+            "obligations": [
+              {
+                "id": "O1",
+                "obligation": "Preserve exact prior source and dependency identities.",
+                "disposition": "SATISFIED",
+                "assessment": "The source aliases, exact releases/full hashes in each sources.json, and the F1-F7 dependency family are retained. No dependency is renamed with the UI label. Identity verification is independent of the behavioral claims.",
+                "evidence_ids": [
+                  "S-01"
+                ]
+              },
+              {
+                "id": "O2",
+                "obligation": "Dispose of the no-op rename separately from semantic invalidation.",
+                "disposition": "SATISFIED",
+                "assessment": "Both explicitly separate the name-only change from 3.12.3 to 3.14.0 invalidation.",
+                "evidence_ids": [
+                  "S-02"
+                ]
+              },
+              {
+                "id": "O3",
+                "obligation": "Re-evaluate default filter/API behavior at both exact releases.",
+                "disposition": "PARTIAL",
+                "assessment": "Default resolution is correct at both exact tags. Relevant refusal behavior is wrongly retained and the new public fallback exception/conditions are missing or misclassified.",
+                "evidence_ids": [
+                  "S-03",
+                  "S-05",
+                  "D-01",
+                  "D-02"
+                ]
+              },
+              {
+                "id": "O4",
+                "obligation": "Revisit security and compatibility claims depending on that default.",
+                "disposition": "PARTIAL",
+                "assessment": "Both correctly retain the need for inspection and caller limits and update older-runtime guidance. Their error/fallback dispositions omit material conditions; additional output-specific compatibility claims are identified below.",
+                "evidence_ids": [
+                  "S-07",
+                  "S-08",
+                  "D-01",
+                  "D-02"
+                ]
+              },
+              {
+                "id": "O5",
+                "obligation": "Do not classify unresolved prior dependencies as already covered.",
+                "disposition": "SATISFIED",
+                "assessment": "U1-U6 remain open. U5 is narrowed by the new pin without falsely resolving fleet support. Already-covered is expressly separated from implemented, tested or adequate. F4's incorrect retention is a source-behavior defect, not evidence that they silently closed a U-item.",
+                "evidence_ids": []
+              },
+              {
+                "id": "O6",
+                "obligation": "Deliver retained/changed/unresolved dispositions and proposed regression checks.",
+                "disposition": "PARTIAL",
+                "assessment": "Both deliver all three disposition categories and label tests proposed-only. Incorrect retention and incorrect Linux path/mode expectations make parts of those deliverables unreliable.",
+                "evidence_ids": [
+                  "D-01",
+                  "D-02",
+                  "D-03"
+                ]
+              }
+            ],
+            "defects": [
+              {
+                "id": "D-01",
+                "kind": "incorrect retained behavior",
+                "materiality": "MATERIAL",
+                "assessment": "False for a filter refusal suppressed by errorlevel=0. In 3.12.3 the failed assignment leaves tarinfo equal to the original member, and extraction continues with that member. In 3.14.0 filtered starts as None and a suppressed refusal excludes the member. Identical handlers and identical documentation do not make these caller paths identical."
+              },
+              {
+                "id": "D-02",
+                "kind": "public API/security change misclassified or omitted",
+                "materiality": "MATERIAL",
+                "assessment": "The original five subclasses remain, but 3.14.0 adds the public LinkFallbackError and changes extractall fallback to re-filter the referenced archive member. This is a consequential change, not a renamed old class. extract() and extractall() also differ in propagation of the fallback filter in this exact file."
+              },
+              {
+                "id": "D-03",
+                "kind": "incorrect proposed rejection assertions",
+                "materiality": "MATERIAL",
+                "assessment": "Leading Linux slashes are stripped. A remaining absolute path is the conditional refusal, exemplified by Windows drive paths. A regular file's high mode bits are cleared rather than refused. Linux /safe_absolute_regular becomes safe_absolute_regular; regular mode 0o4755 becomes 0o755."
+              },
+              {
+                "id": "D-05",
+                "kind": "unsupported security characterization and missing governing condition",
+                "materiality": "MATERIAL",
+                "assessment": "The exact docs warn that normalization can change link meaning when the target traverses symlinks. The code records the normalized linkname but resolves member.linkname, the original string, for the containment check. This is not a generally monotonic tightening guarantee."
+              }
+            ],
+            "useful_deliverable": {
+              "useful": true,
+              "status": "USEFUL_WITH_MATERIAL_DEFECTS",
+              "standalone_reliable_recommendation": false,
+              "reason": "Provides usable source identities, default-change evidence, caller-safeguard guidance and preserved unresolved items. Material behavior/test assertions require correction before adoption; no candidate revisions were made."
+            },
+            "unassessed_remainder": {
+              "declared_obligations_unassessed": [],
+              "remaining_empirical_unknowns": [
+                "No complete CPython 3.12.3 and 3.14.0 interpreter pair was run. Reviewer execution uses the exact mapped tarfile modules on host CPython 3.14.4.",
+                "No full source review or exhaustive behavioral comparison of the two releases' os.path implementations, filesystem races, or every archive format/edge was attempted.",
+                "Concrete U1-U5 product/configuration values and operational cleanup ownership remain unknown."
+              ],
+              "boundary": "All six declared obligations and consequential candidate claims were assessed. These retained unknowns are not blanket abstention or an exhaustive unknown-answer recall claim."
+            }
+          },
+          "timing": {
+            "dispatch_to_terminal_stage_seconds": 252.931,
+            "candidate_cold_inclusive_seconds": 715.337,
+            "seed_seconds": 113.238,
+            "intervening_seed_queue_seconds": 349.168,
+            "within900": true,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/treatment/refresh-v1/final.md",
+            "sha256": "502885bcb521b89c298bd7fb20444a981f2bfa56a4aef4b575eadde942c16627",
+            "bytes": 8717
+          },
+          "native_lifecycle_limit": null
+        }
+      },
+      "quality_comparison": "Both correctly establish the exact default change and preserve U1-U6. Both fail material retained-error/fallback and proposed-path assertions. Output1 additionally preserves the known normalization caveat, new symlink hint and directory refilter lead, but overpromises cross-release parity. Output2 frames normalization as tightening without its known meaning condition. These are source-backed quality differences, not an economic ranking or winner.",
+      "eligibility": {
+        "filesystem_confinement": "HOLD: explicit maps advisory, no enforced firewall established",
+        "blindness": "Method labels remain in frozen contents; independent reviewer cost/target/grade blinded",
+        "limitations": []
+      },
+      "review": {
+        "terminal": "2026-10-07T19:05:14.998Z",
+        "complete_scope_assessed_both": true,
+        "review_output_labels": {
+          "Output1": "control",
+          "Output2": "treatment"
+        },
+        "source_quality": {
+          "Output1": "FAIL",
+          "Output2": "FAIL"
+        },
+        "native_terminal": "complete",
+        "review_status": "INDEPENDENT_FULL_SCOPE_EVALUATED"
+      },
+      "quota": {
+        "billing": null,
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "generated_output_tokens": null,
+        "native_counters": "Preserved in per-stage actual receipts; semantics provider dependent, no double-counting/enclosing addition"
+      }
+    },
+    {
+      "case_id": "D-M05-B",
+      "method_id": "M05",
+      "disposition": "TERMINAL_EVALUATED",
+      "terminal_disposition": null,
+      "seed_attempt": null,
+      "arms": {
+        "control": {
+          "deliverable": "FROZEN",
+          "quality": {
+            "source_quality": "FAIL",
+            "complete_scope_assessed": true,
+            "obligations": [
+              {
+                "obligation_id": 1,
+                "obligation": "Bind prior findings to exact deployment and source dependencies.",
+                "assessed": true,
+                "disposition": "PARTIAL",
+                "assessment": "Explicitly maps all prior F1-F7 DEP inputs and changed/held/open conditions to frozen sources; two retained operational claims fail journal-mode/release qualification.",
+                "primary_evidence": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4",
+                  "P5",
+                  "P6",
+                  "P7",
+                  "P8"
+                ],
+                "defect_ids": [
+                  "D1",
+                  "D2"
+                ]
+              },
+              {
+                "obligation_id": 2,
+                "obligation": "Treat the rename as no-op only where dependencies establish that.",
+                "assessed": true,
+                "disposition": "PASS",
+                "assessment": "Name-only rename is bound to dependency inputs, with a sensible boundary for out-of-module string-keyed artifacts.",
+                "primary_evidence": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4",
+                  "P6",
+                  "P7",
+                  "P8"
+                ],
+                "defect_ids": []
+              },
+              {
+                "obligation_id": 3,
+                "obligation": "Re-evaluate the network-filesystem and process-location assumptions.",
+                "assessed": true,
+                "disposition": "PASS",
+                "assessment": "Direct two-host shared-network opening is rejected using the same-host constraint and mapped-file shared-memory mechanism; sole-process EXCLUSIVE is ruled out for this requirement.",
+                "primary_evidence": [
+                  "P1",
+                  "P12"
+                ],
+                "defect_ids": []
+              },
+              {
+                "obligation_id": 4,
+                "obligation": "Revisit locking, shared memory, durability, and operational promises affected by deployment.",
+                "assessed": true,
+                "disposition": "PARTIAL",
+                "assessment": "Revisits locking, shared memory, checkpoint progress, durability, recovery and custody. Ordinary-reader COMMIT BUSY and strict foreground-sync avoidance are materially incorrect retained promises.",
+                "primary_evidence": [
+                  "P3",
+                  "P4",
+                  "P5",
+                  "P6",
+                  "P9",
+                  "P10"
+                ],
+                "defect_ids": [
+                  "D1",
+                  "D2"
+                ]
+              },
+              {
+                "obligation_id": 5,
+                "obligation": "Keep unaffected findings only with evidence of equivalence.",
+                "assessed": true,
+                "disposition": "PARTIAL",
+                "assessment": "Retains version/fundamental mechanics with unchanged-runtime evidence, but unchanged source bytes do not make generic COMMIT locking or simplified sync language equivalent for this selected WAL release.",
+                "primary_evidence": [
+                  "P2",
+                  "P7",
+                  "P8",
+                  "P9",
+                  "P10"
+                ],
+                "defect_ids": [
+                  "D1",
+                  "D2"
+                ]
+              },
+              {
+                "obligation_id": 6,
+                "obligation": "State a bounded revised disposition, uncertainty, and proposed validation.",
+                "assessed": true,
+                "disposition": "PARTIAL",
+                "assessment": "Gives a bounded rejection, explicit unknowns and proposed-only checks. Its must-BUSY COMMIT oracle is invalid; unsupported-mount experimental success cannot certify correctness.",
+                "primary_evidence": [
+                  "P1",
+                  "P9"
+                ],
+                "defect_ids": [
+                  "D1"
+                ]
+              }
+            ],
+            "defects": [
+              {
+                "id": "D1",
+                "kind": "incorrect retained journal-mode condition",
+                "materiality": "MATERIAL",
+                "assessment": "The generic transaction-page warning is not an ordinary WAL COMMIT rule. Readers can block checkpoint/reset and stale read upgrades can fail; neither means an ordinary reader blocks a separate writer's WAL COMMIT. The unsupported network layout also provides no deterministic BUSY oracle."
+              },
+              {
+                "id": "D2",
+                "kind": "incorrect retained operational promise",
+                "materiality": "MATERIAL",
+                "assessment": "The frozen WAL documentation contains this simplified wording, but released 3.51.3 code initializes syncHeader, clears it for SQLITE_IOCAP_SEQUENTIAL, and invokes sqlite3OsSync with nonzero checkpoint sync flags while writing the new/reused header on the foreground WAL-frame path. NORMAL omits the extra ordinary per-commit sync; it does not imply a strict no-foreground-sync guarantee."
+              }
+            ],
+            "useful_deliverable": {
+              "useful": true,
+              "status": "PARTIAL",
+              "supported_use": "Useful bounded rejection of the stated deployment and inventory of outstanding operational conditions.",
+              "limit": "Whole recommendation cannot receive a source-quality pass while the material retained COMMIT claim is wrong."
+            },
+            "unassessed_remainder": [
+              "Actual two-machine mount/VFS implementation, locking and mmap coherence; no target mount or second-machine access supplied.",
+              "Selected-release runtime execution, deployment binaries/build flags, real workload checkpoint tuning, crash/power-loss injection, fsync latency and backup operations.",
+              "Exhaustive unknown SQLite defects, all code paths/build options, and architectures outside this bounded WAL/deployment module."
+            ]
+          },
+          "timing": {
+            "dispatch_to_terminal_stage_seconds": 220.547,
+            "candidate_cold_inclusive_seconds": 700.729,
+            "seed_seconds": 162.747,
+            "intervening_seed_queue_seconds": 317.435,
+            "within900": true,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/final.md",
+            "sha256": "0db1dee0b7a7f7302549bb33fe0e458cec31ebe209d5a8117ff59f5e1bbf8d3c",
+            "bytes": 11519
+          },
+          "native_lifecycle_limit": null
+        },
+        "treatment": {
+          "deliverable": "FROZEN",
+          "quality": {
+            "source_quality": "FAIL",
+            "complete_scope_assessed": true,
+            "obligations": [
+              {
+                "obligation_id": 1,
+                "obligation": "Bind prior findings to exact deployment and source dependencies.",
+                "assessed": true,
+                "disposition": "PARTIAL",
+                "assessment": "Maps F1-F7 source/deployment dependencies; mistakenly promotes reader-gap provision to established prior state, and retains the generic COMMIT condition.",
+                "primary_evidence": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4",
+                  "P5",
+                  "P6",
+                  "P7",
+                  "P8"
+                ],
+                "defect_ids": [
+                  "D1",
+                  "D4"
+                ]
+              },
+              {
+                "obligation_id": 2,
+                "obligation": "Treat the rename as no-op only where dependencies establish that.",
+                "assessed": true,
+                "disposition": "PASS",
+                "assessment": "Explicit DEP inventory shows store-name independence, consistent with the mapped name-only change.",
+                "primary_evidence": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4",
+                  "P6",
+                  "P7",
+                  "P8"
+                ],
+                "defect_ids": []
+              },
+              {
+                "obligation_id": 3,
+                "obligation": "Re-evaluate the network-filesystem and process-location assumptions.",
+                "assessed": true,
+                "disposition": "PASS",
+                "assessment": "Re-evaluates host/process location and network mount, and applies the documented same-host/no-network rule; rejects no-shm/read-only rescue.",
+                "primary_evidence": [
+                  "P1",
+                  "P12"
+                ],
+                "defect_ids": []
+              },
+              {
+                "obligation_id": 4,
+                "obligation": "Revisit locking, shared memory, durability, and operational promises affected by deployment.",
+                "assessed": true,
+                "disposition": "PARTIAL",
+                "assessment": "Revisits all four affected topics and suspends deployment guarantees. The retained ordinary-reader COMMIT BUSY rule is wrong; a 32KiB upper bound is a separate nonmaterial paraphrase error.",
+                "primary_evidence": [
+                  "P3",
+                  "P4",
+                  "P5",
+                  "P6",
+                  "P9",
+                  "P11"
+                ],
+                "defect_ids": [
+                  "D1",
+                  "D3"
+                ]
+              },
+              {
+                "obligation_id": 5,
+                "obligation": "Keep unaffected findings only with evidence of equivalence.",
+                "assessed": true,
+                "disposition": "PARTIAL",
+                "assessment": "Evidence supports retained version/snapshot/default mechanisms. Retaining F7's generic reader-COMMIT warning as a WAL rule lacks equivalence; identical captures alone do not establish domain correctness.",
+                "primary_evidence": [
+                  "P2",
+                  "P7",
+                  "P8",
+                  "P9"
+                ],
+                "defect_ids": [
+                  "D1"
+                ]
+              },
+              {
+                "obligation_id": 6,
+                "obligation": "State a bounded revised disposition, uncertainty, and proposed validation.",
+                "assessed": true,
+                "disposition": "PASS",
+                "assessment": "Gives a bounded unsupported-deployment disposition, preserves storage/VFS/durability unknowns, and separates proposed checks from reported inspection. Check descriptions need configuration/timing details before execution; these are optional refinements.",
+                "primary_evidence": [
+                  "P1",
+                  "P3",
+                  "P5",
+                  "P6",
+                  "P7"
+                ],
+                "defect_ids": []
+              }
+            ],
+            "defects": [
+              {
+                "id": "D1",
+                "kind": "incorrect retained journal-mode condition",
+                "materiality": "MATERIAL",
+                "assessment": "The generic transaction-page warning is not an ordinary WAL COMMIT rule. Readers can block checkpoint/reset and stale read upgrades can fail; neither means an ordinary reader blocks a separate writer's WAL COMMIT. The unsupported network layout also provides no deterministic BUSY oracle."
+              },
+              {
+                "id": "D3",
+                "kind": "incorrect source paraphrase",
+                "materiality": "NONMATERIAL",
+                "assessment": "The frozen documentation says it rarely exceeds 32 KiB; released code supports multiple 32 KiB index blocks. A total upper bound is false."
+              },
+              {
+                "id": "D4",
+                "kind": "incorrect prior dependency binding",
+                "materiality": "NONMATERIAL",
+                "assessment": "The mapped untrusted prior F3 conditions require reader gaps; its unresolved workload-tuning items and cross-cutting item 2 leave reader-gap provision open. Neither brief nor changes establishes that gaps were actually provisioned."
+              }
+            ],
+            "useful_deliverable": {
+              "useful": true,
+              "status": "PARTIAL",
+              "supported_use": "Useful bounded rejection of the stated deployment and inventory of outstanding operational conditions.",
+              "limit": "Whole recommendation cannot receive a source-quality pass while the material retained COMMIT claim is wrong."
+            },
+            "unassessed_remainder": [
+              "Actual two-machine mount/VFS implementation, locking and mmap coherence; no target mount or second-machine access supplied.",
+              "Selected-release runtime execution, deployment binaries/build flags, real workload checkpoint tuning, crash/power-loss injection, fsync latency and backup operations.",
+              "Exhaustive unknown SQLite defects, all code paths/build options, and architectures outside this bounded WAL/deployment module."
+            ]
+          },
+          "timing": {
+            "dispatch_to_terminal_stage_seconds": 235.843,
+            "candidate_cold_inclusive_seconds": 437.65,
+            "seed_seconds": 162.747,
+            "intervening_seed_queue_seconds": 39.06,
+            "within900": true,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/final.md",
+            "sha256": "bcf2a81003a387b277b4febfa0599f40b27c60b3599d8bda66b7052cd6f4ea7d",
+            "bytes": 11325
+          },
+          "native_lifecycle_limit": "Initial create/get active, pre-terminal get paused, update and fresh get complete. Continuous active state eligibility HOLD; no cause inferred. Exact native outputs retained."
+        }
+      },
+      "quality_comparison": "Both have a supported narrow deployment rejection and a material retained COMMIT/BUSY error. Output1 additionally makes an incorrect foreground-sync promise and a must-BUSY test oracle. Output2's explicit size upper bound and reader-gap prior-state row are localized errors. No economic ranking, preferred winner or target grade is assigned.",
+      "eligibility": {
+        "filesystem_confinement": "HOLD: explicit maps advisory, no enforced firewall established",
+        "blindness": "Method labels remain in frozen contents; independent reviewer cost/target/grade blinded",
+        "limitations": []
+      },
+      "review": {
+        "terminal": "2026-10-07T19:10:52.897Z",
+        "complete_scope_assessed_both": true,
+        "review_output_labels": {
+          "Output1": "control",
+          "Output2": "treatment"
+        },
+        "source_quality": {
+          "Output1": "FAIL",
+          "Output2": "FAIL"
+        },
+        "native_terminal": "complete",
+        "review_status": "INDEPENDENT_FULL_SCOPE_EVALUATED",
+        "review_dispatch_to_terminal_seconds": 993.278,
+        "review_budget_seconds": 900,
+        "review_overrun_seconds": 93.27800000000002
+      },
+      "quota": {
+        "billing": null,
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "generated_output_tokens": null,
+        "native_counters": "Preserved in per-stage actual receipts; semantics provider dependent, no double-counting/enclosing addition"
+      }
+    },
+    {
+      "case_id": "D-M06-A",
+      "method_id": "M06",
+      "disposition": "TERMINAL_BLOCKED_SEED_OVERRUN",
+      "terminal_disposition": {
+        "status": "NONCOMPARABLE_SEED_OVERRUN",
+        "both_arms": "NOT_ADMITTED",
+        "reason": "Required common seed exceeded prospective360s; no clock reset or failed-seed rescue",
+        "assessed_pairs": 0,
+        "assessed_arms": 0,
+        "output_absence_not_comparison": true,
+        "at": "2026-10-07T19:55:26.616519+00:00"
+      },
+      "seed_attempt": {
+        "files": {
+          "draft.md": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/draft.md",
+            "sha256": "8ddb4e06565103dd6ff06c1785835c40ac6c183c1e207e7a6c782ba3b1a70e90",
+            "bytes": 7653,
+            "mtime_utc": "2026-10-07T19:46:38.589490+00:00"
+          },
+          "fixtures.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/fixtures.json",
+            "sha256": "ab7d8ba49ec2d9d5b20a6ac67cb0c120bac11140acfd9817ad385b1b56f60a29",
+            "bytes": 4398,
+            "mtime_utc": "2026-10-07T19:51:00.239717+00:00"
+          },
+          "sources.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/sources.json",
+            "sha256": "8b134c393820f3eefab088a96434210c33b57421ca08591077bb7a462acccd57",
+            "bytes": 1508,
+            "mtime_utc": "2026-10-07T19:43:30.565516+00:00"
+          },
+          "timings.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/timings.json",
+            "sha256": "2b812dad50234667e0bd625633a818a71201150c8c3c0fb38a0e72081b710a3f",
+            "bytes": 1536,
+            "mtime_utc": "2026-10-07T19:53:30.257537+00:00"
+          },
+          "integration-state-active-v2.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/integration-state-active-v2.json",
+            "sha256": "47cfce0fbbaba0ba88250d59552b571ffa95a1adb81ef2910fb0248a612cc630",
+            "bytes": 4747,
+            "mtime_utc": "2026-10-07T19:52:58.767181+00:00"
+          },
+          "integration-state-terminal-v2.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/integration-state-terminal-v2.json",
+            "sha256": "c958f53ffe0f6878eb2f2e7762f14ad281c21bab04b350ab9944895905c45a5c",
+            "bytes": 4536,
+            "mtime_utc": "2026-10-07T19:54:56.693064+00:00"
+          },
+          "t3-terminal-observed.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/t3-terminal-observed.json",
+            "sha256": "a007ee5eccd855c2a2a122385be36a0ff7d1b297d805c52ad19f4c430ef2328d",
+            "bytes": 2555,
+            "mtime_utc": "2026-10-07T19:55:26.611701+00:00"
+          }
+        },
+        "seed_dispatch_to_terminal_seconds": 784.161,
+        "seed_budget_seconds": 360,
+        "overrun_seconds": 424.16099999999994,
+        "native_active_observed": true,
+        "native_terminal": "complete",
+        "t3_quiet": true,
+        "actual_rounds": 4,
+        "mechanical_readability": true,
+        "claims_count": 7,
+        "scientific_seed_truth": "UNASSESSED untrusted candidate input, not comparison/evaluator answer",
+        "per_arm_cold_seed_charge_seconds": 784.161,
+        "physical_shared_seed_seconds": 784.161,
+        "half_seed_amortized_seconds": 392.0805,
+        "usage_billing": null,
+        "carrier": "installed integration driver state, not vendorbackend, unique objective association; ACP transport mapping unclaimed"
+      },
+      "arms": {
+        "control": {
+          "deliverable": "NOT_YET_FROZEN",
+          "quality": null,
+          "timing": null
+        },
+        "treatment": {
+          "deliverable": "NOT_YET_FROZEN",
+          "quality": null,
+          "timing": null
+        }
+      },
+      "quality_comparison": null,
+      "eligibility": {
+        "filesystem_confinement": "HOLD: explicit maps advisory, no enforced firewall established",
+        "blindness": "Method labels remain in frozen contents; independent reviewer cost/target/grade blinded",
+        "limitations": []
+      },
+      "review": null,
+      "quota": {
+        "billing": null,
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "generated_output_tokens": null,
+        "native_counters": "Preserved in per-stage actual receipts; semantics provider dependent, no double-counting/enclosing addition"
+      }
+    },
+    {
+      "case_id": "D-M06-B",
+      "method_id": "M06",
+      "disposition": "TERMINAL_BLOCKED_SEED_OVERRUN",
+      "terminal_disposition": {
+        "status": "NONCOMPARABLE_EXPIRED_INCOMPLETE_SEED",
+        "both_arms": "NOT_ADMITTED",
+        "reason": "Common seed expired360s; root-directed ownedtask cancellation, actual native postcancel state preserved",
+        "assessed_pairs": 0,
+        "assessed_arms": 0,
+        "output_absence_not_comparison": true,
+        "at": "2026-10-07T20:02:16.949231+00:00"
+      },
+      "seed_attempt": {
+        "files": {
+          "draft.md": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/draft.md",
+            "sha256": "350cad31ba640e12019adae1dc970a9dda09848d3b139002267612d936da37fe",
+            "bytes": 5935,
+            "mtime_utc": "2026-10-07T20:00:14.887888+00:00"
+          },
+          "sources.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/sources.json",
+            "sha256": "64cd2a42d75c901aa12b5c12b9c04610ffd6757dba4096241d5e69cad50aac11",
+            "bytes": 2780,
+            "mtime_utc": "2026-10-07T19:57:57.394067+00:00"
+          },
+          "integration-state-active-v2.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/integration-state-active-v2.json",
+            "sha256": "2dab692563246a4cb004ecec53345394163190ab7e66438e0dce2ce2b230d09b",
+            "bytes": 4910,
+            "mtime_utc": "2026-10-07T20:01:51.077460+00:00"
+          },
+          "integration-state-terminal-v2.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/integration-state-terminal-v2.json",
+            "sha256": "95caf88b1fb91cbcb796bc387b97f8b9843bb60a9b2d91c11db48f3db72013a9",
+            "bytes": 4792,
+            "mtime_utc": "2026-10-07T20:02:16.945632+00:00"
+          },
+          "t3-terminal-observed.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/t3-terminal-observed.json",
+            "sha256": "9d2e11bca35000ace6bbef83638f9cd34fe51dc27d277f4543f5a7cfc9bec4fc",
+            "bytes": 2694,
+            "mtime_utc": "2026-10-07T20:02:16.945140+00:00"
+          },
+          "cancel-receipt-v1.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/cancel-receipt-v1.json",
+            "sha256": "e9048c07a9f9c24b6fcb11308d853d7eb649452e68e1ce7a2732afbfa8d0f809",
+            "bytes": 630,
+            "mtime_utc": "2026-10-07T20:01:59.863862+00:00"
+          }
+        },
+        "absences": {
+          "fixtures.json": "Absent at quiet interruption freeze; not inferred complete",
+          "timings.json": "Absent at quiet interruption freeze; not inferred complete"
+        },
+        "seed_dispatch_to_terminal_seconds": 386.488,
+        "seed_budget_seconds": 360,
+        "overrun_seconds": 26.488,
+        "t3_terminal": "interrupted",
+        "native_terminal": "paused",
+        "native_rounds": 2,
+        "native_active_observed": true,
+        "quiet_no_descendants": true,
+        "per_arm_cold_seed_charge_seconds": 386.488,
+        "physical_shared_seed_seconds": 386.488,
+        "half_seed_amortized_seconds": 193.244,
+        "provider_billing": null,
+        "scientific_seed_truth": "UNASSESSED incomplete candidate seed; no source comparison",
+        "root_authorized_cancellation": "At most60s grace after original seed expiry; no ordinary in-flight steer/no restart"
+      },
+      "arms": {
+        "control": {
+          "deliverable": "NOT_YET_FROZEN",
+          "quality": null,
+          "timing": null
+        },
+        "treatment": {
+          "deliverable": "NOT_YET_FROZEN",
+          "quality": null,
+          "timing": null
+        }
+      },
+      "quality_comparison": null,
+      "eligibility": {
+        "filesystem_confinement": "HOLD: explicit maps advisory, no enforced firewall established",
+        "blindness": "Method labels remain in frozen contents; independent reviewer cost/target/grade blinded",
+        "limitations": []
+      },
+      "review": null,
+      "quota": {
+        "billing": null,
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "generated_output_tokens": null,
+        "native_counters": "Preserved in per-stage actual receipts; semantics provider dependent, no double-counting/enclosing addition"
+      }
+    }
+  ]
+}

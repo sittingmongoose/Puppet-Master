@@ -1,0 +1,1252 @@
+{
+  "schema": "ER10_BATCH011_MECHANICAL_VERIFICATION_V1",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "prior_root_remote_tree_not_truncated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "local_pinned_tree_matches_root_remote_blob_identities",
+      "passed": true,
+      "detail": 5779
+    },
+    {
+      "check": "frozen_input_identity_historical/INPUT_IDENTITIES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/final-report/count-and-claim-contract-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/fast01-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/fast02-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/fast03-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method02-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method02-pair-disposition-v2.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method03-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method04-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method04-pair-disposition-v2.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method05-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort2/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-supervisor/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort3/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/state/logical-slot-index-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/@config.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/@INPUTS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-01/control/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-02-terminal-economics-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-02-terminal-economics-v2.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-03/control/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-03/control/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-03-terminal-economics-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-04-terminal-economics-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-04-terminal-economics-v2.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-05-terminal-economics-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-06/control/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-06-terminal-economics-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-06/control/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-fast-01-terminal-economics-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-04/control/review-v2/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/frozen-standalone-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/frozen-standalone-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-02/control/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-03/treatment/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-fast-02-pair-freeze-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-02/control/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-02/treatment/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-02/treatment/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-fast-02-terminal-economics-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-03/control/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-03/control/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-FAST-03/treatment/review-v1/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-fast-03-terminal-economics-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-01/control/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-04-pair-freeze-v2.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-04/control/review-v2/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/coverage.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-05-pair-freeze-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/integrated-methods/I-METHOD-05/control/review-v1/frozen-review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/i-method-06-pair-freeze-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M11-A/comparison-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M12-A/comparison-v3.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M13-A/comparison-v2.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M14-A/comparison-v3.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M14-A/paired-v2-disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M15-A/comparison-v3.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M16-A/comparison-v3.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M11-A/control-v1/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M11-A/treatment-v1/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M13-A/treatment-v2/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M13-A/treatment-v2/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M13-A/control-v2/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M13-A/control-v2/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M12-A/control-v3/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M12-A/control-v3/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M12-A/treatment-v3/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M14-A/control-v3/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M14-A/control-v3/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M14-A/treatment-v3/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M14-A/treatment-v3/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M15-A/control-v3/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M15-A/control-v3/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M15-A/treatment-v3/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M15-A/treatment-v3/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M02-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M02-B/source-review-v2/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M02-A/source-review-v3/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M02-A/source-review-v3/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-supervisor/COMPARISONS-pre-final-preserved.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-supervisor/COMPARISONS-full-final-preserved.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-LUNA/COMPARISON.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-MUSE/COMPARISON.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/protocol-deviation-001.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/partial-status.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-GLM/COMPARISON.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-01/COMPARISON.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-02/COMPARISON.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-03/COMPARISON.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-04/COMPARISON.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-01/control/source-review-v1/HOST_INCOMPLETE_REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-01/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-02/control/source-review-v1/REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-02/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-02/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-02/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-03/control/source-review-v1/REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-03/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-03/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-03/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-04/control/source-review-v1/REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-04/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-04/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/confirmation/C-04/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort3/D-M08-A-v3/J2/freeze_disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort3/D-M08-A-v3/J1/freeze_disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/jobs/D-M08-A/V3_PAIR_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort3/D-M08-B-v3/J2/freeze_disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort3/D-M08-B-v3/J1/freeze_disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/jobs/D-M08-B/V3_PAIR_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort3/D-M10-A-v3/J2/freeze_disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort3/D-M10-A-v3/J1/freeze_disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/jobs/D-M10-A/V3_PAIR_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M16-A/control-v3/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted-cohort4/D-M16-A/treatment-v3/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M01-A/source-review-v1/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M01-B/source-review-v1/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/targeted/D-M02-A/source-review-v2/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method01-pair-freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/integrated-execution/method03-pair-freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-LUNA/pair-freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/judgment.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/judgment.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-MUSE/pair-freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/judgment.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/judgment.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-GLM/pair-freeze.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-GLM/diagnostic-gate-exception-v2.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/judgment.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/judgment.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/state/I-METHOD-02-v2-treatment-only-diagnostic-gate-exception-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/helpers/targeted-cohort4/D-M14-A/original-v1-final-disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/state/C-03-failed-native-diagnostic-review-gate-exception-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/CLOSED_SLOT_LEDGER.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/FIELD_MAP.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/INPUTS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/CAPTURE_MANIFEST.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/ledger.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/REPORTING_NOTES.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_historical/README.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_control/config.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/state/logical-slot-index-v1.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/helpers/targeted-supervisor/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/helpers/targeted-cohort2/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/reviews/targeted-cohort3/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/helpers/targeted-cohort4/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/reviews/anchors/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/helpers/integrated-execution/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_owner/reviews/confirmation/COMPARISONS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_link/reviews/targeted-cohort3/D-M07-A-v3/J1/freeze_disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_link/reviews/targeted-cohort3/D-M07-A-v3/J2/freeze_disposition.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_link/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_input_identity_closed_link/reviews/confirmation/FINAL_QUIET.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen_report_inputs_191_and_13245406B",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_config.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_SUPPLEMENTAL_FIELD_MAP.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_SUPPLEMENTAL_LEDGER.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_unresolved-critical-mappings.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_INPUT_IDENTITIES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_apply_supplement.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_build_field_map.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_freeze_inputs.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_capture_closed_links.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_FINAL_INTERFACE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_README.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_OFFLINE_REPLAY_RECEIPT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "report_artifact_identity_ROOT_NOTIFICATION_RECEIPT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "root_remote_receipt_unchanged_since_initial_read",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J1_brief.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J1_sources.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J1_final.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J1_draft.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J1_review-notes.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J2_brief.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J2_sources.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J2_final.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J2_draft.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J2_critical_check.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J2_source_log.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_bound_science_J2_reserve_check.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_stage_frozen_output_common/fresh-untrusted-seed-v3_draft.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_stage_frozen_output_control/document-order-review-final-v3_review-notes.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_stage_frozen_output_control/document-order-review-final-v3_final.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_stage_frozen_output_treatment/critical-first-protected-breadth-final-v3_critical_check.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_stage_frozen_output_treatment/critical-first-protected-breadth-final-v3_source_log.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_stage_frozen_output_treatment/critical-first-protected-breadth-final-v3_final.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_stage_frozen_output_treatment/critical-first-protected-breadth-final-v3_reserve_check.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_frozen_output_J1_judgment.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_frozen_output_J1_checks.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_frozen_output_J2_judgment.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_review_frozen_output_J2_checks.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retention_original_no_source_excerpts_declaration",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retention_original_no_archive_deletion_or_regrade",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "root_preview_counts_and_limits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_report_code_offline_relocated_byte_exact_replay",
+      "passed": true,
+      "detail": {
+        "SUPPLEMENTAL_LEDGER.json": true,
+        "unresolved-critical-mappings.json": true,
+        "validation.json": true
+      }
+    },
+    {
+      "check": "report_all_36_mechanical_checks_pass",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "root_report_independent_replay_receipt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M07B_diagnostic_both_FAIL_no_method_comparison",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "root_prior_commit_and_157_blob_receipt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "root_B10_duplicate_cleanup_not_campaign_cleanup",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "report_replay": {
+    "SUPPLEMENTAL_LEDGER.json": true,
+    "unresolved-critical-mappings.json": true,
+    "validation.json": true
+  },
+  "limits": {
+    "live_science_excluded": [
+      "D-M09-A",
+      "D-M06-A",
+      "D-M06-B"
+    ],
+    "native_goal_tickets_or_raw_projections_imported": false,
+    "private_source_needles_or_fragments_opened": false,
+    "primary_source_bodies_opened": false,
+    "new_source_research": false,
+    "new_mapping_inference": false,
+    "scientific_grading_or_regrading": false,
+    "network_remote_verification": false,
+    "account_server_rollout_calls": false,
+    "git_mutations": false,
+    "checkout_created": false,
+    "cleanup_performed": false,
+    "archive_created": false,
+    "watchers_or_polls": false,
+    "own_goal_or_workers": false,
+    "working_draft_original_four_remaining_text_preserved": true,
+    "current_remaining_three_recorded_separately": true,
+    "inherited_metadata_gaps_preserved": true,
+    "report_historical_36_closed_4_held_preserved": true,
+    "retention_221_identity_census_is_not_full_condition_verification": true,
+    "retention_original_65535B_cap_and_history_unchanged": true,
+    "raw_sources_not_deleted": true,
+    "campaign_complete_claim": false,
+    "cleanup_complete_claim": false
+  },
+  "mechanical_only": true,
+  "scope_audit_basis": "Exact input allowlists and retained declared frozen report metadata manifest. No Source-body extraction, private fragment read, other live job recursion or raw projection import."
+}

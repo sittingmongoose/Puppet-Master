@@ -1,0 +1,84 @@
+{
+  "entries": [
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-treatment-batch-v3",
+      "runs": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-B-treatment-batch-v3:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "codex_gmail",
+          "model": "gpt-6-luna",
+          "requestedAt": "2026-10-07T20:13:12.582Z",
+          "startedAt": "2026-10-07T20:13:13.326Z",
+          "completedAt": "2026-10-07T20:20:29.097Z"
+        }
+      ]
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-question_1-v3",
+      "runs": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-B-control-question_1-v3:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "codex_gmail",
+          "model": "gpt-6-luna",
+          "requestedAt": "2026-10-07T20:21:00.647Z",
+          "startedAt": "2026-10-07T20:21:02.267Z",
+          "completedAt": "2026-10-07T20:28:40.385Z"
+        }
+      ]
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-question_2-v3",
+      "runs": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-B-control-question_2-v3:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "codex_gmail",
+          "model": "gpt-6-luna",
+          "requestedAt": "2026-10-07T20:29:03.930Z",
+          "startedAt": "2026-10-07T20:29:04.523Z",
+          "completedAt": "2026-10-07T20:34:55.087Z"
+        }
+      ]
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-join-v3",
+      "runs": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-B-control-join-v3:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "codex_gmail",
+          "model": "gpt-6-luna",
+          "requestedAt": "2026-10-07T20:35:21.048Z",
+          "startedAt": "2026-10-07T20:35:21.605Z",
+          "completedAt": "2026-10-07T20:42:35.915Z"
+        }
+      ]
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-source-review-v2",
+      "runs": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-B-source-review-v2:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "codex_gmail",
+          "model": "gpt-6.1-sol",
+          "requestedAt": "2026-10-07T20:43:12.880Z",
+          "startedAt": "2026-10-07T20:43:13.400Z",
+          "completedAt": "2026-10-07T20:52:18.146Z"
+        }
+      ]
+    }
+  ],
+  "usage_unknown": {
+    "billing": null,
+    "generated_tokens": null
+  },
+  "native_cumulative_not_summed": true
+}

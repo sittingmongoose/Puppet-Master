@@ -1,0 +1,65 @@
+{
+  "all_157_new_blobs_remote_git_identity_and_size_verified": true,
+  "at": "2026-10-07T23:39:55.982644+00:00",
+  "commit": "3a3800cd7c540b6a60769b7b767547140961119e",
+  "commit_verified": true,
+  "critical_exact_files": [
+    {
+      "bytes": 198669,
+      "http_status": 200,
+      "path": "reports/external-research-v10-20261007/BATCH010_MANIFEST.json",
+      "sha256": "db7df679e92d217985a7bdc0aa3c53126b5c1bdee60cbfec2ee1f94ab31a7fac",
+      "url": "https://raw.githubusercontent.com/sittingmongoose/Puppet-Master/3a3800cd7c540b6a60769b7b767547140961119e/reports/external-research-v10-20261007/BATCH010_MANIFEST.json"
+    },
+    {
+      "bytes": 6128,
+      "http_status": 200,
+      "path": "reports/external-research-v10-20261007/INDEX_BATCH010.md",
+      "sha256": "38044703e0037df43a482777c25cfe795fc3b1a7edd8568019b272414a6e12bb",
+      "url": "https://raw.githubusercontent.com/sittingmongoose/Puppet-Master/3a3800cd7c540b6a60769b7b767547140961119e/reports/external-research-v10-20261007/INDEX_BATCH010.md"
+    },
+    {
+      "bytes": 4144,
+      "http_status": 200,
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort3/D-M07-A-v3/PAIR_COMPARISON.json",
+      "sha256": "9dade0d13bc24bf8761ae664e27fb996e4f00223f2668c24fc79b473697372c2",
+      "url": "https://raw.githubusercontent.com/sittingmongoose/Puppet-Master/3a3800cd7c540b6a60769b7b767547140961119e/reports/external-research-v10-20261007/reviews/targeted-cohort3/D-M07-A-v3/PAIR_COMPARISON.json"
+    },
+    {
+      "bytes": 6762740,
+      "http_status": 200,
+      "path": "reports/external-research-v10-20261007/helpers/recorded-usage-v2/final/observation-20261007T231625Z-9eea80abc27c8de8.json",
+      "sha256": "9eea80abc27c8de8c0e15389bdeb5e58900a5408b067c47519e4fab34f084f0d",
+      "url": "https://raw.githubusercontent.com/sittingmongoose/Puppet-Master/3a3800cd7c540b6a60769b7b767547140961119e/reports/external-research-v10-20261007/helpers/recorded-usage-v2/final/observation-20261007T231625Z-9eea80abc27c8de8.json"
+    },
+    {
+      "bytes": 9406586,
+      "http_status": 200,
+      "path": "reports/external-research-v10-20261007/helpers/recorded-usage-v2/final/authority-manifest.json",
+      "sha256": "bbd98aecc90e7cef8e18aba5ffe3dd67d0ee62447c6af162173ec261a79ec9a2",
+      "url": "https://raw.githubusercontent.com/sittingmongoose/Puppet-Master/3a3800cd7c540b6a60769b7b767547140961119e/reports/external-research-v10-20261007/helpers/recorded-usage-v2/final/authority-manifest.json"
+    },
+    {
+      "bytes": 49338,
+      "http_status": 200,
+      "path": "reports/external-research-v10-20261007/helpers/recorded-usage-v2/reader.py",
+      "sha256": "2284d0a4452677f896108f8ef571c9a4e9c11740387358f8ee95ee62927b66a4",
+      "url": "https://raw.githubusercontent.com/sittingmongoose/Puppet-Master/3a3800cd7c540b6a60769b7b767547140961119e/reports/external-research-v10-20261007/helpers/recorded-usage-v2/reader.py"
+    }
+  ],
+  "no_main_or_canon_changes": true,
+  "ref": {
+    "node_id": "REF_kwDOQ3DhHdoAOHJlZnMvaGVhZHMvdDMvcmVzZWFyY2gvZXIxMC1yZXNlYXJjaC1lZmZpY2llbmN5LWNhbXBhaWdu",
+    "object": {
+      "sha": "3a3800cd7c540b6a60769b7b767547140961119e",
+      "type": "commit",
+      "url": "https://api.github.com/repos/sittingmongoose/Puppet-Master/git/commits/3a3800cd7c540b6a60769b7b767547140961119e"
+    },
+    "ref": "refs/heads/t3/research/er10-research-efficiency-campaign",
+    "url": "https://api.github.com/repos/sittingmongoose/Puppet-Master/git/refs/heads/t3/research/er10-research-efficiency-campaign"
+  },
+  "remote_campaign_tree_sha": "579d408e4788a61315c683be77dcf33b439cede1",
+  "remote_tree_receipt_sha256": "b875e30ed4222adce00062bf001990b5cc7e2593456ff933c81edb2cb4144320",
+  "remote_tree_truncated": false,
+  "schema": "ER10-publication-batch010-GitHub-verified-v1"
+}

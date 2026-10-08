@@ -1,0 +1,560 @@
+{
+  "archive_created": false,
+  "campaign_completion_claimed": false,
+  "cleanup_claimed": false,
+  "closed_m16_assertion_bound_objects": 22,
+  "deduplicated_private_supplement_bytes": 65535,
+  "deliverables": [
+    "GAP_OBJECTS.json",
+    "SELECTED_SUPPLEMENT.json",
+    "ORIGINAL_ASSERTION_COVERAGE.json",
+    "READ_IDENTITIES.json",
+    "private/fragments",
+    "validate_supplement.py",
+    "README.md"
+  ],
+  "derived_compaction_alternatives": 13,
+  "embedded_distinct_url_locator_records": 278,
+  "finalized_at": "2026-10-07T23:43:41.102717+00:00",
+  "fixed_deadline": "2026-10-07T23:54:21.000Z",
+  "goals_created": 0,
+  "located_not_materialized_components": 7,
+  "metadata_compaction_only": true,
+  "network_calls": 0,
+  "objects_with_unresolved_limits": 85,
+  "old_assertion_objects": 76,
+  "old_root_approved_fragment_bytes": 17010,
+  "old_root_approved_objects": 44,
+  "old_root_approved_ranges": 222,
+  "old_root_approved_unique_fragments": 199,
+  "original_grade_changes": 0,
+  "original_locator_records": 2072,
+  "original_reviewer_lineage_rows": 803,
+  "pre_compaction_binding_rows": 803,
+  "public_metadata_contains_source_body_excerpts": false,
+  "raw_source_bytes_read_including_parser_probe": 2901877,
+  "raw_source_bytes_read_including_parser_probe_and_validation": 5365329,
+  "raw_source_deletion_authorized": false,
+  "recorded_source_and_derived_read_bytes_conservative": 5618185,
+  "remaining_gaps": {
+    "located_unmaterialized_components": [
+      {
+        "bytes": 731,
+        "end_byte": 42776,
+        "fragment_sha256": "b5a05d994a513ac273cae3ac703fcd757ba0fd1bd87a7f7bc9fab6df4e3d5ace",
+        "frozen_reviewer_refs": [
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/source_evidence/17",
+            "pointer": "/consequential_claim_checks/7",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "S06"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/source_evidence/17",
+            "pointer": "/consequential_claim_checks/8",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "S06"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/source_evidence/17",
+            "pointer": "/consequential_claim_checks/33",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "S06"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/source_evidence/17",
+            "pointer": "/consequential_claim_checks/43",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "S06"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/source_evidence/17",
+            "pointer": "/consequential_claim_checks/53",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "S06"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/source_evidence/17",
+            "pointer": "/consequential_claim_checks/54",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "S06"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/source_evidence/17",
+            "pointer": "/consequential_claim_checks/61",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "record_sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "S06"
+          }
+        ],
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html",
+        "source_sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+        "start_byte": 42045,
+        "status": "HOLD_PRIVATE_PAYLOAD_CAP"
+      },
+      {
+        "bytes": 42,
+        "end_byte": 156,
+        "fragment_sha256": "e8362162f4aaaa431ed69e55a6b0e6fd536236811b0a6443d4cafa1491b3a77f",
+        "frozen_reviewer_refs": [
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/8/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/8",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/18/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/18",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/19/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/19",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/20/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/20",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/50/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/50",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          }
+        ],
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osm-tile-headers-20261007.txt",
+        "source_sha256": "e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2",
+        "start_byte": 114,
+        "status": "HOLD_PRIVATE_PAYLOAD_CAP"
+      },
+      {
+        "bytes": 37,
+        "end_byte": 522,
+        "fragment_sha256": "e3dafcebedb864ea68b56c6172849117d8a5dba2a24dbb8b1dc33637048faf6e",
+        "frozen_reviewer_refs": [
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/8/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/8",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/18/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/18",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/19/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/19",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/20/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/20",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/50/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/50",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          }
+        ],
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osm-tile-headers-20261007.txt",
+        "source_sha256": "e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2",
+        "start_byte": 485,
+        "status": "HOLD_PRIVATE_PAYLOAD_CAP"
+      },
+      {
+        "bytes": 12,
+        "end_byte": 552,
+        "fragment_sha256": "c0e4cec396b85b9e8ec33812a234b020d58b541b94b7084ed88d5005a4e805bb",
+        "frozen_reviewer_refs": [
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/8/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/8",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/18/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/18",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/19/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/19",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/20/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/20",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/50/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/50",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P15"
+          }
+        ],
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osm-tile-headers-20261007.txt",
+        "source_sha256": "e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2",
+        "start_byte": 540,
+        "status": "HOLD_PRIVATE_PAYLOAD_CAP"
+      },
+      {
+        "bytes": 16,
+        "end_byte": 46,
+        "fragment_sha256": "2d2fac52cb0b2a7f7c1e10563237e907a42d1257e5d9e7d8f60047e024dafa3e",
+        "frozen_reviewer_refs": [
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/8/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/8",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/14/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/14",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/19/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/19",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/20/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/20",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/21/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/21",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/52/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/52",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          }
+        ],
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osm-tile-headers-probe2-20261007.txt",
+        "source_sha256": "45e1dfafe270826209cf19de207c64817a4b9a0cccbf6a286240015d98e714c7",
+        "start_byte": 30,
+        "status": "HOLD_PRIVATE_PAYLOAD_CAP"
+      },
+      {
+        "bytes": 84,
+        "end_byte": 262,
+        "fragment_sha256": "5cae74c7c3b5125ea4ce4cd97ae44b5d9980c53a48051176afaad60f00d6e759",
+        "frozen_reviewer_refs": [
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/8/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/8",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/14/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/14",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/19/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/19",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/20/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/20",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/21/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/21",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/52/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/52",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          }
+        ],
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osm-tile-headers-probe2-20261007.txt",
+        "source_sha256": "45e1dfafe270826209cf19de207c64817a4b9a0cccbf6a286240015d98e714c7",
+        "start_byte": 178,
+        "status": "HOLD_PRIVATE_PAYLOAD_CAP"
+      },
+      {
+        "bytes": 37,
+        "end_byte": 321,
+        "fragment_sha256": "27d3060d9c63fbee5fdfbc9e965f6c090496b128461b2038cf701b4e06ac534e",
+        "frozen_reviewer_refs": [
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/8/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/8",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/14/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/14",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/19/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/19",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/20/primary_evidence/1",
+            "pointer": "/consequential_claim_checks/20",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/21/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/21",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          },
+          {
+            "binding": "exact original reviewer source ID joins registry path and SHA",
+            "evidence_pointer": "/consequential_claim_checks/52/primary_evidence/0",
+            "pointer": "/consequential_claim_checks/52",
+            "published_path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+            "record_sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+            "role": "frozen_review_assertion_reference",
+            "source_id": "P16"
+          }
+        ],
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osm-tile-headers-probe2-20261007.txt",
+        "source_sha256": "45e1dfafe270826209cf19de207c64817a4b9a0cccbf6a286240015d98e714c7",
+        "start_byte": 284,
+        "status": "HOLD_PRIVATE_PAYLOAD_CAP"
+      }
+    ],
+    "other_categories": [
+      "Eight closed M16 versioned body alternatives still require root adjudication of replay limits.",
+      "Two unopened crate/package bodies retain package/member replay limits.",
+      "Original HTTP 404 HTML locator and curl locator require exact governing-condition resolution.",
+      "Previously frozen unresolved source/component HOLDs remain unchanged.",
+      "Every selected component still requires independent root necessity and qualifier review; entire original assertions are not certified."
+    ]
+  },
+  "root_delivery_status": "HANDOFF_READY_FOR_INDEPENDENT_RETENTION_REVIEW",
+  "root_independent_fragment_and_qualifier_verification_required": true,
+  "schema": "ER10_RETENTION_SUPPLEMENT_SUMMARY_V1",
+  "selected_supplement_ranges": 100,
+  "selected_supplement_source_objects": 26,
+  "semantic_regrading": false,
+  "source_necessity_counts": {
+    "COMPACT_AUTHORED_IDENTITY_REFERENCE": 27,
+    "HOLD_ARCHIVE_MEMBER_OR_PACKAGE_REPLAY_NOT_SELECTED": 2,
+    "MINIMAL_PRIVATE_SUPPLEMENT_PROPOSED_ORIGINAL_CONDITIONS_PARTIAL": 26,
+    "NO_ADDITIONAL_PRIVATE_PAYLOAD_BY_CLOSED_VERIFIED_COMMIT": 2,
+    "NO_ADDITIONAL_PRIVATE_PAYLOAD_BY_ROOT_VERIFIED_ALTERNATIVE": 5,
+    "NO_PRIVATE_PAYLOAD_ESTABLISHED_FOR_FIXED_LOCATOR": 58,
+    "NO_PRIVATE_PAYLOAD_ESTABLISHED_FOR_FIXED_OBJECT_METADATA": 4,
+    "NO_PRIVATE_PAYLOAD_ESTABLISHED_FOR_RELEASED_SPECIFICATION": 7,
+    "PRIOR_SCOPE_REFERENCE_ONLY": 27,
+    "ROOT_APPROVED_EXISTING_MINIMAL_RANGES": 44,
+    "UNRESOLVED_NOT_FULL_ARCHIVE": 9,
+    "UNWITNESSED_MUTABLE_FROZEN_CONDITION": 2,
+    "VERSIONED_BODY_REFERENCE_PENDING_ROOT_ADJUDICATION": 8
+  },
+  "status": "PARTIAL_BOUNDED_COMPONENT_SELECTION_ROOT_REVIEW_REQUIRED",
+  "total_assertion_bound_objects": 221,
+  "unique_derived_compaction_alternative_bytes": 16267,
+  "unique_supplement_fragments": 84,
+  "unmaterialized_located_range_bytes": 959,
+  "unmaterialized_located_sources": 3,
+  "unresolved_source_identity_links": 0,
+  "validation_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-final-gap-v1/VALIDATION.json",
+  "validation_status": "PASS",
+  "workers_started": 0,
+  "working_assertion_referenced_objects": 199,
+  "writing_reserve_begins": "2026-10-07T23:49:21+00:00"
+}

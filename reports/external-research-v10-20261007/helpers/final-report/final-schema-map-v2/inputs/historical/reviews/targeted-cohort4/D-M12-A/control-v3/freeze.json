@@ -1,0 +1,220 @@
+{
+  "schema": "ER10-independent-review-freeze-v3",
+  "frozen_at": "2026-10-07T20:46:05.896340+00:00",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "native_goal": "NOT_REQUIRED_REVIEW_CARRIER_V2",
+  "science_immutable": true,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/INPUT_MAP.json",
+      "sha256": "16af4de32e1e57532b2f4a5fd508a313885ffcc454e3f580f651d90a2e299130",
+      "bytes": 9382
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/dispatch-receipt.json",
+      "sha256": "4576749ac48c3ec3223be32d21473e062627dfff0c9b52818035f03867855e44",
+      "bytes": 1034
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/dispatch-request.json",
+      "sha256": "8a234feb6549faa300901a04aef9f101109ebf3f514b57825fd8c0b33287a7d1",
+      "bytes": 4204
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/prospective-timing.json",
+      "sha256": "25bb52705cc97e95547e7cd6021dffa3c1c5a9a451f879bb319ab6887cf4e79f",
+      "bytes": 156
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/review.json",
+      "sha256": "60cc7f36b72afa52b5c16b5e389863b613b615f43f77b73bfd4b3b4550f61a9b",
+      "bytes": 113649
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/review.md",
+      "sha256": "3f85ea6b2094bcecca24924f6072beb29e9bc348e62d6a4c5a4899e484bc7bb7",
+      "bytes": 82590
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/couchdb-replication-protocol.lines.txt",
+      "sha256": "7337c7e1097523ed342d70c80778b22ea1a23d072ef374f5d276b58be09df9ef",
+      "bytes": 67457
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/derived-provenance.json",
+      "sha256": "1090277496611732418f26f1e8addb9a24e4f5d4c5381c8240a1970e8dca3381",
+      "bytes": 5752
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/mqtt5-spec.lines.txt",
+      "sha256": "53872a62fc8459f561fa56d2f3fd9b5765a0247246372c654b048591b5154fe6",
+      "bytes": 426169
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-conflicts.html",
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "bytes": 79028
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-conflicts.lines.txt",
+      "sha256": "582232013f31c819a676e7d9e3644984de95018e9738f32b436fad333e678384",
+      "bytes": 36751
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-replication-protocol.html",
+      "sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "bytes": 185155
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-replication-protocol.lines.txt",
+      "sha256": "7337c7e1097523ed342d70c80778b22ea1a23d072ef374f5d276b58be09df9ef",
+      "bytes": 67457
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/idempotent-consumer-author.html",
+      "sha256": "d48518392f5e3635c200c8f635403688dc744381bc38774be7bfa80cf4361769",
+      "bytes": 28808
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/idempotent-consumer-author.lines.txt",
+      "sha256": "1b204bfc9c1483c7708f3c37bd57617f9e471b54e41100fd24a73256fbf4887f",
+      "bytes": 15253
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/index.json",
+      "sha256": "dc4a4f29cd83a62b0dce814775c5abd0d3bfbd20e6454ee1297f6db24106d86b",
+      "bytes": 23042
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/kafka-documentation-route.html",
+      "sha256": "6ed5593a781e0363156c1ce3cbc9b498e340c1fd1f91930990fdc9db6c0ed152",
+      "bytes": 20029
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/kafka-documentation-route.lines.txt",
+      "sha256": "a74395ddd2f1f28e70a26c177f3b0406954f120b28e7a28c00c80b3337fdd972",
+      "bytes": 2152
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/mqtt5-spec.html",
+      "sha256": "0989788706e3812e53c0f3da44a2b58b0991bda70b7bc0865803a10f34f89736",
+      "bytes": 1436832
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/mqtt5-spec.lines.txt",
+      "sha256": "53872a62fc8459f561fa56d2f3fd9b5765a0247246372c654b048591b5154fe6",
+      "bytes": 426169
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-confirms.html",
+      "sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951",
+      "bytes": 121173
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-confirms.lines.txt",
+      "sha256": "eb998fd3faa052887cd1bae76e8dec3592dd2b465ba972259dc2b1762cee389b",
+      "bytes": 36313
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-reliability.html",
+      "sha256": "452ba2b6dcfd48492356e3abe45e878c93bc55a2ec55e14c2de15de03d549b63",
+      "bytes": 42707
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-reliability.lines.txt",
+      "sha256": "bfac226792d217b178b61ea4964e7d0c329250d219c597c76f8f230677a5899e",
+      "bytes": 16710
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc4838.lines.txt",
+      "sha256": "d5d9bf891a1afbca443c80ab1d58c74c98579c9dc6036caa462d15ca55b47cfa",
+      "bytes": 103251
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc4838.txt",
+      "sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790",
+      "bytes": 89265
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc5321.lines.txt",
+      "sha256": "f5eea1abbf26961a51e252e3a8113cb16582e88629b3e584199d521456262bb6",
+      "bytes": 263855
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc5321.txt",
+      "sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "bytes": 225929
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc9110.lines.txt",
+      "sha256": "6830382374cace4c847b40c20f99f9857a272bf4cef79dcdd75bd3dc9e26f00f",
+      "bytes": 578436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/sqs-standard-queues.html",
+      "sha256": "ddc9c32ef9654fed493a1a61d05d05896214e32d6012e6be4658558ce65058b2",
+      "bytes": 14250
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/sqs-standard-queues.lines.txt",
+      "sha256": "8813e06ccd2e3d6198abc7402ba4f0533a201739e8ee9d6e55e6aa02b9d52096",
+      "bytes": 4001
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/transactional-outbox.html",
+      "sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "bytes": 25474
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/transactional-outbox.lines.txt",
+      "sha256": "6a01b5e20fa910d9719c89cf0d76dc713b3f523e68edfee74306d05a87efbd89",
+      "bytes": 10501
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rabbitmq-confirms.lines.txt",
+      "sha256": "eb998fd3faa052887cd1bae76e8dec3592dd2b465ba972259dc2b1762cee389b",
+      "bytes": 36313
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rfc4838.lines.txt",
+      "sha256": "d5d9bf891a1afbca443c80ab1d58c74c98579c9dc6036caa462d15ca55b47cfa",
+      "bytes": 103251
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rfc5321.lines.txt",
+      "sha256": "f5eea1abbf26961a51e252e3a8113cb16582e88629b3e584199d521456262bb6",
+      "bytes": 263855
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rfc9110.lines.txt",
+      "sha256": "6830382374cace4c847b40c20f99f9857a272bf4cef79dcdd75bd3dc9e26f00f",
+      "bytes": 578436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/sqs-standard-queues.lines.txt",
+      "sha256": "8813e06ccd2e3d6198abc7402ba4f0533a201739e8ee9d6e55e6aa02b9d52096",
+      "bytes": 4001
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/transactional-outbox.lines.txt",
+      "sha256": "6a01b5e20fa910d9719c89cf0d76dc713b3f523e68edfee74306d05a87efbd89",
+      "bytes": 10501
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/task-terminal.json",
+      "sha256": "871f14b54e4b5d25027fe13d309b04c522215ac75ae635205cd9a705f33477f8",
+      "bytes": 3077
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/timings.json",
+      "sha256": "6774fee9b1c6b2d3cf805a9c6320a4035f3406d9fa13d0a0c902e9b11126e050",
+      "bytes": 3687
+    }
+  ]
+}

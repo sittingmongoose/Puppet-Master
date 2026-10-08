@@ -1,0 +1,34 @@
+{
+  "schema": "ER10_GLM_PASSIVE_NATIVE_TERMINAL_V2",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_6d13440a-9681-4ed7-8ed0-9434440540ac/state.json",
+  "createdAt": 1791415498407,
+  "native_status": "complete",
+  "same_identity_objective_verified": true,
+  "exact_assignment_objective_terminal_verified": true,
+  "original_activation_verified": true,
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T23:35:53.215375+00:00",
+    "entries": [
+      {
+        "stage": "D-M07-B/control/document-order-review-final-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M07-B--control--document-order-review-final-v3--db78c87b9e43096d.json",
+        "sha256": "db78c87b9e43096de8df7edf0946577fbe45300a6bc89c94e18d820d0db63f83",
+        "bytes": 20046,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "raw_current_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/native_terminal_current_raw.json",
+  "raw_current_sha256": "7d1a319b4121f771947887243fb9db20b2078334c9232303cf895c0828502ea8",
+  "vendor_backend_activation": false,
+  "ACP_alias_binding": "unknown",
+  "actual_create_get_update_responses": "missing; installed native state carrier only",
+  "host_capture_seconds": null,
+  "billing": null
+}

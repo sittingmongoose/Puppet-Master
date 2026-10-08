@@ -1,0 +1,145 @@
+{
+  "schema": "ER10_BATCH011_DERIVED_CLOSED_TRANCHE_ADMIN_V1",
+  "cutoff": "2026-10-07T23:52:23+00:00",
+  "current_state_basis": "User fixed closed-tranche declaration plus exact pre-cut Root receipts; no postcut checkpoint or live scientific imports.",
+  "prior_github": {
+    "commit": "3a3800cd7c540b6a60769b7b767547140961119e",
+    "commit_url": "https://github.com/sittingmongoose/Puppet-Master/commit/3a3800cd7c540b6a60769b7b767547140961119e",
+    "branch": "refs/heads/t3/research/er10-research-efficiency-campaign",
+    "root_verified_new_blob_count": 157,
+    "root_verified_selected_raw_http_body_count": 6,
+    "root_receipt": "state/publication-batch010.json",
+    "root_receipt_sha256": "252a676f18698ee34d9a8904304d47a32b48f87c3d61daa6c22a9d5d984f44b5",
+    "curator_fresh_remote_verification": false,
+    "curator_local_pinned_blob_verification": true
+  },
+  "owned_B10_duplicate_cleanup_original_receipt": {
+    "schema": "ER10-B10-owned-duplicate-staging-cleanup-executed-v1",
+    "at": "2026-10-07T23:40:25.486129+00:00",
+    "status": "VERIFIED_REMOVED_DUPLICATE_PAYLOAD",
+    "commit": "3a3800cd7c540b6a60769b7b767547140961119e",
+    "prepared_receipt_sha256": "92462c6b3ef8548a7b4039e368d53dbf64d144924f9f57e4b32548d3157f9aaf",
+    "removed_files": 157,
+    "removed_logical_bytes": 38837167,
+    "removed_allocated_bytes": 39231488,
+    "retained_posted_alias": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch010/staging/reports/external-research-v10-20261007",
+    "alias_target": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007",
+    "all_posted_file_aliases_rehashed": true,
+    "original_sources_and_scientific_outputs_untouched": true,
+    "campaign_cleanup_complete": false
+  },
+  "closed_helpers": {
+    "report_root_reproduction": {
+      "schema": "ER10-final-schema-supplement-root-independent-replay-v1",
+      "at": "2026-10-07T23:51:24.704028+00:00",
+      "status": "PASS",
+      "original_output_status": "WORKING_NOT_TERMINAL",
+      "ordered_logical_slots": 40,
+      "original_logical_arms": 80,
+      "frozen_inputs_hashed": 191,
+      "frozen_input_bytes": 13245406,
+      "all_artifact_hashes_independently_checked": 14,
+      "mapping_entries": 4640,
+      "meaningful_mechanical_checks": 36,
+      "ledger_unresolved_validation_all_byte_identical": true,
+      "no_original_bytes_changed": true,
+      "full_scientific_grade_reassessment_performed": false,
+      "all_original_unknowns_retained": true,
+      "full_campaign_closed": false,
+      "mapping_coverage": {
+        "critical_arm_cells": 1120,
+        "resolved_critical_arm_cells": 597,
+        "unknown_critical_arm_cells": 523,
+        "mapping_entries": 4640
+      },
+      "aggregate_flag_counts": {
+        "scientific_judgment_available": {
+          "TRUE": 69,
+          "FALSE": 3,
+          "UNKNOWN": 8
+        },
+        "review_formal_output_delivery": {
+          "TRUE": 45,
+          "FALSE": 3,
+          "UNKNOWN": 32
+        },
+        "review_actual_timely_delivery": {
+          "TRUE": 15,
+          "FALSE": 1,
+          "UNKNOWN": 64
+        },
+        "full_scientific_coverage": {
+          "TRUE": 64,
+          "FALSE": 5,
+          "UNKNOWN": 11
+        },
+        "full_declared_primary_source_coverage": {
+          "TRUE": 61,
+          "FALSE": 6,
+          "UNKNOWN": 13
+        },
+        "native_pipeline_qualified": {
+          "TRUE": 8,
+          "FALSE": 2,
+          "UNKNOWN": 70
+        },
+        "time_eligible": {
+          "TRUE": 24,
+          "FALSE": 4,
+          "UNKNOWN": 52
+        },
+        "provenance_eligible": {
+          "TRUE": 0,
+          "FALSE": 4,
+          "UNKNOWN": 76
+        },
+        "method_eligible": {
+          "TRUE": 0,
+          "FALSE": 24,
+          "UNKNOWN": 56
+        },
+        "both_full_scientific_coverage": {
+          "TRUE": 30,
+          "FALSE": 5,
+          "UNKNOWN": 5
+        },
+        "both_full_declared_primary_source_coverage": {
+          "TRUE": 28,
+          "FALSE": 6,
+          "UNKNOWN": 6
+        },
+        "both_review_formal_output_delivery": {
+          "TRUE": 20,
+          "FALSE": 3,
+          "UNKNOWN": 17
+        },
+        "both_review_actual_timely_delivery": {
+          "TRUE": 6,
+          "FALSE": 1,
+          "UNKNOWN": 33
+        }
+      }
+    },
+    "retention_root_identity_validation": "state/retention-final-gap-root-identity-validation-v1.json",
+    "retention_root_preview": {
+      "derived_complete_visible_text_alternatives": 13,
+      "additional_located_ranges_materialized": 7,
+      "unique_fragments": 59,
+      "bytes": 40546,
+      "source_identities": 27,
+      "archive_created": false,
+      "deletion_authorized": false,
+      "whole_assertion_coverage_verified": false
+    }
+  },
+  "event_log_limit": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/root-orchestration-events.jsonl",
+    "read": false,
+    "reason": "Not needed for compact tranche admin. Postcut mutable event file not imported.",
+    "mtime_ns": 1791417220518429894
+  },
+  "working_owner_dispositions": 37,
+  "remaining": 3,
+  "campaign_complete": false,
+  "cleanup_complete": false
+}

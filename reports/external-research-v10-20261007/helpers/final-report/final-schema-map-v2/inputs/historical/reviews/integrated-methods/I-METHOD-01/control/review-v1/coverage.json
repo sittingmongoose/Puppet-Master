@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "case_id": "I-METHOD-01",
+  "artifact_under_review": "jobs/I-METHOD-01/control/reviser-v1/artifact.md",
+  "source_judgment": "FAIL",
+  "rationale": "D01 mandatory discovery not completed; D02 changed-station-metadata acceptance lost. Core source claims and actual/proposed validation distinction largely sound.",
+  "axes": [
+    {
+      "id": 1,
+      "assessment": "ASSESSED",
+      "judgment": "FAIL",
+      "findings": [
+        "F13",
+        "F14",
+        "F15",
+        "F16"
+      ],
+      "reason": "All O1-O6/P1-P6 assessed; mandatory discovery remains incomplete and one frozen P6 acceptance decision is lost."
+    },
+    {
+      "id": 2,
+      "assessment": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "findings": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F09",
+        "F10",
+        "F11",
+        "F12"
+      ],
+      "reason": "Consequential primary-source claims supported; no app statistics/performance proven, no chosen SQLite runtime or numerical dependency profile."
+    },
+    {
+      "id": 3,
+      "assessment": "ASSESSED",
+      "judgment": "FAIL",
+      "findings": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F13"
+      ],
+      "reason": "Useful mechanisms, negatives and options; required investigation of directly resembling workbench tools is not completed. Concrete plot/store comparisons remain evidence gaps, without requiring SQLite to win."
+    },
+    {
+      "id": 4,
+      "assessment": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "findings": [
+        "F14",
+        "F15",
+        "F17"
+      ],
+      "reason": "No materially incorrect rejection found; comparison mislabels draft/critique additions as retained. Critic demand for SQLite to win is stronger than the original requirement; conditional preference is not a wrong-selection defect."
+    },
+    {
+      "id": 5,
+      "assessment": "ASSESSED",
+      "judgment": "FAIL",
+      "findings": [
+        "F16",
+        "F17"
+      ],
+      "reason": "All 12 criticism groups retain dispositions/options/conditions, but changed-metadata acceptance from frozen plan and draft is omitted without disposition."
+    },
+    {
+      "id": 6,
+      "assessment": "ASSESSED",
+      "judgment": "FAIL",
+      "findings": [
+        "F09",
+        "F16",
+        "F18"
+      ],
+      "reason": "Proposed-versus-executed separation is accurate and no false witness found; required changed-metadata acceptance proposal missing."
+    }
+  ],
+  "obligations": {
+    "O1": {
+      "assessment": "ASSESSED",
+      "satisfaction": "PARTIAL",
+      "findings": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F13"
+      ]
+    },
+    "O2": {
+      "assessment": "ASSESSED",
+      "satisfaction": "SATISFIED",
+      "findings": [
+        "F05",
+        "F06",
+        "F07",
+        "F11"
+      ]
+    },
+    "O3": {
+      "assessment": "ASSESSED",
+      "satisfaction": "SATISFIED",
+      "findings": [
+        "F08",
+        "F09"
+      ]
+    },
+    "O4": {
+      "assessment": "ASSESSED",
+      "satisfaction": "PARTIAL",
+      "findings": [
+        "F14",
+        "F15",
+        "F16"
+      ]
+    },
+    "O5": {
+      "assessment": "ASSESSED",
+      "satisfaction": "SATISFIED_SCIENTIFIC_CONTENT",
+      "findings": [
+        "F17"
+      ],
+      "qualification": "Family/dispatch identity is a host provenance field, not inferred from source maps."
+    },
+    "O6": {
+      "assessment": "ASSESSED",
+      "satisfaction": "PARTIAL",
+      "findings": [
+        "F13",
+        "F15",
+        "F16",
+        "F17",
+        "F18"
+      ]
+    },
+    "P1": {
+      "assessment": "ASSESSED",
+      "satisfaction": "SATISFIED",
+      "findings": [
+        "F01",
+        "F11",
+        "F15"
+      ]
+    },
+    "P2": {
+      "assessment": "ASSESSED",
+      "satisfaction": "SATISFIED",
+      "findings": [
+        "F04",
+        "F15"
+      ]
+    },
+    "P3": {
+      "assessment": "ASSESSED",
+      "satisfaction": "SATISFIED",
+      "findings": [
+        "F02",
+        "F06",
+        "F14",
+        "F15"
+      ],
+      "qualification": "Explicit threshold/check deferral is an assessed product choice, not an undisclosed omission."
+    },
+    "P4": {
+      "assessment": "ASSESSED",
+      "satisfaction": "SATISFIED",
+      "findings": [
+        "F04",
+        "F15"
+      ]
+    },
+    "P5": {
+      "assessment": "ASSESSED",
+      "satisfaction": "SATISFIED_WITH_LIMITATIONS",
+      "findings": [
+        "F10",
+        "F11",
+        "F12",
+        "F13",
+        "F14",
+        "F15"
+      ],
+      "qualification": "Frozen undecided component choices/operation/target are addressed; O1 component comparison research remains incomplete."
+    },
+    "P6": {
+      "assessment": "ASSESSED",
+      "satisfaction": "PARTIAL",
+      "findings": [
+        "F16",
+        "F18"
+      ]
+    }
+  },
+  "counts": {
+    "declared": 12,
+    "complete": 12,
+    "assessed": 12,
+    "unassessed": 0,
+    "fully_satisfied_scientific_obligations": 8,
+    "partially_satisfied_scientific_obligations": 4,
+    "axes_declared": 6,
+    "axes_complete": 6,
+    "axes_assessed": 6,
+    "axes_unassessed": 0,
+    "consequential_findings_declared": 18,
+    "consequential_findings_complete": 18,
+    "consequential_findings_assessed": 18,
+    "consequential_findings_unassessed": 0,
+    "material_error_count": 2,
+    "non_material_error_count": 1
+  },
+  "count_definition": "complete means assessment completed; it does not mean the requirement was satisfied. O1-O6 and P1-P6 are the 12 original macro obligations; their constituent decisions are enumerated in judgment.md. Findings are this review's bounded consequential check list, not exhaustive opportunity recall.",
+  "material_defects": [
+    {
+      "id": "D01",
+      "findings": [
+        "F13"
+      ],
+      "obligations": [
+        "O1",
+        "O4",
+        "O6",
+        "P5"
+      ]
+    },
+    {
+      "id": "D02",
+      "findings": [
+        "F16"
+      ],
+      "obligations": [
+        "O4",
+        "O6",
+        "P6"
+      ]
+    }
+  ],
+  "non_material_errors": [
+    {
+      "id": "N01",
+      "findings": [
+        "F14"
+      ]
+    }
+  ],
+  "unassessed_obligations": [],
+  "unassessed_consequential_findings": [],
+  "limitations": [
+    "No exhaustive opportunity recall or complete upstream-library audit claimed.",
+    "No application, acceptance, performance or statistical tests executed.",
+    "Control arm name and method-specific prose visible; timing/counters ignored.",
+    "Candidate family/dispatch identity, lifecycle and terminal status remain host-only fields."
+  ],
+  "usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "output_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null
+  },
+  "host_only": {
+    "critic_family_verified": null,
+    "candidate_lifecycle_verified": null,
+    "quota": null
+  }
+}

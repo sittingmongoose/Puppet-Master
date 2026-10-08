@@ -1,0 +1,165 @@
+{
+  "schema": "ER10-independent-review-freeze-v3",
+  "frozen_at": "2026-10-07T21:34:51.665312+00:00",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "native_goal": "NOT_REQUIRED_REVIEW_CARRIER_V2",
+  "science_immutable": true,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/INPUT_MAP.json",
+      "sha256": "1864a1b449029afc1cfe215b6f8993acde5a6fc339b4ff0f9b0fe3dd696c5787",
+      "bytes": 25033
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/dispatch-receipt.json",
+      "sha256": "8c106561d118dc41df3e264c94035797b44cb7adcf34bb1574c14151cb97f558",
+      "bytes": 1042
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/dispatch-request.json",
+      "sha256": "521baef4a1a5c26ffd143f33608965098469736c703bb2b16642355695468041",
+      "bytes": 4168
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/native-counters.json",
+      "sha256": "4597782b3d607fdcf397bce15b803e255652a71913c2f8cb5bc3623a3d4abbfc",
+      "bytes": 385
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/prospective-timing.json",
+      "sha256": "c5d1337ffa93f3979da4cdd51c61e871faf43676bf5638866abf3c7e14c81df6",
+      "bytes": 156
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/review.json",
+      "sha256": "88555ddea3763ef7f12d1f3dba49d6108238c1de52a3c001e75c4a37106b1a2e",
+      "bytes": 111541
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/review.md",
+      "sha256": "fdc298531ef015dfde3826990aa59b61d8ee6f833590076a584cecdab114d7a2",
+      "bytes": 66305
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/01-rfc9110.txt",
+      "sha256": "8a25f00a28bb5857d445a0cd4c412710e27ddf6ef0a4918a00320a6bde2e4616",
+      "bytes": 449689
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/02-tus-resumable-upload-1.0.0.txt",
+      "sha256": "b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505",
+      "bytes": 23741
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/03-s3-api-createmultipartupload.txt",
+      "sha256": "889414a547eed0201381555e27cb5979d88b7ea1a35d58530f4905e0956aa702",
+      "bytes": 41540
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/04-man7-rename-2.txt",
+      "sha256": "1bcfe1b37be314a3bb1ddc4c8eb0376d9f34dd66627bf593c7d3767cb5e61678",
+      "bytes": 12196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/05-man7-open-2.txt",
+      "sha256": "30d9b2277082646efd1e4611ecba161411a4c5db38e70bc803c83a90e3dfb454",
+      "bytes": 43526
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "sha256": "1010089f058db4f700b29ade830477af6e4a17e88f961bd21ead3e8a8a01db13",
+      "bytes": 464484
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/07-tus-protocol-1.0.0.txt",
+      "sha256": "8c356a2da3ac7ca18c2b326f2eac01af8905a49911964bb1ef6348904f0fc2c2",
+      "bytes": 25710
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/08-aws-s3-uploadpart.txt",
+      "sha256": "e22760684a54cbeb4c9bc857d53eced0c158471b4f9d48096ae09f0602c0b8e0",
+      "bytes": 25407
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/09-sqlite-atomiccommit.txt",
+      "sha256": "61bf481ac63b1a0e4542e7c17034a016c9be4c399a76389d4c57b7f26f7c2978",
+      "bytes": 62000
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/10-git-objects-chapter.txt",
+      "sha256": "10e7ec3170a6a28119f655c263cc4be22eefc3e9a0cc4d326ef782e6d1a89789",
+      "bytes": 20685
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.html",
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "bytes": 15152
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.txt",
+      "sha256": "e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c",
+      "bytes": 6034
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.html",
+      "sha256": "dce987a4dd51d5f0c41f1efa579e28b05b8c585bcc879f5e503d242c524d0d02",
+      "bytes": 32489
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.txt",
+      "sha256": "18712c5ee66fae447d879feafdee0019c3bd440effdc8113c425016223efb712",
+      "bytes": 9366
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.html",
+      "sha256": "120bba4c5fffd1ffa8a57aa6e08d1adad866decadc331a77ab195afb27d73c11",
+      "bytes": 83175
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.txt",
+      "sha256": "c3bfe27835cf348ec6f84de4e7f5ff0ad7657cab4d32d69a95de75cf02b95475",
+      "bytes": 40211
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-source-index.json",
+      "sha256": "f4a437669614224e213a7133c29d0c63cf986cdb34b9efadfd4fb1efdaa107da",
+      "bytes": 4090
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.html",
+      "sha256": "d8cfbbcb7a7815d74313e02f9b0e20fcfc087bc955b197dd44b30f20ff4fbd64",
+      "bytes": 22528
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.txt",
+      "sha256": "e1a970945efc96d9e5e1eb09886bb385cedfc698e96346ece117cf9c0bf6bdbd",
+      "bytes": 11679
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/candidate-quote-audit.json",
+      "sha256": "6234410360992b3204682a66dcde38e19d168cefab7dda7d0403cc7f60ac9f24",
+      "bytes": 1717
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/literal-checks.json",
+      "sha256": "5a113a67552a9b248df69d8fec872f2bb18e26fba9ea018430835315fc518f05",
+      "bytes": 1190
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/mapped-source-integrity.json",
+      "sha256": "e615977567e93c71ba1efa58aba27ac42852fc6dbe8d5e6dd2ae42229ab5ef7e",
+      "bytes": 17813
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/task-terminal.json",
+      "sha256": "6c008aea51c99e1a80805c639b4a10ee1d8333fcaf0ea15b76575c354d22b886",
+      "bytes": 3351
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/timings.json",
+      "sha256": "0eb57c53724b9d64a83aeb7e7ce568ea10fd70d400b21aaefa63363f448c5788",
+      "bytes": 18728
+    }
+  ]
+}

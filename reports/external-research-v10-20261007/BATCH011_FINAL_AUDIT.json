@@ -1,0 +1,81 @@
+{
+  "schema": "ER10_BATCH011_FINAL_METADATA_SCOPE_AUDIT_V1",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "retention_public_metadata_identity_GAP_OBJECTS.json",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_SELECTED_SUPPLEMENT.json",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_ORIGINAL_ASSERTION_COVERAGE.json",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_READ_IDENTITIES.json",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_SUMMARY.json",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_RESULT.json",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_VALIDATION.json",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_README.md",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_validate_supplement.py",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_index_supplement.py",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_PARSER_READ_IDENTITIES.json",
+      "passed": true
+    },
+    {
+      "check": "retention_public_metadata_identity_run-read-journal.jsonl",
+      "passed": true
+    },
+    {
+      "check": "private_retention_not_authorized",
+      "passed": true
+    },
+    {
+      "check": "803_original_retention_lineage_rows_not_whole_assertion_proof",
+      "passed": true
+    },
+    {
+      "check": "frozen_sources_coverage_metadata_exactly_declared",
+      "passed": true
+    },
+    {
+      "check": "curator_final_validator_syntax",
+      "passed": true
+    },
+    {
+      "check": "retention_metadata_no_source_text_or_private_needle_payload_fields",
+      "passed": true
+    }
+  ],
+  "scope_validator_correction": "One false-positive path classification corrected: the expressly declared frozen metadata sources/coverage.json is allowed only by exact input-manifest membership. No general sources-directory exemption.",
+  "private_fragments_opened": 0,
+  "raw_source_bodies_opened": 0,
+  "source_text_or_private_needle_fields": [],
+  "all_original_scientific_bytes_unchanged": true,
+  "all_191_report_input_bytes_unchanged": true,
+  "retention_independent_parent_range_validation": "Root receipt cited; curator did not reopen parents/fragments or run retention materializers."
+}

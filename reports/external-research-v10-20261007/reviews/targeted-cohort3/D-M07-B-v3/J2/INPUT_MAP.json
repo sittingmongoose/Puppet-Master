@@ -1,0 +1,44 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "projdoc",
+      "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+      "version_or_capture": "pyproj 3.6.1",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "projcode",
+      "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+      "version_or_capture": "pyproj 3.6.1; underlying PROJ 9.3.0 assumed by brief, no execution implied",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/final.md",
+  "predecessor_science": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md"
+  ],
+  "authored_intermediates": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/critical_check.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/source_log.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/reserve_check.md"
+  ],
+  "scientific_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md": "30a8e78fbc3913556d985d909d82c0db3b61207859f8588ece1d4cef045cce2d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json": "528a61f25f479c20a76c855e15541cc44f392a575ef5fc85e37d2f9b0cd6205d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/final.md": "1528bec9ff92dd23532544162a6743274e4f85e8df431bf7469b49834503ee69",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md": "8ab7b4d982574ad4f3f3b3b80bd044f41ee446e3f947bc9a2e525d99ae1897b9",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/critical_check.md": "d595a80cdb7da7b80b6c03b2faac5ad00af32e44eaf314b38ca0e1d8edbdf63f",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/source_log.md": "51b9b5c9a38ed85cbc4b584e461146e0a60452599ea2e8452d7023844bb69e73",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/reserve_check.md": "41da8bbc19d5888c06e634eac12c69058e9c9d16a475cf5f18523fe137afa9cc",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda"
+  }
+}

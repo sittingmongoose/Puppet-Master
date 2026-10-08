@@ -1,0 +1,885 @@
+{
+  "schema": "ER10_BATCH011_ORIGINAL_SOURCE_IDENTITY_METADATA_V1",
+  "source_bodies_read": 0,
+  "primary_bodies_published": 0,
+  "metadata_bindings": [
+    {
+      "original_metadata_path": "cases/D-M07-B/inputs/sources.json",
+      "original_pointer": "/sources/0",
+      "identity": {
+        "source_id": "projdoc",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+        "version_or_capture": "pyproj 3.6.1",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst",
+        "kind": "public primary raw bytes"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "cases/D-M07-B/inputs/sources.json",
+      "original_pointer": "/sources/1",
+      "identity": {
+        "source_id": "projcode",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+        "version_or_capture": "pyproj 3.6.1; underlying PROJ 9.3.0 assumed by brief, no execution implied",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py",
+        "kind": "public primary raw bytes"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/0",
+      "identity": {
+        "id": "merc.cpp",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/projections/merc.cpp",
+        "version": "PROJ 9.3.0",
+        "sha256": "007679b914de512ada5818ac8980673a66f7544d331b2d704d1cf9732a6ac604",
+        "bytes": 2240,
+        "total_lines": 84,
+        "first_capture_utc": "2026-10-07T23:37:53.763622+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/1",
+      "identity": {
+        "id": "fwd.cpp",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/fwd.cpp",
+        "version": "PROJ 9.3.0",
+        "sha256": "f323098658bbbc714353bd508f23567808192aec89fb2e989f23276bd42adcdb",
+        "bytes": 9115,
+        "total_lines": 296,
+        "first_capture_utc": "2026-10-07T23:37:53.895623+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/2",
+      "identity": {
+        "id": "_transformer.pyx",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/_transformer.pyx",
+        "version": "pyproj 3.6.1",
+        "sha256": "15bef90ba8ec7f45cefc243415521a70fd78d6fc513a914423cb5610a1a0ea17",
+        "bytes": 39998,
+        "total_lines": 1165,
+        "first_capture_utc": "2026-10-07T23:37:54.032340+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/3",
+      "identity": {
+        "id": "projected_crs.sql",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/projected_crs.sql",
+        "version": "PROJ 9.3.0 packaged SQL",
+        "sha256": "d9ae3d9ace69911acaa55528abbef8a5c067a132d9f18c16251a8f429efa9f0e",
+        "bytes": 1346167,
+        "total_lines": 11230,
+        "first_capture_utc": "2026-10-07T23:38:03.018735+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/4",
+      "identity": {
+        "id": "geodetic_crs.sql",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/geodetic_crs.sql",
+        "version": "PROJ 9.3.0 packaged SQL",
+        "sha256": "d86dec56da2f70bc1ceb2e527005d96617b2c7fab83ee43ee1ee5f3aa42515d8",
+        "bytes": 253205,
+        "total_lines": 2292,
+        "first_capture_utc": "2026-10-07T23:38:03.235764+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/5",
+      "identity": {
+        "id": "axis.sql",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/axis.sql",
+        "version": "PROJ 9.3.0 packaged SQL",
+        "sha256": "e3326ee7d15d1732886a32a8896cf32d5467e300736ddbec64a3044a96df4159",
+        "bytes": 29702,
+        "total_lines": 294,
+        "first_capture_utc": "2026-10-07T23:38:03.494227+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/6",
+      "identity": {
+        "id": "conversion.sql",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/conversion.sql",
+        "version": "PROJ 9.3.0 packaged SQL",
+        "sha256": "a51ed2407e744efd83ae0b40b073b43cfb147e4e0b2ee7cb291551f68afb8d49",
+        "bytes": 1758991,
+        "total_lines": 5349,
+        "first_capture_utc": "2026-10-07T23:38:03.777369+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/7",
+      "identity": {
+        "id": "unit_of_measure.sql",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/unit_of_measure.sql",
+        "version": "PROJ 9.3.0",
+        "sha256": "619e1dfcaebafb732f4308ae82d8578213abaf93f540efde0a58c9c13f996ae7",
+        "bytes": 10021,
+        "total_lines": 97,
+        "first_capture_utc": "2026-10-07T23:38:21.720859+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/8",
+      "identity": {
+        "id": "extent.sql",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/extent.sql",
+        "version": "PROJ 9.3.0",
+        "sha256": "a40cc136c826de390c2e668458148e8fad508066c092d6909184a0d7610769f0",
+        "bytes": 719568,
+        "total_lines": 3721,
+        "first_capture_utc": "2026-10-07T23:38:36.987249+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/9",
+      "identity": {
+        "id": "scope.sql",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/scope.sql",
+        "version": "PROJ 9.3.0",
+        "sha256": "5d54ce41c0f115ba1214d6fe3d8ab08c0dbcfe631a5d7466b8ee04b4ced03bca",
+        "bytes": 26283,
+        "total_lines": 263,
+        "first_capture_utc": "2026-10-07T23:38:37.132773+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/10",
+      "identity": {
+        "id": "aoi.py",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/aoi.py",
+        "version": "pyproj 3.6.1",
+        "sha256": "375bbc2a73aa89c108575edca63beb1e49f2a93d239b212a520af186e3a2a34e",
+        "bytes": 3440,
+        "total_lines": 138,
+        "first_capture_utc": "2026-10-07T23:38:37.493683+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/11",
+      "identity": {
+        "id": "test_c_api.cpp",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/test/unit/test_c_api.cpp",
+        "version": "PROJ 9.3.0",
+        "sha256": "3201735ca8668e549a9da146a6c5b91f695934dd9f1663b7aa646788e402f10c",
+        "bytes": 249145,
+        "total_lines": 6494,
+        "first_capture_utc": "2026-10-07T23:38:37.708956+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/12",
+      "identity": {
+        "id": "transformer.rst",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+        "version": "pyproj 3.6.1",
+        "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+        "bytes": 1337,
+        "total_lines": null,
+        "first_capture_utc": "2026-10-07T23:38:58.589877+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J1/checks.json",
+      "original_pointer": "/primary_sources/13",
+      "identity": {
+        "id": "transformer.py",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+        "version": "pyproj 3.6.1",
+        "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+        "bytes": 44983,
+        "total_lines": null,
+        "first_capture_utc": "2026-10-07T23:38:58.705400+00:00"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/0",
+      "identity": {
+        "id": "merc",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/projections/merc.cpp",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/projections/merc.cpp",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:38:24.950277+00:00",
+        "bytes": 2240,
+        "sha256": "007679b914de512ada5818ac8980673a66f7544d331b2d704d1cf9732a6ac604",
+        "lines": 84,
+        "printed_ranges": [
+          [
+            1,
+            84
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/1",
+      "identity": {
+        "id": "fwd",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/fwd.cpp",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/fwd.cpp",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:38:24.945394+00:00",
+        "bytes": 9115,
+        "sha256": "f323098658bbbc714353bd508f23567808192aec89fb2e989f23276bd42adcdb",
+        "lines": 296,
+        "printed_ranges": [
+          [
+            1,
+            296
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/2",
+      "identity": {
+        "id": "webmerc",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/docs/source/operations/projections/webmerc.rst",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/docs/source/operations/projections/webmerc.rst",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:38:25.055533+00:00",
+        "bytes": 3338,
+        "sha256": "0b77c51e435726db8c821aa42f55217c57d81de0d55f863162a97961ac4b1017",
+        "lines": 100,
+        "printed_ranges": [
+          [
+            1,
+            100
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/3",
+      "identity": {
+        "id": "cython",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/_transformer.pyx",
+        "resolved_url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/_transformer.pyx",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:38:24.952386+00:00",
+        "bytes": 39998,
+        "sha256": "15bef90ba8ec7f45cefc243415521a70fd78d6fc513a914423cb5610a1a0ea17",
+        "lines": 1165,
+        "printed_ranges": [
+          [
+            130,
+            245
+          ],
+          [
+            290,
+            327
+          ],
+          [
+            600,
+            617
+          ],
+          [
+            650,
+            710
+          ],
+          [
+            754,
+            823
+          ],
+          [
+            860,
+            1015
+          ]
+        ],
+        "version": "pyproj 3.6.1"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/4",
+      "identity": {
+        "id": "crs_test",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/test/unit/test_io.cpp",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/test/unit/test_io.cpp",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:38:25.096714+00:00",
+        "bytes": 705101,
+        "sha256": "591363354ba92261610c69054fe240c2f9189dbe5bb9b83c5b8964ae7e6e5b8b",
+        "lines": 16872,
+        "printed_ranges": [],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/6",
+      "identity": {
+        "id": "crs_test",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/test/unit/test_crs.cpp",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/test/unit/test_crs.cpp",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:38:43.421892+00:00",
+        "bytes": 333990,
+        "sha256": "85776b30cf96fd8bb6d938bd30f2b4d2500bf4ae9714568b5911697d2a4ad8c7",
+        "lines": 7514,
+        "printed_ranges": [],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/7",
+      "identity": {
+        "id": "extent",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/extent.sql",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/extent.sql",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:38:43.311351+00:00",
+        "bytes": 719568,
+        "sha256": "a40cc136c826de390c2e668458148e8fad508066c092d6909184a0d7610769f0",
+        "lines": 3721,
+        "printed_ranges": [
+          [
+            2521,
+            2525
+          ],
+          [
+            3265,
+            3269
+          ],
+          [
+            3282,
+            3286
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/8",
+      "identity": {
+        "id": "projected_crs",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/projected_crs.sql",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/projected_crs.sql",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:38:43.324434+00:00",
+        "bytes": 1346167,
+        "sha256": "d9ae3d9ace69911acaa55528abbef8a5c067a132d9f18c16251a8f429efa9f0e",
+        "lines": 11230,
+        "printed_ranges": [
+          [
+            3468,
+            3472
+          ],
+          [
+            3653,
+            3658
+          ],
+          [
+            4356,
+            4360
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/9",
+      "identity": {
+        "id": "axis",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/axis.sql",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/axis.sql",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:03.113885+00:00",
+        "bytes": 29702,
+        "sha256": "e3326ee7d15d1732886a32a8896cf32d5467e300736ddbec64a3044a96df4159",
+        "lines": 294,
+        "printed_ranges": [
+          [
+            157,
+            160
+          ],
+          [
+            262,
+            265
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/10",
+      "identity": {
+        "id": "units",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/unit_of_measure.sql",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/unit_of_measure.sql",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:03.105420+00:00",
+        "bytes": 10021,
+        "sha256": "619e1dfcaebafb732f4308ae82d8578213abaf93f540efde0a58c9c13f996ae7",
+        "lines": 97,
+        "printed_ranges": [
+          [
+            19,
+            21
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/11",
+      "identity": {
+        "id": "conversion",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/conversion.sql",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/conversion.sql",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:03.180282+00:00",
+        "bytes": 1758991,
+        "sha256": "a51ed2407e744efd83ae0b40b073b43cfb147e4e0b2ee7cb291551f68afb8d49",
+        "lines": 5349,
+        "printed_ranges": [
+          [
+            14,
+            17
+          ],
+          [
+            369,
+            371
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/12",
+      "identity": {
+        "id": "tests",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/test/test_transformer.py",
+        "resolved_url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/test/test_transformer.py",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:03.212799+00:00",
+        "bytes": 56837,
+        "sha256": "d4f195f41ddd24e3aa629075312f68ec26befc89881d9019a5d519a04290e8ea",
+        "lines": 1691,
+        "printed_ranges": [
+          [
+            628,
+            720
+          ],
+          [
+            723,
+            747
+          ],
+          [
+            891,
+            915
+          ],
+          [
+            920,
+            968
+          ],
+          [
+            1139,
+            1166
+          ],
+          [
+            1595,
+            1638
+          ]
+        ],
+        "version": "pyproj 3.6.1"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/13",
+      "identity": {
+        "id": "api",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/docs/source/development/reference/functions.rst",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/docs/source/development/reference/functions.rst",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:03.452418+00:00",
+        "bytes": 38818,
+        "sha256": "54317fb5e41d7c517891814a784df0c0f303592398a50167b61d9475de9b9a4c",
+        "lines": 1039,
+        "printed_ranges": [
+          [
+            138,
+            160
+          ],
+          [
+            200,
+            214
+          ],
+          [
+            237,
+            266
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/15",
+      "identity": {
+        "id": "pipeline",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/pipeline.cpp",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/pipeline.cpp",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:34.027275+00:00",
+        "bytes": 25814,
+        "sha256": "5190d6ef0fcfc5d1d119fb141ab804c2f0254dccddb7289004497a22e585aea6",
+        "lines": 715,
+        "printed_ranges": [
+          [
+            168,
+            181
+          ],
+          [
+            185,
+            212
+          ],
+          [
+            217,
+            230
+          ],
+          [
+            233,
+            246
+          ],
+          [
+            251,
+            264
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/16",
+      "identity": {
+        "id": "cython_recheck",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/_transformer.pyx",
+        "resolved_url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/_transformer.pyx",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:33.966593+00:00",
+        "bytes": 39998,
+        "sha256": "15bef90ba8ec7f45cefc243415521a70fd78d6fc513a914423cb5610a1a0ea17",
+        "lines": 1165,
+        "printed_ranges": [
+          [
+            116,
+            130
+          ],
+          [
+            235,
+            262
+          ],
+          [
+            709,
+            744
+          ],
+          [
+            817,
+            840
+          ],
+          [
+            886,
+            938
+          ]
+        ],
+        "version": "pyproj 3.6.1"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/17",
+      "identity": {
+        "id": "test_nan",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/test/test_transformer.py",
+        "resolved_url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/test/test_transformer.py",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:34.002995+00:00",
+        "bytes": 56837,
+        "sha256": "d4f195f41ddd24e3aa629075312f68ec26befc89881d9019a5d519a04290e8ea",
+        "lines": 1691,
+        "printed_ranges": [],
+        "version": "pyproj 3.6.1"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/18",
+      "identity": {
+        "id": "scope",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/scope.sql",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/scope.sql",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:33.960275+00:00",
+        "bytes": 26283,
+        "sha256": "5d54ce41c0f115ba1214d6fe3d8ab08c0dbcfe631a5d7466b8ee04b4ced03bca",
+        "lines": 263,
+        "printed_ranges": [
+          [
+            72,
+            85
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/19",
+      "identity": {
+        "id": "api4d",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/4D_api.cpp",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/4D_api.cpp",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:44.840827+00:00",
+        "bytes": 118706,
+        "sha256": "57785485cdc2fe778724435e19db109aea66006eae50efdfc89a2071347ebd35",
+        "lines": 3045,
+        "printed_ranges": [
+          [
+            47,
+            67
+          ],
+          [
+            76,
+            130
+          ],
+          [
+            162,
+            188
+          ],
+          [
+            199,
+            219
+          ],
+          [
+            243,
+            263
+          ],
+          [
+            404,
+            424
+          ],
+          [
+            470,
+            490
+          ],
+          [
+            524,
+            565
+          ],
+          [
+            719,
+            739
+          ],
+          [
+            797,
+            817
+          ],
+          [
+            1412,
+            1432
+          ],
+          [
+            1681,
+            1701
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/20",
+      "identity": {
+        "id": "api_nan",
+        "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/docs/source/development/reference/functions.rst",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/docs/source/development/reference/functions.rst",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:44.770471+00:00",
+        "bytes": 38818,
+        "sha256": "54317fb5e41d7c517891814a784df0c0f303592398a50167b61d9475de9b9a4c",
+        "lines": 1039,
+        "printed_ranges": [
+          [
+            281,
+            306
+          ],
+          [
+            419,
+            439
+          ],
+          [
+            786,
+            811
+          ]
+        ],
+        "version": "PROJ 9.3.0"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    },
+    {
+      "original_metadata_path": "reviews/targeted-cohort3/D-M07-B-v3/J2/checks.json",
+      "original_pointer": "/supplemental_primary_source_ops/21",
+      "identity": {
+        "id": "cython_norm",
+        "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/_transformer.pyx",
+        "resolved_url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/_transformer.pyx",
+        "status": 200,
+        "capture_utc": "2026-10-07T23:39:44.759143+00:00",
+        "bytes": 39998,
+        "sha256": "15bef90ba8ec7f45cefc243415521a70fd78d6fc513a914423cb5610a1a0ea17",
+        "lines": 1165,
+        "printed_ranges": [
+          [
+            632,
+            652
+          ]
+        ],
+        "version": "pyproj 3.6.1"
+      },
+      "body_opened_by_curator": false,
+      "body_published": false,
+      "declared_not_newly_rehashed": true
+    }
+  ],
+  "limits": "Original declarations and locators only. No hashes reconstruct original raw bodies; no fresh Source assessment or full extraction replay."
+}

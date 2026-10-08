@@ -1,0 +1,354 @@
+{
+  "schema": "ER10-cohort3-ordinary-review-freeze-v3",
+  "case": "D-M08-A",
+  "version": "v3",
+  "reviewer": "J1",
+  "arm": "control",
+  "verdict": "FullSourcePASS",
+  "coverage": "FULL_DECLARED_SCOPE",
+  "unassessed": [],
+  "dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-A-v3-review-J1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-A-v3-review-J1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-v3-review-J1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-A-v3-review-J1",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "actual_t3_thread_binding": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-A-v3-review-J1",
+    "link": "[ER10 COHORT3 M08A v3 independent J1](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-v3-review-J1)",
+    "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "title": "ER10 COHORT3 M08A v3 independent J1",
+    "createdBy": "agent",
+    "creationSource": "mcp",
+    "status": "completed",
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-v3-review-J1:ordinal:1",
+    "activeRunId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "linkedPullRequest": null,
+    "titleRegeneration": null,
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+    "relationshipToParent": "subagent",
+    "runCount": 1,
+    "itemCount": 31,
+    "pendingRequestCount": 0,
+    "archived": false,
+    "settled": false,
+    "settledAt": null,
+    "snoozed": false,
+    "snoozedUntil": null,
+    "createdAt": "2026-10-07T20:48:36.985Z",
+    "updatedAt": "2026-10-07T20:54:19.919Z"
+  },
+  "actual_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-v3-review-J1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T20:48:36.986Z",
+    "startedAt": "2026-10-07T20:48:37.650Z",
+    "completedAt": "2026-10-07T20:54:19.919Z"
+  },
+  "quiet": true,
+  "settled": true,
+  "settle_sequence": 459543,
+  "native_goal_required": false,
+  "dispatch_to_delivery_seconds": 342.933,
+  "queue_startup_seconds": 0.664,
+  "artifacts": {
+    "judgment.md": {
+      "sha256": "ae3f088b97e87251979fb78ae2b2604b3f7fee80b01c20f2931cf84d175c952e",
+      "bytes": 15360
+    },
+    "checks.json": {
+      "sha256": "151b0ea1679010e17d9bf0f6ae559679ae2cc2166c50173699d73f239da7c493",
+      "bytes": 12785
+    },
+    "INPUT_MAP.json": {
+      "sha256": "49dcceda0155af3884a9236016b340b35514fa43e2f6a450b6a8ecf6a8817451",
+      "bytes": 3239
+    },
+    "assignment.md": {
+      "sha256": "ca3329740a2459325f98e584f9e9f0cc0f771cc53c18c5921b31e7b34c1b0103",
+      "bytes": 3076
+    },
+    "dispatch.json": {
+      "sha256": "05184d638cfb297c9b17b7cf3c0d05ddaf19b681af42e480c4cbf0d44d2e40ec",
+      "bytes": 986
+    },
+    "quiet_task_receipt.json": {
+      "sha256": "4be57fe81153f42c9b04c6ee8e8a8c63dd7ebb7f002cd5a9d41940d26c8282c1",
+      "bytes": 5860
+    },
+    "t3_terminal_receipt.json": {
+      "sha256": "8b1dd876a1a01883b77037d8875c608d0ffe361b4d26e3a71afa66eb82f15de3",
+      "bytes": 6397
+    }
+  },
+  "billing": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "source_operations": [
+    {
+      "utc": "2026-10-07T20:48:45Z",
+      "op": "read_input_map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J1/INPUT_MAP.json",
+      "reported_output_approx_tokens": 810
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+      "reported_output_approx_tokens": 457
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+      "reported_output_approx_tokens": 314
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/draft.md",
+      "reported_output_approx_tokens": 965
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/critique.md",
+      "reported_output_approx_tokens": 1685
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/final.md",
+      "reported_output_approx_tokens": 1897
+    },
+    {
+      "utc": "2026-10-07T20:48:55Z",
+      "op": "read_declared_scientific_file",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/rewrite.md",
+      "reported_output_approx_tokens": 1897
+    },
+    {
+      "utc": "2026-10-07T20:49:10Z",
+      "op": "hashes_and_identity",
+      "reported_output_approx_tokens": 697
+    },
+    {
+      "utc": "2026-10-07T20:49:10Z",
+      "op": "httpsem_section_discovery",
+      "reported_output_approx_tokens": 277
+    },
+    {
+      "utc": "2026-10-07T20:49:10Z",
+      "op": "httpcache_section_discovery",
+      "reported_output_approx_tokens": 55
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "3.2",
+        "7.1",
+        "8.3",
+        "8.4",
+        "8.6"
+      ],
+      "reported_output_approx_tokens": 4987,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "8.8",
+        "12.5.3",
+        "12.5.5"
+      ],
+      "reported_output_approx_tokens": 6852,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "13.1.5",
+        "13.2.1",
+        "13.2.2",
+        "14.1",
+        "14.2",
+        "14.3",
+        "14.4"
+      ],
+      "reported_output_approx_tokens": 6697,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "15.3.1",
+        "15.3.7",
+        "15.5.17"
+      ],
+      "reported_output_approx_tokens": 3510,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:23Z",
+      "op": "read_primary_sections",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+      "sections": [
+        "3.1",
+        "3.2",
+        "3.3",
+        "3.4",
+        "4.1"
+      ],
+      "reported_output_approx_tokens": 2430,
+      "display_note": "Initial combined tool response was truncated; relevant sections reread visibly in subsequent operations."
+    },
+    {
+      "utc": "2026-10-07T20:49:33Z",
+      "op": "read_primary_validator_selection_sections_visible",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "ranges": [
+        [
+          3362,
+          3714
+        ],
+        [
+          5525,
+          5618
+        ],
+        [
+          5668,
+          5732
+        ]
+      ],
+      "reported_output_approx_tokens": 6899,
+      "note": "Prior grouped read output truncated; reread visibly. nl in this output numbers concatenated extract, source locators retain listed original ranges."
+    },
+    {
+      "utc": "2026-10-07T20:49:49Z",
+      "op": "read_primary_range_precondition_sections_visible",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "ranges": [
+        [
+          3680,
+          3740
+        ],
+        [
+          6109,
+          6307
+        ],
+        [
+          6308,
+          6466
+        ],
+        [
+          6467,
+          6585
+        ],
+        [
+          6586,
+          6695
+        ]
+      ],
+      "reported_output_approx_tokens": 7637
+    },
+    {
+      "utc": "2026-10-07T20:50:07Z",
+      "op": "read_primary_response_encoding_metadata_sections_visible",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sections": [
+        "8.4",
+        "8.6",
+        "14.6",
+        "15.3.1",
+        "15.3.7",
+        "15.5.17"
+      ],
+      "reported_output_approx_tokens": 6505
+    },
+    {
+      "utc": "2026-10-07T20:50:23Z",
+      "op": "read_exact_release_identity_and_cache_update_conditions",
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt"
+      ],
+      "ranges": {
+        "httpsem": [
+          [
+            1,
+            62
+          ],
+          [
+            5680,
+            5750
+          ]
+        ],
+        "httpcache": [
+          [
+            1,
+            55
+          ],
+          [
+            369,
+            452
+          ]
+        ]
+      },
+      "reported_output_approx_tokens": 3461
+    },
+    {
+      "utc": "2026-10-07T20:53:05Z",
+      "op": "write_requested_judgment",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J1/judgment.md"
+    },
+    {
+      "utc": "2026-10-07T20:53:44Z",
+      "op": "read_back_authored_judgment",
+      "reported_output_approx_tokens": 71
+    },
+    {
+      "utc": "2026-10-07T20:53:44Z",
+      "op": "write_requested_checks_json"
+    }
+  ],
+  "network_source_ops": [],
+  "output_volume": {
+    "reported_command_output_approx_tokens": 58103,
+    "note": "Backend-reported approximate command output, including truncated extraction and rereads; not billing or model token usage.",
+    "judgment_utf8_bytes": 15360,
+    "judgment_sha256": "ae3f088b97e87251979fb78ae2b2604b3f7fee80b01c20f2931cf84d175c952e"
+  },
+  "blinding_limit": "Mapped control/coherent-rewrite-check-final-v3 method-bearing path visible; no sibling/other-arm/parent/campaign history consulted.",
+  "frozen_at": "2026-10-07T20:56:59.168575+00:00"
+}

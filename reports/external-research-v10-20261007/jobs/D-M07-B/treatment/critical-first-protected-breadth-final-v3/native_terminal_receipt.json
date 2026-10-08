@@ -1,0 +1,34 @@
+{
+  "schema": "ER10_GLM_PASSIVE_NATIVE_TERMINAL_V2",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_cc86b49f-a87a-415d-8ea2-0d2f78342ab0/state.json",
+  "createdAt": 1791415510052,
+  "native_status": "complete",
+  "same_identity_objective_verified": true,
+  "exact_assignment_objective_terminal_verified": true,
+  "original_activation_verified": true,
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T23:36:45.494149+00:00",
+    "entries": [
+      {
+        "stage": "D-M07-B/treatment/critical-first-protected-breadth-final-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M07-B--treatment--critical-first-protected-breadth-final-v3--9e94d76fb98ffde1.json",
+        "sha256": "9e94d76fb98ffde13231aa3b748a0ad8defca652ecab0622bcfd3fd9426bfea0",
+        "bytes": 20254,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "raw_current_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/native_terminal_current_raw.json",
+  "raw_current_sha256": "e70a578ba3dc3a4d54ec2765c28451750762b4e66745b23fa8745c1060ad070b",
+  "vendor_backend_activation": false,
+  "ACP_alias_binding": "unknown",
+  "actual_create_get_update_responses": "missing; installed native state carrier only",
+  "host_capture_seconds": null,
+  "billing": null
+}

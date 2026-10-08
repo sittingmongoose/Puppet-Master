@@ -1,0 +1,336 @@
+{
+  "schema": "COHORT3-finalfinite-v3-prelaunch-freeze",
+  "case": "D-M07-B",
+  "root_schedule": {
+    "owner": "targeted-cohort3",
+    "family": "GLM",
+    "new_version": 3,
+    "common_stages": [
+      {
+        "assignment": "fresh-untrusted-seed",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "control": [
+      {
+        "assignment": "document-order-review-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          25,
+          5
+        ],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "critical-first-protected-breadth-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          12,
+          13,
+          5
+        ],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 50,
+    "common_absolute_pair_wall_minutes": 50,
+    "arm_overlap": true,
+    "original_case_card_sha256": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "treatment",
+      "control"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "root_schedule_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "binding": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    },
+    "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+  },
+  "carrier": "prospectivepassivev2 actualstate, missingrawAPI explicit",
+  "original_science_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/case-card.json": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/INPUT_MAP.json": "97c3357137b78235fe44ecdceab982c213d6a054bc3cbab57628e41b9429b73e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/SEED_INPUT_MAP.json": "c1b53de01fa55e15acf77476e68f0444bd4c9aefeb91a43c99b110bfee7b1faf",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md": "30a8e78fbc3913556d985d909d82c0db3b61207859f8588ece1d4cef045cce2d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json": "528a61f25f479c20a76c855e15541cc44f392a575ef5fc85e37d2f9b0cd6205d"
+  },
+  "all_stages": [
+    {
+      "stage": "D-M07-B/common/fresh-untrusted-seed-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/assignment.md",
+      "task_sha256": "aa90b95f36cb6f1b3a04ab5103a92ee6db07f8541492bf8abe990f4f2b28b6d3",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "projdoc",
+            "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+            "version_or_capture": "pyproj 3.6.1",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "projcode",
+            "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+            "version_or_capture": "pyproj 3.6.1; underlying PROJ 9.3.0 assumed by brief, no execution implied",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/boundary.json"
+      },
+      "input_map_sha256": "b8d7efa2f7bbb11a6461bb187edffcd1a293e2d18194cd6dae93414bc0a75ed3",
+      "assignment": {
+        "assignment": "fresh-untrusted-seed",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/case-card.json": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/INPUT_MAP.json": "97c3357137b78235fe44ecdceab982c213d6a054bc3cbab57628e41b9429b73e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/SEED_INPUT_MAP.json": "c1b53de01fa55e15acf77476e68f0444bd4c9aefeb91a43c99b110bfee7b1faf",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md": "30a8e78fbc3913556d985d909d82c0db3b61207859f8588ece1d4cef045cce2d",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json": "528a61f25f479c20a76c855e15541cc44f392a575ef5fc85e37d2f9b0cd6205d"
+      },
+      "objective": "Execute ER10 D-M07-B v3 fresh-untrusted-seed",
+      "clientRequestId": "er10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3",
+      "dispatch_task": "/goal Execute ER10 D-M07-B v3 fresh-untrusted-seed. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/assignment.md.",
+      "dispatch_task_sha256": "c6800c28a91de4ef293672b2e7fcf3292cd9b83c9caef1f2c138338fd55343f0",
+      "tool_policy": {
+        "goal": "literal installed /goal only; no model-native Goal tools or second Goal",
+        "science": "exact declared map; primary checks permitted within original scope; no descendants",
+        "carrier": "passive-v2 actual installed driver state, not inferred T3 task",
+        "expiry": "clock_guard passive_cancel; no ordinary live worker steer",
+        "host_startup_observation": "ONE exact-thread activity read actual installed Goal-loop startup event after actual IDs registration; then root nomination; export only one exact assigned nominated state; no polling/steer/retry/secondGoal",
+        "startup_gate_sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0"
+      }
+    },
+    {
+      "stage": "D-M07-B/control/document-order-review-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/assignment.md",
+      "task_sha256": "3c6fce2199577e499cc3ade0edb40a2d32eb8a2807da455c61786a1821eb7817",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "projdoc",
+            "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+            "version_or_capture": "pyproj 3.6.1",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "projcode",
+            "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+            "version_or_capture": "pyproj 3.6.1; underlying PROJ 9.3.0 assumed by brief, no execution implied",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "bfa001b6fc43d966bd877552dfbdd88d557b11e79d6c1c7cf16789fea3dbed2d",
+      "assignment": {
+        "assignment": "document-order-review-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          25,
+          5
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/case-card.json": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/INPUT_MAP.json": "97c3357137b78235fe44ecdceab982c213d6a054bc3cbab57628e41b9429b73e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/SEED_INPUT_MAP.json": "c1b53de01fa55e15acf77476e68f0444bd4c9aefeb91a43c99b110bfee7b1faf",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md": "30a8e78fbc3913556d985d909d82c0db3b61207859f8588ece1d4cef045cce2d",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json": "528a61f25f479c20a76c855e15541cc44f392a575ef5fc85e37d2f9b0cd6205d"
+      },
+      "objective": "Execute ER10 D-M07-B v3 document-order-review-final",
+      "clientRequestId": "er10-cohort3-D-M07-B-control-document-order-review-final-v3",
+      "dispatch_task": "/goal Execute ER10 D-M07-B v3 document-order-review-final. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/assignment.md.",
+      "dispatch_task_sha256": "2b00f8dada21fe31e8275b7a048089c2a548179a447089a01b543023516c9ae3",
+      "tool_policy": {
+        "goal": "literal installed /goal only; no model-native Goal tools or second Goal",
+        "science": "exact declared map; primary checks permitted within original scope; no descendants",
+        "carrier": "passive-v2 actual installed driver state, not inferred T3 task",
+        "expiry": "clock_guard passive_cancel; no ordinary live worker steer",
+        "host_startup_observation": "ONE exact-thread activity read actual installed Goal-loop startup event after actual IDs registration; then root nomination; export only one exact assigned nominated state; no polling/steer/retry/secondGoal",
+        "startup_gate_sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0"
+      }
+    },
+    {
+      "stage": "D-M07-B/treatment/critical-first-protected-breadth-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+      "task_sha256": "98d67a0ee68041799f002e9b39fd919555483a8991969984b462ad37a9350ddc",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "projdoc",
+            "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+            "version_or_capture": "pyproj 3.6.1",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "projcode",
+            "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+            "version_or_capture": "pyproj 3.6.1; underlying PROJ 9.3.0 assumed by brief, no execution implied",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "c91995f084dc92e0fa59e5869be78ef160ae73fe8b30875736e80e99ed507a95",
+      "assignment": {
+        "assignment": "critical-first-protected-breadth-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          12,
+          13,
+          5
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/case-card.json": "4634d7cba5296f17bb3e9dd42c25ccd98d48685ca551eb706be5536734e47a38",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/INPUT_MAP.json": "97c3357137b78235fe44ecdceab982c213d6a054bc3cbab57628e41b9429b73e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/SEED_INPUT_MAP.json": "c1b53de01fa55e15acf77476e68f0444bd4c9aefeb91a43c99b110bfee7b1faf",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md": "30a8e78fbc3913556d985d909d82c0db3b61207859f8588ece1d4cef045cce2d",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json": "528a61f25f479c20a76c855e15541cc44f392a575ef5fc85e37d2f9b0cd6205d"
+      },
+      "objective": "Execute ER10 D-M07-B v3 critical-first-protected-breadth-final",
+      "clientRequestId": "er10-cohort3-D-M07-B-treatment-critical-first-protected-breadth-final-v3",
+      "dispatch_task": "/goal Execute ER10 D-M07-B v3 critical-first-protected-breadth-final. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/assignment.md.",
+      "dispatch_task_sha256": "8f3a0ec30198df9908bb568e85983a9687460706a491dc9d74437e121d39c004",
+      "tool_policy": {
+        "goal": "literal installed /goal only; no model-native Goal tools or second Goal",
+        "science": "exact declared map; primary checks permitted within original scope; no descendants",
+        "carrier": "passive-v2 actual installed driver state, not inferred T3 task",
+        "expiry": "clock_guard passive_cancel; no ordinary live worker steer",
+        "host_startup_observation": "ONE exact-thread activity read actual installed Goal-loop startup event after actual IDs registration; then root nomination; export only one exact assigned nominated state; no polling/steer/retry/secondGoal",
+        "startup_gate_sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0"
+      }
+    }
+  ],
+  "attempt_limit": 1,
+  "old_versions": "immutable; costs retained inclusive separate, no priorfailedscience inputs/no bestof",
+  "frozen_at": "2026-10-07T22:36:07.184715+00:00",
+  "administrative_original": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-B/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+    "sha256": "8309eb59ba0a693c8d40cb274ddb3c132524d5754c4d11d83c1b8767ca916e99"
+  },
+  "prospective_live_catalog_binding_at": "2026-10-07T22:36:07.184715+00:00",
+  "capacity_authority": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/cohort3-glm2-explicit-transfer-v1.json",
+  "activation_registration_order_policy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/prospective-activation-notice-registration-order-v1.json",
+  "prospective_startup_event_gate": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/PROSPECTIVE_GLM_STARTUP_EVENT_GATE_V1.md",
+    "sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0",
+    "hash_bound_at": "2026-10-07T22:50:35.483361+00:00",
+    "prior_overlay_sha256": "3084d5535f4c3a981d18a6298c3040d5a1ca23e70446b4a4f473fad02a0c4f97",
+    "prior_overlay_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-B/administrative-prebinding-originals/before-startup-event-gate.json",
+    "registration_before_observation": true,
+    "activity_startup_read_limit": 1,
+    "activation_export_requires_one_exact_nominated_state": true,
+    "missing_startup_event": "PENDING; supported lifecycle notification only",
+    "no_time_extension": true
+  }
+}

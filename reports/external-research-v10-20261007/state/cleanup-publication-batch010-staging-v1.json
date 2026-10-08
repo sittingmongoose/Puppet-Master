@@ -1,0 +1,15 @@
+{
+  "schema": "ER10-B10-owned-duplicate-staging-cleanup-executed-v1",
+  "at": "2026-10-07T23:40:25.486129+00:00",
+  "status": "VERIFIED_REMOVED_DUPLICATE_PAYLOAD",
+  "commit": "3a3800cd7c540b6a60769b7b767547140961119e",
+  "prepared_receipt_sha256": "92462c6b3ef8548a7b4039e368d53dbf64d144924f9f57e4b32548d3157f9aaf",
+  "removed_files": 157,
+  "removed_logical_bytes": 38837167,
+  "removed_allocated_bytes": 39231488,
+  "retained_posted_alias": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch010/staging/reports/external-research-v10-20261007",
+  "alias_target": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007",
+  "all_posted_file_aliases_rehashed": true,
+  "original_sources_and_scientific_outputs_untouched": true,
+  "campaign_cleanup_complete": false
+}

@@ -1,0 +1,599 @@
+{
+  "comparisons": [
+    {
+      "case": "D-M08-A",
+      "disposition": "HELD_FAILED_SEED_STAGE_OVERRUN",
+      "source_quality": "UNASSESSED",
+      "arms": {
+        "control": "NOT_ADMITTED_FAILED_COMMON_SEED",
+        "treatment": "NOT_ADMITTED_FAILED_COMMON_SEED"
+      },
+      "actual_requestedAt": "2026-10-07T18:54:13.374Z",
+      "actual_deadline": "2026-10-07T18:57:13.374Z",
+      "draft_saved": "2026-10-07T18:57:17.526937903Z",
+      "native_terminal": "2026-10-07T19:00:57Z",
+      "native_status": "complete",
+      "delivery_status": "completed_late",
+      "draft_save_overrun_seconds": 4.153,
+      "native_terminal_elapsed_seconds": 403.626,
+      "native_terminal_overrun_seconds": 223.626,
+      "clock_annotation": "Original child receipts retained unchanged; actual T3 requestedAt supersedes child sampled18:54:29 boundary. Draft itself was also late on actual boundary.",
+      "goal_tokens_raw": 46365,
+      "generated_tokens": null,
+      "billing": null,
+      "quiet": true,
+      "pending_descendants": false,
+      "hashes": {
+        "native_terminal_receipt.json": "6c0a5d66d61e4c946081b431c32da07050433d6af1f0f3db9ae058e4bba636fc",
+        "quiet_task_receipt.json": "7bea0408ed55b128845a280ae308bbf74b061d48ffe058c590cd35df61fb999e",
+        "INPUT_MAP.json": "3aca4805d71722a3f65aef949fd5ebeb1c7b4352eea5b65558d168ed1dd54c8d",
+        "draft.md": "455eed015bee0d97839da28528b6f18c7b98277f3437dc54dc8739dd3adc305b",
+        "task.txt": "2865463bd311b2cbd05c1259b6081d402b315185c60516dbe65a38688e407a24",
+        "native_activation_receipt.json": "7033625e1ab0acb1001777b7e626f0a8c47979a137c92faae303a9a337569e6b",
+        "t3_dispatch_clock_receipt.json": "6dcf447bb861f5573b92ae3cd9bafce474273e2d6eaf100661ab0594b546aee4",
+        "timings.json": "3bd504af42ca1e7412201d6cc1846a29cdfbb131a35349285540b349fb093cd2",
+        "dispatch_response.json": "7bd33c92aba1d4751301172606bc824b3129ba25813acc2e66b3aed2676925d1"
+      },
+      "updated_at": "2026-10-07T19:02:42.314822+00:00",
+      "scientific_classification": "INFRASTRUCTURE_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "is_method_comparison": false
+    },
+    {
+      "case": "D-M08-B",
+      "version": "v1",
+      "disposition": "HELD_FAILED_SEED_DELIVERY_OVERRUN",
+      "scientific_classification": "INFRASTRUCTURE_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "is_method_comparison": false,
+      "arms": {
+        "control": "NOT_ADMITTED_FAILED_COMMON_SEED",
+        "treatment": "NOT_ADMITTED_FAILED_COMMON_SEED"
+      },
+      "source_quality": "UNASSESSED",
+      "native_goal_id": "01a117c0-b581-7262-95f2-1b9652238ff0",
+      "native_status": "complete",
+      "native_first_update_response": "NOT_PERSISTED: receipt construction TextEncoder failure; actual repeated completion response/state retained",
+      "native_tokens_raw": 23810,
+      "native_elapsed_raw_seconds": 107,
+      "generated_tokens": null,
+      "billing": null,
+      "requestedAt": "2026-10-07T19:04:27.651Z",
+      "startedAt": "2026-10-07T19:04:28.182Z",
+      "delivery_completedAt": "2026-10-07T19:08:19.578Z",
+      "dispatch_to_delivery_seconds": 231.927,
+      "delivery_overrun_seconds": 51.92699999999999,
+      "quiet": true,
+      "settled": true,
+      "hashes": {
+        "native_terminal_receipt.json": "eaefc09a351675a9e4cfbee21d190f04af6106be1125633248f4a108be083bd5",
+        "quiet_task_receipt.json": "ec11017645148590ede464d7abc12a16a8f22dd0f7ac9013ebf35a80a78e8219",
+        "INPUT_MAP.json": "22ed109311ab4420aaf72dc988e447ac537e5f72a19f66dbf32881ebe2162190",
+        "boundary.json": "f7ab52fd700bcbba13c801424d48c668b7e4810d714698b98d1f57b5b93db0b8",
+        "t3_terminal_clock_receipt.json": "f9cb0062fea5f727bfab0f67c339a90f5cc39b95f9178480de6f7bc83d498bfb",
+        "draft.md": "6b73e52c01bd15f9f2b85f676a92e2f7d0359fc30e5c7e4529f570bf39bfedae",
+        "task.txt": "cdf0ffefe5f2cd80bc1ac0a3419c825a3835db4a821107c77740ff2b1ee9e9be",
+        "native_activation_receipt.json": "59a2107e96ba1b0e254fc51773d7cf57efa4caee43fc858cdb9718d09619d581",
+        "timings.json": "b783b1a6b90c7663ffee529185bf82ca79a53ada5497d8e87b62d890c9e38a00",
+        "dispatch_response.json": "4768769acc1df3119b595d61dd7cdf1c8c43fda9108443c75998b9a1b8a7d9a0"
+      },
+      "frozen_at": "2026-10-07T19:09:57.189063+00:00"
+    },
+    {
+      "case": "D-M08-A",
+      "version": "v2",
+      "scientific_classification": "INFRASTRUCTURE_COMMON_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "is_method_comparison": false,
+      "disposition": "HOLD_VERSION_AFTER_ACTUAL_FAILURE_NO_IDENTICAL_RETRY",
+      "blockers": [
+        "critic delivered241.001sec exceeds240sec stage",
+        "required hostactive criticstate absent, snapshot complete only"
+      ],
+      "arms": {
+        "control": "NOT_ADMITTED_FAILED_COMMON_SEED",
+        "treatment": "NOT_ADMITTED_FAILED_COMMON_SEED"
+      },
+      "source_quality": "UNASSESSED",
+      "original_failure_retained": true,
+      "research_dispatch_to_delivery_seconds": 268.438,
+      "critic_dispatch_to_delivery_seconds": 241.001,
+      "native_goal_tokens_raw_separate": {
+        "research": 68209,
+        "critic": 43283
+      },
+      "billing": null,
+      "generated_tokens": null,
+      "quiet": true,
+      "hashes": {
+        "native_terminal_receipt.json": "577b5d45ec1de9dec3bcbde737a6f146f75733be95895aa813531d924d582f81",
+        "quiet_task_receipt.json": "0310c1296d1d94a661b9c6eb6bcf2cb4080f30797c747926d0325048fcb3a81d",
+        "dispatch.json": "eda4f887901e0b071d8a7954038b9721feb02353bf54fe16d5a47f0397505fc0",
+        "INPUT_MAP.json": "fcc5d00598b4e0128fbe3068595590f57cabd2d76e05e3650b53e640d8ea5598",
+        "boundary.json": "1926ab33dbee0c58dbcca3e0f20b2eceb2bac38c41ee7075ba758ba33f908f32",
+        "t3_terminal_clock_receipt.json": "341bedd2a4dfd70f0acaba99cb3d03b63dd980c8bebb71053a1bb56d28bfb3fa",
+        "task.txt": "1fa585adb526fd973957d4c0b828f96c86ffe3db4d212799f8e52908922cbb38",
+        "timings.json": "cec20d30d20274c24c592b390ec40fa26c27d8a6b70052f51306abaa9a03e667",
+        "critique.md": "2f36554b143736b6465b3818cdcbd5e35a8ac156319c3d87641479f970209bbc"
+      },
+      "frozen_at": "2026-10-07T19:25:46.323529+00:00"
+    },
+    {
+      "case": "D-M08-B",
+      "version": "v2",
+      "status": "INCOMPLETE_MATCHED_COMPARISON",
+      "control": {
+        "arm": "control",
+        "version": "v2",
+        "native_status": "complete",
+        "quiet": true,
+        "settled": true,
+        "requestedAt": "2026-10-07T19:38:32.139Z",
+        "startedAt": "2026-10-07T19:38:32.891Z",
+        "completedAt": "2026-10-07T19:41:19.107Z",
+        "dispatch_to_delivery_seconds": 166.968,
+        "cold_seed_to_delivery_seconds": 897.272,
+        "absolute_deadline_margin_seconds": 2.728,
+        "source_quality": "UNASSESSED",
+        "native_goal_tokens_raw": 34128,
+        "generated_tokens": null,
+        "billing": null,
+        "timing_file": "MISSING: optionalcandidatewritefailed; host timingcarrier records actualT3states",
+        "hashes": {
+          "native_terminal_receipt.json": "1af614244d8d515e2aef962e38fe8fc1f9b8861e7a5eb6b6addc7a1f1d4558ca",
+          "quiet_task_receipt.json": "ca7a6bf240bc27a8f8f2953000fc258988bea78042baf64d2a721f28173e1d5c",
+          "dispatch.json": "107d00dc8e1a89d9935d90b627e92b371e0eba914d6cebb353700244476ab53b",
+          "INPUT_MAP.json": "ca7183a24c5ffcb258c3b5e3c7ff654be4719d1fc43da9a9b9fd698763a19072",
+          "boundary.json": "b1dca159e7731642e7bde5c4c98a5ff787690cdd706ae0656e04c81c45d910d1",
+          "t3_terminal_clock_receipt.json": "e816a389ca6226245c21c9f0ed940645a5c023916ef9fc21a8309b7d737219bd",
+          "task.txt": "59febf1ff7f08326f941fb5205c2a117754562fa96636e2c6a4e9ee2928f57f9",
+          "native_activation_receipt.json": "a22b17598ad1f24cd80f3b5fbaf04cb0b5806606965c6432a39ef8d0833a9202",
+          "final.md": "f340a75df9cd9e204a4eedbb778f33555904f1987edc431d42d6ae62fcd2e304",
+          "rewrite.md": "f340a75df9cd9e204a4eedbb778f33555904f1987edc431d42d6ae62fcd2e304"
+        }
+      },
+      "treatment": {
+        "case": "D-M08-B",
+        "version": "v2",
+        "arm": "treatment",
+        "disposition": "EXPIRED_INTERRUPTED_MISSING_FINAL",
+        "t3_status": "interrupted",
+        "native_status": "paused",
+        "native_identity": "01a117df-e536-7c51-9238-b79427ce9fae",
+        "native_terminal_complete": false,
+        "quiet": true,
+        "settled": true,
+        "files": {
+          "amendment.md": {
+            "exists": true,
+            "sha256": "d5a3d67d91c33bdddc2dd34cb4acc7801b026fc0c560c7dc5eade46ed452cb68",
+            "bytes": 4413
+          },
+          "change_dependency_check.md": {
+            "exists": false,
+            "sha256": null,
+            "bytes": 0
+          },
+          "final.md": {
+            "exists": false,
+            "sha256": null,
+            "bytes": 0
+          },
+          "timings.json": {
+            "exists": false,
+            "sha256": null,
+            "bytes": 0
+          }
+        },
+        "native_goal_raw": {
+          "objective_sha256": "0a271d8194b6d836eaf5d3bd4f551f570ee12265dbde5740f6214c83e42b091a",
+          "status": "paused",
+          "tokensUsed": 24317,
+          "tokenBudget": null,
+          "timeUsedSeconds": 247
+        },
+        "source_quality": "UNASSESSED",
+        "no_retry": true,
+        "frozen_at": "2026-10-07T20:04:47.269066+00:00"
+      },
+      "winner": null,
+      "twofold_objective": "NOT_ESTABLISHED",
+      "source_quality": "UNASSESSED"
+    },
+    {
+      "case": "D-M10-A",
+      "version": "passivecarrier-v2-originalbudget",
+      "disposition": "HELD_FAILED_COMMONSEED_STAGE_OVERRUN",
+      "scientific_classification": "INFRASTRUCTURE_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "is_method_comparison": false,
+      "requestedAt": "2026-10-07T20:06:20.226Z",
+      "startedAt": "2026-10-07T20:06:20.813Z",
+      "completedAt": "2026-10-07T20:10:34.149Z",
+      "dispatch_to_delivery_seconds": 253.923,
+      "stage_ceiling_seconds": 180,
+      "overrun_seconds": 73.923,
+      "arms": {
+        "treatment": "NOT_ADMITTED_FAILED_COMMONSEED",
+        "control": "NOT_ADMITTED_FAILED_COMMONSEED"
+      },
+      "evidence_withholding": "INTACT: no critic/reconciler/finalizer launched, no evidencephase receivedproposal",
+      "source_quality": "UNASSESSED",
+      "native_status": "complete",
+      "native_identity": "01a117f9-5c12-7700-bddb-960ea0c35cfa",
+      "native_goal_raw": {
+        "objective_sha256": "877cc943a183bde05d7a71dff69f997464a7e06e907459633e2ed7f6dbebed4f",
+        "status": "complete",
+        "tokensUsed": 55175,
+        "tokenBudget": null,
+        "timeUsedSeconds": 207
+      },
+      "raw_api_bodies": null,
+      "generated_tokens": null,
+      "billing": null,
+      "quiet": true,
+      "settled": true,
+      "clock_guard": {
+        "schema": "ER10-readonly-clock-guard-v1",
+        "observed_at": "2026-10-07T20:12:32.965109+00:00",
+        "original_deadline": "2026-10-07T20:09:20.226000+00:00",
+        "seconds_remaining": -192.739109,
+        "deadline_elapsed": true,
+        "prior_notice_at": null,
+        "prior_notice_was_early": null,
+        "actual_notice_grace_end": null,
+        "grace_elapsed": null,
+        "policy": "lifecycle_notice",
+        "decision": "LIFECYCLE_DELIVERY_NOTICE_IF_LIVE",
+        "limitation": "Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline."
+      },
+      "timings": "candidatefilemissing; hostactualT3timing frozen",
+      "files": {
+        "draft.md": {
+          "exists": true,
+          "sha256": "d6e93293ff56bff71519cdc451d9c7f42f984b649a4b7d8b9763d7e405cea5f7",
+          "bytes": 4629
+        },
+        "timings.json": {
+          "exists": false,
+          "sha256": null,
+          "bytes": 0
+        }
+      },
+      "frozen_at": "2026-10-07T20:12:33.755994+00:00"
+    },
+    {
+      "case": "D-M08-A",
+      "version": "v3",
+      "is_method_comparison": true,
+      "disposition": "COMPLETE_FULL_SOURCE_PAIR",
+      "control": "FullSourcePASS",
+      "treatment": "FullSourceFAIL",
+      "six_axes": "Full declared scope independently assessed each arm; no weighted rubric",
+      "conclusion": "This exact trial favors coherent rewrite for source quality. Amendment-first loses the coded-byte coordinate/storage-count condition, and treatment final stage is longer. No treatment speed/quality win or general causal estimate.",
+      "review_freezes": {
+        "J2": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J2/freeze_disposition.json",
+        "J1": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/J1/freeze_disposition.json"
+      },
+      "pair_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/V3_PAIR_FREEZE.json",
+      "economics": {
+        "new_upper_bound_minutes_each_cold": 40,
+        "original_15min_success_claim": false,
+        "shared_stage_dispatch_to_delivery_seconds_fully_charged_each_arm": 591.591,
+        "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 1370.881,
+        "paired_critical_wall_seconds": 1114.876,
+        "arms": {
+          "control": {
+            "occupied_dispatch_to_delivery_seconds_including_full_shared": 932.572,
+            "actual_common_T0_to_final_delivery_seconds": 1016.419,
+            "final_stage_seconds": 340.981,
+            "queue_and_host_handoff_seconds_before_final": 83.84699999999998,
+            "native_goal_raw_counters": {
+              "objective_sha256": "14e0ce13e590d5a0c5405d929b571beac0203ceb90f7abd43ad8a64ef94223a0",
+              "status": "complete",
+              "tokensUsed": 82414,
+              "tokenBudget": null,
+              "timeUsedSeconds": 307
+            },
+            "final_bytes": 7319
+          },
+          "treatment": {
+            "occupied_dispatch_to_delivery_seconds_including_full_shared": 1029.9,
+            "actual_common_T0_to_final_delivery_seconds": 1114.876,
+            "final_stage_seconds": 438.309,
+            "queue_and_host_handoff_seconds_before_final": 84.976,
+            "native_goal_raw_counters": {
+              "objective_sha256": "4d1dd99b6852371df6f41faf786c8e9d92de5d5486ddb6036ffa83fb869ab48c",
+              "status": "complete",
+              "tokensUsed": 89053,
+              "tokenBudget": null,
+              "timeUsedSeconds": 392
+            },
+            "final_bytes": 6456
+          }
+        },
+        "shared_native_goal_raw_counters": [
+          {
+            "objective_sha256": "5acd35f9a09a9ecf66904d4a0b488014630a62019422dd283d9415aa12aaa446",
+            "status": "complete",
+            "tokensUsed": 88430,
+            "tokenBudget": null,
+            "timeUsedSeconds": 266
+          },
+          {
+            "objective_sha256": "c50830adc230926da1ee6d069544b46644e5975808b45a0bb0c1d563fe1c8f53",
+            "status": "complete",
+            "tokensUsed": 80316,
+            "tokenBudget": null,
+            "timeUsedSeconds": 234
+          }
+        ],
+        "overlap": "Root-authorized finals overlap; occupied stage sum is not wall time; service contention inseparable. Parent orchestration is not additionally counted as worker occupied time.",
+        "billing": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "cache_tokens": null,
+        "generated_tokens": null,
+        "old_failure_costs": "All original/v2 failed attempts retained and charged inclusively to each arm cold and once campaign aggregate; separate immutable receipts. Missing old delivery/counter fields remain unknown; v3 numbers are additional costs, not failure-inclusive totals.",
+        "host_capture_cost": "Exact individual activation/terminal receipts retained; no synthesized total when unknown."
+      },
+      "eligibility": "All v3 candidate stages qualified native-active/native-complete, quiet and new-budget delivery. Original/v2 dispositions unchanged.",
+      "provenance": "Advisory path maps, no firewall. Method paths and embedded timing reduce blinding. Candidate source exposure audit incomplete; source grade, timing and provenance separate. No behavioral server/library tests executed.",
+      "frozen_at": "2026-10-07T20:56:59.168575+00:00"
+    },
+    {
+      "case": "D-M08-B",
+      "version": "v3",
+      "is_method_comparison": true,
+      "disposition": "COMPLETE_FULL_SOURCE_PAIR",
+      "control": "FullSourceFAIL",
+      "treatment": "FullSourcePASS",
+      "six_axes": "Full declared scope independently assessed each arm; no weighted rubric",
+      "conclusion": "This exact trial favors amendment-first for source quality and observed final-stage/cold timing. Control generalizes dataset mask precedence to mask reads and loses the RGBA fallback condition; treatment preserves conditional hierarchy. No general causal, billing or quota estimate.",
+      "review_freezes": {
+        "J2": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-B-v3/J2/freeze_disposition.json",
+        "J1": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-B-v3/J1/freeze_disposition.json"
+      },
+      "pair_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/V3_PAIR_FREEZE.json",
+      "economics": {
+        "new_upper_bound_minutes_each_cold": 40,
+        "original_15min_success_claim": false,
+        "shared_stage_dispatch_to_delivery_seconds_fully_charged_each_arm": 565.915,
+        "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 1045.028,
+        "paired_critical_wall_seconds": 980.25,
+        "arms": {
+          "control": {
+            "occupied_dispatch_to_delivery_seconds_including_full_shared": 907.929,
+            "actual_common_T0_to_final_delivery_seconds": 980.25,
+            "final_stage_seconds": 342.014,
+            "queue_and_host_handoff_seconds_before_final": 72.32100000000003,
+            "native_goal_raw_counters": {
+              "objective_sha256": "171a5e39e986b81930f1236282dff3d5c01fd99c84210bbbbf09a0c2da0df95a",
+              "status": "complete",
+              "tokensUsed": 39779,
+              "tokenBudget": null,
+              "timeUsedSeconds": 316
+            },
+            "final_bytes": 6638
+          },
+          "treatment": {
+            "occupied_dispatch_to_delivery_seconds_including_full_shared": 703.0139999999999,
+            "actual_common_T0_to_final_delivery_seconds": 764.723,
+            "final_stage_seconds": 137.099,
+            "queue_and_host_handoff_seconds_before_final": 61.70900000000006,
+            "native_goal_raw_counters": {
+              "objective_sha256": "6b01932ba629097534abda27396fb5ede2a81b8b48150ba5cffbfd42b1fdbb78",
+              "status": "complete",
+              "tokensUsed": 37448,
+              "tokenBudget": null,
+              "timeUsedSeconds": 112
+            },
+            "final_bytes": 5132
+          }
+        },
+        "shared_native_goal_raw_counters": [
+          {
+            "objective_sha256": "f4c7cc12f1a960747ca1a790c42aa9503605a07eb5f4d05305ab37ebe3d067f4",
+            "status": "complete",
+            "tokensUsed": 29246,
+            "tokenBudget": null,
+            "timeUsedSeconds": 147
+          },
+          {
+            "objective_sha256": "dd56ee681fff9825b8b7d7b92a1740a960ff159492749430f9f750027ec236b6",
+            "status": "complete",
+            "tokensUsed": 28468,
+            "tokenBudget": null,
+            "timeUsedSeconds": 364
+          }
+        ],
+        "review_occupied_seconds": {
+          "J1": 356.49,
+          "J2": 217.071
+        },
+        "aggregate_candidate_plus_reviews_stage_sum_seconds": 1618.589,
+        "overlap": "Root-authorized finals overlap; stage sums differ from wall time, contention inseparable; parent orchestration not counted as another worker.",
+        "billing": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "cache_tokens": null,
+        "generated_tokens": null,
+        "old_failure_costs": "All v1/v2 failed attempts retained and charged fully each arm cold/once aggregate. Missing fields unknown; these v3 numbers additional, not failure-inclusive totals.",
+        "host_capture_cost": "Individual exact lifecycle capture costs retained, no synthesized total when unknown."
+      },
+      "eligibility": "All v3 stages native-active/complete, quiet and within new budgets; previous failure grades/dispositions unchanged.",
+      "provenance": "Path maps advisory no firewall; method paths/incidental timing reduce blinding; source exposure audit incomplete. Reviewer algebra only, no raster/runtime processing tests.",
+      "frozen_at": "2026-10-07T21:20:29.273973+00:00"
+    },
+    {
+      "case": "D-M10-A",
+      "version": "v3",
+      "is_method_comparison": true,
+      "disposition": "COMPLETE_FULL_SOURCE_PAIR_BOTH_FAIL",
+      "control": "FullSourceFAIL",
+      "treatment": "FullSourceFAIL",
+      "six_axes": "Full declared scope independently assessed each arm; no weighted rubric",
+      "conclusion": "Neither procedure achieved full source quality in this exact trial. Control omits response must-understand presence when stating no-store exception; treatment omits 5xx exception to full validation response handling. Treatment consumes more observed stage and cold-wall time. No successful treatment speed/quality advantage, causal generalization or billing/quota estimate.",
+      "review_freezes": {
+        "J2": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M10-A-v3/J2/freeze_disposition.json",
+        "J1": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M10-A-v3/J1/freeze_disposition.json"
+      },
+      "pair_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/V3_PAIR_FREEZE.json",
+      "evidence_release_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/V3_EVIDENCE_RELEASE_FREEZE.json",
+      "economics": {
+        "new_upper_bound_minutes_each_cold": 40,
+        "original_15min_success_claim": false,
+        "shared_stage_dispatch_to_delivery_seconds_fully_charged_each_arm": 369.12,
+        "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 1791.243,
+        "paired_critical_wall_seconds": 1433.632,
+        "arms": {
+          "control": {
+            "occupied_dispatch_to_delivery_seconds_including_full_shared": 788.809,
+            "actual_common_T0_to_final_delivery_seconds": 828.272,
+            "own_stage_seconds": {
+              "D-M10-A/control/proposal-first-full-check-final-v3": 419.689
+            },
+            "queue_and_host_handoff_seconds": 39.46300000000002,
+            "native_goal_raw_counters": [
+              {
+                "objective_sha256": "2d6eab476f69c9c32dcddf648b11a327cdd4755a28c30d21b20b465d60eb697e",
+                "status": "complete",
+                "tokensUsed": 75892,
+                "tokenBudget": null,
+                "timeUsedSeconds": 385
+              }
+            ],
+            "final_bytes": 6943,
+            "failure_inclusive_known_worker_delivery_sum_seconds": 1042.732
+          },
+          "treatment": {
+            "occupied_dispatch_to_delivery_seconds_including_full_shared": 1371.554,
+            "actual_common_T0_to_final_delivery_seconds": 1433.632,
+            "own_stage_seconds": {
+              "D-M10-A/treatment/fresh-evidence-first-answer-v3": 562.941,
+              "D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3": 439.493
+            },
+            "queue_and_host_handoff_seconds": 62.0780000000002,
+            "native_goal_raw_counters": [
+              {
+                "objective_sha256": "5bb9ee96f5d1dfd67d72bd26bcc6c60ee2933a572eea38e6184616b0dd7e175d",
+                "status": "complete",
+                "tokensUsed": 69179,
+                "tokenBudget": null,
+                "timeUsedSeconds": 402
+              },
+              {
+                "objective_sha256": "287c1e1902d4f3f98962086d92f70a6bfaa089b29ef1731c4877f42514a56f2c",
+                "status": "complete",
+                "tokensUsed": 95998,
+                "tokenBudget": null,
+                "timeUsedSeconds": 408
+              }
+            ],
+            "final_bytes": 8308,
+            "failure_inclusive_known_worker_delivery_sum_seconds": 1625.477
+          }
+        },
+        "shared_native_goal_raw_counters": [
+          {
+            "objective_sha256": "e777234a188e55ceaf9db997c301fac41794674446341d14f4d19caae38381a8",
+            "status": "complete",
+            "tokensUsed": 61353,
+            "tokenBudget": null,
+            "timeUsedSeconds": 341
+          }
+        ],
+        "review_occupied_seconds": {
+          "J1": 365.322,
+          "J2": 263.65
+        },
+        "aggregate_candidate_plus_reviews_stage_sum_seconds": 2420.215,
+        "overlap": "Root-authorized control/evidence overlap; treatment evidence and fresh reconciliation sequential. Stage sums differ from wall time, contention inseparable; parent not another worker.",
+        "billing": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "cache_tokens": null,
+        "generated_tokens": null,
+        "old_failure_costs": "Prior v2 failedseed delivery253.923s retained full charge each cold/once aggregate; no old science reused. New v3 limits and additional costs separate, no original15 success.",
+        "host_capture_cost": "Individual exact capture costs retained, no synthesized total when unknown."
+      },
+      "eligibility": "All v3 stages native-active/complete, quiet and within new budgets; prior failedseed disposition unchanged.",
+      "provenance": "Evidence separately frozen before exactproposal release to fresh reconciliation; reconciliation read evidence/proposal together, not itself blind. Path maps advisory no firewall; method paths/embedded metadata reduce review blinding. Source access audit incomplete. No application tests executed.",
+      "frozen_at": "2026-10-07T21:52:05.304473+00:00"
+    },
+    {
+      "case": "D-M07-A",
+      "version": "v3",
+      "is_method_comparison": false,
+      "disposition": "COMPLETE_DIAGNOSTIC_FULL_SOURCE_PAIR_BOTH_FAIL_COMPARATIVE_HOLD",
+      "control": "FullSourceFAIL",
+      "treatment": "FullSourceFAIL",
+      "six_axes": "Full declared scope independently assessed each arm; no weighted rubric",
+      "native_provenance_comparative_disposition": "HOLD_MISSING_NATIVE_ACTIVE_ORIGINAL_FAILED_EXPORTS_UNCHANGED",
+      "conclusion": "Both exact final answers fail independent full declared source assessment. Supported deployment/recovery/version/durability advice retained. Both overclaim cross-host lock absence and omit WAL limit/checkpoint completion conditions. Control additionally reports false source search and downgrades explicit sync evidence; treatment categorically rejects rollback feasibility beyond the source evidence. Diagnostic facts only: no qualified method comparison, winner, causal speed/quality or billing claim.",
+      "review_freezes": {
+        "J1": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J1/freeze_disposition.json",
+        "J2": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/freeze_disposition.json"
+      },
+      "pair_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "diagnostic_exception_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_DIAGNOSTIC_REVIEW_EXCEPTION_GATE.json",
+      "economics": {
+        "new_upper_bound_minutes_each_cold": 50,
+        "original_15min_success_claim": false,
+        "common_T0": "2026-10-07T22:36:18.422037+00:00",
+        "absolute_case_deadline": "2026-10-07T23:26:18.422037+00:00",
+        "shared_stage_seconds_full_each_cold_once_aggregate": 588.6,
+        "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 2338.096,
+        "review_sum_seconds": 734.2070000000001,
+        "candidate_and_reviews_sum_seconds": 3072.303,
+        "arms": {
+          "control": {
+            "own_stage_dispatch_to_delivery_seconds": 742.515,
+            "full_shared_seed_seconds_charged": 588.6,
+            "occupied_dispatch_to_delivery_seconds_including_full_shared": 1331.115,
+            "actual_common_T0_to_final_delivery_seconds": 1393.922963,
+            "queue_and_host_handoff_seconds": 62.80796299999997,
+            "actual_requestedAt": "2026-10-07T22:47:09.830Z",
+            "actual_startedAt": "2026-10-07T22:47:16.671Z",
+            "actual_completedAt": "2026-10-07T22:59:32.345Z",
+            "native_createdAt_ms": 1791413244780,
+            "raw_native_counters": {
+              "rounds": 4,
+              "createdAt": 1791413244780,
+              "updatedAt": 1791413970112,
+              "tokens": null
+            },
+            "final_bytes": 8022,
+            "source_operations": "candidate notes retained; execution history not independently authenticated",
+            "review_seconds": 352.821
+          },
+          "treatment": {
+            "own_stage_dispatch_to_delivery_seconds": 1006.981,
+            "full_shared_seed_seconds_charged": 588.6,
+            "occupied_dispatch_to_delivery_seconds_including_full_shared": 1595.5810000000001,
+            "actual_common_T0_to_final_delivery_seconds": 1671.018963,
+            "queue_and_host_handoff_seconds": 75.43796299999985,
+            "actual_requestedAt": "2026-10-07T22:47:22.460Z",
+            "actual_startedAt": "2026-10-07T22:47:30.343Z",
+            "actual_completedAt": "2026-10-07T23:04:09.441Z",
+            "native_createdAt_ms": 1791413261764,
+            "raw_native_counters": {
+              "rounds": 5,
+              "createdAt": 1791413261764,
+              "updatedAt": 1791414249231,
+              "tokens": null
+            },
+            "final_bytes": 8309,
+            "source_operations": "candidate notes retained; execution history not independently authenticated",
+            "review_seconds": 381.386
+          }
+        },
+        "old_failures_costs_grades_retained": true,
+        "host_capture_cost": "retained exact individual receipts; incompletely measured total null",
+        "billing": null,
+        "generated_tokens": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "cache_tokens": null
+      },
+      "frozen_at": "2026-10-07T23:13:50.496419+00:00"
+    }
+  ],
+  "completion": "IN_PROGRESS_GLM_M07B_THEN_M09A_FINITE_QUEUE"
+}

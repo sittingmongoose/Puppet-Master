@@ -1,0 +1,40 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "projdoc",
+      "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+      "version_or_capture": "pyproj 3.6.1",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "projcode",
+      "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+      "version_or_capture": "pyproj 3.6.1; underlying PROJ 9.3.0 assumed by brief, no execution implied",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/final.md",
+  "predecessor_science": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md"
+  ],
+  "authored_intermediates": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/review-notes.md"
+  ],
+  "scientific_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md": "30a8e78fbc3913556d985d909d82c0db3b61207859f8588ece1d4cef045cce2d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources.json": "528a61f25f479c20a76c855e15541cc44f392a575ef5fc85e37d2f9b0cd6205d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/final.md": "c4fd76d15876c747b20b1052c5f2cfa2404a9108e1b36425487532cf85dd1934",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md": "8ab7b4d982574ad4f3f3b3b80bd044f41ee446e3f947bc9a2e525d99ae1897b9",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/review-notes.md": "ed4191468427faebf6939339a3afc91e06c52bd7dc01cd0315804b7ce93898c2",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda"
+  }
+}

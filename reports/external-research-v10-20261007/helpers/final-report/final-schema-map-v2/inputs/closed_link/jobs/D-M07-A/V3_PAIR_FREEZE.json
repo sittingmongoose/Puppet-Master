@@ -1,0 +1,99 @@
+{
+  "case": "D-M07-A",
+  "version": 3,
+  "gate": "BOTH_FULL_FINALS_NATIVE_COMPLETE_QUIET_FROZEN",
+  "stage_freezes": {
+    "D-M07-A/control/document-order-review-final-v3": {
+      "stage": "D-M07-A/control/document-order-review-final-v3",
+      "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_3da10ecd-b492-448e-aeb5-058fdcec2f09/state.json",
+      "native_createdAt": 1791413244780,
+      "native_status": "complete",
+      "native_active_observed": false,
+      "comparative_eligibility": "HOLD_MISSING_NATIVE_ACTIVE_DIAGNOSTIC_ONLY",
+      "t3_status": "completed",
+      "quiet": true,
+      "requestedAt": "2026-10-07T22:47:09.830Z",
+      "startedAt": "2026-10-07T22:47:16.671Z",
+      "completedAt": "2026-10-07T22:59:32.345Z",
+      "dispatch_to_delivery_seconds": 742.515,
+      "stage_ceiling_seconds": 1800,
+      "absolute_case_deadline": "2026-10-07T23:26:18.422037+00:00",
+      "budget_delivery_eligible": true,
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/final.md",
+      "output_sha256": "4938903314c928b37a17b96649cf7f206c388aadad284247ece173f32ad76c9e",
+      "output_bytes": 8022,
+      "scientific_files": {
+        "final.md": {
+          "sha256": "4938903314c928b37a17b96649cf7f206c388aadad284247ece173f32ad76c9e",
+          "bytes": 8022
+        },
+        "working-notes.md": {
+          "sha256": "4d05f45f557a4cd6f3df062efe38a8720ba82193d290b4d9f920ba083a26690d",
+          "bytes": 8587
+        }
+      },
+      "raw_native_goal_counters": {
+        "rounds": 4,
+        "createdAt": 1791413244780,
+        "updatedAt": 1791413970112,
+        "tokens": null
+      },
+      "generated_tokens": null,
+      "billing": null,
+      "source_quality": "UNASSESSED",
+      "scope_audit": "incomplete_unknown; advisory map not firewall",
+      "frozen_at": "2026-10-07T23:00:57.932652+00:00"
+    },
+    "D-M07-A/treatment/critical-first-protected-breadth-final-v3": {
+      "stage": "D-M07-A/treatment/critical-first-protected-breadth-final-v3",
+      "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_02e7a2ad-3bd7-4590-a9bd-2f4eb0e5a3d8/state.json",
+      "native_createdAt": 1791413261764,
+      "native_status": "complete",
+      "native_active_observed": false,
+      "comparative_eligibility": "HOLD_MISSING_NATIVE_ACTIVE_DIAGNOSTIC_ONLY",
+      "t3_status": "completed",
+      "quiet": true,
+      "requestedAt": "2026-10-07T22:47:22.460Z",
+      "startedAt": "2026-10-07T22:47:30.343Z",
+      "completedAt": "2026-10-07T23:04:09.441Z",
+      "dispatch_to_delivery_seconds": 1006.981,
+      "stage_ceiling_seconds": 1800,
+      "absolute_case_deadline": "2026-10-07T23:26:18.422037+00:00",
+      "budget_delivery_eligible": true,
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/final.md",
+      "output_sha256": "e7ac1a889bb1c5c32ace2011fd1868bee6be3207aac3ae56afefd73a0ed240a4",
+      "output_bytes": 8309,
+      "scientific_files": {
+        "notes-reserve.md": {
+          "sha256": "56456041749bfa3e2863a6a379a128dda6df38759f01bb778a267eef40b810d5",
+          "bytes": 8513
+        },
+        "final.md": {
+          "sha256": "e7ac1a889bb1c5c32ace2011fd1868bee6be3207aac3ae56afefd73a0ed240a4",
+          "bytes": 8309
+        },
+        "notes-critical-check.md": {
+          "sha256": "e15ae0c95bd00c986cbb69ca4af0bc2122bb5f41cf30b33495f3fdee6c2ebf08",
+          "bytes": 8886
+        }
+      },
+      "raw_native_goal_counters": {
+        "rounds": 5,
+        "createdAt": 1791413261764,
+        "updatedAt": 1791414249231,
+        "tokens": null
+      },
+      "generated_tokens": null,
+      "billing": null,
+      "source_quality": "UNASSESSED",
+      "scope_audit": "incomplete_unknown; advisory map not firewall",
+      "frozen_at": "2026-10-07T23:05:55.776276+00:00"
+    }
+  },
+  "source_quality": "UNASSESSED_PENDING_DIAGNOSTIC_FULL_SOURCE_REVIEWS",
+  "prior_versions_immutable": true,
+  "frozen_at": "2026-10-07T23:05:55.943527+00:00",
+  "native_activation_gate": "HOLD_MISSING_NATIVE_ACTIVE_ORIGINAL_OBSERVATIONS_UNCHANGED",
+  "comparative_eligibility": "HOLD_DIAGNOSTIC_FULL_SOURCE_REVIEWS_ONLY",
+  "diagnostic_exception_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_DIAGNOSTIC_REVIEW_EXCEPTION_GATE.json"
+}

@@ -1,0 +1,653 @@
+{
+  "schema_version": 1,
+  "case_id": "I-METHOD-03",
+  "source_judgment": "FAIL",
+  "full_declared_scope_assessed": true,
+  "count_definition": "Obligation universe is the six O requirements + 31 atomic frozen P1-P6 clauses + 15 final/draft owner decisions. Axis, P-parent, criticism and consequential-check counts are separate overlapping dimensions and are not added to that total. Complete means assessment completed, not requirement satisfied.",
+  "counts": {
+    "obligations_total": 52,
+    "obligations_complete": 52,
+    "obligations_assessed": 52,
+    "obligations_unassessed": 0,
+    "original_O_total": 6,
+    "original_O_complete": 6,
+    "original_O_assessed": 6,
+    "original_O_unassessed": 0,
+    "plan_clauses_total": 31,
+    "plan_clauses_complete": 31,
+    "plan_clauses_assessed": 31,
+    "plan_clauses_unassessed": 0,
+    "plan_parents_total": 6,
+    "plan_parents_assessed": 6,
+    "owner_decisions_total": 15,
+    "owner_decisions_complete": 15,
+    "owner_decisions_assessed": 15,
+    "owner_decisions_unassessed": 0,
+    "axes_total": 6,
+    "axes_complete": 6,
+    "axes_assessed": 6,
+    "axes_unassessed": 0,
+    "consequential_checks_total": 25,
+    "consequential_checks_complete": 25,
+    "consequential_checks_assessed": 25,
+    "consequential_checks_unassessed": 0,
+    "criticism_dispositions_total": 9,
+    "criticism_dispositions_assessed": 9,
+    "criticism_dispositions_visible_in_final": 9,
+    "material_error_count": 3
+  },
+  "six_axes": [
+    {
+      "axis": 1,
+      "assessment_status": "ASSESSED",
+      "result": "COVERED_WITH_DEFECTS",
+      "check_ids": [
+        "SC01",
+        "SC20",
+        "SC21",
+        "SC23",
+        "SC25"
+      ]
+    },
+    {
+      "axis": 2,
+      "assessment_status": "ASSESSED",
+      "result": "FAIL",
+      "check_ids": [
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07",
+        "SC08",
+        "SC09",
+        "SC10",
+        "SC11",
+        "SC12",
+        "SC13",
+        "SC14",
+        "SC15",
+        "SC17",
+        "SC18",
+        "SC19"
+      ]
+    },
+    {
+      "axis": 3,
+      "assessment_status": "ASSESSED",
+      "result": "BOUNDED_USEFUL_WITH_LIMITATIONS",
+      "check_ids": [
+        "SC14",
+        "SC17",
+        "SC22",
+        "SC24"
+      ]
+    },
+    {
+      "axis": 4,
+      "assessment_status": "ASSESSED",
+      "result": "FAIL_INCORRECT_C1_CORRECTION",
+      "check_ids": [
+        "SC04",
+        "SC05",
+        "SC08",
+        "SC11",
+        "SC17",
+        "SC22",
+        "SC25"
+      ]
+    },
+    {
+      "axis": 5,
+      "assessment_status": "ASSESSED",
+      "result": "PRESERVED_WITH_LIMITATIONS_AND_PROPAGATED_ERROR",
+      "check_ids": [
+        "SC04",
+        "SC13",
+        "SC17",
+        "SC25"
+      ]
+    },
+    {
+      "axis": 6,
+      "assessment_status": "ASSESSED",
+      "result": "PROPOSALS_AND_SOURCE_WITNESSES_CORRECTLY_BOUNDED",
+      "check_ids": [
+        "SC16",
+        "SC18",
+        "SC20",
+        "SC23"
+      ]
+    }
+  ],
+  "original_obligations": [
+    {
+      "id": "O1",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_BOUNDED_WITH_LIMITATIONS",
+      "checks": [
+        "SC24",
+        "SC25"
+      ],
+      "reason": "Useful brief-led content beyond P entries, product/tool comparators and negatives/options; no exhaustive recall or chronology proof. D3 is a substantive discovery/complete-contract gap."
+    },
+    {
+      "id": "O2",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_BOUNDED",
+      "checks": [
+        "SC02",
+        "SC17"
+      ],
+      "reason": "Immutable OTP alternative code and caller/governing context fulfill public-component inspection; not proof of selected custom TripUpdate logic."
+    },
+    {
+      "id": "O3",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_BOUNDED",
+      "checks": [
+        "SC18",
+        "SC19"
+      ],
+      "reason": "Real OTP issue, exact old code, fix, regression source and released containment; no executed test claim."
+    },
+    {
+      "id": "O4",
+      "assessment_status": "ASSESSED",
+      "outcome": "COMPLETE_COMPARISON_WITH_DEFECTS_AND_LIMITATIONS",
+      "checks": [
+        "SC01",
+        "SC15",
+        "SC20",
+        "SC21",
+        "SC25"
+      ],
+      "reason": "All P1-P6 comparison entries exist and all 31 original clauses assessed. Timestamp correction and calculator deficiencies invalidate unqualified completeness."
+    },
+    {
+      "id": "O5",
+      "assessment_status": "ASSESSED",
+      "outcome": "SUBSTANTIVE_CRITICISM_PRESERVED_WITH_SOURCE_ERROR",
+      "checks": [
+        "SC04",
+        "SC13",
+        "SC17",
+        "SC25"
+      ],
+      "reason": "All nine criticism dispositions visible; C1 wrong. Literal family/provenance is excluded from science and left to host."
+    },
+    {
+      "id": "O6",
+      "assessment_status": "ASSESSED",
+      "outcome": "COMPLETE_ARTIFACT_FORMAT_BUT_SUBSTANTIVELY_FAILS",
+      "checks": [
+        "SC04",
+        "SC09",
+        "SC14",
+        "SC21",
+        "SC23",
+        "SC25"
+      ],
+      "reason": "Coherent replacement with alternatives, tests and uncertainty; three material defects prevent a complete correct proposed contract."
+    }
+  ],
+  "plan_parents": [
+    {
+      "id": "P1",
+      "assessment_status": "ASSESSED",
+      "atomic_clauses": 4
+    },
+    {
+      "id": "P2",
+      "assessment_status": "ASSESSED",
+      "atomic_clauses": 4
+    },
+    {
+      "id": "P3",
+      "assessment_status": "ASSESSED",
+      "atomic_clauses": 5
+    },
+    {
+      "id": "P4",
+      "assessment_status": "ASSESSED",
+      "atomic_clauses": 4
+    },
+    {
+      "id": "P5",
+      "assessment_status": "ASSESSED",
+      "atomic_clauses": 7
+    },
+    {
+      "id": "P6",
+      "assessment_status": "ASSESSED",
+      "atomic_clauses": 7
+    }
+  ],
+  "plan_clauses": [
+    {
+      "id": "P1.1",
+      "obligation": "Import user-selected public Schedule archives",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "30-32"
+    },
+    {
+      "id": "P1.2",
+      "obligation": "Poll agency Realtime when available",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "30,34,70"
+    },
+    {
+      "id": "P1.3",
+      "obligation": "Every displayed result retains feed identity/acquisition time",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "40,60"
+    },
+    {
+      "id": "P1.4",
+      "obligation": "Source selection remains deployment decision",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "30,74,124"
+    },
+    {
+      "id": "P2.1",
+      "obligation": "Upcoming departures at 20 selected stops",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "7,40"
+    },
+    {
+      "id": "P2.2",
+      "obligation": "One transfer between two selected routes",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "7,40,93"
+    },
+    {
+      "id": "P2.3",
+      "obligation": "Distinguish Schedule and Realtime-derived information",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "40,54,60"
+    },
+    {
+      "id": "P2.4",
+      "obligation": "Unavailable observation is never a confirmed departure",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_WITH_LIMITATIONS",
+      "final_lines": "40,42,128; D2"
+    },
+    {
+      "id": "P3.1",
+      "obligation": "Scheduled arrival/departure baseline",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_WITH_DEFECTS",
+      "final_lines": "54-56; D2-D3"
+    },
+    {
+      "id": "P3.2",
+      "obligation": "Configurable walking allowance",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_WITH_LIMITATIONS",
+      "final_lines": "23,52,54,124; curator review replaces unspecified user role"
+    },
+    {
+      "id": "P3.3",
+      "obligation": "Observation overlay where supported",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_WITH_LIMITATIONS",
+      "final_lines": "42,54; direct events only"
+    },
+    {
+      "id": "P3.4",
+      "obligation": "No occupancy/accessibility-availability promise",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "7,48,94,133"
+    },
+    {
+      "id": "P3.5",
+      "obligation": "No dispatch coordination or connection promise",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "7,54,56,94,133"
+    },
+    {
+      "id": "P4.1",
+      "obligation": "Inspect feed versions and underlying input records",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "60,95"
+    },
+    {
+      "id": "P4.2",
+      "obligation": "Saved view/result compared with later observations",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_WITH_LIMITATIONS",
+      "final_lines": "60,83; comparison UI and observation classification under-specified"
+    },
+    {
+      "id": "P4.3",
+      "obligation": "Seven-day public history",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "62,83,95"
+    },
+    {
+      "id": "P4.4",
+      "obligation": "No rider identity tracking",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "62,83,95"
+    },
+    {
+      "id": "P5.1",
+      "obligation": "Feed parsing component decision",
+      "assessment_status": "ASSESSED",
+      "outcome": "ASSESSED_OPEN_CHOICE",
+      "final_lines": "9,66,70,119"
+    },
+    {
+      "id": "P5.2",
+      "obligation": "Timestamp component/interpretation decision",
+      "assessment_status": "ASSESSED",
+      "outcome": "ASSESSED_DEFECTIVE",
+      "final_lines": "19-22,36,78,112; D1"
+    },
+    {
+      "id": "P5.3",
+      "obligation": "Limited calculator component/contract decision",
+      "assessment_status": "ASSESSED",
+      "outcome": "ASSESSED_DEFECTIVE",
+      "final_lines": "23-24,52-56; D2-D3"
+    },
+    {
+      "id": "P5.4",
+      "obligation": "Tablet usability",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_PROPOSAL",
+      "final_lines": "48,74,84"
+    },
+    {
+      "id": "P5.5",
+      "obligation": "Intermittent connectivity",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_PROPOSAL",
+      "final_lines": "48,83"
+    },
+    {
+      "id": "P5.6",
+      "obligation": "Explicit acquisition age",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "20-22,40,48,60"
+    },
+    {
+      "id": "P5.7",
+      "obligation": "Operator-readable failure state",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_WITH_LIMITATIONS",
+      "final_lines": "32,36,40,60; detailed operator diagnostics not bound"
+    },
+    {
+      "id": "P6.1",
+      "obligation": "Propose feed-replacement validation",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_PROPOSAL",
+      "final_lines": "76"
+    },
+    {
+      "id": "P6.2",
+      "obligation": "Propose absent-Realtime validation",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_PROPOSAL",
+      "final_lines": "76,78-79"
+    },
+    {
+      "id": "P6.3",
+      "obligation": "Propose inconsistent-ID validation",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_PROPOSAL",
+      "final_lines": "76-77"
+    },
+    {
+      "id": "P6.4",
+      "obligation": "Propose overnight-service validation",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_PROPOSAL",
+      "final_lines": "82"
+    },
+    {
+      "id": "P6.5",
+      "obligation": "Propose clock-change validation",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_PROPOSAL_WITH_DEFECTS",
+      "final_lines": "78,82; D1 expectation"
+    },
+    {
+      "id": "P6.6",
+      "obligation": "Propose performance validation at stop count",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED_PROPOSAL",
+      "final_lines": "84"
+    },
+    {
+      "id": "P6.7",
+      "obligation": "Do not imply inherited component pin/reliability validation",
+      "assessment_status": "ASSESSED",
+      "outcome": "SATISFIED",
+      "final_lines": "9,66,74,126-128"
+    }
+  ],
+  "owner_decisions": [
+    {
+      "id": "OD01",
+      "decision": "Actual agencies, feed URLs, availability and publisher terms/limits",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_OPEN",
+      "locations": "30,34,74,124"
+    },
+    {
+      "id": "OD02",
+      "decision": "Selected stops/routes/physical mapped pair and mapping version",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_OPEN",
+      "locations": "52,74,124"
+    },
+    {
+      "id": "OD03",
+      "decision": "Measured walking allowance, buffer values and sources",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_OPEN",
+      "locations": "23,52,54,124"
+    },
+    {
+      "id": "OD04",
+      "decision": "90-second/10-minute thresholds and future/skew tolerance",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_PROPOSED_NEEDS_CONFIRMATION",
+      "locations": "20-22,78,124"
+    },
+    {
+      "id": "OD05",
+      "decision": "Supported relationships/frequency instances/direct-only overlay",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_BOUNDED_WITH_APPLICABILITY_LIMIT",
+      "locations": "18,42,77,124"
+    },
+    {
+      "id": "OD06",
+      "decision": "Comparable version fields and actual feed compatibility",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_OPEN",
+      "locations": "15,30,124"
+    },
+    {
+      "id": "OD07",
+      "decision": "Product-owned architecture and concrete parser/runtime/library version",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_ARCHITECTURE_WITH_IMPLEMENTATION_OPEN",
+      "locations": "9,66,70,114,119"
+    },
+    {
+      "id": "OD08",
+      "decision": "Reference tablet/browser/network/timezones",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_OPEN",
+      "locations": "74,82,84,124"
+    },
+    {
+      "id": "OD09",
+      "decision": "Warm performance target and separate cold-load budget",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_PROPOSAL_AND_OPEN_BUDGET",
+      "locations": "84,124"
+    },
+    {
+      "id": "OD10",
+      "decision": "Volunteer/public access detail and vehicle-ID privacy/retention",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_OPEN",
+      "locations": "62,83,124"
+    },
+    {
+      "id": "OD11",
+      "decision": "Seven-day history retention acceptance",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_PROPOSAL_NEEDS_CONFIRMATION",
+      "locations": "62,124"
+    },
+    {
+      "id": "OD12",
+      "decision": "Actual alert availability and legacy/absent-period behavior",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_POLICY_WITH_APPLICABILITY_LIMIT",
+      "locations": "22,46,101,124"
+    },
+    {
+      "id": "OD13",
+      "decision": "Whether schedule-only kiosk remains useful at selected agencies",
+      "assessment_status": "ASSESSED",
+      "outcome": "NOT_EXPLICITLY_PRESERVED",
+      "locations": "research-v1:81; final:7,128 assumes utility"
+    },
+    {
+      "id": "OD14",
+      "decision": "Who may approve mapping/feed changes",
+      "assessment_status": "ASSESSED",
+      "outcome": "NOT_EXPLICITLY_PRESERVED",
+      "locations": "research-v1:81; final:30,52 assumes curator"
+    },
+    {
+      "id": "OD15",
+      "decision": "Acceptance fixtures/local reliability and threshold owner review",
+      "assessment_status": "ASSESSED",
+      "outcome": "EXPLICIT_OPEN",
+      "locations": "74-84,97,124"
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 112
+    },
+    {
+      "id": "C2",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 113
+    },
+    {
+      "id": "C3",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 114
+    },
+    {
+      "id": "P1",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 115
+    },
+    {
+      "id": "P2",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 116
+    },
+    {
+      "id": "P3",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 117
+    },
+    {
+      "id": "P4",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 118
+    },
+    {
+      "id": "P5",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 119
+    },
+    {
+      "id": "P6",
+      "assessment_status": "ASSESSED",
+      "disposition_present": true,
+      "final_line": 120
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "D1",
+      "type": "incorrect_source_correction",
+      "conditions": "GTFS Realtime v2.0+ header timestamp absent",
+      "checks": [
+        "SC04"
+      ]
+    },
+    {
+      "id": "D2",
+      "type": "contradictory_negative-service_fallback_contract",
+      "conditions": "Fresh exact SKIPPED selected transfer stop; cancellation/deletion status precedence also unbound",
+      "checks": [
+        "SC09",
+        "SC10"
+      ]
+    },
+    {
+      "id": "D3",
+      "type": "missing_schedule_transfer_eligibility",
+      "conditions": "Selected arriving stop disallows drop-off or selected departing stop disallows pickup; arrangement-required events unhandled",
+      "checks": [
+        "SC14"
+      ]
+    }
+  ],
+  "unassessed_obligation_ids": [],
+  "unassessed_consequential_check_ids": [],
+  "excluded_from_source_grade": [
+    "counterpart/comparative results",
+    "model-family provenance",
+    "native Goal/task lifecycle",
+    "author speed/timing",
+    "usage/billing/quota",
+    "actual application performance/correctness beyond proposed plan"
+  ],
+  "usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null
+  }
+}

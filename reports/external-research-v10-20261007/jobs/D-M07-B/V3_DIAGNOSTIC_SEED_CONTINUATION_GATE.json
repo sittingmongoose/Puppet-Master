@@ -1,0 +1,21 @@
+{
+  "schema": "ER10_M07B_DIAGNOSTIC_SEED_CONTINUATION_GATE_V1",
+  "verified_at": "2026-10-07T23:24:36.432196+00:00",
+  "root_exception_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M07-B-diagnostic-seed-continuation-exception-v1.json",
+  "root_exception_sha256": "e33127dcecbbef58f92004eee7cfd4670c8c2424da5f70129ffec4073449550f",
+  "original_blocked_seed_gate": "HOLD_UNOBSERVED_ACTIVE_AT_TERMINAL",
+  "original_activation_export_not_performed": true,
+  "required_carrier_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/draft.md",
+  "required_carrier_sha256": "8ab7b4d982574ad4f3f3b3b80bd044f41ee446e3f947bc9a2e525d99ae1897b9",
+  "native_terminal_status": "complete",
+  "seed_T3_quiet_settled": true,
+  "seed_delivery_seconds": 488.321,
+  "original_stage_ceiling_seconds": 1200,
+  "original_common_T0": "2026-10-07T23:14:13.527092+00:00",
+  "absolute_case_deadline": "2026-10-08T00:04:13.527092+00:00",
+  "all_prerequisites_verified": true,
+  "diagnostic_original_arms_authorized": true,
+  "qualified_native_provenance_comparative_disposition": "HOLD",
+  "new_seed_or_version_or_clockreset": false,
+  "candidate_science_from_root_or_Sol": false
+}

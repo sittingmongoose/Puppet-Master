@@ -1,0 +1,340 @@
+{
+  "schema": "ER10-cohort3-ordinary-review-freeze-v3",
+  "case": "D-M08-B",
+  "version": "v3",
+  "reviewer": "J2",
+  "arm": "treatment",
+  "verdict": "FullSourcePASS",
+  "coverage": "FULL_DECLARED_SCOPE",
+  "unassessed": [],
+  "dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-v3-review-J2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-v3-review-J2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-v3-review-J2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-v3-review-J2",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "actual_t3_thread_binding": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-v3-review-J2",
+    "link": "[ER10 COHORT3 M08B v3 independent J2](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-v3-review-J2)",
+    "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "title": "ER10 COHORT3 M08B v3 independent J2",
+    "createdBy": "agent",
+    "creationSource": "mcp",
+    "status": "completed",
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-v3-review-J2:ordinal:1",
+    "activeRunId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "linkedPullRequest": null,
+    "titleRegeneration": null,
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+    "relationshipToParent": "subagent",
+    "runCount": 1,
+    "itemCount": 38,
+    "pendingRequestCount": 0,
+    "archived": false,
+    "settled": false,
+    "settledAt": null,
+    "snoozed": false,
+    "snoozedUntil": null,
+    "createdAt": "2026-10-07T21:14:08.587Z",
+    "updatedAt": "2026-10-07T21:17:45.661Z"
+  },
+  "actual_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-v3-review-J2:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:14:08.590Z",
+    "startedAt": "2026-10-07T21:14:09.648Z",
+    "completedAt": "2026-10-07T21:17:45.661Z"
+  },
+  "quiet": true,
+  "settled": true,
+  "settle_sequence": 487221,
+  "native_goal_required": false,
+  "dispatch_to_delivery_seconds": 217.071,
+  "queue_startup_seconds": 1.058,
+  "artifacts": {
+    "judgment.md": {
+      "sha256": "a8e608744f9f30ba2871605639cbf0f77d4af2942c30aa6e72f83ea0cc32fc7b",
+      "bytes": 11865
+    },
+    "checks.json": {
+      "sha256": "05c26a2d4fcf4e2e40aa42d724741d676c7c3aeed15beaf84144fac646a80966",
+      "bytes": 7227
+    },
+    "INPUT_MAP.json": {
+      "sha256": "6b3ee359746cfea5ad49880b7bdb122e8837f64ffd44adc8364ca27071f0999f",
+      "bytes": 4420
+    },
+    "assignment.md": {
+      "sha256": "0d5743210b78e960ffc02176cfb2dd626cac14ee9932b7dd369ccff07eb8062c",
+      "bytes": 3076
+    },
+    "dispatch.json": {
+      "sha256": "b3cac0056d5f54713578af12364a8d75bbe8d6f038bb207b8dc29573c43fecad",
+      "bytes": 986
+    },
+    "quiet_task_receipt.json": {
+      "sha256": "37029605ec06b8ac53ce11ca3ce1fc1b7a7560cf27e8a2ced646c38a5e517898",
+      "bytes": 5696
+    },
+    "t3_terminal_receipt.json": {
+      "sha256": "ebeee706230752f1a049af0815f4a07460a24a02ec907958f1e7a654eb8c676a",
+      "bytes": 6351
+    }
+  },
+  "billing": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "source_operations": [
+    {
+      "operation": "read_declared_input_map",
+      "observed_by_utc": "2026-10-07T21:14:18Z",
+      "status": "completed"
+    },
+    {
+      "operation": "line_numbered_reads_all_ten_declared_scientific_files",
+      "observed_interval_utc": [
+        "2026-10-07T21:14:18Z",
+        "2026-10-07T21:14:35Z"
+      ],
+      "status": "completed",
+      "initial_batch_display_truncated": true,
+      "complete_followup_reads": [
+        "geotransform.rst",
+        "draft.md",
+        "critique.md"
+      ]
+    },
+    {
+      "operation": "sha256_all_ten_declared_files_and_map",
+      "observed_by_utc": "2026-10-07T21:14:35Z",
+      "status": "all_ten_match",
+      "files": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md",
+          "bytes": 1726,
+          "sha256": "80845872fa053e425c1cc24ccdaa6e3559b34b181ece657dae757e1257c8fe97",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json",
+          "bytes": 1622,
+          "sha256": "47356c93d872337b9a70a2e002a29eecc4b9d9d4099153a9aa335f0950c83d07",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/local-amendment-dependency-check-render-v3/final.md",
+          "bytes": 5132,
+          "sha256": "c1ca9dfd44377e0ae44e772e8d762a8da24746d6c25d2defe0030fc3b3f58edb",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3/draft.md",
+          "bytes": 4942,
+          "sha256": "6be193f8977ebdb3ae3c07549d30c4a17a7a887955349607d9322ef62a967474",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-independent-common-critique-v3/critique.md",
+          "bytes": 6815,
+          "sha256": "4d02e232c0bb357066a1927660a949784caf859644feff46375ed36f1a6a14e1",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/local-amendment-dependency-check-render-v3/change_dependency_check.md",
+          "bytes": 5219,
+          "sha256": "3f89bdcea2c34c8284de965b46c7e8e23f27fee39a6d22130878be5dbfc4d955",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/local-amendment-dependency-check-render-v3/amendment.md",
+          "bytes": 3468,
+          "sha256": "767d3b24546052cac973006c2299eb24f68f52d205de3f4ee086a73583befcd7",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst",
+          "bytes": 2267,
+          "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst",
+          "bytes": 9114,
+          "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+          "matches_map": true
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst",
+          "bytes": 1713,
+          "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+          "matches_map": true
+        }
+      ]
+    },
+    {
+      "operation": "web_open_two_public_release_files",
+      "observed_by_utc": "2026-10-07T21:14:49Z",
+      "urls": [
+        "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+        "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py"
+      ],
+      "status": "completed",
+      "limit": "Browser-rendered line numbering differs from raw physical lines; exact-byte locators and hashes use subsequent raw reads."
+    },
+    {
+      "operation": "raw_https_fetch_hash_and_selected_line_inspection",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "version": "Rasterio 1.3.10",
+      "captured_at_utc": [
+        "2026-10-07T21:15:03.300866Z",
+        "2026-10-07T21:15:15.022480Z"
+      ],
+      "bytes_per_fetch": 86415,
+      "fetch_count": 2,
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "physical_line_ranges_inspected": [
+        [
+          417,
+          463
+        ],
+        [
+          615,
+          650
+        ],
+        [
+          853,
+          885
+        ],
+        [
+          979,
+          1030
+        ],
+        [
+          648,
+          679
+        ],
+        [
+          737,
+          764
+        ],
+        [
+          1031,
+          1092
+        ],
+        [
+          205,
+          266
+        ]
+      ],
+      "downloaded_code_executed": false
+    },
+    {
+      "operation": "raw_https_fetch_hash_and_selected_line_inspection",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+      "version": "Rasterio 1.3.10",
+      "captured_at_utc": "2026-10-07T21:15:03.337075Z",
+      "bytes": 5550,
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "physical_line_ranges_inspected": [
+        [
+          48,
+          130
+        ]
+      ],
+      "downloaded_code_executed": false
+    }
+  ],
+  "actual_checks": [
+    {
+      "check": "independent_claim_condition_and_source_support_assessment",
+      "status": "completed",
+      "coverage": "All six brief obligations, all seven critique findings, all consequential final scientific claims, seven amendment/dependency entries, source identity and meaning preservation.",
+      "completed_by_utc": "2026-10-07T21:17:00Z"
+    },
+    {
+      "check": "reviewer_authored_exact_rational_affine_fixtures",
+      "observed_by_utc": "2026-10-07T21:15:15Z",
+      "status": "passed",
+      "fixtures": [
+        {
+          "case": "north_up",
+          "source_shape": [
+            7,
+            11
+          ],
+          "output_shape": [
+            3,
+            5
+          ],
+          "scale": [
+            "11/5",
+            "7/3"
+          ]
+        },
+        {
+          "case": "rotated_sheared",
+          "source_shape": [
+            13,
+            17
+          ],
+          "output_shape": [
+            4,
+            6
+          ],
+          "scale": [
+            "17/6",
+            "13/4"
+          ]
+        }
+      ],
+      "assertions": 10,
+      "points_per_fixture": "four corners and midpoint",
+      "is_rasterio_or_gdal_runtime_test": false
+    },
+    {
+      "check": "output_artifact_validation",
+      "observed_at_utc": "2026-10-07T21:17:38.544338Z",
+      "status": "passed",
+      "checks": [
+        "judgment file exists",
+        "single FullSourcePASS verdict",
+        "exactly six numbered axis headings",
+        "all ten declared hashes reverified",
+        "checks JSON serialization and parse"
+      ]
+    }
+  ],
+  "output_volume": {
+    "declared_unique_input_bytes_including_map": 46438,
+    "additional_raw_https_response_body_bytes_excluding_browser_open": 178380,
+    "tool_display_bytes": null,
+    "judgment_bytes": 11865,
+    "judgment_whitespace_words": 1394,
+    "checks_json_bytes": 7227
+  },
+  "blinding_limit": "Mapped method-specific paths and supplied prose were visible; no sibling, parent/lineage, campaign history, grades, or evaluator answers inspected.",
+  "frozen_at": "2026-10-07T21:18:10.739391+00:00"
+}

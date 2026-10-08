@@ -1,0 +1,49 @@
+{
+  "stage": "D-M07-B/treatment/critical-first-protected-breadth-final-v3",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_cc86b49f-a87a-415d-8ea2-0d2f78342ab0/state.json",
+  "native_createdAt": 1791415510052,
+  "native_status": "complete",
+  "native_active_observed": true,
+  "comparative_eligibility": "PENDING_SOURCE_REVIEW",
+  "t3_status": "completed",
+  "quiet": true,
+  "requestedAt": "2026-10-07T23:25:03.148Z",
+  "startedAt": "2026-10-07T23:25:07.730Z",
+  "completedAt": "2026-10-07T23:36:23.433Z",
+  "dispatch_to_delivery_seconds": 680.285,
+  "stage_ceiling_seconds": 1800,
+  "absolute_case_deadline": "2026-10-08T00:04:13.527092+00:00",
+  "budget_delivery_eligible": true,
+  "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/final.md",
+  "output_sha256": "1528bec9ff92dd23532544162a6743274e4f85e8df431bf7469b49834503ee69",
+  "output_bytes": 6856,
+  "scientific_files": {
+    "critical_check.md": {
+      "sha256": "d595a80cdb7da7b80b6c03b2faac5ad00af32e44eaf314b38ca0e1d8edbdf63f",
+      "bytes": 6526
+    },
+    "source_log.md": {
+      "sha256": "51b9b5c9a38ed85cbc4b584e461146e0a60452599ea2e8452d7023844bb69e73",
+      "bytes": 3069
+    },
+    "final.md": {
+      "sha256": "1528bec9ff92dd23532544162a6743274e4f85e8df431bf7469b49834503ee69",
+      "bytes": 6856
+    },
+    "reserve_check.md": {
+      "sha256": "41da8bbc19d5888c06e634eac12c69058e9c9d16a475cf5f18523fe137afa9cc",
+      "bytes": 6844
+    }
+  },
+  "raw_native_goal_counters": {
+    "rounds": 4,
+    "createdAt": 1791415510052,
+    "updatedAt": 1791416181334,
+    "tokens": null
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "source_quality": "UNASSESSED",
+  "scope_audit": "incomplete_unknown; advisory map not firewall",
+  "frozen_at": "2026-10-07T23:37:01.643245+00:00"
+}

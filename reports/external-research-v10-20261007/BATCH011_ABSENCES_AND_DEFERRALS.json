@@ -1,0 +1,151 @@
+{
+  "schema": "ER10_BATCH011_ABSENCES_LIMITS_V1",
+  "scope_limits": {
+    "live_science_excluded": [
+      "D-M09-A",
+      "D-M06-A",
+      "D-M06-B"
+    ],
+    "native_goal_tickets_or_raw_projections_imported": false,
+    "private_source_needles_or_fragments_opened": false,
+    "primary_source_bodies_opened": false,
+    "new_source_research": false,
+    "new_mapping_inference": false,
+    "scientific_grading_or_regrading": false,
+    "network_remote_verification": false,
+    "account_server_rollout_calls": false,
+    "git_mutations": false,
+    "checkout_created": false,
+    "cleanup_performed": false,
+    "archive_created": false,
+    "watchers_or_polls": false,
+    "own_goal_or_workers": false,
+    "working_draft_original_four_remaining_text_preserved": true,
+    "current_remaining_three_recorded_separately": true,
+    "inherited_metadata_gaps_preserved": true,
+    "report_historical_36_closed_4_held_preserved": true,
+    "retention_221_identity_census_is_not_full_condition_verification": true,
+    "retention_original_65535B_cap_and_history_unchanged": true,
+    "raw_sources_not_deleted": true,
+    "campaign_complete_claim": false,
+    "cleanup_complete_claim": false
+  },
+  "excluded_original_paths": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/integration-state-terminal.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/native_terminal_current_raw.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/native_terminal_export_index.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/start_allnested_census.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/start_catalog_receipt.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/startup_activity_once_receipt.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/integration-state-activation.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/integration-state-terminal.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/native_activation_current_raw.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/native_activation_export_index.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/native_activation_receipt.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/native_terminal_current_raw.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/native_terminal_export_index.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/start_allnested_census.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/start_catalog_receipt.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/startup_activity_once_receipt.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/integration-state-activation.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/integration-state-terminal.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/native_activation_current_raw.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/native_activation_export_index.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/native_activation_receipt.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/native_terminal_current_raw.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/native_terminal_export_index.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/start_allnested_census.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/start_catalog_receipt.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/startup_activity_once_receipt.json",
+      "reason": "NOT_SELECTED_COMPACT_PROTOCOL; native ticket/raw projection/catalog/census/startup activity omitted; no body read"
+    }
+  ],
+  "original_gaps": [],
+  "source_remainder": "Original review scope, supported findings, partial/nonnative provenance limits and economics remain in exact original authored outputs/reviews. No semantic normalization or repair.",
+  "seed_ACTIVE": "Original missing/unobserved seed ACTIVE and missing raw API responses remain comparative HOLD; native terminal and quiet do not rescue activation.",
+  "reproduction_limits": [
+    "Raw source bodies and private fragments are identity/locator metadata only, not publicly reconstructible from hashes.",
+    "Retention validation scripts cannot perform parent-byte comparisons after parents are removed. No original parents were read or deleted.",
+    "Root preview preserves 13 complete normalized-visible-text alternatives, not full original parser/HTML extraction replay.",
+    "Seven helper cap HOLDs were materialized in the separately frozen Root preview; original helper history remains unchanged.",
+    "Thin metadata materializer unnecessary: every one of 191 frozen report input paths is physically included.",
+    "Old adapter, historic four-held templates and working draft are unchanged. No final promotion.",
+    "Inherited malformed JSON/stale hashes/authority-edition gaps from original bundle remain unchanged; no scientific byte repairs."
+  ]
+}

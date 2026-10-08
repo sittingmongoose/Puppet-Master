@@ -1,0 +1,18 @@
+{
+  "clientRequestId": "er10-cohort3-D-M07-B-treatment-critical-first-protected-breadth-final-v3",
+  "mode": "async",
+  "role": "general",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    }
+  },
+  "title": "ER10 COHORT3 D-M07-B critical-first-protected-breadth-final v3",
+  "task": "/goal Execute ER10 D-M07-B v3 critical-first-protected-breadth-final. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/assignment.md."
+}

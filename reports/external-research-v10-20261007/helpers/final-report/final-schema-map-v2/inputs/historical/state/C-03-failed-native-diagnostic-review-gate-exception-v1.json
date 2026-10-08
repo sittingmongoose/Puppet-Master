@@ -1,0 +1,62 @@
+{
+  "schema": "ER10-root-C03-existing-full-science-diagnostic-review-exception-v1",
+  "frozen_at": "2026-10-07T21:30:13.703534+00:00",
+  "authority": "User authorized complete campaign and independent evaluation; root binding authority only. This is assessment of frozen existing science, no candidate repair/retry.",
+  "original_gate": "NOT_PASSED: treatment actual terminal BLOCKED, not complete",
+  "native_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/host/terminal-33c4f0618314afd8.json",
+    "sha256": "33c4f0618314afd8f191aaf1c6b2d3abd92d61299fbd229f7b7814de8159e933",
+    "strong_nativeThreadRef": "01a11835-110e-7a01-9615-e7601d8dd329",
+    "actual_terminal": "blocked"
+  },
+  "pair_quiet": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/PAIR_QUIET.json",
+    "sha256": "30671ce4daaa8d539f7b0578c05c781572e5ed1b15055dbf21d227fa9dae94c4",
+    "actual_tasks": 5,
+    "all_completed_no_pending_descendants": true
+  },
+  "frozen_final_carriers": [
+    {
+      "arm": "control",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/reviser-v1/artifact.md",
+      "sha256": "a1f9393761dffc84e1a47513253c9929bee6c07f762ac109027b3810f83580a1",
+      "bytes": 26877
+    },
+    {
+      "arm": "control",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/reviser-v1/source-map.json",
+      "sha256": "bd7f636b4f7d2b4278dcfdc4e96038c5232b37ec0f3629c30f892c099049fdc4",
+      "bytes": 16897
+    },
+    {
+      "arm": "treatment",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/artifact.md",
+      "sha256": "8f39e0a1a1db92d2ef085b114ed2093b9b0eb2ed0c1010d5d5b493dbb959bd2b",
+      "bytes": 25934
+    },
+    {
+      "arm": "treatment",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/source-map.json",
+      "sha256": "7bfc121f55fbca3d62bb5063b00386236819cc1c1f850e19120d6d23b37186e7",
+      "bytes": 18368
+    }
+  ],
+  "decision": "ALLOW_TWO_FRESH_ORDINARY_FULL_DECLARED_SOURCE6_DIAGNOSTIC_REVIEWS_AFTER_OWN_FULL_FILE_HASH_AND_QUIET_RECHECK",
+  "review_binding": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    },
+    "account": "sittingmongoose@gmail.com"
+  },
+  "review_budget": "Unchanged original per-review40min allowance/writing reserve and full original seven-obligation/six-axis scope. New actual dispatch boundary, not an extension of any started review.",
+  "review_input": "Original locked brief/plan plus each own exact final, preservation predecessors, source map and source evidence. No counterpart, economics, other grades, root semantic findings or prior history.",
+  "reviewer_goal_required": false,
+  "independent_grades_unchanged_after_authorship": true,
+  "no_candidate_feedback_rescue_or_retry": true,
+  "original_confirmation_lock_budget_scope_and_native_requirement_unchanged": true,
+  "native_and_comparative_eligibility": "HOLD; no native completion inferred or confirmation qualification from diagnostic source assessment",
+  "counts": "Record delivered assessments and both-arm full declared source coverage separately; original gate failure remains even if source assessment is complete. No output-absence or failed-native speed win."
+}

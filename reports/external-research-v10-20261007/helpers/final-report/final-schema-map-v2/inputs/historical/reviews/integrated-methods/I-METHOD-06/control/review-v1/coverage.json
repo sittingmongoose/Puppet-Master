@@ -1,0 +1,343 @@
+{
+  "schema_version": "1.0",
+  "case": "I-METHOD-06",
+  "artifact": "control/reviser-v1/artifact.md",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "counts": {
+    "six_axes": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "brief_O1_O6": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "additional_brief_constraints": {
+      "complete": 4,
+      "assessed": 4,
+      "unassessed": 0
+    },
+    "frozen_input_units_contexts": {
+      "complete": 11,
+      "assessed": 11,
+      "unassessed": 0
+    },
+    "owner_decision_groups": {
+      "complete": 71,
+      "assessed": 71,
+      "unassessed": 0
+    },
+    "consequential_claim_groups": {
+      "complete": 20,
+      "assessed": 20,
+      "unassessed": 0
+    },
+    "critic_disposition_groups": {
+      "complete": 27,
+      "assessed": 27,
+      "unassessed": 0
+    },
+    "draft_preservation_themes": {
+      "complete": 12,
+      "assessed": 12,
+      "unassessed": 0
+    },
+    "validation_proposal_groups": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "material_error_count": 0,
+    "nonmaterial_behavior_error_count": 1,
+    "note": "Complete means declared inventory, assessed includes insufficient/partial/qualified findings, not satisfied. Categories overlap and must not be summed."
+  },
+  "axes": [
+    {
+      "axis": 1,
+      "status": "assessed_with_limitations",
+      "finding": "All scope compared; O1 chronology unestablished and Rust/Slint boundary not explicit."
+    },
+    {
+      "axis": 2,
+      "status": "assessed_with_nonmaterial_error",
+      "finding": "Pinned Restic/history and documentation supported; random-subset blanket has all-inventory boundary exceptions."
+    },
+    {
+      "axis": 3,
+      "status": "assessed_supported_with_limits",
+      "finding": "Useful primary alternatives and negative/optional leads; no exhaustive opportunity claim or reconstructed historical proof."
+    },
+    {
+      "axis": 4,
+      "status": "assessed_supported_with_limits",
+      "finding": "Rejections justified by retained choices; no current Kopia defect inferred; retained-by-reference dispositions not counted as runtime proof."
+    },
+    {
+      "axis": 5,
+      "status": "assessed_supported_with_limits",
+      "finding": "All 27 critic disposition groups and 12 draft themes assessed; P5 discovery chronology remains unresolved."
+    },
+    {
+      "axis": 6,
+      "status": "assessed_supported",
+      "finding": "All six validation proposals assessed. No executed component/application/recovery witness claimed."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "status": "assessed_partial",
+      "reason": "Primary discovery beyond plan documented; starting before plan narrowing is not established by admitted evidence."
+    },
+    {
+      "id": "O2",
+      "status": "assessed_satisfied_with_minor_qualification",
+      "reason": "Immutable code/caller/governing context supports mechanism; subset upper boundaries need qualification."
+    },
+    {
+      "id": "O3",
+      "status": "assessed_satisfied",
+      "reason": "Real issue, immutable fix, helper regression and released v0.19.1 applicability independently checked."
+    },
+    {
+      "id": "O4",
+      "status": "assessed_satisfied_with_limits",
+      "reason": "All 11 copied inputs and 71 decision groups compared; Rust/Slint explicit boundary missing; recovery order wording ambiguous."
+    },
+    {
+      "id": "O5",
+      "status": "assessed_substantively_satisfied",
+      "reason": "All criticism dispositions visible; provider/family provenance belongs to host and was not inferred."
+    },
+    {
+      "id": "O6",
+      "status": "assessed_satisfied_with_limits",
+      "reason": "One coherent proposal, options, retained/rejected matters, concrete checks and blockers; not executable recovery proof."
+    }
+  ],
+  "brief_constraints": [
+    {
+      "id": "BC01",
+      "requirement": "One Project/two destinations/capture/verify/as_new; preserve retained modes/products",
+      "status": "assessed_satisfied"
+    },
+    {
+      "id": "BC02",
+      "requirement": "Rust + Slint desktop; no Iced revival/framework change",
+      "status": "assessed_partial",
+      "reason": "No incompatible architecture proposed, but neither Rust nor Slint is stated in final."
+    },
+    {
+      "id": "BC03",
+      "requirement": "Read-only/public research; no actual backup/restore/retention/canon/WorkNodes/private actions",
+      "status": "assessed_authored_boundary_satisfied",
+      "reason": "Source assessment uses statements and admitted artifacts; lifecycle/account execution audit excluded."
+    },
+    {
+      "id": "BC04",
+      "requirement": "Missing adjacent owners remain dependencies, not inferred whole-project defects",
+      "status": "assessed_satisfied"
+    }
+  ],
+  "plan_inputs": [
+    {
+      "id": "scope_and_owners",
+      "status": "assessed_retained",
+      "decision_count": 8,
+      "assessed_decision_ids": [
+        "SC01",
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07",
+        "SC08"
+      ],
+      "assessed_decision_count": 8,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "non_goals",
+      "status": "assessed_retained",
+      "decision_count": 6,
+      "assessed_decision_ids": [
+        "NG01",
+        "NG02",
+        "NG03",
+        "NG04",
+        "NG05",
+        "NG06"
+      ],
+      "assessed_decision_count": 6,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "BRS-001",
+      "status": "assessed_retained",
+      "decision_count": 3,
+      "assessed_decision_ids": [
+        "001a",
+        "001b",
+        "001c"
+      ],
+      "assessed_decision_count": 3,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "BRS-004",
+      "status": "assessed_retained",
+      "decision_count": 6,
+      "assessed_decision_ids": [
+        "004a",
+        "004b",
+        "004c",
+        "004d",
+        "004e",
+        "004f"
+      ],
+      "assessed_decision_count": 6,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "BRS-005",
+      "status": "assessed_retained",
+      "decision_count": 6,
+      "assessed_decision_ids": [
+        "005a",
+        "005b",
+        "005c",
+        "005d",
+        "005e",
+        "005f"
+      ],
+      "assessed_decision_count": 6,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "BRS-006",
+      "status": "assessed_retained",
+      "decision_count": 7,
+      "assessed_decision_ids": [
+        "006a",
+        "006b",
+        "006c",
+        "006d",
+        "006e",
+        "006f",
+        "006g"
+      ],
+      "assessed_decision_count": 7,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "BRS-010",
+      "status": "assessed_retained",
+      "decision_count": 4,
+      "assessed_decision_ids": [
+        "010a",
+        "010b",
+        "010c",
+        "010d"
+      ],
+      "assessed_decision_count": 4,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "BRS-017",
+      "status": "assessed_retained",
+      "decision_count": 7,
+      "assessed_decision_ids": [
+        "017a",
+        "017b",
+        "017c",
+        "017d",
+        "017e",
+        "017f",
+        "017g"
+      ],
+      "assessed_decision_count": 7,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "BRS-019",
+      "status": "assessed_with_limitations",
+      "decision_count": 11,
+      "assessed_decision_ids": [
+        "019a",
+        "019b",
+        "019c",
+        "019d",
+        "019e",
+        "019f",
+        "019g",
+        "019h",
+        "019i",
+        "019j",
+        "019k"
+      ],
+      "assessed_decision_count": 11,
+      "unassessed_decision_count": 0,
+      "exceptions": {
+        "019a": "ordering_ambiguity_L03"
+      }
+    },
+    {
+      "id": "BRS-023",
+      "status": "assessed_retained",
+      "decision_count": 6,
+      "assessed_decision_ids": [
+        "023a",
+        "023b",
+        "023c",
+        "023d",
+        "023e",
+        "023f"
+      ],
+      "assessed_decision_count": 6,
+      "unassessed_decision_count": 0
+    },
+    {
+      "id": "BRS-030",
+      "status": "assessed_retained",
+      "decision_count": 7,
+      "assessed_decision_ids": [
+        "030a",
+        "030b",
+        "030c",
+        "030d",
+        "030e",
+        "030f",
+        "030g"
+      ],
+      "assessed_decision_count": 7,
+      "unassessed_decision_count": 0
+    }
+  ],
+  "unassessed_scientific_scope": [],
+  "excluded_host_fields": [
+    "family/provider identity",
+    "lifecycle/native terminal disposition",
+    "stage timing/quota",
+    "usage/billing",
+    "counterpart/comparative result"
+  ],
+  "usage": {
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null
+  },
+  "blinding_limits": [
+    "Exact authorized paths visibly name arm.",
+    "Authored artifact/procedure structure and method prose can reveal procedure.",
+    "Source maps contain author timing/counters; ignored for judgment.",
+    "No other-arm output/grades/cost/speed targets or parent/evaluator analysis read."
+  ],
+  "scope_limit": "No exhaustive opportunity recall asserted; absent adjacent owner contents are outside the supplied comparison boundary.",
+  "owner_decision_details": "judgment.md#frozen-owner-decision-coverage-appendix",
+  "completed_at_utc": "2026-10-07T21:05:40.196574+00:00"
+}

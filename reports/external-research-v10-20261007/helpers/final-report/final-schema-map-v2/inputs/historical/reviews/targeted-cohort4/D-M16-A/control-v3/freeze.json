@@ -1,0 +1,230 @@
+{
+  "schema": "ER10-independent-review-freeze-v3",
+  "at": "2026-10-07T22:45:30.858952+00:00",
+  "native_goal": "NOT_REQUIRED_REVIEW_CARRIER_V2",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "overall_grade": "FAIL",
+  "assessment_extent": {
+    "extent": "FULL_DECLARED_MATERIAL_SOURCE_SCIENCE_SCOPE",
+    "unique_mapped_documents": 10,
+    "mapped_source_copies": 23,
+    "mapped_indices": 3,
+    "material_claim_checks": 62,
+    "material_defects": 6,
+    "six_axes_assessed": 6,
+    "all_obligations_assessed": 6,
+    "method": "Entire frozen final inventoried; each consequential fact, condition, recommendation, uncertainty, optional lead and check disposition linked to semantically inspected primary sections, or explicitly identified as unsupported/local inference/historical-unverifiable. All mapped identities/hashes were independently checked. Negative statements were restricted to captured content and lexical results were never treated as semantic proof.",
+    "scientific_unassessed_remainder": [],
+    "not_attested_or_executed": [
+      "Historical candidate discovery, prior-report permissions and actual candidate source operations (excluded process history).",
+      "Original live-response timestamps/headers/status when only body bytes and a selected index claim were supplied.",
+      "Live tile endpoint Range/validator/Retry-After capabilities, browser/renderer behavior, actual quotas, crash safety and network behavior (candidate itself proposes them).",
+      "All unseen external implementations/deployment versions and broader research universe beyond this bounded declared bundle."
+    ],
+    "source_text_extent": [
+      "RFC9111 governing storage/key/age/freshness/stale/validation/directive/application sections and complete-file negative searches.",
+      "RFC5861 complete substantive extension, scope, error/window and security text; primary date/status.",
+      "RFC9110 governing validator/date/conditional/range/206/304/404/410/416/Retry-After sections and relevant whole-byte searches.",
+      "All substantive OSMF policy, rendering-wiki authored text plus raw parser metadata, AWS retry page, Mapbox API page, mod_tile README and leaflet README.",
+      "Slippy naming/provider/coordinate/variant/revision sections and whole-byte searches; unrelated coordinate implementation examples were not executed or audited as algorithms because the candidate makes no algorithm-correctness claim."
+    ]
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+      "sha256": "eebf54e198898a4cdb2c6464e8c222ab0e5b9b7667d32d23c35f8ae0146ed7b3",
+      "bytes": 25125
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/dispatch-receipt.json",
+      "sha256": "f5848161561647f58d3559fbad7a80a006913862a32ef8964471a1fe1b0e9c14",
+      "bytes": 1034
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/dispatch-request.json",
+      "sha256": "eb9f1d9c82e8b50ca4dc2070e90002b5e1bcdd17f2b18820b6ac640e48bd159c",
+      "bytes": 4174
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/dispatch.json",
+      "sha256": "3da90ef882548e8d4fa04c8629f0033f60d371cace2faf9e122a353d8b7e44d6",
+      "bytes": 1435
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/native_counters.json",
+      "sha256": "ed2a2fa2738541ebd5c7ce05f2255b26c41c0a8a1744f842770951ecb92b953c",
+      "bytes": 260
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/prospective-timing.json",
+      "sha256": "2ab80c6fd8dcb6b5cc05c8c92e8a2d269283e36057c0846be6489b622104db31",
+      "bytes": 156
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review-runtime-metadata.json",
+      "sha256": "00d679be1e3abf17206700e51dadd75cecc36acca870662db7dbf4c7c8e4e608",
+      "bytes": 870
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+      "sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+      "bytes": 123986
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.md",
+      "sha256": "ec4f40ccb5643e3b4ac9859277a955ad7311822640577e18373b91728f32c768",
+      "bytes": 61000
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+      "sha256": "576e2bbf4312bfa98628131e33ca9d90348e04f3b2841548472359a195fc8bf0",
+      "bytes": 30825
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/aws-public-confirm.html",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "bytes": 63037
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/aws-sdk-retry-behavior.html.review-text.txt",
+      "sha256": "41e764e6aad63133d80fe905b0b21720153ad106644637d20cb3c3585f3817d3",
+      "bytes": 19776
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/exact-locators.json",
+      "sha256": "653d91a5469c27c303282ed22ff5ec38590f8c89e59d3a913e49d42d6b13084c",
+      "bytes": 8024
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/integrity.json",
+      "sha256": "f88b8a6ed90edd2d823e7744e783727593e1861b33058cdcad1f8f8fca79defe",
+      "bytes": 10026
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-README.md.review-text.txt",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "bytes": 1970
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-commit.json",
+      "sha256": "0250de63007f2d33674be54dc1661aa2433c6ba6f27480e766f8fbac859cbfc4",
+      "bytes": 3516
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-pinned-readme.md",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "bytes": 1970
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/lexical-checks.json",
+      "sha256": "8fff7af7df1df7e4a7d28abb1e851dd4c71e49b3e28ff5193789ca67f5077998",
+      "bytes": 8953
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mapbox-current-raster.html",
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "bytes": 57884
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mapbox-raster-tiles-api.html.review-text.txt",
+      "sha256": "dd5be1be45fd26897a0014fb8ce066363583891d6fceb229832392262b886a2c",
+      "bytes": 5935
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod-tile-commit.json",
+      "sha256": "78bbb686b9fd28555294c093cc745c7960e1b68fd8c3ed50819ede7ce61f4064",
+      "bytes": 2150
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod-tile-pinned-readme.rst",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "bytes": 9248
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod_tile-README.rst.review-text.txt",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "bytes": 9248
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osm-wiki-slippy-tilenames.html.review-text.txt",
+      "sha256": "557f5e23685ee3e23ce832f5809b83792954647aa89a15351c4d1764feec281d",
+      "bytes": 40567
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osm-wiki-tile-disk-usage.html.review-text.txt",
+      "sha256": "6ac95cac66b135528a7ae880d110b600ffe2e49c9a68fa79a94e56e5de5c4a82",
+      "bytes": 2781
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osmf-public-confirm.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osmf-tile-policy.html.review-text.txt",
+      "sha256": "08a5747702a55cc76106ce8b01d1160f32a257ddbdfe8310c05dcd900443a3c7",
+      "bytes": 9768
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+      "sha256": "52e61a14a212cd6a58504c323362cb1cf5f670189c69632fb81631aa611d6b62",
+      "bytes": 25309
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/review-artifact-integrity.json",
+      "sha256": "e6f46dfc915c798ca28d37e58e4c74638b8191b4abf6eb14c5db1fc12bbdff31",
+      "bytes": 908
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc5861-public-confirm.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc5861.txt.review-text.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc6585.txt",
+      "sha256": "f6d55d1b491cd515c35827cf9181753b23b2a68c4df14e56d83dc445b3876e58",
+      "bytes": 17164
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9110.txt.review-text.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9111-public-confirm.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9111.txt.review-text.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/web-primary-open-result.json",
+      "sha256": "449257cd3982b978929a789c00458061fdbcb0db12a912df9c2ca550e1da5733",
+      "bytes": 32906
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/wiki-rendering-revision.html",
+      "sha256": "20d2e48260c5618ce2f6c714d43b5ad10c9391c7d287c0b0e79519f25e3130ee",
+      "bytes": 17160
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/task-terminal.json",
+      "sha256": "576cec59860cf21409e433096f3a573c290fb755210b8d8eedea75b3ef8af24d",
+      "bytes": 6396
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/timings.json",
+      "sha256": "2ac629937ab8afc9546e4d2b951fedb61e64e9d10482450ccc920963112df7a4",
+      "bytes": 2923
+    }
+  ]
+}

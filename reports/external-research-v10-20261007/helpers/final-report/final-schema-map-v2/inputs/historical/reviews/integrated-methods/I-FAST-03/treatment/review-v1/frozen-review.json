@@ -1,0 +1,1234 @@
+{
+  "record_at": "2026-10-07T22:14:02.932580+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-03-treatment-independent-review-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:56:34.479Z",
+    "startedAt": "2026-10-07T21:56:36.715Z",
+    "completedAt": "2026-10-07T22:08:30.296Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "case_id": "I-FAST-03",
+    "review_target": "treatment/critic-finalizer-v1",
+    "source_judgment": "FAIL",
+    "assessment_complete": true,
+    "counting_rule": "Required-obligation inventory is six original O obligations plus 38 atomic frozen-plan obligations = 44; these are coverage units, not statistically independent errors. Six axes, six owner summaries, 20 consequential checks, six criticism dispositions and 26 preservation comparisons are separately counted and not added to 44. No opportunity-recall denominator is claimed.",
+    "counts": {
+      "required_obligations": {
+        "complete": 44,
+        "assessed": 44,
+        "unassessed": 0
+      },
+      "O1_O6": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "frozen_plan_atomic": {
+        "complete": 38,
+        "assessed": 38,
+        "unassessed": 0,
+        "met": 37,
+        "partial": 1
+      },
+      "plan_owners": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "additional_supplied_owner_decisions": {
+        "complete": 0,
+        "assessed": 0,
+        "unassessed": 0
+      },
+      "axes": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "consequential_checks": {
+        "complete": 20,
+        "assessed": 20,
+        "unassessed": 0
+      },
+      "criticism_dispositions": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "preservation_comparisons": {
+        "complete": 26,
+        "assessed": 26,
+        "unassessed": 0
+      },
+      "material_error_count": 2
+    },
+    "axes": [
+      {
+        "axis": 1,
+        "assessment_status": "ASSESSED",
+        "judgment": "FAIL",
+        "check_ids": [
+          "C16",
+          "C19",
+          "C20"
+        ],
+        "defect_ids": [
+          "E01",
+          "E02"
+        ]
+      },
+      {
+        "axis": 2,
+        "assessment_status": "ASSESSED",
+        "judgment": "FAIL",
+        "check_ids": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C07",
+          "C08",
+          "C09",
+          "C10",
+          "C11",
+          "C12",
+          "C13",
+          "C14",
+          "C15",
+          "C16",
+          "C17"
+        ],
+        "defect_ids": [
+          "E01"
+        ]
+      },
+      {
+        "axis": 3,
+        "assessment_status": "ASSESSED",
+        "judgment": "PASS_WITH_LIMITATIONS",
+        "check_ids": [
+          "C01",
+          "C02",
+          "C03",
+          "C09",
+          "C10",
+          "C11",
+          "C12",
+          "C19"
+        ],
+        "defect_ids": []
+      },
+      {
+        "axis": 4,
+        "assessment_status": "ASSESSED",
+        "judgment": "FAIL",
+        "check_ids": [
+          "C06",
+          "C10",
+          "C16",
+          "C20"
+        ],
+        "defect_ids": [
+          "E01",
+          "E02"
+        ]
+      },
+      {
+        "axis": 5,
+        "assessment_status": "ASSESSED",
+        "judgment": "PASS_WITH_LIMITATIONS",
+        "check_ids": [
+          "C20"
+        ],
+        "defect_ids": [
+          "E01",
+          "E02"
+        ]
+      },
+      {
+        "axis": 6,
+        "assessment_status": "ASSESSED",
+        "judgment": "FAIL",
+        "check_ids": [
+          "C06",
+          "C09",
+          "C13",
+          "C18"
+        ],
+        "defect_ids": [
+          "E01"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O1",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET_WITH_LIMITATIONS",
+        "final_lines": "12-17,25,29,37,65-76",
+        "check_ids": [
+          "C01",
+          "C02",
+          "C03",
+          "C19"
+        ],
+        "reason": "Bounded brief-led analogy, parser/runtime alternatives, timezone mechanism, and negative applicability research; chart/store/runtime choices remain open, no exhaustive opportunity claim."
+      },
+      {
+        "id": "O2",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "12-13,25,45,72",
+        "check_ids": [
+          "C05",
+          "C07",
+          "C08",
+          "C10"
+        ],
+        "reason": "Released pandas source pins and governing _read/_validate_names caller chain substantiate one consequential mechanism; reviewer resolved exact release commits."
+      },
+      {
+        "id": "O3",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "PARTIAL",
+        "final_lines": "12,72",
+        "check_ids": [
+          "C04",
+          "C05",
+          "C06",
+          "C08",
+          "C11"
+        ],
+        "defect_ids": [
+          "E01"
+        ],
+        "reason": "Issue, fix mechanism, and release are supported; captured live page is misidentified as historical before/after regression witness, and captured MultiIndex test is not the relevant supplied-name regression. Reviewer-only exact tests are not candidate completion."
+      },
+      {
+        "id": "O4",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "PARTIAL",
+        "final_lines": "21-70",
+        "check_ids": [
+          "C16",
+          "C19",
+          "C20"
+        ],
+        "defect_ids": [
+          "E02"
+        ],
+        "reason": "All six owners compared, but P6 uncertainty is specified only for optional review package, not required comparison export."
+      },
+      {
+        "id": "O5",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET_WITH_LIMITATIONS",
+        "final_lines": "10-17,72",
+        "check_ids": [
+          "C20"
+        ],
+        "reason": "Six substantive objections and dispositions are visible and substantively checked. Family identity/process independence are host/provenance questions not established from authored claims or used as source truth; E01 survives the critique."
+      },
+      {
+        "id": "O6",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "PARTIAL",
+        "final_lines": "19-76",
+        "check_ids": [
+          "C16",
+          "C18",
+          "C20"
+        ],
+        "defect_ids": [
+          "E01",
+          "E02"
+        ],
+        "reason": "Coherent complete-shaped replacement, alternatives, rejections, proposed checks, and uncertainty exists; evidentiary regression defect and missing default export uncertainty prevent entire required scope satisfaction."
+      }
+    ],
+    "plan_owners": [
+      {
+        "id": "P1",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "atomic_count": 8
+      },
+      {
+        "id": "P2",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "atomic_count": 5
+      },
+      {
+        "id": "P3",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "atomic_count": 6
+      },
+      {
+        "id": "P4",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "atomic_count": 4
+      },
+      {
+        "id": "P5",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "atomic_count": 5
+      },
+      {
+        "id": "P6",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "PARTIAL",
+        "atomic_count": 10
+      }
+    ],
+    "plan_obligations": [
+      {
+        "id": "P1.01",
+        "owner": "P1",
+        "obligation": "CSV interval export intake",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "23-25",
+        "defect_ids": []
+      },
+      {
+        "id": "P1.02",
+        "owner": "P1",
+        "obligation": "Three meters and one year",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "23,41",
+        "defect_ids": []
+      },
+      {
+        "id": "P1.03",
+        "owner": "P1",
+        "obligation": "Preview meter identity",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "23",
+        "defect_ids": []
+      },
+      {
+        "id": "P1.04",
+        "owner": "P1",
+        "obligation": "Preview interval labeling",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "23",
+        "defect_ids": []
+      },
+      {
+        "id": "P1.05",
+        "owner": "P1",
+        "obligation": "Preview timestamp convention",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "23,37",
+        "defect_ids": []
+      },
+      {
+        "id": "P1.06",
+        "owner": "P1",
+        "obligation": "Preview units",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "23,35",
+        "defect_ids": []
+      },
+      {
+        "id": "P1.07",
+        "owner": "P1",
+        "obligation": "Distinguish interval and cumulative readings",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "23,35",
+        "defect_ids": []
+      },
+      {
+        "id": "P1.08",
+        "owner": "P1",
+        "obligation": "Immutable originals",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "23",
+        "defect_ids": []
+      },
+      {
+        "id": "P2.01",
+        "owner": "P2",
+        "obligation": "Local originals store",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "29",
+        "defect_ids": []
+      },
+      {
+        "id": "P2.02",
+        "owner": "P2",
+        "obligation": "Interpretation choices stored",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "29",
+        "defect_ids": []
+      },
+      {
+        "id": "P2.03",
+        "owner": "P2",
+        "obligation": "Review flags stored",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "29",
+        "defect_ids": []
+      },
+      {
+        "id": "P2.04",
+        "owner": "P2",
+        "obligation": "Repeated and overlapping exports reviewed",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "29",
+        "defect_ids": []
+      },
+      {
+        "id": "P2.05",
+        "owner": "P2",
+        "obligation": "Provenance and no automatic overwrite",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "29",
+        "defect_ids": []
+      },
+      {
+        "id": "P3.01",
+        "owner": "P3",
+        "obligation": "Daily and monthly totals",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "33",
+        "defect_ids": []
+      },
+      {
+        "id": "P3.02",
+        "owner": "P3",
+        "obligation": "Time-of-day profiles",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "33,37",
+        "defect_ids": []
+      },
+      {
+        "id": "P3.03",
+        "owner": "P3",
+        "obligation": "User-selected period comparison",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "33,37",
+        "defect_ids": []
+      },
+      {
+        "id": "P3.04",
+        "owner": "P3",
+        "obligation": "Missing intervals visible",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "33",
+        "defect_ids": []
+      },
+      {
+        "id": "P3.05",
+        "owner": "P3",
+        "obligation": "Excluded suspect readings visible",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "29,33",
+        "defect_ids": []
+      },
+      {
+        "id": "P3.06",
+        "owner": "P3",
+        "obligation": "Estimates never silently measured",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "33",
+        "defect_ids": []
+      },
+      {
+        "id": "P4.01",
+        "owner": "P4",
+        "obligation": "Competing interpretations retained",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "41",
+        "defect_ids": []
+      },
+      {
+        "id": "P4.02",
+        "owner": "P4",
+        "obligation": "Operator event labels",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "41",
+        "defect_ids": []
+      },
+      {
+        "id": "P4.03",
+        "owner": "P4",
+        "obligation": "Descriptive comparison without causal savings",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "37,41",
+        "defect_ids": []
+      },
+      {
+        "id": "P4.04",
+        "owner": "P4",
+        "obligation": "No tariff or billing conclusions",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "41",
+        "defect_ids": []
+      },
+      {
+        "id": "P5.01",
+        "owner": "P5",
+        "obligation": "Delimited ingestion component decision/alternatives",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "25,45",
+        "defect_ids": []
+      },
+      {
+        "id": "P5.02",
+        "owner": "P5",
+        "obligation": "Interval aggregation component decision",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "35,45",
+        "defect_ids": []
+      },
+      {
+        "id": "P5.03",
+        "owner": "P5",
+        "obligation": "Chart component decision",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "37,45,76",
+        "defect_ids": []
+      },
+      {
+        "id": "P5.04",
+        "owner": "P5",
+        "obligation": "Local operation on normal laptop",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "45,59",
+        "defect_ids": []
+      },
+      {
+        "id": "P5.05",
+        "owner": "P5",
+        "obligation": "Identifiers excluded unless explicitly selected for review package",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "45,58",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.01",
+        "owner": "P6",
+        "obligation": "Period comparison export",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "49",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.02",
+        "owner": "P6",
+        "obligation": "Input identities exported",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "49",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.03",
+        "owner": "P6",
+        "obligation": "Coverage exported",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "49",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.04",
+        "owner": "P6",
+        "obligation": "Interpretations exported",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "49",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.05",
+        "owner": "P6",
+        "obligation": "Uncertainty accompanies comparison export",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "PARTIAL",
+        "final_lines": "45,49,58",
+        "defect_ids": [
+          "E02"
+        ]
+      },
+      {
+        "id": "P6.06",
+        "owner": "P6",
+        "obligation": "Counter reset checks proposed",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "55",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.07",
+        "owner": "P6",
+        "obligation": "Overlap checks proposed",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "56",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.08",
+        "owner": "P6",
+        "obligation": "Clock transition checks proposed",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "54,57",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.09",
+        "owner": "P6",
+        "obligation": "Unit handling checks proposed",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "55",
+        "defect_ids": []
+      },
+      {
+        "id": "P6.10",
+        "owner": "P6",
+        "obligation": "Aggregation reproducibility checks proposed",
+        "assessment_status": "ASSESSED",
+        "satisfaction": "MET",
+        "final_lines": "55,57,58",
+        "defect_ids": []
+      }
+    ],
+    "additional_owner_decisions": [],
+    "consequential_findings": [
+      {
+        "id": "C01",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED",
+        "defect_ids": []
+      },
+      {
+        "id": "C02",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_WITH_LIMITS",
+        "defect_ids": []
+      },
+      {
+        "id": "C03",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_WITH_LIMITS",
+        "defect_ids": []
+      },
+      {
+        "id": "C04",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED",
+        "defect_ids": []
+      },
+      {
+        "id": "C05",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED",
+        "defect_ids": []
+      },
+      {
+        "id": "C06",
+        "assessment_status": "ASSESSED",
+        "source_status": "CONTRADICTED",
+        "defect_ids": [
+          "E01"
+        ]
+      },
+      {
+        "id": "C07",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED",
+        "defect_ids": []
+      },
+      {
+        "id": "C08",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_BUT_REQUIRED_CHAIN_INCOMPLETE",
+        "defect_ids": [
+          "E01"
+        ]
+      },
+      {
+        "id": "C09",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_WITH_LIMITS",
+        "defect_ids": []
+      },
+      {
+        "id": "C10",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED",
+        "defect_ids": []
+      },
+      {
+        "id": "C11",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_WITH_LIMITS",
+        "defect_ids": []
+      },
+      {
+        "id": "C12",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_WITH_METADATA_LIMIT",
+        "defect_ids": []
+      },
+      {
+        "id": "C13",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_AS_PROPOSAL",
+        "defect_ids": []
+      },
+      {
+        "id": "C14",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_AS_PROPOSAL",
+        "defect_ids": []
+      },
+      {
+        "id": "C15",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_AS_PROPOSAL",
+        "defect_ids": []
+      },
+      {
+        "id": "C16",
+        "assessment_status": "ASSESSED",
+        "source_status": "INCOMPLETE",
+        "defect_ids": [
+          "E02"
+        ]
+      },
+      {
+        "id": "C17",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_AS_CHOICES",
+        "defect_ids": []
+      },
+      {
+        "id": "C18",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_WITH_WITNESS_DEFECT",
+        "defect_ids": [
+          "E01"
+        ]
+      },
+      {
+        "id": "C19",
+        "assessment_status": "ASSESSED",
+        "source_status": "SUPPORTED_WITH_LIMITS",
+        "defect_ids": []
+      },
+      {
+        "id": "C20",
+        "assessment_status": "ASSESSED",
+        "source_status": "COMPLETE_ASSESSMENT_WITH_DEFECTS",
+        "defect_ids": [
+          "E01",
+          "E02"
+        ]
+      }
+    ],
+    "material_defects": [
+      {
+        "id": "E01",
+        "kind": "misidentified_version_specific_regression_evidence",
+        "final_lines": "12,72",
+        "research_lines": "19",
+        "obligations": [
+          "O3"
+        ]
+      },
+      {
+        "id": "E02",
+        "kind": "required_export_uncertainty_not_retained_in_default_comparison",
+        "final_lines": "45,49,58,70,72",
+        "research_lines": "65,69,78",
+        "frozen_plan_lines": "27",
+        "obligations": [
+          "O4",
+          "O6",
+          "P6.05"
+        ]
+      }
+    ],
+    "unassessed_obligations": [],
+    "unassessed_consequential_checks": [],
+    "blinding_limits": [
+      "Arm is visible in exact admitted paths.",
+      "Artifact headings, same-family wording, stage structure and source-map role reveal procedure.",
+      "Author timing/counters/provenance classifications visible but excluded from scientific judgment.",
+      "No counterpart output, scores, winner targets, costs, parent reasoning or evaluator answer was consulted."
+    ],
+    "unknown_fields": {
+      "distinct_usage": null,
+      "billing": null,
+      "cache_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "host_lifecycle": null,
+      "unknown_quota": null,
+      "critic_family_provenance_verification": null
+    }
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/coverage.json",
+      "bytes": 13984,
+      "sha256": "4a0f39e995b0b2884b981923fc9fd8c03268e028cb5a3e0cd7a4f9838d9708a5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/judgment.md",
+      "bytes": 29365,
+      "sha256": "d4bb712a308f676ba8b13d62f10485a675164f480dca8e35a9df54b0f1478c64"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/source-checks.json",
+      "bytes": 48928,
+      "sha256": "e59bc7279c400de421a447b595a90420425e9fd02ca40498d2fd68a601ea69f7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/brief.md",
+      "bytes": 5149,
+      "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-artifact.md",
+      "bytes": 16040,
+      "sha256": "fa1d2604746b0cacf9bc004819b88551885b7c8e149785ab0e70ee553854604c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json",
+      "bytes": 9880,
+      "sha256": "81730d832cf82a6ed0a8134f2706422ad4db249237040666bd1bcb300b4187b2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-pandas-issue-66259.html",
+      "bytes": 321720,
+      "sha256": "f348706d25e0970e22300305a01c8997457c3f7cf2a45f761c335595f84de1d8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-pandas-issue-66259.review-text.txt",
+      "bytes": 10926,
+      "sha256": "de46ed1165567df417c25a0f96763f8569bc7f5d3c1ca81b800e8a7fcb0f2995"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-pandas-v0.19.0-whatsnew.html",
+      "bytes": 351822,
+      "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-pandas-v0.19.0-whatsnew.review-text.txt",
+      "bytes": 81055,
+      "sha256": "1a3f4a25063f21a3e4d3104737a20035148942602c2507de6d228523ee65a2fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-pandas-v3.0.6-readers.py",
+      "bytes": 93054,
+      "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-python-csv.html",
+      "bytes": 99886,
+      "sha256": "1f68f2975798efb54d1235183dd5eb15e047bfb83e6f20e3565dee546111fcbd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-python-csv.review-text.txt",
+      "bytes": 22462,
+      "sha256": "0dedc9a2b3845337b36481c3fe60bddba46ef1b1765f08e99056d6d5bd7616b5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/emoncms-feeds.html",
+      "bytes": 19036,
+      "sha256": "389edcb2f685a0f09b6d83c68d878fa3f205db38391ad73e75ef29695a7f1d12"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/emoncms-feeds.review-text.txt",
+      "bytes": 3851,
+      "sha256": "64a59bc066c9c13ee83d263397a6afbcd7c2da44a33a0f75fc27d13d88d5aea3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/emoncms-graph-issue-142.html",
+      "bytes": 227776,
+      "sha256": "5205c0bdfeb959117e0070bbb8021ea31f27feaceb6f11f2a84d6fa43b669d3e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/emoncms-graph-issue-142.review-text.txt",
+      "bytes": 3620,
+      "sha256": "2f3a579c4860b81f088f1d6faa0c70e15b19ea229abf002ab45194830157d9af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/emoncms-graphs.html",
+      "bytes": 19245,
+      "sha256": "d3573885e4c14140a22cd3600efd629ac34313959dd52cdb49aac3813a684e4e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/emoncms-graphs.review-text.txt",
+      "bytes": 3288,
+      "sha256": "d1038c96ca0b59ad3f5b9a7f3b06545bc29610d08f99827a07702ffc258cede5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-66259.html",
+      "bytes": 321722,
+      "sha256": "c3224350ceee9a549bbeab1d987cfa72a3f14cbfcae2ece483f44c08090c7e96"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-66259.review-text.txt",
+      "bytes": 10926,
+      "sha256": "de46ed1165567df417c25a0f96763f8569bc7f5d3c1ca81b800e8a7fcb0f2995"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-7160.html",
+      "bytes": 263026,
+      "sha256": "0283e188c392695e87e393e98f5cf76a576b2579fd5b3e3f642ccaceb71d43ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-7160.review-text.txt",
+      "bytes": 3866,
+      "sha256": "2767c9ae8d2a7e21133100992a6b3e34f1ab08f3e5aecfbdf0c601a68ad12292"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v0.19.0-parser.py",
+      "bytes": 105482,
+      "sha256": "adbe3428a777cd0f46886124a70b26b08b359cc2a629b5916721b914aa8ce066"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v0.19.0-whatsnew.html",
+      "bytes": 351822,
+      "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v0.19.0-whatsnew.review-text.txt",
+      "bytes": 81055,
+      "sha256": "1a3f4a25063f21a3e4d3104737a20035148942602c2507de6d228523ee65a2fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v3.0.6-io-guide.rst",
+      "bytes": 217181,
+      "sha256": "abc1df34fbfeb692a0489e9012795d2ccd6a6599fdd3cf7e996e548993198bec"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v3.0.6-readers.py",
+      "bytes": 93054,
+      "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v3.0.6-release-notes.rst",
+      "bytes": 3844,
+      "sha256": "7851b96e14e336195692f24efe5fab7f90d01934c2a80387d64c7f400e52a034"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v3.0.6-test_header.py",
+      "bytes": 20797,
+      "sha256": "f559987c79f78d28e9eb600dc93df3928aaf6ebb836e276b9a4a6fa60f1c7006"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/plan.md",
+      "bytes": 1714,
+      "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/python-zoneinfo.html",
+      "bytes": 64179,
+      "sha256": "288b62fda09d6695452ea4cf919b771dbf3e0fe49d73de1e4d6578b889ed8f7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/python-zoneinfo.review-text.txt",
+      "bytes": 15269,
+      "sha256": "2e537a2b2c3af9f72b41e50c78a781f3552217e286ee547f6f84916a4083b614"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-artifact.md",
+      "bytes": 18535,
+      "sha256": "765e77a3326abba29521cd7f7680d3572f647efdadf9068c584718919fbacfbd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json",
+      "bytes": 8545,
+      "sha256": "f568efbd1220ebc7dc2b8c04a406703a815cedc9ca9b772b1efcdcff54b49f61"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted-manifest.json",
+      "bytes": 18071,
+      "sha256": "e8b8dab9148b9248c608a4547c019f1b523e929b279ec768985785b9331b13d2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-daily-kwh.html",
+      "bytes": 17954,
+      "sha256": "5577e66d438f3510ae0aab9897c8edd33490c92e9ae08bdb2f9839bb2c6bd713"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-daily-kwh.review-text.txt",
+      "bytes": 3324,
+      "sha256": "25a49a84978385ce5315a92e1a0d815741d0f0e87c19d1e5ee74969cd4993ab9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-feeds.html",
+      "bytes": 19403,
+      "sha256": "4cc228714690f7a5dd5ebce08e0d5a7226a25d2c8615c57290b5d4022666dd65"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-feeds.review-text.txt",
+      "bytes": 3851,
+      "sha256": "64a59bc066c9c13ee83d263397a6afbcd7c2da44a33a0f75fc27d13d88d5aea3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-graphs.html",
+      "bytes": 19612,
+      "sha256": "cb7543c9ccf9af932b09aae3d798ff365733e8e0e60223d6413c469d29be8996"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-graphs.review-text.txt",
+      "bytes": 3288,
+      "sha256": "d1038c96ca0b59ad3f5b9a7f3b06545bc29610d08f99827a07702ffc258cede5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-issue142.html",
+      "bytes": 227769,
+      "sha256": "782133da88a82c0d3c63f910c1c684eafe701b6f35c3528b55fd80314177b9ae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-issue142.review-text.txt",
+      "bytes": 3620,
+      "sha256": "2f3a579c4860b81f088f1d6faa0c70e15b19ea229abf002ab45194830157d9af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/nist-joule.html",
+      "bytes": 74046,
+      "sha256": "aff88849ad349206ccbcbb3ea5491f531c12477ac538d1b4be7407f469847b6d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/nist-joule.review-text.txt",
+      "bytes": 3471,
+      "sha256": "f1cc45425528f3a47a6674f2cac276da0ada39a7a5ca1d4816c0ee63ceba3723"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-immutable-v0.19.0-parsers.py",
+      "bytes": 105482,
+      "sha256": "adbe3428a777cd0f46886124a70b26b08b359cc2a629b5916721b914aa8ce066"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-immutable-v0.19.0-whatsnew.txt",
+      "bytes": 72984,
+      "sha256": "451df78c406043519c516a9912acc3366e59f89fca6d1cbca66dc573f46adae5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-immutable-v3.0.6-readers.py",
+      "bytes": 93054,
+      "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-issue-66259.html",
+      "bytes": 321715,
+      "sha256": "d78451aa6a2ba8005459a9a9bdebb767d550a2392152a924ce5e5f20f6c20195"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-issue-66259.review-text.txt",
+      "bytes": 10926,
+      "sha256": "e7d5a5e2051f88f6dfc4ae0865c2071453c77e38d5c3a4443455cc0965730514"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-issue-7160.html",
+      "bytes": 263024,
+      "sha256": "78361e7053e0209f4dabee87a5fe48b7910f623ab150e8c4ea3a5c39cbbeeca7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-issue-7160.review-text.txt",
+      "bytes": 3866,
+      "sha256": "8fbaa335689122c2907121efa27a8de86db10aa5e8c73df663660721896514bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-issue66259-timeline.json",
+      "bytes": 114853,
+      "sha256": "c68935e1948d3e927b680326b85f2760b2cd528c1a55e1100bd34cd5fbbd62ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-live-v0.19.0.html",
+      "bytes": 351822,
+      "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-live-v0.19.0.review-text.txt",
+      "bytes": 81055,
+      "sha256": "1a3f4a25063f21a3e4d3104737a20035148942602c2507de6d228523ee65a2fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-release-refs.txt",
+      "bytes": 240,
+      "sha256": "1da86ced61b828d8e6d2c8a7af8a6b1bced04737d85f3c375aaee7e39dd971cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-tag-v0.19.0.json",
+      "bytes": 335,
+      "sha256": "5b6a1c6c6c9e60dba64fdf5289655907cc4b8c303d2d742aad44c54a6242c7ae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-tag-v3.0.6.json",
+      "bytes": 333,
+      "sha256": "536aae7bbdb0e694b576c8f63c5c933d96e0c654919844cd8dff4b75e5e77152"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-tree-v0.19.0.json",
+      "bytes": 294056,
+      "sha256": "0ef66030a132d5499e36876738dbcc6f6e0a246990bc55c0185dec6637b84a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.18.1-parsers.py",
+      "bytes": 92704,
+      "sha256": "f6ea27e449fd08ee6d585ea66f721d75e31e87d7433fe63f9c7e4779d4e34bdd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.19.0-common-tests.py",
+      "bytes": 55349,
+      "sha256": "fcacf79ea529db9ff9d58d8a5f53a0af760d1ab0f11b08614ff486313d745e01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.19.0-header-tests.py",
+      "bytes": 9185,
+      "sha256": "6007986fcdc8bc30385c7c55950af19d666262b67280bb6a56db311ffff58a28"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.19.0-parsers.py",
+      "bytes": 105482,
+      "sha256": "adbe3428a777cd0f46886124a70b26b08b359cc2a629b5916721b914aa8ce066"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.19.0-test-parsers.py",
+      "bytes": 3184,
+      "sha256": "eaf535c65808edeef7aa9a5083e9e03556b6d4d27dd37385e173b69e6898d22b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.19.0-whatsnew.rst",
+      "bytes": 72984,
+      "sha256": "451df78c406043519c516a9912acc3366e59f89fca6d1cbca66dc573f46adae5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-c-parser.py",
+      "bytes": 14345,
+      "sha256": "f50f4e08cc30c7462d2638e324ce0c842befc474cf203ef77c8e50accb209148"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-parsers.pyx",
+      "bytes": 74389,
+      "sha256": "fbabc034b57c20c6545f281e5a723a64636e11666cbff937c264570d6655207a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-python-parser.py",
+      "bytes": 55162,
+      "sha256": "b9694acd858de51c619f73893909a3ddb5c886cce0948ffb2fdb85e853cda788"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-readers.py",
+      "bytes": 93054,
+      "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-release.rst",
+      "bytes": 3844,
+      "sha256": "7851b96e14e336195692f24efe5fab7f90d01934c2a80387d64c7f400e52a034"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-test-mangle.py",
+      "bytes": 5443,
+      "sha256": "7947628d253aa03202b8d8535b1f7e396f25c99863475a6bb851913b39ab827f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-test_header.py",
+      "bytes": 20797,
+      "sha256": "f559987c79f78d28e9eb600dc93df3928aaf6ebb836e276b9a4a6fa60f1c7006"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-tokenizer.c",
+      "bytes": 56839,
+      "sha256": "727f0f440bba9a849251e7cb8aa5aae8ffa524bfdc7142be95bb71958b38af11"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-csv.html",
+      "bytes": 99886,
+      "sha256": "1f68f2975798efb54d1235183dd5eb15e047bfb83e6f20e3565dee546111fcbd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-csv.review-text.txt",
+      "bytes": 22462,
+      "sha256": "0dedc9a2b3845337b36481c3fe60bddba46ef1b1765f08e99056d6d5bd7616b5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-pep495.html",
+      "bytes": 94792,
+      "sha256": "0f095520a6eb48183b167b071029d8acdab8f52c5fa6161ea02492f356c1f975"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-pep495.review-text.txt",
+      "bytes": 31886,
+      "sha256": "e76ce5c4b362296b3bcf0a37bc0de2555f06178b8b2b883024a3e0da424ad864"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-zoneinfo.html",
+      "bytes": 64179,
+      "sha256": "288b62fda09d6695452ea4cf919b771dbf3e0fe49d73de1e4d6578b889ed8f7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-zoneinfo.review-text.txt",
+      "bytes": 15269,
+      "sha256": "2e537a2b2c3af9f72b41e50c78a781f3552217e286ee547f6f84916a4083b614"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent-manifest.json",
+      "bytes": 72153,
+      "sha256": "e72b449efc101e7064e07efec809a468e8f009baec8158a80c3584acb2a8771c"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json"
+}

@@ -1,0 +1,1688 @@
+{
+  "schema": "independent-source-review.v1",
+  "carrier": "rootreviewcarrier-v2",
+  "case_id": "D-M12-A",
+  "review_role": "ordinary fresh advisory reviewer; not scored candidate",
+  "first_review_of_this_version": true,
+  "overall_grade": "FAIL",
+  "status": "FULL_DECLARED_SCOPE_ASSESSED_COMPLETE",
+  "grade_reason": "Full declared primary-source and consequential-claim checking completed; material defects D01-D06 prevent PASS. This is not a localized diagnostic failure with unassessed science remaining.",
+  "frozen_artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/final.md",
+    "expected_sha256": "d14088f3cbd98e091f6f0ed2b9b6672219d2da23620a3bc1cdab6dd7047bec15",
+    "actual_sha256": "d14088f3cbd98e091f6f0ed2b9b6672219d2da23620a3bc1cdab6dd7047bec15",
+    "hash_verified_before_assessment": true,
+    "first_verified_at": "2026-10-07T20:30:48.677764672Z",
+    "candidate_word_count_whitespace": 1099,
+    "numbered_findings": 8,
+    "candidate_bytes_modified": false,
+    "post_assessment_sha256": "d14088f3cbd98e091f6f0ed2b9b6672219d2da23620a3bc1cdab6dd7047bec15",
+    "hash_verified_after_assessment": true
+  },
+  "inputs": {
+    "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/INPUT_MAP.json",
+    "input_map_sha256": "16af4de32e1e57532b2f4a5fd508a313885ffcc454e3f580f651d90a2e299130",
+    "brief_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/brief.md",
+    "brief_sha256": "dac98c2bfdf5944bc4b0a6ce92037085e01e90dd4178e48c7cd3dee049f493e3",
+    "source_manifest_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/sources.json",
+    "source_manifest_sha256": "50a7a429431407d7d59529fe82f54ab133b6255902092f3addf395c98d019bb2",
+    "manifest_mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+    "manifest_selected_sources_count": 0,
+    "arm_index_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/index.json",
+    "arm_index_sha256": "cdc2c5102b16bb677bc4c9744cefce36e48001b3961445efa6d6ca6810464e22",
+    "arm_index_hash_verified": true,
+    "map_index_fields_independently_crosschecked": true,
+    "checksums_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/checksums.txt",
+    "checksums_sha256": "26b0eeb722cf347232aafc31387d4c97786b46b2230e28b64d242b96ac97c775"
+  },
+  "six_axis_dispositions": [
+    {
+      "axis_id": "A1",
+      "axis": "All required obligations",
+      "disposition": "FAIL",
+      "reason": "All six subjects appear, but offline durable capture and recovery are not established; a per-item queue is asserted to checkpoint automatically. O1 is only partially met.",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "axis_id": "A2",
+      "axis": "Consequential claims and full release/default/type/unit/path/authority conditions",
+      "disposition": "FAIL",
+      "reason": "All material claims were checked. Several recommendations omit governing durability/atomicity/retry/expiry conditions; universal duplicate and exactly-once statements exceed primary support.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06"
+      ]
+    },
+    {
+      "axis_id": "A3",
+      "axis": "Bounded useful discovery, negative and optional yield",
+      "disposition": "PASS",
+      "reason": "Distinct broker/QoS, local outbox, checkpointed state replication and HTTP semantic families plus SMTP and DTN analogies are useful. Exactly eight findings and 1,099 whitespace-delimited words; non-exhaustiveness and unresolved product choices are explicit. F4’s claimed negative law is incorrect and is charged to A2/A4, not credited as a valid discovery."
+    },
+    {
+      "axis_id": "A4",
+      "axis": "Wrong rejection, correction, unjustified abstention",
+      "disposition": "FAIL",
+      "reason": "Challenging the sufficient-retry assumption is warranted; excluding a full sync engine/CRDT build respects scope. Rejecting all in-session retry based on MQTT wrongly exports a protocol-specific rule.",
+      "defect_ids": [
+        "D03",
+        "D05"
+      ]
+    },
+    {
+      "axis_id": "A5",
+      "axis": "Preservation, traceability, uncertainties and options",
+      "disposition": "FAIL",
+      "reason": "Source hashes, identities and uncertainty are preserved, but governing MQTT session/QoS/error/expiry conditions and CouchDB durable checkpoint prerequisites are lost in the recommendations. Traceability has incorrect section pointers and an uncaptured cited chapter; the latter was independently checked by this review.",
+      "defect_ids": [
+        "D01",
+        "D03",
+        "D04",
+        "D06"
+      ]
+    },
+    {
+      "axis_id": "A6",
+      "axis": "Proposed versus executed checks",
+      "disposition": "PASS",
+      "reason": "T1-T4 are explicitly proposed, and no application or downloaded-code execution is claimed. [E] labels assert source reading only. Candidate historical HTTP/checksum operations are not authenticated by an index/checksum file; reviewer’s independent source checks do not manufacture candidate execution evidence. Test coverage limits are recorded per claim."
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "obligation_id": "O1",
+      "obligation": "Address offline persistence and interrupted sync.",
+      "coverage": "PARTIAL",
+      "assessment": "F5 and T4 discuss interruption, but no durable local capture/key/state persistence or restart contract is stated.",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "obligation_id": "O2",
+      "obligation": "Address acknowledgment/retry meaning under duplicate or delayed messages.",
+      "coverage": "MET_WITH_DEFECTS",
+      "assessment": "F1-F3/F8 and T1-T2 address ack, delayed responses and duplicates; success, atomicity and inevitability statements need correction.",
+      "defect_ids": [
+        "D02",
+        "D05",
+        "D06"
+      ]
+    },
+    {
+      "obligation_id": "O3",
+      "obligation": "Investigate distinct mechanism families and at least one relevant analogy beyond direct survey competitors.",
+      "coverage": "MET",
+      "assessment": "Distinct mechanism families and two relevant non-survey analogies are directly sourced.",
+      "defect_ids": []
+    },
+    {
+      "obligation_id": "O4",
+      "obligation": "Challenge a brief assumption when supported.",
+      "coverage": "MET_WITH_DEFECTS",
+      "assessment": "The brief’s sufficiency assumption is challenged on valid risks; the word guarantees overstates the duplicate argument.",
+      "defect_ids": [
+        "D05"
+      ]
+    },
+    {
+      "obligation_id": "O5",
+      "obligation": "Return at most eight distinct material findings, including useful negative discoveries or uncertainty.",
+      "coverage": "MET",
+      "assessment": "Exactly eight numbered material findings; uncertainty and negative claims are present, with incorrect negatives identified in this review.",
+      "defect_ids": []
+    },
+    {
+      "obligation_id": "O6",
+      "obligation": "Give bounded proposed changes and discriminating validation, without claiming exhaustive discovery.",
+      "coverage": "MET_WITH_DEFECTS",
+      "assessment": "Four bounded proposals and four discriminating proposed tests, with explicit non-exhaustiveness; unsafe governing conditions need repair.",
+      "defect_ids": [
+        "D02",
+        "D03",
+        "D04"
+      ]
+    }
+  ],
+  "source_checks": [
+    {
+      "id": "mqtt5-spec",
+      "file": "mqtt-v5.0-os.html",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "version": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "captured_at": "2026-10-07T20:12:44Z",
+      "http_status": 200,
+      "locators": [
+        "section 4.3 Quality of Service levels and protocol flows (QoS 0/1/2, PUBACK/PUBREC/PUBREL/PUBCOMP)",
+        "section 4.4 Message delivery retry (no retransmit within a connection; retry only on reconnect)"
+      ],
+      "family": "broker ack/QoS protocol",
+      "role": "mechanism",
+      "why": "canonical acknowledgment semantics for QoS1 (at-least-once, DUP, packet identifiers, session state)",
+      "bytes": 1436465,
+      "sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/mqtt-v5.0-os.html",
+      "actual_sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce",
+      "actual_bytes": 1436465,
+      "hash_verified": true,
+      "observed_identity_version": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "identity_check": "Primary publisher identity and relevant text independently corroborated by bounded public GET; not accepted from index alone",
+      "reviewer_recapture_sha256": "0989788706e3812e53c0f3da44a2b58b0991bda70b7bc0865803a10f34f89736",
+      "recapture_raw_matches": false,
+      "recapture_normalized_text_matches": true,
+      "capture_limit": "Candidate capture time/status are index assertions, not authenticated historical request receipts. Recapture independently establishes identity/content only at reviewer capture. No errata or implementation conformance audit."
+    },
+    {
+      "id": "sqs-standard-queues",
+      "file": "sqs-standard-queues.html",
+      "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues.html",
+      "version": "Amazon SQS Developer Guide, current at capture",
+      "captured_at": "2026-10-07T20:15:23Z",
+      "http_status": 200,
+      "locators": [
+        "Standard queues: at-least-once delivery, occasionally more than one copy of a message is delivered"
+      ],
+      "family": "managed queue at-least-once delivery",
+      "role": "mechanism",
+      "why": "primary statement that transport-level at-least-once implies duplicates regardless of sender care",
+      "bytes": 14250,
+      "sha256": "ddc9c32ef9654fed493a1a61d05d05896214e32d6012e6be4658558ce65058b2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/sqs-standard-queues.html",
+      "actual_sha256": "ddc9c32ef9654fed493a1a61d05d05896214e32d6012e6be4658558ce65058b2",
+      "actual_bytes": 14250,
+      "hash_verified": true,
+      "observed_identity_version": "AWS SQS Developer Guide, Standard queue type, rolling current-at-capture page",
+      "identity_check": "Primary publisher identity and relevant text independently corroborated by bounded public GET; not accepted from index alone",
+      "reviewer_recapture_sha256": "ddc9c32ef9654fed493a1a61d05d05896214e32d6012e6be4658558ce65058b2",
+      "recapture_raw_matches": true,
+      "recapture_normalized_text_matches": true,
+      "capture_limit": "Candidate capture time/status are index assertions, not authenticated historical request receipts. Recapture independently establishes identity/content only at reviewer capture. No errata or implementation conformance audit."
+    },
+    {
+      "id": "rabbitmq-confirms",
+      "file": "rabbitmq-confirms.html",
+      "url": "https://www.rabbitmq.com/confirms.html",
+      "final_url": "https://www.rabbitmq.com/docs/confirms",
+      "version": "RabbitMQ documentation, current at capture",
+      "captured_at": "2026-10-07T20:15Z (approx., same batch as sqs-standard-queues)",
+      "http_status": 200,
+      "locators": [
+        "Publisher confirms",
+        "Consumer Acknowledgements and Publisher Confirms sections: redelivery when a consumer dies without ack; duplicate delivery possible"
+      ],
+      "family": "message-broker ack/redelivery",
+      "role": "mechanism",
+      "why": "broker-native redelivery rules and duplicate-delivery guidance for consumers",
+      "bytes": 121173,
+      "sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rabbitmq-confirms.html",
+      "actual_sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951",
+      "actual_bytes": 121173,
+      "hash_verified": true,
+      "observed_identity_version": "RabbitMQ documentation Version 4.3; AMQP 0-9-1 acknowledgements and publisher-confirm extension",
+      "identity_check": "Primary publisher identity and relevant text independently corroborated by bounded public GET; not accepted from index alone",
+      "reviewer_recapture_sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951",
+      "recapture_raw_matches": true,
+      "recapture_normalized_text_matches": true,
+      "capture_limit": "Candidate capture time/status are index assertions, not authenticated historical request receipts. Recapture independently establishes identity/content only at reviewer capture. No errata or implementation conformance audit."
+    },
+    {
+      "id": "transactional-outbox",
+      "file": "transactional-outbox.html",
+      "url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "version": "microservices.io pattern page (Chris Richardson), current at capture",
+      "captured_at": "2026-10-07T20:12:44Z",
+      "http_status": 200,
+      "locators": [
+        "Solution: order/message relay reading local outbox table",
+        "duplicate detection / idempotent consumer discussion"
+      ],
+      "family": "local-write + reliable relay (outbox)",
+      "role": "mechanism",
+      "why": "queue-the-work-with-the-state pattern: local durable write first, then relay with at-least-once + downstream dedup",
+      "bytes": 25474,
+      "sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/transactional-outbox.html",
+      "actual_sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "actual_bytes": 25474,
+      "hash_verified": true,
+      "observed_identity_version": "Chris Richardson, Transactional Outbox pattern, unversioned current-at-capture page",
+      "identity_check": "Primary publisher identity and relevant text independently corroborated by bounded public GET; not accepted from index alone",
+      "reviewer_recapture_sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "recapture_raw_matches": true,
+      "recapture_normalized_text_matches": true,
+      "capture_limit": "Candidate capture time/status are index assertions, not authenticated historical request receipts. Recapture independently establishes identity/content only at reviewer capture. No errata or implementation conformance audit."
+    },
+    {
+      "id": "couchdb-replication-protocol",
+      "file": "couchdb-replication-protocol.html",
+      "url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "version": "Apache CouchDB 3.5 documentation (stable), Replication Protocol",
+      "captured_at": "2026-10-07T20:12:45Z",
+      "http_status": 200,
+      "locators": [
+        "Synchronization Protocol (documents/changes feed)",
+        "Checkpoints (replication history to avoid resending)",
+        "Conflicts (sibling revisions retained)"
+      ],
+      "family": "offline-first state-based replication with checkpoints/conflicts",
+      "role": "mechanism",
+      "why": "offline-first local store sync: checkpointed resume after interruption and merge-with-conflicts instead of ack-per-item",
+      "bytes": 185155,
+      "sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/couchdb-replication-protocol.html",
+      "actual_sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "actual_bytes": 185155,
+      "hash_verified": true,
+      "observed_identity_version": "Apache CouchDB 3.5 documentation; Replication Protocol document Version 3",
+      "identity_check": "Primary publisher identity and relevant text independently corroborated by bounded public GET; not accepted from index alone",
+      "reviewer_recapture_sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "recapture_raw_matches": true,
+      "recapture_normalized_text_matches": true,
+      "capture_limit": "Candidate capture time/status are index assertions, not authenticated historical request receipts. Recapture independently establishes identity/content only at reviewer capture. No errata or implementation conformance audit."
+    },
+    {
+      "id": "rfc9110",
+      "file": "rfc9110.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110, HTTP Semantics, June 2022 (STD 97)",
+      "captured_at": "2026-10-07T20:12:45Z",
+      "http_status": 200,
+      "locators": [
+        "section 9.2.2 Idempotent Methods (line 3861 in capture): retry safety of idempotent methods after connection failure"
+      ],
+      "family": "retry-safety semantics (idempotency)",
+      "role": "mechanism",
+      "why": "formal definition of idempotency as the property that makes blind retry safe",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rfc9110.txt",
+      "actual_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "actual_bytes": 502941,
+      "hash_verified": true,
+      "observed_identity_version": "RFC 9110, STD 97, Standards Track, June 2022",
+      "identity_check": "Primary publisher identity and relevant text independently corroborated by bounded public GET; not accepted from index alone",
+      "reviewer_recapture_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "recapture_raw_matches": true,
+      "recapture_normalized_text_matches": true,
+      "capture_limit": "Candidate capture time/status are index assertions, not authenticated historical request receipts. Recapture independently establishes identity/content only at reviewer capture. No errata or implementation conformance audit."
+    },
+    {
+      "id": "rfc5321",
+      "file": "rfc5321.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "version": "RFC 5321, Simple Mail Transfer Protocol, October 2008",
+      "captured_at": "2026-10-07T20:12:45Z",
+      "http_status": 200,
+      "locators": [
+        "section 4.5.4.1 Sending Strategy (line 3685): retry transient failures, minimum ~30 min, SHOULD give up after days and return (bounce) = bounded retention with eventual expiry notification",
+        "section 4.5.4.2 Receiving Strategy"
+      ],
+      "family": "analogy: store-and-forward mail queues",
+      "role": "analogy",
+      "why": "mail queues: retry schedule + bounded retention + explicit failure return mirrors survey queue aging",
+      "bytes": 225929,
+      "sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rfc5321.txt",
+      "actual_sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "actual_bytes": 225929,
+      "hash_verified": true,
+      "observed_identity_version": "RFC 5321, Standards Track, October 2008",
+      "identity_check": "Primary publisher identity and relevant text independently corroborated by bounded public GET; not accepted from index alone",
+      "reviewer_recapture_sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "recapture_raw_matches": true,
+      "recapture_normalized_text_matches": true,
+      "capture_limit": "Candidate capture time/status are index assertions, not authenticated historical request receipts. Recapture independently establishes identity/content only at reviewer capture. No errata or implementation conformance audit."
+    },
+    {
+      "id": "rfc4838",
+      "file": "rfc4838.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc4838.txt",
+      "version": "RFC 4838, Delay-Tolerant Networking Architecture, April 2007",
+      "captured_at": "2026-10-07T20:12:45Z",
+      "http_status": 200,
+      "locators": [
+        "section 3.10 Reliability and Custody Transfer (TOC, p.19)",
+        "section 4.2 Custody Transfer State",
+        "Custody Transfer Requested flag (line ~631): hop-by-hop ack of storage responsibility"
+      ],
+      "family": "analogy: DTN custody transfer / store-carry-forward",
+      "role": "analogy",
+      "why": "custody transfer: acknowledgment means 'I now hold durable responsibility', not 'final delivery' - key semantic distinction for survey sync",
+      "bytes": 89265,
+      "sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rfc4838.txt",
+      "actual_sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790",
+      "actual_bytes": 89265,
+      "hash_verified": true,
+      "observed_identity_version": "RFC 4838, Informational architecture, April 2007",
+      "identity_check": "Primary publisher identity and relevant text independently corroborated by bounded public GET; not accepted from index alone",
+      "reviewer_recapture_sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790",
+      "recapture_raw_matches": true,
+      "recapture_normalized_text_matches": true,
+      "capture_limit": "Candidate capture time/status are index assertions, not authenticated historical request receipts. Recapture independently establishes identity/content only at reviewer capture. No errata or implementation conformance audit."
+    }
+  ],
+  "source_evidence": [
+    {
+      "evidence_id": "E01",
+      "source_id": "mqtt5-spec",
+      "primary_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/mqtt-v5.0-os.html",
+      "primary_sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce",
+      "version_authority": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "primary_locator": "§4.3.2 [MQTT-4.3.2-3/4/5], flow note; §4.3.3 [MQTT-4.3.3-3/4/5/8/10/11/12/13]; §4.4 [MQTT-4.4.0-2]",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/mqtt5-spec.lines.txt",
+      "derived_lines": "11691-11742,11789-11792,11813-11883,11898-11900,11997-12004",
+      "stated_source_fact": "QoS 1 PUBACK and successful QoS 2 PUBREC transfer application-message ownership; onward delivery need not finish first. PUBREL is the sender’s release phase, not merely an arrival confirmation. PUBREC/PUBACK error reason codes at or above 0x80 end the PUBLISH retry even though processing failed. QoS 2 suppresses repeated delivery for an existing transaction.",
+      "governing_conditions": "Packet Identifier correlation, QoS level, protocol phase and reason code matter. These are link/session-scoped guarantees, not a survey business-commit guarantee; Packet Identifiers become reusable after transaction completion.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E02",
+      "source_id": "mqtt5-spec",
+      "primary_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/mqtt-v5.0-os.html",
+      "primary_sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce",
+      "version_authority": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "primary_locator": "§4.1.1 Storing Session State; §4.1.2 non-normative examples",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/mqtt5-spec.lines.txt",
+      "derived_lines": "11527-11566",
+      "stated_source_fact": "Session state retention rules do not require every deployment to persist on nonvolatile storage. The specification contrasts a volatile meter deployment with an application that writes nonvolatile data before network transmission.",
+      "governing_conditions": "Storage limits, administrative termination and hardware/software loss are acknowledged. The nonvolatile example is risk-dependent design guidance, not a normative guarantee that an arbitrary queue is durable.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E03",
+      "source_id": "mqtt5-spec",
+      "primary_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/mqtt-v5.0-os.html",
+      "primary_sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce",
+      "version_authority": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "primary_locator": "§3.1.2.11.2 Session Expiry Interval; §4.4 [MQTT-4.4.0-1]; §4.3.3 [MQTT-4.3.3-6]",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/mqtt5-spec.lines.txt",
+      "derived_lines": "4271-4296,11836-11840,11887-11900",
+      "stated_source_fact": "MQTT 5 retries unacknowledged QoS>0 PUBLISH/PUBREL with original Packet Identifiers on reconnect with Clean Start=0 and a session present; retransmission is forbidden at other times. After PUBREL, the sender retries the transaction’s PUBREL, not PUBLISH.",
+      "governing_conditions": "This is MQTT 5 session/protocol logic, not an application-independent retry law. Session expiry is a Four Byte Integer in seconds; absent/zero ends the session on disconnect; 0xFFFFFFFF means no expiry. Preserved session state is essential to this retry path.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E04",
+      "source_id": "mqtt5-spec",
+      "primary_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/mqtt-v5.0-os.html",
+      "primary_sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce",
+      "version_authority": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "primary_locator": "§4.6 [MQTT-4.6.0-1..6]; §3.1.2.11.3 Receive Maximum; §4.9 [MQTT-4.9.0-1/2/3]",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/mqtt5-spec.lines.txt",
+      "derived_lines": "12026-12088,4385-4404,12575-12630",
+      "stated_source_fact": "Client retransmitted PUBLISH packets preserve original send order. Receive Maximum bounds outstanding QoS>0 publishes; quota is replenished by protocol acknowledgements, including error acknowledgements.",
+      "governing_conditions": "Ordering is §4.6, not §4.4. Receive Maximum is a nonzero Two Byte Integer, default 65,535; it applies per connection, not QoS 0, and is reset across connections. Ordered-topic forwarding has topic/client/QoS/non-shared-subscription conditions; bounded in-flight sends alone do not promise arbitrary cross-item business ordering.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E05",
+      "source_id": "mqtt5-spec",
+      "primary_url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/mqtt-v5.0-os.html",
+      "primary_sha256": "abd47b7f843cd7e03a2970dfabb84d8204c1988b3566f4a3b760cd9deafee3ce",
+      "version_authority": "MQTT Version 5.0, OASIS Standard, 07 March 2019",
+      "primary_locator": "§3.3.2.3.3 [MQTT-3.3.2-5/6]; §4.3.3 [MQTT-4.3.3-7/13]",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/mqtt5-spec.lines.txt",
+      "derived_lines": "6712-6738,11836-11840,11882-11883",
+      "stated_source_fact": "Message Expiry Interval is optional. When absent, the application message does not expire. When supplied, it controls a subscriber copy’s lifetime before onward delivery starts; the forwarded remaining interval is reduced by time held.",
+      "governing_conditions": "Property identifier 0x02; Four Byte Integer in seconds. A QoS 2 sender MUST NOT apply message expiry after PUBLISH has been sent; receiver must finish the QoS 2 acknowledgement sequence even if expiry is applied. This is not an unconditional local retry-count or survey-storage cap.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E06",
+      "source_id": "sqs-standard-queues",
+      "primary_url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/sqs-standard-queues.html",
+      "primary_sha256": "ddc9c32ef9654fed493a1a61d05d05896214e32d6012e6be4658558ce65058b2",
+      "version_authority": "AWS SQS Developer Guide, Standard queue type, rolling current-at-capture page",
+      "primary_locator": "#standard-queues, opening paragraphs",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/sqs-standard-queues.lines.txt",
+      "derived_lines": "33-43,48-63",
+      "stated_source_fact": "Standard queues provide at-least-once delivery; copies may be repeated and may occasionally arrive out of order. SendMessage redundantly stores across availability zones before acknowledging.",
+      "governing_conditions": "Standard is the default queue type; these statements are not claims about every SQS queue type or every underlying transport, nor do they guarantee that every message is duplicated. Broker storage acknowledgement is not final application processing.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E07",
+      "source_id": "rabbitmq-confirms",
+      "primary_url": "https://www.rabbitmq.com/confirms.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rabbitmq-confirms.html",
+      "primary_sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951",
+      "version_authority": "RabbitMQ documentation Version 4.3; AMQP 0-9-1 acknowledgements and publisher-confirm extension",
+      "primary_locator": "#relation; #acknowledgement-modes; #automatic-requeueing",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rabbitmq-confirms.lines.txt",
+      "derived_lines": "115-140,177-229,674-689",
+      "stated_source_fact": "Publisher confirms and consumer delivery acknowledgements are orthogonal. With manual acknowledgements, unacked deliveries are requeued on channel/connection closure and consumers need idempotent handling. Automatic acknowledgement considers socket write delivery and can lose a message.",
+      "governing_conditions": "RabbitMQ docs 4.3, AMQP 0-9-1. Automatic versus manual mode, connection/channel closure and positive/negative acknowledgement choice affect safety; requeue redelivery does not prove the earlier application consumed a message.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E08",
+      "source_id": "rabbitmq-confirms",
+      "primary_url": "https://www.rabbitmq.com/confirms.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rabbitmq-confirms.html",
+      "primary_sha256": "f768857aa5cded67cf19c0205bc57c1ca10702e00d620d32cb2051f96e31f951",
+      "version_authority": "RabbitMQ documentation Version 4.3; AMQP 0-9-1 acknowledgements and publisher-confirm extension",
+      "primary_locator": "#consumer-acks-delivery-tags; #when-publishes-are-confirmed; #publisher-confirms-ordering; #publisher-confirms-and-guaranteed-delivery",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rabbitmq-confirms.lines.txt",
+      "derived_lines": "155-175,703-755,761-832",
+      "stated_source_fact": "A publisher confirm can be issued for an unroutable message. Routable persistent messages to durable queues are confirmed after disk persistence; quorum queues require accepted/confirmed replicas. Confirms can arrive out of publication order.",
+      "governing_conditions": "Delivery tags are channel-scoped; confirm mode must be enabled. mandatory publishing receives basic.return for unroutable messages before basic.ack. Positive broker confirm does not by itself mean the intended survey consumer durably processed the observation.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E09",
+      "source_id": "transactional-outbox",
+      "primary_url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/transactional-outbox.html",
+      "primary_sha256": "7b9d9b224d9b985bf03d581dcdef5c94a21f49a93f3ac1e74c6bc2104a48b3eb",
+      "version_authority": "Chris Richardson, Transactional Outbox pattern, unversioned current-at-capture page",
+      "primary_locator": "#solution; #result-context",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/transactional-outbox.lines.txt",
+      "derived_lines": "45-83,85-116",
+      "stated_source_fact": "Outbox work is written in the database transaction that changes business state and later relayed. Relay crash after publish but before recording completion may republish; idempotent consumers may track processed message IDs.",
+      "governing_conditions": "Atomic local state/work write is the defining mechanism. Duplicate publication is possible, not inevitable. The pattern does not choose a phone storage engine, deduplication expiry or conflict policy for this tool.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E10",
+      "source_id": "rfc9110",
+      "primary_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "version_authority": "RFC 9110, STD 97, Standards Track, June 2022",
+      "primary_locator": "§9.2.2 Idempotent Methods, original TXT lines",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rfc9110.lines.txt",
+      "derived_lines": "3861-3904",
+      "stated_source_fact": "Idempotence means repeated identical requests have the same intended server effect. PUT, DELETE and safe methods are idempotent; logging/history/other side effects may still occur per request. Retrying non-idempotent methods requires known idempotent semantics or knowledge the first request was never applied.",
+      "governing_conditions": "The property concerns requested effects, not byte-identical responses or exactly one execution of every side effect. A UUID alone does not make arbitrary POST logic idempotent.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E11",
+      "source_id": "couchdb-replication-protocol",
+      "primary_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/couchdb-replication-protocol.html",
+      "primary_sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "version_authority": "Apache CouchDB 3.5 documentation; Replication Protocol document Version 3",
+      "primary_locator": "#definitions; #generate-replication-id; #compare-replication-logs; #listen-to-changes-feed",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/couchdb-replication-protocol.lines.txt",
+      "derived_lines": "205-245,270-281,644-681,820-835,900-919",
+      "stated_source_fact": "Checkpoints record sequence progress for recovery. The replication identity binds the replication process; source/target logs establish common session ancestry. Without common ancestry full replication is required.",
+      "governing_conditions": "Docs 3.5; protocol document Version 3. Replication is directed source-to-target. Sequence IDs are incremental but need not be integers. Source/target URI, persistent peer identity, filters and relevant parameters participate in the replication identity; an arbitrary per-item acknowledgement is not automatically this durable checkpoint mechanism.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E12",
+      "source_id": "couchdb-replication-protocol",
+      "primary_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/couchdb-replication-protocol.html",
+      "primary_sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "version_authority": "Apache CouchDB 3.5 documentation; Replication Protocol document Version 3",
+      "primary_locator": "#ensure-in-commit; #record-replication-checkpoint; #upload-batch-of-changed-documents",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/couchdb-replication-protocol.lines.txt",
+      "derived_lines": "1420-1437,1651-1695",
+      "stated_source_fact": "The documented algorithm ensures target data is laid down on disk/persistent storage, then records successful replication state in logs on both peers so failure can resume from success.",
+      "governing_conditions": "Commit precedes checkpoint. The page identifies X-Couch-Full-Commit as controlling CouchDB <3.0 delayed-commit behavior and says other peers may ignore it; the old example must not be adopted as a new 3.5 configuration guarantee. A local durable per-item ack ledger can play an analogous role, but its transaction and restart semantics must be specified.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E13",
+      "source_id": "couchdb-replication-protocol",
+      "primary_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/couchdb-replication-protocol.html",
+      "primary_sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "version_authority": "Apache CouchDB 3.5 documentation; Replication Protocol document Version 3",
+      "primary_locator": "#protocol-robustness; #optimisations",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/couchdb-replication-protocol.lines.txt",
+      "derived_lines": "1821-1829,1948-1970",
+      "stated_source_fact": "Replicators should detect timeouts and repeat failed HTTP requests; connection pools and keeping sockets open are recommended.",
+      "governing_conditions": "This primary mechanism family directly prevents treating MQTT’s reconnect-only retransmission rule as a universal rejection of retries within a live application/network session. Avoiding hot loops is compatible with timed retries.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E14",
+      "source_id": "couchdb-replication-protocol",
+      "primary_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/couchdb-replication-protocol.html",
+      "primary_sha256": "314bbd15492c99eaa5b0d6161a50104e17b107e8111f0f2ff9cdc582c7477a7a",
+      "version_authority": "Apache CouchDB 3.5 documentation; Replication Protocol document Version 3",
+      "primary_locator": "#definitions; #listen-to-changes-feed; #upload-batch-of-changed-documents; #upload-document-with-attachments",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/couchdb-replication-protocol.lines.txt",
+      "derived_lines": "215-222,900-919,1420-1437,1544-1553",
+      "stated_source_fact": "Documents may have multiple conflicting leaf revisions; changes feed requests include all leaves and uploaded history preserves ancestry. Multipart document/attachment transfer is a conditional optimization for large attachments.",
+      "governing_conditions": "_id is document identity, _rev is an MVCC revision token; these have distinct roles. The brief contains photo metadata and observations, not a declared photo-blob upload requirement. Attachment mechanisms are an optional lead, not established sandbox behavior.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E15",
+      "source_id": "rfc5321",
+      "primary_url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rfc5321.txt",
+      "primary_sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "version_authority": "RFC 5321, Standards Track, October 2008",
+      "primary_locator": "§4.5.4.1 Sending Strategy, original TXT lines",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rfc5321.lines.txt",
+      "derived_lines": "3750-3809",
+      "stated_source_fact": "Undeliverable-now mail must be queued and retried. Failed-destination retries must be delayed; the interval generally SHOULD be at least 30 minutes, with more sophisticated variable strategies allowed. Give-up time generally needs to be at least 4-5 days; retry parameters must be configurable.",
+      "governing_conditions": "Minutes and days are SMTP strategy guidance, not hard survey defaults or a universal maximum. Retry depends on cause and destination; a timer/backoff strategy is explicitly described, rather than a universal reconnect-only rule.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E16",
+      "source_id": "rfc5321",
+      "primary_url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rfc5321.txt",
+      "primary_sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "version_authority": "RFC 5321, Standards Track, October 2008",
+      "primary_locator": "§4.2.5; §6.1 Reliable Delivery and Replies by Email, original TXT lines",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rfc5321.lines.txt",
+      "derived_lines": "2993-3040,4030-4082",
+      "stated_source_fact": "Positive completion after DATA transfers responsibility for delivery/retry/failure notification; temporary/permanent failures preserve sender responsibility with different retry guidance. Accepted mail must not be lost on predictable crash/resource shortage.",
+      "governing_conditions": "Failure notifications after acceptance use a null reverse-path; another notification MUST NOT be generated when the original reverse-path is null. The candidate’s bounce analogy is useful but returning every message unconditionally is not the rule; §4.5.4.1 alone does not establish the return contract.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E17",
+      "source_id": "rfc4838",
+      "primary_url": "https://www.rfc-editor.org/rfc/rfc4838.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rfc4838.txt",
+      "primary_sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790",
+      "version_authority": "RFC 4838, Informational architecture, April 2007",
+      "primary_locator": "§3.6.1 Delivery Options; §3.10 Reliability and Custody Transfer; §4.2 Custody Transfer State, original TXT lines",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rfc4838.lines.txt",
+      "derived_lines": "634-660,1052-1158,1432-1446",
+      "stated_source_fact": "Custody means reliable-delivery responsibility transfers to an accepting custodian, distinguished from final delivery. Custody success signals release corresponding retransmission/accounting state; expiry can bound state lifetime.",
+      "governing_conditions": "Informational architecture from April 2007, used as an analogy. Custody transfer is optional/advisory unless source acceptance is required; not every hop is a custodian, so it is not a true hop-by-hop mechanism. The candidate’s literal responsibility quote is in §3.6.1, with the concept elaborated in §3.10/4.2.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E18",
+      "source_id": "couchdb-conflicts",
+      "primary_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-conflicts.html",
+      "primary_sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "version_authority": "Apache CouchDB 3.5 documentation, chapter 2.3",
+      "primary_locator": "#couchdb-replication; #working-with-conflicting-documents",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/couchdb-conflicts.lines.txt",
+      "derived_lines": "183-212,295-355",
+      "stated_source_fact": "CouchDB retains competing revisions, but basic GET and ordinary map input show a deterministic winner. Explicit conflicts=true or open_revs=all queries expose other leaves for application presentation or merging.",
+      "governing_conditions": "This chapter 2.3 was not in the frozen candidate capture: it appeared there as a navigation link only. Reviewer fetched the primary chapter. Retention does not automatically surface conflicts; returned leaf order is not winner order, and deleted leaves need filtering.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E19",
+      "source_id": "rabbitmq-reliability",
+      "primary_url": "https://www.rabbitmq.com/docs/reliability",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-reliability.html",
+      "primary_sha256": "452ba2b6dcfd48492356e3abe45e878c93bc55a2ec55e14c2de15de03d549b63",
+      "version_authority": "RabbitMQ documentation Version 4.3",
+      "primary_locator": "#publisher-side; #consumer-side; #confirms",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/rabbitmq-reliability.lines.txt",
+      "derived_lines": "143-174,225-278",
+      "stated_source_fact": "Lost confirms may cause retransmission and message duplication. Consumer logic can deduplicate or be idempotent; a redelivered flag is a hint, not proof the earlier delivery was seen.",
+      "governing_conditions": "Reviewer supplementary 4.3 primary guide. Current successful fetch does not refute a historical 403 asserted by the candidate. No historical candidate execution is inferred from this check.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E20",
+      "source_id": "idempotent-consumer-author",
+      "primary_url": "https://microservices.io/post/microservices/patterns/2020/10/16/idempotent-consumer.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/idempotent-consumer-author.html",
+      "primary_sha256": "d48518392f5e3635c200c8f635403688dc744381bc38774be7bfa80cf4361769",
+      "version_authority": "Chris Richardson, unversioned article at dated /2020/10/16/ URL; current page at reviewer capture 2026-10-07; publication date not shown in captured body",
+      "primary_locator": "#idempotency-is-important; #save-messages-in-a-processed_message-table; #store-message-ids-in-the-business-entities-created-or-updated-by-message-handlers",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/idempotent-consumer-author.lines.txt",
+      "derived_lines": "73-87,99-131",
+      "stated_source_fact": "The pattern author describes naturally idempotent updates as an alternative. For tracked IDs, the key insert and business update occur in one transaction with unique subscriber/message identity; a conditional single-entity operation is another option.",
+      "governing_conditions": "Author primary explanation at dated /2020/10/16/ URL; current page at reviewer capture, with no publication date shown in captured body. SQL multi-table transactions are a condition of the separate-table example, not a required technology choice. Pseudocode was read, never executed. No Kafka semantic claims from this page were adopted.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E21",
+      "source_id": "rfc9110",
+      "primary_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M12-A/control/normal_research_final-v3/sources/raw/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "version_authority": "RFC 9110, STD 97, Standards Track, June 2022",
+      "primary_locator": "§10.2.3 Retry-After, original TXT lines",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/rfc9110.lines.txt",
+      "derived_lines": "4799-4824",
+      "stated_source_fact": "HTTP Retry-After can describe a wait before a follow-up request, including expected unavailability after a 503 response.",
+      "governing_conditions": "Value is HTTP-date or nonnegative decimal delay-seconds. This supports a live-connection transient-failure discriminator; the review does not impose a specific survey delay.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    },
+    {
+      "evidence_id": "E22",
+      "source_id": "kafka-documentation-route",
+      "primary_url": "https://kafka.apache.org/documentation/",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/kafka-documentation-route.html",
+      "primary_sha256": "6ed5593a781e0363156c1ce3cbc9b498e340c1fd1f91930990fdc9db6c0ed152",
+      "version_authority": "Kafka documentation redirect route at 2026-10-07 reviewer capture",
+      "primary_locator": "HTML title Documentation Redirect; raw UTF-8 byte offsets 16657-17019; derived route text",
+      "reviewer_derived_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/kafka-documentation-route.lines.txt",
+      "derived_lines": "1-3,144-157",
+      "stated_source_fact": "The fetched /documentation/ route is a 20,029-byte redirect shell with JavaScript location replacement to release-specific paths; it contains no substantive retry/ack mechanism text.",
+      "governing_conditions": "One bounded route check supports a fetch/capture limitation at that route, not the universal claim that Kafka’s entire site only renders content in JS. Historical 404/403 batches and other routes have no frozen response bodies in the mapped set and are not independently authenticated.",
+      "verification_kind": "Direct reading of primary bytes and relevant surrounding conditions; HTML lines are reviewer extraction bound to raw SHA-256, not publisher line numbers."
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "claim_id": "C01",
+      "candidate_locator": "final.md:3,7,27-32",
+      "candidate_claim": "This is a small, local retry/ack/local-retention module recommendation for an unnamed survey tool.",
+      "claim_kind": "scope and implementation-size inference",
+      "disposition": "SUPPORTED_WITH_LIMITS",
+      "evidence_ids": [],
+      "checked_source_fact_and_conditions": "The original brief confines work to retry/ack and retention for photo metadata and observations; it supplies no implementation.",
+      "reviewer_inference_or_assessment": "Four proposed changes fit the intended module, but server modifications and attachment handling cannot be independently called small/local in an absent codebase. Treat photo-blob handling as conditional.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": "No app inspection or implementation-size evidence; this is not grounds to demand a whole survey design."
+    },
+    {
+      "claim_id": "C02",
+      "candidate_locator": "final.md:3,49-51",
+      "candidate_claim": "Eight selected source captures are frozen with versions, dates and SHA-256/checksums.",
+      "claim_kind": "provenance and executed-source-check assertion",
+      "disposition": "VERIFIED_BYTES_EXECUTION_LIMIT",
+      "evidence_ids": [],
+      "checked_source_fact_and_conditions": "The exact final, index, eight raw files and checksum entries were independently hashed and match the declared values; map/index fields match. Primary recaptures corroborate identities, seven raw byte-for-byte and MQTT in extracted text.",
+      "reviewer_inference_or_assessment": "A checksum file establishes expected hashes, not that the candidate ran a checksum tool or fetched at asserted times.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": "Historical request/capture/execution times remain index assertions; no candidate operations log was read or supplied."
+    },
+    {
+      "claim_id": "C03",
+      "candidate_locator": "final.md:7",
+      "candidate_claim": "Retry-until-acknowledged alone is insufficient; stable idempotency, durable acknowledgement and bounded retention are useful additions.",
+      "claim_kind": "central recommendation/inference",
+      "disposition": "SUPPORTED_CORE_WITH_DEFECTS",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E06",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E15",
+        "E17"
+      ],
+      "checked_source_fact_and_conditions": "Primary families distinguish repeated delivery, transferred responsibility and durable state; they support challenging the brief’s sufficient-retry assumption.",
+      "reviewer_inference_or_assessment": "The core recommendation is useful, but implementation-independent sufficiency is not established until the governing contracts in D01-D04 are stated.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C04",
+      "candidate_locator": "final.md:11",
+      "candidate_claim": "MQTT PUBACK/PUBREC/PUBREL/PUBCOMP confirm only hop-by-hop arrival.",
+      "claim_kind": "protocol fact [E]",
+      "disposition": "CONTRADICTED_AS_STATED",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ],
+      "checked_source_fact_and_conditions": "MQTT ownership, transaction phase and error reason codes distinguish the packets. PUBREL is a release phase; successful PUBACK/PUBREC transfer ownership without waiting for onward delivery. Nonvolatile durability is deployment-dependent.",
+      "reviewer_inference_or_assessment": "The correct limit is that these packets do not prove final survey-business commit. Reducing all four to mere arrival erases consequential semantics.",
+      "defect_ids": [
+        "D06"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C05",
+      "candidate_locator": "final.md:11",
+      "candidate_claim": "DTN custody moves responsibility among custodians, distinct from final delivery.",
+      "claim_kind": "analogy/source fact [E]",
+      "disposition": "SUPPORTED_WITH_LOCATOR_CORRECTION",
+      "evidence_ids": [
+        "E17"
+      ],
+      "checked_source_fact_and_conditions": "The quoted responsibility language is §3.6.1; §3.10/4.2 explain custody transfer and state release. Custody is optional/advisory, not every hop, and the RFC is Informational.",
+      "reviewer_inference_or_assessment": "The analogy usefully defines a durable-responsibility boundary without requiring adoption of DTN. Candidate section pointers are conceptually related but do not locate the literal quote.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": "No present-day DTN implementation claim; no requirement to survey all DTN successor specifications."
+    },
+    {
+      "claim_id": "C06",
+      "candidate_locator": "final.md:11",
+      "candidate_claim": "A receipt acknowledgement followed by server crash before persistence can lose observations if the client deletes them.",
+      "claim_kind": "tool risk explicitly [I]",
+      "disposition": "SUPPORTED_INFERENCE",
+      "evidence_ids": [
+        "E02",
+        "E08",
+        "E12",
+        "E16"
+      ],
+      "checked_source_fact_and_conditions": "MQTT storage examples distinguish volatile/nonvolatile state; RabbitMQ warns of loss before persistence without confirms; CouchDB commits before checkpoints; SMTP prohibits frivolous post-acceptance loss.",
+      "reviewer_inference_or_assessment": "This is a valid conditional counterexample to the sandbox assumption, not a claimed observed sandbox failure.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C07",
+      "candidate_locator": "final.md:11,30",
+      "candidate_claim": "Acknowledge only after durable commit; client deletes only on that acknowledgement, queued to in-flight to acked.",
+      "claim_kind": "proposed contract",
+      "disposition": "SUPPORTED_BUT_INCOMPLETE",
+      "evidence_ids": [
+        "E01",
+        "E08",
+        "E12",
+        "E16"
+      ],
+      "checked_source_fact_and_conditions": "Durable effect before success acknowledgement is a valid chosen boundary; protocol acknowledgement alone may mean a different stage or failed operation.",
+      "reviewer_inference_or_assessment": "State/key durability, success/failure typing and acknowledgement-to-item correlation must accompany this contract; the three-state arrow alone does not define recovery.",
+      "defect_ids": [
+        "D01",
+        "D06"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C08",
+      "candidate_locator": "final.md:13,23",
+      "candidate_claim": "SQS Standard at-least-once delivery permits duplicate copies and occasional out-of-order arrival.",
+      "claim_kind": "source fact [E]",
+      "disposition": "SUPPORTED",
+      "evidence_ids": [
+        "E06"
+      ],
+      "checked_source_fact_and_conditions": "Exact opening paragraphs support both properties for the Standard/default queue type, not all SQS types. SendMessage storage-before-ack is also stated.",
+      "reviewer_inference_or_assessment": "Useful evidence for idempotency and separating event time from receive order; duplicate delivery is possible, not mandatory.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C09",
+      "candidate_locator": "final.md:13",
+      "candidate_claim": "RabbitMQ redelivers requeued deliveries never positively acknowledged.",
+      "claim_kind": "source fact [E]",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "evidence_ids": [
+        "E07"
+      ],
+      "checked_source_fact_and_conditions": "With manual acknowledgement, channel/connection closure automatically requeues unacked deliveries. Explicit negative acknowledgement may requeue; automatic-ack mode can instead lose messages.",
+      "reviewer_inference_or_assessment": "The described redelivery family is valid with these modes and triggers; it does not describe every configuration.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C10",
+      "candidate_locator": "final.md:13",
+      "candidate_claim": "Lost/delayed acknowledgement means retrying until acknowledgement guarantees duplicates.",
+      "claim_kind": "causal source-to-tool inference [E label]",
+      "disposition": "OVERSTATED",
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E09",
+        "E19"
+      ],
+      "checked_source_fact_and_conditions": "The cited primary documents say may/might duplicate; lost-before-delivery can have no duplicate, and QoS 2 suppresses repeated delivery of an ongoing transaction.",
+      "reviewer_inference_or_assessment": "Sender uncertainty supports possible duplicates and idempotent effects. It does not prove inevitable duplicate deliveries/effects.",
+      "defect_ids": [
+        "D05"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C11",
+      "candidate_locator": "final.md:13,43",
+      "candidate_claim": "Amend the sufficient-retry brief assumption rather than accept it.",
+      "claim_kind": "assumption challenge",
+      "disposition": "SUPPORTED_WITH_CORRECTION",
+      "evidence_ids": [
+        "E02",
+        "E06",
+        "E09",
+        "E10",
+        "E12"
+      ],
+      "checked_source_fact_and_conditions": "Durability and duplicate effects supply valid counterexamples to sufficiency even without universal inevitability.",
+      "reviewer_inference_or_assessment": "The challenge remains warranted after replacing guarantees with permits.",
+      "defect_ids": [
+        "D05"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C12",
+      "candidate_locator": "final.md:15",
+      "candidate_claim": "An outbox relay may crash after publishing and republish; consumers can track processed IDs.",
+      "claim_kind": "source fact [E]",
+      "disposition": "SUPPORTED",
+      "evidence_ids": [
+        "E09"
+      ],
+      "checked_source_fact_and_conditions": "The Result context explicitly describes the crash interval and idempotent consumer tracking. The Solution defines atomic state/outbox writing before relay.",
+      "reviewer_inference_or_assessment": "This is a relevant durable-local-work mechanism, not merely a generic competitor citation.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C13",
+      "candidate_locator": "final.md:15",
+      "candidate_claim": "HTTP idempotence gives the same effect for identical repeated requests.",
+      "claim_kind": "source fact [E]",
+      "disposition": "SUPPORTED_WITH_EFFECT_SCOPE",
+      "evidence_ids": [
+        "E10"
+      ],
+      "checked_source_fact_and_conditions": "RFC 9110 §9.2.2 limits equality to the intended effect, permits other per-request side effects, lists idempotent methods, and conditions non-idempotent retries.",
+      "reviewer_inference_or_assessment": "The ellipsis drops intended; preserve that scope when interpreting exactly-one-record versus all downstream side effects. Responses need not be identical.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C14",
+      "candidate_locator": "final.md:15,29",
+      "candidate_claim": "Client-generated UUID per item and a server seen-key store solve duplicate effects.",
+      "claim_kind": "proposed analogue",
+      "disposition": "INCOMPLETE_GOVERNING_CONDITIONS",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E20"
+      ],
+      "checked_source_fact_and_conditions": "Author guidance makes key tracking and business updates atomic, with unique identity, or uses an equivalent conditional entity operation; naturally idempotent handlers are an alternative.",
+      "reviewer_inference_or_assessment": "A persistent UUID is useful but does not ensure atomic unique effect by itself. Same identity must survive retries and restarts and refer to the same operation/payload.",
+      "defect_ids": [
+        "D02"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C15",
+      "candidate_locator": "final.md:17",
+      "candidate_claim": "MQTT forbids resending PUBLISH after sending PUBREL.",
+      "claim_kind": "source fact [E]",
+      "disposition": "SUPPORTED_QOS_PHASE_LIMIT",
+      "evidence_ids": [
+        "E01",
+        "E03"
+      ],
+      "checked_source_fact_and_conditions": "[MQTT-4.3.3-6] is the QoS 2 transaction-phase rule; PUBREL remains pending until PUBCOMP.",
+      "reviewer_inference_or_assessment": "Correct narrow fact. It is not an application-level prohibition on all repeated attempts.",
+      "defect_ids": [
+        "D03"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C16",
+      "candidate_locator": "final.md:17",
+      "candidate_claim": "MQTT resent packets preserve original order, cited to §4.4.",
+      "claim_kind": "source fact/locator",
+      "disposition": "SUPPORTED_FACT_WRONG_LOCATOR",
+      "evidence_ids": [
+        "E04"
+      ],
+      "checked_source_fact_and_conditions": "[MQTT-4.6.0-1] in §4.6 imposes retransmitted PUBLISH ordering; §4.4 concerns retry eligibility.",
+      "reviewer_inference_or_assessment": "The normative ordering source is present in the frozen bytes, but the candidate locator is wrong. This matters when separating resend eligibility from ordering.",
+      "defect_ids": [
+        "D03"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C17",
+      "candidate_locator": "final.md:17,43",
+      "candidate_claim": "Mature acknowledged protocols reject unbounded in-session retry loops.",
+      "claim_kind": "negative discovery/generalization",
+      "disposition": "OVERGENERALIZED",
+      "evidence_ids": [
+        "E03",
+        "E13",
+        "E15"
+      ],
+      "checked_source_fact_and_conditions": "MQTT 5 forbids protocol retransmission except resumed session; CouchDB recommends repeating failed HTTP requests and persistent connections; SMTP schedules delayed retries.",
+      "reviewer_inference_or_assessment": "Rejecting hot loops is sensible. Rejecting all in-session timed retries is not supported by the declared families.",
+      "defect_ids": [
+        "D03"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C18",
+      "candidate_locator": "final.md:17,32",
+      "candidate_claim": "Retry should be reconnect-driven.",
+      "claim_kind": "material recommendation",
+      "disposition": "UNJUSTIFIED_UNIVERSAL_RESTRICTION",
+      "evidence_ids": [
+        "E03",
+        "E13",
+        "E15",
+        "E21"
+      ],
+      "checked_source_fact_and_conditions": "MQTT Clean Start=0/session-present retransmission rules are protocol-specific. HTTP can signal a timed retry while remaining connected; CouchDB expects timeout/failure retry.",
+      "reviewer_inference_or_assessment": "Strict reconnect-only application logic can fail liveness after recoverable failures without connectivity transitions.",
+      "defect_ids": [
+        "D03"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C19",
+      "candidate_locator": "final.md:17,32",
+      "candidate_claim": "Use ordered bounded in-flight sends.",
+      "claim_kind": "material recommendation",
+      "disposition": "SUPPORTED_WITH_PROTOCOL_SCOPE",
+      "evidence_ids": [
+        "E04",
+        "E07",
+        "E08"
+      ],
+      "checked_source_fact_and_conditions": "MQTT Receive Maximum and RabbitMQ manual-ack prefetch demonstrate bounded outstanding work; quota and tag rules are connection/channel-specific and ack order can differ.",
+      "reviewer_inference_or_assessment": "Bounded concurrency is useful; do not infer arbitrary business ordering or a total retry limit merely from an in-flight window.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C20",
+      "candidate_locator": "final.md:19",
+      "candidate_claim": "CouchDB checkpoints and common ancestry avoid restarting every interrupted replication from scratch.",
+      "claim_kind": "source fact [E]",
+      "disposition": "SUPPORTED_WITH_PRECONDITIONS",
+      "evidence_ids": [
+        "E11",
+        "E12"
+      ],
+      "checked_source_fact_and_conditions": "Common histories choose a startup checkpoint; commit precedes updating both peer logs. No common ancestry requires full replication.",
+      "reviewer_inference_or_assessment": "The qualified source mechanism is valid; it is not an unconditional promise that any queue resumes only unsent items.",
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C21",
+      "candidate_locator": "final.md:19",
+      "candidate_claim": "A per-item queue with per-item acknowledgement is already checkpointed at item granularity.",
+      "claim_kind": "tool inference [I]",
+      "disposition": "UNJUSTIFIED_WITHOUT_DURABLE_STATE",
+      "evidence_ids": [
+        "E02",
+        "E09",
+        "E11",
+        "E12"
+      ],
+      "checked_source_fact_and_conditions": "Durable state and recorded progress are distinct mechanisms; CouchDB specifies both. An arbitrary queue can be volatile or leave in-flight work unrecovered.",
+      "reviewer_inference_or_assessment": "Per-item acknowledgement can support a checkpoint after a durable local record/recovery contract is specified; that contract is absent.",
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C22",
+      "candidate_locator": "final.md:19",
+      "candidate_claim": "The real interruption risk is a split photo blob and metadata half-completing.",
+      "claim_kind": "hypothetical tool risk [I]",
+      "disposition": "SUPPORTED_ONLY_IF_MULTIPART_ITEMS_EXIST",
+      "evidence_ids": [
+        "E14"
+      ],
+      "checked_source_fact_and_conditions": "CouchDB has conditional document-plus-attachment transfer; the brief declares photo metadata and observations, not image-blob upload.",
+      "reviewer_inference_or_assessment": "Half-completion is a useful conditional lead, but calling it the real risk sidelines the required local persistence/recovery risk and assumes an extra payload. No full photo pipeline is required.",
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": "The final does label this as an inference; no observed tool behavior is established."
+    },
+    {
+      "claim_id": "C23",
+      "candidate_locator": "final.md:19,32",
+      "candidate_claim": "Complete an item atomically or resume parts at part granularity.",
+      "claim_kind": "bounded optional recommendation",
+      "disposition": "SUPPORTED_CONDITIONAL_INFERENCE",
+      "evidence_ids": [
+        "E12",
+        "E14"
+      ],
+      "checked_source_fact_and_conditions": "Commit-before-checkpoint and attachment/history mechanisms support explicit atomic completion or per-part state under an actual multi-part item contract.",
+      "reviewer_inference_or_assessment": "This option is reasonable if items contain dependent parts; it does not replace durable local capture or prove blob upload is in scope.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C24",
+      "candidate_locator": "final.md:21",
+      "candidate_claim": "SMTP retries at intervals of at least 30 minutes.",
+      "claim_kind": "source timing fact [E]",
+      "disposition": "QUALIFICATION_LOST",
+      "evidence_ids": [
+        "E15"
+      ],
+      "checked_source_fact_and_conditions": "Failed retries MUST be delayed; in general the interval SHOULD be at least 30 minutes, with sophisticated variable strategies allowed.",
+      "reviewer_inference_or_assessment": "The candidate states the general guidance as unconditional. Do not transplant an SMTP interval into phone sync.",
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C25",
+      "candidate_locator": "final.md:21",
+      "candidate_claim": "SMTP gives up after at least 4-5 days.",
+      "claim_kind": "source timing fact [E]",
+      "disposition": "QUALIFICATION_LOST",
+      "evidence_ids": [
+        "E15"
+      ],
+      "checked_source_fact_and_conditions": "Give-up time generally needs to be at least 4-5 days; retry parameters MUST be configurable, and some notifications may have a shorter maximum.",
+      "reviewer_inference_or_assessment": "This is neither an exact expiry date nor a universal upper storage bound. Product retention ages remain undecided.",
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C26",
+      "candidate_locator": "final.md:21",
+      "candidate_claim": "SMTP returns failed mail, supporting a visible failure state.",
+      "claim_kind": "analogy/source fact [E]",
+      "disposition": "SUPPORTED_WITH_NOTIFICATION_LIMITS",
+      "evidence_ids": [
+        "E15",
+        "E16"
+      ],
+      "checked_source_fact_and_conditions": "Retry strategy plus §4.2.5/6.1 provide failure-notification responsibility; null reverse-path messages must not generate another bounce.",
+      "reviewer_inference_or_assessment": "A visible survey failure analogue is useful. The cited sending-strategy section alone does not state the full return contract; the correct sections and exceptions are retained here.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C27",
+      "candidate_locator": "final.md:21",
+      "candidate_claim": "MQTT likewise carries a Message-expiry property in §4.3.3 context.",
+      "claim_kind": "source property fact [E]",
+      "disposition": "SUPPORTED_EXISTENCE_MISSING_DEFAULT_LIMITS",
+      "evidence_ids": [
+        "E05"
+      ],
+      "checked_source_fact_and_conditions": "The property is §3.3.2.3.3: optional Four Byte Integer seconds, absent means no expiry; it addresses subscriber-copy lifetime before onward delivery. QoS 2 sender expiry cannot abort a sent PUBLISH transaction.",
+      "reviewer_inference_or_assessment": "Existence is correct but does not support an unconditional in-flight/phone-local retention cap. The missing defaults and phase limits are consequential.",
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C28",
+      "candidate_locator": "final.md:21",
+      "candidate_claim": "Keeping stale offline work indefinitely can grow storage; silent discard hides data loss.",
+      "claim_kind": "tool risk inference",
+      "disposition": "SUPPORTED_CONDITIONAL_INFERENCE",
+      "evidence_ids": [
+        "E02",
+        "E15",
+        "E16",
+        "E17"
+      ],
+      "checked_source_fact_and_conditions": "Sources recognize finite storage/resource and queue responsibility limits; the brief describes continuing offline capture.",
+      "reviewer_inference_or_assessment": "Growth follows continued capture plus retained undelivered data. A fixed single record’s retry by itself need not enlarge storage.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C29",
+      "candidate_locator": "final.md:21,31",
+      "candidate_claim": "Cap retention by age/attempts; move overflow to visible failed with notice.",
+      "claim_kind": "material recommendation",
+      "disposition": "FAILS_STATED_STORAGE_BOUND",
+      "evidence_ids": [
+        "E05",
+        "E15",
+        "E16",
+        "E17"
+      ],
+      "checked_source_fact_and_conditions": "Retry expiry and state lifetime are separate; these sources do not specify a survey failed-record disposal or capacity contract.",
+      "reviewer_inference_or_assessment": "A state transition stops active retry but does not limit bytes retained in failed. Define recover/export/purge/admission behavior with a visible outcome and a total bound.",
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C30",
+      "candidate_locator": "final.md:23",
+      "candidate_claim": "Delayed/reordered arrivals make client capture time useful rather than server arrival time.",
+      "claim_kind": "source-to-tool inference, later identified [I]",
+      "disposition": "SUPPORTED_WITH_CLOCK_LIMIT",
+      "evidence_ids": [
+        "E06"
+      ],
+      "checked_source_fact_and_conditions": "SQS Standard permits reordering; the brief allows extended offline delay. This does not make a correct server receive timestamp inaccurate or prove phone clocks trustworthy.",
+      "reviewer_inference_or_assessment": "Record capture and receive timestamps with distinct meanings. For conflict ordering, client clock skew/tampering and revision identity require a policy; wall-clock LWW is not proven by the sources.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": "The final retains conflict policy as a product decision; no universal winner is imposed."
+    },
+    {
+      "claim_id": "C31",
+      "candidate_locator": "final.md:23",
+      "candidate_claim": "CouchDB retains conflicting sibling revisions rather than overwriting.",
+      "claim_kind": "source fact [E]",
+      "disposition": "SUPPORTED_WITH_VISIBILITY_LIMIT",
+      "evidence_ids": [
+        "E14",
+        "E18"
+      ],
+      "checked_source_fact_and_conditions": "Frozen protocol definitions/history preserve conflicting leaves. Independently captured chapter 2.3 confirms sibling retention, but ordinary GET and map functions show only a deterministic winner.",
+      "reviewer_inference_or_assessment": "Retention is true; merge honesty requires explicit conflict retrieval/presentation if this option is selected.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": "Chapter 2.3 itself was not a captured primary body in the candidate index; it was only a navigation link. Reviewer supplementation verifies the fact without changing the candidate set."
+    },
+    {
+      "claim_id": "C32",
+      "candidate_locator": "final.md:23,25",
+      "candidate_claim": "Define per-field last-writer-wins or retain conflicts; current edit-conflict policy is a product decision.",
+      "claim_kind": "proposed options/uncertainty",
+      "disposition": "SUPPORTED_AS_OPTIONS",
+      "evidence_ids": [
+        "E14",
+        "E18"
+      ],
+      "checked_source_fact_and_conditions": "CouchDB supplies one revision-preserving example, not a required survey merge policy; the brief does not establish edited-observation semantics.",
+      "reviewer_inference_or_assessment": "Retain these as options gated on whether edits are in scope and which ordering/visibility policy is chosen. Do not claim a source chooses LWW for this tool.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C33",
+      "candidate_locator": "final.md:25",
+      "candidate_claim": "End-to-end exactly-once is not established by these transport documents for the unnamed tool.",
+      "claim_kind": "bounded negative/uncertainty [E/I]",
+      "disposition": "SUPPORTED_SCOPE_LIMIT",
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E08",
+        "E10"
+      ],
+      "checked_source_fact_and_conditions": "MQTT QoS 2 gives a scoped delivery guarantee, and broker acknowledgements have link/queue-specific semantics; none establishes an unknown application’s complete durable processing chain.",
+      "reviewer_inference_or_assessment": "Useful negative discovery if kept to the application end-to-end boundary; it should not erase scoped delivery guarantees.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C34",
+      "candidate_locator": "final.md:25",
+      "candidate_claim": "Exactly-once exists only where the consumer deduplicates.",
+      "claim_kind": "exclusive mechanism assertion [E/I]",
+      "disposition": "OVERSTATED",
+      "evidence_ids": [
+        "E01",
+        "E10",
+        "E20"
+      ],
+      "checked_source_fact_and_conditions": "Sources preserve naturally idempotent effects and conditional/transactional identity enforcement, alongside MQTT’s QoS 2 suppression. Intended effect is not all-side-effect execution count.",
+      "reviewer_inference_or_assessment": "Consumer dedup is one way to achieve a single business effect; the exclusive phrasing is not primary-supported. Nor does dedup alone establish an end-to-end guarantee.",
+      "defect_ids": [
+        "D02",
+        "D05"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C35",
+      "candidate_locator": "final.md:25,43,47",
+      "candidate_claim": "The sandbox acknowledgement point and edit-conflict policy are unresolved and gate choices.",
+      "claim_kind": "uncertainty and option preservation",
+      "disposition": "SUPPORTED",
+      "evidence_ids": [],
+      "checked_source_fact_and_conditions": "The original brief supplies no server implementation, storage contract or edit/conflict rule.",
+      "reviewer_inference_or_assessment": "Maintaining these as uncertainties is justified, not an abstention defect. Retention also needs a capacity/data-disposition decision independent of these two questions.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C36",
+      "candidate_locator": "final.md:29-32",
+      "candidate_claim": "The four bounded changes implement findings F1-F6.",
+      "claim_kind": "proposal binding/traceability",
+      "disposition": "SUPPORTED_BINDINGS_UNSAFE_CONDITIONS",
+      "evidence_ids": [
+        "E03",
+        "E09",
+        "E12",
+        "E15",
+        "E20"
+      ],
+      "checked_source_fact_and_conditions": "The key, ack, failure and retry proposals map to their stated finding IDs and remain within an intended module. Their required conditions are not all carried forward.",
+      "reviewer_inference_or_assessment": "Traceability IDs are intact; bindings do not repair the omitted contracts.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D06"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C37",
+      "candidate_locator": "final.md:36",
+      "candidate_claim": "T1: Inject acknowledgement loss and assert exactly one server record per key survives.",
+      "claim_kind": "proposed validation [P]",
+      "disposition": "USEFUL_NOT_EXECUTED_INCOMPLETE_STRESS",
+      "evidence_ids": [
+        "E09",
+        "E19",
+        "E20"
+      ],
+      "checked_source_fact_and_conditions": "Lost ack can replay an already committed effect; atomic unique handling is the discriminator.",
+      "reviewer_inference_or_assessment": "This is a useful proposed oracle, not proof of current correctness. Include concurrent requests and effect/key crash boundaries to validate the strongest recommendation.",
+      "defect_ids": [
+        "D02"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": "No source or application test execution was performed."
+    },
+    {
+      "claim_id": "C38",
+      "candidate_locator": "final.md:37",
+      "candidate_claim": "T2: Crash server between receive and commit; client keeps and resends.",
+      "claim_kind": "proposed validation [P]",
+      "disposition": "USEFUL_NOT_EXECUTED",
+      "evidence_ids": [
+        "E02",
+        "E08",
+        "E12"
+      ],
+      "checked_source_fact_and_conditions": "Commit-before-success-ack rejects a premature receipt acknowledgement.",
+      "reviewer_inference_or_assessment": "A useful distinguishing test; include an actual durable client queue and a reliable observation of crash location. No outcome is claimed.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": "Proposed only; no sandbox exists in the supplied material."
+    },
+    {
+      "claim_id": "C39",
+      "candidate_locator": "final.md:38",
+      "candidate_claim": "T3: Age beyond cap; assert failed and never silently discarded.",
+      "claim_kind": "proposed validation [P]",
+      "disposition": "USEFUL_BUT_NOT_STORAGE_DISCRIMINATING",
+      "evidence_ids": [
+        "E15",
+        "E16",
+        "E17"
+      ],
+      "checked_source_fact_and_conditions": "A visible failed state addresses notice; it does not establish a cap on failed-record storage.",
+      "reviewer_inference_or_assessment": "Also test continued capture, total bytes/items and recovery/disposition at capacity. The original oracle could pass while phone storage remains unbounded.",
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C40",
+      "candidate_locator": "final.md:39",
+      "candidate_claim": "T4: Kill mid-batch, resume and send only unacked items.",
+      "claim_kind": "proposed validation [P]",
+      "disposition": "CONDITIONAL_ORACLE_NOT_EXECUTED",
+      "evidence_ids": [
+        "E11",
+        "E12"
+      ],
+      "checked_source_fact_and_conditions": "Resuming from recorded durable success is sound; a server-committed item whose response was lost remains unacknowledged to the client and can safely be retransmitted with its stable key.",
+      "reviewer_inference_or_assessment": "Define unacked against durable client-observed success, not server commit inferred remotely. Recover in-flight state and tolerate harmless replay around an ack-persistence crash.",
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C41",
+      "candidate_locator": "final.md:43",
+      "candidate_claim": "Accept F2/F3/F5/F6/F7 mechanisms; reject building a full sync engine/CRDT stack.",
+      "claim_kind": "disposition/scope decision",
+      "disposition": "SUPPORTED_SCOPE_WITH_CONDITIONS",
+      "evidence_ids": [],
+      "checked_source_fact_and_conditions": "The original brief explicitly requests only one diagnostic module, with at most eight findings.",
+      "reviewer_inference_or_assessment": "Rejecting a full application/CRDT implementation respects scope. Acceptance of mechanisms is conditional on corrections to their material claims; no preset adoption truth is assumed.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C42",
+      "candidate_locator": "final.md:43",
+      "candidate_claim": "Reject unbounded in-session retry loops.",
+      "claim_kind": "rejection/negative discovery",
+      "disposition": "VALID_HOT_LOOP_REJECTION_BAD_RECONNECT_BASIS",
+      "evidence_ids": [
+        "E03",
+        "E13",
+        "E15"
+      ],
+      "checked_source_fact_and_conditions": "Backoff/timed request retry and persistent connections remain supported alternatives; MQTT has a narrower prohibition.",
+      "reviewer_inference_or_assessment": "Prevent zero-delay unbounded loops, but do not reject bounded recoverable retries while connectivity remains available.",
+      "defect_ids": [
+        "D03"
+      ],
+      "materiality": "Material to recommendation/obligation or evidentiary status; defect materiality is specified by defect ID.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C43",
+      "candidate_locator": "final.md:47",
+      "candidate_claim": "Sources are protocol/infrastructure documents; F1/F5/F7 risk mappings are inferences, and discovery is not exhaustive.",
+      "claim_kind": "method/uncertainty preservation",
+      "disposition": "SUPPORTED",
+      "evidence_ids": [],
+      "checked_source_fact_and_conditions": "The original brief provides no inspectable tool. The frozen source set is standards and primary infrastructure/pattern documentation.",
+      "reviewer_inference_or_assessment": "The final’s [I]/[P] distinction and non-exhaustiveness are appropriate. Other design mappings also need conditional wording; no exhaustive unknown answer key is used.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C44",
+      "candidate_locator": "final.md:47 and sources/index.json meta.failed_routes",
+      "candidate_claim": "Kafka site content renders only in JS; failed routes constrained discovery.",
+      "claim_kind": "negative provenance/execution claim",
+      "disposition": "ROUTE_LIMIT_SUPPORTED_SITE_WIDE_UNVERIFIED",
+      "evidence_ids": [
+        "E22"
+      ],
+      "checked_source_fact_and_conditions": "Reviewer fetched the declared /documentation/ route: a 20,029-byte JavaScript redirect shell, not substantive docs. The script points to release-specific routes. Historical failure batches lack mapped response bodies.",
+      "reviewer_inference_or_assessment": "A single route explains a fetch limitation but does not establish that the entire site is JS-only or that no primary docs are reachable. Bounded discovery does not require exhaustive Kafka rescue.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": "No candidate historical failures are independently authenticated; other routes/tags/API failures were not replayed, and no Kafka mechanism conclusion is adopted."
+    },
+    {
+      "claim_id": "C45",
+      "candidate_locator": "final.md:51 and sources/index.json source version fields",
+      "candidate_claim": "Versions/authority identities are MQTT 5.0 OS 2019, current AWS/RabbitMQ/pattern, CouchDB 3.5, RFC 9110/5321/4838.",
+      "claim_kind": "release/version/authority facts",
+      "disposition": "SUPPORTED_MORE_PRECISE_VERSION_RETAINED",
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E07",
+        "E09",
+        "E10",
+        "E11",
+        "E15",
+        "E17"
+      ],
+      "checked_source_fact_and_conditions": "All eight identity/version headers and relevant texts were independently corroborated at primary URLs. RabbitMQ’s body explicitly says Version 4.3; CouchDB docs 3.5 contain Replication Protocol Version 3; RFC 4838 is Informational.",
+      "reviewer_inference_or_assessment": "Current-at-capture plus exact hash pins unversioned pages but does not declare the tool’s deployed transport/version. No source conformance testing or full errata survey is claimed.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": ""
+    },
+    {
+      "claim_id": "C46",
+      "candidate_locator": "final.md:3,11-25,34-39",
+      "candidate_claim": "[E] denotes executed source checking; T1-T4 are [P], not executed application checks.",
+      "claim_kind": "execution-versus-proposal classification",
+      "disposition": "DISTINCTION_PRESERVED_EXECUTION_LIMIT",
+      "evidence_ids": [],
+      "checked_source_fact_and_conditions": "The final explicitly says proposed, not executed here and uses [E on sources; I on tool] for risk mappings.",
+      "reviewer_inference_or_assessment": "No false application-test execution claim is present. Independent reviewer hash/HTTP/text checks corroborate source facts, not historical candidate source-check operations.",
+      "defect_ids": [],
+      "materiality": "Assessed; no independent material defect found in this claim as qualified here.",
+      "limits": "Candidate source-reading/checksum execution has no authenticated receipts in the mapped inputs; it is not upgraded to SourcePASS based on index/exit/hash alone."
+    }
+  ],
+  "defects": [
+    {
+      "defect_id": "D01",
+      "title": "Offline persistence and restart recovery are left implicit",
+      "severity": "high",
+      "material": true,
+      "candidate_locator": "final.md:19,30,39",
+      "evidence_ids": [
+        "E02",
+        "E09",
+        "E11",
+        "E12"
+      ],
+      "materiality": "A volatile queue or an unrecovered persisted in-flight state fits the written design and can lose observations or strand them after phone/process interruption. Per-item ack is not itself a durable checkpoint.",
+      "bounded_correction": "Specify a nonvolatile item record containing stable item identity/payload and recoverable delivery state, durably committed before reporting queued or sending. Persist successful item acknowledgement/deletion coherently and recover interrupted in-flight work. This is a local module contract, not a whole-app design.",
+      "proposed_discriminating_validation": "Terminate the phone process after capture but before send, during in-flight work, and during ack-state persistence; restart and check every uncommitted-to-server item remains recoverable with the same key.",
+      "executed": false
+    },
+    {
+      "defect_id": "D02",
+      "title": "UUID plus a seen-key store omits the atomic effect/key contract",
+      "severity": "high",
+      "material": true,
+      "candidate_locator": "final.md:15,29-30,36",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E20"
+      ],
+      "materiality": "Recording a key before the observation can make a crash discard valid retries; recording the observation before the key can duplicate the effect. Concurrent duplicates can race a separate check. The proposed exactly-one-record oracle is not justified by a UUID alone.",
+      "bounded_correction": "Require an atomic durable business effect and uniqueness/idempotency decision, by a transaction or equivalent conditional write; preserve key across all replays, define payload/key binding and retry result. Make the deduplication horizon compatible with permitted replay/failed-item recovery. Do not mandate a new storage product.",
+      "proposed_discriminating_validation": "Send concurrent duplicates and interrupt between effect/key/ack boundaries; replay after restart and after any permitted retention boundary; check one durable effect or an explicit rejected conflict, never silent loss.",
+      "executed": false
+    },
+    {
+      "defect_id": "D03",
+      "title": "A MQTT session rule becomes a universal reconnect-only retry policy",
+      "severity": "high",
+      "material": true,
+      "candidate_locator": "final.md:17,32,43",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E13",
+        "E15",
+        "E21"
+      ],
+      "materiality": "A live HTTP/application session can receive a transient failure while connectivity stays up. Waiting solely for a reconnect can strand the item until its cap, even after recovery. The mapped CouchDB and SMTP families support timeout/timer retries.",
+      "bounded_correction": "Keep bounded in-flight work and avoid hot loops, but choose protocol-aware timeout/backoff retry for recoverable failures; reserve MQTT 5 retransmission rules for Clean Start=0 with a retained session and the correct QoS transaction phase. Correct the ordering locator to §4.6.",
+      "proposed_discriminating_validation": "Keep the network/connection available, return a transient 503/Retry-After or recoverable request failure, then recover the server without reconnect. Check bounded retry makes progress; separately check MQTT resumed-session behavior if that transport is actually selected.",
+      "executed": false
+    },
+    {
+      "defect_id": "D04",
+      "title": "A failed-state transition does not bound local retained storage",
+      "severity": "high",
+      "material": true,
+      "candidate_locator": "final.md:21,31,38",
+      "evidence_ids": [
+        "E05",
+        "E15",
+        "E16",
+        "E17"
+      ],
+      "materiality": "Age/attempt caps end retries but the proposed never-silently-discarded failed records can remain indefinitely. Continued offline captures can still exhaust a phone. MQTT optional expiry and SMTP configurable timing do not supply a survey data-disposition/capacity contract.",
+      "bounded_correction": "Distinguish retry budget, active/failed-item retention and byte/item capacity. Define visible recover/export/purge or admission/backpressure behavior when capacity is reached, with product-approved ages and data disposition. Preserve failed data until the chosen visible disposition; do not invent a mandatory deletion age from SMTP.",
+      "proposed_discriminating_validation": "Keep adding offline items through expiry and failures; verify total retained bytes/items stay within the chosen bound and each item has an explicit recoverable or surfaced disposition. Test null/bounce and MQTT in-progress limits only if those analogies become adopted protocols.",
+      "executed": false
+    },
+    {
+      "defect_id": "D05",
+      "title": "Duplicate inevitability and consumer-dedup exclusivity are overstated",
+      "severity": "moderate",
+      "material": true,
+      "candidate_locator": "final.md:13,25",
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E09",
+        "E10",
+        "E19",
+        "E20"
+      ],
+      "materiality": "May duplicate is changed to guarantees duplicates, and a scoped end-to-end warning becomes only consumer dedup can give exactly-once effects. These erase scoped QoS 2 suppression and naturally idempotent effect designs and can lead to unjustified mechanism rejection.",
+      "bounded_correction": "Say at-least-once/lost-ack retry permits duplicates and requires idempotent effects. Keep hop/session delivery, one durable application effect and final delivery separate; dedup is one implementation, and its correctness is conditional on D02. The valid challenge to the brief remains.",
+      "proposed_discriminating_validation": "Use a lost-before-delivery case with no duplicate and a repeated identical naturally idempotent update or QoS 2 transaction as conceptual discriminators; do not describe these unexecuted cases as application evidence.",
+      "executed": false
+    },
+    {
+      "defect_id": "D06",
+      "title": "Acknowledgement stages and success/failure semantics are conflated",
+      "severity": "moderate",
+      "material": true,
+      "candidate_locator": "final.md:11,30",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E06",
+        "E07",
+        "E08",
+        "E17"
+      ],
+      "materiality": "The source characterization treats PUBACK/PUBREC/PUBREL/PUBCOMP as only arrival confirmations. Ownership, phase and negative reason codes differ; broker confirmation can even mean an unroutable publish was handled. A protocol acknowledgement is not automatically successful durable observation commit.",
+      "bounded_correction": "Describe the actual hop/session ownership semantics accurately and define a success acknowledgement correlated to the immutable item/operation after the intended durable effect. Classify permanent/temporary failures separately and surface them without deleting an uncommitted observation as successfully synced. Preserve custom-API freedom.",
+      "proposed_discriminating_validation": "Present a terminal error acknowledgement, an unroutable broker confirm, and a delayed ack from an older item/attempt; confirm the module deletes only the item whose intended durable effect succeeded. These are proposed checks, not observed sandbox behavior.",
+      "executed": false
+    }
+  ],
+  "nonblocking_limits": [
+    {
+      "id": "N01",
+      "text": "CouchDB chapter 2.3 was cited but not frozen; reviewer supplemented it directly. Correct MQTT ordering and DTN quote locators are supplied. RabbitMQ visible version is 4.3, more precise than current at capture."
+    },
+    {
+      "id": "N02",
+      "text": "Capture timestamps describe event-time intention; phone wall clocks are not thereby authoritative ordering clocks. LWW versus conflict retention remains an explicit product choice. If retaining CouchDB-like conflicts, basic GET/views conceal losers unless explicit retrieval/presentation is arranged."
+    },
+    {
+      "id": "N03",
+      "text": "Photo-blob multipart behavior is a conditional optional lead beyond the brief’s photo metadata. Implementation size/locality is not independently measurable for the unnamed tool."
+    },
+    {
+      "id": "N04",
+      "text": "Historical candidate route failures and executed checksum operations lack request/execution receipts in the mapped artifact set. Current route checks do not prove or disprove those past operations; Kafka site-wide JS-only language exceeds the checked redirect route."
+    }
+  ],
+  "assessment_extent": {
+    "declared_primary_sources": 8,
+    "declared_primary_sources_hash_checked": 8,
+    "declared_primary_sources_semantically_checked": 8,
+    "final_artifact_complete_read": true,
+    "all_numbered_findings_checked": [
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7",
+      "F8"
+    ],
+    "all_proposed_changes_checked": 4,
+    "all_proposed_validation_checks_checked": 4,
+    "bounded_public_primary_gets": 12,
+    "additional_primary_pages": 4,
+    "material_claim_scope": "Every substantive final paragraph, source fact, inference, recommendation, rejection, uncertainty and proposed oracle; surrounding release/type/default/unit/authority conditions were read where relevant. Not a claim to have read every unrelated sentence of large specifications.",
+    "m14_applicable": false,
+    "m14_reason": "D-M12-A is a bounded research module. INPUT_MAP declares no M14 authored set, semantic projections or preservation views.",
+    "unassessed_remainder": [],
+    "intrinsically_unverifiable_limits": [
+      "Actual unnamed sandbox storage/ack/conflict implementation and application test outcomes were not provided; candidate properly acknowledges this.",
+      "Historical candidate HTTP failures/capture timestamps/source-reading operations are index assertions without full frozen response/operation receipts. Their evidentiary limits are assessed, not upgraded to executed proof."
+    ],
+    "exhaustive_discovery_claimed": false,
+    "consequential_claims_checked": 46
+  },
+  "blinding_scope_provenance": {
+    "blinding": "Partial only: case/method/arm names are visible in paths and final; source-index meta exposes captured_by provider/model. No cost, winner, speed target, other-arm output, grades, prior findings, parent analysis or campaign history was supplied or sought.",
+    "allowed_inputs_read": [
+      "Original brief and empty source manifest",
+      "INPUT_MAP and mapped candidate source index/checksums/raw source bytes",
+      "This exact frozen final.md",
+      "Bounded public primary source recaptures and supplementary pages saved under review sources",
+      "Own T3 current-run metadata only, with afterPosition beyond timeline returning no items"
+    ],
+    "prohibited_material_read": false,
+    "drafts_predecessors_other_cases_helpers_reviews_read": false,
+    "candidate_hash_or_grade_artifacts_modified": false,
+    "repo_canon_worknodes_modified": false,
+    "downloaded_code_executed": false,
+    "application_tests_executed": false,
+    "delegation_used": false,
+    "own_goal_created": false,
+    "pending_children": 0,
+    "provenance": "Source identities and capture indices were treated as untrusted claims; direct primary text and fresh public corroboration establish source facts. Supplemental sources repair reviewer evidence only, not the candidate artifact.",
+    "public_capture_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/public-checks/index.json",
+    "derived_provenance": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/sources/derived-provenance.json"
+  },
+  "deadline": {
+    "provided_deadline": "2026-10-07T20:50:25.427292+00:00",
+    "actual_t3_requested_at": "2026-10-07T20:30:38.033Z",
+    "actual_t3_started_at": "2026-10-07T20:30:40.838Z",
+    "twenty_minute_deadline_from_actual_request": "2026-10-07T20:50:38.033Z",
+    "effective_deadline": "2026-10-07T20:50:25.427292+00:00",
+    "rule": "Earlier of supplied absolute deadline and actual T3 requestedAt +20 minutes; includes startup/services/writing/delivery.",
+    "expired": false
+  },
+  "review_written_at": "2026-10-07T20:45:07.956561+00:00",
+  "artifact_verification": {
+    "all_json_parse": true,
+    "unique_claim_ids": 46,
+    "evidence_ids": 22,
+    "cross_references_resolve": true,
+    "derived_locator_ranges_in_bounds": true,
+    "all_primary_raw_hashes_verified": true,
+    "candidate_sources_index_final_immutable_rechecked": true,
+    "checked_at": "2026-10-07T20:45:07.956561+00:00",
+    "native_application_tests": 0
+  }
+}

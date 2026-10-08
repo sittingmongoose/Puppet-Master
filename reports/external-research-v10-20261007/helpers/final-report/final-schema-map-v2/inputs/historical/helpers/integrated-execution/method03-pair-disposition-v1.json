@@ -1,0 +1,131 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-METHOD-03",
+  "record_at": "2026-10-07T20:31:12.875146+00:00",
+  "status": "pair_assessed_terminal_both_SourceFAIL",
+  "all_candidate_tasks_quiet": true,
+  "all_review_tasks_quiet": true,
+  "both_exact_full_finals_nativecomplete_frozen": true,
+  "paired_candidate_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method03-pair-freeze.json",
+  "arms": {
+    "control": {
+      "source_judgment": "FAIL",
+      "counts": {
+        "complete_scope_count": 50,
+        "assessed_count": 50,
+        "unassessed_count": 0,
+        "original_obligations": {
+          "complete_scope_count": 6,
+          "assessed_count": 6,
+          "unassessed_count": 0
+        },
+        "plan_decisions": {
+          "complete_scope_count": 29,
+          "assessed_count": 29,
+          "unassessed_count": 0
+        },
+        "owner_product_decisions": {
+          "complete_scope_count": 15,
+          "assessed_count": 15,
+          "unassessed_count": 0
+        },
+        "axes": {
+          "complete_scope_count": 6,
+          "assessed_count": 6,
+          "unassessed_count": 0
+        },
+        "consequential_check_groups": {
+          "complete_scope_count": 28,
+          "assessed_count": 28,
+          "unassessed_count": 0
+        },
+        "scientific_critic_findings": {
+          "complete_scope_count": 7,
+          "assessed_count": 7,
+          "unassessed_count": 0,
+          "preserved_count": 7
+        },
+        "material_error_count": 2,
+        "nonmaterial_citation_limitations": 3
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T20:03:15.806Z",
+      "review_startedAt": "2026-10-07T20:03:16.592Z",
+      "review_completedAt": "2026-10-07T20:30:29.414Z",
+      "review_delivery_frozenAt": "2026-10-07T20:30:47.213709+00:00",
+      "review_dispatch_to_delivery_seconds": 1633.608,
+      "source_correct_usable_delivery": null,
+      "source_correct_usable_latency": null,
+      "usage_billing_unknown": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      },
+      "full_scope_assessed": true
+    },
+    "treatment": {
+      "source_judgment": "FAIL",
+      "counts": {
+        "obligations_total": 52,
+        "obligations_complete": 52,
+        "obligations_assessed": 52,
+        "obligations_unassessed": 0,
+        "original_O_total": 6,
+        "original_O_complete": 6,
+        "original_O_assessed": 6,
+        "original_O_unassessed": 0,
+        "plan_clauses_total": 31,
+        "plan_clauses_complete": 31,
+        "plan_clauses_assessed": 31,
+        "plan_clauses_unassessed": 0,
+        "plan_parents_total": 6,
+        "plan_parents_assessed": 6,
+        "owner_decisions_total": 15,
+        "owner_decisions_complete": 15,
+        "owner_decisions_assessed": 15,
+        "owner_decisions_unassessed": 0,
+        "axes_total": 6,
+        "axes_complete": 6,
+        "axes_assessed": 6,
+        "axes_unassessed": 0,
+        "consequential_checks_total": 25,
+        "consequential_checks_complete": 25,
+        "consequential_checks_assessed": 25,
+        "consequential_checks_unassessed": 0,
+        "criticism_dispositions_total": 9,
+        "criticism_dispositions_assessed": 9,
+        "criticism_dispositions_visible_in_final": 9,
+        "material_error_count": 3
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T20:03:39.919Z",
+      "review_startedAt": "2026-10-07T20:03:40.444Z",
+      "review_completedAt": "2026-10-07T20:30:12.261Z",
+      "review_delivery_frozenAt": "2026-10-07T20:30:40.057590+00:00",
+      "review_dispatch_to_delivery_seconds": 1592.342,
+      "source_correct_usable_delivery": null,
+      "source_correct_usable_latency": null,
+      "usage_billing_unknown": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      },
+      "full_scope_assessed": true
+    }
+  },
+  "economic_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-03-terminal-economics-v1.json",
+  "lifecycle_and_timing_limits": [
+    "Both finals missing active snapshot; exact terminal projections nativecomplete retained in linked annotations, lifecycle HOLD separate",
+    "Control critic original stage delivery overrun/expiry limit retained"
+  ],
+  "selection_basis": "DIAGNOSTIC_UNQUALIFIED; both fail, no source-correct quality/speed win",
+  "all_original_costs_and_failures_retained": true,
+  "no_bestof_regrade_or_Sol_rescue": true,
+  "exhaustive_opportunity_recall_claimed": false
+}

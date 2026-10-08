@@ -1,0 +1,34 @@
+{
+  "schema": "ER10_GLM_PASSIVE_NATIVE_TERMINAL_V2",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_347e14a4-47e0-4b2d-a4fd-30bb3f23da0e/state.json",
+  "createdAt": 1791414862859,
+  "native_status": "complete",
+  "same_identity_objective_verified": false,
+  "exact_assignment_objective_terminal_verified": true,
+  "original_activation_verified": false,
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T23:24:20.196130+00:00",
+    "entries": [
+      {
+        "stage": "D-M07-B/common/fresh-untrusted-seed-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M07-B--common--fresh-untrusted-seed-v3--28a646ad6fc89fb6.json",
+        "sha256": "28a646ad6fc89fb6363c11b6882cd1fb4220b3704d63b77fb3744d6860c57302",
+        "bytes": 16347,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "raw_current_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/native_terminal_current_raw.json",
+  "raw_current_sha256": "3febf43e202aed442964f097cf92dea14d506339dba2eb29b46d584b747368c7",
+  "vendor_backend_activation": false,
+  "ACP_alias_binding": "unknown",
+  "actual_create_get_update_responses": "missing; installed native state carrier only",
+  "host_capture_seconds": null,
+  "billing": null
+}
