@@ -245,28 +245,13 @@
   const isAppSound = s => !!(s && s.o55 && typeof s.o55 === 'object' && s.o55.kit);
   const appCollection = s => s.o55.kit === 'nier' ? APP_NIER : APP_SETUP;
   const appStyle = c => typeof c.style === 'string' && c.style.trim() ? c.style.trim() : c.kit === 'nier' ? APP_NIER : `${APP_SETUP} · ${lookName(c.kit)}`;
-  /* The moment's name and the shared "plays during setup" line are SOUND's copy (soundLibrary.events / usedBy).
-     Read them when the card is drawn, so a new moment does not depend on a second table here. */
-  const APP_WHEN_FALLBACK = 'Plays during setup and the Guided Tour';
-  function appCopy(key) {
-    const o = window.O55; if (!o) return null;
-    if (typeof o.tx === 'function') { const node = o.tx(key); return node == null ? null : node; }
-    if (typeof o.t !== 'function') return null;
-    const text = o.t(key); return text == null || text === key ? null : text;
-  }
-  function appEventPhrase(event) {
-    const events = appCopy('soundLibrary.events');
-    if (events && typeof events === 'object' && !Array.isArray(events) && typeof events[event] === 'string') return events[event];
-    const o = window.O55; if (!o || typeof o.t !== 'function' || !event) return '';
-    const key = `soundLibrary.events.${event}`; const text = o.t(key);
-    return typeof text === 'string' && text && text !== key ? text : '';
-  }
-  function appWhen(s) {
-    const phrase = appEventPhrase(s && s.o55 ? s.o55.event : '');
-    const usedNode = appCopy('soundLibrary.usedBy');
-    const used = typeof usedNode === 'string' && usedNode.trim() ? usedNode.trim() : APP_WHEN_FALLBACK;
-    return phrase ? `${phrase}. ${used}` : used;
-  }
+  /* The moment a sound plays at, in plain words, from SOUND's catalog (its `about`, else `description`): the card's
+     own line. The group around the card already says the set plays in setup and the tour, so without it the card
+     says nothing more (never the name again). */
+  const appAbout = c => { const v = c ? (typeof c.about === 'string' ? c.about : typeof c.description === 'string' ? c.description : '') : ''; return v.trim(); };
+  /* Inside its group the card drops the look's prefix the catalog name carries ("NieR · Tap" reads "Tap" under NieR);
+     the stored name, which alerts pick by, keeps it, and so do the event picker and the card's spoken label. */
+  const appShortName = s => { const pre = `${lookName(s.o55.kit)} · `; const n = String(s.name || ''); return n.startsWith(pre) && n.length > pre.length ? n.slice(pre.length) : n; };
   /* The catalog's length is in seconds (a value over 20 is read as milliseconds); the library writes m:ss.s. */
   const secondsOf = v => { if (typeof v === 'number' && Number.isFinite(v)) return v > 20 ? v / 1000 : v; const m = /^(?:(\d+):)?(\d+(?:\.\d+)?)$/.exec(String(v || '').trim()); return m ? Number(m[1] || 0) * 60 + Number(m[2]) : 0; };
   const clockOf = secs => { const t = Math.max(.1, Math.round((Number(secs) || .5) * 10) / 10); return `${Math.floor(t / 60)}:${(t % 60 < 10 ? '0' : '') + (t % 60).toFixed(1)}`; };
@@ -300,11 +285,11 @@
       if (!s) {
         s = { id, name: '', source: APP_SOURCE, style, duration, format: 'Generated', volume: 70, o55: {} };
         s.name = appName(from, s); n.sounds.push(s);
-        Object.assign(s.o55, { id: String(c.id), kit: String(c.kit), event: String(c.event || ''), variant: c.variant == null ? null : c.variant, featured: c.featured !== false, name: s.name, from });
+        Object.assign(s.o55, { id: String(c.id), kit: String(c.kit), event: String(c.event || ''), variant: c.variant == null ? null : c.variant, featured: c.featured !== false, name: s.name, from, about: appAbout(c) });
       } else {
         const o = s.o55 && typeof s.o55 === 'object' ? s.o55 : (s.o55 = {});
         if (o.from !== from && s.name === o.name) { const next = appName(from, s); events().forEach(e => { if (e.sound === s.name) e.sound = next; }); s.name = next; o.name = next; }
-        Object.assign(o, { id: String(c.id), kit: String(c.kit), event: String(c.event || ''), variant: c.variant == null ? null : c.variant, featured: c.featured !== false, from });
+        Object.assign(o, { id: String(c.id), kit: String(c.kit), event: String(c.event || ''), variant: c.variant == null ? null : c.variant, featured: c.featured !== false, from, about: appAbout(c) });
         s.style = style; s.duration = duration; s.source = APP_SOURCE; s.format = 'Generated';
       }
       if (Array.isArray(c.bars) && c.bars.length) s.bars = c.bars.slice(0, 18).map(v => Math.max(4, Math.min(24, Math.round(Number(v) || 0))));
@@ -653,24 +638,27 @@
   }
   /* Library card: play + name + menu, source tag + length, "Used by …" + Use for events… */
   /* A setup or tour sound uses the same card. The group heading (or the look choice) already names the look, so the
-     card keeps the sound's name and does not repeat the look as a tag. It is marked as a demonstration tone, and its
-     first line names the moment from O55's copy before which alerts use it. */
+     card shows the sound's name without the look's prefix and does not repeat the look as a tag. It is marked as a
+     demonstration tone, and its line says when it plays (SOUND's catalog description, which wraps rather than being
+     cut) before which alerts use it. */
   function soundCard(s) {
     const app = isAppSound(s);
     const available = soundAvailable(s);
     const playing = state.soundPlaying === s.id;
     const used = eventsUsing(s).map(e => e.name);
-    const usedText = app ? appWhen(s) + (used.length ? ' · Used by ' + used.join(', ') : '') : used.length ? 'Used by ' + used.join(', ') : 'Not used yet';
+    const about = app && s.o55.about ? s.o55.about : '';
+    const usedText = about ? about + (used.length ? ' Used by ' + used.join(', ') + '.' : '') : used.length ? 'Used by ' + used.join(', ') : 'Not used yet';
+    const shown = app ? appShortName(s) : s.name;
     const missing = app ? APP_UNPLAYABLE : 'The uploaded file is missing. Choose Replace file from its menu to attach it again.';
     const disabled = available ? '' : ` aria-disabled="true" data-disabled-reason="${a(missing)}" data-pm-hover-label="${a(s.name)} is unavailable" data-pm-hover-detail="${app ? 'Its player did not load on this page.' : 'The uploaded file is missing.'}"`;
     const hover = available ? ` data-pm-hover-label="${playing ? 'Stop' : 'Play'} ${a(s.name)} preview" data-pm-hover-detail="${playing ? 'Stop this local preview.' : 'Preview this sound locally.'}"` : '';
     const meta = app ? `${h(durationText(s.duration))} · Demo tone` : `${PM51.tag(isBuiltInSound(s) ? styleOf(s) : sourceLabel(s))} · ${h(durationText(s.duration))}${!isBuiltInSound(s) && s.format ? ' · ' + h(String(s.format)) : ''}`;
     return `<div class="sound-row pm51-sound-card${playing ? ' is-playing' : ''}${available ? '' : ' is-unavailable'}" data-sound-row="${a(s.id)}">
       <button type="button" class="sound-play${playing ? ' is-playing' : ''}" data-action="play-sound" data-id="${a(s.id)}" aria-pressed="${playing ? 'true' : 'false'}" aria-label="${playing ? 'Stop' : 'Play'} ${a(s.name)} preview"${hover}${disabled}>${icon(playing ? 'volume' : 'play')}</button>
-      <span class="sound-copy"><strong>${h(s.name)}</strong>${available ? '' : PM51.status(app ? 'Cannot play here' : 'File missing', 'attention')}</span>
+      <span class="sound-copy"><strong>${h(shown)}</strong>${available ? '' : PM51.status(app ? 'Cannot play here' : 'File missing', 'attention')}</span>
       ${waveform(s)}
       <button type="button" class="icon-btn" data-action="pm51-notifications-sound-menu" data-id="${a(s.id)}" aria-label="Manage ${a(s.name)}" data-pm-hover-label="Manage ${a(s.name)}" data-pm-hover-detail="${app ? 'Rename it, or choose which events use it.' : 'Rename, replace the file, or choose which events use it.'}">${icon('more')}</button>
-      <span class="pm51-sound-lines"><span class="pm51-sound-meta">${meta}</span><span class="pm51-sound-used"><span class="pm51-sound-used-text" title="${a(usedText)}">${h(usedText)}</span>${PM51.link({ label: 'Use for events…', action: 'pm51-notifications-assign-open', data: { id: s.id } })}</span></span>
+      <span class="pm51-sound-lines"><span class="pm51-sound-meta">${meta}</span><span class="pm51-sound-used${about ? ' pm51-sound-about' : ''}"><span class="pm51-sound-used-text" title="${a(usedText)}">${h(usedText)}</span>${PM51.link({ label: 'Use for events…', action: 'pm51-notifications-assign-open', data: { id: s.id } })}</span></span>
     </div>`;
   }
   const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];

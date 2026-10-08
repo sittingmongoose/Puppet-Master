@@ -156,8 +156,9 @@
     '.pm6-chat-slash-item', '.pm6-fab-item', '.chat-thread-item', '.pm6-dash-catalog-item', '[role="menuitem"]', '[role="option"]:not([aria-disabled="true"])'].join(',');
   /* tabs and places a click chooses, where the brackets lock on (menu items close with their menu) */
   const CHOSEN_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm7u-navbtn, .domain-link, .side-link, .index-link, .page-index-title, .pm-segtab-item, .activity-bar .icon, .resource-row';
-  /* items in a horizontal strip: the cursor sits under them (a neighbour sits where the left side would be) */
-  const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode, .pm7u-range button';
+  /* items in a horizontal strip: the cursor sits under them (a neighbour sits where the left side would be); the look
+     menu's Adjust button shares its row with the NieR Mode checkbox, so it is one of them */
+  const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode, .pm7u-range button, .o55-looknier-adjust';
   const targetOf = e => (e && e.target && e.target.closest ? e.target.closest(CURSOR_SEL) : null);
   let cur = null, curT = null, curHide = 0;
   function curPlace(t) {
@@ -218,10 +219,14 @@
     }
   }
   function retOff() { retT = null; if (ret && ret.hasAttribute('data-on')) ret.removeAttribute('data-on'); }
+  /* a heading the onboarding window focuses itself (tabindex -1, so the next Tab starts there) is not a target: the
+     window brackets its own chosen card, and a reticle round a full-width heading framed the column, not the words */
+  const retSkip = t => t.getAttribute('tabindex') === '-1' && !!t.closest('#pm-o55-onboarding');
   function retFocus(e) {
     const t = e.target; if (!(t instanceof Element)) return;
     let fv = false; try { fv = t.matches(':focus-visible'); } catch (x) { fv = false; }
     if (!fv) return;
+    if (retSkip(t)) { if (!retLock) retOff(); return; }
     if (retLock) { window.clearTimeout(retLock); retLock = 0; }
     retT = t; retPlace(t);
   }
@@ -229,7 +234,7 @@
     window.setTimeout(() => {
       if (retLock) return;
       const a = document.activeElement;
-      let fv = false; try { fv = !!a && a !== document.body && a.matches(':focus-visible'); } catch (x) { fv = false; }
+      let fv = false; try { fv = !!a && a !== document.body && a.matches(':focus-visible') && !retSkip(a); } catch (x) { fv = false; }
       if (!fv) retOff(); else if (a !== retT) { retT = a; retPlace(a); }
     }, 0);
   }

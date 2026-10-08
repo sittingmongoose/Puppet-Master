@@ -25,5 +25,10 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr .pm51-sound-group-head > .
   #panel-settings .pm51-mgr .pm51-sound-group-count { margin-left: 26px; }
   #panel-settings .pm51-mgr .pm51-sound-group-body { padding: 10px; }
 }
+/* A setup or tour sound's line says when it plays (SOUND's catalog description): it wraps, two lines at most, instead
+   of being cut by Use for events…, which follows it and drops to its own line when the text needs the width. */
+#panel-settings .pm51-mgr .pm51-sound-grid .pm51-sound-used.pm51-sound-about { flex-wrap: wrap; align-items: baseline; row-gap: 3px; }
+#panel-settings .pm51-mgr .pm51-sound-grid .pm51-sound-about .pm51-sound-used-text { flex: 0 1 auto; white-space: normal; line-height: 1.4;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 /* NieR Mode's YoRHa headers part: the group title reads like the section titles above it. */
 html[data-o55-nier-parts~="headers"] #panel-settings .pm51-mgr .pm51-sound-group-title { text-transform: uppercase; letter-spacing: .16em; }

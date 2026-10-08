@@ -104,14 +104,37 @@ if (!Element.prototype.o55Animate) {
 const O55_ACCENT_TOKENS = ['--accent-soft', '--accent-glow', '--elev-hover', '--glass-glow-color', '--pm6-sb-thumb', '--pm6-sb-thumb-hover'];
 const o55AccentSet = new Set();
 const o55Hex3 = hex => { const x = String(hex || '').trim().replace('#', ''); const f = x.length === 3 ? x.split('').map(c => c + c).join('') : x; return f.length === 6 ? [0, 2, 4].map(i => parseInt(f.slice(i, i + 2), 16)) : null; };
+/* Reading a theme's own tokens is a getComputedStyle of <html>, which forces a style pass of the whole page; right
+   after a theme or NieR repaint that pass is the full restyle (measured 717 ms at Project created, films M4). So the
+   tokens are read only when an accent is chosen (they are what it replaces), once per painted theme (the cache below,
+   keyed by the attributes the theme sheets select on), and a pass that changes neither the theme nor the accent
+   touches nothing. With no accent chosen nothing is read: the swatch of the theme's own accent falls back to
+   --accent-primary, which is then the theme's own. */
+const o55ThemeTokens = new Map();
+let o55AccentSig = null;
+const o55ThemeKey = html => `${html.getAttribute('data-theme') || ''}|${html.getAttribute('data-o55-nier') || ''}|${html.getAttribute('data-contrast') || ''}`;
 function o55AccentTokens(html, chosen, light) {
   const st = html.style;
-  ['--accent-primary', '--accent-primary-rgb', '--accent-blue', '--accent-blue-rgb', ...O55_ACCENT_TOKENS].forEach(n => { if (o55AccentSet.has(n) || n === '--accent-primary' || n === '--accent-primary-rgb') st.removeProperty(n); });
-  o55AccentSet.clear();
-  const cs = getComputedStyle(html), themeHex = cs.getPropertyValue('--accent-primary').trim();
-  if (themeHex) st.setProperty('--o55-theme-accent', themeHex); else st.removeProperty('--o55-theme-accent');
   const acc = O55_ACCENTS[chosen], pick = acc ? acc[light ? 'light' : 'dark'] : null;
-  if (!pick) { html.removeAttribute('data-o55-accent'); st.removeProperty('--o55-on-accent'); return; }
+  const key = o55ThemeKey(html), sig = `${key}|${pick ? pick[0] : ''}`;
+  if (sig === o55AccentSig && (!pick || st.getPropertyValue('--accent-primary') === pick[0])) return;
+  o55AccentSig = sig;
+  /* drop what this function wrote (removing a property that is not there would still be a write) */
+  ['--accent-primary', '--accent-primary-rgb', ...o55AccentSet].forEach(n => { if (st.getPropertyValue(n)) st.removeProperty(n); });
+  o55AccentSet.clear();
+  if (!pick) {
+    if (html.hasAttribute('data-o55-accent')) html.removeAttribute('data-o55-accent');
+    ['--o55-on-accent', '--o55-theme-accent'].forEach(n => { if (st.getPropertyValue(n)) st.removeProperty(n); });
+    return;
+  }
+  let theme = o55ThemeTokens.get(key);
+  if (!theme) {
+    const cs = getComputedStyle(html);
+    theme = {}; ['--accent-primary', '--accent-blue', ...O55_ACCENT_TOKENS].forEach(n => { theme[n] = cs.getPropertyValue(n).trim(); });
+    o55ThemeTokens.set(key, theme);
+  }
+  const themeHex = theme['--accent-primary'];
+  if (themeHex) st.setProperty('--o55-theme-accent', themeHex); else st.removeProperty('--o55-theme-accent');
   const put = (n, v) => { st.setProperty(n, v); o55AccentSet.add(n); };
   put('--accent-primary', pick[0]); put('--accent-primary-rgb', pick[1]);
   const from = o55Hex3(themeHex), to = pick[1].split(',').map(Number);
@@ -119,11 +142,11 @@ function o55AccentTokens(html, chosen, light) {
     const hexRe = new RegExp(themeHex.replace(/[^#\w]/g, ''), 'ig');
     const rgbRe = new RegExp(`\\b${from[0]}\\s*,\\s*${from[1]}\\s*,\\s*${from[2]}\\b`, 'g');
     O55_ACCENT_TOKENS.forEach(n => {
-      const v = cs.getPropertyValue(n).trim(); if (!v) return;
+      const v = theme[n]; if (!v) return;
       const next = v.replace(hexRe, pick[0]).replace(rgbRe, to.join(','));
       if (next !== v) put(n, next);
     });
-    const blue = o55Hex3(cs.getPropertyValue('--accent-blue'));
+    const blue = o55Hex3(theme['--accent-blue']);
     if (blue && blue.join() === from.join()) { put('--accent-blue', pick[0]); put('--accent-blue-rgb', pick[1]); }
   }
   html.setAttribute('data-o55-accent', String(chosen).toLowerCase());

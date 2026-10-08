@@ -37,12 +37,14 @@
                           the Settings script runs hear it, so read on() when you start). 'on' and 'off' fire right
                           after the repaint, inside the transition and under its cover, so a part can swap its own
                           scene there; the transition's promise settles after.
-     setTransition(fn) -> registers async fn(repaint, { on, reason, within?, sound? }) run when NieR Mode turns on or
-                          off; it must call repaint() once (the theme changes inside it) and may animate before and
-                          after. within: an element the moment should play inside (the onboarding window, which holds
-                          the app beneath still); sound: false when the caller plays its own. The default calls
-                          repaint() at once. A transition that throws or never calls repaint() still repaints when it
-                          settles. Passing null restores the default. Returns the previous function.
+     setTransition(fn) -> registers async fn(repaint, info) run when NieR Mode turns on or off; it must call repaint()
+                          once (the theme changes inside it, and onChange reports 'on' / 'off' at once, still under the
+                          cover) and may animate before and after. info: { on, dir: 'on' | 'off', reason, within?,
+                          sound?, from?, lines?, onReveal? }. within: an element the moment plays inside (the onboarding
+                          window, which holds the app beneath still); sound: false when the caller plays its own; from,
+                          lines and onReveal come from preview(patch, opts) (see there). The default calls repaint() at
+                          once. A transition that throws or never calls repaint() still repaints when it settles.
+                          Passing null restores the default. Returns the previous function.
      replay()          -> runs the registered transition around a repaint that changes nothing (the manager's "Play
                           reboot moment"); resolves when it is done
      notePick(family)  -> a family was picked somewhere while NieR Mode is on: shows "Your theme is saved. It shows
@@ -59,9 +61,13 @@
                           exactly as if stored (same attributes, same transition); writes nothing to Settings. null
                           clears it and repaints from the stored values. opts: within (the element every transition
                           plays inside while this preview lasts; null for none), sound (false: this change's transition
-                          is quiet), instant (true: this change repaints at once, as a resumed onboarding does). Returns
-                          a promise that settles after the repaint. A Project switch keeps it (every reader asks the
-                          preview first), which is how the look survives Creating.
+                          is quiet), instant (true: this change repaints at once, as a resumed onboarding does), and for
+                          a switch's moment inside the window (kit.d/19-nier-parts.js, hero H1): from (the control, or a
+                          function returning it, the cover grows from and folds back into), lines ([{ text, stamp }]
+                          for the check list; the cover words its own when absent) and onReveal(phase) ('reveal' as the
+                          window shows again, 'gone' when the cover has left). Returns a promise that settles at 'gone'
+                          (after the repaint). A Project switch keeps it (every reader asks the preview first), which is
+                          how the look survives Creating.
      previewing()      -> a copy of the preview { on?, parts?, background? } (loose: true once lingering), or null
      commitPreview()   -> writes the preview's values that differ from the CURRENT Project's through the real settings
                           path in one batch, then clears the preview with no repaint; returns true, or false (the
@@ -71,7 +77,13 @@
      store(kind)       -> { kind, on(), set(on), parts(), setParts(keys), background(), setBackground(label),
                           BACKGROUNDS, onChange(cb) }; kind 'live' commits through Settings, kind 'preview' previews
                           (the Plug-in Chips editor reads and writes through one of these); on() is the request
-   A live write while a preview is shown moves the preview too, so what is painted is always the latest request. */
+   A live write while a preview is shown moves the preview too, so what is painted is always the latest request; a live
+   write to a NieR row while a preview lingers saves what is painted (the preview's other rows with it), so NieR Mode
+   never turns off under an edit made on what was shown.
+
+   o55NierCopy(key, fallback, vars) reads the build's copy (src/copy.d/60-nier-settings.json, merged into
+   window.O55_COPY) when it is there, so every NieR Settings word lives in copy; the literal is only the fallback for a
+   page without the onboarding layer. */
 const O55_NIER_IDS = ['general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'];
 const O55_NIER_PARTS = Object.freeze([
   ['Look', 'Square hairlines', 'square'], ['Look', 'Menu cursor', 'cursor'], ['Look', 'YoRHa headers', 'headers'],
@@ -91,6 +103,14 @@ const o55NierByKey = new Map(O55_NIER_PARTS.map(p => [p.key, p.label]));
 const O55_NIER_LABEL = 'NieR: Automata';
 /* general.visual.nier-background's options, in canon order (Plans/settings_inventory.json) */
 const O55_NIER_BACKGROUNDS = Object.freeze(['Parchment', 'City Ruins', 'The Bunker', 'Desert', 'Forest Castle', 'Amusement Park', 'Flooded City', 'Follow the page']);
+/* copy: read when it is used (the copy table loads after the Settings scripts) */
+function o55NierCopy(key, fallback, vars) {
+  let node = window.O55_COPY || (window.O55 && window.O55.copy) || null;
+  for (const part of String(key).split('.')) { if (node == null) break; node = node[part]; }
+  let text = typeof node === 'string' ? node : String(fallback == null ? '' : fallback);
+  if (vars) text = text.replace(/\{(\w+)\}/g, (m, k) => (vars[k] == null ? m : String(vars[k])));
+  return text;
+}
 
 /* ---------- state ---------------------------------------------------------------------------------------------- */
 /* What the setting asks for, and what is painted. They differ only while a transition runs (or before the Settings
@@ -188,7 +208,8 @@ function o55NierPaint(want) {
   O55_NIER_OWNS.forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); });
   if (typeof o55SyncDependents === 'function') o55SyncDependents('general.visual.theme');
 }
-/* opts: within (the element the transition plays inside), sound (false: the caller plays its own) */
+/* opts: within (the element the transition plays inside), sound (false: the caller plays its own), and the in-window
+   moment's from, lines and onReveal (preview opts) */
 function o55NierRun(reason, opts) {
   const o = opts || o55NierNextRun || {};
   if (!opts) o55NierNextRun = null;
@@ -196,12 +217,16 @@ function o55NierRun(reason, opts) {
     const want = o55NierWanted();
     if (want === o55NierIsPainted()) { o55NierWriteAttrs(); o55NierEmit(); return; }
     let done = false;
-    /* the latest request is painted, so a change asked for while this transition plays is never undone by it */
-    const repaint = () => { if (done) return; done = true; o55NierPaint(o55NierWanted()); };
-    const info = { on: want, reason: reason || (want ? 'on' : 'off') };
+    /* the latest request is painted, so a change asked for while this transition plays is never undone by it; the
+       parts hear 'on' / 'off' at once, so they install (or leave) under the transition's cover */
+    const repaint = () => { if (done) return; done = true; o55NierPaint(o55NierWanted()); o55NierEmit(); };
+    const info = { on: want, dir: want ? 'on' : 'off', reason: reason || (want ? 'on' : 'off') };
     const within = o.within || o55NierWithin();
     if (within) info.within = within;
     if (o.sound === false) info.sound = false;
+    if (o.from) info.from = o.from;
+    if (Array.isArray(o.lines) && o.lines.length) info.lines = o.lines.slice();
+    if (typeof o.onReveal === 'function') info.onReveal = o.onReveal;
     try { await o55NierTransition(repaint, info); }
     catch (e) { /* the transition is decoration; the repaint is not */ }
     finally { repaint(); o55NierEmit(); }
@@ -274,10 +299,31 @@ commitSettingValue = function (id, value) {
 function o55NierPreviewDrop() { o55NierPv = null; o55NierPvLoose = false; o55NierPvWithin = null; o55NierPvProject = ''; }
 function o55NierFollowWrite(id, value) {
   if (!o55NierPv) return;
+  if (o55NierPvLoose && O55_NIER_IDS.includes(id)) { o55NierAdopt(id); return; }
   if (o55NierPvLoose) { o55NierPreviewDrop(); o55NierRun(); return; }
   if (id === 'general.visual.nier-mode') o55NierPv.on = o55On(value);
   else if (id === 'general.visual.nier-parts') o55NierPv.parts = o55NierKeys((Array.isArray(value) ? value : []).map(l => o55NierByLabel.get(String(l))));
   else if (id === 'general.visual.nier-background') o55NierPv.background = String(value);
+}
+
+/* A live edit of a NieR row while the onboarding's preview lingers (the title-bar Adjust NieR look, its toggle) was made
+   on what is painted, and the live store shows the preview: so the edit saves what is painted. The row just written
+   is kept; the preview's other rows that differ from the stored ones are written with it in one batch, then the
+   preview goes and nothing repaints (what is painted is what is stored). Never a list derived from the preview saved
+   while its switch is dropped. */
+function o55NierAdopt(id) {
+  const pv = o55NierPv; o55NierPreviewDrop();
+  const writes = {};
+  if (id !== 'general.visual.nier-mode' && typeof pv.on === 'boolean' && pv.on !== o55NierStoredOn()) writes['general.visual.nier-mode'] = pv.on;
+  if (id !== 'general.visual.nier-parts' && Array.isArray(pv.parts) && pv.parts.join(' ') !== o55NierStoredParts().join(' ')) writes['general.visual.nier-parts'] = o55NierLabels(pv.parts);
+  if (id !== 'general.visual.nier-background' && pv.background && pv.background !== o55NierStoredBackground()) writes['general.visual.nier-background'] = pv.background;
+  const ids = Object.keys(writes);
+  if (ids.length && commitSettingValues(writes)) {
+    saveState();
+    ids.forEach(w => { if (root.querySelector(`[id="setting-${cssEscape(w)}"]`)) refreshSettingRow(w); if (typeof o55Notify === 'function') o55Notify(w, writes[w]); });
+  }
+  /* a switch that now differs from the paint runs its transition; otherwise the attributes follow and listeners hear */
+  if (o55NierWanted() !== o55NierIsPainted()) o55NierRun(); else { o55NierWriteAttrs(); o55NierEmit(); }
 }
 
 /* ---------- the onboarding preview ------------------------------------------------------------------------------ */
@@ -300,7 +346,7 @@ function o55NierPreview(patch, opts) {
   /* parts and background show at once; a changed switch runs the transition */
   o55NierWriteAttrs(); o55NierEmit();
   if (o55NierWanted() === o55NierIsPainted()) return Promise.resolve(true);
-  return o55NierRun(undefined, { within, sound: o.sound }).then(() => true);
+  return o55NierRun(undefined, { within, sound: o.sound, from: o.from, lines: o.lines, onReveal: o.onReveal }).then(() => true);
 }
 function o55NierPreviewing() {
   if (!o55NierPv) return null;
@@ -326,7 +372,8 @@ function o55NierCommitPreview() {
     ids.forEach(id => { refreshSettingRow(id); if (typeof o55Notify === 'function') o55Notify(id, writes[id]); });
   }
   o55NierPreviewDrop();
-  o55LookKey = ''; o55ApplyLook();
+  /* the look pass runs only if a stored value changed (its key holds them); the attributes follow either way */
+  o55ApplyLook();
   return true;
 }
 function o55NierLinger() {
