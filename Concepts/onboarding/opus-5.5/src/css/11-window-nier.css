@@ -297,6 +297,7 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55nw-stage { display: block; posit
 /* -- Pod companion [pod]: resting at the corner, hovering in steps; it steps away while O55.nierFx's Pod speaks -- */
 html[data-o55-nier-parts~="pod"] #pm-o55-onboarding .o55nw-pod { display: block; right: 18px; top: 36px; width: 40px; height: 52px; }
 html[data-o55fx-pod] #pm-o55-onboarding .o55nw-pod { visibility: hidden; }
+html[data-o55fx-pod] #pm-o55-onboarding .o55nw-pod * { animation-play-state: paused !important; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55nw-pod { top: 18px; right: 14px; }
 .o55nw-pod-bob, .o55nw-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
 .o55nw-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
