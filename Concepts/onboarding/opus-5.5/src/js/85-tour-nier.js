@@ -115,20 +115,36 @@
 
   /* ------------------------------------------------------------------ the engine's style under NieR */
   /* where Pod 042 hovers to reach el: 64 px above its middle (at least 47.5 above its top edge), its string lowered
-     onto the top edge; with under 80 px of room above, beside it to the right (else the left), its string run across */
-  const SHAFT = 15, ARM = 17;
+     onto the top edge; with under 80 px of room above, beside it to the right (else the left), its string run across.
+     A hover whose body would sit on the step's callout (the Chat icon's side hover lands on the kicker) moves below
+     the target instead, or to the free side, and the string runs up onto the target's bottom edge. */
+  const SHAFT = 15, ARM = 17, CROWN = 26;
+  const podBox = (p) => ({ left: p.x - 22, top: p.y - 28, right: p.x + 22, bottom: p.y + 28 });
+  const boxHits = (a, b) => !!(a && b && b.right > b.left && b.bottom > b.top && !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom));
   function hoverFor(el, c) {
     if (!el || typeof el.getBoundingClientRect !== 'function') return null;
     const r = el.getBoundingClientRect(); if (!r.width && !r.height) return null;
-    if (r.top >= 80) return { x: c.x, y: Math.max(30, Math.min(c.y - 64, r.top - 47.5)) };
-    const right = Math.max(c.x + 64, r.right + 41);
-    if (right + 26 <= innerWidth) return { x: right, y: c.y };
-    return { x: Math.min(c.x - 64, r.left - 41), y: c.y };
+    const co = calloutEl(), cr = co ? co.getBoundingClientRect() : null;
+    const above = r.top >= 80 ? { x: c.x, y: Math.max(30, Math.min(c.y - 64, r.top - 47.5)) } : null;
+    const rightX = Math.max(c.x + 64, r.right + 41);
+    const right = rightX + 26 <= innerWidth ? { x: rightX, y: c.y } : null;
+    const left = { x: Math.min(c.x - 64, r.left - 41), y: c.y };
+    const below = { x: c.x, y: Math.min(innerHeight - 36, Math.max(c.y + 64, r.bottom + 47.5)) };
+    const clear = (p) => !!(p && p.x >= 26 && p.y >= 30 && p.x <= innerWidth - 26 && p.y <= innerHeight - 36 && !boxHits(podBox(p), cr));
+    if (clear(above)) return above;
+    const side = right || left;
+    if (clear(side)) return side;
+    if (clear(below)) return below;
+    if (right && side !== left && clear(left)) return left;
+    if (above && !boxHits(podBox(above), cr)) return above;
+    if (!boxHits(podBox(below), cr)) return below;
+    return above || side;
   }
-  /* the string from where the Pod hovers to el: its direction and its length */
+  /* the string from where the Pod hovers to el: its direction and its length. Below the target, it runs up from the crown. */
   function stringTo(el, at) {
     const r = el.getBoundingClientRect();
     if (at.y + SHAFT <= r.top + 1) return { dir: 'down', len: r.top - (at.y + SHAFT) };
+    if (at.y - CROWN >= r.bottom - 1) return { dir: 'up', len: (at.y - CROWN) - r.bottom };
     if (at.x - ARM >= r.right - 1) return { dir: 'left', len: (at.x - ARM) - r.right };
     return { dir: 'right', len: r.left - (at.x + ARM) };
   }
@@ -341,7 +357,11 @@
   const frameEl = () => st.root && st.root.querySelector('.o55t-nframe');
   const cornerDir = (c) => [c.classList.contains('o55t-tl') || c.classList.contains('o55t-bl') ? -1 : 1, c.classList.contains('o55t-tl') || c.classList.contains('o55t-tr') ? -1 : 1];
   function frameStop() { if (frameT) { frameT.cancel(); frameT = null; } frameAnims.forEach((a) => { try { a.cancel(); } catch (_) {} }); frameAnims = []; }
-  function frameOff() { frameStop(); if (st.root) st.root.removeAttribute('data-nctl'); }
+  function frameOff() {
+    frameStop();
+    const f = frameEl(); if (f) f.querySelectorAll('.o55t-ntag-l').forEach((t) => { t.style.left = ''; t.style.top = ''; });
+    if (st.root) st.root.removeAttribute('data-nctl');
+  }
   function frameOn() {
     const f = frameEl(); if (!f || !has('brackets')) return;
     frameStop();
@@ -349,7 +369,7 @@
     const L = f.querySelector('.o55t-ntag-l .o55t-ntag-t'), R = f.querySelector('.o55t-ntag-r .o55t-ntag-t');
     L.textContent = T('frame.inControl'); R.textContent = T('frame.stop');
     st.root.setAttribute('data-nctl', 'on');
-    tagCover(st.target);
+    parkTag();
     if (!still() && has('slice')) {
       f.querySelectorAll('.o55t-nfc').forEach((c) => {
         const [sx, sy] = cornerDir(c);
@@ -366,6 +386,7 @@
     const tag = f.querySelector('.o55t-ntag-l');
     tag.querySelector('.o55t-ntag-t').textContent = T('frame.handBack');
     tag.removeAttribute('data-cover');
+    parkTag();
     if (!still()) {
       if (has('slice')) {
         f.querySelectorAll('.o55t-nfc').forEach((c) => {
@@ -378,6 +399,54 @@
     }
     frameT = M.after(still() ? 1200 : 600, () => { frameT = null; frameOff(); });
     return true;
+  }
+  /* "Pod 042 · In control" keeps its top-left place unless that place covers the app's title-bar wordmark. Then it
+     moves to the first spot that misses the wordmark, the project chip, the page tabs, the other tag, the callout
+     and the target. If none does, it stands down rather than sit on the name. */
+  function parkTag() {
+    const f = frameEl(); if (!f) return;
+    const tag = f.querySelector('.o55t-ntag-l');
+    if (tag) { tag.style.left = ''; tag.style.top = ''; }
+    tagCover(st.target);
+    if (!tag || tag.offsetWidth < 8) return;
+    const word = document.querySelector('.title-bar .app-name');
+    const wr = word && word.getBoundingClientRect();
+    if (!wr || wr.width < 2) return;
+    const hits = (rect, box) => !!(box && box.right > box.left && box.bottom > box.top && !(rect.right < box.left - 4 || rect.left > box.right + 4 || rect.bottom < box.top - 4 || rect.top > box.bottom + 4));
+    const home = tag.getBoundingClientRect();
+    if (!hits(home, wr)) return;
+    const w = home.width, h = home.height, rectAt = (s) => ({ left: s.left, top: s.top, right: s.left + w, bottom: s.top + h });
+    const obstacles = [wr];
+    const add = (el) => { const r = el && el.getBoundingClientRect && el.getBoundingClientRect(); if (r && r.width > 1 && r.height > 1) obstacles.push(r); };
+    add(document.querySelector('.title-bar #projectMenuWrap'));
+    add(document.querySelector('.title-bar .page-tabs'));
+    add(f.querySelector('.o55t-ntag-r'));
+    add(calloutEl());
+    add(st.root && st.root.querySelector('.o55t-bar'));
+    add(document.getElementById('activityBar'));
+    add(st.target);
+    const bar = document.querySelector('.title-bar'), br = bar && bar.getBoundingClientRect();
+    const rt = f.querySelector('.o55t-ntag-r'), rr = rt && rt.getBoundingClientRect();
+    const co = calloutEl(), cr = co && co.getBoundingClientRect();
+    const spots = [];
+    if (br && br.height) {
+      spots.push({ left: Math.round(wr.right + 12), top: 9 });
+      if (rr && rr.width) spots.push({ left: Math.round(rr.left - w - 12), top: 9 });
+      spots.push({ left: 32, top: Math.round(br.bottom + 8) });
+      spots.push({ left: Math.round(wr.right + 12), top: Math.round(br.bottom + 8) });
+    }
+    if (cr && cr.width && br && br.height) spots.push({ left: Math.round(cr.right + 12), top: Math.round(br.bottom + 8) });
+    const onScreen = (s) => s.left >= 8 && s.top >= 6 && s.left + w <= innerWidth - 8 && s.top + h <= innerHeight - 8;
+    const clean = spots.find((s) => onScreen(s) && !obstacles.some((o) => hits(rectAt(s), o)));
+    const offName = spots.find((s) => onScreen(s) && !hits(rectAt(s), wr));
+    const spot = clean || offName;
+    if (!spot) { tag.setAttribute('data-cover', ''); return; }
+    tag.style.left = spot.left + 'px'; tag.style.top = spot.top + 'px';
+    tagCover(st.target);
+    if (!clean) {
+      const now = tag.getBoundingClientRect();
+      if (hits(now, wr)) tag.setAttribute('data-cover', '');
+    }
   }
   /* a tag that would sit over what is being shown or pressed stands down */
   function tagCover(...els) {
@@ -445,8 +514,8 @@
     const n = npod(); if (n) n.removeAttribute('data-str');
   }
   /* the knot's offset back toward the Pod when the string is shorter by `by` px (for the lowering and the lift) */
-  const knotBack = (dir, by) => (dir === 'down' ? `0px ${-by}px` : dir === 'left' ? `${by}px 0px` : `${-by}px 0px`);
-  const lineScale = (dir, f) => (dir === 'down' ? `1 ${f}` : `${f} 1`);
+  const knotBack = (dir, by) => (dir === 'down' ? `0px ${-by}px` : dir === 'up' ? `0px ${by}px` : dir === 'left' ? `${by}px 0px` : `${-by}px 0px`);
+  const lineScale = (dir, f) => (dir === 'down' || dir === 'up' ? `1 ${f}` : `${f} 1`);
   function stringShow(dir, len, grow) {
     const e = strEls(); if (!e) return;
     stringOff();
