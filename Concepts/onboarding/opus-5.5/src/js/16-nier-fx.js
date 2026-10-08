@@ -272,6 +272,52 @@
     return c;
   }
 
+  /* ------------------------------------------------------------------ the read phase */
+  /* Geometry is read where the frame has just computed it: in a ResizeObserver callback, which the browser runs after
+     the frame's own style and layout and before its paint. measure(fn) queues fn there (a hidden 1 px probe under
+     <html> is observed again, so the next frame's observer step calls back): a read there costs no style pass of its
+     own, whatever another script left dirty is never paid inside an effect, and what fn writes is drawn in that same
+     frame. Called during an animation-frame callback (the window's skin places its Pod and draws a screen there) fn
+     runs later in that frame; from a timer, in the next one. Nothing is re-observed inside an observer callback (a
+     queue made there is armed in the next animation frame), so the browser's resize loop never skips a notification. */
+  const reads = [];
+  let probe = null, probeObs = null, probeArmed = false, probeT = null, inRead = false;
+  const report = (e) => { try { (window.reportError || console.error)(e); } catch (_) { /* nowhere to report */ } };
+  function flush() {
+    if (!probeArmed) return;
+    probeArmed = false;
+    probeObs.unobserve(probe);
+    if (probeT != null) { M.real.clearTimeout(probeT); probeT = null; }
+    const list = reads.splice(0);
+    inRead = true;
+    for (const fn of list) { try { fn(); } catch (e) { report(e); } }
+    inRead = false;
+    portRects.clear();
+    if (reads.length) raf(arm); else probe.remove();
+  }
+  function arm() {
+    if (probeArmed || !reads.length) return;
+    probeArmed = true;
+    if (!probe) {
+      probe = document.createElement('i');
+      probe.setAttribute('aria-hidden', 'true');
+      probe.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;visibility:hidden;pointer-events:none;contain:strict';
+      probeObs = new ResizeObserver(flush);
+    }
+    if (!probe.isConnected) html.appendChild(probe);
+    probeObs.observe(probe);
+    /* a frame that never comes (a hidden page): read anyway */
+    probeT = M.real.setTimeout(() => { probeT = null; flush(); }, 500);
+  }
+  function measure(fn) {
+    reads.push(fn);
+    if (typeof ResizeObserver !== 'function') { if (reads.length === 1) raf(() => reads.splice(0).forEach((f) => { try { f(); } catch (e) { report(e); } })); return; }
+    if (inRead || inObserver) raf(arm); else arm();
+  }
+  /* the scroll boxes' rects, read once per read phase (the followers of one pane share one) */
+  const portRects = new Map();
+  function portRect(p) { let r = portRects.get(p); if (!r) { r = p.getBoundingClientRect(); if (inRead) portRects.set(p, r); } return r; }
+
   /* running one-shot effects, so clear() can stop them and snap() can finish them */
   const running = new Set();
   function run(host, stop, snap) { const e = { host, stop, snap }; running.add(e); return e; }
