@@ -158,6 +158,7 @@
     ctx.pal = fam.palette(ctx.mode, ctx.tok, ctx);
     ctx.fam = fam; ctx.sceneId = sceneId;
     const items = (scene.compose(ctx) || []).filter(Boolean);
+    ctx.items = items; /* the whole composition, for a family that spends something once per scene (NieR's ochre) */
     const layers = { back: [], mid: [], front: [] };
     /* Marionette strings. A helper tied to the control bar (opts.tie) does not draw its own string: the scene gets one
        string per tie, in the family's own string style, from the bar's hook to the helper's head (and, for a raised

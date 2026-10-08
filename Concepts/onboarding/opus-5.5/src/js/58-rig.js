@@ -159,6 +159,19 @@
      speed no one can tell 30 from 60. Arrivals, cheers and plucks run at the full frame rate. */
   const IDLE_MS = 1000 / 30 - 4;
   let lastIdle = 0;
+  /* when every live rig has a stepped feel (NieR: a 125 ms tick), the wait (ms) to the nearest next tick, so a stepped
+     troupe wakes the page 8 times a second rather than 30; 0 otherwise (any other family keeps the 30 Hz timer) */
+  function stepWait() {
+    const n = M.now();
+    let wait = Infinity;
+    for (const [svg, st] of rigs) {
+      if (!svg.isConnected || !ambientOn(svg)) continue;
+      if (!st.feel.tick || st.amb0 == null) return 0;
+      wait = Math.min(wait, st.feel.tick - ((n - st.amb0) % st.feel.tick));
+    }
+    if (!isFinite(wait) || !(M.timeScale > 0)) return 0;
+    return Math.max(4, Math.min(250, wait / M.timeScale + 2));
+  }
   function frame() {
     raf = 0;
     const real = performance.now();
@@ -171,7 +184,7 @@
     }
     /* between idle redraws a timer waits, not a frame callback: a callback alone makes the browser run a whole
        rendering pass of the page */
-    if (!busy && live && real - lastIdle < IDLE_MS) { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, IDLE_MS - (real - lastIdle)); return; }
+    if (!busy && live && real - lastIdle < IDLE_MS) { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, Math.max(IDLE_MS - (real - lastIdle), stepWait())); return; }
     lastIdle = real;
     let any = false;
     const now = M.now(), measuring = [], settled = [];
@@ -198,7 +211,7 @@
     if (!any) return;
     /* idle: the next redraw is a timer away (see above); arrivals, cheers and plucks ask for the very next frame */
     if (busy || !live) raf = requestAnimationFrame(frame);
-    else { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, IDLE_MS); }
+    else { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, stepWait() || IDLE_MS); }
   }
 
   /* ---------------------------------------------------------------- while props arrive: measured, reads first */

@@ -169,6 +169,20 @@
       g.appendChild(el);
       const x0 = at[0] + (Math.random() - 0.5) * (small ? 6 : 30), y0 = at[1];
       const spin = fam === 'retro' ? 0 : nier ? 90 * Math.round((Math.random() - 0.5) * 4) : (Math.random() - 0.5) * 720; /* pixels never rotate; NieR turns in quarter turns */
+      if (nier) {
+        /* NieR: the flight is the same path on the separate translate property, falling in steps; the turn runs on the
+           separate rotate property with one step per quarter turn, so every sampled angle is a multiple of 90 degrees
+           (inside one stepped transform the turn was interpolated with the flight, and pieces sat at any angle) */
+        const path = [[x0, y0, 1, 0], [x0 + dx * 0.85, y0 + dy * 0.85, 1, 0.38], [x0 + dx + (i % 2 ? 12 : -12), y0 + dy + fall * 0.6, 1, 0.72], [x0 + dx * 1.05, y0 + dy + fall, 0, 1]];
+        if (small) el.style.scale = '0.7';
+        const dur = small ? 620 + Math.random() * 240 : 1300 + Math.random() * 500, delay = small ? Math.random() * 60 : Math.random() * 160;
+        longest = Math.max(longest, dur + delay);
+        try {
+          el.animate(path.map(([x, y, op, offset]) => ({ translate: `${x}px ${y}px`, opacity: op, offset })), { duration: dur, delay, easing: small ? 'steps(4, end)' : 'steps(12, end)', fill: 'both' });
+          if (spin) el.animate([{ rotate: '0deg' }, { rotate: `${spin}deg` }], { duration: dur, delay, easing: `steps(${Math.abs(spin) / 90}, end)`, fill: 'both' });
+        } catch (_) {}
+        continue;
+      }
       /* Glass motes rise and fade; the others fly up and out, then fall with a little flutter */
       const kf = fam === 'glass'
         ? [{ transform: `translate(${x0}px, ${y0}px) scale(0.4)`, opacity: 0 }, { transform: `translate(${x0 + dx * 0.4}px, ${y0 + dy * 0.5}px) scale(1)`, opacity: 1, offset: 0.35 }, { transform: `translate(${x0 + dx * 0.7}px, ${y0 + dy * 0.9 - 40}px) scale(0.6)`, opacity: 0 }]
@@ -177,7 +191,7 @@
       if (small && fam !== 'retro') kf.forEach((k) => { k.transform += ' scale(0.7)'; }); /* a fleck is smaller; Retro keeps whole pixels */
       const dur = small ? 620 + Math.random() * 240 : (fam === 'glass' ? 1500 : 1300) + Math.random() * 500, delay = small ? Math.random() * 60 : Math.random() * 160;
       longest = Math.max(longest, dur + delay);
-      try { el.animate(kf, { duration: dur, delay, easing: fam === 'retro' ? (small ? 'steps(5, end)' : 'steps(10, end)') : nier ? (small ? 'steps(4, end)' : 'steps(12, end)') : 'cubic-bezier(0.2, 0.6, 0.4, 1)', fill: 'both' }); } catch (_) {}
+      try { el.animate(kf, { duration: dur, delay, easing: fam === 'retro' ? (small ? 'steps(5, end)' : 'steps(10, end)') : 'cubic-bezier(0.2, 0.6, 0.4, 1)', fill: 'both' }); } catch (_) {}
     }
     M.after(longest + 100, () => g.remove());
   }
