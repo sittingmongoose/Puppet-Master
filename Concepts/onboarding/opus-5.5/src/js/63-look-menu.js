@@ -1,7 +1,9 @@
 /* O55.lookMenu — the look can be changed at any point: a palette button beside the sound button (the onboarding window's
-   header and the Guided Tour's bar) opens a small menu of the four looks and Light / Dark. In onboarding the choice is
-   the same as on "Pick a look" (a preview until the look is saved with the new Project); in the tour, after setup, it
-   is saved at once through Settings. Each option shows its own look's colours (its swatch carries data-theme). */
+   header and the Guided Tour's bar) opens a small menu of the four looks and Light / Dark, then NieR Mode: a checkbox
+   (never a fifth look) and Adjust NieR look beside it. In onboarding the choice is the same as on "Pick a look" (a
+   preview until the look is saved with the new Project); in the tour, after setup, it is saved at once through
+   Settings. Each option shows its own look's colours (its swatch carries data-theme). The NieR actions are lookNier and
+   lookNierAdjust; each host routes them to nier(action, el) (O55.nierLook does the work). */
 (function () {
   'use strict';
   const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v);
@@ -21,7 +23,24 @@
         + `<span class="o55-lookswatch" data-theme="${f}-${th.mode}" aria-hidden="true"><i></i><i></i><i></i></span><span class="o55-lookname">${U.esc(T('look.families.' + f + '.name'))}</span></button>`;
       const mode = (m) => `<button type="button" class="${m === th.mode ? 'o55-on' : ''}" ${attr}="lookMode" data-arg="${m}" role="menuitemradio" aria-checked="${m === th.mode}" data-pm-hover-exempt="true">${U.esc(T('look.' + m))}</button>`;
       return `<div class="o55-lookmenu" role="menu" aria-label="${U.esc(T('chrome.look'))}"><div class="o55-lookopts">${FAMILIES.map(opt).join('')}</div>`
-        + `<div class="o55-lookmodes" role="group" aria-label="${U.esc(T('look.modeLabel'))}">${mode('light')}${mode('dark')}</div></div>`;
+        + `<div class="o55-lookmodes" role="group" aria-label="${U.esc(T('look.modeLabel'))}">${mode('light')}${mode('dark')}</div>${this.nierRow(attr)}</div>`;
+    },
+    /* NieR Mode: a menuitemcheckbox with a square box, and Adjust beside it (unique data-arg values keep focus on them
+       across the redraw a click causes) */
+    nierRow(attr) {
+      const L = O55.nierLook; if (!L || !window.PM_NIER) return '';
+      const on = L.state().on;
+      return `<div class="o55-looknier" role="none"><button type="button" class="o55-looknier-check${on ? ' o55-on' : ''}" ${attr}="lookNier" data-arg="nier" role="menuitemcheckbox" aria-checked="${on}" data-o55-nier-check data-pm-hover-exempt="true">`
+        + `<span class="o55-nierbox" aria-hidden="true"></span><span>${U.esc(T('look.nier.label'))}</span></button>`
+        + `<button type="button" class="o55-looknier-adjust" ${attr}="lookNierAdjust" data-arg="nier-adjust" role="menuitem" aria-label="${U.esc(T('look.nier.adjust'))}" title="${U.esc(T('look.nier.adjust'))}" data-pm-hover-exempt="true">`
+        + `${L.icon()}<span>${U.esc(T('look.nier.adjustShort'))}</span></button></div>`;
+    },
+    /* the host's lookNier / lookNierAdjust: a preview in onboarding, saved at once after setup (O55.nierLook) */
+    nier(action, el) {
+      const L = O55.nierLook; if (!L) return false;
+      if (action === 'lookNier') return L.toggle('lookMenu', el);
+      if (action === 'lookNierAdjust') return !!L.adjust(el);
+      return false;
     },
     /* after setup (the tour): the look is saved straight away */
     save(family, mode) {
