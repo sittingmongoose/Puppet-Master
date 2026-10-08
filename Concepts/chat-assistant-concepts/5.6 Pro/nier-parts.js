@@ -10,8 +10,8 @@
  *   cursor     one shared cursor (#o55np-cursor) beside the hovered or keyboard-focused menu item, picker row, thread
  *              row or wand row, placed by transform on pointerover and focusin
  *   brackets   one reticle of four corners (#o55np-reticle) on keyboard focus, and for 1.2 s on a chosen thread or tab
- *   reboot     PM_NIER.setTransition: an ink band down over the old look, the theme picked under full cover, a stepped
- *              flicker back (Demo Studio's theme list, PM_NIER.set, Play reboot moment; nier.js switchTo)
+ *   reboot     PM_NIER.setTransition: an ink band down over the old look, the theme picked under full cover, then a
+ *              six-slat tear-out (Demo Studio's theme list, PM_NIER.set, Play reboot moment; nier.js switchTo)
  *   decode     the thread title on a thread switch, the head of an arriving assistant turn or card, arriving toasts
  *   wipe       a band over the transcript while a switched-to thread draws, sliding off (#o55np-wipe)
  *   particles  twelve ink motes drifting over the transcript (#o55np-ground, CSS-anchored to it), and a burst of six
@@ -471,6 +471,47 @@
   };
 
   /* ---------- reboot moment ---------------------------------------------------------------------------------------------- */
+  /* The plate leaves as six horizontal slats (hero-spec §1 rule 3, the page-wide path). Even bands slide left and odd
+     bands slide right, translateX ±101%, steps(4), 30 ms stagger from the middle pair outward. Each slat clips one
+     band of the plate so the log stays aligned, and the slats ignore the pointer. Opacity never reverses: a
+     window-sized plate must not flash. Reduced motion, the Still preset (the reboot part is off) and a hidden tab
+     still take the instant path in reboot(). */
+  function tear(cover, band) {
+    /* the meter is full when the plate tears (its fill has finished); a clone does not keep the animation */
+    var meterBar = cover.querySelector('.o55np-rb-meter > i');
+    if (meterBar) {
+      if (typeof meterBar.getAnimations === 'function') meterBar.getAnimations().forEach(function (a) { a.cancel(); });
+      meterBar.style.transform = 'scaleX(1)';
+    }
+    if (typeof band.getAnimations === 'function') band.getAnimations().forEach(function (a) { a.cancel(); });
+    var h = cover.clientHeight || window.innerHeight, y0 = 0, slats = [];
+    for (var i = 0; i < 6; i++) {
+      var y1 = Math.round((i + 1) * h / 6);
+      var slat = document.createElement('div');
+      slat.className = 'o55np-slat';
+      slat.style.top = y0 + 'px';
+      slat.style.height = (y1 - y0) + 'px';
+      var slice = band.cloneNode(true);
+      slice.style.transform = 'none';
+      slice.style.top = (-y0) + 'px';
+      slice.style.height = h + 'px';
+      slice.style.left = '0';
+      slice.style.right = 'auto';
+      slice.style.bottom = 'auto';
+      slice.style.width = '100%';
+      slat.appendChild(slice);
+      slats.push(slat);
+      y0 = y1;
+    }
+    band.remove();
+    slats.forEach(function (s) { cover.appendChild(s); });
+    return Promise.all(slats.map(function (slat, i) {
+      var dist = Math.abs(i - 2.5) - 0.5;
+      var dir = (i % 2) ? '101%' : '-101%';
+      return slat.animate([{ transform: 'translateX(0%)' }, { transform: 'translateX(' + dir + ')' }],
+        { duration: 240, delay: dist * 30, easing: 'steps(4, end)', fill: 'forwards' }).finished;
+    }));
+  }
   var REBOOT_COPY = {
     on: ['NieR Mode', 'Rebooting the interface', 'Ink and parchment loaded'],
     off: ['NieR Mode', 'Shutting down the unit', 'Your theme restored'],
@@ -501,9 +542,7 @@
       .then(function () { return fill.finished; })
       .then(function () {
         lines[1].setAttribute('data-ok', '');
-        return cover.animate([{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.16, easing: 'step-end' }, { opacity: 0.85, offset: 0.3, easing: 'step-end' },
-          { opacity: 0, offset: 0.46, easing: 'step-end' }, { opacity: 0.4, offset: 0.6, easing: 'step-end' }, { opacity: 0, offset: 0.74 }, { opacity: 0 }],
-        { duration: 480, fill: 'forwards' }).finished;
+        return tear(cover, band);
       })
       .then(finish, function () { repaint(); sync(); finish(); });
   }
