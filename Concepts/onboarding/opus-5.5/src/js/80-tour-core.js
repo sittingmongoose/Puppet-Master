@@ -19,8 +19,9 @@
   /* ------------------------------------------------------------------ hooks */
   /* A skin follows the tour without the engine knowing it (NieR Mode, 85-tour-nier.js): TR.on(name, fn(d, st)) ->
      off. Moments: build {root} · look (the style below, filled in place) · start {resume, from} (may hold the first
-     step: return a promise) · arrive {step, prev, index, chapterChanged, forward, back, silent, first} before the
-     callout is drawn (a listener may set d.hold and return a promise: the spotlight moves on and the callout waits) ·
+     step: return a promise) · arrive {step, prev, index, chapterChanged, forward, back, silent, first, sound} before
+     the callout is drawn (a listener may set d.hold and return a promise: the spotlight moves on and the callout
+     waits; d.sound is the arrival's sound event, 'callout') ·
      step {same} once it is drawn · callout {step, missing, done, count, tryLabel, pod} (fill d.pod with markup for
      the callout, before its buttons) · render {focus} · bar {chapter, ci, si, total, pip} (d.pip[chapter]: markup
      after that chapter's ticks) · target {el, prev} · complete {step} · showMe {step} · showMeEnd (hold: the
@@ -477,11 +478,12 @@
     if (my !== st.seq) return;
     /* a skin may hold the new callout back for a moment (a chapter banner) while the spotlight moves on */
     const arrival = { step: st.step, prev: prev || null, index: st.step.index, chapterChanged: !!(prev && prev.chapter !== st.step.chapter),
-      forward: !!(prev && prev.index < st.step.index), back: !!o.back, silent: !!o.silent, first: !prev, hold: false };
+      forward: !!(prev && prev.index < st.step.index), back: !!o.back, silent: !!o.silent, first: !prev, hold: false, sound: 'callout' };
     const held = emit('arrive', arrival);
-    if (arrival.hold) { place(false); await settle(held, 2600); if (my !== st.seq) return; }
+    if (arrival.hold) { renderBar(); place(false); await settle(held, 2600); if (my !== st.seq) return; }
     renderBar(); renderCallout(true);
-    if (!o.silent) O55.sound.play('callout', { step: st.step.index });
+    /* the callout's arrival sound (a listener that already sounded the moment, a chapter banner, sets it to null) */
+    if (!o.silent && arrival.sound) O55.sound.play(arrival.sound, { step: st.step.index });
     emit('step', arrival);
     U.announce(T('tour.bar.progress', { n: CHAPTERS.indexOf(st.step.chapter) + 1, name: T('tour.chapters.' + st.step.chapter), s: TR.defs.filter((d) => d.chapter === st.step.chapter).indexOf(st.step) + 1, total: TR.defs.filter((d) => d.chapter === st.step.chapter).length }) + '. ' + copy(st.step.id, 'title'), st.root);
     watch();

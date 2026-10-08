@@ -44,9 +44,9 @@
     + '<path class="o55t-podi" stroke="none" d="M15 18H25V21H15Z"/><path class="o55t-podi" stroke="none" d="M22 18H25V21H22Z" opacity=".35"/>';
   const STROKE = 'fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="miter" stroke-linecap="square"';
   /* the pointer's Pod hovers up and to the right of the point it presses: its middle sits this far from the hotspot
-     on screen (the 30 px pointer box, viewBox 32, hotspot (6, 3), Pod at translate(13.6 -37) scale(.62)); the dock in
-     the callout draws the same Pod at the same size, so the one becomes the other */
-  const POD_DX = 18.4, POD_DY = -23.6;
+     on screen (the 30 px pointer box, viewBox 32, hotspot (6, 3), Pod at translate(14 -44.8) scale(.8)); the dock in
+     the callout draws the same Pod at the same size (30 x 39 px), so the one becomes the other */
+  const POD_DX = 22.5, POD_DY = -25.3;
   const LEAD = /^(report|proposal|alert|query|analysis)\s*:\s*/i;
 
   /* the line Pod says now, and what kind of line it is (a new step's 'line', 'wait' until an info step is ready,
@@ -105,8 +105,8 @@
     if (svg && !svg.querySelector('.o55t-pg-nier')) {
       svg.insertAdjacentHTML('beforeend', '<g class="o55t-ptr o55t-pg-nier">'
         + '<path class="o55t-pgn-ret" d="M1 0V-2H3 M9 -2H11V0 M1 6V8H3 M9 8H11V6"/>'
-        + '<rect class="o55t-pgn-s" x="24.7" y="-22.2" width="2.6" height="2.6"/><rect class="o55t-pgn-s" x="24.7" y="-22.2" width="2.6" height="2.6"/><rect class="o55t-pgn-s" x="24.7" y="-22.2" width="2.6" height="2.6"/>'
-        + `<g class="o55t-pgn-dip"><g class="o55t-pgn-bob"><g transform="translate(13.6 -37) scale(.62)" ${STROKE}>${POD}</g></g></g></g>`);
+        + '<rect class="o55t-pgn-s" x="28.7" y="-30.5" width="2.6" height="2.6"/><rect class="o55t-pgn-s" x="28.7" y="-30.5" width="2.6" height="2.6"/><rect class="o55t-pgn-s" x="28.7" y="-30.5" width="2.6" height="2.6"/>'
+        + `<g class="o55t-pgn-dip"><g class="o55t-pgn-bob"><g transform="translate(14 -44.8) scale(.8)" ${STROKE}>${POD}</g></g></g></g>`);
     }
   });
 
@@ -180,7 +180,7 @@
     /* a new chapter: a quest banner while the spotlight moves on, then the callout */
     const fx = FX();
     if (d.chapterChanged && d.forward && fx && fx.enabled('banner')) {
-      d.hold = true;
+      d.hold = true; d.sound = null; /* the banner's quest sting is this chapter's sound */
       root.classList.add('o55t-nheld');
       const ch = d.step.chapter, n = TR.CHAPTERS.indexOf(ch) + 1;
       const shown = fx.banner({ kicker: T('banner.kicker', { n }), title: O55.t('tour.chapters.' + ch), sub: T('banner.' + ch), ms: 1800, within: root });
