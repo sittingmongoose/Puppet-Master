@@ -789,6 +789,12 @@
       R.at = M.now(); R.marksAt = Infinity;
       meter(layer); brand(true);
       if (cold) { const r = rootEl(); if (r) ['data-o55nw-cold', 'data-o55nw-go'].forEach((a) => r.removeAttribute(a)); if (!cold.log) podHold(false); if (!cold.opened) { cold.opened = true; play('open'); } }
+      else if (dir === 'open') {
+        /* the instant open (Reduced Motion, the Still preset, a low-resource computer, no Boot part): the run's first
+           music still plays (a state sound), a beat after the release like the cold open's, so the open sound keeps
+           its own moment (final review minor 5) */
+        later(90, () => { if (shown() && painted()) play('chapter', { chapter: pr.current, depth: 0, intensity: 0.4 }); });
+      }
       const F = fx(); if (!F) return false;
       /* The effects start at the next frame. This frame (the release) styles and lays out the new screen once; the
          effects' measurements then read a finished layout instead of forcing it again in the middle of it (films M1).
