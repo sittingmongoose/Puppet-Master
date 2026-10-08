@@ -169,6 +169,10 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) .o55-nier-maplabel
 .o55-f-nier .o55-nier-slump .nv-stub, .o55-nier-asleep .o55-ens-h .nv-stub { opacity: 1; }
 .o55-nier-asleep .o55-ens-h .nv-scan { opacity: 0; }
 .o55-nier-asleep .o55-ens-h .nv-rest { opacity: 1; }
+/* the cold open's asleep stage decodes each string in with the unit it holds (its --d, 50-art-core.js): a string has no
+   entrance of its own, and they hung alone in the empty window for about 200 ms before the set (films H2) */
+.o55-nier-asleep .o55-tie { animation: o55-nier-in 420ms steps(1, end) var(--d, 0ms) both; }
+html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-nier-asleep .o55-tie { animation-name: o55-fade; animation-timing-function: steps(4, end); }
 /* You: the arm raised (as drawn), half raised or resting on the knee; the slit dark; the head bowed. Asleep: bowed,
    dark, the arm down; while the ensemble is held: the arm down (the signal raises it) */
 .o55-nier-asleep .o55-nier-op-arm, .o55-ens-hold[data-family="nier"] .o55-nier-op-arm { display: none; }
@@ -319,6 +323,7 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="slice"]) .o55-scene-host .o
 .o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-cur-r,
 .o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-cur-sl,
 .o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-cur-sr,
+.o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-tie,
 .o55-scene-wrap.o55-cc-in.o55-scene-held .o55-bg,
 .o55-scene-wrap.o55-cc-in.o55-scene-held .o55-sl-back,
 .o55-scene-wrap.o55-cc-in.o55-scene-held .o55-sl-mid,

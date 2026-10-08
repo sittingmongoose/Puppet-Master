@@ -533,11 +533,14 @@
       /* NieR's strings carry their rest length from the composition (data-rest, scene units: the hook-to-hook distance
          with every prop on its mark), so a scene born slack (asleep, held) draws its sag from the first frame (58-rig.js) */
       const rest = (a, b) => (ctx.family === 'nier' ? ` data-rest="${Math.hypot(b[0] - a[0], b[1] - a[1]).toFixed(1)}"` : '');
+      /* NieR's strings carry their prop's entrance delay (--d), so a string can arrive with its unit (the cold open's
+         asleep stage decodes each string in with the unit it holds: 30-art.css) */
+      const late = (it) => (ctx.family === 'nier' ? ` style="--d:${Math.round(it.delay || 0)}ms"` : '');
       const strings = ties.map((it) => {
-        let out = hookPts.get(it).map(([name, local, bh]) => { const a = pt(bar, hooks[bh] || [0, 0]), b = pt(it, local); return `<g class="o55-tie" data-key="tie-${U.esc(it.key)}-${name}" data-from="${U.esc(bar.key)}:${U.esc(bh)}" data-to="${U.esc(it.key)}:${name}"${rest(a, b)}>${fam.string(ctx, d(a, b))}</g>`; }).join('');
+        let out = hookPts.get(it).map(([name, local, bh]) => { const a = pt(bar, hooks[bh] || [0, 0]), b = pt(it, local); return `<g class="o55-tie" data-key="tie-${U.esc(it.key)}-${name}" data-from="${U.esc(bar.key)}:${U.esc(bh)}" data-to="${U.esc(it.key)}:${name}"${rest(a, b)}${late(it)}>${fam.string(ctx, d(a, b))}</g>`; }).join('');
         /* a raised hand's string, when the bar has the hook it names (barHooks always has w0 and w2) */
         const hand = it.opts.pose === 'wave' && it.opts.handTie && hooks[it.opts.handTie] && fam.hand && fam.hand.wave;
-        if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand">${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie]), pt(it, fam.hand.wave)), true)}</g>`;
+        if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand"${late(it)}>${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie]), pt(it, fam.hand.wave)), true)}</g>`;
         return out;
       }).join('');
       layers.mid.push(`<g class="o55-ties" data-key="ties">${strings}</g>`);
