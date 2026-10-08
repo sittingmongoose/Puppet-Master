@@ -325,6 +325,7 @@
 
   /* Quiet in-screen update: morph the current layer; never replays the entrance. */
   function refresh() {
+    flushOpen();
     if (!S.open) return;
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
@@ -436,6 +437,7 @@
 
   /* ---------------------------------------------------------------- navigation */
   function go(id, opts) {
+    flushOpen();
     opts = opts || {};
     if (!SCREENS.defs[id]) { console.warn('O55: unknown screen', id); return; }
     const from = SCREENS.defs[S.sess.screen];
@@ -455,6 +457,7 @@
     transition(opts.dir || 'fwd');
   }
   function back() {
+    flushOpen();
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.onBack && def.onBack(S) === false) return;
     let prev = S.sess.history.pop();
@@ -611,8 +614,11 @@
   const warm = () => { try { O55.motion.softwareRendered(); } catch (_) {} };
   if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(warm, { timeout: 6000 }); else window.setTimeout(warm, 3000);
 
-  let openGen = 0;
+  let openGen = 0, pendingMount = null;
   function clearOpenScrim() { const n = document.getElementById('o55-open-scrim'); if (n) n.remove(); }
+  /* A caller that opens the window and drives it in the same turn (go, back, refresh: the demo bar, the film and
+     scenario tools) gets the window built first; close before the build cancels the open. */
+  function flushOpen() { const m = pendingMount; if (m) { pendingMount = null; m(); } }
   function open(opts) {
     opts = opts || {};
     if (opts.fresh && O55.tour && O55.tour.hasUnresolved && O55.tour.hasUnresolved()) { O55.tour.start({}); return false; }
@@ -625,8 +631,10 @@
       const wasShown = !!(S.open && S.root && !S.root.hidden);
       const focus = opts.returnFocus || document.activeElement;
       const gen = ++openGen;
-      const mount = () => { if (gen === openGen) open(Object.assign({}, opts, { _mount: true, _wasShown: wasShown, returnFocus: focus })); };
+      let mounted = false;
+      const mount = () => { if (mounted || gen !== openGen) return; mounted = true; pendingMount = null; open(Object.assign({}, opts, { _mount: true, _wasShown: wasShown, returnFocus: focus })); };
       if (wasShown) { mount(); return true; }
+      pendingMount = mount;
       if (!document.getElementById('o55-open-scrim')) {
         const flash = document.createElement('div');
         flash.id = 'o55-open-scrim'; flash.setAttribute('aria-hidden', 'true');
@@ -711,6 +719,7 @@
   /* close(reason, {handoff}) — with handoff the window gives way at once, because the Guided Tour's first callout
      grows out of the same rectangle in the same frame (see O55.tour.start({from})) */
   function close(reason, o) {
+    if (pendingMount) { pendingMount = null; openGen++; clearOpenScrim(); }
     if (!S.open) return;
     const handoff = !!(o && o.handoff);
     const def = SCREENS.defs[S.sess.screen];
