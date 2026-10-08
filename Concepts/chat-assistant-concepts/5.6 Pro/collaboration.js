@@ -3120,7 +3120,7 @@
         hero: { n: 1, title: 'What should they review?', helper: 'We take a snapshot when you press Start. Every reviewer sees that exact version, even if you keep working.', placeholder: 'Anything specific? e.g. Does search still handle padded queries?',
           before: '<div class="pmx-collab-target" data-pmx-affects="target">' + S.pickerButton({ action: 'collab-pick-choice', anchor: 'collab-choice-target', strong: esc(tgt.label), small: esc(targetSmall(ctx, tgt.value)), extra: 'data-field="target" data-menu-title="What to review"' }) + '</div>' },
         whoTitle: 'Who reviews', whoMeta: '<span data-k="cnt:' + n + '">' + plural2(n, 'reviewer') + '</span> · up to 8', whoAffects: 'count',
-        rosterCols: [{ label: 'Looks for', helper: 'What it checks' }, { label: 'AI model', helper: 'Different models notice different things' }, { label: 'Persona', helper: 'How it works (checks, doubts…)' }],
+        rosterCols: [{ label: 'Looks for', helper: 'What it checks' }, { label: 'AI model', helper: 'Which AI, which account pays', hover: 'Which AI reviews, and which of your accounts pays for it. Different models notice different things.' }, { label: 'Persona', helper: 'How it works (checks, doubts…)' }],
         roster: { recipes: true, addLabel: 'Add a reviewer' },
         plate: reviewPlateFit(d, ctx),
         shelf: null,

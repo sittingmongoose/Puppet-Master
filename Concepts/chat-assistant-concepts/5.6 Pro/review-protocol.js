@@ -435,7 +435,7 @@
     before:changed?trig.replace('</div>','<span class="pmx-fine pmx-review-changed" data-k="rv-changed">'+S.pmxGlyph('swap',12)+'Changed since you opened this</span></div>'):trig}),
    whoTitle:'Who reviews',whoMeta:'<span data-k="cnt:'+n+'">'+plural(n,'reviewer')+'</span> · up to 8',whoAffects:'count',
    rosterCols:[{label:'Looks for',helper:'What it checks',hover:'What this reviewer checks. Each focus goes into a reviewer’s job.'},
-    {label:'AI model',helper:'Different models notice different things',hover:'Which AI reviews, and which of your accounts pays for it. Different models notice different things.'},
+    {label:'AI model',helper:'Which AI, which account pays',hover:'Which AI reviews, and which of your accounts pays for it. Different models notice different things.'},
     {label:'Persona',helper:'How it works (checks, doubts…)',hover:'How this reviewer works: Reviewer checks, Critical Advisor doubts.'}],
    roster:{recipes:TEAMS,addLabel:'Add a reviewer'},
    rowExtras:(row,i)=>{if(!i)return {};for(let k=0;k<i;k++)if(d.rows[k].requestedModelId===row.requestedModelId){const who=d.rows[k].role||('reviewer '+(k+1));

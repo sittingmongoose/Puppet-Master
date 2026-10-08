@@ -219,7 +219,7 @@
    total width of every variant is the foundation's (module-shell.css), only the last two columns trade. */
 body .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 178px 28px;}
 body[data-theme^="friendly"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 182px 28px;}
-body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 216px 192px 28px;}
+body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 210px 190px 28px;}
 @media (max-width: 1167.98px){
   body .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:24px minmax(80px,1fr) 172px 170px 28px;}
   body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:24px minmax(64px,1fr) 176px 170px 28px;}
@@ -227,7 +227,7 @@ body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28p
 @media (max-width: 947.98px){
   body .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 178px 28px;}
   body[data-theme^="friendly"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 182px 28px;}
-  body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 216px 192px 28px;}
+  body[data-theme^="retro"] .pmx-sheet.collab-configure .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 210px 190px 28px;}
 }
 .pmx-sheet.collab-configure .pmx-row-acts{position:relative;justify-content:flex-end;}
 .pmx-sheet.collab-configure .pmx-row-acts > .pmx-row-act:first-child:not(:last-child){position:absolute;top:50%;right:38px;margin-top:-14px;background:var(--pmx-sheet-bg);visibility:hidden;}

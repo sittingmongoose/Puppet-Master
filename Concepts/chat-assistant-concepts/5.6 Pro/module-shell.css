@@ -336,14 +336,16 @@ body[data-theme^="retro"] .pmx-sheet :is(.pmx-ctl-copy, .pmx-spec-copy) .pmx-hel
    plate is at its floor */
 .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 140px 66px;margin-top:12px;flex:0 1 auto;display:flex;flex-direction:column;min-height:0;}
 body[data-theme^="friendly"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 144px 66px;}
-/* retro mono "Claude Sonnet 4.6" needs 216 in the model column (188 ellipsized it to "4…"). The flexible job column gives the 28 px. */
-body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 216px 150px 66px;}
+/* retro mono "Claude Sonnet 4.6" needs 210 in the model column (188 ellipsized it to "4…"). The flexible job column gives the
+   width back through a 6px column gap, so its helper ("What it focuses on", 113px in Plex Mono) stays whole at 1440. */
+body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 210px 150px 66px;}
 /* retro: the mono roster takes a little more of the body so job names ellipsize less (two-column windows only:
    below 948 px the one-column rule must win, review cycle 1) */
 @media (min-width: 948px){
   body[data-theme^="retro"] .pmx-sheet--wide .pmx-body:not([data-layout="one"]):has(> .pmx-col .pmx-roster){grid-template-columns:minmax(0,1.36fr) minmax(0,1fr);}
 }
 .pmx-sheet .pmx-roster-head, .pmx-sheet .pmx-row{display:grid;grid-template-columns:var(--pmx-cols);column-gap:10px;align-items:center;}
+body[data-theme^="retro"] .pmx-sheet .pmx-roster :is(.pmx-roster-head, .pmx-row){column-gap:6px;}
 .pmx-sheet .pmx-roster-head{align-items:end;padding-bottom:1px;}
 .pmx-sheet .pmx-roster-col{min-width:0;}
 .pmx-sheet .pmx-roster-col b{display:block;font:600 11.5px/17px var(--font-ui);color:var(--muted);}
@@ -1393,7 +1395,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
      rule narrowed them, which cut "Implementer" and the model names at 900 and 700) */
   .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 140px 66px;}
   body[data-theme^="friendly"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 144px 66px;}
-  body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 216px 150px 66px;}
+  body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 210px 150px 66px;}
   /* the Advanced page scrolls with the body, never inside a clipped grid */
   .pmx-sheet .pmx-advpage{min-height:auto;}
   .pmx-sheet .pmx-advgrid{min-height:auto;overflow:visible;}
