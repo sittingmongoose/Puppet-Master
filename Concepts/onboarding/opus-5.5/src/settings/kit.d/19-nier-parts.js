@@ -646,26 +646,32 @@
   }
 
   /* the check list's motion, all created now with delays (design ms from t0): the caret block steps across each line,
-     the stamp blinks in, the meter fills; "Synchronising" waits at plan.sync and blinks its caret until R */
+     the stamp blinks in, the meter fills; "Synchronising" waits until plan.sync and blinks its caret until R. Every
+     element rests in its finished state and each animation only holds the state before it (fill: backwards): a
+     composited animation that finishes while the main thread is stalled in the repaint once lost its held end value
+     (a typed line came back un-typed), and this way a finished or dropped animation can only show the finished line. */
   function rbType(log, plan, now) {
-    const anims = [], A = (el, kf, o) => { const a = el.animate(kf, o); anims.push(a); return a; };
+    const anims = [], A = (el, kf, o) => { const a = el.animate(kf, Object.assign({ fill: 'backwards' }, o)); anims.push(a); return a; };
     const d = t => Math.max(0, t - now);
     log.querySelectorAll('.o55np-lns > .o55np-ln').forEach((ln, i) => {
       const st = plan.stamps[i];
-      A(ln.querySelector('.o55np-ln-mask'), [{ transform: 'translateX(0)' }, { transform: 'translateX(calc(100% + 10px))' }], { duration: 120, delay: d(st - 120), easing: 'steps(8, end)', fill: 'forwards' });
-      A(ln.querySelector('.o55np-stamp'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 80, delay: d(st), fill: 'forwards' });
+      A(ln.querySelector('.o55np-ln-mask'), [{ transform: 'translateX(0)' }, { transform: 'translateX(calc(100% + 10px))' }], { duration: 120, delay: d(st - 120), easing: 'steps(8, end)' });
+      /* hidden until the stamp, then on, off, on (a small element's blink) */
+      A(ln.querySelector('.o55np-stamp'), [{ opacity: 0, easing: 'step-end' }, { opacity: 1, offset: 0.34, easing: 'step-end' }, { opacity: 0, offset: 0.67, easing: 'step-end' }, { opacity: 1 }],
+        { duration: 120, delay: Math.max(0, d(st) - 40) });
     });
-    A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)', fill: 'forwards' });
+    A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)' });
     const sync = log.querySelector('.o55np-sync');
-    const show = A(sync, [{ opacity: 1 }, { opacity: 1 }], { duration: 1, delay: d(plan.sync), fill: 'forwards' });
-    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity });
+    const show = A(sync, [{ opacity: 0 }, { opacity: 0 }], { duration: Math.max(1, d(plan.sync)) });
+    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
     return { anims, show, blink };
   }
   /* at R: the list in its end state (by attribute, so the slats' copies show it too), "All clear" in one step */
   function rbClear(log, typing, plan, t0) {
     const synced = since(t0) >= plan.sync;
     typing.anims.forEach(a => a.cancel());
-    if (synced) { const s = log.querySelector('.o55np-sync'); s.setAttribute('data-shown', ''); s.setAttribute('data-ok', ''); }
+    const s = log.querySelector('.o55np-sync');
+    if (synced) s.setAttribute('data-ok', ''); else s.style.display = 'none';
     log.setAttribute('data-done', '');
     log.querySelector('.o55np-kick-t').textContent = RB('allClear', 'All clear');
   }
