@@ -25,17 +25,23 @@
   Object.values(METRICS).forEach((m) => { m.barHooks = hooks(m.anchors); });
   A.metrics = (family) => METRICS[family] || METRICS.basic;
 
-  /* Marionette ensemble: bar + three helpers on strings (hero, look tiles, creating, ready). */
+  /* Marionette ensemble: bar + three helpers on strings (hero, look tiles, creating, ready). The bar and the helpers
+     carry o55-ens-bar / o55-ens-h, the parts a held ensemble hides until O55.art.troupe.enter lowers them in (50-art-core
+     ctx.ensembleHold, 30-art.css .o55-ens-hold). NieR's helpers also carry `fly`, the height they are lowered from in
+     their own units (FLY scene units above their mark; the inner group's --o55-fly, read by the rig and the fly-in).
+     o.level hangs the three at one height (o.level units above the floor: NieR's Creating, while the work runs). */
+  const FLY = 160;
+  A.FLY = FLY;
   A.ensemble = function ensemble(ctx, o) {
     o = o || {};
     const m = A.metrics(ctx.family), cx = o.cx || 240, barY = o.barY || m.barY, floor = o.floor || m.floor;
-    const s = (o.scale || 1) * m.helperScale, spread = o.spread || 112, poses = o.poses || ['wave', 'carry', 'stand'];
-    const items = [{ key: 'bar', prop: 'bar', x: cx, y: barY, layer: 'front', anim: 'drop', delay: o.delay || 0, amb: 'sway', ambd: 5600 }];
+    const s = (o.scale || 1) * m.helperScale, spread = o.spread || 112, poses = o.poses || ['wave', 'carry', 'stand'], nier = ctx.family === 'nier';
+    const items = [{ key: 'bar', prop: 'bar', x: cx, y: barY, layer: 'front', anim: 'drop', delay: o.delay || 0, amb: 'sway', ambd: 5600, cls: 'o55-ens-bar' }];
     [-1, 0, 1].forEach((side, i) => {
       const a = side < 0 ? m.anchors[0] : side > 0 ? m.anchors[2] : m.anchors[1];
       /* each helper hangs from its own point on the bar; a waving helper's hand hangs from a second point on its side */
-      items.push({ key: 'h' + i, prop: 'helper', x: cx + side * spread, y: floor - (side === 0 ? 14 : 0), s, layer: 'mid', anim: 'drop',
-        delay: (o.delay || 0) + 260 + i * 90, amb: 'bob', ambd: 2400 + i * 380,
+      items.push({ key: 'h' + i, prop: 'helper', x: cx + side * spread, y: o.level != null ? floor - o.level : floor - (side === 0 ? 14 : 0), s, layer: 'mid', anim: o.anim || 'drop',
+        delay: (o.delay || 0) + 260 + i * 90, amb: 'bob', ambd: 2400 + i * 380, cls: 'o55-ens-h', fly: nier ? -FLY / s : null,
         opts: { variant: (o.variants || [0, 1, 2])[i], pose: poses[i], anchor: [cx + a[0], barY + a[1]], px: m.helperPx,
           tie: ['a0', 'a1', 'a2'][side + 1], handTie: side < 0 ? 'w0' : 'w2', side } }); /* a raised right hand hangs from the bar's right side */
     });
@@ -69,9 +75,20 @@
   /* You sits 12 to the right of the design sheet's x 50 and the ruler 14 to the left of its x 440: the wide art pane
      shows about x 34..446 of the scene, and there You's head and the ruler's label were cut off */
   const YOU = { x: 62, y: 384, s: 1.32, hand: [16, -43.2] };
+  /* Asleep (beat 'asleep', or params.asleep: the window's first open, design/hero-spec.md H2): the same composition,
+     marked on the svg (o55-nier-asleep: 30-art.css slumps each unit at the foot of its string, rest dashes on the
+     visors, You bowed with its slit dark and its arm down, the link dark, the control unit's slit dark; the rig hangs the
+     control unit 14 low so the strings sag, and holds the wave arm down). The set decodes in (no drops: nothing falls
+     onto a sleeping stage). O55.art.troupe.wake raises it. */
   function heroNier(ctx, m) {
+    /* (only where the wake can play: never under Reduced Motion or on a low-resource computer, and only with the Boot
+       sequence part, which the Still and Colors only presets leave out) */
+    const parts = ctx.tok && ctx.tok.nierParts, M = O55.motion;
+    const asleep = (ctx.beat === 'asleep' || !!(ctx.params || {}).asleep) && !M.reduced() && !M.lowResource && (!parts || parts.indexOf('boot') >= 0);
+    if (asleep) ctx.sceneCls = 'o55-nier-asleep';
     const items = [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + 28, layer: 'back', anim: 'rise', delay: 80 }];
-    items.push(...A.ensemble(ctx, {}));
+    items.push(...A.ensemble(ctx, asleep ? { anim: 'fade' } : {}));
+    if (asleep) items.forEach((it) => { if (it.key === 'bar') it.anim = 'fade'; });
     items.push(...sparks([[78, 236, 0], [410, 226, 1], [400, 352, 2], [306, 250, 3]]).map((it) => Object.assign(it, { layer: 'back' })));
     items.push({ key: 'dim', prop: 'dimv', x: 426, y: m.barY, layer: 'back', anim: 'fade', delay: 700, opts: { h: m.floor - m.barY, label: L('strings', 'strings') } });
     items.push({ key: 'n-plan', prop: 'note', x: 252, y: m.floor - 62, layer: 'front', anim: 'fade', delay: 1300, opts: { text: L('plan', 'the plan'), dx: 62, dy: 118 } });

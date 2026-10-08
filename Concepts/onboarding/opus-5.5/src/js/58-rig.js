@@ -15,7 +15,18 @@
    small dip that settle on their own, as when a letter lands on the name sign.
    Retro moves in whole pixels on a stepped clock and never rotates: the bar hops, the helpers hop with it, the waving
    helper swaps between two frames, and a pluck drops the prop one pixel step for a beat. Reduced Motion and
-   low-resource mode hold the ambient motion still; nothing runs while the scene is hidden, paused or gone. */
+   low-resource mode hold the ambient motion still; nothing runs while the scene is hidden, paused or gone.
+   The troupe's acting (O55.art.troupe, 59-cheer.js) adds, for NieR's units:
+   - a drop of the control unit below its mark (A.rig.bar: the strings go slack and sag, the units stay standing; a
+     drawing marked asleep starts SLEEP.drop low) and a held offset of a waving arm (A.rig.arm: asleep, it hangs down);
+     both move in held steps on the motion clock;
+   - a measuring window re-armed by every arrival (watch(svg, { settle, payout })): strings follow props that fly in,
+     paying out straight (no sag) while they do;
+   - rest lengths from the drawing (data-rest), so a drawing born slack sags from its first frame;
+   - a held ensemble (.o55-ens-hold): the units wait at the top of their fly-in (their inner group's --o55-fly), and the
+     strings end on their knots there without measuring.
+   NieR's idle sway is decoration: it stops while the NieR parts leave out Scan sweep (the Still and Colors only
+   presets), like the drawings' own loops (30-art.css). */
 (function () {
   'use strict';
   const O55 = window.O55, A = O55.art, M = O55.motion;
@@ -33,6 +44,16 @@
     nier: { tilt: 1.2, period: 7200, bob: 1.2, lift: 1, swing: 0.5, lean: 0.08, arm: 1, wave: 3, waveHz: 0.8, k: 70, c: 18, tick: 125, qTilt: 0.3, qLift: 0.5, qHop: 3 }
   };
   const quant = (v, q) => (q ? Math.round(v / q) * q : v);
+  /* NieR asleep (55-scenes.js): the control unit SLEEP.drop units below its mark, every string let out SLEEP.slack units
+     (so it sags, whatever the slumped unit's distance), a waving arm SLEEP.arm degrees down */
+  const SLEEP = { drop: 14, slack: 34, arm: 128 };
+  /* a value moving in held steps: the first step lands at t0, the last at t0 + ms * (steps - 1) / steps */
+  function stepped(a, now) {
+    if (now < a.t0) return a.from;
+    const p = (now - a.t0) / Math.max(1, a.ms);
+    return p >= 1 ? a.to : a.from + ((a.to - a.from) * Math.min(a.steps, Math.floor(p * a.steps) + 1)) / a.steps;
+  }
+  const flyOf = (g) => { const inEl = g && g.querySelector(':scope > .o55-in'), v = inEl ? parseFloat(inEl.style.getPropertyValue('--o55-fly')) : NaN; return Number.isFinite(v) ? v : 0; };
   const rigs = new Map();
   let raf = 0;
   const rad = (d) => (d * Math.PI) / 180;
@@ -55,19 +76,29 @@
   }
 
   A.rig = {
-    /* (re)read a mounted scene: after its first mount and after every beat change */
+    /* (re)read a mounted scene: after its first mount and after every beat change. opts: quick (a re-render that moved
+       no prop: measure at once), settle (ms: measure the strings for this long, re-armed by an arrival; never shortens a
+       window already open), payout (strings stay straight while measuring: props flying in on them). */
     watch(svg, opts) {
       if (!svg) return;
+      opts = opts || {};
       const ties = [...svg.querySelectorAll('.o55-tie')];
       if (!ties.length) { rigs.delete(svg); return; }
       const fam = svg.getAttribute('data-family'), it = (key) => svg.querySelector(`.o55-it[data-key="${key}"]`);
       const am = (g) => g && g.querySelector(':scope > .o55-in > .o55-am');
       const prev = rigs.get(svg), now = M.now();
+      const asleep = svg.classList.contains('o55-nier-asleep'), wrap = svg.parentNode, held = !!(wrap && wrap.classList && wrap.classList.contains('o55-ens-hold'));
       /* a re-render keeps the ambient phase and the bar's pose; one that moved no prop re-measures at once */
-      const st = { svg, fam, feel: FEEL[fam] || FEEL.basic, born: prev ? prev.born : now, last: now, settleAt: now + (prev ? (opts && opts.quick ? 0 : 950) : 1900),
+      const settle = opts.settle != null ? opts.settle : prev ? (opts.quick ? 0 : 950) : 1900;
+      const st = { svg, fam, feel: FEEL[fam] || FEEL.basic, born: prev ? prev.born : now, last: now, settleAt: Math.max(now + settle, prev ? prev.settleAt : 0),
+        payoutUntil: opts.payout ? now + settle : prev ? prev.payoutUntil : 0, asleep,
         amb0: prev ? prev.amb0 : null, until: prev ? prev.until : 0, morph: !!prev, cached: false, helpers: new Map() };
       const barKey = ties[0].getAttribute('data-from').split(':')[0], barIt = it(barKey);
-      st.bar = { it: barIt, am: am(barIt), pos: parse(barIt), tilt: prev ? prev.bar.tilt : 0, lift: prev ? prev.bar.lift : 0 };
+      /* the control unit's drop: kept across a re-render; a drawing born asleep starts low; one that left its sleep
+         with no wake under way (a re-render, a snap) stands at its mark */
+      const pb = prev && prev.bar, woke = !!(pb && pb.asleep && !asleep && !pb.dropA);
+      const drop = pb ? (woke ? 0 : pb.drop) : asleep ? SLEEP.drop : 0, slack = pb ? (woke ? 0 : pb.slack) : asleep ? SLEEP.slack : 0;
+      st.bar = { it: barIt, am: am(barIt), pos: parse(barIt), tilt: pb ? pb.tilt : 0, lift: pb ? pb.lift : 0, drop, slack, dropA: pb && !woke ? pb.dropA : null, asleep };
       st.ties = ties.map((g) => {
         const [fk, fh] = g.getAttribute('data-from').split(':'), [tk, th] = g.getAttribute('data-to').split(':');
         const from = it(fk) && it(fk).querySelector(`.o55-hook[data-hook="${fh}"]`), hIt = it(tk), to = hIt && hIt.querySelector(`.o55-hook[data-hook="${th}"]`);
@@ -75,12 +106,16 @@
         const t = { g, from, to, paths: [...g.querySelectorAll('.o55-sp')], hand: th === 'hand', key: tk };
         /* the same string before the re-render: its hook places carry over until they are measured again */
         const was = prev && prev.ties.find((o) => o.g === g || o.g.getAttribute('data-key') === g.getAttribute('data-key'));
-        if (was && was.fromLocal) { t.fromLocal = was.fromLocal; t.toLocal = was.toLocal; t.rest = was.rest; }
+        if (was && was.fromLocal) { t.fromLocal = was.fromLocal; t.toLocal = was.toLocal; t.rest = was.rest; t.armM = was.armM; }
+        /* a head string's rest length from the drawing, when it gives one (NieR) */
+        if (!t.hand && g.hasAttribute('data-rest')) { t.rest = +g.getAttribute('data-rest'); t.fixed = true; }
         if (!st.helpers.has(tk)) {
           const old = prev && prev.helpers.get(tk), arm = hIt.querySelector('.o55-arm');
           st.helpers.set(tk, { it: hIt, am: am(hIt), pos: parse(hIt), arm, pivot: arm ? (arm.getAttribute('data-pivot') || '0 0').split(/[ ,]+/).map(Number) : null,
             frames: [...hIt.querySelectorAll('.o55-wf')], x: old ? old.x : 0, v: old ? old.v : 0, up: old ? old.up : 0, lean: old ? old.lean : 0, ang: old ? old.ang : 0,
-            cheer: old ? old.cheer : null, pl: old ? old.pl : null, still: old ? old.still : null, i: st.helpers.size });
+            cheer: old ? old.cheer : null, pl: old ? old.pl : null, still: old ? old.still : null, i: st.helpers.size,
+            /* a held arm (asleep: hanging down) and its stepped move; the fly-in height while the ensemble is held */
+            armOff: old ? old.armOff : asleep && arm ? SLEEP.arm : 0, armA: old ? old.armA : null, inY: held && hIt.classList.contains('o55-ens-h') ? flyOf(hIt) : 0 });
         }
         const h = st.helpers.get(tk);
         if (t.hand) h.handTie = t; else { h.heads = (h.heads || []).concat(t); h.head = h.head || t; }
@@ -91,17 +126,64 @@
       if (!raf) raf = requestAnimationFrame(frame);
     },
     /* a helper cheers: a hop and a lean (and a lifted arm), on top of whatever the bar is doing. `who` is a helper key
-       or 'all' (the troupe celebrates, one after another). */
+       or 'all' (the troupe celebrates, one after another). o: big; or a shape of its own (the NieR thumbnail's peek):
+       hop (units), dur (ms), stagger (ms between helpers), steps (the hop held in steps: up, then down), arm (the
+       raised arm's lift, 1 = the usual), lean (0 = none). */
     cheer(svg, who, o) {
       const st = svg && rigs.get(svg); if (!st) return false;
-      const now = M.now(), big = !!(o && o.big);
+      o = o || {};
+      const now = M.now(), big = !!o.big, gap = o.stagger != null ? o.stagger : 110;
+      let n = 0, end = 0;
       [...st.helpers.entries()].forEach(([k, h], i) => {
         if (who !== 'all' && who !== k) return;
-        h.cheer = { t0: now + (who === 'all' ? i * 110 : 0), dur: big ? 1300 : 760, hop: big ? 22 : 12, turns: big ? 2 : 1 };
+        const c = { t0: now + (who === 'all' ? i * gap : 0), dur: o.dur || (big ? 1300 : 760), hop: o.hop != null ? o.hop : big ? 22 : 12, turns: big ? 2 : 1,
+          steps: o.steps || 0, arm: o.arm != null ? o.arm : 1, lean: o.lean != null ? o.lean : 1 };
+        h.cheer = c; n++; end = Math.max(end, c.t0 + c.dur);
       });
-      st.until = now + (big ? 1900 : 1100);
+      st.until = Math.max(st.until || 0, o.dur || o.stagger != null ? end + 60 : now + (big ? 1900 : 1100));
+      if (!raf) raf = requestAnimationFrame(frame);
+      return n > 0;
+    },
+    /* the control unit moves `to` units below its mark (negative: above it) in held steps; o: ms, steps, delay, slack
+       (the strings let out by this many units by the end, taken up when 0: the wake's takeup). The units stay standing
+       (their strings go slack and sag below the mark) and are lifted with it above. */
+    bar(svg, to, o) {
+      const st = svg && rigs.get(svg); if (!st) return false;
+      o = o || {};
+      const now = M.now(), t0 = now + (o.delay || 0), ms = o.ms == null ? 240 : o.ms, B = st.bar, a0 = B.dropA;
+      B.dropA = { from: a0 ? stepped(a0, now) : B.drop, to: +to || 0, t0, ms, steps: Math.max(1, o.steps || 2),
+        s0: a0 && a0.s1 != null ? stepped({ from: a0.s0, to: a0.s1, t0: a0.t0, ms: a0.ms, steps: a0.steps }, now) : B.slack, s1: o.slack != null ? +o.slack : null };
+      st.until = Math.max(st.until || 0, t0 + ms + 60); st.drawnStill = false;
       if (!raf) raf = requestAnimationFrame(frame);
       return true;
+    },
+    /* a waving helper's arm held `deg` from where the rig puts it (0: let go), in held steps; o: ms, steps, delay */
+    arm(svg, key, deg, o) {
+      const st = svg && rigs.get(svg), h = st && st.helpers.get(key); if (!h || !h.arm) return false;
+      o = o || {};
+      const now = M.now(), t0 = now + (o.delay || 0), ms = o.ms == null ? 120 : o.ms;
+      h.armA = { from: h.armA ? stepped(h.armA, now) : h.armOff, to: +deg || 0, t0, ms, steps: Math.max(1, o.steps || 2) };
+      st.until = Math.max(st.until || 0, t0 + ms + 60); st.drawnStill = false;
+      if (!raf) raf = requestAnimationFrame(frame);
+      return true;
+    },
+    /* end every stepped move at once (a key or a press snaps the troupe to its end state); o.drop / o.arm force them */
+    finish(svg, o) {
+      const st = svg && rigs.get(svg); if (!st) return false;
+      o = o || {};
+      const B = st.bar;
+      if (B.dropA) { B.drop = B.dropA.to; if (B.dropA.s1 != null) B.slack = B.dropA.s1; B.dropA = null; }
+      if (o.drop != null) B.drop = o.drop;
+      if (o.slack != null) B.slack = o.slack;
+      for (const h of st.helpers.values()) { if (h.armA) { h.armOff = h.armA.to; h.armA = null; } if (o.arm != null) h.armOff = o.arm; h.cheer = null; }
+      st.drawnStill = false;
+      if (!raf) raf = requestAnimationFrame(frame);
+      return true;
+    },
+    /* for tests and films: the control unit's drop and each helper's held arm */
+    state(svg) {
+      const st = rigs.get(svg); if (!st) return null;
+      return { drop: st.bar.drop, slack: st.bar.slack, measuring: M.now() < st.settleAt, arms: [...st.helpers.entries()].map(([k, h]) => ({ key: k, armOff: h.armOff, inY: h.inY })) };
     },
     /* a tied prop is plucked: a kick sideways into its spring, a wobble and a dip that die away (a letter landing on
        the name sign, a new beginning hung on the string). Reduced Motion skips it. */
@@ -145,11 +227,16 @@
   document.addEventListener('visibilitychange', wake);
   window.addEventListener('o55:lowresource', wake);
 
+  /* NieR's idle is decoration: off while the installed parts leave out Scan sweep (a preview while NieR Mode is off
+     has no parts attribute and shows every part) */
+  const sweepOn = () => { const r = document.documentElement, p = r.getAttribute('data-o55-nier-parts'); return p == null || (' ' + p + ' ').indexOf(' sweep ') >= 0; };
   const ambientOn = (svg) => {
     if (M.reduced() || M.lowResource || document.hidden) return false;
+    if (svg.getAttribute('data-family') === 'nier' && !sweepOn()) return false;
     const host = svg.closest('[data-o55-ambient]');
     return !host || host.getAttribute('data-o55-ambient') === 'on';
   };
+  new MutationObserver(wake).observe(document.documentElement, { attributes: true, attributeFilter: ['data-o55-nier-parts', 'data-motion'] });
 
   /* One frame for every rig on the page, in three passes: the rig transforms that decide where things are, then every
      measurement, then every string. Several scenes can be live at once (the look page has five), and a measurement
@@ -192,7 +279,8 @@
       if (!svg.isConnected) { rigs.delete(svg); continue; }
       const moving = ambientOn(svg);
       /* props still arriving: measure the strings; after a re-render the troupe keeps moving meanwhile */
-      if (now < st.settleAt) { if (st.morph && (moving || (st.until && now < st.until))) drive(st, now, moving); measuring.push(st); any = true; continue; }
+      /* (a drawing that hangs its control unit off its mark, asleep or acting, is driven from its first frame) */
+      if (now < st.settleAt) { if ((st.morph && (moving || (st.until && now < st.until))) || st.bar.drop || st.bar.dropA) drive(st, now, moving); measuring.push(st); any = true; continue; }
       settled.push([st, moving]);
     }
     const measuredEnds = measuring.map(measure);
@@ -222,30 +310,45 @@
       t.fromLocal = st.bar.am ? inSpace(st.bar.am, t.from, hookLocal(t.from)) : hookLocal(t.from);
       const h = t.h;
       t.toLocal = t.hand && h.arm ? inSpace(h.arm, t.to, hookLocal(t.to)) : h.am ? inSpace(h.am, t.to, hookLocal(t.to)) : hookLocal(t.to);
+      /* a raised hand turns with its arm group; anything between that group and the helper's moving group (NieR's
+         slump while asleep) is carried as a matrix, left out when it is none */
+      t.armM = null;
+      if (t.hand && h.arm && h.am && h.arm.parentNode !== h.am) {
+        const a = h.am.getScreenCTM(), b = h.arm.parentNode.getScreenCTM();
+        if (a && b) { const m = a.inverse().multiply(b); if (Math.abs(m.a - 1) + Math.abs(m.b) + Math.abs(m.c) + Math.abs(m.d - 1) + Math.abs(m.e) + Math.abs(m.f) > 1e-4) t.armM = [m.a, m.b, m.c, m.d, m.e, m.f]; }
+      }
     }
-    /* rest lengths of the head strings, for slack */
-    for (const t of st.ties) if (!t.hand) { const [a, b] = ends(st, t, true); t.rest = Math.hypot(b[0] - a[0], b[1] - a[1]); }
+    /* rest lengths of the head strings, for slack (unless the drawing gave them) */
+    for (const t of st.ties) if (!t.hand && !t.fixed) { const [a, b] = ends(st, t, true); t.rest = Math.hypot(b[0] - a[0], b[1] - a[1]); }
     st.cached = true;
   }
   /* a tie's two ends from the rig's own transforms (rest = with every rig transform at zero) */
   function ends(st, t, rest) {
     const B = st.bar, h = t.h, bs = B.pos.s || 1, hs = h.pos.s || 1;
-    const bp = rest ? t.fromLocal : (() => { const r = rot(t.fromLocal, B.tilt); return [r[0], r[1] - B.lift]; })();
+    const bp = rest ? t.fromLocal : (() => { const r = rot(t.fromLocal, B.tilt); return [r[0], r[1] - B.lift + B.drop]; })();
     const a = [B.pos.x + bs * bp[0], B.pos.y + bs * bp[1]];
     let p = t.toLocal;
     if (!rest && t.hand && h.arm) { const pv = h.pivot, r = rot([p[0] - pv[0], p[1] - pv[1]], h.ang); p = [pv[0] + r[0], pv[1] + r[1]]; }
-    if (!rest) { const r = rot(p, h.lean); p = [r[0] + h.x / hs, r[1] - h.up / hs]; }
+    if (t.armM) { const m = t.armM; p = [m[0] * p[0] + m[2] * p[1] + m[4], m[1] * p[0] + m[3] * p[1] + m[5]]; }
+    if (!rest) { const r = rot(p, h.lean); p = [r[0] + h.x / hs, r[1] - h.up / hs + h.inY]; }
     return [a, [h.pos.x + hs * p[0], h.pos.y + hs * p[1]]];
   }
   function computed(st) { for (const t of st.ties) { const [a, b] = ends(st, t, false); write(st, t, a, b); } }
 
   /* a string between two points; a head string shorter than its rest length is slack and sags */
+  /* (a string paying out under a prop that flies in, or hanging short above a held one, stays straight; a hand string
+     whose arm hangs down is loose; strings let out (the control unit's slack: asleep) bow outward, away from the
+     stage's middle, so the sag reads on a string that hangs nearly straight down) */
   function write(st, t, a, b) {
-    const retro = st.fam === 'retro';
+    const retro = st.fam === 'retro', B = st.bar;
     if (retro) { a = a.map(Math.round); b = b.map(Math.round); }
-    const len = Math.hypot(b[0] - a[0], b[1] - a[1]), slack = !retro && t.rest ? Math.max(0, t.rest - len) : 0;
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const slack = retro ? 0 : t.hand ? (t.h.armOff > 40 ? 30 : 0) : t.rest && !t.h.inY && !(st.payoutUntil && M.now() < st.payoutUntil) ? Math.max(0, t.rest + (B.slack || 0) - len) : 0;
     let d;
-    if (slack > 0.4) {
+    if (slack > 0.4 && B.slack > 0) {
+      const sag = Math.min(30, Math.sqrt(slack) * 3.8), out = b[0] >= 240 ? 1 : -1, mx = (a[0] + b[0]) / 2 + out * sag, my = (a[1] + b[1]) / 2 + sag * 0.3;
+      d = `M${a[0].toFixed(1)} ${a[1].toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
+    } else if (slack > 0.4) {
       const sag = Math.min(16, Math.sqrt(slack) * 3.2), mx = (a[0] + b[0]) / 2 + sag * 0.45, my = (a[1] + b[1]) / 2 + sag * 0.2;
       d = `M${a[0].toFixed(1)} ${a[1].toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
     } else d = `M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
@@ -258,8 +361,10 @@
     const c = h.cheer; if (!c) return null;
     const p = (now - c.t0) / c.dur; if (p < 0) return { up: 0, lean: 0, arm: 0 };
     if (p >= 1) { h.cheer = null; return null; }
-    const hop = Math.abs(Math.sin(Math.PI * p * c.turns)) * (1 - p * 0.35) * c.hop;
-    return { up: hop, lean: Math.sin(Math.PI * 2 * p * c.turns) * 5 * (1 - p), arm: -Math.sin(Math.PI * p) * 34 };
+    /* a stepped hop: up for the first half, down for the second */
+    const hop = c.steps ? (p < 0.5 ? c.hop : 0) : Math.abs(Math.sin(Math.PI * p * c.turns)) * (1 - p * 0.35) * c.hop;
+    const k = c.arm == null ? 1 : c.arm, l = c.lean == null ? 1 : c.lean;
+    return { up: hop, lean: Math.sin(Math.PI * 2 * p * c.turns) * 5 * (1 - p) * l, arm: -Math.sin(Math.PI * p) * 34 * k };
   }
   /* a pluck's wobble (deg) and dip (px, down) at time now: a damped swing with the family's spring feel */
   function pluckAt(h, now, f) {
@@ -283,11 +388,17 @@
     const B = st.bar;
     B.tilt = moving ? quant(f.tilt * Math.sin(w(f.period)) + f.tilt * 0.25 * Math.sin(w(f.period * 0.41)), f.qTilt) : B.tilt;
     B.lift = moving ? quant(f.bob * Math.sin(w(f.period * 1.7)), f.qLift) : B.lift;
-    if (B.am) put(B.am, 'transform', `translate(0 ${(-B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
+    if (B.dropA) {
+      const a = B.dropA; B.drop = stepped(a, now);
+      if (a.s1 != null) B.slack = stepped({ from: a.s0, to: a.s1, t0: a.t0, ms: a.ms, steps: a.steps }, now);
+      if (now >= a.t0 + a.ms) { B.drop = a.to; if (a.s1 != null) B.slack = a.s1; B.dropA = null; }
+    }
+    if (B.am) put(B.am, 'transform', `translate(0 ${(B.drop - B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
     for (const h of st.helpers.values()) {
+      if (h.armA) { h.armOff = stepped(h.armA, now); if (now >= h.armA.t0 + h.armA.ms) { h.armOff = h.armA.to; h.armA = null; } }
       if (!h.head || !h.am || h.heads.some((t) => !t.fromLocal)) continue; /* a string not measured yet */
       /* a prop hung by two strings (the name sign) tilts with the bar and rises by the mean of its two points */
-      const shift = (l) => { const r = rot(l, B.tilt); return [r[0] - l[0], r[1] - l[1] - B.lift]; };
+      const shift = (l) => { const r = rot(l, B.tilt); return [r[0] - l[0], r[1] - l[1] - B.lift + B.drop]; };
       const moves = h.heads.map((t) => shift(t.fromLocal)), dx = moves.reduce((a, m) => a + m[0], 0) / moves.length, dy = moves.reduce((a, m) => a + m[1], 0) / moves.length;
       /* with the ambient motion held, a helper keeps the place it stopped at, and a pluck settles back to it */
       if (moving) h.still = null; else if (h.still == null) h.still = h.x;
@@ -299,8 +410,8 @@
       const s = h.pos.s || 1;
       put(h.am, 'transform', `translate(${(h.x / s).toFixed(2)} ${(-h.up / s).toFixed(2)}) rotate(${h.lean.toFixed(2)})`);
       if (h.arm) {
-        const hy = h.handTie && h.handTie.fromLocal ? (() => { const l = h.handTie.fromLocal, rr = rot(l, B.tilt); return rr[1] - l[1] - B.lift; })() : 0;
-        h.ang = Math.max(-28, Math.min(22, hy * f.arm)) + (moving ? f.wave * Math.sin(2 * Math.PI * f.waveHz * t) : 0) + (ch ? ch.arm : 0);
+        const hy = h.handTie && h.handTie.fromLocal ? (() => { const l = h.handTie.fromLocal, rr = rot(l, B.tilt); return rr[1] - l[1] - B.lift + B.drop; })() : 0;
+        h.ang = Math.max(-28, Math.min(22, hy * f.arm)) + (moving ? f.wave * Math.sin(2 * Math.PI * f.waveHz * t) : 0) + (ch ? ch.arm : 0) + h.armOff;
         put(h.arm, 'transform', `rotate(${h.ang.toFixed(2)} ${h.pivot[0]} ${h.pivot[1]})`);
       }
     }

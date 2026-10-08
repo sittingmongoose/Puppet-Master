@@ -174,17 +174,20 @@
 
   /* the visor's display faces, paper on the band: scan (a notch that steps across, part Scan sweep; it rests at -7.4
      on either band), joy (two chevrons; drawn at opacity 0, shown while the unit cheers), rest (two dashes, the bow) */
-  function face(K, v, kind, dy, scan) {
-    const B = v.hood ? VISOR_HOOD : VISOR, cy = B.y + B.h / 2 + dy, k = v.hood ? 0.8 : 1;
+  function face(K, v, kind, dy, scan, off) {
+    const B = v.hood ? VISOR_HOOD : VISOR, cy = B.y + B.h / 2 + dy, k = v.hood ? 0.8 : 1, hid = off ? ' opacity="0"' : '';
     if (kind === 'joy') {
       const d = `M${f(-6.6 * k)} ${f(cy + 1.4)}L${f(-4.4 * k)} ${f(cy - 1.2)}L${f(-2.2 * k)} ${f(cy + 1.4)}M${f(2.2 * k)} ${f(cy + 1.4)}L${f(4.4 * k)} ${f(cy - 1.2)}L${f(6.6 * k)} ${f(cy + 1.4)}`;
       return `<g class="nv-joy" opacity="0">${K.P(d, 'ko', 1.1)}</g>`;
     }
-    if (kind === 'rest') return `<g class="nv-rest">${K.P(`M${f(-6.6 * k)} ${f(cy)}H${f(-2.4 * k)}M${f(2.4 * k)} ${f(cy)}H${f(6.6 * k)}`, 'ko', 1.1)}</g>`;
-    return `<g class="nv-scan">${K.R(-7.4, B.y + dy, 1.4, B.h, 'g', null, scan.cls, scan.style)}</g>`;
+    if (kind === 'rest') return `<g class="nv-rest"${hid}>${K.P(`M${f(-6.6 * k)} ${f(cy)}H${f(-2.4 * k)}M${f(2.4 * k)} ${f(cy)}H${f(6.6 * k)}`, 'ko', 1.1)}</g>`;
+    return `<g class="nv-scan"${hid}>${K.R(-7.4, B.y + dy, 1.4, B.h, 'g', null, scan.cls, scan.style)}</g>`;
   }
   /* the head group: tilted about the hook, or (the bow) dipped 4 below it behind a stub of string, so the knot and the
-     string's end never move */
+     string's end never move. Every unit draws all three display faces: scan, joy (opacity 0) and rest (opacity 0 but
+     in the bow), so a class on the unit's item can show any of them on any pose (.o55-rest, .o55-joy: 30-art.css). A
+     unit that is not bowing also carries the bow's stub of string, hidden (.nv-stub): a bow played on it (.o55-bow,
+     59-cheer.js) dips its head below the knot and shows the stub. */
   function head(K, v, vi, pose, scan, s) {
     const dip = pose === 'bow' ? 4 : 0, look = pose === 'bow' ? 1.4 : pose === 'carry' ? 1 : 0, tilt = dip ? 0 : (TILT[pose] || TILT.stand)[vi] || 0;
     let h = '';
@@ -193,13 +196,24 @@
       if (v.fin) h += K.P(FIN, 'i') + K.P('M-11.4 -57.6V-53.4', 'ko', 0.6);
       h += K.P(HEAD, 'p s', W.outline) + K.R(VISOR.x, VISOR.y + look, VISOR.w, VISOR.h, 'i');
     }
-    h += face(K, v, dip ? 'rest' : 'scan', look, scan) + face(K, v, 'joy', look, scan);
+    h += face(K, v, 'scan', look, scan, !!dip) + face(K, v, 'rest', look, scan, !dip) + face(K, v, 'joy', look, scan);
     const tf = dip ? `translate(0 ${dip})` : tilt ? `rotate(${tilt} 0 ${HOOK})` : '';
-    return `<g class="nv-head"${tf ? ` transform="${tf}"` : ''}>${h}</g>` + (dip ? K.P(`M0 ${HOOK}V${HOOK + dip}`, 's2', 0.85 / s) : '');
+    const stub = K.P(`M0 ${HOOK}V${HOOK + 4}`, 's2', 0.85 / s, dip ? '' : 'nv-stub', dip ? '' : ' opacity="0"');
+    return (dip ? '' : stub) + `<g class="nv-head"${tf ? ` transform="${tf}"` : ''}>${h}</g>` + (dip ? stub : '');
   }
   const collar = (K) => K.P('M-5.5 -49.5L-1.5 -47.3L0 -45.6L1.5 -47.3L5.5 -49.5L6.5 -42.5H-6.5Z', 'i') + K.P('M-6.9 -42.4H6.9', 'ko', 0.7) + K.P('M-1.5 -47.3L-2.6 -43.2M1.5 -47.3L2.6 -43.2', 'ko', 0.55);
   const arm = (K, side, pts, hand) => K.P(`M${side * SH} ${SY}L${f(pts[0][0])} ${f(pts[0][1])}L${f(pts[1][0])} ${f(pts[1][1])}`, 's', W.limb)
     + K.SQ(pts[0][0], pts[0][1], 2.2, 'p s', W.joint) + (hand === false ? '' : K.SQ(pts[1][0], pts[1][1], 3, 'p s', W.hand));
+  /* The right arm's other poses, drawn hidden (display none, so A.box and the paint skip them) for the troupe's acting
+     (59-cheer.js): a class on the unit's item shows one in place of the pose's own right arm (.nv-arm-r): .o55-arm-stand,
+     -mid (half raised), -up (raised, the wave's hand), -aim (drawn back before a jab), -pt (pointing). A unit that waves
+     (its arm is the rig's group) or carries (both hands hold the chip) has none: it acts with its head and visor only. */
+  const ALT = { stand: ARMS.stand.R, mid: [[18, -41.5], [23.5, -48]], up: ARMS.wave.R, aim: [[17, -37.5], [24.5, -40]], pt: ARMS.point.R };
+  const TIP = 'M30.6 -41.5H34.5';
+  function alts(K, pose) {
+    if (pose === 'wave' || pose === 'carry') return '';
+    return Object.keys(ALT).filter((k) => k !== pose).map((k) => `<g class="nv-alt nv-alt-${k} o55-nier-shade-alt" display="none">${arm(K, 1, ALT[k])}${k === 'pt' ? K.P(TIP, 's', 1.2) : ''}</g>`).join('');
+  }
   const legs = (K, v) => K.P(`M-3 ${v.hip}V-14.5M3 ${v.hip}V-14.5`, 's', W.leg) + K.P(BOOTS, 'i') + K.SQ(-3, -15, 2.2, 'p s', W.joint) + K.SQ(3, -15, 2.2, 'p s', W.joint);
   /* the carried thing: a plug-in chip whose core is the scene's ochre accent when it holds it (accentOf), else ink */
   const chip = (K, och) => K.R(-8, -36.5, 16, 11, 'p s', 1) + K.P(PINS, 's', 0.8) + K.R(-3, -33.4, 6, 4.8, och ? 'och' : 'i');
@@ -218,19 +232,23 @@
     if (v.buckle) out += K.SQ(v.buckle[0], v.buckle[1], 2.8, 'g');
     if (v.emblem) out += K.DI(v.emblem[0], v.emblem[1], 1.6, 'g');
     if (v.hood) out += collar(K);
-    out += arm(K, -1, Ar.L) + (wave ? '' : arm(K, 1, Ar.R, pose !== 'carry'));
+    out += arm(K, -1, Ar.L);
+    /* the pose's own right arm (and the bow's hand on the chest, the pointer's tip) in one group, so a class can swap
+       it for one of the alternates drawn beside it (alts above) */
+    if (!wave) out += `<g class="nv-arm-r">${arm(K, 1, Ar.R, pose !== 'carry')}${pose === 'point' ? K.P(TIP, 's', 1.2) : ''}</g>` + alts(K, pose);
     if (pose === 'carry') out += chip(K, accentOf(ctx, item)) + K.SQ(-8.6, -30.5, 3, 'p s', W.hand) + K.SQ(8.6, -30.5, 3, 'p s', W.hand);
     out += K.SQ(-SH, SY, 2.6, 'p s', W.joint) + (wave ? '' : K.SQ(SH, SY, 2.6, 'p s', W.joint));
     if (v.over) out += K.P(v.over, 'i') + K.P(v.over, 'ko', 0.7) + (v.overKo ? K.P(v.overKo, 'ko', 0.7) : '');
     out += head(K, v, vi, pose, scan, s);
     if (!v.hood) out += collar(K);
     if (v.clasp) out += K.DI(v.clasp[0], v.clasp[1], 1.6, 'g');
-    if (pose === 'bow') out += K.SQ(2.8, -37.5, 3, 'p s', W.hand);
+    if (pose === 'bow') out += `<g class="nv-arm-r">${K.SQ(2.8, -37.5, 3, 'p s', W.hand)}</g>`;
     /* the waving arm is its own group: the rig turns it about the shoulder, and the hand's string follows its hook */
     if (wave) out += `<g class="o55-arm" data-pivot="${SH} ${SY}">${arm(K, 1, Ar.R)}${K.SQ(SH, SY, 2.6, 'p s', W.joint)}<circle class="o55-hook" data-hook="hand" cx="${HAND[0]}" cy="${HAND[1]}" r="0.01" fill="none"/></g>`;
-    if (pose === 'point') out += K.P('M30.6 -41.5H34.5', 's', 1.2);
-    if (o.rig || o.anchor) out += K.DI(0, HOOK, W.knot, 'i');
-    return `${G} class="o55-nier-unit">${out}</g>`;
+    /* the knot keeps its own class: while the troupe is held above the stage (.o55-ens-hold) the unit is hidden but its
+       knot shows, hanging in mid-air at the end of its string */
+    if (o.rig || o.anchor) out += K.DI(0, HOOK, W.knot, 'i', null, 'nv-knot');
+    return `${G} class="o55-nier-unit" data-pose="${pose}">${out}</g>`;
   }
 
   /* ================================================================ YOU (props.operator), hero only
@@ -250,6 +268,10 @@
       ground: `M-36 ${H}H14`
     };
   })();
+  /* You's states, for the troupe's acting (59-cheer.js; 30-art.css): the near arm is drawn three ways, raised (the
+     signal's start, .o55-nier-op-arm), half raised (-armmid) and resting on the knee (-armdn), one shown at a time; the
+     head and its paper slit are their own groups, so the slit can go dark and the head bow while the stage is asleep
+     (.o55-nier-asleep), or while the troupe is held (the arm only). */
   function operator(ctx) {
     const K = kit(ctx.pal);
     return `${G} class="o55-nier-you">`
@@ -259,7 +281,9 @@
       + K.P('M-8 -26H6L8 -23L5 -1H-7L-10 -23Z', 'i')
       + K.P('M-6.5 -21L-10.5 -10.5L-8.5 -2', 's', 2) + K.SQ(-8.5, -2, 3.2, 'i')
       + `<g class="o55-nier-op-arm">${K.P('M4 -22L11 -31.5L15.5 -42', 's', 2)}${K.SQ(16, -43.2, 3.6, 'i')}</g>`
-      + K.P('M-4.4 -44.5H4.4L7.8 -41V-32.8L3.6 -27.6H-3.6L-7.8 -32.8V-41Z', 'i') + K.R(-3.2, -39, 11, 3.8, 'oi')
+      + `<g class="o55-nier-op-armmid" display="none">${K.P('M4 -22L12 -26.5L19.5 -31', 's', 2)}${K.SQ(20.4, -31.6, 3.6, 'i')}</g>`
+      + `<g class="o55-nier-op-armdn" display="none">${K.P('M4 -22L7.4 -12.5L11.6 -4.4', 's', 2)}${K.SQ(12.2, -3.6, 3.6, 'i')}</g>`
+      + `<g class="o55-nier-op-head">${K.P('M-4.4 -44.5H4.4L7.8 -41V-32.8L3.6 -27.6H-3.6L-7.8 -32.8V-41Z', 'i')}${K.R(-3.2, -39, 11, 3.8, 'oi', null, 'o55-nier-op-slit')}</g>`
       + '</g>';
   }
   /* a small machine lifeform (the package's own machine idiom, original): sits on the stage's broken corner and
@@ -289,7 +313,7 @@
       + K.R(-118, -6.5, 8, 13, 'i') + K.R(110, -6.5, 8, 13, 'i') + K.P('M-114 -6.5V6.5M114 -6.5V6.5', 'ko', 0.7)
       + K.P('M-6 12L-4.5 26.5H4.5L6 12Z', 'i')
       + K.P('M-13 -25H13L18 -20V7L13 12H-13L-18 7V-20Z', 'p s', 1.4) + K.P('M-18 -18H18M-14 3.5H14M-14 7H14', 's', 0.8)
-      + K.R(-10.5, -13, 21, 5.2, 'i') + `<g class="scan2">${K.R(-8.6, -13, 2.6, 5.2, 'g', null, 'o55-nier-scan', ' style="--o55-scan-d:2.8s"')}</g>`
+      + K.R(-10.5, -13, 21, 5.2, 'i') + `<g class="scan2 o55-nier-barslit">${K.R(-8.6, -13, 2.6, 5.2, 'g', null, 'o55-nier-scan', ' style="--o55-scan-d:2.8s"')}</g>`
       + K.SQ(-100, 0, 4.6, 'i') + K.SQ(100, 0, 4.6, 'i') + K.SQ(-56, 0, 2.4, 'g s2', 0.8) + K.SQ(56, 0, 2.4, 'g s2', 0.8)
       + K.R(-3.2, 26.8, 6.4, 6.4, 'p s', 1.2)
       + '</g>';
@@ -462,10 +486,28 @@
        one object on a dark ground too (the ink box starts where the kicker ends: nothing of it peeks out at the kicker's
        edges). Same structure for any label (it is relettered on every keystroke). Hung by its corners (opts.ties),
        edgeInset in from them: the left string lands on the kicker's outline. */
+    /* Two options for the Created act (57-scenes-journey.js, 59-cheer.js): hang (a scene y above the sign) draws its
+       own two strings from its top corners up to there, so a sign hung from the top of the frame (not from the control
+       unit) is lowered with its strings; stamp (a word) adds a stamp straddling the bottom edge at the right, in the
+       sign's inverse (paper on an inked sign), drawn as a frame and a filled block (.nv-stamp-frame, -fill) so it can
+       invert onto the sign in two steps (30-art.css: after the sign's own entrance). .o55-nier-body is the sign's box,
+       for a lock-on (the strings left out). */
     badge(ctx, item) {
       const K = kit(ctx.pal), o = item.opts || {}, lab = String(o.label || ''), w = Math.max(88, Math.ceil(lab.length * 6.6 + 34)), x0 = -w / 2, on = !!(o.accent || o.on);
-      return `${G}>${on ? K.R(x0 + 16, -14, w - 16, 28, 'i') + K.R(x0, -14, 16, 28, 'g s', 1.2) : K.R(x0, -14, w, 28, 'p s', 1.2) + K.R(x0, -14, 16, 28, 'i')}${K.DI(x0 + 8, 0, 3.4, on ? 'i' : 'g')}`
-        + `${K.T(8, 3, lab, { size: 7.4, role: on ? 'txo' : 'txi', ls: 2.2 })}${K.P(`M${f(x0 + 22)} 9H${f(-x0 - 6)}`, on ? 'koi' : 's3', 0.7)}</g>`;
+      let hang = '', stamp = '';
+      if (o.hang != null) {
+        const sc = item.s || 1, top = Math.min(-20, (o.hang - (item.y || 0)) / sc), ins = (A.metrics('nier').edgeInset || 7);
+        hang = K.P(`M${f(x0 + ins)} -14V${f(top)}M${f(-x0 - ins)} -14V${f(top)}`, 's2', 0.85 / sc, 'o55-nier-hangs');
+      }
+      if (o.stamp) {
+        const word = String(o.stamp), sw = Math.ceil(word.length * 5.7 + 16), sx = -x0 - 6 - sw, ink = on ? 'g' : 'i';
+        stamp = `<g class="o55-nier-stamp"><g class="nv-stamp-frame">${K.P(brk(sx - 2, 5, 1, 1, 4) + brk(sx + sw + 2, 5, -1, 1, 4) + brk(sx - 2, 22, 1, -1, 4) + brk(sx + sw + 2, 22, -1, -1, 4), on ? 'koi' : 's', 0.9)}</g>`
+          + `<g class="nv-stamp-fill">${K.R(sx, 7, sw, 13, ink + (on ? ' s' : ' koi'), 1)}${K.SQ(sx + 4.5, 13.5, 2.2, on ? 'i' : 'g')}${K.SQ(sx + sw - 4.5, 13.5, 2.2, on ? 'i' : 'g')}`
+          + `${K.T(sx + sw / 2, 15.9, word, { size: 6.2, role: on ? 'txi' : 'txo', ls: 1.6 })}</g></g>`;
+      }
+      return `${G}>${hang}${on ? K.R(x0 + 16, -14, w - 16, 28, 'i') + K.R(x0, -14, 16, 28, 'g s', 1.2) : K.R(x0, -14, w, 28, 'p s', 1.2) + K.R(x0, -14, 16, 28, 'i')}${K.DI(x0 + 8, 0, 3.4, on ? 'i' : 'g')}`
+        + `${K.T(8, 3, lab, { size: 7.4, role: on ? 'txo' : 'txi', ls: 2.2 })}${K.P(`M${f(x0 + 22)} 9H${f(-x0 - 6)}`, on ? 'koi' : 's3', 0.7)}`
+        + `${o.hang != null || o.stamp ? `<rect class="o55-nier-body" x="${f(x0)}" y="-14" width="${f(w)}" height="28" fill="none"/>` : ''}${stamp}</g>`;
     },
     /* a chamfered square with target-bracket corners (left out of its measured outline, so strings and routes end on
        the square), the glyph in ink; on (state 'on' or accent): inverted. The family says round: false. */
@@ -476,23 +518,26 @@
         + `${o.label ? caption(K, 44, o.label) : ''}${o.sub ? K.T(0, 55, o.sub, { size: 5.8 }) : ''}</g>`;
     },
     /* an orthogonal map route in ink 0.55 with square end studs (ink at the start, paper at the end) and cross ticks
-       every 10 that carry the stepped march (.o55-nier-mk, numbered from the start, still at 0.55) */
+       every 10 that carry the stepped march (.o55-nier-mk, numbered from the start, still at 0.55). The ticks of one
+       phase (k % 3) are one path, so a route runs three animations whatever its length (the tour ring's method). */
     pathline(ctx, item) {
       const K = kit(ctx.pal), pts = (item.opts || {}).pts || [];
       if (pts.length < 2) return '';
       const r = route(pts), d = 'M' + r.map((q) => `${f(q[0])} ${f(q[1])}`).join('L');
       let total = 0;
       for (let i = 1; i < r.length; i++) total += Math.hypot(r[i][0] - r[i - 1][0], r[i][1] - r[i - 1][1]);
-      let ticks = '', k = 0, at = 0;
+      const ph = ['', '', ''];
+      let k = 0, at = 0;
       for (let i = 1; i < r.length; i++) {
         const a = r[i - 1], b = r[i], len = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / len, uy = (b[1] - a[1]) / len;
         for (let t = Math.ceil((at - 8) / 10) * 10 + 8 - at; t < len; t += 10) {
           if (at + t > total - 6 || (t < 2 && i > 1)) continue; /* none on the end stud, none doubled on a corner */
           const x = a[0] + ux * t, y = a[1] + uy * t;
-          ticks += `<path class="o55-nier-mk o55-nier-mk${k++ % 3}" opacity="0.55" d="M${f(x - uy * 2.6)} ${f(y + ux * 2.6)}L${f(x + uy * 2.6)} ${f(y - ux * 2.6)}" fill="none" stroke="${ctx.pal.ink}" stroke-width="1"/>`;
+          ph[k++ % 3] += `M${f(x - uy * 2.6)} ${f(y + ux * 2.6)}L${f(x + uy * 2.6)} ${f(y - ux * 2.6)}`;
         }
         at += len;
       }
+      const ticks = ph.map((t, j) => (t ? `<path class="o55-nier-mk o55-nier-mk${j}" opacity="0.55" d="${t}" fill="none" stroke="${ctx.pal.ink}" stroke-width="1"/>` : '')).join('');
       const e = r[r.length - 1];
       return `${G}>${K.P(d, 's2', 1)}${ticks}${K.SQ(r[0][0], r[0][1], 4, 'i')}${K.SQ(e[0], e[1], 4, 'g s', 1)}</g>`;
     },
@@ -521,18 +566,22 @@
         + `${lab ? K.R(-3, hh / 2 - 22, 16, 44, 'g') + K.T(5, hh / 2, lab, { size: 6, extra: ` transform="rotate(90 5 ${f(hh / 2)})"` }) : ''}</g>`;
     },
     /* You's stepped signal to the control unit (hero; added with `operator`): pts = [the raised hand, under the bar's
-       left end cap] in scene units, item at 0,0. Segments 4.5 long every 11, marching away from the hand
-       (.o55-nier-mk, still at 0.55), ending in a paper diamond. Scenery, not a string: the rig never moves it. */
+       left end cap] in scene units, item at 0,0. Segments 4.5 long every 11, marching away from the hand: the segments
+       of one phase (k % 3) sit in one group (.o55-nier-mk, still at 0.55), so the march is three animations. Each
+       segment carries its index (--k, of --n) for the one-shot signal run and the power-down (.o55-nier-linkrun,
+       -linkoff: 30-art.css, 59-cheer.js). Ends in a paper diamond. Scenery, not a string: the rig never moves it. */
     link(ctx, item) {
       const p = ctx.pal, pts = (item.opts || {}).pts || [];
       if (pts.length < 2) return '';
       const [a, b] = pts, len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, ux = (b[0] - a[0]) / len, uy = (b[1] - a[1]) / len;
-      let segs = '';
-      for (let d = 7, k = 0; d < len - 8; d += 11, k++) {
-        segs += `<path class="o55-nier-mk o55-nier-mk${k % 3}" opacity="0.55" d="M${f(a[0] + ux * d)} ${f(a[1] + uy * d)}L${f(a[0] + ux * (d + 4.5))} ${f(a[1] + uy * (d + 4.5))}"/>`;
+      const ph = ['', '', ''];
+      let n = 0;
+      for (let d = 7; d < len - 8; d += 11, n++) {
+        ph[n % 3] += `<path style="--k:${n}" d="M${f(a[0] + ux * d)} ${f(a[1] + uy * d)}L${f(a[0] + ux * (d + 4.5))} ${f(a[1] + uy * (d + 4.5))}"/>`;
       }
-      return `<g class="o55-nier-link" fill="none" stroke="${p.ink}" stroke-width="1" stroke-linecap="square">${segs}`
-        + `<path d="${dia(b[0], b[1] + 2, 2.6)}" fill="${p.ground}" stroke-width="0.9" stroke-linejoin="miter"/></g>`;
+      return `<g class="o55-nier-link" fill="none" stroke="${p.ink}" stroke-width="1" stroke-linecap="square" style="--n:${n}">`
+        + ph.map((g, j) => `<g class="o55-nier-mk o55-nier-mk${j}" opacity="0.55">${g}</g>`).join('')
+        + `<path class="o55-nier-linkend" d="${dia(b[0], b[1] + 2, 2.6)}" fill="${p.ground}" stroke-width="0.9" stroke-linejoin="miter"/></g>`;
     }
   };
 
