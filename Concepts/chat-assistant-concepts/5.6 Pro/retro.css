@@ -12,13 +12,42 @@
  *
  * Geometry is 5.6's: where a box had a 1 px border its 2 px line is that border plus a 1 px outer ring
  * (box-shadow 0 0 0 1px), so no box changes size and nothing that measures a box (the sheets' plate fit, the
- * Orbit, the send flight) sees a different layout. Only the thread rows, which had no border, gain one.
+ * Orbit, the send flight) sees a different layout. Only the thread rows, which had no border, and the boxed
+ * assistant reply (decision D2) gain one.
+ *
+ * Two looks are Jared's open calls, each built as the recommended option in one commented block that can be flipped
+ * on its own: D1 Retro Light readability and D2 the boxed assistant reply (section 0).
  *
  * Scope: every selector starts with body[data-theme^="retro"] (or a per-theme id), so no other theme changes and
  * NieR (which paints basic) never reaches here. Colours are literal per theme: no color-mix() (pmx-verify
  * forbidden-props reads computed pmx styles). Motion and sound are untouched: no duration, easing, keyframe,
  * transform or font size is set here. Loaded in CSS_LAST after send-stop.css, so it wins the ties it restyles.
  */
+
+/* ---------------------------------------------------------------- 0 Jared's two open calls (one block each) */
+/* DECISION D1 -- Retro Light readability. BUILT: the readable option (recommended).
+   PMConcept7's own retro-light inks are an orange warning #F57C00 (2.4:1 on the #F5F0E8 paper) and near-black text
+   #1A1A1A on the #2F7A3D green user bubble (3.3:1). Built instead: warning #A65800, the same orange darkened to
+   4.6:1 on the paper (4.9:1 on the raised #FAF7F2), carried by the time-family hue and the Orbit's test step too, and
+   the paper colour #F5F0E8 as the user bubble's ink (4.7:1).
+   TO FLIP to PMConcept7-exact, set the four values to: --warning:#F57C00; --fam-time:#F57C00; --rt-step-test:#F57C00;
+   --rt-lime-ink:#1A1A1A. (neon-verify check 11 then fails on Retro Light: the idle ink would outrank the warning.)
+   styles.css and turn-stage.css hold the same readable values in their token tables; this block is the one that
+   wins, so flipping it is the whole change. Retro Dark needs no such call: PMConcept7's dark warning and user-bubble
+   ink already read 8:1 or more. */
+body[data-theme="retro-light"] { --warning: #A65800; --fam-time: #A65800; --rt-step-test: #A65800; --rt-lime-ink: #F5F0E8; }
+
+/* DECISION D2 -- Retro assistant replies. BUILT: the boxed reply (recommended).
+   A square box on the raised surface with one plain 2 px structural line all round and the hard retro offset shadow
+   (3 px, no blur): PMConcept7's boxed assistant turn without its coloured left edge and without its lime side glow
+   (no coloured strip on any side). Turn Stage's presence mark and spine stay in the gutter outside the box: the
+   mark (drawn 10 px below the item's top) sits beside the box's top corner and the spine runs down 17 px clear of
+   its left edge, so the box reads as hanging off the spine. A collapsed long reply fades into the box's own fill.
+   TO FLIP to Turn Stage's unboxed prose (no box, prose straight on the spine), delete this block. */
+body[data-theme^="retro"] :is(.transcript, .tx-feed)[data-variant="16"] .message-assistant .message-surface {
+  background: var(--surface-2); border: 2px solid var(--rt-line); box-shadow: var(--rt-sh); padding: 8px 12px;
+}
+body[data-theme^="retro"] :is(.transcript, .tx-feed)[data-variant="16"] .message-assistant .long-fade::after { background: linear-gradient(transparent, var(--surface-2)); }
 
 /* ---------------------------------------------------------------- 1 tokens */
 body[data-theme="retro-dark"] {
@@ -31,15 +60,13 @@ body[data-theme="retro-dark"] {
   --rt-hair-sh: 0 0 0 1px #333a28, 4px 4px 0 rgba(107,118,84,.55);
   --rt-lime: #86c46a; --rt-lime-ink: #1A1A1A; --rt-lime-soft: #273220; --rt-lime-55: rgba(134,196,106,.55); --rt-lime-32: rgba(134,196,106,.32);
   --rt-op-bg: rgba(134,196,106,.08); --rt-op-edge: #5c7548;
-  --rt-soft: rgba(184,208,102,.13); --rt-asst-edge: rgba(74,83,58,.85);
+  --rt-soft: rgba(184,208,102,.13);
   --rt-focus: #86c46a; --rt-grid: rgba(224,224,224,.03); --rt-thumb: rgba(184,208,102,.5); --rt-thumb-h: rgba(184,208,102,.7);
   /* the Orbit's and the trails' step families (motion.css gives each step kind its own hue; retro draws them from
      PMConcept7's Atlas inks, as NieR draws them from its own) */
   --rt-step-think: #b8d066; --rt-step-look: #9db4d0; --rt-step-make: #86c46a; --rt-step-test: #d8b93c; --rt-step-crew: #e9853f; --rt-step-tool: #a8b394;
   --rt-chip: #e9853f;
 }
-/* Retro Light's user bubble is PMConcept7's #2F7A3D; PMConcept7's #1A1A1A ink there reads 3.3:1, so the bubble
-   takes the paper ink (#F5F0E8, 4.7:1) */
 body[data-theme="retro-light"] {
   --rt-line: #4A463F; --rt-hair: #D8D1C7; --rt-rail: #E4DED5;
   --rt-sh: 3px 3px 0 rgba(26,26,26,.30); --rt-sh-sm: 2px 2px 0 rgba(26,26,26,.22);
@@ -47,12 +74,12 @@ body[data-theme="retro-light"] {
   --rt-frame-sh: 0 0 0 1px #4A463F, 4px 4px 0 rgba(26,26,26,.30);
   --rt-frame-lg: 0 0 0 1px #4A463F, 6px 6px 0 rgba(26,26,26,.30);
   --rt-hair-sh: 0 0 0 1px #D8D1C7, 4px 4px 0 rgba(26,26,26,.22);
-  --rt-lime: #2F7A3D; --rt-lime-ink: #F5F0E8; --rt-lime-soft: #d9dfd0; --rt-lime-55: rgba(47,122,61,.55); --rt-lime-32: rgba(47,122,61,.32);
+  --rt-lime: #2F7A3D; --rt-lime-soft: #d9dfd0; --rt-lime-55: rgba(47,122,61,.55); --rt-lime-32: rgba(47,122,61,.32);
   --rt-op-bg: rgba(47,122,61,.08); --rt-op-edge: #42563e;
-  --rt-soft: rgba(0,71,171,.12); --rt-asst-edge: rgba(74,70,63,.85);
+  --rt-soft: rgba(0,71,171,.12);
   --rt-focus: #0047AB; --rt-grid: rgba(26,26,26,.015); --rt-thumb: rgba(0,71,171,.5); --rt-thumb-h: rgba(0,71,171,.7);
   /* mid-tone inks: a step's hue paints on the paper and inside the Orbit's dark puck, so each holds 3:1 on both */
-  --rt-step-think: #2F66C4; --rt-step-look: #B5307E; --rt-step-make: #2F7A3D; --rt-step-test: #A65800; --rt-step-crew: #B04A18; --rt-step-tool: #7f7a71;
+  --rt-step-think: #2F66C4; --rt-step-look: #B5307E; --rt-step-make: #2F7A3D; --rt-step-crew: #B04A18; --rt-step-tool: #7f7a71;
   --rt-chip: #E06A1B;
 }
 /* the :root shape tokens, restated on body: every var(--radius*) and var(--pmx-r-*) is square (inputs and chips
@@ -78,24 +105,36 @@ body[data-theme^="retro"] [data-step-kind="bash"] { --pm-step: var(--rt-step-too
 body[data-theme^="retro"] *, body[data-theme^="retro"] *::before, body[data-theme^="retro"] *::after { border-radius: 0 !important; }
 /* PMConcept7 keeps 2 px on inputs, chips and pills */
 body[data-theme^="retro"] :is(input:not([type="checkbox"]):not([type="radio"]):not(.pmx-step-input), select, .input-wrap, .pmx-sheet .pmx-hero-box, .meta-pill, .meta-chip, .goal-chip, .todo-chip, .af-chip, .qs-file-chip, .att-chip, .att-pill, .orbit-chip, .pmap-chip, .receipt-chip, .wa-tag, .qs-pill) { border-radius: 2px !important; }
-/* round on purpose: dials, rings and status dots (PMConcept7 keeps its dots and its run ring round), and the
-   pieces a motion draws as discs (the neon halos and backlights, Send / Stop's flood and backlights) */
+/* round on purpose: dials, rings and status dots (PMConcept7 keeps its dots and its run ring round), the ledger
+   bead that rides the Turn Stage spine, and the pieces a motion draws as discs (the neon halos and backlights,
+   Send / Stop's flood and backlights). Elements sit in :is(); pseudo-elements cannot (an :is() argument with a
+   pseudo-element is dropped), so they are listed one by one below it. Step markers (the Ask Card's spine, the plan
+   steps' checkboxes) stay square on purpose: they are counters, not status lights. */
 body[data-theme^="retro"] :is(
-  .status-dot, .status-ring, .status-ring::after, .status-orbit, .status-orbit::after, .status-clock,
-  .context-ring, .context-ring::after, .ring-mini, .ctx-spin, .ctx-cap .ctx-capdot,
-  .orbit-track, .orbit-core, .orbit-sat, .orbit-node-flag, .orbit-narration-mark, .pm-rail-item.orbit-strip-item.current::before,
-  .qs-orbit i, .qs-orrery-ring, .qs-orrery-bead, .qs-ask-mark-radio, .qs-ask-mark-radio::after, .pmx-bsd-ring::before,
-  .calm-glyph, .calm-dots i, .calm-marker, .ribbon-item.done::after, .wa-chrome .wa-disc[data-action]::after,
-  .working-variant-22 .c22-scope, .working-variant-22 .c22-scope::before, .working-variant-22 .c22-ring, .working-variant-22 .c22-sweep,
+  .status-dot, .status-ring, .status-orbit, .status-clock,
+  .context-ring, .ring-mini, .ctx-spin, .ctx-cap .ctx-capdot,
+  .orbit-track, .orbit-core, .orbit-sat, .orbit-node-flag, .orbit-narration-mark,
+  .qs-orbit i, .qs-orrery-ring, .qs-orrery-bead, .qs-ask-mark-radio,
+  .calm-glyph, .calm-dots i, .calm-marker,
+  .working-variant-22 .c22-scope, .working-variant-22 .c22-ring, .working-variant-22 .c22-sweep,
   .working-variant-22 .c22-core, .working-variant-22 .c22-blip, .working-variant-20 .c20-pivot,
   .effort-dot, .goal-dot, .goal-chip-dot, .pmap-dot, .worktree-button .wt-dot, .message-meta .meta-live-dot,
   .pmx-lg-dot, .pmx-lg-hollow, .pmx-lg-filled, .pmx-stop-dot, .pmx-eli5-dot, .af-phase-dot, .plan-doc-compact .pd-compact-dot,
-  .plan-doc .pd-build-building::after, .att-msg-drift-dot, .att-obj[data-state="failed"] > .att-tracer::after,
-  .activity-item .state-mark, .activity-live-feed i, .activity-live-feed > button > i, .activity-live-feed > .pmap-feed-head > i,
-  .ab-card .ab-head-icon::after, .ab-card .ab-avatar::after, .pm-lens-trigger.is-on::before,
-  .pmx-sched-sw[data-kind="dot"], .pmx-sched-life li > i, .debug-phases li > span,
-  .nx-bolt::before, .nx-st::before, .sendstop::before, .ss-bl, .ss-bl::before, .ss-flood
+  .att-msg-drift-dot, .activity-item .state-mark, .activity-live-feed i, .activity-live-feed > button > i,
+  .activity-live-feed > .pmap-feed-head > i, .pmx-sched-sw[data-kind="dot"], .pmx-sched-life li > i, .debug-phases li > span,
+  :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] > .event-icon,
+  .ss-bl, .ss-flood
 ) { border-radius: 50% !important; }
+body[data-theme^="retro"] .status-ring::after, body[data-theme^="retro"] .status-orbit::after,
+body[data-theme^="retro"] .context-ring::after, body[data-theme^="retro"] .qs-ask-mark-radio::after,
+body[data-theme^="retro"] .pmx-bsd-ring::before, body[data-theme^="retro"] .pm-rail-item.orbit-strip-item.current::before,
+body[data-theme^="retro"] .working-variant-22 .c22-scope::before, body[data-theme^="retro"] .ribbon-item.done::after,
+body[data-theme^="retro"] .wa-chrome .wa-disc[data-action]::after, body[data-theme^="retro"] .plan-doc .pd-build-building::after,
+body[data-theme^="retro"] .att-obj[data-state="failed"] > .att-tracer::after,
+body[data-theme^="retro"] .ab-card .ab-head-icon::after, body[data-theme^="retro"] .ab-card .ab-avatar::after,
+body[data-theme^="retro"] .pm-lens-trigger.is-on::before,
+body[data-theme^="retro"] .nx-bolt::before, body[data-theme^="retro"] .nx-st::before,
+body[data-theme^="retro"] .sendstop::before, body[data-theme^="retro"] .ss-bl::before { border-radius: 50% !important; }
 html[data-ab-ready] body[data-theme^="retro"] .activity-item[data-hover-domain]::after { border-radius: 50% !important; }
 
 /* ---------------------------------------------------------------- 3 shell */
@@ -136,6 +175,8 @@ body[data-theme^="retro"] .shared-picker-button { background: var(--surface); bo
 body[data-theme^="retro"] .shared-picker-button:hover { background: var(--surface-2); border-color: var(--accent); }
 body[data-theme^="retro"] :is(button, input, textarea, select, summary, a, [tabindex]):focus-visible { outline-color: var(--rt-focus); }
 body[data-theme^="retro"] .meta-pill { background: var(--surface-2); border-color: var(--rt-hair); }
+/* native checkboxes check in PMConcept7's lime (the browser picks the tick's ink for contrast) */
+body[data-theme^="retro"] input[type="checkbox"] { accent-color: var(--rt-lime); }
 /* a module sheet's fields are PMConcept7 inputs: the 2 px structural line (1 px border + 1 px ring) */
 body[data-theme^="retro"] .pmx-sheet :is(.pmx-hero-box, input.pmx-hero-field, .pmx-hero-aside input[type=text]) { border-color: var(--rt-line); box-shadow: var(--rt-frame); }
 body[data-theme^="retro"] .pmx-sheet :is(.pmx-hero-box:focus-within, input.pmx-hero-field:focus, .pmx-hero-aside input[type=text]:focus) { border-color: var(--pmx-focus-edge); box-shadow: 0 0 0 1px var(--pmx-focus-edge), 0 0 0 3px var(--pmx-focus-ring); }
@@ -171,37 +212,31 @@ body[data-theme^="retro"] :is(.history-flyout, .history-panel) :is(.history-head
 /* ---------------------------------------------------------------- 7 transcript (Turn Stage and the lab takes) */
 /* the user turn: PMConcept7's solid lime block, its 2 px structural line and its soft directional glow */
 body[data-theme^="retro"] .message-user .message-surface,
-body[data-theme^="retro"] .transcript[data-variant="16"] .message-user .message-surface {
+body[data-theme^="retro"] :is(.transcript, .tx-feed)[data-variant="16"] .message-user .message-surface {
   background: var(--tx-user-bg); border: 1px solid var(--rt-line); box-shadow: var(--rt-frame), 8px 0 12px -8px var(--rt-lime-32); color: var(--rt-lime-ink);
 }
 body[data-theme^="retro"] .message-user .message-surface :is(.message-body, .message-body *) { color: var(--rt-lime-ink); }
 body[data-theme^="retro"] .message-user .long-fade::after { background: linear-gradient(transparent, var(--tx-user-bg)); }
-/* the assistant turn: PMConcept7's boxed turn on the raised surface, the mark and the spine still in the gutter.
-   Its blue left edge is left out: a one-sided coloured edge is a side strip, which this concept's rules forbid, so
-   the box keeps one even line all round. */
-body[data-theme^="retro"] .transcript[data-variant="16"] .message-assistant .message-surface {
-  background: var(--surface-2); border: 1px solid var(--rt-asst-edge); box-shadow: -8px 0 12px -8px var(--rt-lime-32);
-  padding: 8px 12px;
-}
+/* the assistant turn: decision D2 (section 0) */
 /* the work card: at rest a hairline chat card; live, PMConcept7's op card (a lime wash, the olive edge) instead of
    the accent ring and glow. Its breathing and the Orbit keep their motion. */
-body[data-theme^="retro"] .transcript-inner > .working-card { background: var(--surface); border-color: var(--rt-hair); box-shadow: var(--rt-frame-hair); }
-body[data-theme^="retro"] .transcript-inner > .working-card:not(.is-done) { background: var(--rt-op-bg); border-color: var(--rt-op-edge); box-shadow: 0 0 0 1px var(--rt-op-edge); }
-body[data-theme^="retro"] .transcript-inner > .working-card .working-head { border-bottom-color: var(--rt-hair); }
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > .working-card { background: var(--surface); border-color: var(--rt-hair); box-shadow: var(--rt-frame-hair); }
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > .working-card:not(.is-done) { background: var(--rt-op-bg); border-color: var(--rt-op-edge); box-shadow: 0 0 0 1px var(--rt-op-edge); }
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > .working-card .working-head { border-bottom-color: var(--rt-hair); }
 body[data-theme^="retro"] .working-card { background: var(--surface); border-color: var(--rt-hair); }
 body[data-theme^="retro"] .work-phase-icon { box-shadow: inset 0 0 0 1px var(--rt-hair); }
 /* deliverables are PMConcept7's chat cards with the dashboard card's hard shadow; system, event and plan cards are
    chat cards (a 2 px hairline, no shadow); no gradients */
-body[data-theme^="retro"] .transcript-inner > [data-family="deliverable"]:is(.system-card, .work-output, .plan-doc, article) {
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="deliverable"]:is(.system-card, .work-output, .plan-doc, article) {
   background: var(--surface-2); border-color: var(--rt-hair); box-shadow: var(--rt-hair-sh);
 }
-body[data-theme^="retro"] .transcript-inner > [data-family="deliverable"] .artifact-preview { border-color: var(--rt-hair); background: var(--code); box-shadow: none; }
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="deliverable"] .artifact-preview { border-color: var(--rt-hair); background: var(--code); box-shadow: none; }
 body[data-theme^="retro"] :is(.system-card, .event-card) { background: var(--surface-2); border-color: var(--rt-hair); box-shadow: var(--rt-frame-hair); }
 body[data-theme^="retro"] .plan-card { background: var(--surface-2); border-color: var(--rt-hair); }
-body[data-theme^="retro"] .transcript-inner > [data-family="ledger"].event-card { background: transparent; border-color: transparent; box-shadow: none; }
-body[data-theme^="retro"] .transcript-inner > [data-family="needs"].event-card { background: var(--surface-2); border-color: var(--needs); box-shadow: 0 0 0 1px var(--needs), 4px 4px 0 var(--rt-line); }
-body[data-theme^="retro"] .transcript-inner > [data-family="people"]:is(.event-card, .system-card, .work-output) { background: var(--surface-2); border-color: var(--rt-hair); box-shadow: var(--rt-frame-hair); }
-body[data-theme^="retro"] .transcript-inner > [data-family="people"] .live-agent-row { background: var(--surface); border-color: var(--rt-hair); }
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"].event-card { background: transparent; border-color: transparent; box-shadow: none; }
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="needs"].event-card { background: var(--surface-2); border-color: var(--needs); box-shadow: 0 0 0 1px var(--needs), 4px 4px 0 var(--rt-line); }
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="people"]:is(.event-card, .system-card, .work-output) { background: var(--surface-2); border-color: var(--rt-hair); box-shadow: var(--rt-frame-hair); }
+body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="people"] .live-agent-row { background: var(--surface); border-color: var(--rt-hair); }
 body[data-theme^="retro"] .artifact-preview { border-color: var(--rt-hair); }
 body[data-theme^="retro"] .message-details { background: var(--surface-2); border-color: var(--rt-hair); }
 /* in-chat module run cards: the chat card's 2 px hairline as an outer ring (no layout shift, even on all sides) */
@@ -212,10 +247,13 @@ body[data-theme^="retro"] .pmx-run[data-density][data-tone="warm"], body[data-th
 body[data-theme^="retro"] .decision-host[data-variant] .decision-surface { background: var(--surface-2); border-color: var(--rt-line); box-shadow: var(--rt-frame-sh); }
 
 /* ---------------------------------------------------------------- 9 composer */
+/* PMConcept7's composer: the raised surface, the structural line, square, no shadow. Focus changes nothing: the
+   composer never glows, thickens or recolours on focus in any theme (composer.css), so the :focus-within state
+   restates the resting box instead of PMConcept7's accent ring. */
 body[data-theme^="retro"] .composer-box,
-body[data-theme^="retro"] .chat-stage[data-shell] .composer-box { background: var(--surface-2); border-color: var(--rt-line); box-shadow: none; }
+body[data-theme^="retro"] .chat-stage[data-shell] .composer-box,
 body[data-theme^="retro"] .composer-box:focus-within,
-body[data-theme^="retro"] .chat-stage[data-shell] .composer-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px var(--rt-soft); }
+body[data-theme^="retro"] .chat-stage[data-shell] .composer-box:focus-within { background: var(--surface-2); border-color: var(--rt-line); box-shadow: none; }
 body[data-theme^="retro"] .composer-tools,
 body[data-theme^="retro"] .chat-stage[data-shell="7"] .composer-tools,
 body[data-theme^="retro"] .composer-box:focus-within .composer-tools,
@@ -237,6 +275,9 @@ body[data-theme^="retro"] .activity-panel { background: var(--surface); border-r
 body[data-theme^="retro"] .activity-panel.transient { border-color: var(--rt-line); box-shadow: var(--rt-frame-lg); }
 body[data-theme^="retro"] .activity-panel-head, body[data-theme^="retro"] .activity-filter { border-bottom-color: var(--rt-hair); }
 body[data-theme^="retro"] .activity-filter button.active { background: var(--rt-soft); box-shadow: inset 0 0 0 1px var(--rt-line); }
-body[data-theme^="retro"] .activity-panel .todo-node { background: var(--surface-2); border-color: var(--rt-hair); }
+/* To-Do rows stay what they are in every theme, flat one-line rows like the hover preview (no box per row); retro
+   only gives them its row states: the hover field and PMConcept7's selected wash */
+body[data-theme^="retro"] .activity-panel .todo-virtual-row:hover { background: var(--surface-3); }
+body[data-theme^="retro"] .activity-panel .todo-virtual-row[aria-selected="true"] { background: var(--rt-soft); }
 body[data-theme^="retro"] .activity-panel :is(.todo-search input, .pmap-search input) { background: var(--surface-2); border-color: var(--rt-line); box-shadow: var(--rt-frame); }
 body[data-theme^="retro"] .hover-card.ab-card { background: var(--surface-2); }

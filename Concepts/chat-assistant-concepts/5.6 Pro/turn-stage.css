@@ -49,7 +49,8 @@ body[data-theme="friendly-dark"] { --fam-deliverable: #7fd6c4; --fam-people: #ff
 body[data-theme^="glass"] { --tx-sheet: color-mix(in srgb, #fff 6%, var(--surface-2)); --tx-user-bg: color-mix(in srgb, #fff 10%, var(--surface)); }
 body[data-theme="glass-dark"] { --tx-sunken: color-mix(in srgb, #000 30%, var(--surface)); --fam-deliverable: #7fe0d0; --fam-people: #ffb3a6; --fam-time: #ffd98a; }
 body[data-theme="glass-light"] { --tx-sheet: color-mix(in srgb, #fff 55%, var(--surface-2)); --tx-user-bg: color-mix(in srgb, #fff 40%, var(--surface-3)); }
-/* Retro (PMConcept7's retro, 2026-10-07): literal tones, no colour maths; retro.css draws the turn boxes */
+/* Retro (PMConcept7's retro, 2026-10-07): literal tones, no colour maths; retro.css draws the turn boxes (its
+   decision D2) and owns Retro Light's --fam-time (its decision D1) */
 body[data-theme^="retro"] { --tx-shadow: none; --tx-mark: var(--accent); --tx-sheet: var(--surface-2); --tx-sunken: var(--surface); }
 body[data-theme="retro-dark"] { --tx-user-bg: #86c46a; --tx-user-edge: #4a533a; --tx-sheet-edge: #333a28; --tx-sunken-edge: #333a28; --tx-spine: rgba(223,230,207,.14); --tx-spine-strong: rgba(223,230,207,.34); --fam-deliverable: #9db4d0; --fam-people: #e9853f; --fam-time: #d8b93c; }
 body[data-theme="retro-light"] { --tx-user-bg: #2F7A3D; --tx-user-edge: #4A463F; --tx-sheet-edge: #D8D1C7; --tx-sunken-edge: #D8D1C7; --tx-spine: rgba(26,26,26,.16); --tx-spine-strong: rgba(26,26,26,.38); --fam-deliverable: #0047AB; --fam-people: #B04A18; --fam-time: #A65800; }
