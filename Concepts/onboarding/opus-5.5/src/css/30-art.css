@@ -70,7 +70,10 @@
 .o55-f-nier .o55-an { animation-name: o55-nier-in; animation-timing-function: steps(1, end); --dur: 420ms; }
 .o55-f-nier .o55-an-drop { animation-name: o55-nier-drop; animation-timing-function: steps(6, end); --dur: 520ms; }
 .o55-f-nier .o55-an-rise { animation-name: o55-nier-rise; animation-timing-function: steps(5, end); --dur: 460ms; }
-html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-f-nier .o55-an:not(.o55-an-drop):not(.o55-an-rise) { animation-name: o55-fade; animation-timing-function: steps(4, end); }
+html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-f-nier .o55-an:not(.o55-an-drop):not(.o55-an-rise):not(.o55-an-hang) { animation-name: o55-fade; animation-timing-function: steps(4, end); }
+/* a sign hung from the top of the frame is lowered on its own strings from above it (NieR's Created act) */
+.o55-f-nier .o55-an-hang { animation-name: o55-nier-hang; animation-timing-function: steps(6, end); --dur: 320ms; }
+@keyframes o55-nier-hang { from { transform: translateY(-84px); } to { transform: none; } }
 @keyframes o55-nier-in { 0% { opacity: 0; } 20% { opacity: 0.6; } 35% { opacity: 0.1; } 55% { opacity: 1; } 70% { opacity: 0.5; } 85%, 100% { opacity: 1; } }
 @keyframes o55-nier-drop { from { opacity: 0; transform: translateY(-36px); } 17% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-nier-rise { from { opacity: 0; transform: translateY(12px); } 20% { opacity: 1; } to { opacity: 1; transform: none; } }
@@ -114,7 +117,11 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-f-nier .o55-
 .o55-nier-mk { animation: o55-nier-mk 0.9s steps(1, end) infinite; }
 .o55-nier-mk1 { animation-delay: -0.6s; }
 .o55-nier-mk2 { animation-delay: -0.3s; }
-html[data-o55-nier-parts]:not([data-o55-nier-parts~="sweep"]) :is(.o55-nier-scan, .o55-nier-mk), html[data-o55-nier-parts]:not([data-o55-nier-parts~="cursor"]) .o55-nier-blink { animation: none; }
+/* Every loop of the NieR drawings is decoration, so it needs the Scan sweep part (Motion): the Still and Colors only
+   presets, which leave every Motion part out, are motionless (a busy lamp also needs Menu cursor); the scenes' shared
+   ambient loops (sparks, rings, the beginning's idles) stop with them, and so does the rig's idle sway (58-rig.js) */
+html[data-o55-nier-parts]:not([data-o55-nier-parts~="sweep"]) :is(.o55-nier-scan, .o55-nier-mk, .o55-nier-blink), html[data-o55-nier-parts]:not([data-o55-nier-parts~="cursor"]) .o55-nier-blink { animation: none; }
+html[data-o55-nier-parts]:not([data-o55-nier-parts~="sweep"]) .o55-f-nier :is(.o55-amb, .o55-ring, .o55-gl) { animation: none !important; }
 /* NieR's ornaments (spec.md section 11) are always drawn and hidden here while their part is removed: the kicker and its
    rule (YoRHa headers), the machine-glyph strip (Machine glyphs), the dot grid (Parchment ground), the stage's map label
    and the lip's ruler ticks (Map ticks: the lip is then a plain ink band) */
@@ -123,10 +130,86 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ground"]) .o55-nier-dots,
 html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) :is(.o55-nier-maplabel, .o55-nier-lipticks) { display: none; }
 @keyframes o55-nier-scan { 0%, 72% { transform: translateX(0); } 75% { transform: translateX(3.6px); } 78% { transform: translateX(7.2px); } 81% { transform: translateX(10.8px); } 84% { transform: translateX(14.4px); } 87%, 100% { transform: translateX(0); } }
 @keyframes o55-nier-mk { 0% { opacity: 0.9; } 33.333% { opacity: 0.3; } 66.667%, 100% { opacity: 0.55; } }
-/* a cheering unit's visor shows joy (59-cheer.js puts o55-joy on its item for the cheer): the scan face (and the bow's
-   rest face) give way to the joy chevrons at once, and come back when it ends. The unit draws .nv-joy at opacity 0. */
+/* a resting unit's visor shows its rest dashes (.o55-rest on its item: asleep, offline on Creating, bowing, powered
+   down); a cheering unit's visor shows joy (59-cheer.js puts o55-joy on its item for the cheer): the scan face (and the
+   bow's rest face) give way to the joy chevrons at once, and come back when it ends. The unit draws .nv-joy and (but in
+   the bow) .nv-rest at opacity 0. Joy wins over rest. */
+.o55-f-nier .o55-rest .nv-scan { opacity: 0; }
+.o55-f-nier .o55-rest .nv-rest { opacity: 1; }
 .o55-f-nier .o55-joy .nv-scan, .o55-f-nier .o55-joy .nv-rest { opacity: 0; }
 .o55-f-nier .o55-joy .nv-joy { opacity: 1; }
+
+/* ---- NieR: the troupe acts (O55.art.troupe and friends, 59-cheer.js; design/hero-spec.md 2.2) --------------------
+   States are classes and attributes on an item (a unit, You, the link, the control unit), or on the whole drawing
+   while it is asleep (svg.o55-nier-asleep) or held (the layer's .o55-ens-hold). The performances step between them with
+   class changes on the motion clock and one-shot Web Animations (transform and opacity only, in held steps); every one
+   of them goes straight to its end state under Reduced Motion and on a low-resource computer (59-cheer.js), and the
+   one-shot CSS ones are in the lists at the end of this file. Slint: the states are `states` of the unit component,
+   the steps a Timer, the alternates Paths with `visible`. */
+/* a unit bows: its head dips 4 below the knot (the stub of string shows; 59-cheer.js steps it in 2) */
+.o55-f-nier .o55-bow .nv-head { translate: 0px 4px; }
+.o55-f-nier .o55-bow .nv-stub { opacity: 1; }
+/* a unit's right arm in another pose (54-art-nier.js draws them hidden); a unit without that alternate never gets the
+   class (59-cheer.js asks first) */
+.o55-f-nier :is(.o55-arm-stand, .o55-arm-mid, .o55-arm-up, .o55-arm-aim, .o55-arm-pt) .nv-arm-r { display: none; }
+.o55-f-nier .o55-arm-stand .nv-alt-stand, .o55-f-nier .o55-arm-mid .nv-alt-mid, .o55-f-nier .o55-arm-up .nv-alt-up,
+.o55-f-nier .o55-arm-aim .nv-alt-aim, .o55-f-nier .o55-arm-pt .nv-alt-pt { display: inline; }
+/* a unit slumped at the foot of its string (asleep): tipped about its feet, sunk, its head down into the collar; the
+   tilt per unit is the same in 59-cheer.js (SLUMP), which rises it */
+.o55-f-nier .o55-nier-slump .o55-nier-unit, .o55-nier-asleep .o55-ens-h .o55-nier-unit { transform: translate(0px, 6px) rotate(var(--o55-slump, 8deg)) scale(1, 0.86); }
+.o55-f-nier [data-key="h0"] { --o55-slump: -14deg; }
+.o55-f-nier [data-key="h1"] { --o55-slump: 7deg; }
+.o55-f-nier [data-key="h2"] { --o55-slump: 14deg; }
+.o55-f-nier .o55-nier-slump .nv-head, .o55-nier-asleep .o55-ens-h .nv-head { translate: 0px 2px; }
+.o55-f-nier .o55-nier-slump .nv-stub, .o55-nier-asleep .o55-ens-h .nv-stub { opacity: 1; }
+.o55-nier-asleep .o55-ens-h .nv-scan { opacity: 0; }
+.o55-nier-asleep .o55-ens-h .nv-rest { opacity: 1; }
+/* You: the arm raised (as drawn), half raised or resting on the knee; the slit dark; the head bowed. Asleep: bowed,
+   dark, the arm down; while the ensemble is held: the arm down (the signal raises it) */
+.o55-nier-asleep .o55-nier-op-arm, .o55-ens-hold[data-family="nier"] .o55-nier-op-arm { display: none; }
+.o55-nier-asleep .o55-nier-op-armdn, .o55-ens-hold[data-family="nier"] .o55-nier-op-armdn { display: inline; }
+.o55-f-nier .o55-it[data-arm] .o55-nier-op-arm, .o55-f-nier .o55-it[data-arm] .o55-nier-op-armmid, .o55-f-nier .o55-it[data-arm] .o55-nier-op-armdn { display: none; }
+.o55-f-nier .o55-it[data-arm="up"] .o55-nier-op-arm, .o55-f-nier .o55-it[data-arm="mid"] .o55-nier-op-armmid, .o55-f-nier .o55-it[data-arm="dn"] .o55-nier-op-armdn { display: inline; }
+.o55-nier-asleep .o55-nier-op-slit, .o55-f-nier .o55-it[data-slit="dark"] .o55-nier-op-slit { opacity: 0; }
+.o55-f-nier .o55-it[data-slit="half"] .o55-nier-op-slit { opacity: 0.5; }
+.o55-f-nier .o55-it[data-slit="lit"] .o55-nier-op-slit { opacity: 1; }
+.o55-nier-asleep .o55-nier-op-head, .o55-f-nier .o55-it[data-head="bow"] .o55-nier-op-head { transform: rotate(16deg); transform-origin: 0px -29px; }
+.o55-f-nier .o55-it[data-head="up"] .o55-nier-op-head { transform: none; }
+/* the control unit's slit dark (no scan notch) */
+.o55-nier-asleep .o55-nier-barslit, .o55-f-nier .o55-nier-slitdark .o55-nier-barslit { opacity: 0; }
+.o55-f-nier .o55-nier-slitlit .o55-nier-barslit { opacity: 1; }
+/* the link: dark (asleep, held, powered down), the one-shot signal run from the hand to the control unit (each segment
+   lights at --k * --o55-run-step and settles at the still 0.55), and the power-down (dark from the control unit back
+   toward the hand) */
+.o55-nier-asleep .o55-nier-link .o55-nier-mk, .o55-ens-hold[data-family="nier"] .o55-nier-link .o55-nier-mk, .o55-f-nier .o55-nier-linkdark .o55-nier-mk { animation: none; opacity: 0.16; }
+.o55-nier-asleep .o55-nier-linkend, .o55-ens-hold[data-family="nier"] .o55-nier-linkend, .o55-f-nier .o55-nier-linkdark .o55-nier-linkend { opacity: 0.4; }
+.o55-f-nier .o55-it.o55-nier-linkrun .o55-nier-mk, .o55-f-nier .o55-it.o55-nier-linkoff .o55-nier-mk { animation: none; opacity: 1; }
+.o55-f-nier .o55-it.o55-nier-linkrun .o55-nier-link path[style] { animation: o55-nier-linkrun var(--o55-run-ms, 200ms) steps(1, end) calc(var(--k, 0) * var(--o55-run-step, 25ms)) both; }
+.o55-f-nier .o55-it.o55-nier-linkoff .o55-nier-link path[style] { animation: o55-nier-linkoff 40ms steps(1, end) calc((var(--n, 1) - 1 - var(--k, 0)) * 20ms) both; }
+.o55-f-nier .o55-it.o55-nier-linkoff .o55-nier-linkend { opacity: 0.4; }
+@keyframes o55-nier-linkrun { 0% { opacity: 0.16; } 1% { opacity: 1; } 60% { opacity: 1; } 61%, 100% { opacity: 0.55; } }
+@keyframes o55-nier-linkoff { from { opacity: 0.55; } to { opacity: 0.16; } }
+/* the ensemble held above the stage while a new cast arrives (A.mount ctx.ensembleHold; O55.art.troupe.enter lowers
+   it): NieR's units wait unseen at the top of their fly-in (--o55-fly, their own units) with their knots in mid-air on
+   short strings; a family's control bar, strings and helpers wait unseen at the start of their own entrance */
+.o55-ens-hold[data-family="nier"] .o55-ens-h > .o55-in { animation: none !important; visibility: hidden; transform: translateY(var(--o55-fly, -91px)); }
+.o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot, .o55-f-nier .o55-nier-flyin .nv-knot { visibility: visible; }
+.o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot-hand, .o55-f-nier .o55-nier-flyin .nv-knot-hand { display: inline; }
+.o55-ens-hold:not([data-family="nier"]) :is(.o55-ens-bar, .o55-ens-h) > .o55-in { animation-play-state: paused !important; }
+.o55-ens-hold:not([data-family="nier"]) :is(.o55-ens-bar, .o55-ens-h, .o55-ties) { visibility: hidden; }
+/* Creating: a unit comes online as the work goes on (57-scenes-journey.js): its rest dashes hold a moment, then the scan
+   notch shows and sweeps the visor once (4 steps out, one back). No fill: once done, the unit's own state rules (a
+   cheer's joy hides the scan again). The same boot is played by Web Animations in 59-cheer.js (BOOT). */
+.o55-f-nier .o55-nier-online .nv-rest { animation: o55-nier-off 130ms steps(1, end); }
+.o55-f-nier .o55-nier-online .nv-scan { animation: o55-nier-boot 520ms steps(1, end); }
+@keyframes o55-nier-off { from { opacity: 1; } to { opacity: 0; } }
+@keyframes o55-nier-on { from { opacity: 0; } to { opacity: 1; } }
+@keyframes o55-nier-boot { 0% { opacity: 0; transform: none; } 25% { opacity: 1; transform: none; } 37.5% { opacity: 1; transform: translateX(3.6px); } 50% { opacity: 1; transform: translateX(7.2px); } 62.5% { opacity: 1; transform: translateX(10.8px); } 75% { opacity: 1; transform: translateX(14.4px); } 87.5%, 100% { opacity: 1; transform: none; } }
+/* the stamp on the name sign inverts onto it in two steps once the sign has landed (its frame, then the filled block) */
+.o55-f-nier .o55-nier-stamp .nv-stamp-frame { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) - 40ms) both; }
+.o55-f-nier .o55-nier-stamp .nv-stamp-fill { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) + 50ms) both; }
+/* a drawing that never idles (A.mount ctx.still: the look screen's NieR thumbnail while NieR Mode is off) */
+.o55-still :is(.o55-amb, .o55-ring, .o55-gl, .o55-nier-scan, .o55-nier-mk, .o55-nier-blink, .o55-led, .o55-px-blink, .o55-px-twinkle, .o55-star, .o55-core, .o55-ripple, .o55-pulse, .o55-beam) { animation: none !important; }
 @keyframes o55-sway { from { transform: rotate(-1.4deg); } to { transform: rotate(1.4deg); } }
 @keyframes o55-bob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
 @keyframes o55-twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
@@ -193,14 +276,17 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="slice"]) .o55-scene-host .o
 [data-o55-ambient="off"] .o55-ripple, [data-o55-ambient="off"] .o55-pulse, [data-o55-ambient="off"] .o55-ring, [data-o55-ambient="off"] .o55-px-march > rect, [data-o55-ambient="off"] .o55-beam,
 [data-o55-ambient="off"] .o55-gl, [data-o55-ambient="off"] :is(.o55-nier-blink, .o55-nier-scan, .o55-nier-mk) { animation-play-state: paused !important; }
 html[data-o55-lowres] .o55-gl, html[data-o55-lowres] .o55-amb, html[data-o55-lowres] .o55-pulse, html[data-o55-lowres] .o55-ring, html[data-o55-lowres] .o55-core, html[data-o55-lowres] .o55-px-march > rect, html[data-o55-lowres] .o55-beam,
-html[data-o55-lowres] :is(.o55-nier-blink, .o55-nier-scan, .o55-nier-mk) { animation: none !important; }
+html[data-o55-lowres] :is(.o55-nier-blink, .o55-nier-scan, .o55-nier-mk),
+html[data-o55-lowres] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun path[style], .o55-nier-linkoff path[style], .o55-nier-stamp *) { animation: none !important; }
 html[data-motion="reduced"] .o55-amb, html[data-motion="reduced"] .o55-pulse, html[data-motion="reduced"] .o55-ring,
 html[data-motion="reduced"] .o55-core, html[data-motion="reduced"] .o55-ripple, html[data-motion="reduced"] .o55-star, html[data-motion="reduced"] .o55-gl,
-html[data-motion="reduced"] :is(.o55-nier-blink, .o55-nier-scan, .o55-nier-mk) { animation: none !important; }
+html[data-motion="reduced"] :is(.o55-nier-blink, .o55-nier-scan, .o55-nier-mk),
+html[data-motion="reduced"] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun path[style], .o55-nier-linkoff path[style], .o55-nier-stamp *) { animation: none !important; }
 html[data-motion="reduced"] .o55-an, html[data-motion="reduced"] .o55-draw, html[data-motion="reduced"] .o55-scene-wrap { animation-duration: 140ms !important; animation-name: o55-fade !important; animation-delay: 0ms !important; stroke-dashoffset: 0 !important; }
 html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 @media (prefers-reduced-motion: reduce) {
   .o55-amb, .o55-pulse, .o55-ring, .o55-core, .o55-ripple, .o55-star, .o55-gl, .o55-nier-blink, .o55-nier-scan, .o55-nier-mk { animation: none !important; }
+  .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun path[style], .o55-nier-linkoff path[style], .o55-nier-stamp *) { animation: none !important; }
   .o55-an, .o55-draw, .o55-scene-wrap { animation-duration: 140ms !important; animation-name: o55-fade !important; animation-delay: 0ms !important; stroke-dashoffset: 0 !important; }
   .o55-it { transition-duration: 140ms !important; }
 }
@@ -223,10 +309,11 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 /* NieR: the cover is cut into horizontal slices that slide off to alternate sides, one after another (o55-cur-sl /
    o55-cur-sr, --k the slice's index); the plate across the middle is cut first. Whatever the NieR curtain is drawn as,
    the whole of it is gone once it has opened (o55-cur-all), so it can never stay over the stage. */
-.o55-f-nier .o55-cur-sl { animation: o55-nier-cur-l 760ms steps(8, end) calc(340ms + var(--k, 0) * 40ms) both; }
-.o55-f-nier .o55-cur-sr { animation: o55-nier-cur-r 760ms steps(8, end) calc(340ms + var(--k, 0) * 40ms) both; }
-.o55-f-nier .o55-cur-plate { animation: o55-cut 40ms linear 300ms both; }
-.o55-f-nier .o55-cur-all { animation: o55-cut 60ms linear 1880ms both; } /* linear: a 1 ms steps(1) cut after a long delay can end a hair short of 1 and hold */
+/* (it is open by about 0.95 s, so the curtain call's first bow at 1 s plays on a clear stage: design/hero-spec.md H4b) */
+.o55-f-nier .o55-cur-sl { animation: o55-nier-cur-l 480ms steps(6, end) calc(180ms + var(--k, 0) * 30ms) both; }
+.o55-f-nier .o55-cur-sr { animation: o55-nier-cur-r 480ms steps(6, end) calc(180ms + var(--k, 0) * 30ms) both; }
+.o55-f-nier .o55-cur-plate { animation: o55-cut 40ms linear 140ms both; }
+.o55-f-nier .o55-cur-all { animation: o55-cut 60ms linear 940ms both; } /* linear: a 1 ms steps(1) cut after a long delay can end a hair short of 1 and hold */
 @keyframes o55-nier-cur-l { to { transform: translateX(-500px); } }
 @keyframes o55-nier-cur-r { to { transform: translateX(500px); } }
 html[data-motion="reduced"] .o55-cur-all { display: none; }

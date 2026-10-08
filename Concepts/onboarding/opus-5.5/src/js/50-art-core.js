@@ -123,7 +123,7 @@
       + (item.s && item.s !== 1 ? ` scale(${item.s})` : '') + (item.r ? ` rotate(${item.r}deg)` : '');
     const anim = item.anim ? ` o55-an o55-an-${item.anim}` : '';
     const amb = item.amb ? ` o55-amb o55-amb-${item.amb}` : '';
-    const style = `--d:${Math.round(item.delay || 0)}ms;${item.dur ? `--dur:${item.dur}ms;` : ''}${item.ambd ? `--ambd:${item.ambd}ms;` : ''}`;
+    const style = `--d:${Math.round(item.delay || 0)}ms;${item.dur ? `--dur:${item.dur}ms;` : ''}${item.ambd ? `--ambd:${item.ambd}ms;` : ''}${item.fly != null ? `--o55-fly:${(+item.fly).toFixed(2)}px;` : ''}`;
     const op = item.o != null ? ` opacity="${item.o}"` : '';
     return `<g class="o55-it${item.cls ? ' ' + item.cls : ''}" data-key="${U.esc(item.key)}" style="transform:${tf}"${op}>`
       + `<g class="o55-in${anim}" style="${style}"><g class="o55-am${amb}">${inner}</g></g></g>`;
@@ -184,8 +184,11 @@
       });
       const pt = (it, local) => { const s = A.scaleOf(ctx, it); return [it.x + s * local[0], it.y + s * local[1]]; };
       const d = (a, b) => `M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
+      /* NieR's strings carry their rest length from the composition (data-rest, scene units: the hook-to-hook distance
+         with every prop on its mark), so a scene born slack (asleep, held) draws its sag from the first frame (58-rig.js) */
+      const rest = (a, b) => (ctx.family === 'nier' ? ` data-rest="${Math.hypot(b[0] - a[0], b[1] - a[1]).toFixed(1)}"` : '');
       const strings = ties.map((it) => {
-        let out = hookPts.get(it).map(([name, local, bh]) => `<g class="o55-tie" data-key="tie-${U.esc(it.key)}-${name}" data-from="${U.esc(bar.key)}:${U.esc(bh)}" data-to="${U.esc(it.key)}:${name}">${fam.string(ctx, d(pt(bar, hooks[bh] || [0, 0]), pt(it, local)))}</g>`).join('');
+        let out = hookPts.get(it).map(([name, local, bh]) => { const a = pt(bar, hooks[bh] || [0, 0]), b = pt(it, local); return `<g class="o55-tie" data-key="tie-${U.esc(it.key)}-${name}" data-from="${U.esc(bar.key)}:${U.esc(bh)}" data-to="${U.esc(it.key)}:${name}"${rest(a, b)}>${fam.string(ctx, d(a, b))}</g>`; }).join('');
         /* a raised hand's string, when the bar has the hook it names (barHooks always has w0 and w2) */
         const hand = it.opts.pose === 'wave' && it.opts.handTie && hooks[it.opts.handTie] && fam.hand && fam.hand.wave;
         if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand">${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie]), pt(it, fam.hand.wave)), true)}</g>`;
@@ -209,7 +212,8 @@
     const label = scene.label ? O55.t(scene.label) : '';
     const band = ctx.band ? (scene.band || [0, 170, A.W, 280]) : null;
     const vb = band ? band.join(' ') : `0 0 ${A.W} ${A.H}`;
-    const svg = `<svg class="o55-scene o55-f-${ctx.family} o55-m-${ctx.mode}" viewBox="${vb}" preserveAspectRatio="xMidYMid slice"`
+    /* ctx.sceneCls: a state the composition puts on the whole drawing (NieR's 'o55-nier-asleep', 55-scenes.js) */
+    const svg = `<svg class="o55-scene o55-f-${ctx.family} o55-m-${ctx.mode}${ctx.sceneCls ? ' ' + ctx.sceneCls : ''}" viewBox="${vb}" preserveAspectRatio="xMidYMid slice"`
       + ` role="img" aria-label="${U.esc(label)}" data-scene="${U.esc(sceneId)}" data-beat="${U.esc(ctx.beat)}" data-family="${ctx.family}" xmlns="http://www.w3.org/2000/svg">`
       + `<defs>${defs}</defs><g class="o55-bg" data-key="bg">${bg}</g>`
       + `<g class="o55-sl o55-sl-back" data-key="back">${layers.back.join('')}</g>`
@@ -221,15 +225,25 @@
 
   /* mount(host, sceneId, ctx): first mount plays the entrance; the same scene with a new beat morphs (keyed props
      glide to new positions, new props enter, removed props exit); a different scene cross-transitions with an inert
-     outgoing layer so there is never a blank frame. */
+     outgoing layer so there is never a blank frame. A change of art family to or from NieR's is a new layer too, never
+     a morph: one cast replaces another (design/hero-spec.md 2.2; between two families the morph stays, so no family
+     pixel changes). Options besides the drawing's (render):
+     - ensembleHold: the new layer shows its set while the ensemble waits (.o55-ens-hold: NieR's units hidden at the top
+       of their fly-in with their knots in mid-air; a family's bar, strings and helpers unseen at the start of their own
+       entrance) until O55.art.troupe.enter lowers it in (59-cheer.js);
+     - still: a drawing that never idles (no ambient loop, no rig sway; one-shot answers such as O55.art.peek still
+       play): the look screen's NieR thumbnail while NieR Mode is off.
+     Every mount and beat change stamps the drawing with the motion clock's time (data-o55-t0), so a performance asked
+     for after its scene arrived keeps the scene's own timeline (O55.art.createdAct, curtainCall). */
   A.mount = function mount(host, sceneId, ctx) {
     const current = host.querySelector(':scope > .o55-scene-wrap:not(.o55-out)');
     const out = drawScene(sceneId, ctx), html = out.svg;
+    const cast = current && current.getAttribute('data-family') !== out.family && (out.family === 'nier' || current.getAttribute('data-family') === 'nier');
     /* the host, and each scene layer, name the art family they show: 'nier' while NieR Mode is painted, although the
        window's skin stays Basic. The layer's own attribute is what NieR's cross-transition keys on (30-art.css), so a
        host attribute rewritten by its owner between mounts never restarts a running entrance. */
     if (host.getAttribute('data-family') !== out.family) host.setAttribute('data-family', out.family);
-    if (current && current.getAttribute('data-scene') === sceneId) {
+    if (current && current.getAttribute('data-scene') === sceneId && !cast) {
       const svg = current.querySelector('svg');
       const tpl = document.createElement('template'); tpl.innerHTML = html;
       const next = tpl.content.firstElementChild;
@@ -241,13 +255,16 @@
       if (restore) restore();
       if (current.getAttribute('data-family') !== out.family) current.setAttribute('data-family', out.family);
       current.classList.add('o55-beat');
+      svg.setAttribute('data-o55-t0', String(Math.round(O55.motion.now())));
       if (A.rig) A.rig.watch(svg, { quick: A.rig.layout(svg) === was });
       return current;
     }
     const wrap = document.createElement('div');
-    wrap.className = 'o55-scene-wrap o55-enter';
+    wrap.className = 'o55-scene-wrap o55-enter' + (ctx && ctx.ensembleHold ? ' o55-ens-hold' : '') + (ctx && ctx.still ? ' o55-still' : '');
     wrap.setAttribute('data-scene', sceneId); wrap.setAttribute('data-family', out.family);
+    if (ctx && ctx.still) wrap.setAttribute('data-o55-ambient', 'off');
     wrap.innerHTML = html;
+    wrap.firstElementChild.setAttribute('data-o55-t0', String(Math.round(O55.motion.now())));
     if (current) {
       current.classList.add('o55-out');
       current.setAttribute('aria-hidden', 'true');
@@ -260,6 +277,8 @@
     if (ctx && ctx.hold) { wrap.classList.add('o55-hold'); if (current) current.classList.add('o55-wait'); }
     host.appendChild(wrap);
     O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
+    /* a held ensemble that nobody lowers in (its caller failed or never came) is lowered in by itself */
+    if (ctx && ctx.ensembleHold) O55.motion.after(9000, () => { if (wrap.isConnected && wrap.classList.contains('o55-ens-hold') && A.troupe) A.troupe.enter(host); });
     if (A.rig) A.rig.watch(wrap.querySelector('svg'));
     return wrap;
   };
