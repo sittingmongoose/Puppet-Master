@@ -236,50 +236,28 @@
 
   /* =====================================================================
      The live plate (8.1 run view: "the plate, live (working marks show floor bars, done marks check notches)").
-     Built from PM56_SHELL.pmxPlateParts only; seats keep the foundation's J-2 label geometry.
+     2026-10-07: the same cast plate the Crew sheet draws (PM56_COLLAB.sheet.castRun, one grammar for every kind),
+     each helper in the state of its part of the plan (working, done, or waiting: a slack string and "waits its turn"
+     only while a part really waits), and the plan's dependencies as "after" arrows between the seats (the Integrator
+     starts after the other two). A finished run has no waiting seat, so it shows no waits line.
      ===================================================================== */
-  function fit(text, px) { text = String(text || ''); var max = Math.max(4, Math.floor(px / 6.9)); return text.length > max ? text.slice(0, max - 1).replace(/\s+$/, '') + '…' : text; }
-  function jobWords(r) {
-    var w = String(r.purpose || r.title || '').trim().split(/\s+/).filter(Boolean);
-    if (!w.length) return 'Not written yet';
-    var take = w.slice(0, 4), cut = w.length > 4;
-    while (take.length > 1 && take.join(' ').length > 18) { take.pop(); cut = true; }
-    return take.join(' ') + (cut ? '…' : '');
-  }
   function seatState(r, p) {
     var a = assignments(r).filter(function (x) { return x.participantId === p.id; })[0];
     if (!a) return p.outcome === 'completed' ? 'done' : 'idle';
     if (a.status === 'done') return 'done';
-    if (a.status === 'running') return presentState(r) === 'paused' ? 'queued' : 'working';
-    return 'queued';
+    if (a.status === 'running') return presentState(r) === 'paused' ? 'idle' : 'working';
+    return isLive(r) && presentState(r) !== 'paused' && presentState(r) !== 'waiting' ? 'queued' : 'idle';
   }
   function livePlate(r) {
-    var P = S().pmxPlateParts, ps = (r.participants || []).filter(function (p) { return !p.additiveRoleKind || p.additiveRoleKind === 'none'; });
-    var n = ps.length || 1, LX = 350, LY = 33, HY = 124, EY = 198;
-    var span = n === 1 ? 0 : Math.min(180, 520 / (n - 1)), lab = n === 1 ? 200 : Math.max(64, span - 18);
-    var runs = (r.crew && r.crew.effectiveConcurrency) || 1, st = presentState(r);
-    var leadState = st === 'completed' ? 'done' : 'idle';
-    var coord = !r.coordinator || r.coordinator.kind === 'parent_assistant' ? 'This chat’s assistant' : (r.coordinator.label || 'A separate AI');
-    /* the paper is 56 tall so its words keep >= 8 px from its edge even when the view draws the plate below 1:1 */
-    var s = P.paper({ key: 'crew-vp-job', x: 20, y: 6, w: 160, h: 56, label: 'The job', sub: esc(jobWords(r)), part: 'job' });
-    s += P.line({ key: 'crew-vp-l-job', from: { x: 180, y: 33 }, to: { x: LX - 20, y: 33 }, style: 'fixed', part: 'job' });
-    s += '<g class="pmx-p-seat" data-k="crew-vp-lead" style="--x:' + LX + 'px;--y:' + LY + 'px" data-pmx-part="lead">' +
-      P.seat({ x: 0, y: 0, role: 'lead', state: leadState }).replace(/^<g class="pmx-p-seat"[^>]*>/, '').replace(/<\/g>$/, '') +
-      P.label({ x: 22, y: -2, text: 'Coordinator', cls: 'lab' }) + P.label({ x: 22, y: 16, text: esc(coord), cls: 'sub' }) + '</g>';
-    ps.forEach(function (p, i) {
-      var x = Math.round(LX + (i - (n - 1) / 2) * span), state = seatState(r, p), si = standIn(p);
-      var floor = state === 'queued' && isLive(r) && i >= runs ? 'hatch' : 'bar';
-      s += P.line({ key: 'crew-vp-hand:' + p.id, from: { x: LX, y: LY + 38 }, to: { x: x, y: HY - 20 }, style: 'hands', part: 'assign' });
-      s += P.seat({ key: 'crew-vp-seat:' + p.id, x: x, y: HY, role: markRole(p), seat: i + 1, state: state, standin: !!si, floor: floor, part: 'team',
-        label: esc(fit(p.role, lab)), sub: esc(fit(si ? modelShort(p.effectiveModelName) + ' · stands in' : modelShort(p.effectiveModelName || p.requestedModelName), lab)) });
+    var fn = C.sheet && C.sheet.castRun;
+    if (typeof fn !== 'function') return '';
+    var A = assignments(r), states = {}, after = {};
+    (r.participants || []).forEach(function (p) { if (!p.additiveRoleKind || p.additiveRoleKind === 'none') states[p.id] = seatState(r, p); });
+    A.forEach(function (a) {
+      var deps = (a.dependsOn || []).map(function (d) { return (byId(A, d) || {}).participantId; }).filter(Boolean);
+      if (a.participantId && deps.length) after[a.participantId] = deps;
     });
-    /* J-2: the stage edge sits 11 px under the helpers' sub-lines' ink; You hangs 22 px under it */
-    s += P.line({ key: 'crew-vp-edge', from: { x: 40, y: EY }, to: { x: 660, y: EY }, style: 'fixed', part: 'permission' });
-    s += P.line({ key: 'crew-vp-toyou', from: { x: LX, y: EY }, to: { x: LX, y: EY + 10 }, style: 'toyou', part: 'you' });
-    s += P.you({ x: LX, y: EY + 22, label: 'You', sub: st === 'completed' ? 'got one checked result' : 'get one checked result' });
-    s += P.glyph('lock', 40, EY + 11, 12) + P.label({ x: 58, y: EY + 21, text: 'this chat’s permissions', part: 'permission' });
-    return S().pmxPlate({ key: 'crew-vp:' + r.id, kind: 'crew', mode: 'full', w: 700, h: 256, svg: s, cls: 'crew-view-plate',
-      legend: [{ sample: 'bar', label: 'works at once', part: 'parallel' }, { sample: 'hatch', label: 'waits its turn', part: 'parallel' }] });
+    return fn(r, { key: 'crew-vp:' + r.id, live: { states: states, after: after, done: presentState(r) === 'completed', lead: presentState(r) === 'completed' ? 'done' : 'idle' } });
   }
 
   /* =====================================================================

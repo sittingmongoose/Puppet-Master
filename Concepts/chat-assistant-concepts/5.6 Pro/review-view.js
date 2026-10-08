@@ -329,13 +329,19 @@
   else if(st.participant&&tab==='participants')main=participantHtml(r,st.participant)||common(r,tab,ctx);
   else main=common(r,tab,ctx);
   return {title:esc(r.title),kindWord:'Review · '+(vm.single?'Single Agent':'Multi-Pass Review'),status:statusHtml(vm,r),
-   actions:framed?own+(generic.actions||''):own,plate:framed?undefined:'',tabs,main,aside:asideHtml(vm),cls:framed?'review-document pmx-rview':undefined,vm};
+   actions:framed?own+(generic.actions||''):own,plate:framed?undefined:castPlate(r),tabs,main,aside:asideHtml(vm),cls:framed?'review-document pmx-rview':undefined,vm};
+ }
+ /* the report's cast (2026-10-07): the same plate the Review sheet draws (PM56_COLLAB.sheet.castRun, one grammar), each
+    reviewer in its run state (one that timed out is drawn failed); in the frame (collab-view) the frame draws it */
+ function castPlate(r){
+  const fn=C.sheet&&C.sheet.castRun;
+  try{return typeof fn==='function'?fn(r,{key:'review-plate:'+r.id})||'':'';}catch(e){return '';}
  }
  function viewDocument(ctx,id){
   const r=run(id);
   if(!r||r.kind!=='review')return S.pmxView({key:'review:'+id,cls:'review-document pmx-rview',kind:'review',kindWord:'Review',title:'This review is no longer here',statusHtml:'Its chat was reset, so there is no report to show.'});
   const p=viewParts(r,null,ctx);
-  return S.pmxView({key:'review:'+r.id,cls:'review-document collab-panel pmx-rview',kind:'review',kindWord:p.kindWord,title:p.title,statusHtml:p.status,actionsHtml:p.actions,tabsHtml:p.tabs,mainHtml:p.main,asideHtml:p.aside,
+  return S.pmxView({key:'review:'+r.id,cls:'review-document collab-panel pmx-rview',kind:'review',kindWord:p.kindWord,title:p.title,statusHtml:p.status,actionsHtml:p.actions,plateHtml:p.plate||'',tabsHtml:p.tabs,mainHtml:p.main,asideHtml:p.aside,
    attrs:'data-review-run="'+esc(r.id)+'"'});
  }
  /* G-26: the evidence document, a pmxView without tabs; the line gutter stays put while the code scrolls */

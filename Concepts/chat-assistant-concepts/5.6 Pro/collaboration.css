@@ -30,7 +30,6 @@
 @container pmxrun (max-width: 359px) {
   .pmx-run.collab-card:has(> .pmx-run-foot > .pmx-collab-more) > .pmx-run-body > .collab-card-meta { display: none; }
 }
-.pmx-collab-tech { margin: 8px 0 0; font: var(--pmx-fs-fine); color: var(--subtle); overflow-wrap: anywhere; }
 /* 7.12: the one-control-set pointer takes the follow-on's place in the same row (R-28) */
 .pmx-collab-choosing { display: inline-flex; align-items: center; gap: 8px; min-width: 0; font: var(--pmx-fs-sentence, var(--pmx-fs-help)); color: var(--muted); }
 .pmx-collab-choosing > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -183,9 +182,10 @@
 /* short windows (<= 820 px, 1280 x 800): the secondary lines of COLLAB's own parts drop, as the foundation's do,
    before anything scrolls (J-2: drop, never compress) */
 /* the preview tray (R-02): a top frame taller than 120 px keeps its whole height and is centred at the scale that fits
-   the 82 px tray (heroHtml sets --collab-pv-h and the scale; the frame keeps the real card width) */
-.pmx-sheet .pmx-collab-pv{min-width:0;}
-.pmx-sheet .pmx-collab-pv .pmx-preview-card{top:calc((82px - var(--collab-pv-h, 120px) * var(--pmx-preview-scale, .62)) / 2);}
+   the tray (heroHtml sets --collab-pv-h and the scale; the frame is laid out at 360 px). The wrapper passes the side
+   column's height on to the figure, so the tray fills it (owner tweak 2026-10-07) */
+.pmx-sheet .pmx-collab-pv{min-width:0;flex:1 1 auto;display:flex;flex-direction:column;}
+.pmx-sheet .pmx-collab-pv .pmx-preview-card{top:calc((100% - var(--collab-pv-h, 120px) * var(--pmx-preview-scale, .62)) / 2);}
 .pmx-run.pmx-collab-pvrun[data-pmx-preview="1"]{height:var(--collab-pv-h, 120px);}
 @media (max-height: 820px){
   /* the Crew Auto promise (E-02, the sheet's way to its settings) keeps its place in the side column at every size, over
@@ -201,8 +201,6 @@
   /* BrainStorm keeps its first promise ("Nothing gets built"); dissent and "Rules beat votes" drop (the must-haves
      label's hover card says the rule), so both specialists fit at 1280 x 800 (6.3 common case) */
   .pmx-sheet .pmx-col--side .pmx-promise:is([data-k="pr-dissent"], [data-k="pr-rules"]){display:none;}
-  /* BrainStorm's hero side (preview + must-haves) would stand taller than the field: the preview's caption drops */
-  .pmx-sheet .pmx-hero-side:has(.pmx-collab-must) .pmx-preview > figcaption{display:none;}
   /* an added specialist's model trigger loses its second line like every side trigger (J-2 reference update), and
      its row keeps 6 px above and below: 12 px between stacked triggers and 8 px under the shelf title's and meta's ink */
   .pmx-sheet .pmx-col--side .pmx-spec-control .shared-picker-copy small{display:none;}

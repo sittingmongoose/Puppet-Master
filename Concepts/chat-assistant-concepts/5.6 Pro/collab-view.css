@@ -16,7 +16,6 @@
 .collab-view-more-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;min-width:0;}
 .collab-view-item{display:inline-flex;align-items:center;gap:12px;min-width:0;}
 .collab-view-item > .pmx-reason{margin:0;}
-.collab-view-tech{margin:12px 0 0;overflow-wrap:anywhere;}
 
 /* ---------------------------------------------------------------- lines, figures, helper lines */
 .collab-view-line{display:flex;align-items:baseline;gap:8px;margin:0;font:var(--pmx-fs-body);color:var(--text);min-width:0;}

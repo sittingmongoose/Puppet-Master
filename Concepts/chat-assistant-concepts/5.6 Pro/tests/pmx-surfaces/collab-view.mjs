@@ -57,9 +57,9 @@ export default () => [
     async h => { await openRun(h, await crewDemo(h), { tab: 'usage' }); }, { canon: ['Crew'] }),
   view('collab-view:crew-participant', 'Crew run view, one helper’s own view (D5): state, model, Message disabled with its reason, own messages',
     async h => { const id = await crewDemo(h); const pid = await h.ev(id => window.PM56_COLLAB.run(id).participants[1].id, id); await openRun(h, id, { participantId: pid }); }, { canon: ['Crew'] }),
-  view('collab-view:crew-more', 'Crew run view, the More row open with Technical details (G-12: real buttons, Download transcript disabled with its reason)',
+  view('collab-view:crew-more', 'Crew run view, the More row open (G-12: real buttons, Download transcript disabled with its reason; no Technical details, 2026-10-07)',
     async h => { await openRun(h, await crewDemo(h), { tab: 'overview' }); await h.clickVisible(`${VIEW} [data-action="collab-view-toggle"][data-part="more"]`); await h.wait(200);
-      await h.clickVisible(`${VIEW} [data-action="collab-view-toggle"][data-part="tech"]`); await h.wait(200); }, { canon: ['Crew'] }),
+      if (await h.ev(v => !!document.querySelector(v + ' [data-action="collab-view-toggle"][data-part="tech"]'), VIEW)) throw new Error('the run view’s More row still offers Technical details'); }, { canon: ['Crew'] }),
   view('collab-view:review-report', 'Review run view (Multi-Pass, recorded), Report tab: generic summary and the plate',
     async h => { await openRun(h, await demoRun(h, 'review-demo-start', 'multi'), { tab: 'overview' }); }, { canon: ['Review', 'Multi-Pass'] }),
   view('collab-view:brainstorm-conversation', 'BrainStorm run view (recorded), Conversation: protocol messages as people say them (G-33)',

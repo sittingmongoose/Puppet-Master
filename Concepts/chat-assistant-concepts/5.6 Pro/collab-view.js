@@ -28,7 +28,7 @@
  * pmxParticipant, pmxMd, pmxMark, pmxStandIn, pmxCost, pmxTime ...); no primitive is re-implemented here.
  * Actions reuse the existing collab-* names (pause, resume, cancel, message, export, open-configure, the
  * follow-ons); the only new actions are view state: collab-view-toggle (the More row, the in-place cancel
- * confirm, Technical details) and collab-view-filter (the Conversation's "Showing everyone" picker).
+ * confirm) and collab-view-filter (the Conversation's "Showing everyone" picker).
  */
 (function () {
   'use strict';
@@ -61,12 +61,12 @@
   function joinNames(a) { return a.length <= 1 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
 
   /* ================================================================ view state (G-14)
-     One record per run: the tab, the helper whose own view is open, the Conversation filter, and the three
-     view-local toggles (More row, the in-place cancel confirm, Technical details). Reset on reset-all. */
+     One record per run: the tab, the helper whose own view is open, the Conversation filter, and the two
+     view-local toggles (More row, the in-place cancel confirm). Reset on reset-all. */
   var VIEW = {};
   function vs(runId) {
     var v = VIEW[runId];
-    if (!v) v = VIEW[runId] = { tab: 'overview', participantId: null, filter: 'all', more: false, confirm: false, tech: false };
+    if (!v) v = VIEW[runId] = { tab: 'overview', participantId: null, filter: 'all', more: false, confirm: false };
     return v;
   }
 
@@ -211,12 +211,7 @@
     out += btn({ action: 'collab-view-toggle', attrs: runAttr(run) + ' data-part="more" aria-expanded="' + !!v.more + '"', icon: true, glyph: 'more', label: esc(A.more || 'More') });
     return out;
   }
-  var CMD = { crew: 'cmd.collaboration.crew', review: 'cmd.review', brainstorm: 'cmd.brainstorm', chat_room: 'cmd.chat_room' };
-  function techLine(run) {
-    var bits = ['Run ' + esc(run.id), esc(CMD[run.kind] || 'cmd.collaboration') + '.* (no command registered in this preview)', 'status ' + esc(run.status)];
-    if (run.config_fingerprint) bits.push('fingerprint ' + esc(String(run.config_fingerprint).slice(0, 12)));
-    return bits.join(' · ');
-  }
+  /* the More row: real buttons (G-12); no Technical details (2026-10-07, Jared) */
   function moreRow(run, kp) {
     var v = vs(run.id), st = present(run), A = copy().actions || {}, kw = KIND_WORD[run.kind] || 'run';
     if (!v.more) return '';
@@ -237,30 +232,19 @@
     items += reasoned(btn({ action: 'collab-export', attrs: runAttr(run) + ' data-failure="command_not_registered"', disabled: true, label: esc(A.download || 'Download transcript') }), esc(copy().notAvailable || 'Not available in this preview.'));
     if (finished(st)) items += reasoned(btn({ action: 'collab-message', attrs: runAttr(run), disabled: true, label: esc(A.message || 'Message') }),
       esc(fill(copy().finishedMessage || 'This {kind} has finished, so it can’t take messages. Ask the assistant instead.', { kind: kw })));
-    items += btn({ action: 'collab-view-toggle', attrs: runAttr(run) + ' data-part="tech" aria-expanded="' + !!v.tech + '"', label: esc(A.technical || 'Technical details') });
-    var tech = v.tech ? '<p class="pmx-fine collab-view-tech">' + techLine(run) + '</p>' : '';
-    return '<div class="collab-view-more" data-k="cv-more:' + esc(run.id) + '"><div class="collab-view-more-row">' + items + '</div>' + tech + '</div>';
+    return '<div class="collab-view-more" data-k="cv-more:' + esc(run.id) + '"><div class="collab-view-more-row">' + items + '</div></div>';
   }
 
-  /* ================================================================ the plate: the run's cast, drawn by COLLAB's own plate
-     COLLAB's plates are built from a draft; the run's core helpers make that draft, and only the full mode is
-     kept (the view has room for it and no plate slot to fit). Crews of 4+ and failures show no plate. */
+  /* ================================================================ the plate: the run's cast (2026-10-07)
+     The same cast plate the sheet drew (PM56_COLLAB.sheet.castRun: one grammar), with every helper in its LIVE state
+     (working, waits, needs you, done, failed) rather than the sheet's plan, so a helper that needs your OK is never
+     drawn "waiting its turn". The richest mode that fits 640 wide; any team size. */
   function plateHtml(run) {
-    var c = C(), fn = c && c.sheet && c.sheet.plateParts && c.sheet.plateParts[run.kind];
-    if (typeof fn !== 'function') return '';
-    var core = coreOf(run);
-    if (!core.length || core.length > 3) return '';
-    var specs = specialsOf(run);
-    var d = {
-      kind: run.kind, rows: core.map(function (p) { return { rowId: p.id, role: p.role, requestedModelId: p.requestedModelId, persona: p.requestedPersona || p.effectivePersona }; }),
-      config: Object.assign({}, run.config || {}), wonderer: specs.some(function (p) { return specialKind(p) === 'wonderer'; }), grillMe: specs.some(function (p) { return specialKind(p) === 'grill'; }),
-      purpose: run.purpose || '', name: run.title || '', mustHaves: '', specialistRoutes: {}, reviewTargetChoice: 'latest_changes'
-    };
+    var c = C(), fn = c && c.sheet && c.sheet.castRun;
+    if (typeof fn !== 'function' || !coreOf(run).length) return '';
     var html = '';
-    try { html = String(fn(d) || ''); } catch (e) { return ''; }
-    var m = /<figure class="pmx-plate[^"]*"[^>]*data-mode="full"[\s\S]*?<\/figure>/.exec(html);
-    if (!m) return '';
-    return m[0].replace(/\sdata-collab-mirror="[^"]*"/g, '').replace(/\sdata-k="([^"]*)"/g, function (x, v) { return ' data-k="cv:' + v + '"'; });
+    try { html = String(fn(run, { key: 'cv-plate:' + run.id }) || ''); } catch (e) { return ''; }
+    return html.replace(/\sdata-collab-mirror="[^"]*"/g, '');
   }
 
   /* ================================================================ Conversation (D3, G-06, G-33) */
@@ -707,7 +691,6 @@
     var v = vs(id), part = b.dataset.part;
     if (part === 'more') { v.more = !v.more; v.confirm = false; }
     else if (part === 'confirm') v.confirm = !v.confirm;
-    else if (part === 'tech') v.tech = !v.tech;
     reRender(ctx); return true;
   });
   EXT.action('collab-view-filter', function (ctx, b) {

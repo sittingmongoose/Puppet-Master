@@ -1,8 +1,10 @@
 /* ROOM surfaces for tests/pmx-verify.mjs (package ROOM-A, DESIGN-SPEC 8.3 and 7: the Chat Room sheet's parts and
    its in-chat card). wand.mjs already opens the default Chat Room sheet (wand:chat_room, four helpers, Moderator
    guides) and demo:room-discussion. These are the other states the blueprint draws:
-   - the sheet with two helpers (the full table plate) and Take turns (the ring with one arrowhead);
-   - the sheet with three helpers and One answer each (the compact plate, "One answer each is always one round");
+   - the sheet with two helpers (the full cast plate: the topic to the Moderator, the helpers hanging under it, the turn
+     policy on one note line, "Take turns · up to 5 rounds"; 2026-10-07: no table, no ring);
+   - the sheet with three helpers and One answer each (the plate's note reads "One answer each · one round", and the
+     helper says "One answer each is always one round");
    - the sheet a recorded example opens (prefilled, "Recorded example · no AI cost", the "Your move" preview);
    - the card at each moment of a recorded room: not started ("Your move · start the first round", Ask Everyone),
      a round in progress (the speaker's words streaming, up next, the previous turn), a round done (Next Round,
@@ -124,10 +126,10 @@ function card(id, title, reach, extra = {}) {
 }
 
 export default () => [
-  sheet('room:sheet-table-turns', 'Chat Room sheet with two helpers and Take turns: the full table plate (8.3)', async h => {
+  sheet('room:sheet-table-turns', 'Chat Room sheet with two helpers and Take turns: the cast plate with "Take turns" on its note line (8.3)', async h => {
     await removeHelpers(h, 2); await pickPolicy(h, 'round_robin');
   }),
-  sheet('room:sheet-once', 'Chat Room sheet with three helpers and One answer each: the compact plate, one round', async h => {
+  sheet('room:sheet-once', 'Chat Room sheet with three helpers and One answer each: one round', async h => {
     await removeHelpers(h, 1); await pickPolicy(h, 'ask_everyone_once');
   }),
   {

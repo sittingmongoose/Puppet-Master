@@ -180,76 +180,14 @@
  const CONF_WORD={high:'very sure',medium:'fairly sure',low:'unsure'},CONF_N={high:3,medium:2,low:1};
  const WAIT_NOUN='the team hasn’t started drafting';
 
- /* ---- sheet: the plate (8.4 "Who's on the team"). Four modes, richest first, each at its natural height:
-    full 216 (chapters, helpers named behind screens, the branches merging into one plan, You), compact 108
-    (the diverge-converge plate a 4-helper sheet shows at 1440 x 900: chapters, marks behind screens, the
-    branches merging, You), strip 64 (marks behind screens and You) and the caption. Built only from
-    PM56_SHELL.pmxPlateParts, so the plate needs no kind CSS. ---- */
- function seatOf(d,row,i){const C2=window.PM56_COLLAB;return C2&&typeof C2.seatOf==='function'?C2.seatOf(d,row):(i%8)+1;}
- function fitLabel(text,px){text=String(text||'');const max=Math.max(4,Math.floor(px/6.6));return text.length>max?text.slice(0,max-1).replace(/\s+$/,'')+'…':text;}
- function modelShort(id){const ms=window.PM56_DATA&&window.PM56_DATA.models,arr=Array.isArray(ms)?ms:Object.values(ms||{}),m=arr.find(x=>x&&x.id===id);return String(m?m.name:(id||'')).replace(/^Claude /,'');}
- function chapterRow(P,y,pitch,x0){
-  let s=P.line({key:'pmx-p-chapters',from:{x:x0,y},to:{x:x0+6*pitch,y},style:'fixed',part:'rounds'});
-  CHAPTERS.forEach((c,i)=>{s+=P.chapter({key:'pmx-p-ch:'+i,x:x0+i*pitch,y,label:c[0],state:'next',part:c[3]+(i===0?' job':'')});});
-  return s;
- }
- /* the branches merge into one stem (the kind mark's idea): each helper drops to one rail, the rail runs to You */
- function mergeRail(P,xs,top,railY,you){
-  if(!xs.length)return '';
-  let s='';xs.forEach((x,i)=>{s+=P.line({key:'pmx-p-drop:'+i,from:{x,y:top},to:{x,y:railY},style:'fixed',part:'team you'});});
-  const x0=Math.min(...xs),x1=Math.max(...xs);
-  if(x1>x0)s+=P.line({key:'pmx-p-rail',from:{x:x0,y:railY},to:{x:x1,y:railY},style:'fixed',part:'team you'});
-  return s+P.line({key:'pmx-p-toyou',d:you,style:'toyou',part:'you'});
- }
+ /* ---- sheet: the plate (8.4 "Who's on the team"). 2026-10-07: one cast grammar for every collaboration kind,
+    drawn by PM56_SHELL.pmxCastFit from COLLAB's one BrainStorm description (PM56_COLLAB.sheet.castSpec.brainstorm:
+    the seven chapters as the bar ending in the edge to You, the team hanging under them behind screens, the
+    specialists' wing, the must-have rule on the Vote chapter, the lean compact of a recorded draft), so the sheet
+    and the run view draw the same plate. ---- */
  function plateFit(d){
-  const S=S_(),P=S.pmxPlateParts,n=d.rows.length,specs=(d.wonderer?1:0)+(d.grillMe?1:0);
-  const rules=String(d.mustHaves||'').trim()?1:0,C2=window.PM56_COLLAB,lean=!!(C2&&C2.isRecordedDraft&&C2.isRecordedDraft(d));
-  const seats=d.rows.map((r,i)=>({r,seat:seatOf(d,r,i),role:String(r.persona||'Implementer')}));
-  function spread(x0,x1,step){const span=n<2?0:Math.min(step,(x1-x0)/(n-1)),c=(x0+x1)/2;return seats.map((_,i)=>Math.round(c+(i-(n-1)/2)*span));}
-  function full(){
-   const H2=216,HY=86,RAIL=158;
-   let s=chapterRow(P,12,77,50);
-   const xs=spread(specs?80:70,specs?400:500,118),lab=n<2?120:Math.max(58,Math.min(118,(xs[1]-xs[0]))-14);
-   for(let i=0;i<n-1;i++)s+=P.screen({key:'pmx-p-scr:'+i,x:(xs[i]+xs[i+1])/2,y:HY,h:28,part:'blind'});
-   seats.forEach((o,i)=>{s+=P.seat({key:'pmx-p-seat:bs:'+o.r.rowId,x:xs[i],y:HY,role:o.role,seat:o.seat,label:H(fitLabel(o.r.role||'Helper',lab)),sub:H(fitLabel(modelShort(o.r.requestedModelId),lab)),part:'team blind'});});
-   if(d.wonderer)s+=P.seat({key:'pmx-p-seat:bs:wonderer',x:506,y:HY,role:'wonderer',seat:SPEC_SEAT.wonderer,label:'Wonderer',sub:'doesn’t vote',part:'wonderer specialists'});
-   const cx=Math.round((xs[0]+xs[n-1])/2);
-   s+=mergeRail(P,xs,HY+60,RAIL,'M'+cx+' '+RAIL+' V'+(RAIL+14));
-   if(rules)s+=P.glyph('lock',cx+8,RAIL+2,11).replace('<g ','<g data-pmx-part="rules" ');
-   s+=P.you({x:cx,y:RAIL+28,label:'You',sub:'get one plan'});
-   if(d.grillMe)s+=P.seat({key:'pmx-p-seat:bs:grill',x:506,y:RAIL+22,role:'grill',seat:SPEC_SEAT.grillMe,label:'Grill Me',part:'grill questions specialists'});
-   return S.pmxPlate({key:'pmx-plate-bs:full',kind:'brainstorm',mode:'full',w:576,h:H2,fitH:H2,svg:s});
-  }
-  /* lean (review fix): a guided demo's sheet carries the guide strip, which leaves the slot 94 px at 1440 x 900; the
-     compact plate is then drawn 16 px shorter (the chapters' labels 8 px above the screens' glyphs, shorter screens),
-     so the chapters and the merge into one plan still show where first-time users meet the sheet */
-  function compact(){
-   const H2=lean?92:108,HY=lean?57:68,RAIL=lean?84:99,YY=lean?HY-3:HY,end=specs?372:452;
-   let s=chapterRow(P,lean?9:10,77,50);
-   const xs=spread(60,end,96);
-   for(let i=0;i<n-1;i++)s+=P.screen({key:'pmx-p-scr:'+i,x:(xs[i]+xs[i+1])/2,y:lean?HY+5:HY,h:lean?12:22,part:'blind'});
-   seats.forEach((o,i)=>{s+=P.seat({key:'pmx-p-seat:bs:'+o.r.rowId,x:xs[i],y:HY,role:o.role,seat:o.seat,part:'team blind'});});
-   if(d.wonderer)s+=P.seat({key:'pmx-p-seat:bs:wonderer',x:d.grillMe?404:430,y:HY,role:'wonderer',seat:SPEC_SEAT.wonderer,part:'wonderer specialists'});
-   if(d.grillMe)s+=P.seat({key:'pmx-p-seat:bs:grill',x:d.wonderer?448:430,y:HY,role:'grill',seat:SPEC_SEAT.grillMe,part:'grill questions specialists'});
-   s+=mergeRail(P,xs,HY+16,RAIL,'M'+xs[n-1]+' '+RAIL+' H552 V'+(YY+13));
-   if(rules)s+=P.glyph('lock',xs[n-1]+(lean?18:12),RAIL-13,11).replace('<g ','<g data-pmx-part="rules" ');
-   s+=P.you({x:552,y:YY,anchor:'end',label:'You',sub:'one plan'});
-   return S.pmxPlate({key:'pmx-plate-bs:compact',kind:'brainstorm',mode:'compact',w:576,h:H2,fitH:H2,svg:s});
-  }
-  function strip(){
-   const H2=64,Y=30,end=(specs?360:440);
-   const xs=seats.map((_,i)=>Math.round(44+i*(n<2?0:Math.min(96,(end-44)/(n-1)))));
-   let s='';
-   for(let i=0;i<n-1;i++)s+=P.screen({key:'pmx-p-scr:'+i,x:(xs[i]+xs[i+1])/2,y:Y,h:22,part:'blind'});
-   seats.forEach((o,i)=>{s+=P.seat({key:'pmx-p-seat:bs:'+o.r.rowId,x:xs[i],y:Y,role:o.role,seat:o.seat,part:'team blind job'});});
-   if(d.wonderer)s+=P.seat({key:'pmx-p-seat:bs:wonderer',x:d.grillMe?404:430,y:Y,role:'wonderer',seat:SPEC_SEAT.wonderer,part:'wonderer specialists'});
-   if(d.grillMe)s+=P.seat({key:'pmx-p-seat:bs:grill',x:d.wonderer?448:430,y:Y,role:'grill',seat:SPEC_SEAT.grillMe,part:'grill questions specialists'});
-   s+=P.you({x:552,y:Y,anchor:'end',label:'You',sub:'one plan'});
-   return S.pmxPlate({key:'pmx-plate-bs:strip',kind:'brainstorm',mode:'strip',w:576,h:H2,fitH:H2,svg:s});
-  }
-  const caption=plural(n,'helper')+' draft alone, debate, check the facts and vote. You get one plan.';
-  const plates=n<=4?[full(),compact(),strip()]:n<=6?[compact(),strip()]:[];
-  return S.pmxPlateFit({key:'pmx-plate-fit:bs',affects:'team',plates,caption:'<span data-pmx-part="team job">'+H(caption)+'</span>'});
+  const C2=window.PM56_COLLAB,fn=C2&&C2.sheet&&C2.sheet.plateParts&&C2.sheet.plateParts.brainstorm;
+  return typeof fn==='function'?fn(d):'';
  }
 
  /* ---- sheet: the question budget (8.4 "Questions for you"). The exact .collab-qmax node stays for the
@@ -267,7 +205,9 @@
    /* the visible helper only while the side column has the line (no specialist rows; retro and short windows drop it) */
    (d.wonderer||d.grillMe||lean?'':'<p class="pmx-help pmx-bs-qhelp">Shared by everyone. A limit, not a target.</p>')+'</div>';
  }
- /* must-haves: the user field draft.mustHaves (IMPACT A1-01), one rule per line, in the hero's aside (8.0).
+ /* must-haves: the user field draft.mustHaves (IMPACT A1-01), one rule per line, beside the question in the hero
+    (8.0; owner tweak 2026-10-07: it was the hero's aside, under the preview, which kept the preview small; the hero's
+    `after` slot, collaboration.js heroHtml, puts it behind the field in a box as tall as the field's).
     Review fixes (J-2, honesty): the field grows with its rules from one line to two (field-sizing, inside a box that
     carries the border, so a third line scrolls inside the field and never shows half cut through its glyphs); a
     recorded example decides by the recording's own rules, so its sheet shows them read-only: the first rule on one
@@ -297,7 +237,7 @@
   const out={
    title:'Set up a BrainStorm',
    lead:'Several AIs each draft a plan without peeking at the others. They debate, check the facts and vote, and you get one plan you can build.',
-   hero:{n:1,title:'What should the team decide?',helper:'This becomes the plan’s goal. Everyone reads it.',placeholder:'e.g. How should search stay fast without uploading anything?',aside:mustHavesBlock(d,recorded)},
+   hero:{n:1,title:'What should the team decide?',helper:'This becomes the plan’s goal. Everyone reads it.',placeholder:'e.g. How should search stay fast without uploading anything?',after:mustHavesBlock(d,recorded)},
    whoTitle:'Who’s on the team',whoMeta:'<span data-k="cnt:'+n+'">'+plural(n,'helper')+'</span> · 2 to 8',
    rosterCols:[{label:'Job',helper:'What it looks at',hover:'What this helper looks at. The role name is the job; everyone also reads the question above.'},{label:'AI model',helper:'Which AI, which account pays'},{label:'Persona',helper:'How it works (builds, checks…)'}],
    plate:plateFit(d),
@@ -453,8 +393,7 @@
   const openA={action:'brainstorm-open-results',attrs:ra,label:'Open Panel',core:true};
   const clusterHtml=cluster.map(c=>({html:S.pmxMark({role:c.role,seat:c.seat,size:18,state:c.state,standin:c.standin}),mini:S.pmxMark({role:c.role,seat:c.seat,size:12})}));
   const base={kindWord:'BrainStorm',owned:true,openAction:'brainstorm-open-results',cluster:clusterHtml,
-   nouns:{waiting:WAIT_NOUN,progress,cancelExtra:progress},allowedActions:[],clusterRoles:cluster,
-   technical:{command:'cmd.collaboration.open',text:'Open Panel sends cmd.collaboration.open {target: run_view}.'}};
+   nouns:{waiting:WAIT_NOUN,progress,cancelExtra:progress},allowedActions:[],clusterRoles:cluster};
   /* the one Plan (BS-10): the card stays and says what was picked; the Plan card is born beneath it (plans.js) */
   if(b.synthesis){
    const plan=P&&P.get?P.get(b.synthesis.planId):null,ver=plan&&plan.version?'Plan V'+plan.version:'Plan ready';
@@ -470,8 +409,7 @@
     receipt:{headline:'Picked: '+H(q.title),glyph:'check',recorded:rec,time:ver,cost:''},
     meta:{recorded:rec,parts:[ver+' · nothing has been built yet']},
     /* S tier (review fix): the next step is the Plan, so Open Plan is a core action and stays on the one row */
-    actions:[{action:'brainstorm-open-plan',attrs:ra,label:'Open Plan',primary:true,core:true},openA],
-    technical:{command:'cmd.nav.open_subject',text:'Open Plan sends cmd.nav.open_subject. Open Panel sends cmd.collaboration.open {target: run_view}.'}});
+    actions:[{action:'brainstorm-open-plan',attrs:ra,label:'Open Plan',primary:true,core:true},openA]});
   }
   const running=r.status==='running';
   let sentence,board='',lanes='',decision=null,now='',density='live',tone='',followOns=[];
@@ -533,7 +471,6 @@
     if(running&&viewOpen)followOns=acts;
     sentence={status:'yourmove',word:'Ready to write the plan',reason:'One Deep Plan, with the disagreement kept in it.'};
    }
-   base.technical={command:'cmd.brainstorm.synthesize_plan',text:'Write the plan sends cmd.brainstorm.synthesize_plan. One more debate round sends cmd.brainstorm.next_round.'};
   }
   const playable=running&&!!(window.PM56_BRAINSTORM_DEMOS&&ctx&&window.PM56_BRAINSTORM_DEMOS.controls(ctx,r));
   const actions=[openA,{action:'collab-message',attrs:ra,label:'Message',core:true}];

@@ -768,9 +768,10 @@
      in collab-view.js; PM56_COLLAB.viewState reads it).
      ===================================================================== */
   /* step 2 (the card): face = the density last rendered, settling = a face held one beat (G-07), arriving = a
-     card whose Start flight is in the air (M3), cancelAsk = the in-place Cancel confirm, tech = the Technical
-     details line, last = the presentation state last seen, doneMark = when a run finished in this session */
-  var UI = { expanded: {}, more: {}, face: {}, settling: {}, arriving: {}, cancelAsk: {}, tech: {}, last: {}, doneMark: {}, sentTo: {} };
+     card whose Start flight is in the air (M3), cancelAsk = the in-place Cancel confirm, last = the presentation
+     state last seen, doneMark = when a run finished in this session (the card has no Technical details line:
+     2026-10-07, Jared) */
+  var UI = { expanded: {}, more: {}, face: {}, settling: {}, arriving: {}, cancelAsk: {}, last: {}, doneMark: {}, sentTo: {} };
 
   /* IMPACT A2-14: the phrase primitives replace the local formatters (fmtClock, fmtMoney, fmtTokens are gone). COLLAB step 3:
      the centred panel's own renderers (status chip, participant row, message line, usage strip, the kind inline blocks)
@@ -1357,11 +1358,12 @@
      40-collab.js) that wave 2 builds against. Tolerated shapes, normalised here: cluster [html | '|' | {html, mini}]
      (+ clusterMini [html]), meta [html] (+ recorded) or {parts, recorded}, result html or {glyph, headline, sub,
      outputHtml, boardHtml, creditsHtml}, more [{action, label, attrs, disabled, reason}] (the kind's More entries),
-     technical html or {text}, nouns {waiting, progress, cancelExtra} (or waitingNoun / progressNoun), allowedActions
-     (the recovery buttons of a failed face), density (the face the run would take by itself), dock {tone, sentence}.
+     nouns {waiting, progress, cancelExtra} (or waitingNoun / progressNoun), allowedActions (the recovery buttons
+     of a failed face), density (the face the run would take by itself), dock {tone, sentence}. A card has no
+     Technical details line (2026-10-07, Jared): the command a sheet would send stays in its Advanced page only.
      On the shared faces (waiting, paused, cancelled, stopped at your limit, a failed run with no decision of the
      kind's own) COLLAB's sentence and actions stay (IMPACT A3-04); the kind supplies nouns, track, lanes and marks. */
-  var SHARED_OK = { track: 1, lanes: 1, cluster: 1, clusterMini: 1, clock: 1, openAction: 1, openAttrs: 1, kindWord: 1, technical: 1, nouns: 1, waitingNoun: 1, progressNoun: 1, allowedActions: 1, more: 1, recorded: 1, dock: 1 };
+  var SHARED_OK = { track: 1, lanes: 1, cluster: 1, clusterMini: 1, clock: 1, openAction: 1, openAttrs: 1, kindWord: 1, nouns: 1, waitingNoun: 1, progressNoun: 1, allowedActions: 1, more: 1, recorded: 1, dock: 1 };
   var DENSITY_OK = { starting: 1, waiting: 1, live: 1, attention: 1, result: 1, failed: 1 };
   function kindParts(run, ctx, face, generic) {
     var mod = kindModule(run.kind);
@@ -1388,7 +1390,6 @@
     if (Array.isArray(out.meta)) out.meta = { parts: out.meta, recorded: own.recorded != null ? !!own.recorded : generic.meta.recorded };
     if (typeof out.result === 'string') out.result = out.result ? { html: out.result } : generic.result;
     if (Array.isArray(own.more)) out.moreExtra = own.more;
-    if (own.technical) out.techText = typeof own.technical === 'string' ? own.technical : esc(own.technical.text || own.technical.command || '');
     var nouns = own.nouns || {};
     var prog = nouns.cancelExtra || nouns.progress;
     if (st === 'cancelled' && prog) out.sentence = { status: 'cancelled', word: 'Cancelled', reason: esc(prog) + ' · everything so far is kept.' };
@@ -1463,8 +1464,8 @@
   function canResume(run) { return run.status === 'paused' || (run.status === 'waiting' && !run.blockedReason); }
   function canCancel(run) { return ['running', 'paused', 'waiting', 'blocked', 'configuring'].indexOf(run.status) >= 0; }
 
-  /* the More row (G-12): an in-card row of real buttons that replaces the actions row in place */
-  var TECH_CMD = { 'collab-open-panel': 'cmd.collaboration.open {target: run_view}', 'crew-open-work': 'cmd.collaboration.open {target: run_view}', 'review-open-report': 'cmd.collaboration.open {target: run_view}', 'brainstorm-open-results': 'cmd.collaboration.open {target: run_view}', 'collab-resume': 'cmd.collaboration.resume', 'collab-open-configure': 'cmd.collaboration.start (seeded definition)', 'collab-watch-example': 'no command: demo' };
+  /* the More row (G-12): an in-card row of real buttons that replaces the actions row in place (no Technical
+     details: 2026-10-07, Jared) */
   function moreItems(run, st, p, shown) {
     var K = KIND_LABEL[run.kind], out = [], planBound = !!(run.crew && run.crew.planBinding);
     if (canPause(run) && !TERMINAL[st]) out.push({ action: 'collab-pause', label: 'Pause' });
@@ -1480,7 +1481,6 @@
     /* A1-38: disabled with its reason, unless the kind's own More already has a working export (ROOM-A (d)) */
     /* a run that has not started has no transcript yet, so a waiting card's More does not offer one */
     if ((hasStarted(run) || TERMINAL[st]) && !out.some(function (y) { return /export/.test(y.action) && !y.disabled; })) out.push({ action: 'collab-export', label: 'Download transcript', disabled: true, reason: 'Not in this preview', attrs: 'data-failure="command_not_registered"' });
-    out.push({ action: 'collab-tech', label: 'Technical details' });
     /* DON'T 31: a control already on the card (decision row, actions row) is not repeated here */
     var seen = {};
     return out.filter(function (x) { var k = x.action + '|' + (x.attrs || ''); if (shown[x.action] || shown[k] || seen[k]) return false; seen[k] = 1; return true; });
@@ -1492,9 +1492,8 @@
       return '<span class="pmx-collab-mi"><button type="button" class="text-button pmx-act" data-action="' + esc(x.action) + '"' + at + (x.disabled ? ' disabled' : '') + '>' + x.label + '</button>' +
         (x.disabled && x.reason ? '<span class="pmx-collab-why">' + esc(x.reason) + '</span>' : '') + '</span>';
     }).join('');
-    var tech = UI.tech[run.id] ? '<p class="pmx-fine pmx-collab-tech" data-k="collab-tech-' + esc(run.id) + '">' + (p.techText ? p.techText + ' · ' : 'Open Panel: ' + esc(TECH_CMD[p.openAction] || 'cmd.collaboration.open {target: run_view}') + ' · ') + 'run ' + esc(run.id) + '</p>' : '';
     return '<div class="pmx-actions pmx-collab-more" data-k="collab-more-' + esc(run.id) + '">' + items + '<span class="pmx-grow"></span>' +
-      '<button type="button" class="icon-button pmx-act" data-action="collab-toggle-more"' + ra + ' aria-label="Close More" aria-expanded="true">' + S_().pmxGlyph('close', 14) + '</button></div>' + tech;
+      '<button type="button" class="icon-button pmx-act" data-action="collab-toggle-more"' + ra + ' aria-label="Close More" aria-expanded="true">' + S_().pmxGlyph('close', 14) + '</button></div>';
   }
   function withRun(list, run) {
     return (list || []).filter(Boolean).map(function (a) {
@@ -1643,11 +1642,10 @@
     if (UI.more[id] && run && UI.face[id] === 'receipt') UI.expanded[id] = 'open';
     ctx.renderApp(); return true;
   });
-  /* new card actions (IMPACT A3-07): collab-cancel-ask / -keep and collab-tech are view state; collab-watch-example
+  /* new card actions (IMPACT A3-07): collab-cancel-ask / -keep are view state; collab-watch-example
      is demo (8.15: a demo action never becomes a command) */
   EXT.action('collab-cancel-ask', function (ctx, btn) { var id = btn.dataset.run; UI.cancelAsk[id] = true; UI.more[id] = false; ctx.renderApp(); return true; });
   EXT.action('collab-cancel-keep', function (ctx, btn) { UI.cancelAsk[btn.dataset.run] = false; ctx.renderApp(); return true; });
-  EXT.action('collab-tech', function (ctx, btn) { var id = btn.dataset.run; UI.tech[id] = !UI.tech[id]; ctx.renderApp(); return true; });
   var EXAMPLE_START = { crew: ['crew-demo-start', 'delegation'], review: ['review-demo-start', 'multi'], brainstorm: ['brainstorm-demo-start', 'synthesis'], chat_room: ['room-demo-start', 'discussion'] };
   /* G-32: a wand-started run never plays in place; the recorded example opens in a new chat with its own team */
   EXT.action('collab-watch-example', function (ctx, btn) {
@@ -2677,8 +2675,26 @@
     return S.pmxRun({ key: 'collab-card-new', kind: d.kind, density: ff.density, preview: true, headHtml: head, bodyHtml: body })
       .replace(/^<article class="pmx-run"/, '<article class="pmx-run pmx-collab-pvrun" style="--collab-pv-h:' + Math.max(120, UI.previewH || 120) + 'px"');
   }
-  /* the preview renders at the destination card's width, measured when the sheet opens (R-02) */
-  UI.sheetScale = UI.sheetScale || 0;
+  /* the preview (R-02; owner tweak 2026-10-07: drawn at about .56 it was too small to make out) lays the card's top
+     frame out at PV_LAYOUT_W, the narrowest M-tier card, and scales it to fit the tray's own box (module-shell.css: the
+     tray fills the hero's side column), PV_PAD_X beside the frame and at least PV_PAD_Y above and below, never past
+     1:1. heroHtml draws it at the scale for the last measured tray (resetPreview's guess when the sheet opens) and
+     fitPreview measures the tray and the frame after the overlay render and redraws once, before the first paint, when
+     either differs. The Start flight lays its clone out at the real card's width (measureCardWidth). */
+  var PV_LAYOUT_W = 360, PV_PAD_X = 10, PV_PAD_Y = 5;
+  function previewScale(trayW, trayH, frameH) {
+    var s = Math.min((trayW - 2 * PV_PAD_X) / PV_LAYOUT_W, (trayH - 2 * PV_PAD_Y) / Math.max(120, frameH || 120), 1);
+    return Math.max(0.3, Math.round(s * 1000) / 1000);
+  }
+  /* when a sheet opens: the frame's usual height at PV_LAYOUT_W (125 px: head, a two-line sentence, the track) and the
+     tray box module-shell.css gives this window (340 x 134 beside the three-line field under the caption; 308 wide
+     under 1168 px; 308 x 110 beside the two-line field in a window 820 px tall or less) */
+  function resetPreview() {
+    var tall = window.innerHeight > 820;
+    UI.previewH = 125;
+    UI.trayW = tall && window.innerWidth >= 1168 ? 340 : 308;
+    UI.trayH = tall ? 134 : 110;
+  }
   function measureCardWidth() {
     var el = document.querySelector('#pmRoot .transcript-inner');
     var w = 0;
@@ -2687,8 +2703,8 @@
       w = el.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
     }
     if (!(w > 200)) w = 417;
-    /* the preview is the card's top frame at the M tier at least: an S-tier card's three-line sentence would not fit
-       the tray, and the flight lays its clone out at the real card's width anyway (M3) */
+    /* the Start flight's layout width: the card's own, at the M tier at least (the landing re-lays the clone out at
+       the card's exact width when it differs, M3) */
     return Math.max(360, Math.min(720, w));
   }
 
@@ -2697,267 +2713,173 @@
      PM56_<KIND>.sheetParts replaces any field it returns). Plates are built
      only from PM56_SHELL.pmxPlateParts, so no kind CSS is needed for them.
      ===================================================================== */
-  var PP = function () { return S_().pmxPlateParts; };
-  function fitLabel(text, px) { text = String(text || ''); var max = Math.max(4, Math.floor(px / 6.6)); return text.length > max ? text.slice(0, max - 1).replace(/\s+$/, '') + '…' : text; }
   function capacityOf(d) { return d.crewInput && d.crewInput.capacity && d.crewInput.capacity.maxConcurrent ? d.crewInput.capacity.maxConcurrent : PLAN_CAPACITY; }
 
-  /* ---- Crew plate (8.1): the job and the Coordinator upstage, helpers on their marks (a floor bar works at once,
-     a hatched floor waits its turn), specialists in the right wing, the stage edge, You and the permission lock
-     in the house. Natural heights: full 225, compact 104, strip 72, caption 40 (J-2 reference update). ---- */
-  function crewPlateFit(d) {
-    var S = S_(), P = PP();
+  /* ---- the cast plates (8.1, 8.3, 8.4, 8.5; 2026-10-07, Jared: "messy, and a little hard to follow"). Each kind
+     only describes its cast; PM56_SHELL.pmxCastFit / pmxCastPlate draw every mode in one grammar (module-shell.js:
+     the bar with what goes in, who runs it and the accent edge to You; the cast hanging under it on orthogonal
+     strings, one baseline, always named; the specialists' wing after a dotted rule; state on the seats only).
+     The sheets and the run views draw from the same descriptions: live = {states: {rowId: state}, lead: state,
+     done: bool, after: {rowId: [rowId...]}, stop: chapter index, rounds} gives the seats their run state instead
+     of the sheet's plan (a queued seat in a run view is one that really waits, never the sheet's guess). ---- */
+  var CAST_KEY = { crew: 'crew', review: 'rev', brainstorm: 'bs', chat_room: 'room' };
+  function castWing(d, kind, live) {
+    var k = CAST_KEY[kind] || kind, st = (live && live.states) || {}, out = [];
+    if (d.wonderer) out.push({ key: 'pmx-p-seat:' + k + ':wonderer', role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: 'doesn’t vote', state: st.wonderer || (kind === 'brainstorm' && live ? 'abstained' : 'idle'), part: 'wonderer specialists' });
+    if (d.grillMe) out.push({ key: 'pmx-p-seat:' + k + ':grill', role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', sub: 'asks you first', state: st.grill || 'idle', part: 'grill specialists' + (kind === 'brainstorm' ? ' questions' : '') });
+    return out;
+  }
+  function castSeats(d, kind, live, o) {
+    var k = CAST_KEY[kind] || kind, st = live && live.states;
+    return d.rows.map(function (r, i) {
+      var si = standInFor(d, r.requestedModelId), waits = st ? st[r.rowId] === 'queued' : !!(o.waits && o.waits(r, i));
+      var sub = si ? modelShort(r.requestedModelId) + ' · offline' : (r.modelName || modelShort(r.requestedModelId));
+      return { key: 'pmx-p-seat:' + k + ':' + r.rowId, rowId: r.rowId, role: markOf(r.persona), seat: r.seat || seatOf(d, r), state: st ? (st[r.rowId] || 'idle') : waits ? 'queued' : 'idle',
+        standin: !!(r.standin || (si && si.tone !== 'failed')), label: r.role || o.noun, sub: sub, part: o.part + (waits ? ' parallel' : ''), waits: waits && o.dash !== false };
+    });
+  }
+  /* "starts after" (a Crew run view): the seat hangs a short arrow from the helper it waits for */
+  function castAfter(seats, live) {
+    var dep = live && live.after;
+    if (!dep) return seats;
+    var at = {}; seats.forEach(function (c, i) { at[c.rowId] = i; });
+    seats.forEach(function (c, j) {
+      var ds = (dep[c.rowId] || []).map(function (id) { return at[id]; }).filter(function (i) { return i != null && i < j; });
+      if (ds.length) c.after = { from: Math.max.apply(null, ds), label: ds.length > 1 ? (ds.length === 2 ? 'after both' : 'after ' + ds.length) : 'after' };
+    });
+    return seats;
+  }
+  function crewCast(d, live) {
     var n = d.rows.length, eff = Math.min(clamp(d.config.parallelism || 1, 1, 8), capacityOf(d), n);
-    var coord = optionOf(CONFIG_CHOICES.coordinator.options, d.config.coordinator);
-    var specs = (d.wonderer ? 1 : 0) + (d.grillMe ? 1 : 0);
-    function full() {
-      var H = 225, LX = 234, HY = 96, EY = 174;
-      var centre = specs ? 250 : 288, width = specs ? 250 : 300;
-      var span = n === 1 ? 0 : Math.min(specs ? 130 : 150, width / (n - 1));
-      var xs = d.rows.map(function (r, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
-      var lab = n === 1 ? 170 : Math.max(60, span - 14);
-      var s = P.paper({ key: 'pmx-p-job', x: 20, y: 8, w: 150, h: 50, label: 'The job', sub: '<span data-collab-mirror="job">' + esc(jobWords(d)) + '</span>', part: 'job' });
-      s += P.line({ key: 'pmx-p-l-job', from: { x: 170, y: 32 }, to: { x: LX - 20, y: 32 }, style: 'fixed', part: 'job' });
-      s += '<g class="pmx-p-seat" data-k="pmx-p-seat:crew:lead" style="--x:' + LX + 'px;--y:32px" data-pmx-part="lead">' +
-        P.seat({ x: 0, y: 0, role: 'lead' }).replace(/^<g class="pmx-p-seat"[^>]*>/, '').replace(/<\/g>$/, '') +
-        P.label({ x: 22, y: -2, text: 'Coordinator', cls: 'lab' }) + P.label({ x: 22, y: 16, text: esc(coord.sub || coord.label), cls: 'sub' }) + '</g>';
-      d.rows.forEach(function (r, i) {
-        var x = xs[i];
-        s += P.line({ key: 'pmx-p-l:' + r.rowId, d: 'M' + LX + ' 50 C ' + LX + ' ' + (HY - 12) + ', ' + x + ' ' + (HY - 30) + ', ' + x + ' ' + (HY - 18), style: 'hands', part: 'assign' });
-      });
-      d.rows.forEach(function (r, i) {
-        var x = xs[i], waits = i >= eff, si = standInFor(d, r.requestedModelId);
-        var sub = si ? modelShort(r.requestedModelId) + ' · offline' : modelShort(r.requestedModelId);
-        s += P.seat({ key: 'pmx-p-seat:crew:' + r.rowId, x: x, y: HY, role: markOf(r.persona), seat: seatOf(d, r), state: waits ? 'queued' : 'idle', floor: waits ? 'hatch' : 'bar', standin: !!(si && si.tone !== 'failed'),
-          label: esc(fitLabel(r.role || 'New helper', lab)), sub: esc(fitLabel(sub, lab)), part: waits ? 'team parallel' : 'team' });
-        if (waits && i === eff) s += P.label({ x: x - 24, y: HY + 4, text: 'waits its turn', anchor: 'end', part: 'parallel' });
-      });
-      var edgeTo = specs ? 460 : 554;
-      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:crew:wonderer', x: 518, y: 48, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: 'doesn’t vote', part: 'wonderer specialists' });
-      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:crew:grill', x: 518, y: 124, role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', sub: 'asks you first', part: 'grill specialists' });
-      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: edgeTo, y: EY }, style: 'fixed', part: 'permission' });
-      s += P.line({ key: 'pmx-p-toyou', from: { x: 288, y: EY + 4 }, to: { x: 288, y: EY + 12 }, style: 'toyou', part: 'you' });
-      s += P.you({ x: 288, y: EY + 26, label: 'You', sub: 'get one checked result' });
-      s += P.glyph('lock', 24, EY + 22, 11) + P.label({ x: 40, y: EY + 32, text: 'this chat’s permissions', part: 'permission' });
-      return S.pmxPlate({ key: 'pmx-plate-crew:full', kind: 'crew', mode: 'full', w: 576, h: H, fitH: H, svg: s,
-        legend: [{ sample: 'bar', label: 'works at once', part: 'parallel' }, { sample: 'hatch', label: 'waits its turn', part: 'parallel' }] });
-    }
-    /* compact (6.3, 4 rows or a short slot): the same three bands with names only, 156 tall. Upstage: the
-       Coordinator; stage: the helpers over their floor bars or hatches, the specialists in the wing; house: the
-       stage edge and You. */
-    function bands() {
-      var centre = specs ? 230 : 288, width = specs ? 220 : 330;
-      var H = 156, LX = centre, LY = 18, HY = 68, EY = 122;
-      var span = n === 1 ? 0 : Math.min(specs ? 110 : 120, width / (n - 1));
-      var xs = d.rows.map(function (r, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
-      var lab = n === 1 ? 150 : Math.max(56, span - 14);
-      var s = '<g class="pmx-p-seat" data-k="pmx-p-seat:crew:lead" style="--x:' + LX + 'px;--y:' + LY + 'px" data-pmx-part="lead">' +
-        P.seat({ x: 0, y: 0, role: 'lead' }).replace(/^<g class="pmx-p-seat"[^>]*>/, '').replace(/<\/g>$/, '') +
-        P.label({ x: -22, y: 5, text: 'Coordinator', cls: 'lab', anchor: 'end' }) + '</g>';
-      s = P.paper({ key: 'pmx-p-job', x: 20, y: 6, w: specs ? 80 : 130, h: 36, label: 'The job', part: 'job' }) + s;
-      d.rows.forEach(function (r, i) {
-        var x = xs[i];
-        s += P.line({ key: 'pmx-p-l:' + r.rowId, d: 'M' + LX + ' ' + (LY + 16) + ' C ' + LX + ' ' + (HY - 22) + ', ' + x + ' ' + (HY - 34) + ', ' + x + ' ' + (HY - 17), style: 'hands', part: 'assign' });
-      });
-      d.rows.forEach(function (r, i) {
-        var waits = i >= eff, si = standInFor(d, r.requestedModelId);
-        s += P.seat({ key: 'pmx-p-seat:crew:' + r.rowId, x: xs[i], y: HY, role: markOf(r.persona), seat: seatOf(d, r), state: waits ? 'queued' : 'idle', floor: waits ? 'hatch' : 'bar',
-          standin: !!(si && si.tone !== 'failed'), label: esc(fitLabel(r.role || 'New helper', lab)), part: waits ? 'team parallel' : 'team' });
-      });
-      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:crew:wonderer', x: d.grillMe ? 460 : 500, y: HY, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', part: 'wonderer specialists' });
-      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:crew:grill', x: d.wonderer ? 530 : 500, y: HY, role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', part: 'grill specialists' });
-      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: specs ? 400 : 554, y: EY }, style: 'fixed', part: 'permission' });
-      s += P.line({ key: 'pmx-p-toyou', from: { x: LX, y: EY + 4 }, to: { x: LX, y: EY + 10 }, style: 'toyou', part: 'you' });
-      s += P.you({ x: LX, y: EY + 20, label: 'You', sub: '' });
-      return S.pmxPlate({ key: 'pmx-plate-crew:compact', kind: 'crew', mode: 'compact', w: 576, h: H, fitH: H, svg: s,
-        legend: [{ sample: 'bar', label: 'works at once', part: 'parallel' }, { sample: 'hatch', label: 'waits its turn', part: 'parallel' }] });
-    }
-    function row(mode) {
-      /* the strip is 500 wide (not 576), so it fits the 516 px main column of a 1024 window instead of falling to the caption */
-      var compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36, W = compact ? 576 : 500;
-      var x0 = compact ? 54 : 40, last = (compact ? 446 : 284) - specs * 44; /* strip: 16 more units before You's sub line (retro's wider mono met the last hatch) */
-      var step = Math.min(110, (last - x0) / Math.max(1, n)), s = '';
-      s += P.seat({ key: 'pmx-p-seat:crew:lead', x: x0, y: y, role: 'lead', label: compact ? 'Coordinator' : '', part: 'lead assign job' });
-      d.rows.forEach(function (r, i) {
-        var waits = i >= eff;
-        s += P.seat({ key: 'pmx-p-seat:crew:' + r.rowId, x: Math.round(x0 + (i + 1) * step), y: y, role: markOf(r.persona), seat: seatOf(d, r), state: waits ? 'queued' : 'idle', floor: waits ? 'hatch' : 'bar',
-          standin: !!(standInFor(d, r.requestedModelId) && standInFor(d, r.requestedModelId).tone !== 'failed'), label: compact ? esc(fitLabel(r.role || 'New helper', step - 12)) : '', part: waits ? 'team parallel' : 'team' });
-      });
-      /* the specialists stand in the wing, after the helpers and well before You */
-      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:crew:wonderer', x: last + 44, y: y, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, part: 'wonderer specialists' });
-      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:crew:grill', x: last + 44 * specs, y: y, role: 'grill', seat: SPECIALIST_SEAT.grillMe, part: 'grill specialists' });
-      s += P.you({ x: W - 24, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'one checked result' });
-      return S.pmxPlate({ key: 'pmx-plate-crew:' + mode, kind: 'crew', mode: mode, w: W, h: h, fitH: h, svg: s });
-    }
-    var waiting = n - eff;
+    var coord = optionOf(CONFIG_CHOICES.coordinator.options, d.config.coordinator), waiting = n - eff;
+    var seats = castAfter(castSeats(d, 'crew', live, { noun: 'New helper', part: 'team', waits: function (r, i) { return i >= eff; } }), live);
     var caption = (eff >= n ? (n === 1 ? 'The Coordinator and 1 helper.' : 'All ' + n + ' work at once.') : eff + ' work at once; the other ' + waiting + (waiting === 1 ? ' waits its turn.' : ' wait their turn.')) + ' You get one checked result.';
-    var plates = n <= 3 ? [full(), bands(), row('strip')] : n === 4 ? [bands(), row('strip')] : n <= 6 ? [row('strip')] : [];
-    return S.pmxPlateFit({ key: 'pmx-plate-fit:crew', affects: 'team', plates: plates, caption: '<span data-pmx-part="parallel job">' + esc(caption) + '</span>' });
+    return { key: 'pmx-plate-crew', kind: 'crew', fitKey: 'pmx-plate-fit:crew', affects: 'team', busPart: 'assign',
+      input: { label: 'The job', sub: '<span data-collab-mirror="job">' + esc(jobWords(d)) + '</span>', part: 'job' },
+      hub: { key: 'pmx-p-seat:crew:lead', role: 'coordinator', label: 'Coordinator', sub: (live && live.coordinator) || coord.sub || coord.label, state: (live && live.lead) || 'idle', part: 'lead' },
+      seats: seats, wing: castWing(d, 'crew', live),
+      you: { label: 'You', sub: live && live.done ? 'got one checked result' : 'one checked result', part: 'you' },
+      waits: { label: 'waits its turn', many: 'wait their turn', part: 'parallel' },
+      caption: '<span data-pmx-part="parallel job">' + esc(caption) + '</span>' };
   }
+  function crewPlateFit(d) { return S_().pmxCastFit(crewCast(d)); }
 
-  /* ---- Review plate (8.5): the locked snapshot upstage, reviewers in an arc behind screens, sightlines to the
-     snapshot, compare lines to one junction, You and the findings in the house. ---- */
-  function reviewPlateFit(d, ctx) {
-    var S = S_(), P = PP();
-    var n = d.rows.length, single = n === 1 || d.config.strategy === 'single_agent';
-    var tgt = targetOf(d.reviewTargetChoice);
-    function full() {
-      var H = 244, cx = 300;
-      var span = n === 1 ? 0 : Math.min(128, 380 / (n - 1));
-      var xs = d.rows.map(function (r, i) { return Math.round(cx + (i - (n - 1) / 2) * span); });
-      var yOf = function (x) { return 100 + Math.round(Math.abs(x - cx) * 0.08); };
-      var lab = n === 1 ? 180 : Math.max(60, span - 14);
-      var s = P.paper({ key: 'pmx-p-snap', x: 24, y: 10, w: 170, h: 50, label: esc(tgt.label), sub: 'locked at Start', lock: true, part: 'target job' });
-      d.rows.forEach(function (r, i) { s += P.line({ key: 'pmx-p-sees:' + r.rowId, from: { x: 109, y: 60 }, to: { x: xs[i], y: yOf(xs[i]) - 18 }, style: 'sees', part: 'target' }); });
-      if (!single) for (var i = 0; i < n - 1; i++) { var mx = (xs[i] + xs[i + 1]) / 2; s += P.screen({ key: 'pmx-p-scr:' + i, x: mx, y: (yOf(xs[i]) + yOf(xs[i + 1])) / 2 - 2, h: 30, part: 'blind' }); }
-      d.rows.forEach(function (r, i) {
-        s += P.seat({ key: 'pmx-p-seat:rev:' + r.rowId, x: xs[i], y: yOf(xs[i]), role: markOf(r.persona), seat: seatOf(d, r), label: esc(fitLabel(r.role || 'Reviewer', lab)), sub: esc(fitLabel(modelShort(r.requestedModelId), lab)), part: 'count focus' });
-      });
-      var jy = 188;
-      if (!single) d.rows.forEach(function (r, i) { s += P.line({ key: 'pmx-p-cmp:' + r.rowId, d: 'M' + xs[i] + ' ' + (yOf(xs[i]) + 60) + ' Q ' + xs[i] + ' ' + jy + ', ' + cx + ' ' + jy, style: 'hands', part: 'blind' }); });
-      s += P.line({ key: 'pmx-p-toyou', from: { x: cx, y: single ? yOf(cx) + 60 : jy + 4 }, to: { x: cx, y: jy + 12 }, style: 'toyou', part: 'target' });
-      s += P.you({ x: cx, y: jy + 28, label: 'You', sub: 'get one report' });
-      s += P.paper({ key: 'pmx-p-report', x: 452, y: jy + 10, w: 100, h: 36, label: 'Findings', part: 'focus' });
-      return S.pmxPlate({ key: 'pmx-plate-review:full', kind: 'review', mode: 'full', w: 576, h: H, fitH: H, svg: s,
-        legend: single ? [] : [{ sample: 'screen', label: 'can’t see each other', part: 'blind' }, { sample: 'hands', label: 'compare notes', part: 'blind' }] });
-    }
-    /* compact (6.3): three bands, names only, 164 tall. Upstage: the locked snapshot; stage: the reviewers in a row
-       with screens between them, each on a sightline from the snapshot; house: one dotted line down to You. */
-    function bands() {
-      var H = 164, HY = 84, cx = 300;
-      var span = n === 1 ? 0 : Math.min(110, 300 / (n - 1));
-      var xs = d.rows.map(function (r, i) { return Math.round(cx + (i - (n - 1) / 2) * span); });
-      var lab = n === 1 ? 150 : Math.max(56, span - 14);
-      var s = P.paper({ key: 'pmx-p-snap', x: cx - 75, y: 6, w: 150, h: 36, label: esc(tgt.label), lock: true, part: 'target job' });
-      d.rows.forEach(function (r, i) { s += P.line({ key: 'pmx-p-sees:' + r.rowId, from: { x: cx, y: 42 }, to: { x: xs[i], y: HY - 16 }, style: 'sees', part: 'target' }); });
-      if (!single) for (var i = 0; i < n - 1; i++) s += P.screen({ key: 'pmx-p-scr:' + i, x: (xs[i] + xs[i + 1]) / 2, y: HY + 8, h: 22, part: 'blind' });
-      d.rows.forEach(function (r, i) {
-        s += P.seat({ key: 'pmx-p-seat:rev:' + r.rowId, x: xs[i], y: HY, role: markOf(r.persona), seat: seatOf(d, r), label: esc(fitLabel(r.role || 'Reviewer', lab)), part: 'count focus' });
-      });
-      s += P.line({ key: 'pmx-p-toyou', from: { x: cx, y: HY + 44 }, to: { x: cx, y: HY + 50 }, style: 'toyou', part: 'you' });
-      s += P.you({ x: cx, y: HY + 64, label: 'You', sub: '' });
-      return S.pmxPlate({ key: 'pmx-plate-review:compact', kind: 'review', mode: 'compact', w: 576, h: H, fitH: H, svg: s,
-        legend: single ? [] : [{ sample: 'screen', label: 'can’t see each other', part: 'blind' }] });
-    }
-    function row(mode) {
-      var compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36, W = compact ? 576 : 500;
-      var x0 = compact ? 60 : 44, last = compact ? 446 : 300;
-      var step = n === 1 ? 0 : Math.min(110, (last - x0) / (n - 1)), s = '';
-      d.rows.forEach(function (r, i) {
-        var x = Math.round(x0 + i * step);
-        s += P.seat({ key: 'pmx-p-seat:rev:' + r.rowId, x: x, y: y, role: markOf(r.persona), seat: seatOf(d, r), label: compact ? esc(fitLabel(r.role || 'Reviewer', step - 12)) : '', part: 'count focus job' });
-        if (!single && i < n - 1) s += P.screen({ key: 'pmx-p-scr:' + i, x: x + step / 2, y: y, h: 24, part: 'blind' });
-      });
-      s += P.you({ x: W - 24, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'one report' });
-      return S.pmxPlate({ key: 'pmx-plate-review:' + mode, kind: 'review', mode: mode, w: W, h: h, fitH: h, svg: s });
-    }
+  /* Review (8.5): the locked snapshot goes in; at the junction it goes down to each reviewer, who read alone behind
+     screens; their notes come back up, are compared, and You get one report. Single Agent: one reviewer, no screens,
+     nothing to compare. */
+  function reviewCast(d, live) {
+    var n = d.rows.length, single = n === 1 || d.config.strategy === 'single_agent', tgt = targetOf(d.reviewTargetChoice);
     var caption = single ? 'One fresh reviewer, nothing to compare against. You get one report.' : n + ' reviewers read on their own, then compare notes. You get one report.';
-    var plates = n <= 3 ? [full(), bands(), row('strip')] : n === 4 ? [bands(), row('strip')] : n <= 6 ? [row('strip')] : [];
-    return S.pmxPlateFit({ key: 'pmx-plate-fit:review', affects: 'count', plates: plates, caption: '<span data-pmx-part="blind job">' + esc(caption) + '</span>' });
+    return { key: 'pmx-plate-review', kind: 'review', fitKey: 'pmx-plate-fit:review', affects: 'count', busPart: 'target', junctionPart: 'target',
+      input: { label: 'Locked at Start', short: tgt.label, sub: esc((live && live.target) || tgt.label), part: 'target job' },
+      out: single ? null : { label: 'compare notes', part: 'blind' },
+      seats: castSeats(d, 'review', live, { noun: 'Reviewer', part: 'count focus' }), screens: !single, wing: [],
+      you: { label: 'You', sub: live && live.done ? 'got one report' : 'one report', part: 'you' },
+      note: single ? null : { text: 'Screens: each reviewer reads alone.', part: 'blind' },
+      caption: '<span data-pmx-part="blind job">' + esc(caption) + '</span>' };
   }
+  function reviewPlateFit(d) { return S_().pmxCastFit(reviewCast(d)); }
 
-  /* ---- BrainStorm plate (8.4): the seven chapters upstage, helpers behind screens, Wonderer in the wing,
-     Grill Me by the stage edge, You get one plan. ---- */
+  /* BrainStorm (8.4): the bar is the seven chapters, ending in the accent edge to You (one plan); the team hangs from
+     a bar of its own under the chapter names, behind screens (each drafts alone). A must-have rule lights the Vote
+     chapter ('rules': a rule beats the votes). lean: a recorded draft's sheet carries the guide strip, so its compact
+     plate is drawn at 1x to keep the chapters where first-time users meet it. */
   var BS_CHAPTERS = [['Understand', 'questions'], ['Draft alone', 'blind'], ['Line up', 'team'], ['Debate', 'rounds'], ['Check facts', 'research'], ['Vote', 'team'], ['Write the plan', 'you']];
-  function brainstormPlateFit(d) {
-    var S = S_(), P = PP();
-    var n = d.rows.length, specs = (d.wonderer ? 1 : 0) + (d.grillMe ? 1 : 0);
-    function full() {
-      var H = 232, HY = 112, EY = 182;
-      var s = P.line({ key: 'pmx-p-chapters', from: { x: 48, y: 16 }, to: { x: 516, y: 16 }, style: 'fixed', part: 'rounds' });
-      BS_CHAPTERS.forEach(function (c, i) { s += P.chapter({ key: 'pmx-p-ch:' + i, x: 48 + i * 78, y: 16, label: c[0], state: 'next', part: c[1] + (i === 0 ? ' job' : '') }); });
-      var centre = specs ? 250 : 288, width = specs ? 270 : 330;
-      var span = n === 1 ? 0 : Math.min(128, width / (n - 1));
-      var xs = d.rows.map(function (r, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
-      var lab = Math.max(60, span - 14);
-      for (var i = 0; i < n - 1; i++) s += P.screen({ key: 'pmx-p-scr:' + i, x: (xs[i] + xs[i + 1]) / 2, y: HY, h: 30, part: 'blind' });
-      d.rows.forEach(function (r, i) {
-        s += P.seat({ key: 'pmx-p-seat:bs:' + r.rowId, x: xs[i], y: HY, role: markOf(r.persona), seat: seatOf(d, r), label: esc(fitLabel(r.role || 'Helper', lab)), sub: esc(fitLabel(modelShort(r.requestedModelId), lab)), part: 'team blind' });
-      });
-      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:bs:wonderer', x: 518, y: 70, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: 'doesn’t vote', part: 'wonderer specialists' });
-      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:bs:grill', x: 518, y: 150, role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', part: 'grill questions specialists' });
-      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: specs ? 460 : 554, y: EY }, style: 'fixed', part: 'team' });
-      s += P.line({ key: 'pmx-p-toyou', from: { x: 288, y: EY + 4 }, to: { x: 288, y: EY + 12 }, style: 'toyou', part: 'you' });
-      s += P.you({ x: 288, y: EY + 28, label: 'You', sub: 'get one plan' });
-      return S.pmxPlate({ key: 'pmx-plate-bs:full', kind: 'brainstorm', mode: 'full', w: 576, h: H, fitH: H, svg: s });
-    }
-    /* compact (6.3): three bands, names only, 160 tall. Upstage: the seven chapters; stage: the helpers behind
-       their screens, the specialists side by side in the wing; house: the stage edge and You. */
-    function bands() {
-      var H = 160, HY = 78, EY = 120;
-      var s = P.line({ key: 'pmx-p-chapters', from: { x: 48, y: 14 }, to: { x: 516, y: 14 }, style: 'fixed', part: 'rounds' });
-      BS_CHAPTERS.forEach(function (c, i) { s += P.chapter({ key: 'pmx-p-ch:' + i, x: 48 + i * 78, y: 14, label: c[0], state: 'next', part: c[1] + (i === 0 ? ' job' : '') }); });
-      var centre = specs ? 230 : 288, width = specs ? 240 : 330;
-      var span = n === 1 ? 0 : Math.min(120, width / (n - 1));
-      var xs = d.rows.map(function (r, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
-      var lab = Math.max(56, span - 14);
-      for (var i = 0; i < n - 1; i++) s += P.screen({ key: 'pmx-p-scr:' + i, x: (xs[i] + xs[i + 1]) / 2, y: HY + 4, h: 22, part: 'blind' });
-      d.rows.forEach(function (r, i) {
-        s += P.seat({ key: 'pmx-p-seat:bs:' + r.rowId, x: xs[i], y: HY, role: markOf(r.persona), seat: seatOf(d, r), label: esc(fitLabel(r.role || 'Helper', lab)), part: 'team blind' });
-      });
-      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:bs:wonderer', x: d.grillMe ? 460 : 500, y: HY, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', part: 'wonderer specialists' });
-      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:bs:grill', x: d.wonderer ? 530 : 500, y: HY, role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', part: 'grill questions specialists' });
-      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: specs ? 410 : 554, y: EY }, style: 'fixed', part: 'team' });
-      s += P.line({ key: 'pmx-p-toyou', from: { x: centre, y: EY + 4 }, to: { x: centre, y: EY + 10 }, style: 'toyou', part: 'you' });
-      s += P.you({ x: centre, y: EY + 22, label: 'You', sub: '' });
-      return S.pmxPlate({ key: 'pmx-plate-bs:compact', kind: 'brainstorm', mode: 'compact', w: 576, h: H, fitH: H, svg: s });
-    }
-    function row(mode) {
-      var compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36, W = compact ? 576 : 500;
-      var x0 = compact ? 60 : 44, last = (compact ? 446 : 300) - specs * 44;
-      var step = n === 1 ? 0 : Math.min(110, (last - x0) / (n - 1)), s = '';
-      d.rows.forEach(function (r, i) {
-        var x = Math.round(x0 + i * step);
-        s += P.seat({ key: 'pmx-p-seat:bs:' + r.rowId, x: x, y: y, role: markOf(r.persona), seat: seatOf(d, r), label: compact ? esc(fitLabel(r.role || 'Helper', step - 12)) : '', part: 'team blind job' });
-        if (i < n - 1) s += P.screen({ key: 'pmx-p-scr:' + i, x: x + step / 2, y: y, h: 24, part: 'blind' });
-      });
-      if (d.wonderer) s += P.seat({ key: 'pmx-p-seat:bs:wonderer', x: last + 44, y: y, role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, part: 'wonderer specialists' });
-      if (d.grillMe) s += P.seat({ key: 'pmx-p-seat:bs:grill', x: last + 44 * specs, y: y, role: 'grill', seat: SPECIALIST_SEAT.grillMe, part: 'grill questions specialists' });
-      s += P.you({ x: W - 24, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'one plan' });
-      return S.pmxPlate({ key: 'pmx-plate-bs:' + mode, kind: 'brainstorm', mode: mode, w: W, h: h, fitH: h, svg: s });
-    }
+  function brainstormCast(d, live) {
+    var n = d.rows.length, rules = String(d.mustHaves || '').trim() ? ' rules' : '', stop = live && live.stop != null ? live.stop : -1;
     var caption = n + ' helpers draft alone, debate, check the facts and vote. You get one plan.';
-    var plates = n <= 4 ? [full(), bands(), row('strip')] : n <= 6 ? [bands(), row('strip')] : [];
-    return S.pmxPlateFit({ key: 'pmx-plate-fit:bs', affects: 'team', plates: plates, caption: '<span data-pmx-part="team job">' + esc(caption) + '</span>' });
+    /* compact and strip at 576: the seven chapter names and four long helper names need the width, and BrainStorm's slot
+       at 1024 x 768 holds the caption only */
+    return { key: 'pmx-plate-bs', kind: 'brainstorm', fitKey: 'pmx-plate-fit:bs', affects: 'team', busPart: 'team', lean: isRecordedDraft(d) && !live, w: { compact: 576, strip: 576 },
+      chapters: BS_CHAPTERS.map(function (c, i) { return { label: c[0], state: stop < 0 ? 'next' : i < stop ? 'done' : i === stop ? 'now' : 'next', part: c[1] + (i === 0 ? ' job' : '') + (i === 5 ? rules : '') }; }),
+      seats: castSeats(d, 'brainstorm', live, { noun: 'Helper', part: 'team blind', dash: false }), screens: n > 1,
+      wing: castWing(d, 'brainstorm', live),
+      you: { label: 'You', sub: 'one plan', part: 'you' },
+      note: n > 1 ? { text: 'Screens: each drafts alone; nobody sees the others’ ideas.', part: 'blind' } : null,
+      caption: '<span data-pmx-part="team job">' + esc(caption) + '</span>' };
   }
+  function brainstormPlateFit(d) { return S_().pmxCastFit(brainstormCast(d)); }
 
-  /* ---- Chat Room plate (8.3): the round table, the Moderator at its head, helpers around it, the turn policy
-     drawn as a static path, You in the house. ---- */
-  function roomPlateFit(d) {
-    var S = S_(), P = PP();
-    var n = d.rows.length, pol = d.config.turnPolicy || 'moderated';
-    function full() {
-      var H = 226, cx = 288, cy = 104, EY = 176;
-      var s = P.table({ cx: cx, cy: cy, r: 30, part: 'rounds job' });
-      s += '<g class="pmx-p-seat" data-k="pmx-p-seat:room:mod" style="--x:' + cx + 'px;--y:40px" data-pmx-part="moderator">' +
-        P.seat({ x: 0, y: 0, role: 'lead' }).replace(/^<g class="pmx-p-seat"[^>]*>/, '').replace(/<\/g>$/, '') +
-        P.label({ x: 22, y: -2, text: 'Moderator', cls: 'lab' }) + P.label({ x: 22, y: 16, text: esc(d.config.moderatorPersona || 'Product Manager'), cls: 'sub' }) + '</g>';
-      var left = Math.ceil(n / 2), right = n - left;
-      var pos = [];
-      for (var i = 0; i < left; i++) pos.push({ x: Math.round(cx - 84 - (left - 1 - i) * 104), y: cy });
-      for (var j = 0; j < right; j++) pos.push({ x: Math.round(cx + 84 + j * 104), y: cy });
-      d.rows.forEach(function (r, k) {
-        var st = pol === 'free_discussion' && k < 2 ? 'working' : 'idle';
-        s += P.seat({ key: 'pmx-p-seat:room:' + r.rowId, x: pos[k].x, y: pos[k].y, role: markOf(r.persona), seat: seatOf(d, r), state: st, label: esc(fitLabel(r.role || 'Helper', 92)), sub: esc(fitLabel(modelShort(r.requestedModelId), 92)), part: 'team' });
-      });
-      if (n && pol === 'moderated') s += P.line({ key: 'pmx-p-policy', d: 'M' + (cx - 14) + ' 52 Q ' + (pos[0].x + 10) + ' 52, ' + pos[0].x + ' ' + (cy - 18), style: 'toyou', part: 'policy' });
-      if (pol === 'round_robin') s += P.line({ key: 'pmx-p-policy', d: 'M' + (cx - 44) + ' ' + cy + ' A 44 44 0 1 1 ' + (cx - 44) + ' ' + (cy + 1), style: 'hands', draw: 'out', part: 'policy' });
-      s += P.line({ key: 'pmx-p-edge', from: { x: 22, y: EY }, to: { x: 554, y: EY }, style: 'fixed', part: 'team' });
-      s += P.line({ key: 'pmx-p-toyou', from: { x: cx, y: EY + 4 }, to: { x: cx, y: EY + 12 }, style: 'toyou', part: 'you' });
-      s += P.you({ x: cx, y: EY + 28, label: 'You', sub: 'pick what, if anything, to keep' });
-      return S.pmxPlate({ key: 'pmx-plate-room:full', kind: 'chat_room', mode: 'full', w: 576, h: H, fitH: H, svg: s });
-    }
-    function row(mode) {
-      var compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36, W = compact ? 576 : 500;
-      var x0 = compact ? 54 : 40, last = compact ? 446 : 300;
-      var step = Math.min(110, (last - x0) / Math.max(1, n)), s = '';
-      s += P.seat({ key: 'pmx-p-seat:room:mod', x: x0, y: y, role: 'lead', label: compact ? 'Moderator' : '', part: 'moderator job' });
-      d.rows.forEach(function (r, i) { s += P.seat({ key: 'pmx-p-seat:room:' + r.rowId, x: Math.round(x0 + (i + 1) * step), y: y, role: markOf(r.persona), seat: seatOf(d, r), label: compact ? esc(fitLabel(r.role || 'Helper', step - 12)) : '', part: 'team' }); });
-      s += P.you({ x: W - 24, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'you pick what to keep' });
-      return S.pmxPlate({ key: 'pmx-plate-room:' + mode, kind: 'chat_room', mode: mode, w: W, h: h, fitH: h, svg: s });
-    }
+  /* Chat Room (8.3): the topic goes to the Moderator, who calls on the helpers hanging under it; You pick what to keep.
+     The turn policy is one note line, never arcs; the strip names sit beside the marks (40 tall: the Chat Room's
+     slot is the shortest, because the roster pins the Moderator's row). */
+  function roomTopic(d) {
+    var w = String(d.purpose || '').trim().split(/\s+/).filter(Boolean);
+    if (!w.length) return 'Not written yet';
+    var take = w.slice(0, 5), cut = w.length > 5;
+    while (take.length > 1 && take.join(' ').length > 18) { take.pop(); cut = true; }
+    return take.join(' ') + (cut ? '…' : '');
+  }
+  function roomCast(d, live) {
+    var n = d.rows.length, cfg = d.config || {}, pol = optionOf(CONFIG_CHOICES.turnPolicy.options, cfg.turnPolicy || 'moderated');
+    var R = pol.value === 'ask_everyone_once' ? 1 : clamp(cfg.maxRounds || 5, 1, 20);
+    var note = pol.label + ' · ' + (live && live.rounds ? live.rounds : (R === 1 ? 'one round' : 'up to ' + R + ' rounds'));
     var caption = n + ' helpers and the Moderator talk it through. You pick what, if anything, to keep.';
-    var plates = n <= 4 ? [full(), row('compact'), row('strip')] : n <= 6 ? [row('compact'), row('strip')] : [];
-    return S.pmxPlateFit({ key: 'pmx-plate-fit:room', affects: 'team', plates: plates, caption: '<span data-pmx-part="team job">' + esc(caption) + '</span>' });
+    return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line',
+      input: { label: 'The topic', sub: '<span data-collab-mirror="job">' + esc(roomTopic(d)) + '</span>', part: 'job' },
+      hub: { key: 'pmx-p-seat:room:mod', role: 'moderator', label: 'Moderator', sub: cfg.moderatorPersona || 'Product Manager', state: (live && live.lead) || 'idle', part: 'moderator' },
+      seats: castSeats(d, 'chat_room', live, { noun: 'Helper', part: 'team', dash: false }), wing: castWing(d, 'chat_room', live),
+      you: { label: 'You', sub: 'pick what to keep', part: 'you' },
+      note: { text: note, part: 'policy rounds' },
+      caption: '<span data-pmx-part="team job">' + esc(caption) + '</span>' };
+  }
+  function roomPlateFit(d) { return S_().pmxCastFit(roomCast(d)); }
+  var CAST_SPEC = { crew: crewCast, review: reviewCast, brainstorm: brainstormCast, chat_room: roomCast };
+  /* a run view's plate: the richest mode that fits 640 wide, with the run's live states (collab-view, crew-view,
+     brainstorm-view, room-view, review-view) */
+  function castView(kind, d, live, o) {
+    var fn = CAST_SPEC[kind], S = S_();
+    if (!fn || !d || !d.rows || !d.rows.length) return '';
+    var sp = fn(d, live || {});
+    o = o || {};
+    sp.key = o.key || ('cv-plate-' + kind);
+    sp.w = { full: o.w || 640, compact: o.w || 640, strip: o.w || 640, line: o.w || 640 };
+    sp.cls = o.cls || '';
+    var modes = o.modes || ['full', 'compact', 'strip'];
+    /* every key in a view's plate is its own (cv:), so a sheet open over the view never shares one */
+    for (var i = 0; i < modes.length; i++) { var h = S.pmxCastPlate(sp, modes[i]); if (h) return h.replace(/ data-k="(?!cv:)/g, ' data-k="cv:'); }
+    return '';
+  }
+  /* castRun(run, {key, w, live}) - a run view's plate from the run itself: its core helpers on the seats in their run
+     order and hue, each in its LIVE state (working, waits, needs you, done, failed; a run that has not started shows
+     everyone idle, never "waits its turn"), its specialists in the wing, the Coordinator done when the run is. o.live
+     adds or overrides (crew-view: the plan's "starts after"; brainstorm-view: the chapter it is on). */
+  var CAST_SPECIAL = { wonderer: 'wonderer', grill_me: 'grill', grillme: 'grill', grill: 'grill' };
+  var CAST_STATE = { working: 'working', done: 'done', completed: 'done', blocked: 'needs', failed: 'failed', disabled: 'failed', waiting: 'queued', pending: 'queued' };
+  function castRun(run, o) {
+    o = o || {};
+    if (!run || !CAST_SPEC[run.kind]) return '';
+    var ps = run.participants || [], sk = function (p) { return CAST_SPECIAL[String(p.additiveRoleKind || 'none').toLowerCase()] || ''; };
+    var core = ps.filter(function (p) { return !sk(p); }), specs = ps.filter(function (p) { return !!sk(p); });
+    if (!core.length) return '';
+    var st = presentState(run), notYet = st === 'waiting', paused = st === 'paused', short = function (n) { return String(n || '').split(' · ')[0].replace(/^Claude /, ''); };
+    var states = {};
+    core.forEach(function (p) {
+      var s = notYet ? 'idle' : (CAST_STATE[p.status] || 'idle');
+      if (!notYet && /^(failed|timed_out|unavailable)$/.test(String(p.outcome || ''))) s = 'failed';
+      if (paused && s === 'working') s = 'idle';
+      states[p.id] = s;
+    });
+    specs.forEach(function (p) { states[sk(p)] = notYet ? 'idle' : (CAST_STATE[p.status] || (run.kind === 'brainstorm' && sk(p) === 'wonderer' ? 'abstained' : 'idle')); });
+    var rows = core.map(function (p, i) {
+      var req = p.requestedModelName || '', eff = p.effectiveModelName || '';
+      return { rowId: p.id, role: p.role || p.name || 'Helper', requestedModelId: p.requestedModelId, modelName: short(eff || req || p.requestedModelId), persona: p.effectivePersona || p.requestedPersona || 'Implementer', seat: i + 1,
+        standin: !!(req && eff && req !== eff && p.effectiveModelId) };
+    });
+    var cfg = Object.assign({}, run.config || {}), pack = run.review && run.review.targetPack, tgt = null;
+    if (run.kind === 'chat_room') {
+      cfg.turnPolicy = (run.chatRoom && run.chatRoom.turnPolicy) || cfg.turnPolicy;
+      cfg.moderatorPersona = cfg.moderatorPersona || ((run.coordinator && run.coordinator.label || '').match(/\(([^)]+?) persona\)/) || [])[1] || 'Product Manager';
+    }
+    if (pack) TARGETS.forEach(function (t) { if (!tgt && t.kind === pack.targetKind) tgt = t; });
+    var d = { kind: run.kind, rows: rows, config: cfg, wonderer: specs.some(function (p) { return sk(p) === 'wonderer'; }), grillMe: specs.some(function (p) { return sk(p) === 'grill'; }),
+      purpose: run.purpose || run.title || '', name: run.title || '', mustHaves: '', reviewTargetChoice: tgt ? tgt.value : 'changes' };
+    var cr = run.chatRoom, R = cfg.turnPolicy === 'ask_everyone_once' ? 1 : (+cfg.maxRounds || 0);
+    var live = Object.assign({ states: states, lead: run.status === 'completed' ? 'done' : 'idle', done: run.status === 'completed',
+      coordinator: run.coordinator && run.coordinator.kind === 'parent_assistant' ? 'This chat’s assistant' : (run.coordinator && run.coordinator.label) || '',
+      rounds: run.kind === 'chat_room' && cr && cr.roundsSoFar && R ? 'round ' + cr.roundsSoFar + ' of ' + R : '' }, o.live || {});
+    if (o.live && o.live.states) live.states = Object.assign(states, o.live.states);
+    return castView(run.kind, d, live, { key: o.key || ('cv-plate:' + run.id), w: o.w });
   }
 
   /* ---- a preserved choice trigger for a catalog field ---- */
@@ -3362,19 +3284,23 @@
     if (!p.hero) return '';
     var h = p.hero;
     var ff = p.firstFrame;
-    /* the tray is 82 px tall: the scale fits the frame's width (242 / card width, R-02) AND its height, so a top frame
-       whose sentence wraps (a 362 px card at 1280 x 800) is never cut at the tray edge; the frame keeps the real card
-       width (--pmx-preview-w), so what flies into the chat is what the tray showed */
-    var pvW = UI.previewW || Math.round(242 / (UI.sheetScale || 0.58)), pvH = Math.max(120, UI.previewH || 120);
-    var scale = Math.min(UI.sheetScale || 0.58, 78 / pvH);
-    var preview = ff ? '<div class="pmx-collab-pv" style="--pmx-preview-w:' + pvW + 'px;--collab-pv-h:' + pvH + 'px">' + S.pmxPreview({ key: 'pmx-preview', scale: Math.round(scale * 1000) / 1000, cardHtml: previewCardHtml(d, ff) }) + '</div>' : '';
+    /* the frame is laid out at PV_LAYOUT_W and scaled to fit the tray's width AND height (previewScale), so a top frame
+       whose sentence wraps is never cut at the tray edge */
+    var pvH = Math.max(120, UI.previewH || 120);
+    if (!(UI.trayW > 0)) resetPreview();
+    var scale = previewScale(UI.trayW, UI.trayH, pvH);
+    var preview = ff ? '<div class="pmx-collab-pv" style="--pmx-preview-w:' + PV_LAYOUT_W + 'px;--collab-pv-h:' + pvH + 'px">' + S.pmxPreview({ key: 'pmx-preview', scale: scale, cardHtml: previewCardHtml(d, ff) }) + '</div>' : '';
     var titleIn = p.cardTitle === false ? '' :
       '<span data-hover-key="collab-card-title" data-hover-tip="Shown on the card in your chat.">Card title</span>' +
       '<input type="text" data-collab-input="name" data-pmx-source="name" aria-label="Card title" value="' + esc(d.nameEdited ? d.name : deriveCardTitle(d.purpose)) + '" placeholder="Shown on the card">';
     var attrs = 'data-collab-input="purpose"' + (h.fieldAttrs ? ' ' + h.fieldAttrs : '') + (h.readOnly ? ' readonly' : '');
-    var html = S.pmxHero({ key: 'pmx-hero', n: h.n, title: esc(h.title), helper: esc(h.helper), headAside: titleIn, cls: h.before ? 'pmx-collab-hero--before' : '',
+    var html = S.pmxHero({ key: 'pmx-hero', n: h.n, title: esc(h.title), helper: esc(h.helper), headAside: titleIn, cls: h.before ? 'pmx-collab-hero--before' : h.after ? 'pmx-collab-hero--after' : '',
       field: { tag: 'textarea', attrs: attrs, value: d.purpose || '', placeholder: h.placeholder || '' }, preview: preview, aside: h.aside || '' });
     if (h.before) html = html.replace('<div class="pmx-hero-box">', h.before + '<div class="pmx-hero-box">');
+    /* after (owner tweak 2026-10-07): a block drawn beside the field, behind it (BrainStorm's must-haves, which left the
+       side column so the preview could have its whole height); the field's value is escaped, so the first
+       "</textarea></div>" closes the field's box */
+    if (h.after) { var shut = '</textarea></div>', cut = html.indexOf(shut); if (cut >= 0) html = html.slice(0, cut + shut.length) + h.after + html.slice(cut + shut.length); }
     return html;
   }
   function renderConfigureModal(ctx) {
@@ -3450,11 +3376,12 @@
        still running synchronously), and queue the landing to the render that creates the card. arm() sets the
        start exit hint (the sheet ghost leaves as one object, focus goes to the composer). A run with no open sheet
        (Crew Auto, a demo that committed itself) has no preview to fly from, so its card fades in. A refused Start
-       never reaches this function, so nothing is armed. */
+       never reaches this function, so nothing is armed. The preview's frame is laid out at the narrow PV_LAYOUT_W, so
+       the clone is laid out at the real card's width for the flight (layoutWidth, as Teach's does). */
     var P = PMX_();
     if (P && P.handoff && ctx.state.selectedThread === run.threadId) {
       var id = run.id;
-      P.handoff.arm({});
+      P.handoff.arm({ layoutWidth: measureCardWidth() });
       UI.arriving[id] = true;
       var landed = function () { if (!UI.arriving[id]) return; UI.arriving[id] = false; var c = EXT.ctx(); if (c && c.renderApp) c.renderApp(); };
       P.handoff.land(id, { done: landed });
@@ -3484,8 +3411,7 @@
     var ta = document.querySelector('textarea.composer-input'); if (ta) ta.value = '';
   }
   function openSheet(ctx, fresh) {
-    UI.previewW = measureCardWidth(); UI.previewH = 120;
-    UI.sheetScale = Math.round((242 / UI.previewW) * 1000) / 1000;
+    resetPreview();
     if (fresh) { ctx.closeMenu && ctx.closeMenu(); ctx.closeDialog && ctx.closeDialog(); }
     ctx.openDialog({ type: 'collab-configure' });
   }
@@ -3952,19 +3878,33 @@
     if (P && P.exitHint) P.exitHint('save');
   }
   if (PMX_() && PMX_().after) PMX_().after(function (ctx, phase) { if (phase === 'overlay') { afterOverlay(ctx); fitPreview(ctx); } });
-  /* the preview's natural top-frame height (head, sentence, track) at the real card width; a frame taller than the
-     tray's 120 px design height re-renders once at the scale that fits it (heroHtml) */
+  /* the preview's natural top-frame height (head, sentence, track) at PV_LAYOUT_W, and the tray's own box (its layout
+     size: the sheet's entrance scales what the rects read); when either differs from what heroHtml drew with, the
+     overlay renders once more, synchronously, so the first paint already has the scale that fits */
   function fitPreview(ctx) {
     var run = document.querySelector('#pmOverlayRoot .pmx-collab-pv .pmx-preview-card > .pmx-run');
     var trk = run && run.querySelector('.pmx-track');
-    if (!run || !trk) return;
-    var card = run.parentNode, m = /matrix\(([\d.]+)/.exec(getComputedStyle(card).transform || '');
-    var sc = m ? parseFloat(m[1]) : 0;
-    if (!(sc > 0)) return;
-    var nat = (trk.getBoundingClientRect().bottom - run.getBoundingClientRect().top) / sc + (parseFloat(getComputedStyle(run).paddingBottom) || 12);
+    var tray = run && run.closest('.pmx-preview-tray');
+    if (!run || !trk || !tray || !(tray.clientWidth > 0 && tray.clientHeight > 0)) return;
+    var rr = run.getBoundingClientRect(), k = run.offsetWidth ? rr.width / run.offsetWidth : 0;
+    if (!(k > 0)) return;
+    var nat = (trk.getBoundingClientRect().bottom - rr.top) / k + (parseFloat(getComputedStyle(run).paddingBottom) || 12);
     var h = Math.max(120, Math.ceil(nat));
-    if (Math.abs(h - Math.max(120, UI.previewH || 120)) > 1) { UI.previewH = h; if (ctx && ctx.renderOverlays) ctx.renderOverlays(); }
+    var drawn = previewScale(UI.trayW, UI.trayH, Math.max(120, UI.previewH || 120));
+    UI.trayW = tray.clientWidth; UI.trayH = tray.clientHeight;
+    var stale = Math.abs(h - Math.max(120, UI.previewH || 120)) > 1;
+    if (stale) UI.previewH = h;
+    if ((stale || Math.abs(previewScale(UI.trayW, UI.trayH, UI.previewH) - drawn) > 0.004) && ctx && ctx.renderOverlays) ctx.renderOverlays();
   }
+  /* the tray's box follows the window (module-shell.css) and the frame follows the fonts, neither of which renders
+     the overlay: a resize or a face that arrives with the sheet open fits the preview again (one frame later) */
+  var fitRaf = 0;
+  function refitPreview() {
+    if (fitRaf) return;
+    fitRaf = requestAnimationFrame(function () { fitRaf = 0; var c = EXT.ctx && EXT.ctx(); if (c && RTC.draft) fitPreview(c); });
+  }
+  window.addEventListener('resize', refitPreview);
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', refitPreview);
 
 
   /* =====================================================================
@@ -4469,7 +4409,7 @@
   EXT.chainAction('reset-all', function (ctx, btn, ev) {
     restoreFixture();
     UI.expanded = {}; UI.more = {}; UI.selectedFindings = {};
-    UI.face = {}; UI.settling = {}; UI.arriving = {}; UI.cancelAsk = {}; UI.tech = {}; UI.last = {}; UI.doneMark = {}; UI.sentTo = {};
+    UI.face = {}; UI.settling = {}; UI.arriving = {}; UI.cancelAsk = {}; UI.last = {}; UI.doneMark = {}; UI.sentTo = {};
     UI.prov = {}; UI.waiting = {}; UI.allLanes = {};
     LANE_SEEN = {}; LANE_STREAM = {};
     return false;
@@ -4638,7 +4578,7 @@
       d.scheduleIntent={expected:scheduledCopy(expected)};
       /* scheduled mode (8.1): the job is the Plan's, so the hero starts from its title */
       if(!d.purpose){const p=scheduledPlan(d);if(p)d.purpose='Build the plan “'+(p.title||'')+'” as written.';}
-      UI.stash=null;UI.previewW=measureCardWidth();UI.previewH=120;UI.sheetScale=Math.round((242/UI.previewW)*1000)/1000;
+      UI.stash=null;resetPreview();
       EXT.ctx().openDialog({type:'collab-configure'});return {ok:true};
     },
     kinds: KINDS.slice(),
@@ -4715,6 +4655,9 @@
     markOf: function (persona) { return markOf(persona); },
     capacity: function (d) { return capacityOf(d || RTC.draft || {}); },
     targets: function (ctx) { var c = ctx || EXT.ctx(); return TARGETS.map(function (t) { return { value: t.value, label: t.label, read: t.read, kind: t.kind, small: targetSmall(c, t.value) }; }); },
-    sheet: { generic: function (d, ctx) { return genericParts(d || RTC.draft, ctx || EXT.ctx()); }, plateParts: { crew: function (d) { return crewPlateFit(d); }, review: function (d) { return reviewPlateFit(d, EXT.ctx()); }, brainstorm: function (d) { return brainstormPlateFit(d); }, chat_room: function (d) { return roomPlateFit(d); } } }
+    sheet: { generic: function (d, ctx) { return genericParts(d || RTC.draft, ctx || EXT.ctx()); }, plateParts: { crew: function (d) { return crewPlateFit(d); }, review: function (d) { return reviewPlateFit(d); }, brainstorm: function (d) { return brainstormPlateFit(d); }, chat_room: function (d) { return roomPlateFit(d); } },
+      /* the cast plates' one description per kind (2026-10-07): castSpec[kind](draft, live); castView(kind, draft, live,
+         {key, w, modes}) draws a run view's plate in the same grammar with the run's live states */
+      castSpec: CAST_SPEC, castView: castView, castRun: castRun }
   };
 })();

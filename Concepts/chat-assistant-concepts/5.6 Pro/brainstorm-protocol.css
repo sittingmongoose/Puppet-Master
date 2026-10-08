@@ -7,25 +7,30 @@
 @media (max-height:820px){.pmx-sheet .pmx-bs-qhelp{display:none;}}
 /* retro's monospace side column has no line to spare at 1440 x 900: the label's hover card carries it there */
 body[data-theme^="retro"] .pmx-sheet .pmx-bs-qhelp{display:none;}
-/* the must-haves (review fix, J-2): the box carries border, fill and focus ring (the hero field's pattern); the field
-   inside grows with its rules from one line to two and scrolls past that (one line in short windows). The box keeps
-   the 7 px padding above and below, outside the field, and the field is exactly whole 17.5 px lines tall, so typing
-   scrolls it by whole lines (its 2 px bottom scroll padding makes the caret reveal take in the caret line's
-   half-leading, so the end of the text sits on the field's bottom edge, one line or two; measured scrollTop within
-   0.5 px of a 17.5 px multiple, the whole-pixel scroll offset's limit) and a hidden line never shows half cut. The
-   label keeps to the first line. Two lines is
-   what the hero's side holds without growing the sheet (measured: the side column has 5 px to spare at 1440 x 900),
-   once the preview's "In your chat" caption leaves, as COLLAB's own short-window rule already does. */
-.pmx-sheet .pmx-hero-side:has(.pmx-bs-must) .pmx-preview > figcaption{display:none;}
-.pmx-sheet .pmx-collab-must.pmx-bs-must{align-items:start;}
-.pmx-sheet .pmx-bs-must > .pmx-ctl-label{padding-top:8px;}
-.pmx-sheet .pmx-bs-mbox{display:block;min-width:0;box-sizing:border-box;padding:7px 0;overflow:hidden;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;}
-.pmx-sheet .pmx-bs-mbox:focus-within{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
-.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{display:block;width:100%;box-sizing:border-box;margin:0;padding:0 10px;border:0;border-radius:0;background:transparent;outline:none;box-shadow:none;
+/* the must-haves (owner tweak 2026-10-07; review fix, J-2). They sit beside the question, behind the job field, in a
+   box of their own exactly as tall as the field's (88 px, 66 in short windows): they were the hero's aside, under the
+   preview, which kept the preview small and BrainStorm's hero 26 px taller than every other kind's in short windows.
+   The box carries border, fill and focus ring (the hero field's pattern: 10 px corners, 13 px inside) and holds its
+   label over the field. The field grows with its rules from one line to two and scrolls past that (one line in short
+   windows); it is exactly whole 17.5 px lines tall, so typing scrolls it by whole lines (its 2 px bottom scroll
+   padding makes the caret reveal take in the caret line's half-leading, so the end of the text sits on the field's
+   bottom edge, one line or two) and a hidden line never shows half cut. The 10 px under the field are the field box's
+   own, so a rule's ink keeps clear of the border. */
+.pmx-sheet .pmx-hero-main:has(> .pmx-bs-must){display:grid;grid-template-columns:minmax(0,1fr) var(--pmx-bs-must-w,216px);column-gap:12px;align-items:stretch;}
+.pmx-sheet .pmx-hero-main:has(> .pmx-bs-must) > :is(.pmx-q-head, .pmx-help){grid-column:1 / -1;}
+.pmx-sheet .pmx-hero-main > .pmx-collab-must.pmx-bs-must{grid-column:2;display:flex;flex-direction:column;align-items:stretch;gap:2px;min-width:0;box-sizing:border-box;margin-top:12px;padding:9px 0 0;overflow:hidden;cursor:text;
+ background:var(--surface-2);border:1px solid var(--border);border-radius:10px;}
+.pmx-sheet .pmx-hero-main > .pmx-bs-must:focus-within{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
+.pmx-sheet .pmx-bs-must > .pmx-ctl-label{flex:none;padding:0 13px;cursor:default;}
+.pmx-sheet .pmx-bs-mbox{display:block;min-width:0;padding:0 0 10px;}
+.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{display:block;width:100%;box-sizing:border-box;margin:0;padding:0 13px;border:0;border-radius:0;background:transparent;outline:none;box-shadow:none;
  field-sizing:content;height:auto;min-height:17.5px;max-height:calc(2 * 17.5px);line-height:17.5px;overflow:hidden auto;scrollbar-width:thin;scroll-padding-block:0 2px;}
 @media (max-height:820px){.pmx-sheet .pmx-collab-must .pmx-bs-mbox > textarea{max-height:17.5px;}}
-/* a recorded example's rules, read-only: the first rule on the label's line, the note under both */
-.pmx-sheet .pmx-bs-must[data-recorded] > .pmx-ctl-label{padding-top:0;}
+/* the column narrows with the hero's side column in a window under 1168 px wide */
+@media (max-width:1167.98px){.pmx-sheet .pmx-hero-main:has(> .pmx-bs-must){--pmx-bs-must-w:196px;}}
+/* a recorded example's rules, read-only, in the same box: the first rule on the label's line, the note under both */
+.pmx-sheet .pmx-hero-main > .pmx-bs-must[data-recorded]{display:grid;grid-template-columns:auto minmax(0,1fr);align-content:start;align-items:baseline;column-gap:8px;row-gap:1px;padding:9px 13px 0;cursor:default;}
+.pmx-sheet .pmx-bs-must[data-recorded] > .pmx-ctl-label{padding:0;}
 .pmx-sheet .pmx-bs-mrule{min-width:0;font:var(--pmx-w-reg) 12.5px/18.5px var(--font-ui);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 body[data-theme^="retro"] .pmx-sheet .pmx-bs-mrule{font-size:11.5px;line-height:17px;}
 .pmx-sheet .pmx-bs-mnote{grid-column:1 / -1;margin-top:1px;min-width:0;font:var(--pmx-w-reg) 11px/16px var(--font-ui);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}

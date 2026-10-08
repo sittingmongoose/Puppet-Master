@@ -380,8 +380,7 @@
   const done=vm?vm.parts.filter(x=>x.checked).length:(r.crew?.assignments||[]).filter(a=>a.status==='done').length,total=vm?vm.parts.length:(r.crew?.assignments||[]).length;
   const out={kindWord:'Crew',
    nouns:{waiting:WAIT_NOUN,progress:total?done+' of '+total+' parts done':undefined,cancelExtra:total?done+' of '+total+' parts done':undefined},
-   allowedActions:allowed.length?allowed:undefined,
-   technical:{text:'Open Panel sends cmd.collaboration.open {target: run_view}'+(r.status==='completed'&&vm?.result?'; Download sends cmd.collaboration.export {content_kind: result}':'')}};
+   allowedActions:allowed.length?allowed:undefined};
   /* after Retry (7.6/7.7): the second try waits, so the card takes the waiting face (Open Panel · Message · More with
      Cancel) and the clock slot reads "not started" instead of running on; COLLAB keeps the owner's sentence */
   if(retryPending.has(r.id)&&r.status!=='waiting')retryPending.delete(r.id);

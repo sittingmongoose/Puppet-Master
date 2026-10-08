@@ -475,7 +475,7 @@
      density (the face this run would take by itself), sentence:{status,word,reason}, decision (pmxDecision args)|null,
      track:{stops,nowText}, board (html)|'', lanes (html)|'', meta:[html], recorded, actions:[{action,label,attrs,primary,disabled}],
      pointer (text)|'', more:[{action,label,attrs,disabled,reason}], result (html)|'', receipt:{headline,glyph,time,cost,recorded},
-     technical (html), waitingNoun, progressNoun, notice:{code,text}|null}
+     waitingNoun, progressNoun, notice:{code,text}|null}
     Every string is HTML (escaped here). Every button carries data-run. */
  const WAIT_NOUN='the snapshot hasn’t been taken';
  function naturalFace(vm){
@@ -494,8 +494,6 @@
    clusterRoles:vm.reviewers.map(rv=>({role:rv.persona,seat:rv.seat,state:mState(rv)})),density:naturalFace(vm),waitingNoun:WAIT_NOUN,
    progressNoun:vm.reviewers.filter(x=>x.done).length+' of '+plural(vm.reviewers.length,'reviewer')+' finished',notice:vm.followOns.notice,recorded:vm.recorded,
    clock:vm.phase==='waiting'?clockOf(null):live||vm.phase==='paused'?clockOf(vm.usage.workedMs):H(workedOf(vm.usage.workedMs))};
-  out.technical=vm.phase==='done'&&vm.followOns.canAct?'Create To-Dos sends <code>cmd.review.create_todos</code>; Send Findings To Agent sends <code>cmd.review.send_findings_to_agent</code>. Snapshot <code>'+H(vm.target.hash)+'</code>.'
-   :'Open Panel sends <code>cmd.collaboration.open</code>. Snapshot <code>'+H(vm.target.hash)+'</code>.';
   /* the track: Snapshot -> Reading on their own -> Comparing notes -> Writing the report (Single Agent drops Comparing) */
   const stops=vm.multi?STOPS:STOPS.filter(s=>s!=='Comparing notes');
   const at={waiting:-1,snapshot:1,reading:1,retrying:1,partial:1,stale:1,comparing:2,writing:vm.multi?3:2,done:stops.length,paused:1,cancelled:1,failed:1}[vm.phase];

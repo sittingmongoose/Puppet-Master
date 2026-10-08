@@ -260,28 +260,17 @@
     return (o.guide || '') + lede(vm) + nextRow(vm) + rec + optionsHtml(vm) + '<div class="bs-secs">' + dis + votes + debate + evidence + '</div>' + wondererHtml(vm) + also;
   }
 
-  /* ---------------------------------------------------------------- plate: the run view's stage (8.4 plate, run states) */
+  /* ---------------------------------------------------------------- plate: the run view's stage (8.4 plate, run states)
+     2026-10-07: the same cast plate the BrainStorm sheet draws (PM56_COLLAB.sheet.castRun, one grammar): the seven
+     chapters as the bar, lit up to the one the run is on and ending in the edge to You; the helpers behind their
+     screens in their run state; the specialists in their own wing beside the helpers (never under the chapter names);
+     the screens' meaning said once on the note line. */
   function plate(r, vm) {
-    var P = S.pmxPlateParts, H = 228, HY = 104, EY = 172, W = 640;
-    var cs = core(r), spec = specialists(r), n = cs.length;
-    var s = P.line({ key: 'bs-p-chapters', from: { x: 52, y: 16 }, to: { x: 52 + 6 * 88, y: 16 }, style: 'fixed', part: 'rounds' });
-    STOPS.forEach(function (st, i) { s += P.chapter({ key: 'bs-p-ch:' + i, x: 52 + i * 88, y: 16, label: st[3], state: i < vm.stop ? 'done' : i === vm.stop ? 'now' : 'next' }); });
-    /* with the specialists' wing the core row moves left but keeps the full 128 pitch (retro's mono labels need it) */
-    var centre = spec.length ? 262 : 320, width = spec.length ? 396 : 400;
-    var span = n < 2 ? 0 : Math.min(128, width / (n - 1));
-    var xs = cs.map(function (p, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
-    for (var i = 0; i < n - 1; i++) s += P.screen({ key: 'bs-p-scr:' + i, x: (xs[i] + xs[i + 1]) / 2, y: HY, h: 30, part: 'blind' });
-    var done = r.status === 'completed';
-    cs.forEach(function (p, i) {
-      var st = done ? 'done' : p.status === 'working' && r.status === 'running' ? 'working' : 'idle';
-      s += P.seat({ key: 'bs-p-seat:' + p.id, x: xs[i], y: HY, role: markRole(p), seat: seatOf(r, p), state: st, standin: !!standIn(p), label: esc(p.role), sub: esc(modelShort(p)), part: 'team' });
-    });
-    spec.forEach(function (p, i) { s += P.seat({ key: 'bs-p-seat:' + p.id, x: 586, y: 60 + i * 72, role: markRole(p), seat: seatOf(r, p), label: p.additiveRoleKind === 'wonderer' ? 'Wonderer' : 'Grill Me', sub: p.additiveRoleKind === 'wonderer' ? 'doesn’t vote' : 'asks you first', part: 'specialists' }); });
-    s += P.line({ key: 'bs-p-edge', from: { x: 24, y: EY }, to: { x: spec.length ? 520 : 616, y: EY }, style: 'fixed', part: 'team' });
-    s += P.line({ key: 'bs-p-toyou', from: { x: 320, y: EY + 4 }, to: { x: 320, y: EY + 14 }, style: 'toyou', part: 'you' });
-    s += P.you({ x: 320, y: EY + 30, label: 'You', sub: 'get one plan' });
-    if (n > 1) s += P.label({ x: 24, y: EY + 26, text: 'Screens: each drafts alone,', cls: 'sub', part: 'blind' }) + P.label({ x: 24, y: EY + 44, text: 'nobody sees the others’ ideas.', cls: 'sub', part: 'blind' });
-    return S.pmxPlate({ key: 'bs-plate:' + r.id, kind: 'brainstorm', mode: 'full', w: W, h: H, svg: s });
+    var c = C(), fn = c && c.sheet && c.sheet.castRun;
+    if (typeof fn !== 'function') return '';
+    var done = r.status === 'completed', states = {};
+    core(r).forEach(function (p) { states[p.id] = done ? 'done' : p.status === 'working' && r.status === 'running' ? 'working' : 'idle'; });
+    return fn(r, { key: 'bs-plate:' + r.id, live: { states: states, stop: vm.stop, done: done } });
   }
 
   /* ---------------------------------------------------------------- Conversation (always BrainStorm's: G-33), Team and Cost (this file's own frame) */

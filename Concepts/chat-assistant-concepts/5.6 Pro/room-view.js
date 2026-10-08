@@ -398,6 +398,17 @@
   /* PM56_ROOM.viewParts(run, tab, ctx, generic) -> the kind's parts for COLLAB's run-view frame (KIND INTERFACE, view
      part). Discussion is the room's own (the pinned summary, the script in rounds, what you queued); Team and Cost are
      the frame's common tabs; the head's actions are the frame's Pause / Message / More followed by the room's. */
+  /* the room's cast (2026-10-07): the same plate the Chat Room sheet draws (PM56_COLLAB.sheet.castRun, one grammar):
+     the topic to the Moderator, the helpers hanging under it (the one speaking now is working), the turn policy and
+     the round on one note line, You at the end. A compact plate: the Discussion is what the view is for. */
+  function plateOf(run, vm) {
+    var fn = C.sheet && C.sheet.castRun;
+    if (typeof fn !== 'function') return '';
+    var states = {}, speaking = vm.speaking && vm.speaking.pid;
+    (vm.team || []).forEach(function (t) { states[t.pid] = speaking === t.pid ? 'working' : 'idle'; });
+    var rounds = vm.roundsSoFar ? 'round ' + vm.roundsSoFar + ' of ' + (vm.maxRounds || vm.roundsSoFar) : '';
+    try { return fn(run, { key: 'room-plate:' + run.id, live: { states: states, rounds: rounds, done: run.status === 'completed' } }) || ''; } catch (e) { return ''; }
+  }
   function viewParts(run, tab, ctx, generic) {
     var vm = discussionVM(run); if (!vm) return null;
     var st = viewState(run.id);
@@ -413,7 +424,7 @@
     var mess = vm.messages.length;
     return {
       title: esc(isRoomDoc(ctx) && vm.source === 'legacy' ? bareTitle(run.title) : run.title), kindWord: COPY.kind,
-      status: statusHtml(vm), actions: actionsHtml(vm, generic || {}), plate: '',
+      status: statusHtml(vm), actions: actionsHtml(vm, generic || {}), plate: plateOf(run, vm),
       tabs: [{ value: 'transcript', label: COPY.tabs.transcript, count: mess || '' }, { value: 'participants', label: COPY.tabs.participants, count: vm.team.length + 1 },
         { value: 'usage', label: COPY.tabs.usage }],
       main: main, participant: participant, aside: !pid && tab === 'transcript' ? aside(vm) : undefined,
