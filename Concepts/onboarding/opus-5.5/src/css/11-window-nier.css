@@ -51,7 +51,13 @@ html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-ph-done, .o55-step-done) .o
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-failed { color: var(--o55-nier-error-text); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-failed .o55-phmark { background: var(--o55-nier-error); border-color: var(--o55-nier-error); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-step-active .o55-phmark { box-shadow: none; border-color: var(--o55-nier-ink); }
+/* the working mark keeps the ink (the Diamond loaders part turns it into a hollow diamond drawn in currentColor) */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-active .o55-phmark { color: var(--o55-nier-ink); border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-inlinecheck { background: transparent; border-color: rgba(var(--o55-nier-ink-rgb), .45); }
+/* provider marks lose their hues: an ink letter in a hairline square */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-plogo { background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .45); font: 600 15px/1 var(--mono-font); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-provider[data-state="ready"] .o55-row { border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-scroll { scrollbar-color: rgba(var(--o55-nier-ink-rgb), .5) transparent; }
 
 /* Pod's speech strip in the window is narrower than the app's, so it fits over the art panel beside its Pod */
 #pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 236px; }

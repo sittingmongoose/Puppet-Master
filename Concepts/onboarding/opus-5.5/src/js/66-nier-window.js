@@ -302,7 +302,7 @@
       const R = runState(), prevIdx = R.idx, prevChapter = R.chapter, h = layer.querySelector('#o55-h');
       /* error surfaces already on the new screen are part of it, not news */
       const pr = adopt(layer, def);
-      R.marksAt = M.now() + (reduced() ? 0 : 460);
+      R.at = M.now(); R.marksAt = R.at + (reduced() ? 0 : 460);
       meter(layer);
       const F = fx(); if (!F) return false;
       const pane = layer.parentElement;
@@ -377,7 +377,11 @@
       const s = O55.S, cm = s.sess.commit || {};
       if (key === cm.key) return false; /* the Project's creation has its own banner and line */
       const lines = O55.tx('nierWindow.pod.ops'); if (!Array.isArray(lines) || !lines.length) return false;
-      const R = runState(), words = lines[R.ops++ % lines.length];
+      const R = runState();
+      /* the checks a screen runs by itself on arrival are part of the screen (its own line covers them); Pod reports
+         the operations the person set going */
+      if (M.now() - (R.at || 0) < 2600) return false;
+      const words = lines[R.ops++ % lines.length];
       later(380, () => say(words));
       return true;
     },
