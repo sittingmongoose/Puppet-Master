@@ -199,7 +199,9 @@ removes every NieR attribute, layer and font.
   paper text and a stepping square cursor), YoRHa headers, the parchment
   ground, target brackets on focus and the chosen thread, diamond loaders, the
   square pointer and square icon strokes.
-- **Motion:** the reboot band when entering or leaving NieR; the stepped slice
+- **Motion:** the reboot band when entering or leaving NieR, whose cover
+  leaves by tearing out in six horizontal slats (no large surface ever
+  flashes; only small elements flicker); the stepped slice
   on menus, dialogs and sheets; the title decode on a thread switch; the page
   wipe; drifting particles; the ambient sweep; and a glitch on alert toasts,
   refusals and failed steps.
@@ -414,7 +416,6 @@ Basic) never reaches it.
     one filled primary action at the far edge (danger-toned for tool errors).
     A collaboration run that needs the reader keeps its own card and shows it
     with an in-card warm tint, never the family halo.
-  <!-- C56-CONFIRM (item 14, puppets): after the final merge check that every Live subagents row leads with the agent's puppet (app.js agentPuppet in renderLiveAgentRow, 24px, no initials avatar and no native title left on the row), and that only a working row's puppet sways (module-shell.css pp-agent-sway; NieR also sways idle rows). -->
   - **People** (crew / review / brainstorm / chat room runs, live subagents,
     delegation records): live subagents are a roster of rows, each led by the
     agent's puppet (see *Puppet agents*), which keeps swaying on its strings
@@ -428,7 +429,6 @@ Basic) never reaches it.
     revert-turn, advisor notes (never Needs you), finished scheduled messages,
     route changes, reconnects, attachment events): not a card, one quiet line
     (icon, title, first line of detail); hover or focus expands the rest.
-<!-- C56-CONFIRM (item 14, puppets): check that the lead seat's puppet (the Coordinator's crown, the Chat Room Moderator's gavel) is still painted in the text colour (the pmx-seat-lead token) on cards, plates and run views after the merge. -->
 - **Accent rule.** Surfaces are neutral (Basic Dark and Light are graphite, not
   navy). The accent is spent only on live work, on Needs-you items, on the one
   primary action of a card, and on Send/Stop. Event icons outside Needs-you,
@@ -488,7 +488,6 @@ Basic) never reaches it.
   the parent thread. While the agent works its mark is lit and the comet runs
   down the spine to its latest item; reduced motion drops both. In this
   concept the child transcripts are fixtures, so nothing new arrives in them.
-  <!-- C56-CONFIRM (card 7, work stretches; tmp/c56-feed2 is still WIP): after the final merge confirm that consecutive agent-work records render as one stretch row (transcript-records.js feedStretch, app.js renderFeedStretch) and not as grok3's one-line rows; check the rail fold at 12 discs, the summary wording ("Ran N tools · read N files", "Working · N tools so far"), the live last stretch, the toggle's cascade and reduced motion, the hover cards, and Query Analyzer's counts (22 items: 8 messages, 14 work records in 5 stretches). -->
   - **Work between messages.** The parent transcript hides a subagent's work
     records; its feed keeps them. Each run of work records between two
     messages is one **stretch** row: a compact Step Rail (one disc per record:
@@ -1126,6 +1125,14 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   reduced-motion behavior, and internal Raw scroller. Re-run the complete
   context suite after the port; static markup or a closed-drawer-only check is
   not sufficient runtime evidence.
+- When this chat's NieR Mode is ported, use the names PMConcept7 already has
+  rather than this concept's: the `O55.sound` events `wake`, `string`, `land`,
+  `bow` and `save` (with their motif, sting and rest behaviour); the
+  `O55.nierFx` functions `type` (typed text in a reserved layout, used instead
+  of the decode for text longer than 8 characters), `bootlog`, the hung banner
+  variant, `fold`, `lineTo`, `lineHold`, `slice({from})` and `trail`; and the
+  Pod narrator's two lanes (below the control bar line, and low over the stage
+  lip, never covering an actor).
 
 ---
 
@@ -1290,6 +1297,8 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   Subagent subjects pop their agents out as satellites around the center disc; the
   panel lists the same agents as Child agents. A satellite or a Child agents
   row opens that agent's read-only live transcript (its hover card says so).
+  Each satellite and each Child agents row shows the agent's puppet (its role
+  prop, its roster seat hue and its live state), never initials.
 - Reduced motion: every choreography lands its end state instantly.
 
 ## Step Rail (simplified) — behavior spec
@@ -1318,15 +1327,15 @@ composer's Mode chip) are Ask `info`, Agent `sparkles`, Debug `bug`, Plan and
 Deep Plan `plan` (a folded map) and Review the Review kind mark.
 
 - **Plan** — Quick / **Standard · Default** / Thorough.
-<!-- C56-CONFIRM (item 11 glyph placement, tmp/c56-agents WIP): after the merge confirm the Deep Plan sidecar's Grill Me row leads with icon('grill',14) and plays the act on hover or focus, and that the same glyph marks the Deep Plan workspace's Grill Me button (deep-plan-batch14.js), the Plan details' Turn Grill Me on/off button (plans.js), the BrainStorm run view's Grill Me check (collab-view.js) and the Add specialists shelf's Grill Me item (collaboration.js); drop any host that did not land. -->
 - **Deep Plan** — **Thorough · Default** / Exhaustive / BrainStorm, then a
   divider and a persistent **Grill Me** check. Grill Me matches the Fast-style
   auxiliary row pattern and is not model effort. Its row leads with the neon
   kettle grill, which plays its act (the lid swings open, flames flicker, smoke
   rises, the lid drops shut) when the row is hovered or focused; the same
   glyph marks the Grill Me buttons in the Deep Plan workspace and the Plan's
-  details, the BrainStorm run view's Grill Me check and the Grill Me item on a
-  setup sheet's Add specialists shelf.
+  details, the BrainStorm run card's and run view's Grill Me check and the
+  Grill Me item on a setup sheet's Add specialists shelf. Reduced motion leaves
+  the grill still.
 - **Review** — Single Agent / **Multi-Pass Review · Default**.
 
 Those are the **six Plan choices**, and there are exactly six: there is no
@@ -1414,8 +1423,9 @@ child sub-To-Dos; every leaf carries a bounded expected outcome.
   Only parents carry an expand caret, left of their mark; a leaf keeps no caret
   column, and each level steps 12px right (three levels at most), so a child's
   mark sits under the start of its parent's title. An item with an explicit
-  agent or persona assignment shows its owner before the status word, compact
-  and muted (the owner's mark or name), so the title keeps priority. Hovering a
+  agent or persona assignment shows its owner's 16px puppet (role prop and
+  roster seat hue) before the status word, so the title keeps priority; the
+  hover card and the selected item's Owner line name the owner. Hovering a
   row shows the app hover card with the full title, the owner and the status or
   the waiting or blocker reason; rows have no native tooltips, and the reason
   also stays in the selected detail. Rows carry no buttons: there is no Start
@@ -1480,7 +1490,6 @@ Each module supplies only its own content.
   module's equivalent, then the questions, the promise lines ("What won't
   happen") where the module has any, and one **Advanced** entry. Foot: the
   read-back sentence, the estimate line, Cancel and one primary.
-<!-- C56-CONFIRM (item 14, puppets): check that pmxMark draws every agent as a puppet on every module surface after the merge, and that a puppet in a setup sheet never animates while one in a run card or run view acts once on mount or state change (module-shell.css .pmx-sheet rule, pmx-pp-pick, pmx-pp-hop). -->
 - **Marks.** Module glyphs come through the pmx primitive (`pmxGlyph`,
   `pmxKindMark`, `pmxStatus`, and `pmxMark` for agents, in `module-shell.js`)
   and are lit and still: sheet-head kind marks are concept-lit, a run's kind
@@ -1506,15 +1515,18 @@ Each module supplies only its own content.
   it is open: switching tabs, opening Advanced or adding rows moves nothing.
   Advanced opens as a page inside the same sheet, never as a disclosure that
   grows.
-<!-- C56-CONFIRM (item 14, cast plates; plates-polish was still running): re-measure which mode each kind draws with its default team at 1440x900, 1280x800 and 1024x768 on the merged build (the graphs report had Crew full/compact/compact, Review full/compact/compact, BrainStorm compact/lean/caption, Chat Room strip/caption/caption) and whether the retro-dark 1440x900 Crew side-column scroll (13 to 17px, also on base) is fixed; drop the window sentence if the numbers moved. -->
 - **Yield rules.** The common case never scrolls at 1440×900 or 1280×800. In a
   collaboration sheet the cast plate yields first as the roster grows: it takes
   the richest mode that fits its slot (full, compact, BrainStorm's lean, a
   strip, then one caption sentence; see *The cast plate*) and grows into spare
   height when the column is short. With the default teams at 1440×900, Crew and
   Review draw the full plate, BrainStorm the compact one and Chat Room its
-  one-line strip; at 1280×800 Crew and Review draw compact, BrainStorm lean and
-  Chat Room the caption. The roster scrolls inside its own region only at 7-8
+  one-line strip; at 1280×800 Crew and Review draw compact and BrainStorm and
+  Chat Room their lean modes; at 1024×768 Crew and Review stay compact,
+  BrainStorm falls to the caption and Chat Room keeps its lean line where it
+  fits (Basic, Glass and NieR; Friendly and Retro show the caption there).
+  These are Basic's numbers; another theme's type can move a kind one mode.
+  The roster scrolls inside its own region only at 7-8
   helpers, with Add a helper kept visible. The side column
   scrolls only below 1280×800. The hero field scrolls inside itself past three
   lines and never grows. Below a 900px sheet width the body becomes one column
@@ -1592,16 +1604,17 @@ Each module supplies only its own content.
   trigger's larger side and closes with the sheet.
 - **Canonical commands.** Every control is a canonical `cmd.*`, draft state,
   view state, or a demo action. A sheet names the command its primary would
-  dispatch in one Technical details line, or says "no command: view state": a
-  collaboration sheet as the last row of its Advanced page, Back Seat Driver
-  on its Advanced page, and ELI5, Revert and New chat defaults as one fine
-  line. Run cards, run views (their More row and their side columns), Schedule
-  Message, Build At, the Scheduled manager and scheduled-message records show
-  no Technical details.
+  dispatch in one Technical details line on its Advanced page, or says "no
+  command: view state": a collaboration sheet as the last row of its Advanced
+  page, and Back Seat Driver on its Advanced page. Nothing else shows Technical
+  details: not the sheets without an Advanced page (ELI5, Revert, New chat
+  defaults, Teach, Memory, Schedule Message, Build At), the Wonderer workspace,
+  run cards or run views (their More row and their side columns), the
+  Scheduled manager, scheduled-message records, the Review report's Plain text
+  and Export, or the Back Seat Driver session in Context's More Details.
 
 ## Puppet agents
 
-<!-- C56-CONFIRM (item 14, the whole section; tmp/c56-agents was still being polished): after the final merge check the role table (module-shell.js ROLE_PROP, PROPS, GRILL, YOU), the family materials (module-shell.css B1 block), the NieR unit (pnUnit, PN, nier-parts.css Puppet agents block: visor 9.7,8.9 8.6x2, strings at 55%, one string at 18 to 20px and three from 22px), the detail-by-size gates, the state drawings, the motion split (still in sheets, one-shot in run cards and run views, continuous sway only on Live subagents rows and Agent Stage lanes, NieR idle sway there too) and the list of surfaces. Initials avatars were still drawn on the Orbit panel's Child agents rows (orbit.js orbit-agent-avatar) and on a lab Activity Detail take's Subagents lines (app.js activity-line agent-avatar); if they become puppets, add them to the surface list, otherwise keep the "on those surfaces" limit. -->
 Every agent is drawn as a small marionette, after PMConcept7's onboarding
 helpers: a control bar with strings to the head and both hands, a chibi figure
 (a big round head, a small tunic, stick limbs) and one prop or piece of
@@ -1611,9 +1624,10 @@ draws every puppet (`pmxMark` and `markInner` in `module-shell.js`, on a
 28-unit grid with the whole figure inside the box, so a plate can scale a
 seat), so a sheet's roster, cast plate and specialist shelf (where Grill Me's
 item is the neon kettle grill instead), a run card's cluster and lanes, a run
-view's plate, team and conversation, Activity's Crew rows, the chat's Live
-subagents card and the Agent Stage lanes all show the same puppet. No agent on
-those surfaces is drawn as initials.
+view's plate, team and conversation, Activity's Crew rows and Agent Board,
+Activity Detail's Subagents lines, Orbit's satellites and Child agents rows, a
+To-Do's owner, the chat's Live subagents card and the Agent Stage lanes all
+show the same puppet. No agent is drawn as initials anywhere.
 
 - **Props by role.** The Coordinator (and this chat) wears a crown; the Chat
   Room's Moderator holds a gavel; both are lead seats in the text colour.
@@ -1682,7 +1696,6 @@ Who builds it › A Crew (scheduled mode) and a Plan's **Build With Crew** open
 the same sheet.
 
 **The configuration sheet** (wide).
-<!-- C56-CONFIRM (item 13, the preview; sheets work landed inside tmp/c56-agents): after the merge check the side column widths (340px, Retro 330, 308 under 1168px wide or 820px tall), the 360px layout width (collaboration.js PV_LAYOUT_W), the measured scales (about .889 at 1440x900, .8 at 1280x800 and 1024x768), the dropped caption with the figure's aria-label, and that tests/shell-selfcheck.cjs A16 pmxPreview passes again (it failed on the agents branch because of that aria-label). -->
 - Hero: the job or question, the **Card title** input (derived from the job
   until you edit it: its first sentence, at most 48 characters, cut at a word)
   and the **In your chat** preview of the card's first frame. The preview fills
@@ -1709,7 +1722,6 @@ the same sheet.
   is saved). Review's presets are Careful review (Security, Bugs, Tests), Quick
   check (one reviewer, Single Agent) and Deep audit (5 reviewers, one of them a
   Critical Advisor).
-<!-- C56-CONFIRM (items 11 and 14): check that the shelf's Grill Me item shows the neon grill glyph (collaboration.js pmx-spec-glyph, pmxGlyph('grill', 24)) and plays its act on hover or focus, and that Grill Me's seat on the plate is the kettle-grill puppet. -->
 - **Add specialists** (Crew, Chat Room and BrainStorm; never Review):
   **Wonderer** is a built-in Persona plus a reusable methodology skill that
   brings ideas from other fields, kept labelled as hypotheses until researched;
@@ -1735,7 +1747,6 @@ the same sheet.
   specialists and settings and prefills only new drafts (never Reconfigure,
   scheduled or recorded drafts); it shows "Saved as your default" in place for
   2.4 s, and where it is stored stays concept-local this wave.
-<!-- C56-CONFIRM (item 13): check that BrainStorm's must-haves sit in their own box beside the question, as tall as the job field (88px, 66 in short windows), 216px wide (196 under 1168px), so the side column holds only the preview (brainstorm-protocol.css). -->
 - **Must-haves** (BrainStorm) are your own per-run rules, in a box of their own
   beside the question, as tall as the job field, so the side column holds only
   the preview; Review's target choice is its own field. Whether a run is a
@@ -1743,7 +1754,6 @@ the same sheet.
   sets when it opens the sheet, never by what these fields hold; the recording
   preflights run only on recorded drafts, so a wand-started Crew or Chat Room
   is never refused for not being a recording.
-<!-- C56-CONFIRM (item 13): check that the Start flight still lays its copy out at the real card's width (collaboration.js handoff.arm({layoutWidth: measureCardWidth()})). -->
 - The sheet is a transaction: before a successful Start there is no run,
   provider call, usage, event, card or settings write, and open → configure →
   cancel changes nothing. Only after the commit succeeds does the sheet's
@@ -1753,7 +1763,6 @@ the same sheet.
   no preview to fly (a narrow window hides it) or motion is reduced, the card
   simply appears. Focus then moves to the composer.
 
-<!-- C56-CONFIRM (item 14, cast plates; plates-polish was still running): after the merge check the bar, cast, wing, screens and note wording against collaboration.js crewCast, reviewCast, brainstormCast and roomCast (You labels: one checked result, one report, one plan, pick what to keep; Review's paper Locked at Start; the Chat Room note is the policy label plus rounds, e.g. Moderator guides · up to 5 rounds), the mode sizes in module-shell.js CAST and PLATE_H (full about 155px, 182 with a note; compact 110; lean about 99, BrainStorm only; strip 60; Chat Room line 40), word-first name cuts and pitch growth, and where each run view draws its plate (castRun, 640 wide); pmx-verify plate-labels and crowding must pass in every mode. -->
 **The cast plate.** Crew, Chat Room, Review and BrainStorm draw their graph in
 one grammar, in the sheet and in the run view (`pmxCastPlate` and `pmxCastFit`
 in `module-shell.js`; each kind only describes its cast in
@@ -1784,8 +1793,10 @@ in `module-shell.js`; each kind only describes its cast in
 - **Modes**, richest first: full (seats at 1.5×, about 155px tall, 182 with a
   note), compact (seats at 1.25×, names only, 110px), lean (BrainStorm only:
   the compact at .86, about 99px, keeping its chapters and strings), a one-row
-  strip (names under the marks, 60px; Chat Room's is a 40px line with the
-  names beside the marks) and the caption sentence. A mode whose seats would
+  strip (names under the marks, 60px; Chat Room's is a 40px line with the names
+  beside the marks, and with the specialists on it stacks the names under the
+  marks), Chat Room's lean line (32px, its puppets at 22px with every name
+  whole beside them) and the caption sentence. A mode whose seats would
   sit closer than its minimum pitch is skipped, and a plate is never scaled to
   fit its slot. Long names are cut at a whole word first, and in full and
   compact a seat's pitch grows to keep its name whole.
@@ -1808,7 +1819,6 @@ the dock, the receipt, Activity's counts and rows, the run view, the composer
 destination, and which of Pause and Cancel is offered) reads it from one place,
 never from the raw record status. A card turns to `result` only on a clean
 completion, and nothing on a cancelled card changes again.
-<!-- C56-CONFIRM (item 14): check that the card head's cast is a row of 18px puppets (pmx-cluster, the lead first, the Chat Room's Moderator with its gavel), that the lanes lead with puppets, and that a card's puppets act once and never loop. -->
 - The card shows the kind mark and word, the card title, the cast as a row of
   small puppets (the lead first) and a clock; then one true sentence (status
   word · reason); a track of the kind's phases; at most three lanes plus "+N
@@ -1869,7 +1879,6 @@ no line. Each line has one control, [Review] on a needs-you line and [Show]
 otherwise, which brings its card into view; no decision is ever taken from the
 dock.
 
-<!-- C56-CONFIRM (item 14): confirm where each run view draws its cast plate (collab-view plateHtml, crew-view livePlate, brainstorm-view, room-view, review-view) and that the sentence "It draws the run's cast plate" still holds for all five; the no Technical details sentence is final (card 8). -->
 **The run view.** Open Panel opens the run's full record in the editor pane
 beside the chat, never as a centred modal: Summary, Report or How they decided,
 then Conversation, Team and Cost (a Chat Room opens its room document with
@@ -1973,7 +1982,10 @@ fix request into your empty message box and never sends by itself; if the box
 already has text it refuses ("Your message box already has text. Send or clear
 it first."), and the finding lineage travels in metadata, not in the text. A
 Single Agent result says "Single pass: one reviewer, so nothing was
-double-checked." and shows no agreement words.
+double-checked." and shows no agreement words. The report's Plain text view
+and its Export are the same Markdown in the report's own words, with no
+Technical details section and no engine ids, report version or snapshot hash
+(those stay in the record).
 
 ## Back Seat Driver
 
@@ -2380,7 +2392,6 @@ This is a concept lab, and the distinction is kept visible rather than blurred:
   `questions.css` (+ its NieR block in `nier-parts.css`). Subagent live
   transcript: `app.js` `renderAgentEditor` (a `.tx-feed` root, never
   `.transcript`) + `turn-stage.js` (one spine per root) + `turn-stage.css`.
-<!-- C56-CONFIRM (items 12 to 14 and card 7): after the merge confirm these owners and names: module-shell.js pmxMark, markInner, pnUnit, pmxCastPlate, pmxCastFit; module-shell.css (puppet materials, states and motion, step tiles, the hero side column and preview tray); nier-parts.css (NieR puppets, step tiles); collaboration.js crewCast, reviewCast, brainstormCast, roomCast, castRun; app.js agentPuppet; transcript-records.js feedStretch with app.js renderFeedStretch (replacing feedLine and renderFeedWorkLine). -->
 - Agents and plates: `module-shell.js` (`pmxMark` / `markInner` puppets and
   the NieR unit `pnUnit`, `pmxCastPlate` / `pmxCastFit`) + `module-shell.css`
   (puppet materials, states and motion; step tiles; the hero side column and
@@ -2404,15 +2415,15 @@ This is a concept lab, and the distinction is kept visible rather than blurred:
   Each has a matching `.css` concatenated last. `composer-state` loads first of
   the set because the others write the composer destination it owns; `plans.js`
   installs the identity-preserving `window.PM56_RUNTIME` merging accessor.
-<!-- C56-CONFIRM (verification, depends on the final merge): re-run every suite below on the merged build and record what passes. Known on main and the branches: tests/context-verify.mjs stops at line 311 waiting for .ctx-srcrow (the drawer's sections now open collapsed), so its new closed-outline check never runs; recount its checks once it runs through (208 assumes only that one ok() was added). tests/transcript-verify.mjs stops at line 491 (it clicks the stale .lens-mode-item). questions-verify fails C0e to C8e on base too. tests/shell-selfcheck.cjs fails A16 pmxPreview on tmp/c56-agents until the preview's aria-label and the check agree. The six redesign suites this bullet used to name (assistant-plan, todo, bsd, attachments-composer, browser-capture, restored-features) have no scripts in tests/, only reports, so they were dropped here. -->
 - Verification: `node neon-verify.mjs` (+ `--reduced`; census, roles, status set,
   salience, contrast order, reduced motion, all ten themes; its preview checks
   wait for the hover card rather than a fixed delay), `node orbit-verify.mjs`
   (+ `--negative`), `node turn-verify.mjs` (the send flight, the live agent
   turn, item families and voices), `node questions-verify.mjs` (the Ask Card),
   `node history-verify.mjs`, `node tests/audit.mjs`,
-  `node tests/context-verify.mjs` (current context contract: **208 checks**,
-  including the capability boxes' closed outlines),
+  `node tests/context-verify.mjs` (the current context contract, including the
+  capability boxes' closed outlines), `node hover-tip-verify.mjs` (hover tag
+  timing, the hand-off between anchors and press to dismiss),
   `node tests/transcript-verify.mjs` (including the More overflow keeping the
   meta chips and the toolbar on one row), `node tests/scheduling-verify.mjs`
   (including the Schedule Message send-time track, its Page Up / Page Down
