@@ -244,7 +244,9 @@
     if (v.clasp) out += K.DI(v.clasp[0], v.clasp[1], 1.6, 'g');
     if (pose === 'bow') out += `<g class="nv-arm-r">${K.SQ(2.8, -37.5, 3, 'p s', W.hand)}</g>`;
     /* the waving arm is its own group: the rig turns it about the shoulder, and the hand's string follows its hook */
-    if (wave) out += `<g class="o55-arm" data-pivot="${SH} ${SY}">${arm(K, 1, Ar.R)}${K.SQ(SH, SY, 2.6, 'p s', W.joint)}<circle class="o55-hook" data-hook="hand" cx="${HAND[0]}" cy="${HAND[1]}" r="0.01" fill="none"/></g>`;
+    /* (its hand string ends in a small knot too, shown only while the unit is held above the stage or flies in: then
+       the hand is hidden or arriving and the string needs an end of its own; 30-art.css .nv-knot-hand) */
+    if (wave) out += `<g class="o55-arm" data-pivot="${SH} ${SY}">${arm(K, 1, Ar.R)}${K.SQ(SH, SY, 2.6, 'p s', W.joint)}${K.P(dia(HAND[0], HAND[1] - 2.2, 1.4), 'i', null, 'nv-knot nv-knot-hand', ' display="none"')}<circle class="o55-hook" data-hook="hand" cx="${HAND[0]}" cy="${HAND[1]}" r="0.01" fill="none"/></g>`;
     /* the knot keeps its own class: while the troupe is held above the stage (.o55-ens-hold) the unit is hidden but its
        knot shows, hanging in mid-air at the end of its string */
     if (o.rig || o.anchor) out += K.DI(0, HOOK, W.knot, 'i', null, 'nv-knot');

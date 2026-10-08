@@ -194,8 +194,7 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) :is(.o55-nier-mapl
    short strings; a family's control bar, strings and helpers wait unseen at the start of their own entrance */
 .o55-ens-hold[data-family="nier"] .o55-ens-h > .o55-in { animation: none !important; visibility: hidden; transform: translateY(var(--o55-fly, -91px)); }
 .o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot, .o55-f-nier .o55-nier-flyin .nv-knot { visibility: visible; }
-/* (a held unit's raised hand has nothing to hang from its string yet: that string shows when the unit flies in) */
-.o55-ens-hold[data-family="nier"] .o55-tie-hand, .o55-f-nier .o55-tie-hand.o55-nier-tiewait { visibility: hidden; }
+.o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot-hand, .o55-f-nier .o55-nier-flyin .nv-knot-hand { display: inline; }
 .o55-ens-hold:not([data-family="nier"]) :is(.o55-ens-bar, .o55-ens-h) > .o55-in { animation-play-state: paused !important; }
 .o55-ens-hold:not([data-family="nier"]) :is(.o55-ens-bar, .o55-ens-h, .o55-ties) { visibility: hidden; }
 /* Creating: a unit comes online as the work goes on (57-scenes-journey.js): its rest dashes hold a moment, then the scan
