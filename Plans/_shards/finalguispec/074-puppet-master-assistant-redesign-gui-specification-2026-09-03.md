@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36075-L36382
+Source lines: L36099-L36406
 
-Source SHA256: `b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67`
+Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
 
 ---
 
@@ -60,11 +60,11 @@ Historical Completed and Canceled cards stay in place and default to compact. A 
 
 Goal appears in the Activity bar only for the current thread and only when an active or retained Goal record exists. Its hover preview is interactive: `Goal · Running`, a two-line objective preview, and `[Pause] [Cancel] [edit icon]`, with Resume replacing Pause when eligible. The edit icon opens Activity Detail in edit mode; clicking the Goal item itself opens the normal detail view.
 
-Activity Detail shows a text-only objective area with `[Save] [Cancel edit]`, then `[Pause/Resume] [Cancel Goal]` and a `History ▾` revision list. It must not show a title, phases, child Goals, budgets, a current action, a next action, or separate scope and done-when fields. Agent-proposed changes use the existing approval host showing only the current objective, the proposed objective, `Approve Change` and `Cancel`. **There is no Goal transcript card.**
+Activity Detail shows the objective, then one control row `[Pause/Resume] [Edit objective] … [Cancel Goal]` with Cancel Goal alone at the far edge, and an `Objective history ▾` footer that opens the revision list in place; Edit objective shows the text-only objective editor with `[Save] [Cancel edit]`. There is no View Goal route and no Ask for a replacement control (amended 2026-10-08, DL-147, F3-593). It must not show a title, phases, child Goals, budgets, a current action, a next action, or separate scope and done-when fields. Agent-proposed changes use the existing approval host showing only the current objective, the proposed objective, `Approve Change` and `Cancel`. **There is no Goal transcript card.**
 
 ### 8. To-Dos Activity UI
 
-The hover preview shows compact current work — a completed-over-total count and the current items, with several current rows allowed and a blocked count only when nonzero. Activity Detail shows one hierarchical tree using distinct pending, current, completed, blocked and skipped marks in the existing visual language. Completed entries stay inline with a filled dot and strike-through. There is no Done heading, no source chip, no verification badge, no Goal grouping and no cross-thread row. Parent rows expand and collapse and show derived counts, and clicking an active item may open its associated work, agent or artifact. **There is no To-Do transcript card.**
+The hover preview shows compact current work — a completed-over-total count and the current items, with several current rows allowed and a blocked count only when nonzero. Activity Detail shows one hierarchical tree using distinct pending, current, completed, blocked and skipped marks in the existing visual language. Completed entries stay inline with a filled dot and strike-through. There is no Done heading, no source chip, no verification badge, no Goal grouping and no cross-thread row. Parent rows expand and collapse and show derived counts; each row is one line in the hover preview's checklist form with no buttons, and an item's selected detail offers Open work for its associated work, agent or artifact (amended 2026-10-08, DL-147, F3-593). **There is no To-Do transcript card.**
 
 ### 9. Activity bar domains
 
@@ -90,9 +90,9 @@ The browser toolbar and context menu expose `Full Screenshot ▶ Visible Browser
 
 `Schedule Message` opens a modal carrying date and time, timezone, destination, message preview, attachments, missed-time behavior, the selected model and account summary, and a Schedule action. The composer stays populated until the schedule commits, and on success only the scheduled snapshot clears from the buffer.
 
-`Build At…` opens a Plan modal carrying one-time start or recurring window, the exact Plan version disclosure, timezone and days, start and pause time, wind-down, auto-resume next window, and a provider usage or reset hint where available. A version change places a small `Schedule needs update` notice on the Plan card and disables automatic dispatch until it is resolved.
+`Build At…` opens a Plan modal carrying one-time start or recurring window, the exact Plan version it binds, named in the sheet (its id and hash are in the Plan's Details, DL-148), timezone and days, start and pause time, wind-down, auto-resume next window, and a provider usage or reset hint where available. A version change places a small `Schedule needs update` notice on the Plan card and disables automatic dispatch until it is resolved.
 
-Both are sheets of the wand modules grammar (F3-566); F3-573 states what each shows beyond the fields above: the message as a future bubble, the resolved time in the schedule's own zone, and a plate of the next 48 hours for Schedule Message; a week plate of the build slots for Build At.
+Both are sheets of the wand modules grammar (F3-566); F3-573 states what each shows beyond the fields above: the message as a future bubble, the resolved time in the schedule's own zone, and a plate of the next 48 hours for Schedule Message that is also its send-time control (F3-592); a week plate of the build slots for Build At.
 
 The quota wait strip described in section 4 links to Usage detail from its reset and source text, and its checkbox controls only that run's consent unless Settings defines a default.
 
@@ -223,7 +223,7 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Plan is a transcript card with a title, a Plan Vn badge, and a Rich Text / Markdown toggle defaulting to Rich Text; its body renders full document content with no editable caret and its footer carries exactly one primary status control reading Build, Building…, Completed, or Canceled alongside Build With Crew, Build At, Revise, Send To Planning Wizard, Export, Cancel and Open To-Dos as applicable. A pause or quota wait appears as small support copy while the button still reads Building…. Historical Completed and Canceled cards stay in place and default compact, with no Plan picker and no Superseded label. Goal and To-Dos are Activity domains and have no transcript card: the Goal hover offers Pause, Cancel and an edit icon opening Activity Detail in edit mode, and Goal detail shows only the objective, Save and Cancel edit, lifecycle controls and a revision History. The To-Do hover shows a completed-over-total count with several current rows allowed, and To-Do detail shows one hierarchical tree with completed items inline with a filled dot and strike-through and no Done heading, source chip, verification badge, Goal grouping, or cross-thread row. Activity domains become Goal, To-Dos, Subagents, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts, preserving per-thread presence, empty-domain omission, compaction tiers, hover dwell and detail routing, with Subagents distinct from Crew.
+  The Plan is a transcript card with a title, a Plan Vn badge, and a Rich Text / Markdown toggle defaulting to Rich Text; its body renders full document content with no editable caret and its footer carries exactly one primary status control reading Build, Building…, Completed, or Canceled alongside Build With Crew, Build At, Revise, Send To Planning Wizard, Export, Cancel and Open To-Dos as applicable. A pause or quota wait appears as small support copy while the button still reads Building…. Historical Completed and Canceled cards stay in place and default compact, with no Plan picker and no Superseded label. Goal and To-Dos are Activity domains and have no transcript card: the Goal hover offers Pause, Cancel and an edit icon opening Activity Detail in edit mode, and Goal detail shows only the objective, Save and Cancel edit, lifecycle controls and a revision History (since 2026-10-08 one control row with Edit objective and Cancel Goal alone at the far edge, and an Objective history footer; DL-147, F3-593). The To-Do hover shows a completed-over-total count with several current rows allowed, and To-Do detail shows one hierarchical tree with completed items inline with a filled dot and strike-through and no Done heading, source chip, verification badge, Goal grouping, or cross-thread row; its rows are one line each, like the hover preview, with no buttons (DL-147, F3-593). Activity domains become Goal, To-Dos, Subagents, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts, preserving per-thread presence, empty-domain omission, compaction tiers, hover dwell and detail routing, with Subagents distinct from Crew.
 gui_related: true
 gui_classification_reason: This unit specifies the Plan card and every Activity surface in the redesign.
 depends_on: [F3-531]

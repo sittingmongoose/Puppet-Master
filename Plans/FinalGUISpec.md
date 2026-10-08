@@ -3139,7 +3139,7 @@ The Basic theme is the primary accessibility-friendly option:
 
 
 All themes must show visible focus indicators:
-- **Retro Dark/Light:** ACID_LIME 2px border on focus
+- **Retro Dark/Light:** 2px border on focus, ACID_LIME (Retro Dark's `--accent-lime`) on Retro Dark and accent-blue on Retro Light (amended 2026-10-08, DL-151)
 - **Basic:** High-contrast 2px ring with 2px offset in accent-blue
 
 ### 13.3 Keyboard Navigation
@@ -16080,8 +16080,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  All themes show visible focus indicators: Retro Dark/Light use an ACID_LIME 2px border, and
-  Basic uses a high-contrast 2px ring with 2px offset in accent-blue.
+  All themes show visible focus indicators: Retro Dark/Light use a 2px border, ACID_LIME (Retro
+  Dark's --accent-lime) on Retro Dark and accent-blue on Retro Light (amended 2026-10-08, DL-151),
+  and Basic uses a high-contrast 2px ring with 2px offset in accent-blue.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible focus indicators despite the source inference being false.
@@ -16116,7 +16117,8 @@ preserved_exact_tokens:
 - "accent-blue"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retro Light's ACID_LIME focus border is replaced by accent-blue, PMConcept7's Retro Light focus (DL-151)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -29786,6 +29788,18 @@ tables are literal precomputed constants, transcribed from the NieR: Automata th
 `Plans/Settings_System.md` section 4.4, and are painted over the Basic variant while the switch is on; the eight
 built-in variants of F3-425 and their tables are unchanged, and no NieR value is derived at runtime.
 
+Amended 2026-10-08 (DL-151, the 5.6 Pro chat tweaks): the retro-dark and retro-light tables take PMConcept7's final
+retro values from `Concepts/PMConcept7.html`, as measured in
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PMCONCEPT7-RETRO-VALUES.md` (SHA-256 `4268674a786a33f938d43a5c91c32ba8324c78d883070e13e5aaab7b030ebdec`).
+Retro Dark becomes PMConcept7's olive "Atlas" palette, whose primary is its own lime-yellow `#b8d066`, replacing
+PMConcept6's acid-lime values; Retro Light keeps its paper palette and takes PMConcept7's green `#2F7A3D` for
+`--accent-lime` and `--graph-passed`. One Retro Light value deliberately differs from PMConcept7 (decision card 3):
+`--accent-warning` is `#A65800`, PMConcept7's `#F57C00` darkened to read at about 4.6:1 on the paper, and the chat's
+user turn, a block in `--accent-lime`, takes the paper `--surface` (`#F5F0E8`) as its text (F3-597); the PMConcept7
+thread is told so PMConcept7 can match. Retro focus follows F3-201: lime on Retro Dark, accent-blue on Retro Light.
+These remain the app's only Retro tables (DR-043); the chat paints them through F3-597. Geometry, motion and type
+size rows already matched PMConcept7 and are unchanged.
+
 ### F3-427 - Glass Composition Single-Blur Contract
 
 ```yaml
@@ -30123,7 +30137,7 @@ Settings appearance overrides (2026-09-27): the per-variant tables below are wha
 
 ### Theme Token Tables (F3-426 spec data)
 
-Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431.
+Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431. Since 2026-10-08 the retro-dark and retro-light tables carry PMConcept7's retro values instead (DL-151; see the dated note after F3-426).
 
 #### Root fallback contract (`:root`, 02-css-tokens.part.html:28-66)
 
@@ -30166,36 +30180,40 @@ Variants inherit these values wherever a per-variant table row says "not defined
 
 #### retro-dark (02-css-tokens.part.html:140-187)
 
+Source since 2026-10-08 (DL-151): PMConcept7's retro-dark, `Concepts/PMConcept7.html`, its "PM7 T22 Atlas" block over its earlier retro-dark block; the line range in the heading is the former PMConcept6 source.
+
 | Group | Token | Value |
 |---|---|---|
-| Surfaces | `--background` | `#1A1A1A` |
-| Surfaces | `--surface` | `#1A1A1A` |
-| Surfaces | `--surface-elevated` | `#252525` |
+| Surfaces | `--background` | `#10120e` |
+| Surfaces | `--surface` | `#171a14` |
+| Surfaces | `--surface-elevated` | `#1e2219` |
 | Surfaces | `--surface-alt` | not defined (friendly-only token; no root definition) |
-| Text | `--text-primary` | `#E0E0E0` |
-| Text | `--text-secondary` | `#A6A6A6` |
-| Text | `--text-muted` | `#909090` |
-| Borders | `--border` | `#A8ACB3` |
-| Borders | `--border-light` | `#3A3D42` |
-| Accents | `--accent-blue` | `#0047AB` |
-| Accents | `--accent-magenta` | `#FF1493` |
-| Accents | `--accent-lime` | `#00FF41` |
-| Accents | `--accent-orange` | `#FF7F27` |
-| Accents | `--accent-warning` | `#FFB300` |
-| Accents | `--accent-error` | `#FF5252` |
-| Accents | `--accent-primary` | `var(--accent-lime)` (resolves to `#00FF41`) |
-| Accents | `--accent-primary-rgb` | `0,255,65` |
-| Graph | `--graph-pending` | `#6C757D` |
-| Graph | `--graph-running` | `#FF9800` |
-| Graph | `--graph-passed` | `#4CAF50` |
-| Graph | `--graph-failed` | `#F44336` |
-| Graph | `--graph-planning` | `#2196F3` |
-| Graph | `--graph-gating` | `#9C27B0` |
-| Elevation | `--shadow` | `3px 3px 0 rgba(224,224,224,.55)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(224,224,224,.55)` |
-| Elevation | `--elev-1` | `2px 2px 0 rgba(224,224,224,.40)` |
-| Elevation | `--elev-2` | `3px 3px 0 rgba(224,224,224,.55)` |
-| Elevation | `--elev-3` | `5px 5px 0 rgba(224,224,224,.55)` |
+| Text | `--text-primary` | `#dfe6cf` |
+| Text | `--text-secondary` | `#a8b394` |
+| Text | `--text-muted` | `#7c866b` |
+| Borders | `--border` | `#4a533a` |
+| Borders | `--border-light` | `#333a28` |
+| Accents | `--accent-blue` | `#9db4d0` |
+| Accents | `--accent-magenta` | `#d8b93c` |
+| Accents | `--accent-lime` | `#86c46a` |
+| Accents | `--accent-orange` | `#e9853f` |
+| Accents | `--accent-warning` | `#d8b93c` |
+| Accents | `--accent-error` | `#e2694f` |
+| Accents | `--accent-primary` | `#b8d066` (its own lime-yellow; not `--accent-lime`) |
+| Accents | `--accent-primary-rgb` | `184,208,102` |
+| Accents | `--accent-soft` | `rgba(184,208,102,.13)` (PMConcept7 writes `color-mix(in srgb,#b8d066 13%,transparent)`; precomputed) |
+| Accents | `--accent-glow` | `rgba(184,208,102,.24)` (PMConcept7 writes `color-mix(in srgb,#b8d066 24%,transparent)`; precomputed) |
+| Graph | `--graph-pending` | `#78806a` |
+| Graph | `--graph-running` | `#e9853f` |
+| Graph | `--graph-passed` | `#86c46a` |
+| Graph | `--graph-failed` | `#e2694f` |
+| Graph | `--graph-planning` | `#9db4d0` |
+| Graph | `--graph-gating` | `#d8b93c` |
+| Elevation | `--shadow` | `3px 3px 0 rgba(107,118,84,.55)` |
+| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(107,118,84,.55)` |
+| Elevation | `--elev-1` | `2px 2px 0 rgba(74,83,58,.68)` |
+| Elevation | `--elev-2` | `3px 3px 0 rgba(107,118,84,.56)` |
+| Elevation | `--elev-3` | `5px 5px 0 rgba(107,118,84,.5)` |
 | Elevation | `--elev-hover` | `4px 4px 0 var(--accent-glow)` (runtime-derived in concept; precompute per F3-431) |
 | Geometry | `--border-radius` | `0px` |
 | Geometry | `--border-width` | `2px` |
@@ -30210,14 +30228,17 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
 | Motion | `--motion-med` | `140ms` |
 | Motion | `--sheen-dur` | `.35s` |
-| Typography | `--display-font` | `'IBM Plex Mono', monospace` |
-| Typography | `--display-font-sm` | `'IBM Plex Mono', monospace` |
-| Typography | `--body-font` | `'IBM Plex Mono', monospace` |
+| Typography | `--display-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--display-font-sm` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--body-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--mono-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
 | Typography | `--base-font-size` | `15px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
 
 #### retro-light (02-css-tokens.part.html:192-239)
+
+Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7.html`, its retro-light block with its later `--accent-lime` and `--graph-passed` override, and the readable `--accent-warning` of decision card 3; the line range in the heading is the former PMConcept6 source.
 
 | Group | Token | Value |
 |---|---|---|
@@ -30232,15 +30253,15 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Borders | `--border-light` | `#D8D1C7` |
 | Accents | `--accent-blue` | `#0047AB` |
 | Accents | `--accent-magenta` | `#FF1493` |
-| Accents | `--accent-lime` | `#00FF41` |
+| Accents | `--accent-lime` | `#2F7A3D` |
 | Accents | `--accent-orange` | `#FF7F27` |
-| Accents | `--accent-warning` | `#F57C00` |
+| Accents | `--accent-warning` | `#A65800` (PMConcept7's `#F57C00` darkened to about 4.6:1 on the paper; decision card 3, DL-151) |
 | Accents | `--accent-error` | `#D32F2F` |
 | Accents | `--accent-primary` | `var(--accent-blue)` (resolves to `#0047AB`) |
 | Accents | `--accent-primary-rgb` | `0,71,171` |
 | Graph | `--graph-pending` | `#ADB5BD` |
 | Graph | `--graph-running` | `#FFB74D` |
-| Graph | `--graph-passed` | `#66BB6A` |
+| Graph | `--graph-passed` | `#2F7A3D` |
 | Graph | `--graph-failed` | `#EF5350` |
 | Graph | `--graph-planning` | `#42A5F5` |
 | Graph | `--graph-gating` | `#AB47BC` |
@@ -30263,9 +30284,10 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
 | Motion | `--motion-med` | `140ms` |
 | Motion | `--sheen-dur` | `.35s` |
-| Typography | `--display-font` | `'IBM Plex Mono', monospace` |
-| Typography | `--display-font-sm` | `'IBM Plex Mono', monospace` |
-| Typography | `--body-font` | `'IBM Plex Mono', monospace` |
+| Typography | `--display-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--display-font-sm` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--body-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--mono-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
 | Typography | `--base-font-size` | `15px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
@@ -35516,7 +35538,8 @@ canonical_text: >-
   visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent
   within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement,
   pointer press, scrolling, or departure before the thresholds resets or cancels the pending opening; pointer departure
-  after opening uses a 160 ms grace period; Escape closes.
+  after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and
+  that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145).
   Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state,
   shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route
   IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current.
@@ -35531,13 +35554,14 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false
-depends_on: [F3-517, F3-519]
+depends_on: [F3-517, F3-519, DL-145]
 unblocks: [F3-524]
 acceptance_criteria:
   - "One overlay controller positions all tags above/below with edge clamping, no clipping, and no layout shift."
   - "A pointer tag becomes visible only after at least 1600 ms of residence plus 1100 ms of stationary intent within a 5 px radius, and a keyboard-focus tag only after 1000 ms of continuous focus; persistent accessible descriptions and relationships remain available immediately rather than waiting for either visual dwell; movement, target relocation, pointer press, scrolling, departure, or focus change resets/cancels the pending open, opened pointer tags retain the 160 ms departure grace, and Escape closes immediately."
   - "Every required target has one stable hover key, accessible name, aria-describedby-equivalent relationship, and role=tooltip semantics; disabled controls remain reachable and explain their disabled reason."
   - "general.interaction.show-tooltips suppresses visual tags without removing accessible explanatory text."
+  - "A pointer press on an anchor closes its open tag, and that tag does not reopen until the pointer has left the anchor (DL-145)."
   - "User-facing native title-only behavior is absent; tests use stable IDs/data attributes rather than title text."
   - "Every tag uses human, contextual effect/state/shortcut/value/consequence language; raw command, action, schema, route, DOM, or machine identifiers never become generic visible fallback copy, while a genuinely useful technical value may appear as clearly explained secondary detail."
   - "Dynamic text, shortcut, full-value, state, consequence, and disabled reason remain current after pin/unpin, availability, truncation, theme, transparency, and Settings changes."
@@ -36124,11 +36148,11 @@ Historical Completed and Canceled cards stay in place and default to compact. A 
 
 Goal appears in the Activity bar only for the current thread and only when an active or retained Goal record exists. Its hover preview is interactive: `Goal · Running`, a two-line objective preview, and `[Pause] [Cancel] [edit icon]`, with Resume replacing Pause when eligible. The edit icon opens Activity Detail in edit mode; clicking the Goal item itself opens the normal detail view.
 
-Activity Detail shows a text-only objective area with `[Save] [Cancel edit]`, then `[Pause/Resume] [Cancel Goal]` and a `History ▾` revision list. It must not show a title, phases, child Goals, budgets, a current action, a next action, or separate scope and done-when fields. Agent-proposed changes use the existing approval host showing only the current objective, the proposed objective, `Approve Change` and `Cancel`. **There is no Goal transcript card.**
+Activity Detail shows the objective, then one control row `[Pause/Resume] [Edit objective] … [Cancel Goal]` with Cancel Goal alone at the far edge, and an `Objective history ▾` footer that opens the revision list in place; Edit objective shows the text-only objective editor with `[Save] [Cancel edit]`. There is no View Goal route and no Ask for a replacement control (amended 2026-10-08, DL-147, F3-593). It must not show a title, phases, child Goals, budgets, a current action, a next action, or separate scope and done-when fields. Agent-proposed changes use the existing approval host showing only the current objective, the proposed objective, `Approve Change` and `Cancel`. **There is no Goal transcript card.**
 
 ### 8. To-Dos Activity UI
 
-The hover preview shows compact current work — a completed-over-total count and the current items, with several current rows allowed and a blocked count only when nonzero. Activity Detail shows one hierarchical tree using distinct pending, current, completed, blocked and skipped marks in the existing visual language. Completed entries stay inline with a filled dot and strike-through. There is no Done heading, no source chip, no verification badge, no Goal grouping and no cross-thread row. Parent rows expand and collapse and show derived counts, and clicking an active item may open its associated work, agent or artifact. **There is no To-Do transcript card.**
+The hover preview shows compact current work — a completed-over-total count and the current items, with several current rows allowed and a blocked count only when nonzero. Activity Detail shows one hierarchical tree using distinct pending, current, completed, blocked and skipped marks in the existing visual language. Completed entries stay inline with a filled dot and strike-through. There is no Done heading, no source chip, no verification badge, no Goal grouping and no cross-thread row. Parent rows expand and collapse and show derived counts; each row is one line in the hover preview's checklist form with no buttons, and an item's selected detail offers Open work for its associated work, agent or artifact (amended 2026-10-08, DL-147, F3-593). **There is no To-Do transcript card.**
 
 ### 9. Activity bar domains
 
@@ -36154,9 +36178,9 @@ The browser toolbar and context menu expose `Full Screenshot ▶ Visible Browser
 
 `Schedule Message` opens a modal carrying date and time, timezone, destination, message preview, attachments, missed-time behavior, the selected model and account summary, and a Schedule action. The composer stays populated until the schedule commits, and on success only the scheduled snapshot clears from the buffer.
 
-`Build At…` opens a Plan modal carrying one-time start or recurring window, the exact Plan version disclosure, timezone and days, start and pause time, wind-down, auto-resume next window, and a provider usage or reset hint where available. A version change places a small `Schedule needs update` notice on the Plan card and disables automatic dispatch until it is resolved.
+`Build At…` opens a Plan modal carrying one-time start or recurring window, the exact Plan version it binds, named in the sheet (its id and hash are in the Plan's Details, DL-148), timezone and days, start and pause time, wind-down, auto-resume next window, and a provider usage or reset hint where available. A version change places a small `Schedule needs update` notice on the Plan card and disables automatic dispatch until it is resolved.
 
-Both are sheets of the wand modules grammar (F3-566); F3-573 states what each shows beyond the fields above: the message as a future bubble, the resolved time in the schedule's own zone, and a plate of the next 48 hours for Schedule Message; a week plate of the build slots for Build At.
+Both are sheets of the wand modules grammar (F3-566); F3-573 states what each shows beyond the fields above: the message as a future bubble, the resolved time in the schedule's own zone, and a plate of the next 48 hours for Schedule Message that is also its send-time control (F3-592); a week plate of the build slots for Build At.
 
 The quota wait strip described in section 4 links to Usage detail from its reset and source text, and its checkbox controls only that run's consent unless Settings defines a default.
 
@@ -36287,7 +36311,7 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Plan is a transcript card with a title, a Plan Vn badge, and a Rich Text / Markdown toggle defaulting to Rich Text; its body renders full document content with no editable caret and its footer carries exactly one primary status control reading Build, Building…, Completed, or Canceled alongside Build With Crew, Build At, Revise, Send To Planning Wizard, Export, Cancel and Open To-Dos as applicable. A pause or quota wait appears as small support copy while the button still reads Building…. Historical Completed and Canceled cards stay in place and default compact, with no Plan picker and no Superseded label. Goal and To-Dos are Activity domains and have no transcript card: the Goal hover offers Pause, Cancel and an edit icon opening Activity Detail in edit mode, and Goal detail shows only the objective, Save and Cancel edit, lifecycle controls and a revision History. The To-Do hover shows a completed-over-total count with several current rows allowed, and To-Do detail shows one hierarchical tree with completed items inline with a filled dot and strike-through and no Done heading, source chip, verification badge, Goal grouping, or cross-thread row. Activity domains become Goal, To-Dos, Subagents, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts, preserving per-thread presence, empty-domain omission, compaction tiers, hover dwell and detail routing, with Subagents distinct from Crew.
+  The Plan is a transcript card with a title, a Plan Vn badge, and a Rich Text / Markdown toggle defaulting to Rich Text; its body renders full document content with no editable caret and its footer carries exactly one primary status control reading Build, Building…, Completed, or Canceled alongside Build With Crew, Build At, Revise, Send To Planning Wizard, Export, Cancel and Open To-Dos as applicable. A pause or quota wait appears as small support copy while the button still reads Building…. Historical Completed and Canceled cards stay in place and default compact, with no Plan picker and no Superseded label. Goal and To-Dos are Activity domains and have no transcript card: the Goal hover offers Pause, Cancel and an edit icon opening Activity Detail in edit mode, and Goal detail shows only the objective, Save and Cancel edit, lifecycle controls and a revision History (since 2026-10-08 one control row with Edit objective and Cancel Goal alone at the far edge, and an Objective history footer; DL-147, F3-593). The To-Do hover shows a completed-over-total count with several current rows allowed, and To-Do detail shows one hierarchical tree with completed items inline with a filled dot and strike-through and no Done heading, source chip, verification badge, Goal grouping, or cross-thread row; its rows are one line each, like the hover preview, with no buttons (DL-147, F3-593). Activity domains become Goal, To-Dos, Subagents, Crew, BrainStorm, Review, Chat Room, Changes and Artifacts, preserving per-thread presence, empty-domain omission, compaction tiers, hover dwell and detail routing, with Subagents distinct from Crew.
 gui_related: true
 gui_classification_reason: This unit specifies the Plan card and every Activity surface in the redesign.
 depends_on: [F3-531]
@@ -36718,8 +36742,8 @@ invariants.
   section panel, and grid presentation across all nine Activity Detail families while preserving
   concise hierarchy, high contrast, clear progress and state grouping, quiet action rows, and canonical routing:
   1. *Goal Detail:* Objective headline, lifecycle status, inline edit/save, progress indicators, and revision history.
-  2. *To-Dos Detail:* Hierarchical task tree, inline completion status (filled dot with strike-through), owner chips, and action links without separate Done headers.
-  3. *Subagents Detail:* Active and completed subagent cards, parent task link, model identity, tool invocation count, and termination status.
+  2. *To-Dos Detail:* Hierarchical task tree, inline completion status (filled dot with strike-through), owner chips (the owner's mark or name, only for an explicit assignment), and Open work in the selected item's detail rather than action links on rows, without separate Done headers.
+  3. *Subagents Detail:* Active and completed subagent cards, parent task link, model identity (underlined), tool invocation count, and termination status; opening a subagent opens its read-only live transcript (ACD-485, F3-593).
   4. *Crew Detail:* Coordinator card, member cards with assigned roles, live phase indicator, and output links.
   5. *BrainStorm Detail:* Idea clusters, exploration tracks, retained questions/answers, and synthesized plan seeds.
   6. *Review Detail:* Reviewer roster, pass-by-pass findings, severity ratings, consensus/single-pass summary, and remediation links.
@@ -36730,6 +36754,8 @@ invariants.
   Scoped exception (2026-09-27, DL-122): for Crew, BrainStorm, Review and Chat Room (items 4 to 7) the
   Activity Detail body is the short team list of F3-580, and the kind content listed above lives in
   the run view (ACD-480). The other five families keep the native presentation above.
+  Second scoped exception (2026-10-08, DL-147): the To-Dos rows of item 2 are one-line checklist rows like the
+  To-Do hover preview, inside the native panel (F3-593).
 - **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
   render findings, diagnostics, and code views without interactive mutation controls or misleading
   active buttons, clearly labeling the static or demo nature of the content.
@@ -37159,6 +37185,7 @@ canonical_text: >-
   descriptions, and consistent inset footers with 16 px padding and clear button hierarchy. Selecting
   Single Agent Review immediately collapses the active reviewer roster to one. All nine Activity Detail
   families adhere to the unified native card and grid presentation grammar per USER-REFERENCE-LAYOUT-ROLLBACK-20260908,
+  apart from the scoped exceptions of F3-580 (DL-122) and the To-Do rows of F3-593 (DL-147),
   superseding the reference-video flat-row and forced single-column layout while preserving concise hierarchy,
   clear progress/state grouping, and quiet action rows. Read-only inspection fixtures present findings
   and code evidence without interactive mutation controls.
@@ -37169,7 +37196,7 @@ unblocks: []
 acceptance_criteria:
   - Popups use shared choice dropdowns, plain-language options, and 16 px inset footers.
   - Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
-  - All nine Activity Detail families apply the native card and grid presentation grammar with concise hierarchy, superseding the reference-video flat-row prescription.
+  - All nine Activity Detail families apply the native card and grid presentation grammar with concise hierarchy, superseding the reference-video flat-row prescription, apart from the scoped exceptions of F3-580 and F3-593.
   - Read-only inspection demos render findings without interactive mutation controls.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -37197,7 +37224,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not retain multiple reviewers when Single Agent Review is active.
   - Do not omit any of the nine Activity Detail families from the unified grammar.
-  - Do not reintroduce reference-video flat-row or forced single-column CSS into Activity Detail.
+  - Do not reintroduce reference-video flat-row or forced single-column CSS into Activity Detail beyond the scoped exceptions of F3-580 and F3-593.
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -38457,8 +38484,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a
   turn mark and a paint-only spine per assistant turn, seven item families by message type with
-  distinct silhouettes, prose without a container, a neutral right-aligned user bubble, and the
-  accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style,
+  distinct silhouettes, prose without a container, a neutral right-aligned user bubble (under Retro
+  both drawn as F3-597 states, DL-151), and the accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style,
   with the behaviour owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering
   to at most 30 nodes, narration that tucks into the card's caption, and the fold into the strip
   when the final answer starts. For the transcript and the working activity this supersedes the
@@ -38687,10 +38714,13 @@ canonical_text: >-
   tokens. Every configuration popup is a configuration sheet with one anatomy. The head has the
   module's kind mark (no tile, no box), a sentence-case title with the canonical name inside, one
   lead sentence and the close control, and no header pill. The hero is the most important input,
-  first and focused. Then a plate, a flat drawing of who is involved and where the result goes,
-  over the roster or the module's equivalent; then the questions, numbered 1 to 4 only in the four
-  collaboration kinds, where the order is real, and unnumbered elsewhere; the promise lines saying
-  what won't happen; and one Advanced entry that opens as a page inside the same sheet. Every
+  first and focused. Then a plate, a flat drawing of who is involved and where the result goes (in
+  the four collaboration kinds, the cast plate of F3-595, DL-149), over the roster or the module's
+  equivalent; then the questions, numbered only where the order is real (1 to 4 in the four
+  collaboration kinds, 1 to 3 in Crew Auto), each number drawn as a step tile (F3-592, DL-148), and
+  unnumbered elsewhere; the promise lines saying what won't happen, where the module has any (the
+  Schedule Message sheet has none, DL-148); and one Advanced entry that opens as a page inside the
+  same sheet. Every
   control has a visible label and one helper line; options with descriptions use the preserved
   dropdown trigger, and each description names the real difference between the options (for
   example Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive
@@ -38713,15 +38743,15 @@ canonical_text: >-
   (Revert, ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most
   its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open.
   The common case never scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster
-  grows (full at 1 to 3 rows, compact at 4, a strip at 5 or 6, one sentence at 7 or 8) and grows
+  grows, showing its richest mode that fits and never scaled to fit (F3-595, DL-149), and grows
   into spare height when the column is short; the roster scrolls in its own region only at 7 or 8
   helpers with Add a helper kept visible; the side column scrolls only below 1280 x 800; the hero
   field scrolls inside itself past three lines; below a 900 px sheet width the body becomes one
   column that scrolls inside the sheet with head and foot fixed; nothing overflows sideways.
   Hovering or focusing a control lights the plate parts and read-back phrases it affects and dims
   the others, with no re-render. Kinds are told apart by a kind mark drawn by shape, and each
-  participant by a cast mark drawn from silhouette, spike and hue with its state as a ring, never
-  by initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a
+  participant by its puppet, which replaced the cast mark (F3-594, DL-149): a role prop, the theme
+  family's material and a puppet-drawn state, never initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a
   block (columns are separated by space only), nested boxes, uppercase micro-labels or emoji.
   Typography (J-1): every wand-module surface uses the theme's own font with no separate display
   face; the voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings)
@@ -38741,7 +38771,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
-depends_on: [DL-109, DL-113, DL-114, DL-115, DL-139, ACD-475, F3-431, F3-531, F3-534, F3-582]
+depends_on: [DL-109, DL-113, DL-114, DL-115, DL-139, DL-148, DL-149, ACD-475, F3-431, F3-531, F3-534, F3-582]
 unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
   - "Theme timing never overrides the shared timing or order of a transcript entrance."
@@ -38803,6 +38833,8 @@ stale_retired_dispositions:
   - "2026-09-03 redesign section 10 'one shared modal shell' and 'pops out to a full panel' are superseded for presentation by this unit, F3-569 and ACD-480; the participant-row and per-kind behaviour sentences stay."
   - "Additive Correction v4 'Nothing here authorises a broad restyle' is superseded for the wand modules' surfaces by DL-109 and this unit."
   - "DL-139 replaces the solid-sheet outcome of DL-114's 2026-09-27 check on the Skia GPU path: once the Skia renderer extensions draw backdrop blur, sheets are frosted there and stay solid on the CPU raster."
+  - "The cast mark drawn from silhouette, spike and hue with its state as a ring is replaced by the agent puppet of F3-594, and the plate's row-count thresholds (full at 1 to 3 rows, compact at 4, a strip at 5 or 6, one sentence at 7 or 8) by F3-595's fit rule (DL-149)."
+  - "The promise lines are drawn only where a module has any; the Schedule Message sheet has none (DL-148)."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -38897,16 +38929,17 @@ canonical_text: >-
   press consumed by a menu or a dialog never falls through to stopping an agent. Escape on a sheet
   runs the sheet's cancel path (UIW-025). In one place Escape is not the close button: a Crew Auto
   sheet opened from a Crew sheet goes back one step to the Crew sheet with its draft on Escape or
-  Cancel, while the close button and the scrim close both; the registry help says Escape goes back one step. A dropdown opened from a sheet paints above it and returns focus to its trigger.
+  Cancel, while the close button and the scrim close both; the registry help says Escape goes back one step. A dropdown opened from a sheet paints above it and returns focus to its trigger; clicking its own trigger again closes it, clicking another dropdown's trigger in the same sheet switches to that dropdown, and each trigger reports whether its list is open (amended 2026-10-08, DL-145).
 gui_related: true
 gui_classification_reason: "Defines sheet keyboard behaviour and the scoped shortcut registry rules."
 split_recommended: false
-depends_on: [F3-566, UIW-025]
+depends_on: [F3-566, UIW-025, DL-145]
 unblocks: []
 acceptance_criteria:
   - "Ctrl/Cmd+Enter in a sheet dispatches exactly the command of the primary it activates and never a warm primary without focus."
   - "An Escape consumed by a menu or dialog never stops an agent."
   - "The shortcut registry lists Confirm dialog (primary action) as reserved and dialog-scoped and Tab as composer-scoped."
+  - "A second click on a sheet dropdown's own trigger closes it (DL-145)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -38964,9 +38997,10 @@ canonical_text: >-
   Open Panel, Message and More may sit behind Expand, and below 520 px the helper count may move into
   the card's hover card (DL-123). On a result face or a receipt, Message moves into More as a
   disabled item with its reason printed ("This {Kind} has finished, so it can't take messages. Ask
-  the assistant instead."), never only in a tooltip. The Coordinator's cast mark uses the text
-  colour or its seat colour, never the accent (DL-111). Open Panel opens the run view, the editor document of ACD-480, which
-  holds the full record. While a run's view is the active editor tab, the card's follow-on controls
+  the assistant instead."), never only in a tooltip. The Coordinator's puppet (the crowned one,
+  F3-594) uses the text colour or its seat colour, never the accent (DL-111). Open Panel opens the run view, the editor document of ACD-480, which
+  holds the full record. The run view is headed by the run's cast plate in live states (F3-595), and
+  neither a run card nor a run view shows Technical details (DL-149). While a run's view is the active editor tab, the card's follow-on controls
   give way to one line saying where to decide, at the same height, so a control that changes the run
   is in one place at a time; decisions from an approval owner stay in the card. The collaboration
   hover cards show at most four run rows plus one overflow line (APR-007).
@@ -38976,12 +39010,13 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Fixes run card geometry, receipts and the run view hand-off."
 split_recommended: false
-depends_on: [F3-566, ACD-480, DL-111, DL-123]
+depends_on: [F3-566, ACD-480, DL-111, DL-123, DL-149]
 unblocks: []
 acceptance_criteria:
   - "The editor/chat split preserves a 360 px minimum chat pane while card tiers continue to measure card content width."
   - "A collapsed or sub-520 px card reaches Open Panel, Message and More through Expand; a finished run's Message prints why it is disabled."
   - "The Coordinator's mark never paints the accent."
+  - "No run card or run view shows Technical details (DL-149)."
   - "Card heights stay within the tier budgets under the periodic tick in all eight themes."
   - "No card shows more than three lane rows without its summary row."
   - "Every module's finished trace uses the one 44 px receipt grammar."
@@ -39236,25 +39271,30 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Schedule Message and Build At are standard sheets of F3-566 and keep every field of section 13.
   Schedule Message: the hero is the message itself, shown as the future bubble it will become, with
-  its attachments; a plate of the next 48 hours shows existing schedules and presets that write the
-  real date and time inputs; one sentence states the resolved time in the schedule's own time zone,
+  its attachments; a plate of the next 48 hours shows existing schedules, presets that write the
+  real date and time inputs, and the send marker, which is also the send-time control (drag, press or
+  keys, never in the past; F3-592, DL-148); one sentence states the resolved time in the schedule's own time zone,
   and a second when a daylight-saving change falls before it; the route row names who will answer
   and says the model is never swapped silently; the missed-time behaviour; and a primary that names
   the time. The composer keeps its text until the schedule commits (section 13). A link opens the
-  Scheduled and Automations manager. Build At: a week plate of the build slots; one time or a
+  Scheduled and Automations manager. The Schedule Message sheet has no promise lines and no Technical
+  details (DL-148). Build At: a week plate of the build slots; one time or a
   nightly time slot; the days in words; whether to keep going next time; the wrap-up time; who
-  builds it; what happens if the slot is missed; and the exact Plan version in Technical details.
+  builds it; what happens if the slot is missed; and the exact Plan version it binds, named in the
+  sheet's lead, with the Plan's id, version and hash in the Plan's Details (PDET-001) and no Technical
+  details on the sheet (DL-148).
   The Plan card's Schedule needs update notice stays, and the Plan card's schedule line belongs to
   Assistant_Plan_Runtime APR-071. Scheduling_and_Quota_Resume SQR-012 owns the scheduled message's
   transcript card and its state words.
 gui_related: true
 gui_classification_reason: "Defines what the two scheduling sheets show."
 split_recommended: false
-depends_on: [F3-566]
+depends_on: [F3-566, DL-148]
 unblocks: []
 acceptance_criteria:
   - "The Schedule Message sheet states the resolved time in the schedule's own time zone before commit."
-  - "Build At keeps the exact Plan version reachable in Technical details."
+  - "Build At names the exact Plan version it binds, and the Plan's id, version and hash are reachable through the Plan's Details."
+  - "The Schedule Message sheet shows no promise lines and no Technical details."
   - "A Plan version change still shows Schedule needs update."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -39701,7 +39741,7 @@ canonical_text: >-
   APR-061 and assistant-chat-design v3 item 20), allowed on 2026-09-27 for five surfaces only
   (DL-122), because each run's full detail lives in its run view (ACD-480). For Crew, BrainStorm,
   Review and Chat Room, the Activity Detail body is a short team list: the run title, the run's one
-  true sentence, where the run is now, one 36 px row per helper (its cast mark, name and one state
+  true sentence, where the run is now, one 36 px row per helper (its puppet, F3-594, name and one state
   word, and no stand-in sentence, because no model stands in for a chosen helper, DL-121), then Open
   Panel and Message. It never repeats the run card or the kind's board. A click on
   one of these four domains' chip in the Activity bar reveals the newest card of that kind in the
@@ -39712,7 +39752,7 @@ canonical_text: >-
   Session, Usage), with evidence as sentences and raw data behind Show raw data, and no metric-card
   grid and no pills. Every other Activity Detail family (Goal, To-Dos, Subagents, Changes, Artifacts)
   and every other Context Details section keeps the restored native card, panel and grid
-  presentation.
+  presentation, apart from the To-Do rows, which are DL-147's second scoped exception (F3-593).
 gui_related: true
 gui_classification_reason: "Defines the compact Activity Detail and Back Seat Driver Context Details surfaces."
 split_recommended: false
@@ -39723,7 +39763,7 @@ acceptance_criteria:
   - "No helper row in the short team list carries a stand-in sentence (DL-121)."
   - "A collaboration domain chip click reveals the newest card; its hover rows still open Activity Detail."
   - "Back Seat Driver's Context Details section has no metric-card grid and no pills."
-  - "Goal, To-Dos, Subagents, Changes and Artifacts keep the native card and grid presentation."
+  - "Goal, To-Dos, Subagents, Changes and Artifacts keep the native card and grid presentation, apart from the To-Do rows of F3-593 (DL-147)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -39751,7 +39791,7 @@ preserved_exact_tokens:
   - "short team list"
   - "no metric-card grid"
 negative_constraints:
-  - "Do not extend the exception beyond the four collaboration kinds and Back Seat Driver's Context Details."
+  - "Do not extend the exception beyond the four collaboration kinds and Back Seat Driver's Context Details; the To-Do rows' exception is DL-147's, stated in F3-593, not this unit's."
   - "Do not remove the hover-row route into Activity Detail."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -40046,26 +40086,29 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Every icon in the assistant chat (transcript, composer, thread history, activity bar and Activity Detail, working
   activity, menus, wand sheets and module cards) is drawn from one icon registry with one drawing per concept, reused
-  everywhere; provider marks, avatars, charts and illustrations are not icons (DL-140). Anatomy: a lit tube with round
+  everywhere; provider marks, agent puppets (F3-594), charts and illustrations are not icons (DL-140, DL-149). Anatomy: a lit tube with round
   caps and joins over a core halo stroke of the same ink, plus a soft radial glow on the host element for the glow's
   tail; the icon glow is never an element blur or filter, so it draws the same on the Skia CPU raster (F3-582). Roles:
   controls draw unlit in the host ink and ignite on hover or keyboard focus (the glyph lights to the text colour, the
   halo comes up on dark themes, and the glyph's act plays once); status icons are always lit in their tone and move by
   status like the activity bar; concept icons (kind marks, mode glyphs) are lit steady; a pressed toggle sits on a
-  raised neutral tile with its glyph lit, never an accent tile. Acts: each glyph moves part by part in its own way,
+  raised neutral tile with its glyph lit, never an accent tile. One control is the exception (DL-146): the composer's
+  capabilities wand, and the wand in its menu head, wears its own fixed colours at rest and on hover (F3-588), never
+  unlit grey and never a status tone, and turns to ink under NieR Mode. Acts: each glyph moves part by part in its own way,
   the activity bar included (the goal arrow strikes the target, the To-Do ticks check in sequence, the artifact lines
-  write in); acts animate transform and opacity, a draw-on is a clip reveal with both endpoints stated, looping motion
+  write in, the wand's sparkles twinkle after its flick, Grill Me's kettle grill swings its lid open while smoke
+  rises); acts animate transform and opacity, a draw-on is a clip reveal with both endpoints stated, looping motion
   returns along its path, and below 12 px no part moves. Tones are the activity bar's status tones: blocked danger,
   attention warning, working accent, changed accent-2, done positive, idle subtle and paused muted. Colour is reserved
-  for status, so menu, event-card and card-head icons sit on neutral tiles. Module cards and sheets draw their marks
-  lit and still, with one-shot acts only, inside the live card's two-loop budget. Per-family motion voices change
+  for status, apart from the capabilities wand, so menu, event-card and card-head icons sit on neutral tiles. Module
+  cards and sheets draw their marks, agent puppets included (F3-594), lit and still, with one-shot acts only, inside the live card's two-loop budget. Per-family motion voices change
   easing only: Friendly overshoots, Glass glides, Retro steps, NieR steps. Reduced motion stops every act and loop
   while the lit ink, the halo and the silhouette still carry each state. On light themes the halo stays faint and
   never forms a smudge or a plate.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-140, F3-425, F3-426, F3-582, ACD-469]
+depends_on: [DL-140, DL-146, DL-149, F3-425, F3-426, F3-582, ACD-469]
 unblocks: []
 acceptance_criteria:
   - "An icon census of the chat finds every icon drawn from the registry, one drawing per concept."
@@ -40096,8 +40139,11 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not give a non-status glyph status colour outside a status host."
   - "Do not draw the icon glow with an element blur or filter."
+  - "Do not give any glyph other than the capabilities wand its own colours."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "DL-140's rule that colour is reserved for status admits one exception from DL-146: the capabilities wand."
+  - "Avatars are no longer named among the non-icons; agents are drawn as puppets (F3-594, DL-149)."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -40299,21 +40345,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Two glyphs carry required drawings (DL-140). The wand is a thin rod with a star tip and loose sparkles, reading as a
-  wand and never as a pencil beside the edit pen at 14 px. The Fast-mode bolt shows beside the model on the composer's
-  model chip and in a Fast reply's meta row while that row's chrome shows. It is amber, the attention tone, and
-  strikes like lightning: it cracks top-down segment by segment in under 200 ms, flashes, re-flashes and settles into
-  an afterglow, about every 5 s while Fast mode is on, and hovering it strikes it once more. The bolt never shakes or
-  moves as a whole; under reduced motion it is lit and still, and under NieR Mode it cracks in ink steps with no
-  flash.
+  Three glyphs carry required drawings (DL-140, DL-146). The wand is a thin rod with a star tip and loose sparkles,
+  reading as a wand and never as a pencil beside the edit pen at 14 px. On the composer's capabilities control and in
+  its menu head it is drawn in colour: a silver handle, a gold star and three sparkles in blue, pink and green, each
+  tube glowing in its own colour on dark themes and taking a deeper ink of at least 3:1 on light themes; hovering
+  never greys it. After its hover or focus flick the sparkles twinkle in turn, each flaring into a small eight-point
+  glint, all within about a second. The wand drawn as a working-activity step keeps its status ink. The Fast-mode bolt
+  shows beside the model on the composer's model chip and in a Fast reply's meta row while that row's chrome shows. It
+  is amber, the attention tone, and strikes like lightning, only ever brighter than at rest: it cracks top-down as a
+  bright leader, white-hot on dark themes and the bolt's amber on light ones, that runs down inside the bolt from its
+  top spike to its point in under 200 ms; then the whole bolt, its halo and its backlight flash, re-flash and settle
+  into an afterglow, about every 5 s while Fast mode is on, and hovering it strikes it once more. Its outline never
+  dims or goes dark, and the bolt never shakes or moves as a whole. Grill Me's glyph is a kettle grill (a domed lid
+  with a handle, the rim, a round bowl with grill marks, two legs), drawn wherever Grill Me appears as a control or a
+  label; its act swings the lid open while flames flicker and smoke rises, then drops it shut. Under reduced motion
+  all three are lit and still. Under NieR Mode they draw no glow and no colour: the wand stays ink, its handle a
+  lighter ink and its star filled, and its sparkles twinkle in held steps; the bolt's leader steps down band by band
+  in ink and the bolt then flashes solid ink; and the grill's act steps.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-140, F3-584]
+depends_on: [DL-140, DL-146, F3-584]
 unblocks: []
 acceptance_criteria:
   - "The wand reads as a wand, distinct from the edit pen, at 14 px."
   - "The Fast-mode bolt cracks top-down, flashes and settles, and never translates or shakes."
+  - "The capabilities wand shows its five colours at rest and on hover outside NieR Mode, and is ink under NieR Mode."
+  - "No frame of the bolt's strike is darker than the bolt at rest."
+  - "Grill Me's kettle grill plays its lid, flame and smoke act on hover or focus wherever it is drawn, and is still under reduced motion."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -40329,20 +40388,27 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-140"
+  - "Plans/Decision_Log.md#DL-146"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
 preserved_exact_tokens:
   - "star tip"
   - "cracks top-down"
+  - "silver handle"
+  - "kettle grill"
 negative_constraints:
   - "Do not animate the bolt by shaking or moving it as a whole."
+  - "Do not dim or darken the bolt during its strike."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "The 2026-10-07 NieR clause that the bolt cracks in ink steps with no flash is replaced by DL-146: the ink leader steps down and the bolt flashes solid ink."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-140, ContractName:Plans/FinalGUISpec.md#F3-584
+ContractRef: ContractName:Plans/Decision_Log.md#DL-140, ContractName:Plans/Decision_Log.md#DL-146, ContractName:Plans/FinalGUISpec.md#F3-584
 
 ### F3-589 — Assistant Chat Under NieR Mode And Scene Changes
 
@@ -40356,7 +40422,10 @@ canonical_text: >-
   under NieR's ink-and-parchment tables and fonts, and its icons draw no glow: ink tubes with square caps and stepped
   acts, the status marks still distinct (needs you an inverted ink block with a paper question mark and, under the
   Target brackets part, ink corner brackets; working the diamond loader under the Diamond loaders part; idle and
-  pending squares under the Square hairlines part). The installed parts land in the chat as follows: Menu cursor on
+  pending squares under the Square hairlines part). The capabilities wand stays ink, with a lighter handle and a filled
+  star, and its sparkles twinkle in held steps (F3-588, DL-146); agents are PMConcept7's ink NieR puppets with the
+  rigid visor band (F3-594); a setup sheet's step number is an inverted ink square (F3-592); and the Ask Card's chosen
+  answer is the menu cursor, with diamond spine marks (F3-596). The installed parts land in the chat as follows: Menu cursor on
   menus, pickers, thread rows and wand rows; Slice open on menus, dialogs and sheets; Text decode on the thread title
   at a thread switch and on the head of an arriving assistant turn; Page wipe on a thread switch; Alert glitch, Scan
   sweep and Drifting particles on alert toasts, refusals and failed steps; Pod companion above the composer, turning
@@ -40372,7 +40441,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-144, SSYS-042, F3-441, F3-584, F3-585, ACD-474]
+depends_on: [DL-144, DL-146, DL-149, SSYS-042, F3-441, F3-584, F3-585, ACD-474]
 unblocks: []
 acceptance_criteria:
   - "Every chat surface renders under NieR Mode with no glow and with its parts placed as listed."
@@ -40409,3 +40478,591 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-144, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/FinalGUISpec.md#F3-441
+
+## DL-145 to DL-151 — Assistant Chat Tweaks: Hover Labels, The Coloured Wand, Activity Detail, Setup Sheets, Puppet Agents, The Ask Card And Retro (2026-10-08)
+
+This addendum compiles the owner decisions DL-145 to DL-151: the sixteen tweaks Jared asked for on 2026-10-07 to the 5.6 Pro assistant chat concept, his answers on that day's eight decision cards, and the lead's rulings on the questions no card covered (recorded in each DL entry). The concept and these units land together (decision card 1). Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-473 (the working activity), ACD-480 (editor documents) and ACD-485 (the subagent live transcript), `Plans/Goal_Runtime_System.md` GRS-055, `Plans/ToDo_Runtime.md` TDR-007 and TDR-011, `Plans/Collaborative_Workflows.md` CWR-018 to CWR-020, `Plans/Scheduling_and_Quota_Resume.md` SQR-002, SQR-013 and SQR-015, the global hover tag of F3-523 and the theme token tables of F3-426. The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks, Demo Studio and every measured timing outside these units are not canon.
+
+### F3-590 — Chat Hover Labels Wait For Intent And Activity Previews Dwell
+
+```yaml
+plan_unit_id: F3-590
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Every icon control in the assistant chat names itself through the shared PMHoverTag of F3-523, never through a
+  native title (DL-145). This includes the controls the concept used to title natively: the editor's Return to chat
+  and its tabs, the model picker's provider rail and favourite stars, the history drawer's status marks and resize
+  handle, thread-search result actions, the thread-operation dialog's close, the Schedule Message send-time track, and
+  a To-Do row's full title, assignment and waiting or blocker reason. Every chat tag waits for F3-523's deliberate
+  intent, unchanged, with no faster hand-off from one tag to the next, and a press on an anchor closes its tag until
+  the pointer leaves that anchor (F3-523). The owner's request that the chat's hover labels wait longer is met by
+  F3-523's thresholds, which the concept now follows. Activity bar domain previews are interactive hover cards, not
+  tags: a pointer opens one only after a deliberate dwell, long enough that passing between the composer and the bar
+  opens none; keyboard focus on a domain opens its preview at once; moving to another domain while a preview is open
+  switches at once; and a preview closes after the same short departure grace as a tag. The preview dwell the concept
+  measures is a lab value (ACD-474).
+gui_related: true
+gui_classification_reason: Defines how the assistant chat's icon controls name themselves and when its activity previews open.
+split_recommended: false
+depends_on: [DL-145, F3-523, ACD-474]
+unblocks: []
+acceptance_criteria:
+  - "No icon control in the assistant chat exposes its name only through a native title, and no chat tag opens before F3-523's thresholds."
+  - "A pointer passing between the composer and the activity bar opens no preview; keyboard focus on a domain opens its preview at once."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_hover_and_chrome_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-145"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "PMHoverTag"
+  - "native title"
+  - "deliberate dwell"
+negative_constraints:
+  - "Do not restate or change F3-523's thresholds in this unit."
+  - "Do not add a hand-off that opens a second tag faster than F3-523 allows."
+  - "Do not open an activity preview for a pointer passing through."
+compatibility_only_notes: []
+stale_retired_dispositions:
+  - "The concept's earlier label timings (about 400 ms, then about 1 s with a 120 ms hand-off) and its 220 ms preview dwell are retired; none of them was canon (ACD-474)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474
+
+### F3-591 — Opening More Keeps The Message Chrome On Its Row
+
+```yaml
+plan_unit_id: F3-591
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A transcript message's chrome is one row: its meta chips and its Copy, Details and More actions, right-aligned on a
+  user turn. Opening More never moves them: the overflow panel is a sibling of that row and opens on its own line
+  below it, so the chips and actions keep their row and their places while it is open, and the message grows by the
+  panel's height only (DL-145). In Context More Details, each capability box under Capabilities in this thread draws
+  its whole outline, the left edge included, at every width, as section 20's uniform perimeter rule requires
+  (APR-034).
+gui_related: true
+gui_classification_reason: Defines the message chrome row and the Context capability boxes' outline.
+split_recommended: false
+depends_on: [DL-145, F3-534]
+unblocks: []
+acceptance_criteria:
+  - "With More open on any message, its meta chips and actions keep the row and positions they had with More closed."
+  - "Every capability box in Context More Details shows a closed outline at every chat width."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_hover_and_chrome_drift
+reasoning_tier: standard
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-145"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "its own line below it"
+  - "uniform perimeter"
+negative_constraints:
+  - "Do not wrap a message's meta chips or actions onto a new row when More opens."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-534
+
+### F3-592 — Setup Sheet Step Tiles, A Readable In Your Chat Preview, And The Send Time Track
+
+```yaml
+plan_unit_id: F3-592
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  In the setup sheets whose questions are numbered (the four collaboration kinds and Crew Auto, F3-566) each question
+  number is a step tile (DL-148): a small square tile in the theme's small corner, tinted with the accent and edged in
+  the focus colour, with its numeral in the accent, so the numbers read as steps. The step whose question holds focus
+  fills with the accent and its numeral turns to the theme's on-accent ink, at least 4.5:1 on the accent in every
+  theme, and a question in error turns its tile warm. Under NieR Mode the tile is an inverted ink square with no glow.
+  The In your chat preview of CWR-018 is drawn large enough to read: it fills the hero's side column, lays the card's
+  first frame out at the narrowest M-tier card width (F3-569) and scales it to fit the column, never above its real
+  size, without growing the sheet; in a short window its caption drops while the preview keeps its accessible name;
+  and the commit flight onto the new card lays its copy out at the real card's width. The Schedule Message sheet's
+  plate of the next 48 hours is also its send-time control: dragging the send marker, or pressing the track, moves the
+  send time in 15-minute steps (5 minutes with Shift); with the track focused, the arrow keys move it 5 minutes (an
+  hour with Shift), Page Up a day later and Page Down a day earlier, Home to the earliest allowed time and End to the
+  end of the track. It never sets a time in the past. Every move writes the same Date and Time inputs as the presets,
+  so the resolved time, the read-back and the primary's label follow it, and the track explains itself through the
+  hover tag, never a native title (F3-590). The Schedule Message sheet has no promise lines and no Technical details
+  (F3-573).
+gui_related: true
+gui_classification_reason: Defines the setup sheets' step tiles, the In your chat preview's legibility and the Schedule Message send-time track.
+split_recommended: false
+depends_on: [DL-148, F3-566, F3-569, F3-573, CWR-018]
+unblocks: []
+acceptance_criteria:
+  - "Each numbered sheet question renders its number as a step tile in every theme, and the focused step's tile is filled with its numeral at 4.5:1 or more."
+  - "At 1440 x 900 the In your chat preview's card title is readable without zoom, and the preview is never drawn above its real size."
+  - "No drag, press or key on the send-time track yields a time earlier than now, and every move updates the Date and Time inputs."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_sheet_presentation_drift
+reasoning_tier: high
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-148"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "step tile"
+  - "In your chat"
+  - "send-time control"
+negative_constraints:
+  - "Do not scale the In your chat preview above its real size or grow the sheet to enlarge it."
+  - "Do not let the send-time track write a time in the past."
+compatibility_only_notes: []
+stale_retired_dispositions:
+  - "The Schedule Message sheet's promise lines and its Technical details are removed (DL-148)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-148, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-573, ContractName:Plans/Collaborative_Workflows.md#CWR-018
+
+### F3-593 — Goal, To-Dos And Subagents In Activity Detail
+
+```yaml
+plan_unit_id: F3-593
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Goal (DL-147; behaviour GRS-055): Goal Activity Detail shows the objective, then one control row, Pause or Resume
+  and Edit objective together at its start and Cancel Goal alone at the far edge in the danger tone, so the
+  destructive action never sits in the safe group; a narrow panel may shorten Edit objective's visible label, never
+  its accessible name. A bound Goal adds the Plan row (Open exact Plan · Vn, and Revise Plan when blocked), and the
+  footer is an Objective history disclosure with the revision count, which opens the revision list in place. Editing
+  shows the text-only objective editor with Save and Cancel edit. There is no View Goal route to a separate Goal
+  document and no Ask for a replacement control; a replacement the agent proposes after the user asks for one in the
+  chat still follows Goal_Runtime_System's approval path. The activity bar's Goal preview stays the short card, and
+  its Details opens this section with Objective history expanded. To-Dos (DL-147; behaviour TDR-007, TDR-011): as a
+  second scoped exception to the 2026-09-08 rollback, after F3-580's, each row is one line in the To-Do hover
+  preview's checklist form inside the panel's native frame: the expand caret on a parent, the status mark (F3-585),
+  the title (full contrast while in progress, struck through when completed), the explicit assignment, shown only when
+  an agent or Persona is explicitly assigned, as the owner's mark or name, and a right-aligned status word in its tone
+  (Pending, Working, Done, Blocked, Skipped; Waiting for a pending item held by a dependency or an owner wait; done
+  over total on a parent), which a completed leaf may leave out because its check and strike already say it. No theme
+  boxes the rows one by one. Rows carry no buttons, so there is no Start work or Run work; TDR-011's next action reads
+  as the row's status word and the selected item's Open work. A row's full title, full assignment and waiting or
+  blocker reason show in its hover tag (F3-523) and in the selected detail. The selected detail keeps its header with
+  Close details, the Expected well, the dependency or waiting line, Open work when the item has a work binding
+  (cmd.chat.todos.open_work) and its source links. The list fills the panel's height below its search and navigation
+  line and puts its scrollbar at the panel's edge with no dead gutter. Subagents (DL-147; behaviour ACD-485): rows,
+  the Subagents preview and the detail card underline the agent's model. Clicking a row selects it and opens the
+  agent's read-only live transcript, and the detail card's button reads Open live transcript. That transcript is drawn
+  in the chat's Turn Stage presentation (ACD-469, F3-562), set close like a live feed: the turn mark, the spine
+  through every item, the families and the theme's motion voice. Its head is one row naming the agent, its status mark
+  and word with the elapsed time, its model (underlined) and its parent, with a Read-only marker (Read-only · live
+  while it works) whose hover tag reads Read-only child thread. It has no composer. Messages keep only Copy, More
+  details and Expand or Collapse with their meta row, shown on hover or focus; event and needs-you items keep their
+  cards without actions. Between messages, each stretch of the agent's work is one collapsed row stating a plain count
+  of what it did (for example, ran 3 tools and edited 1 file); a click, Enter or Space opens it in place to list that
+  stretch's records, each with its detail in its hover tag. The row carries a small Step Rail motif (ACD-473): the
+  stretch the agent is working in plays a variation of the Step Rail working animation, and a finished stretch shows a
+  still, completed rail. While the agent works its mark is lit and the spine's light runs to its latest item. Reduced
+  motion lands every motion here at its end state.
+gui_related: true
+gui_classification_reason: Defines the Goal, To-Dos and Subagents Activity Detail presentation and the subagent live transcript's look.
+split_recommended: false
+depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585]
+unblocks: []
+acceptance_criteria:
+  - "Goal Activity Detail renders one control row with Cancel Goal alone at the far edge and an Objective history footer; no View Goal route or Ask for a replacement control exists."
+  - "Every To-Do row is one line with no button, shows an explicit assignment only when one exists, and Open work appears only in the selected detail."
+  - "A subagent's live transcript renders in the Turn Stage presentation with no composer, only Copy, More details and Expand or Collapse on messages, and each stretch of work as one collapsed row with a count."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_activity_detail_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/ToDo_Runtime.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-147"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "Objective history"
+  - "Open live transcript"
+  - "Read-only child thread"
+  - "Step Rail"
+negative_constraints:
+  - "Do not give a To-Do row a Start work, Run work or other mutation button."
+  - "Do not drop a To-Do's explicit assignment from Activity Detail."
+  - "Do not give the subagent live transcript a composer or a control that acts on the child or the parent thread."
+  - "Do not lay a subagent's work records out one line each between messages; each stretch is one collapsed row until opened."
+compatibility_only_notes: []
+stale_retired_dispositions:
+  - "For the To-Do rows only, the native card presentation of F3-542 and F3-580 is replaced by one-line checklist rows (DL-147); the panel keeps its native frame."
+  - "The Goal panel's View Goal route and its Ask for a replacement control are retired (DL-147); the agent-proposed replacement path is not."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580
+
+### F3-594 — Agents Are Puppets
+
+```yaml
+plan_unit_id: F3-594
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Every agent is drawn as a small marionette puppet (DL-149), after PMConcept7's onboarding helpers: a control bar
+  with strings to the head and both hands, a chibi figure (a large round head, a small tunic, thin limbs) and one prop
+  or piece of headwear that names its role, so roles read in grayscale; the seat hue is the second cue and paints the
+  figure. One puppet primitive draws every agent, so a sheet's roster, specialists and cast plate (F3-595), a run
+  card's cluster and lanes, a run view's plate, roster and conversation, Activity's team and subagent rows and the
+  chat's live agents card show the same puppet; no agent is drawn as initials, letters or an avatar, and the puppet
+  replaces F3-566's cast mark and ACD-469's avatar stack. Props by role: the Coordinator, and the chat's own
+  assistant, wears a crown and keeps the text colour or its seat colour, never the accent (DL-111); the Chat Room
+  Moderator holds a gavel wherever it is drawn; builders, implementers and helpers wear a hard hat; reviewers,
+  checkers and testers hold a magnifier; critics and adversarial reviewers wear a jester's cap; Wonderer has an orbit
+  ring and moon; Grill Me stands behind a little kettle grill, the same kettle as its glyph (F3-588); scribes,
+  teachers and writers hold a page; architects and designers a set square; product roles a pennant; and You hold the
+  control bar up yourself, with no strings. A Persona matches on its full name, then on its last word, and an unknown
+  role wears the hard hat. Material by theme family: Basic is a blueprint line puppet, with the neon halo only on dark
+  themes; Friendly is felt (a skin head with hair, a solid tunic in the seat hue, a wooden bar); Glass is crystal (a
+  clear body with a lit edge and a light core); Retro is a pixel sprite. Under NieR Mode every agent is PMConcept7's
+  NieR puppet unit: ink on parchment with no hue and no halo, a rigid ink visor band that overhangs the head, an ink
+  coat, square joints and the role prop in ink. Its geometry and ink tokens belong to PMConcept7's onboarding owner of
+  that unit (the handoff in this unit's lineage until that owner lands); the chat adds only Grill Me's kettle grill
+  and the Moderator's gavel, drawn in ink, and the working state's static ink stage-floor line. No NieR part gates the
+  puppet's look or its visor. Detail by size: the smallest sizes draw a bust, or under NieR Mode a pixel figure;
+  larger sizes add the whole figure and its strings, then the face, then the joints, feet and family detail. States
+  keep the mark grammar, drawn puppet-native: working is taut strings over a lit stage floor, queued slack strings and
+  dimmed, needs you a raised hand with the warning notch, done the check notch, failed a cut hand string with a
+  slumped head and the failed notch, abstained dimmed, optional a dashed figure, and a stand-in shows the swap notch.
+  Motion: inside setup sheets puppets hold still; in run cards and run views a puppet acts once, swung on its strings
+  as it starts working and hopping once when it is done or needs you, within the module cards' one-shot rule (F3-584);
+  only on the chat's live agents card, which is not a module surface, does a working puppet keep swaying from its bar.
+  Nothing moves at the smallest size, the motion voice is the family's (Retro and NieR step), and reduced motion and
+  NieR Mode's Still preset leave the rest pose, with the NieR visor in its static state.
+gui_related: true
+gui_classification_reason: Defines how every agent is drawn in the assistant chat and the wand module sheets.
+split_recommended: false
+depends_on: [DL-149, F3-566, F3-584, F3-585, F3-588, F3-589, DL-111]
+unblocks: [F3-595]
+acceptance_criteria:
+  - "One puppet primitive renders every agent in sheets, run cards, run views, Activity and the live agents card in every theme, NieR Mode included, and no agent is drawn as initials."
+  - "Every role prop is distinguishable in grayscale at the sizes the surfaces use."
+  - "No setup sheet runs a puppet motion, no run card or run view runs a looping one, and reduced motion shows the rest pose."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: agent_mark_presentation_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-149"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/nier-puppets-final-handoff.md, SHA-256 492a3bbeae1285f1dd1d55dfbdc87da3bfa9fce207c9ef01a9f2005abb0ddfa0"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md, SHA-256 c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "marionette puppet"
+  - "puppet primitive"
+  - "visor band"
+  - "kettle grill"
+negative_constraints:
+  - "Do not draw an agent with initials, letters or an avatar."
+  - "Do not draw a second puppet primitive for any surface."
+  - "Do not give the puppet a hue or a glow under NieR Mode."
+  - "Do not run a looping puppet motion in a setup sheet, run card or run view."
+compatibility_only_notes: []
+stale_retired_dispositions:
+  - "F3-566's cast mark drawn from silhouette, spike and hue with its state as a ring, and ACD-469's avatar stack, are replaced by the puppet (DL-149)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-149, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-584, ContractName:Plans/FinalGUISpec.md#F3-589, ContractName:Plans/DRY_Rules.md#DR-044
+
+### F3-595 — Cast Plates In Sheets And Run Views
+
+```yaml
+plan_unit_id: F3-595
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  One cast plate grammar draws every collaboration graph, in the four kinds' setup sheets and at the head of each run
+  view (DL-149); each kind only describes its cast. A bar across the top reads from what goes in (the job, the topic,
+  or Review's snapshot locked at Start) to who runs it: the Coordinator's or the Moderator's puppet on the bar, or
+  Review's junction, where the snapshot goes down to the reviewers and their notes come back up to be compared. It
+  ends in one accent edge to You (one checked result, one report, one plan, or pick what to keep). BrainStorm's bar is
+  its seven chapters ending at You, and its team hangs from a bar of its own under the chapter names. The cast hangs
+  under the bar on straight vertical and horizontal strings only, never diagonals or curves; every seat stands on one
+  baseline at one pitch and is always named, and the full mode adds the model on a second line. A queued helper hangs
+  on a slack string, and "waits its turn" is written once under the group. Review and BrainStorm stand a short screen
+  between seats, because the helpers cannot see each other, said once in a note line. The specialists (Wonderer, Grill
+  Me) stand in a wing on the right after a dotted rule in every kind that has them, and nothing routes under or
+  through the wing. Chat Room's turn policy and rounds are one note line built from its settings, never arcs or a
+  table. State shows on the seats only. The plate shows its richest mode that fits: full, then compact (names only),
+  then a one-row strip, then one caption sentence, with BrainStorm adding a lean mode between compact and strip that
+  keeps its chapters and Chat Room, whose slot is the shortest, adding a lean line between its strip and the caption
+  that keeps every name whole. It skips any mode whose seats would sit closer than its minimum pitch, is never scaled
+  to fit a sheet, and grows into spare height. Hovering or focusing a sheet control lights the plate parts it affects
+  (F3-566). Every run view heads with the run's plate, its seats in their live states (working, waits, needs you, done
+  or failed); a run that has not started shows everyone idle, never "waits its turn", and the Coordinator is done when
+  the run is. The Crew view hangs a short after arrow from the helper a seat waits for, the BrainStorm view lights the
+  chapter it is on, and the Chat Room's room document and a recorded Review report have a plate too. Run cards and run
+  views show no Technical details, neither as a control nor as fine print; a collaboration setup sheet keeps its
+  Technical details as the last row of its Advanced page (DL-149, decision card 8).
+gui_related: true
+gui_classification_reason: Defines the collaboration graphs in sheets and run views and the removal of Technical details from run surfaces.
+split_recommended: false
+depends_on: [DL-149, F3-594, F3-566, F3-569, CWR-020]
+unblocks: []
+acceptance_criteria:
+  - "Every collaboration sheet and run view draws its graph in the cast plate grammar with straight strings only and every seat named in every mode."
+  - "In a sheet the plate is never scaled to fit; it changes mode instead."
+  - "No run card or run view renders Technical details as a control or as fine print."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_sheet_presentation_drift
+reasoning_tier: high
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-149"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "cast plate"
+  - "waits its turn"
+negative_constraints:
+  - "Do not draw diagonal or curved strings in a cast plate."
+  - "Do not route anything under or through the specialists' wing."
+  - "Do not show Technical details on a run card or in a run view."
+compatibility_only_notes: []
+stale_retired_dispositions:
+  - "F3-566's plate thresholds (full at 1 to 3 rows, compact at 4, a strip at 5 or 6, one sentence at 7 or 8) are replaced by this unit's fit rule, and the run card's and run view's Technical details are retired (DL-149)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-149, ContractName:Plans/FinalGUISpec.md#F3-594, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/Collaborative_Workflows.md#CWR-020
+
+### F3-596 — The Ask Card's Look
+
+```yaml
+plan_unit_id: F3-596
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The questions card (the Ask Card, the shared question card of assistant-chat-design section 7.4) keeps its
+  behaviour, features, layout and choreography timings and takes this look (DL-150). Its quiet shell carries a faint
+  accent light in its top-left corner, and the prompt, as the title, has the needs-you mark of F3-585 beside it, lit
+  and still apart from one hop as each question arrives. The spine to the right of the options is a progress wire: an
+  accent fill runs from the first mark to the current one and rides the thumb's spring; answered marks are accent
+  beads, skipped ones hollow and the rest solid discs, and the current mark is a numbered accent circle. Next, or
+  Submit on review, is the card's one filled control, in the accent. Resting option rows sit on a faint ink tint; the
+  chosen row takes an accent tint with an accent hairline, an accent number and a semibold label. Pressing a row
+  springs that row only, and the selection lands: the radio's dot pops in, or the check draws itself once. Review rows
+  lead with a numbered disc, accent when answered and dashed for Not answered. The optional note's label is in
+  sentence case and its well takes an accent focus ring. The footer rises in as the rows land, never scaling past the
+  card's edges, and the spine's wire draws down from the first mark; rows leaving on a question change settle within a
+  few pixels. Under NieR Mode the chosen answer is the menu cursor (an ink bar with paper text), the spine's marks are
+  diamonds, the selection lands in steps and nothing glows. Reduced motion lands every Ask Card motion at its end
+  state. Its accent stays within ACD-469's budget for needs-you items.
+gui_related: true
+gui_classification_reason: Defines the questions card's visual presentation.
+split_recommended: false
+depends_on: [DL-150, ACD-469, F3-585, F3-589]
+unblocks: []
+acceptance_criteria:
+  - "The Ask Card's behaviour, draft lifecycle and choreography timings are unchanged."
+  - "The chosen option, the progress wire and the one filled primary render in every theme; under NieR Mode the chosen answer is the menu cursor and nothing glows."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_card_presentation_drift
+reasoning_tier: standard
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-150"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "Ask Card"
+  - "progress wire"
+  - "menu cursor"
+negative_constraints:
+  - "Do not change the questionnaire's behaviour or draft lifecycle through its look."
+  - "Do not give the Ask Card a second filled control."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-150, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/FinalGUISpec.md#F3-585
+
+### F3-597 — The Assistant Chat Under The Retro Themes
+
+```yaml
+plan_unit_id: F3-597
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Under Retro Dark and Retro Light the assistant chat paints the app's Retro token tables (F3-426), which now carry
+  PMConcept7's retro themes (DL-151): Retro Dark is PMConcept7's olive Atlas palette with a lime-yellow primary, and
+  Retro Light is ink on warm paper with a blue primary. On Retro Light the warning ink is the darker orange of
+  F3-426's table, which reads at about 4.6:1 on the paper, and the user turn's text is paper-coloured on its green
+  (decision card 3). The chat uses PMConcept7's retro box grammar. Every corner is square, except 2 px on inputs,
+  chips and pills, and except the round dials, rings, status dots and the discs a motion draws. Structural boxes carry
+  a 2 px dark structural line (--border) and inner boxes a hairline (--border-light); where a box had a 1 px border
+  its second pixel is an outer ring, so no box changes size. Shadows are hard offsets with no blur, from F3-426's
+  elevation tokens: 5 px (--elev-3) on menus, hover cards, drawers, dialogs and sheets, 3 px (--shadow) on thread
+  rows, deliverables and the assistant turn, and 2 px (--elev-1) on the primary button and the activity bar; menus,
+  hover cards, drawers and dialogs are opaque. Thread rows are boxed on a darker rail, and the selected row is a lime
+  box with a lime line and a lime hard shadow. The user turn is a solid block in the theme's lime (--accent-lime, a
+  theme-token role under DR-043, not the accent) inside the structural line, with PMConcept7's soft directional lime
+  glow beside it, the one blurred shadow under Retro; it is a Retro-only exception to ACD-469's neutral user bubble.
+  The assistant turn sits in a square box on the raised surface with one plain structural line all round and the hard
+  retro shadow, never a coloured edge or side strip on any side, with its turn mark and spine still in the gutter
+  outside the box (decision card 4). Live work is PMConcept7's operation card (a lime wash and an olive edge) instead
+  of the accent ring and glow; deliverables are cards with a hard shadow, and system, event and plan cards are cards
+  with no shadow; no surface carries a decorative gradient. The composer is a square box in the structural line that
+  keeps its resting look on focus, with square selectors and a square Send, and a queued follow-up is a square chip
+  with an orange line. Module sheets take the structural line and the 5 px hard shadow. Focus is a 2 px outline, lime
+  on Retro Dark and blue on Retro Light (F3-201); scrollbar thumbs are square, in the primary at half strength; the
+  Retro pixel grid lies over the whole app under the Retro texture settings (Settings_System section 4.4) and never
+  takes a pointer. Kept unchanged: IBM Plex Mono and every retro font size, every retro motion (ACD-475's Retro voice,
+  the print-in, the phosphor bloom and the block caret) and the retro sound kit. NieR Mode paints over Basic, so none
+  of this applies under NieR Mode.
+gui_related: true
+gui_classification_reason: Defines the assistant chat's presentation under the Retro theme family.
+split_recommended: false
+depends_on: [DL-151, F3-426, F3-201, ACD-469, ACD-475, F3-562, F3-589, DR-043]
+unblocks: []
+acceptance_criteria:
+  - "Under Retro the chat paints only F3-426's Retro token values, with square corners, the structural line and blur-free hard shadows as stated."
+  - "Retro fonts, motion and sounds are unchanged, and under NieR Mode none of this applies."
+  - "No Retro transcript item draws a coloured side strip, and the assistant turn's box has one even line all round."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: theme_token_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-151"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PMCONCEPT7-RETRO-VALUES.md, SHA-256 4268674a786a33f938d43a5c91c32ba8324c78d883070e13e5aaab7b030ebdec"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "box grammar"
+  - "hard offsets with no blur"
+  - "operation card"
+negative_constraints:
+  - "Do not give the chat a Retro palette outside F3-426."
+  - "Do not change Retro motion or sounds through this unit."
+  - "Do not draw a coloured left edge or side strip on a Retro assistant turn."
+compatibility_only_notes: []
+stale_retired_dispositions:
+  - "Under Retro, ACD-469's neutral user bubble and uncontained assistant prose are replaced by the lime user block and the boxed assistant turn (DL-151)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-151, ContractName:Plans/FinalGUISpec.md#F3-426, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/DRY_Rules.md#DR-043

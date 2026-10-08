@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25835-L26341
+Source lines: L25835-L26349
 
-Source SHA256: `b38665e5d3190ade988857f21bfa0bc3b98cb9bbb5c33de6ef6d147506aad9c6`
+Source SHA256: `284326628056f4106d8107cd25d46608b0264d0d974da3feefaddb8ef84f1728`
 
 ---
 
@@ -32,10 +32,15 @@ canonical_text: >-
   (the working activity card) is a sunken instrument surface. Deliverable (plans, artifacts, change
   records) is a raised sheet with an icon eyebrow and a title. Needs you (approvals, questions,
   advice that waits on the user, blocking errors, waits) is an accent-tinted item with one primary
-  action. People (collaboration runs, live agents, delegation) is a roster led by an avatar stack.
+  action. People (collaboration runs, live agents, delegation) is a roster led by the agents' puppets
+  (FinalGUISpec F3-594, DL-149), never initials or avatars.
   Time (scheduled messages) is a ticket with a time block. Ledger (receipts, context and thread
   operations, route changes, attachment events, informational notices) is one muted line on the
-  spine. A user turn is a right-aligned bubble on a raised neutral surface with no accent. The
+  spine. A user turn is a right-aligned bubble on a raised neutral surface with no accent. Under
+  Retro (DL-151, FinalGUISpec F3-597) the user turn is a solid block in the theme's lime, a theme-token
+  role under DR-043 and not the accent, and the assistant turn sits in a square box with one plain
+  line all round and no coloured edge, its turn mark and spine still in the gutter; the families, the
+  spine and the accent budget are otherwise unchanged. The
   accent budget: the accent colours only live work, needs-you items, the one primary action of a
   card, and Send and Stop; family hues are quiet and appear only on eyebrow tiles and spine ticks.
   Message types, their persistence and the ACD-073 boundary are unchanged.
@@ -45,14 +50,14 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines how every transcript item renders in the default chat presentation."
 split_recommended: false
-depends_on: [DL-104, ACD-072, ACD-073]
+depends_on: [DL-104, DL-149, DL-151, ACD-072, ACD-073]
 unblocks: [F3-562, DR-043]
 acceptance_criteria:
   - "A scheduled-message card retains its SQR-012 layout and schedule time zone within the Time family."
   - "Every persisted message type and runtime card kind maps to exactly one of the seven families through one owner map."
   - "The spine, ticks and live light add no scroll width or height at any chat pane width."
   - "In Basic Dark no transcript element uses the accent outside live work, needs-you items, a card's one primary action, and Send and Stop."
-  - "Assistant prose renders without a container; user turns render as right-aligned neutral bubbles."
+  - "Assistant prose renders without a container and user turns render as right-aligned neutral bubbles, except under Retro as FinalGUISpec F3-597 states (DL-151)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -87,11 +92,14 @@ preserved_exact_tokens:
   - "accent budget"
 negative_constraints:
   - "Do not render every item kind in one shared card shell."
-  - "Do not spend the accent on decoration, event icons, the user bubble, model chips or chart bars."
+  - "Do not spend the accent on decoration, event icons, the user bubble, model chips or chart bars; the Retro user block is the theme's lime, a theme-token role, not the accent."
+  - "Do not draw a coloured edge or side strip on a boxed Retro assistant turn."
   - "Do not let the spine, ticks or live light extend scrollable area."
   - "Do not infer a record's message_type from its family."
 stale_retired_dispositions:
   - "ACD-072 rendering column values left-aligned bubble for user and right-aligned bubble for assistant are superseded for the default presentation by DL-104: user turns are right-aligned neutral bubbles and assistant prose has no container."
+  - "The People roster's avatar stack is replaced by the agents' puppets (DL-149, FinalGUISpec F3-594)."
+  - "Under Retro only, the neutral user bubble and the uncontained assistant prose are replaced by the lime user block and the boxed assistant turn (DL-151)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

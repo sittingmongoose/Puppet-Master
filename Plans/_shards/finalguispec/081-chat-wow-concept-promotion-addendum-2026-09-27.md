@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38446-L38667
+Source lines: L38473-L38694
 
-Source SHA256: `b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67`
+Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
 
 ---
 
@@ -22,8 +22,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a
   turn mark and a paint-only spine per assistant turn, seven item families by message type with
-  distinct silhouettes, prose without a container, a neutral right-aligned user bubble, and the
-  accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style,
+  distinct silhouettes, prose without a container, a neutral right-aligned user bubble (under Retro
+  both drawn as F3-597 states, DL-151), and the accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style,
   with the behaviour owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering
   to at most 30 nodes, narration that tucks into the card's caption, and the fold into the strip
   when the final answer starts. For the transcript and the working activity this supersedes the

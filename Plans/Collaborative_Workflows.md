@@ -1547,7 +1547,8 @@ canonical_text: >-
   The configuration modal of Crew, Crew Auto, Chat Room, BrainStorm and Review is presented as a
   configuration sheet over its own scrim. Scrim click, the close control, Cancel and Escape run one
   close path, which discards the local draft and emits no domain event (MODAL-003..005); a click
-  outside an open dropdown closes only that dropdown. The sheet shows an In your chat preview of the
+  outside an open dropdown closes only that dropdown, and a click on the dropdown's own trigger closes
+  it (FinalGUISpec F3-568, DL-145). The sheet shows an In your chat preview of the
   card's first frame. The preview is local view state and becomes a transcript card only after a
   committed Start is admitted, never on open, configure or cancel. A read-back sentence restates the
   draft and is always true for the values on screen. An estimate line states likely time and cost;
@@ -1644,8 +1645,9 @@ canonical_text: >-
   participants exist; the full transcript belongs to the run view. The expanded card's Usage summary
   is its meta line: cost so far against the limit, effective concurrency and any
   requested-versus-effective disclosure, exactly as the Usage and model owners report them. The card
-  head shows the roster as participant marks ringed by their live state, never as initials; this is
-  the People-family roster whose internals ACD-469 leaves to this owner.
+  head shows the roster as a cluster of the participants' puppets, each drawing its live state
+  (FinalGUISpec F3-594, DL-149), never as initials; this is the People-family roster whose internals
+  ACD-469 leaves to this owner.
 gui_related: true
 gui_classification_reason: This unit maps run state to the card's density and bounds the card's transcript slice and meta line.
 depends_on: [CWR-003, CWR-029, CWR-030]

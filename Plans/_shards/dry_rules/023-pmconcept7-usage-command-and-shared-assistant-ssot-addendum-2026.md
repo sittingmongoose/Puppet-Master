@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L2317-L2404
 
-Source SHA256: `7950bdd9cd213a5f7d105ca91e9dd905c13615e70db3f0b5c2eff7c88440641b`
+Source SHA256: `56d7b1e7636f4be37971dc1ce56e312a61d2fc725007ff92091b54cc10521730`
 
 ---
 

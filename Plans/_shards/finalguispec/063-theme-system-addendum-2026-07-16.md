@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29642-L30678
+Source lines: L29644-L30700
 
-Source SHA256: `b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67`
+Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
 
 ---
 
@@ -154,6 +154,18 @@ Amended 2026-09-28 (user-approved inventory wave, see F3-441): NieR Mode adds no
 tables are literal precomputed constants, transcribed from the NieR: Automata theme file named in
 `Plans/Settings_System.md` section 4.4, and are painted over the Basic variant while the switch is on; the eight
 built-in variants of F3-425 and their tables are unchanged, and no NieR value is derived at runtime.
+
+Amended 2026-10-08 (DL-151, the 5.6 Pro chat tweaks): the retro-dark and retro-light tables take PMConcept7's final
+retro values from `Concepts/PMConcept7.html`, as measured in
+`/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PMCONCEPT7-RETRO-VALUES.md` (SHA-256 `4268674a786a33f938d43a5c91c32ba8324c78d883070e13e5aaab7b030ebdec`).
+Retro Dark becomes PMConcept7's olive "Atlas" palette, whose primary is its own lime-yellow `#b8d066`, replacing
+PMConcept6's acid-lime values; Retro Light keeps its paper palette and takes PMConcept7's green `#2F7A3D` for
+`--accent-lime` and `--graph-passed`. One Retro Light value deliberately differs from PMConcept7 (decision card 3):
+`--accent-warning` is `#A65800`, PMConcept7's `#F57C00` darkened to read at about 4.6:1 on the paper, and the chat's
+user turn, a block in `--accent-lime`, takes the paper `--surface` (`#F5F0E8`) as its text (F3-597); the PMConcept7
+thread is told so PMConcept7 can match. Retro focus follows F3-201: lime on Retro Dark, accent-blue on Retro Light.
+These remain the app's only Retro tables (DR-043); the chat paints them through F3-597. Geometry, motion and type
+size rows already matched PMConcept7 and are unchanged.
 
 ### F3-427 - Glass Composition Single-Blur Contract
 
@@ -492,7 +504,7 @@ Settings appearance overrides (2026-09-27): the per-variant tables below are wha
 
 ### Theme Token Tables (F3-426 spec data)
 
-Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431.
+Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431. Since 2026-10-08 the retro-dark and retro-light tables carry PMConcept7's retro values instead (DL-151; see the dated note after F3-426).
 
 #### Root fallback contract (`:root`, 02-css-tokens.part.html:28-66)
 
@@ -535,36 +547,40 @@ Variants inherit these values wherever a per-variant table row says "not defined
 
 #### retro-dark (02-css-tokens.part.html:140-187)
 
+Source since 2026-10-08 (DL-151): PMConcept7's retro-dark, `Concepts/PMConcept7.html`, its "PM7 T22 Atlas" block over its earlier retro-dark block; the line range in the heading is the former PMConcept6 source.
+
 | Group | Token | Value |
 |---|---|---|
-| Surfaces | `--background` | `#1A1A1A` |
-| Surfaces | `--surface` | `#1A1A1A` |
-| Surfaces | `--surface-elevated` | `#252525` |
+| Surfaces | `--background` | `#10120e` |
+| Surfaces | `--surface` | `#171a14` |
+| Surfaces | `--surface-elevated` | `#1e2219` |
 | Surfaces | `--surface-alt` | not defined (friendly-only token; no root definition) |
-| Text | `--text-primary` | `#E0E0E0` |
-| Text | `--text-secondary` | `#A6A6A6` |
-| Text | `--text-muted` | `#909090` |
-| Borders | `--border` | `#A8ACB3` |
-| Borders | `--border-light` | `#3A3D42` |
-| Accents | `--accent-blue` | `#0047AB` |
-| Accents | `--accent-magenta` | `#FF1493` |
-| Accents | `--accent-lime` | `#00FF41` |
-| Accents | `--accent-orange` | `#FF7F27` |
-| Accents | `--accent-warning` | `#FFB300` |
-| Accents | `--accent-error` | `#FF5252` |
-| Accents | `--accent-primary` | `var(--accent-lime)` (resolves to `#00FF41`) |
-| Accents | `--accent-primary-rgb` | `0,255,65` |
-| Graph | `--graph-pending` | `#6C757D` |
-| Graph | `--graph-running` | `#FF9800` |
-| Graph | `--graph-passed` | `#4CAF50` |
-| Graph | `--graph-failed` | `#F44336` |
-| Graph | `--graph-planning` | `#2196F3` |
-| Graph | `--graph-gating` | `#9C27B0` |
-| Elevation | `--shadow` | `3px 3px 0 rgba(224,224,224,.55)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(224,224,224,.55)` |
-| Elevation | `--elev-1` | `2px 2px 0 rgba(224,224,224,.40)` |
-| Elevation | `--elev-2` | `3px 3px 0 rgba(224,224,224,.55)` |
-| Elevation | `--elev-3` | `5px 5px 0 rgba(224,224,224,.55)` |
+| Text | `--text-primary` | `#dfe6cf` |
+| Text | `--text-secondary` | `#a8b394` |
+| Text | `--text-muted` | `#7c866b` |
+| Borders | `--border` | `#4a533a` |
+| Borders | `--border-light` | `#333a28` |
+| Accents | `--accent-blue` | `#9db4d0` |
+| Accents | `--accent-magenta` | `#d8b93c` |
+| Accents | `--accent-lime` | `#86c46a` |
+| Accents | `--accent-orange` | `#e9853f` |
+| Accents | `--accent-warning` | `#d8b93c` |
+| Accents | `--accent-error` | `#e2694f` |
+| Accents | `--accent-primary` | `#b8d066` (its own lime-yellow; not `--accent-lime`) |
+| Accents | `--accent-primary-rgb` | `184,208,102` |
+| Accents | `--accent-soft` | `rgba(184,208,102,.13)` (PMConcept7 writes `color-mix(in srgb,#b8d066 13%,transparent)`; precomputed) |
+| Accents | `--accent-glow` | `rgba(184,208,102,.24)` (PMConcept7 writes `color-mix(in srgb,#b8d066 24%,transparent)`; precomputed) |
+| Graph | `--graph-pending` | `#78806a` |
+| Graph | `--graph-running` | `#e9853f` |
+| Graph | `--graph-passed` | `#86c46a` |
+| Graph | `--graph-failed` | `#e2694f` |
+| Graph | `--graph-planning` | `#9db4d0` |
+| Graph | `--graph-gating` | `#d8b93c` |
+| Elevation | `--shadow` | `3px 3px 0 rgba(107,118,84,.55)` |
+| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(107,118,84,.55)` |
+| Elevation | `--elev-1` | `2px 2px 0 rgba(74,83,58,.68)` |
+| Elevation | `--elev-2` | `3px 3px 0 rgba(107,118,84,.56)` |
+| Elevation | `--elev-3` | `5px 5px 0 rgba(107,118,84,.5)` |
 | Elevation | `--elev-hover` | `4px 4px 0 var(--accent-glow)` (runtime-derived in concept; precompute per F3-431) |
 | Geometry | `--border-radius` | `0px` |
 | Geometry | `--border-width` | `2px` |
@@ -579,14 +595,17 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
 | Motion | `--motion-med` | `140ms` |
 | Motion | `--sheen-dur` | `.35s` |
-| Typography | `--display-font` | `'IBM Plex Mono', monospace` |
-| Typography | `--display-font-sm` | `'IBM Plex Mono', monospace` |
-| Typography | `--body-font` | `'IBM Plex Mono', monospace` |
+| Typography | `--display-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--display-font-sm` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--body-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--mono-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
 | Typography | `--base-font-size` | `15px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | not defined (inherits root: `normal`) |
 
 #### retro-light (02-css-tokens.part.html:192-239)
+
+Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7.html`, its retro-light block with its later `--accent-lime` and `--graph-passed` override, and the readable `--accent-warning` of decision card 3; the line range in the heading is the former PMConcept6 source.
 
 | Group | Token | Value |
 |---|---|---|
@@ -601,15 +620,15 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Borders | `--border-light` | `#D8D1C7` |
 | Accents | `--accent-blue` | `#0047AB` |
 | Accents | `--accent-magenta` | `#FF1493` |
-| Accents | `--accent-lime` | `#00FF41` |
+| Accents | `--accent-lime` | `#2F7A3D` |
 | Accents | `--accent-orange` | `#FF7F27` |
-| Accents | `--accent-warning` | `#F57C00` |
+| Accents | `--accent-warning` | `#A65800` (PMConcept7's `#F57C00` darkened to about 4.6:1 on the paper; decision card 3, DL-151) |
 | Accents | `--accent-error` | `#D32F2F` |
 | Accents | `--accent-primary` | `var(--accent-blue)` (resolves to `#0047AB`) |
 | Accents | `--accent-primary-rgb` | `0,71,171` |
 | Graph | `--graph-pending` | `#ADB5BD` |
 | Graph | `--graph-running` | `#FFB74D` |
-| Graph | `--graph-passed` | `#66BB6A` |
+| Graph | `--graph-passed` | `#2F7A3D` |
 | Graph | `--graph-failed` | `#EF5350` |
 | Graph | `--graph-planning` | `#42A5F5` |
 | Graph | `--graph-gating` | `#AB47BC` |
@@ -632,9 +651,10 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | Motion | `--ease-default` | `var(--ease-snap)` (resolves to `cubic-bezier(.2,0,0,1)`) |
 | Motion | `--motion-med` | `140ms` |
 | Motion | `--sheen-dur` | `.35s` |
-| Typography | `--display-font` | `'IBM Plex Mono', monospace` |
-| Typography | `--display-font-sm` | `'IBM Plex Mono', monospace` |
-| Typography | `--body-font` | `'IBM Plex Mono', monospace` |
+| Typography | `--display-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--display-font-sm` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--body-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
+| Typography | `--mono-font` | `'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace` |
 | Typography | `--base-font-size` | `15px` |
 | Typography | `--line-height` | `1.55` |
 | Typography | `--letter-spacing` | not defined (inherits root: `normal`) |

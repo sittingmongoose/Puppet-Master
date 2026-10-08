@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L6929-L7449
 
-Source SHA256: `0b49b5b55c8dae805a985380a0c8642d335ef10e00b3e5bd763287bbb719f0c7`
+Source SHA256: `eec7c52d7e287ee5f9a29140708909593230e46e320f8d26cb98401e3c0971fd`
 
 ---
 
@@ -19,7 +19,7 @@ Each control of the redesigned sheets, cards, dock lines and run view is a comma
 **View state (`LOCAL_PRESENTATION`): no command, no event, no catalog row.**
 - Opening a sheet, except where a registered row opens it (`cmd.collaboration.configure`, `cmd.chat.crew_auto.open_config`, `cmd.chat.teach.capture`, `cmd.chat.teach.open_memory`). The Schedule Message wand row and the Revert entry points (the files row, the wand row, Changes, the message menu) only open their sheets.
 - Cancel, ×, Escape and the scrim on a collaboration sheet, and "Keep going" when a cancel is confirmed in place. Teach is the exception: its Cancel, ×, Escape and scrim are `cmd.chat.teach.cancel`.
-- Expand and collapse, More, tabs, filters, Technical details, disclosures and Advanced, on sheets, cards and the run view.
+- Expand and collapse, More, tabs, filters, disclosures and Advanced, on sheets, cards and the run view, and Technical details on a setup sheet's Advanced page, the only place it remains (DL-148, DL-149).
 - The Review and BrainStorm Formatted and Plain text toggles. No Review or BrainStorm view command is registered; the Plan view is the one document view toggle with a row (`cmd.chat.plan.view.set`, `shell_view`, CDRY-006). CS-079's `LOCAL_PRESENTATION` listing of the plan Rich/Markdown toggle means that it is no domain command, not that it has no row.
 - The Revert preview, which is a read of the turn's change manifest; "See what's blocking it", which only opens the Revert document at that file; and "Leave my files as they are", which writes no outcome record.
 - The Why? on a Back Seat Driver aside. The Why? on the advisor note itself is `cmd.bsd.finding.open`.
@@ -45,8 +45,8 @@ owner_doc: Plans/Commands_System.md
 canonical_text: >-
   The wand-module redesign's non-command controls are fixed. View state (LOCAL_PRESENTATION, no
   command, no event, no catalog row): opening a sheet unless a registered row opens it; Cancel, x,
-  Escape and scrim on a collaboration sheet and Keep going; expand, More, tabs, filters, Technical
-  details, disclosures and Advanced; the Review and BrainStorm Formatted and Plain text toggles; the
+  Escape and scrim on a collaboration sheet and Keep going; expand, More, tabs, filters, disclosures
+  and Advanced, and Technical details on a setup sheet's Advanced page (DL-148, DL-149); the Review and BrainStorm Formatted and Plain text toggles; the
   Revert preview, See what's blocking it and Leave my files as they are; the Why? on a Back Seat
   Driver aside. Draft state: every sheet control, stepper, team recipe, specialist and Advanced row,
   and Bring back, which is never an undo command. Reuse replaces aliases: cmd.collaboration.open for

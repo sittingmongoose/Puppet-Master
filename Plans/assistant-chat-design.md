@@ -24865,7 +24865,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 17. **Internal Work-Note Boundary (`APR-056`)**: Internal work notes (scratch notes, reasoning fragments, diagnostic traces) are behind-the-scenes diagnostic state. They must never appear as ordinary transcript message cards or standalone user artifacts. Concise user-facing progress summaries are distinct, typed projections.
 18. **History Thread Currentness and Normal Workflows (`APR-057`, `APR-058`, `APR-067`)**: All 30 fixture threads in History are inventoried and aligned to current specifications. Everyday threads predominantly show running, completed, or successful work. Failure, blocked, or recovery states are segregated into an intentional, clearly labeled recovery minority (`recovery-scheduling`, `recovery-attachments`, `recovery-collaboration`). Unfinished work is not labeled "Needs attention" unless explicitly blocked or faulted. Read-only review fixtures demonstrate inspection and findings without mutating workspace files.
 19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 360px` for chat, DL-138; Assistant_Plan_Runtime APR-014), preventing the transcript from being squeezed into the resize handle track.
-20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including pinned Activity Detail defaults, floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
+20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including pinned Activity Detail defaults, floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
 
 ```yaml
 plan_unit_id: ACD-452
@@ -25856,10 +25856,15 @@ canonical_text: >-
   (the working activity card) is a sunken instrument surface. Deliverable (plans, artifacts, change
   records) is a raised sheet with an icon eyebrow and a title. Needs you (approvals, questions,
   advice that waits on the user, blocking errors, waits) is an accent-tinted item with one primary
-  action. People (collaboration runs, live agents, delegation) is a roster led by an avatar stack.
+  action. People (collaboration runs, live agents, delegation) is a roster led by the agents' puppets
+  (FinalGUISpec F3-594, DL-149), never initials or avatars.
   Time (scheduled messages) is a ticket with a time block. Ledger (receipts, context and thread
   operations, route changes, attachment events, informational notices) is one muted line on the
-  spine. A user turn is a right-aligned bubble on a raised neutral surface with no accent. The
+  spine. A user turn is a right-aligned bubble on a raised neutral surface with no accent. Under
+  Retro (DL-151, FinalGUISpec F3-597) the user turn is a solid block in the theme's lime, a theme-token
+  role under DR-043 and not the accent, and the assistant turn sits in a square box with one plain
+  line all round and no coloured edge, its turn mark and spine still in the gutter; the families, the
+  spine and the accent budget are otherwise unchanged. The
   accent budget: the accent colours only live work, needs-you items, the one primary action of a
   card, and Send and Stop; family hues are quiet and appear only on eyebrow tiles and spine ticks.
   Message types, their persistence and the ACD-073 boundary are unchanged.
@@ -25869,14 +25874,14 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines how every transcript item renders in the default chat presentation."
 split_recommended: false
-depends_on: [DL-104, ACD-072, ACD-073]
+depends_on: [DL-104, DL-149, DL-151, ACD-072, ACD-073]
 unblocks: [F3-562, DR-043]
 acceptance_criteria:
   - "A scheduled-message card retains its SQR-012 layout and schedule time zone within the Time family."
   - "Every persisted message type and runtime card kind maps to exactly one of the seven families through one owner map."
   - "The spine, ticks and live light add no scroll width or height at any chat pane width."
   - "In Basic Dark no transcript element uses the accent outside live work, needs-you items, a card's one primary action, and Send and Stop."
-  - "Assistant prose renders without a container; user turns render as right-aligned neutral bubbles."
+  - "Assistant prose renders without a container and user turns render as right-aligned neutral bubbles, except under Retro as FinalGUISpec F3-597 states (DL-151)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -25911,11 +25916,14 @@ preserved_exact_tokens:
   - "accent budget"
 negative_constraints:
   - "Do not render every item kind in one shared card shell."
-  - "Do not spend the accent on decoration, event icons, the user bubble, model chips or chart bars."
+  - "Do not spend the accent on decoration, event icons, the user bubble, model chips or chart bars; the Retro user block is the theme's lime, a theme-token role, not the accent."
+  - "Do not draw a coloured edge or side strip on a boxed Retro assistant turn."
   - "Do not let the spine, ticks or live light extend scrollable area."
   - "Do not infer a record's message_type from its family."
 stale_retired_dispositions:
   - "ACD-072 rendering column values left-aligned bubble for user and right-aligned bubble for assistant are superseded for the default presentation by DL-104: user turns are right-aligned neutral bubbles and assistant prose has no container."
+  - "The People roster's avatar stack is replaced by the agents' puppets (DL-149, FinalGUISpec F3-594)."
+  - "Under Retro only, the neutral user bubble and the uncontained assistant prose are replaced by the lime user block and the boxed assistant turn (DL-151)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -27030,3 +27038,69 @@ owner_hints:
 ContractRef: ContractName:Plans/Decision_Log.md#DL-126, ContractName:Plans/FinalGUISpec.md#F3-572, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Settings_System.md
 
 ELI5 contracts: `cmd.chat.eli5.set` (`ELI5ThreadOverrideRequest`, on, off or inherit) and `cmd.chat.eli5.explain_reply` (`ELI5ExplainReplyRequest`, `ELI5ExplainReplyResult`) validate against `Plans/assistant_chat_contracts.schema.json`, with fixtures in `Plans/assistant_chat_contract_fixtures.json`.
+
+## Chat Tweaks Addendum (2026-10-08)
+
+This addendum carries DL-147's subagent decision into this owner. What opening a subagent does is ACD-485's; how the live transcript looks is FinalGUISpec F3-593's. The 5.6 Pro concept is source lineage only, and its lab tools stay excluded by ACD-474.
+
+### ACD-485 - A Subagent Opens As A Read-Only Live Child Transcript
+
+```yaml
+plan_unit_id: ACD-485
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Opening a subagent (its Activity Detail row or that row's Open live transcript, a Subagents preview row, a
+  working-activity satellite, or a row of the live agents card) opens that child run's history, the direct child
+  history navigation of section 14.1, as one editor document per child run beside the chat through the ACD-480
+  document mechanism: an open document is focused, never duplicated, and at narrow widths it follows the Plan tab's
+  rules (DL-147). The document is read-only for the user: it has no composer and no control that acts on the child or
+  on the parent thread, and while the child runs it follows new items live. Its items are projections of the child
+  run's persisted records, and its status is section 14's child-run status projection, never a second lifecycle. Its
+  messages, events and needs-you items render as the main chat renders them (ACD-469), and between messages each
+  stretch of the child's work records (tool calls, file changes, tests) is one collapsed row that states what the
+  stretch did and opens in place to list those records (decision card 7). The inline subagent card keeps section 14's
+  expanded panel (work stream, thought stream, state, context and result).
+gui_related: true
+gui_classification_reason: Defines what opening a subagent does in the assistant chat.
+split_recommended: false
+depends_on: [DL-147, ACD-480, ACD-469, ACD-473]
+unblocks: [F3-593]
+acceptance_criteria:
+  - "Opening a subagent twice focuses one document and never duplicates it."
+  - "The document has no composer and no control that changes the child or the parent thread."
+  - "Its status words come from the child-run status projection, and each stretch of work records is one collapsed row until opened."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: subagent_transcript_authority_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-147"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "read-only"
+  - "direct child history navigation"
+  - "collapsed row"
+negative_constraints:
+  - "Do not give the subagent document a composer or a mutation control."
+  - "Do not invent a subagent-only status in the document."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/assistant-chat-design.md#ACD-480, ContractName:Plans/FinalGUISpec.md#F3-593

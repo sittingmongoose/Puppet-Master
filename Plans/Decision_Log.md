@@ -2525,7 +2525,7 @@ Answered on 2026-09-27 by Jared on wand-modules decision card `p04` (register E-
 
 **Answer:** Option A, "Allow the short list for these".
 
-In the Activity panel, Crew, Chat Room, BrainStorm and Review show a short, scannable team list, and Back Seat Driver's details use the same compact form; the full card-and-grid detail is one click away in the run view beside the chat. This is a scoped exception to Jared's 2026-09-08 rollback (APR-060, APR-061, ACD item 20) for these five only; every other Activity surface keeps the restored native cards and grids. The register lines waiting on this card, B-CW-05, B-BSD-04, B-ACD-05, B-FGS-12, B-FGS-13, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
+In the Activity panel, Crew, Chat Room, BrainStorm and Review show a short, scannable team list, and Back Seat Driver's details use the same compact form; the full card-and-grid detail is one click away in the run view beside the chat. This is a scoped exception to Jared's 2026-09-08 rollback (APR-060, APR-061, ACD item 20) for these five only; every other Activity surface keeps the restored native cards and grids. **Amended on 2026-10-08 by DL-147:** the To-Do rows of Activity Detail are a second scoped exception: each row is a one-line checklist row like the To-Do hover preview, inside the native panel; Goal, Subagents, Changes and Artifacts keep the native presentation. The register lines waiting on this card, B-CW-05, B-BSD-04, B-ACD-05, B-FGS-12, B-FGS-13, compile it into the owner documents in the WAIT wave; this entry changes no owner text itself.
 
 SourceRef: decision card `p04` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json`, SHA-256 `61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a`; card SHA-256 `f49e399e046820f880093035b40d36f999238aba08321d82e684d3127323e39c` (`/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards-companion.json`, SHA-256 `709393edbf34b827d33fa05cf6d51db2c8d25495228b99e27dc6ad9034c4318d`); answer record `p04` in `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json`, SHA-256 `4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f`. Agent-relayed; not verifiable from inside this repository.
 
@@ -2955,7 +2955,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Release_Supp
 - Every icon lit like a neon sign: a lit stroke with a soft halo of the same colour and a faint glow behind it.
 - Each icon moves part by part in its own way: the goal arrow strikes the target, the To-Do ticks check in one after another, the artifact lines write in. The activity bar's icons do this too.
 - Ordinary controls (close, chevrons, copy, more, pickers) stay quiet until you hover or focus them, then light up and play their motion once. Status icons are always lit and moving, like the bar. Icons that name a thing are lit and still.
-- Colour stays reserved for status.
+- Colour stays reserved for status. **Amended on 2026-10-08 by DL-146:** the composer's capabilities wand is the one control drawn in its own colours (a silver handle, a gold star, blue, pink and green sparkles), and it turns to ink under NieR Mode.
 - The magic wand reads as a wand, not a pencil, and the Fast-mode bolt is amber and strikes like lightning.
 
 **What it costs:**
@@ -3102,6 +3102,240 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-587, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md`, SHA-256 `1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf`; the NieR specification `/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/specs/NIER.md`, SHA-256 `ea5f2a23dc4b48b50bdd90da19492aecbfa9b779a853d1d55942a1571fa059b5`.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-589, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/FinalGUISpec.md#F3-441
+
+### DL-145: The chat's hover labels wait for a deliberate pause, and three small chrome fixes
+
+**Question:** How long should the assistant chat's hover labels wait before they show, and how should three small pieces of chrome behave: the capability boxes in Context More Details, a message's More overflow, and a dropdown inside a setup popup? This entry also records how this wave of tweaks is written down and landed.
+
+**Why it came up:** On 2026-10-07 Jared asked for sixteen changes to the 5.6 Pro assistant chat concept. The first was that its hover labels should wait longer before showing, because they were annoying: they appeared after about 0.4 s on almost anything the pointer crossed. He also reported three chrome faults: the left edge of the selected capability boxes looked cut off, opening a message's More pushed its icons down onto new lines, and a dropdown in a setup popup did not close when its own button was clicked again.
+
+**What you get:**
+- Hover labels show only after a deliberate pause, the app's existing hover tag rule (F3-523), which the concept now follows exactly. Keyboard focus shows a label after a shorter wait.
+- Every icon in the chat's chrome names itself with the app's hover tag, never the browser's plain tooltip.
+- Pressing a control closes its label, and the label stays closed until the pointer leaves the control.
+- The activity bar's previews wait for a deliberate pause before they open from the pointer, and still open at once from the keyboard.
+- Opening a message's More keeps its meta chips and its Copy, Details and More buttons on their row; the panel opens on its own line below them.
+- The capability boxes under Capabilities in this thread, in Context More Details, show their whole outline, the left edge included.
+- A dropdown inside a setup popup closes when its own button is clicked again.
+
+**What it costs:**
+- A label takes at least 1.6 seconds of resting pointer to appear, and moving along a row of icons no longer hands the label on quickly: each icon waits the full time.
+
+**Options considered:** No options were offered on the timing. The concept first tried about one second, with a quick hand-off from one label to the next; the lead then ruled that the concept follow the product rule exactly (1600 ms of pointer residence and 1100 ms of stationary pointer within 5 px, or 1000 ms of keyboard focus, with no quick hand-off), because the product already waits that long. F3-523 said a press cancels a label that is about to open but was silent on a label already showing, so it gains the press-to-close rule. The activity previews are not labels; their dwell is a concept timing, not canon (ACD-474). The lead also ruled that the two native browser tooltips left in the concept (the Schedule Message track and the To-Do rows) move to the hover tag, so F3-523 needs no exemption.
+
+**What the owner decided** (in plain words; decision card 2):
+- 2026-10-07, in his request: the hover labels everywhere in the chat should wait longer before they show; the three chrome faults above should be fixed; and the plan documents should be updated for every change.
+- 2026-10-07, decision card 1: land the concept and these plan changes as soon as the checks pass, without a review copy first.
+- 2026-10-07, decision card 2: record these decisions in plain words, without quoting his messages.
+
+**What the spec now says:**
+1. **Hover labels and activity previews** (`Plans/FinalGUISpec.md#F3-590`): every icon control in the chat names itself through the shared hover tag of F3-523, never a native title; activity previews open only after a deliberate dwell and at once from keyboard focus. F3-523's thresholds are unchanged, and it gains the press-to-close rule (`Plans/FinalGUISpec.md#F3-523`, amended).
+2. **The message chrome row and the capability boxes** (`Plans/FinalGUISpec.md#F3-591`).
+3. **A dropdown in a setup sheet closes from its own trigger** (`Plans/FinalGUISpec.md#F3-568` and `Plans/Collaborative_Workflows.md#CWR-018`, amended).
+4. **This wave lands with the concept** (card 1), and its Decision Log entries, DL-145 to DL-151, describe the owner's decisions in plain words (card 2).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md`, SHA-256 `acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt`, SHA-256 `e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe` (the owner answers on the eight decision cards); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/chat56-decision-cards-20261007.html`, SHA-256 `29ad155f2313e47df69cb91cd006917d105bd7626168af6517f5987c3e14337c` (the cards as presented); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt`, SHA-256 `546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7` (the lead rulings on the questions no card covered; agent rulings, not owner answers).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-590, ContractName:Plans/FinalGUISpec.md#F3-591, ContractName:Plans/FinalGUISpec.md#F3-568, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/Collaborative_Workflows.md#CWR-018
+
+### DL-146: The capabilities wand is drawn in colour, the Fast bolt strikes from the top, and Grill Me's icon is a kettle grill
+
+**Question:** How should the composer's capabilities wand, the Fast-mode bolt and Grill Me's icon look and move?
+
+**Why it came up:** After the neon icons of DL-140, Jared asked for a coloured wand that sparkles after its shake. He found that the Fast bolt's strike did not read as a strike from the top: its lower half seemed to flicker to black. And he asked for Grill Me's icon to be a grill in the same neon style, with an animation of its own.
+
+**What you get:**
+- The wand on the composer's capabilities control and in its menu head is drawn in colour, still in the neon style: a silver handle, a gold star and blue, pink and green sparkles. Each part glows in its own colour on dark themes and takes a deeper ink on light themes, and hovering never greys it.
+- After the wand's shake on hover or focus, its three sparkles twinkle one after another, each flaring into a small star-shaped glint.
+- The Fast bolt strikes from the top: a bright line runs down inside the bolt from its top spike to its point, then the whole bolt flashes, flashes again and fades back to rest. It is never darker than at rest.
+- Grill Me's icon is a kettle grill in the neon style. Its motion swings the lid open while flames flicker and smoke rises, then drops it shut. It is drawn wherever Grill Me appears as a control or a label.
+- Under NieR Mode the wand stays ink, with a lighter handle and a filled star, and twinkles in NieR's stepped motion; the bolt's bright line steps down in ink and the bolt then flashes solid ink.
+
+**What it costs:**
+- The wand is the one control in the chat drawn in its own colours, an exception to DL-140's rule that colour is reserved for status.
+- The wand's colours do not show under NieR Mode.
+
+**Options considered:** The colours are the ones Jared suggested. Decision card 5 offered ink under NieR Mode with colour in every other theme, colour under NieR Mode too, or faded parchment tints of the five colours under NieR Mode; he chose ink under NieR Mode. Of the grills he suggested (gas or charcoal), a charcoal kettle grill was drawn, to match the kettle Grill Me's puppet stands behind (DL-149). The lead ruled that the grill glyph is drawn wherever Grill Me appears as a control or a label.
+
+**What the owner decided** (in plain words; decision card 2):
+- 2026-10-07, in his request: the capabilities wand should be coloured, still read as neon and keep its drawing; he suggested a silver handle, a gold star end and blue, pink and green sparkles, and asked for the coloured sparkles to sparkle after the wand's shake.
+- 2026-10-07, in his request: the Fast bolt's animation should strike down from the top.
+- 2026-10-07, in his request: Grill Me's icon should be a gas or charcoal grill in the neon style, with an animation of its own; every change should keep the themes and NieR Mode in mind.
+- 2026-10-07, decision card 5: the wand turns to ink under NieR Mode and keeps its colours in every other theme.
+
+**What the spec now says:**
+1. **The wand, the Fast bolt and the grill** (`Plans/FinalGUISpec.md#F3-588`, amended): three required drawings; the coloured wand and its sparkle; the bolt's top-down leader, flash, re-flash and afterglow, never darker than at rest; the kettle grill and its act; their reduced-motion and NieR forms.
+2. **The one colour exception** (`Plans/FinalGUISpec.md#F3-584`, amended): colour stays reserved for status, apart from the capabilities wand.
+3. **NieR Mode** (`Plans/FinalGUISpec.md#F3-589`, amended): the wand stays ink.
+4. **DL-140** (amended): its rule that colour is reserved for status admits the wand.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md`, SHA-256 `acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt`, SHA-256 `e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe` (the owner answers on the eight decision cards); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/chat56-decision-cards-20261007.html`, SHA-256 `29ad155f2313e47df69cb91cd006917d105bd7626168af6517f5987c3e14337c` (the cards as presented); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt`, SHA-256 `546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7` (the lead rulings on the questions no card covered; agent rulings, not owner answers).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-588, ContractName:Plans/FinalGUISpec.md#F3-584, ContractName:Plans/FinalGUISpec.md#F3-589, ContractName:Plans/Decision_Log.md#DL-140
+
+### DL-147: Activity Detail gets a tidy Goal panel, one-line To-Do rows, and subagents that open as a live transcript
+
+**Question:** How should the Goal, To-Dos and Subagents panels of Activity Detail read?
+
+**Why it came up:** Jared found the Goal panel's View Goal route unhelpful, its buttons messily placed and its Ask for a replacement button unclear. He found the To-Do rows harder to read than the To-Do hover preview, with labels (Start work, Run work) that are not buttons and should not be. And he asked that a subagent's model be underlined and that opening a subagent show a normal transcript: a live, read-only feed of the working agent.
+
+**What you get:**
+- **Goal.** The panel shows the objective, then one row of controls: Pause (or Resume) and Edit objective on the left, and Cancel Goal alone at the far edge in the danger colour. Its footer is Objective history, which opens the list of earlier objectives right there. There is no View Goal route and no Ask for a replacement button; asking the assistant in the chat to change the Goal works as before.
+- **To-Dos.** Each row is one line, like the To-Do hover preview: the status mark, the title, the owner when an agent or Persona is explicitly assigned, and a status word at the right edge. Rows have no buttons; Open work is in the selected item's detail. The list uses the panel's full height, and its scrollbar sits at the panel's edge.
+- **Subagents.** Rows, the preview and the detail card underline the agent's model. Clicking a subagent opens its live transcript beside the chat, drawn like the chat but read-only: no message box, and only Copy, More details and Expand on its messages. Each stretch of the agent's work between messages is one collapsed row with a plain count (for example, ran 3 tools and edited 1 file) that opens on click, with a small Step Rail motif whose live stretch plays a variation of the Step Rail working animation.
+
+**What it costs:**
+- The To-Do rows become a second scoped exception to Jared's 2026-09-08 rollback to native cards (DL-122 made the first): each row is a one-line checklist line, while the panel keeps its native frame.
+- A subagent's work shows only as counts until you open a stretch.
+
+**Options considered:** Decision card 7 offered compact one-line rows for each work record between messages, messages only, or one collapsed row per stretch of work that opens on click; Jared chose the collapsed row per stretch and suggested using the Step Rail working animation or a variation of it. The Start work and Run work labels were concept-only: the To-Do owner registers no user command that changes an item (`Plans/ToDo_Runtime.md`, Exact commands and required result boundaries). The lead ruled that the To-Do's explicit assignment stays (TDR-011): it shows only when an agent or Persona is explicitly assigned, as the owner's mark or name, with the full label in the row's hover tag and the selected detail. Removing Ask for a replacement removes only that button: an agent-proposed replacement still follows Goal_Runtime_System's approval path when the user asks in the chat, and `cmd.chat.goal.propose_update` is unchanged.
+
+**What the owner decided** (in plain words; decision card 2):
+- 2026-10-07, in his request: the Goal panel's View Goal section, which opened the active Goal in its own tab, should go, because nothing in it was needed; the Pause, Cancel Goal and Objective history controls looked messily placed; and Ask for a replacement was unclear and should go.
+- 2026-10-07, in his request: the To-Do list should use the panel's full height and more of its width, like the To-Do hover preview, with less padding beside the scrollbar, and without the Start work and Run work labels.
+- 2026-10-07, in his request: the Subagents panel should underline the model, and clicking a subagent should show a normal-looking transcript, a live read-only feed of the working agent, without a composer or most of the main chat's controls.
+- 2026-10-07, decision card 7: the live transcript shows one collapsed row per stretch of work that opens on click, and that row may use the Step Rail working animation or a variation of it.
+
+**What the spec now says:**
+1. **Goal, To-Dos and Subagents in Activity Detail** (`Plans/FinalGUISpec.md#F3-593`), with the 2026-09-03 redesign's sections 7 and 8 and v3 section 24 amended in place, and `Plans/Goal_Runtime_System.md`'s Goal Activity Detail block and `Plans/ToDo_Runtime.md`'s Activity projection and section 9 amended.
+2. **The To-Do rows' scoped exception** to the 2026-09-08 rollback (`Plans/FinalGUISpec.md#F3-542` and `#F3-580`, `Plans/assistant-chat-design.md` v3 item 20 and `Plans/Decision_Log.md#DL-122`, amended).
+3. **A subagent opens as a read-only live child transcript** (`Plans/assistant-chat-design.md#ACD-485`).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md`, SHA-256 `acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt`, SHA-256 `e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe` (the owner answers on the eight decision cards); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/chat56-decision-cards-20261007.html`, SHA-256 `29ad155f2313e47df69cb91cd006917d105bd7626168af6517f5987c3e14337c` (the cards as presented); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt`, SHA-256 `546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7` (the lead rulings on the questions no card covered; agent rulings, not owner answers).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/Decision_Log.md#DL-122
+
+### DL-148: The setup popups get clear step tiles, a readable chat preview and a send time you can drag, and Technical details leaves the scheduling surfaces
+
+**Question:** How should the setup popups show their numbered steps and their In your chat preview, how should Schedule Message set its time, and where does Technical details still appear?
+
+**Why it came up:** Jared found the numbered steps in the setup popups hard to recognise as steps, because of their colour, and the In your chat previews too small to make out. He asked to drag the send time on Schedule Message's 48-hour graphic and to remove that popup's Technical details and its two promise lines. Decision card 8 then asked where else Technical details should go.
+
+**What you get:**
+- In the setup popups with numbered questions (Crew, Review, BrainStorm, Chat Room and Crew Auto), each number sits in a small square step tile in the accent colour, and the step you are on fills in. Under NieR Mode the tile is an inverted ink square.
+- The In your chat preview fills the popup's side column and is scaled to fit it, so the card's first frame can be read; the popup itself does not grow.
+- In Schedule Message you drag the send marker along the 48-hour track, or click the track, to set the time; with the track focused the keyboard moves it too. It never goes into the past, and the date, the time and the read-back follow it.
+- Schedule Message has no Technical details and no promise lines (the line saying it sends exactly this text, and the line saying it can be edited or cancelled before it sends). The message is still sent exactly as scheduled.
+- Technical details also leaves Build At, the Scheduled and Automations manager and the records of scheduled and sent messages. Build At still names the exact Plan version it will build, and the Plan's id, version and hash are in the Plan's Details. Each setup popup keeps its Technical details on its Advanced page.
+
+**What it costs:**
+- Schedule Message no longer says that a scheduled message is frozen; it stays the behaviour (`Plans/Scheduling_and_Quota_Resume.md#SQR-002`).
+- Internal command names are no longer visible on the everyday surfaces; only the setup popups' Advanced pages show them.
+
+**Options considered:** Decision card 8 offered removing Technical details everywhere except each setup popup's Advanced page, removing it everywhere, or removing it only where Jared asked; he chose everywhere except each setup popup's Advanced page. The lead ruled that Crew Auto, whose sheet numbers its three questions, counts among the sheets with numbered questions.
+
+**What the owner decided** (in plain words; decision card 2):
+- 2026-10-07, in his request: on Schedule Message the send time should be draggable on its graphic, and its Technical details and its two promise lines should go.
+- 2026-10-07, in his request: the numbered steps in the setup popups should stand out as steps.
+- 2026-10-07, in his request: the In your chat previews should be a little bigger.
+- 2026-10-07, decision card 8: remove Technical details everywhere except each setup popup's Advanced page.
+
+**What the spec now says:**
+1. **Step tiles, the readable preview and the send-time track** (`Plans/FinalGUISpec.md#F3-592`).
+2. **Schedule Message and Build At** (`Plans/FinalGUISpec.md#F3-573` and the 2026-09-03 redesign's section 13, amended): the track is the send-time control; no promise lines and no Technical details; Build At names its Plan version and leaves the id, version and hash to the Plan's Details (`Plans/Scheduling_and_Quota_Resume.md#SQR-013` and `#SQR-015`, amended).
+3. **The sheet anatomy** (`Plans/FinalGUISpec.md#F3-566`, amended): promise lines only where a module has any, and Crew Auto among the numbered sheets.
+4. **The command census** (`Plans/UI_Command_Catalog.md#UCC-170` and `Plans/Commands_System.md#CDRY-021`, amended): Technical details has no producer on the Schedule Message sheet and remains only on the setup sheets' Advanced pages.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md`, SHA-256 `acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt`, SHA-256 `e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe` (the owner answers on the eight decision cards); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/chat56-decision-cards-20261007.html`, SHA-256 `29ad155f2313e47df69cb91cd006917d105bd7626168af6517f5987c3e14337c` (the cards as presented); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt`, SHA-256 `546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7` (the lead rulings on the questions no card covered; agent rulings, not owner answers).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-592, ContractName:Plans/FinalGUISpec.md#F3-573, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-013, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/UI_Command_Catalog.md#UCC-170, ContractName:Plans/Commands_System.md#CDRY-021
+
+### DL-149: Agents are drawn as little puppets, the agent graphs become tidy cast plates, and Technical details leaves the run cards and run views
+
+**Question:** How should agents be drawn in the chat and in the setup popups, how should the Crew, Review, BrainStorm and Chat Room graphs read, and do run cards and run views keep Technical details?
+
+**Why it came up:** Jared found the agent graphs in the setup popups messy and hard to follow. He pointed to the puppet helpers of PMConcept7's onboarding and suggested drawing the agents as little puppets matching each theme, in the popups, in the chat's cards and in the panel a card opens, with NieR Mode changing them too, and for Technical details to leave the cards.
+
+**What you get:**
+- Every agent is a small marionette: a control bar with strings, a chibi figure, and one prop or piece of headwear that names its role (the Coordinator's crown, the Moderator's gavel, a builder's hard hat, a reviewer's magnifier, a critic's jester cap, Wonderer's orbit ring, Grill Me's little kettle grill and so on), so roles read without colour. The seat colour paints the figure.
+- Each theme family has its own puppet material: a blueprint line puppet in Basic, felt in Friendly, crystal in Glass, a pixel sprite in Retro. Under NieR Mode the puppet is PMConcept7's NieR puppet: ink on parchment with a rigid visor band.
+- One drawing serves every place an agent appears: the popups' rosters and graphs, run cards, run views, Activity's rows and the chat's live agents card. No agent is ever drawn as initials.
+- Each graph becomes one tidy cast plate: a bar across the top saying what goes in and who runs it, ending at you; the cast hanging under it on straight strings, every seat named; specialists in a wing on the right; the run's state shown on the seats. The run view opens with the same plate.
+- Run cards and run views no longer show Technical details; each setup popup keeps it on its Advanced page.
+- In the setup popups the puppets hold still. In the chat a puppet moves once on run cards and in run views (swung on its strings as it starts working, a hop when it is done or needs you), and a working agent's puppet keeps swaying only on the live agents card.
+
+**What it costs:**
+- A puppet is a larger drawing than the old marks; at the smallest sizes it simplifies to a bust or a pixel figure.
+- The setup popups feel more static.
+
+**Options considered:** Decision card 6 offered still puppets in the popups and live ones in the chat, a gentle sway in the popups too, or still everywhere; Jared chose still in the popups and alive in the chat. The lead ruled that alive in the chat means one-shot motions on run cards and run views, as F3-584 already allows module cards, and continuous sway only on the live agents card; that the Chat Room's Moderator holds a gavel everywhere it is drawn; and that Technical details is gone from run views entirely, fine print included. Decision card 8 is recorded under DL-148. The NieR puppet is the one PMConcept7's onboarding draws; that thread's onboarding unit owns its geometry, and the chat adds only Grill Me's kettle, the Moderator's gavel and the working stage-floor line.
+
+**What the owner decided** (in plain words; decision card 2):
+- 2026-10-07, in his request: the agent graphs in the Crew, Review, BrainStorm and Chat Room popups need polish because they are messy and hard to follow; the agents could be drawn as little puppets after PMConcept7's onboarding helpers, much smaller and matching each theme, in the popups, in the transcript cards and in the panel a card opens; NieR Mode should change the puppets too; and the cards' Technical details button can go.
+- 2026-10-07, decision card 6: the puppets hold still in the setup popups and are alive in the chat.
+- 2026-10-07, decision card 8: remove Technical details everywhere except each setup popup's Advanced page.
+
+**What the spec now says:**
+1. **Agents are puppets** (`Plans/FinalGUISpec.md#F3-594`): anatomy, props by role, material by theme family, NieR Mode, detail by size, states and motion.
+2. **Cast plates in sheets and run views** (`Plans/FinalGUISpec.md#F3-595`), with no Technical details on run cards or in run views.
+3. **The superseded cast mark and avatar stack** in `Plans/FinalGUISpec.md#F3-566`, `#F3-569`, `#F3-580` and `#F3-584`, `Plans/Collaborative_Workflows.md#CWR-019`, `Plans/assistant-chat-design.md#ACD-469` and `Plans/DRY_Rules.md#DR-044`, amended; the run card row of `Plans/UI_Command_Catalog.md#UCC-170` and `Plans/Commands_System.md#CDRY-021`, amended.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md`, SHA-256 `acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt`, SHA-256 `e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe` (the owner answers on the eight decision cards); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/chat56-decision-cards-20261007.html`, SHA-256 `29ad155f2313e47df69cb91cd006917d105bd7626168af6517f5987c3e14337c` (the cards as presented); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt`, SHA-256 `546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7` (the lead rulings on the questions no card covered; agent rulings, not owner answers); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/nier-puppets-final-handoff.md`, SHA-256 `492a3bbeae1285f1dd1d55dfbdc87da3bfa9fce207c9ef01a9f2005abb0ddfa0` (the NieR puppet handoff from the PMConcept7 thread); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md`, SHA-256 `c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002` (the agreement with the PMConcept7 thread on who owns what).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-594, ContractName:Plans/FinalGUISpec.md#F3-595, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/Collaborative_Workflows.md#CWR-019, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/Decision_Log.md#DL-111
+
+### DL-150: The Ask Card gets a livelier look
+
+**Question:** How should the questions card (the Ask Card) look?
+
+**Why it came up:** Jared found the questions card dull in spite of its animations. Its behaviour and features were right and stay as they are.
+
+**What you get:**
+- A faint accent light in the card's corner, and the waiting mark beside the question, which hops in once per question.
+- A progress line along the spine fills in accent colour up to the current question; answered questions show filled beads, skipped ones hollow ones.
+- Next (or Submit) is the card's one filled button.
+- Options rest on a faint tint; the chosen one takes an accent tint, an accent edge, an accent number and a bolder label, and its radio dot pops in or its check draws itself.
+- Calmer, tidier motion: a pressed row springs back, the footer rises into place, the spine draws down.
+- Under NieR Mode the chosen answer is NieR's menu cursor and the spine's marks are diamonds; nothing glows.
+
+**What it costs:**
+- More accent on the card. It stays inside the accent budget: the Ask Card is a needs-you item, where the accent is allowed (ACD-469).
+
+**Options considered:** None were offered; Jared asked for a new look with the same behaviour.
+
+**What the owner decided** (in plain words; decision card 2):
+- 2026-10-07, in his request: the questions popup's look should be updated and its animations polished; its behaviour and features are right.
+
+**What the spec now says:**
+1. **The Ask Card's look** (`Plans/FinalGUISpec.md#F3-596`). The questionnaire's behaviour stays with `Plans/assistant-chat-design.md` section 7.4.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md`, SHA-256 `acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe` (the owner request).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-596, ContractName:Plans/assistant-chat-design.md#ACD-469
+
+### DL-151: The Retro themes follow PMConcept7's colours and box shapes
+
+**Question:** Should the chat's Retro Dark and Retro Light match PMConcept7's retro themes?
+
+**Why it came up:** Jared found the chat's retro box shapes and colours off against PMConcept7's retro themes, and asked to keep the chat's retro sounds and animations, which he likes.
+
+**What you get:**
+- Retro Dark is PMConcept7's olive Atlas palette with a lime-yellow primary, and Retro Light is ink on warm paper with a blue primary. Both come from the app's Retro theme tokens, which now hold PMConcept7's values, so every Retro screen matches, not only the chat.
+- PMConcept7's box grammar: square corners, 2 px structural lines, inner hairlines, hard offset shadows with no blur, opaque menus and dialogs, square selectors and Send. Focus is a lime outline on Retro Dark and a blue one on Retro Light.
+- Thread rows are boxed; the selected row is a lime box with a hard lime shadow. Your messages are a solid lime or green block. The assistant's replies sit in a square box with a plain border and the hard retro shadow, with no coloured strip.
+- Live work is PMConcept7's operation card (a lime wash and an olive edge) instead of a glow.
+- Kept: IBM Plex Mono, every retro font size, every retro motion (stepped motion, the print-in, the phosphor bloom, the block caret) and the retro sound kit. NieR Mode paints over Basic, so none of this reaches NieR Mode.
+
+**What it costs:**
+- On Retro Light the warning text is a darker orange and the text on your green message block is paper-coloured, so both read comfortably; PMConcept7 differs in these two spots until it makes the same change, and its thread has been told.
+- Retro turns no longer share the open layout of the other themes.
+- The app's Retro token tables change for every Retro screen, not only the chat.
+
+**Options considered:** Decision card 3 offered readable Retro Light colours in both concepts, an exact copy of PMConcept7, or readable colours in 5.6 Pro only; Jared chose readable in both, with the PMConcept7 thread told. Decision card 4 offered a square reply box with a plain border and no coloured strip, PMConcept7's exact box with its blue left strip, or open replies along the spine as in the other themes; he chose the square box with no strip. The lead ruled that the solid user block is accepted as a Retro-only exception that names its token role (the theme's lime, not the accent; DR-043), that F3-426's two Retro tables take PMConcept7's values, which this wave owns by agreement with the PMConcept7 thread, and that Retro Light's focus is blue.
+
+**What the owner decided** (in plain words; decision card 2):
+- 2026-10-07, in his request: the chat's retro themes should match PMConcept7's retro themes more closely, in their box shapes and design and their colours, keeping the chat's current retro sounds and animations.
+- 2026-10-07, decision card 3: readable Retro Light colours (a darker warning orange and paper-coloured text on the green user block), and the PMConcept7 thread is told so it can match.
+- 2026-10-07, decision card 4: retro replies are a square box with a plain border and the hard retro shadow, without a coloured strip.
+
+**What the spec now says:**
+1. **The assistant chat under the Retro themes** (`Plans/FinalGUISpec.md#F3-597`).
+2. **The Retro token tables** (`Plans/FinalGUISpec.md#F3-426`, Theme Token Tables retro-dark and retro-light, amended) take PMConcept7's final retro values and the readable Retro Light warning; Retro focus (`Plans/FinalGUISpec.md#F3-201` and section 13.2, amended) is a lime outline on Retro Dark and a blue outline on Retro Light.
+3. **The transcript families under Retro** (`Plans/assistant-chat-design.md#ACD-469` and `Plans/FinalGUISpec.md#F3-562`, amended).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md`, SHA-256 `acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt`, SHA-256 `e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe` (the owner answers on the eight decision cards); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/chat56-decision-cards-20261007.html`, SHA-256 `29ad155f2313e47df69cb91cd006917d105bd7626168af6517f5987c3e14337c` (the cards as presented); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt`, SHA-256 `546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7` (the lead rulings on the questions no card covered; agent rulings, not owner answers); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PMCONCEPT7-RETRO-VALUES.md`, SHA-256 `4268674a786a33f938d43a5c91c32ba8324c78d883070e13e5aaab7b030ebdec` (PMConcept7 retro values measured in Concepts/PMConcept7.html, the PM7 T22 Atlas block); `/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md`, SHA-256 `c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002` (the agreement with the PMConcept7 thread).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-597, ContractName:Plans/FinalGUISpec.md#F3-426, ContractName:Plans/FinalGUISpec.md#F3-201, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/DRY_Rules.md#DR-043
 
 ## Owner / Consumer Map
 
@@ -9635,7 +9869,8 @@ canonical_text: >-
   Jared decided on 2026-09-27 on card p04 (E-04), choosing "Allow the short list for these", that
   Activity shows a short team list for Crew, Chat Room, BrainStorm and Review and a compact form for
   Back Seat Driver's details, with the full detail in the run view, as a scoped exception to the
-  2026-09-08 rollback that applies to these five only.
+  2026-09-08 rollback that applies to these five only. DL-147 (2026-10-08) adds the To-Do rows as a
+  second scoped exception (one-line checklist rows inside the native panel, FinalGUISpec F3-593).
 gui_related: true
 gui_classification_reason: Records an owner decision about activity detail presentation or behaviour.
 split_recommended: false
@@ -9643,7 +9878,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Activity renders the short team list for the four collaboration kinds and Back Seat Driver.
-  - Every other Activity surface keeps the native cards and grids of the 2026-09-08 rollback.
+  - Every other Activity surface keeps the native cards and grids of the 2026-09-08 rollback, apart from the To-Do rows of DL-147.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -10772,7 +11007,8 @@ canonical_text: >-
   bar's neon-sign look: a lit stroke over a halo of the same ink plus a soft glow behind the host, never a blur or
   filter (F3-584). Ordinary controls ignite on hover or keyboard focus; status icons are always lit and moving like
   the activity bar; concept icons are lit and still; each icon moves part by part in its own way, the activity bar
-  included; colour is reserved for status; module cards draw their marks lit and still. The wand is redrawn as a rod
+  included; colour is reserved for status (amended on 2026-10-08 by DL-146, which draws the capabilities wand in its own
+  colours); module cards draw their marks lit and still. The wand is redrawn as a rod
   with a star tip and the Fast-mode bolt is amber and strikes like lightning (F3-588). The halo approach stays after
   DL-139 made blur available, because it costs the same on the Skia CPU raster and NieR Mode draws no glow. Jared
   asked: "I really like the icons/animations used for the items in the chat activity bar.  They are kind of like
@@ -11035,6 +11271,395 @@ negative_constraints:
   - "Do not add moving touches inside the scenes in the chat."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-145 - The Chat's Hover Labels Wait For A Deliberate Pause And Three Small Chrome Fixes
+
+```yaml
+plan_unit_id: DL-145
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-145 records the owner request of 2026-10-07 and his answers on decision cards 1 and 2 of that day. The assistant
+  chat's icon controls name themselves through the shared PMHoverTag of F3-523, never a native title, and every chat
+  tag waits for F3-523's deliberate intent, which the concept now follows exactly with no faster hand-off; a press on
+  an anchor closes its tag until the pointer leaves it (F3-523, amended). The owner's request for later hover labels
+  is met by those thresholds. Activity bar previews open only after a deliberate pointer dwell and at once from
+  keyboard focus (F3-590). Opening a message's More keeps its meta chips and actions on their row, and Context More
+  Details' capability boxes draw their whole outline (F3-591). A dropdown in a setup sheet closes when its own trigger
+  is clicked again (F3-568, CWR-018). The owner chose to land this wave with the concept as soon as the checks pass
+  (card 1) and to have DL-145 to DL-151 describe his decisions in plain words, without quoting him (card 2).
+gui_related: true
+gui_classification_reason: Records an owner decision on the assistant chat's visual design.
+split_recommended: false
+depends_on: [DL-140, ACD-474]
+unblocks: [F3-590, F3-591, F3-568, F3-523]
+acceptance_criteria:
+  - "No icon control in the assistant chat relies on a native title for its name, and no chat tag opens before F3-523's thresholds (F3-590)."
+  - "Opening a message's More leaves its meta chips and actions on their row (F3-591)."
+  - "The owner's decisions are recorded in plain words with their source hashes, and no entry of this wave quotes the owner."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_hover_and_chrome_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Collaborative_Workflows.md
+  - Plans/00-plans-index.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-145"
+  - "PMHoverTag"
+  - "plain words"
+negative_constraints:
+  - "Do not use a native title as an icon control's name in the chat."
+  - "Do not write the concept's hover or preview timings into canon as product values."
+  - "Do not quote the owner's messages in DL-145 to DL-151."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-146 - The Capabilities Wand In Colour The Fast Bolt Strikes From The Top And Grill Me's Icon Is A Kettle Grill
+
+```yaml
+plan_unit_id: DL-146
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-146 records the owner request of 2026-10-07 and his answer on decision card 5, and amends DL-140. The composer's
+  capabilities wand, and the wand in its menu head, is drawn in colour at rest and on hover (a silver handle, a gold
+  star, blue, pink and green sparkles), and after its flick its sparkles twinkle in turn; it is the one exception to
+  DL-140's rule that colour is reserved for status (F3-584, F3-588). Under NieR Mode the wand stays ink (F3-589). The
+  Fast-mode bolt strikes top-down as a bright leader that runs down inside the bolt, then flashes, re-flashes and
+  settles into an afterglow, never darker than at rest; under NieR Mode its leader steps down in ink and the bolt
+  flashes solid ink (F3-588). Grill Me's glyph is a kettle grill whose act swings the lid open while flames flicker
+  and smoke rises, drawn wherever Grill Me appears as a control or a label (F3-588).
+gui_related: true
+gui_classification_reason: Records an owner decision on the assistant chat's visual design.
+split_recommended: false
+depends_on: [DL-140]
+unblocks: [F3-588, F3-584, F3-589]
+acceptance_criteria:
+  - "The capabilities wand shows its five colours at rest and on hover outside NieR Mode, and is ink under NieR Mode."
+  - "No frame of the Fast bolt's strike is darker than the bolt at rest."
+  - "The owner's decisions are recorded in plain words with their source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_icon_family_drift
+reasoning_tier: high
+context_scope: chat_neon_icons
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-146"
+  - "capabilities wand"
+  - "kettle grill"
+negative_constraints:
+  - "Do not draw any chat glyph other than the capabilities wand in its own colours."
+  - "Do not dim or darken the Fast bolt during its strike."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-147 - Activity Detail Gets A Tidy Goal Panel One Line To Do Rows And A Live Subagent Transcript
+
+```yaml
+plan_unit_id: DL-147
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-147 records the owner request of 2026-10-07 and his answer on decision card 7. Goal Activity Detail shows the
+  objective and one control row (Pause or Resume and Edit objective, with Cancel Goal alone at the far edge) and an
+  Objective history footer disclosure; the View Goal route and the Ask for a replacement control are removed, and an
+  agent-proposed replacement still follows Goal_Runtime_System's approval path when the user asks in the chat (F3-593,
+  GRS-055). To-Do rows are one-line checklist rows like the To-Do hover preview, keeping the explicit assignment when
+  one exists, with no Start work or Run work control and Open work in the selected detail; this is a second scoped
+  exception to the 2026-09-08 rollback, after DL-122's, for the To-Do rows only (F3-593, F3-542, F3-580, TDR-011).
+  Subagent rows, the preview and the detail card underline the model, and opening a subagent opens its read-only live
+  child transcript in the Turn Stage presentation, where each stretch of work between messages is one collapsed row
+  with a plain count and a small Step Rail motif that opens on click (ACD-485, F3-593).
+gui_related: true
+gui_classification_reason: Records an owner decision on the assistant chat's Activity Detail presentation.
+split_recommended: false
+depends_on: [DL-122, GRS-055, TDR-011, ACD-480]
+unblocks: [F3-593, ACD-485]
+acceptance_criteria:
+  - "Goal Activity Detail shows no View Goal route and no Ask for a replacement control."
+  - "No To-Do row carries a button; Open work is in the selected detail."
+  - "Opening a subagent opens one read-only document per child run with no composer, and each stretch of work is one collapsed row."
+  - "The owner's decisions are recorded in plain words with their source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_activity_detail_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/ToDo_Runtime.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-147"
+  - "Objective history"
+  - "Step Rail"
+negative_constraints:
+  - "Do not give a To-Do row a Start work, Run work or other mutation button."
+  - "Do not give a subagent's live transcript a composer or a control that acts on the parent thread."
+  - "Do not read the removal of the Ask for a replacement button as retiring cmd.chat.goal.propose_update."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+```
+
+### DL-148 - The Setup Popups Get Step Tiles A Readable Chat Preview And A Draggable Send Time
+
+```yaml
+plan_unit_id: DL-148
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-148 records the owner request of 2026-10-07 and his answer on decision card 8. In the setup sheets with numbered
+  questions (the four collaboration kinds and Crew Auto) each number is a step tile and the focused step fills
+  (F3-592, F3-566). The In your chat preview fills the hero's side column, scaled to fit and never above its real size
+  (F3-592). The Schedule Message sheet's 48-hour track is also its send-time control (drag, press or keys, never in
+  the past), and the sheet has no promise lines and no Technical details (F3-592, F3-573). Technical details also
+  leaves Build At, the Scheduled and Automations manager and the scheduled-message records, and stays only on each
+  setup sheet's Advanced page; Build At names the exact Plan version it binds, and the Plan's id, version and hash are
+  in the Plan's Details (F3-573, SQR-013, SQR-015, UCC-170, CDRY-021).
+gui_related: true
+gui_classification_reason: Records an owner decision on the wand module sheets' presentation.
+split_recommended: false
+depends_on: [SQR-002]
+unblocks: [F3-592, F3-573, F3-566]
+acceptance_criteria:
+  - "Dragging, pressing or stepping the send-time track writes the same Date and Time inputs as the presets and never a past time."
+  - "The Schedule Message sheet, Build At, the Scheduled and Automations manager and the scheduled-message records show no Technical details."
+  - "The owner's decisions are recorded in plain words with their source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_sheet_presentation_drift
+reasoning_tier: high
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-148"
+  - "step tile"
+  - "send-time control"
+negative_constraints:
+  - "Do not let the send-time track set a time in the past."
+  - "Do not drop the scheduled message's exact-snapshot behaviour with its promise lines (SQR-002)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Scheduling_and_Quota_Resume.md
+```
+
+### DL-149 - Agents Are Drawn As Little Puppets The Agent Graphs Become Cast Plates And Technical Details Leaves The Run Surfaces
+
+```yaml
+plan_unit_id: DL-149
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-149 records the owner request of 2026-10-07 and his answers on decision cards 6 and 8. Every agent is drawn as a
+  small marionette puppet, after PMConcept7's onboarding helpers: a control bar with strings, a chibi figure and one
+  role prop, in the theme family's material, and PMConcept7's ink NieR puppet under NieR Mode; one puppet primitive
+  draws every agent everywhere, and no agent is drawn as initials (F3-594). The puppet replaces the cast mark of
+  F3-566, F3-569, F3-580 and CWR-019 and the avatar stack of ACD-469 (DR-044). The Crew, Review, BrainStorm and Chat
+  Room graphs become one cast plate grammar in the setup sheets and at the head of each run view (F3-595). Run cards
+  and run views have no Technical details (F3-569, F3-595, UCC-170, CDRY-021). Puppets hold still in setup sheets, act
+  once on run cards and run views, and sway continuously only on the chat's live agents card (F3-594).
+gui_related: true
+gui_classification_reason: Records an owner decision on how agents and their graphs are drawn.
+split_recommended: false
+depends_on: [DL-111]
+unblocks: [F3-594, F3-595, F3-566, F3-569, ACD-469]
+acceptance_criteria:
+  - "Every agent mark in sheets, cards, run views, Activity and the live agents card is the one puppet primitive of F3-594."
+  - "No run card or run view shows Technical details."
+  - "The owner's decisions are recorded in plain words with their source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: agent_mark_presentation_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/DRY_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/nier-puppets-final-handoff.md, SHA-256 492a3bbeae1285f1dd1d55dfbdc87da3bfa9fce207c9ef01a9f2005abb0ddfa0"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md, SHA-256 c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-149"
+  - "marionette puppet"
+  - "cast plate"
+negative_constraints:
+  - "Do not draw an agent with initials, letters or an avatar."
+  - "Do not draw a second puppet primitive for any surface."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-150 - The Ask Card Gets A Livelier Look
+
+```yaml
+plan_unit_id: DL-150
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-150 records the owner request of 2026-10-07. The questions card (the Ask Card) keeps its behaviour and features
+  and gets a new look: an accent progress wire on its spine, one filled Next or Submit, distinct resting and chosen
+  option rows whose selection lands, the waiting mark beside the question and calmer motion; under NieR Mode the
+  chosen answer is the menu cursor and the spine's marks are diamonds (F3-596).
+gui_related: true
+gui_classification_reason: Records an owner decision on the questions card's visual design.
+split_recommended: false
+depends_on: []
+unblocks: [F3-596]
+acceptance_criteria:
+  - "The Ask Card's behaviour and draft lifecycle are unchanged (assistant-chat-design section 7.4)."
+  - "The owner's decision is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_card_presentation_drift
+reasoning_tier: standard
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-150"
+  - "Ask Card"
+  - "progress wire"
+negative_constraints:
+  - "Do not change the questionnaire's behaviour through its look."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-151 - The Retro Themes Follow PMConcept7's Colours And Box Shapes
+
+```yaml
+plan_unit_id: DL-151
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-151 records the owner request of 2026-10-07 and his answers on decision cards 3 and 4. The app's Retro token
+  tables take PMConcept7's retro values (the olive Atlas Retro Dark, and Retro Light's ink on paper with a blue
+  primary), with Retro Light's warning ink darkened for readable contrast (F3-426); Retro focus is lime on Retro Dark
+  and blue on Retro Light (F3-201). Under Retro the assistant chat uses PMConcept7's box grammar of square corners, 2
+  px structural lines, inner hairlines and hard offset shadows, keeps the chat's retro fonts, motion and sounds, draws
+  the user turn as a solid block in the theme's lime with paper-coloured text on Retro Light, and boxes the assistant
+  turn with a plain border and the hard retro shadow and no coloured strip (F3-597, ACD-469, F3-562).
+gui_related: true
+gui_classification_reason: Records an owner decision on the Retro theme presentation.
+split_recommended: false
+depends_on: [F3-426, F3-201]
+unblocks: [F3-597, ACD-469]
+acceptance_criteria:
+  - "Under Retro the chat paints only the app's Retro token values; no chat-local palette exists."
+  - "Retro motion and sounds are unchanged."
+  - "The owner's decisions are recorded in plain words with their source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: theme_token_drift
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PMCONCEPT7-RETRO-VALUES.md, SHA-256 4268674a786a33f938d43a5c91c32ba8324c78d883070e13e5aaab7b030ebdec"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/PM7-COORDINATION-20261008.md, SHA-256 c31bdbf5c69cf7f3110b2bbdc63258848bba8eee69da4154f976c295e2881002"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-151"
+  - "box grammar"
+  - "Retro token tables"
+negative_constraints:
+  - "Do not give the chat a palette of its own under Retro."
+  - "Do not change Retro motion or sounds through this decision."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
 ```
 
 ## Migration Coverage

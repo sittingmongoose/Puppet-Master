@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40035-L40411
+Source lines: L40075-L40480
 
-Source SHA256: `b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67`
+Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
 
 ---
 
@@ -22,26 +22,29 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Every icon in the assistant chat (transcript, composer, thread history, activity bar and Activity Detail, working
   activity, menus, wand sheets and module cards) is drawn from one icon registry with one drawing per concept, reused
-  everywhere; provider marks, avatars, charts and illustrations are not icons (DL-140). Anatomy: a lit tube with round
+  everywhere; provider marks, agent puppets (F3-594), charts and illustrations are not icons (DL-140, DL-149). Anatomy: a lit tube with round
   caps and joins over a core halo stroke of the same ink, plus a soft radial glow on the host element for the glow's
   tail; the icon glow is never an element blur or filter, so it draws the same on the Skia CPU raster (F3-582). Roles:
   controls draw unlit in the host ink and ignite on hover or keyboard focus (the glyph lights to the text colour, the
   halo comes up on dark themes, and the glyph's act plays once); status icons are always lit in their tone and move by
   status like the activity bar; concept icons (kind marks, mode glyphs) are lit steady; a pressed toggle sits on a
-  raised neutral tile with its glyph lit, never an accent tile. Acts: each glyph moves part by part in its own way,
+  raised neutral tile with its glyph lit, never an accent tile. One control is the exception (DL-146): the composer's
+  capabilities wand, and the wand in its menu head, wears its own fixed colours at rest and on hover (F3-588), never
+  unlit grey and never a status tone, and turns to ink under NieR Mode. Acts: each glyph moves part by part in its own way,
   the activity bar included (the goal arrow strikes the target, the To-Do ticks check in sequence, the artifact lines
-  write in); acts animate transform and opacity, a draw-on is a clip reveal with both endpoints stated, looping motion
+  write in, the wand's sparkles twinkle after its flick, Grill Me's kettle grill swings its lid open while smoke
+  rises); acts animate transform and opacity, a draw-on is a clip reveal with both endpoints stated, looping motion
   returns along its path, and below 12 px no part moves. Tones are the activity bar's status tones: blocked danger,
   attention warning, working accent, changed accent-2, done positive, idle subtle and paused muted. Colour is reserved
-  for status, so menu, event-card and card-head icons sit on neutral tiles. Module cards and sheets draw their marks
-  lit and still, with one-shot acts only, inside the live card's two-loop budget. Per-family motion voices change
+  for status, apart from the capabilities wand, so menu, event-card and card-head icons sit on neutral tiles. Module
+  cards and sheets draw their marks, agent puppets included (F3-594), lit and still, with one-shot acts only, inside the live card's two-loop budget. Per-family motion voices change
   easing only: Friendly overshoots, Glass glides, Retro steps, NieR steps. Reduced motion stops every act and loop
   while the lit ink, the halo and the silhouette still carry each state. On light themes the halo stays faint and
   never forms a smudge or a plate.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-140, F3-425, F3-426, F3-582, ACD-469]
+depends_on: [DL-140, DL-146, DL-149, F3-425, F3-426, F3-582, ACD-469]
 unblocks: []
 acceptance_criteria:
   - "An icon census of the chat finds every icon drawn from the registry, one drawing per concept."
@@ -72,8 +75,11 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not give a non-status glyph status colour outside a status host."
   - "Do not draw the icon glow with an element blur or filter."
+  - "Do not give any glyph other than the capabilities wand its own colours."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "DL-140's rule that colour is reserved for status admits one exception from DL-146: the capabilities wand."
+  - "Avatars are no longer named among the non-icons; agents are drawn as puppets (F3-594, DL-149)."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -275,21 +281,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Two glyphs carry required drawings (DL-140). The wand is a thin rod with a star tip and loose sparkles, reading as a
-  wand and never as a pencil beside the edit pen at 14 px. The Fast-mode bolt shows beside the model on the composer's
-  model chip and in a Fast reply's meta row while that row's chrome shows. It is amber, the attention tone, and
-  strikes like lightning: it cracks top-down segment by segment in under 200 ms, flashes, re-flashes and settles into
-  an afterglow, about every 5 s while Fast mode is on, and hovering it strikes it once more. The bolt never shakes or
-  moves as a whole; under reduced motion it is lit and still, and under NieR Mode it cracks in ink steps with no
-  flash.
+  Three glyphs carry required drawings (DL-140, DL-146). The wand is a thin rod with a star tip and loose sparkles,
+  reading as a wand and never as a pencil beside the edit pen at 14 px. On the composer's capabilities control and in
+  its menu head it is drawn in colour: a silver handle, a gold star and three sparkles in blue, pink and green, each
+  tube glowing in its own colour on dark themes and taking a deeper ink of at least 3:1 on light themes; hovering
+  never greys it. After its hover or focus flick the sparkles twinkle in turn, each flaring into a small eight-point
+  glint, all within about a second. The wand drawn as a working-activity step keeps its status ink. The Fast-mode bolt
+  shows beside the model on the composer's model chip and in a Fast reply's meta row while that row's chrome shows. It
+  is amber, the attention tone, and strikes like lightning, only ever brighter than at rest: it cracks top-down as a
+  bright leader, white-hot on dark themes and the bolt's amber on light ones, that runs down inside the bolt from its
+  top spike to its point in under 200 ms; then the whole bolt, its halo and its backlight flash, re-flash and settle
+  into an afterglow, about every 5 s while Fast mode is on, and hovering it strikes it once more. Its outline never
+  dims or goes dark, and the bolt never shakes or moves as a whole. Grill Me's glyph is a kettle grill (a domed lid
+  with a handle, the rim, a round bowl with grill marks, two legs), drawn wherever Grill Me appears as a control or a
+  label; its act swings the lid open while flames flicker and smoke rises, then drops it shut. Under reduced motion
+  all three are lit and still. Under NieR Mode they draw no glow and no colour: the wand stays ink, its handle a
+  lighter ink and its star filled, and its sparkles twinkle in held steps; the bolt's leader steps down band by band
+  in ink and the bolt then flashes solid ink; and the grill's act steps.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-140, F3-584]
+depends_on: [DL-140, DL-146, F3-584]
 unblocks: []
 acceptance_criteria:
   - "The wand reads as a wand, distinct from the edit pen, at 14 px."
   - "The Fast-mode bolt cracks top-down, flashes and settles, and never translates or shakes."
+  - "The capabilities wand shows its five colours at rest and on hover outside NieR Mode, and is ink under NieR Mode."
+  - "No frame of the bolt's strike is darker than the bolt at rest."
+  - "Grill Me's kettle grill plays its lid, flame and smoke act on hover or focus wherever it is drawn, and is still under reduced motion."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -305,20 +324,27 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-140"
+  - "Plans/Decision_Log.md#DL-146"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
 preserved_exact_tokens:
   - "star tip"
   - "cracks top-down"
+  - "silver handle"
+  - "kettle grill"
 negative_constraints:
   - "Do not animate the bolt by shaking or moving it as a whole."
+  - "Do not dim or darken the bolt during its strike."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "The 2026-10-07 NieR clause that the bolt cracks in ink steps with no flash is replaced by DL-146: the ink leader steps down and the bolt flashes solid ink."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-140, ContractName:Plans/FinalGUISpec.md#F3-584
+ContractRef: ContractName:Plans/Decision_Log.md#DL-140, ContractName:Plans/Decision_Log.md#DL-146, ContractName:Plans/FinalGUISpec.md#F3-584
 
 ### F3-589 — Assistant Chat Under NieR Mode And Scene Changes
 
@@ -332,7 +358,10 @@ canonical_text: >-
   under NieR's ink-and-parchment tables and fonts, and its icons draw no glow: ink tubes with square caps and stepped
   acts, the status marks still distinct (needs you an inverted ink block with a paper question mark and, under the
   Target brackets part, ink corner brackets; working the diamond loader under the Diamond loaders part; idle and
-  pending squares under the Square hairlines part). The installed parts land in the chat as follows: Menu cursor on
+  pending squares under the Square hairlines part). The capabilities wand stays ink, with a lighter handle and a filled
+  star, and its sparkles twinkle in held steps (F3-588, DL-146); agents are PMConcept7's ink NieR puppets with the
+  rigid visor band (F3-594); a setup sheet's step number is an inverted ink square (F3-592); and the Ask Card's chosen
+  answer is the menu cursor, with diamond spine marks (F3-596). The installed parts land in the chat as follows: Menu cursor on
   menus, pickers, thread rows and wand rows; Slice open on menus, dialogs and sheets; Text decode on the thread title
   at a thread switch and on the head of an arriving assistant turn; Page wipe on a thread switch; Alert glitch, Scan
   sweep and Drifting particles on alert toasts, refusals and failed steps; Pod companion above the composer, turning
@@ -348,7 +377,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-144, SSYS-042, F3-441, F3-584, F3-585, ACD-474]
+depends_on: [DL-144, DL-146, DL-149, SSYS-042, F3-441, F3-584, F3-585, ACD-474]
 unblocks: []
 acceptance_criteria:
   - "Every chat surface renders under NieR Mode with no glow and with its parts placed as listed."

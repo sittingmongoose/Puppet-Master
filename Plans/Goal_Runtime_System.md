@@ -188,18 +188,16 @@ Goal · Running
 
 `Paused` and `Blocked` states substitute `Resume` for `Pause`, and render `Resume` disabled with the owner-supplied reason when the Goal is blocked and the condition has not cleared. The edit icon opens Goal Activity Detail already in edit mode with the objective textarea focused. Clicking the Activity item itself opens the ordinary detail view. No separate `Open` button is required.
 
-Goal Activity Detail contains a text-only objective editor and the lifecycle controls:
+Goal Activity Detail contains the objective, one lifecycle control row and the objective history (DL-147, FinalGUISpec F3-593):
 
 ```text
 Goal
-[objective textarea]
-[Save] [Cancel edit]
-
-[Pause/Resume] [Cancel Goal]
-History ▾
+<objective>
+[Pause/Resume] [Edit objective]          [Cancel Goal]
+Objective history ▾  (n revisions)
 ```
 
-`History` is a compact revision list: revision number, timestamp, `change_source`, and the objective text at that revision. The blocker reason is shown when `blocked_reason_ref` is present.
+Edit objective swaps the objective for the text-only objective editor with `[Save] [Cancel edit]`. Cancel Goal stands alone at the far edge of the row, apart from the safe actions. `Objective history` is a compact revision list that opens in place under the footer: revision number, timestamp, `change_source`, and the objective text at that revision. The blocker reason is shown when `blocked_reason_ref` is present. The panel has no route to a separate Goal document and no control that asks the agent for a replacement; an agent-proposed replacement still follows the authority path above when the user asks for one in the chat.
 
 The detail view must not show a title field, phases, tranches, child Goals, budgets, a current action, a next action, a task drawer, a progress bar derived from invented percentages, or separate scope/done-when/constraints fields. Goal progress is visible through To-Dos and through the ordinary transcript, not through a Goal-owned task tracker.
 

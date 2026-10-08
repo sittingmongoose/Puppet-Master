@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L13516-L14613
 
-Source SHA256: `124899875c100510041d0cffe1b6a2095765d6e1fee967bcbb11b0b3fa2427df`
+Source SHA256: `96296f9a137b515ccb5cae5c4cb35c0f3a73485e35952c0cd9ec86e775083dc5`
 
 ---
 
@@ -236,7 +236,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Change setup… | Command, `cmd.collaboration.configure`. Save changes commits it. | `workflow_card` |
 | Run again with changes… | Command, the same as Run again with changes in the sheet | `workflow_card` |
 | Download transcript | Command, revised, `cmd.collaboration.export` with content_kind transcript (CWR-031). It renders disabled with its reason until wired (UCC-156). | `workflow_card`, `workflow_panel` |
-| Technical details | View | `workflow_card` |
+| Technical details | No producer. DL-149 removes it from run cards and run views; a collaboration sheet keeps it on its Advanced page. | — |
 | A lane or team row; "+N more · Show all" | Command, `cmd.collaboration.participant.open`. Show all is View. | `workflow_card`, `workflow_panel` |
 | Needs-you decision: Allow once, Don't allow, Details | Command, `cmd.runtime.approve`, `cmd.runtime.decline`, `cmd.permissions.review_request` | `workflow_card` only |
 | Helper timed out: Retry, Use another model, Continue without it | Command, revised, `cmd.collaboration.reconfigure` (retry, replacement, waiver) | `workflow_card` |
@@ -358,8 +358,8 @@ A row may list several controls, and then it gives each its disposition. The Sur
 |---|---|---|
 | Wand "Schedule Message…" | View (it opens the sheet) | `wand` |
 | Presets | Draft | `schedule_sheet` |
-| Date, time, time zone, missed policy, grace, route model | Draft | `schedule_sheet` |
-| Technical details | View | `schedule_sheet` |
+| Date and time (including dragging, pressing or stepping the send-time track, DL-148), time zone, missed policy, grace, route model | Draft | `schedule_sheet` |
+| Technical details | No producer. DL-148 removes it from the Schedule Message sheet, Build At, the manager and the records. | — |
 | See all scheduled | View | `schedule_sheet` |
 | "Schedule for {time}" | Command, revised, `cmd.chat.schedule_message` (SQR-013) | `schedule_sheet` |
 | Done on the confirmation | View | `schedule_sheet` |

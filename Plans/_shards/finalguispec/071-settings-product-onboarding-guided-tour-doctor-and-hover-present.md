@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35078-L35827
+Source lines: L35100-L35851
 
-Source SHA256: `b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67`
+Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
 
 ---
 
@@ -449,7 +449,8 @@ canonical_text: >-
   visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent
   within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement,
   pointer press, scrolling, or departure before the thresholds resets or cancels the pending opening; pointer departure
-  after opening uses a 160 ms grace period; Escape closes.
+  after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and
+  that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145).
   Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state,
   shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route
   IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current.
@@ -464,13 +465,14 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false
-depends_on: [F3-517, F3-519]
+depends_on: [F3-517, F3-519, DL-145]
 unblocks: [F3-524]
 acceptance_criteria:
   - "One overlay controller positions all tags above/below with edge clamping, no clipping, and no layout shift."
   - "A pointer tag becomes visible only after at least 1600 ms of residence plus 1100 ms of stationary intent within a 5 px radius, and a keyboard-focus tag only after 1000 ms of continuous focus; persistent accessible descriptions and relationships remain available immediately rather than waiting for either visual dwell; movement, target relocation, pointer press, scrolling, departure, or focus change resets/cancels the pending open, opened pointer tags retain the 160 ms departure grace, and Escape closes immediately."
   - "Every required target has one stable hover key, accessible name, aria-describedby-equivalent relationship, and role=tooltip semantics; disabled controls remain reachable and explain their disabled reason."
   - "general.interaction.show-tooltips suppresses visual tags without removing accessible explanatory text."
+  - "A pointer press on an anchor closes its open tag, and that tag does not reopen until the pointer has left the anchor (DL-145)."
   - "User-facing native title-only behavior is absent; tests use stable IDs/data attributes rather than title text."
   - "Every tag uses human, contextual effect/state/shortcut/value/consequence language; raw command, action, schema, route, DOM, or machine identifiers never become generic visible fallback copy, while a genuinely useful technical value may appear as clearly explained secondary detail."
   - "Dynamic text, shortcut, full-value, state, consequence, and disabled reason remain current after pin/unpin, availability, truncation, theme, transparency, and Settings changes."

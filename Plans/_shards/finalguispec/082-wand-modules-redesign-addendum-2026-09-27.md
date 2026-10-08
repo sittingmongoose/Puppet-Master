@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38669-L39864
+Source lines: L38696-L39904
 
-Source SHA256: `b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67`
+Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
 
 ---
 
@@ -29,10 +29,13 @@ canonical_text: >-
   tokens. Every configuration popup is a configuration sheet with one anatomy. The head has the
   module's kind mark (no tile, no box), a sentence-case title with the canonical name inside, one
   lead sentence and the close control, and no header pill. The hero is the most important input,
-  first and focused. Then a plate, a flat drawing of who is involved and where the result goes,
-  over the roster or the module's equivalent; then the questions, numbered 1 to 4 only in the four
-  collaboration kinds, where the order is real, and unnumbered elsewhere; the promise lines saying
-  what won't happen; and one Advanced entry that opens as a page inside the same sheet. Every
+  first and focused. Then a plate, a flat drawing of who is involved and where the result goes (in
+  the four collaboration kinds, the cast plate of F3-595, DL-149), over the roster or the module's
+  equivalent; then the questions, numbered only where the order is real (1 to 4 in the four
+  collaboration kinds, 1 to 3 in Crew Auto), each number drawn as a step tile (F3-592, DL-148), and
+  unnumbered elsewhere; the promise lines saying what won't happen, where the module has any (the
+  Schedule Message sheet has none, DL-148); and one Advanced entry that opens as a page inside the
+  same sheet. Every
   control has a visible label and one helper line; options with descriptions use the preserved
   dropdown trigger, and each description names the real difference between the options (for
   example Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive
@@ -55,15 +58,15 @@ canonical_text: >-
   (Revert, ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most
   its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open.
   The common case never scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster
-  grows (full at 1 to 3 rows, compact at 4, a strip at 5 or 6, one sentence at 7 or 8) and grows
+  grows, showing its richest mode that fits and never scaled to fit (F3-595, DL-149), and grows
   into spare height when the column is short; the roster scrolls in its own region only at 7 or 8
   helpers with Add a helper kept visible; the side column scrolls only below 1280 x 800; the hero
   field scrolls inside itself past three lines; below a 900 px sheet width the body becomes one
   column that scrolls inside the sheet with head and foot fixed; nothing overflows sideways.
   Hovering or focusing a control lights the plate parts and read-back phrases it affects and dims
   the others, with no re-render. Kinds are told apart by a kind mark drawn by shape, and each
-  participant by a cast mark drawn from silhouette, spike and hue with its state as a ring, never
-  by initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a
+  participant by its puppet, which replaced the cast mark (F3-594, DL-149): a role prop, the theme
+  family's material and a puppet-drawn state, never initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a
   block (columns are separated by space only), nested boxes, uppercase micro-labels or emoji.
   Typography (J-1): every wand-module surface uses the theme's own font with no separate display
   face; the voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings)
@@ -83,7 +86,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
-depends_on: [DL-109, DL-113, DL-114, DL-115, DL-139, ACD-475, F3-431, F3-531, F3-534, F3-582]
+depends_on: [DL-109, DL-113, DL-114, DL-115, DL-139, DL-148, DL-149, ACD-475, F3-431, F3-531, F3-534, F3-582]
 unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
   - "Theme timing never overrides the shared timing or order of a transcript entrance."
@@ -145,6 +148,8 @@ stale_retired_dispositions:
   - "2026-09-03 redesign section 10 'one shared modal shell' and 'pops out to a full panel' are superseded for presentation by this unit, F3-569 and ACD-480; the participant-row and per-kind behaviour sentences stay."
   - "Additive Correction v4 'Nothing here authorises a broad restyle' is superseded for the wand modules' surfaces by DL-109 and this unit."
   - "DL-139 replaces the solid-sheet outcome of DL-114's 2026-09-27 check on the Skia GPU path: once the Skia renderer extensions draw backdrop blur, sheets are frosted there and stay solid on the CPU raster."
+  - "The cast mark drawn from silhouette, spike and hue with its state as a ring is replaced by the agent puppet of F3-594, and the plate's row-count thresholds (full at 1 to 3 rows, compact at 4, a strip at 5 or 6, one sentence at 7 or 8) by F3-595's fit rule (DL-149)."
+  - "The promise lines are drawn only where a module has any; the Schedule Message sheet has none (DL-148)."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -239,16 +244,17 @@ canonical_text: >-
   press consumed by a menu or a dialog never falls through to stopping an agent. Escape on a sheet
   runs the sheet's cancel path (UIW-025). In one place Escape is not the close button: a Crew Auto
   sheet opened from a Crew sheet goes back one step to the Crew sheet with its draft on Escape or
-  Cancel, while the close button and the scrim close both; the registry help says Escape goes back one step. A dropdown opened from a sheet paints above it and returns focus to its trigger.
+  Cancel, while the close button and the scrim close both; the registry help says Escape goes back one step. A dropdown opened from a sheet paints above it and returns focus to its trigger; clicking its own trigger again closes it, clicking another dropdown's trigger in the same sheet switches to that dropdown, and each trigger reports whether its list is open (amended 2026-10-08, DL-145).
 gui_related: true
 gui_classification_reason: "Defines sheet keyboard behaviour and the scoped shortcut registry rules."
 split_recommended: false
-depends_on: [F3-566, UIW-025]
+depends_on: [F3-566, UIW-025, DL-145]
 unblocks: []
 acceptance_criteria:
   - "Ctrl/Cmd+Enter in a sheet dispatches exactly the command of the primary it activates and never a warm primary without focus."
   - "An Escape consumed by a menu or dialog never stops an agent."
   - "The shortcut registry lists Confirm dialog (primary action) as reserved and dialog-scoped and Tab as composer-scoped."
+  - "A second click on a sheet dropdown's own trigger closes it (DL-145)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -306,9 +312,10 @@ canonical_text: >-
   Open Panel, Message and More may sit behind Expand, and below 520 px the helper count may move into
   the card's hover card (DL-123). On a result face or a receipt, Message moves into More as a
   disabled item with its reason printed ("This {Kind} has finished, so it can't take messages. Ask
-  the assistant instead."), never only in a tooltip. The Coordinator's cast mark uses the text
-  colour or its seat colour, never the accent (DL-111). Open Panel opens the run view, the editor document of ACD-480, which
-  holds the full record. While a run's view is the active editor tab, the card's follow-on controls
+  the assistant instead."), never only in a tooltip. The Coordinator's puppet (the crowned one,
+  F3-594) uses the text colour or its seat colour, never the accent (DL-111). Open Panel opens the run view, the editor document of ACD-480, which
+  holds the full record. The run view is headed by the run's cast plate in live states (F3-595), and
+  neither a run card nor a run view shows Technical details (DL-149). While a run's view is the active editor tab, the card's follow-on controls
   give way to one line saying where to decide, at the same height, so a control that changes the run
   is in one place at a time; decisions from an approval owner stay in the card. The collaboration
   hover cards show at most four run rows plus one overflow line (APR-007).
@@ -318,12 +325,13 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Fixes run card geometry, receipts and the run view hand-off."
 split_recommended: false
-depends_on: [F3-566, ACD-480, DL-111, DL-123]
+depends_on: [F3-566, ACD-480, DL-111, DL-123, DL-149]
 unblocks: []
 acceptance_criteria:
   - "The editor/chat split preserves a 360 px minimum chat pane while card tiers continue to measure card content width."
   - "A collapsed or sub-520 px card reaches Open Panel, Message and More through Expand; a finished run's Message prints why it is disabled."
   - "The Coordinator's mark never paints the accent."
+  - "No run card or run view shows Technical details (DL-149)."
   - "Card heights stay within the tier budgets under the periodic tick in all eight themes."
   - "No card shows more than three lane rows without its summary row."
   - "Every module's finished trace uses the one 44 px receipt grammar."
@@ -578,25 +586,30 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Schedule Message and Build At are standard sheets of F3-566 and keep every field of section 13.
   Schedule Message: the hero is the message itself, shown as the future bubble it will become, with
-  its attachments; a plate of the next 48 hours shows existing schedules and presets that write the
-  real date and time inputs; one sentence states the resolved time in the schedule's own time zone,
+  its attachments; a plate of the next 48 hours shows existing schedules, presets that write the
+  real date and time inputs, and the send marker, which is also the send-time control (drag, press or
+  keys, never in the past; F3-592, DL-148); one sentence states the resolved time in the schedule's own time zone,
   and a second when a daylight-saving change falls before it; the route row names who will answer
   and says the model is never swapped silently; the missed-time behaviour; and a primary that names
   the time. The composer keeps its text until the schedule commits (section 13). A link opens the
-  Scheduled and Automations manager. Build At: a week plate of the build slots; one time or a
+  Scheduled and Automations manager. The Schedule Message sheet has no promise lines and no Technical
+  details (DL-148). Build At: a week plate of the build slots; one time or a
   nightly time slot; the days in words; whether to keep going next time; the wrap-up time; who
-  builds it; what happens if the slot is missed; and the exact Plan version in Technical details.
+  builds it; what happens if the slot is missed; and the exact Plan version it binds, named in the
+  sheet's lead, with the Plan's id, version and hash in the Plan's Details (PDET-001) and no Technical
+  details on the sheet (DL-148).
   The Plan card's Schedule needs update notice stays, and the Plan card's schedule line belongs to
   Assistant_Plan_Runtime APR-071. Scheduling_and_Quota_Resume SQR-012 owns the scheduled message's
   transcript card and its state words.
 gui_related: true
 gui_classification_reason: "Defines what the two scheduling sheets show."
 split_recommended: false
-depends_on: [F3-566]
+depends_on: [F3-566, DL-148]
 unblocks: []
 acceptance_criteria:
   - "The Schedule Message sheet states the resolved time in the schedule's own time zone before commit."
-  - "Build At keeps the exact Plan version reachable in Technical details."
+  - "Build At names the exact Plan version it binds, and the Plan's id, version and hash are reachable through the Plan's Details."
+  - "The Schedule Message sheet shows no promise lines and no Technical details."
   - "A Plan version change still shows Schedule needs update."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -1043,7 +1056,7 @@ canonical_text: >-
   APR-061 and assistant-chat-design v3 item 20), allowed on 2026-09-27 for five surfaces only
   (DL-122), because each run's full detail lives in its run view (ACD-480). For Crew, BrainStorm,
   Review and Chat Room, the Activity Detail body is a short team list: the run title, the run's one
-  true sentence, where the run is now, one 36 px row per helper (its cast mark, name and one state
+  true sentence, where the run is now, one 36 px row per helper (its puppet, F3-594, name and one state
   word, and no stand-in sentence, because no model stands in for a chosen helper, DL-121), then Open
   Panel and Message. It never repeats the run card or the kind's board. A click on
   one of these four domains' chip in the Activity bar reveals the newest card of that kind in the
@@ -1054,7 +1067,7 @@ canonical_text: >-
   Session, Usage), with evidence as sentences and raw data behind Show raw data, and no metric-card
   grid and no pills. Every other Activity Detail family (Goal, To-Dos, Subagents, Changes, Artifacts)
   and every other Context Details section keeps the restored native card, panel and grid
-  presentation.
+  presentation, apart from the To-Do rows, which are DL-147's second scoped exception (F3-593).
 gui_related: true
 gui_classification_reason: "Defines the compact Activity Detail and Back Seat Driver Context Details surfaces."
 split_recommended: false
@@ -1065,7 +1078,7 @@ acceptance_criteria:
   - "No helper row in the short team list carries a stand-in sentence (DL-121)."
   - "A collaboration domain chip click reveals the newest card; its hover rows still open Activity Detail."
   - "Back Seat Driver's Context Details section has no metric-card grid and no pills."
-  - "Goal, To-Dos, Subagents, Changes and Artifacts keep the native card and grid presentation."
+  - "Goal, To-Dos, Subagents, Changes and Artifacts keep the native card and grid presentation, apart from the To-Do rows of F3-593 (DL-147)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -1093,7 +1106,7 @@ preserved_exact_tokens:
   - "short team list"
   - "no metric-card grid"
 negative_constraints:
-  - "Do not extend the exception beyond the four collaboration kinds and Back Seat Driver's Context Details."
+  - "Do not extend the exception beyond the four collaboration kinds and Back Seat Driver's Context Details; the To-Do rows' exception is DL-147's, stated in F3-593, not this unit's."
   - "Do not remove the hover-row route into Activity Detail."
 owner_hints:
   - Plans/FinalGUISpec.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36570-L37269
+Source lines: L36594-L37296
 
-Source SHA256: `b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67`
+Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
 
 ---
 
@@ -159,8 +159,8 @@ invariants.
   section panel, and grid presentation across all nine Activity Detail families while preserving
   concise hierarchy, high contrast, clear progress and state grouping, quiet action rows, and canonical routing:
   1. *Goal Detail:* Objective headline, lifecycle status, inline edit/save, progress indicators, and revision history.
-  2. *To-Dos Detail:* Hierarchical task tree, inline completion status (filled dot with strike-through), owner chips, and action links without separate Done headers.
-  3. *Subagents Detail:* Active and completed subagent cards, parent task link, model identity, tool invocation count, and termination status.
+  2. *To-Dos Detail:* Hierarchical task tree, inline completion status (filled dot with strike-through), owner chips (the owner's mark or name, only for an explicit assignment), and Open work in the selected item's detail rather than action links on rows, without separate Done headers.
+  3. *Subagents Detail:* Active and completed subagent cards, parent task link, model identity (underlined), tool invocation count, and termination status; opening a subagent opens its read-only live transcript (ACD-485, F3-593).
   4. *Crew Detail:* Coordinator card, member cards with assigned roles, live phase indicator, and output links.
   5. *BrainStorm Detail:* Idea clusters, exploration tracks, retained questions/answers, and synthesized plan seeds.
   6. *Review Detail:* Reviewer roster, pass-by-pass findings, severity ratings, consensus/single-pass summary, and remediation links.
@@ -171,6 +171,8 @@ invariants.
   Scoped exception (2026-09-27, DL-122): for Crew, BrainStorm, Review and Chat Room (items 4 to 7) the
   Activity Detail body is the short team list of F3-580, and the kind content listed above lives in
   the run view (ACD-480). The other five families keep the native presentation above.
+  Second scoped exception (2026-10-08, DL-147): the To-Dos rows of item 2 are one-line checklist rows like the
+  To-Do hover preview, inside the native panel (F3-593).
 - **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
   render findings, diagnostics, and code views without interactive mutation controls or misleading
   active buttons, clearly labeling the static or demo nature of the content.
@@ -600,6 +602,7 @@ canonical_text: >-
   descriptions, and consistent inset footers with 16 px padding and clear button hierarchy. Selecting
   Single Agent Review immediately collapses the active reviewer roster to one. All nine Activity Detail
   families adhere to the unified native card and grid presentation grammar per USER-REFERENCE-LAYOUT-ROLLBACK-20260908,
+  apart from the scoped exceptions of F3-580 (DL-122) and the To-Do rows of F3-593 (DL-147),
   superseding the reference-video flat-row and forced single-column layout while preserving concise hierarchy,
   clear progress/state grouping, and quiet action rows. Read-only inspection fixtures present findings
   and code evidence without interactive mutation controls.
@@ -610,7 +613,7 @@ unblocks: []
 acceptance_criteria:
   - Popups use shared choice dropdowns, plain-language options, and 16 px inset footers.
   - Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
-  - All nine Activity Detail families apply the native card and grid presentation grammar with concise hierarchy, superseding the reference-video flat-row prescription.
+  - All nine Activity Detail families apply the native card and grid presentation grammar with concise hierarchy, superseding the reference-video flat-row prescription, apart from the scoped exceptions of F3-580 and F3-593.
   - Read-only inspection demos render findings without interactive mutation controls.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -638,7 +641,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not retain multiple reviewers when Single Agent Review is active.
   - Do not omit any of the nine Activity Detail families from the unified grammar.
-  - Do not reintroduce reference-video flat-row or forced single-column CSS into Activity Detail.
+  - Do not reintroduce reference-video flat-row or forced single-column CSS into Activity Detail beyond the scoped exceptions of F3-580 and F3-593.
 owner_hints:
   - Plans/FinalGUISpec.md
 ```

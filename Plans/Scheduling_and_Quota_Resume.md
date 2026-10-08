@@ -1172,8 +1172,9 @@ durable commit and only when the scheduled text came from it. On the card and in
 Edit and send and Reschedule are `cmd.chat.schedule_message.update`; Edit refuses with its typed reason, printed
 as a sentence, once dispatch has started. Send now on a `Held` message, including a missed one, is the same
 update with `reschedule_to: "now"`. Cancel is `cmd.chat.schedule_message.cancel` with the expected revision and
-currentness. Go to message and Open message are `cmd.chat.open_thread` with `route_target: message`. Details and
-Technical details only disclose.
+currentness. Go to message and Open message are `cmd.chat.open_thread` with `route_target: message`. Details only
+disclose; the Schedule Message and Build At sheets, the scheduled-message card and its record, and the Schedule Manager show no Technical details
+(DL-148).
 
 The Build At sheet's primary is one `cmd.chat.plan.schedule_build` whose `AssistantPlanScheduleRequest` carries
 the window specification; the owner creates the binding and its `ExecutionSchedule` atomically, and the surface
@@ -1335,7 +1336,9 @@ times, Keep going next time, Wrap-up time, the timezone, who builds it (`executi
 builds it", "As a Goal", whose Goal is created only when the build starts, or "A Crew"), and what to do if the
 slot is missed. A value the sheet shows is the value it records: when the missed policy is `cancel_after_grace`
 the minutes shown are recorded as the schedule's `grace_seconds`. The read-back sentence and any DST line are
-computed from the real start, stop and wind-down; Plan id, version and hash sit in Technical details.
+computed from the real start, stop and wind-down. The sheet names the exact Plan version it binds, and the Plan's id,
+version and hash are in the Plan's Details (FinalGUISpec PDET-001), not in a Technical details disclosure on the
+sheet (DL-148).
 
 The Plan card's schedule line is secondary information beside the Build control; its placement belongs to
 `Plans/Assistant_Plan_Runtime.md` and its content to this owner. Before a run it gives the cadence, the slot and
@@ -1355,8 +1358,9 @@ canonical_text: >-
   The Build At sheet binds the exact Plan version it names and commits through SQR-013, offering schedule_kind,
   days, start and stop, Keep going next time, Wrap-up time, timezone, execution_topology and the missed policy.
   A value the sheet shows is the value it records; under cancel_after_grace the shown minutes are recorded as
-  grace_seconds in pm.execution.schedule.v2 and survive reload (DL-138). The read-back and DST line are computed from the real start, stop and wind-down; Plan id,
-  version and hash sit in Technical details. The Plan card schedule line is secondary information whose placement
+  grace_seconds in pm.execution.schedule.v2 and survive reload (DL-138). The read-back and DST line are computed from the real start, stop and wind-down; the sheet
+  names the exact Plan version it binds, and the Plan's id, version and hash are in the Plan's Details, not in
+  Technical details on the sheet (DL-148). The Plan card schedule line is secondary information whose placement
   is Assistant Plan Runtime's and whose content is this owner's: cadence, slot, next occurrence and a night
   ribbon before a run, Building now with the wrap-up time during a slot, and otherwise a lead canon token of
   Outside execution window, Paused, Waiting for Usage (with reset truth, no countdown when unknown) or Schedule

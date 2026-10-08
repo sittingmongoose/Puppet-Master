@@ -713,7 +713,7 @@ To-Dos are Activity-only. They are never rendered as transcript cards.
 
 The Activity bar hover preview shows the completed-over-total summary, the currently `in_progress` items, the next runnable items, and a blocked count when it is nonzero. It shows no verification state and no source grouping.
 
-Activity Detail renders one hierarchical list in `display_order` within each parent. Completed items remain **inline**, in place, with a filled dot and strike-through — there is no Done section and no reordering of completed work to the bottom. Parents expand and collapse as local view state. Concurrent `in_progress` items are individually indicated rather than collapsed into one "current" item. A `blocked` item shows its blocker detail from `blocked_reason_ref`. Where useful, a leaf links to its active work, subagent, or artifact through `cmd.chat.todos.open_work`.
+Activity Detail renders one hierarchical list in `display_order` within each parent. Completed items remain **inline**, in place, with a filled dot and strike-through — there is no Done section and no reordering of completed work to the bottom. Parents expand and collapse as local view state. Concurrent `in_progress` items are individually indicated rather than collapsed into one "current" item. A `blocked` item shows its blocker detail from `blocked_reason_ref`. Where useful, a leaf links to its active work, subagent, or artifact through `cmd.chat.todos.open_work`, offered as Open work in the item's selected detail; rows carry no buttons (DL-147).
 
 The panel must not show a Done category, source headers, a verification column, a per-item progress percentage, or a single-current-item stepper.
 
@@ -925,7 +925,10 @@ APR-059.
   USER-REFERENCE-LAYOUT-ROLLBACK-20260908, To-Do Activity Detail presentation restores native card and
   hierarchy presentation rather than reference-derived forced flat-row CSS, preserving visual baseline
   alignment, inline completion (filled dot + strike-through), single bounded hover preview without nested
-  panels, disclosures, and zero decorative left stripes.
+  panels, disclosures, and zero decorative left stripes. Scoped exception (2026-10-08, DL-147, FinalGUISpec
+  F3-593): each row is one line in the To-Do hover preview's checklist form, inside the native panel, with the
+  ownership assignment shown only when an explicit agent or Persona is assigned and no Start work or Run work
+  control; the next immediate action reads as the row's status word and the selected item's Open work.
 
 ```yaml
 plan_unit_id: TDR-011

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5338-L26460
+Source lines: L5338-L26462
 
-Source SHA256: `b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67`
+Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
 
 ---
 
@@ -10753,8 +10753,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  All themes show visible focus indicators: Retro Dark/Light use an ACID_LIME 2px border, and
-  Basic uses a high-contrast 2px ring with 2px offset in accent-blue.
+  All themes show visible focus indicators: Retro Dark/Light use a 2px border, ACID_LIME (Retro
+  Dark's --accent-lime) on Retro Dark and accent-blue on Retro Light (amended 2026-10-08, DL-151),
+  and Basic uses a high-contrast 2px ring with 2px offset in accent-blue.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible focus indicators despite the source inference being false.
@@ -10789,7 +10790,8 @@ preserved_exact_tokens:
 - "accent-blue"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retro Light's ACID_LIME focus border is replaced by accent-blue, PMConcept7's Retro Light focus (DL-151)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
