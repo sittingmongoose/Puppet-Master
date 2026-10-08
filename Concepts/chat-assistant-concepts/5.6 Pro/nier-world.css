@@ -33,8 +33,13 @@
   transform-origin: left center; transform: scaleX(0); animation: o55nw-boot-meter 640ms steps(12, end) 80ms both; will-change: transform; }
 @keyframes o55nw-boot-line { to { opacity: 1; } }
 @keyframes o55nw-boot-meter { to { transform: scaleX(1); } }
-/* full cover, then the game's flicker off */
-@keyframes o55nw-boot-out { 0%, 70% { opacity: 1; } 76% { opacity: 0; } 82% { opacity: .8; } 88% { opacity: 0; } 93% { opacity: .35; } 100% { opacity: 0; } }
+/* full cover, then a 2-step fade off. The old flicker reversed a window-sized plate several times in the last
+   330 ms (about six flashes a second). A large surface leaves one way only. */
+@keyframes o55nw-boot-out {
+  0%, 72% { opacity: 1; animation-timing-function: step-end; }
+  86% { opacity: .4; animation-timing-function: step-end; }
+  100% { opacity: 0; }
+}
 
 /* ================================================================================ Unit readouts [readouts] */
 /* The status bar reads like a unit's status panel: inverted mono labels (AI for the agent and model, NET for the

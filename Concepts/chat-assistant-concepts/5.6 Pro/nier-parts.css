@@ -200,8 +200,8 @@ html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: n
    by nier_palette_56.py into nier.css's generated block, keyed by the cover's own tone (the look it covers). */
 #o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict; }
 #o55np-reboot > .o55np-rb-band { position: absolute; inset: 0; background: var(--rb-ink); transform: translateY(-101%); will-change: transform; }
-#o55np-reboot > .o55np-rb-band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--rb-ink); box-shadow: 0 -3px 0 var(--rb-ink); }
-#o55np-reboot > .o55np-rb-band > .o55np-rb-lines { position: absolute; inset: 0;
+#o55np-reboot .o55np-rb-band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--rb-ink); box-shadow: 0 -3px 0 var(--rb-ink); }
+#o55np-reboot .o55np-rb-band > .o55np-rb-lines { position: absolute; inset: 0;
   background: repeating-linear-gradient(to bottom, rgba(var(--rb-ink-rgb), 0) 0 2px, rgba(var(--rb-shade-rgb), .09) 2px 3px); opacity: .9; }
 #o55np-reboot .o55np-rb-copy { position: absolute; left: 50%; top: 50%; width: 360px; margin: -44px 0 0 -180px; color: var(--rb-paper);
   font: 500 11px/1.7 "PM NieR Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .22em; text-transform: uppercase; }
@@ -214,6 +214,11 @@ html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: n
 #o55np-reboot .o55np-rb-line { display: flex; gap: 10px; }
 #o55np-reboot .o55np-rb-line::after { content: "- - -"; margin-left: auto; opacity: .6; }
 #o55np-reboot .o55np-rb-line[data-ok]::after { content: "OK"; opacity: 1; }
+/* Tear-out: six horizontal slats, each clipping one band of the plate (the slice is the full plate, shifted up by
+   this slat's top). They slide off in script (translateX ±101%, steps(4), 30 ms from the middle outward) and ignore
+   the pointer, so the window shows through band by band and stays clickable. */
+#o55np-reboot > .o55np-slat { position: absolute; left: 0; right: 0; overflow: hidden; pointer-events: none; will-change: transform; }
+#o55np-reboot > .o55np-slat > .o55np-rb-band { position: absolute; left: 0; width: 100%; background: var(--rb-ink); transform: none; will-change: auto; }
 
 /* ---- Slice open [slice]: menus, pickers, dialogs, the context drawer and wand sheets unfold from a 1px line, one
    flicker step. They mount once per opening (the app's patch keeps an open overlay's node), so the animation runs once.
