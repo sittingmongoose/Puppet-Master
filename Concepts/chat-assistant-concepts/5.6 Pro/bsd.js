@@ -165,12 +165,18 @@
     padding, J-2 item 2); the key stays in data-k so `disclosures` remembers it and foldRaw folds it */
  const rawDisc=(key,summary,body,cls)=>window.PM56_SHELL.pmxDisclosure({key,cls:'pmx-bsd-raw'+(cls?' '+cls:''),open:!!disclosures.get(key),summary,body});
  function disc(c,key,label,body){return '<details class="pmx-bsd-disc" data-k="'+c.esc(key)+'"'+opened(key)+'><summary>'+chev()+'<span>'+label+'</span></summary><div class="pmx-bsd-disc-body">'+body+'</div></details>';}
+ function readLine(cursor, generation, end){
+  const n=Number(cursor)||0, g=Number(generation)||0;
+  if(n<=0) return end?'Nothing read yet.':'Nothing read yet';
+  const s='Read up to version '+n+' of '+g;
+  return end?s+'.':s;
+ }
  function sessionBody(c,a,cur){
   const idn=a.identity||{},row=K.stageRow?K.stageRow(a.stage):a.stage,stage=row?STAGE_PLAIN[row]||row:'Ordinary work in this chat',id=a.threadId;
   const S=window.PM56_SHELL,si=S.pmxStandIn?S.pmxStandIn({requested:idn.requestedName,effective:idn.effectiveName,reason:idn.reason,noSubstitute:!idn.effectiveName}):null;
   const who=idn.effectiveName&&idn.effectiveName===idn.requestedName?'<p class="pmx-bsd-say">Advisor: <b>'+c.esc(idn.effectiveName)+'</b> as <b>'+c.esc(idn.persona||'Critical Advisor')+'</b>, the model you picked.</p>'
    :'<p class="pmx-bsd-say">'+(idn.effectiveName?c.esc(advisorWords(idn))+'.':'<b>'+c.esc(idn.requestedName||'Its model')+'</b> isn’t available right now, and nothing stands in, so it isn’t checking.')+'</p>'+(si&&si.fine?'<p class="pmx-bsd-fine">'+si.fine+'</p>':'');
-  const read=cur?'Read up to <b>v'+a.cursor+'</b> of v'+cur.generation+'.':'',fresh=a.epoch-1-(saveExtra.get(a.id)||0);
+  const read=cur?readLine(a.cursor,cur.generation,true):'',fresh=a.epoch-1-(saveExtra.get(a.id)||0);
   const paused=a.paused,stopped=a.stopped,quar=a.quarantined;
   const b=(ctl,label,off)=>'<button type="button" class="soft-button" data-action="bsd-control"'+attrs(id)+' data-control="'+ctl+'" data-epoch="'+a.epoch+'"'+(off?' disabled':'')+'>'+label+'</button>';
   const canResume=!stopped&&(paused||a.state==='quota_paused');
@@ -685,5 +691,5 @@
   p.usage={calls,checks:u?u.localEvaluations:0,skipped:u?u.noCalls:0,costUsd:u&&u.costUsd!=null?u.costUsd:calls?null:0,costReported:!!(u&&u.costUsd!=null),separate:true,purpose:'bsd',account:idn.effectiveAccount||idn.requestedAccount||null};
   return p;
  }
- window.PM56_BSD={engine,identity,refresh,view,dot,policy:id=>policyView(id),state:()=>statusOf(view(),'details').word,status:(where,id)=>statusOf(view(id),where||'details'),snapshot:id=>engine.snapshot(id||E.ctx().thread.id),held:()=>view().assignment?.findings.filter(f=>f.status==='held')||[],emitted:()=>view().assignment?.findings.filter(f=>f.status==='emitted')||[],lastSave:()=>lastSave?clone(lastSave):null,choices:key=>CHOICES[key]?clone(CHOICES[key]):null,foldAsides:()=>{openAside.clear();},foldRaw:()=>{for(const k of [...disclosures.keys()])if(/^bsd12-(raw|raw-usage|tx):/.test(k))disclosures.delete(k);},restore:()=>{engine.clear();refresh();}};
+ window.PM56_BSD={engine,identity,readLine,refresh,view,dot,policy:id=>policyView(id),state:()=>statusOf(view(),'details').word,status:(where,id)=>statusOf(view(id),where||'details'),snapshot:id=>engine.snapshot(id||E.ctx().thread.id),held:()=>view().assignment?.findings.filter(f=>f.status==='held')||[],emitted:()=>view().assignment?.findings.filter(f=>f.status==='emitted')||[],lastSave:()=>lastSave?clone(lastSave):null,choices:key=>CHOICES[key]?clone(CHOICES[key]):null,foldAsides:()=>{openAside.clear();},foldRaw:()=>{for(const k of [...disclosures.keys()])if(/^bsd12-(raw|raw-usage|tx):/.test(k))disclosures.delete(k);},restore:()=>{engine.clear();refresh();}};
 })();

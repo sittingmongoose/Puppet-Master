@@ -1279,7 +1279,10 @@
   }
   function pmxRoster(o) {
     o = o || {};
-    var head = (o.cols || []).map(function (c) { return '<span class="pmx-roster-col"><b>' + str(c.label) + '</b>' + (c.helper ? '<small>' + c.helper + '</small>' : '') + '</span>'; }).join('');
+    var head = (o.cols || []).map(function (c) {
+      var hover = (c.hoverKey && c.hoverTip) ? ' data-hover-key="' + esc(c.hoverKey) + '" data-hover-tip="' + esc(c.hoverTip) + '"' : '';
+      return '<span class="pmx-roster-col"' + hover + '><b>' + str(c.label) + '</b>' + (c.helper ? '<small>' + c.helper + '</small>' : '') + '</span>';
+    }).join('');
     return '<div class="' + cls('pmx-roster', o.cls) + '"' + k(o.key) + (o.template ? ' style="--pmx-cols:' + esc(o.template) + '"' : '') + at('data-pmx-affects', o.affects) + raw(o.attrs) + '>' +
       '<div class="pmx-roster-head"><span></span>' + head + '<span></span></div>' +
       '<div class="' + cls('pmx-roster-rows', o.rowsCls) + '"' + (o.scroll ? ' data-scroll="1"' : '') + raw(o.rowsAttrs) + '>' + str(o.rowsHtml) + '</div>' +

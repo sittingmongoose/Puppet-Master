@@ -112,6 +112,7 @@
 .todo-chip{ display:inline-flex; align-items:center; max-width:100%; box-sizing:border-box; padding:1px 7px; border-radius:999px; font-size:9.5px;
   border:1px solid var(--border); background:var(--surface-3); color:var(--muted); white-space:normal;
   line-height:1.5; overflow-wrap:anywhere; }
+.todo-chip.todo-chip-dep.is-waiting{ display:inline-block; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; vertical-align:bottom; }
 /* Pending-with-a-dependency is deliberately NOT danger-toned — it is not
    blocked (TDR-003), so it must not read like a problem. */
 .todo-chip-dep.is-waiting{ border-color:color-mix(in srgb,var(--accent-2) 40%,var(--border));
@@ -214,5 +215,6 @@
 .todo-selected-detail .todo-detail-label{display:block;margin-bottom:4px;font-size:10px;font-weight:650;letter-spacing:.04em;text-transform:uppercase;color:var(--subtle)}
 .todo-selected-detail .todo-detail-outcome{margin:0;line-height:1.45;color:var(--text)}
 .todo-selected-detail .todo-chip-dep{display:flex;width:100%;max-width:100%;box-sizing:border-box;margin-top:8px;border-radius:8px;white-space:normal}
+.todo-selected-detail .todo-chip-dep.is-waiting{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;max-width:100%}
 .todo-selected-detail pre,.todo-opened-work pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px;max-height:240px;overflow:auto}
 .todo-hover-overflow{background:none;border:0;color:var(--accent);font-size:11px;text-align:left;padding:7px 0;cursor:pointer}

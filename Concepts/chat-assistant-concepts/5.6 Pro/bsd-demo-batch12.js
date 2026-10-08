@@ -74,7 +74,7 @@
   const held=a?a.findings.filter(f=>f.status==='held').length:0,shown=a?a.findings.filter(f=>f.status==='emitted').length:0,gone=a?a.findings.filter(f=>f.status==='cleared').length:0;
   const adv=S.pmxViewSection({key:'bsd12-sec-advisor',title:'The advisor',body:
    '<p class="bsd12-say">'+st.html+'</p>'+
-   '<p class="bsd12-fine">'+(a?'Read up to v'+a.cursor+' of v'+p.generation+' · '+held+' double-checking · '+shown+' shown in the chat · '+gone+' resolved quietly':'Not started. Setting it up alone starts nothing.')+(a&&a.catchUp&&a.catchUp.state==='waiting'?' · the finish waits up to '+a.catchUp.budgetSeconds+' s':'')+'</p>'+
+   '<p class="bsd12-fine">'+(a?B.readLine(a.cursor,p.generation)+' · '+held+' double-checking · '+shown+' shown in the chat · '+gone+' resolved quietly':'Not started. Setting it up alone starts nothing.')+(a&&a.catchUp&&a.catchUp.state==='waiting'?' · the finish waits up to '+a.catchUp.budgetSeconds+' s':'')+'</p>'+
    '<div class="bsd12-acts"><button type="button" class="soft-button" data-action="bsd-configure-stages" data-thread="'+c.esc(id)+'">Configure</button><button type="button" class="soft-button" data-action="bsd-open-details" data-thread="'+c.esc(id)+'">Open its Details</button></div>'});
   const lab=S.pmxViewSection({key:'bsd12-sec-lab',title:'Try a situation',body:
    '<details class="bsd12-disclosure" data-k="bsd12-lab:'+c.esc(id)+'"'+opened('bsd12-lab:'+id)+'><summary>'+chev()+'<span>Show the situations</span></summary><p class="bsd12-fine">Made-up inputs for this example. Nothing contacts an AI.</p>'+

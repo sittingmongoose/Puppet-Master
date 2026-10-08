@@ -1938,6 +1938,27 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="chat-float" data-k="chat-float">${jump}${bar}${q}</div>`;
   }
 
+  /* Size the domain tabs to their words. When the row is wider than the panel, unselected
+     tabs keep the icon and the hover tag; the selected tab keeps its whole label. */
+  function fitActivityTabs(){
+    document.querySelectorAll('.activity-filter').forEach(filter=>{
+      if(filter.classList.contains('hidden')||filter.clientWidth<8) return;
+      filter.classList.remove('tabs-icon');
+      const buttons=[...filter.children].filter(el=>el.tagName==='BUTTON');
+      if(buttons.length<2) return;
+      const box=filter.getBoundingClientRect();
+      const last=buttons[buttons.length-1].getBoundingClientRect();
+      const cut=buttons.some(b=>{const s=b.querySelector('span');return !!(s&&s.scrollWidth>s.clientWidth+1);});
+      if(!(cut||last.right>box.right+0.5)) return;
+      filter.classList.add('tabs-icon');
+      const active=filter.querySelector('button.active')||buttons[0];
+      const fr=filter.getBoundingClientRect();
+      const ar=active.getBoundingClientRect();
+      if(ar.right>fr.right+0.5) filter.scrollLeft+=Math.ceil(ar.right-fr.right);
+      else if(ar.left<fr.left-0.5) filter.scrollLeft-=Math.ceil(fr.left-ar.left);
+    });
+  }
+
   function renderActivityPanel(transient=false){
     const defs=activityDefs();
     const live=ACTIVITY_ORDER.filter(id=>defs[id]);
@@ -1951,7 +1972,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const pinLabel=(state.activity.pinned?'Unpin':'Pin')+' Activity Detail';
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button${state.activity.pinned?' is-pinned':''}" data-action="${pinAction}" aria-pressed="${state.activity.pinned?'true':'false'}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button${state.activity.pinned?' is-pinned':''}" data-action="${pinAction}" aria-pressed="${state.activity.pinned?'true':'false'}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}" data-hover-key="act-dom-${esc(id)}" data-hover-tip="${esc(x.label)}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
@@ -2382,6 +2403,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     rollDigits(rollBefore);
     restoreScroll(positions,{workH, post, workGrow:workFlipped(flips)});
     renderOverlays();
+    fitActivityTabs();
     retainHoverAfterRender();
     armComposerObserver();
     armJumpBottomListener();
@@ -4592,6 +4614,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(dragState.kind==='history')state.historyWidth=clamp(dragState.history+dx,170,360);
     if(dragState.kind==='activity')state.activityWidth=clamp(dragState.activity+dx,240,480);
     document.documentElement.style.setProperty('--editor-w',`${state.editorWidth}%`);document.documentElement.style.setProperty('--history-w',`${state.historyWidth}px`);document.documentElement.style.setProperty('--activity-w',`${state.activityWidth}px`);
+    if(dragState.kind==='activity') fitActivityTabs();
   });
   document.addEventListener('pointerup',()=>{
     if(!dragState)return;
@@ -4604,6 +4627,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const settledKind=dragState.kind;
     document.querySelectorAll('.dragging').forEach(x=>x.classList.remove('dragging'));dragState=null;savePrefs();
     if(settledKind==='editor'&&state.activity.open&&state.activity.pinned)renderApp();
+    else if(settledKind==='activity') fitActivityTabs();
   });
 
   window.addEventListener('resize',()=>{
@@ -4618,7 +4642,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       applyDemoGeomStyles(document.querySelector('.demo-dialog'),state.dialog.geom);
     }
     if(state.menu||state.hover)renderOverlays();if(phoneChanged||activityPinChanged||(isNarrow()&&state.historyMode==='pinned'))renderApp();
-    else syncJumpBottom();
+    else { syncJumpBottom(); fitActivityTabs(); }
   });
 
   // Public deterministic concept API used by the Demo Studio and automated inspection.

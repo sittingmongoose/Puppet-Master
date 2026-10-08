@@ -41,14 +41,15 @@
 .pmx-sheet .pmx-sched-when > .pmx-q-head{align-items:center;min-height:32px;}
 .pmx-sheet .pmx-sched-presets{gap:6px 18px;justify-content:flex-end;}
 .pmx-sheet .pmx-sched-slot{display:flex;flex-direction:column;height:114px;min-width:0;}
-.pmx-sheet .pmx-sched-inputs{display:grid;grid-template-columns:152px 128px 236px minmax(0,1fr);gap:12px 16px;align-items:start;margin-top:12px;min-width:0;}
+.pmx-sheet .pmx-sched-inputs{display:grid;grid-template-columns:152px 128px 236px minmax(0,1fr);gap:12px 16px;align-items:start;margin-top:12px;width:100%;max-width:100%;min-width:0;}
 .pmx-sheet .pmx-sched-inputs > .pmx-ctl{margin-top:0;}
 /* the date and time boxes stand as tall as the preserved zone trigger beside them (its two lines), so the row's
    labels and boxes line up; the trigger itself is untouched (DON'T 12) */
 .pmx-sheet .pmx-sched-inputs input[type=date], .pmx-sheet .pmx-sched-inputs input[type=time]{height:47px;padding:0 10px;font-size:12.5px;color-scheme:inherit;}
-.pmx-sheet .pmx-sched-resolved{margin:0;align-self:end;padding-bottom:14px;min-width:0;font:var(--pmx-fs-help);color:var(--muted);}
+.pmx-sheet .pmx-sched-resolved{margin:0;align-self:end;padding-bottom:14px;min-width:0;max-width:100%;display:flex;flex-wrap:wrap;align-items:baseline;column-gap:.35em;row-gap:2px;font:var(--pmx-fs-help);color:var(--muted);}
 .pmx-sheet .pmx-sched-resolved b{color:var(--text);font-weight:var(--pmx-w-620);}
-/* a time and a countdown never break inside themselves ("in 2 h / 1 m") */
+.pmx-sheet .pmx-sched-zone{min-width:0;}
+/* a time and a countdown never break inside themselves ("in 2 h / 1 m"); the countdown can drop to the next line */
 .pmx-sheet .pmx-sched-resolved b, .pmx-sheet .pmx-sched-rel{white-space:nowrap;}
 .pmx-sheet .pmx-sched-late{color:var(--warning);}
 .pmx-sheet .pmx-sched-dstsay{margin:10px 0 0;display:flex;align-items:flex-start;gap:8px;font:var(--pmx-fs-help);color:var(--muted);}
