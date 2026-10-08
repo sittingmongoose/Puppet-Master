@@ -416,9 +416,10 @@ html[data-motion="reduced"] .tx-feed-inner > .message > .message-chrome { transi
   box-shadow: none;
   animation: none;
   clip-path: none;
-  --nx-disc: var(--canvas);
-  --nx-disc-text: var(--text);
 }
+/* the dark disc (orbit.css PART 3's): the canvas on dark themes, the ink on light ones. Kept off the item rule above,
+   whose (0,5,0) would beat the light-theme line. */
+.tx-stretch { --nx-disc: var(--canvas); --nx-disc-text: var(--text); }
 body[data-theme$="-light"] .tx-stretch { --nx-disc: var(--text); --nx-disc-text: var(--canvas); }
 .tx-stretch > .tx-stretch-head {
   display: flex;
@@ -457,10 +458,23 @@ body[data-theme$="-light"] .tx-stretch { --nx-disc: var(--text); --nx-disc-text:
   border: 1px solid var(--border);
   background: var(--surface-3);
   color: var(--positive);
+  /* the Step Rail's disc moves: a finished step demotes in colour, a hovered disc grows a little */
+  transition: transform var(--pm-t-icon) var(--pm-ease-pop),
+              background-color var(--pm-t-icon) var(--pm-ease-out),
+              border-color var(--pm-t-icon) var(--pm-ease-out),
+              color var(--pm-t-icon) var(--pm-ease-out);
 }
 .tx-stretch-node > svg { width: 10px; height: 10px; --nx-stroke-base: 3; --nx-hi-a: var(--nx-h-quiet-i); }
-.tx-stretch-node.is-fold { width: auto; min-width: 16px; padding: 0 3px; border-radius: 8px; color: var(--muted); }
-.tx-stretch-node.is-fold > b { font-size: 9px; font-weight: 650; line-height: 1; font-variant-numeric: tabular-nums; }
+.tx-stretch-head:hover .tx-stretch-node:hover { transform: scale(1.12); }
+/* a record's line pointed at or focused in the open list rings its disc (the Step Rail's pinned disc), and a pointed
+   disc marks its line (transcript-records.js pairs them) */
+.tx-stretch-node.is-paired {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 1px var(--pm-step, var(--accent));
+}
+.tx-stretch-node.is-live.is-paired { transform: scale(1.06); }
+.tx-stretch-node.is-fold { color: var(--muted); }
+.tx-stretch-node.is-fold > b { font-size: 7.5px; font-weight: 700; line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
 .tx-stretch-node.is-live {
   width: 20px;
   height: 20px;
@@ -470,8 +484,12 @@ body[data-theme$="-light"] .tx-stretch { --nx-disc: var(--text); --nx-disc-text:
   /* inside the dark disc the dark themes' glow strengths apply on every theme (the Step Rail's rule) */
   --nx-hi-w: 3.6px;
   --nx-h-working-i: .20;
+  /* a new step's disc grows in a beat after its label settles (the Step Rail's 65 ms), blur-free */
+  animation: orbit-disc-in var(--pm-t-icon) var(--pm-ease-pop) 65ms backwards;
 }
-.tx-stretch-node.is-live > svg { width: 12px; height: 12px; --nx-stroke-base: 2.6; --nx-hi-a: var(--nx-h-working-i); }
+.tx-stretch-head:hover .tx-stretch-node.is-live:hover { transform: scale(1.06); }
+/* drawn at 14 (moving parts), painted at 12: --nx-u converts the moving parts' halo copies at the painted size */
+.tx-stretch-node.is-live > svg { width: 12px; height: 12px; --nx-u: 2; --nx-stroke-base: 2.6; --nx-hi-a: var(--nx-h-working-i); }
 /* the working animation, the Step Rail's: the glyph acts on the 2.2 s loop and a ring grows out of the disc and
    fades every 1.9 s (transform and opacity, on the compositor) */
 .tx-stretch-node.is-live > svg .nx-p {
@@ -492,7 +510,11 @@ body[data-theme$="-light"] .tx-stretch { --nx-disc: var(--text); --nx-disc-text:
 /* the words: muted, one line; the verb a step stronger. Live, the verb is the Step Rail's shimmering verb. */
 .tx-stretch-sum { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
 .tx-stretch-verb { font-weight: 620; color: color-mix(in srgb, var(--text) 74%, var(--muted)); }
-.tx-stretch-verb.pm-shimmer { --pm-ink: color-mix(in srgb, var(--text) 74%, var(--muted)); color: transparent; }
+.tx-stretch-verb.pm-shimmer {
+  --pm-ink: color-mix(in srgb, var(--text) 74%, var(--muted));
+  color: transparent;
+  animation: rail8-settle var(--pm-t-label) var(--pm-ease-out) both, pm-shimmer var(--pm-shimmer-cycle) linear infinite;
+}
 .tx-stretch-time { flex: none; color: var(--subtle); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .tx-stretch-chev {
   flex: none;
@@ -534,7 +556,7 @@ body[data-theme$="-light"] .tx-stretch { --nx-disc: var(--text); --nx-disc-text:
   clip-path: none;
 }
 .tx-feed .tx-stretch-row { margin: 0 0 0 -6px; padding: 0 4px 0 7px; border-radius: 6px; outline: none; }
-.tx-feed .tx-stretch-row:is(:hover, :focus-visible) { background: color-mix(in srgb, var(--text) 5%, transparent); }
+.tx-feed .tx-stretch-row:is(:hover, :focus-visible, .is-paired) { background: color-mix(in srgb, var(--text) 5%, transparent); }
 .tx-feed .tx-stretch-row:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
 .tx-feed .tx-work-line .tx-work-glyph {
   flex: none;
@@ -581,6 +603,9 @@ body[data-theme$="-light"] .tx-stretch { --nx-disc: var(--text); --nx-disc-text:
 }
 
 /* Retro (and NieR, which moves in Retro's voice): the ring, the shimmer band and the chevron step. */
+.tx-feed[data-voice="retro"] .tx-stretch-node { transition-timing-function: steps(3, end); }
+/* the live disc's entrance steps too; NieR's own line below keeps its blink in one step */
+html:not([data-o55-nier="on"]) .tx-feed[data-voice="retro"] .tx-stretch-node.is-live { animation-timing-function: steps(3, end); }
 .tx-feed[data-voice="retro"] .tx-stretch-node.is-live::before { animation-timing-function: steps(5, end); }
 .tx-feed[data-voice="retro"] .tx-stretch-verb.pm-shimmer { animation-timing-function: steps(12, end); }
 .tx-feed[data-voice="retro"] .tx-stretch-chev { transition-timing-function: steps(3, end); }
@@ -593,17 +618,18 @@ html[data-o55-nier="on"] .tx-stretch-node.is-live {
   background: var(--o55-nier-ink);
   border-color: var(--o55-nier-ink);
   color: var(--o55-nier-on-ink);
-  animation: o55n-blink 1900ms steps(1, end) 600ms infinite;
+  animation: orbit-disc-in var(--pm-t-icon) steps(3, end) 65ms backwards, o55n-blink 1900ms steps(1, end) 600ms infinite;
 }
 html[data-o55-nier="on"] .tx-stretch-node.is-live::before { display: none; }
 html[data-o55-nier="on"] .tx-stretch-verb.pm-shimmer { animation: none; background: none; color: var(--text); }
 html[data-o55-nier="on"] .tx-stretch > .tx-stretch-head:hover,
-html[data-o55-nier="on"] .tx-feed .tx-stretch-row:is(:hover, :focus-visible) { background: rgba(var(--o55-nier-ink-rgb), .08); }
+html[data-o55-nier="on"] .tx-feed .tx-stretch-row:is(:hover, :focus-visible, .is-paired) { background: rgba(var(--o55-nier-ink-rgb), .08); }
 /* Reduced motion, all three routes: the end state with no motion. The live disc stays the lit disc (or NieR's ink
    block) without its ring or blink; the shimmering verb is painted text; the chevron turns at once; the glyph's act
    is stopped by neon-icons.css section 10, and the list opens at once (feedStretch's toggle reads the same routes). */
 @media (prefers-reduced-motion: reduce) {
   .tx-stretch-node.is-live, .tx-stretch-node.is-live::before { animation: none !important; }
+  .tx-stretch-node { transition: none !important; }
   .tx-stretch-verb.pm-shimmer { animation: none; background: none; color: color-mix(in srgb, var(--text) 74%, var(--muted)); }
   .tx-stretch-chev { transition: none !important; }
 }
@@ -611,4 +637,5 @@ body.pm56-reduced .tx-stretch-node.is-live, body.pm56-reduced .tx-stretch-node.i
 html[data-motion="reduced"] .tx-stretch-node.is-live, html[data-motion="reduced"] .tx-stretch-node.is-live::before { animation: none !important; }
 body.pm56-reduced .tx-stretch-verb.pm-shimmer,
 html[data-motion="reduced"] .tx-stretch-verb.pm-shimmer { animation: none; background: none; color: color-mix(in srgb, var(--text) 74%, var(--muted)); }
-body.pm56-reduced .tx-stretch-chev, html[data-motion="reduced"] .tx-stretch-chev { transition: none !important; }
+body.pm56-reduced .tx-stretch-chev, html[data-motion="reduced"] .tx-stretch-chev,
+body.pm56-reduced .tx-stretch-node, html[data-motion="reduced"] .tx-stretch-node { transition: none !important; }

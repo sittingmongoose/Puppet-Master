@@ -80,9 +80,9 @@
      participle in it ("Union computed", "Rollback rehearsed"). A detail that reports passing tests or green
      assertions makes it a test step. The step picks the disc's glyph and its Step Rail phase hue (--pm-step). */
   const STEP={
-    read:['files','page','read'], search:['files','search','search'], run:['bash','terminal','run'],
+    read:['files','page','read'], search:['files','folder-search','search'], run:['bash','terminal','run'],
     edit:['edit','file-edit','edit'], check:['validate','check-circle','check'], test:['test','flask','test'],
-    hand:['artifact','outbox','hand'], agents:['agents','users','agents']
+    hand:['artifact','upload','hand'], agents:['agents','users','agents']
   };
   const VERB={
     read:'read', opened:'read', inspected:'read', scanned:'read',
@@ -96,6 +96,9 @@
     handed:'hand', shared:'hand', published:'hand', delegated:'agents'
   };
   const PASSED=/(\d[\d,]*)\s+(?:tests?\s+)?passed\b/i, GREEN=/(\d[\d,]*)\s+assertions?\b[^.]*?\b(?:all green|passed)\b/i;
+  const FAILED=/(\d[\d,]*)\s+(?:tests?\s+)?failed\b/i;
+  /* a title that leads with a present participle ("Benchmarking the index ...") is a step still under way */
+  const GERUND=/^\s*([A-Z][a-z]+ing)\b\s*(.*)$/;
   function stepOf(m){
     const ref=reference(m||{});
     const pick=k=>{const s=STEP[k];return {kind:s[0],glyph:s[1],verb:s[2]};};
@@ -120,18 +123,22 @@
   }
   const plural=(n,one,many)=>n+' '+(n===1?one:(many||one+'s'));
   /* The row's words. Finished: "Ran N tools", then only what the records themselves report: files read (distinct
-     paths), files edited (a file change's path), tests or assertions passed (the detail's own numbers). A stretch of
-     one record is summed up by that record's own title. Live: "Working" (the Step Rail's shimmering verb) and the
-     count so far. */
+     paths), files edited (a file change's path), tests or assertions passed and tests failed (the detail's own
+     numbers). A stretch of one record is summed up by that record's own title. Live, the Step Rail's label: the
+     current step's verb, bold and shimmering, then what it is on and the count so far ("Benchmarking the index under
+     concurrent writes · 2 tools so far"); a latest record that does not lead with a verb in -ing is "Working · " and
+     its title. */
   function stretchSummary(list,live,steps){
     steps=steps||list.map(stepOf);
-    const read=new Map(),edited=new Set();let tests=0,asserts=0;
+    const read=new Map(),edited=new Set();let tests=0,asserts=0,failed=0;
+    const num=x=>Number(String(x).replace(/,/g,''));
     list.forEach((m,i)=>{
       const rc=readCount(m,steps[i]);if(rc) read.set(rc.path,rc.n);
       const ref=reference(m||{});if(ref.kind==='change'&&ref.path) edited.add(ref.path);
-      const d=String((m&&m.detail)||''),pt=PASSED.exec(d),gr=!pt&&GREEN.exec(d);
-      if(pt) tests+=Number(pt[1].replace(/,/g,''));
-      else if(gr) asserts+=Number(gr[1].replace(/,/g,''));
+      const d=String((m&&m.detail)||''),pt=PASSED.exec(d),gr=!pt&&GREEN.exec(d),fl=FAILED.exec(d);
+      if(pt) tests+=num(pt[1]);
+      else if(gr) asserts+=num(gr[1]);
+      if(fl) failed+=num(fl[1]);
     });
     const facts=[];
     let nRead=0;read.forEach(n=>{nRead+=n;});
@@ -139,10 +146,14 @@
     if(edited.size) facts.push('edited '+plural(edited.size,'file'));
     if(tests) facts.push(plural(tests,'test')+' passed');
     if(asserts) facts.push(plural(asserts,'assertion')+' passed');
+    if(failed) facts.push(plural(failed,'test')+' failed');
     const n=list.length,title=String((list[n-1]&&list[n-1].title)||'').trim()||'Work note';
-    if(live) return {verb:'Working',rest:n===1?title:[plural(n,'tool')+' so far'].concat(facts).join(' · '),facts};
-    if(n===1) return {verb:'',rest:title,facts};
-    return {verb:'Ran',rest:[plural(n,'tool')].concat(facts).join(' · '),facts};
+    if(live){
+      const g=GERUND.exec(title),tail=n>1?[plural(n,'tool')+' so far'].concat(facts):[];
+      return {verb:g?g[1]:'Working',sep:g?' ':' · ',rest:[g?g[2]:title].concat(tail).filter(Boolean).join(' · '),facts,underway:!!g};
+    }
+    if(n===1) return {verb:'',sep:'',rest:title,facts};
+    return {verb:'Ran',sep:' ',rest:[plural(n,'tool')].concat(facts).join(' · '),facts};
   }
   /* Open stretches, by stretch id (the first record's id), so a re-render keeps them open. */
   const OPEN=new Set();
@@ -154,25 +165,30 @@
     const n=list.length,live=!!o.live,open=OPEN.has(o.id),steps=list.map(stepOf);
     const sum=stretchSummary(list,live,steps);
     const domId='txs-'+String(o.id).replace(/[^\w-]/g,'_');
-    /* the hover card: the record's title, then its detail (a linked path first), "In progress" on the live one */
+    /* the hover card: the record's title, then its detail (a linked path first). The live one leads with where it
+       is: "In progress" for a step still under way, else "Latest step" while the agent works on. */
+    const nowWord=sum.underway?'In progress':'Latest step, still working';
     const tipOf=(m,cur)=>{
-      const f=feedLine(m),more=(cur?'In progress'+(f.detail?'. ':''):'')+(f.detail||'');
+      const f=feedLine(m),more=(cur?nowWord+(f.detail?'. ':''):'')+(f.detail||'');
       return esc(f.label)+(more?'&#10;'+esc(more):'');
     };
     /* past RAIL_MAX the earliest records fold into one counted disc; the rows still list every record */
     const fold=n>RAIL_MAX?n-(RAIL_MAX-1):0;
-    const nodes=(fold?'<span class="tx-stretch-node is-done is-fold" data-k="snf:'+esc(o.id)+'" data-hover-key="feed-fold-'+esc(o.id)+'" data-hover-tip="Earlier in this stretch&#10;'+plural(fold,'record')+', listed when the stretch is open.">'+'<b>+'+fold+'</b></span>':'')
+    const nodes=(fold?'<span class="tx-stretch-node is-done is-fold" data-k="snf:'+esc(o.id)+'" data-hover-key="feed-fold-'+esc(o.id)+'" data-hover-tip="Earlier in this stretch&#10;'+plural(fold,'record')+', listed when the stretch is open.">'+'<b>'+(fold>99?'99+':'+'+fold)+'</b></span>':'')
       +list.slice(fold).map((m,j)=>{
         const i=j+fold,s=steps[i],cur=live&&i===n-1;
-        /* the live disc's glyph is drawn at 12 with its moving parts, so it acts; finished discs at 10, still */
+        /* the live disc's glyph is drawn at 14, where its moving parts pass the registry's size gate, and painted at
+           12 (the Step Rail's narrow tier does the same), so it acts; finished discs are drawn at 10, still */
         return '<span class="tx-stretch-node '+(cur?'is-live':'is-done')+'" data-k="sn:'+esc(m.id)+'"'+(s.kind?' data-step-kind="'+esc(s.kind)+'"':'')
-          +' data-hover-key="feed-node-'+esc(m.id)+'" data-hover-tip="'+tipOf(m,cur)+'">'+icon(s.glyph,cur?12:10)+'</span>';
+          +' data-hover-key="feed-node-'+esc(m.id)+'" data-hover-tip="'+tipOf(m,cur)+'">'+icon(s.glyph,cur?14:10)+'</span>';
       }).join('');
     const lastKind=steps[n-1]&&steps[n-1].kind;
-    const verb=sum.verb?'<span class="tx-stretch-verb'+(live?' pm-shimmer':'')+'">'+esc(sum.verb)+'</span>'+(sum.rest?'<span class="tx-stretch-rest">'+(live?' · ':' ')+esc(sum.rest)+'</span>':''):'<span class="tx-stretch-rest">'+esc(sum.rest)+'</span>';
+    /* the live verb is keyed by its record, so a new step's label settles in (the Step Rail's 90 ms label beat) */
+    const verb=sum.verb?'<span class="tx-stretch-verb'+(live?' pm-shimmer':'')+'"'+(live?' data-k="sv:'+esc(list[n-1].id)+'"':'')+'>'+esc(sum.verb)+'</span>'+(sum.rest?'<span class="tx-stretch-rest">'+esc(sum.sep+sum.rest)+'</span>':''):'<span class="tx-stretch-rest">'+esc(sum.rest)+'</span>';
+    const sumText=(sum.verb?sum.verb+sum.sep:'')+sum.rest;
     const rows=list.map((m,i)=>{
       const s=steps[i],cur=live&&i===n-1,f=feedLine(m);
-      const aria=f.label+(cur?', in progress':'')+(f.detail?'. '+f.detail:'');
+      const aria=f.label+(cur?', '+nowWord.toLowerCase():'')+(f.detail?'. '+f.detail:'');
       return '<div class="tx-work-line tx-stretch-row'+(cur?' is-live':'')+'" role="listitem" tabindex="0" data-k="sr:'+esc(m.id)+'"'+(s.kind?' data-step-kind="'+esc(s.kind)+'"':'')
         +' data-hover-key="feed-work-'+esc(m.id)+'" data-hover-tip="'+tipOf(m,cur)+'" aria-label="'+esc(aria)+'">'
         +'<span class="tx-work-glyph" aria-hidden="true">'+icon(s.glyph,13)+'</span><span class="tx-work-label">'+esc(f.label)+'</span>'
@@ -181,7 +197,7 @@
     }).join('');
     const listLabel=(live?'Work so far':'Work records')+', '+plural(n,'record');
     return '<div class="tx-stretch" data-k="stretch:'+esc(o.id)+'" data-stretch="'+esc(o.id)+'" data-open="'+(open?'1':'0')+'"'+(live?' data-live="1"':'')+(live&&lastKind?' data-step-kind="'+esc(lastKind)+'"':'')+'>'
-      +'<button type="button" class="tx-stretch-head" data-action="feed-stretch" data-stretch="'+esc(o.id)+'" aria-expanded="'+(open?'true':'false')+'" aria-controls="'+domId+'">'
+      +'<button type="button" class="tx-stretch-head" data-action="feed-stretch" data-stretch="'+esc(o.id)+'" aria-expanded="'+(open?'true':'false')+'" aria-controls="'+domId+'" aria-label="'+esc(sumText+', '+clock(list[n-1]))+'">'
       +'<span class="tx-stretch-rail" aria-hidden="true">'+nodes+'</span>'
       +'<span class="tx-stretch-sum">'+verb+'</span>'
       +'<span class="tx-stretch-time">'+esc(clock(list[n-1]))+'</span>'
@@ -223,5 +239,23 @@
     }
     return true;
   });
+  /* Disc and line are one record: pointing at (or focusing) a record's line in an open stretch rings its disc on the
+     rail (the Step Rail's pinned look), and pointing at a disc marks its line. A class only, set and cleared here;
+     a re-render simply drops it. */
+  function pairOf(el){
+    const box=el.closest('.tx-stretch'),k=el.getAttribute('data-k')||'',row=el.classList.contains('tx-stretch-row');
+    const id=k.slice(3);if(!box||!id) return null;
+    return box.querySelector(row?'.tx-stretch-node[data-k="sn:'+CSS.escape(id)+'"]':'.tx-stretch-row[data-k="sr:'+CSS.escape(id)+'"]');
+  }
+  function pairs(e,on){
+    const el=e.target&&e.target.closest&&e.target.closest('.tx-feed .tx-stretch-row, .tx-feed .tx-stretch-node:not(.is-fold)');
+    if(!el||(!on&&e.relatedTarget&&el.contains(e.relatedTarget))) return;
+    const mate=pairOf(el);
+    el.classList.toggle('is-paired',on);if(mate) mate.classList.toggle('is-paired',on);
+  }
+  document.addEventListener('pointerover',e=>pairs(e,true),{passive:true});
+  document.addEventListener('pointerout',e=>pairs(e,false),{passive:true});
+  document.addEventListener('focusin',e=>pairs(e,true));
+  document.addEventListener('focusout',e=>pairs(e,false));
   window.PM56_RECORDS={reference,kindLabel,formatRecord,feedLine,stepOf,stretchSummary,feedStretch};
 })();
