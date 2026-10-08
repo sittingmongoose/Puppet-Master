@@ -197,8 +197,9 @@
     M.quiet(700);
     const anim = blk.animate([{ transform: 'translate(0px, 0px) scale(1, 1)' }, { transform: `translate(${Math.round(b.x - a.x)}px, ${Math.round(b.y - a.y)}px) scale(${(b.w / a.w).toFixed(4)}, ${(b.h / a.h).toFixed(4)})` }],
       { duration: 300, easing: 'steps(5, end)', fill: 'forwards' });
-    /* a tick on each step of the block (texture under the sting) */
-    for (let i = 1; i <= 5; i++) M.after(i * 60, () => { if (blk.isConnected) play('move', { step: i }); });
+    /* a tick on each step of the block (texture under the sting); walk asks past RATE.move and the same-event
+       merge, so all five steps tick (final review minor 7) */
+    for (let i = 1; i <= 5; i++) M.after(i * 60, () => { if (blk.isConnected) play('move', { step: i, walk: true }); });
     const end = () => { blk.remove(); if (!nav.querySelector(':scope > .o55nw-railcur')) nav.removeAttribute('data-o55nw-walk'); return true; };
     return anim.finished.then(end, end);
   }
@@ -788,6 +789,12 @@
       R.at = M.now(); R.marksAt = Infinity;
       meter(layer); brand(true);
       if (cold) { const r = rootEl(); if (r) ['data-o55nw-cold', 'data-o55nw-go'].forEach((a) => r.removeAttribute(a)); if (!cold.log) podHold(false); if (!cold.opened) { cold.opened = true; play('open'); } }
+      else if (dir === 'open') {
+        /* the instant open (Reduced Motion, the Still preset, a low-resource computer, no Boot part): the run's first
+           music still plays (a state sound), a beat after the release like the cold open's, so the open sound keeps
+           its own moment (final review minor 5) */
+        later(90, () => { if (shown() && painted()) play('chapter', { chapter: pr.current, depth: 0, intensity: 0.4 }); });
+      }
       const F = fx(); if (!F) return false;
       /* The effects start at the next frame. This frame (the release) styles and lays out the new screen once; the
          effects' measurements then read a finished layout instead of forcing it again in the middle of it (films M1).

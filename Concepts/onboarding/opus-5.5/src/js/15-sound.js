@@ -1492,6 +1492,16 @@
   }
   /* several asked for in one moment: the most important plays. The moment is when each was asked for (a long render
      between the ask and the flush must not let a lesser sound stack on top) */
+  /* the same event asked again inside the merge window is one sound twice — except when the repeat is the music:
+     a stage chord tone whose helper's voice differs (the wake chord's three strings, the landings, the bows; the same
+     voice keeps its own RATE), and the rail walk's tick on every step (H3; its walk flag asks past the merge here and
+     past RATE below, so the walk ticks step by step instead of every other step; final review minor 2 and minor 7).
+     b is the note already accepted (win or recent), a the candidate; its entry carries what it played with. */
+  function musicalRepeat(a, b) {
+    if (!a || !b || a.event !== b.event) return false;
+    if (a.opts.walk) return !!(b.entry && b.entry.walk);
+    return !!(FOLEY.has(a.event) && a.opts.voice != null && b.entry && b.entry.voice != null && (a.opts.voice | 0) !== b.entry.voice);
+  }
   function flush() {
     flushing = false;
     const batch = queue; queue = [];
@@ -1503,7 +1513,7 @@
       const of = Object.keys(LAYER_AFTER).find((e) => playedAt[e] != null && m - playedAt[e] < LAYER_AFTER[e]);
       if (of) { win.layer = true; win.entry.layerOf = of; }
     }
-    if (recent && now - recent.t < MERGE_MS) {
+    if (recent && now - recent.t < MERGE_MS && !musicalRepeat(win, recent)) {
       if (win.prio <= recent.prio) {
         if (layers(recent.event, win.event)) win.layer = true;
         else { batch.forEach((it) => drop(it, 'merged', recent.event)); return; }
@@ -1519,7 +1529,9 @@
     if (h && !win.layer) recent = { t: now, prio: win.prio, event: win.event, handle: h, entry: win.entry };
     for (let i = 1; i < batch.length; i++) {
       const it = batch[i];
-      if (!win.layer && layers(win.event, it.event)) { it.layer = true; voice(it); } else drop(it, 'merged', win.event);
+      if (!win.layer && layers(win.event, it.event)) { it.layer = true; voice(it); }
+      else if (musicalRepeat(it, win)) voice(it);
+      else drop(it, 'merged', win.event);
     }
   }
 
@@ -1559,6 +1571,7 @@
       if (ev && ev !== event) entry.resolved = ev;
       if (sting) entry.depth = po.depth;
       if (o.voice != null) entry.voice = o.voice | 0;
+      if (o.walk) entry.walk = true;
       if (o.pan != null && Number.isFinite(+o.pan)) entry.pan = +(+o.pan).toFixed(2);
       if (o.step != null) entry.step = o.step | 0;
     } else { entry.kit = entry.family = kit; if (ev && ev !== event) entry.resolved = ev; }
@@ -1575,7 +1588,9 @@
     if (event === 'quest' && playedAt.save != null && m - playedAt.save < 1000) { entry.dropped = 'merged'; entry.by = 'save'; return false; }
     if (late && late.since != null && big.m >= late.since && big.prio >= prio && big.event !== event) { entry.dropped = 'merged'; entry.by = big.event; return false; }
     const rate = RATE[event];
-    if (rate && now - (lastAt[event] || -1e9) < rate * (lowres ? 1.8 : 1)) { entry.dropped = 'rate'; return false; }
+    /* the rail walk's tick rides on every step (60 ms), under RATE.move (110 ms): a walk tick asks past the rate
+       (its walk flag also lets the next tick through the same-event merge, see musicalRepeat in flush) */
+    if (rate && !o.walk && now - (lastAt[event] || -1e9) < rate * (lowres ? 1.8 : 1)) { entry.dropped = 'rate'; return false; }
     if (event === 'land') {
       while (landAt.length && now - landAt[0] > LAND_SPAN) landAt.shift();
       if (landAt.length >= LAND_MAX) { entry.dropped = 'rate'; return false; }
