@@ -217,8 +217,9 @@ html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: n
 /* Tear-out: six horizontal slats, each clipping one band of the plate (the slice is the full plate, shifted up by
    this slat's top). They slide off in script (translateX ±101%, steps(4), 30 ms from the middle outward) and ignore
    the pointer, so the window shows through band by band and stays clickable. */
-#o55np-reboot > .o55np-slat { position: absolute; left: 0; right: 0; overflow: hidden; pointer-events: none; will-change: transform; }
-#o55np-reboot > .o55np-slat > .o55np-rb-band { position: absolute; left: 0; width: 100%; background: var(--rb-ink); transform: none; will-change: auto; }
+#o55np-reboot > .o55np-slats { position: absolute; inset: 0; pointer-events: none; }
+#o55np-reboot > .o55np-slats > .o55np-slat { position: absolute; left: 0; right: 0; overflow: hidden; pointer-events: none; will-change: transform; }
+#o55np-reboot > .o55np-slats > .o55np-slat > .o55np-rb-band { position: absolute; left: 0; width: 100%; background: var(--rb-ink); transform: none; will-change: auto; }
 
 /* ---- Slice open [slice]: menus, pickers, dialogs, the context drawer and wand sheets unfold from a 1px line, one
    flicker step. They mount once per opening (the app's patch keeps an open overlay's node), so the animation runs once.
