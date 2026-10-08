@@ -1,0 +1,8 @@
+/* Jared approved, 2026-10-08, matches 5.6 Pro */
+[data-theme="retro-light"] {
+  --accent-warning: #A65800;
+}
+[data-theme="retro-light"] .message.user .msg-body,
+[data-theme="retro-light"] .message.user .msg-body .runtime-snapshot {
+  color: #F5F0E8;
+}
