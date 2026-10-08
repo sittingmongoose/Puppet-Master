@@ -559,9 +559,13 @@
        both sides (T300-T540), two lines type (stamps at T700 and T850), then the repaint; at R "All clear" for 120 ms,
        'reveal', and the plate, as one, shrinks in 6 held steps into the NieR thumbnail with the brackets riding its
        corners; the brackets let go 60 ms after, then 'gone'.
-     - anywhere else (the Settings page, the title-bar menu): the ink band over the whole page, stepped down in 6 held
-       steps, with the same check list; it leaves by the same slat tear-out. The old flicker-out was a large-area strobe
-       over the WCAG three-flash limit (films KEY-H1-dark-strobe); no surface here reverses its brightness twice.
+     - anywhere else (the Settings row, the title-bar menu, the tour's look menu): the same plate over the whole page,
+       in the same ground and ink (NieR's ground in the look's own tone: a dark user never sees a parchment sheet, a light
+       user never an ink one), grown from the control pressed (info.from, else the last press on a control, else the
+       middle) to the whole screen in the same 6 steps, with the same check list and the same slat tear-out; unticking,
+       the slats close in at once (there is no stage to power down), and at R the plate folds back into that control.
+       The old flicker-out was a large-area strobe over the WCAG three-flash limit (films KEY-H1-dark-strobe), and the
+       old page band an inverted sheet (films M6); no surface here reverses its brightness.
      The cover takes NieR's tokens from the preview scope (data-o55-nier-preview, styles.d/13-nier.css), because it
      exists before the palette is painted. Every time is on the animation timeline (document.timeline, scaled by
      Animation speed like every animation here), so slow-motion filming slows all of it together. Reduced motion, a
@@ -693,15 +697,31 @@
     log.querySelector('.o55np-kick-t').textContent = RB('allClear', 'All clear');
   }
 
-  /* ---- the in-window plate's geometry: rects in the cover's own CSS px, the hairline edges and brackets as transforms */
+  /* ---- the plate's geometry: rects in the cover's own CSS px, the hairline edges and brackets as transforms */
   const BR = 12;
   function rbBox(cover) { const r = cover.getBoundingClientRect(), w = cover.offsetWidth || r.width || 1, h = cover.offsetHeight || r.height || 1; return { r, w, h, k: r.width / w || 1 }; }
-  function rbFrom(info, within, box) {
-    let given = null; try { given = typeof info.from === 'function' ? info.from() : info.from; } catch (e) { given = null; }
-    const thumb = within.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-nier-thumb]') || within.querySelector('[data-nier-thumb]');
-    for (const c of [given, thumb, document.activeElement]) {
+  /* the control a page-wide change was asked from: a press (a pointer, or Enter or Space) on it at most 2 s before. The
+     page's cover grows from it and folds back into it, as the window's grows from the NieR thumbnail. Only the target is
+     kept (no rect is read until a cover needs one) */
+  let press = null;
+  const PRESSABLE = 'button, a[href], input, select, label, summary, [role="button"], [role="switch"], [role="checkbox"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="menuitem"], [role="option"], [role="tab"]';
+  function notePress(e) {
+    const t = e.target;
+    if (!e.isTrusted || !(t instanceof Element) || t.closest('#o55np-reboot')) return;
+    if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+    press = { el: t.closest(PRESSABLE) || t, at: performance.now() };
+  }
+  document.addEventListener('pointerdown', notePress, true);
+  document.addEventListener('keydown', notePress, true);
+  const pressed = () => (press && press.el.isConnected && performance.now() - press.at < 2000 ? press.el : null);
+  const givenFrom = info => { try { return typeof info.from === 'function' ? info.from() : info.from; } catch (e) { return null; } };
+  const thumbIn = scope => scope.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-nier-thumb]') || scope.querySelector('[data-nier-thumb]');
+  /* the first candidate on screen (an element inside scope, or a client rect), as a rect in the cover's px clipped to
+     it; else a small rect in the middle */
+  function rbFrom(cands, scope, box) {
+    for (const c of cands) {
       let r = null;
-      if (c && typeof c.getBoundingClientRect === 'function') { if (!c.isConnected || !within.contains(c)) continue; r = c.getBoundingClientRect(); }
+      if (c && typeof c.getBoundingClientRect === 'function') { if (!c.isConnected || !scope.contains(c)) continue; r = c.getBoundingClientRect(); }
       else if (c && typeof c.left === 'number' && typeof c.width === 'number') r = c;
       if (!r || r.width < 8 || r.height < 8) continue;
       const x = (r.left - box.r.left) / box.k, y = (r.top - box.r.top) / box.k, w = r.width / box.k, h = r.height / box.k;
@@ -712,7 +732,6 @@
     return { x: box.w / 2 - 80, y: box.h / 2 - 50, w: 160, h: 100 };
   }
   const lerpRect = (a, b, f) => ({ x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, w: a.w + (b.w - a.w) * f, h: a.h + (b.h - a.h) * f });
-  const px = v => `${Math.round(v)}px`;
   /* the plate's clip, on the compositor: the plate is an overflow box moved and scaled onto the rect, its ground inside
      scaled and moved back by the inverse, so the map stays put while the box around it steps (in Slint, a clipping
      Rectangle whose x, y, width and height step); [plate transform, ground transform] */
@@ -728,23 +747,21 @@
       `translate(${x - k}px, ${y - k}px) scale(1, 1)`, `translate(${x2 + k - BR}px, ${y - k}px) scale(-1, 1)`,
       `translate(${x - k}px, ${y2 + k - BR}px) scale(1, -1)`, `translate(${x2 + k - BR}px, ${y2 + k - BR}px) scale(-1, -1)`];
   }
-  function rbSet(lines, inWindow) {
+  /* the plate (its ground, the map grid and the list) and its decorations (the hairline frame and four brackets) */
+  function rbSet(lines) {
     const set = document.createElement('div');
     set.className = 'o55np-set';
     const ground = document.createElement('div');
-    ground.className = inWindow ? 'o55np-plate' : 'o55np-band';
-    if (!inWindow) ground.innerHTML = '<div class="o55np-rb-lines"></div>';
-    else ground.innerHTML = '<div class="o55np-plate-in"></div>';
+    ground.className = 'o55np-plate';
+    ground.innerHTML = '<div class="o55np-plate-in"></div>';
     const log = rbLog(lines);
-    (inWindow ? ground.firstElementChild : ground).appendChild(log);
+    ground.firstElementChild.appendChild(log);
     set.appendChild(ground);
-    if (inWindow) {
-      const deco = document.createElement('div');
-      deco.className = 'o55np-deco';
-      deco.innerHTML = '<i class="o55np-edge" data-e="t"></i><i class="o55np-edge" data-e="b"></i><i class="o55np-edge" data-e="l"></i><i class="o55np-edge" data-e="r"></i>'
-        + '<i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i>';
-      set.appendChild(deco);
-    }
+    const deco = document.createElement('div');
+    deco.className = 'o55np-deco';
+    deco.innerHTML = '<i class="o55np-edge" data-e="t"></i><i class="o55np-edge" data-e="b"></i><i class="o55np-edge" data-e="l"></i><i class="o55np-edge" data-e="r"></i>'
+      + '<i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i>';
+    set.appendChild(deco);
     return { set, ground, inner: ground.firstElementChild, log, deco: set.querySelectorAll('.o55np-deco > i') };
   }
   /* keyframes for a stepped walk: frames [{ t, ... }] in ms over total ms, every segment held (step-end) */
@@ -776,27 +793,35 @@
     coverUp = false;
   }
 
-  /* ---- inside the onboarding window */
-  async function rebootWithin(ctx, info, within, folding) {
-    const kind = folding ? 'fold' : info.reason === 'replay' ? 'replay' : 'on';
+  /* ---- the moment, one plate for both stagings: inside the onboarding window (scope, the window) or over the whole
+     page (scope null). Each grows from the control pressed (in the window, else its NieR thumbnail; on the page, the
+     row or switch, else the middle of the screen), types its list through the repaint and tears out as slats; unticking
+     closes in as slats, types two lines and folds back into that control. */
+  async function rebootPlate(ctx, info, scope, folding) {
+    const page = !scope, root = page ? html : scope;
+    const kind = folding ? (page ? 'pageOff' : 'fold') : info.reason === 'replay' ? 'replay' : page ? 'pageOn' : 'on';
     const lines = rbLines(info, kind), t = tone();
     let plan = rbPlan(lines.length, folding);
     const cover = ctx.cover = document.createElement('div');
-    cover.id = 'o55np-reboot'; cover.className = 'o55np-within'; cover.setAttribute('aria-hidden', 'true');
+    cover.id = 'o55np-reboot'; cover.className = page ? 'o55np-page' : 'o55np-within'; cover.setAttribute('aria-hidden', 'true');
     cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
-    const { set, ground, inner, log, deco } = rbSet(lines, true);
+    const { set, ground, inner, log, deco } = rbSet(lines);
     cover.appendChild(set);
-    within.appendChild(cover);
+    /* where it grows from and folds back to: on the page the control is kept from the start (with its rect, for a row
+       the repaint redraws in place); in the window it is asked again (the window re-renders) */
+    const startEl = page ? (givenFrom(info) || pressed()) : null;
+    const startRect = startEl && startEl.isConnected ? startEl.getBoundingClientRect() : null;
+    const home = box => rbFrom(page ? [startEl, startRect] : [givenFrom(info), thumbIn(scope), document.activeElement], root, box);
+    (page ? document.body : scope).appendChild(cover);
     /* the window's own effects (brackets on the chosen card, the cursor, Pod's strip) sit above the window in its root:
        they hold off while the cover is up (an attribute that restyles only those layers), and so do the page's pointers */
-    const host = ctx.host = within.closest('#pm-o55-onboarding');
-    if (host) host.setAttribute('data-o55np-cover', '');
+    if (!page) { const host = ctx.host = scope.closest('#pm-o55-onboarding'); if (host) host.setAttribute('data-o55np-cover', ''); }
     coverUp = true; curOff(); retOff();
     let t0 = tl();
     const box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
     if (!folding) {
       /* T0-T90 the brackets lock on in 3 steps; T90 the plate is born on the rect; T90-T390 it grows in 6 held steps */
-      const from = rbFrom(info, within, box);
+      const from = home(box);
       const F = [0, 0.3, 0.55, 0.75, 0.9, 1], rects = F.map(f => lerpRect(from, full, f)), off = F.map(f => 3 - 17 * f);
       const at = k => 90 + 60 * k, TOTAL = 450;
       const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box);
@@ -819,12 +844,13 @@
       set.querySelectorAll('.o55np-deco > i').forEach(el => el.getAnimations().forEach(a => { try { a.commitStyles(); } catch (e) { /* not rendered */ } a.cancel(); }));
       ground.style.opacity = '1'; grow.cancel(); growIn.cancel();
     } else {
-      /* the stage powers down (the window's beat), then T300-T540 six slats close in from both sides */
+      /* in the window the stage powers down first (the window's beat, 300 ms); on the page the slats close at once:
+         six slats close in from both sides */
       const poses = rbPose(full, -14, box);
       deco.forEach((el, j) => { el.style.transform = poses[j]; el.style.opacity = '1'; });
       ground.style.opacity = '1';
       cover.setAttribute('data-hold', '');
-      const shut = rbSlats(cover, set, 'in', 300);
+      const shut = rbSlats(cover, set, 'in', page ? 60 : 300);
       t0 = await rbStart(shut.first, t0);
       await shut.done;
       cover.removeAttribute('data-hold');
@@ -843,7 +869,7 @@
     rbClear(log, typing, plan, t0);
     if (!cover.isConnected) return;
     if (!folding) {
-      /* R: hold 160 ms, then the slats tear out and the window shows band by band */
+      /* R: hold 160 ms, then the slats tear out and what is under the cover shows band by band */
       const slats = rbSlats(cover, set, 'out', 160);
       set.remove();
       await rbWait(cover, 160);
@@ -853,8 +879,9 @@
       await slats.done;
       return;
     }
-    /* R: hold 120 ms; then the plate, as one, folds back into the NieR thumbnail (measured now: the window re-rendered) */
-    const to = rbFrom(info, within, rbBox(cover));
+    /* R: hold 120 ms; then the plate, as one, folds back into where it grew from (measured now: the window re-rendered,
+       the page redrew the row) */
+    const to = home(rbBox(cover));
     await rbWait(cover, 120);
     log.style.display = 'none';
     cover.style.pointerEvents = 'none';
@@ -875,42 +902,6 @@
       el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
     });
     await settled(fold);
-  }
-
-  /* ---- the whole page: the ink band, stepped down, the list, the tear-out */
-  async function rebootPage(ctx, info, folding) {
-    const kind = folding ? 'pageOff' : info.reason === 'replay' ? 'replay' : 'pageOn';
-    const lines = rbLines(info, kind), t = tone();
-    let plan = rbPlan(lines.length, folding);
-    const cover = ctx.cover = document.createElement('div');
-    cover.id = 'o55np-reboot'; cover.setAttribute('aria-hidden', 'true'); cover.setAttribute('data-page', '');
-    cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
-    const { set, ground, log } = rbSet(lines, false);
-    cover.appendChild(set);
-    document.body.appendChild(cover);
-    let t0 = tl();
-    /* 6 held steps down: on T90-T390 (nierOn's six ticks), off T60-T360 */
-    const first = folding ? 60 : 90, TOTAL = first + 360;
-    const drop = ground.animate(walk([{ t: 0, v: { transform: 'translateY(-101%)' } }, ...[83.3, 66.7, 50, 33.3, 16.7, 0].map((y, k) => ({ t: first + 60 * k, v: { transform: `translateY(${-y}%)` } })),
-      { t: TOTAL, v: { transform: 'translateY(0%)' } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
-    t0 = await rbStart(drop, t0);
-    await settled(drop);
-    ground.style.transform = 'none'; drop.cancel();
-    if (!cover.isConnected) return;
-    log.setAttribute('data-on', '');
-    plan = rbShift(plan, since(t0));
-    const typing = rbType(log, plan, since(t0));
-    await settledStart(typing.anims);
-    ctx.paint();
-    await rbIdle(4000);
-    await rbAt(cover, t0, plan.done);
-    rbClear(log, typing, plan, t0);
-    if (!cover.isConnected) return;
-    const slats = rbSlats(cover, set, 'out', 160);
-    set.remove();
-    await rbWait(cover, 160);
-    ctx.cue('reveal');
-    await slats.done;
   }
 
   /* The moment's own sounds, unless its caller plays them (info.sound false: the onboarding window's NieR checkbox and
@@ -956,7 +947,7 @@
     try {
       snd.hum();
       const folding = !on && reason !== 'replay';
-      if (within) await rebootWithin(ctx, info, within, folding); else await rebootPage(ctx, info, folding);
+      await rebootPlate(ctx, info, within, folding);
     } catch (e) { /* the moment is decoration; the repaint is not */ } finally {
       paint();
       if (ctx.cover) ctx.cover.remove();

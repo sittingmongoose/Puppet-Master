@@ -161,23 +161,24 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
 
 /* ---- Reboot moment [reboot]: the cover (kit.d/19-nier-parts.js runs it inside PM_NIER.setTransition) ----
    The cover exists before the palette is painted (turning NieR Mode on), so it carries data-o55-nier-preview="<tone>"
-   and takes NieR's tokens from the preview scope (styles.d/13-nier.css). Two stagings, one vocabulary:
-   - .o55np-within (inside the onboarding window): a plate in NieR's ground with the 32 px map grid, a hairline frame
-     and four brackets (.o55np-deco, placed by transform so they ride the plate's edge while it grows or folds);
-   - [data-page] (anywhere else): the ink band over the whole page, with its scanlines and leading rule.
-   Both carry the check list (.o55np-log: the kicker band, lines with a caret-led mask, dot leaders and stamps, the
-   12-cell meter, the "Synchronising" line) and leave as six slats (.o55np-slat, each a copy of the set moved up by its
-   own place). --rb-ground is what the list sits on and --rb-text its ink; the masks are the ground, the caret the ink.
-   Motion is transform or opacity only, all one-shot, so the compositor runs it through the repaint's long frames.
+   and takes NieR's tokens from the preview scope (styles.d/13-nier.css). One plate for both stagings, inside the
+   onboarding window (.o55np-within) and over the whole page (.o55np-page): NieR's own ground in the tone of the look
+   (parchment in light, its dark ground in dark, never the inverse: a full ink sheet over a light app, or a parchment one
+   over a dark app, read as a flash), the 32 px map grid with rulers, a hairline frame and four brackets (.o55np-deco,
+   placed by transform so they ride the plate's edge while it grows or folds). It carries the check list (.o55np-log:
+   the ink kicker band, lines with a caret-led mask, dot leaders and stamps, the 12-cell meter, the "Synchronising"
+   line), the same ink-on-ground as the window's boot log, and leaves as six slats (.o55np-slat, each a copy of the set
+   moved up by its own place). --rb-ground is what the list sits on and --rb-text its ink; the masks are the ground,
+   the caret the ink. Motion is transform or opacity only, all one-shot, so the compositor runs it through the
+   repaint's long frames. The cover takes the pointer until the reveal (what is under it is not what will be there).
    Slint: the plate is a clipping Rectangle whose x, y, width and height step; edges, brackets and slats are Rectangles
    with an animated x / y. */
-#o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict;
-  --rb-ground: var(--o55-nier-ink); --rb-text: var(--o55-nier-on-ink); color: var(--rb-text); }
-#o55np-reboot.o55np-within { position: absolute; inset: 0; z-index: 60; border-radius: inherit; pointer-events: auto;
-  --rb-ground: var(--background); --rb-text: var(--o55-nier-ink); }
+#o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: auto; overflow: hidden; contain: strict;
+  --rb-ground: var(--background); --rb-text: var(--o55-nier-ink); color: var(--rb-text); }
+#o55np-reboot.o55np-within { position: absolute; inset: 0; z-index: 60; border-radius: inherit; }
 #o55np-reboot .o55np-set { position: absolute; inset: 0; }
 #o55np-reboot[data-hold] > .o55np-set { visibility: hidden; }
-/* the in-window plate: NieR's ground and its map grid (a 128 px major grid over the 32 px one) */
+/* the plate: NieR's ground and its map grid (a 128 px major grid over the 32 px one) */
 /* the plate is an overflow box stepped onto its rect by transform; its ground (.o55np-plate-in) is moved back by the
    inverse, so the map holds still while the box grows or folds, all on the compositor */
 #o55np-reboot .o55np-plate { position: absolute; inset: 0; opacity: 0; overflow: hidden; transform-origin: 0 0; will-change: transform, opacity; }
@@ -201,13 +202,8 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
 #o55np-reboot .o55np-edge:is([data-e="l"], [data-e="r"]) { width: 1px; height: 100%; }
 #o55np-reboot .o55np-br { position: absolute; left: 0; top: 0; width: 12px; height: 12px; opacity: 0; will-change: transform;
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat; }
-/* the page band: ink, faint scanlines, and the leading rule under it */
-#o55np-reboot .o55np-band { position: absolute; inset: 0; background: var(--rb-ground); transform: translateY(-101%); will-change: transform; }
-#o55np-reboot .o55np-band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--rb-ground); box-shadow: 0 -3px 0 var(--rb-ground); }
-#o55np-reboot .o55np-rb-lines { position: absolute; inset: 0; opacity: .9;
-  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(var(--o55-nier-paper-rgb), .09) 2px 3px); }
 /* the check list */
-/* the list sits on its own panel of the ground (a hairline frame on the grid or the band), so the masks that hide the
+/* the list sits on its own panel of the ground (a hairline frame on the grid), so the masks that hide the
    untyped words match what is under them exactly */
 #o55np-reboot .o55np-log { position: absolute; left: 50%; top: 50%; box-sizing: border-box; width: min(448px, calc(100% - 40px)); padding: 16px 18px 14px;
   transform: translate(-50%, -50%); visibility: hidden; background: var(--rb-ground); border: 1px solid color-mix(in srgb, var(--rb-text) 26%, transparent);
