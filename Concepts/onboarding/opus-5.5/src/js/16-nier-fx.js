@@ -602,8 +602,20 @@
     const ms = clamp(Number(o.ms) || 260, 80, 1200);
     quiet(ms + 600);
     const line = newLine({ left: r.left, top: r.top + r.height / 2 - 1, width: r.width });
-    /* the surface squashes to its centre line in 4 held steps; on the last one it is gone and the line is there */
-    const a = el.animate([{ scale: '1 1' }, { scale: '1 0' }], { duration: ms, easing: 'steps(4, end)', fill: 'forwards' });
+    /* the surface squashes to its centre line in 4 held steps; on the last one it is gone and the line is there. The
+       separate scale property applies outside el's own transform, so for an element placed by a translation (the
+       tour callout) the squash is centred on where it stands (its origin, inside the animation only, is moved by that
+       translation); any other transform closes with a clip to the same centre line instead */
+    let kf = null;
+    try {
+      const t = getComputedStyle(el).transform, m = new DOMMatrixReadOnly(t && t !== 'none' ? t : undefined);
+      if (m.is2D && m.a === 1 && m.b === 0 && m.c === 0 && m.d === 1) {
+        const origin = `${(el.offsetWidth / 2 + m.e).toFixed(1)}px ${(el.offsetHeight / 2 + m.f).toFixed(1)}px`;
+        kf = [{ scale: '1 1', transformOrigin: origin }, { scale: '1 0', transformOrigin: origin }];
+      }
+    } catch (_) { /* no matrix: the clip below */ }
+    if (!kf) kf = [{ clipPath: 'inset(0 -40px 0 -40px)' }, { clipPath: 'inset(50% -40px 50% -40px)' }];
+    const a = el.animate(kf, { duration: ms, easing: 'steps(4, end)', fill: 'forwards' });
     const show = line.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms, easing: 'step-end', fill: 'both' });
     const rec = { a, off: null };
     folds.set(el, rec);
@@ -1326,8 +1338,9 @@
     if (hang && !card.hasAttribute('data-compact') && H > s.height * 0.62) { card.setAttribute('data-compact', ''); H = card.offsetHeight || H; }
     let top;
     if (hang) {
-      const f = Number.isFinite(o.at) ? clamp(o.at, 0, 1) : 0.36;
-      top = Math.round(clamp(s.height * f - H / 2, 6, Math.max(6, s.height - H - 4)));
+      /* at: where its centre hangs; else the first place clear of the tour's callout and bar (a stage: 36 %) */
+      if (Number.isFinite(o.at)) top = Math.round(clamp(s.height * clamp(o.at, 0, 1) - H / 2, 6, Math.max(6, s.height - H - 4)));
+      else top = Math.max(6, bandTop(s, H, host.id === 'pm-o55-tour' && (!o.within || o.within === host) ? [0.23, 0.62, 0.5, 0.8] : [0.36, 0.62, 0.5, 0.8]) - Math.round(s.top));
       card.style.top = `${top}px`;
       strs.forEach((t) => { t.style.height = `${top}px`; });
     } else {
