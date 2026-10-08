@@ -1741,7 +1741,7 @@
     }
     var frame = trackFrame(d.timezone, now, 904), minA = Math.ceil((Date.now() + 60000) / 300000) * 300000;
     var valueNow = w.ok ? w.at : minA, valueText = w.ok ? (w.day + ' · ' + w.clock + ' · ' + w.rel) : 'Pick a date and a time';
-    return '<div class="pmx-sched-slot" data-k="sched-track-slot" data-sched-drag role="slider" tabindex="0" aria-label="Send time" aria-valuemin="' + minA + '" aria-valuemax="' + frame.end + '" aria-valuenow="' + valueNow + '" aria-valuetext="' + esc(valueText) + '" title="Drag the marker or use the arrow keys"' + (ui.schedDrag ? ' data-dragging=""' : '') + '>' +
+    return '<div class="pmx-sched-slot" data-k="sched-track-slot" data-sched-drag role="slider" tabindex="0" aria-label="Send time" aria-valuemin="' + minA + '" aria-valuemax="' + frame.end + '" aria-valuenow="' + valueNow + '" aria-valuetext="' + esc(valueText) + '"' + (ui.schedDrag ? ' data-dragging=""' : '') + '>' +
       SH.pmxPlateFit({ key: 'sched-track', kind: 'schedule', affects: 'when', plates: [one('full', 904), one('compact', 580)] }) + '</div>';
   }
 
@@ -3317,8 +3317,9 @@
     var d = ui.msgDraft, w = msgWhen(d, nowMinute()), from = w.ok ? w.at : minAllowedAt(), target = null;
     if (e.key === 'ArrowRight' || e.key === 'ArrowUp') target = from + (e.shiftKey ? 3600000 : 300000);
     else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') target = from + (e.shiftKey ? -3600000 : -300000);
-    else if (e.key === 'PageDown') target = from + 86400000;
-    else if (e.key === 'PageUp') target = from - 86400000;
+    /* ARIA slider convention: Page Up is the larger step up (a day later), Page Down a day earlier. */
+    else if (e.key === 'PageUp') target = from + 86400000;
+    else if (e.key === 'PageDown') target = from - 86400000;
     else if (e.key === 'Home') target = minAllowedAt();
     else if (e.key === 'End') target = trackFrame(d.timezone, nowMinute(), 904).end;
     else return;

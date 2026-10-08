@@ -725,6 +725,20 @@ async function main() {
     return { now: +slot.getAttribute('aria-valuenow'), min: +slot.getAttribute('aria-valuemin') };
   });
   check('Home goes to the next allowed minute, never the past', homed.now === homed.min && homed.now >= Date.now(), JSON.stringify(homed));
+  /* ARIA slider convention: Page Up is the larger step up (a day later), Page Down a day earlier. */
+  await page.keyboard.press('PageUp');
+  await page.waitForTimeout(180);
+  const pagedUp = await ev(() => +document.querySelector('[data-k="sched-track-slot"]').getAttribute('aria-valuenow'));
+  check('PageUp moves the send time a day later', pagedUp - homed.now === 86400000, String(pagedUp - homed.now));
+  await page.keyboard.press('PageDown');
+  await page.waitForTimeout(180);
+  const pagedDown = await ev(() => {
+    const slot = document.querySelector('[data-k="sched-track-slot"]');
+    return { now: +slot.getAttribute('aria-valuenow'), min: +slot.getAttribute('aria-valuemin'), title: slot.getAttribute('title') };
+  });
+  check('PageDown moves it a day earlier, never before the earliest allowed minute',
+    pagedUp - pagedDown.now === 86400000 || pagedDown.now === pagedDown.min, JSON.stringify({ pagedUp, pagedDown }));
+  check('the track has no native title tooltip (explanations live in the app hover card)', pagedDown.title === null, String(pagedDown.title));
   const saved = page.viewportSize();
   await page.setViewportSize({ width: 700, height: 900 });
   await page.waitForTimeout(500);
