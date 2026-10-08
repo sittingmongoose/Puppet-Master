@@ -59,9 +59,11 @@
     #panel-settings .pm51-check-list { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
     #panel-settings .pm51-check-list .check-row { min-height: 26px; font-size: 11.5px; }
     /* sound library: a two-column card grid (plan K.F). The engine's syncSoundPreviewRows keeps driving
-       .sound-row[data-sound-row] / .sound-play[data-id] / is-playing, so that markup is unchanged. */
+       .sound-row[data-sound-row] / .sound-play[data-id] / is-playing, so that markup is unchanged. A card stretched to
+       its row (the setup and tour sets' lines wrap, so two cards side by side can differ) keeps its rows at the top:
+       the default stretched both auto rows and set a short card's name lower than its neighbour's. */
     #panel-settings .pm51-mgr .pm51-sound-list.pm51-sound-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; }
-    #panel-settings .pm51-mgr .pm51-sound-grid .sound-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) 72px 32px; grid-template-rows: auto auto; align-items: center; gap: 5px 10px; min-height: 0; margin: 0; padding: 10px 12px 11px; border: 1px solid var(--k3-line); border-radius: 10px; background: var(--k3-bg-2); transition: border-color var(--k3-dur-fast) var(--k3-ease-out), box-shadow var(--k3-dur-fast) var(--k3-ease-out); }
+    #panel-settings .pm51-mgr .pm51-sound-grid .sound-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) 72px 32px; grid-template-rows: auto auto; align-content: start; align-items: center; gap: 5px 10px; min-height: 0; margin: 0; padding: 10px 12px 11px; border: 1px solid var(--k3-line); border-radius: 10px; background: var(--k3-bg-2); transition: border-color var(--k3-dur-fast) var(--k3-ease-out), box-shadow var(--k3-dur-fast) var(--k3-ease-out); }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-row:first-of-type { border-top: 1px solid var(--k3-line); }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-row:hover { border-color: var(--k3-line-strong); }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-row.is-playing { border-color: rgba(var(--accent-primary-rgb), .6); box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), .12); }
