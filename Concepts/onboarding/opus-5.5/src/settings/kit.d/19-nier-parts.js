@@ -195,7 +195,8 @@
   }
   /* a pointer already resting when the part turns on never sends pointerover: read :hover once so the paper matches */
   function curSyncHover() {
-    let n = null; try { n = document.querySelector(':hover'); } catch (e) { n = null; }
+    /* the deepest hovered element (querySelector(':hover') would answer <html>, the first in document order) */
+    let n = null; try { const all = document.querySelectorAll(':hover'); n = all.length ? all[all.length - 1] : null; } catch (e) { n = null; }
     curMark(n && n.closest ? n.closest(CURSOR_SEL) : null);
   }
   /* while the reboot cover is up nothing points through it (the cursor and the reticle sit above the window) */
