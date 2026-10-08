@@ -19,6 +19,13 @@ html[data-o55-open][data-o55-nier-parts] body > [inert] :is(.pm6-wiz-disc-spin, 
    not drawn at all while the window is open; the scrim then lies over the page's own ground */
 html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !important; }
 .o55-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 74%, transparent); }
+/* The click paints this dim before the window is built (the open used to stay undimmed through that work).
+   The flash is one empty element, so the click frame can paint it; the real scrim replaces it on the next
+   frame, already at full dim. A held open keeps that dim and hides only the window. */
+#o55-open-scrim { position: fixed; inset: 0; z-index: 2147482000; pointer-events: none; background: color-mix(in srgb, var(--background) 74%, transparent); }
+html[data-o55-nier-parts~="ground"] #o55-open-scrim { background-image: repeating-linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), .05) 0 1px, transparent 1px 3px); }
+#pm-o55-onboarding.o55-hold .o55-scrim { visibility: visible; }
+#pm-o55-onboarding.o55-scrim-lit .o55-scrim { opacity: 1 !important; animation: none !important; }
 .o55-win { position: relative; z-index: 1; width: min(1080px, calc(100vw - 48px)); height: min(720px, calc(100vh - 48px)); display: grid; grid-template-rows: auto minmax(0, 1fr);
   border-radius: var(--o55-r); background: var(--o55-win-bg); border: 1px solid var(--o55-line); box-shadow: 0 40px 90px -24px rgba(0, 0, 0, 0.55); overflow: hidden; isolation: isolate; }
 .o55-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

@@ -611,11 +611,33 @@
   const warm = () => { try { O55.motion.softwareRendered(); } catch (_) {} };
   if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(warm, { timeout: 6000 }); else window.setTimeout(warm, 3000);
 
+  let openGen = 0;
+  function clearOpenScrim() { const n = document.getElementById('o55-open-scrim'); if (n) n.remove(); }
   function open(opts) {
     opts = opts || {};
     if (opts.fresh && O55.tour && O55.tour.hasUnresolved && O55.tour.hasUnresolved()) { O55.tour.start({}); return false; }
-    O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
-    const wasShown = !!(S.open && S.root && !S.root.hidden); /* Start over reopens a window already on screen */
+    /* The scrim dims on the click, and the window is mounted on the next frame. Building it in the click's own
+       turn held the first paint for most of a second, so the app sat undimmed (minor 14). The click adds one
+       empty scrim and returns; the build, the inert app and the theme land on the next frame, under that dim.
+       A window already on screen (Start over) mounts where it is. */
+    if (!opts._mount) {
+      O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
+      const wasShown = !!(S.open && S.root && !S.root.hidden);
+      const focus = opts.returnFocus || document.activeElement;
+      const gen = ++openGen;
+      const mount = () => { if (gen === openGen) open(Object.assign({}, opts, { _mount: true, _wasShown: wasShown, returnFocus: focus })); };
+      if (wasShown) { mount(); return true; }
+      if (!document.getElementById('o55-open-scrim')) {
+        const flash = document.createElement('div');
+        flash.id = 'o55-open-scrim'; flash.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(flash);
+      }
+      /* A single rAF runs before the next paint, so the scrim would be added and removed with the build and never
+         drawn. The empty frame lets that paint happen; the build is the frame after. */
+      O55.motion.real.raf(() => { if (gen === openGen) O55.motion.real.raf(mount); });
+      return true;
+    }
+    const wasShown = !!opts._wasShown;
     build();
     /* a Project that is being created is never abandoned half-made: starting over waits for it, on its own screen */
     let waitNote = false;
@@ -647,14 +669,16 @@
     if (S.env.lowResource) O55.motion.setLowResource(true, 'scenario');
     setInert(true); reapplyLook(); syncTheme(false); layoutClass();
     r.setAttribute('data-o55-ambient', 'on');
-    r.classList.remove('o55-closing'); r.classList.add('o55-opening');
+    r.classList.remove('o55-closing'); r.classList.add('o55-opening', 'o55-scrim-lit');
     /* the whole window waits, unseen, through the frame that styles it and restyles the now inert app beneath; the
-       first screen's release (transition below) lets the opening play from its first frame */
+       first screen's release (transition below) lets the opening play from its first frame. The click's scrim
+       stays until this root is on screen, so the dim never drops out between the two. */
     if (!wasShown && !O55.motion.reduced()) r.classList.add('o55-hold');
+    clearOpenScrim();
     /* known in advance on a computer that renders in software: the backdrop is solid from the first frame */
     if (SOLID === null && O55.motion.softwareRendered()) SOLID = true;
     if (SOLID && !wasShown) setSolid(true);
-    O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening'); if (SOLID) setSolid(true); } });
+    O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
     const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
     /* a resumed run starts on its own chapter's chord */
@@ -696,6 +720,7 @@
     S.save();
     S.open = false;
     const r = S.root;
+    r.classList.remove('o55-scrim-lit'); clearOpenScrim(); /* the close plays its own scrim */
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
