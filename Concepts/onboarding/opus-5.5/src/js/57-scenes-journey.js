@@ -121,7 +121,7 @@
       const helpers = done ? 3 : Math.max(0, Math.min(3, step - 2 + (step >= total - 1 ? 1 : 0)));
       [-1, 0, 1].slice(0, helpers).forEach((side, i) => { const a = side < 0 ? m.anchors[0] : side > 0 ? m.anchors[2] : m.anchors[1]; items.push({ key: 'h' + i, prop: 'helper', x: 240 + side * 112, y: m.floor - (side === 0 ? 14 : 0), s: m.helperScale, layer: 'mid', anim: 'drop', amb: 'bob', ambd: 2400 + i * 380, opts: { variant: i, pose: done ? 'bow' : 'carry', anchor: step >= 2 || done ? [240 + a[0], m.barY + a[1]] : null, px: m.helperPx, tie: step >= 2 || done ? ['a0', 'a1', 'a2'][side + 1] : null, side } }); });
       if (!done) items.push({ key: 'rings', prop: 'rings', x: 240, y: 300, s: 1.4, layer: 'back', anim: 'fade', amb: 'pulse' });
-      if (done) items.push({ key: 'ok', prop: 'badge', x: 240, y: 72, s: R(ctx) ? 1 : 1.4, layer: 'front', anim: 'drop', delay: 200, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } }, ...sparks([[80, 200, 0], [408, 170, 1], [100, 420, 2], [396, 400, 3]], 150));
+      if (done) items.push({ key: 'ok', prop: 'badge', x: 240, y: m.signY || 72, s: R(ctx) ? 1 : 1.4, layer: 'front', anim: 'drop', delay: 200, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } }, ...sparks([[80, 200, 0], [408, 170, 1], [100, 420, 2], [396, 400, 3]], 150));
       return items;
     }
   });
@@ -146,7 +146,7 @@
     label: 'art.hero', band: [0, 170, 480, 280],
     compose(ctx) {
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: ['bow', 'wave', 'bow'] }));
-      items.push({ key: 'sign', prop: 'badge', x: 240, y: 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
+      items.push({ key: 'sign', prop: 'badge', x: 240, y: A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
       items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' }); /* it opens on the troupe */
       return items;

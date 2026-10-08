@@ -356,6 +356,128 @@ html[data-o55-nier][data-theme="basic-dark"] #panel-settings .o55g-wrap.o55g-wra
   --g-on-accent: #2f2d26;
   --g-win-bg: #36342c;
 }
+/* light preview: an element with data-o55-nier-preview="light" shows NieR Mode while it is off */
+:root [data-o55-nier-preview="light"] {
+  --background: #ccc8b1;
+  --bg: #ccc8b1;
+  --surface: #c6c2ab;
+  --surface-elevated: #d1cdb7;
+  --surface-alt: #bfbba4;
+  --text-primary: #211f1b;
+  --text-secondary: #4d4b3f;
+  --text-muted: #4d4b40;
+  --border: #a29e89;
+  --border-light: #aeaa93;
+  --accent-primary: #211f1b;
+  --accent-primary-rgb: 33,31,27;
+  --accent-blue: #211f1b;
+  --accent-blue-rgb: 33,31,27;
+  --accent-magenta: #a94a38;
+  --accent-lime: #676930; /* derived: olive from the warning hue */
+  --accent-orange: #5c5022;
+  --accent-warning: #5c5022;
+  --accent-error: #a94a38;
+  --accent-red: #a94a38;
+  --accent-soft: rgba(33,31,27,0.1);
+  --shadow: none;
+  --elev-1: 0 1px 2px rgba(33,31,27,0.1);
+  --elev-2: 0 2px 6px rgba(33,31,27,0.12);
+  --elev-3: 0 6px 16px rgba(33,31,27,0.16);
+  --elev-hover: 0 4px 12px rgba(33,31,27,0.14);
+  --body-font: "PM NieR Sans", "Inter", system-ui, sans-serif;
+  --display-font: "PM NieR Sans", "Inter", system-ui, sans-serif;
+  --mono-font: "PM NieR Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --font-mono: "PM NieR Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --o55-nier-ink: #211f1b;
+  --o55-nier-ink-rgb: 33,31,27;
+  --o55-nier-on-ink: #dcd8c2;
+  --o55-nier-paper: #ccc8b1;
+  --o55-nier-paper-rgb: 204,200,177;
+  --o55-nier-raised: #d1cdb7;
+  --o55-nier-overlay: #d7d3bf;
+  --o55-nier-secondary: #c1bda5;
+  --o55-nier-hover: #b8b49d;
+  --o55-nier-active: #b1ad96;
+  --o55-nier-selected: #aeaa93;
+  --o55-nier-line-strong: #928e7a;
+  --o55-nier-ok: #676930;
+  --o55-nier-ok-text: #525426; /* derived */
+  --o55-nier-ok-surface: rgba(103,105,48,0.18);
+  --o55-nier-warn: #a08e42;
+  --o55-nier-warn-text: #5c5022;
+  --o55-nier-warn-surface: #ccc49e;
+  --o55-nier-error: #a94a38;
+  --o55-nier-error-text: #7d3427;
+  --o55-nier-error-surface: #cfb7a2;
+  --o55-nier-code-bg: #c6c2ab;
+  --o55-nier-code-fg: #211f1b;
+  --o55-nier-term-selection: #aeaa93;
+  --o55-nier-term-cursor: #211f1b;
+  --o55-nier-shadow-rgb: 33,31,27;
+  --o55-on-accent: #dcd8c2;
+  --o55-win-bg: #c6c2ab;
+}
+/* dark preview: an element with data-o55-nier-preview="dark" shows NieR Mode while it is off */
+:root [data-o55-nier-preview="dark"] {
+  --background: #2f2d26;
+  --bg: #2f2d26;
+  --surface: #36342c;
+  --surface-elevated: #3b3930;
+  --surface-alt: #282620;
+  --text-primary: #d1cdb7;
+  --text-secondary: #a8a593;
+  --text-muted: #9d9986;
+  --border: #4f4d45;
+  --border-light: #45433a;
+  --accent-primary: #d1cdb7;
+  --accent-primary-rgb: 209,205,183;
+  --accent-blue: #d1cdb7;
+  --accent-blue-rgb: 209,205,183;
+  --accent-magenta: #c96b57;
+  --accent-lime: #b6b964; /* derived: olive from the warning hue */
+  --accent-orange: #c2b169;
+  --accent-warning: #c2b169;
+  --accent-error: #c96b57;
+  --accent-red: #c96b57;
+  --accent-soft: rgba(209,205,183,0.12);
+  --shadow: none;
+  --elev-1: 0 1px 2px rgba(33,31,27,0.4);
+  --elev-2: 0 2px 6px rgba(33,31,27,0.45);
+  --elev-3: 0 6px 16px rgba(33,31,27,0.55);
+  --elev-hover: 0 4px 12px rgba(33,31,27,0.5);
+  --body-font: "PM NieR Sans", "Inter", system-ui, sans-serif;
+  --display-font: "PM NieR Sans", "Inter", system-ui, sans-serif;
+  --mono-font: "PM NieR Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --font-mono: "PM NieR Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --o55-nier-ink: #d1cdb7;
+  --o55-nier-ink-rgb: 209,205,183;
+  --o55-nier-on-ink: #2f2d26;
+  --o55-nier-paper: #2f2d26;
+  --o55-nier-paper-rgb: 47,45,38;
+  --o55-nier-raised: #3b3930;
+  --o55-nier-overlay: #403e35;
+  --o55-nier-secondary: #3d3b33;
+  --o55-nier-hover: #33312a;
+  --o55-nier-active: #3a382f;
+  --o55-nier-selected: #3d3b33;
+  --o55-nier-line-strong: #49473f;
+  --o55-nier-ok: #b6b964;
+  --o55-nier-ok-text: #c0c379; /* derived */
+  --o55-nier-ok-surface: rgba(182,185,100,0.18);
+  --o55-nier-warn: #c2b169;
+  --o55-nier-warn-text: #d3c47e;
+  --o55-nier-warn-surface: #403a24;
+  --o55-nier-error: #c96b57;
+  --o55-nier-error-text: #d98a77;
+  --o55-nier-error-surface: #45302a;
+  --o55-nier-code-bg: #33312a;
+  --o55-nier-code-fg: #ccc8b1;
+  --o55-nier-term-selection: #45433a;
+  --o55-nier-term-cursor: #d1cdb7;
+  --o55-nier-shadow-rgb: 33,31,27;
+  --o55-on-accent: #2f2d26;
+  --o55-win-bg: #36342c;
+}
 /* ---- end of generated tables ---- */
 
 /* The ground. The head boot script paints <html> inline (and #pm-boot-paint) in Basic Dark before Settings load, and

@@ -140,6 +140,26 @@ def roles(mode: str, c: dict, light: dict) -> dict:
     return {'root': root, 'settings': settings, 't37': t37, 'onboarding': onboarding, 'wizard': wizard}
 
 
+# A NieR preview while NieR Mode is off (the look screen's NieR thumbnail, kit previews): any element with
+# data-o55-nier-preview="light" or "dark" gets the colours and faces of that variant, so the onboarding art
+# (O55.art.tokens / the 'nier' art family) and a small tile can draw in ink on parchment inside a page in another look.
+# Only what a scene and a tile read: no measures (the tile keeps its own layout), no terminal, diff or graph tokens.
+PREVIEW_ROOT = ('--background', '--bg', '--surface', '--surface-elevated', '--surface-alt', '--text-primary', '--text-secondary',
+                '--text-muted', '--border', '--border-light', '--accent-primary', '--accent-primary-rgb', '--accent-blue',
+                '--accent-blue-rgb', '--accent-magenta', '--accent-lime', '--accent-orange', '--accent-warning', '--accent-error',
+                '--accent-red', '--accent-soft', '--shadow', '--elev-1', '--elev-2', '--elev-3', '--elev-hover',
+                '--body-font', '--display-font', '--mono-font', '--font-mono')
+PREVIEW_SELECTOR = ':root [data-o55-nier-preview="{mode}"]'  # (0,2,0): above a look tile's own [data-theme] tokens
+
+
+def preview(r: dict) -> dict:
+    """The preview scope's declarations: PREVIEW_ROOT and every --o55-nier-* helper of the root table, then the
+    onboarding window's two tokens (a preview tile sits inside it)."""
+    decls = {k: v for k, v in r['root'].items() if k in PREVIEW_ROOT or k.startswith('--o55-nier-')}
+    decls.update(r['onboarding'])
+    return decls
+
+
 def block(selector: str, decls: dict) -> str:
     lines = []
     for k, v in decls.items():
@@ -161,6 +181,10 @@ def generate() -> str:
         out.append(block(f'{base} :is({T37})', r['t37']))
         out.append(block(f'{base} #pm-o55-onboarding', r['onboarding']))
         out.append(block(f'{base} #panel-settings .o55g-wrap.o55g-wrap', r['wizard']))
+    for mode in ('light', 'dark'):
+        r = roles(mode, t[mode], t['light'])
+        out.append(f'/* {mode} preview: an element with data-o55-nier-preview="{mode}" shows NieR Mode while it is off */')
+        out.append(block(PREVIEW_SELECTOR.format(mode=mode), preview(r)))
     out.append(END)
     return '\n'.join(out)
 
