@@ -107,8 +107,9 @@
       on: () => s.on(), parts: () => s.parts(), background: () => s.background(), onChange: (cb) => s.onChange(cb),
       set(on) {
         if (!!on === s.on()) return true;
+        /* the editor's Turn on: the same moment as the checkbox (its sound, the reboot inside the window) */
         O55.sound.play(on ? 'nierOn' : 'nierOff');
-        const ok = s.set(on); after(null); paint(!!on); return ok;
+        N().preview({ on: !!on }, { within: within(), sound: false }); after(null); paint(!!on); return true;
       },
       setParts(keys) {
         const before = s.parts(), list = Array.isArray(keys) ? keys : [];
@@ -143,11 +144,23 @@
       mountEl.innerHTML = `<p class="o55-note o55-note-info">${O55.c.small('spark', 14)}<span>${U.esc(T('look.nier.missing'))}</span></p>`
         + `<div class="o55-nierpanel-fallback"><button type="button" class="o55-btn o55-secondary" data-o55-nierpanel="done" data-pm-hover-exempt="true"><span>${U.esc(T('chrome.done'))}</span></button></div>`;
     }
-    const onKey = (e) => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closePanel(); } };
+    /* Escape closes the panel first (before the window's own Escape); caught on the document as well, in case the
+       control that had focus went away (the editor's Turn on hides itself once used) */
+    const onKey = (e) => {
+      if (e.key !== 'Escape' || !panel || panel.host !== host) return;
+      if (!(host.contains(e.target) || e.target === document.body || e.target === document.documentElement)) return;
+      e.preventDefault(); e.stopPropagation(); closePanel();
+    };
     const onClickHost = (e) => { if (e.target.closest && e.target.closest('[data-o55-nierpanel="done"]')) { e.preventDefault(); closePanel(); } };
-    host.addEventListener('keydown', onKey);
+    /* a control that hides itself once used (Turn on) hands focus to the panel's heading, never to the page */
+    const keepFocus = () => O55.motion.after(0, () => {
+      const a = document.activeElement;
+      if (panel && panel.host === host && (!a || a === document.body || !host.contains(a) || !a.getClientRects().length)) { const h = host.querySelector('.o55-nierpanel-h'); if (h) h.focus({ preventScroll: true }); }
+    });
     host.addEventListener('click', onClickHost);
-    panel = { host, from: from || null, m, body };
+    host.addEventListener('click', keepFocus);
+    document.addEventListener('keydown', onKey, true);
+    panel = { host, from: from || null, m, body, off: () => document.removeEventListener('keydown', onKey, true) };
     O55.sound.play('sheet');
     /* it opens the way a NieR surface opens when NieR Mode is painted (a stepped slice), otherwise it rises */
     const fx = O55.nierFx;
@@ -160,6 +173,7 @@
     o = o || {};
     if (!panel) return;
     const p = panel; panel = null;
+    p.off();
     try { if (p.m && p.m.unmount) p.m.unmount(); } catch (_) {}
     p.host.remove();
     if (p.body) { p.body.removeAttribute('inert'); p.body.removeAttribute('aria-hidden'); }
