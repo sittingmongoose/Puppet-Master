@@ -94,12 +94,25 @@
     }
   `);
 
-  /* Unavailable recordings never play; say so instead of surfacing an audio error. */
+  /* Unavailable recordings never play; say so instead of surfacing an audio error. A setup or tour sound previews
+     through the player that really makes it (appPreview below); every other sound keeps the engine's tone player. */
   const pm51NotifPrevDispatch = dispatchAction;
   dispatchAction = function (action, el, event) {
     if (action === 'play-sound' && el && el.getAttribute && el.getAttribute('aria-disabled') === 'true') { PM51.toast('This sound is unavailable', el.dataset.disabledReason || 'The recording is missing. Replace the file to preview it.', 'info', 2600); return; }
+    if (action === 'play-sound' && el && el.dataset) {
+      const s = sounds().find(x => x.id === el.dataset.id);
+      if (isAppSound(s)) { appPreview.toggle(s); return; }
+      appPreview.stop();
+    }
     return pm51NotifPrevDispatch(action, el, event);
   };
+  /* The engine stops its own preview when Settings navigates, redraws, closes, changes the notifications tab, or
+     switches Project. A setup sound's preview stops on those same events: this wrap, the tab check in render, and
+     PM51_NOTIF_APP_PREVIEW_STOP (build.py), each of which calls O55.sound.stopPreview(). */
+  const pm51NotifPrevNavigate = navigate;
+  navigate = function () { appPreview.stop(); return pm51NotifPrevNavigate.apply(this, arguments); };
+  const pm51NotifPrevRenderApp = renderApp;
+  renderApp = function () { appPreview.stop(); return pm51NotifPrevRenderApp.apply(this, arguments); };
   /* The engine mirrors playback onto .sound-row / .sound-play; the inline preview buttons on event rows and sheets follow too. */
   const pm51NotifPrevSync = syncSoundPreviewRows;
   syncSoundPreviewRows = function (activeId = null) {
@@ -157,13 +170,26 @@
     const all = list || dests(); const d = all.find(x => x.name === m[1]) || all.find(x => x.name.toLowerCase().includes(m[1].toLowerCase()));
     return { to: d ? d.name : 'none', after: m[2] };
   }
-  /* The built-in library grows to two dozen sounds in six styles; each new one carries its own recipe (tones). */
+  /* The built-in library: two dozen alert sounds, each with its own recipe (tones). V1 delivered them behind a flag
+     and read them through X(), where the copy of the extras an older session persisted hides the shipped list, so a
+     profile that had run it never received a sound added later. V2 reads the shipped list itself and keeps the ids a
+     profile has been given (o55NotifSoundsGiven; on its first run, what V1 gave): each shipped sound arrives exactly
+     once, never as a second copy, and one you removed stays removed. The setup and tour sounds are not in that list:
+     they follow the live catalog on every render (syncAppSounds). */
   function migrateSounds() {
-    const n = state.notifications; if (!n || PM51.s().o55NotifSoundsV1) return;
-    n.sounds = n.sounds || []; const styles = X().builtinStyles || {};
-    n.sounds.forEach(s => { if (!s.style && styles[s.id]) s.style = styles[s.id]; });
-    (X().builtinSounds || []).forEach(b => { if (!n.sounds.some(s => s.id === b.id)) n.sounds.push(clone(b)); });
-    PM51.s().o55NotifSoundsV1 = true;
+    const n = state.notifications; const p = PM51.s(); if (!n) return;
+    const shipped = DATA.notifications || {};
+    n.sounds = n.sounds || [];
+    if (!p.o55NotifSoundsV2) {
+      p.o55NotifSoundsGiven = p.o55NotifSoundsV1 ? (X().builtinSounds || []).map(b => b && b.id).filter(Boolean) : [];
+      const styles = shipped.builtinStyles || {};
+      n.sounds.forEach(s => { if (!s.style && styles[s.id]) s.style = styles[s.id]; });
+      p.o55NotifSoundsV1 = true; p.o55NotifSoundsV2 = true;
+    }
+    const given = new Set(Array.isArray(p.o55NotifSoundsGiven) ? p.o55NotifSoundsGiven : []);
+    const before = given.size;
+    (shipped.builtinSounds || []).forEach(b => { if (!b || !b.id || given.has(b.id)) return; given.add(b.id); if (!n.sounds.some(s => s.id === b.id)) n.sounds.push(clone(b)); });
+    if (given.size !== before || !Array.isArray(p.o55NotifSoundsGiven)) p.o55NotifSoundsGiven = [...given];
   }
   const escStore = p => p.to === 'none' ? 'None' : p.to === 'repeat' ? `Repeat urgent after ${p.after}` : `${p.to} after ${p.after}`;
   const escText = g => { const p = escParts(g); return p.to === 'none' ? 'No escalation' : p.to === 'repeat' ? `Repeats after ${p.after}` : `Then ${p.to} after ${p.after}`; };
@@ -188,12 +214,212 @@
   const events = () => N().events || [];
   const eventById = id => events().find(e => e.id === id);
   const sounds = () => N().sounds || [];
-  const soundAvailable = s => settingsSoundPreview.availability(s) !== 'file_unavailable';
+  const soundAvailable = s => isAppSound(s) ? appPlayable() : settingsSoundPreview.availability(s) !== 'file_unavailable';
   const soundByName = name => sounds().find(s => s.name === name);
   const isBuiltInSound = s => /^Built-in/.test(String(s.source || ''));
   const sourceLabel = s => isBuiltInSound(s) ? 'Built-in' : /pack/i.test(String(s.source || '')) ? 'Imported pack' : 'Uploaded';
   const styleOf = s => isBuiltInSound(s) ? (s.style || 'Chimes') : 'Yours';
-  const STYLE_ORDER = () => [...(X().soundStyles || ['Chimes', 'Pings', 'Alerts', 'Soft', 'Playful', 'Retro']), 'Yours'];
+  /* The shipped order, read from the shipped data (a persisted copy of the extras would hide styles added later). */
+  const STYLE_ORDER = () => [...((DATA.notifications || {}).soundStyles || ['Chimes', 'Pings', 'Alerts', 'Soft', 'Playful', 'Retro', APP_SETUP, APP_NIER]), 'Yours'];
+  /* What the style filter groups by: a setup or tour sound sits under its collection (Setup & tour, NieR). */
+  const filterOf = s => isAppSound(s) ? appCollection(s) : styleOf(s);
+  const rankOf = s => STYLE_ORDER().indexOf(filterOf(s)) * 100 + (isAppSound(s) ? (APP_LOOKS.includes(s.o55.kit) ? APP_LOOKS.indexOf(s.o55.kit) : 50) : 0);
+
+  /* ---------- setup and tour sounds (O55.sound.CATALOG) ------------------- */
+  /* The onboarding window and the Guided Tour play their own generated sounds: a set for each look, and NieR Mode's
+     own set. The library lists every one as a built-in card read from O55's live catalog at render time (this script
+     runs before O55 loads, so nothing here reads it earlier), so the cards always match what really plays. A card is
+     stored like any built-in, since alerts choose a sound by name: id 'o55-<catalog id>', s.o55 = { id, kit, event,
+     variant, name, from }. It cannot be removed or replaced (removing it would not silence setup), it can be renamed
+     and used for alerts, and its preview plays the real sound (appPreview). Like every built-in here it is a
+     generated demonstration tone, and its card says so. */
+  const APP_SETUP = 'Setup & tour';
+  const APP_NIER = 'NieR';
+  const APP_LOOKS = ['basic', 'friendly', 'glass', 'retro'];
+  const LOOK_NAME = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR' };
+  const APP_SOURCE = 'Built-in · generated demonstration tone';
+  const APP_UNPLAYABLE = 'The player for setup and tour sounds did not load on this page, so this sound cannot play here.';
+  const appPlayer = () => { const o = window.O55; return o && o.sound && typeof o.sound === 'object' ? o.sound : null; };
+  const appCatalog = () => { const p = appPlayer(); return p && Array.isArray(p.CATALOG) ? p.CATALOG : null; };
+  const appPlayable = () => { const p = appPlayer(); return !!p && (typeof p.preview === 'function' || typeof p.renderBuffer === 'function'); };
+  const isAppSound = s => !!(s && s.o55 && typeof s.o55 === 'object' && s.o55.kit);
+  const appCollection = s => s.o55.kit === 'nier' ? APP_NIER : APP_SETUP;
+  const appStyle = c => typeof c.style === 'string' && c.style.trim() ? c.style.trim() : c.kit === 'nier' ? APP_NIER : `${APP_SETUP} · ${lookName(c.kit)}`;
+  /* The moment's name and the shared "plays during setup" line are SOUND's copy (soundLibrary.events / usedBy).
+     Read them when the card is drawn, so a new moment does not depend on a second table here. */
+  const APP_WHEN_FALLBACK = 'Plays during setup and the Guided Tour';
+  function appCopy(key) {
+    const o = window.O55; if (!o) return null;
+    if (typeof o.tx === 'function') { const node = o.tx(key); return node == null ? null : node; }
+    if (typeof o.t !== 'function') return null;
+    const text = o.t(key); return text == null || text === key ? null : text;
+  }
+  function appEventPhrase(event) {
+    const events = appCopy('soundLibrary.events');
+    if (events && typeof events === 'object' && !Array.isArray(events) && typeof events[event] === 'string') return events[event];
+    const o = window.O55; if (!o || typeof o.t !== 'function' || !event) return '';
+    const key = `soundLibrary.events.${event}`; const text = o.t(key);
+    return typeof text === 'string' && text && text !== key ? text : '';
+  }
+  function appWhen(s) {
+    const phrase = appEventPhrase(s && s.o55 ? s.o55.event : '');
+    const usedNode = appCopy('soundLibrary.usedBy');
+    const used = typeof usedNode === 'string' && usedNode.trim() ? usedNode.trim() : APP_WHEN_FALLBACK;
+    return phrase ? `${phrase}. ${used}` : used;
+  }
+  /* The catalog's length is in seconds (a value over 20 is read as milliseconds); the library writes m:ss.s. */
+  const secondsOf = v => { if (typeof v === 'number' && Number.isFinite(v)) return v > 20 ? v / 1000 : v; const m = /^(?:(\d+):)?(\d+(?:\.\d+)?)$/.exec(String(v || '').trim()); return m ? Number(m[1] || 0) * 60 + Number(m[2]) : 0; };
+  const clockOf = secs => { const t = Math.max(.1, Math.round((Number(secs) || .5) * 10) / 10); return `${Math.floor(t / 60)}:${(t % 60 < 10 ? '0' : '') + (t % 60).toFixed(1)}`; };
+  /* The looks that have setup sounds, the four families first in their usual order, then any other look the catalog names. */
+  const looksIn = list => { const kits = []; list.forEach(s => { if (isAppSound(s) && s.o55.kit !== 'nier' && !kits.includes(s.o55.kit)) kits.push(s.o55.kit); }); return [...APP_LOOKS.filter(k => kits.includes(k)), ...kits.filter(k => !APP_LOOKS.includes(k))]; };
+  const lookName = k => LOOK_NAME[k] || cap(String(k));
+  const currentLook = () => { try { const t = window.O55 && typeof window.O55.theme === 'function' ? window.O55.theme() : null; if (t && APP_LOOKS.includes(t.chosen)) return t.chosen; } catch (err) { /* the look is a default only */ } const f = String(document.documentElement.getAttribute('data-theme') || '').split('-')[0]; return APP_LOOKS.includes(f) ? f : 'basic'; };
+  /* Alerts choose a sound by name, so every name in the library is different: a name the catalog gives more than one
+     set ("Next step" in each look) carries its look ("Next step · Glass"), and one another sound already has gets a
+     number. */
+  const appLabel = (name, kit, shared) => shared ? `${name} · ${lookName(kit)}` : name;
+  function appName(name, self) {
+    const taken = x => sounds().some(o => o !== self && String(o.name).toLowerCase() === x.toLowerCase());
+    if (!taken(name)) return name;
+    let k = 2; while (taken(`${name} ${k}`)) k++; return `${name} ${k}`;
+  }
+  /* Every render: add the catalog's sounds a profile lacks (by id, so never twice), follow the synth's style, length
+     and name (a name you gave it is kept; alerts follow a changed name), and let a sound the synth no longer makes
+     leave the library unless an alert still uses it. Before O55 has loaded it does nothing. */
+  function syncAppSounds() {
+    const n = state.notifications; const cat = appCatalog(); if (!n || !cat) return;
+    n.sounds = n.sounds || [];
+    const live = new Set();
+    const uses = new Map(); cat.forEach(c => { if (c && c.kit) { const k = String(c.name || c.id).toLowerCase(); uses.set(k, (uses.get(k) || 0) + 1); } });
+    cat.forEach(c => {
+      if (!c || c.id == null || !c.kit) return;
+      const id = /^o55-/.test(String(c.id)) ? String(c.id) : 'o55-' + c.id; if (live.has(id)) return; live.add(id);
+      const from = appLabel(String(c.name || c.id), c.kit, uses.get(String(c.name || c.id).toLowerCase()) > 1);
+      const style = appStyle(c); const duration = clockOf(secondsOf(c.duration));
+      let s = n.sounds.find(x => x.id === id);
+      if (!s) {
+        s = { id, name: '', source: APP_SOURCE, style, duration, format: 'Generated', volume: 70, o55: {} };
+        s.name = appName(from, s); n.sounds.push(s);
+        Object.assign(s.o55, { id: String(c.id), kit: String(c.kit), event: String(c.event || ''), variant: c.variant == null ? null : c.variant, featured: c.featured !== false, name: s.name, from });
+      } else {
+        const o = s.o55 && typeof s.o55 === 'object' ? s.o55 : (s.o55 = {});
+        if (o.from !== from && s.name === o.name) { const next = appName(from, s); events().forEach(e => { if (e.sound === s.name) e.sound = next; }); s.name = next; o.name = next; }
+        Object.assign(o, { id: String(c.id), kit: String(c.kit), event: String(c.event || ''), variant: c.variant == null ? null : c.variant, featured: c.featured !== false, from });
+        s.style = style; s.duration = duration; s.source = APP_SOURCE; s.format = 'Generated';
+      }
+      if (Array.isArray(c.bars) && c.bars.length) s.bars = c.bars.slice(0, 18).map(v => Math.max(4, Math.min(24, Math.round(Number(v) || 0))));
+    });
+    if (cat.length) n.sounds = n.sounds.filter(s => !isAppSound(s) || live.has(s.id) || eventsUsing(s).length);
+  }
+  /* Settings can draw before O55 loads (a page that opens on Settings): draw the library again once it has. */
+  let appCatalogWait = false;
+  function awaitAppCatalog() {
+    if (appCatalog() || appCatalogWait || document.readyState !== 'loading') return;
+    appCatalogWait = true;
+    document.addEventListener('DOMContentLoaded', () => { if (appCatalog() && root.querySelector(`[data-pm51-manager="${ID}"]`)) PM51.refresh(ID, { swap: false }); }, { once: true });
+  }
+  /* A setup sound's card shows its real shape: after a render, the shown cards without bars are measured one at a time
+     in idle time (O55.sound.bars renders offline) and kept on the sound, so each is measured once. */
+  let barsRun = 0; const barsTried = new Set();
+  function measureShownBars() {
+    const p = appPlayer(); if (!p || typeof p.bars !== 'function') return;
+    const run = ++barsRun;
+    const idle = fn => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 600 }) : window.setTimeout(fn, 60));
+    const next = () => idle(async () => {
+      if (run !== barsRun) return;
+      const ids = [...root.querySelectorAll(`[data-pm51-manager="${ID}"] .sound-row[data-sound-row^="o55-"]`)].map(r => r.dataset.soundRow);
+      const s = ids.map(id => sounds().find(x => x.id === id)).find(x => isAppSound(x) && !(Array.isArray(x.bars) && x.bars.length) && !barsTried.has(x.id));
+      if (!s) return;
+      barsTried.add(s.id);
+      let v = null; try { v = await p.bars(s.o55.id, 18); } catch (err) { v = null; }
+      if (run !== barsRun) return;
+      if (Array.isArray(v) && v.length === 18) {
+        s.bars = v.map(x => Math.round(4 + Math.max(0, Math.min(1, Number(x) || 0)) * 20));
+        const w = root.querySelector(`.sound-row[data-sound-row="${cssEscape(s.id)}"] .sound-waveform`); if (w) w.outerHTML = waveform(s);
+      }
+      next();
+    });
+    next();
+  }
+  /* Eighteen bar heights from a rendered sound, for its card. */
+  function barsOf(buffer) {
+    try {
+      const d = buffer.getChannelData(0); const n = 18; const step = Math.max(1, Math.floor(d.length / n)); const peaks = [];
+      for (let i = 0; i < n; i++) { let m = 0; for (let j = i * step, end = Math.min(d.length, (i + 1) * step); j < end; j += 8) m = Math.max(m, Math.abs(d[j])); peaks.push(m); }
+      const top = Math.max(...peaks) || 1; return peaks.map(p => Math.round(4 + Math.sqrt(p / top) * 20));
+    } catch (err) { return null; }
+  }
+  /* The preview of a setup or tour sound: through O55.sound.preview(id), the synth that plays it in setup and the
+     tour; when that is missing or refuses, its offline render (O55.sound.renderBuffer) played here; never through the
+     tone recipe player, which cannot make these sounds. Same rules as every preview here: an explicit press, one at a
+     time, a second press stops it, Play sounds does not mute it, and it stops when Settings navigates or redraws. */
+  const appPreview = (() => {
+    const cur = { id: null, token: 0, timer: 0, stop: null };
+    const AC = () => window.AudioContext || window.webkitAudioContext;
+    function stopEngine() {
+      try { const p = appPlayer(); if (p && typeof p.stopPreview === 'function') p.stopPreview(); } catch (err) { /* already ended */ }
+    }
+    function stop() {
+      stopEngine();
+      if (!cur.id) return false;
+      const id = cur.id; const halt = cur.stop;
+      cur.token++; cur.id = null; cur.stop = null; window.clearTimeout(cur.timer); cur.timer = 0;
+      try { if (halt) halt(); } catch (err) { /* already ended */ }
+      if (state.soundPlaying === id) { state.soundPlaying = null; syncSoundPreviewRows(null); }
+      return true;
+    }
+    const ends = (token, secs) => { window.clearTimeout(cur.timer); cur.timer = window.setTimeout(() => { if (token === cur.token) stop(); }, Math.ceil((Math.min(Math.max(secs, .2), 12) + .25) * 1000)); };
+    const handleOf = r => r && typeof r === 'object' && typeof r.stop === 'function' ? () => r.stop() : null;
+    async function fromBuffer(s, token) {
+      const p = appPlayer(); const Ctx = AC(); if (!p || typeof p.renderBuffer !== 'function' || !Ctx) return false;
+      const buffer = await p.renderBuffer(s.o55.kit, s.o55.event, s.o55.variant);
+      if (token !== cur.token) return true;
+      if (!buffer || typeof buffer.duration !== 'number' || !buffer.duration) return false;
+      const ctx = new Ctx();
+      if (ctx.state === 'suspended' && typeof ctx.resume === 'function') await ctx.resume();
+      if (token !== cur.token) { try { ctx.close(); } catch (err) { /* closed */ } return true; }
+      const src = ctx.createBufferSource(); const gain = ctx.createGain(); const len = Math.min(buffer.duration, 12);
+      const volume = Math.max(0, Math.min(100, Number.isFinite(Number(s.volume)) ? Number(s.volume) : 70)) / 100;
+      src.buffer = buffer; gain.gain.value = volume; src.connect(gain); gain.connect(ctx.destination);
+      let done = false;
+      const close = () => { if (done) return; done = true; try { src.stop(); } catch (err) { /* ended */ } try { src.disconnect(); gain.disconnect(); } catch (err) { /* gone */ } try { const c = ctx.close(); if (c && c.catch) c.catch(() => {}); } catch (err) { /* closed */ } };
+      src.onended = () => { close(); if (token === cur.token) stop(); };
+      src.start(ctx.currentTime + .02, 0, len);
+      cur.stop = close; ends(token, len);
+      const bars = barsOf(buffer);
+      if (bars && !(Array.isArray(s.bars) && s.bars.length)) { s.bars = bars; const w = root.querySelector(`.sound-row[data-sound-row="${cssEscape(s.id)}"] .sound-waveform`); if (w) w.outerHTML = waveform(s); }
+      return true;
+    }
+    async function play(s) {
+      settingsSoundPreview.stop('replaced'); stop();
+      const token = ++cur.token; cur.id = s.id;
+      state.soundPlaying = s.id; syncSoundPreviewRows(s.id);
+      ends(token, secondsOf(s.duration) || 1);
+      try {
+        const p = appPlayer(); let played = false;
+        if (p && typeof p.preview === 'function') {
+          let r;
+          const halt = r0 => handleOf(r0) || (typeof p.stopPreview === 'function' ? () => p.stopPreview() : null);
+          try { r = p.preview(s.o55.id, { volume: Number.isFinite(Number(s.volume)) ? Number(s.volume) : 70 }); if (r && typeof r.then === 'function') r = await r; } catch (err) { r = false; }
+          played = r !== false && r !== null && !(r && typeof r === 'object' && r.ok === false);
+          /* pressed again (or another preview began elsewhere) while it started: silence it; a newer setup sound
+             preview has already replaced it in the player, so leave that one playing */
+          if (token !== cur.token) { const h0 = played && (handleOf(r) || (!cur.id && halt(r))); if (h0) h0(); return; }
+          if (played) { cur.stop = halt(r); if (r && Number.isFinite(r.duration) && r.duration > 0) ends(token, r.duration); }
+        }
+        if (!played) played = await fromBuffer(s, token);
+        if (!played && token === cur.token) throw new Error('The setup sound player did not make this sound.');
+      } catch (err) {
+        if (token !== cur.token) return;
+        stop();
+        PM51.toast('Sound preview did not play', `${String(err && err.message || 'Browser audio output is unavailable.').slice(0, 180)} No sound was played.`, 'error', 5200);
+      }
+    }
+    return { play, stop, toggle: s => { if (cur.id === s.id) { stop(); return; } play(s); }, playing: () => cur.id };
+  })();
+  document.addEventListener('visibilitychange', () => { if (document.hidden) appPreview.stop(); });
+  /* The tone player is frozen, so build.py calls this from settings-surface-close, notification-tab and project-changed. */
+  window.PM51_NOTIF_APP_PREVIEW_STOP = () => appPreview.stop();
   const eventsUsing = s => events().filter(e => e.sound === s.name);
   const groups = () => Object.assign({}, SOUND_GROUPS, X().soundGroups || {});
   const priorities = () => { const list = Array.isArray(X().priorities) ? X().priorities : []; return PRIORITIES.map(p => { const f = list.find(x => x && x.value === p) || {}; return { value: p, label: f.label || p, meta: f.meta || '' }; }); };
@@ -203,8 +429,8 @@
   /* Options for every event-sound dropdown: No sound / Built-in / Uploaded; a missing upload says so. */
   function soundOptions(current) {
     const g = groups();
-    const order = STYLE_ORDER();
-    const rows = sounds().map(s => ({ value: s.name, label: s.name, group: isBuiltInSound(s) ? styleOf(s) : g.uploaded, meta: soundAvailable(s) ? durationText(s.duration) : 'File missing', rank: order.indexOf(styleOf(s)) }));
+    /* a setup sound's other takes stay out of the list (Use for events on its card reaches them), unless chosen */
+    const rows = sounds().filter(s => isMainTake(s) || s.name === current).map(s => ({ value: s.name, label: s.name, group: isBuiltInSound(s) ? styleOf(s) : g.uploaded, meta: soundAvailable(s) ? durationText(s.duration) : isAppSound(s) ? 'Cannot play here' : 'File missing', rank: rankOf(s) }));
     rows.sort((x, y) => x.rank - y.rank);
     if (current && current !== 'None' && !soundByName(current)) rows.push({ value: current, label: current, group: g.uploaded, meta: 'File missing' });
     return [{ value: 'None', label: 'None', group: g.none }, ...rows];
@@ -212,7 +438,7 @@
   /* Inline preview: the engine's play-sound action with an id; None and missing files are aria-disabled with a reason. */
   function playButton(s, { labelled } = {}) {
     const playing = !!s && state.soundPlaying === s.id;
-    const why = !s ? 'Choose a sound first.' : soundAvailable(s) ? '' : 'The uploaded file is missing. Replace it from the Sounds tab to preview it.';
+    const why = !s ? 'Choose a sound first.' : soundAvailable(s) ? '' : isAppSound(s) ? APP_UNPLAYABLE : 'The uploaded file is missing. Replace it from the Sounds tab to preview it.';
     const name = s ? s.name : 'sound';
     const aria = `${playing ? 'Stop' : 'Play'} ${name} preview`;
     return `<button type="button" class="${labelled ? 'btn small pm51-btn' : 'icon-btn'} pm51-sound-inline-play${playing ? ' is-playing' : ''}" data-action="play-sound" data-id="${a(s ? s.id : '')}" data-sound="${a(name)}" aria-pressed="${playing ? 'true' : 'false'}" aria-label="${a(aria)}" data-pm-hover-label="${a(aria)}" data-pm-hover-detail="${a(why || (playing ? 'Stop this local preview.' : 'Preview this sound locally.'))}"${why ? ` aria-disabled="true" data-disabled-reason="${a(why)}"` : ''}>${icon(playing ? 'volume' : 'play')}${labelled ? `<span>${playing ? 'Stop' : 'Play'}</span>` : ''}</button>`;
@@ -412,10 +638,12 @@
   }
 
   /* ---------- Sounds ------------------------------------------------------- */
-  /* Each card's bars follow its own sound: the recipe's notes and levels where it has one, else a shape seeded by its name. */
+  /* Each card's bars follow its own sound: bars measured from it (a setup sound, once it has played), the recipe's
+     notes and levels where it has one, else a shape seeded by its name. */
   function waveform(s) {
     const n = 18; let hs;
-    if (s && Array.isArray(s.tones) && s.tones.length) {
+    if (s && Array.isArray(s.bars) && s.bars.length === n) hs = s.bars.map(v => Math.max(4, Math.min(24, Math.round(Number(v) || 4))));
+    else if (s && Array.isArray(s.tones) && s.tones.length) {
       hs = Array.from({ length: n }, (_, i) => { const p = (i + .5) / n; let amp = 0; s.tones.forEach(([f, off, len, type, glide, level]) => { if (p >= off && p <= off + len) { const k = 1 - (p - off) / Math.max(len, .01); amp = Math.max(amp, (level || .42) * (.35 + .65 * k) * (type === 'square' || type === 'sawtooth' ? 1.4 : 1)); } }); return Math.round(4 + Math.min(1, amp * 2.2) * 20); });
     } else {
       let seed = [...String((s && (s.id || s.name)) || 'x')].reduce((x, c) => (x * 31 + c.charCodeAt(0)) >>> 0, 7);
@@ -424,30 +652,102 @@
     return `<span class="sound-waveform">${hs.map((hgt, i) => `<i style="--h:${hgt}px;--n:${i}"></i>`).join('')}</span>`;
   }
   /* Library card: play + name + menu, source tag + length, "Used by …" + Use for events… */
+  /* A setup or tour sound uses the same card. The group heading (or the look choice) already names the look, so the
+     card keeps the sound's name and does not repeat the look as a tag. It is marked as a demonstration tone, and its
+     first line names the moment from O55's copy before which alerts use it. */
   function soundCard(s) {
+    const app = isAppSound(s);
     const available = soundAvailable(s);
     const playing = state.soundPlaying === s.id;
     const used = eventsUsing(s).map(e => e.name);
-    const usedText = used.length ? 'Used by ' + used.join(', ') : 'Not used yet';
-    const disabled = available ? '' : ` aria-disabled="true" data-disabled-reason="The uploaded file is missing. Choose Replace file from its menu to attach it again." data-pm-hover-label="${a(s.name)} is unavailable" data-pm-hover-detail="The uploaded file is missing."`;
+    const usedText = app ? appWhen(s) + (used.length ? ' · Used by ' + used.join(', ') : '') : used.length ? 'Used by ' + used.join(', ') : 'Not used yet';
+    const missing = app ? APP_UNPLAYABLE : 'The uploaded file is missing. Choose Replace file from its menu to attach it again.';
+    const disabled = available ? '' : ` aria-disabled="true" data-disabled-reason="${a(missing)}" data-pm-hover-label="${a(s.name)} is unavailable" data-pm-hover-detail="${app ? 'Its player did not load on this page.' : 'The uploaded file is missing.'}"`;
     const hover = available ? ` data-pm-hover-label="${playing ? 'Stop' : 'Play'} ${a(s.name)} preview" data-pm-hover-detail="${playing ? 'Stop this local preview.' : 'Preview this sound locally.'}"` : '';
+    const meta = app ? `${h(durationText(s.duration))} · Demo tone` : `${PM51.tag(isBuiltInSound(s) ? styleOf(s) : sourceLabel(s))} · ${h(durationText(s.duration))}${!isBuiltInSound(s) && s.format ? ' · ' + h(String(s.format)) : ''}`;
     return `<div class="sound-row pm51-sound-card${playing ? ' is-playing' : ''}${available ? '' : ' is-unavailable'}" data-sound-row="${a(s.id)}">
       <button type="button" class="sound-play${playing ? ' is-playing' : ''}" data-action="play-sound" data-id="${a(s.id)}" aria-pressed="${playing ? 'true' : 'false'}" aria-label="${playing ? 'Stop' : 'Play'} ${a(s.name)} preview"${hover}${disabled}>${icon(playing ? 'volume' : 'play')}</button>
-      <span class="sound-copy"><strong>${h(s.name)}</strong>${available ? '' : PM51.status('File missing', 'attention')}</span>
+      <span class="sound-copy"><strong>${h(s.name)}</strong>${available ? '' : PM51.status(app ? 'Cannot play here' : 'File missing', 'attention')}</span>
       ${waveform(s)}
-      <button type="button" class="icon-btn" data-action="pm51-notifications-sound-menu" data-id="${a(s.id)}" aria-label="Manage ${a(s.name)}" data-pm-hover-label="Manage ${a(s.name)}" data-pm-hover-detail="Rename, replace the file, or choose which events use it.">${icon('more')}</button>
-      <span class="pm51-sound-lines"><span class="pm51-sound-meta">${PM51.tag(isBuiltInSound(s) ? styleOf(s) : sourceLabel(s))} · ${h(durationText(s.duration))}${!isBuiltInSound(s) && s.format ? ' · ' + h(String(s.format)) : ''}</span><span class="pm51-sound-used"><span class="pm51-sound-used-text" title="${a(usedText)}">${h(usedText)}</span>${PM51.link({ label: 'Use for events…', action: 'pm51-notifications-assign-open', data: { id: s.id } })}</span></span>
+      <button type="button" class="icon-btn" data-action="pm51-notifications-sound-menu" data-id="${a(s.id)}" aria-label="Manage ${a(s.name)}" data-pm-hover-label="Manage ${a(s.name)}" data-pm-hover-detail="${app ? 'Rename it, or choose which events use it.' : 'Rename, replace the file, or choose which events use it.'}">${icon('more')}</button>
+      <span class="pm51-sound-lines"><span class="pm51-sound-meta">${meta}</span><span class="pm51-sound-used"><span class="pm51-sound-used-text" title="${a(usedText)}">${h(usedText)}</span>${PM51.link({ label: 'Use for events…', action: 'pm51-notifications-assign-open', data: { id: s.id } })}</span></span>
     </div>`;
+  }
+  const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+  const inWords = n => NUMBER_WORDS[n] || String(n);
+  const soundGrid = list => `<div class="pm51-sound-list pm51-sound-grid">${list.map(soundCard).join('')}</div>`;
+  /* Setup & tour: one look at a time (the look you use first), so the list stays short. */
+  function appSetupBody(app) {
+    const setup = app.filter(s => appCollection(s) === APP_SETUP);
+    const looks = looksIn(setup);
+    if (!looks.length) return PM51.note('No setup and tour sounds yet.');
+    const want = PM51.s().notifSoundLook; const mine = currentLook();
+    const look = looks.includes(want) ? want : looks.includes(mine) ? mine : looks[0];
+    return `<div class="pm51-sound-looks">${PM51.segmented(look, looks.map(k => [k, `${lookName(k)} look`]), { action: 'pm51-notifications-sound-look', label: 'Which look' })}</div>`
+      + appList(setup.filter(s => s.o55.kit === look), `while setup and the Guided Tour use the ${lookName(look)} look`, 'setup');
+  }
+  function appNierBody(app) {
+    const nier = app.filter(s => appCollection(s) === APP_NIER);
+    if (!nier.length) return PM51.note('No NieR sounds yet.');
+    return appList(nier, 'in setup and the Guided Tour while NieR Mode is on with its Menu sounds part', 'nier');
+  }
+  /* A moment that has several takes (setup varies them so a repeated moment never sounds the same) shows its main
+     take; the others are one press away, and an alert can use any of them. Each group keeps its own expanded flag. */
+  const isMainTake = s => !isAppSound(s) || s.o55.featured !== false;
+  function takesState() {
+    const p = PM51.s(); const t = p.notifSoundTakes;
+    if (t && typeof t === 'object' && !Array.isArray(t)) {
+      if (typeof t.setup !== 'boolean') t.setup = false;
+      if (typeof t.nier !== 'boolean') t.nier = false;
+      return t;
+    }
+    p.notifSoundTakes = { setup: t === true, nier: t === true };
+    return p.notifSoundTakes;
+  }
+  function appList(list, when, key) {
+    const extra = list.filter(s => !isMainTake(s)).length;
+    const main = list.length - extra;
+    const open = extra > 0 && !!takesState()[key];
+    const shown = open ? list : list.filter(isMainTake);
+    const line = extra
+      ? `All ${list.length} takes play ${when}. ${open ? 'Every take is shown.' : `The main take of each of these ${main} moments is shown.`}`
+      : `These ${list.length} sounds play ${when}.`;
+    const takesLabel = open ? 'Show only the main take of each' : `Show ${extra} more ${extra === 1 ? 'take' : 'takes'}`;
+    const takesDetail = open ? 'Show just the main take of each moment. Every take still plays.' : 'Show the other takes. Every take plays.';
+    const toggle = extra ? ' ' + PM51.link({ label: takesLabel, action: 'pm51-notifications-sound-takes', data: { group: key } }).replace('<button ', `<button aria-expanded="${open ? 'true' : 'false'}" data-pm-hover-label="${a(takesLabel)}" data-pm-hover-detail="${a(takesDetail)}" `) : '';
+    return `<p class="pm51-sound-sub">${h(line)}${toggle}</p>` + soundGrid(shown);
+  }
+  /* Under All, each set is one closed group (it holds dozens of sounds); the head opens it in place. */
+  function appGroup(name, app) {
+    const list = app.filter(s => appCollection(s) === name); if (!list.length) return '';
+    const key = name === APP_NIER ? 'nier' : 'setup';
+    const open = !!(PM51.s().notifSoundOpen || {})[key];
+    const help = name === APP_NIER ? 'Generated tones that play in setup and the Guided Tour while NieR Mode is on.' : `Generated tones that setup and the Guided Tour play, a set for each of the ${inWords(looksIn(list).length)} looks.`;
+    const bodyId = `pm51-sound-group-${key}`;
+    const helpId = `pm51-sound-group-${key}-help`;
+    const hoverLabel = `${open ? 'Hide' : 'Show'} the ${name} sounds`;
+    return `<div class="pm51-sound-group${open ? ' is-open' : ''}" data-group="${key}">`
+      + `<button type="button" class="pm51-sound-group-head" data-action="pm51-notifications-sound-group" data-group="${key}" aria-expanded="${open ? 'true' : 'false'}" aria-label="${a(hoverLabel)}" aria-describedby="${helpId}"${open ? ` aria-controls="${bodyId}"` : ''} data-pm-hover-label="${a(hoverLabel)}" data-pm-hover-detail="${a(help)}">${icon('chevron')}<span class="pm51-sound-group-copy"><span class="pm51-sound-group-title">${h(name)}</span><span class="pm51-sound-group-help" id="${helpId}">${h(help)}</span></span><span class="pm51-sound-group-count">${list.length} sounds</span></button>`
+      + (open ? `<div class="pm51-sound-group-body" id="${bodyId}">${name === APP_NIER ? appNierBody(app) : appSetupBody(app)}</div>` : '')
+      + '</div>';
   }
   function soundsTab() {
     const ev = events();
     const packs = N().packs || [];
     const adv = N().soundSettings || (N().soundSettings = { volume: 70, whenFocused: true });
-    const styleNow = STYLE_ORDER().includes(PM51.s().notifSoundStyle) ? PM51.s().notifSoundStyle : 'All';
-    const shown = sounds().filter(s => styleNow === 'All' || styleOf(s) === styleNow);
-    const styles = ['All', ...STYLE_ORDER().filter(st => sounds().some(s => styleOf(s) === st))];
+    const all = sounds(); const app = all.filter(isAppSound); const plain = all.filter(s => !isAppSound(s));
+    const styles = ['All', ...STYLE_ORDER().filter(st => all.some(s => filterOf(s) === st))];
+    const styleNow = styles.includes(PM51.s().notifSoundStyle) ? PM51.s().notifSoundStyle : 'All';
+    /* V2 appends a newly delivered built-in. Order the plain grid by style, then by name, so it sits with its style. */
+    const pool = styleNow === 'All' ? plain : plain.filter(s => styleOf(s) === styleNow);
+    const shown = pool.slice().sort((x, y) => rankOf(x) - rankOf(y) || String(x.name || '').localeCompare(String(y.name || ''), undefined, { numeric: true, sensitivity: 'base' }));
+    const listed = styleNow === APP_SETUP ? appSetupBody(app) : styleNow === APP_NIER ? appNierBody(app)
+      : styleNow === 'All' ? (shown.length ? soundGrid(shown) : '') + appGroup(APP_SETUP, app) + appGroup(APP_NIER, app)
+      : shown.length ? soundGrid(shown) : '';
     const library = `<div class="pm51-sound-styles">${PM51.segmented(styleNow, styles.map(st => [st, st === 'Yours' ? 'Uploaded' : st]), { action: 'pm51-notifications-sound-style', label: 'Show sounds' })}</div>`
-      + PM51.home(S.catalog, shown.length ? `<div class="pm51-sound-list pm51-sound-grid">${shown.map(soundCard).join('')}</div>` : PM51.note(styleNow === 'Yours' ? 'No uploaded sounds yet. Use Add sound to upload one or import a pack.' : 'No sounds in this style.'));
+      + PM51.home(S.catalog, listed || PM51.note(styleNow === 'Yours' ? 'No uploaded sounds yet. Use Add sound to upload one or import a pack.' : 'No sounds in this style.'));
+    const builtIn = all.filter(isBuiltInSound);
+    const styleCount = new Set(builtIn.map(filterOf)).size;
     const sfxOn = !!PM51.value(S.sfx);
     const basics = PM51.bound.rows([S.sfx]) + PM51.scoped.rows([
       orow({ label: 'Volume', help: 'Used unless a sound sets its own.', control: `<label class="o55-num"><input class="text-control" type="number" inputmode="numeric" min="0" max="100" step="5" value="${a(adv.volume)}" data-action="pm51-notifications-volume" aria-label="Volume"><span class="o55-unit">%</span></label>` }),
@@ -456,7 +756,7 @@
     const eventRows = ev.map(e => ({ label: e.name, help: e.enabled ? undefined : 'This alert is off.', control: soundControl(e) }));
     const packRows = packs.map(p => ({ label: p.name, help: `${p.sounds} sounds · Licence ${String(p.license || 'unknown').toLowerCase()} · example only, not playable`, control: PM51.toggle(p.status === 'active', { action: 'pm51-notifications-pack-toggle', data: { id: p.id }, label: p.name }) }));
     return PM51.section({ title: 'Sounds', body: basics })
-      + PM51.section({ title: 'Sound library', help: `${sounds().filter(isBuiltInSound).length} sounds are built in, in six styles. Press play to hear one, or upload your own.`, action: PM51.bound.action(S.manage, { label: 'Add sound', icon: 'plus' }), body: library })
+      + PM51.section({ title: 'Sound library', help: `${builtIn.length} sounds are built in, in ${inWords(styleCount)} styles, all generated demonstration tones. Press play to hear one, or upload your own.${app.length ? ' The Setup & tour and NieR sounds are the ones setup and the Guided Tour play.' : ''}`, action: PM51.bound.action(S.manage, { label: 'Add sound', icon: 'plus' }), body: library })
       + PM51.section({ title: 'Event sounds', help: 'Which sound plays for each alert. Press play to hear it.', body: PM51.home(S.soundMap, ev.length ? PM51.rows(eventRows) : PM51.note('No events yet. Add one under Events.')) })
       + PM51.section({ title: 'Sound packs', help: 'Sets of sounds made for PeonPing-compatible apps.', action: { label: 'Import pack', icon: 'download', small: true, action: 'import-peonping-pack' }, body: packRows.length ? PM51.rows(packRows) : PM51.note('No packs imported yet.') })
       + PM51.advanced([
@@ -470,7 +770,7 @@
     const rows = PM51.rows(events().map(e => ({ label: e.name, help: e.sound && e.sound !== 'None' && e.sound !== s.name ? `Now: ${e.sound}` : (e.enabled ? undefined : 'This alert is off.'), control: PM51.toggle(e.sound === s.name, { action: 'pm51-notifications-assign', data: { event: e.id, sound: s.id }, label: e.name }) })));
     PM51.panel({
       icon: 'volume', eyebrow: 'Sound', title: `Use ${s.name} for`, subtitle: 'Each alert can have one sound.',
-      status: { label: soundAvailable(s) ? 'Ready to play' : 'File missing', tone: soundAvailable(s) ? 'ready' : 'attention' },
+      status: { label: soundAvailable(s) ? 'Ready to play' : isAppSound(s) ? 'Cannot play here' : 'File missing', tone: soundAvailable(s) ? 'ready' : 'attention' },
       facts: [{ label: 'Source', value: sourceLabel(s) }, { label: 'Length', value: durationText(s.duration) }, { label: 'Used by', value: `${used.length} ${used.length === 1 ? 'event' : 'events'}` }],
       body: PM51.panelSection('Events', events().length ? rows : PM51.note('No events yet. Add one under Events.'), 'Turn on every alert that should play this sound.', { icon: 'bell' }),
       primaryLabel: 'Done', onPrimary: () => save()
@@ -540,8 +840,13 @@
   }
 
   /* ---------- page --------------------------------------------------------- */
+  let appSoundTab = false;
   function render() {
-    migrateV2(); migrateSounds(); syncStores();
+    const onSounds = tab() === 'sounds';
+    if (appSoundTab && !onSounds) appPreview.stop();
+    appSoundTab = onSounds;
+    migrateV2(); migrateSounds(); syncAppSounds(); awaitAppCatalog(); syncStores();
+    if (tab() === 'sounds') measureShownBars();
     const t = tab();
     const inner = t === 'events' ? eventsTab() : t === 'sounds' ? soundsTab() : t === 'quiet' ? quietTab() : t === 'history' ? historyTab() : destinationsTab();
     /* no wrapper around the tab: placed sections and More options must stay direct children of the page */
@@ -686,6 +991,9 @@
     requestAnimationFrame(() => { const i = document.querySelector('.drawer-wrap input[data-action="pm51-notifications-group-name"]'); if (i) { i.focus(); i.select(); } });
   });
   PM51.on('notifications-sound-style', el => { PM51.s().notifSoundStyle = el.dataset.value; saveState(); PM51.refresh(ID, { swap: false }); });
+  PM51.on('notifications-sound-look', el => { const v = el.dataset.value; if (!looksIn(sounds()).includes(v)) return; PM51.s().notifSoundLook = v; saveState(); PM51.refresh(ID, { swap: false }); refocus(`[data-action="pm51-notifications-sound-look"][data-value="${cssEscape(v)}"]`); });
+  PM51.on('notifications-sound-takes', el => { const k = ds(el, 'group'); if (k !== 'setup' && k !== 'nier') return; const o = takesState(); o[k] = !o[k]; saveState(); PM51.refresh(ID, { swap: false }); refocus(`[data-action="pm51-notifications-sound-takes"][data-group="${k}"]`); });
+  PM51.on('notifications-sound-group', el => { const k = ds(el, 'group'); if (k !== 'setup' && k !== 'nier') return; const o = PM51.s().notifSoundOpen || (PM51.s().notifSoundOpen = {}); o[k] = !o[k]; saveState(); PM51.refresh(ID, { swap: false }); refocus(`[data-action="pm51-notifications-sound-group"][data-group="${k}"]`); });
   PM51.on('notifications-group-toggle', el => { const g = (N().agents || []).find(x => x.id === ds(el, 'id')); if (!g) return; g.status = g.status === 'active' ? 'disabled' : 'active'; el.classList.toggle('on', g.status === 'active'); el.setAttribute('aria-checked', g.status === 'active' ? 'true' : 'false'); saveState(); });
   /* Add an alert: pick one Puppet Master can raise (or your own, raised by scripts), then where it goes and how it sounds. */
   PM51.on('notifications-add-event', () => {
@@ -751,12 +1059,15 @@
     const available = soundAvailable(s);
     const used = eventsUsing(s);
     PM51.menu(el, [
-      { label: state.soundPlaying === s.id ? 'Stop preview' : 'Play preview', icon: state.soundPlaying === s.id ? 'volume' : 'play', ariaDisabled: !available, meta: available ? '' : 'File missing', onClick: () => { if (playBtn) dispatchAction('play-sound', playBtn, null); } },
+      { label: state.soundPlaying === s.id ? 'Stop preview' : 'Play preview', icon: state.soundPlaying === s.id ? 'volume' : 'play', ariaDisabled: !available, meta: available ? '' : isAppSound(s) ? 'Cannot play here' : 'File missing', onClick: () => { if (playBtn) dispatchAction('play-sound', playBtn, null); } },
       { label: 'Use for events…', icon: 'bell', meta: used.length ? `${used.length} now` : '', onClick: () => assignPanel(s) },
       { label: 'Rename', icon: 'edit', onClick: () => renameSound(s) },
-      { label: 'Replace file', icon: 'upload', onClick: () => editSound(s) },
-      { separator: true },
-      { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${s.name}?`, used.length ? `${used.map(e => e.name).join(', ')} will have no sound.` : 'No event uses it right now.', 'Remove', () => { events().forEach(e => { if (e.sound === s.name) e.sound = 'None'; }); settingsSoundPreview.releaseFile(s.id); N().sounds = sounds().filter(x => x.id !== s.id); save(); PM51.toast('Sound removed', `${s.name} is gone.`); }, true) }
+      /* setup and the tour play a setup sound whatever the library holds, so it has no file to replace and stays */
+      ...(isAppSound(s) ? [] : [
+        { label: 'Replace file', icon: 'upload', onClick: () => editSound(s) },
+        { separator: true },
+        { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${s.name}?`, used.length ? `${used.map(e => e.name).join(', ')} will have no sound.` : 'No event uses it right now.', 'Remove', () => { events().forEach(e => { if (e.sound === s.name) e.sound = 'None'; }); settingsSoundPreview.releaseFile(s.id); N().sounds = sounds().filter(x => x.id !== s.id); save(); PM51.toast('Sound removed', `${s.name} is gone.`); }, true) }
+      ])
     ], s.name);
   });
   PM51.on('notifications-assign', el => {
@@ -780,11 +1091,11 @@
   /* ---------- actions: history & page ------------------------------------- */
   PM51.on('notifications-history', el => historyPanel(Number(ds(el, 'index'))));
   PM51.on('notifications-reset', () => PM51.confirm('Reset notification defaults?', 'Destinations, events, sounds, and quiet hours go back to the example defaults. Uploaded recordings are forgotten.', 'Reset', () => {
-    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); PM51.s().o55NotifV2 = false; PM51.s().o55NotifSoundsV1 = false; migrateV2(); migrateSounds(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
+    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); PM51.s().o55NotifV2 = false; PM51.s().o55NotifSoundsV1 = false; PM51.s().o55NotifSoundsV2 = false; barsTried.clear(); barsRun++; appPreview.stop(); migrateV2(); migrateSounds(); syncAppSounds(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
   }, true));
   PM51.on('notifications-help', () => PM51.panel({
     icon: 'info', title: 'How notifications work',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">An event is something worth telling you about. Each event goes to the destinations you pick, with the sound you choose, unless quiet hours say otherwise.</p>')
-      + PM51.panelSection('The pieces', PM51.kv([['Destinations', 'Places an alert can arrive: this app, your system tray, a chat service, or your phone.'], ['Events', 'What triggers an alert, and where it goes. Add your own for scripts and automations; they raise it by name.'], ['Sounds', 'Two dozen built-in sounds in six styles. Upload your own or import a pack.'], ['Quiet hours', 'A daily window when alerts wait. Each destination says whether urgent alerts, or everything, still get through.'], ['Notification agents', 'Watch a few alerts and, if nobody responds, send them somewhere louder.']]))
+      + PM51.panelSection('The pieces', PM51.kv([['Destinations', 'Places an alert can arrive: this app, your system tray, a chat service, or your phone.'], ['Events', 'What triggers an alert, and where it goes. Add your own for scripts and automations; they raise it by name.'], ['Sounds', (() => { const b = sounds().filter(isBuiltInSound); const n = new Set(b.map(filterOf)).size; return `${b.length} built-in sounds in ${inWords(n)} styles, all generated demonstration tones${b.some(isAppSound) ? ', including the ones setup and the Guided Tour play' : ''}. Upload your own or import a pack.`; })()], ['Quiet hours', 'A daily window when alerts wait. Each destination says whether urgent alerts, or everything, still get through.'], ['Notification agents', 'Watch a few alerts and, if nobody responds, send them somewhere louder.']]))
   }));
 })();

@@ -8,6 +8,15 @@
   const O55 = window.O55, C = O55.c, U = O55.util, F = O55.flow, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
   const OL = (S) => (S.sess.online = S.sess.online || { purpose: 'copy' });
+  /* No numeric priority: O55.sound ranks coinciding events itself. A sign-in's transport stays
+     quiet in O55.flow.op (sound.done false): the sign-in sounds once, when it is really complete. */
+  const SND = { signedIn: { intensity: 0.8 }, warn: { intensity: 0.4 } };
+  function seeSheet(S) {
+    const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    const sheet = layer && layer.querySelector('.o55-sheet[data-open="true"]');
+    if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() ? 'auto' : 'smooth' });
+    O55.sound.play('sheet');
+  }
   const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : (O55.fixtures.forge(id) || {}).name || id);
   const instanceKey = (d) => [d.forge || '', d.forge_provider_variant || '', (() => { try { const u = new URL(d.forge_instance_url || ''); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return ''; } })()].join('|');
   const accountFor = (S, service) => {
@@ -59,7 +68,8 @@
     const d = md(S), f = O55.fixtures.forge(si.service) || {};
     return f.device && !(d.forge === si.service && needsAddress(si.service, d.forge_provider_variant)) ? f.device : null;
   }
-  function completeSignIn(S, login, action) {
+  /* quiet: the caller's own screen change is the moment (Continue with an account that is already connected) */
+  function completeSignIn(S, login, action, quiet) {
     const si = SI(S);
     if (!login || (si.kind === 'forge' && si.instance_key !== instanceKey(md(S)))) return false;
     si.state = 'done'; si.account = login;
@@ -70,13 +80,13 @@
       if (OL(S).purpose === 'source') O55.draft.set(d, { source_access_authorization_refs: Array.from(new Set(d.source_access_authorization_refs.concat(['auth:' + U.slug(si.instance_key) + ':' + U.slug(login)]))).slice(0, 16) });
     }
     if (si.done && O55.official.handlers[si.done]) O55.official.handlers[si.done](S, login);
-    S.save(); O55.sound.play('success'); O55.ui.refresh(); return true;
+    S.save(); if (!quiet && S.open && S.sess.screen === 'online-signin') O55.sound.play('success', SND.signedIn); O55.ui.refresh(); return true;
   }
   /* The person finishes in their browser; the fixture completes after a while. A newer attempt (device code, a new
      code) supersedes an older wait, so a stale wait never completes the sign-in. */
   function waitForBrowser(S, ms) {
     const si = SI(S), attempt = si.attempt || 0, identity = si.instance_key, key = 'signin:' + U.slug(identity) + ':' + attempt;
-    F.op(S, key, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: ms || 2700 }], { quiet: true, onDone: () => {
+    F.op(S, key, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: ms || 2700 }], { quiet: true, sound: { done: false }, onDone: () => {
       const cur = SI(S);
       if (cur.service === si.service && cur.instance_key === identity && (si.kind !== 'forge' || instanceKey(md(S)) === identity) &&
           (cur.attempt || 0) === attempt && ['waiting', 'code'].includes(cur.state)) completeSignIn(S, si.kind === 'forge' ? 'jared-p' : 'jared@example.com', 'sign_in_during_setup');
@@ -135,24 +145,25 @@
     do: {
       useKnown(S) {},
       another(S) { SI(S).another = true; S.save(); O55.ui.refresh(); },
-      signIn(S) { const si = SI(S); si.state = 'waiting'; si.attempt = (si.attempt || 0) + 1; S.save(); O55.official.open(S, { name: si.name, url: signinUrl(S, si) }); O55.ui.refresh(); waitForBrowser(S); },
-      copyLink(S) { const si = SI(S), url = signinUrl(S, si); if (url) U.copyText(url); O55.ui.toast(url ? T('online.signin.linkCopied', { url: url.replace(/^https:\/\//, '') }) : T('online.signin.linkCopiedNone')); },
-      code(S) { const si = SI(S); si.state = 'code'; si.code = 'WDJB-MJHT'; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); waitForBrowser(S, 7000); },
-      newCode(S) { const si = SI(S); si.code = ['WDJB', 'K3PX', 'R7QM', 'T2LN'][Math.floor(Math.random() * 4)] + '-' + ['MJHT', 'V9CZ', 'H4WE', 'B8KD'][Math.floor(Math.random() * 4)]; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); waitForBrowser(S, 7000); },
+      signIn(S) { const si = SI(S); si.state = 'waiting'; si.attempt = (si.attempt || 0) + 1; S.save(); O55.official.open(S, { name: si.name, url: signinUrl(S, si) }); O55.ui.refresh(); O55.sound.play('tap'); waitForBrowser(S); },
+      copyLink(S) { const si = SI(S), url = signinUrl(S, si); if (url) { U.copyText(url); O55.sound.play('copy'); } O55.ui.toast(url ? T('online.signin.linkCopied', { url: url.replace(/^https:\/\//, '') }) : T('online.signin.linkCopiedNone')); },
+      code(S) { const si = SI(S); si.state = 'code'; si.code = 'WDJB-MJHT'; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); waitForBrowser(S, 7000); },
+      newCode(S) { const si = SI(S); si.code = ['WDJB', 'K3PX', 'R7QM', 'T2LN'][Math.floor(Math.random() * 4)] + '-' + ['MJHT', 'V9CZ', 'H4WE', 'B8KD'][Math.floor(Math.random() * 4)]; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); waitForBrowser(S, 7000); },
       create(S) { const si = SI(S); si.state = 'create'; S.save(); O55.official.open(S, { kind: 'signup', name: si.name, url: si.kind === 'forge' ? O55.official.forgeUrl(S, si.service, 'signup') : null }); O55.ui.refresh(); },
       signupBack(S) { const si = SI(S); si.state = 'idle'; si.another = true; S.save(); O55.ui.refresh(); },
-      tokenOn(S) { SI(S).state = 'token'; S.save(); O55.ui.refresh(); },
+      tokenOn(S) { SI(S).state = 'token'; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       tokenCheck(S) {
         const si = SI(S), i = S.root.querySelector('#o55f-token'), v = i ? i.value.trim() : ''; if (i) i.value = '';
         si.tokenTyped = false; F.reset(S, 'token:' + si.service);
         F.op(S, 'token:' + si.service, 'cmd.auth_profile.sign_in', [{ key: 'verify', ms: 800, fail: () => (v.length >= 8 ? null : 'token_rejected') }], {
+          sound: { done: false, fail: 'warn' }, /* a refused token is a soft warning under its field; done sounds in completeSignIn */
           /* normalize() rebuilds the instance profile with auth_method pat_ref; the token itself went to the keychain owner */
           onDone: () => { const d = md(S); d.forge_auth_method = 'token'; O55.draft.set(d, { forge_instance_profile: null }); if (d.forge_instance_profile) d.forge_instance_profile.credential_ref = 'credential:' + si.service + ':token'; completeSignIn(S, 'jared', 'sign_in_during_setup'); }
         });
       },
       next(S) {
         const si = SI(S);
-        if (si.state !== 'done' && si.kind === 'forge') { const k = accountFor(S, si.service); if (!completeSignIn(S, k, 'already_connected')) return; }
+        if (si.state !== 'done' && si.kind === 'forge') { const k = accountFor(S, si.service); if (!completeSignIn(S, k, 'already_connected', true)) return; }
         if (si.state !== 'done') return;
         O55.ui.go(si.then || 'safe');
       }
@@ -295,7 +306,7 @@
       azAdvanced(S) { S.sess.ui.azureTeamProjectAdvanced = !S.sess.ui.azureTeamProjectAdvanced; S.save(); O55.ui.refresh(); },
       azCreateTeamProject(S) { const route = azureProjectRoute(S); if (!route) return; O55.official.open(S, { kind: 'page', name: 'Azure DevOps team projects', ...route }); },
       adv(S) { S.sess.ui.onlineAdv = !S.sess.ui.onlineAdv; S.save(); O55.ui.refresh(); },
-      readme(S) { O55.draft.set(md(S), { repository_initialize_readme: !md(S).repository_initialize_readme }); S.save(); O55.ui.refresh(); },
+      readme(S) { const on = !md(S).repository_initialize_readme; O55.draft.set(md(S), { repository_initialize_readme: on }); S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff'); },
       gitignore(S, v) { O55.draft.set(md(S), { repository_gitignore: v }); S.save(); O55.ui.refresh(); },
       license(S, v) { O55.draft.set(md(S), { repository_license: v }); S.save(); O55.ui.refresh(); },
       next(S) {
@@ -304,7 +315,7 @@
       }
     },
     bind: {
-      repo(S, v) { O55.draft.set(md(S), { repository_name: v.trim().replace(/\s+/g, '-') }); S.save(); O55.ui.refresh(); },
+      repo(S, v) { const was = nameTaken(S, md(S).repository_name); O55.draft.set(md(S), { repository_name: v.trim().replace(/\s+/g, '-') }); S.save(); O55.ui.refresh(); if (!was && nameTaken(S, md(S).repository_name)) O55.sound.play('warn', SND.warn); },
       desc(S, v) { O55.draft.set(md(S), { repository_description: v }); S.save(); },
       branch(S, v) { O55.draft.set(md(S), { repository_default_branch: v.trim() || 'main' }); S.save(); }
     }
@@ -420,9 +431,9 @@
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
       backend(S, v) { O55.draft.set(md(S), { history_backend: v }); S.save(); O55.ui.refresh(); },
-      filesafe(S) { O55.draft.set(md(S), { filesafe: !md(S).filesafe }); S.save(); O55.ui.refresh(); },
+      filesafe(S) { const on = !md(S).filesafe; O55.draft.set(md(S), { filesafe: on }); S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff'); },
       online(S) { OL(S).purpose = 'copy'; S.save(); O55.ui.go('online-service'); },
-      backup(S) { S.sess.ui.sheet = 'backup'; S.save(); O55.ui.refresh(); },
+      backup(S) { S.sess.ui.sheet = 'backup'; S.save(); O55.ui.refresh(); seeSheet(S); },
       bdest(S, v, el) { S.sess.backup.dest = v === 'none' ? null : v; S.save(); O55.ui.refresh(); if (v !== 'none') O55.ui.charm(el, backupLabel(S, v), 'vault'); },
       next(S) { O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); }
     },
