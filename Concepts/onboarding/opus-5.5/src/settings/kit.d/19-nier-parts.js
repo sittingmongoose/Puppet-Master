@@ -554,7 +554,7 @@
        34 ms, two frames or more after repaint() returned, never before the list is done and at most 4 s after: the
        kicker reads "All clear" in one step, holds 160 ms, and the plate tears out as six slats sliding off to
        alternate sides from the middle outward (steps(4), 30 ms apart, the first step on the hold's last frame).
-       info.onReveal('reveal') fires on that frame (the window takes input again from then, and the wake sounds) and
+       info.onReveal('start') fires on the cover's first frame (the hum is scored from there), 'reveal' on that frame (the window takes input again from then, and the wake sounds) and
        'gone' once they are off; the window's own effects come back then, never over the plate.
        Unticking, "back into the box": the stage powers down first (300 ms, the window's beat), six slats close in from
        both sides (T300-T540), two lines type (stamps at T700 and T850), then the repaint; at R "All clear" for 120 ms,
@@ -843,6 +843,7 @@
         el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
       });
       t0 = await started;
+      ctx.cue('start');
       await settled(grow);
       /* T450: full cover; the decorations keep their last place inline (so the slats' copies carry them) */
       set.querySelectorAll('.o55np-deco > i').forEach(el => el.getAnimations().forEach(a => { try { a.commitStyles(); } catch (e) { /* not rendered */ } a.cancel(); }));
@@ -856,6 +857,7 @@
       cover.setAttribute('data-hold', '');
       const shut = rbSlats(cover, set, 'in', page ? 60 : 300);
       t0 = await rbStart(shut.first, t0);
+      ctx.cue('start');
       await shut.done;
       cover.removeAttribute('data-hold');
       shut.wrap.remove();
@@ -910,13 +912,15 @@
   }
 
   /* The moment's own sounds, unless its caller plays them (info.sound false: the onboarding window's NieR checkbox and
-     the look menus play nierOn / nierOff and wake through O55 themselves): the hum (nierOn or nierOff) as the cover
-     starts, and the world waking (wake: NieR's choir after turning on, the look's own reveal after turning off) as the
-     tear-out begins. Whoever plays the hum plays the wake, so it sounds once. wake never follows the hum by less than
-     120 ms (an instant change: Reduced Motion, no Reboot moment part), or the two would meet as one moment and the
-     wake be dropped; it is a state sound and always plays (hero spec rules 5 and 10). */
-  function rbSounds(info, on) {
-    const own = info.sound !== false;
+     the look menus play nierOn / nierOff and wake through O55 themselves, on the same cues): the hum (nierOn or
+     nierOff) on the cover's first frame ('start': its six growth ticks are scheduled from there and land on the plate's
+     six steps; films minor 3, where the hum started at the click and ran 200 ms ahead), and the world waking (wake:
+     NieR's choir after turning on, the look's own reveal after turning off) as the tear-out begins. Whoever plays the
+     hum plays the wake, so it sounds once. wake never follows the hum by less than 120 ms (an instant change: Reduced
+     Motion, no Reboot moment part), or the two would meet as one moment and the wake be dropped; it is a state sound
+     and always plays (hero spec rules 5 and 10). A hidden tab, or a change asked during another, plays neither. */
+  function rbSounds(info, on, quiet) {
+    const own = info.sound !== false && !quiet;
     let humAt = -1e9, woke = false;
     return {
       hum() { if (own && sfx(on || info.reason === 'replay' ? 'sweepOn' : 'sweepOff', true)) humAt = performance.now(); },
@@ -935,22 +939,26 @@
     const on = !!info.on, reason = info.reason;
     /* a change made inside the onboarding window plays inside it (info.within, the window): the app beneath holds still */
     const within = info.within && info.within.isConnected ? info.within : null;
-    const snd = rbSounds(info, on);
+    const snd = rbSounds(info, on, rebooting || document.hidden);
+    /* the phases, each once and in order: 'start' (the cover's first frame, or at once), 'reveal', 'gone' */
     const seen = new Set(), cue = phase => {
-      if (seen.has(phase)) return; seen.add(phase);
-      if (phase === 'reveal') snd.wake();
-      try { if (typeof info.onReveal === 'function') info.onReveal(phase); } catch (e) { /* the caller's beat never stops the moment */ }
+      ['start', 'reveal', 'gone'].some(p => {
+        if (!seen.has(p)) {
+          seen.add(p);
+          if (p === 'start') snd.hum(); else if (p === 'reveal') snd.wake();
+          try { if (typeof info.onReveal === 'function') info.onReveal(p); } catch (e) { /* the caller's beat never stops the moment */ }
+        }
+        return p === phase;
+      });
     };
     let painted = false;
     const paint = () => { if (painted) return; painted = true; repaint(); sync(); };
     if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) {
-      if (!rebooting && !document.hidden) snd.hum();
-      paint(); cue('reveal'); cue('gone'); return;
+      cue('start'); paint(); cue('reveal'); cue('gone'); return;
     }
     rebooting = true;
     const ctx = { cover: null, paint, cue };
     try {
-      snd.hum();
       const folding = !on && reason !== 'replay';
       await rebootPlate(ctx, info, within, folding);
     } catch (e) { /* the moment is decoration; the repaint is not */ } finally {
@@ -958,7 +966,7 @@
       if (ctx.cover) ctx.cover.remove();
       rbRelease(ctx);
       rebooting = false;
-      cue('reveal'); cue('gone');
+      cue('gone');
     }
   }
 
