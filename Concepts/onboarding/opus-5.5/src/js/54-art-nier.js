@@ -570,7 +570,7 @@
     /* You's stepped signal to the control unit (hero; added with `operator`): pts = [the raised hand, under the bar's
        left end cap] in scene units, item at 0,0. Segments 4.5 long every 11, marching away from the hand: the segments
        of one phase (k % 3) sit in one group (.o55-nier-mk, still at 0.55), so the march is three animations. Each
-       segment carries its index (--k, of --n) for the one-shot signal run and the power-down (.o55-nier-linkrun,
+       segment (.nv-lk) carries its index (--k, of --n) for the one-shot signal run and the power-down (.o55-nier-linkrun,
        -linkoff: 30-art.css, 59-cheer.js). Ends in a paper diamond. Scenery, not a string: the rig never moves it. */
     link(ctx, item) {
       const p = ctx.pal, pts = (item.opts || {}).pts || [];
@@ -579,7 +579,7 @@
       const ph = ['', '', ''];
       let n = 0;
       for (let d = 7; d < len - 8; d += 11, n++) {
-        ph[n % 3] += `<path style="--k:${n}" d="M${f(a[0] + ux * d)} ${f(a[1] + uy * d)}L${f(a[0] + ux * (d + 4.5))} ${f(a[1] + uy * (d + 4.5))}"/>`;
+        ph[n % 3] += `<path class="nv-lk" style="--k:${n}" d="M${f(a[0] + ux * d)} ${f(a[1] + uy * d)}L${f(a[0] + ux * (d + 4.5))} ${f(a[1] + uy * (d + 4.5))}"/>`;
       }
       return `<g class="o55-nier-link" fill="none" stroke="${p.ink}" stroke-width="1" stroke-linecap="square" style="--n:${n}">`
         + ph.map((g, j) => `<g class="o55-nier-mk o55-nier-mk${j}" opacity="0.55">${g}</g>`).join('')

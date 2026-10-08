@@ -119,9 +119,16 @@
     syncButtons();
     window.dispatchEvent(new CustomEvent('o55:sound', detail));
   }
-  /* re-read the current Project's value (or the unbound default) and reflect it; plays nothing, writes nothing */
-  let refreshedAt = -1e9;
+  /* re-read the current Project's value (or the unbound default) and reflect it; plays nothing, writes nothing.
+     A read holds for the rest of the run of script it was made in (until the next microtask checkpoint): a screen
+     change asks several times in one run (the sound button's render, its 'next', a cue), and each read copies the
+     Project's whole Settings snapshot through the owner (about 1 ms on the VM). Writes, toggles, the Settings page's
+     own clicks and a Project switch always read again. */
+  let refreshedAt = -1e9, held = false;
+  const FRESH = new Set(['write', 'toggle', 'settings', 'project', 'project-switched', 'load', 'dom']);
   S.refresh = function refresh(source) {
+    if (held && !FRESH.has(source)) return S.binding();
+    held = true; queueMicrotask(() => { held = false; });
     refreshedAt = performance.now();
     const p = currentProject();
     if (!p) {
@@ -1362,6 +1369,7 @@
       const { master, comp } = buildMaster(ctx);
       const tap = ctx.createAnalyser(); tap.fftSize = 2048; comp.connect(tap);
       S.ctx = ctx; S.master = master; S.tap = tap;
+      S.prepare(ctx.sampleRate);
       return ctx;
     } catch (_) { return null; }
   }
@@ -1388,8 +1396,64 @@
     const t = S.ctx.currentTime;
     [h.gain, h.send].forEach((n) => { if (!n) return; try { n.gain.cancelScheduledValues(t); n.gain.setValueAtTime(n.gain.value, t); n.gain.linearRampToValueAtTime(0, t + s); } catch (_) {} });
   }
+  /* ---- pre-rendered takes. A recipe that comes out the same on every play (nothing of the music's place, the step,
+     the helper's voice, the depth, the layer, the intensity or the pitch drift in it; its only randomness where its
+     noise clicks start in the noise buffer) is rendered once per sample rate, offline, in quiet moments after the first
+     gesture, and played as one buffer through the play's own chain (level, lp, shelf, pan): NieR's world opening
+     (wake), its switching on and off (nierOn, nierOff) and the reboot hum. Built live each was 60 to 75 nodes and 5 to
+     12 ms of main thread, wake on the very frame the world is revealed (design/hero-spec.md H1). A take is kept only
+     when two renders made at two different places of the journey agree (sameTake); until it is ready, or where it was
+     not kept, the recipe plays live as before. prepare(rate) -> Promise (the live context asks for its own rate;
+     a test may ask for another); takeReady(kit, event, variant, rate). */
+  const TAKES = [['nier', 'wake'], ['nier', 'nierOn'], ['nier', 'nierOff'], ['nier', 'reboot']];
+  const takes = new Map(); /* sample rate -> Map('kit:event:variant' -> AudioBuffer | null) */
+  const preparing = new Map(); /* sample rate -> Promise */
+  const PLACES = [{ o: {}, v: 1 }, { o: { chapter: 'ai', step: 5, voice: 2, depth: 1, intensity: 1, layer: true }, v: 1.02 }];
+  function renderTake(rate, kit, ev, vi, place) {
+    const fn = poolOf(kit, ev)[vi]; if (!fn || typeof OfflineAudioContext === 'undefined') return Promise.resolve(null);
+    const off = new OfflineAudioContext(2, Math.ceil(rate * (tailOf(kit, ev) + 0.3)), rate);
+    const out = off.createGain(); out.connect(off.destination);
+    run(fn, off, out, 0, place.v, mk(kit, ev, place.o, true, vi, O55.util.rng('take:' + kit + ':' + ev + ':' + vi)));
+    return off.startRendering();
+  }
+  /* two renders agree when they differ nowhere by more than -80 dB (an offline render is not bit-exact from one
+     context to the next: the same graph twice differs by up to 6e-7); a recipe that follows the chord, the step, the
+     voice, the drift or the intensity differs at full level */
+  function sameTake(a, b) {
+    if (!a || !b || a.length !== b.length || a.numberOfChannels !== b.numberOfChannels) return false;
+    for (let c = 0; c < a.numberOfChannels; c++) { const x = a.getChannelData(c), y = b.getChannelData(c); for (let i = 0; i < x.length; i++) if (Math.abs(x[i] - y[i]) > 1e-4) return false; }
+    return true;
+  }
+  /* a take is kept mono, as the live recipe is (its oscillators are, until the play's own panner): rendered into two
+     channels, a recipe with a pan of its own inside comes out with two different channels and is not kept */
+  function monoOf(b) {
+    if (b.__mono !== undefined) return b.__mono;
+    let mono = null;
+    const x = b.getChannelData(0), y = b.numberOfChannels > 1 ? b.getChannelData(1) : x;
+    let same = true; for (let i = 0; i < x.length; i++) if (Math.abs(x[i] - y[i]) > 1e-6) { same = false; break; }
+    if (same) { mono = new AudioBuffer({ length: b.length, numberOfChannels: 1, sampleRate: b.sampleRate }); mono.copyToChannel(x, 0); }
+    b.__mono = mono; return mono;
+  }
+  const idle = (fn) => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 4000 }) : later(200, fn));
+  S.prepare = function prepare(rate) {
+    rate = Math.round(+rate || 0); if (!rate) return Promise.resolve(false);
+    if (preparing.has(rate)) return preparing.get(rate);
+    const m = new Map(); takes.set(rate, m);
+    const jobs = [];
+    TAKES.forEach(([kit, ev]) => { for (let vi = 0; vi < poolOf(kit, ev).length; vi++) jobs.push([kit, ev, vi]); });
+    /* one take per quiet moment: each render builds its graph on the main thread */
+    const p = jobs.reduce((chain, [kit, ev, vi]) => chain.then(() => new Promise((res) => idle(() => {
+      Promise.all(PLACES.map((pl) => renderTake(rate, kit, ev, vi, pl).catch(() => null)))
+        .then(([a, b]) => { m.set(kit + ':' + ev + ':' + vi, a && sameTake(a, b) && monoOf(a) ? monoOf(a) : null); res(); }, () => res());
+    }))), Promise.resolve()).then(() => true);
+    preparing.set(rate, p);
+    return p;
+  };
+  const takeOf = (rate, kit, ev, vi) => { const m = takes.get(Math.round(rate)); return (m && m.get(kit + ':' + ev + ':' + vi)) || null; };
+  S.takeReady = (kit, ev, vi, rate) => !!takeOf(rate || (S.ctx && S.ctx.sampleRate) || 0, kit, ev, vi || 0);
+
   /* one sound: its chain (level and trim, darker when quiet, placed toward the click or where its helper stands) and
-     the kit's recipe */
+     the kit's recipe (or its pre-rendered take) */
   function voice(item) {
     const ctx = ensureContext();
     if (!ctx || ctx.state === 'closed') { drop(item, 'no-audio'); return null; }
@@ -1411,8 +1475,12 @@
     const sh = shape(ctx, spec, g); sh.head.connect(S.master);
     const nodes = [g].concat(sh.nodes);
     const t0 = ctx.currentTime + 0.004 + (item.layer && ev === 'pod' ? 0.09 : 0), v = 1 + (k.r() - 0.5) * 0.04;
-    try { run(fns[vi], ctx, g, t0, v, k); entry.played = true; entry.variant = vi; if (item.layer) entry.layer = true; }
-    catch (err) { entry.error = String(err && err.message || err); }
+    const take = takeOf(ctx.sampleRate, kit, ev, vi);
+    try {
+      if (take) { const src = ctx.createBufferSource(); src.buffer = take; src.connect(g); src.start(t0); nodes.push(src); entry.take = true; }
+      else run(fns[vi], ctx, g, t0, v, k);
+      entry.played = true; entry.variant = vi; if (item.layer) entry.layer = true;
+    } catch (err) { entry.error = String(err && err.message || err); }
     const send = sendOf.get(g); if (spec.sendNodes) nodes.push(...spec.sendNodes);
     window.setTimeout(() => { nodes.forEach((n) => { try { n.disconnect(); } catch (_) {} }); }, Math.round((tailOf(kit, ev) + 2.6) * 1000));
     if (!BURST_FREE.has(item.event)) { starts.push(item.at); if (starts.length > 12) starts.shift(); }

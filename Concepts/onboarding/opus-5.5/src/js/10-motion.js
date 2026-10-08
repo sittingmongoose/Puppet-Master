@@ -12,9 +12,11 @@
   M.now = function now() { const r = performance.now(); vNow += (r - last) * M.timeScale; last = r; return vNow; };
   M.setTimeScale = function setTimeScale(k) { M.now(); M.timeScale = Math.max(0, Number(k) || 0); };
 
+  /* the media query is made once (its .matches follows the system setting live): made on every call, it was a new
+     MediaQueryList each time the rig, the effects or the sound asked, several times a frame */
+  const reduceMq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   M.reduced = function reduced() {
-    return document.documentElement.getAttribute('data-motion') === 'reduced'
-      || !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    return document.documentElement.getAttribute('data-motion') === 'reduced' || !!(reduceMq && reduceMq.matches);
   };
   M.delay = function delay(ms) {
     return new Promise((res) => {
@@ -31,19 +33,23 @@
     return { cancel() { cancelled = true; if (id != null) real.clearTimeout(id); } };
   };
   /* settled(el, {subtree, fallback}) -> Promise: resolves when the element's running animations finish (or are
-     cancelled), with a clock-scaled fallback so a missed event never strands a class. */
+     cancelled), with a clock-scaled fallback so a missed event never strands a class. The animations are listed two
+     frames on, in that frame's read phase (O55.nierFx.measure: after its own style, before its paint): getAnimations()
+     brings style up to date first, and in the animation frame itself it made the browser style a just-released screen
+     early (about 3 ms over 70 elements on the VM, in a screen change's busiest frames). */
   M.settled = function settled(el, o) {
     o = o || {};
     return new Promise((res) => {
       let done = false; const finish = () => { if (!done) { done = true; t.cancel(); res(); } };
       const t = M.after(o.fallback || 2400, finish);
-      real.raf(() => real.raf(() => {
+      const list = () => {
         /* ambient loops and spinners never finish: only finite animations count */
         const anims = (el && el.getAnimations ? el.getAnimations({ subtree: o.subtree !== false }) : [])
           .filter((a) => { try { return Number.isFinite(a.effect.getComputedTiming().endTime); } catch (_) { return false; } });
-        if (!anims.length) return finish();
+        if (!anims.length) { finish(); return; }
         Promise.all(anims.map((a) => a.finished.catch(() => null))).then(finish);
-      }));
+      };
+      real.raf(() => real.raf(() => { const FX = O55.nierFx; if (FX && FX.measure) FX.measure(list); else list(); }));
     });
   };
 
@@ -54,18 +60,50 @@
   M.release = function release(fn) { real.raf(() => real.raf(fn)); };
 
   /* softwareRendered(): true when this browser draws without a GPU (no WebGL, or WebGL on a software rasteriser such as
-     SwiftShader or llvmpipe); then the page is composited on the CPU too. Read once. */
-  let sw = null;
-  M.softwareRendered = function softwareRendered() {
-    if (sw !== null) return sw;
+     SwiftShader or llvmpipe); then the page is composited on the CPU too. Read once, off the main thread: at load a
+     worker makes the WebGL context on an OffscreenCanvas and reports the renderer. Made on the main thread, at the
+     window's first opening, the context cost about 210 ms of that opening's one long task on the VM (the window asks
+     in open(), 60-ui-core.js). Until the worker has answered the answer is false, "not known yet", and the window
+     measures its first opening instead (checkSolid), as it does on any computer this cannot tell; where the worker
+     cannot run (no Worker or OffscreenCanvas, or its WebGL is missing) the context is made here, on first ask. */
+  const SOFT = /swiftshader|llvmpipe|softpipe|software|basic render/i;
+  let sw = null, swAsking = false;
+  function probeHere() {
     try {
       const c = document.createElement('canvas'), gl = c.getContext('webgl') || c.getContext('experimental-webgl');
-      if (!gl) return (sw = true);
+      if (!gl) return true;
       const ext = gl.getExtension('WEBGL_debug_renderer_info');
-      sw = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)));
+      const r = SOFT.test(String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)));
       const lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();
-    } catch (_) { sw = true; }
-    return sw;
+      return r;
+    } catch (_) { return true; }
+  }
+  (function probeAway() {
+    if (typeof Worker !== 'function' || typeof OffscreenCanvas !== 'function' || typeof Blob !== 'function' || !window.URL || !URL.createObjectURL) return;
+    const src = 'try{var c=new OffscreenCanvas(1,1),g=c.getContext("webgl")||c.getContext("experimental-webgl");'
+      + 'if(!g)postMessage({r:null});else{var e=g.getExtension("WEBGL_debug_renderer_info");'
+      + 'postMessage({r:String(e?g.getParameter(e.UNMASKED_RENDERER_WEBGL):g.getParameter(g.RENDERER))});'
+      + 'var l=g.getExtension("WEBGL_lose_context");if(l)l.loseContext();}}catch(x){postMessage({r:null});}';
+    let url = null, w = null;
+    const end = (r) => {
+      if (!swAsking) return;
+      swAsking = false;
+      if (sw === null && typeof r === 'string') sw = SOFT.test(r);
+      try { w.terminate(); } catch (_) {}
+      try { URL.revokeObjectURL(url); } catch (_) {}
+    };
+    try {
+      url = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+      w = new Worker(url); swAsking = true;
+      w.onmessage = (e) => end(e.data && e.data.r);
+      w.onerror = () => end(null);
+      real.setTimeout(() => end(null), 5000);
+    } catch (_) { swAsking = false; }
+  })();
+  M.softwareRendered = function softwareRendered() {
+    if (sw !== null) return sw;
+    if (swAsking) return false;
+    return (sw = probeHere());
   };
 
   /* sampleFrames(ms) -> Promise<{median, p90, n}>: the intervals between painted frames over a short window (it asks

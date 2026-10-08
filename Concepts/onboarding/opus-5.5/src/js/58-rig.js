@@ -274,32 +274,51 @@
     if (!busy && live && real - lastIdle < IDLE_MS) { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, Math.max(IDLE_MS - (real - lastIdle), stepWait())); return; }
     lastIdle = real;
     let any = false;
-    const now = M.now(), measuring = [], settled = [];
+    const now = M.now(), measuring = [], settled = [], caching = [];
     for (const [svg, st] of rigs) {
       if (!svg.isConnected) { rigs.delete(svg); continue; }
       const moving = ambientOn(svg);
       /* props still arriving: measure the strings; after a re-render the troupe keeps moving meanwhile */
       /* (a drawing that hangs its control unit off its mark, asleep or acting, is driven from its first frame) */
       if (now < st.settleAt) { if ((st.morph && (moving || (st.until && now < st.until))) || st.bar.drop || st.bar.dropA) drive(st, now, moving); measuring.push(st); any = true; continue; }
+      if (!st.cached) { caching.push([st, moving]); any = true; continue; }
       settled.push([st, moving]);
     }
-    const measuredEnds = measuring.map(measure);
-    for (const [st] of settled) if (!st.cached) cache(st);
-    measuring.forEach((st, i) => st.ties.forEach((t, k) => write(st, t, measuredEnds[i][k][0], measuredEnds[i][k][1])));
-    for (const [st, moving] of settled) {
-      const cheering = st.until && now < st.until;
-      if (!moving && !cheering && st.drawnStill) continue;
-      /* a stepped feel (NieR) redraws its idle sway once a tick, not at 30 Hz: nothing is read or written in between */
-      if (moving && !cheering && st.feel.tick && st.amb0 != null && st.drawnTick === Math.floor((now - st.amb0) / st.feel.tick)) { any = true; continue; }
-      drive(st, now, moving);
-      computed(st);
-      st.drawnStill = !moving && !cheering;
-      any = true;
+    /* a settled rig is arithmetic only: drawn now */
+    for (const [st, moving] of settled) if (draw(st, now, moving)) any = true;
+    /* the measuring and the first caching read the hooks in the read phase (O55.nierFx.measure: after this frame's own
+       style and layout, before its paint), and draw from what they read in that same frame. A read here, in the
+       animation frame, made the browser style and lay out a just-released screen early (14-32 ms on the VM in a
+       screen change's first frame) and again, a little, in every frame while props arrived. */
+    if (measuring.length || caching.length) {
+      const reads = () => {
+        const ends = measuring.map((st) => (st.svg.isConnected ? measure(st) : null));
+        caching.forEach(([st]) => { if (st.svg.isConnected) cache(st); });
+        return () => {
+          measuring.forEach((st, i) => { if (ends[i]) st.ties.forEach((t, k) => write(st, t, ends[i][k][0], ends[i][k][1])); });
+          caching.forEach(([st, moving]) => { if (st.cached) draw(st, now, moving); });
+        };
+      };
+      const FX = O55.nierFx;
+      if (FX && FX.measure) FX.measure(reads); else reads()();
     }
     if (!any) return;
     /* idle: the next redraw is a timer away (see above); arrivals, cheers and plucks ask for the very next frame */
     if (busy || !live) raf = requestAnimationFrame(frame);
     else { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, stepWait() || IDLE_MS); }
+  }
+
+  /* a settled rig's frame, from its own transforms; false: nothing to draw (held still, or between two stepped ticks
+     with nothing to redraw counts as drawn) */
+  function draw(st, now, moving) {
+    const cheering = st.until && now < st.until;
+    if (!moving && !cheering && st.drawnStill) return false;
+    /* a stepped feel (NieR) redraws its idle sway once a tick, not at 30 Hz: nothing is read or written in between */
+    if (moving && !cheering && st.feel.tick && st.amb0 != null && st.drawnTick === Math.floor((now - st.amb0) / st.feel.tick)) return true;
+    drive(st, now, moving);
+    computed(st);
+    st.drawnStill = !moving && !cheering;
+    return true;
   }
 
   /* ---------------------------------------------------------------- while props arrive: measured, reads first */

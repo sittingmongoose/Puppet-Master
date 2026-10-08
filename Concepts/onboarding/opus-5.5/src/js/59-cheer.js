@@ -41,30 +41,42 @@
     M.after((delay || 0) + ms, () => g.classList.remove('o55-joy'));
   }
   const NS = 'http://www.w3.org/2000/svg';
+  /* a measurement and the drawing it decides, in the read phase (O55.nierFx.measure: after the frame's own style and
+     layout, before its paint): read() returns the writes. Asked for from a timer or an event, the drawing shows in the
+     next frame, the one it would have been painted in; a getBBox() or getScreenCTM() in the timer itself made the
+     browser style and lay out whatever the moment had just changed (8.7 ms on the VM at the Created act's stamp, 2-3 ms
+     on every typed letter). */
+  function measured(read) {
+    const FX = O55.nierFx;
+    if (FX && FX.measure) FX.measure(read); else { const w = read(); if (typeof w === 'function') w(); }
+  }
   function lockOn(svg, g, delay) {
     const am = g.querySelector(':scope > .o55-in > .o55-am'), tok = A.tokens(svg);
     if (!am || !am.animate || (A.nier && A.nier.has && !A.nier.has({ tok }, 'brackets'))) return;
-    M.after(delay || 0, () => {
-      if (!am.isConnected) return;
+    M.after(delay || 0, () => measured(() => {
+      if (!am.isConnected) return null;
       /* around the unit's body: an element marked .o55-nier-body (untransformed, in the unit's own units), else the whole unit */
-      let b; try { b = (am.querySelector('.o55-nier-body') || am).getBBox(); } catch (_) { return; }
-      if (!b || !(b.width || b.height)) return;
-      const sm = /scale\(\s*(-?[\d.]+)\)/.exec(g.style.transform || ''), s = sm ? +sm[1] || 1 : 1; /* the unit's own units: 6 canvas units long, 1 wide */
-      const pad = 3 / s, n = 6 / s, x0 = b.x - pad, y0 = b.y - pad, x1 = b.x + b.width + pad, y1 = b.y + b.height + pad;
-      const c = (x, y, dx, dy) => `M${(x + dx * n).toFixed(2)} ${y.toFixed(2)}H${x.toFixed(2)}V${(y + dy * n).toFixed(2)}`;
-      const ink = A.nier && A.nier.tokens ? A.nier.tokens(tok, svg.classList.contains('o55-m-light') ? 'light' : 'dark').text : tok.text;
-      const el = document.createElementNS(NS, 'path');
-      el.setAttribute('class', 'o55-nier-lock'); el.setAttribute('aria-hidden', 'true');
-      el.setAttribute('d', c(x0, y0, 1, 1) + c(x1, y0, -1, 1) + c(x0, y1, 1, -1) + c(x1, y1, -1, -1));
-      el.setAttribute('fill', 'none'); el.setAttribute('stroke', ink); el.setAttribute('stroke-width', (1 / s).toFixed(3)); el.setAttribute('stroke-linecap', 'square');
-      el.style.transformBox = 'fill-box'; el.style.transformOrigin = 'center';
-      am.appendChild(el);
-      try {
-        el.animate([{ transform: 'scale(1.3)', opacity: 1, easing: 'steps(3, end)' }, { transform: 'scale(1)', opacity: 1, offset: 0.286, easing: 'steps(1, end)' },
-          { transform: 'scale(1)', opacity: 1, offset: 0.762, easing: 'steps(2, end)' }, { transform: 'scale(1)', opacity: 0 }], { duration: 840, fill: 'both' });
-      } catch (_) {}
-      M.after(860, () => el.remove());
-    });
+      let b; try { b = (am.querySelector('.o55-nier-body') || am).getBBox(); } catch (_) { return null; }
+      if (!b || !(b.width || b.height)) return null;
+      return () => {
+        if (!am.isConnected) return;
+        const sm = /scale\(\s*(-?[\d.]+)\)/.exec(g.style.transform || ''), s = sm ? +sm[1] || 1 : 1; /* the unit's own units: 6 canvas units long, 1 wide */
+        const pad = 3 / s, n = 6 / s, x0 = b.x - pad, y0 = b.y - pad, x1 = b.x + b.width + pad, y1 = b.y + b.height + pad;
+        const c = (x, y, dx, dy) => `M${(x + dx * n).toFixed(2)} ${y.toFixed(2)}H${x.toFixed(2)}V${(y + dy * n).toFixed(2)}`;
+        const ink = A.nier && A.nier.tokens ? A.nier.tokens(tok, svg.classList.contains('o55-m-light') ? 'light' : 'dark').text : tok.text;
+        const el = document.createElementNS(NS, 'path');
+        el.setAttribute('class', 'o55-nier-lock'); el.setAttribute('aria-hidden', 'true');
+        el.setAttribute('d', c(x0, y0, 1, 1) + c(x1, y0, -1, 1) + c(x0, y1, 1, -1) + c(x1, y1, -1, -1));
+        el.setAttribute('fill', 'none'); el.setAttribute('stroke', ink); el.setAttribute('stroke-width', (1 / s).toFixed(3)); el.setAttribute('stroke-linecap', 'square');
+        el.style.transformBox = 'fill-box'; el.style.transformOrigin = 'center';
+        am.appendChild(el);
+        try {
+          el.animate([{ transform: 'scale(1.3)', opacity: 1, easing: 'steps(3, end)' }, { transform: 'scale(1)', opacity: 1, offset: 0.286, easing: 'steps(1, end)' },
+            { transform: 'scale(1)', opacity: 1, offset: 0.762, easing: 'steps(2, end)' }, { transform: 'scale(1)', opacity: 0 }], { duration: 840, fill: 'both' });
+        } catch (_) {}
+        M.after(860, () => el.remove());
+      };
+    }));
   }
 
   /* NieR's hero: the machine lifeform watching from the stage's broken corner glances at the cheering unit, one step of
@@ -144,7 +156,7 @@
         : [{ transform: 'scale(0.4) rotate(-14deg)', opacity: 0 }, { transform: 'scale(1.16) rotate(4deg)', opacity: 1, offset: 0.55 }, { transform: 'scale(1) rotate(0deg)', opacity: 1 }],
       { duration: fam === 'retro' ? 360 : fam === 'nier' ? 400 : 460, easing: fam === 'retro' ? 'steps(3, end)' : fam === 'nier' ? 'steps(4, end)' : fam === 'glass' ? 'cubic-bezier(0.3, 0, 0.2, 1)' : 'cubic-bezier(0.34, 1.4, 0.64, 1)' });
     } catch (_) {}
-    if (o.fleck && M.now() - lastFleck > 70) { lastFleck = M.now(); const at = wordEnd(svg, it); if (at) confetti(svg, fam, at, 2 + (Math.random() < 0.4 ? 1 : 0), true); }
+    if (o.fleck && M.now() - lastFleck > 70) { lastFleck = M.now(); const n = 2 + (Math.random() < 0.4 ? 1 : 0); measured(() => { const at = svg.isConnected && wordEnd(svg, it); return at ? () => confetti(svg, fam, at, n, true) : null; }); }
     return true;
   };
   /* the end of the word on a prop (its last text), in scene units */
@@ -497,7 +509,7 @@
   /* ---------------------------------------------------------------- bow, rise, point, wave */
   T.bow = function bow(host, o) {
     o = o || {};
-    const svg = o.svg || (host && host.querySelector(':scope > .o55-scene-wrap.o55-wait svg.o55-scene')) || sceneSvg(host);
+    const svg = o.svg || (host && host.querySelector(':scope > .o55-scene-wrap.o55-scene-waiting svg.o55-scene')) || sceneSvg(host);
     if (!svg) return Promise.resolve(false);
     const hs = (o.keys ? o.keys.map((k) => item(svg, k)) : units(svg)).filter((g) => g && pose(g) && pose(g) !== 'bow');
     if (!hs.length || !acts(svg)) return Promise.resolve(false);
