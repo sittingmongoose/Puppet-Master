@@ -106,7 +106,9 @@
     }
     return pm51NotifPrevDispatch(action, el, event);
   };
-  /* The engine stops its own preview when Settings navigates or redraws; a setup sound's preview stops with it. */
+  /* The engine stops its own preview when Settings navigates, redraws, closes, changes the notifications tab, or
+     switches Project. A setup sound's preview stops on those same events: this wrap, the tab check in render, and
+     PM51_NOTIF_APP_PREVIEW_STOP (build.py), each of which calls O55.sound.stopPreview(). */
   const pm51NotifPrevNavigate = navigate;
   navigate = function () { appPreview.stop(); return pm51NotifPrevNavigate.apply(this, arguments); };
   const pm51NotifPrevRenderApp = renderApp;
@@ -237,32 +239,34 @@
   const LOOK_NAME = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR' };
   const APP_SOURCE = 'Built-in · generated demonstration tone';
   const APP_UNPLAYABLE = 'The player for setup and tour sounds did not load on this page, so this sound cannot play here.';
-  /* When each moment plays, in plain words; an event the list does not know reads "during setup and the Guided Tour". */
-  const APP_WHEN = {
-    tap: 'when you press a button', select: 'when you choose a card or a tile', next: 'when you move on a step', back: 'when you go back a step',
-    toggleOn: 'when something turns on', toggleOff: 'when something turns off', success: 'when something finishes', error: 'when something goes wrong',
-    commit: 'when your Project is made', open: 'when setup or the tour opens', close: 'when setup or the tour closes',
-    pickup: 'when the tour picks something up', drop: 'when the tour puts something down', spot: 'when the tour points something out',
-    step: 'when a tour step begins', finish: 'when the tour ends', cheer: 'when a helper cheers you on', celebrate: 'when setup celebrates',
-    type: 'as you type', chapter: 'when a new part of setup begins', phase: 'as a check moves on', found: 'when setup finds something',
-    sheet: 'when a panel opens', unsheet: 'when a panel closes', move: 'when the spotlight moves', callout: 'when a tour tip appears',
-    pointer: 'when Show Me moves the pointer', arrive: 'when the pointer arrives', checkpoint: 'when you finish a tour step',
-    missing: 'when the tour cannot find something', interrupt: 'when you take over from Show Me', warn: 'when something needs a second look',
-    reveal: 'when the look changes', copy: 'when you copy something', pod: 'when Pod 042 speaks', reboot: 'when NieR Mode starts up',
-    decode: 'as a title decodes', glitch: 'on an alert', save: 'when your choices are saved', quest: 'when a new objective appears',
-    nierOn: 'when NieR Mode turns on', nierOff: 'when NieR Mode turns off', tick: 'when the cursor moves', confirm: 'when you confirm a choice',
-    cancel: 'when you cancel', alert: 'on an alert', sweepOn: 'when NieR Mode turns on', sweepOff: 'when NieR Mode turns off',
-    hover: 'when the cursor moves onto a choice'
-  };
   const appPlayer = () => { const o = window.O55; return o && o.sound && typeof o.sound === 'object' ? o.sound : null; };
   const appCatalog = () => { const p = appPlayer(); return p && Array.isArray(p.CATALOG) ? p.CATALOG : null; };
   const appPlayable = () => { const p = appPlayer(); return !!p && (typeof p.preview === 'function' || typeof p.renderBuffer === 'function'); };
   const isAppSound = s => !!(s && s.o55 && typeof s.o55 === 'object' && s.o55.kit);
   const appCollection = s => s.o55.kit === 'nier' ? APP_NIER : APP_SETUP;
   const appStyle = c => typeof c.style === 'string' && c.style.trim() ? c.style.trim() : c.kit === 'nier' ? APP_NIER : `${APP_SETUP} · ${lookName(c.kit)}`;
-  /* The card's short style word: the look's name, or what follows "NieR · " in a NieR style. */
-  const appTag = s => s.o55.kit === 'nier' ? (/·\s*(.+)$/.exec(String(s.style || '')) || [0, APP_NIER])[1] : `${lookName(s.o55.kit)} look`;
-  const appWhen = s => `Plays ${APP_WHEN[s.o55.event] || 'during setup and the Guided Tour'}`;
+  /* The moment's name and the shared "plays during setup" line are SOUND's copy (soundLibrary.events / usedBy).
+     Read them when the card is drawn, so a new moment does not depend on a second table here. */
+  const APP_WHEN_FALLBACK = 'Plays during setup and the Guided Tour';
+  function appCopy(key) {
+    const o = window.O55; if (!o) return null;
+    if (typeof o.tx === 'function') { const node = o.tx(key); return node == null ? null : node; }
+    if (typeof o.t !== 'function') return null;
+    const text = o.t(key); return text == null || text === key ? null : text;
+  }
+  function appEventPhrase(event) {
+    const events = appCopy('soundLibrary.events');
+    if (events && typeof events === 'object' && !Array.isArray(events) && typeof events[event] === 'string') return events[event];
+    const o = window.O55; if (!o || typeof o.t !== 'function' || !event) return '';
+    const key = `soundLibrary.events.${event}`; const text = o.t(key);
+    return typeof text === 'string' && text && text !== key ? text : '';
+  }
+  function appWhen(s) {
+    const phrase = appEventPhrase(s && s.o55 ? s.o55.event : '');
+    const usedNode = appCopy('soundLibrary.usedBy');
+    const used = typeof usedNode === 'string' && usedNode.trim() ? usedNode.trim() : APP_WHEN_FALLBACK;
+    return phrase ? `${phrase}. ${used}` : used;
+  }
   /* The catalog's length is in seconds (a value over 20 is read as milliseconds); the library writes m:ss.s. */
   const secondsOf = v => { if (typeof v === 'number' && Number.isFinite(v)) return v > 20 ? v / 1000 : v; const m = /^(?:(\d+):)?(\d+(?:\.\d+)?)$/.exec(String(v || '').trim()); return m ? Number(m[1] || 0) * 60 + Number(m[2]) : 0; };
   const clockOf = secs => { const t = Math.max(.1, Math.round((Number(secs) || .5) * 10) / 10); return `${Math.floor(t / 60)}:${(t % 60 < 10 ? '0' : '') + (t % 60).toFixed(1)}`; };
@@ -328,6 +332,7 @@
       if (!s) return;
       barsTried.add(s.id);
       let v = null; try { v = await p.bars(s.o55.id, 18); } catch (err) { v = null; }
+      if (run !== barsRun) return;
       if (Array.isArray(v) && v.length === 18) {
         s.bars = v.map(x => Math.round(4 + Math.max(0, Math.min(1, Number(x) || 0)) * 20));
         const w = root.querySelector(`.sound-row[data-sound-row="${cssEscape(s.id)}"] .sound-waveform`); if (w) w.outerHTML = waveform(s);
@@ -351,7 +356,11 @@
   const appPreview = (() => {
     const cur = { id: null, token: 0, timer: 0, stop: null };
     const AC = () => window.AudioContext || window.webkitAudioContext;
+    function stopEngine() {
+      try { const p = appPlayer(); if (p && typeof p.stopPreview === 'function') p.stopPreview(); } catch (err) { /* already ended */ }
+    }
     function stop() {
+      stopEngine();
       if (!cur.id) return false;
       const id = cur.id; const halt = cur.stop;
       cur.token++; cur.id = null; cur.stop = null; window.clearTimeout(cur.timer); cur.timer = 0;
@@ -409,6 +418,8 @@
     return { play, stop, toggle: s => { if (cur.id === s.id) { stop(); return; } play(s); }, playing: () => cur.id };
   })();
   document.addEventListener('visibilitychange', () => { if (document.hidden) appPreview.stop(); });
+  /* The tone player is frozen, so build.py calls this from settings-surface-close, notification-tab and project-changed. */
+  window.PM51_NOTIF_APP_PREVIEW_STOP = () => appPreview.stop();
   const eventsUsing = s => events().filter(e => e.sound === s.name);
   const groups = () => Object.assign({}, SOUND_GROUPS, X().soundGroups || {});
   const priorities = () => { const list = Array.isArray(X().priorities) ? X().priorities : []; return PRIORITIES.map(p => { const f = list.find(x => x && x.value === p) || {}; return { value: p, label: f.label || p, meta: f.meta || '' }; }); };
@@ -641,8 +652,9 @@
     return `<span class="sound-waveform">${hs.map((hgt, i) => `<i style="--h:${hgt}px;--n:${i}"></i>`).join('')}</span>`;
   }
   /* Library card: play + name + menu, source tag + length, "Used by …" + Use for events… */
-  /* A setup or tour sound's card is the same card: its tag is its look (or NieR), it is marked as a demonstration
-     tone, and its first line says when setup and the tour play it before which alerts use it. */
+  /* A setup or tour sound uses the same card. The group heading (or the look choice) already names the look, so the
+     card keeps the sound's name and does not repeat the look as a tag. It is marked as a demonstration tone, and its
+     first line names the moment from O55's copy before which alerts use it. */
   function soundCard(s) {
     const app = isAppSound(s);
     const available = soundAvailable(s);
@@ -652,7 +664,7 @@
     const missing = app ? APP_UNPLAYABLE : 'The uploaded file is missing. Choose Replace file from its menu to attach it again.';
     const disabled = available ? '' : ` aria-disabled="true" data-disabled-reason="${a(missing)}" data-pm-hover-label="${a(s.name)} is unavailable" data-pm-hover-detail="${app ? 'Its player did not load on this page.' : 'The uploaded file is missing.'}"`;
     const hover = available ? ` data-pm-hover-label="${playing ? 'Stop' : 'Play'} ${a(s.name)} preview" data-pm-hover-detail="${playing ? 'Stop this local preview.' : 'Preview this sound locally.'}"` : '';
-    const meta = app ? `${PM51.tag(appTag(s))} · ${h(durationText(s.duration))} · Demo tone` : `${PM51.tag(isBuiltInSound(s) ? styleOf(s) : sourceLabel(s))} · ${h(durationText(s.duration))}${!isBuiltInSound(s) && s.format ? ' · ' + h(String(s.format)) : ''}`;
+    const meta = app ? `${h(durationText(s.duration))} · Demo tone` : `${PM51.tag(isBuiltInSound(s) ? styleOf(s) : sourceLabel(s))} · ${h(durationText(s.duration))}${!isBuiltInSound(s) && s.format ? ' · ' + h(String(s.format)) : ''}`;
     return `<div class="sound-row pm51-sound-card${playing ? ' is-playing' : ''}${available ? '' : ' is-unavailable'}" data-sound-row="${a(s.id)}">
       <button type="button" class="sound-play${playing ? ' is-playing' : ''}" data-action="play-sound" data-id="${a(s.id)}" aria-pressed="${playing ? 'true' : 'false'}" aria-label="${playing ? 'Stop' : 'Play'} ${a(s.name)} preview"${hover}${disabled}>${icon(playing ? 'volume' : 'play')}</button>
       <span class="sound-copy"><strong>${h(s.name)}</strong>${available ? '' : PM51.status(app ? 'Cannot play here' : 'File missing', 'attention')}</span>
@@ -672,22 +684,38 @@
     const want = PM51.s().notifSoundLook; const mine = currentLook();
     const look = looks.includes(want) ? want : looks.includes(mine) ? mine : looks[0];
     return `<div class="pm51-sound-looks">${PM51.segmented(look, looks.map(k => [k, `${lookName(k)} look`]), { action: 'pm51-notifications-sound-look', label: 'Which look' })}</div>`
-      + appList(setup.filter(s => s.o55.kit === look), n => `These ${n} sounds play while setup and the Guided Tour use the ${lookName(look)} look.`);
+      + appList(setup.filter(s => s.o55.kit === look), `while setup and the Guided Tour use the ${lookName(look)} look`, 'setup');
   }
   function appNierBody(app) {
     const nier = app.filter(s => appCollection(s) === APP_NIER);
     if (!nier.length) return PM51.note('No NieR sounds yet.');
-    return appList(nier, n => `These ${n} sounds play in setup and the Guided Tour while NieR Mode is on with its Menu sounds part.`);
+    return appList(nier, 'in setup and the Guided Tour while NieR Mode is on with its Menu sounds part', 'nier');
   }
   /* A moment that has several takes (setup varies them so a repeated moment never sounds the same) shows its main
-     take; the others are one press away, and an alert can use any of them. */
+     take; the others are one press away, and an alert can use any of them. Each group keeps its own expanded flag. */
   const isMainTake = s => !isAppSound(s) || s.o55.featured !== false;
-  function appList(list, say) {
+  function takesState() {
+    const p = PM51.s(); const t = p.notifSoundTakes;
+    if (t && typeof t === 'object' && !Array.isArray(t)) {
+      if (typeof t.setup !== 'boolean') t.setup = false;
+      if (typeof t.nier !== 'boolean') t.nier = false;
+      return t;
+    }
+    p.notifSoundTakes = { setup: t === true, nier: t === true };
+    return p.notifSoundTakes;
+  }
+  function appList(list, when, key) {
     const extra = list.filter(s => !isMainTake(s)).length;
-    const all = extra > 0 && !!PM51.s().notifSoundTakes;
-    const shown = all ? list : list.filter(isMainTake);
-    const toggle = extra ? ' ' + PM51.link({ label: all ? 'Show only the main take of each' : `Show ${extra} more ${extra === 1 ? 'take' : 'takes'}`, action: 'pm51-notifications-sound-takes' }) : '';
-    return `<p class="pm51-sound-sub">${h(say(shown.length))}${toggle}</p>` + soundGrid(shown);
+    const main = list.length - extra;
+    const open = extra > 0 && !!takesState()[key];
+    const shown = open ? list : list.filter(isMainTake);
+    const line = extra
+      ? `All ${list.length} takes play ${when}. ${open ? 'Every take is shown.' : `The main take of each of these ${main} moments is shown.`}`
+      : `These ${list.length} sounds play ${when}.`;
+    const takesLabel = open ? 'Show only the main take of each' : `Show ${extra} more ${extra === 1 ? 'take' : 'takes'}`;
+    const takesDetail = open ? 'Show just the main take of each moment. Every take still plays.' : 'Show the other takes. Every take plays.';
+    const toggle = extra ? ' ' + PM51.link({ label: takesLabel, action: 'pm51-notifications-sound-takes', data: { group: key } }).replace('<button ', `<button aria-expanded="${open ? 'true' : 'false'}" data-pm-hover-label="${a(takesLabel)}" data-pm-hover-detail="${a(takesDetail)}" `) : '';
+    return `<p class="pm51-sound-sub">${h(line)}${toggle}</p>` + soundGrid(shown);
   }
   /* Under All, each set is one closed group (it holds dozens of sounds); the head opens it in place. */
   function appGroup(name, app) {
@@ -696,8 +724,10 @@
     const open = !!(PM51.s().notifSoundOpen || {})[key];
     const help = name === APP_NIER ? 'Generated tones that play in setup and the Guided Tour while NieR Mode is on.' : `Generated tones that setup and the Guided Tour play, a set for each of the ${inWords(looksIn(list).length)} looks.`;
     const bodyId = `pm51-sound-group-${key}`;
+    const helpId = `pm51-sound-group-${key}-help`;
+    const hoverLabel = `${open ? 'Hide' : 'Show'} the ${name} sounds`;
     return `<div class="pm51-sound-group${open ? ' is-open' : ''}" data-group="${key}">`
-      + `<button type="button" class="pm51-sound-group-head" data-action="pm51-notifications-sound-group" data-group="${key}" aria-expanded="${open ? 'true' : 'false'}"${open ? ` aria-controls="${bodyId}"` : ''}>${icon('chevron')}<span class="pm51-sound-group-copy"><span class="pm51-sound-group-title">${h(name)}</span><span class="pm51-sound-group-help">${h(help)}</span></span><span class="pm51-sound-group-count">${list.length} sounds</span></button>`
+      + `<button type="button" class="pm51-sound-group-head" data-action="pm51-notifications-sound-group" data-group="${key}" aria-expanded="${open ? 'true' : 'false'}" aria-label="${a(hoverLabel)}" aria-describedby="${helpId}"${open ? ` aria-controls="${bodyId}"` : ''} data-pm-hover-label="${a(hoverLabel)}" data-pm-hover-detail="${a(help)}">${icon('chevron')}<span class="pm51-sound-group-copy"><span class="pm51-sound-group-title">${h(name)}</span><span class="pm51-sound-group-help" id="${helpId}">${h(help)}</span></span><span class="pm51-sound-group-count">${list.length} sounds</span></button>`
       + (open ? `<div class="pm51-sound-group-body" id="${bodyId}">${name === APP_NIER ? appNierBody(app) : appSetupBody(app)}</div>` : '')
       + '</div>';
   }
@@ -708,7 +738,9 @@
     const all = sounds(); const app = all.filter(isAppSound); const plain = all.filter(s => !isAppSound(s));
     const styles = ['All', ...STYLE_ORDER().filter(st => all.some(s => filterOf(s) === st))];
     const styleNow = styles.includes(PM51.s().notifSoundStyle) ? PM51.s().notifSoundStyle : 'All';
-    const shown = styleNow === 'All' ? plain : plain.filter(s => styleOf(s) === styleNow);
+    /* V2 appends a newly delivered built-in. Order the plain grid by style, then by name, so it sits with its style. */
+    const pool = styleNow === 'All' ? plain : plain.filter(s => styleOf(s) === styleNow);
+    const shown = pool.slice().sort((x, y) => rankOf(x) - rankOf(y) || String(x.name || '').localeCompare(String(y.name || ''), undefined, { numeric: true, sensitivity: 'base' }));
     const listed = styleNow === APP_SETUP ? appSetupBody(app) : styleNow === APP_NIER ? appNierBody(app)
       : styleNow === 'All' ? (shown.length ? soundGrid(shown) : '') + appGroup(APP_SETUP, app) + appGroup(APP_NIER, app)
       : shown.length ? soundGrid(shown) : '';
@@ -808,7 +840,11 @@
   }
 
   /* ---------- page --------------------------------------------------------- */
+  let appSoundTab = false;
   function render() {
+    const onSounds = tab() === 'sounds';
+    if (appSoundTab && !onSounds) appPreview.stop();
+    appSoundTab = onSounds;
     migrateV2(); migrateSounds(); syncAppSounds(); awaitAppCatalog(); syncStores();
     if (tab() === 'sounds') measureShownBars();
     const t = tab();
@@ -956,7 +992,7 @@
   });
   PM51.on('notifications-sound-style', el => { PM51.s().notifSoundStyle = el.dataset.value; saveState(); PM51.refresh(ID, { swap: false }); });
   PM51.on('notifications-sound-look', el => { const v = el.dataset.value; if (!looksIn(sounds()).includes(v)) return; PM51.s().notifSoundLook = v; saveState(); PM51.refresh(ID, { swap: false }); refocus(`[data-action="pm51-notifications-sound-look"][data-value="${cssEscape(v)}"]`); });
-  PM51.on('notifications-sound-takes', () => { PM51.s().notifSoundTakes = !PM51.s().notifSoundTakes; saveState(); PM51.refresh(ID, { swap: false }); refocus('[data-action="pm51-notifications-sound-takes"]'); });
+  PM51.on('notifications-sound-takes', el => { const k = ds(el, 'group'); if (k !== 'setup' && k !== 'nier') return; const o = takesState(); o[k] = !o[k]; saveState(); PM51.refresh(ID, { swap: false }); refocus(`[data-action="pm51-notifications-sound-takes"][data-group="${k}"]`); });
   PM51.on('notifications-sound-group', el => { const k = ds(el, 'group'); if (k !== 'setup' && k !== 'nier') return; const o = PM51.s().notifSoundOpen || (PM51.s().notifSoundOpen = {}); o[k] = !o[k]; saveState(); PM51.refresh(ID, { swap: false }); refocus(`[data-action="pm51-notifications-sound-group"][data-group="${k}"]`); });
   PM51.on('notifications-group-toggle', el => { const g = (N().agents || []).find(x => x.id === ds(el, 'id')); if (!g) return; g.status = g.status === 'active' ? 'disabled' : 'active'; el.classList.toggle('on', g.status === 'active'); el.setAttribute('aria-checked', g.status === 'active' ? 'true' : 'false'); saveState(); });
   /* Add an alert: pick one Puppet Master can raise (or your own, raised by scripts), then where it goes and how it sounds. */
@@ -1023,7 +1059,7 @@
     const available = soundAvailable(s);
     const used = eventsUsing(s);
     PM51.menu(el, [
-      { label: state.soundPlaying === s.id ? 'Stop preview' : 'Play preview', icon: state.soundPlaying === s.id ? 'volume' : 'play', ariaDisabled: !available, meta: available ? '' : 'File missing', onClick: () => { if (playBtn) dispatchAction('play-sound', playBtn, null); } },
+      { label: state.soundPlaying === s.id ? 'Stop preview' : 'Play preview', icon: state.soundPlaying === s.id ? 'volume' : 'play', ariaDisabled: !available, meta: available ? '' : isAppSound(s) ? 'Cannot play here' : 'File missing', onClick: () => { if (playBtn) dispatchAction('play-sound', playBtn, null); } },
       { label: 'Use for events…', icon: 'bell', meta: used.length ? `${used.length} now` : '', onClick: () => assignPanel(s) },
       { label: 'Rename', icon: 'edit', onClick: () => renameSound(s) },
       /* setup and the tour play a setup sound whatever the library holds, so it has no file to replace and stays */
@@ -1055,7 +1091,7 @@
   /* ---------- actions: history & page ------------------------------------- */
   PM51.on('notifications-history', el => historyPanel(Number(ds(el, 'index'))));
   PM51.on('notifications-reset', () => PM51.confirm('Reset notification defaults?', 'Destinations, events, sounds, and quiet hours go back to the example defaults. Uploaded recordings are forgotten.', 'Reset', () => {
-    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); PM51.s().o55NotifV2 = false; PM51.s().o55NotifSoundsV1 = false; PM51.s().o55NotifSoundsV2 = false; appPreview.stop(); migrateV2(); migrateSounds(); syncAppSounds(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
+    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); PM51.s().o55NotifV2 = false; PM51.s().o55NotifSoundsV1 = false; PM51.s().o55NotifSoundsV2 = false; barsTried.clear(); barsRun++; appPreview.stop(); migrateV2(); migrateSounds(); syncAppSounds(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
   }, true));
   PM51.on('notifications-help', () => PM51.panel({
     icon: 'info', title: 'How notifications work',
