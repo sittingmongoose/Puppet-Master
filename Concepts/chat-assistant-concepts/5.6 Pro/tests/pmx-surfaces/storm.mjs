@@ -1,11 +1,11 @@
 /* STORM surfaces for tests/pmx-verify.mjs (package STORM, DESIGN-SPEC 8.4; STORM-A: the sheet and the card).
    wand.mjs opens the BrainStorm sheet in its default state (wand:brainstorm) and collab.mjs adds both specialists and
    Grill Me. These are the other states the blueprint draws, each reached through the sheet's own controls:
-   - a question typed and a must-have written (the must-haves field, the lock on the plate's stem);
+   - a question typed and a must-have written (the must-haves field; the plate's Vote chapter carries the rule's part);
    - two long rules typed (the field grows to three lines and scrolls past them, never a half-cut line);
    - the recorded example's sheet (the guided demo: its rules read-only, "This recording uses its own 2 rules.", and
-     the lean diverge-converge plate beside the guide strip);
-   - two helpers (the richest plate: chapters, named helpers behind screens, the branches merging to You);
+     the lean cast plate beside the guide strip: the chapters to You, the team under them);
+   - two helpers (the richest plate: the chapters ending in You, named helpers hanging behind screens);
    - six helpers (the plate yields to its strip; beyond the common case, 6.3).
    And the card through the phases of a recorded BrainStorm, stepped with the protocol's own validated ingress (the
    same calls brainstorm-demo-batch4.js makes on its 450 ms clock, one phase at a time so each density holds still):
@@ -105,7 +105,7 @@ export function cardSurfaces(prefix = 'storm', extra = {}) {
   }, extra.surface || {})]);
 }
 export default () => [
-  sheet('storm:sheet-must', 'BrainStorm sheet with a question and a must-have (8.4; the plate locks the stem)', async h => {
+  sheet('storm:sheet-must', 'BrainStorm sheet with a question and a must-have (8.4; the rule lights the plate’s Vote chapter)', async h => {
     await typeInto(h, `${SHEET} textarea[data-collab-input="purpose"]`, 'How should search stay fast without uploading anything?');
     await typeInto(h, `${SHEET} textarea[data-collab-input="mustHaves"]`, 'Nothing leaves this device');
     await h.page.mouse.move(4, 4);

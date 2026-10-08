@@ -72,7 +72,7 @@ body{
   --pmx-fs-title:var(--pmx-w-650) 22px/28px var(--font-ui);--pmx-ls-title:-.018em;
   --pmx-fs-lead:var(--pmx-w-reg) 13px/19px var(--font-ui);
   --pmx-fs-q:var(--pmx-w-620) 15px/20px var(--font-ui);--pmx-ls-q:-.01em;
-  --pmx-fs-qn:600 12px/20px var(--font-ui);
+  --pmx-fs-qn:var(--pmx-w-650) 12px/20px var(--font-ui);
   --pmx-fs-hero:var(--pmx-w-reg) 14.5px/22px var(--font-ui);--pmx-hero-lh:22px;
   --pmx-fs-ctl:600 12.5px/18.5px var(--font-ui);
   --pmx-fs-help:var(--pmx-w-reg) 12px/17.5px var(--font-ui);
@@ -227,7 +227,32 @@ body[data-theme^="friendly"]{
 /* J-2 / 3.2 rhythm: 28 between questions */
 .pmx-sheet .pmx-q + .pmx-q, .pmx-sheet .pmx-q + .pmx-shelf, .pmx-sheet .pmx-shelf + .pmx-q{margin-top:28px;}
 .pmx-sheet .pmx-q-head{display:flex;align-items:baseline;gap:10px;min-height:20px;min-width:0;}
-.pmx-sheet .pmx-q-n{flex:none;min-width:10px;font:var(--pmx-fs-qn);color:var(--subtle);}
+/* the step number (owner tweak 2026-10-07: the 1 2 3 4 of a sheet's questions must read as steps): a 20 px accent tile,
+   the head's own height, in the theme's corner (5 px; friendly 6, retro 2, NieR's ink square in nier-parts.css). The
+   tile is painted by ::before behind the numeral, as a badge, like a mark: the precomputed accent fill (16 %, none in
+   retro: an outline there) and an inset 1 px ring in the focus edge. The question that holds focus is the step you
+   are on: its tile fills with the accent and the numeral turns on-accent. Colour only, over --pmx-t-light (reduced
+   motion: instant). A numbered head keeps 8 px between tile and title and at least 6 px before its meta or aside, so
+   it takes 4 px more than the bare numeral did (the specialists head has 5.6 px to spare in friendly at 1024 x 768) */
+.pmx-sheet .pmx-q-head:has(> .pmx-q-n){column-gap:6px;}
+.pmx-sheet .pmx-q-n{position:relative;z-index:0;flex:none;align-self:flex-start;display:inline-grid;place-items:center;box-sizing:border-box;width:20px;min-width:20px;height:20px;margin-right:2px;
+  font:var(--pmx-fs-qn);font-variant-numeric:tabular-nums;color:var(--accent);transition:color var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-sheet .pmx-q-n::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--pmx-q-n-r,5px);background:var(--pmx-seat-fill-accent);box-shadow:inset 0 0 0 1px var(--pmx-focus-edge);
+  transition:background-color var(--pmx-t-light) var(--pmx-ease-linear),box-shadow var(--pmx-t-light) var(--pmx-ease-linear);}
+/* dark themes set the numeral in the lighter accent their focus outline already uses (about 6:1 on the tile, where
+   the accent itself is about 4:1); the tinted light themes in a deeper accent, precomputed (the accent on its own
+   tile measured 4.4:1 in basic, 4.2 in glass, 3.0 in friendly; these 6.6, 6.4 and 5.6). Retro-light's outline tile
+   has no fill, and its accent stands at 5.4:1 on the sheet. */
+body[data-theme$="-dark"] .pmx-sheet .pmx-q-n{color:var(--pmx-focus-outline);}
+body[data-theme="basic-light"] .pmx-sheet{--pmx-q-n-ink:#4c3ea7;}
+body[data-theme="friendly-light"] .pmx-sheet{--pmx-q-n-ink:#8d415a;}
+body[data-theme="glass-light"] .pmx-sheet{--pmx-q-n-ink:#5c4098;}
+body[data-theme$="-light"] .pmx-sheet .pmx-q-n{color:var(--pmx-q-n-ink,var(--accent));}
+body[data-theme^="friendly"] .pmx-sheet{--pmx-q-n-r:6px;}
+body[data-theme^="retro"] .pmx-sheet{--pmx-q-n-r:2px;}
+.pmx-sheet :is(.pmx-q, .pmx-shelf):focus-within > .pmx-q-head > .pmx-q-n, .pmx-sheet .pmx-hero:focus-within > .pmx-hero-main > .pmx-q-head > .pmx-q-n{color:var(--on-accent);}
+.pmx-sheet :is(.pmx-q, .pmx-shelf):focus-within > .pmx-q-head > .pmx-q-n::before, .pmx-sheet .pmx-hero:focus-within > .pmx-hero-main > .pmx-q-head > .pmx-q-n::before{background:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);}
+html[data-motion="reduced"] .pmx-sheet .pmx-q-n, html[data-motion="reduced"] .pmx-sheet .pmx-q-n::before{transition:none;}
 .pmx-sheet .pmx-q-title{margin:0;min-width:0;font:var(--pmx-fs-q);letter-spacing:var(--pmx-ls-q);color:var(--text);}
 .pmx-sheet .pmx-q-meta{margin-left:auto;flex:none;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
 .pmx-sheet .pmx-q > .pmx-help, .pmx-sheet .pmx-shelf > .pmx-help{margin-top:4px;}
@@ -240,10 +265,17 @@ body[data-theme^="friendly"]{
    had no box and every title in it measured 0-3 px from its edge); the negative margin keeps the layout in place */
 .pmx-sheet .pmx-q[data-state="error"]{background:var(--pmx-card-warm);border-radius:12px;padding:8px;margin-left:-8px;margin-right:-8px;box-shadow:none;}
 .pmx-sheet .pmx-q[data-state="error"] .pmx-q-n, .pmx-sheet .pmx-q[data-state="error"] .pmx-q-title{color:var(--warning);}
+/* an error's step tile goes warm (focus or not): the warning fill and the warm edge */
+.pmx-sheet .pmx-q[data-state="error"] > .pmx-q-head > .pmx-q-n{color:var(--warning);}
+.pmx-sheet .pmx-q[data-state="error"] > .pmx-q-head > .pmx-q-n::before{background:var(--pmx-seat-fill-warning);box-shadow:inset 0 0 0 1px var(--pmx-edge-warm);}
 
 /* ================================================================ A3 hero */
 /* R-18: the hero spans the sheet (the legacy .mdl-section{align-self:start} shrank it to max-content) */
-.pmx-sheet .pmx-hero{flex:none;align-self:stretch;width:auto;min-width:0;margin:16px 0 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) 262px;gap:24px;border:0;background:none;border-radius:0;overflow:visible;}
+/* the side column (the "In your chat" preview) is 340 px, 308 in a window under 1168 px wide or 820 px tall (owner
+   tweak 2026-10-07: it was 262 and the preview too small to make out); retro's is 330 at full size, so its wide mono
+   hero helpers keep the one line they had (Review's measures 700 px) */
+.pmx-sheet .pmx-hero{flex:none;align-self:stretch;width:auto;min-width:0;margin:16px 0 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) var(--pmx-hero-side-w,var(--pmx-hero-side-full,340px));gap:24px;border:0;background:none;border-radius:0;overflow:visible;}
+body[data-theme^="retro"] .pmx-sheet{--pmx-hero-side-full:330px;}
 .pmx-sheet .pmx-hero[data-aside="0"]{grid-template-columns:minmax(0,1fr);}
 .pmx-sheet .pmx-hero-main{min-width:0;}
 /* A3 (review cycle 1): the field is a fixed three lines (3 x line height + 10 + 10 padding + 2 border: 88 px in
@@ -266,9 +298,13 @@ body[data-theme^="friendly"]{
 .pmx-sheet input.pmx-hero-field:focus{border-color:var(--pmx-focus-edge);box-shadow:0 0 0 3px var(--pmx-focus-ring);}
 .pmx-sheet .pmx-hero-main > .pmx-help{margin-top:8px;}
 .pmx-sheet .pmx-hero-main > .pmx-q-head{align-items:center;min-height:32px;}
+/* the step tile stands at the top of a question's first line; in the hero's 32 px head the title is centred, so the
+   tile is too */
+.pmx-sheet .pmx-hero-main > .pmx-q-head > .pmx-q-n{align-self:center;}
 .pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + .pmx-hero-box,
 .pmx-sheet .pmx-hero-main > .pmx-q-head:has(.pmx-hero-aside) + .pmx-hero-field{margin-top:12px;}
-.pmx-sheet .pmx-hero-side{min-width:0;}
+/* the side column stands as tall as the main column (the grid stretches it) and hands that height to the preview */
+.pmx-sheet .pmx-hero-side{min-width:0;display:flex;flex-direction:column;}
 .pmx-sheet .pmx-hero-aside{margin-left:auto;display:flex;align-items:center;gap:10px;width:280px;max-width:50%;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
 /* J-2: the card-title field is a boxed 32 px input (text used to sit on its underline) */
 .pmx-sheet .pmx-hero-aside input[type=text]{flex:1;min-width:0;height:32px;min-height:32px;padding:0 10px;font:600 12px var(--font-ui);color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;outline:none;box-shadow:none;}
@@ -359,6 +395,11 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr
 .pmx-sheet .pmx-spec{display:grid;grid-template-columns:28px minmax(0,1fr) auto;column-gap:10px;align-items:center;min-height:54px;padding:8px 0;box-sizing:border-box;}
 .pmx-sheet .pmx-spec[data-state="on"]{padding:9px 0;}
 .pmx-sheet .pmx-spec > .pmx-mark{justify-self:center;}
+/* item 11: an item drawn by a neon glyph instead of a mark (Grill Me's kettle grill), the mark's 24 px; disabled, it dims
+   like the item's words */
+.pmx-sheet .pmx-spec > .pmx-spec-glyph{justify-self:center;display:block;width:24px;height:24px;line-height:0;}
+.pmx-sheet .pmx-spec > .pmx-spec-glyph > svg{display:block;}
+.pmx-sheet .pmx-spec[data-state="disabled"] > .pmx-spec-glyph{opacity:.45;}
 .pmx-sheet .pmx-spec-copy{min-width:0;}
 .pmx-sheet .pmx-spec-copy b{display:block;font:var(--pmx-fs-ctl);color:var(--text);}
 .pmx-sheet .pmx-spec-copy .pmx-help{margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -427,6 +468,12 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr
 .pmx-check-copy{min-width:0;display:block;}
 .pmx-check-copy b{display:block;font:600 12.5px/18.5px var(--font-ui);color:var(--text);}
 .pmx-check-copy small{display:block;margin-top:3px;font:var(--pmx-fs-help);color:var(--muted);}
+/* item 11: a check's glyph (Grill Me's kettle grill) stands between the box and the words, centred on the label's
+   first line, 7 from the box; it rests in the muted ink and lights with the row (neon-icons.css 8d plays its act) */
+.pmx-check-glyph{flex:none;display:block;width:16px;height:16px;margin:1px 0 0 -3px;line-height:0;color:var(--muted);}
+.pmx-check-glyph > svg{display:block;}
+.pmx-check:hover > .pmx-check-glyph, .pmx-check:focus-within > .pmx-check-glyph{color:var(--text);}
+.pmx-check > input:disabled ~ .pmx-check-glyph{opacity:.45;}
 
 /* ================================================================ A12 words */
 .pmx-words{display:flex;flex-wrap:wrap;gap:12px 16px;min-width:0;}
@@ -475,13 +522,17 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr
 .pmx-sheet .pmx-advgrid[data-pmx-overflow="1"]{padding-bottom:14px;-webkit-mask-image:linear-gradient(#000 calc(100% - 14px),transparent);mask-image:linear-gradient(#000 calc(100% - 14px),transparent);}
 
 /* ================================================================ A16 preview (the Start flight source) */
-.pmx-sheet .pmx-preview{margin:0;min-width:0;}
+.pmx-sheet .pmx-preview{margin:0;min-width:0;flex:1 1 auto;display:flex;flex-direction:column;}
 .pmx-sheet .pmx-preview figcaption{display:flex;justify-content:space-between;}
-/* R-02: the preview renders the card's first frame at the destination card width (242 / scale: 417 px at .58,
-   591 at .41; --pmx-preview-w overrides) and the 262 x 82 tray fills the hero's side column to the sheet's
-   28 px padding, the frame centred in it */
-.pmx-sheet .pmx-preview-tray{position:relative;width:262px;max-width:100%;height:82px;margin-top:8px;border-radius:var(--pmx-r-md);background:var(--pmx-floor);overflow:hidden;}
-.pmx-sheet .pmx-preview-card{position:absolute;left:10px;top:calc((82px - 120px * var(--pmx-preview-scale,.62)) / 2);width:var(--pmx-preview-w,calc(242px / var(--pmx-preview-scale,.62)));transform:scale(var(--pmx-preview-scale,.62));transform-origin:0 0;pointer-events:none;}
+/* R-02, owner tweak 2026-10-07 (the preview was drawn at about .56 and too small to make out): the preview lays the
+   card's first frame out at the narrowest M-tier card, 360 px (--pmx-preview-w), and the tray fills the hero's side
+   column (340 px, 308 in smaller windows) to the main column's foot, under the caption. The scale fits the frame to
+   the tray's own box with 10 px beside it and at least 5 px above and below (collaboration.js fitPreview reads the
+   box): .889 at 1440 x 900, the 13.5 px title at 12 px and the 12.5 px sentence at 11.1; .8 at 1280 x 800 and
+   1024 x 768 (10.8 and 10), where the tray is the hero's whole 110 px. The frame is centred both ways; the Start
+   flight lays its clone out at the real card width (layoutWidth). */
+.pmx-sheet .pmx-preview-tray{position:relative;flex:1 1 auto;width:100%;min-height:96px;margin-top:8px;border-radius:var(--pmx-r-md);background:var(--pmx-floor);overflow:hidden;}
+.pmx-sheet .pmx-preview-card{position:absolute;left:calc((100% - var(--pmx-preview-w,360px) * var(--pmx-preview-scale,.62)) / 2);top:calc((100% - 120px * var(--pmx-preview-scale,.62)) / 2);width:var(--pmx-preview-w,360px);transform:scale(var(--pmx-preview-scale,.62));transform-origin:0 0;pointer-events:none;}
 /* The preview is the card's top frame (head, sentence, track): 391 x 120. */
 .pmx-run[data-pmx-preview="1"]{height:120px;overflow:hidden;}
 /* the frame is the card's own geometry: in a 120 px box the flex column shrank the 28 px head to 20 and let 5 px of
@@ -543,29 +594,136 @@ body[data-theme$="-light"] .pmx-sheet .pmx-primary[data-tone="warm"]{color:#fff;
 .pmx-tab.active, .pmx-tab[aria-selected="true"]{color:var(--text);}
 .pmx-tab.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);transform-origin:50% 100%;}
 
-/* ================================================================ B1 marks (silhouette x spike x hue) */
+/* ================================================================ B1 marks: puppet agents (item 14a, 2026-10-07)
+   module-shell.js markInner draws every agent as a little marionette (control bar, strings, a chibi figure, one prop
+   or headwear per role); this block paints it. The seat hue (--pmx-seat, its 16 % fill --pmx-seat-fill) paints the
+   figure; the prop is drawn in the text ink on the notch ground, so a role reads in grayscale. Material by theme
+   family: Basic = blueprint line (joints and a construction cross from 28 px), Friendly = felt (skin head, hair, a
+   solid tunic, a wooden bar), Glass = crystal (a lit core, a shine, filament strings), Retro = the pixel sprite, NieR
+   = ink with the YoRHa visor (nier-parts.css). On dark themes the line work keeps the neon family's lit feel: a
+   halo copy underneath at the concept strength (--nx-h-concept-i, 0 on light themes and under NieR); no filter, no
+   colour maths, no dashoffset. */
 .pmx-mark{display:inline-block;flex:none;position:relative;width:var(--pmx-mark-size,22px);height:var(--pmx-mark-size,22px);vertical-align:middle;}
 .pmx-mark[data-size="12"]{--pmx-mark-size:12px;} .pmx-mark[data-size="16"]{--pmx-mark-size:16px;} .pmx-mark[data-size="18"]{--pmx-mark-size:18px;}
 .pmx-mark[data-size="22"]{--pmx-mark-size:22px;} .pmx-mark[data-size="24"]{--pmx-mark-size:24px;} .pmx-mark[data-size="28"]{--pmx-mark-size:28px;} .pmx-mark[data-size="36"]{--pmx-mark-size:36px;}
 .pmx-mark > svg{width:100%;height:100%;overflow:visible;display:block;}
-.pmx-m-sil{fill:var(--pmx-seat-fill,transparent);stroke:var(--pmx-seat);stroke-width:1.6;stroke-linejoin:round;}
-.pmx-m-spk{fill:var(--pmx-seat);stroke:none;}
-.pmx-m-spks{fill:none;stroke:var(--pmx-seat);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
-.pmx-m-ring{fill:none;stroke:var(--pmx-seat);stroke-width:1.5;}
-.pmx-m-floor{fill:var(--pmx-seat);}
+/* detail gates: 12 px (and the mini cluster, .pmx-cluster rules below) draw the bust, 22 px and up the face, 28 px and
+   up and plate seats the joints, feet and family detail; --pmx-pp-k thickens the lines as the mark shrinks and
+   --pmx-pp-hw is the halo's width in screen px */
+.pmx-mark, .pmx-p-mark{--pmx-pp-g2:none;--pmx-pp-g3:none;--pmx-pp-full:inline;--pmx-pp-bust:none;--pmx-pp-k:1;--pmx-pp-hw:3px;}
+.pmx-mark[data-size="16"], .pmx-mark[data-size="18"]{--pmx-pp-k:1.14;--pmx-pp-hw:2.4px;}
+.pmx-mark[data-size="22"], .pmx-mark[data-size="24"]{--pmx-pp-g2:inline;}
+.pmx-mark[data-size="28"], .pmx-mark[data-size="36"], .pmx-p-mark{--pmx-pp-g2:inline;--pmx-pp-g3:inline;--pmx-pp-k:.92;--pmx-pp-hw:3.4px;}
+.pmx-mark[data-size="12"]{--pmx-pp-full:none;--pmx-pp-bust:inline;--pmx-pp-k:1.3;--pmx-pp-hw:0px;}
+.pmx-pp-full{display:var(--pmx-pp-full);} .pmx-pp-bust{display:var(--pmx-pp-bust);}
+.pmx-pp-g2{display:var(--pmx-pp-g2);} .pmx-pp-g3{display:var(--pmx-pp-g3);}
+/* family-only parts (each family turns its own on below) */
+.pmx-pp-hair, .pmx-pp-shine, .pmx-pp-core, .pmx-pp-corehi, .pmx-pp-facet, .pmx-pp-cheek, .pmx-pp-smile{display:none;}
+/* the bust: the head, its headwear and the shoulders, a size up (no hand strings, no hand props) */
+.pmx-mark[data-size="12"] .pmx-pp-v{transform:translateY(-.6px) scale(1.16);transform-origin:14px 12px;}
+/* paint: Basic (and the base every family restates) */
+.pmx-pp{--pmx-pp-ink:var(--pmx-seat);--pmx-pp-prop:var(--text);--pmx-pp-prop-fill:var(--pmx-notch-bg,var(--surface));transform-origin:14px 1.6px;}
+.pmx-pp-halo{fill:none;stroke:var(--pmx-seat);stroke-width:var(--pmx-pp-hw);stroke-opacity:var(--nx-h-concept-i,0);vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;}
+.pmx-pp-str{fill:none;stroke:var(--pmx-seat);stroke-width:calc(.72px * var(--pmx-pp-k));stroke-opacity:.8;stroke-linecap:round;}
+.pmx-pp-bar{fill:none;stroke:var(--pmx-pp-ink);stroke-width:calc(1.9px * var(--pmx-pp-k));stroke-linecap:round;}
+.pmx-pp-grip{fill:none;stroke:var(--pmx-pp-ink);stroke-width:calc(1.5px * var(--pmx-pp-k));stroke-linecap:round;}
+.pmx-pp-limb, .pmx-pp-foot{fill:none;stroke:var(--pmx-pp-ink);stroke-width:calc(1.5px * var(--pmx-pp-k));stroke-linecap:round;stroke-linejoin:round;}
+.pmx-pp-head, .pmx-pp-body, .pmx-pp-shoulders{fill:var(--pmx-seat-fill,transparent);stroke:var(--pmx-pp-ink);stroke-width:calc(1.5px * var(--pmx-pp-k));stroke-linejoin:round;}
+.pmx-pp-eye{fill:var(--pmx-pp-ink);}
+.pmx-pp-pf{fill:var(--pmx-pp-prop-fill);stroke:var(--pmx-pp-prop);stroke-width:calc(1.2px * var(--pmx-pp-k));stroke-linejoin:round;stroke-linecap:round;}
+.pmx-pp-pl{fill:none;stroke:var(--pmx-pp-prop);stroke-width:calc(1.3px * var(--pmx-pp-k));stroke-linecap:round;stroke-linejoin:round;}
+.pmx-pp-hdl, .pmx-pp-blk{stroke-width:calc(1.7px * var(--pmx-pp-k));}
+.pmx-pp-pa{fill:var(--pmx-pp-prop);}
+.pmx-pp-lens{fill:var(--pmx-pp-prop-fill);fill-opacity:.55;stroke:var(--pmx-pp-prop);stroke-width:calc(1.3px * var(--pmx-pp-k));}
+.pmx-pp-bigeye{fill:var(--pmx-pp-ink);}
+.pmx-pp-stud, .pmx-pp-joint{fill:var(--pmx-pp-prop-fill);stroke:var(--pmx-pp-ink);stroke-width:.7px;}
+.pmx-pp-floor{fill:none;stroke:var(--pmx-seat);stroke-width:1.7px;stroke-linecap:round;}
+/* Friendly: felt. A skin head with hair, a solid tunic in the seat hue, an ink outline, a wooden bar with sunny studs */
+body[data-theme^="friendly"] .pmx-pp{--pmx-pp-line:#3b2f36;--pmx-pp-skin:#f6cfb2;--pmx-pp-hairc:#4a3530;--pmx-pp-wood:#b9814f;--pmx-pp-blush:#f0a0a4;--pmx-pp-prop:var(--pmx-pp-line);--pmx-pp-prop-fill:#fff6ea;}
+/* on the dark stage the felt is stitched in a warm cream thread (a dark outline vanished into the card) */
+body[data-theme="friendly-dark"] .pmx-pp{--pmx-pp-line:#efdccb;--pmx-pp-skin:#f3c9a8;--pmx-pp-hairc:#4b3431;--pmx-pp-wood:#d39a68;--pmx-pp-prop:#efdccb;--pmx-pp-prop-fill:#3a3047;}
+body[data-theme^="friendly"] .pmx-pp-head, body[data-theme^="friendly"] .pmx-pp-body, body[data-theme^="friendly"] .pmx-pp-shoulders{stroke-width:calc(1.2px * var(--pmx-pp-k));}
+body[data-theme="friendly-dark"] .pmx-pp-eye, body[data-theme="friendly-dark"] .pmx-pp-bigeye, body[data-theme="friendly-dark"] .pmx-pp-smile{fill:#2a2230;stroke:#2a2230;}
+body[data-theme="friendly-dark"] .pmx-pp-smile{fill:none;}
+body[data-theme^="friendly"] .pmx-pp-head{fill:var(--pmx-pp-skin);stroke:var(--pmx-pp-line);}
+body[data-theme^="friendly"] .pmx-pp-body, body[data-theme^="friendly"] .pmx-pp-shoulders{fill:var(--pmx-seat);stroke:var(--pmx-pp-line);}
+body[data-theme^="friendly"] .pmx-pp-limb, body[data-theme^="friendly"] .pmx-pp-foot{stroke:var(--pmx-pp-line);}
+body[data-theme^="friendly"] .pmx-pp-bar, body[data-theme^="friendly"] .pmx-pp-grip{stroke:var(--pmx-pp-wood);}
+body[data-theme^="friendly"] .pmx-pp-str{stroke:var(--pmx-pp-line);stroke-opacity:.5;}
+body[data-theme="friendly-dark"] .pmx-pp-str{stroke:var(--muted);stroke-opacity:.8;}
+body[data-theme^="friendly"] .pmx-pp-hair{display:inline;fill:var(--pmx-pp-hairc);}
+body[data-theme^="friendly"] .pmx-pp-eye, body[data-theme^="friendly"] .pmx-pp-bigeye{fill:var(--pmx-pp-line);}
+body[data-theme^="friendly"] .pmx-pp-cheek{display:var(--pmx-pp-g3);fill:var(--pmx-pp-blush);}
+body[data-theme^="friendly"] .pmx-pp-smile{display:var(--pmx-pp-g3);fill:none;stroke:var(--pmx-pp-line);stroke-width:.6px;stroke-linecap:round;}
+body[data-theme^="friendly"] .pmx-pp-joint{display:none;}
+body[data-theme^="friendly"] .pmx-pp-stud{fill:#f5c64e;stroke:var(--pmx-pp-wood);}
+/* Glass: crystal. A clear body with a thin lit edge, a light core in the chest, a shine, two light eyes, filaments */
+body[data-theme^="glass"] .pmx-pp-head, body[data-theme^="glass"] .pmx-pp-body, body[data-theme^="glass"] .pmx-pp-shoulders{stroke-width:calc(1.15px * var(--pmx-pp-k));}
+body[data-theme^="glass"] .pmx-pp-limb{stroke-width:calc(1.25px * var(--pmx-pp-k));}
+body[data-theme^="glass"] .pmx-pp-str{stroke-width:calc(.55px * var(--pmx-pp-k));stroke-opacity:1;}
+body[data-theme^="glass"] .pmx-pp-head, body[data-theme^="glass"] .pmx-pp-body, body[data-theme^="glass"] .pmx-pp-shoulders{fill:var(--pmx-seat);fill-opacity:.26;}
+body[data-theme="glass-light"] .pmx-pp-head, body[data-theme="glass-light"] .pmx-pp-body, body[data-theme="glass-light"] .pmx-pp-shoulders{fill-opacity:.18;}
+body[data-theme^="glass"] .pmx-pp-core{display:var(--pmx-pp-full);fill:var(--pmx-seat);}
+body[data-theme^="glass"] .pmx-pp-corehi{display:var(--pmx-pp-g2);fill:#fff;}
+body[data-theme^="glass"] .pmx-pp-facet{display:var(--pmx-pp-full);fill:none;stroke:var(--pmx-seat);stroke-width:.6px;stroke-linejoin:round;}
+body[data-theme^="glass"] .pmx-pp-shine{display:var(--pmx-pp-full);fill:none;stroke:#fff;stroke-opacity:.9;stroke-width:calc(.95px * var(--pmx-pp-k));stroke-linecap:round;}
+body[data-theme="glass-dark"] .pmx-pp-eye{fill:#fff;}
+body[data-theme^="glass"] .pmx-pp{--pmx-pp-prop-fill:var(--pmx-seat-fill,transparent);}
+/* Retro: the pixel sprite (crisp 2-unit cells) instead of the line puppet */
+/* (markInner draws only the sprite under a retro theme and only the line puppet elsewhere; a mark that outlives a
+   theme switch keeps its own layer until the next render) */
+body[data-theme^="retro"] .pmx-pp-halo{display:none;}
+.pmx-pp-px{shape-rendering:crispEdges;}
+body[data-theme^="retro"] .pmx-pp{--pmx-px-wood:#d08a3c;--pmx-px-hair:#6b4528;--pmx-px-skin:#f2c38e;--pmx-px-eye:#1a120c;--pmx-px-gold:#f2d35e;--pmx-px-paper:#f3f0dc;}
+body[data-theme="retro-light"] .pmx-pp{--pmx-px-wood:#9a5a22;--pmx-px-hair:#4a2e1a;--pmx-px-gold:#b88a12;--pmx-px-paper:#fffdf0;}
+.pmx-pp-xb{fill:var(--pmx-px-wood);} .pmx-pp-xs{fill:var(--muted);} .pmx-pp-xh{fill:var(--pmx-px-hair);} .pmx-pp-xk{fill:var(--pmx-px-skin);}
+.pmx-pp-xe{fill:var(--pmx-px-eye);} .pmx-pp-xc{fill:var(--pmx-seat);} .pmx-pp-xl{fill:var(--muted);} .pmx-pp-xp{fill:var(--text);}
+.pmx-pp-xq{fill:var(--pmx-px-gold);} .pmx-pp-xw{fill:var(--pmx-px-paper);}
+/* states, puppet-native: working pulls the strings taut over a lit stage floor; queued hangs them slack; optional
+   dashes the figure; needs raises a hand and failed cuts a string (both drawn by markInner); the notches as before */
+:is(.pmx-mark, .pmx-p-mark)[data-state="working"] .pmx-pp-str{stroke-opacity:1;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="queued"] .pmx-pp-str{stroke-dasharray:1.1 1.3;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="queued"] .pmx-pp-xs{opacity:.5;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-pp-head, :is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-pp-body, :is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-pp-limb{stroke-dasharray:1.6 1.3;}
+:is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-pp-px{opacity:.6;}
 .pmx-m-nd{fill:var(--pmx-notch-bg,var(--surface));}
 .pmx-m-nc{fill:none;stroke:var(--positive);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .pmx-m-nw{fill:none;stroke:var(--warning);stroke-width:2.2;stroke-linecap:round;}
 .pmx-m-nx{fill:none;stroke:var(--danger);stroke-width:1.8;stroke-linecap:round;}
 .pmx-m-sw{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-.pmx-mark[data-state="queued"], .pmx-p-mark[data-state="queued"]{opacity:.5;}
-:is(.pmx-mark, .pmx-p-mark)[data-state="queued"] .pmx-m-ring{stroke:var(--subtle);stroke-dasharray:1.5 2.5;}
-:is(.pmx-mark, .pmx-p-mark)[data-state="needs"] .pmx-m-ring{stroke:var(--warning);}
-.pmx-mark[data-state="failed"], .pmx-p-mark[data-state="failed"]{opacity:.45;}
+.pmx-mark[data-state="queued"], .pmx-p-mark[data-state="queued"]{opacity:.55;}
+.pmx-mark[data-state="failed"], .pmx-p-mark[data-state="failed"]{opacity:.5;}
 .pmx-mark[data-state="abstained"], .pmx-p-mark[data-state="abstained"]{opacity:.6;}
-:is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-m-sil{stroke-dasharray:2.5 2.5;}
-body[data-theme^="retro"] .pmx-m-sil{fill:none;}
-body[data-theme^="retro"] .pmx-m-sil, body[data-theme^="retro"] .pmx-m-spks, body[data-theme^="retro"] .pmx-m-ring{stroke-linecap:square;stroke-linejoin:miter;}
+body[data-theme^="retro"] .pmx-m-nc, body[data-theme^="retro"] .pmx-m-nw, body[data-theme^="retro"] .pmx-m-nx, body[data-theme^="retro"] .pmx-m-sw{stroke-linecap:square;stroke-linejoin:miter;}
+/* motion: module marks are lit and still (the pmx loop budget is the sheen's). In run cards and run views a puppet
+   only acts once, when it mounts in a state or changes into one: picked up and swung on its strings as it starts
+   working, a hop when it is done or needs you. Inside a setup sheet (.pmx-sheet: rosters, the specialist shelf, the
+   plate) puppets hold still (integrator direction 2026-10-08, pending Jared). Nothing moves at 12 px; the voice is the
+   family's (--nx-ease / --nx-le: retro and NieR step); reduced motion (the media query and body.pm56-reduced through
+   pmx-system.css, html[data-motion] here) leaves the rest pose. */
+.pmx-mark[data-state="working"] .pmx-pp, .pmx-p-mark[data-state="working"] .pmx-pp{animation:pmx-pp-pick calc(var(--pmx-t-settle) * 2) var(--nx-ease) backwards;}
+.pmx-mark[data-state="done"] .pmx-pp, .pmx-p-mark[data-state="done"] .pmx-pp, .pmx-mark[data-state="needs"] .pmx-pp, .pmx-p-mark[data-state="needs"] .pmx-pp{animation:pmx-pp-hop var(--pmx-t-settle) var(--nx-ease) backwards;}
+.pmx-mark[data-size="12"] .pmx-pp, .pmx-sheet :is(.pmx-mark, .pmx-p-mark)[data-state] .pmx-pp{animation:none;}
+@keyframes pmx-pp-pick{0%{transform:translateY(1.4px);}22%{transform:translateY(-.6px) rotate(-5deg);}46%{transform:rotate(3.4deg);}70%{transform:rotate(-1.5deg);}86%{transform:rotate(.5deg);}100%{transform:none;}}
+@keyframes pmx-pp-hop{0%, 100%{transform:none;}38%{transform:translateY(-2.2px);}68%{transform:translateY(.4px);}}
+html[data-motion="reduced"] .pmx-pp{animation:none !important;}
+/* app.js hosts: the live subagents rows and the Agent Stage lanes carry the puppet where the initials tile was. They
+   are not pmx surfaces, so a working puppet may keep swaying on its strings there: the loop runs on the host's own
+   slot (app.js writes its data-state), swinging the whole mark from its control bar, never on a pmx node, so no pmx
+   loop budget is spent; the three reduced-motion routes stop it here. */
+.live-agent-row > .agent-mark, .agent-lane > .lane-mark{display:grid;place-items:center;width:28px;height:28px;transform-origin:50% 8%;}
+.agent-lane > .lane-mark{width:25px;height:25px;}
+.live-agent-row > .agent-mark[data-state="working"], .agent-lane > .lane-mark[data-state="working"]{animation:pp-agent-sway calc(var(--pmx-t-breathe) * 1.4) var(--nx-le) calc(var(--pmx-t-settle) * 2) infinite;}
+@keyframes pp-agent-sway{0%, 100%{transform:none;}25%{transform:rotate(-3deg);}75%{transform:rotate(3deg);}}
+@media (prefers-reduced-motion: reduce){.live-agent-row > .agent-mark, .agent-lane > .lane-mark{animation:none !important;}}
+body.pm56-reduced .live-agent-row > .agent-mark, body.pm56-reduced .agent-lane > .lane-mark, html[data-motion="reduced"] .live-agent-row > .agent-mark, html[data-motion="reduced"] .agent-lane > .lane-mark{animation:none !important;}
+.live-agent-row .pmx-mark, .agent-lane .pmx-mark{--pmx-notch-bg:var(--surface-3);}
+/* the other agent rows (2026-10-08): the Activity Detail's subagent lines and the Agent Board's cards (app.js and
+   activity-panel.js) carry the puppet where the initials were too (Orbit's rows and satellites: orbit.css). They keep
+   no loop: a puppet acts once as it starts working or finishes, like a run card's. */
+.activity-line > .activity-agent-mark{flex:none;display:grid;place-items:center;width:22px;height:22px;}
+.activity-line .pmx-mark{--pmx-notch-bg:var(--surface);}
+.pmap-av > .pmap-agent-mark{display:grid;place-items:center;line-height:0;}
 .pmx-run .pmx-mark, .pmx-dock .pmx-mark{--pmx-notch-bg:var(--pmx-card);}
 .pmx-run[data-tone="warm"] .pmx-mark, .pmx-run[data-density="attention"]:not([data-tone="accent"]) .pmx-mark, .pmx-dock-line[data-tone="needs"] .pmx-mark{--pmx-notch-bg:var(--pmx-card-warm);}
 .pmx-sheet .pmx-mark{--pmx-notch-bg:var(--surface-2);}
@@ -588,6 +746,7 @@ body[data-theme^="retro"] .pmx-m-sil, body[data-theme^="retro"] .pmx-m-spks, bod
 .pmx-sheet .pmx-plate-fit:not([data-fit]) > .pmx-plate:last-child,
 .pmx-sheet .pmx-plate-fit[data-fit="full"] > .pmx-plate[data-mode="full"],
 .pmx-sheet .pmx-plate-fit[data-fit="compact"] > .pmx-plate[data-mode="compact"],
+.pmx-sheet .pmx-plate-fit[data-fit="lean"] > .pmx-plate[data-mode="lean"],
 .pmx-sheet .pmx-plate-fit[data-fit="strip"] > .pmx-plate[data-mode="strip"]{display:block;}
 .pmx-sheet .pmx-plate-fit[data-fit="caption"] > .pmx-plate[data-mode="caption"], .pmx-sheet .pmx-plate-fit:not([data-fit]) > .pmx-plate[data-mode="caption"]:last-child{display:flex;}
 /* a caption that wraps (retro at 1024 x 768) grows its plate and the slot with it: 8 px of floor above and below its
@@ -626,6 +785,9 @@ body[data-theme^="retro"] .pmx-plate{background-image:linear-gradient(var(--pmx-
 .pmx-p-line[data-style="toyou"]{stroke:var(--accent);stroke-dasharray:1.5 4;stroke-linecap:round;stroke-width:1.6;}
 .pmx-p-line[data-style="sees"]{stroke-dasharray:2 3;stroke-width:.9;}
 .pmx-p-line[data-style="accent"]{stroke:var(--accent);stroke-width:1.6;}
+/* cast plates (2026-10-07): the dotted rule before the specialists' wing, and Review's junction on the bar */
+.pmx-p-line[data-style="rule"]{stroke-width:1;stroke-dasharray:1 3.5;stroke-linecap:round;}
+.pmx-p-dot{fill:var(--pmx-line);stroke:none;transition:fill var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-p-seat, .pmx-p-slot, .pmx-p-screen-g, .pmx-p-paper-g, .pmx-p-you, .pmx-p-chapter, .pmx-p-cue-g{transform:translate(var(--x,0),var(--y,0));transition:transform var(--pmx-t-move) var(--pmx-ease-move),opacity var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-p-lab{font:var(--pmx-fs-plate);fill:var(--text);}
 .pmx-p-sub{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--subtle);}
@@ -651,9 +813,10 @@ body[data-theme^="retro"] .pmx-p-hatch{stroke-dasharray:1.2 2.2;}
 .pmx-p-chap{fill:var(--pmx-floor);stroke:var(--muted);stroke-width:1.4;}
 .pmx-p-chapter[data-state="done"] .pmx-p-chap{fill:var(--positive);stroke:var(--positive);}
 .pmx-p-chapter[data-state="now"] .pmx-p-chap{fill:var(--accent);stroke:var(--accent);}
+.pmx-p-chap-ring{fill:none;stroke:var(--accent);stroke-width:1.2;opacity:.6;}
+.pmx-p-chapter[data-state="now"] > .pmx-p-sub{fill:var(--text);}
 .pmx-p-table{fill:var(--pmx-table-fill);stroke:var(--pmx-line);stroke-width:1.2;}
-.pmx-p-mark .pmx-m-floor{display:none;}
-.pmx-p-seat[data-state="working"] .pmx-p-mark .pmx-m-floor{display:inline;}
+/* (the puppet marks have no pmx-m-floor: a working seat shows its own stage floor, path.pmx-pp-floor in the mark) */
 body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 
 /* ================================================================ C1 run card: every density */
@@ -672,8 +835,10 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-run-kind > svg{color:var(--muted);}
 .pmx-run .pmx-run-title{flex:1 1 auto;min-width:0;margin:0;font:var(--pmx-fs-run-title);letter-spacing:-.005em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-cluster{display:inline-flex;align-items:center;gap:3px;flex:none;}
-.pmx-cluster .pmx-mark{--pmx-mark-size:18px;}
-.pmx-cluster--mini .pmx-mark{--pmx-mark-size:12px;}
+.pmx-cluster .pmx-mark{--pmx-mark-size:18px;--pmx-pp-g2:none;--pmx-pp-g3:none;--pmx-pp-full:inline;--pmx-pp-bust:none;--pmx-pp-k:1.14;--pmx-pp-hw:2.4px;}
+.pmx-cluster--mini .pmx-mark{--pmx-mark-size:12px;--pmx-pp-full:none;--pmx-pp-bust:inline;--pmx-pp-k:1.3;--pmx-pp-hw:0px;}
+.pmx-cluster--mini .pmx-pp-v{transform:translateY(-.6px) scale(1.16);transform-origin:14px 12px;}
+.pmx-cluster--mini .pmx-pp{animation:none;}
 .pmx-cluster--mini{gap:2px;}
 .pmx-cluster-more{font:500 11px/16px var(--font-ui);color:var(--muted);margin-left:2px;}
 .pmx-cluster-screen{display:block;flex:none;width:1.5px;height:13px;margin:0 3px;border-radius:1px;background:var(--pmx-line);}
@@ -1197,6 +1362,10 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
   .pmx-sheet .pmx-roster{--pmx-cols:24px minmax(80px,1fr) 172px 132px 66px;}
   body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:24px minmax(64px,1fr) 176px 132px 66px;}
   .pmx-sheet .pmx-ctl{grid-template-columns:minmax(0,1fr) 184px;}
+  /* the hero's side column (the preview) narrows, so the job field keeps its room, and the card-title field beside
+     the question narrows with it, so the longest question (retro's "What should the room talk about?") keeps one line */
+  .pmx-sheet .pmx-hero{--pmx-hero-side-w:308px;}
+  .pmx-sheet .pmx-hero-aside{width:256px;}
 }
 /* Below a 900 px sheet (the 900 / 700 wide windows): one column, the body
    scrolls inside itself with fades; head and foot stay put. */
@@ -1245,6 +1414,13 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
      three full lines; the reference's field was 66), which gives every collaboration sheet its room at 1280 x 800 */
   .pmx-sheet:is([data-pmx-kind="crew"], [data-pmx-kind="crew-auto"], [data-pmx-kind="crew_auto"], [data-pmx-kind="chat_room"], [data-pmx-kind="brainstorm"], [data-pmx-kind="review"]) textarea.pmx-hero-field{height:calc(2 * var(--pmx-hero-lh) + 10px);}
   .pmx-sheet .pmx-hero-main > .pmx-help{display:none;}
+  /* the preview takes the hero's whole height beside the two-line field (110 px): its "In your chat" caption leaves
+     the screen with the hero helper, hidden visually only so it still names the figure, and the side column narrows to
+     the 308 px that height can fill (owner tweak 2026-10-07) */
+  .pmx-sheet .pmx-hero{--pmx-hero-side-w:308px;}
+  .pmx-sheet .pmx-hero-side .pmx-preview{position:relative;}
+  .pmx-sheet .pmx-hero-side .pmx-preview > figcaption{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+  .pmx-sheet .pmx-hero-side .pmx-preview-tray{margin-top:0;}
   .pmx-sheet .pmx-col--side .pmx-ctl-copy .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .pmx-sheet .pmx-col--side .pmx-shelf > .pmx-help{display:none;}
   .pmx-sheet .pmx-col--side .pmx-spec-copy .pmx-help{display:none;}

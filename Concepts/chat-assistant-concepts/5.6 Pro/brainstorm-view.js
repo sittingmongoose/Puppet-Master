@@ -213,8 +213,7 @@
         '<p class="bs-opt-backed">' + backedLine(o) + (o.by ? '. First drafted by ' + esc(o.by) + '.' : o.from > 1 ? '. ' + o.from + ' helpers drafted it on their own.' : '.') + '</p>' + (o.sources.length && o.sources.length < vm.sources.length ? srcButtons(vm, o.sources) : '') + '</div>';
     }).join('') + '</div>';
     var ruled = vm.ruledOut.map(function (h) {
-      return '<p class="bs-ruled ' + h.cls + '" data-k="' + esc(h.key) + '">' + g('not', 14) + '<span><s>' + esc(h.title) + '</s> is ruled out: it breaks ' + vm.ruleOwner + ' rule “' + esc(String(h.rule || '').replace(/[.\s]+$/, '')) + '”. Votes can’t override a rule.' +
-        '<span class="bs-tech">Technical details: Disqualified regardless of vote count</span></span></p>';
+      return '<p class="bs-ruled ' + h.cls + '" data-k="' + esc(h.key) + '">' + g('not', 14) + '<span><s>' + esc(h.title) + '</s> is ruled out: it breaks ' + vm.ruleOwner + ' rule “' + esc(String(h.rule || '').replace(/[.\s]+$/, '')) + '”. Votes can’t override a rule.</span></p>';
     }).join('');
     var meta = vm.phase === 'vote' || vm.phase === 'evidence' ? 'voting now · ' + vm.counts.voted + ' of ' + vm.counts.voters + ' in' : plural(vm.options.length, 'option');
     return S.pmxViewSection({ key: 'bs-v-opts', cls: 'bs-v-opts', title: 'The options', meta: meta, body: cols + ruled });
@@ -233,8 +232,7 @@
   }
   function evidenceHtml(vm) {
     return '<div class="bs-srcs">' + vm.sources.map(function (s) { return '<button type="button" class="text-button bs-srcrow" data-action="brainstorm-open-evidence" data-run="' + esc(vm.runId) + '" data-evidence="' + esc(s.id) + '">' + g('file', 14) + '<span>' + esc(s.label) + '</span></button>'; }).join('') + '</div>' +
-      (vm.answers.length ? '<p class="bs-sub">Your earlier answers, so nobody asks them again</p><ul class="bs-answers">' + vm.answers.map(function (a) { return '<li><span>' + esc(a.q) + '</span> <b>' + esc(a.a) + '</b></li>'; }).join('') + '</ul>' : '') +
-      '<p class="bs-tech">Technical details: source checksum ' + esc(vm.sourceHash) + '</p>';
+      (vm.answers.length ? '<p class="bs-sub">Your earlier answers, so nobody asks them again</p><ul class="bs-answers">' + vm.answers.map(function (a) { return '<li><span>' + esc(a.q) + '</span> <b>' + esc(a.a) + '</b></li>'; }).join('') + '</ul>' : '');
   }
   function wondererHtml(vm) {
     var w = vm.wonderer; if (!w || !w.leads.length) return '';
@@ -260,28 +258,17 @@
     return (o.guide || '') + lede(vm) + nextRow(vm) + rec + optionsHtml(vm) + '<div class="bs-secs">' + dis + votes + debate + evidence + '</div>' + wondererHtml(vm) + also;
   }
 
-  /* ---------------------------------------------------------------- plate: the run view's stage (8.4 plate, run states) */
+  /* ---------------------------------------------------------------- plate: the run view's stage (8.4 plate, run states)
+     2026-10-07: the same cast plate the BrainStorm sheet draws (PM56_COLLAB.sheet.castRun, one grammar): the seven
+     chapters as the bar, lit up to the one the run is on and ending in the edge to You; the helpers behind their
+     screens in their run state; the specialists in their own wing beside the helpers (never under the chapter names);
+     the screens' meaning said once on the note line. */
   function plate(r, vm) {
-    var P = S.pmxPlateParts, H = 228, HY = 104, EY = 172, W = 640;
-    var cs = core(r), spec = specialists(r), n = cs.length;
-    var s = P.line({ key: 'bs-p-chapters', from: { x: 52, y: 16 }, to: { x: 52 + 6 * 88, y: 16 }, style: 'fixed', part: 'rounds' });
-    STOPS.forEach(function (st, i) { s += P.chapter({ key: 'bs-p-ch:' + i, x: 52 + i * 88, y: 16, label: st[3], state: i < vm.stop ? 'done' : i === vm.stop ? 'now' : 'next' }); });
-    /* with the specialists' wing the core row moves left but keeps the full 128 pitch (retro's mono labels need it) */
-    var centre = spec.length ? 262 : 320, width = spec.length ? 396 : 400;
-    var span = n < 2 ? 0 : Math.min(128, width / (n - 1));
-    var xs = cs.map(function (p, i) { return Math.round(centre + (i - (n - 1) / 2) * span); });
-    for (var i = 0; i < n - 1; i++) s += P.screen({ key: 'bs-p-scr:' + i, x: (xs[i] + xs[i + 1]) / 2, y: HY, h: 30, part: 'blind' });
-    var done = r.status === 'completed';
-    cs.forEach(function (p, i) {
-      var st = done ? 'done' : p.status === 'working' && r.status === 'running' ? 'working' : 'idle';
-      s += P.seat({ key: 'bs-p-seat:' + p.id, x: xs[i], y: HY, role: markRole(p), seat: seatOf(r, p), state: st, standin: !!standIn(p), label: esc(p.role), sub: esc(modelShort(p)), part: 'team' });
-    });
-    spec.forEach(function (p, i) { s += P.seat({ key: 'bs-p-seat:' + p.id, x: 586, y: 60 + i * 72, role: markRole(p), seat: seatOf(r, p), label: p.additiveRoleKind === 'wonderer' ? 'Wonderer' : 'Grill Me', sub: p.additiveRoleKind === 'wonderer' ? 'doesn’t vote' : 'asks you first', part: 'specialists' }); });
-    s += P.line({ key: 'bs-p-edge', from: { x: 24, y: EY }, to: { x: spec.length ? 520 : 616, y: EY }, style: 'fixed', part: 'team' });
-    s += P.line({ key: 'bs-p-toyou', from: { x: 320, y: EY + 4 }, to: { x: 320, y: EY + 14 }, style: 'toyou', part: 'you' });
-    s += P.you({ x: 320, y: EY + 30, label: 'You', sub: 'get one plan' });
-    if (n > 1) s += P.label({ x: 24, y: EY + 26, text: 'Screens: each drafts alone,', cls: 'sub', part: 'blind' }) + P.label({ x: 24, y: EY + 44, text: 'nobody sees the others’ ideas.', cls: 'sub', part: 'blind' });
-    return S.pmxPlate({ key: 'bs-plate:' + r.id, kind: 'brainstorm', mode: 'full', w: W, h: H, svg: s });
+    var c = C(), fn = c && c.sheet && c.sheet.castRun;
+    if (typeof fn !== 'function') return '';
+    var done = r.status === 'completed', states = {};
+    core(r).forEach(function (p) { states[p.id] = done ? 'done' : p.status === 'working' && r.status === 'running' ? 'working' : 'idle'; });
+    return fn(r, { key: 'bs-plate:' + r.id, live: { states: states, stop: vm.stop, done: done } });
   }
 
   /* ---------------------------------------------------------------- Conversation (always BrainStorm's: G-33), Team and Cost (this file's own frame) */
@@ -361,13 +348,12 @@
     if (specialists(r).some(function (p) { return p.additiveRoleKind === 'wonderer'; })) rows.push('<li><b>Wonderer</b> abstains: its ideas stay hypotheses until checked.</li>');
     /* the exact legacy .collab-qmax text is a hidden harness node (IMPACT A2-19); the reader sees the plain line */
     rows.push('<li class="bs-q"><p class="' + q.cls + '" data-k="collab-qmax" data-pmx-harness>' + esc(q.text) + '</p><p class="bs-q-line"><b>Questions for you</b> · ' + nw('up to ' + q.limit) + (q.grill ? ' ' + nw('(' + (q.limit - q.extension) + ' + Grill Me ' + q.extension + ')') : '') + '</p><p class="bs-q-help">' + (q.asked ? plural(q.asked, 'question') + ' asked so far' : 'No questions asked yet') + ', shared by everyone. It’s a limit, not a target.</p>' +
-      (q.canToggle ? S.pmxCheck({ key: 'bs-grill:' + r.id, cls: 'bs-grill', attrs: 'data-action="collab-brainstorm-toggle-grill" data-run="' + esc(r.id) + '"', checked: q.grill, label: 'Grill Me', helper: 'Allow up to ' + q.extension + ' more questions.' + (q.asked ? ' The ' + q.asked + ' already asked still count.' : '') }) : '') + '</li>');
+      (q.canToggle ? S.pmxCheck({ key: 'bs-grill:' + r.id, cls: 'bs-grill', attrs: 'data-action="collab-brainstorm-toggle-grill" data-run="' + esc(r.id) + '"', checked: q.grill, label: 'Grill Me', glyph: 'grill', helper: 'Allow up to ' + q.extension + ' more questions.' + (q.asked ? ' The ' + q.asked + ' already asked still count.' : '') }) : '') + '</li>');
     rows.push('<li><b>' + costWords(r, vm).split(' · ').map(nw).join(' · ') + '</b></li>');
     var mode = MODE[r.id] || 'rich';
     var modes = vm.protocol ? '<p class="bs-modes"><span>Show as</span>' + [['rich', 'Formatted'], ['markdown', 'Plain text']].map(function (m) { return '<button type="button" class="text-button" data-action="brainstorm-view" data-run="' + esc(r.id) + '" data-mode="' + m[0] + '" aria-pressed="' + (mode === m[0]) + '">' + m[1] + '</button>'; }).join('') + '</p>' : '';
-    /* IMPACT A1-53: Technical details names the command the primary dispatches */
-    var tech = '<p class="bs-tech">Technical details: Write the plan runs cmd.brainstorm.synthesize_plan. Open Plan runs cmd.nav.open_subject. Tabs are view state, no command.</p>';
-    return '<ul class="bs-aside">' + rows.join('') + '</ul>' + modes + tech;
+    /* no Technical details (2026-10-07, Jared): the commands stay on the sheet's Advanced page only */
+    return '<ul class="bs-aside">' + rows.join('') + '</ul>' + modes;
   }
   function actionsHtml(r) {
     var run = ' data-run="' + esc(r.id) + '"', out = '';
@@ -426,8 +412,7 @@
     return S.pmxView({ key: 'bs-evi:' + id + ':' + eid, cls: 'bs-document bs-evidence', attrs: 'data-brainstorm-evidence="' + esc(eid) + '"', kind: 'brainstorm', kindWord: 'BrainStorm evidence', title: esc(e.label),
       statusHtml: 'Source used in this BrainStorm' + (prov(r) === 'recorded' ? ' · recorded example' : ''),
       actionsHtml: '<button type="button" class="text-button" data-action="brainstorm-open-results" data-run="' + esc(id) + '">Back to how they decided</button>',
-      mainHtml: '<pre class="bs-pre bs-source-text">' + esc(e.content) + '</pre>' + (e.provenance ? '<p class="bs-prov">' + esc(e.provenance) + '</p>' : '') +
-        '<p class="bs-tech">Technical details: source checksum ' + esc(input.sourceHash) + ' · source ' + esc(eid) + '</p>' });
+      mainHtml: '<pre class="bs-pre bs-source-text">' + esc(e.content) + '</pre>' + (e.provenance ? '<p class="bs-prov">' + esc(e.provenance) + '</p>' : '') });
   }
   E.slot('editorTabLabel', function (c) { var id = String(c.editorId || ''); return id.indexOf(EVI) === 0 ? 'BrainStorm evidence' : id.indexOf(DOC) === 0 ? 'BrainStorm' : ''; });
   E.slot('editorDocument', function (c) {

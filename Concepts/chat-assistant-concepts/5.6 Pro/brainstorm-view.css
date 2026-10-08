@@ -40,7 +40,6 @@
 .bs-ruled { margin: 20px 0 0; display: flex; gap: 10px; align-items: flex-start; max-width: 78ch; font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
 .bs-ruled > svg { flex: none; margin-top: 2px; color: var(--danger); }
 .bs-ruled s { color: var(--text); text-decoration-thickness: 1.5px; }
-.bs-tech { display: block; margin: 6px 0 0; font: var(--pmx-w-reg) 11px/16px var(--font-ui); color: var(--subtle); overflow-wrap: anywhere; }
 
 /* ---- disclosures: hairlines across the full width, never a side rule ---- */
 .bs-secs { margin-top: 28px; }
@@ -103,7 +102,6 @@
 .bs-q .bs-grill { margin-top: 12px; }
 .bs-modes { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; font: var(--pmx-fs-help); color: var(--muted); }
 .bs-modes [aria-pressed="true"] { color: var(--text); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 5px; text-decoration-color: var(--accent); }
-.bs-aside + .bs-modes + .bs-tech, .bs-aside + .bs-tech { margin-top: 12px; }
 
 /* evidence document and Plain text: prose-like source text wraps inside its own code fill (no sideways scroll) */
 .bs-pre { margin: 0; padding: 12px 16px; border-radius: var(--pmx-r-md, 12px); background: var(--code); color: var(--text); font: 12px/1.6 var(--font-mono); white-space: break-spaces; overflow-wrap: anywhere; max-width: 100%; box-sizing: border-box; }

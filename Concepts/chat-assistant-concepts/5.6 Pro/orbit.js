@@ -317,7 +317,7 @@
           + ' style="--angle:' + ang.toFixed(2) + 'deg;--sat-i:' + i + '"'
           + tipAttrs(esc, w.cardId, 'sat-' + a.id, a.name, statusLabel(c, a.status) + ' — opens its live transcript')
           + ' aria-label="Open ' + esc(a.name) + ' live transcript">'
-          + '<span class="orbit-sat-mark">' + esc(initials(a.name)) + '</span></button>';
+          + face(c, a, 'orbit-sat-mark', 12) + '</button>';
       }).join('');
     }
 
@@ -449,7 +449,7 @@
               + ' data-action="open-agent" data-id="' + esc(a.id) + '"'
               + tipAttrs(esc, w.cardId, 'oa-' + a.id, a.name, 'Open its live transcript')
               + '>'
-              + '<span class="orbit-agent-avatar">' + esc(initials(a.name)) + '</span>'
+              + face(c, a, 'orbit-agent-mark', 22)
               + '<span class="orbit-agent-copy"><strong>' + esc(a.name) + '</strong>'
               + '<span>' + esc(a.current || a.blocker || '—') + '</span></span>'
               + '<span class="orbit-agent-state ' + tone(a.status) + '">' + esc(statusLabel(c, a.status)) + '</span>'
@@ -605,8 +605,11 @@
     if (status === 'fallback') return 'warn';
     return 'idle';
   }
-  function initials(name) {
-    return String(name || '?').split(/\s+/).map(function (x) { return x[0] || ''; }).join('').slice(0, 2).toUpperCase();
+  /* a child agent's face is its puppet mark (app.js agentPuppet: the role from its persona, the seat from its place in
+     the roster, the state from its status), never initials (item 14, 2026-10-08). It acts once as it mounts (the pick-up
+     or the hop, module-shell.css) and never loops: Orbit's motion budget stays its own */
+  function face(c, a, cls, size) {
+    return c.agentPuppet ? c.agentPuppet(cls, a, size) : '<span class="' + cls + '"></span>';
   }
 
   /* ---- actions ------------------------------------------------------- */

@@ -56,8 +56,6 @@ export function galleryInPage() {
     { k: 'r8', role: 'builder', seat: 8, job: 'Perf pass', model: 'sonnet46', persona: 'Implementer', sub: 'Sonnet 4.6' }
   ];
   var CAP = 2;
-  /* 6.3: 1-3 helpers full, 4 compact, 5-6 strip, 7-8 caption */
-  function plateMode(n) { return n <= 3 ? 'full' : n === 4 ? 'compact' : n <= 6 ? 'strip' : 'caption'; }
   /* 6.3 yield order (review cycle 1): the plate yields all the way to a 40 px caption before the roster's rows
      scroll, so every Crew plate slot carries the caption mode (pmxPlateFit({caption}) appends it) */
   function crewCaption(n) {
@@ -65,65 +63,27 @@ export function galleryInPage() {
     return n <= CAP ? (n === 1 ? 'The Coordinator and 1 helper. You get one checked result.' : 'All ' + n + ' work at once. You get one checked result.')
       : CAP + ' work at once; the other ' + w + (w === 1 ? ' waits its turn.' : ' wait their turn.') + ' You get one checked result.';
   }
-  /* key: draw the full mode alone under that key (the specimens sheet shows every mode, whichever one the
-     sheet's fit slot picks at a given window size) */
-  function crewPlate(n, key) {
-    var mode = key ? 'full' : plateMode(n), list = HELPERS.slice(0, n), w = 576;
-    if (mode === 'caption') {
-      return S.pmxPlate({ key: 'g-plate', kind: 'crew', mode: 'caption', caption: crewCaption(n) });
-    }
-    /* 4-6 helpers: the one-row modes (compact 104 with labels at 4, strip 72), then the caption */
-    if (mode !== 'full') {
-      var rowModes = mode === 'compact' ? [crewRowPlate(n, 'compact'), crewRowPlate(n, 'strip')] : [crewRowPlate(n, 'strip')];
-      return S.pmxPlateFit ? S.pmxPlateFit({ key: 'g-plate-fit', affects: 'team', plates: rowModes, caption: crewCaption(n) }) : rowModes[0];
-    }
-    /* 1-3 helpers: the reference's full Crew plate (proto-src/41-crew.js, natural height 225 per the J-2 reference
-       update). The Coordinator sits upstage at x 234 with its words to the right; the hands lines leave from
-       under its mark (x 234) so they never run under those words; helpers stand at 288 +/- span on a floor mark
-       (bar: works at once, hatch: waits), with the foundation's label offsets (+42 over a floor mark, sub +18);
-       the note "waits its turn" sits left of the first waiting seat (reference: x - 24, anchor end); the stage
-       line at 174, then You and the permission lock. The Coordinator's own words keep the foundation's seat pitch
-       (sub 18 under the label; review cycle 2: at 14 the two lines touched in friendly's Poppins). */
-    var H = 225, LX = 234, HY = 96, EY = 174, span = n === 1 ? 0 : Math.min(150, 300 / (n - 1));
-    var xs = list.map(function (r, i) { return Math.round(288 + (i - (n - 1) / 2) * span); });
-    var svg2 = PP.paper({ key: 'p-job', x: 20, y: 8, w: 120, h: 50, label: 'The job', sub: 'Add CSV export…', part: 'job' }) +
-      PP.line({ key: 'l-job', from: { x: 140, y: 32 }, to: { x: LX - 20, y: 32 }, style: 'fixed', part: 'job' }) +
-      '<g class="pmx-p-seat" data-k="s-lead" style="--x:' + LX + 'px;--y:32px" data-pmx-part="lead">' + PP.seat({ x: 0, y: 0, role: 'lead' }).replace(/^<g class="pmx-p-seat"[^>]*>/, '').replace(/<\/g>$/, '') +
-      PP.label({ x: 22, y: -2, text: 'Coordinator', cls: 'lab' }) + PP.label({ x: 22, y: 16, text: 'This chat’s assistant', cls: 'sub' }) + '</g>';
-    list.forEach(function (r, i) {
-      var x = xs[i], waits = i >= CAP;
-      svg2 += PP.line({ key: 'l-' + r.k, d: 'M' + LX + ' 50 C ' + LX + ' ' + (HY - 12) + ', ' + x + ' ' + (HY - 30) + ', ' + x + ' ' + (HY - 18), style: 'hands', part: 'assign' });
-      svg2 += PP.seat({ key: 's-' + r.k, x: x, y: HY, role: r.role, seat: r.seat, state: waits ? 'queued' : 'working', floor: waits ? 'hatch' : 'bar', standin: r.standin, label: r.job, sub: r.sub, part: waits ? 'team parallel' : 'team' });
-      if (waits && i === CAP) svg2 += PP.label({ x: x - 24, y: HY + 4, text: 'waits its turn', anchor: 'end', part: 'parallel' });
-    });
-    svg2 += PP.line({ key: 'l-stage', from: { x: 22, y: EY }, to: { x: 554, y: EY }, style: 'fixed', part: 'permission' }) +
-      PP.line({ key: 'l-you', from: { x: 288, y: EY + 4 }, to: { x: 288, y: EY + 12 }, style: 'toyou', part: 'you' }) +
-      PP.you({ x: 288, y: EY + 26, label: 'You', sub: 'get one checked result' }) +
-      PP.glyph('lock', 24, EY + 22, 11) + PP.label({ x: 40, y: EY + 32, text: 'this chat’s permissions', part: 'permission' });
-    var natural = S.pmxPlate({ key: key || (S.pmxPlateFit ? 'g-plate:full' : 'g-plate'), kind: 'crew', mode: 'full', w: w, h: H, fitH: H, fluid: !S.pmxPlateFit, svg: svg2,
-      legend: [{ sample: 'bar', label: 'works at once', part: 'parallel' }, { sample: 'hatch', label: 'waits its turn', part: 'parallel' }] });
-    if (!S.pmxPlateFit || key) return natural;
-    /* J-2 plate yield (as the reference composes it): a pmxPlateFit slot holding the natural mode and
-       the smaller ones; the foundation marks the richest that fits (data-fit) */
-    return S.pmxPlateFit({ key: 'g-plate-fit', affects: 'team', plates: [natural, crewRowPlate(n, 'compact'), crewRowPlate(n, 'strip')], caption: crewCaption(n) });
+  /* 2026-10-07 (Jared: the agent graphs were "messy, and a little hard to follow"): the gallery draws the product's
+     cast plate (PM56_SHELL.pmxCastFit / pmxCastPlate, one grammar for every collaboration kind) instead of the old
+     reference drawing: the job paper and the Coordinator on the bar with the accent edge to You at its end, the
+     helpers hanging under it on orthogonal strings at one pitch on one baseline, always named, the ones past the cap
+     on a slack string with "waits its turn" written once under them. The fit slot carries every mode that fits its
+     width and the caption (6.3 yield order); `key` draws one mode alone under that key (the specimens sheet shows
+     every mode, whichever one the sheet's fit slot picks at a given window size). */
+  function crewCast(n, key) {
+    return { key: key || 'g-plate', kind: 'crew', fitKey: 'g-plate-fit', affects: 'team', busPart: 'assign',
+      input: { label: 'The job', sub: 'Add CSV export…', part: 'job' },
+      hub: { key: 's-lead', role: 'lead', label: 'Coordinator', sub: 'This chat’s assistant', part: 'lead' },
+      seats: HELPERS.slice(0, n).map(function (r, i) {
+        var waits = i >= CAP;
+        return { key: 's-' + r.k, role: r.role, seat: r.seat, state: waits ? 'queued' : 'working', standin: r.standin, label: r.job, sub: r.sub, part: waits ? 'team parallel' : 'team', waits: waits };
+      }),
+      you: { label: 'You', sub: 'one checked result', part: 'you' },
+      waits: { label: 'waits its turn', many: 'wait their turn', part: 'parallel' },
+      caption: crewCaption(n) };
   }
-  /* the compact (104, labelled) and strip (72) yield modes: the lead and every helper on one row, and You in a
-     slot of its own at the right end (review cycle 1: at 5 helpers "one checked result" ran over the sixth mark).
-     The row ends 8 px before the slot's widest line, measured for retro's IBM Plex Mono (6.3-6.6 px a character
-     at 10.5-11 px), the widest theme font: the strip's slot holds "You" over "one checked result" (x 421-534 in
-     retro), so the last seat stands at 380 (its floor hatch ends at 402); the compact row labels every seat, so
-     there You is a label only ("You", x 500-534) and the row spreads out to 446 */
-  function crewRowPlate(n, mode, key) {
-    var list = HELPERS.slice(0, n), compact = mode === 'compact', h = compact ? 104 : 72, y = compact ? 40 : 36;
-    var YOU_X = 552, x0 = compact ? 54 : 40, last = compact ? 446 : 380;
-    var step = Math.min(110, (last - x0) / Math.max(1, n)), svg = '';
-    svg += PP.seat({ key: 's-l', x: x0, y: y, role: 'lead', label: compact ? 'Coordinator' : '', part: 'lead' });
-    list.forEach(function (r, i) {
-      svg += PP.seat({ key: 's-' + r.k, x: Math.round(x0 + (i + 1) * step), y: y, role: r.role, seat: r.seat, state: i < CAP ? 'working' : 'queued', floor: i < CAP ? 'bar' : 'hatch', standin: r.standin, label: compact ? r.job : '', part: i < CAP ? 'team' : 'team parallel' });
-    });
-    svg += PP.you({ x: YOU_X, y: y, anchor: 'end', label: 'You', sub: compact ? '' : 'one checked result' });
-    return S.pmxPlate({ key: key || 'g-plate:' + mode, kind: 'crew', mode: mode, w: 576, h: h, fitH: h, svg: svg });
-  }
+  function crewPlate(n, key) { return key ? S.pmxCastPlate(crewCast(n, key), 'full') : S.pmxCastFit(crewCast(n)); }
+  function crewRowPlate(n, mode, key) { return S.pmxCastPlate(crewCast(n, key), mode); }
   /* R-02 / M3: the preview is the card's first frame, so it renders from the SAME data as the waiting card it
      lands on (review cycle 1: a shorter preview sentence made the clone's text jump from 2 lines to 3) */
   function waitingParts(o) {

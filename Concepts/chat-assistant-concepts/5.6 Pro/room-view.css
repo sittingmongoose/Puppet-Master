@@ -79,7 +79,7 @@ body.pm56-reduced .pmx-view.room-discussion :is(.pmx-rv-msg[data-arrive], .pmx-r
 
 .pmx-view.room-discussion .pmx-rv-empty{margin:0;font:var(--pmx-fs-sentence);color:var(--muted);}
 
-/* the aside: who is at the table, how they talk, the promise, the transcript, Technical details */
+/* the aside: who is at the table, how they talk, the promise, the transcript (no Technical details: 2026-10-07) */
 .pmx-view.room-discussion .pmx-rv-asidehead{margin:0;}
 .pmx-view.room-discussion .pmx-rv-table{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
 .pmx-view.room-discussion .pmx-rv-table li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;font:var(--pmx-fs-sentence);color:var(--muted);}
@@ -91,9 +91,6 @@ body.pm56-reduced .pmx-view.room-discussion :is(.pmx-rv-msg[data-arrive], .pmx-r
 .pmx-view.room-discussion .pmx-view-aside .pmx-rv-promise{display:flex;gap:8px;align-items:flex-start;margin:12px 0 0;font:var(--pmx-fs-sentence);color:var(--muted);}
 .pmx-view.room-discussion .pmx-rv-promise svg{flex:none;margin-top:2px;}
 .pmx-view.room-discussion .pmx-view-aside .pmx-rv-export{display:inline-flex;align-items:center;gap:8px;margin:16px 0 0 -10px;color:var(--accent);font-weight:600;}
-.pmx-view.room-discussion .pmx-view-aside .pmx-rv-tech{margin:12px 0 0;}
-.pmx-view.room-discussion .pmx-rv-tech > summary{display:flex;align-items:center;min-height:32px;cursor:pointer;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
-.pmx-view.room-discussion .pmx-rv-tech > p{margin:8px 0 0;overflow-wrap:anywhere;}
 
 /* a speaker's own messages (the frame's Team and Cost tabs are COLLAB's) */
 .pmx-view.room-discussion .pmx-rv-pjob{margin:-4px 0 16px;font:var(--pmx-fs-help);color:var(--muted);}

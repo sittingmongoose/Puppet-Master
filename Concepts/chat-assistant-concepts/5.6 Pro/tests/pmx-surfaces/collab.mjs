@@ -116,9 +116,11 @@ const CARD_SURFACES = [
   chat('collab:card-waiting', 'A Crew started from the wand with no recording: born waiting, "Watch a recorded example" (7.7, D-6)', async h => {
     await wandStart(h, 'crew', 'Export the collection to CSV without losing quotes or order.');
   }, { canon: ['Crew', 'Open Panel'] }),
-  chat('collab:card-more', 'The waiting card with its More row open: Cancel Crew…, Change setup…, Download transcript (disabled, reason printed), Technical details', async h => {
+  chat('collab:card-more', 'The waiting card with its More row open: Cancel Crew…, Change setup… (no Technical details: 2026-10-07)', async h => {
     await wandStart(h, 'crew', 'Export the collection to CSV.');
     await cardClick(h, 'collab-toggle-more');
+    const id = await h.ev(() => window.__pmxCollab.run);
+    if (await h.ev(sel => !!document.querySelector(sel + ' [data-action="collab-tech"]'), CARD(id))) throw new Error('the card’s More row still offers Technical details');
   }, { canon: ['Crew'] }),
   chat('collab:card-cancel-ask', 'Cancel confirmed in place: "Cancel this Crew? Everything so far is kept." [Cancel Crew] [Keep going]', async h => {
     await wandStart(h, 'crew', 'Export the collection to CSV.');

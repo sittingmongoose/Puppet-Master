@@ -217,78 +217,15 @@
  /* rounds a run can have: One answer each is always one round (beginRound caps it) */
  const maxRoundsOf=(policy,rounds)=>policy==='ask_everyone_once'?1:clampN(rounds||5,1,20);
 
- /* ---- the sheet's plate (8.3): a round table seen from above, the question written small on the tabletop,
-    the Moderator at its head, helpers around the rim, one rim tick per round, the turn policy as a static path
-    (never a loop), You in the house with a dotted line from the table. Natural heights: full 164, compact 104,
-    strip 40 (a 4-helper room at 1440 x 900 has 40-49 px, by theme), then COLLAB's caption. The seat hue of each row is COLLAB's (read from its generic
-    plate so the plate, the roster and the card agree; FOUNDATION/COLLAB REQUEST in ROOM-A-NOTES). */
- function seatMap(d,gen){const out={},html=String(gen&&gen.plate||'');(d.rows||[]).forEach((r,i)=>{const m=new RegExp('data-k="pmx-p-seat:room:'+String(r.rowId).replace(/[^\w-]/g,'')+'"[^>]*?--pmx-seat-(\\d)').exec(html);out[r.rowId]=m?+m[1]:i+1;});return out;}
- function tabletopWords(d){const w=String(d.purpose||'').trim().split(/\s+/).filter(Boolean);if(!w.length)return 'Not written yet';let take=w.slice(0,4),cut=w.length>4;while(take.length>1&&take.join(' ').length>16){take.pop();cut=true;}let t=take.join(' ');if(t.length>16){t=t.slice(0,15);cut=true;}return t+(cut?'…':'');}
- function fitWords(t,px){t=String(t||'');const max=Math.max(4,Math.floor(px/6.6));return t.length>max?t.slice(0,max-1).replace(/\s+$/,'')+'…':t;}
- function modelWord(id){const M=window.PM56_DATA&&window.PM56_DATA.models;const list=Array.isArray(M)?M:[];const m=list.find(x=>x&&x.id===id);return String(m?m.name:(id||'')).replace(/^Claude /,'');}
- function roomPlate(d,gen){
-  const S=SH(),P=S.pmxPlateParts,n=d.rows.length,cfg=d.config||{},pol=cfg.turnPolicy||'moderated',R=maxRoundsOf(pol,cfg.maxRounds),seats=seatMap(d,gen);
-  const persona=escH(cfg.moderatorPersona||'Product Manager');
-  const g=(part,body)=>'<g data-pmx-part="'+part+'">'+body+'</g>';
-  function ticks(cx,cy,r,from,to){/* one short radial tick per round on the rim, spread over [from,to] degrees */
-   let dd='';const k=Math.min(R,20);for(let i=0;i<k;i++){const a=(from+(k===1?(to-from)/2:i*(to-from)/(k-1)))*Math.PI/180,c=Math.cos(a),s=Math.sin(a);dd+='M'+(cx+c*(r+1)).toFixed(1)+' '+(cy+s*(r+1)).toFixed(1)+'L'+(cx+c*(r+6)).toFixed(1)+' '+(cy+s*(r+6)).toFixed(1);}
-   return P.line({key:'pmx-p-room-ticks',d:dd,style:'fixed',draw:'out',part:'rounds'});}
-  function full(){
-   const H=164,cx=288,cy=70,r=40,EY=130,out=[];
-   out.push(P.table({cx,cy,r,part:'job rounds'}));
-   out.push('<foreignObject class="pmx-room-topic-fo" x="'+(cx-28)+'" y="'+(cy-16)+'" width="56" height="32" data-pmx-part="job"><div xmlns="http://www.w3.org/1999/xhtml" class="pmx-room-topic"><span data-collab-mirror="job">'+escH(tabletopWords(d))+'</span></div></foreignObject>');
-   out.push(ticks(cx,cy,r,25,155));
-   const left=Math.ceil(n/2),pos=[];
-   for(let i=0;i<left;i++)pos.push({x:Math.round(cx-112-(left-1-i)*102),y:cy});
-   for(let j=0;j<n-left;j++)pos.push({x:Math.round(cx+112+j*102),y:cy});
-   const lit=pol==='free_discussion'?Math.min(3,n,Math.max(2,n-1)):0;
-   d.rows.forEach((row,k)=>out.push(P.seat({key:'pmx-p-seat:room:'+row.rowId,x:pos[k].x,y:pos[k].y,role:String(row.persona||'Implementer'),seat:seats[row.rowId],state:k<lit?'working':'idle',label:escH(fitWords(row.role||'Helper',90)),sub:escH(fitWords(modelWord(row.requestedModelId),90)),part:k<lit?'team policy':'team'})));
-   /* the Moderator at the head of the table, its name and Persona on one line beside the mark */
-   out.push(g('moderator',P.seat({key:'pmx-p-seat:room:mod',x:cx,y:15,role:'lead'})+P.label({x:cx+22,y:20,text:'Moderator · '+persona,cls:'lab'})));
-   if(n&&pol==='moderated'){const t=pos[Math.max(0,left-1)];
-    out.push(P.line({key:'pmx-p-room-policy',d:'M'+(cx-15)+' 18 Q '+(t.x+4)+' 18, '+t.x+' '+(t.y-20),style:'toyou',part:'policy'}));
-    out.push(P.line({key:'pmx-p-room-next',d:'M'+(t.x-6)+' '+(t.y-22)+'L'+(t.x+6)+' '+(t.y-22),style:'fixed',part:'policy'}));}
-   if(n&&pol==='round_robin'){const rr=r+13,a0=-35*Math.PI/180,a1=215*Math.PI/180,p=a=>(cx+Math.cos(a)*rr).toFixed(1)+' '+(cy+Math.sin(a)*rr).toFixed(1);
-    out.push(P.line({key:'pmx-p-room-policy',d:'M'+p(a1)+' A '+rr+' '+rr+' 0 1 0 '+p(a0),style:'hands',draw:'out',part:'policy'}));
-    const ex=cx+Math.cos(a0)*rr,ey=cy+Math.sin(a0)*rr;out.push(P.line({key:'pmx-p-room-arrow',d:'M'+(ex-7).toFixed(1)+' '+(ey-1).toFixed(1)+'L'+ex.toFixed(1)+' '+ey.toFixed(1)+'L'+(ex-2).toFixed(1)+' '+(ey+7).toFixed(1),style:'fixed',part:'policy'}));}
-   if(n&&pol==='ask_everyone_once'){let s='';pos.forEach(p=>{s+=P.glyph('check',p.x+11,p.y-27,12);});s+=P.glyph('check-circle',cx-40,8,14);out.push(g('policy',s));}
-   out.push(P.line({key:'pmx-p-edge',from:{x:22,y:EY},to:{x:554,y:EY},style:'fixed',part:'team'}));
-   out.push(P.line({key:'pmx-p-toyou',d:'M'+cx+' '+(cy+r+8)+' Q '+cx+' '+(EY+18)+', '+(cx+12)+' '+(EY+19),style:'toyou',part:'you'}));
-   out.push(P.you({x:cx+26,y:EY+19,label:'You pick what to keep'}));/* ink 10 px under the stage edge */
-   return S.pmxPlate({key:'pmx-plate-room:full',kind:'chat_room',mode:'full',w:576,h:H,fitH:H,svg:out.join('')});
-  }
-  function row(mode){
-   /* strip: 40 px, the caption's own height, so the table survives in every theme wherever a caption would fit
-      (the 4-helper default gets 40-49 px at 1440 x 900 depending on the theme's metrics). The right-hand column
-      (x > 470) is You's alone: seats are laid out left of it, so no label ever sits under You. */
-   const strip=mode==='strip',h=strip?40:104,y=strip?20:44,labels=mode==='compact',out=[];
-   const x0=58,last=strip?430:420,step=n?Math.min(104,(last-x0)/n):0;
-   const xs=d.rows.map((_,i)=>Math.round(x0+(i+1)*step));
-   /* the table, seen from the side at this height: a low band the seats sit around */
-   out.push('<ellipse class="pmx-p-table" cx="'+Math.round((x0+(xs[n-1]||x0))/2)+'" cy="'+y+'" rx="'+Math.round(((xs[n-1]||x0)-x0)/2+24)+'" ry="8" data-pmx-part="job rounds"/>');
-   const lit=pol==='free_discussion'?Math.min(3,n,Math.max(2,n-1)):0;
-   out.push(g('moderator'+(mode==='strip'?' policy':''),P.seat({key:'pmx-p-seat:room:mod',x:x0,y,role:'lead',label:labels?'Moderator':''})));
-   d.rows.forEach((row,i)=>out.push(P.seat({key:'pmx-p-seat:room:'+row.rowId,x:xs[i],y,role:String(row.persona||'Implementer'),seat:seats[row.rowId],state:i<lit?'working':'idle',label:labels?escH(fitWords(row.role||'Helper',step-14)):'',part:i<lit?'team policy':'team'})));
-   if(mode==='compact'&&n){
-    if(pol==='moderated')out.push(P.line({key:'pmx-p-room-policy',d:'M'+(x0+10)+' '+(y-16)+' Q '+Math.round((x0+xs[0])/2)+' '+(y-30)+', '+(xs[0]-10)+' '+(y-16),style:'toyou',part:'policy'}));
-    if(pol==='round_robin'){const a=xs[0],b=xs[n-1];out.push(P.line({key:'pmx-p-room-policy',d:'M'+(a-4)+' '+(y-18)+' Q '+Math.round((a+b)/2)+' '+(y-34)+', '+(b+4)+' '+(y-18),style:'hands',part:'policy'}));
-     out.push(P.line({key:'pmx-p-room-arrow',d:'M'+(b-3)+' '+(y-25)+'L'+(b+4)+' '+(y-18)+'L'+(b-5)+' '+(y-16),style:'fixed',part:'policy'}));}
-    if(pol==='ask_everyone_once'){let s='';xs.forEach(x=>{s+=P.glyph('check',x+9,y-26,11);});s+=P.glyph('check-circle',x0+9,y-27,12);out.push(g('policy',s));}
-   }
-   /* the turn policy keeps a mark in the strip too: the Moderator's accent arc to the first speaker, the ring's
-      direction as a dotted line under the seats with its arrowhead, or one small check over each seat */
-   if(strip&&n){
-    if(pol==='moderated')out.push(P.line({key:'pmx-p-room-policy',d:'M'+(x0+15)+' '+(y-6)+' Q '+Math.round((x0+xs[0])/2)+' '+(y-17)+', '+(xs[0]-15)+' '+(y-6),style:'toyou',part:'policy'}));
-    if(pol==='round_robin'){const a=xs[0],b=xs[n-1];out.push(P.line({key:'pmx-p-room-policy',d:'M'+(a-6)+' '+(y+17)+'L'+(b+6)+' '+(y+17),style:'hands',part:'policy'}));
-     out.push(P.line({key:'pmx-p-room-arrow',d:'M'+(b+1)+' '+(y+13)+'L'+(b+6)+' '+(y+17)+'L'+(b+1)+' '+(y+21),style:'fixed',part:'policy'}));}
-    if(pol==='ask_everyone_once'){let s='';xs.forEach(x=>{s+=P.glyph('check',x+10,y-19,9);});out.push(g('policy',s));}
-   }
-   out.push(strip?P.you({x:552,y,anchor:'end',label:'You'}):P.you({x:552,y,anchor:'end',label:'You',sub:'pick what to keep'}));
-   return S.pmxPlate({key:'pmx-plate-room:'+mode,kind:'chat_room',mode,w:576,h,fitH:h,svg:out.join('')});
-  }
-  const caption=plural(n,'helper')+' and the Moderator talk it through. You pick what, if anything, to keep.';
-  const plates=n<=4?[full(),row('compact'),row('strip')]:n<=6?[row('compact'),row('strip')]:[row('strip')];
-  return S.pmxPlateFit({key:'pmx-plate-fit:room',affects:'team',plates,caption:'<span data-pmx-part="team job">'+escH(caption)+'</span>'});
+ /* ---- the sheet's plate (8.3). 2026-10-07: one cast grammar for every collaboration kind, drawn by
+    PM56_SHELL.pmxCastFit from COLLAB's one Chat Room description (PM56_COLLAB.sheet.castSpec.chat_room): the topic
+    goes to the Moderator on the bar, the helpers hang under it on one baseline (no table, no rim ticks), the turn
+    policy is one note line ("Moderator guides · up to 5 rounds"), the specialists' wing is drawn when they are on,
+    and the strip names its seats beside their marks (40 tall: a 4-helper room at 1440 x 900 has 40-49 px, by
+    theme). The seat hues are COLLAB's own, so the plate, the roster and the card agree. ---- */
+ function roomPlate(d){
+  const fn=C.sheet&&C.sheet.plateParts&&C.sheet.plateParts.chat_room;
+  return typeof fn==='function'?fn(d):'';
  }
 
  /* ---- PM56_ROOM.sheetParts (KIND INTERFACE, COLLAB-NOTES): only the Chat Room's own parts; COLLAB keeps the
@@ -323,7 +260,7 @@
     shape of COLLAB's KIND INTERFACE (card part, COLLAB-NOTES): every field returned replaces COLLAB's generic one.
     Returned: density (live while a round runs, attention with an accent decision between rounds, result when
     finished), sentence, decision, track, lanes, cluster, meta {parts, recorded}, more, result, receipt, dock,
-    technical (the cmd.* line, A1-53), openAction, waitingNoun / progressNoun. COLLAB adds data-run to every action
+    openAction, waitingNoun / progressNoun. COLLAB adds data-run to every action
     (G-19). The shared faces (waiting, paused, cancelled, stopped at your limit) stay COLLAB's (A3-04). */
  const WAIT_NOUN='the Moderator hasn’t opened the first round';
  const refused=new Map();
@@ -365,11 +302,11 @@
     queued ring. Marks are keyed so the speaker marker can find them (identity keys only, 5.3). */
  function clusterOf(r,f){
   const S=SH(),done=r.status==='completed',live=r.status==='running';
-  return [S.pmxMark({key:'cm:'+r.id+':mod',role:'lead',size:18,state:done?'done':'idle'})].concat(r.participants.map(p=>
+  return [S.pmxMark({key:'cm:'+r.id+':mod',role:'moderator',size:18,state:done?'done':'idle'})].concat(r.participants.map(p=>
    markFor(r,p,18,done?'done':live&&f.speaker===p?'working':live&&f.next===p?'queued':'idle','cm:'+r.id+':'+p.id)));
  }
  function laneFor(r,p,o){const S=SH();return S.pmxLane(Object.assign({key:'pmx-lane:'+r.id+':'+p.id,action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'" data-participant="'+escH(p.id)+'"'+(o.message?' data-message="'+escH(o.message)+'"':''),mark:markFor(r,p,22,o.state||'idle'),name:escH(p.role)},o));}
- function moderatorLane(r,o){const S=SH();return S.pmxLane(Object.assign({key:'pmx-lane:'+r.id+':mod',action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'"'+(o.message?' data-message="'+escH(o.message)+'"':''),mark:S.pmxMark({role:'lead',size:22,state:'idle'}),name:'Moderator'},o));}
+ function moderatorLane(r,o){const S=SH();return S.pmxLane(Object.assign({key:'pmx-lane:'+r.id+':mod',action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'"'+(o.message?' data-message="'+escH(o.message)+'"':''),mark:S.pmxMark({role:'moderator',size:22,state:'idle'}),name:'Moderator'},o));}
  const quoteOf=m=>'<q>'+escH(firstSentence(m.body))+'</q>';
  /* the speaker's words (M4): the recorded player's own turn when it has one (PM56_ROOM_DEMOS.speaking: the text and
     pace the room document streams, so the card and the document keep step), else the recorded round's reply.
@@ -446,8 +383,7 @@
   if(!owns(r.id))return {nouns:{waiting:WAIT_NOUN,progress:''},waitingNoun:WAIT_NOUN,progressNoun:'rounds'};/* seeds and wand rooms: COLLAB's faces */
   const S=SH(),T=S.PMX_COPY,f=roomFacts(r),pol=policyOption(f.pol),done=r.status==='completed';
   const P=PMXo(),viewing=!!(P&&P.viewOpen&&P.viewOpen(r.id));
-  const out={waitingNoun:WAIT_NOUN,progressNoun:'rounds',openAction:'collab-open-panel',cluster:clusterOf(r,f),track:trackOf(r,f),recorded:f.prov==='recorded',
-   technical:'Ask Everyone and Next Round send <code>cmd.chat_room.next_round</code> · Summarize Now sends <code>cmd.chat_room.summarize</code> · End discussion asks for the new command <code>cmd.chat_room.end</code> · Promote to sends <code>cmd.chat_room.promote_to_todo</code> or <code>cmd.chat_room.promote_to_plan</code>'};
+  const out={waitingNoun:WAIT_NOUN,progressNoun:'rounds',openAction:'collab-open-panel',cluster:clusterOf(r,f),track:trackOf(r,f),recorded:f.prov==='recorded'};
   /* a send the room can't take keeps its words in the composer; a queued one (E-18) says where it stands. Either
      way the words get a line of their own on the card (queueLine), never a cut-off tail of the meta line */
   if(refused.has(r.id)&&(canSend(r.id).ok||r.status!=='running'||refused.get(r.id).at!==roomMoment(r)))refused.delete(r.id);

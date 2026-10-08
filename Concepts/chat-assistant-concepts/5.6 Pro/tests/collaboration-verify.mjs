@@ -355,20 +355,24 @@ async function main() {
   await openPanel('review-orchestrator-boundary');
   const reviewPanelChecks = await ev(() => {
     const p = document.querySelector('.collab-panel');
-    const targetTxt = p.querySelector('.collab-targetpack') ? p.querySelector('.collab-targetpack').textContent : '';
+    /* 2026-10-07 (Jared: no Technical details in the run views): the hashes ride on the elements as data-target-hash and
+       the set-aside reason as data-reason; the reader sees the plain sentence */
+    const tp = p.querySelector('.collab-targetpack');
+    const targetTxt = tp ? (tp.getAttribute('data-target-hash') || '') + ' ' + tp.textContent : '';
     const excluded = p.querySelector('.collab-finding.collab-excluded');
     const readonlyNote = p.querySelector('.collab-readonly-note') ? p.querySelector('.collab-readonly-note').textContent : '';
     const actions = Array.from(p.querySelectorAll('[data-action]')).map(el => el.getAttribute('data-action'));
-    return { targetTxt, excludedTxt: excluded ? excluded.textContent : null, readonlyNote, hasRepairAction: actions.some(a => /repair/i.test(a)) };
+    return { targetTxt, excludedTxt: excluded ? excluded.textContent : null, excludedReason: excluded ? excluded.getAttribute('data-reason') : null,
+      excludedHash: excluded ? excluded.getAttribute('data-target-hash') : null, readonlyNote, hasRepairAction: actions.some(a => /repair/i.test(a)) };
   });
   const run = await getRun('review-orchestrator-boundary');
   const pack = run.review.targetPack.targetHashes.primary;
   check('the panel names the single frozen target pack hash all initial passes shared',
     reviewPanelChecks.targetTxt.includes(pack), reviewPanelChecks.targetTxt);
   check('a finding produced against a DIFFERENT target hash is excluded from corroboration, not silently merged',
-    reviewPanelChecks.excludedTxt && reviewPanelChecks.excludedTxt.includes('different frozen pack') &&
-    run.review.excludedFindings[0].targetHash !== pack,
-    reviewPanelChecks.excludedTxt);
+    reviewPanelChecks.excludedTxt && /older version/.test(reviewPanelChecks.excludedTxt) && reviewPanelChecks.excludedReason === 'different_target_hash' &&
+    reviewPanelChecks.excludedHash === run.review.excludedFindings[0].targetHash && run.review.excludedFindings[0].targetHash !== pack,
+    JSON.stringify([reviewPanelChecks.excludedTxt, reviewPanelChecks.excludedReason, reviewPanelChecks.excludedHash]));
   const corroborated = run.review.findings.find(f => (f.originatingReviewerIds || []).length >= 2);
   check('at least one finding is corroborated by more than one reviewer under that same frozen pack',
     !!corroborated, corroborated && corroborated.id);
@@ -432,7 +436,7 @@ async function main() {
     return { hardConflict: hc ? hc.textContent : null, dissent: dis ? dis.textContent : null };
   });
   check('the disqualified alternative stays visible regardless of vote count (hard constraint section)',
-    preSynth.hardConflict && /Disqualified regardless of vote count/.test(preSynth.hardConflict), preSynth.hardConflict);
+    preSynth.hardConflict && /Votes can’t override a rule/.test(preSynth.hardConflict), preSynth.hardConflict);
   check('material dissent is preserved and rendered, not smoothed over', preSynth.dissent && preSynth.dissent.length > 0, preSynth.dissent);
 
   await clickSel('[data-action="collab-brainstorm-synthesize"][data-run="brainstorm-provider-failover"]');
