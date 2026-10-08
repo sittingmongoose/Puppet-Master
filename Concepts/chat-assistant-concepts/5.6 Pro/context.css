@@ -55,12 +55,12 @@ body[data-theme="glass-light"] {
   --ctxseg-4: #9b6710; --ctxseg-5: #ba435c; --ctxseg-6: #c45a1a;
 }
 body[data-theme="retro-dark"] {
-  --ctxseg-1: #60f39a; --ctxseg-2: #59d6ff; --ctxseg-3: #f2d35e;
-  --ctxseg-4: #ff9d5c; --ctxseg-5: #ff6b95; --ctxseg-6: #ff8a4a;
+  --ctxseg-1: #b8d066; --ctxseg-2: #9db4d0; --ctxseg-3: #d8b93c;
+  --ctxseg-4: #e9853f; --ctxseg-5: #c48fc0; --ctxseg-6: #86c46a;
 }
 body[data-theme="retro-light"] {
-  --ctxseg-1: #19734c; --ctxseg-2: #166d83; --ctxseg-3: #86600d;
-  --ctxseg-4: #a33d42; --ctxseg-5: #52489c; --ctxseg-6: #c45a1a;
+  --ctxseg-1: #0047AB; --ctxseg-2: #2F7A3D; --ctxseg-3: #A65800;
+  --ctxseg-4: #D32F2F; --ctxseg-5: #8B1E73; --ctxseg-6: #4A463F;
 }
 
 .ctxseg-1 { background: var(--ctxseg-1); }

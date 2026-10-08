@@ -75,11 +75,13 @@ body[data-theme$="-light"] {
    working ink (the theme accent) is only 3.22 at rest, so a darker idle would read above working. Friendly keeps
    3.08 at rest on every row state (integrate, lead decision 2026-10-02: the hover-only darkening put idle above
    working on a hovered row, and salience order wins; idle under 3:1 on a hovered or selected row is accepted). Glass
-   holds 3.35+ on its tint. */
+   holds 3.35+ on its tint. Retro Light (PMConcept7's paper, item 16, 2026-10-07): its rows are boxes on the paper
+   (#F5F0E8, hover #FAF7F2, selected #d9dfd0), where #7f7a71 reads 3.76 / 3.99 / 3.13:1, under its lowest live tone
+   (danger, 4.39 at rest). */
 body[data-theme="basic-light"] { --nx-idle: #86868f; }
 body[data-theme="friendly-light"] { --nx-idle: #93838e; }
 body[data-theme="glass-light"] { --nx-idle: #857d98; }
-body[data-theme="retro-light"] { --nx-idle: #6e8174; }
+body[data-theme="retro-light"] { --nx-idle: #7f7a71; }
 /* Friendly overshoots, Glass glides, Retro steps. */
 body[data-theme^="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
 body[data-theme^="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
