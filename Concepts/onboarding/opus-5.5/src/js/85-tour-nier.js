@@ -255,7 +255,9 @@
       const ch = d.step.chapter, n = TR.CHAPTERS.indexOf(ch) + 1, my = ++chapterSeq;
       st.barHold = d.prev || null;
       const sting = () => sound('quest', { chapter: 'tour-' + ch, depth: depthNow() });
-      const shown = fx.banner({ kicker: T('banner.kicker', { n }), title: O55.t('tour.chapters.' + ch), sub: T('banner.' + ch), within: root, hang: true, sound: false, ms: 1660, onLand: sting });
+      /* a card, not a band: narrowed inside the window (its strings at 22 % and 78 % of its width) */
+      const inset = innerWidth >= 1100 ? 0.18 : innerWidth >= 800 ? 0.08 : 0;
+      const shown = fx.banner({ kicker: T('banner.kicker', { n }), title: O55.t('tour.chapters.' + ch), sub: T('banner.' + ch), within: root, hang: true, inset, sound: false, ms: 1660, onLand: sting });
       const letGo = () => { if (my === chapterSeq && st.barHold === d.prev) st.barHold = null; };
       if (still()) return Promise.race([shown, M.delay(900)]).then(letGo, letGo);
       return M.delay(1400).then(() => (my === chapterSeq && TR.running ? walkBar() : null)).then(letGo, letGo);
@@ -398,6 +400,7 @@
      back (interrupt) and flies home. */
   let anticip = null, homeFly = null, trails = [];
   const trailsOff = () => { trails.forEach((t) => t.cancel()); trails = []; };
+  const anticipOff = () => { if (anticip) { anticip.cancel(); anticip = null; } };
   TR.on('showMe', (d) => {
     if (!painted()) return null;
     TR.refresh();
@@ -416,18 +419,20 @@
     podState('dock');
     const body = st.root.querySelector('.o55t-npod-body'), t = st.target && st.target.isConnected ? TR.center(st.target) : null;
     const lean = t ? (t.x < at.x - 4 ? -7 : t.x > at.x + 4 ? 7 : 0) : 0;
-    if (anticip) anticip.cancel();
+    anticipOff();
     anticip = body && body.animate([{ translate: '0px 0px', rotate: '0deg' }, { translate: '0px -2px', rotate: `${lean / 2}deg` }, { translate: '0px -4px', rotate: `${lean}deg` }],
       { duration: 160, easing: 'steps(2, end)', fill: 'forwards' });
-    return M.delay(160).then(() => { if (st.show) podState('out'); });
+    return M.delay(160);
   });
-  /* each held hop leaves a trail square where it was */
+  /* each held hop leaves a trail square where it was. A launch from the dock holds its lean until the first hop,
+     and the Pod grows to full size as it leaves (two held steps) */
   TR.on('travel', (d) => {
     if (!has('pod') || still()) return;
-    if (anticip) { anticip.cancel(); anticip = null; }
     trailsOff();
+    const n = d.points && d.points.length > 1 ? d.points.length - 1 : 1;
+    if (anticip) { const a = anticip; trails.push(M.after(d.ms / n, () => { a.cancel(); if (anticip === a) anticip = null; podState('out'); })); }
+    else podState('out');
     const fx = FX(); if (!fx || typeof fx.trail !== 'function' || !d.points || d.points.length < 2) return;
-    const n = d.points.length - 1;
     for (let k = 1; k <= n; k++) { const [x, y] = d.points[k - 1]; trails.push(M.after(d.ms * k / n, () => { if (P.el().classList.contains('o55t-on')) fx.trail(x, y); })); }
   });
 
@@ -525,7 +530,7 @@
     if (!painted()) return null;
     if (frameEnd()) sound('interrupt');
     if (!has('pod') || still()) return null;
-    stringOff(); eye(false);
+    stringOff(); anticipOff(); eye(false);
     const me = st.show, s = d.step;
     if (st.advancing && s && !s.after && !s.stay) return nextDock().then((at) => (at && st.show === me ? homeTo(at, 380) : null));
     const at = dock(); if (!at) return null;
@@ -539,14 +544,13 @@
       off = TR.on('step', () => { off(); t.cancel(); res(dock()); });
     });
   }
-  TR.on('showMeDone', () => { trailsOff(); if (painted() && TR.running) TR.refresh(); });
+  TR.on('showMeDone', () => { trailsOff(); anticipOff(); if (painted() && TR.running) TR.refresh(); });
   /* a key or a press took control back: the frame hands back (the core sounded it), the string lets go, and the Pod
      flies home from where it was with its dock empty until it lands (a Show Me pressed meanwhile takes it over) */
   TR.on('interrupt', (d) => {
     if (!painted() || !TR.running) return;
     back = M.now(); TR.refresh(); M.after(6100, () => { if (back && TR.running) { back = 0; TR.refresh(); } });
-    frameEnd(); stringOff(); trailsOff(); eye(false);
-    if (anticip) { anticip.cancel(); anticip = null; }
+    frameEnd(); stringOff(); trailsOff(); anticipOff(); eye(false);
     if (!has('pod') || still() || st.rewinding || st.ending || st.paused || !d || !d.at) return;
     const at = dock(); if (!at) return;
     const fly = homeFly = { cancelled: false };
@@ -746,9 +750,9 @@
       + `<dl class="o55t-res-rows">${f.rows.map(([k, v], i) => `<div class="o55t-res-row" data-i="${i}"><dt>${U.esc(T('results.' + k))}</dt><i class="o55t-res-lead" aria-hidden="true"></i><dd>${U.esc(v)}</dd></div>`).join('')}</dl></div>`;
     if (!quick) card.setAttribute('data-wait', '');
     document.body.appendChild(card);
-    /* where the callout stood (kept inside the window) */
+    /* where the callout stood, about its middle, where the line it folded to waits (kept inside the window) */
     const w = card.offsetWidth, h = card.offsetHeight, at = f.at;
-    const left = at && at.width ? at.left + (at.width - w) / 2 : (innerWidth - w) / 2, top = at && at.width ? at.top : (innerHeight - h) / 2 - 40;
+    const left = at && at.width ? at.left + (at.width - w) / 2 : (innerWidth - w) / 2, top = at && at.width ? at.top + (at.height - h) / 2 : (innerHeight - h) / 2 - 40;
     card.style.left = Math.round(Math.max(12, Math.min(innerWidth - w - 12, left))) + 'px';
     card.style.top = Math.round(Math.max(56, Math.min(innerHeight - h - 16, top))) + 'px';
     const line = f.line; f.line = null;
@@ -834,7 +838,7 @@
     if (d.status === 'restore-pending') { finaleOff(); const fx = FX(), c = calloutEl(); if (fx && c && fx.unfold) fx.unfold(c); }
     if (st.root) st.root.classList.remove('o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout', 'o55t-nhand', 'o55t-nhandbar', ...(d.status === 'restore-pending' ? ['o55t-nend', 'o55t-nfin'] : []));
     st.barHold = null; hand = null; homeFly = null;
-    spoken = null; back = 0; focusOff(); cursorOff(); frameOff(); stringOff(); trailsOff();
+    spoken = null; back = 0; focusOff(); cursorOff(); frameOff(); stringOff(); trailsOff(); anticipOff();
     const fx = FX(); if (fx && cued) { fx.brackets(cued, false); cued = null; }
   });
   TR.on('closed', () => { if (st.root) st.root.classList.remove('o55t-nend', 'o55t-nfin'); });
