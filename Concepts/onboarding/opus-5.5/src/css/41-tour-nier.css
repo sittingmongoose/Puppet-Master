@@ -116,7 +116,10 @@ html[data-o55-nier-parts~="ticks"] #pm-o55-tour .o55t-ntk { display: block; }
 #pm-o55-tour .o55t-nscan { position: absolute; left: 8px; right: 8px; top: 8px; height: 2px; display: block; opacity: 0; will-change: transform, opacity;
   background: linear-gradient(to right, var(--o55-nier-ink) 0 6px, rgba(var(--o55-nier-ink-rgb), .55) 6px calc(100% - 6px), var(--o55-nier-ink) calc(100% - 6px)); }
 #pm-o55-tour[data-paused] .o55t-nbk, #pm-o55-tour[data-hidden] .o55t-nbk { animation-play-state: paused; }
-/* the left dock's drop band: an ink hatch and an ink label band */
+/* the left dock's drop band: an ink hatch and an ink label band; its breathing and the label's nudge step, and stop
+   with the Motion parts (Still, Colors only) */
+html[data-o55-nier="on"] #pm-o55-tour :is(.o55t-zone.o55t-on, .o55t-zonelabel svg) { animation-timing-function: steps(2, end); }
+html[data-o55-nier="on"]:not([data-o55-nier-parts~="sweep"]) #pm-o55-tour :is(.o55t-zone, .o55t-zonelabel svg) { animation: none; }
 html[data-o55-nier="on"] #pm-o55-tour .o55t-zonelabel { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border: 0; border-radius: 0; font: 500 10.5px/1 var(--mono-font); letter-spacing: .22em; box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .25); }
 
 /* ---- Show Me: Pod 042 [pod] hovering up and to the right of the point it presses; a lock of four corners there;

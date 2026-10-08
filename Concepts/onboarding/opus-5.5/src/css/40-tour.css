@@ -75,6 +75,8 @@ body.pm-home-dragging .o55t-zonelabel { transform: translateY(-50%) scale(1.06);
 .o55t-root[data-family="retro"] .o55t-zonelabel { border-radius: 0; font-family: var(--display-font); text-transform: uppercase; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); transition-timing-function: steps(3, end); }
 .o55t-root[data-family="retro"] .o55t-zonelabel svg { animation: o55t-blink 0.8s steps(1) infinite; }
 .o55t-root[data-family="retro"] .o55t-zl-idle::before { content: '> '; }
+/* the label's nudge runs only while the zone shows (hidden, it kept a loop running for the whole tour) */
+.o55t-zone:not(.o55t-on) .o55t-zonelabel svg { animation: none; }
 @keyframes o55t-blink { 50% { opacity: 0.35; } }
 
 /* while the tour runs, its callout is the only guide on screen: the app's hover tags would stack a second tooltip on
