@@ -1492,6 +1492,15 @@
   }
   /* several asked for in one moment: the most important plays. The moment is when each was asked for (a long render
      between the ask and the flush must not let a lesser sound stack on top) */
+  /* the same foley event again inside the merge window is a repeat — except when its helper's voice differs: the wake
+     chord's three strings, the landings and the bows are chord tones (each helper its own voice, its own RATE), and on
+     a busy frame two of their rises land in real time within MERGE_MS, where the merge used to drop the chord's note
+     (final review minor 2: H2 lost string v2 on about half the 1x runs). b is the one already accepted (win or recent),
+     a the candidate; its entry carries the voice it played with. */
+  function chordTone(a, b) {
+    return !!(a && b && a.event === b.event && FOLEY.has(a.event) && a.opts.voice != null && b.entry
+      && b.entry.voice != null && (a.opts.voice | 0) !== b.entry.voice);
+  }
   function flush() {
     flushing = false;
     const batch = queue; queue = [];
@@ -1503,7 +1512,7 @@
       const of = Object.keys(LAYER_AFTER).find((e) => playedAt[e] != null && m - playedAt[e] < LAYER_AFTER[e]);
       if (of) { win.layer = true; win.entry.layerOf = of; }
     }
-    if (recent && now - recent.t < MERGE_MS) {
+    if (recent && now - recent.t < MERGE_MS && !chordTone(win, recent)) {
       if (win.prio <= recent.prio) {
         if (layers(recent.event, win.event)) win.layer = true;
         else { batch.forEach((it) => drop(it, 'merged', recent.event)); return; }
@@ -1519,7 +1528,9 @@
     if (h && !win.layer) recent = { t: now, prio: win.prio, event: win.event, handle: h, entry: win.entry };
     for (let i = 1; i < batch.length; i++) {
       const it = batch[i];
-      if (!win.layer && layers(win.event, it.event)) { it.layer = true; voice(it); } else drop(it, 'merged', win.event);
+      if (!win.layer && layers(win.event, it.event)) { it.layer = true; voice(it); }
+      else if (chordTone(it, win)) voice(it);
+      else drop(it, 'merged', win.event);
     }
   }
 
