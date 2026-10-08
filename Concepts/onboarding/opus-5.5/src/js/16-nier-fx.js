@@ -63,6 +63,10 @@
      podSvg(cls, { part?, fill?, ink? }) -> string   the one Pod 042 drawing (part 'body' or 'shadow'); its fill and ink
                            paths carry `${cls}-fill` / `${cls}-ink` (or the classes given)
      snap(host?)           running words, logs, slices and lines jump to their end state (a key or press)
+     measure(fn)           run fn in the read phase: after the frame's style and layout, before its paint (the frame
+                           of a call made in an animation frame, else the next one); reads there cost no style or
+                           layout pass of their own. A function fn returns runs after every read of that phase (its
+                           writes). Never call it from inside a ResizeObserver callback of your own.
      clear(host?)          stop every effect (in host, or everywhere) and send every follower and Pod away now
      version
 
@@ -71,8 +75,8 @@
    one, a string picks another event); type plays 'type' ticks (every 120 ms) and a short decode 'decode' only when
    asked (opts.sound: true). The other effects are silent: their callers own the sound.
    Pod 042 is one character: while pod.say speaks, the app's corner Pod (#o55np-pod) and the window's resting Pod
-   (.o55nw-pod) step away, marked on themselves (#o55np-pod[data-o55fx-away], #pm-o55-onboarding[data-o55fx-pod]),
-   never on <html>, so a Pod line restyles only those, and this one flies out from that place and back.
+   (.o55nw-pod) step away, each marked on itself (data-o55fx-away), never on <html> or a surface's root, so a Pod
+   line restyles only those two, and this one flies out from that place and back.
 
    Where banners, bands and Pods are drawn, and the hand-over. opts.layer: 'page' (or within: document.body) draws in
    the page layer, above the window and the tour; within: el draws in el's surface across el's box; with neither, the
@@ -93,24 +97,30 @@
      write the words: that is their end state.
    - Reduced Motion gives the end state at once: the words, the brackets, the ink bar and the Pod's words without
      motion; slice, wipe, fold, glitch, alert, band, bootlog and trail draw nothing; a banner stands still for its time
-     (a hung card stands in place and onLand runs at once). A low-resource computer (O55.motion.lowResource) gets the
-     same end states for the main-thread effects (slice's clip, the scan line, the shards) and a Pod that does not
-     hover; the wipe and the fold are compositor transforms and play in both directions.
+     (a hung card stands in place and onLand runs on its first frame). A low-resource computer
+     (O55.motion.lowResource) gets the same end states for the main-thread effects (slice's clip, the scan line, the
+     shards) and a Pod that does not hover; the wipe and the fold are compositor transforms and play in both
+     directions.
    - No flashes (rule 3): nothing larger than 340x256 reverses its opacity more than once a second. Large surfaces
      leave one way (a fold to a line, slats, a 2-step fade); only small things blink (carets, stamps, ticks, the Pod).
      Multi-step flickers put their step easing on each keyframe, never on the whole iteration.
    - No layout moves: overlays are absolutely placed and never take a click; the element itself is only clipped
      (clip-path), scaled or nudged by the separate `scale` / `translate` properties, or painted (the cursor's ink bar).
      Its own `transform` is never touched, so callers may position with it (the tour callout does).
-   - Reads come before writes: geometry is read in one batch (a follower's in an animation frame, so it costs no extra
-     style pass), and the Pod measures itself once. The NieR choreography marks itself as an expected heavy moment
-     (O55.motion.quiet), so it never switches the window to low-resource mode.
+   - Reads come before writes, and the costly ones wait for a frame that has already computed its layout: banners,
+     bands, Pod lines and followers read their geometry in the read phase (measure(): a ResizeObserver callback, after
+     the frame's style and layout and before its paint), every read of a phase before any of its writes, so no effect
+     pays for a style or layout pass of its own. A banner, band or Pod line is made at the call, held unseen, and
+     placed, shown and started in that phase (its sound with it); the Pod measures itself once, inside its own
+     layer. The quick one-shots (slice, wipe, fold, glitch) read their element's rect at the call, before they write.
+     The NieR choreography marks itself as an expected heavy moment (O55.motion.quiet), so it never switches the
+     window to low-resource mode.
    - Motion is transform and opacity, stepped (steps()), as Web Animations; the only loops (Pod hover, cursor nudge,
      carets, a held line) are on transform/opacity and stop under Reduced Motion. Timers run on the motion clock
      (O55.motion.after: slowed for filming, held at time-scale 0). Ink and parchment only: every colour is a NieR token.
    - It cleans up after itself: nodes go when their motion ends; followers (brackets, cursor, Pod) leave when their
-     element leaves, its screen goes, its surface closes, NieR Mode goes off or their part is removed; the shared poll
-     and listeners exist only while something follows. */
+     element leaves, its screen goes, its surface closes, NieR Mode goes off or their part is removed; their observers
+     (one ResizeObserver, a move watch each), listeners and light timer exist only while something follows. */
 (function () {
   'use strict';
   const O55 = window.O55, U = O55.util, M = O55.motion;
@@ -236,8 +246,13 @@
     L.appendChild(node);
     prune(from);
   }
+  /* host's effects layer, if it has one (a read: nothing is made) */
+  function layerIn(host) {
+    if (host) for (const c of host.children) if (c.classList.contains('o55fx-layer')) return c;
+    return null;
+  }
   function layerOf(host) {
-    for (const c of host.children) if (c.classList.contains('o55fx-layer')) return c;
+    const had = layerIn(host); if (had) return had;
     const L = document.createElement('div');
     L.className = 'o55fx-layer' + (host === document.body ? ' o55fx-page' : '');
     L.setAttribute('aria-hidden', 'true');
@@ -272,77 +287,218 @@
     return c;
   }
 
+  /* ------------------------------------------------------------------ the read phase */
+  /* Geometry is read where the frame has just computed it: in a ResizeObserver callback, which the browser runs after
+     the frame's own style and layout and before its paint. measure(fn) queues fn there (a hidden 1 px probe under
+     <html> is observed again, so the next frame's observer step calls back): a read there costs no style pass of its
+     own, whatever another script left dirty is never paid inside an effect, and what fn writes is drawn in that same
+     frame. Called during an animation-frame callback (the window's skin places its Pod and draws a screen there) fn
+     runs later in that frame; from a timer or an event, in the next one. A phase runs every queued read first; a read
+     that returns a function has that function (its writes) run after all of them. Nothing is re-observed inside an
+     observer callback (a queue made there is armed in the next animation frame), so the browser's resize loop never
+     skips a notification. Slint has no layout pass to wait for: these are plain property reads there. */
+  const reads = [];
+  let probe = null, probeObs = null, probeArmed = false, probeT = null, inRead = false;
+  const report = (e) => { try { (window.reportError || console.error)(e); } catch (_) { /* nowhere to report */ } };
+  /* the scroll boxes' rects and the layers' sizes, read once per phase (the followers of one pane share one; what a
+     phase writes is inside the effects layers, which contain their own layout, so neither changes meanwhile) */
+  const portRects = new Map(), layerSizes = new Map();
+  function portRect(p) { let r = portRects.get(p); if (!r) { r = p.getBoundingClientRect(); if (inRead) portRects.set(p, r); } return r; }
+  function layerSize(L) {
+    let s = layerSizes.get(L);
+    if (!s) { s = { w: L.clientWidth || z1(innerWidth), h: L.clientHeight || z1(innerHeight) }; if (inRead) layerSizes.set(L, s); }
+    return s;
+  }
+  function phase(list) {
+    const was = inRead, writes = [];
+    inRead = true;
+    try {
+      for (const fn of list) { try { const w = fn(); if (typeof w === 'function') writes.push(w); } catch (e) { report(e); } }
+      for (const w of writes) { try { w(); } catch (e) { report(e); } }
+    } finally {
+      inRead = was;
+      if (!was) { portRects.clear(); layerSizes.clear(); }
+    }
+  }
+  function flush() {
+    if (!probeArmed) return;
+    probeArmed = false;
+    probeObs.unobserve(probe);
+    if (probeT != null) { M.real.clearTimeout(probeT); probeT = null; }
+    phase(reads.splice(0));
+    if (reads.length) raf(arm); else probe.remove();
+  }
+  function arm() {
+    if (probeArmed || !reads.length) return;
+    probeArmed = true;
+    if (!probe) {
+      probe = document.createElement('i');
+      probe.setAttribute('aria-hidden', 'true');
+      probe.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;visibility:hidden;pointer-events:none;contain:strict';
+      probeObs = new ResizeObserver(flush);
+    }
+    if (!probe.isConnected) html.appendChild(probe);
+    probeObs.observe(probe);
+    /* a frame that never comes (a hidden page): read anyway */
+    probeT = M.real.setTimeout(() => { probeT = null; flush(); }, 500);
+  }
+  const RO = typeof ResizeObserver === 'function';
+  function measure(fn) {
+    reads.push(fn);
+    if (!RO) { if (reads.length === 1) raf(() => phase(reads.splice(0))); return; }
+    if (inRead) raf(arm); else arm();
+  }
+  FX.measure = (fn) => { if (typeof fn === 'function') measure(fn); };
+
   /* running one-shot effects, so clear() can stop them and snap() can finish them */
   const running = new Set();
   function run(host, stop, snap) { const e = { host, stop, snap }; running.add(e); return e; }
   const finish = (e) => running.delete(e);
 
   /* ------------------------------------------------------------------ followers: brackets, cursor, Pod */
-  /* A follower keeps an overlay on its element: placed from the element's rect in an animation frame (so the read
-     costs no extra style pass: the frame computes style once anyway), again on the shared poll (every 250 ms on the
-     motion clock, writing only when the rect moved), on resize, and 140 ms after a scroll (it steps aside while the
-     page scrolls). It hides while its element is outside its scroll box or hidden, and leaves for good when the
-     element or its screen goes or the surface closes. */
+  /* A follower keeps an overlay on its element. It is placed in the read phase, and placed again only when something
+     says its element may have moved: a ResizeObserver on the element (its size; also its first frame), a move watch
+     (an IntersectionObserver whose root is shrunk to the element's own rect, so any move changes what it sees), a
+     resize of the window, and 140 ms after a scroll (it steps aside while the page scrolls). A light timer (every
+     400 ms on the motion clock) reads no geometry: it lets a follower go when its element or its screen goes or its
+     surface closes, and asks a hidden one to look again. It hides while its element is outside its scroll box or
+     hidden. The observers, listeners and timer exist only while something follows. */
   const followers = new Set();
-  let pollT = null, pollRaf = false, scrollT = null, wired = false;
+  const watched = new Map(); /* element -> the followers on it (one ResizeObserver entry each) */
+  let sizeObs = null, liveT = null, scrollT = null, wired = false;
+  const IO = typeof IntersectionObserver === 'function';
+  /* the nearest scroll box above el (kept per parent element while the look stays the same: the climb reads styles) */
+  const ports = new WeakMap();
   function scrollBox(el, host) {
-    for (let p = el.parentElement; p && p !== host && p !== document.body; p = p.parentElement) {
+    const par = el.parentElement; if (!par) return null;
+    const key = lookKey(), hit = ports.get(par);
+    if (hit && hit.key === key && (!hit.p || hit.p.isConnected)) return hit.p;
+    let port = null;
+    for (let p = par; p && p !== host && p !== document.body; p = p.parentElement) {
       const cs = getComputedStyle(p);
-      if (/(auto|scroll|hidden|clip)/.test(cs.overflowX + ' ' + cs.overflowY)) return p;
+      if (/(auto|scroll|hidden|clip)/.test(cs.overflowX + ' ' + cs.overflowY)) { port = p; break; }
     }
-    return null;
+    ports.set(par, { key, p: port });
+    return port;
   }
-  /* o.now: place at once (the Pod, which speaks this frame); else in the next animation frame, hidden until then */
+  function onSize(entries) {
+    const list = [];
+    entries.forEach((e) => { const s = watched.get(e.target); if (s) s.forEach((f) => { if (list.indexOf(f.read) < 0) list.push(f.read); }); });
+    if (list.length) phase(list);
+  }
+  /* the move watch: the root is the viewport shrunk to the element's rect r (whole pixels, never smaller), so the
+     element fills it (ratio 1, or the ratio its scroll box leaves showing); a move changes the ratio and the follower
+     is queued. Built again from each new rect. The rect the observer reports is used, never read again. */
+  function moveWatch(f, r) {
+    if (!IO) return;
+    const key = r ? `${Math.floor(r.left)},${Math.floor(r.top)},${Math.ceil(r.right)},${Math.ceil(r.bottom)}` : '';
+    if (f.ioKey === key && f.io) return;
+    if (f.io) { f.io.disconnect(); f.io = null; }
+    f.ioKey = key;
+    if (!r) return;
+    const vw = html.clientWidth || innerWidth, vh = html.clientHeight || innerHeight;
+    const build = (rect, thr) => {
+      const t = Math.floor(rect.top), l = Math.floor(rect.left), b = Math.floor(vh - rect.bottom), rt = Math.floor(vw - rect.right);
+      let first = true;
+      const io = new IntersectionObserver((es) => {
+        const e = es[es.length - 1], ratio = e.intersectionRatio;
+        if (first) {
+          first = false;
+          if (Math.abs(ratio - thr) < 1e-3) return;
+          /* its scroll box clips it: watch that ratio instead (or any sliver of it, once it is out of sight) */
+          io.disconnect(); if (f.io === io) f.io = build(e.boundingClientRect, ratio > 0 ? ratio : 1e-7);
+          return;
+        }
+        if (!scrollT) f.queue();
+      }, { rootMargin: `${-t}px ${-rt}px ${-b}px ${-l}px`, threshold: thr });
+      io.observe(f.el);
+      return io;
+    };
+    f.io = build(r, 1);
+  }
+  /* o.now: place at once (the Pod, placed in the read phase that shows it); else in the read phase, hidden until then */
   function follow(el, node, host, put, leave, o) {
-    const f = { el, node, host, port: undefined, last: '', gone: null, force: false };
+    const f = { el, node, host, port: undefined, last: '', gone: null, force: false, io: null, ioKey: '' };
     const gone = (g) => { if (f.gone === g) return; f.gone = g; node.toggleAttribute('data-gone', g); };
-    f.place = () => {
-      if (!el.isConnected || !node.isConnected || closing(host) || el.closest('.o55-out, [hidden]')) { f.off(); return; }
+    /* a read: what it found, then (returned) what it writes */
+    f.read = () => {
+      if (!followers.has(f)) return null;
+      if (!el.isConnected || !node.isConnected || closing(host) || el.closest('.o55-out, [hidden]')) return f.off;
       /* inside a folded surface (the window folding to its line) it stays aside until the surface opens again */
-      for (const fe of folds.keys()) if (fe.contains(el)) { gone(true); return; }
+      for (const fe of folds.keys()) if (fe.contains(el)) return f.hide;
       if (f.port === undefined) f.port = scrollBox(el, host);
       const r = rectOf(el);
-      const p = f.port && f.port.isConnected ? f.port.getBoundingClientRect() : null;
+      const p = f.port && f.port.isConnected ? portRect(f.port) : null;
+      moveWatch(f, r);
       const inside = r && (!p || (r.top >= p.top - 2 && r.bottom <= p.bottom + 2 && r.left >= p.left - 2 && r.right <= p.right + 2));
-      if (!inside) { gone(true); return; }
+      if (!inside) return f.hide;
       const key = `${Math.round(r.left)},${Math.round(r.top)},${Math.round(r.width)},${Math.round(r.height)}`;
       /* back from hidden (or new): the overlay arrives again (brackets lock on again) */
       const again = f.gone !== false;
-      if (key !== f.last || f.force || again) { f.last = key; f.force = false; put(r, again); }
-      gone(false);
+      if (key === f.last && !f.force && !again) return null;
+      const w = put(r, again);
+      return () => { if (!followers.has(f)) return; f.last = key; f.force = false; if (typeof w === 'function') w(); gone(false); };
     };
+    f.place = () => { const w = f.read(); if (typeof w === 'function') w(); };
+    f.queue = () => { if (!f.queued) { f.queued = true; measure(() => { f.queued = false; return f.read(); }); } };
     f.hide = () => gone(true);
-    f.off = () => { if (!followers.has(f)) return; followers.delete(f); unwire(); try { leave(); } catch (_) {} };
-    followers.add(f); wire();
+    f.off = () => { if (!followers.has(f)) return; unfollow(f); try { leave(); } catch (_) {} };
+    followers.add(f);
+    let s = watched.get(el);
+    if (!s) { s = new Set(); watched.set(el, s); }
+    s.add(f);
+    wire();
+    /* the element's first size report places it (an element with no size yet waits for one, or the timer) */
+    if (sizeObs) sizeObs.observe(el, { box: 'border-box' });
     if (o && o.now) f.place();
-    else { gone(true); f.gone = null; raf(() => { if (followers.has(f)) f.place(); }); }
+    else { gone(true); f.gone = null; if (!sizeObs) f.queue(); }
     return f;
   }
-  function poll() {
-    pollT = null;
+  function unfollow(f) {
+    if (!f || !followers.delete(f)) return;
+    if (f.io) { f.io.disconnect(); f.io = null; }
+    const s = watched.get(f.el);
+    if (s) { s.delete(f); if (!s.size) { watched.delete(f.el); if (sizeObs) sizeObs.unobserve(f.el); } }
+    unwire();
+  }
+  /* reads no geometry: who has gone, and a look again for those that hide */
+  function live() {
+    liveT = null;
     if (!followers.size) return;
-    if (!pollRaf) {
-      pollRaf = true;
-      raf(() => { pollRaf = false; if (!document.hidden) followers.forEach((f) => f.place()); if (followers.size && !pollT) pollT = M.after(250, poll); });
+    if (!document.hidden) {
+      Array.from(followers).forEach((f) => {
+        if (!f.el.isConnected || !f.node.isConnected || closing(f.host) || f.el.closest('.o55-out, [hidden]')) { f.off(); return; }
+        if (f.gone !== false || !IO) f.queue();
+      });
     }
+    if (followers.size) liveT = M.after(400, live);
   }
   function onScroll() {
     followers.forEach((f) => f.hide());
     if (scrollT) scrollT.cancel();
-    scrollT = M.after(140, () => { scrollT = null; raf(() => followers.forEach((f) => f.place())); });
+    scrollT = M.after(140, () => { scrollT = null; followers.forEach((f) => f.queue()); });
   }
-  function onResize() { followers.forEach((f) => f.place()); }
+  function onResize() { followers.forEach((f) => { f.force = true; f.queue(); }); }
   function wire() {
-    if (!wired) { wired = true; window.addEventListener('scroll', onScroll, { capture: true, passive: true }); window.addEventListener('resize', onResize, { passive: true }); }
-    if (!pollT) pollT = M.after(250, poll);
+    if (!wired) {
+      wired = true;
+      window.addEventListener('scroll', onScroll, { capture: true, passive: true }); window.addEventListener('resize', onResize, { passive: true });
+      if (RO) sizeObs = new ResizeObserver(onSize);
+    }
+    if (!liveT) liveT = M.after(400, live);
   }
   function unwire() {
     if (followers.size) return;
-    if (wired) { wired = false; window.removeEventListener('scroll', onScroll, { capture: true }); window.removeEventListener('resize', onResize); }
-    if (pollT) { pollT.cancel(); pollT = null; }
+    if (wired) {
+      wired = false;
+      window.removeEventListener('scroll', onScroll, { capture: true }); window.removeEventListener('resize', onResize);
+      if (sizeObs) { sizeObs.disconnect(); sizeObs = null; }
+      watched.clear();
+    }
+    if (liveT) { liveT.cancel(); liveT = null; }
     if (scrollT) { scrollT.cancel(); scrollT = null; }
   }
-  const z1 = (v) => Math.round(v / zoom());
+  function z1(v) { return Math.round(v / zoom()); }
 
   /* ================================================================== words: type and decode */
   /* the first text node with words, skipping icons (svg, aria-hidden, .o55-ico) */
@@ -370,18 +526,21 @@
   const NAME_ROLE = /^(heading|button|link|option|menuitem|menuitemcheckbox|menuitemradio|tab|radio|checkbox|switch|treeitem|cell|gridcell|columnheader|rowheader|tooltip)$/;
   const NAME_TAG = /^(H[1-6]|BUTTON|SUMMARY)$/;
   const named = new WeakMap(); /* carrier -> { n, value } */
-  function referenced(e) {
+  /* is e named or described by an element of its own surface (the window's dialog by its heading; the root itself
+     counts, so a dialog that is the root is found; outside a surface, the page) */
+  function referenced(e, scope) {
     if (!e.id) return false;
-    const id = e.id.replace(/["\\]/g, '\\$&');
-    try { return !!document.querySelector(`[aria-labelledby~="${id}"], [aria-describedby~="${id}"]`); } catch (_) { return false; }
+    const id = e.id.replace(/["\\]/g, '\\$&'), sel = `[aria-labelledby~="${id}"], [aria-describedby~="${id}"]`;
+    try { return !!((scope.matches && scope.matches(sel)) || scope.querySelector(sel)); } catch (_) { return false; }
   }
   function carrierOf(node) {
     const p = node.parentElement;
     if (!p || p.closest('[aria-hidden="true"]')) return null;
+    const scope = p.closest(ROOTS) || document.body;
     for (let e = p; e && e !== document.body && e !== html && !e.matches(ROOTS); e = e.parentElement) {
       const role = (e.getAttribute('role') || '').trim().split(/\s+/)[0];
       if (role ? NAME_ROLE.test(role) : (NAME_TAG.test(e.tagName) || (e.tagName === 'A' && e.hasAttribute('href')))) return e;
-      if (referenced(e)) return e;
+      if (referenced(e, scope)) return e;
       if (role && role !== 'none' && role !== 'presentation' && role !== 'generic') return null;
     }
     return null;
@@ -586,7 +745,7 @@
     folds.delete(el);
     if (f.off) f.off();
     try { f.a.cancel(); } catch (_) {}
-    raf(() => followers.forEach((x) => { if (el.contains(x.el)) x.place(); }));
+    followers.forEach((x) => { if (el.contains(x.el)) { x.force = true; x.queue(); } });
   }
   FX.unfold = unfoldNow;
   /* el stays folded (a filled scale animation) until it opens again; its surface being hidden also restores it (the
@@ -602,14 +761,13 @@
     o = o || {};
     if (!el || typeof el.animate !== 'function' || !has('slice') || still() || document.hidden) return Promise.resolve(null);
     const r = rectOf(el); if (!r) return Promise.resolve(null);
-    unfoldNow(el);
     const ms = clamp(Number(o.ms) || 260, 80, 1200);
     quiet(ms + 600);
-    const line = newLine({ left: r.left, top: r.top + r.height / 2 - 1, width: r.width });
     /* the surface squashes to its centre line in 4 held steps; on the last one it is gone and the line is there. The
        separate scale property applies outside el's own transform, so for an element placed by a translation (the
        tour callout) the squash is centred on where it stands (its origin, inside the animation only, is moved by that
-       translation); any other transform closes with a clip to the same centre line instead */
+       translation); any other transform closes with a clip to the same centre line instead (read before the line
+       is written) */
     let kf = null;
     try {
       const t = getComputedStyle(el).transform, m = new DOMMatrixReadOnly(t && t !== 'none' ? t : undefined);
@@ -619,6 +777,8 @@
       }
     } catch (_) { /* no matrix: the clip below */ }
     if (!kf) kf = [{ clipPath: 'inset(0 -40px 0 -40px)' }, { clipPath: 'inset(50% -40px 50% -40px)' }];
+    unfoldNow(el);
+    const line = newLine({ left: r.left, top: r.top + r.height / 2 - 1, width: r.width });
     const a = el.animate(kf, { duration: ms, easing: 'steps(4, end)', fill: 'forwards' });
     const show = line.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms, easing: 'step-end', fill: 'both' });
     const rec = { a, off: null };
@@ -746,10 +906,11 @@
     o = o || {};
     if (!el || !has('wipe') || still() || document.hidden) return no();
     const r = rectOf(el); if (!r) return no();
+    const ground = groundOf(el); /* read before anything is written */
     const ms = clamp(Number(o.ms) || 380, 160, 1200), host = hostOf(el), L = layerOf(host);
     const b = box(L, r, 'o55fx-wipe', '<i><b></b></i>');
     if (o.dir === 'back') b.setAttribute('data-dir', 'back');
-    const ground = groundOf(el); if (ground) b.style.setProperty('--o55fx-ground', ground);
+    if (ground) b.style.setProperty('--o55fx-ground', ground);
     const a = b.firstElementChild.animate([
       { transform: 'translateX(0)', offset: 0 },
       { transform: 'translateX(0)', offset: 0.16, easing: 'steps(8, end)' },
@@ -800,7 +961,7 @@
   function hurt(el, kind) {
     if (!el || !has('glitch') || still() || document.hidden) return no();
     const r = rectOf(el); if (!r) return no();
-    const host = hostOf(el), L = layerOf(host), ground = groundOf(el);
+    const ground = groundOf(el), host = hostOf(el), L = layerOf(host);
     const anims = [];
     if (typeof el.animate === 'function') {
       anims.push(el.animate([{ translate: '0px 0px' }, { translate: '4px 0px' }, { translate: '-3px 0px' }, { translate: '2px 0px' }, { translate: '0px 0px' }],
@@ -824,28 +985,31 @@
     if (!el) return null;
     const cur = locks.get(el);
     if (on === false || !has('brackets')) { if (cur) cur.release(); return null; }
-    if (cur) { cur.f.force = true; raf(() => cur.f.place()); return cur.node; }
+    if (cur) { cur.f.force = true; cur.f.queue(); return cur.node; }
     const host = hostOf(el), L = layerOf(host);
     const node = document.createElement('div');
     node.className = 'o55fx-brk'; node.innerHTML = '<i></i><i></i><i></i><i></i>';
     L.appendChild(node);
     const GAP = 4, EDGE = 2;
+    /* read (the layer's size), then return the writes */
     const put = (r, first) => {
-      node.toggleAttribute('data-jump', first);
       /* kept inside the layer, at least 2 px in from its edges (a target at the viewport's edge, the tour's Chat
          icon at left 0, still shows all four corners) */
-      const Lr = node.parentElement, W = (Lr && Lr.clientWidth) || z1(innerWidth), H = (Lr && Lr.clientHeight) || z1(innerHeight);
+      const Lr = node.parentElement, size = Lr ? layerSize(Lr) : { w: z1(innerWidth), h: z1(innerHeight) }, W = size.w, H = size.h;
       const x0 = clamp(z1(r.left) - GAP, EDGE, W - EDGE - 24), y0 = clamp(z1(r.top) - GAP, EDGE, H - EDGE - 24);
       const x1 = clamp(z1(r.right) + GAP, x0 + 24, W - EDGE), y1 = clamp(z1(r.bottom) + GAP, y0 + 24, H - EDGE);
-      node.style.transform = `translate(${x0}px, ${y0}px)`;
-      node.style.width = `${x1 - x0}px`; node.style.height = `${y1 - y0}px`;
-      if (first && !still()) {
-        Array.from(node.children).forEach((c, i) => {
-          const sx = i % 2 ? 1 : -1, sy = i > 1 ? 1 : -1;
-          c.animate([{ translate: `${sx * 10}px ${sy * 10}px`, opacity: 0 }, { translate: `${sx * 4}px ${sy * 4}px`, opacity: 1, offset: 0.66 }, { translate: '0px 0px', opacity: 1 }],
-            { duration: 210, easing: 'steps(3, end)' });
-        });
-      }
+      return () => {
+        node.toggleAttribute('data-jump', first);
+        node.style.transform = `translate(${x0}px, ${y0}px)`;
+        node.style.width = `${x1 - x0}px`; node.style.height = `${y1 - y0}px`;
+        if (first && !still()) {
+          Array.from(node.children).forEach((c, i) => {
+            const sx = i % 2 ? 1 : -1, sy = i > 1 ? 1 : -1;
+            c.animate([{ translate: `${sx * 10}px ${sy * 10}px`, opacity: 0 }, { translate: `${sx * 4}px ${sy * 4}px`, opacity: 1, offset: 0.66 }, { translate: '0px 0px', opacity: 1 }],
+              { duration: 210, easing: 'steps(3, end)' });
+          });
+        }
+      };
     };
     let gone = false;
     const leave = () => { if (gone) return; gone = true; locks.delete(el); drop(node); };
@@ -854,7 +1018,7 @@
       release() {
         if (gone) return;
         locks.delete(el);
-        const f = item.f; followers.delete(f); unwire();
+        const f = item.f; unfollow(f);
         if (still() || !node.isConnected || f.gone !== false) { leave(); return; }
         const anims = Array.from(node.children).map((c, i) => {
           const sx = i % 2 ? 1 : -1, sy = i > 1 ? 1 : -1;
@@ -878,7 +1042,7 @@
   function barOff(c) {
     if (!c || !c.el) return;
     if (c.mo) { c.mo.disconnect(); c.mo = null; }
-    if (c.f) { followers.delete(c.f); unwire(); c.f = null; }
+    if (c.f) { unfollow(c.f); c.f = null; }
     c.el.removeAttribute(CUR);
     c.el = null;
   }
@@ -891,10 +1055,10 @@
   /* Where the square goes. Beside the row's left edge when 16 px there are free (no neighbouring element, inside
      its scroll box and the viewport). Else (a tile in the second column of a grid, a row flush with its box) inside
      the ink bar, a paper square in its left padding beside the first line of words; with no padding for it, above
-     the bar's left corner. (Read in the follower's animation frame, after the frame's layout.) */
+     the bar's left corner. (Read in the read phase, after the frame's layout, before anything is written.) */
   function roomLeft(el, r, port) {
     if (r.left < 16) return false;
-    if (port && port.isConnected && r.left - port.getBoundingClientRect().left < 16) return false;
+    if (port && port.isConnected && r.left - portRect(port).left < 16) return false;
     const y = r.top + r.height / 2;
     for (const dx of [3, 15]) {
       const t = document.elementFromPoint(r.left - dx, y);
@@ -919,7 +1083,7 @@
     const host = hostOf(el), c = cursors.get(host);
     if (on === false) { if (c && c.el === el) cursorOff(host); return null; }
     if (!has('cursor')) { if (c) cursorOff(host); return null; }
-    if (c && c.el === el) { c.f.force = true; raf(() => c.f && c.f.place()); return c.node; }
+    if (c && c.el === el) { c.f.force = true; c.f.queue(); return c.node; }
     let cur = c;
     if (cur) barOff(cur);
     else {
@@ -943,13 +1107,16 @@
     cur.mo.observe(el, { attributes: true, attributeFilter: [CUR] });
     const node = cur.node;
     let port;
+    /* read (where the square goes), then return the writes */
     const put = (r, again) => {
-      if (again && node.getAttribute('data-gone') != null) node.setAttribute('data-jump', '');
       if (port === undefined) port = scrollBox(el, host);
       const s = curSpot(el, r, port);
-      node.style.transform = `translate(${s.x}px, ${s.y}px)`;
-      if (node.dataset.side !== s.side) node.dataset.side = s.side;
-      if (node.hasAttribute('data-jump')) M.release(() => node.removeAttribute('data-jump'));
+      return () => {
+        if (again && node.getAttribute('data-gone') != null) node.setAttribute('data-jump', '');
+        node.style.transform = `translate(${s.x}px, ${s.y}px)`;
+        if (node.dataset.side !== s.side) node.dataset.side = s.side;
+        if (node.hasAttribute('data-jump')) M.release(() => node.removeAttribute('data-jump'));
+      };
     };
     cur.f = follow(el, node, host, put, () => { if (cursors.get(host) === cur && cur.el === el) cursorOff(host); });
     return node;
@@ -980,10 +1147,17 @@
      They are the same Pod: while this one speaks, those step away (the mark sits on them, never on <html>, so it
      restyles nothing else) and this one flies out from that place and back to it. */
   const RESTING = '.o55nw-pod';
+  /* the window's resting Pod (kept, so a line does not search the window for it) */
+  let rest = null;
+  function restingIn(host) {
+    if (!host) return null;
+    if (!(rest && rest.isConnected && host.contains(rest))) rest = host.querySelector(RESTING);
+    return rest;
+  }
   function home(host) {
     if (host && host.id === 'pm-o55-onboarding') {
-      const e = host.querySelector(RESTING);
-      if (e && !host.hasAttribute('data-o55fx-pod')) { const r = e.getBoundingClientRect(); if (r.width > 4) return { el: e, r }; }
+      const e = restingIn(host);
+      if (e && !e.hasAttribute('data-o55fx-away')) { const r = e.getBoundingClientRect(); if (r.width > 4) return { el: e, r }; }
       return null;
     }
     const e = document.getElementById('o55np-pod');
@@ -993,12 +1167,15 @@
     const r = e.getBoundingClientRect();
     return r.width > 4 ? { el: e, r } : null;
   }
+  /* the resting Pods step away while one of ours is on screen (a line still waiting for its frame does not count).
+     The mark sits on each resting Pod itself: a mark on the window's root made the browser look through the whole
+     window for the rule's .o55nw-pod (about 1.7 ms a line). */
   function homeSync() {
-    const away = pods.size > 0;
-    const app = document.getElementById('o55np-pod');
-    if (app && app.hasAttribute('data-o55fx-away') !== away) app.toggleAttribute('data-o55fx-away', away);
-    const onb = document.getElementById('pm-o55-onboarding');
-    if (onb && onb.hasAttribute('data-o55fx-pod') !== away) onb.toggleAttribute('data-o55fx-pod', away);
+    let away = false;
+    pods.forEach((P) => { if (P.shown) away = true; });
+    const mark = (e) => { if (e && e.hasAttribute('data-o55fx-away') !== away) e.toggleAttribute('data-o55fx-away', away); };
+    mark(document.getElementById('o55np-pod'));
+    mark(restingIn(document.getElementById('pm-o55-onboarding')));
   }
 
   /* would a box at (x, y, w, h) cover a control of the page? (the Pod's layer takes no pointer, so it is not hit) */
@@ -1012,14 +1189,16 @@
     return false;
   }
   /* reading text the Pod must not stand on either: the tour's callout and bar, the window's head (one that holds
-     the anchor, or lies inside it, does not count) */
-  const OBSTACLE = '.o55t-callout, .o55t-bar, .o55-head';
+     the anchor, or lies inside it, does not count). They are children of the two surfaces' roots (the head inside
+     the window), so they are found there without a search of the page. */
   function obstacles(anchor) {
     const z = zoom(), out = [], el = anchor && anchor.nodeType === 1 ? anchor : null;
-    document.querySelectorAll(OBSTACLE).forEach((e) => {
-      if (el && (e === el || e.contains(el) || el.contains(e))) return;
-      const root = e.closest(ROOTS);
-      if ((root && closing(root)) || e.closest('[hidden]')) return;
+    const found = [];
+    const tour = document.getElementById('pm-o55-tour'), onb = document.getElementById('pm-o55-onboarding');
+    if (tour && !closing(tour)) for (const c of tour.children) if (c.classList.contains('o55t-callout') || c.classList.contains('o55t-bar')) found.push(c);
+    if (onb && !closing(onb)) { const h = onb.querySelector(':scope > .o55-win > .o55-head'); if (h) found.push(h); }
+    found.forEach((e) => {
+      if (e.hidden || (el && (e === el || e.contains(el) || el.contains(e)))) return;
       const r = e.getBoundingClientRect();
       if (r.width >= 2 && r.height >= 2) out.push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z });
     });
@@ -1037,7 +1216,8 @@
   const ACTORS = '.o55-nier-unit, .o55-nier-you, .o55-nier-mach, .o55-nier-kicker, .o55-it[data-key="sign"], .o55-it[data-key="ok"], .o55-it[data-key="ready"], [data-o55fx-avoid]';
   /* props that are set, light or ground rather than subject: the slab, the bar and its link, the sparks, the curtain */
   const SET = /^(stage|bar|link|dim|curtain|you|mach|sign|ok|ready|sp\d+|h\d+)$/;
-  function lanesOf(stage, size, o) {
+  /* the stage's rects (reads only: a placement reads these before the Pod is written) */
+  function laneReads(stage, o) {
     o = o || {};
     const z = zoom(), S = rectOf(stage);
     if (!S) return null;
@@ -1045,10 +1225,18 @@
     const add = (r, to) => { if (r && r.width >= 2 && r.height >= 2) (to || obs).push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z }); };
     stage.querySelectorAll(ACTORS).forEach((e) => { if (!e.closest('.o55-out')) add(e.getBoundingClientRect()); });
     stage.querySelectorAll('.o55-it[data-key]').forEach((e) => { if (!SET.test(e.getAttribute('data-key')) && !e.closest('.o55-out')) add(e.getBoundingClientRect(), soft); });
-    document.querySelectorAll('.o55fx-banner[data-hang] .o55fx-bn-card').forEach((e) => add(e.getBoundingClientRect()));
+    /* a card hung in the stage's surface or the page layer (found in those layers, not by a search of the page) */
+    [layerIn(stage.closest(ROOTS)), layerIn(document.body)].forEach((L) => {
+      if (L) L.querySelectorAll(':scope > .o55fx-banner[data-hang]:not([data-wait]) > .o55fx-bn-card').forEach((e) => add(e.getBoundingClientRect()));
+    });
     (Array.isArray(o.avoid) ? o.avoid : o.avoid ? [o.avoid] : []).forEach((a) => add(toRect(a)));
     const bar = stage.querySelector('.o55-nier-bar'), slab = stage.querySelector('.o55-nier-stage');
-    const br = bar ? bar.getBoundingClientRect() : null, sr = slab ? slab.getBoundingClientRect() : null;
+    return { S, obs, soft, br: bar ? bar.getBoundingClientRect() : null, sr: slab ? slab.getBoundingClientRect() : null };
+  }
+  /* the choice, from those rects and the strip's size (no reads) */
+  function lanePick(R, size, o) {
+    o = o || {};
+    const z = zoom(), S = R.S, obs = R.obs, soft = R.soft, br = R.br, sr = R.sr;
     const s = { l: S.left / z, t: S.top / z, r: S.right / z, b: S.bottom / z };
     /* the bar's line; on the narrow band the scene is cropped from the top and the bar lies above it: its lane is then
        the band's own top edge */
@@ -1076,26 +1264,34 @@
     if (!pick) pick = best || { lane: 'lip', x: Math.round(s.r - PAD - w), y: Math.round(clamp(lipY - 8 - h, s.t, s.b - h)), clear: false };
     return { stage: s, lanes, obstacles: obs, props: soft, pick };
   }
+  function lanesOf(stage, size, o) { const R = laneReads(stage, o); return R ? lanePick(R, size, o) : null; }
 
   /* where the Pod may stand: inside the onboarding window (it is a bounded modal), else the viewport */
   function podBounds(P) {
     const z = zoom(), win = P.host.id === 'pm-o55-onboarding' ? rectOf(P.host.querySelector('.o55-win')) : null;
     return win ? { l: win.left / z + 8, t: win.top / z + 8, r: win.right / z - 8, b: win.bottom / z - 8 } : { l: 8, t: 8, r: innerWidth / z - 8, b: innerHeight / z - 8 };
   }
-  /* The Pod's size is measured once per line (its strip's words decide it), and every place is then judged from rects
-     read in one batch: nothing is written between the reads, so the page lays out at most once. */
-  function podPlace(P, first) {
+  /* everything outside the Pod that a placement reads, in one batch before the Pod is written */
+  function podReads(P) {
+    if (P.stage) { const lanes = laneReads(P.stage, { avoid: P.avoid }); if (lanes) return { lanes }; }
+    return { B: podBounds(P), ar: toRect(P.anchor), obs: obstacles(P.anchor) };
+  }
+  /* The Pod's size is measured once per line (its strip's words decide it; its layer contains its layout, so the
+     measure lays out only the Pod), and every place is judged from the rects read before it (R, or read here when a
+     follower places it): the hit tests run on the layout that measure left clean. */
+  function podPlace(P, first, R) {
     const n = P.node, z = zoom(), GAP = 12;
+    R = R || podReads(P);
     let pick = null;
-    if (P.stage) {
+    if (R.lanes) {
       /* the window's stage: one of the narrator's two lanes; the strip to the left of the Pod */
       if (n.dataset.side !== 'left') n.dataset.side = 'left';
       const size = P.size || (P.size = { w: n.offsetWidth, h: n.offsetHeight });
-      const L = lanesOf(P.stage, size, { lane: P.lane, avoid: P.avoid });
-      if (L) { pick = { side: 'left', x: L.pick.x, y: L.pick.y, clear: L.pick.clear, lane: L.pick.lane }; }
+      const L = lanePick(R.lanes, size, { lane: P.lane });
+      pick = { side: 'left', x: L.pick.x, y: L.pick.y, clear: L.pick.clear, lane: L.pick.lane };
     }
     if (!pick) {
-      const B = podBounds(P), ar = toRect(P.anchor);
+      const B = R.B || podBounds(P), ar = R.ar !== undefined ? R.ar : toRect(P.anchor), obs = R.obs || obstacles(P.anchor);
       /* a side is possible when the Pod fits beside the anchor along that side's axis; along the other axis it tries
          centred on the anchor, then lined up with the anchor's start, then its end (each slid inside the bounds). The
          first spot that meets no reading text (the callout, the bar, the window's head) and covers no control wins;
@@ -1105,7 +1301,6 @@
       let last = null;
       const order = P.side ? [P.side, 'right', 'left', 'top', 'bottom'] : ['right', 'left', 'top', 'bottom'];
       const sides = ar ? order.filter((s, i) => order.indexOf(s) === i) : ['dock'];
-      const obs = obstacles(P.anchor);
       const spots = [];
       for (const side of sides) {
         const a = ar ? { l: ar.left / z, t: ar.top / z, r: ar.right / z, b: ar.bottom / z, cx: (ar.left + ar.width / 2) / z, cy: (ar.top + ar.height / 2) / z } : null;
@@ -1126,7 +1321,6 @@
           spots.push(spot);
         }
       }
-      /* the hit tests run after every rect is read (layout is clean by then) */
       for (const s of spots) {
         if (!pick) pick = s;
         if (!meets(s.x, s.y, w, h, obs) && !covers(s.x, s.y, w, h, P.anchor)) { pick = Object.assign({}, s, { clear: true }); break; }
@@ -1144,7 +1338,7 @@
     return pick;
   }
   function podTurn(P) {
-    if (still() || !P.node.isConnected) return;
+    if (still() || !P.shown || !P.node.isConnected) return;
     const side = P.node.dataset.side, body = P.node.querySelector('.o55fx-pod-body');
     const lean = side === 'right' ? -12 : side === 'left' ? 12 : 0, dx = side === 'right' ? -1 : side === 'left' ? 1 : 0, dy = side === 'bottom' ? -1 : side === 'top' ? 1 : -0.4;
     body.animate([{ transform: 'rotate(0deg) translate(0, 0)' }, { transform: `rotate(${lean}deg) translate(${dx * 2}px, -3px)`, offset: 0.22 },
@@ -1155,31 +1349,63 @@
       { duration: 480, delay: 160 + i * 80, easing: 'steps(6, end)', fill: 'backwards' });
     });
   }
-  /* the Pod leaves (now: in this frame); its promise resolves ok (false when its surface went before it had finished) */
+  /* The Pod leaves (now: in this frame); its promise resolves ok (false when its surface went before it had finished).
+     One way out: the strip folds to a line and goes, and the unit flies back to its resting place in held hops (or,
+     with no resting place on screen, a small element's flicker: 40 x 52). A Pod whose line never reached its frame
+     simply goes. The exit reads where it flies in the read phase. */
   function podGo(host, now, ok) {
     const P = pods.get(host); if (!P) return;
     pods.delete(host);
-    if (P.timer) P.timer.cancel();
-    if (P.f) { followers.delete(P.f); unwire(); }
+    P.seq++;
+    if (P.timer) { P.timer.cancel(); P.timer = null; }
+    if (P.f) { unfollow(P.f); P.f = null; }
     if (P.unwatch) P.unwatch();
     if (P.typed) { const j = typeJobIn(P.node); if (j) j.stop(true); }
-    const end = () => { drop(P.node); P.res(ok !== false); homeSync(); };
-    if (now || still() || !P.node.isConnected || document.hidden) { end(); return; }
-    const strip = P.node.querySelector('.o55fx-pod-strip'), unit = P.node.querySelector('.o55fx-pod-unit');
-    strip.animate([{ transform: 'scaleY(1)', opacity: 1 }, { transform: 'scaleY(.04)', opacity: 1, offset: 0.7 }, { transform: 'scaleY(.04)', opacity: 0 }], { duration: 180, easing: 'steps(3, end)', fill: 'forwards' });
-    let a;
-    const back = P.home && P.home.isConnected ? P.home.getBoundingClientRect() : null;
-    if (back && back.width > 4 && P.node.getAttribute('data-unit') != null) {
-      /* back to its place, where the resting Pod takes over */
-      const u = unit.getBoundingClientRect(), z = zoom();
-      a = unit.animate([{ translate: '0px 0px' }, { translate: `${Math.round((back.left - u.left) / z)}px ${Math.round((back.top - u.top) / z)}px` }], { duration: 360, delay: 120, easing: 'steps(6, end)', fill: 'forwards' });
-    } else {
-      /* a small element's flicker out: the step easing on each keyframe */
-      a = unit.animate([{ opacity: 1, offset: 0, easing: 'step-end' }, { opacity: 0.2, offset: 0.4, easing: 'step-end' }, { opacity: 0.7, offset: 0.6, easing: 'step-end' }, { opacity: 0, offset: 1 }],
-        { duration: 220, delay: 80, fill: 'forwards' });
-    }
-    ended(a).then(end);
+    let done = false;
+    const end = () => { if (done) return; done = true; drop(P.node); P.res(ok !== false); homeSync(); };
+    if (now || !P.shown || still() || !P.node.isConnected || document.hidden) { end(); return; }
+    measure(() => {
+      if (!P.node.isConnected || document.hidden) return end;
+      const strip = P.node.querySelector('.o55fx-pod-strip'), unit = P.node.querySelector('.o55fx-pod-unit');
+      const back = P.home && P.home.isConnected ? P.home.getBoundingClientRect() : null;
+      const u = back && back.width > 4 && P.node.getAttribute('data-unit') != null ? unit.getBoundingClientRect() : null, z = zoom();
+      return () => {
+        strip.animate([{ transform: 'scaleY(1)', opacity: 1 }, { transform: 'scaleY(.04)', opacity: 1, offset: 0.7 }, { transform: 'scaleY(.04)', opacity: 0 }], { duration: 180, easing: 'steps(3, end)', fill: 'forwards' });
+        let a;
+        if (u) {
+          /* back to its place, where the resting Pod takes over */
+          a = unit.animate([{ translate: '0px 0px' }, { translate: `${Math.round((back.left - u.left) / z)}px ${Math.round((back.top - u.top) / z)}px` }], { duration: 360, delay: 120, easing: 'steps(6, end)', fill: 'forwards' });
+        } else {
+          /* a small element's flicker out: the step easing on each keyframe */
+          a = unit.animate([{ opacity: 1, offset: 0, easing: 'step-end' }, { opacity: 0.2, offset: 0.4, easing: 'step-end' }, { opacity: 0.7, offset: 0.6, easing: 'step-end' }, { opacity: 0, offset: 1 }],
+            { duration: 220, delay: 80, fill: 'forwards' });
+        }
+        ended(a).then(end);
+      };
+    });
   }
+  /* a line's words, lead and marks, and the side it most likely takes (the stage's lanes put the strip left of the
+     Pod; else the side asked for, else right): what decides the Pod's size and its row */
+  function podWrite(P, ln) {
+    const node = P.node;
+    if (P.typed) { const j = typeJobIn(node); if (j) j.stop(true); P.typed = false; }
+    node.toggleAttribute('data-unit', ln.unitOn);
+    node.toggleAttribute('data-voice', ln.voice);
+    node.setAttribute('data-lead', ln.lead);
+    node.querySelector('.o55fx-pod-text > b').textContent = ln.voice ? T('pod.leads.' + ln.lead) : '';
+    node.querySelector('.o55fx-pod-text > span').textContent = ln.words;
+    const side = ln.stage ? 'left' : ln.side === 'left' ? 'left' : ln.side || 'right';
+    if (node.dataset.side !== side) node.dataset.side = side;
+  }
+  /* the compact strip (cw: its widest, in px; 0: the usual strip) */
+  function podCompact(P, cw) {
+    P.compact = cw;
+    P.node.toggleAttribute('data-compact', cw > 0);
+    if (cw > 0) P.node.style.setProperty('--o55fx-pod-max', `${cw}px`); else P.node.style.removeProperty('--o55fx-pod-max');
+  }
+  /* pod.say: the call makes the Pod (held unseen, data-wait) or takes the one that is out, and keeps the line; the
+     line is shown in the read phase (podShow): its words written, the Pod measured and placed, then its motion, its
+     typing, its sound and its time all start on the frame it is first drawn. */
   function podSay(text, o) {
     o = o || {};
     const unitOn = has('pod'), voice = has('voice');
@@ -1195,53 +1421,75 @@
     const host = flyHost(o, stage || anchor);
     const ms = clamp(Number(o.ms) || 1700 + words.length * 45, 1600, 12000);
     quiet(900);
-    let P = pods.get(host);
-    const fresh = !P;
+    let P = pods.get(host), fresh = false;
     if (P) {
-      if (P.timer) P.timer.cancel();
-      if (P.f) { followers.delete(P.f); unwire(); P.f = null; }
-      const j = typeJobIn(P.node); if (j) j.stop(true);
+      if (P.timer) { P.timer.cancel(); P.timer = null; }
+      if (P.f) { unfollow(P.f); P.f = null; }
       P.res(true);
+      /* a line not shown yet is still a new Pod's: its words are written again now */
+      if (!P.shown) podWrite(P, { words, lead, unitOn, voice, stage, side: o.side || null });
     } else {
       const node = document.createElement('div');
       node.className = 'o55fx-pod';
+      node.setAttribute('data-wait', '');
       node.innerHTML = `<div class="o55fx-pod-unit"><div class="o55fx-pod-shadow">${FX.podSvg('o55fx-pod', { part: 'shadow' })}</div><div class="o55fx-pod-bob"><div class="o55fx-pod-body">${FX.podSvg('o55fx-pod')}</div></div>`
         + '<i class="o55fx-pod-sig"></i><i class="o55fx-pod-sig"></i><i class="o55fx-pod-sig"></i></div>'
         + `<div class="o55fx-pod-strip"><div class="o55fx-pod-head"><i></i><i></i><i></i><span>${esc(T('pod.name'))}</span></div><p class="o55fx-pod-text"><b></b><span></span></p></div>`;
-      /* read where it comes from before anything is written */
-      const from = unitOn ? home(host) : null;
-      layerOf(host).appendChild(node);
-      P = { host, node, from: from ? from.r : null, home: from ? from.el : (host.id === 'pm-o55-onboarding' ? host.querySelector(RESTING) : document.getElementById('o55np-pod')) };
+      P = { host, node, seq: 0, shown: false, compact: 0, from: null, home: host.id === 'pm-o55-onboarding' ? restingIn(host) : document.getElementById('o55np-pod') };
+      fresh = true;
       pods.set(host, P);
-      homeSync();
       /* its surface going (the window closing, the tour ending) sends it away at once, resolving false */
       P.unwatch = flyWatch(host, () => podGo(host, true, false));
     }
-    const node = P.node;
-    node.toggleAttribute('data-unit', unitOn);
-    node.toggleAttribute('data-voice', voice);
-    node.setAttribute('data-lead', lead);
-    node.querySelector('.o55fx-pod-text > b').textContent = voice ? T('pod.leads.' + lead) : '';
-    const span = node.querySelector('.o55fx-pod-text > span'), strip = node.querySelector('.o55fx-pod-strip');
-    span.textContent = words;
-    P.size = null; P.anchor = anchor; P.side = o.side || null; P.stage = stage; P.lane = o.lane || null; P.avoid = o.avoid || null;
-    /* a short stage (the 760 px band): a compact strip, one or two lines without the name band, beside a smaller Pod,
-       so it fits over the units' heads */
-    const sr = stage ? rectOf(stage) : null, compact = !!(sr && sr.height / zoom() < 260);
-    node.toggleAttribute('data-compact', compact);
-    if (compact) node.style.setProperty('--o55fx-pod-max', `${Math.max(220, Math.round(sr.width / zoom() - 96))}px`); else node.style.removeProperty('--o55fx-pod-max');
     const p = new Promise((r) => { P.res = r; });
+    const line = { words, lead, unitOn, voice, ms, anchor, stage, side: o.side || null, lane: o.lane || null, avoid: o.avoid || null, sound: o.sound, announce: !!o.announce };
+    /* a new Pod is written before it is attached, so the frame styles it once with everything else */
+    if (fresh) { podWrite(P, line); layerOf(host).appendChild(P.node); }
+    const seq = ++P.seq;
+    measure(() => podShow(P, seq, line));
+    return p;
+  }
+  function podShow(P, seq, ln) {
+    const host = P.host, node = P.node;
+    if (pods.get(host) !== P || P.seq !== seq) return null;
+    if (!node.isConnected || closing(host)) { podGo(host, true, false); return null; }
+    const fresh = !P.shown;
+    /* reads first: where it comes from (the resting Pod, before it is marked away), the stage, what it must not cover */
+    if (fresh) { const from = ln.unitOn ? home(host) : null; P.from = from ? from.r : null; if (from) P.home = from.el; }
+    const sr = ln.stage ? rectOf(ln.stage) : null;
+    const follows = !ln.stage && ln.anchor && ln.anchor.nodeType === 1;
+    P.size = null; P.anchor = ln.anchor; P.side = ln.side; P.stage = ln.stage; P.lane = ln.lane; P.avoid = ln.avoid;
+    const R = follows ? null : podReads(P);
+    /* then the writes. A Pod that is out takes its new words now (they must not show before they type); a new one
+       was written where it was made. A short stage (the 760 px band) takes the compact strip: one or two lines
+       without the name band, beside a smaller Pod, so it fits over the units' heads (a change re-measures) */
+    if (!fresh) podWrite(P, ln);
+    const cw = sr && sr.height / zoom() < 260 ? Math.max(220, Math.round(sr.width / zoom() - 96)) : 0;
+    if (cw !== P.compact) podCompact(P, cw);
+    const strip = node.querySelector('.o55fx-pod-strip'), span = node.querySelector('.o55fx-pod-text > span'), compact = cw > 0;
+    /* its size, once per line (a new Pod was styled with the rest of the frame, so this costs no pass of its own; its
+       layer contains its layout). A Pod that flies out also reads its unit here, where it was made (the layer's
+       origin: no transform yet) and turned to the side it most likely takes: where the unit stands after the
+       placement is that rect moved by the placement, so nothing is read after the writes (only a side that flips
+       the row reads again) */
+    P.size = { w: node.offsetWidth, h: node.offsetHeight };
+    const side0 = node.dataset.side;
+    const u0 = fresh && P.from && !still() ? node.querySelector('.o55fx-pod-unit').getBoundingClientRect() : null;
     let placed = false;
-    if (!stage && anchor && anchor.nodeType === 1) P.f = follow(anchor, node, host, () => { podPlace(P, fresh && !placed); placed = true; }, () => podGo(host, false), { now: true });
-    if (!placed) podPlace(P, fresh);
+    if (follows) P.f = follow(ln.anchor, node, host, () => () => { podPlace(P, fresh && !placed); placed = true; }, () => podGo(host, false), { now: true });
+    if (!placed) podPlace(P, fresh, R);
+    P.shown = true;
+    node.removeAttribute('data-wait');
+    homeSync();
     const side = node.dataset.side;
     if (!still()) {
       const stripDelay = fresh ? (P.from ? 300 : 90) : 0;
       if (fresh) {
         const unit = node.querySelector('.o55fx-pod-unit');
         if (P.from) {
-          /* out from its resting place to where it speaks (read once, after the placement's own reads) */
-          const u = unit.getBoundingClientRect(), z = zoom();
+          /* out from its resting place to where it speaks */
+          const z = zoom(), at = P.at || { x: 0, y: 0 };
+          const u = u0 && (side === 'left') === (side0 === 'left') ? { left: u0.left + at.x * z, top: u0.top + at.y * z } : unit.getBoundingClientRect();
           unit.animate([{ translate: `${Math.round((P.from.left - u.left) / z)}px ${Math.round((P.from.top - u.top) / z)}px` }, { translate: '0px 0px' }], { duration: 360, easing: 'steps(6, end)' });
         } else {
           const dx = side === 'left' ? -10 : side === 'right' ? 10 : 0, dy = side === 'top' ? -8 : side === 'bottom' ? 8 : 0;
@@ -1249,19 +1497,19 @@
         }
       }
       /* it opens from a line; the small strip blinks once as it lands (a wide compact one never blinks: rule 3) */
-      const blink = node.hasAttribute('data-compact') ? [] : [{ transform: 'scaleY(1)', opacity: 0.4, offset: 0.88, easing: 'step-end' }];
+      const blink = compact ? [] : [{ transform: 'scaleY(1)', opacity: 0.4, offset: 0.88, easing: 'step-end' }];
       strip.animate([{ transform: 'scaleY(.04)', opacity: 0, offset: 0, easing: 'step-end' }, { transform: 'scaleY(.04)', opacity: 1, offset: 0.25, easing: 'steps(4, end)' },
         { transform: 'scaleY(1)', opacity: 1, offset: 0.8, easing: 'step-end' }, ...blink, { transform: 'scaleY(1)', opacity: 1, offset: 1 }],
       { duration: 280, delay: stripDelay, fill: 'backwards' });
       /* the words type on once the strip is open (their layout is the final one from the first frame) */
       P.typed = true;
-      FX.type(span, { text: words, part: null, delay: stripDelay + 240 });
+      FX.type(span, { text: ln.words, part: null, delay: stripDelay + 240 });
       podTurn(P);
     }
-    if (o.sound !== false) play(typeof o.sound === 'string' ? o.sound : 'pod');
-    if (o.announce) U.announce((voice ? T('pod.leads.' + lead) + ' ' : '') + words, host === document.body ? null : host);
-    P.timer = M.after(ms, () => { if (pods.get(host) === P) podGo(host, false); });
-    return p;
+    if (ln.sound !== false) play(typeof ln.sound === 'string' ? ln.sound : 'pod');
+    if (ln.announce) U.announce((ln.voice ? T('pod.leads.' + ln.lead) + ' ' : '') + ln.words, host === document.body ? null : host);
+    P.timer = M.after(ln.ms, () => { if (pods.get(host) === P) podGo(host, false); });
+    return null;
   }
   FX.pod = {
     say: podSay,
@@ -1275,7 +1523,8 @@
        app) that turns; with neither on screen it is silent and returns false. */
     chirp() {
       if (!has('pod') && !has('voice')) return false;
-      if (pods.size) { pods.forEach((P) => podTurn(P)); play('pod'); return true; }
+      const out = Array.from(pods.values()).filter((P) => P.shown);
+      if (out.length) { out.forEach((P) => podTurn(P)); play('pod'); return true; }
       const at = has('pod') ? home(null) : null;
       const body = at && at.el.querySelector('.o55np-pod-body');
       if (!body || typeof body.animate !== 'function') return false;
@@ -1296,7 +1545,9 @@
      default). Its height follows its words (a long title takes two lines at a narrow width). Its span is within's box,
      else the onboarding window's box (never the page), else the viewport. Where it stands: opts.at (a fraction of the
      span's height, 0 top .. 1 bottom); else the first of 30 % (23 % in the tour), 62 %, 50 % and 80 % of the span
-     where it covers neither the tour's callout nor its bar, nor the window's heading block. */
+     where it covers neither the tour's callout nor its bar, nor the window's heading block. The call makes it, held
+     unseen (data-wait); its span and what it must not cover are read in the read phase, where it is measured, placed
+     and shown, and its motion, typing, sound and time start on that frame. */
   const banners = new Map();
   function spanOf(host, within) {
     const z = zoom();
@@ -1306,16 +1557,19 @@
     return r ? { top: r.top / z, height: r.height / z, left: r.left / z, width: r.width / z }
       : { top: 0, height: innerHeight / z, left: 0, width: innerWidth / z };
   }
-  /* the top of a band h tall in span s: the first place that covers neither the tour's callout nor its bar, nor the
-     onboarding screen's heading block (its eyebrow, title and lead) */
-  const HEADING = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) :is(.o55-eyebrow, .o55-title, .o55-lead)';
-  function bandTop(s, h, ats) {
+  /* what a band must not cover (reads): the tour's callout and bar (children of the tour's root), and the onboarding
+     screen's heading block (its eyebrow, title and lead) as one box */
+  const HEADING = '.o55-pane > .o55-layer:not(.o55-out) :is(.o55-eyebrow, .o55-title, .o55-lead)';
+  function bandObs() {
     const z = zoom(), obs = [];
-    document.querySelectorAll('#pm-o55-tour .o55t-callout, #pm-o55-tour .o55t-bar').forEach((e) => {
-      if (closing(e.closest(ROOTS))) return;
-      const r = e.getBoundingClientRect();
-      if (r.width >= 2 && r.height >= 2) obs.push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z });
-    });
+    const tour = document.getElementById('pm-o55-tour');
+    if (tour && !closing(tour)) {
+      for (const e of tour.children) {
+        if (e.hidden || !(e.classList.contains('o55t-callout') || e.classList.contains('o55t-bar'))) continue;
+        const r = e.getBoundingClientRect();
+        if (r.width >= 2 && r.height >= 2) obs.push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z });
+      }
+    }
     const onb = document.getElementById('pm-o55-onboarding');
     let hb = null;
     if (onb && !closing(onb)) {
@@ -1325,6 +1579,11 @@
       });
       if (hb) obs.push(hb);
     }
+    return { obs, hb };
+  }
+  /* the top of a band h tall in span s: the first place that covers none of ob (bandObs) */
+  function bandTop(s, h, ats, ob) {
+    const obs = ob ? ob.obs : [], hb = ob ? ob.hb : null;
     const at = (f) => Math.round(clamp(s.top + s.height * f - h / 2, s.top + 4, Math.max(s.top + 4, s.top + s.height - h - 4)));
     for (const f of ats) { const t = at(f); if (!meets(s.left, t, s.width, h, obs)) return t; }
     /* every place meets something: at least never the heading the person is reading */
@@ -1340,49 +1599,32 @@
     if (!has('quests') || !title || document.hidden) return no();
     let host = flyHost(o, o.within);
     const prev = banners.get(host); if (prev) prev(true);
-    const L = layerOf(host), s = spanOf(host, o.within);
     const ms = clamp(Number(o.ms) || 1800, 900, 8000);
     const kicker = o.kicker != null ? String(o.kicker) : T('banner.kickers.goalUpdated');
     const hang = !!o.hang;
     const inset = clamp(Number(o.inset) || 0, 0, 0.4);
+    /* where it may stand, decided by the surface it was called for (it keeps that choice if it moves to the page) */
+    const inTour = host.id === 'pm-o55-tour', ats = Number.isFinite(o.at) ? [clamp(o.at, 0, 1)]
+      : hang ? (inTour && (!o.within || o.within === host) ? [0.23, 0.62, 0.5, 0.8] : [0.36, 0.62, 0.5, 0.8]) : [inTour ? 0.23 : 0.3, 0.62, 0.5, 0.8];
     const el = document.createElement('div');
     el.className = 'o55fx-banner';
-    let card = el, band, copy, strs = [];
+    el.setAttribute('data-wait', '');
+    let card = el, strs = [];
     if (hang) {
       /* the span is the clip: the strings hang from its top edge and the card never leaves it */
       el.setAttribute('data-hang', '');
-      el.style.cssText = `left:${Math.round(s.left)}px;top:${Math.round(s.top)}px;width:${Math.round(s.width)}px;height:${Math.round(s.height)}px`;
-      const cw = Math.round(s.width * (1 - 2 * inset)), cx = Math.round(s.width * inset);
       el.innerHTML = '<i class="o55fx-bn-str"></i><i class="o55fx-bn-str"></i>'
-        + `<div class="o55fx-bn-card" style="left:${cx}px;width:${cw}px;top:0">${bannerCopy(kicker, title, o.sub)}<i class="o55fx-bn-knot"></i><i class="o55fx-bn-knot"></i></div>`;
+        + `<div class="o55fx-bn-card">${bannerCopy(kicker, title, o.sub)}<i class="o55fx-bn-knot"></i><i class="o55fx-bn-knot"></i></div>`;
       card = el.querySelector('.o55fx-bn-card');
       strs = Array.from(el.querySelectorAll('.o55fx-bn-str'));
-      strs.forEach((t, i) => { t.style.left = `${cx + Math.round(cw * (i ? 0.78 : 0.22))}px`; });
-      card.querySelectorAll('.o55fx-bn-knot').forEach((k, i) => { k.style.left = `${Math.round(cw * (i ? 0.78 : 0.22))}px`; });
-      /* a short stage (the 760 px band) takes the compact card: no sub line */
-      if (s.height < 260) card.setAttribute('data-compact', '');
     } else {
-      el.style.cssText = `left:${Math.round(s.left)}px;width:${Math.round(s.width)}px;top:0`;
       el.innerHTML = bannerCopy(kicker, title, o.sub);
     }
-    L.appendChild(el);
-    band = card.querySelector('.o55fx-bn-band'); copy = card.querySelector('.o55fx-bn-copy');
+    layerOf(host).appendChild(el);
+    const band = card.querySelector('.o55fx-bn-band'), copy = card.querySelector('.o55fx-bn-copy');
     const titleEl = copy.querySelector('.o55fx-bn-title'), mark = copy.querySelector('.o55fx-bn-mark');
-    let H = card.offsetHeight || 96;
-    if (hang && !card.hasAttribute('data-compact') && H > s.height * 0.62) { card.setAttribute('data-compact', ''); H = card.offsetHeight || H; }
-    let top;
-    if (hang) {
-      /* at: where its centre hangs; else the first place clear of the tour's callout and bar (a stage: 36 %) */
-      if (Number.isFinite(o.at)) top = Math.round(clamp(s.height * clamp(o.at, 0, 1) - H / 2, 6, Math.max(6, s.height - H - 4)));
-      else top = Math.max(6, bandTop(s, H, host.id === 'pm-o55-tour' && (!o.within || o.within === host) ? [0.23, 0.62, 0.5, 0.8] : [0.36, 0.62, 0.5, 0.8]) - Math.round(s.top));
-      card.style.top = `${top}px`;
-      strs.forEach((t) => { t.style.height = `${top}px`; });
-    } else {
-      const ats = Number.isFinite(o.at) ? [clamp(o.at, 0, 1)] : [host.id === 'pm-o55-tour' ? 0.23 : 0.3, 0.62, 0.5, 0.8];
-      el.style.top = `${bandTop(s, H, ats)}px`;
-    }
     quiet(ms + 400);
-    let res, timer = null, gone = false, landed = false;
+    let res, timer = null, gone = false, landed = false, shown = false, top = 0, H = 0;
     const anims = [];
     const p = new Promise((r) => { res = r; });
     const end = () => { if (gone) return; gone = true; if (timer) timer.cancel(); unwatch(); finish(job); if (banners.get(host) === stop) banners.delete(host); const j = typeJobIn(titleEl); if (j) j.stop(true); drop(el); res(true); };
@@ -1392,7 +1634,7 @@
     };
     function stop(now) {
       if (gone) return;
-      if (now || still() || !el.isConnected) { land(); end(); return; }
+      if (now || !shown || still() || !el.isConnected) { land(); end(); return; }
       if (timer) { timer.cancel(); timer = null; }
       anims.forEach((a) => { try { a.finish(); } catch (_) {} });
       land();
@@ -1403,6 +1645,7 @@
         a = card.animate([{ transform: 'translateY(0px)' }, { transform: `translateY(${up}px)` }], { duration: 260, easing: 'steps(5, end)', fill: 'forwards' });
         strs.forEach((t) => t.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(0)' }], { duration: 260, easing: 'steps(5, end)', fill: 'forwards' }));
       } else {
+        /* one way out: the words step down in three, the band folds to its centre line in three, the line goes */
         copy.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 120, easing: 'steps(3, end)', fill: 'forwards' });
         a = band.animate([{ transform: 'scaleY(1)', opacity: 1, offset: 0, easing: 'steps(3, end)' }, { transform: 'scaleY(.012)', opacity: 1, offset: 0.75, easing: 'step-end' }, { transform: 'scaleY(.012)', opacity: 0, offset: 1 }],
           { duration: 260, delay: 80, fill: 'forwards' });
@@ -1419,35 +1662,67 @@
       host = job.host = document.body; banners.set(host, stop);
       toPage(el);
     });
-    let landAt = 0;
-    if (!still()) {
+    measure(() => {
+      if (gone) return null;
+      /* reads: its span and what it must not cover */
+      const s = spanOf(host, o.within);
+      const ob = hang && Number.isFinite(o.at) ? null : bandObs();
+      /* writes: its geometry; then its height (its layer contains its layout, so this lays out the banner only) */
       if (hang) {
-        /* the strings come down first (3 steps), then the card is lowered onto them (6 steps), lands on the knots and
-           settles 4 px in 2 steps; the landing frame is the one onLand gets */
-        const STR = 90, DROP = 230, SETTLE = 80;
-        landAt = STR + DROP;
-        strs.forEach((t) => anims.push(t.animate([{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }], { duration: STR, easing: 'steps(3, end)', fill: 'backwards' })));
-        const descent = card.animate([{ transform: `translateY(${-(top + H + 8)}px)` }, { transform: 'translateY(0px)' }], { duration: DROP, delay: STR, easing: 'steps(6, end)', fill: 'backwards' });
-        anims.push(descent);
-        anims.push(card.animate([{ translate: '0px 0px' }, { translate: '0px 4px', offset: 0.5 }, { translate: '0px 0px' }], { duration: SETTLE, delay: landAt, easing: 'steps(2, end)' }));
-        strs.forEach((t) => anims.push(t.animate([{ scale: '1 1' }, { scale: `1 ${((top + 4) / Math.max(1, top)).toFixed(4)}`, offset: 0.5 }, { scale: '1 1' }], { duration: SETTLE, delay: landAt, easing: 'steps(2, end)' })));
-        /* it hangs: one 0.6 degree tilt step as the strings settle, and back */
-        anims.push(card.animate([{ rotate: '0deg' }, { rotate: '0.6deg', offset: 0.5 }, { rotate: '0deg' }], { duration: 220, delay: landAt + 540, easing: 'steps(2, end)' }));
-        ended(descent).then(() => land());
-        FX.type(titleEl, { text: title, part: null, delay: landAt + 40 });
+        el.style.cssText = `left:${Math.round(s.left)}px;top:${Math.round(s.top)}px;width:${Math.round(s.width)}px;height:${Math.round(s.height)}px`;
+        const cw = Math.round(s.width * (1 - 2 * inset)), cx = Math.round(s.width * inset);
+        card.style.cssText = `left:${cx}px;width:${cw}px;top:0`;
+        strs.forEach((t, i) => { t.style.left = `${cx + Math.round(cw * (i ? 0.78 : 0.22))}px`; });
+        card.querySelectorAll('.o55fx-bn-knot').forEach((k, i) => { k.style.left = `${Math.round(cw * (i ? 0.78 : 0.22))}px`; });
+        /* a short stage (the 760 px band) takes the compact card: no sub line */
+        if (s.height < 260) card.setAttribute('data-compact', '');
       } else {
-        anims.push(band.animate([{ transform: 'scale(0, .012)', offset: 0, easing: 'steps(3, end)' }, { transform: 'scale(1, .012)', offset: 0.4, easing: 'steps(4, end)' }, { transform: 'scale(1, 1)', offset: 1 }],
-          { duration: 300, fill: 'backwards' }));
-        /* the words come on one way, in two steps (a wide element never flickers) */
-        anims.push(copy.animate([{ opacity: 0, offset: 0, easing: 'step-end' }, { opacity: 0.5, offset: 0.5, easing: 'step-end' }, { opacity: 1, offset: 1 }],
-          { duration: 120, delay: 240, fill: 'backwards' }));
-        anims.push(mark.animate([{ transform: 'rotate(-45deg) scale(.4)' }, { transform: 'rotate(45deg) scale(1)' }], { duration: 240, delay: 240, easing: 'steps(3, end)', fill: 'backwards' }));
-        FX.type(titleEl, { text: title, part: null, delay: 300 });
+        el.style.cssText = `left:${Math.round(s.left)}px;width:${Math.round(s.width)}px;top:0`;
       }
-    } else land();
-    if (o.sound !== false) play(typeof o.sound === 'string' ? o.sound : 'quest');
-    if (o.announce) U.announce([kicker, title, o.sub].filter(Boolean).join('. '), host === document.body ? null : host);
-    timer = M.after(Math.max(landAt + 500, ms - (hang ? 260 : 340)), () => { timer = null; stop(false); });
+      H = card.offsetHeight || 96;
+      if (hang && !card.hasAttribute('data-compact') && H > s.height * 0.62) { card.setAttribute('data-compact', ''); H = card.offsetHeight || H; }
+      if (hang) {
+        /* at: where its centre hangs; else the first place clear of the tour's callout and bar (a stage: 36 %) */
+        if (Number.isFinite(o.at)) top = Math.round(clamp(s.height * clamp(o.at, 0, 1) - H / 2, 6, Math.max(6, s.height - H - 4)));
+        else top = Math.max(6, bandTop(s, H, ats, ob) - Math.round(s.top));
+        card.style.top = `${top}px`;
+        strs.forEach((t) => { t.style.height = `${top}px`; });
+      } else {
+        el.style.top = `${bandTop(s, H, ats, ob)}px`;
+      }
+      shown = true;
+      el.removeAttribute('data-wait');
+      let landAt = 0;
+      if (!still()) {
+        if (hang) {
+          /* the strings come down first (3 steps), then the card is lowered onto them (6 steps), lands on the knots and
+             settles 4 px in 2 steps; the landing frame is the one onLand gets */
+          const STR = 90, DROP = 230, SETTLE = 80;
+          landAt = STR + DROP;
+          strs.forEach((t) => anims.push(t.animate([{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }], { duration: STR, easing: 'steps(3, end)', fill: 'backwards' })));
+          const descent = card.animate([{ transform: `translateY(${-(top + H + 8)}px)` }, { transform: 'translateY(0px)' }], { duration: DROP, delay: STR, easing: 'steps(6, end)', fill: 'backwards' });
+          anims.push(descent);
+          anims.push(card.animate([{ translate: '0px 0px' }, { translate: '0px 4px', offset: 0.5 }, { translate: '0px 0px' }], { duration: SETTLE, delay: landAt, easing: 'steps(2, end)' }));
+          strs.forEach((t) => anims.push(t.animate([{ scale: '1 1' }, { scale: `1 ${((top + 4) / Math.max(1, top)).toFixed(4)}`, offset: 0.5 }, { scale: '1 1' }], { duration: SETTLE, delay: landAt, easing: 'steps(2, end)' })));
+          /* it hangs: one 0.6 degree tilt step as the strings settle, and back */
+          anims.push(card.animate([{ rotate: '0deg' }, { rotate: '0.6deg', offset: 0.5 }, { rotate: '0deg' }], { duration: 220, delay: landAt + 540, easing: 'steps(2, end)' }));
+          ended(descent).then(() => land());
+          FX.type(titleEl, { text: title, part: null, delay: landAt + 40 });
+        } else {
+          anims.push(band.animate([{ transform: 'scale(0, .012)', offset: 0, easing: 'steps(3, end)' }, { transform: 'scale(1, .012)', offset: 0.4, easing: 'steps(4, end)' }, { transform: 'scale(1, 1)', offset: 1 }],
+            { duration: 300, fill: 'backwards' }));
+          /* the words come on one way, in two steps (a wide element never flickers) */
+          anims.push(copy.animate([{ opacity: 0, offset: 0, easing: 'step-end' }, { opacity: 0.5, offset: 0.5, easing: 'step-end' }, { opacity: 1, offset: 1 }],
+            { duration: 120, delay: 240, fill: 'backwards' }));
+          anims.push(mark.animate([{ transform: 'rotate(-45deg) scale(.4)' }, { transform: 'rotate(45deg) scale(1)' }], { duration: 240, delay: 240, easing: 'steps(3, end)', fill: 'backwards' }));
+          FX.type(titleEl, { text: title, part: null, delay: 300 });
+        }
+      } else land();
+      if (o.sound !== false) play(typeof o.sound === 'string' ? o.sound : 'quest');
+      if (o.announce) U.announce([kicker, title, o.sub].filter(Boolean).join('. '), host === document.body ? null : host);
+      timer = M.after(Math.max(landAt + 500, ms - (hang ? 260 : 340)), () => { timer = null; stop(false); });
+      return null;
+    });
     return p;
   };
 
@@ -1456,7 +1731,8 @@
      the kicker (small squares, the unit's name, a rule) shows, the status line types on behind a block caret while a
      row of thirty-two ticks fills in steps, OK lands, and the band folds back to its line, which retracts (one way:
      never a flicker of a wide surface). A key or a press anywhere ends it at once (it never takes the press).
-     band(text, ms?, opts?) or band(text, opts) with opts.ms. */
+     band(text, ms?, opts?) or band(text, opts) with opts.ms. Like the banner, the call makes it held unseen and the
+     read phase places it and starts it. */
   const bands = new Map();
   FX.band = function band(text, ms, o) {
     if (ms && typeof ms === 'object') { o = ms; ms = o.ms; }
@@ -1465,20 +1741,19 @@
     if (!has('reboot') || !words || still() || document.hidden) return no();
     let host = flyHost(o, o.within);
     const prev = bands.get(host); if (prev) prev(true);
-    const L = layerOf(host), s = spanOf(host, o.within);
     const total = clamp(Number(ms) || 1500, 900, 6000), H = 108;
     quiet(total + 400);
     const el = document.createElement('div');
     el.className = 'o55fx-band';
-    el.style.cssText = `left:${Math.round(s.left)}px;width:${Math.round(s.width)}px;top:${Math.round(s.top + s.height / 2 - H / 2)}px;height:${H}px`;
+    el.setAttribute('data-wait', '');
     el.innerHTML = '<div class="o55fx-bd-band"></div><div class="o55fx-bd-copy">'
       + `<div class="o55fx-bd-kicker"><i></i><i></i><i></i><span>${esc(o.kicker != null ? o.kicker : T('band.kicker'))}</span></div>`
       + `<div class="o55fx-bd-line"><span class="o55fx-bd-text"></span><i class="o55fx-bd-caret"></i><b class="o55fx-bd-ok">${esc(T('band.ok'))}</b></div>`
       + '<div class="o55fx-bd-ticks"><span class="o55fx-bd-empty"></span><span class="o55fx-bd-fill"><span></span></span></div></div>';
-    L.appendChild(el);
+    layerOf(host).appendChild(el);
     const bandEl = el.firstElementChild, copy = el.lastElementChild, out = el.querySelector('.o55fx-bd-text');
     const fill = el.querySelector('.o55fx-bd-fill'), fillIn = fill.firstElementChild;
-    let res, gone = false, leaving = false;
+    let res, gone = false, leaving = false, shown = false;
     const timers = [];
     const later = (t, fn) => { const h = M.after(t, () => { if (!gone) fn(); }); timers.push(h); return h; };
     const p = new Promise((r) => { res = r; });
@@ -1494,7 +1769,7 @@
     function stop(now) {
       if (gone || leaving) { if (now) end(); return; }
       leaving = true;
-      if (now || !el.isConnected) { end(); return; }
+      if (now || !shown || !el.isConnected) { end(); return; }
       /* it folds away: the words go in two steps, the band closes to its centre line in three, the line retracts */
       copy.animate([{ opacity: 1, offset: 0, easing: 'step-end' }, { opacity: 0.5, offset: 0.5, easing: 'step-end' }, { opacity: 0, offset: 1 }], { duration: 80, fill: 'forwards' });
       const a = bandEl.animate([{ transform: 'scale(1, 1)', offset: 0, easing: 'steps(3, end)' }, { transform: 'scale(1, .01)', offset: 0.55, easing: 'steps(3, end)' }, { transform: 'scale(0, .01)', offset: 1 }],
@@ -1513,20 +1788,28 @@
       toPage(el);
     });
     document.addEventListener('keydown', skip, true); document.addEventListener('pointerdown', skip, true);
-    /* timeline: line + open 280 ms, typing to 55 %, ticks from 300 ms to 82 %, OK at 84 %, the fold in the last 340 ms */
-    const openMs = 280, outMs = 340, tickMs = Math.max(320, total * 0.82 - openMs), typeMs = Math.max(180, total * 0.55 - openMs);
-    bandEl.animate([{ transform: 'scale(0, .01)', offset: 0, easing: 'steps(4, end)' }, { transform: 'scale(1, .01)', offset: 0.5, easing: 'steps(3, end)' }, { transform: 'scale(1, 1)', offset: 1 }],
-      { duration: openMs, fill: 'backwards' });
-    copy.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: openMs - 40, fill: 'backwards' });
-    fill.animate([{ transform: 'translateX(-100%)' }, { transform: 'translateX(0)' }], { duration: tickMs, delay: openMs, easing: 'steps(32, end)', fill: 'both' });
-    fillIn.animate([{ transform: 'translateX(100%)' }, { transform: 'translateX(0)' }], { duration: tickMs, delay: openMs, easing: 'steps(32, end)', fill: 'both' });
-    const per = clamp(typeMs / words.length, 14, 42);
-    let k = 0;
-    const type = () => { k++; out.textContent = words.slice(0, k); if (k < words.length) later(per, type); else el.setAttribute('data-typed', ''); };
-    later(openMs, type);
-    later(openMs + tickMs, () => el.setAttribute('data-ok', ''));
-    later(total - outMs, () => stop(false));
-    if (o.sound !== false) play(typeof o.sound === 'string' ? o.sound : 'reboot');
+    measure(() => {
+      if (gone || leaving) return null;
+      const s = spanOf(host, o.within);
+      el.style.cssText = `left:${Math.round(s.left)}px;width:${Math.round(s.width)}px;top:${Math.round(s.top + s.height / 2 - H / 2)}px;height:${H}px`;
+      shown = true;
+      el.removeAttribute('data-wait');
+      /* timeline: line + open 280 ms, typing to 55 %, ticks from 300 ms to 82 %, OK at 84 %, the fold in the last 340 ms */
+      const openMs = 280, outMs = 340, tickMs = Math.max(320, total * 0.82 - openMs), typeMs = Math.max(180, total * 0.55 - openMs);
+      bandEl.animate([{ transform: 'scale(0, .01)', offset: 0, easing: 'steps(4, end)' }, { transform: 'scale(1, .01)', offset: 0.5, easing: 'steps(3, end)' }, { transform: 'scale(1, 1)', offset: 1 }],
+        { duration: openMs, fill: 'backwards' });
+      copy.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: openMs - 40, fill: 'backwards' });
+      fill.animate([{ transform: 'translateX(-100%)' }, { transform: 'translateX(0)' }], { duration: tickMs, delay: openMs, easing: 'steps(32, end)', fill: 'both' });
+      fillIn.animate([{ transform: 'translateX(100%)' }, { transform: 'translateX(0)' }], { duration: tickMs, delay: openMs, easing: 'steps(32, end)', fill: 'both' });
+      const per = clamp(typeMs / words.length, 14, 42);
+      let k = 0;
+      const type = () => { k++; out.textContent = words.slice(0, k); if (k < words.length) later(per, type); else el.setAttribute('data-typed', ''); };
+      later(openMs, type);
+      later(openMs + tickMs, () => el.setAttribute('data-ok', ''));
+      later(total - outMs, () => stop(false));
+      if (o.sound !== false) play(typeof o.sound === 'string' ? o.sound : 'reboot');
+      return null;
+    });
     return p;
   };
 
@@ -1618,9 +1901,10 @@
       close(co) {
         co = co || {};
         if (gone) return no();
+        /* read where it goes before anything is written */
+        const t = toRect(co.to), rr = rule.getBoundingClientRect();
         holdOff();
         finishAll();
-        const t = toRect(co.to), rr = rule.getBoundingClientRect();
         const fold = body.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(0)' }], { duration: 120, easing: 'steps(3, end)', fill: 'forwards' });
         quiet(800);
         let slide = null;
@@ -1653,8 +1937,7 @@
   FX.clear = function clear(host) {
     const mine = (h) => !host || h === host;
     Array.from(running).forEach((e) => { if (mine(e.host)) { try { e.stop(); } catch (_) {} } });
-    Array.from(locks.entries()).forEach(([el, it]) => { if (mine(it.f && it.f.host)) { followers.delete(it.f); locks.delete(el); drop(it.node); } });
-    unwire();
+    Array.from(locks.entries()).forEach(([el, it]) => { if (mine(it.f && it.f.host)) { unfollow(it.f); locks.delete(el); drop(it.node); } });
     Array.from(cursors.keys()).forEach((h) => { if (mine(h)) cursorOff(h); });
     Array.from(pods.keys()).forEach((h) => { if (mine(h)) podGo(h, true); });
     Array.from(banners.keys()).forEach((h) => { if (mine(h)) banners.get(h)(true); });
