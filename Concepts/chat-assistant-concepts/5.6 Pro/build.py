@@ -64,7 +64,10 @@ def join(names): return '\n'.join(read(n) for n in names)
 # all: every rule in them is scoped by PMConcept7's contract
 # (html[data-o55-nier...]) and must win the ties it restyles. A file listed here is skipped in the MODULES pass,
 # so no stylesheet is ever included twice.
-CSS_LAST=['composer.css','neon-icons.css','send-stop.css','nier.css','nier-parts.css','nier-world.css','nier-scenes.css']
+# retro.css (item 16, 2026-10-07: PMConcept7's retro box grammar for Retro Dark and Light) sits after send-stop.css,
+# whose chip it squares, and before the NieR sheets; every rule in it is scoped body[data-theme^="retro"], which NieR
+# (it paints basic) never matches. It is CSS only, so it has no MODULES entry.
+CSS_LAST=['composer.css','neon-icons.css','send-stop.css','retro.css','nier.css','nier-parts.css','nier-world.css','nier-scenes.css']
 CSS_ORDER=(['styles.css','motion.css','variants-a.css','variants-b.css','variants-c.css','transcripts.css']
            +[f'{m}.css' for m in MODULES if f'{m}.css' not in CSS_LAST]+CSS_LAST)
 if len(set(CSS_ORDER))!=len(CSS_ORDER):

@@ -933,7 +933,7 @@ body[data-theme$="-light"] .working-card { --nx-disc: var(--text); --nx-disc-tex
 html:not([data-o55-nier="on"]) body[data-theme="basic-light"] .orbit-core { --positive: #5cd69b; --warning: #f5bd55; }
 html:not([data-o55-nier="on"]) body[data-theme="friendly-light"] .orbit-core { --positive: #86d8a7; --warning: #ffd078; }
 html:not([data-o55-nier="on"]) body[data-theme="glass-light"] .orbit-core { --positive: #7be0af; --warning: #ffd074; }
-html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --positive: #74ffb0; --warning: #f2d35e; }
+html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --positive: #86c46a; --warning: #d8b93c; }
 /* Inside a dark disc the glow strengths of the dark themes apply on every
    theme (neon-icons.css section 1 tunes the light-theme values for ink on
    paper, where a bloom reads as a tinted sticker): restated on the disc, its
