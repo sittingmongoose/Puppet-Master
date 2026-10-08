@@ -447,3 +447,25 @@ html[data-o55-nier="on"] .live-agent-row > .agent-mark[data-state="idle"], html[
 @keyframes o55n-pp-hop { 0% { transform: none; animation-timing-function: steps(3, end); } 30% { transform: translateY(-2.5px); } 62% { transform: translateY(-2.5px); animation-timing-function: steps(2, end); } 100% { transform: none; } }
 @keyframes o55n-pp-work-slot { from { transform: rotate(-1.6deg); } to { transform: rotate(1.6deg) translateY(-.5px); } }
 @keyframes o55n-pp-sway { from { transform: rotate(-2.4deg); } to { transform: rotate(2.4deg); } }
+
+/* ============================================================================================= Questions (Ask Card) */
+/* OWNER: Questions, item 15 (2026-10-07). The Ask Card (questions.js take 8, the boot questionnaire) in NieR's parts. The
+   palette half (no header light, no bloom, the stepped selection) is in questions.css; corners are already square by
+   [square]. One rule per selector, no :has() (tests/shell-selfcheck.cjs). */
+/* ---- [cursor]: the chosen answer is the menu cursor, an ink bar with paper text; its mark inverts to a paper box with
+   an ink dot or tick, and its number goes to paper ---- */
+html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on,
+html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on {
+  background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+}
+html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-num,
+html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on .qs-num { color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-mark,
+html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on .qs-ask-mark { background: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-mark-radio::after,
+html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on .qs-ask-mark-radio::after { background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-mark-check::after,
+html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on .qs-ask-mark-check::after { border-color: var(--o55-nier-ink); }
+/* ---- [diamonds]: the spine's marks are diamonds (the thumb stays the numbered ink square) ---- */
+html[data-o55-nier-parts~="diamonds"] button.qs-spine-slot::after { transform: rotate(45deg) scale(.82); }
+html[data-o55-nier-parts~="diamonds"] button.qs-spine-slot:hover::after { transform: rotate(45deg) scale(1.08); }

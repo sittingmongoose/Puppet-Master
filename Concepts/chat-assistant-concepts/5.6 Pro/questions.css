@@ -360,31 +360,55 @@ button.qs-tick.is-skipped::after{ background:var(--warning); }
   animation:qs-ask-opt-in 260ms var(--pm-ease-pop) both;
   animation-delay:calc(140ms + var(--i, 0) * 45ms);
 }
-.qs-shell.qs-opening .qs-spine,
-.qs-shell.qs-opening .qs-ask-foot,
+/* Item 15: the late parts land in their own way. Only the close button still pops; the footer used to scale to 128 %
+   with it, which pushed "Question 1 of 5" and Next past the card's edges mid-open, so it now rises in; the spine's
+   wire draws down from the first mark as the rows land (a clip reveal, widened so the thumb's ring is never cut). */
 .qs-shell.qs-opening .qs-ask-x{
   opacity:0;
   animation:qs-late 370ms var(--pm-ease-pop) both;
 }
+.qs-shell.qs-opening .qs-ask-foot{
+  opacity:0;
+  animation:qs-foot-in 370ms var(--pm-ease-pop) both;
+}
+.qs-shell.qs-opening .qs-spine{
+  animation:qs-wire-in 440ms var(--pm-ease-out) both;
+}
+@keyframes qs-foot-in{
+  0%,45%{ opacity:0; transform:translateY(8px); }
+  100%{ opacity:1; transform:none; }
+}
+@keyframes qs-wire-in{
+  0%,30%{ opacity:0; clip-path:inset(-24px -24px 100% -24px); }
+  42%{ opacity:1; }
+  100%{ opacity:1; clip-path:inset(-24px -24px -24px -24px); }
+}
+/* Item 15 polish: the same cascade with less jelly. The title overshot by 10px and grew 5%, the rows by 8px with a
+   10% stretch, which read as wobble on a two-line prompt; now a 3-4px settle and a 1-4% stretch, same timings. */
 @keyframes qs-ask-title-in{
-  from{ opacity:0; filter:blur(10px); transform:translateY(16px) scale(.97); }
-  68%{ opacity:1; filter:blur(0); transform:translateY(-10px) scale(1.05); }
+  from{ opacity:0; filter:blur(8px); transform:translateY(14px) scale(.98); }
+  64%{ opacity:1; filter:blur(0); transform:translateY(-3px) scale(1.01); }
   to{ opacity:1; filter:none; transform:none; }
 }
 @keyframes qs-ask-opt-in{
-  from{ opacity:0; filter:blur(8px); transform:translateY(28px) scaleY(1.10); }
-  68%{ opacity:1; filter:blur(0); transform:translateY(-8px) scaleY(1); }
+  from{ opacity:0; filter:blur(6px); transform:translateY(22px) scaleY(1.06); }
+  66%{ opacity:1; filter:blur(0); transform:translateY(-4px) scaleY(1); }
   to{ opacity:1; filter:none; transform:none; }
 }
 @keyframes qs-ask-title-out{
   from{ opacity:1; filter:none; transform:none; }
-  32%{ opacity:1; filter:blur(0); transform:translateY(-10px) scale(1.05); }
-  to{ opacity:0; filter:blur(10px); transform:translateY(16px) scale(.97); }
+  32%{ opacity:1; filter:blur(0); transform:translateY(-3px) scale(1.01); }
+  to{ opacity:0; filter:blur(8px); transform:translateY(14px) scale(.98); }
 }
 @keyframes qs-ask-opt-out{
   from{ opacity:1; filter:none; transform:none; }
-  32%{ opacity:1; filter:blur(0); transform:translateY(-8px) scaleY(1.10); }
-  to{ opacity:0; filter:blur(8px); transform:translateY(28px) scaleY(1.10); }
+  32%{ opacity:1; filter:blur(0); transform:translateY(-4px) scaleY(1.03); }
+  to{ opacity:0; filter:blur(6px); transform:translateY(22px) scaleY(1.06); }
+}
+/* a chosen answer re-lands with its row: the dot pops (the check draws) just after the row settles */
+.qs-shell.qs-opening .qs-ask-opt.is-on .qs-ask-mark::after,
+.qs-shell.qs-opening .qs-other-ask.is-on .qs-ask-mark::after{
+  animation-delay:calc(300ms + var(--i, 0) * 45ms);
 }
 .qs-shell.qs-closing .qs-ask-title,
 .qs-shell.qs-closing .qs-ask-sub{
@@ -414,6 +438,12 @@ button.qs-tick.is-skipped::after{ background:var(--warning); }
 .qs-ask .qs-reel-stage > .qs-reel-next .qs-ask-review-row{
   animation:qs-elastic-in 320ms var(--pm-ease-pop) both;
   animation-delay:calc(var(--i, 0) * 45ms);
+}
+.qs-ask .qs-reel-stage > .qs-reel-next .qs-ask-opt.is-on .qs-ask-mark::after,
+.qs-ask .qs-reel-stage > .qs-reel-prev .qs-ask-opt.is-on .qs-ask-mark::after,
+.qs-ask .qs-reel-stage > .qs-reel-next .qs-other-ask.is-on .qs-ask-mark::after,
+.qs-ask .qs-reel-stage > .qs-reel-prev .qs-other-ask.is-on .qs-ask-mark::after{
+  animation-delay:calc(220ms + var(--i, 0) * 45ms);
 }
 .qs-ask .qs-reel-stage > .qs-reel-prev .qs-ask-title,
 .qs-ask .qs-reel-stage > .qs-reel-prev .qs-ask-sub{
@@ -455,12 +485,12 @@ button.qs-tick.is-skipped::after{ background:var(--warning); }
 .qs-ask .qs-ask-sub{ --i:0; }
 @keyframes qs-elastic-out{
   0%{ opacity:1; filter:none; transform:none; }
-  14%{ transform:scaleY(1.10); }
+  14%{ transform:scaleY(1.04); }
   100%{ opacity:0; filter:blur(4px); transform:translateY(-28px) scale(.97); }
 }
 @keyframes qs-elastic-out-prev{
   0%{ opacity:1; filter:none; transform:none; }
-  14%{ transform:scaleY(1.10); }
+  14%{ transform:scaleY(1.04); }
   100%{ opacity:0; filter:blur(4px); transform:translateY(28px) scale(.97); }
 }
 @keyframes qs-elastic-in{
@@ -801,8 +831,12 @@ div.qs-step-body{ cursor:default; }
   max-height:none;
   z-index:10;
 }
+/* The shell is lit from where the needs-you mark sits (item 15): a faint accent wash in the top-left corner, sized
+   in px so it stays a header light while the shell morphs between pill and card. */
 .decision-host[data-variant="8"] .qs-shell{
-  background:var(--surface-2);
+  background:
+    radial-gradient(90% 160px at 0 0, color-mix(in srgb, var(--accent) 14%, transparent), transparent),
+    var(--surface-2);
   border:1px solid color-mix(in srgb,var(--text) 8%, transparent);
   border-radius:22px;
   box-shadow:0 10px 28px rgb(0 0 0 / .16), 0 1px 0 color-mix(in srgb,var(--text) 7%, transparent);
@@ -828,7 +862,9 @@ div.qs-step-body{ cursor:default; }
 }
 .decision-host[data-variant="8"] .qs-pill-label{ font-size:13px; font-weight:550; }
 .decision-host[data-variant="8"] .qs-open-face{
-  background:var(--surface-2);
+  background:
+    radial-gradient(90% 160px at 0 0, color-mix(in srgb, var(--accent) 14%, transparent), transparent),
+    var(--surface-2);
   padding:0 20px 0 16px;
   flex-direction:row; flex-wrap:nowrap; align-items:center; gap:10px;
 }
@@ -868,44 +904,81 @@ div.qs-step-body{ cursor:default; }
   color:var(--text); background:var(--surface-3);
   transform:scale(1.08);
 }
-.qs-ask-title{
-  font-size:16px; font-weight:650; line-height:1.35;
-  padding-right:32px; margin:0 0 12px;
+/* Ask Card skin (item 15, 2026-10-07: "oddly boring despite the animations"). One accent voice, used where the
+   card speaks: the needs-you mark on the title, the chosen answer, the progress wire and the way forward (Next /
+   Submit). Everything else stays quiet: resting rows are a faint tint of the ink, not boxes, and the shell keeps
+   its soft edge. Every colour is a mix of --accent, --text and transparent, so light, dark, glass and NieR (where
+   the accent is the ink) all work from one set of rules. Tokens: */
+.qs-ask{
+  --qs-row: color-mix(in srgb, var(--text) 4%, transparent);
+  --qs-row-hover: color-mix(in srgb, var(--text) 7.5%, transparent);
+  --qs-line: color-mix(in srgb, var(--text) 9%, transparent);
+  --qs-on: color-mix(in srgb, var(--accent) 14%, transparent);
+  --qs-on-hover: color-mix(in srgb, var(--accent) 18%, transparent);
+  --qs-on-line: color-mix(in srgb, var(--accent) 55%, transparent);
+  --qs-on-ink: var(--on-accent, #fff);
+  --qs-hang: 24px;
 }
+.qs-ask-title{
+  position:relative;
+  font-size:16px; font-weight:650; line-height:1.35; letter-spacing:-.005em;
+  /* the close button sits over the spine column, so the prompt may run to 8px short of the reel's edge (with the
+     24px hang the line is exactly as long as before the mark) */
+  padding-right:8px; margin:0 0 12px;
+  text-wrap:pretty;
+}
+.qs-ask-title.has-glyph{ padding-left:var(--qs-hang); }
+.qs-ask-glyph{
+  position:absolute; left:0; top:2px;
+  display:flex; line-height:0;
+}
+.qs-ask-glyph > .nx-st{ --nx-bl-ink:var(--accent); --nx-bl-a:var(--nx-bl-working); }
+.qs-ask-glyph > .nx-st > svg.nx{ --nx-ink:var(--accent); }
+.qs-ask-title .qs-req{ margin-left:3px; }
 .qs-ask-sub{
   font-size:12px; font-weight:500; color:var(--muted);
-  margin:-6px 0 10px; padding-right:8px;
+  margin:-7px 0 10px; padding-right:8px;
+}
+.qs-ask-title.has-glyph + .qs-ask-sub{ padding-left:var(--qs-hang); }
+.qs-ask-sub-n{
+  color:color-mix(in srgb, var(--accent) 82%, var(--text)); font-weight:600;
+  font-variant-numeric:tabular-nums;
 }
 .qs-ask-opts{ display:flex; flex-direction:column; gap:4px; }
 .qs-ask-opt,
 .qs-ask-review-row{
   display:flex; align-items:flex-start; gap:10px; width:100%; text-align:left;
-  padding:10px 12px; border:1px solid transparent; border-radius:14px;
-  background:transparent; color:var(--text); cursor:pointer;
-  transition:background 180ms var(--spring-ease), border-color 180ms var(--spring-ease);
+  padding:10px 12px; border:1px solid transparent; border-radius:12px;
+  background:var(--qs-row); color:var(--text); cursor:pointer;
+  transition:background 180ms var(--spring-ease), border-color 180ms var(--spring-ease), color 180ms var(--spring-ease);
 }
 .qs-ask-opt{ align-items:center; }
-.qs-ask-opt:hover, .qs-ask-review-row:hover{ background:var(--surface-3); }
+.qs-ask-opt:hover, .qs-ask-review-row:hover{ background:var(--qs-row-hover); }
 .qs-ask-opt.is-on{
-  background:color-mix(in srgb,var(--accent) 8%,var(--surface-2));
-  border-color:transparent;
+  background:var(--qs-on);
+  border-color:var(--qs-on-line);
 }
-.qs-ask-review-row.is-ok{
-  background:color-mix(in srgb,var(--text) 4%,var(--surface-2));
-  border-color:transparent;
+.qs-ask-opt.is-on:hover{ background:var(--qs-on-hover); }
+.qs-ask-opt.is-on .qs-ask-opt-label{ font-weight:600; }
+.qs-ask-review-row.is-ok{ background:var(--qs-row); border-color:transparent; }
+.qs-ask-review-row.is-empty{
+  background:transparent;
+  border:1px dashed color-mix(in srgb, var(--text) 20%, transparent);
 }
-.qs-ask-review-row.is-empty{ opacity:.78; }
+.qs-ask-review-row.is-empty:hover{ background:var(--qs-row); }
 .qs-ask-mark{
   appearance:none; -webkit-appearance:none;
   width:18px; height:18px; flex:0 0 auto;
   display:grid; place-items:center;
-  border:1.5px solid color-mix(in srgb,var(--text) 32%,var(--border));
+  border:1.5px solid color-mix(in srgb,var(--text) 34%,transparent);
   background:transparent; color:inherit;
   padding:0; margin:0; cursor:pointer;
   transition:background 150ms var(--pm-ease-out), border-color 150ms var(--pm-ease-out);
 }
+.qs-ask-opt:hover .qs-ask-mark,
+.qs-ask .qs-other-ask:hover .qs-ask-mark{ border-color:color-mix(in srgb,var(--text) 58%,transparent); }
 .qs-ask-mark-radio{ border-radius:999px; }
-.qs-ask-mark-check{ border-radius:4px; }
+.qs-ask-mark-check{ border-radius:5px; }
 .qs-ask-opt.is-on .qs-ask-mark,
 .qs-ask-mark.is-on,
 .qs-other-ask.is-on .qs-ask-mark,
@@ -913,40 +986,55 @@ div.qs-step-body{ cursor:default; }
 .qs-other-ask:has(.qs-file-chip) .qs-ask-mark{
   border-color:var(--accent); background:var(--accent);
 }
+/* the selection lands: the radio's dot pops in and the check draws itself, once, as the row turns on */
 .qs-ask-mark-radio.is-on::after,
 .qs-ask-opt.is-on .qs-ask-mark-radio::after,
 .qs-other-ask.is-on .qs-ask-mark-radio::after,
 .qs-other-ask:has(.qs-other-input:not(:placeholder-shown)) .qs-ask-mark-radio::after,
 .qs-other-ask:has(.qs-file-chip) .qs-ask-mark-radio::after{
-  content:''; width:6px; height:6px; border-radius:999px; background:var(--surface-2);
+  content:''; width:6px; height:6px; border-radius:999px; background:var(--qs-on-ink);
+  animation:qs-mark-dot 260ms var(--pm-ease-pop) both;
 }
 .qs-ask-mark-check.is-on::after,
 .qs-ask-opt.is-on .qs-ask-mark-check::after,
 .qs-other-ask.is-on .qs-ask-mark-check::after,
 .qs-other-ask:has(.qs-other-input:not(:placeholder-shown)) .qs-ask-mark-check::after,
 .qs-other-ask:has(.qs-file-chip) .qs-ask-mark-check::after{
-  content:''; width:8px; height:4px; margin-top:-1px;
-  border-left:2px solid var(--surface-2); border-bottom:2px solid var(--surface-2);
+  content:''; width:9px; height:4.5px; margin-top:-2px;
+  border-left:2px solid var(--qs-on-ink); border-bottom:2px solid var(--qs-on-ink);
   transform:rotate(-45deg);
+  animation:qs-mark-tick 240ms var(--pm-ease-out) both;
+}
+@keyframes qs-mark-dot{
+  from{ transform:scale(0); opacity:0; }
+  to{ transform:none; opacity:1; }
+}
+@keyframes qs-mark-tick{
+  from{ clip-path:inset(0 100% 0 0); }
+  to{ clip-path:inset(0 0 0 0); }
 }
 .qs-ask-opt .qs-num, .qs-ask .qs-other-ask .qs-num{
-  font-size:13px; font-weight:500; color:var(--muted);
+  font-size:13px; font-weight:550; color:var(--subtle);
+  font-variant-numeric:tabular-nums;
+  transition:color 150ms var(--pm-ease-out);
 }
+.qs-ask-opt:hover .qs-num{ color:var(--muted); }
+.qs-ask-opt.is-on .qs-num, .qs-ask .qs-other-ask.is-on .qs-num{ color:var(--accent); }
 .qs-ask-opt-label{ font-size:14px; font-weight:500; min-width:0; }
 .qs-ask-review{ display:flex; flex-direction:column; gap:4px; margin-top:2px; }
 .qs-ask-review-copy{
-  display:flex; flex-direction:column; gap:4px; min-width:0; flex:1;
+  display:flex; flex-direction:column; gap:3px; min-width:0; flex:1;
 }
 .qs-ask-review-disc{
   flex:0 0 auto; width:20px; height:20px; margin-top:1px;
   border-radius:6px; display:grid; place-items:center;
-  font-size:11px; font-weight:700; line-height:1;
-  background:color-mix(in srgb,var(--text) 70%, transparent);
-  color:var(--surface-2);
+  font-size:11px; font-weight:700; line-height:1; font-variant-numeric:tabular-nums;
+  background:var(--accent);
+  color:var(--qs-on-ink);
 }
 .qs-ask-review-row.is-empty .qs-ask-review-disc{
   background:transparent; color:var(--muted);
-  border:1.5px solid color-mix(in srgb,var(--text) 32%, transparent);
+  border:1.5px dashed color-mix(in srgb,var(--text) 42%, transparent);
 }
 .qs-ask-review-q{
   font-size:12px; font-weight:500; color:var(--muted); line-height:1.4;
@@ -962,35 +1050,52 @@ div.qs-step-body{ cursor:default; }
 }
 .qs-ask .qs-other-ask{
   display:flex; align-items:center; gap:10px; margin-top:4px; padding:10px 12px;
-  border-radius:14px; border:1px solid transparent; cursor:pointer;
+  border-radius:12px; border:1px solid transparent; cursor:pointer;
+  background:var(--qs-row);
+  transition:background 180ms var(--spring-ease), border-color 180ms var(--spring-ease);
 }
+.qs-ask .qs-other-ask:hover{ background:var(--qs-row-hover); }
 .qs-ask .qs-other-ask.is-on,
 .qs-ask .qs-other-ask:has(.qs-other-input:not(:placeholder-shown)),
 .qs-ask .qs-other-ask:has(.qs-file-chip){
-  background:color-mix(in srgb,var(--accent) 8%,var(--surface-2));
-  border:1px solid transparent;
+  background:var(--qs-on);
+  border:1px solid var(--qs-on-line);
 }
 .qs-ask .qs-other-ask:focus-within:not(.is-on):not(:has(.qs-other-input:not(:placeholder-shown))):not(:has(.qs-file-chip)){
-  background:var(--surface-3);
+  background:var(--qs-row-hover);
 }
 .qs-ask .qs-other-ask .qs-other-input{ cursor:text; }
 .qs-ask .qs-other-ask .qs-num{ margin-top:0; font-size:13px; }
 .qs-ask .qs-other-ask .qs-other-line{
-  border:1px solid var(--border); background:var(--surface-3); padding:4px 8px;
-  min-height:32px; border-radius:10px;
+  border:1px solid var(--qs-line); background:var(--surface-2); padding:4px 8px;
+  min-height:32px; border-radius:9px;
+  transition:border-color 150ms var(--pm-ease-out);
 }
+.qs-ask .qs-other-ask .qs-other-line:focus-within{
+  border-color:var(--qs-on-line);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+/* the well shows the focus; the field inside it draws no second (square) ring */
+.qs-ask .qs-other-ask .qs-other-input:focus-visible,
+.qs-ask-note-input:focus-visible{ outline:none; }
 .qs-ask .qs-other-ask .qs-other-input{ font-size:13px; font-weight:500; padding:4px 0; }
 .qs-ask-note{ margin:2px 8px 0 0; }
+/* sentence case (pmx grammar: no uppercase micro-labels) */
 .qs-ask-note-eyebrow{
-  font-size:11px; font-weight:650; letter-spacing:.04em; text-transform:uppercase;
-  color:var(--muted); margin:0 0 8px;
+  font-size:12px; font-weight:600; color:var(--muted); margin:0 0 7px;
 }
 .qs-ask-note-well{
   position:relative;
   display:flex; flex-direction:column; align-items:stretch; gap:8px;
   min-height:84px; padding:10px 12px;
-  border:1px solid var(--border); border-radius:12px;
-  background:var(--surface-3);
+  border:1px solid var(--qs-line); border-radius:12px;
+  background:var(--qs-row);
+  transition:border-color 150ms var(--pm-ease-out), box-shadow 150ms var(--pm-ease-out), background 150ms var(--pm-ease-out);
+}
+.qs-ask-note-well:focus-within{
+  border-color:var(--qs-on-line);
+  background:transparent;
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
 }
 .qs-ask-note-input{
   width:100%; min-height:64px; resize:none;
@@ -1006,7 +1111,7 @@ div.qs-step-body{ cursor:default; }
 }
 @keyframes qs-late{
   0%,50%{ opacity:0; transform:scale(.6); }
-  78%{ opacity:1; transform:scale(1.28); }
+  78%{ opacity:1; transform:scale(1.12); }
   100%{ opacity:1; transform:none; }
 }
 .qs-ask-count{
@@ -1022,14 +1127,18 @@ div.qs-step-body{ cursor:default; }
 }
 .qs-ask-foot .text-button, .qs-ask-foot .soft-button{ color:var(--muted); }
 .qs-ask-foot .text-button:hover, .qs-ask-foot .soft-button:hover{ color:var(--text); background:transparent; }
+/* the way forward is the one filled control: Next, and Submit on review */
 .qs-ask-foot .primary-button{
-  border-radius:999px; padding:6px 14px;
-  background:color-mix(in srgb,var(--text) 12%, var(--surface-3));
-  color:var(--text);
-  border:0; box-shadow:none;
+  border-radius:999px; padding:6px 16px;
+  background:var(--accent);
+  color:var(--qs-on-ink);
+  font-weight:650;
+  border:0;
+  box-shadow:0 6px 16px -8px color-mix(in srgb, var(--accent) 80%, transparent);
 }
 .qs-ask-foot .primary-button:hover{
-  background:color-mix(in srgb,var(--text) 18%, var(--surface-3));
+  background:color-mix(in srgb, var(--accent) 86%, var(--text));
+  filter:none;
 }
 .qs-ask .qs-spine{
   position:relative;
@@ -1042,8 +1151,14 @@ div.qs-step-body{ cursor:default; }
 .qs-spine-track{
   position:absolute; left:50%; top:48px; bottom:20px;
   width:4px; margin-left:-2px; border-radius:999px;
-  background:color-mix(in srgb,var(--text) 32%, transparent);
+  background:color-mix(in srgb,var(--text) 14%, transparent);
   pointer-events:none;
+}
+/* progress: the accent wire from the first mark to the current one */
+.qs-spine-fill{
+  position:absolute; left:0; right:0; top:0;
+  display:block; height:calc(var(--qs-fill, 0) * 100%);
+  border-radius:inherit; background:var(--accent);
 }
 button.qs-spine-slot{
   appearance:none; -webkit-appearance:none;
@@ -1054,22 +1169,22 @@ button.qs-spine-slot{
 }
 button.qs-spine-slot::after{
   content:''; width:8px; height:8px; border-radius:999px; box-sizing:border-box;
-  border:1.5px solid color-mix(in srgb,var(--text) 40%, transparent);
-  background:transparent;
+  border:0;
+  background:color-mix(in srgb,var(--text) 30%, var(--surface-2));
   transition:background 150ms var(--pm-ease-out), border-color 150ms var(--pm-ease-out),
     transform 150ms var(--pm-ease-pop);
 }
+/* answered: an accent bead (on the lit wire it reads as a knot; ahead of the thumb, as a promise kept) */
+button.qs-spine-slot.is-done::after{ background:var(--accent); }
+/* skipped: a hollow bead, a gap in the lit wire */
+button.qs-spine-slot.is-skipped::after{
+  background:var(--surface-2);
+  border:2px solid var(--accent);
+}
 button.qs-spine-slot:hover::after{
-  border-color:color-mix(in srgb,var(--text) 82%, transparent);
-  background:color-mix(in srgb,var(--text) 82%, transparent);
-  transform:scale(1.12);
+  transform:scale(1.3);
 }
-button.qs-spine-slot.is-todo::after,
-button.qs-spine-slot.is-skipped::after,
-button.qs-spine-slot.is-done::after{
-  border:0;
-  background:color-mix(in srgb,var(--text) 70%, transparent);
-}
+button.qs-spine-slot.is-todo:hover::after{ background:color-mix(in srgb,var(--text) 70%, var(--surface-2)); }
 button.qs-spine-slot.is-current::after{
   opacity:0;
 }
@@ -1077,9 +1192,11 @@ button.qs-spine-slot.is-current::after{
   position:absolute; left:50%; z-index:2; pointer-events:none;
   width:16px; height:16px; margin-left:-8px;
   border-radius:999px;
-  background:var(--text); color:var(--surface-2);
+  background:var(--accent); color:var(--qs-on-ink);
   font-size:10px; font-weight:700; line-height:16px; text-align:center;
+  font-variant-numeric:tabular-nums;
   display:grid; place-items:center;
+  box-shadow:0 0 0 3px var(--surface-2), 0 0 12px 1px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
 /* ==========================================================================
@@ -1139,4 +1256,32 @@ button.qs-spine-slot.is-current::after{
   }
   .qs-stack-peek:hover{ transform:none; }
   .qs-chip:active{ transform:none; }
+  .qs-ask-mark::after{ animation:none !important; }
+  .qs-ask-opt, .qs-ask .qs-other-ask, .qs-ask-mark, .qs-ask .qs-num, .qs-ask-note-well, .qs-spine-slot::after{ transition:none !important; }
 }
+/* Item 15: the Ask Card's own motion ends at its end state on the two class routes too (Demo Studio's
+   body.pm56-reduced, PMConcept7's html[data-motion="reduced"]): the cascade and reel collapse to 1ms, the selection's
+   dot and check are simply there. questions.js reduceMotion() reads the same three routes for the WAAPI morph, the
+   row press and the spine. */
+body.pm56-reduced .qs-ask, body.pm56-reduced .qs-shell, body.pm56-reduced .qs-reel, body.pm56-reduced .qs-reel-out, body.pm56-reduced .qs-ask-foot, body.pm56-reduced .qs-ask-title, body.pm56-reduced .qs-ask-sub, body.pm56-reduced .qs-ask-opt, body.pm56-reduced .qs-ask-review-row, body.pm56-reduced .qs-ask-note, body.pm56-reduced .qs-spine, body.pm56-reduced .qs-ask-x, body.pm56-reduced .qs-spine-thumb, body.pm56-reduced .qs-other-ask,
+html[data-motion="reduced"] .qs-ask, html[data-motion="reduced"] .qs-shell, html[data-motion="reduced"] .qs-reel, html[data-motion="reduced"] .qs-reel-out, html[data-motion="reduced"] .qs-ask-foot, html[data-motion="reduced"] .qs-ask-title, html[data-motion="reduced"] .qs-ask-sub, html[data-motion="reduced"] .qs-ask-opt, html[data-motion="reduced"] .qs-ask-review-row, html[data-motion="reduced"] .qs-ask-note, html[data-motion="reduced"] .qs-spine, html[data-motion="reduced"] .qs-ask-x, html[data-motion="reduced"] .qs-spine-thumb, html[data-motion="reduced"] .qs-other-ask{
+  animation-duration:1ms !important; animation-delay:0ms !important; filter:none !important;
+}
+body.pm56-reduced .qs-ask-mark::after,
+html[data-motion="reduced"] .qs-ask-mark::after{ animation:none !important; }
+body.pm56-reduced .qs-ask-opt, body.pm56-reduced .qs-other-ask, body.pm56-reduced .qs-ask-mark, body.pm56-reduced .qs-ask .qs-num, body.pm56-reduced .qs-ask-note-well, body.pm56-reduced .qs-spine-slot::after,
+html[data-motion="reduced"] .qs-ask-opt, html[data-motion="reduced"] .qs-other-ask, html[data-motion="reduced"] .qs-ask-mark, html[data-motion="reduced"] .qs-ask .qs-num, html[data-motion="reduced"] .qs-ask-note-well, html[data-motion="reduced"] .qs-spine-slot::after{ transition:none !important; }
+
+/* ==========================================================================
+   Ask Card in NieR (item 15).  The palette half; the parts half (cursor, diamonds) is nier-parts.css's Questions
+   block.  The accent is the ink, so the card's accent rules already ink the chosen row, the wire, the thumb and Next
+   (paper on ink).  Nothing glows: the header light, the thumb's bloom and Next's shadow go, the thumb keeps its cut
+   ring.  The selection lands in NieR's stepped voice.
+   ========================================================================== */
+html[data-o55-nier="on"] .decision-host[data-variant="8"] .qs-shell,
+html[data-o55-nier="on"] .decision-host[data-variant="8"] .qs-open-face{ background:var(--surface-2); }
+html[data-o55-nier="on"] .qs-spine-thumb{ box-shadow:0 0 0 3px var(--surface-2); }
+html[data-o55-nier="on"] .qs-ask-foot .primary-button{ box-shadow:none; }
+html[data-o55-nier="on"] .qs-ask-note-well:focus-within,
+html[data-o55-nier="on"] .qs-ask .qs-other-ask .qs-other-line:focus-within{ box-shadow:none; }
+html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3, jump-end); }
