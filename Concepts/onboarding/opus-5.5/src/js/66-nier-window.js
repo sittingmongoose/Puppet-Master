@@ -145,17 +145,18 @@
   }
 
   /* ------------------------------------------------------------------ choices: brackets and the menu cursor */
-  /* the chosen card or tile wears target brackets; they move with the choice and let go when it changes */
+  /* the chosen card or tile (and the look screen's NieR row while it is on) wears target brackets; they move with the
+     choice and let go when it changes */
   const locked = new Set();
   function marks(layer) {
     const F = fx(), want = new Set();
-    if (F && F.enabled('brackets') && layer && layer.isConnected && shown()) layer.querySelectorAll('.o55-card.o55-on, .o55-tile.o55-on').forEach((el) => want.add(el));
+    if (F && F.enabled('brackets') && layer && layer.isConnected && shown()) layer.querySelectorAll('.o55-card.o55-on, .o55-tile.o55-on, .o55-nierlook[data-on="true"]').forEach((el) => want.add(el));
     locked.forEach((el) => { if (!want.has(el)) { locked.delete(el); if (O55.nierFx) O55.nierFx.brackets(el, false); } });
     want.forEach((el) => { if (!locked.has(el)) { locked.add(el); F.brackets(el, true); } });
   }
   /* the menu cursor: the card, tile or switch under the pointer (or holding focus) becomes an ink bar with the square
      cursor stepping beside it, with the cursor's tick (O55.sound 'hover', silent outside the NieR kit) */
-  const CHOICE = '.o55-card:not([aria-disabled="true"]), .o55-tile, .o55-toggle';
+  const CHOICE = '.o55-card:not([aria-disabled="true"]), .o55-tile, .o55-toggle, .o55-nierlook';
   let cur = null, tick = 0;
   function point(el) {
     if (el === cur) return;
@@ -179,7 +180,22 @@
       if (to && cur.contains(to)) return;
       if (choiceOf(e.target) === cur && document.activeElement !== cur) point(null);
     });
-    r.addEventListener('focusin', (e) => { if (painted()) point(choiceOf(e.target)); });
+    r.addEventListener('focusin', (e) => { if (painted()) { point(choiceOf(e.target)); M.release(reticle); } });
+    r.addEventListener('scroll', () => { if (painted()) { reticle(); M.after(200, reticle); } }, { capture: true, passive: true });
+  }
+  /* The page-wide focus reticle (Target brackets) frames what holds focus, and after a scroll it comes back to it. In
+     the window a heading or card the pane has scrolled out of view would leave the reticle drawn over the header or
+     the footer: it stands aside while its target is not wholly inside the pane's scroll box. */
+  const SCROLLER = '.o55-scroll, .o55-treelist, .o55-nierpanel-scroll';
+  function reticle() {
+    const ret = document.getElementById('o55np-reticle'); if (!ret) return;
+    const r = rootEl(), a = document.activeElement;
+    let hide = false;
+    if (r && shown() && painted() && a && r.contains(a)) {
+      const box = a.closest(SCROLLER);
+      if (box) { const A = a.getBoundingClientRect(), B = box.getBoundingClientRect(); hide = A.top < B.top - 2 || A.bottom > B.bottom + 2 || A.left < B.left - 2 || A.right > B.right + 2; }
+    }
+    if (ret.hasAttribute('data-o55nw-hide') !== hide) ret.toggleAttribute('data-o55nw-hide', hide);
   }
 
   /* ------------------------------------------------------------------ block progress */
@@ -255,7 +271,7 @@
     const on = painted() && !!rootEl();
     stage(on); brand(on);
     if (on) wire();
-    if (!on) { cancelAll(); point(null); marks(null); podUntil = 0; }
+    if (!on) { cancelAll(); point(null); marks(null); podUntil = 0; reticle(); }
   }
   /* NieR Mode turned on or off, or a part installed or removed, while the window is open (the look screen's preview) */
   new MutationObserver(() => {
@@ -388,6 +404,7 @@
 
     close(reason, handoff) {
       cancelAll(); point(null); marks(null); podUntil = 0; opening = null;
+      const ret = document.getElementById('o55np-reticle'); if (ret) ret.removeAttribute('data-o55nw-hide');
       if (O55.nierFx && O55.nierFx.pod) O55.nierFx.pod.hush();
       if (painted() && reason === 'done') handover(!!handoff);
       return false;
