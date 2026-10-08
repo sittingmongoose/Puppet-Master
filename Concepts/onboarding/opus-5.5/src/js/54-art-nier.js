@@ -416,18 +416,24 @@
   const props = {
     bar, helper, stage, operator, machine,
     curtain(ctx) {
-      /* ten slices of parchment, each with an ink hairline, leave to alternate sides (30-art.css .o55-cur-sl/-sr, --k);
-         the ink plate across the middle is cut first (.o55-cur-plate); all of it is gone at 1 s (.o55-cur-all) */
-      const p = ctx.pal, n = 10, h = A.H / n;
-      let out = '';
-      for (let i = 0; i < n; i++) {
-        const y = -A.H / 2 + i * h;
-        out += `<g class="o55-cur o55-cur-${i % 2 ? 'sr' : 'sl'}" style="--k:${i}"><rect x="-240" y="${f(y)}" width="480" height="${f(h + 0.6)}" fill="${p.ground}"/>`
-          + `<path d="M-240 ${f(y + h)}H240" stroke="${p.faint}" stroke-width="0.8"/></g>`;
-      }
-      const plate = `<g class="o55-cur o55-cur-plate"><rect x="-150" y="-14" width="300" height="28" fill="${p.ink}"/>`
-        + `<path d="${dia(-130, 0, 6)}${dia(130, 0, 6)}" fill="${p.onInk}"/><path d="M-112 0H112" stroke="${p.onInk}" stroke-width="1" stroke-opacity="0.5"/></g>`;
-      return `<g class="o55-cur-all">${out}${plate}</g>`;
+      /* A theatre curtain of two parchment panels that meet at the middle of the stage (design/hero-spec.md H4b): each
+         is ruled with faint pleats, has an ink seam with square studs at its inner edge, and carries its half of an ink
+         plate across the middle (a paper diamond near the seam, a paper hairline). 30-art.css closes it over the scene
+         it replaces and opens it on the troupe in held steps whose edges stand only in the gaps between the units
+         (x 30 / 180 / 240 / 300 / 450: the units stand at 128, 240 and 352), so no frame shows part of a unit; all of
+         it is gone once open (.o55-cur-all). Slint: two Rectangles stepping x, their pleats and studs as children. */
+      const p = ctx.pal, K = kit(p), Hh = A.H / 2, Wh = A.W / 2;
+      const panel = (sd) => {
+        const x0 = sd < 0 ? -Wh : 0, out = sd < 0 ? -1 : 1;
+        let pleats = '', studs = '';
+        for (let x = 24; x < Wh; x += 24) pleats += `M${out * x} ${-Hh}V${Hh}`;
+        for (let y = -Hh + 30; y < Hh; y += 60) if (Math.abs(y) > 20) studs += K.SQ(out * 5, y, 3, 'i');
+        const seam = out * 0.7, dx = out * 20;
+        return `<g class="o55-cur o55-cur-p${sd < 0 ? 'l' : 'r'}">${K.R(x0, -Hh, Wh, A.H, 'g')}${K.P(pleats, 's3', 0.7)}`
+          + `${K.R(sd < 0 ? -Wh : 1, -14, Wh - 1, 28, 'i')}${K.DI(dx, 0, 5.5, 'oi')}${K.P(`M${out * 32} 0H${out * (Wh - 16)}`, 'koi', 0.8)}`
+          + `${K.P(`M${seam} ${-Hh}V${Hh}`, 's', 1.4)}${studs}</g>`;
+      };
+      return `<g class="o55-cur-all">${panel(-1)}${panel(1)}</g>`;
     },
     /* a chamfered bezel with an ink header band, a paper screen of three text rows and a blinking cursor block (part
        Menu cursor), or a check; an ink base; the caption below */

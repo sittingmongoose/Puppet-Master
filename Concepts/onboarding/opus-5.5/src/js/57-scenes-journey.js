@@ -161,7 +161,8 @@
   /* What powers Puppet Master: the helpers wait on the stage; each connected account lights a spark on the bar;
      Free Models brings extra helpers onto the stage. */
   A.defineScene('power', {
-    label: 'art.hero', band: [0, 170, 480, 280],
+    /* (NieR's narrow band: the troupe's heads and shoulders, as at Ready, where its curtain closes over this scene) */
+    label: 'art.hero', band: [0, 170, 480, 280], bandNier: [0, 210, 480, 280],
     compose(ctx) {
       const pr = ctx.params || {}, n = pr.n || 0, m = A.metrics(ctx.family);
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: n ? ['wave', 'carry', 'stand'] : ['stand', 'stand', 'stand'] }));
@@ -176,14 +177,19 @@
 
   /* Ready: the curtain lifts, the helpers bow, a sign reads ready. */
   A.defineScene('ready', {
-    label: 'art.hero', band: [0, 170, 480, 280],
+    /* (NieR's narrow band frames the troupe's heads, visors and shoulders, so the curtain call's bows read there, with
+       Pod's lane just above the heads: on the 170 px band of a 760 px window the scene shows about y 294..406) */
+    label: 'art.hero', band: [0, 170, 480, 280], bandNier: [0, 210, 480, 280],
     compose(ctx) {
       /* NieR's troupe stands in a line for its curtain call (O55.art.curtainCall bows it and rises it), and the unit
-         nearest the pane ends pointing at it: the next thing to press is the Guided Tour */
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: ctx.family === 'nier' ? ['stand', 'wave', 'point'] : ['bow', 'wave', 'bow'] }));
-      items.push({ key: 'sign', prop: 'badge', x: 240, y: ctx.family === 'nier' && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
+         nearest the pane ends pointing at it: the next thing to press is the Guided Tour. The curtain opens on it
+         standing there: the set and the troupe have no entrance of their own. */
+      const nier = ctx.family === 'nier';
+      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: nier ? null : 'rise' }].concat(A.ensemble(ctx, { poses: nier ? ['stand', 'wave', 'point'] : ['bow', 'wave', 'bow'], standing: nier }));
+      items.push({ key: 'sign', prop: 'badge', x: 240, y: nier && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
-      items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' }); /* it opens on the troupe */
+      /* it opens on the troupe (NieR's, on the narrow band, is centred on what the band shows: its plate in view) */
+      items.push({ key: 'curtain', prop: 'curtain', x: 240, y: nier && ctx.band ? 350 : 300, layer: 'front' });
       return items;
     }
   });

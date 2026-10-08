@@ -29,18 +29,20 @@
      carry o55-ens-bar / o55-ens-h, the parts a held ensemble hides until O55.art.troupe.enter lowers them in (50-art-core
      ctx.ensembleHold, 30-art.css .o55-ens-hold). NieR's helpers also carry `fly`, the height they are lowered from in
      their own units (FLY scene units above their mark; the inner group's --o55-fly, read by the rig and the fly-in).
-     o.level hangs the three at one height (o.level units above the floor: NieR's Creating, while the work runs). */
+     o.level hangs the three at one height (o.level units above the floor: NieR's Creating, while the work runs).
+     o.standing: the bar and the troupe are simply there, with no entrance of their own (NieR's Ready: the curtain
+     opens on them standing in a line). */
   const FLY = 160;
   A.FLY = FLY;
   A.ensemble = function ensemble(ctx, o) {
     o = o || {};
     const m = A.metrics(ctx.family), cx = o.cx || 240, barY = o.barY || m.barY, floor = o.floor || m.floor;
     const s = (o.scale || 1) * m.helperScale, spread = o.spread || 112, poses = o.poses || ['wave', 'carry', 'stand'], nier = ctx.family === 'nier';
-    const items = [{ key: 'bar', prop: 'bar', x: cx, y: barY, layer: 'front', anim: 'drop', delay: o.delay || 0, amb: 'sway', ambd: 5600, cls: 'o55-ens-bar' }];
+    const items = [{ key: 'bar', prop: 'bar', x: cx, y: barY, layer: 'front', anim: o.standing ? null : 'drop', delay: o.delay || 0, amb: 'sway', ambd: 5600, cls: 'o55-ens-bar' }];
     [-1, 0, 1].forEach((side, i) => {
       const a = side < 0 ? m.anchors[0] : side > 0 ? m.anchors[2] : m.anchors[1];
       /* each helper hangs from its own point on the bar; a waving helper's hand hangs from a second point on its side */
-      items.push({ key: 'h' + i, prop: 'helper', x: cx + side * spread, y: o.level != null ? floor - o.level : floor - (side === 0 ? 14 : 0), s, layer: 'mid', anim: o.anim || 'drop',
+      items.push({ key: 'h' + i, prop: 'helper', x: cx + side * spread, y: o.level != null ? floor - o.level : floor - (side === 0 ? 14 : 0), s, layer: 'mid', anim: o.standing ? null : o.anim || 'drop',
         delay: (o.delay || 0) + 260 + i * 90, amb: 'bob', ambd: 2400 + i * 380, cls: 'o55-ens-h', fly: nier ? -FLY / s : null,
         opts: { variant: (o.variants || [0, 1, 2])[i], pose: poses[i], anchor: [cx + a[0], barY + a[1]], px: m.helperPx,
           tie: ['a0', 'a1', 'a2'][side + 1], handTie: side < 0 ? 'w0' : 'w2', side } }); /* a raised right hand hangs from the bar's right side */
@@ -55,14 +57,16 @@
     compose(ctx) {
       const m = A.metrics(ctx.family);
       if (ctx.family === 'nier' && ctx.beat !== 'ready') return heroNier(ctx, m);
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + (ctx.family === 'retro' ? 38 : 28), layer: 'back', anim: 'rise', delay: 80 }];
-      items.push(...A.ensemble(ctx, {}));
+      /* (NieR's ready beat: its curtain opens on the troupe standing, so the set and the troupe have no entrance) */
+      const standing = ctx.family === 'nier' && ctx.beat === 'ready';
+      const items = [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + (ctx.family === 'retro' ? 38 : 28), layer: 'back', anim: standing ? null : 'rise', delay: 80 }];
+      items.push(...A.ensemble(ctx, { standing }));
       items.push(...sparks([[74, 262, 0], [410, 230, 1], [398, 352, 2], [88, 380, 3]]));
       items.push({ key: 'dim', prop: 'dimv', x: 414, y: m.barY, layer: 'back', anim: 'fade', delay: 700, opts: { h: m.floor - m.barY, label: L('strings', 'strings') } });
       items.push({ key: 'n-plan', prop: 'note', x: 252, y: m.floor - 62, layer: 'front', anim: 'fade', delay: 1300, opts: { text: L('plan', 'the plan'), dx: 64, dy: 116 } });
       if (ctx.family === 'retro' && ctx.beat !== 'ready') items.push({ key: 'ready', prop: 'badge', x: 240, y: 574, layer: 'front', anim: 'type', delay: 1300, amb: 'blink', opts: { label: L('pressStart', 'press start'), accent: true } });
       /* the pages that end Connect and restore ("… is ready", "… is back") open on the troupe too */
-      if (ctx.beat === 'ready') items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' });
+      if (ctx.beat === 'ready') items.push({ key: 'curtain', prop: 'curtain', x: 240, y: standing && ctx.band ? 350 : 300, layer: 'front' });
       return items;
     }
   });

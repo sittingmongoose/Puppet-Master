@@ -556,7 +556,9 @@
     const fx = fam.overlay ? fam.overlay(ctx) : '';
     const defs = fam.defs ? fam.defs(ctx) : '';
     const label = scene.label ? O55.t(scene.label) : '';
-    const band = ctx.band ? (scene.band || [0, 170, A.W, 280]) : null;
+    /* (a scene may frame NieR's art in its own band, scene.bandNier: the narrow window's 170 px band shows only about
+       112 units of it, centred, so NieR's hero pictures centre it on what they show there) */
+    const band = ctx.band ? ((ctx.family === 'nier' && scene.bandNier) || scene.band || [0, 170, A.W, 280]) : null;
     const vb = band ? band.join(' ') : `0 0 ${A.W} ${A.H}`;
     /* ctx.sceneCls: a state the composition puts on the whole drawing (NieR's 'o55-nier-asleep', 55-scenes.js) */
     const svg = `<svg class="o55-scene o55-f-${ctx.family} o55-m-${ctx.mode}${ctx.sceneCls ? ' ' + ctx.sceneCls : ''}" viewBox="${vb}" preserveAspectRatio="xMidYMid slice"`
@@ -566,7 +568,7 @@
       + `<g class="o55-sl o55-sl-mid" data-key="mid">${layers.mid.join('')}</g>`
       + `<g class="o55-sl o55-sl-front" data-key="front">${layers.front.join('')}</g>`
       + `<g class="o55-fx" data-key="fx">${fx}</g></svg>`;
-    return { svg, family: ctx.family };
+    return { svg, family: ctx.family, parts: ctx.tok.nierParts };
   }
 
   /* mount(host, sceneId, ctx): first mount plays the entrance; the same scene with a new beat morphs (keyed props
@@ -606,7 +608,13 @@
       return current;
     }
     const wrap = document.createElement('div');
-    wrap.className = 'o55-scene-wrap o55-enter' + (ctx && ctx.ensembleHold ? ' o55-ens-hold' : '') + (ctx && ctx.still ? ' o55-still' : '');
+    /* a NieR scene with a curtain (Ready, the pages that end Connect and restore) that replaces a scene on the stage
+       closes its curtain over that scene and opens it on its own troupe instead of slicing in over it (30-art.css
+       .o55-cc-in): a slice cut the old units at the waist and the curtain's edges never stand on a unit. Not where the
+       curtain is not drawn (no Slice open part, a low-resource computer, Reduced Motion). */
+    const M = O55.motion, parts = out.parts;
+    const cc = !!current && out.family === 'nier' && html.indexOf('o55-cur-all') >= 0 && !M.reduced() && !M.lowResource && (!parts || parts.indexOf('slice') >= 0);
+    wrap.className = 'o55-scene-wrap o55-enter' + (cc ? ' o55-cc-in' : '') + (ctx && ctx.ensembleHold ? ' o55-ens-hold' : '') + (ctx && ctx.still ? ' o55-still' : '');
     wrap.setAttribute('data-scene', sceneId); wrap.setAttribute('data-family', out.family);
     if (ctx && ctx.still) wrap.setAttribute('data-o55-ambient', 'off');
     wrap.innerHTML = html;
