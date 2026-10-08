@@ -31,13 +31,13 @@
      onboarding it is a preview kept with the look (O55.nierLook). */
   function nierRow(th) {
     if (!O55.nierLook || !window.PM_NIER) return '';
-    const on = O55.nierLook.state().on, name = T('look.families.' + th.chosen + '.name');
+    const on = O55.nierLook.state().on, name = T('look.families.' + th.chosen + '.name'), sub = on ? T('look.nier.subOn', { name }) : T('look.nier.sub');
     return `<div class="o55-nierlook" data-key="nier" data-on="${on}">`
-      + `<button type="button" class="o55-niercheck${on ? ' o55-on' : ''}" role="checkbox" aria-checked="${on}" aria-labelledby="o55-niername" aria-describedby="o55-niersub" data-o55-do="pickNier" data-o55-sound="self" data-o55-nier-check data-key="nier-check" data-pm-hover-exempt="true">`
+      + `<button type="button" class="o55-niercheck${on ? ' o55-on' : ''}" role="checkbox" aria-checked="${on}" aria-labelledby="o55-niername" aria-describedby="o55-niersub" title="${U.esc(sub)}" data-o55-do="pickNier" data-o55-sound="self" data-o55-nier-check data-key="nier-check" data-pm-hover-exempt="true">`
       + `<span class="o55-nierthumb o55-scene-host" data-nier-thumb aria-hidden="true" data-morph-skip></span>`
       + `<span class="o55-niertext"><span class="o55-niertitle"><span class="o55-nierbox" aria-hidden="true"></span><span class="o55-niername" id="o55-niername">${U.esc(T('look.nier.label'))}</span>`
       + `<span class="o55-tag o55-niertag">${U.esc(T('look.nier.tag'))}</span></span>`
-      + `<span class="o55-niersub" id="o55-niersub">${U.esc(on ? T('look.nier.subOn', { name }) : T('look.nier.sub'))}</span></span></button>`
+      + `<span class="o55-niersub" id="o55-niersub">${U.esc(sub)}</span></span></button>`
       + `<button type="button" class="o55-btn o55-secondary o55-small o55-nieradjust" data-o55-do="adjustNier" data-o55-sound="self" data-key="nier-adjust" data-pm-hover-exempt="true">${O55.nierLook.icon()}<span>${U.esc(T('look.nier.adjust'))}</span></button></div>`;
   }
   let nierSub = null;
@@ -50,7 +50,9 @@
     scene: () => ({ id: 'hero', beat: 'look' }),
     eyebrow: () => T('look.eyebrow'),
     title: () => T('look.title'),
-    lead: () => T('look.lead'),
+    /* the note about Light / Dark (or, for a returning person, that their look is kept) ends the lead, on its short
+       second line, so the mode line has room for NieR Mode beside Light / Dark (review W5) */
+    lead: (S) => T('look.lead') + ' ' + T(S && S.env && S.env.here.projects.length ? 'look.keep' : 'look.modeHint'),
     body(S) {
       const th = O55.theme();
       const tiles = FAMS.map((f, i) => {
@@ -60,11 +62,11 @@
           + `<span class="o55-tilename">${U.esc(T('look.families.' + f + '.name'))}</span><span class="o55-tilesub">${U.esc(T('look.families.' + f + '.sub'))}</span>`
           + `<span class="o55-check" aria-hidden="true"></span></button>`;
       }).join('');
-      /* Light/Dark sits above the tiles; a returning person reads that their current look is kept unless they pick
-         another (it is already the selected tile) */
-      const note = S.env.here.projects.length ? `<span class="o55-hintline o55-keep">${C.small('check', 13)}${U.esc(T('look.keep'))}</span>` : `<span class="o55-hintline">${U.esc(T('look.hint'))}</span>`;
-      return `<div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}${note}</div>`
-        + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}">${tiles}</div>` + nierRow(th);
+      /* Light / Dark sits above the tiles. NieR Mode follows the tiles in reading order; on a wide window it is drawn
+         as a compact card on Light / Dark's line (13-nier-look.css), so the checkbox and Adjust are in the first view
+         with the four looks; the narrow window keeps it as a row under them */
+      return `<div class="o55-lookgrid" data-key="lookgrid"><div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}</div>`
+        + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}" data-key="tiles">${tiles}</div>` + nierRow(th) + '</div>';
     },
     mounted(S, layer, first) {
       /* each tile is a small living scene drawn with that family's own tokens */

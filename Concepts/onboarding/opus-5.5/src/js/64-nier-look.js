@@ -103,7 +103,7 @@
       const live = tour && !tour.hidden ? tour.querySelector('.o55t-bar [data-o55t="lookMenu"]') : null;
       return live || (el && el.isConnected ? el : null);
     };
-    return C.popup({ store: n.store('live'), from: el || null, returnFocus });
+    return C.popup({ store: n.store('live'), from: el || null, title: T('look.nier.panelTitle'), returnFocus });
   }
 
   /* The editor inside the window: a panel over the window's interior (the stage and the pane), under its header. The
@@ -167,7 +167,7 @@
     const onKey = (e) => {
       if (!panel || panel.host !== host) return;
       const t = e.target, root = S.root;
-      if (e.key === 'Enter' && t && t.classList && t.classList.contains('o55-nierpanel-h')) { e.preventDefault(); return; }
+      if (e.key === 'Enter' && t && t.classList && t.classList.contains('o55-nierpanel-h')) { e.preventDefault(); e.stopPropagation(); return; }
       if (e.key !== 'Escape') return;
       const inside = host.contains(t) || t === document.body || t === document.documentElement || (root && root.contains(t) && !S.lookOpen);
       if (!inside) return;

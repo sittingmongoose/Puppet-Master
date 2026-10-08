@@ -68,16 +68,21 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-scroll { scrollbar-color: rgba(
 /* the page-wide focus reticle stands aside while its target is scrolled out of the pane (66-nier-window.js) */
 html[data-o55-open] #o55np-reticle[data-o55nw-hide] { visibility: hidden !important; }
 /* Pod's speech strip in the window: the narrator speaks in a lane of the art panel (66-nier-window.js anchor()), so
-   its size is known before it is drawn: at most 280 px wide (196 px when a lane is only clear for a slimmer strip).
+   its size is known before it is drawn: at most 260 px wide (196 px when a lane is only clear for a slimmer strip).
    On the narrow window's short band it is one compact row: the POD 042 head inline beside the words, the unit at
-   five eighths of its size, so it fits the band above or below the scene's subject. */
-#pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 280px; }
+   five eighths of its size, so it fits the band above or below the scene's subject; beside a subject as tall as the
+   band it is a stacked strip 200 px wide. */
+#pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 260px; }
 #pm-o55-onboarding[data-o55nw-slim] > .o55fx-layer .o55fx-pod-strip { max-width: 196px; }
 #pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod { gap: 8px; }
 #pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-unit { margin: -9.75px -7.5px; transform: scale(.625); }
 #pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch; max-width: 520px; }
 #pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-head { padding: 0 10px; align-self: stretch; }
 #pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-text { align-self: center; padding: 7px 10px 8px; line-height: 1.4; }
+/* beside a subject as tall as the band: a stacked strip 200 px wide, its head on top */
+#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-strip { display: block; max-width: 200px; }
+#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-head { padding: 3px 10px 2px; }
+#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-text { padding: 7px 11px 9px; }
 #pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip::before { width: 8px; }
 #pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip::after { right: calc(100% + 7px); }
 #pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod[data-side="left"] .o55fx-pod-strip::after { right: auto; left: calc(100% + 7px); }

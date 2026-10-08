@@ -27,7 +27,10 @@
   const html = document.documentElement;
   const T = (k, v) => O55.t('nierWindow.' + k, v);
   const painted = () => html.getAttribute('data-o55-nier') === 'on';
-  const has = (key) => painted() && (' ' + (html.getAttribute('data-o55-nier-parts') || '') + ' ').indexOf(' ' + key + ' ') >= 0;
+  /* one gate for every NieR part, O55.nierFx's when it offers it (it also reads a preview's parts while the painted
+     attribute is briefly absent), else the painted attribute */
+  const has = (key) => painted() && (O55.nierFx && typeof O55.nierFx.has === 'function' ? !!O55.nierFx.has(key)
+    : (' ' + (html.getAttribute('data-o55-nier-parts') || '') + ' ').indexOf(' ' + key + ' ') >= 0);
   const fx = () => (painted() && O55.nierFx && O55.nierFx.enabled ? O55.nierFx : null);
   const reduced = () => M.reduced();
   /* One low-resource rule for both directions, O55.nierFx's: the heavy one-shots (the page wipe, the slice) are end
@@ -52,6 +55,7 @@
   }
   /* timers belong to the screen that set them: a screen change, the window closing or NieR Mode going cancels them */
   let token = 0;
+  let backWipe = null; /* the running Back wipe: a screen change, the window closing or NieR Mode going stops it */
   const timers = new Set();
   function later(ms, fn) {
     const t = token;
@@ -59,7 +63,7 @@
     timers.add(h);
     return h;
   }
-  function cancelAll() { token++; timers.forEach((h) => h.cancel()); timers.clear(); pending = null; }
+  function cancelAll() { token++; timers.forEach((h) => h.cancel()); timers.clear(); pending = null; if (backWipe) backWipe(); }
 
   /* ------------------------------------------------------------------ the stage overlay and the brand */
   /* PMConcept7's ink-line Pod (the same drawing as kit.d/19-nier-parts.js and O55.nierFx), resting by the art panel's
@@ -107,10 +111,10 @@
      most). On the narrow window's short band the strip is one compact row (11-window-nier.css), so it fits a lane.
      The geometry is read once per line, at the start of a frame, never between frames (README Performance rule 3).
      One line at a time: a line asked for while another is still being read waits for it (an alert does not wait); a
-     later line replaces a waiting one. Its dwell is its reading time, and both clocks (this queue and the strip's own
-     timer in O55.nierFx) use the same number, so the words stay exactly as long as they take to read. */
+     later line replaces a waiting one. Its dwell follows its length (1.3 s and 22 ms a letter, at most 3.2 s), and both
+     clocks (this queue and the strip's own timer in O55.nierFx) use the same number (review W4). */
   let podUntil = 0, pending = null, lastLine = '', lastAt = 0, podFrame = 0;
-  const readMs = (text) => Math.round(Math.min(5600, Math.max(2400, 1500 + String(text).length * 40)));
+  const readMs = (text) => Math.round(Math.min(3200, 1300 + String(text).length * 22));
   /* what the narrator must not cover: props it is not ('stage' the slab, 'bar' the control bar is the lane's own edge,
      the operator's 'link' and the 'dim' rule, the 'curtain' cloth, the sparks 'sp<n>' and the review's routes are set
      dressing it may pass over), the actors (weighted most), and the stage kicker; plus a card or banner hung in it */
@@ -119,7 +123,8 @@
     const st = r.querySelector('.o55-stage'), sr = st ? st.getBoundingClientRect() : null;
     if (!sr || sr.width < 80 || sr.height < 60) return null;
     const wrap = st.querySelector(':scope > .o55-scene-wrap:not(.o55-out)');
-    const box = (e) => { const b = e.getBoundingClientRect(); return b.width > 1 && b.height > 1 ? { l: b.left, t: b.top, r: b.right, b: b.bottom } : null; };
+    /* every rect keeps a margin of 5 px, so the strip never touches what it stands beside */
+    const box = (e) => { const b = e.getBoundingClientRect(); return b.width > 1 && b.height > 1 ? { l: b.left - 5, t: b.top - 5, r: b.right + 5, b: b.bottom + 5 } : null; };
     const avoid = [];
     let bar = null, lowest = -Infinity;
     if (wrap) {
@@ -137,22 +142,24 @@
     const narrow = sr.height < 220;
     return { s: { l: sr.left + 22, t: sr.top + (narrow ? 6 : 10), r: sr.right - 12, b: sr.bottom - 18 }, bar, lowest, avoid, narrow };
   }
-  /* the strip's box before it is drawn (unit + gap + strip): 11-window-nier.css caps the strip's width (280 px, 196
-     slim; the narrow window's compact row up to 520 px with its head inline) and its height follows its lines */
+  /* the strip's box before it is drawn (unit + gap + strip): 11-window-nier.css caps the strip's width (260 px, 196
+     slim; on the narrow window a compact row up to 520 px with its head inline, or a stacked 200 px strip beside a
+     subject as tall as the band) and its height follows its lines */
   function stripSize(text, narrow, slim) {
     const n = String(text).length, cw = 6.8;
-    if (narrow) {
+    if (narrow && !slim) {
       const sw = Math.min(520, 124 + n * cw), lines = Math.ceil((n * cw) / (sw - 124));
       return { w: 25 + 8 + sw, h: Math.max(34, lines * 17.5 + 17) };
     }
-    const sw = slim ? 196 : 280, lines = Math.ceil(n / ((sw - 24) / cw));
+    if (narrow) { const lines = Math.ceil(n / (176 / cw)); return { w: 25 + 8 + 200, h: 20 + lines * 17.5 + 18 }; }
+    const sw = slim ? 196 : 260, lines = Math.ceil(n / ((sw - 24) / cw));
     return { w: 40 + 12 + sw, h: 20 + lines * 18.75 + 20 };
   }
   const cross = (a, o) => Math.max(0, Math.min(a.r, o.r) - Math.max(a.l, o.l)) * Math.max(0, Math.min(a.b, o.b) - Math.max(a.t, o.t));
   function anchor(text, o) {
     const r = rootEl(); if (!r) return null;
     const m = stageMap(r); if (!m) return null;
-    const P = m.s, GAP = 8;
+    const P = m.s, GAP = 4;
     const fits = (box) => box.t >= P.t && box.b <= P.b && box.l >= P.l - 1 && box.r <= P.r + 1;
     const score = (box) => m.avoid.reduce((t, a) => t + cross(box, a) * a.w, 0);
     let best = null;
@@ -173,7 +180,7 @@
       lip: (size) => (m.narrow || m.lowest < 0 ? P.b - size.h : Math.min(P.b - size.h, m.lowest + GAP))
     };
     const order = o && o.lane === 'lip' ? ['lip', 'bar'] : ['bar', 'lip'];
-    const sizes = m.narrow ? [[stripSize(text, true), false]] : [[stripSize(text, false), false], [stripSize(text, false, true), true]];
+    const sizes = [[stripSize(text, m.narrow), false], [stripSize(text, m.narrow, true), true]];
     let done = false;
     for (const lane of order) {
       for (const [size, slim] of sizes) if (tryAt(lane, Math.round(lanes[lane](size)), size, slim)) { done = true; break; }
@@ -302,7 +309,11 @@
     const r = rootEl(), a = document.activeElement;
     let hide = false;
     if (r && shown() && painted() && a && r.contains(a)) {
-      const box = a.closest(SCROLLER);
+      /* a heading the window focuses by script (the screen's and the Adjust panel's, tabindex -1) is not a control the
+         person reached: the skin's own brackets mark the choice, and a reticle round a whole-column heading framed
+         empty space (review W10) */
+      if (a.matches('[tabindex="-1"]')) hide = true;
+      const box = !hide && a.closest(SCROLLER);
       if (box) { const A = a.getBoundingClientRect(), B = box.getBoundingClientRect(); hide = A.top < B.top - 2 || A.bottom > B.bottom + 2 || A.left < B.left - 2 || A.right > B.right + 2; }
     }
     if (ret.hasAttribute('data-o55nw-hide') !== hide) ret.toggleAttribute('data-o55nw-hide', hide);
@@ -353,11 +364,12 @@
     const d = s.sess.drafts.main || {}, laterMode = d.project_mode === 'later';
     R.spoken.add('creating');
     later(320, () => {
-      /* the line about creating it goes with the banner that says it is made; Pod's report follows the banner */
+      /* the line about creating it goes with the banner that says it is made; Pod's report follows the banner. The
+         banner is silent: the commit's chord already marks the moment and the celebration layers on it (review W7) */
       if (F.pod) F.pod.hush();
       podUntil = 0;
       const go = F.enabled('banner')
-        ? F.banner({ kicker: O55.t('nierFx.banner.kickers.goalComplete'), title: T(laterMode ? 'banner.serverReady' : 'banner.created'), sub: laterMode ? '' : (d.project_name || ''), ms: 1800 })
+        ? F.banner({ kicker: O55.t('nierFx.banner.kickers.goalComplete'), title: T(laterMode ? 'banner.serverReady' : 'banner.created'), sub: laterMode ? '' : (d.project_name || ''), ms: 1800, sound: false })
         : Promise.resolve(false);
       const t = token;
       go.then(() => { if (t === token) later(160, () => say(line(laterMode ? 'pod.creatingDoneLater' : 'pod.creatingDone'))); });
@@ -368,6 +380,7 @@
   /* the same ruled band in the pane, mirrored: it steps off to the left, so Back reads as going back */
   function wipeBack(pane) {
     const F = fx(); if (!F || !F.enabled('wipe') || calm() || !pane) return;
+    if (backWipe) backWipe();
     const b = document.createElement('div');
     b.className = 'o55fx-wipe o55nw-wipe'; b.setAttribute('aria-hidden', 'true'); b.innerHTML = '<i><b></b></i>';
     const win = pane.closest('.o55-win'), ground = win ? getComputedStyle(win).backgroundColor : '';
@@ -375,7 +388,9 @@
     pane.appendChild(b);
     const a = b.firstElementChild.animate([{ transform: 'translateX(0)', offset: 0 }, { transform: 'translateX(0)', offset: 0.16, easing: 'steps(8, end)' }, { transform: 'translateX(101%)', offset: 1 }],
       { duration: 380, fill: 'forwards' });
-    const end = () => b.remove();
+    const end = () => { b.remove(); if (backWipe === stop) backWipe = null; };
+    const stop = () => { try { a.cancel(); } catch (_) {} end(); };
+    backWipe = stop;
     a.finished.then(end, end);
   }
 
