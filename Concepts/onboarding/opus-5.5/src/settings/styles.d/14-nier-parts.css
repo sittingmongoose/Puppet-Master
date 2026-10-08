@@ -168,8 +168,9 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
    Both carry the check list (.o55np-log: the kicker band, lines with a caret-led mask, dot leaders and stamps, the
    12-cell meter, the "Synchronising" line) and leave as six slats (.o55np-slat, each a copy of the set moved up by its
    own place). --rb-ground is what the list sits on and --rb-text its ink; the masks are the ground, the caret the ink.
-   Motion is transform, opacity or a stepped clip-path inset (the plate), all one-shot. Slint: the plate is a clipping
-   Rectangle whose x, y, width and height step; edges, brackets and slats are Rectangles with an animated x / y. */
+   Motion is transform or opacity only, all one-shot, so the compositor runs it through the repaint's long frames.
+   Slint: the plate is a clipping Rectangle whose x, y, width and height step; edges, brackets and slats are Rectangles
+   with an animated x / y. */
 #o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict;
   --rb-ground: var(--o55-nier-ink); --rb-text: var(--o55-nier-on-ink); color: var(--rb-text); }
 #o55np-reboot.o55np-within { position: absolute; inset: 0; z-index: 60; border-radius: inherit; pointer-events: auto;
@@ -177,16 +178,19 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
 #o55np-reboot .o55np-set { position: absolute; inset: 0; }
 #o55np-reboot[data-hold] > .o55np-set { visibility: hidden; }
 /* the in-window plate: NieR's ground and its map grid (a 128 px major grid over the 32 px one) */
-#o55np-reboot .o55np-plate { position: absolute; inset: 0; opacity: 0; background-color: var(--rb-ground);
+/* the plate is an overflow box stepped onto its rect by transform; its ground (.o55np-plate-in) is moved back by the
+   inverse, so the map holds still while the box grows or folds, all on the compositor */
+#o55np-reboot .o55np-plate { position: absolute; inset: 0; opacity: 0; overflow: hidden; transform-origin: 0 0; will-change: transform, opacity; }
+#o55np-reboot .o55np-plate-in { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; background-color: var(--rb-ground);
   background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb), .075) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .075) 1px, transparent 1px),
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .04) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .04) 1px, transparent 1px);
   background-size: 128px 128px, 128px 128px, 32px 32px, 32px 32px; background-position: -1px -1px; }
 /* map rulers inside the frame, top and left: a tick every 8 px, a long one every 32 px (they show as the plate grows) */
-#o55np-reboot .o55np-plate::before, #o55np-reboot .o55np-plate::after { content: ""; position: absolute; left: 12px; top: 12px; opacity: .5; pointer-events: none; }
-#o55np-reboot .o55np-plate::before { right: 12px; height: 7px;
+#o55np-reboot .o55np-plate-in::before, #o55np-reboot .o55np-plate-in::after { content: ""; position: absolute; left: 12px; top: 12px; opacity: .5; pointer-events: none; }
+#o55np-reboot .o55np-plate-in::before { right: 12px; height: 7px;
   background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 1px, transparent 1px 32px) 0 0 / 100% 7px no-repeat,
     repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 1px, transparent 1px 8px) 0 0 / 100% 3px no-repeat; }
-#o55np-reboot .o55np-plate::after { bottom: 12px; width: 7px;
+#o55np-reboot .o55np-plate-in::after { bottom: 12px; width: 7px;
   background: repeating-linear-gradient(180deg, var(--o55-nier-ink) 0 1px, transparent 1px 32px) 0 0 / 7px 100% no-repeat,
     repeating-linear-gradient(180deg, var(--o55-nier-ink) 0 1px, transparent 1px 8px) 0 0 / 3px 100% no-repeat; }
 #o55np-reboot .o55np-deco { position: absolute; inset: 0; pointer-events: none; }

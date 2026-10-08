@@ -625,6 +625,9 @@
     });
   }
   const twoFrames = () => Promise.race([frames(2), new Promise(res => window.setTimeout(res, 120))]);
+  /* before the repaint's long frames, every list animation must have its start time settled with the compositor: one
+     still pending when the main thread stalls was restarted by the next commit (a typed line un-typed and typed again) */
+  const settledStart = anims => Promise.race([Promise.all(anims.map(a => a.ready.catch(() => null))), new Promise(res => window.setTimeout(res, 250))]).then(twoFrames);
   /* the repaint's long tasks are expected here: the window's low-resource watch should not count them (films M1) */
   const quiet = ms => { try { const M = window.O55 && window.O55.motion; if (M && typeof M.quiet === 'function') M.quiet(ms); } catch (e) { /* none */ } };
 
@@ -687,7 +690,13 @@
   }
   const lerpRect = (a, b, f) => ({ x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, w: a.w + (b.w - a.w) * f, h: a.h + (b.h - a.h) * f });
   const px = v => `${Math.round(v)}px`;
-  const insetOf = (r, box) => `inset(${px(r.y)} ${px(box.w - r.x - r.w)} ${px(box.h - r.y - r.h)} ${px(r.x)})`;
+  /* the plate's clip, on the compositor: the plate is an overflow box moved and scaled onto the rect, its ground inside
+     scaled and moved back by the inverse, so the map stays put while the box around it steps (in Slint, a clipping
+     Rectangle whose x, y, width and height step); [plate transform, ground transform] */
+  function clipOf(r, box) {
+    const x = Math.round(r.x), y = Math.round(r.y), sx = Math.max(1, Math.round(r.w)) / box.w, sy = Math.max(1, Math.round(r.h)) / box.h;
+    return [`translate(${x}px, ${y}px) scale(${sx.toFixed(5)}, ${sy.toFixed(5)})`, `scale(${(1 / sx).toFixed(5)}, ${(1 / sy).toFixed(5)}) translate(${-x}px, ${-y}px)`];
+  }
   /* the eight decorations for a rect: edges top, bottom, left, right, then brackets tl, tr, bl, br, o px outside it */
   function rbPose(r, o, box) {
     const sx = Math.max(r.w, 1) / box.w, sy = Math.max(r.h, 1) / box.h, x = Math.round(r.x), y = Math.round(r.y), x2 = Math.round(r.x + r.w), y2 = Math.round(r.y + r.h), k = Math.round(o);
@@ -702,8 +711,9 @@
     const ground = document.createElement('div');
     ground.className = inWindow ? 'o55np-plate' : 'o55np-band';
     if (!inWindow) ground.innerHTML = '<div class="o55np-rb-lines"></div>';
+    else ground.innerHTML = '<div class="o55np-plate-in"></div>';
     const log = rbLog(lines);
-    ground.appendChild(log);
+    (inWindow ? ground.firstElementChild : ground).appendChild(log);
     set.appendChild(ground);
     if (inWindow) {
       const deco = document.createElement('div');
@@ -712,7 +722,7 @@
         + '<i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i>';
       set.appendChild(deco);
     }
-    return { set, ground, log, deco: set.querySelectorAll('.o55np-deco > i') };
+    return { set, ground, inner: ground.firstElementChild, log, deco: set.querySelectorAll('.o55np-deco > i') };
   }
   /* keyframes for a stepped walk: frames [{ t, ... }] in ms over total ms, every segment held (step-end) */
   const walk = (frames, total) => frames.map(f => Object.assign({ offset: Math.min(1, f.t / total), easing: 'step-end' }, f.v));
@@ -751,7 +761,7 @@
     const cover = ctx.cover = document.createElement('div');
     cover.id = 'o55np-reboot'; cover.className = 'o55np-within'; cover.setAttribute('aria-hidden', 'true');
     cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
-    const { set, ground, log, deco } = rbSet(lines, true);
+    const { set, ground, inner, log, deco } = rbSet(lines, true);
     cover.appendChild(set);
     within.appendChild(cover);
     /* the window's own effects (brackets on the chosen card, the cursor, Pod's strip) sit above the window in its root:
@@ -766,9 +776,11 @@
       const from = rbFrom(info, within, box);
       const F = [0, 0.3, 0.55, 0.75, 0.9, 1], rects = F.map(f => lerpRect(from, full, f)), off = F.map(f => 3 - 17 * f);
       const at = k => 90 + 60 * k, TOTAL = 450;
-      const plate = walk([{ t: 0, v: { clipPath: insetOf(rects[0], box), opacity: 0 } }, ...rects.map((r, k) => ({ t: at(k), v: { clipPath: insetOf(r, box), opacity: 1 } })),
-        { t: TOTAL, v: { clipPath: insetOf(full, box), opacity: 1 } }], TOTAL);
-      const grow = ground.animate(plate, { duration: TOTAL, fill: 'forwards' });
+      const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box);
+      const grow = ground.animate(walk([{ t: 0, v: { transform: clips[0][0], opacity: 0 } }, ...clips.map((c, k) => ({ t: at(k), v: { transform: c[0], opacity: 1 } })),
+        { t: TOTAL, v: { transform: idle[0], opacity: 1 } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
+      const growIn = inner.animate(walk([{ t: 0, v: { transform: clips[0][1] } }, ...clips.map((c, k) => ({ t: at(k), v: { transform: c[1] } })),
+        { t: TOTAL, v: { transform: idle[1] } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
       const started = rbStart(grow, t0);
       const poses = rects.map((r, k) => rbPose(r, off[k], box)), lock = [12, 8, 5].map(o => rbPose(rects[0], o, box));
       deco.forEach((el, j) => {
@@ -782,7 +794,7 @@
       await settled(grow);
       /* T450: full cover; the decorations keep their last place inline (so the slats' copies carry them) */
       set.querySelectorAll('.o55np-deco > i').forEach(el => el.getAnimations().forEach(a => { try { a.commitStyles(); } catch (e) { /* not rendered */ } a.cancel(); }));
-      ground.style.opacity = '1'; ground.style.clipPath = 'none'; grow.cancel();
+      ground.style.opacity = '1'; grow.cancel(); growIn.cancel();
     } else {
       /* the stage powers down (the window's beat), then T300-T540 six slats close in from both sides */
       const poses = rbPose(full, -14, box);
@@ -800,7 +812,7 @@
     log.setAttribute('data-on', '');
     plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
-    await twoFrames();
+    await settledStart(typing.anims);
     quiet(5000);
     ctx.paint();
     await rbIdle(4000);
@@ -821,13 +833,16 @@
     /* R: hold 120 ms; then the plate, as one, folds back into the NieR thumbnail (measured now: the window re-rendered) */
     const to = rbFrom(info, within, rbBox(cover));
     await rbWait(cover, 120);
-    log.style.visibility = 'hidden';
+    log.style.display = 'none';
     cover.style.pointerEvents = 'none';
     rbRelease(ctx);
     ctx.cue('reveal');
     const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
-    const fold = ground.animate(walk([{ t: 0, v: { clipPath: insetOf(full, box), opacity: 1 } }, ...rects.map((r, k) => ({ t: 60 * (k + 1), v: { clipPath: insetOf(r, box), opacity: 1 } })),
-      { t: 390, v: { clipPath: insetOf(to, box), opacity: 0 } }, { t: TOTAL, v: { clipPath: insetOf(to, box), opacity: 0 } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
+    const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
+    const fold = ground.animate(walk([{ t: 0, v: { transform: idle[0], opacity: 1 } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[0], opacity: 1 } })),
+      { t: 390, v: { transform: last[0], opacity: 0 } }, { t: TOTAL, v: { transform: last[0], opacity: 0 } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
+    inner.animate(walk([{ t: 0, v: { transform: idle[1] } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[1] } })), { t: TOTAL, v: { transform: last[1] } }], TOTAL),
+      { duration: TOTAL, fill: 'forwards' });
     const poses = [rbPose(full, -14, box), ...rects.map((r, k) => rbPose(r, off[k], box))], let1 = rbPose(to, 7, box);
     deco.forEach((el, j) => {
       const fr = poses.map((p, k) => ({ t: 60 * k, v: { transform: p[j], opacity: 1 } }));
@@ -862,7 +877,7 @@
     log.setAttribute('data-on', '');
     plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
-    await twoFrames();
+    await settledStart(typing.anims);
     ctx.paint();
     await rbIdle(4000);
     await rbAt(cover, t0, plan.done);
