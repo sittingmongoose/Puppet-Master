@@ -166,11 +166,11 @@
     const F = flight;
     if (!F || !F.revealed || F.snapped || (F.entered && F.spoke) || O55.motion.now() - F.revealAt > 4500) return;
     F.timers.forEach((t) => t.cancel());
+    F.snapped = true;
     const st = stageEl(), tr = troupe();
     enter(F);
     if (st && tr && tr.snap) tr.snap(st);
     if (F.on) speak(F);
-    F.snapped = true;
   }
   /* every NieR checkbox on screen shows the request at once (the window re-renders from state() after the repaint) */
   function paint(on) {
