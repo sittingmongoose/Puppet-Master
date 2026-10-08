@@ -27,7 +27,7 @@
      Settings loads it and repaints the app's theme from it, then the look is saved into it (publishProject) and
      repainted again, and each time the app's own theme listeners re-measure the whole page, the better part of a
      second on a slow computer. All of that runs while the screen still shows its last check done; the made moment
-     (its sound, the title, the saved line, the troupe) follows on the first idle frame after, so it never freezes.
+     (its sound, the title, the saved line, the troupe) follows on the first calm frames after, so it never freezes.
      The outcome is the truth at once (saved as done); only the moment waits (S.settling, never saved: a reopened
      window shows it made). By then the speaker is bound to the new Project's own setting, which Settings can read once
      the look has been written into it (selecting it rebinds the speaker, silent until then: fail closed), so the made
@@ -58,7 +58,9 @@
   /* Edit from Review: the edited screen's own Continue comes straight back to Review once nothing is missing. */
   const baseGo = O55.ui.go;
   O55.ui.go = function go(id, opts) {
-    const S = O55.S, rt = S.sess && S.sess.ui.returnTo;
+    const S = O55.S, rt = S.sess && S.sess.ui.returnTo, cm = S.sess && S.sess.commit;
+    /* leaving Creating while its made moment waits for the app (Continue pressed at once): the moment is skipped */
+    if (cm && S.settling && S.settling === cm.key && id !== 'creating') { S.settling = null; cm.doneAt = Date.now(); }
     if (rt && !(opts && opts.dir === 'back') && FLOW.includes(id) && FLOW.indexOf(id) > FLOW.indexOf(rt.from) && !O55.draft.missing(md(S)).length) {
       S.sess.ui.returnTo = null; S.save();
       return baseGo('review', opts);
@@ -488,7 +490,8 @@
     },
     foot(S) {
       const cm = S.sess.commit || {};
-      if (shownDone(S)) return { back: false, primary: { label: T('creating.continue'), do: 'next' } };
+      /* (done is enough: while the made moment waits for the app to settle, Continue already goes on and skips it) */
+      if (cm.state === 'done') return { back: false, primary: { label: T('creating.continue'), do: 'next' } };
       const reason = cm.state === 'failed' ? T('creating.failTitle') : cm.state === 'running' || cm.state === 'done' ? T('chrome.working') : T('creating.recovery.waiting');
       return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: true, reason } };
     },
