@@ -167,10 +167,15 @@
     F.revealed = true; F.revealAt = O55.motion.now();
     if (flight !== F || !inWindow()) return;
     /* the choir (NieR) or the look's own reveal (unticking), on the frame the window shows again; on the instant path
-       (Reduced Motion, Still, Colors only, a low-resource computer) the repaint is the same task as the click, so it
-       follows the toggle's own sound just after, rather than merging into it */
-    if (instant()) { O55.motion.after(120, () => { if (flight === F && inWindow()) O55.sound.play('wake'); }); enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
-    O55.sound.play('wake');
+       (Reduced Motion, a low-resource computer) the repaint is the same task as the click, so it follows the toggle's
+       own sound just after, rather than merging into it */
+    const wake = () => { if (flight === F && inWindow()) O55.sound.play('wake'); };
+    if (instant()) { O55.motion.after(120, wake); enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
+    /* a reveal within 120 ms of that sound (no cover played: Still, Colors only, the Reboot moment part removed) waits
+       for the rest of the 120 ms, so wake still sounds as the state sound it is (hero spec rule 10; films minor 4, where
+       Still and Colors only dropped it); the stage keeps its own beats */
+    const early = F.humAt + 120 - F.revealAt;
+    if (early > 0) O55.motion.after(early, wake); else wake();
     if (F.on) { at(F, 260, () => enter(F)); at(F, 1940, () => speak(F)); }
     else at(F, 360, () => enter(F));
   }
