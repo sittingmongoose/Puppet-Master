@@ -329,6 +329,10 @@ await openDrawer();
     ok((await page.locator('.ctx-cap .ctx-caplab').allInnerTexts()).includes(cap), `Capability row: ${cap}`);
   const capsOn = await page.locator('.ctx-cap.on').count();
   ok(capsOn >= 1, 'At least one capability renders in its ON state', capsOn);
+  const capBorders = await page.locator('.ctx-cap').evaluateAll(els =>
+    els.map(el => { const s = getComputedStyle(el); return s.borderLeftWidth + '/' + s.borderRightWidth; }));
+  ok(capBorders.length > 0 && capBorders.every(b => { const [l, r] = b.split('/'); return l === r && l !== '0px'; }),
+    'Capability boxes keep a closed outline (left border equals right)', capBorders.join(' '));
 
   /* growth chart */
   ok((await page.locator('.ctx-growth svg').count()) === 1, 'Growth chart renders');
