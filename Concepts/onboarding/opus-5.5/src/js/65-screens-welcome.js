@@ -26,6 +26,21 @@
   });
 
   const FAMS = ['basic', 'friendly', 'glass', 'retro'];
+  /* NieR Mode under the four looks: a checkbox over whichever look is picked (never a fifth tile, so it sits outside
+     their radiogroup), a NieR scene of its own, and Adjust NieR look (enabled on or off: the editor shows Turn on). In
+     onboarding it is a preview kept with the look (O55.nierLook). */
+  function nierRow(th) {
+    if (!O55.nierLook || !window.PM_NIER) return '';
+    const on = O55.nierLook.state().on, name = T('look.families.' + th.chosen + '.name');
+    return `<div class="o55-nierlook" data-key="nier" data-on="${on}">`
+      + `<button type="button" class="o55-niercheck${on ? ' o55-on' : ''}" role="checkbox" aria-checked="${on}" aria-labelledby="o55-niername" aria-describedby="o55-niersub" data-o55-do="pickNier" data-o55-sound="self" data-o55-nier-check data-key="nier-check" data-pm-hover-exempt="true">`
+      + `<span class="o55-nierthumb o55-scene-host" data-nier-thumb aria-hidden="true" data-morph-skip></span>`
+      + `<span class="o55-niertext"><span class="o55-niertitle"><span class="o55-nierbox" aria-hidden="true"></span><span class="o55-niername" id="o55-niername">${U.esc(T('look.nier.label'))}</span>`
+      + `<span class="o55-tag o55-niertag">${U.esc(T('look.nier.tag'))}</span></span>`
+      + `<span class="o55-niersub" id="o55-niersub">${U.esc(on ? T('look.nier.subOn', { name }) : T('look.nier.sub'))}</span></span></button>`
+      + `<button type="button" class="o55-btn o55-secondary o55-small o55-nieradjust" data-o55-do="adjustNier" data-o55-sound="self" data-key="nier-adjust" data-pm-hover-exempt="true">${O55.nierLook.icon()}<span>${U.esc(T('look.nier.adjust'))}</span></button></div>`;
+  }
+  let nierSub = null;
   function ack(el, sel) {
     const group = el.parentElement;
     group.querySelectorAll(':scope > ' + sel).forEach((n) => { const on = n === el; n.classList.toggle('o55-on', on); n.setAttribute('aria-checked', String(on)); });
@@ -49,7 +64,7 @@
          another (it is already the selected tile) */
       const note = S.env.here.projects.length ? `<span class="o55-hintline o55-keep">${C.small('check', 13)}${U.esc(T('look.keep'))}</span>` : `<span class="o55-hintline">${U.esc(T('look.hint'))}</span>`;
       return `<div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}${note}</div>`
-        + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}">${tiles}</div>`;
+        + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}">${tiles}</div>` + nierRow(th);
     },
     mounted(S, layer, first) {
       /* each tile is a small living scene drawn with that family's own tokens */
@@ -62,6 +77,22 @@
         host.innerHTML = '';
         O55.art.mount(host, 'tile', { family: f, mode, beat: 'default', tok: O55.art.tokens(tile), params: {}, instance: 'tile', band: true });
       });
+      /* the NieR row's scene is drawn in NieR's own tokens whether NieR Mode is on or off: while off it previews them
+         (data-o55-nier-preview over Basic, the look NieR Mode paints over); while on it takes the painted ones */
+      const th = O55.theme(), thumb = layer.querySelector('[data-nier-thumb]');
+      if (thumb) {
+        const key = 'nier-' + th.mode + (th.nier ? '-on' : '');
+        if (thumb.getAttribute('data-look') !== key) {
+          thumb.setAttribute('data-look', key); thumb.setAttribute('data-o55-nier-preview', th.mode);
+          if (th.nier) thumb.removeAttribute('data-theme'); else thumb.setAttribute('data-theme', 'basic-' + th.mode);
+          thumb.innerHTML = '';
+          O55.art.mount(thumb, 'tile', { family: 'basic', mode: th.mode, beat: 'default', tok: O55.art.tokens(thumb), params: {}, instance: 'nier', band: true });
+        }
+      }
+      /* a look picked under NieR Mode changes the line that names it: NieR resolves it from scrambled letters */
+      const sub = layer.querySelector('.o55-niersub'), text = sub ? sub.textContent : null;
+      if (sub && !first && nierSub !== null && text !== nierSub && th.nier && O55.nierFx && O55.nierFx.decode) O55.nierFx.decode(sub);
+      nierSub = text;
     },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
@@ -76,7 +107,9 @@
         O55.ui.applyLook(f, O55.theme().mode, el);
       },
       pickMode(S, m, el) { ack(el, 'button'); O55.ui.applyLook(O55.theme().chosen, m, el); },
-      next(S) { O55.ui.go('where'); }
+      next(S) { O55.ui.go('where'); },
+      pickNier(S, arg, el) { O55.nierLook.toggle('look', el); },
+      adjustNier(S, arg, el) { O55.nierLook.adjust(el); }
     }
   });
 })();

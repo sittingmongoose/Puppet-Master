@@ -95,8 +95,12 @@
     /* the look belongs to the whole onboarding, not to one journey's draft (it was lost at the end when it was picked
        while the Connect draft was active) */
     Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: family, theme_mode: mode })); S.save();
-    const now = O55.theme(); if (now.chosen !== family && window.PM_NIER) window.PM_NIER.notePick(family);
+    /* under NieR Mode a family does not change the window (it shows once NieR Mode is off, and the look screen says so):
+       no reveal over a window that stays the same, and no Settings note, because nothing is saved here; the screen and
+       the look menu redraw for the pick themselves (the painted look did not change, so nothing else redraws them) */
+    const now = O55.theme();
     if (now.chosen === family && now.mode === mode) return;
+    if (now.nier && now.mode === mode) { apply(); refresh(); return; }
     if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
     if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
@@ -327,6 +331,7 @@
     if (action === 'lookMenu') { S.lookOpen = !S.lookOpen; O55.sound.play(S.lookOpen ? 'toggleOn' : 'toggleOff'); renderLook(); return; }
     if (action === 'lookFamily') { applyLook(arg, O55.theme().mode, t); return; }
     if (action === 'lookMode') { applyLook(O55.theme().chosen, arg, t); return; }
+    if (action === 'lookNier' || action === 'lookNierAdjust') { if (O55.lookMenu && O55.lookMenu.nier) O55.lookMenu.nier(action, t); return; }
     if (action === 'go') return go(arg);
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
@@ -468,7 +473,7 @@
     document.documentElement.setAttribute('data-o55-open', 'true');
     if (window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.pause) { try { window.PM_DEMO.clock.pause(); S.pausedClock = true; } catch (_) {} }
     if (S.env.lowResource) O55.motion.setLowResource(true, 'scenario');
-    setInert(true); syncTheme(false); layoutClass();
+    setInert(true); reapplyLook(); syncTheme(false); layoutClass();
     r.setAttribute('data-o55-ambient', 'on');
     r.classList.remove('o55-closing'); r.classList.add('o55-opening');
     /* the whole window waits, unseen, through the frame that styles it and restyles the now inert app beneath; the
@@ -487,6 +492,15 @@
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: 'opened', screen: S.sess.screen, resumed: S.resumed } }));
     return true;
   }
+  /* A reopened run shows its own look again (a reload painted the saved theme while the drafts kept the pick): the
+     family and mode from the drafts, and NieR Mode from the session (O55.nierLook), still previews */
+  function reapplyLook() {
+    const d = S.sess.drafts && S.sess.drafts.main, th = O55.theme();
+    if (d && d.theme_family && (th.chosen !== d.theme_family || th.mode !== d.theme_mode)) {
+      try { window.PM_THEME.setFamily(d.theme_family, { persist: false }); window.PM_THEME.setMode(d.theme_mode, { persist: false }); } catch (_) {}
+    }
+    if (O55.nierLook && O55.nierLook.reapply) O55.nierLook.reapply(S);
+  }
   /* close(reason, {handoff}) — with handoff the window gives way at once, because the Guided Tour's first callout
      grows out of the same rectangle in the same frame (see O55.tour.start({from})) */
   function close(reason, o) {
@@ -494,6 +508,7 @@
     const handoff = !!(o && o.handoff);
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.leave) def.leave(S);
+    if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
     S.save();
     S.open = false;

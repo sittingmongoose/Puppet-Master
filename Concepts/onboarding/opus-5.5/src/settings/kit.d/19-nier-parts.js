@@ -521,17 +521,21 @@
   let rebooting = false;
   async function reboot(repaint, info) {
     const on = !!(info && info.on), reason = info && info.reason;
-    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || onboarding()) { repaint(); sync(); return; }
+    /* a change made inside the onboarding window plays inside it (info.within, the window): the app beneath holds still */
+    const within = info && info.within && info.within.isConnected ? info.within : null;
+    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) { repaint(); sync(); return; }
     rebooting = true;
     const copy = REBOOT_COPY[reason === 'replay' ? 'replay' : on ? 'on' : 'off'];
     const cover = document.createElement('div');
     cover.id = 'o55np-reboot'; cover.setAttribute('aria-hidden', 'true'); cover.dataset.tone = tone();
+    if (within) cover.classList.add('o55np-within');
     cover.innerHTML = `<div class="o55np-rb-band"><div class="o55np-rb-lines"></div><div class="o55np-rb-copy"><div class="o55np-rb-title">${copy[0]}</div>`
       + `<div class="o55np-rb-line">${copy[1]}</div><div class="o55np-rb-line">${copy[2]}</div><div class="o55np-rb-meter"><i></i></div></div></div>`;
-    document.body.appendChild(cover);
+    (within || document.body).appendChild(cover);
     const band = cover.firstElementChild, meter = cover.querySelector('.o55np-rb-meter > i'), lines = cover.querySelectorAll('.o55np-rb-line');
     try {
-      sfx(on || reason === 'replay' ? 'sweepOn' : 'sweepOff', true);
+      /* info.sound false: the caller plays its own (the onboarding's NieR checkbox plays nierOn / nierOff) */
+      if (!(info && info.sound === false)) sfx(on || reason === 'replay' ? 'sweepOn' : 'sweepOff', true);
       await band.animate([{ transform: 'translateY(-101%)' }, { transform: 'translateY(0)' }], { duration: 320, easing: 'cubic-bezier(.6, 0, .3, 1)', fill: 'forwards' }).finished;
       const fill = meter.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 560, easing: 'steps(12, end)', fill: 'forwards' });
       lines[0].setAttribute('data-ok', '');

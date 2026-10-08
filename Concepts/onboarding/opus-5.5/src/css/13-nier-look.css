@@ -1,0 +1,123 @@
+/* ---- NieR Mode on the look surfaces (src/js/64-nier-look.js, 65-screens-welcome.js, 63-look-menu.js) ---------------
+   A checkbox over the chosen look, never a fifth look: on "Pick a look" it is a row under the four tiles, drawn as their
+   peer (the same card material per family) with a NieR scene of its own and an Add-on tag; in the look menu it is a
+   square box under Light / Dark with Adjust beside it. Adjust NieR look opens the Plug-in Chips editor as a panel over
+   the window's interior. Under NieR Mode everything here reads in NieR's own tokens (ink on parchment, square, hairline,
+   stepped); no colour literal is needed for it. Motion is transform and opacity; Reduce Motion gets the end state. */
+
+/* ---------------------------------------------------------------- the checkbox box (row and menu) */
+.o55-nierbox { position: relative; flex: none; display: inline-block; width: 18px; height: 18px; border-radius: 5px; border: 1.6px solid color-mix(in srgb, var(--text-primary) 42%, transparent);
+  background: var(--o55-win-bg, var(--surface)); transition: background-color 160ms ease, border-color 160ms ease; }
+.o55-nierbox::after { content: ''; position: absolute; left: 50%; top: 45%; width: 4.5px; height: 9px; margin: -5.5px 0 0 -2.6px; border: solid var(--o55-on-accent, #fff); border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0); transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+[aria-checked="true"] .o55-nierbox { background: var(--o55-accent, var(--accent-blue)); border-color: var(--o55-accent, var(--accent-blue)); }
+[aria-checked="true"] .o55-nierbox::after { transform: rotate(45deg) scale(1); }
+
+/* ---------------------------------------------------------------- "Pick a look": the row under the tiles */
+/* The checkbox (scene + title + help) spans the row; Adjust sits under the help text, on top of the checkbox's lower
+   edge (the text keeps room for it), so the scene runs the row's full height beside both. */
+.o55-nierlook { position: relative; display: grid; grid-template-columns: 136px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 16px; margin-top: 14px; padding: 8px;
+  border-radius: var(--o55-card-r); border: 1px solid var(--o55-line); background: var(--o55-card-bg); transition: border-color 200ms ease, box-shadow 220ms ease; }
+.o55-nierlook[data-on="true"] { border-color: var(--o55-accent); box-shadow: inset 0 0 0 1px var(--o55-accent); }
+.o55-niercheck { grid-column: 1 / -1; grid-row: 1 / -1; min-width: 0; display: grid; grid-template-columns: subgrid; align-items: stretch; padding: 0; border: 0;
+  border-radius: calc(var(--o55-card-r) * 0.7); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.o55-nierthumb { position: relative; display: block; min-height: 96px; border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 10%, transparent); transition: transform 200ms ease; }
+.o55-niercheck:hover .o55-nierthumb { transform: translateY(-1px); }
+.o55-niertext { display: grid; align-content: start; gap: 5px; min-width: 0; padding: 4px 6px 48px 0; }
+.o55-niertitle { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
+.o55-niername { font: 700 14.5px/1.2 var(--body-font); }
+.o55-niertag { padding: 4px 7px; font-size: 10px; }
+.o55-niersub { font: 400 12.5px/1.45 var(--body-font); color: var(--text-secondary); max-width: 62ch; }
+.o55-nieradjust { grid-column: 2; grid-row: 2; justify-self: start; align-self: end; position: relative; z-index: 1; margin: 0 0 4px; gap: 7px; }
+.o55-nieradjust .o55-sg { opacity: 0.85; }
+.o55-niercheck:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 4px; }
+
+/* the same material as the tiles and cards, per family */
+#pm-o55-onboarding[data-family="friendly"] .o55-nierlook { border: 2px solid color-mix(in srgb, var(--o55-ink) 55%, transparent); box-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 12%, transparent); }
+#pm-o55-onboarding[data-family="friendly"] .o55-nierlook[data-on="true"] { border-color: var(--o55-ink); box-shadow: 4px 5px 0 color-mix(in srgb, var(--o55-accent) 70%, transparent); }
+#pm-o55-onboarding[data-family="friendly"] .o55-nierbox { border: 2px solid var(--o55-ink); border-radius: 6px; }
+#pm-o55-onboarding[data-family="friendly"] .o55-nierthumb { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--o55-ink) 30%, transparent); }
+#pm-o55-onboarding[data-family="glass"] .o55-nierlook { border-color: rgba(255, 255, 255, 0.2); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] .o55-nierlook { border-color: var(--o55-line); }
+#pm-o55-onboarding[data-family="glass"] .o55-nierlook[data-on="true"] { background: color-mix(in srgb, var(--o55-accent) 16%, transparent); box-shadow: inset 0 0 0 1px var(--o55-accent), 0 10px 30px -12px color-mix(in srgb, var(--o55-accent) 80%, transparent); }
+#pm-o55-onboarding[data-family="retro"] .o55-nierlook { border: 2px solid color-mix(in srgb, var(--text-primary) 70%, transparent); border-radius: 0; transition: none; }
+#pm-o55-onboarding[data-family="retro"] .o55-nierlook[data-on="true"] { border-color: var(--text-primary); box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 40%, transparent); }
+#pm-o55-onboarding[data-family="retro"] :is(.o55-nierthumb, .o55-niercheck) { border-radius: 0; transition: none; }
+#pm-o55-onboarding[data-family="retro"] .o55-nierbox { border: 2px solid var(--text-primary); border-radius: 0; transition: none; }
+#pm-o55-onboarding[data-family="retro"] .o55-nierbox::after { transition: none; }
+#pm-o55-onboarding[data-family="retro"] .o55-niername { font-family: var(--display-font); text-transform: uppercase; font-size: 13.5px; letter-spacing: 0.03em; }
+
+/* narrow window: a smaller scene */
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-nierlook { grid-template-columns: 104px minmax(0, 1fr); column-gap: 12px; }
+
+/* ---------------------------------------------------------------- the look menu: NieR Mode under Light / Dark */
+.o55-looknier { display: flex; align-items: stretch; gap: 4px; padding-top: 8px; border-top: 1px solid var(--border); }
+.o55-looknier-check { flex: 1; min-width: 0; display: flex; align-items: center; gap: 9px; padding: 7px 8px; border-radius: 10px; border: 1px solid transparent; background: transparent;
+  color: var(--text-primary); font: 600 13px/1.1 var(--body-font); cursor: pointer; text-align: left; }
+.o55-looknier-check .o55-nierbox { width: 16px; height: 16px; }
+.o55-looknier-check .o55-nierbox::after { width: 4px; height: 8px; margin: -5px 0 0 -2.3px; }
+.o55-looknier-adjust { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: transparent;
+  color: var(--text-secondary); font: 600 12.5px/1 var(--body-font); cursor: pointer; }
+.o55-looknier-check:hover, .o55-looknier-adjust:hover { background: color-mix(in srgb, var(--text-primary) 7%, transparent); color: var(--text-primary); }
+.o55-looknier-check:focus-visible, .o55-looknier-adjust:focus-visible { outline: 2px solid var(--o55-accent, var(--accent-blue)); outline-offset: 1px; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="retro"] :is(.o55-looknier-check, .o55-looknier-adjust) { border-radius: 0; font-family: var(--display-font); text-transform: uppercase; font-size: 11.5px; letter-spacing: 0.04em; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="retro"] .o55-looknier-check .o55-nierbox { border: 2px solid var(--text-primary); border-radius: 0; transition: none; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="retro"] .o55-looknier { border-top: 2px dashed color-mix(in srgb, var(--text-primary) 45%, transparent); }
+
+/* ---------------------------------------------------------------- Adjust NieR look: the panel inside the window */
+/* it takes the interior's grid cell (the window is header / interior), so the header, the rail and Close stay; the
+   interior is pinned to that cell too (where it always is), or auto-placement would push it to a third row */
+.o55-win > .o55-body { grid-area: 2 / 1; }
+.o55-nierpanel { grid-row: 2; grid-column: 1; position: relative; z-index: 3; min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); background: var(--o55-win-bg); border-top: 1px solid var(--o55-line); }
+.o55-nierpanel-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 18px var(--o55-pad) 12px; border-bottom: 1px solid var(--o55-line); }
+.o55-nierpanel-titles { display: grid; gap: 4px; min-width: 0; }
+.o55-nierpanel-eye { margin: 0; font: 700 11px/1 var(--body-font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.o55-nierpanel-h { margin: 0; font: 700 clamp(19px, 1.8vw, 23px)/1.2 var(--display-font, var(--body-font)); color: var(--text-primary); outline: none; }
+.o55-nierpanel-scroll { min-height: 0; overflow: auto; overscroll-behavior: contain; }
+.o55-nierpanel-body { padding: 16px var(--o55-pad) 0; }
+.o55-nierpanel-body .o55nc { max-width: 920px; }
+/* the editor's Done stays in reach at the foot of the scrolling list */
+.o55-nierpanel-body .o55nc-mount-foot { position: sticky; bottom: 0; z-index: 1; justify-content: flex-end; margin: 18px calc(-1 * var(--o55-pad)) 0; padding-inline: var(--o55-pad);
+  background: var(--o55-win-bg); border-top: 1px solid var(--o55-line); }
+.o55-nierpanel-body .o55nc-mount-foot .btn { border: 1px solid var(--o55-line); color: var(--text-primary); }
+.o55-nierpanel-fallback { display: flex; justify-content: flex-end; padding: 16px 0; }
+#pm-o55-onboarding[data-family="glass"] .o55-nierpanel { background: linear-gradient(var(--surface), var(--surface)), var(--background); }
+#pm-o55-onboarding[data-family="retro"] .o55-nierpanel { border-top-width: 2px; }
+#pm-o55-onboarding[data-family="retro"] .o55-nierpanel-h { text-transform: uppercase; letter-spacing: 0.02em; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-nierpanel-body .o55nc-top { grid-template-columns: minmax(0, 1fr); }
+/* outside NieR Mode it rises into place; under NieR Mode the slice part opens it (O55.nierFx.slice) */
+.o55-nierpanel.o55-nierpanel-in { animation: o55-nierpanel-in 260ms cubic-bezier(0.2, 0, 0, 1) both; }
+#pm-o55-onboarding[data-family="retro"] .o55-nierpanel.o55-nierpanel-in { animation-timing-function: steps(4, end); }
+@keyframes o55-nierpanel-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* ---------------------------------------------------------------- the reboot moment inside the window */
+/* kit.d/19-nier-parts.js plays it inside the element it is given (the window) instead of over the page */
+#o55np-reboot.o55np-within { position: absolute; inset: 0; z-index: 60; border-radius: inherit; }
+
+/* ---------------------------------------------------------------- under NieR Mode */
+/* ink on parchment, square boxes with an inked square for the tick, a ruled YoRHa title */
+html[data-o55-nier] .o55-nierbox { border: 1.4px solid var(--o55-nier-ink); background: transparent; transition: none; }
+html[data-o55-nier] .o55-nierbox::after { left: 3px; top: 3px; right: 3px; bottom: 3px; width: auto; height: auto; margin: 0; border: 0; background: var(--o55-nier-ink); transform: scale(0); transition: transform 120ms steps(2, end); }
+html[data-o55-nier] [aria-checked="true"] .o55-nierbox { background: transparent; border-color: var(--o55-nier-ink); }
+html[data-o55-nier] [aria-checked="true"] .o55-nierbox::after { transform: none; }
+html[data-o55-nier] .o55-nierlook[data-on="true"] { border-color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
+html[data-o55-nier] .o55-nierthumb { box-shadow: inset 0 0 0 1px var(--o55-nier-line-strong, var(--border)); }
+html[data-o55-nier-parts~="headers"] .o55-niername { letter-spacing: 0.16em; text-transform: uppercase; font-size: 13px; }
+html[data-o55-nier] .o55-niertag { color: var(--o55-nier-on-ink); background: var(--o55-nier-ink); letter-spacing: 0.14em; }
+/* the menu's checked row is an ink bar, like its chosen look (the cursor part inks menuitemradio rows only) */
+html[data-o55-nier-parts~="cursor"] .o55-looknier-check[aria-checked="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="cursor"] .o55-looknier-check[aria-checked="true"] .o55-nierbox { border-color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] .o55-looknier-check[aria-checked="true"] .o55-nierbox::after { background: var(--o55-nier-on-ink); }
+html[data-o55-nier] .o55-looknier { border-top-color: var(--o55-nier-line-strong, var(--border)); }
+html[data-o55-nier] .o55-nierpanel-eye { letter-spacing: 0.22em; color: var(--text-secondary); }
+html[data-o55-nier-parts~="headers"] .o55-nierpanel-h { letter-spacing: 0.14em; text-transform: uppercase; font-size: 19px; }
+html[data-o55-nier-parts~="headers"] .o55-nierpanel-head { border-bottom-color: var(--o55-nier-ink); }
+
+/* ---------------------------------------------------------------- Reduce Motion: end states only */
+html[data-motion="reduced"] :is(.o55-nierbox, .o55-nierlook, .o55-nierthumb), html[data-motion="reduced"] .o55-nierbox::after { transition: none !important; }
+html[data-motion="reduced"] .o55-nierpanel.o55-nierpanel-in { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.o55-nierbox, .o55-nierlook, .o55-nierthumb), .o55-nierbox::after { transition: none !important; }
+  .o55-nierpanel.o55-nierpanel-in { animation: none; }
+}

@@ -25,12 +25,15 @@
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
       return true;
     },
-    /* the look chosen in onboarding becomes the saved theme (the preview used persist:false) */
+    /* the look chosen in onboarding becomes the saved theme (the preview used persist:false), and NieR Mode's three
+       rows, the rest of the look, are saved with it into the same Project (their preview, O55.nierLook) */
     commitLook(S) {
       const d = md(S), tome = window.PM7_SETTINGS_TOME;
-      try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(d.theme_family); tome.setChromeThemeMode(d.theme_mode); return true; } } catch (_) {}
-      try { window.PM_THEME.setFamily(d.theme_family); window.PM_THEME.setMode(d.theme_mode); } catch (_) {}
-      return false;
+      let ok = false;
+      try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(d.theme_family); tome.setChromeThemeMode(d.theme_mode); ok = true; } } catch (_) {}
+      if (!ok) try { window.PM_THEME.setFamily(d.theme_family); window.PM_THEME.setMode(d.theme_mode); } catch (_) {}
+      if (O55.nierLook && O55.nierLook.commit) O55.nierLook.commit(S);
+      return ok;
     },
     openWizard() { const t = document.getElementById('tab-wizard') || document.querySelector('[data-page="wizard"]'); if (t) { t.click(); return true; } return false; }
   };
