@@ -476,11 +476,15 @@
         + s.index + '" aria-label="Question ' + (s.index + 1) + '" data-k="qs-tick:' + ctx.esc(s.id) + '"></button>';
     }).join('') + '</div>';
   }
+  /* The spine is a progress wire (item 15, 2026-10-07): the accent fill runs from the first mark to the current one.
+     --qs-fill is its resting length as a fraction of the track (the slots are spaced evenly, so mark i of n sits at
+     i/(n-1)); springSpineThumb drives the same fill in px while the thumb travels, so the two never part. */
   function askSpine(ctx, m) {
     if (!m.steps || m.type !== 'question') return '';
     var idx = Math.min(Math.max(ctx.state.questionIndex | 0, 0), Math.max(m.steps.length - 1, 0));
-    return '<div class="qs-spine" data-k="qs-spine">'
-      + '<div class="qs-spine-track" aria-hidden="true"></div>'
+    var frac = m.steps.length > 1 ? idx / (m.steps.length - 1) : 0;
+    return '<div class="qs-spine" data-k="qs-spine" style="--qs-fill:' + (Math.round(frac * 1e4) / 1e4) + '">'
+      + '<div class="qs-spine-track" aria-hidden="true"><i class="qs-spine-fill"></i></div>'
       + m.steps.map(function (s) {
         return '<button type="button" class="qs-spine-slot is-' + s.state + '" data-action="qs-goto-question" data-index="'
           + s.index + '" aria-label="Question ' + (s.index + 1) + '" data-k="qs-spine:' + ctx.esc(s.id) + '"></button>';
@@ -505,7 +509,11 @@
     }
     return live;
   }
+  /* All three reduced routes (the media query, Demo Studio's body.pm56-reduced, PMConcept7's
+     html[data-motion="reduced"]) end the Ask Card's motion at its end state. */
   function reduceMotion() {
+    if (document.body && document.body.classList.contains('pm56-reduced')) return true;
+    if (document.documentElement.getAttribute('data-motion') === 'reduced') return true;
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }
   function fileName(p) {
@@ -1000,6 +1008,15 @@
      ticks are a vertical rail on the right. Footer is Back, Question N of M,
      Skip (not on review), Next or Submit. Choice does not auto-advance.
      Composer stays below, unchanged. */
+  /* The title carries the needs-you mark (item 15): the shared status set's waiting glyph, held still (nx-still: no
+     list rhythm, its "?" hops in once as it mounts, so each new question in the reel is announced once and the idle
+     card has no loop). It hangs left of the prompt; the prompt stays the title's text. */
+  function askTitle(ctx, m) {
+    var N = window.PM56_NEON;
+    var mark = (N && N.status) ? '<span class="qs-ask-glyph" aria-hidden="true">' + N.status('waiting', 16, 'nx-still') + '</span>' : '';
+    return '<div class="qs-prompt qs-ask-title' + (mark ? ' has-glyph' : '') + '" data-k="qs-prompt">' + mark + ctx.esc(m.prompt)
+      + (m.required ? '<span class="qs-req" title="Required">*</span>' : '') + '</div>';
+  }
   function take8(ctx, m) {
     if (m.type !== 'question') return take0(ctx, m);
     var qs = ctx.state.questions || [];
@@ -1011,8 +1028,9 @@
     if (m.input && m.input.kind === 'multi') {
       var selN = (q && Array.isArray(q.answer)) ? q.answer.length : 0;
       if (q && String(q.other || '').trim()) selN += 1;
+      /* the running count wears the accent, so it reads with the rows it counts (item 15) */
       sub = '<div class="qs-ask-sub" data-k="qs-ask-sub">Select all that apply'
-        + (selN ? ' · ' + selN + ' selected' : '') + '</div>';
+        + (selN ? ' · <span class="qs-ask-sub-n">' + selN + ' selected</span>' : '') + '</div>';
     }
     var back = { a: 'prev-question', label: 'Back', kind: 'soft', disabled: idx === 0 };
     var skip = review ? null : { a: 'skip-question', label: 'Skip', kind: 'text' };
@@ -1023,7 +1041,7 @@
       + '<button type="button" class="qs-ask-x" data-action="close-decision" title="Close and return later; answers are preserved" aria-label="Close decision">'
       + iconOf(ctx, 'close', 12) + '</button>'
       + '<div class="qs-ask-row">'
-      + reel(ctx, m, promptHtml(ctx, m, 'qs-ask-title') + sub + inputHtml(ctx, m, 'ask'))
+      + reel(ctx, m, askTitle(ctx, m) + sub + inputHtml(ctx, m, 'ask'))
       + askSpine(ctx, m)
       + '</div>'
       + '<div class="qs-ask-foot" data-k="qs-ask-foot">'
@@ -1073,7 +1091,13 @@
     try { m = buildModel(ctx); } catch (err) { console.error('questions.js model threw', err); return ''; }
     if (!m) return '';
     var st = qsState(ctx);
-    if (!document.querySelector('.decision-host .qs-shell')) st.morphPlayed = false;
+    var liveShell = document.querySelector('.decision-host .qs-shell');
+    if (!liveShell) st.morphPlayed = false;
+    /* While the shell implodes (close, submit) it belongs to playClose: its classes, inline size and the
+       "Submitting answers…" face are all script-owned. A full render landing mid-leave (a work tick that falls back
+       to renderApp) used to strip them, so the face vanished and an empty 44px pill sat there until the 1.4 s
+       watchdog (item 15). The slot hands back what is on screen, which pmPatch leaves alone. */
+    if (st.leaving && liveShell && liveShell.classList.contains('qs-closing')) return liveShell.outerHTML;
     if (m.type === 'preparing' || m.type === 'submitting') return wrapShell(ctx, m, waitPill(ctx, m));
     var fn = RENDERERS[m.take] || RENDERERS[0];
     return wrapShell(ctx, m, fn(ctx, m));
@@ -1149,9 +1173,11 @@
         }
       }
       if (!row || !row.animate) return;
+      /* item 15: a press that springs back (the row gives under the click, then settles a hair proud), not a
+         4% swell, which on a full-width row jumped about 8px past each edge */
       row.animate(
-        [{ transform: 'scale(1.04)' }, { transform: 'scale(1)' }],
-        { duration: 280, easing: morphEaseOut() }
+        [{ transform: 'scale(.975)' }, { transform: 'scale(1.008)', offset: 0.55 }, { transform: 'scale(1)' }],
+        { duration: 300, easing: morphEaseOut() }
       );
     });
   }
@@ -1683,6 +1709,11 @@
     thumb.style.top = Math.round(spineThumbTop(spine, thumb)) + 'px';
     thumb.style.transform = '';
   }
+  /* the fill's length (px) when the thumb's top is `top`: from the track's start to the thumb's centre */
+  function spineFillAt(spine, thumb, top) {
+    var track = spine.querySelector('.qs-spine-track');
+    return track ? Math.max(0, Math.round(top + thumb.offsetHeight / 2 - track.offsetTop)) : 0;
+  }
   function springSpineThumb(jump) {
     var spine = document.querySelector('.qs-spine');
     var thumb = spine && spine.querySelector('.qs-spine-thumb');
@@ -1693,6 +1724,20 @@
     var from = st && st.spineFromTop;
     thumb.style.top = Math.round(to) + 'px';
     if (!jump || reduceMotion() || !thumb.animate || from == null || Math.abs(to - from) < 2) return;
+    /* the accent fill rides the thumb on the same curve (it rests on --qs-fill once the jump lands) */
+    var fill = spine.querySelector('.qs-spine-fill');
+    if (fill && fill.animate) {
+      var mid = Math.round(from + (to - from) * 0.55), over = Math.round(to + (to > from ? 3 : -3));
+      fill.animate(
+        [
+          { height: spineFillAt(spine, thumb, from) + 'px' },
+          { height: spineFillAt(spine, thumb, mid) + 'px', offset: 0.45 },
+          { height: spineFillAt(spine, thumb, over) + 'px', offset: 0.78 },
+          { height: spineFillAt(spine, thumb, to) + 'px' }
+        ],
+        { duration: 400, easing: morphEaseOut() }
+      );
+    }
     thumb.animate(
       [
         { top: from + 'px', transform: 'scale(1)' },
