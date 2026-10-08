@@ -246,10 +246,11 @@
 
   /* ------------------------------------------------------------------ Show Me: Pod 042 */
   /* It leaves from its dock every time, in the same frame as the dock empties (no blink, no fade: one Pod). */
-  TR.on('showMe', () => {
+  TR.on('showMe', (d) => {
     if (!painted()) return;
     TR.refresh();
-    if (has('pod')) { const at = dock(); TR.pointer.pos = null; if (at) TR.pointer.show(at.x, at.y); }
+    /* (taking over from a Pod still flying home: it sets off from where it is) */
+    if (has('pod') && !d.takeover) { const at = dock(); TR.pointer.pos = null; if (at) TR.pointer.show(at.x, at.y); }
   });
   /* its press is its chirp (the engine plays it): the next line keeps quiet for a moment */
   TR.on('press', () => { if (has('pod')) podAt = M.now(); });

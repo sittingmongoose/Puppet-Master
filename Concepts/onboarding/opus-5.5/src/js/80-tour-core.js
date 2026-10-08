@@ -366,11 +366,13 @@
   /* ------------------------------------------------------------------ the pointer (Show Me) */
   const P = TR.pointer = {
     el: () => st.root.querySelector('.o55t-pointer'),
-    pos: null,
+    pos: null, anim: null,
     show(x, y) { const p = P.el(); P.pos = { x, y }; p.style.transform = `translate(${x}px, ${y}px)`; p.classList.add('o55t-on'); },
-    hide() { const p = P.el(); p.classList.remove('o55t-on', 'o55t-press'); },
+    hide() { const p = P.el(); p.classList.remove('o55t-on', 'o55t-press'); if (P.anim) { const a = P.anim; P.anim = null; a.cancel(); } },
     /* travel on a gentle arc; the destination is pre-cued before the pointer leaves */
     async moveTo(x, y, dur, o) {
+      /* a travel still in flight (the pointer flying home as a new Show Me begins) hands over from where it is now */
+      if (P.anim) { const m = new DOMMatrixReadOnly(getComputedStyle(P.el()).transform); P.pos = { x: m.m41, y: m.m42 }; const was = P.anim; P.anim = null; was.cancel(); }
       /* the pointer emerges from the Show Me button the learner just pressed (else from the callout's middle), or
          from where a skin keeps it (pointerFrom) */
       if (!P.pos) {
@@ -394,9 +396,10 @@
          thread repaints that whole page on a computer without a GPU */
       const n = tv ? tv.n : fam === 'retro' ? 8 : 28, frame = tv ? tv.frame : fam === 'retro' ? 'steps(1, end)' : 'linear', frames = [];
       for (let k = 0; k <= n; k++) { const [px, py] = at(ease(k / n)); frames.push({ transform: `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px)`, easing: frame }); }
-      const a = el.animate(frames, { duration: fam === 'glass' && !tv ? Math.round(d * 1.12) : d, fill: 'forwards' });
+      const a = P.anim = el.animate(frames, { duration: fam === 'glass' && !tv ? Math.round(d * 1.12) : d, fill: 'forwards' });
       await a.finished.catch(() => null);
-      end(); a.cancel();
+      if (P.anim !== a) return; /* a newer travel took the pointer over */
+      P.anim = null; end(); a.cancel();
       if (!quiet && dist > 24 && !SM.cancelled()) O55.sound.play('arrive');
     },
     async press(on) { P.el().classList.toggle('o55t-press', on !== false); await M.delay(on === false ? 60 : 140); }
@@ -496,11 +499,16 @@
     const l2 = Math.hypot(b.x - via.x, b.y - via.y), f = l1 / Math.max(1, l1 + l2);
     return (t) => { if (t <= f && f > 0) return q(t / f); const u = f < 1 ? (t - f) / (1 - f) : 1; return [via.x + (b.x - via.x) * u, via.y + (b.y - via.y) * u]; };
   }
+  /* a demonstration whose step has already moved on is only bringing the pointer home: input never waits for it */
+  const homing = () => !!(st.show && st.show.step !== st.step);
   async function showMe() {
-    const s = st.step; if (!s || !s.showMe || st.show) return;
+    const s = st.step; if (!s || !s.showMe || (st.show && !homing())) return;
+    /* Show Me on the next step while the pointer is still flying home: this one takes the pointer from where it is */
+    const takeover = homing();
+    if (takeover) { st.show.cancelled = true; st.show = null; }
     const me = st.show = { cancelled: false, step: s };
     st.root.setAttribute('data-showme', 'true');
-    emit('showMe', { step: s }); /* the pointer's travel is its sound ('pointer'), so the button itself is quiet */
+    emit('showMe', { step: s, takeover }); /* the pointer's travel is its sound ('pointer'), so the button itself is quiet */
     try { await s.showMe(SM, st); } catch (err) { console.warn('O55 tour: Show Me stopped', err); }
     await M.delay(600); /* settle: the result stays visible while the guide names the change */
     /* the pointer comes home (a skin may wait for the next step's callout and fly there: allow for its arrival) */
@@ -514,7 +522,10 @@
   }
   function interruptShow() {
     if (!st.show) return;
+    /* the demonstration was already over (its step done, the pointer flying home): it is put away, with no hand-back */
+    const home = homing(), s = st.show.step;
     st.show.cancelled = true; st.show = null; st.root.removeAttribute('data-showme'); P.hide();
+    if (home) { emit('showMeDone', { step: s }); return; }
     O55.sound.play('interrupt'); emit('interrupt', {});
     U.announce(T('tour.controls.interrupted'), st.root);
   }
