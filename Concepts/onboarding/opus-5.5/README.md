@@ -22,6 +22,8 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then
 python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches, stale output, lint, PM7 byte parity
 ```
 
+`build.py --out <path>` is a private build: it lints, then writes only that path, never either published output.
+
 `build.py` reads the pinned base page (SHA-256 `b3888fad…`), swaps the base's Settings managers for the fork in
 `src/settings` (see Settings below), strips the old onboarding and tour, splices `src/`
 between `<!-- O55:… -->` markers and applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher
@@ -38,7 +40,9 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | Path | What |
 |---|---|
 | `src/copy.json` | Every user-facing string. Lint rejects jargon ("repository", "runtime", …) outside `detail*` keys. |
+| `src/copy.d/*.json` | Strings added by later work, merged into `copy.json` by the build in filename order; a leaf key may be defined once. |
 | `src/js/00–20` | Namespace, utilities, the motion clock (one time-scale for filming), synthesised sound kits, storage. |
+| `src/js/16-nier-fx.js` + `src/css/05-nier-fx.css` | `O55.nierFx`: the shared NieR effects for the onboarding window and the tour (see Settings below). |
 | `src/js/25–35` | Fixture world and scenarios, the owner command table (pre-commit discipline), the canonical setup-plan draft. |
 | `src/js/50–57` | Art: scene system, four family prop libraries (Basic blueprint, Friendly paper theatre, Glass light lab, Retro arcade), scene compositions. |
 | `src/js/60–62` | The window, components, flow helpers (phased owner operations, countdowns, QR drawing). |
@@ -48,6 +52,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/css/` | Window, components, motion, art. Colours come from the live theme tokens. |
 | `src/coverage.map.json` → `src/coverage.json` | Every setup-plan field (63) and conditional (26) mapped to the screen or control that sets it, plus screens → scenes and scenarios → drivers. |
 | `src/settings/` | The Settings layer, forked from the base's T50 Settings refresh and composed by `tools/settings_layer.py`: `kit.js` + `kit.d/*.js` (rows, controls, placement, plain pages, look settings, wizard, flows), `managers/*.js` (one per manager page), `styles.css` + `styles.d/*.css`, `data.json` + `data.d/`, `placement.json` + `o55/placement.d/*.json` (where every canonical setting id is drawn), `o55/rows.d/*.json` (per-row wording and behaviour). |
+| `src/settings/kit.d/23-nier-theme-menu.js` + `src/settings/styles.d/18-nier-theme-menu.css` | The title-bar theme menu's NieR Mode row and its Adjust button (see Settings below). |
 
 ## Tools (all file:// with the local Chrome; outputs go to /tmp or the Evidence share, never the repository)
 
@@ -121,8 +126,64 @@ part, a storage meter, the presets Full install, Quiet, Still and Colors only, a
 Play reboot moment. It is a row editor, not a manager. The palette tables come from `tools/nier_palette.py`, and
 `tools/nier_hue_audit.mjs` finds any pixel outside ink and parchment.
 
+The title-bar theme menu ends with a NieR Mode row (`kit.d/23-nier-theme-menu.js` +
+`styles.d/18-nier-theme-menu.css`): a divider after the family rows, a `menuitemcheckbox` that calls `PM_NIER.set`
+and syncs from `PM_NIER.onChange`, and an Adjust NieR look button that opens the parts editor on the live store.
+Toggling leaves the menu open; Adjust closes it. The same Plug-in Chips editor renders outside Settings as
+`PM_NIER_CHIPS.popup` (a body-level modal dialog with a scrim, a focus trap, Escape and a close button, returning
+focus to its opener) and through `PM_NIER_CHIPS.mount` (the editor inside a host element, which onboarding uses for
+a panel in its own window instead of a nested dialog). Both read and write only through a store, and the editor's
+CSS works outside `#panel-settings`.
+
+`O55.nierFx` (`src/js/16-nier-fx.js` + `src/css/05-nier-fx.css`, words in `src/copy.d/10-nier-fx.json`) holds the
+shared NieR effects the onboarding window and the tour use: one-shot decode, slice, wipe, glitch and alert, the
+brackets and cursor followers, quest banners, reboot bands and Pod 042 speech. Every effect is a no-op while NieR
+is off, honours Reduced Motion with the end state at once, draws only while its part is installed, and cleans up
+after itself. The Pod's chirps and the banners' stings play through `O55.sound`, so the window's mute governs them.
+
 Verifying a change: `build.py --check`, then open the page with `?o55=off` (skips onboarding, which freezes headless
 Chrome) and drive `PM51.go(domain, workspace)`; check all eight themes and 760 / 900 / 1280 / 1700 px widths.
+
+## Sound
+
+`O55.sound` (`src/js/15-sound.js`) plays synthesised UI sound for the onboarding window and the tour: no audio files
+and no samples, every sound built from oscillators, filters and noise. One kit per theme family (dark and light
+share a kit), plus a fifth NieR kit while NieR is painted with its Menu sounds part installed; with the part off
+NieR plays the painted Basic kit. `nierOn`, `nierOff` and `reboot` always use the NieR voice while the sounds part
+is installed, even mid-transition. An explicit `family` or `kit` option picks a kit outright.
+
+The vocabulary is 43 events. An event a kit lacks falls back to an older one: `chapter` to `next`,
+`reveal`/`sheet`/`reboot`/`nierOn` to `open`, `unsheet`/`nierOff` to `close`, `phase`/`copy`/`move`/`pod` to `tap`,
+`found`/`save` to `success`, `warn`/`missing`/`glitch` to `error`, `callout` to `spot`, `pointer` to `pickup`,
+`arrive` to `drop`, `checkpoint`/`quest` to `step`, `interrupt` to `back`, `decode` to `type`. `hover` is silent
+outside NieR; an unknown event is dropped and logged.
+
+Frequent events are pools of related variants drawn by a shuffle that never repeats the last one. Pitches follow
+the journey: each chapter has its chord (Welcome I, Computer IV, Project V, AI vi, Ready I up an octave; the tour's
+ask, workspace and plan chapters IV, ii and V, resolving to I at the finish; NieR its own modal chords), forward
+steps climb the chord with progress, Back descends, and choices rotate through it. The first forward move into a new
+chapter becomes a chapter sting automatically, unless the window has only just opened. `setContext` tells the music
+where the journey is; `chapter: 'tour'` follows the tour's own chapter.
+
+Several events in the same moment (one task, or within 70 ms) play the most important one; three pairs layer by
+design instead: decode chatter under anything, a celebration's sparkles over commit or finish, and the Pod just
+after callout, quest, chapter or step. Very frequent events carry a minimum gap between two of the same. Nothing
+plays before the first trusted gesture.
+
+The mute control mirrors the current Project's `general.interaction.sound-effects` (factory default on, DL-107); a
+refused or unavailable write changes nothing. With no Project the control starts on as a session-only preview: it
+writes and stores nothing, and the Project's own value wins at the commit and at every rebind (canon F3-520).
+
+The NieR Menu sounds part plays through `O55.sound.synth`, so there is one AudioContext and the blips sit under the
+same mute and gesture rule. The blips ignore synthetic clicks and anything inside the onboarding window or the tour.
+
+`O55.sound.CATALOG` lists all 310 kit, event and variant takes with names, styles and durations; `preview` plays one
+entry unmuted, `renderBuffer` renders one offline, and `bars` draws its waveform. Settings › Notifications & Sounds ›
+Sounds shows them as Setup & tour groups (one look at a time) and a NieR group, all generated demonstration tones
+previewed through `O55.sound`; main takes show first and the rest sit behind Show N more takes. The event phrases
+come from the `soundLibrary` strings in `src/copy.d/30-sound.json`. `TRIM` (level trims per kit and event) and `DUR`
+(audible seconds per kit, event and variant) in `15-sound.js` are generated: `tools/sound_render.mjs` renders every
+entry offline, then `tools/sound_catalog.py --write` rewrites the tables.
 
 ## The Guided Tour
 
@@ -155,6 +216,8 @@ it back at the end.
 Canon check: the onboarding carries F3-520's exact eleven-stage main graph and six-stage connect graph
 (`src/js/40-stages.js`). The full-reload resume capability in F3-521 remains unverified until the native owner can
 resolve a bounded restoration reference; scenario t4 must verify the concept's explicit recovery state instead.
+
+<!-- NIER-ONBOARDING-TOUR-ART: the lead adds the onboarding NieR row, window skin, tour and puppet sections here -->
 
 ## Findings for the production app (found while building the tour)
 
