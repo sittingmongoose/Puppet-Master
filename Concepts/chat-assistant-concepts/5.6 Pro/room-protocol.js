@@ -302,11 +302,11 @@
     queued ring. Marks are keyed so the speaker marker can find them (identity keys only, 5.3). */
  function clusterOf(r,f){
   const S=SH(),done=r.status==='completed',live=r.status==='running';
-  return [S.pmxMark({key:'cm:'+r.id+':mod',role:'lead',size:18,state:done?'done':'idle'})].concat(r.participants.map(p=>
+  return [S.pmxMark({key:'cm:'+r.id+':mod',role:'moderator',size:18,state:done?'done':'idle'})].concat(r.participants.map(p=>
    markFor(r,p,18,done?'done':live&&f.speaker===p?'working':live&&f.next===p?'queued':'idle','cm:'+r.id+':'+p.id)));
  }
  function laneFor(r,p,o){const S=SH();return S.pmxLane(Object.assign({key:'pmx-lane:'+r.id+':'+p.id,action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'" data-participant="'+escH(p.id)+'"'+(o.message?' data-message="'+escH(o.message)+'"':''),mark:markFor(r,p,22,o.state||'idle'),name:escH(p.role)},o));}
- function moderatorLane(r,o){const S=SH();return S.pmxLane(Object.assign({key:'pmx-lane:'+r.id+':mod',action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'"'+(o.message?' data-message="'+escH(o.message)+'"':''),mark:S.pmxMark({role:'lead',size:22,state:'idle'}),name:'Moderator'},o));}
+ function moderatorLane(r,o){const S=SH();return S.pmxLane(Object.assign({key:'pmx-lane:'+r.id+':mod',action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'"'+(o.message?' data-message="'+escH(o.message)+'"':''),mark:S.pmxMark({role:'moderator',size:22,state:'idle'}),name:'Moderator'},o));}
  const quoteOf=m=>'<q>'+escH(firstSentence(m.body))+'</q>';
  /* the speaker's words (M4): the recorded player's own turn when it has one (PM56_ROOM_DEMOS.speaking: the text and
     pace the room document streams, so the card and the document keep step), else the recorded round's reply.

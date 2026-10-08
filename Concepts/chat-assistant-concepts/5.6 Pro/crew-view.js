@@ -212,8 +212,7 @@
       '<summary>' + g('chevron-right', 12) + '<span>The locked copy of the job</span></summary><div class="crew-plan-more">' +
       '<p class="crew-plan-h">The records</p><ul class="crew-source-rows">' + (s.rows || []).map(function (x) { return '<li><span class="crew-source-id">' + esc(x.id) + '</span><code>' + esc(x.title) + '</code></li>'; }).join('') + '</ul>' +
       (req.length ? '<p class="crew-plan-h">What the result must keep</p><ul class="crew-source-req">' + req.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
-      '<p class="pmx-fine crew-source-fine">' + g('lock', 12) + '<span>The fingerprint proves the input didn’t change.</span></p>' +
-      S().pmxDisclosure({ cls: 'crew-plan-raw', attrs: 'data-crew-view-disclosure="tech-source" data-run="' + esc(vm.runId) + '"', open: disclosureOpen(vm.runId, 'tech-source'), summary: 'Technical details', body: '<p class="pmx-fine">Fingerprint ' + esc(s.hash || '') + '</p>' }) +
+      '<p class="pmx-fine crew-source-fine">' + g('lock', 12) + '<span>Locked at Start: the input can’t change while the Crew works.</span></p>' +
       '</div></details>';
   }
   function renderPlanBound(vm) {
@@ -401,8 +400,7 @@
     out += '<li>' + (cl && cl.card.indexOf(' (') > 0 ? '<b>' + esc(cl.card.split(' (')[0]) + '</b> (' + esc(cl.card.split(' (')[1]) : '<b>' + runs + ' at a time</b>') + '</li>';
     (r.participants || []).forEach(function (p) { var si = standIn(p); if (si) out += '<li>' + si.card + '</li>'; });
     out += '<li>Helpers can do what this chat can: ' + esc(((r.crew && r.crew.parent) || {}).mode || 'Agent') + ', asking first.</li></ul>';
-    out += '<details class="crew-view-tech" data-crew-view-disclosure="tech" data-run="' + esc(r.id) + '"' + (disclosureOpen(r.id, 'tech') ? ' open' : '') + '><summary>' + g('chevron-right', 12) + '<span>Technical details</span></summary>' +
-      '<p class="pmx-fine">Opened with cmd.collaboration.open {target: run_view}. Pause and Resume: cmd.collaboration.pause / .resume. Download: cmd.collaboration.export {content_kind: result}. Tabs and disclosures: no command, view state.</p></details>';
+    /* no Technical details (2026-10-07, Jared): the commands stay on the sheet's Advanced page only */
     return out;
   }
   /* viewParts(run, tab, ctx, generic): with `generic` (COLLAB-VIEW's frame calls it so), the answer is the frame's

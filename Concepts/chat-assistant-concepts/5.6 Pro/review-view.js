@@ -5,7 +5,8 @@
  *                              COLLAB's legacy adapter builds the same shape from seed / wand runs.
  *  - renderReport(vm, ctx, o)  the one renderer: "What they found" (Why / Proof / Suggested fix / You'll know
  *                              it's fixed when), the choose block (G-13), "How they agreed", "Still disagrees",
- *                              "Set aside". asideHtml(vm): snapshot, cost, the read-only promise, Technical details.
+ *                              "Set aside". asideHtml(vm): snapshot, cost, the read-only promise (no Technical
+ *                              details, 2026-10-07: the snapshot's hash rides on the first row as data-target-hash).
  *                              Hook classes travel in the view model as `cls`.
  *  - viewParts(run, tab, ctx)  the KIND INTERFACE view part: {title, kindWord, status, actions, plate, tabs, main,
  *                              aside, vm}. Tabs: Report (overview) · Conversation · Team · Cost.
@@ -78,7 +79,7 @@
       reviewers:[{id, name, persona, model, requested, seat, state, notes, done, outcome}],
       findings:[{id, n, claim, severity, sevWord, disposition, dispWord, votes[], agree, toFix, idea,
                  why, proof:{code, first, refs[]}, fix, expected, dissent[], todoId, selected, canTick, reason, cls}],
-      excluded:[{key, text, tech, cls}], agreement:{reviewers[], rows[]}|null, counts, headline,
+      excluded:[{key, text, code, cls}], agreement:{reviewers[], rows[]}|null, counts, headline,
       readOnly:{text, cls}, followOns:{selected, created, createdNs[], canCreate, canSend},
       worked, cost, duplicates, notes, markdown() }
     ===================================================================== */
@@ -118,7 +119,7 @@
    const old=x.targetHash||(x.payload&&x.payload.targetHash)||'';
    const code=old&&primary&&old!==primary?'different_target_hash':x.reason;
    const w=EXCLUDED[code]||['this note didn’t match the snapshot every reviewer read.',String(x.reason||'excluded')];
-   return {key:'rx-'+i,text:w[0],tech:w[1]+(code==='different_target_hash'&&old?' · '+old+' vs '+primary:''),cls:'collab-finding collab-excluded'};});
+   return {key:'rx-'+i,text:w[0],code:String(code||'excluded'),cls:'collab-finding collab-excluded'};});
   const reviewers=parts.map((p,i)=>{const pass=(v.passes||[]).find(x=>x.participantId===p.id)||{};
    return {id:p.id,name:p.role,persona:p.effectivePersona,model:p.effectiveModelName,requested:p.requestedModelName,seat:i+1,state:p.status,
     notes:(pass.findings||[]).length,done:pass.status==='completed',outcome:p.outcome};});
@@ -214,7 +215,8 @@
   items.push('<li>'+esc(costText(vm))+(vm.worked!=null&&T()?' · worked '+esc(T().worked(vm.worked)):'')+'</li>');
   items.push('<li class="'+esc(vm.readOnly.cls)+'">'+esc(vm.readOnly.text)+'</li>');
   if(vm.recorded)items.push('<li class="pmx-rview-prov">'+g('play-ring',13)+'<span>Example report: no AI was contacted.</span></li>');
-  items.push('<li class="'+esc(t.cls)+'">Reviewed: '+esc(t.label)+(at?' · snapshot '+esc(at):'')+'<span class="pmx-fine">Technical details · '+(t.hashKind?esc(t.hashKind)+' ':'')+esc(t.hash)+'</span><span class="pmx-fine">Create To-Dos: cmd.review.create_todos · this report: cmd.collaboration.open</span></li>');
+  /* no Technical details (2026-10-07, Jared): the snapshot's hash rides on the first row, never in the reader's text */
+  items[0]=items[0].replace('<li>','<li class="'+esc(t.cls)+'" data-target-hash="'+esc(t.hash)+'">');
   return '<ul class="pmx-rview-aside">'+items.join('')+'</ul>';
  }
  /* the report body (Report tab). o = {mode:'rich'|'markdown', choose:bool} */
@@ -234,7 +236,7 @@
  /* notes set aside (a different frozen pack, a restarted or stopped run): shown while the run is going as well as in
     the report, so a set-aside note is never invisible until the end */
  function setAsideHtml(vm){
-  return vm.excluded.length?S.pmxViewSection({key:'rv-set',title:'Set aside',meta:'never mixed in',body:vm.excluded.map(x=>'<div class="'+esc(x.cls)+' pmx-rview-set" data-k="'+esc(x.key)+'"><p><b>Set aside:</b> '+esc(x.text)+'</p><p class="pmx-fine">Technical details · '+esc(x.tech)+'</p></div>').join('')}):'';
+  return vm.excluded.length?S.pmxViewSection({key:'rv-set',title:'Set aside',meta:'never mixed in',body:vm.excluded.map(x=>'<div class="'+esc(x.cls)+' pmx-rview-set" data-k="'+esc(x.key)+'" data-reason="'+esc(x.code)+'"><p><b>Set aside:</b> '+esc(x.text)+'</p></div>').join('')}):'';
  }
  /* before the report: who is reading, sealed notes, never dispositions (REV-05) */
  function progressHtml(vm){
@@ -355,7 +357,7 @@
   const cites=mark?'<p class="pmx-help pmx-rview-note">'+(mark[0]===mark[1]?'The highlighted line '+mark[0]+' is the one':'The highlighted lines '+mark[0]+'–'+mark[1]+' are the ones')+' the report points to.</p>':'';
   const main=codeBlock('rv-src:'+eid,e.content,1,0,'pmx-rview-code--doc',mark)+(e.note?'<p class="pmx-help pmx-rview-note">'+esc(e.note)+'</p>':'')+cites;
   return S.pmxView({key:'review-evidence:'+id+':'+eid,cls:'review-document pmx-rview pmx-rview-ev',kind:'review',kindWord:'Review evidence · '+esc(r.title),title:esc(e.label),
-   statusHtml:'The exact version every reviewer read'+(at?' · snapshot '+esc(at):'')+'.<span class="pmx-fine pmx-rview-tech">Technical details · '+esc(vm.target.hash)+'</span>',actionsHtml:back,mainHtml:main,
+   statusHtml:'The exact version every reviewer read'+(at?' · snapshot '+esc(at):'')+'.',actionsHtml:back,mainHtml:main,
    attrs:'data-review-run="'+esc(id)+'"'});
  }
 

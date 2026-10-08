@@ -1066,7 +1066,7 @@
   function clusterOf(run, size, st) {
     var S = S_(), out = [];
     var leadState = st === 'waiting' ? 'queued' : st === 'completed' ? 'done' : (coordinatorSlot(run) && coordinatorSlot(run).outcome && coordinatorSlot(run).outcome !== 'completed') ? 'failed' : 'idle';
-    if (run.kind !== 'review') out.push(S.pmxMark({ role: 'lead', size: size, state: leadState }));
+    if (run.kind !== 'review') out.push(S.pmxMark({ role: run.kind === 'chat_room' ? 'moderator' : 'lead', size: size, state: leadState }));
     var blind = run.kind === 'review' && (run.participants || []).length > 1 && (run.config || {}).blindInitialPass !== false;
     (run.participants || []).forEach(function (p, i) {
       if (blind && i) out.push('|');
@@ -2662,7 +2662,7 @@
   }
   function draftCluster(d, state) {
     var S = S_(), out = [];
-    if (d.kind !== 'review') out.push(S.pmxMark({ role: 'lead', size: 18, state: state }));
+    if (d.kind !== 'review') out.push(S.pmxMark({ role: d.kind === 'chat_room' ? 'moderator' : 'lead', size: 18, state: state }));
     d.rows.forEach(function (r) { out.push(S.pmxMark({ role: markOf(r.persona), seat: seatOf(d, r), size: 18, state: state, standin: !!(standInFor(d, r.requestedModelId) || {}).strong && (standInFor(d, r.requestedModelId) || {}).tone !== 'failed' })); });
     return out;
   }
@@ -3162,7 +3162,7 @@
   function moderatorRow(ctx, d) {
     var S = S_(), PK = window.PM56_PICKERS;
     return S.pmxRosterRow({ key: 'collab-modrow', cls: 'pmx-collab-modrow', attrs: 'data-row="moderator"',
-      mark: S.pmxMark({ role: 'lead', size: 24 }),
+      mark: S.pmxMark({ role: 'moderator', size: 24 }),
       job: { attrs: 'aria-label="Job" data-row="moderator" data-hover-key="collab-moderator" data-hover-tip="The Moderator picks who speaks next and sums up each round."', value: 'Moderator', readonly: true },
       model: PK.modelButton('collab-pick-model', 'collab-model-moderator', d.config.moderatorModelId || 'sonnet46', 'data-row="moderator"'),
       persona: PK.personaButton('collab-pick-persona', 'collab-persona-moderator', d.config.moderatorPersona || 'Product Manager', 'data-row="moderator"'),

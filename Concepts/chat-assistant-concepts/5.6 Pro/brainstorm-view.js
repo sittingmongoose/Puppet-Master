@@ -213,8 +213,7 @@
         '<p class="bs-opt-backed">' + backedLine(o) + (o.by ? '. First drafted by ' + esc(o.by) + '.' : o.from > 1 ? '. ' + o.from + ' helpers drafted it on their own.' : '.') + '</p>' + (o.sources.length && o.sources.length < vm.sources.length ? srcButtons(vm, o.sources) : '') + '</div>';
     }).join('') + '</div>';
     var ruled = vm.ruledOut.map(function (h) {
-      return '<p class="bs-ruled ' + h.cls + '" data-k="' + esc(h.key) + '">' + g('not', 14) + '<span><s>' + esc(h.title) + '</s> is ruled out: it breaks ' + vm.ruleOwner + ' rule “' + esc(String(h.rule || '').replace(/[.\s]+$/, '')) + '”. Votes can’t override a rule.' +
-        '<span class="bs-tech">Technical details: Disqualified regardless of vote count</span></span></p>';
+      return '<p class="bs-ruled ' + h.cls + '" data-k="' + esc(h.key) + '">' + g('not', 14) + '<span><s>' + esc(h.title) + '</s> is ruled out: it breaks ' + vm.ruleOwner + ' rule “' + esc(String(h.rule || '').replace(/[.\s]+$/, '')) + '”. Votes can’t override a rule.</span></p>';
     }).join('');
     var meta = vm.phase === 'vote' || vm.phase === 'evidence' ? 'voting now · ' + vm.counts.voted + ' of ' + vm.counts.voters + ' in' : plural(vm.options.length, 'option');
     return S.pmxViewSection({ key: 'bs-v-opts', cls: 'bs-v-opts', title: 'The options', meta: meta, body: cols + ruled });
@@ -233,8 +232,7 @@
   }
   function evidenceHtml(vm) {
     return '<div class="bs-srcs">' + vm.sources.map(function (s) { return '<button type="button" class="text-button bs-srcrow" data-action="brainstorm-open-evidence" data-run="' + esc(vm.runId) + '" data-evidence="' + esc(s.id) + '">' + g('file', 14) + '<span>' + esc(s.label) + '</span></button>'; }).join('') + '</div>' +
-      (vm.answers.length ? '<p class="bs-sub">Your earlier answers, so nobody asks them again</p><ul class="bs-answers">' + vm.answers.map(function (a) { return '<li><span>' + esc(a.q) + '</span> <b>' + esc(a.a) + '</b></li>'; }).join('') + '</ul>' : '') +
-      '<p class="bs-tech">Technical details: source checksum ' + esc(vm.sourceHash) + '</p>';
+      (vm.answers.length ? '<p class="bs-sub">Your earlier answers, so nobody asks them again</p><ul class="bs-answers">' + vm.answers.map(function (a) { return '<li><span>' + esc(a.q) + '</span> <b>' + esc(a.a) + '</b></li>'; }).join('') + '</ul>' : '');
   }
   function wondererHtml(vm) {
     var w = vm.wonderer; if (!w || !w.leads.length) return '';
@@ -354,9 +352,8 @@
     rows.push('<li><b>' + costWords(r, vm).split(' · ').map(nw).join(' · ') + '</b></li>');
     var mode = MODE[r.id] || 'rich';
     var modes = vm.protocol ? '<p class="bs-modes"><span>Show as</span>' + [['rich', 'Formatted'], ['markdown', 'Plain text']].map(function (m) { return '<button type="button" class="text-button" data-action="brainstorm-view" data-run="' + esc(r.id) + '" data-mode="' + m[0] + '" aria-pressed="' + (mode === m[0]) + '">' + m[1] + '</button>'; }).join('') + '</p>' : '';
-    /* IMPACT A1-53: Technical details names the command the primary dispatches */
-    var tech = '<p class="bs-tech">Technical details: Write the plan runs cmd.brainstorm.synthesize_plan. Open Plan runs cmd.nav.open_subject. Tabs are view state, no command.</p>';
-    return '<ul class="bs-aside">' + rows.join('') + '</ul>' + modes + tech;
+    /* no Technical details (2026-10-07, Jared): the commands stay on the sheet's Advanced page only */
+    return '<ul class="bs-aside">' + rows.join('') + '</ul>' + modes;
   }
   function actionsHtml(r) {
     var run = ' data-run="' + esc(r.id) + '"', out = '';
@@ -415,8 +412,7 @@
     return S.pmxView({ key: 'bs-evi:' + id + ':' + eid, cls: 'bs-document bs-evidence', attrs: 'data-brainstorm-evidence="' + esc(eid) + '"', kind: 'brainstorm', kindWord: 'BrainStorm evidence', title: esc(e.label),
       statusHtml: 'Source used in this BrainStorm' + (prov(r) === 'recorded' ? ' · recorded example' : ''),
       actionsHtml: '<button type="button" class="text-button" data-action="brainstorm-open-results" data-run="' + esc(id) + '">Back to how they decided</button>',
-      mainHtml: '<pre class="bs-pre bs-source-text">' + esc(e.content) + '</pre>' + (e.provenance ? '<p class="bs-prov">' + esc(e.provenance) + '</p>' : '') +
-        '<p class="bs-tech">Technical details: source checksum ' + esc(input.sourceHash) + ' · source ' + esc(eid) + '</p>' });
+      mainHtml: '<pre class="bs-pre bs-source-text">' + esc(e.content) + '</pre>' + (e.provenance ? '<p class="bs-prov">' + esc(e.provenance) + '</p>' : '') });
   }
   E.slot('editorTabLabel', function (c) { var id = String(c.editorId || ''); return id.indexOf(EVI) === 0 ? 'BrainStorm evidence' : id.indexOf(DOC) === 0 ? 'BrainStorm' : ''; });
   E.slot('editorDocument', function (c) {

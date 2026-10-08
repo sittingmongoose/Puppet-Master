@@ -401,21 +401,28 @@ html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-
    module-shell.js pnUnit (geometry in PN / PN_ROLE, from that thread's design/puppets-final gen.mjs). This block is its
    paint and motion, per the same handoff: ink and paper only (no seat hue, no halo), square caps and mitred joins
    (miter limit 2), strokes in device px per size (§7: outline, limbs, strings, pin outlines), strings in ink at 55 %,
-   queued by opacity only (no dashes). Motion (§6), stepped, transform only, about the bar centre (14, 3.2): in pmx
-   sheets and cards a mark only acts once (module marks are lit and still), so working plays the unit's working sway
-   for one there-and-back (18 px and up) and done or needs hops (22 px and up); the live subagents rows and the Agent
-   Stage lanes, which are not pmx surfaces, sway while working (and idle). Reduced motion (the media query,
-   body.pm56-reduced, html[data-motion]) leaves the rest pose. Scoped by html[data-o55-nier="on"], so it holds with
-   every NieR part switched off: the visor is identity, not decor. ---- */
+   queued by opacity only (no dashes); optional (not in the handoff) hollows the coat to paper inside an ink outline.
+   A card's head cluster draws its 22 px marks at 18 px, so there the unit keeps the 18 px row: the head string only,
+   no hop. Motion (§6), stepped, transform only, about the bar centre (14, 3.2): inside a setup sheet a puppet holds
+   still; in run cards and run views a mark only acts once (module marks are lit and still), so working plays the
+   unit's working sway for one there-and-back (18 px and up) and done or needs hops (22 px and up); the live subagents
+   rows and the Agent Stage lanes, which are not pmx surfaces, sway while working (and idle). Reduced motion (the media
+   query, body.pm56-reduced, html[data-motion]) leaves the rest pose. Scoped by html[data-o55-nier="on"], so it holds
+   with every NieR part switched off: the visor is identity, not decor. ---- */
 html[data-o55-nier="on"] .pmx-mark, html[data-o55-nier="on"] .pmx-p-mark { --pn-o: 1px; --pn-l: 1.25px; --pn-s: .75px; --pn-j: .8px; }
 html[data-o55-nier="on"] .pmx-mark[data-size="22"], html[data-o55-nier="on"] .pmx-mark[data-size="24"] { --pn-l: 1.3px; }
 html[data-o55-nier="on"] .pmx-mark[data-size="28"] { --pn-o: 1.1px; --pn-l: 1.4px; --pn-s: .8px; --pn-j: .8px; }
 html[data-o55-nier="on"] .pmx-mark[data-size="36"], html[data-o55-nier="on"] .pmx-p-mark { --pn-o: 1.25px; --pn-l: 1.6px; --pn-s: .9px; --pn-j: .9px; }
 html[data-o55-nier="on"] .pmx-cluster .pmx-mark { --pn-o: 1px; --pn-l: 1.25px; --pn-s: .75px; }
+html[data-o55-nier="on"] .pmx-cluster .pmx-pn-hs { display: none; }
 html[data-o55-nier="on"] .pmx-pp[data-fam="nier"] path, html[data-o55-nier="on"] .pmx-pp[data-fam="nier"] rect { stroke-linecap: square; stroke-linejoin: miter; stroke-miterlimit: 2; vector-effect: non-scaling-stroke; }
 html[data-o55-nier="on"] .pmx-pn-so, html[data-o55-nier="on"] .pmx-pn-sl, html[data-o55-nier="on"] .pmx-pn-sj, html[data-o55-nier="on"] .pmx-pn-str, html[data-o55-nier="on"] .pmx-pn-ko { fill: none; }
 html[data-o55-nier="on"] .pmx-pn-i { fill: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmx-pn-g { fill: var(--o55-nier-paper); }
+html[data-o55-nier="on"] .pmx-pn-p { fill: var(--o55-nier-raised); }
+html[data-o55-nier="on"] :is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-pn-coat { fill: var(--o55-nier-paper); stroke: var(--o55-nier-ink); stroke-width: var(--pn-o); }
+html[data-o55-nier="on"] :is(.pmx-mark, .pmx-p-mark)[data-state="optional"] .pmx-pn-px { opacity: .6; }
+html[data-o55-nier="on"] .pmx-m-nc, html[data-o55-nier="on"] .pmx-m-nw, html[data-o55-nier="on"] .pmx-m-nx, html[data-o55-nier="on"] .pmx-m-sw { stroke-linecap: square; stroke-linejoin: miter; }
 html[data-o55-nier="on"] .pmx-pn-so { stroke: var(--o55-nier-ink); stroke-width: var(--pn-o); }
 html[data-o55-nier="on"] .pmx-pn-sl { stroke: var(--o55-nier-ink); stroke-width: var(--pn-l); }
 html[data-o55-nier="on"] .pmx-pn-sj { stroke: var(--o55-nier-ink); stroke-width: var(--pn-j); }
@@ -430,7 +437,9 @@ html[data-o55-nier="on"] .pmx-mark[data-state="working"] .pmx-pp, html[data-o55-
 html[data-o55-nier="on"] .pmx-mark[data-state="done"] .pmx-pp, html[data-o55-nier="on"] .pmx-p-mark[data-state="done"] .pmx-pp,
 html[data-o55-nier="on"] .pmx-mark[data-state="needs"] .pmx-pp, html[data-o55-nier="on"] .pmx-p-mark[data-state="needs"] .pmx-pp { animation: o55n-pp-hop 620ms linear; }
 html[data-o55-nier="on"] .pmx-mark[data-size="12"] .pmx-pp, html[data-o55-nier="on"] .pmx-mark[data-size="16"] .pmx-pp,
-html[data-o55-nier="on"] .pmx-mark[data-size="18"][data-state="done"] .pmx-pp, html[data-o55-nier="on"] .pmx-mark[data-size="18"][data-state="needs"] .pmx-pp { animation: none; }
+html[data-o55-nier="on"] .pmx-mark[data-size="18"][data-state="done"] .pmx-pp, html[data-o55-nier="on"] .pmx-mark[data-size="18"][data-state="needs"] .pmx-pp,
+html[data-o55-nier="on"] .pmx-cluster .pmx-mark:is([data-state="done"], [data-state="needs"]) .pmx-pp,
+html[data-o55-nier="on"] .pmx-sheet :is(.pmx-mark, .pmx-p-mark)[data-state] .pmx-pp { animation: none; }
 html[data-o55-nier="on"] .live-agent-row > .agent-mark, html[data-o55-nier="on"] .agent-lane > .lane-mark { transform-origin: 50% 11.4%; }
 html[data-o55-nier="on"] .live-agent-row > .agent-mark[data-state="working"], html[data-o55-nier="on"] .agent-lane > .lane-mark[data-state="working"] { animation: o55n-pp-work-slot 1.6s steps(4, end) infinite alternate; }
 html[data-o55-nier="on"] .live-agent-row > .agent-mark[data-state="idle"], html[data-o55-nier="on"] .agent-lane > .lane-mark[data-state="idle"] { animation: o55n-pp-sway 3.6s steps(6, end) infinite alternate; }

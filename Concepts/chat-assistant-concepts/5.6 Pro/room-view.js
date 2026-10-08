@@ -44,7 +44,6 @@
     toYou: 'to you',
     landed: 'Where the room landed',
     table: 'At the table',
-    tech: 'Technical details',
     emptyRoom: 'Nobody has spoken yet. Ask Everyone starts the first round.',
     emptyWaiting: 'Nothing has been said yet.',
     queued: 'Queued for the next round',
@@ -245,7 +244,7 @@
   /* ---------------------------------------------------------------- the renderer (one per kind, A1-50) */
   function mark(m, size) {
     if (m.kind === 'you') return S.pmxMark({ role: 'you', size: size });
-    if (m.kind === 'moderator') return S.pmxMark({ role: 'lead', size: size });
+    if (m.kind === 'moderator') return S.pmxMark({ role: 'moderator', size: size });
     return S.pmxMark({ role: m.persona || 'helper', seat: m.seat || 1, size: size });
   }
   function runAttr(vm) { return ' data-run="' + esc(vm.runId) + '"'; }
@@ -367,16 +366,13 @@
   }
   function aside(vm) {
     var mod = vm.moderator;
-    var rows = '<li>' + S.pmxMark({ role: 'lead', size: 18 }) + '<span><b>Moderator</b> · ' + esc(mod.persona) + '<small>' + COPY.moderatorJob + '</small></span></li>' +
+    var rows = '<li>' + S.pmxMark({ role: 'moderator', size: 18 }) + '<span><b>Moderator</b> · ' + esc(mod.persona) + '<small>' + COPY.moderatorJob + '</small></span></li>' +
       vm.team.map(function (t) { return '<li>' + S.pmxMark({ role: t.persona || 'helper', seat: t.seat, size: 18 }) + '<span><b>' + esc(t.name) + '</b> · ' + esc(t.persona) + '</span></li>'; }).join('');
-    var tech = '<details class="pmx-rv-tech" data-k="room-tech:' + esc(vm.runId) + '"><summary>' + COPY.tech + '</summary><p class="pmx-fine">' +
-      'Ask Everyone and Next Round: cmd.chat_room.next_round. Summarize Now: cmd.chat_room.summarize. End discussion: cmd.chat_room.end (a new command request). ' +
-      'Promote to: cmd.chat_room.promote_to_todo, cmd.chat_room.promote_to_plan. Open: cmd.chat.todos.open or cmd.nav.open_subject. ' +
-      'Download transcript: cmd.collaboration.export. Tabs and speaker names: no command, view state.</p></details>';
+    /* no Technical details (2026-10-07, Jared): the commands stay on the sheet's Advanced page only */
     return '<p class="pmx-fine pmx-rv-asidehead">' + COPY.table + '</p><ul class="pmx-rv-table">' + rows + '</ul>' +
       '<p class="pmx-rv-policy"><b>' + esc(vm.policy.label) + '</b> · up to ' + plural(vm.maxRounds, 'round') + '</p>' +
       '<p class="pmx-rv-promise">' + g('not', 14) + '<span>' + COPY.promise + '</span></p>' +
-      (vm.source === 'protocol' ? '<button type="button" class="text-button pmx-rv-export" data-action="room-export"' + runAttr(vm) + '>' + g('download', 14) + '<span>' + COPY.download + '</span></button>' : '') + tech;
+      (vm.source === 'protocol' ? '<button type="button" class="text-button pmx-rv-export" data-action="room-export"' + runAttr(vm) + '>' + g('download', 14) + '<span>' + COPY.download + '</span></button>' : '');
   }
   /* A speaker's own messages (7.9): a helper replaces the frame's helper view (participant), the Moderator (not a
      participant record) is drawn as the Team tab's main while its view is open. */

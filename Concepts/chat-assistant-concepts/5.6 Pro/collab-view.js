@@ -272,7 +272,7 @@
   function participantById(run, pid) { var out = null; list(run.participants).forEach(function (p) { if (p.id === pid) out = p; }); return out; }
   function sender(run, m) {
     if (m.senderKind === 'user') return { who: 'You', mark: S().pmxMark({ role: 'you', size: 22 }) };
-    if (m.senderKind === 'coordinator') return { who: run.kind === 'chat_room' ? 'Moderator' : 'Coordinator', mark: S().pmxMark({ role: 'lead', size: 22 }) };
+    if (m.senderKind === 'coordinator') return { who: run.kind === 'chat_room' ? 'Moderator' : 'Coordinator', mark: S().pmxMark({ role: run.kind === 'chat_room' ? 'moderator' : 'lead', size: 22 }) };
     var p = null;
     list(run.participants).forEach(function (q) { if (!p && (q.id === m.senderId || (!m.senderId && q.name === m.senderName))) p = q; });
     return { who: esc(p ? p.role : (m.senderName || 'Helper')), mark: p ? markOf(run, p, 22) : S().pmxMark({ role: 'helper', size: 22 }) };
@@ -442,17 +442,18 @@
         claim: esc(f.claim), why: f.dissent ? '<b>Still disagrees:</b> ' + esc(f.dissent) : (f.proposedRemediation ? '<b>Suggested fix:</b> ' + esc(f.proposedRemediation) : ''),
         todo: f.convertedToTodo ? glyph('check', 13) + 'To-Do created' : '' });
     }).join('');
+    /* no Technical details (2026-10-07, Jared): the snapshots' hashes ride on the elements, never in the reader's text */
     var excluded = list(r.excludedFindings).map(function (x) {
-      return '<div class="collab-finding collab-excluded" data-k="collab-fx-' + esc(x.id) + '"><p class="collab-view-line"><b>Set aside:</b> this reviewer saw an older version of the file.</p>' +
-        '<p class="collab-view-quote">' + esc(x.claim) + '</p><p class="pmx-fine">Technical details · different frozen pack · ' + esc(x.targetHash) + ' vs ' + esc(hash) + '</p></div>';
+      return '<div class="collab-finding collab-excluded" data-k="collab-fx-' + esc(x.id) + '" data-reason="different_target_hash" data-target-hash="' + esc(x.targetHash) + '"><p class="collab-view-line"><b>Set aside:</b> this reviewer saw an older version of the file.</p>' +
+        '<p class="collab-view-quote">' + esc(x.claim) + '</p></div>';
     }).join('');
     var anySel = findings.some(function (f) { return sel[f.id] && !f.convertedToTodo; });
     var follow = '<div class="collab-view-acts">' +
       btn({ action: 'collab-review-create-todos', attrs: runAttr(run), disabled: !anySel, label: 'Create To-Dos' }) +
       btn({ action: 'collab-review-send-findings', attrs: runAttr(run), disabled: !anySel, label: 'Send Findings To Agent' }) + '</div>' +
       '<p class="pmx-fine collab-view-help">' + (anySel ? 'Only ticked findings. Nothing is fixed for you.' : 'Tick the confirmed findings you want to act on first.') + '</p>';
-    var target = '<div class="collab-targetpack collab-view-target" data-k="collab-targetpack"><p class="collab-view-line">Reviewed: ' + esc(pack.targetKind === 'changes' ? 'your latest changes' : (pack.targetKind || 'the snapshot')) +
-      (pack.frozenAt ? ' · snapshot ' + esc(S().pmxTime.at(pack.frozenAt, null, { day: false })) : '') + '</p><p class="pmx-fine">Technical details · snapshot ' + esc(hash) + '</p></div>';
+    var target = '<div class="collab-targetpack collab-view-target" data-k="collab-targetpack" data-target-hash="' + esc(hash) + '"><p class="collab-view-line">Reviewed: ' + esc(pack.targetKind === 'changes' ? 'your latest changes' : (pack.targetKind || 'the snapshot')) +
+      (pack.frozenAt ? ' · snapshot ' + esc(S().pmxTime.at(pack.frozenAt, null, { day: false })) : '') + '</p></div>';
     return S().pmxViewSection({ key: 'cv-found:' + run.id, title: 'What they found', meta: esc(toFix + ' to fix · ' + unsure + ' unsure'), body: target + S().pmxFindings(rows, { key: 'cv-findings:' + run.id }) + follow }) +
       (excluded ? S().pmxViewSection({ key: 'cv-setaside:' + run.id, title: 'Set aside', body: excluded }) : '') +
       '<p class="collab-readonly-note collab-view-line">' + glyph('lock', 13) + '<span>Review never changes your files and never auto-repairs.</span></p>';
@@ -482,8 +483,7 @@
         esc(pr ? pr.participantRole + '’s idea' : v.proposalId) + ' (' + (v.confidence === 'high' ? 'very sure' : v.confidence === 'low' ? 'not sure' : 'fairly sure') + ')<small>' + esc(v.reason) + '</small></span></li>';
     }).join('');
     var ruled = list(b.hardConstraintViolations).map(function (h, i) {
-      return '<div class="collab-hardconflict collab-view-ruled" data-k="' + (i ? 'collab-hc-' + i : 'collab-hc') + '">' + glyph('not', 14) + '<p><s>' + esc(h.approach) + '</s> is ruled out: it breaks your rule “' + esc(h.constraint) + '”. Votes can’t override a rule.' +
-        '<small class="pmx-fine">Technical details · Disqualified regardless of vote count</small></p></div>';
+      return '<div class="collab-hardconflict collab-view-ruled" data-k="' + (i ? 'collab-hc-' + i : 'collab-hc') + '">' + glyph('not', 14) + '<p><s>' + esc(h.approach) + '</s> is ruled out: it breaks your rule “' + esc(h.constraint) + '”. Votes can’t override a rule.</p></div>';
     }).join('');
     var dissent = list(b.dissent).map(function (d, i) {
       return S().pmxQuote({ key: i ? 'collab-dissent-' + i : 'collab-dissent', cls: 'collab-dissent', text: esc(d.reason), who: esc(d.participantRole), note: 'still disagrees' });

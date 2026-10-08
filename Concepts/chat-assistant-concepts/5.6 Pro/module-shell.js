@@ -238,8 +238,9 @@
      control bar with three strings (head and both hands), a chibi figure (a big round head, a little trapezoid
      tunic, stick limbs) and ONE prop or headwear that names the role, so roles read in grayscale; the seat hue is
      the secondary cue and paints the figure. The material follows the theme family in module-shell.css (Basic
-     blueprint line with a neon halo on dark, Friendly felt, Glass crystal, Retro a pixel sprite) and NieR inks it
-     with the YoRHa visor (nier-parts.css). The whole drawing stays inside 0..28, so a plate may scale a seat.
+     blueprint line with a neon halo on dark, Friendly felt, Glass crystal, Retro a pixel sprite); NieR draws the
+     PMConcept7 NieR puppet unit instead (pnUnit below; paint in nier-parts.css). The whole drawing stays inside 0..28,
+     so a plate may scale a seat.
      Detail by size (CSS gates on data-size and the cluster hosts): 12 px and the mini cluster draw a bust (bar,
      head string, head and headwear, shoulders); 16-18 px the whole figure and three strings; 22 px and up the
      face; 28 px and up (and plate seats) joints, feet and family detail.
@@ -276,9 +277,6 @@
     cutR: { arm: 'M17 16.3 19.4 20.6', str: 'M18 2.2 19.6 6.6', tip: 'M19.6 6.6 20.7 7.3M19.6 6.6 19.8 7.9', hand: [19.4, 20.6] },
     slump: 'rotate(13 14 15)'
   };
-  /* NieR (the PMConcept7 NieR-puppet contract; tune here): the YoRHa visor band and its tail, square joints, square
-     string anchors on the bar. Drawn always, shown only under html[data-o55-nier="on"] (nier-parts.css). */
-  var PUP_NIER = { visor: [9.6, 10.5, 8.8, 2], tail: 'M18.4 11.5 20.2 14.4', joint: 1.3, anchor: 1.6 };
   /* Props and headwear. back: drawn behind the head. hand: the hand a prop holds ('L'/'R'), so needs
      raises the other one and failed cuts the other one's string; head: headwear (it slumps with the head), held: a
      hand prop. Overrides (strC, armL, strL, armR, strR) re-rig the
@@ -423,26 +421,22 @@
     var inner = '<circle class="pmx-pp-head" cx="14" cy="11.1" r="4.2"/>';
     if (M.fam === 'friendly') inner += pp('hair', PUP.hair) + (M.g3 ? ppo('cheek g3', PUP.cheeks[0][0], PUP.cheeks[0][1], .75) + ppo('cheek g3', PUP.cheeks[1][0], PUP.cheeks[1][1], .75) + pp('smile g3', PUP.smile) : '');
     if (M.fam === 'glass' && !M.bust) inner += pp('shine full', PUP.shine);
-    if (M.nier) inner += ppr('visor', PUP_NIER.visor[0], PUP_NIER.visor[1], PUP_NIER.visor[2], PUP_NIER.visor[3]) + (M.g2 ? pp('vtail g2', PUP_NIER.tail) : '');
-    else if (M.g2) inner += ppo('eye g2', PUP.eyes[0][0], PUP.eyes[0][1], .6) + (prop === 'lens' ? '' : ppo('eye g2', PUP.eyes[1][0], PUP.eyes[1][1], .6));
+    if (M.g2) inner +=ppo('eye g2', PUP.eyes[0][0], PUP.eyes[0][1], .6) + (prop === 'lens' ? '' : ppo('eye g2', PUP.eyes[1][0], PUP.eyes[1][1], .6));
     return t ? '<g transform="' + t + '">' + inner + '</g>' : inner;
   }
   function headD(h) { return dCirc(h[0], h[1], h[2]); }
   function ppStuds(M) {
-    var o = '', a = PUP_NIER.anchor;
-    for (var i = 0; i < PUP.studs.length; i++) {
-      if (M.nier && !M.bust) o += ppr('nstud full', n2(PUP.studs[i][0] - a / 2), n2(PUP.studs[i][1] - a / 2), a, a);
-      else if (!M.nier && M.g3) o += ppo('stud g3', PUP.studs[i][0], PUP.studs[i][1], .85);
-    }
+    var o = '';
+    if (M.g3) for (var i = 0; i < PUP.studs.length; i++) o += ppo('stud g3', PUP.studs[i][0], PUP.studs[i][1], .85);
     return o;
   }
   function ppJoints(list, M) {
-    var o = '', j = PUP_NIER.joint;
-    if (!M.g3 || (!M.nier && M.fam === 'friendly')) return '';
-    for (var i = 0; i < list.length; i++) o += M.nier ? ppr('njoint g3', n2(list[i][0] - j / 2), n2(list[i][1] - j / 2), j, j, 'rotate(45 ' + list[i][0] + ' ' + list[i][1] + ')') : ppo('joint g3', list[i][0], list[i][1], .75);
+    var o = '';
+    if (!M.g3 || M.fam === 'friendly') return '';
+    for (var i = 0; i < list.length; i++) o += ppo('joint g3', list[i][0], list[i][1], .75);
     return o;
   }
-  /* the line puppet (Basic, Friendly, Glass, NieR) and its halo d */
+  /* the line puppet (Basic, Friendly, Glass) and its halo d */
   function ppVector(prop, state, M) {
     var P = PROPS[prop] || {}, pose = state === 'needs' ? 'raise' : state === 'failed' ? 'cut' : '';
     var side = P.hand === 'L' ? 'R' : 'L';
@@ -506,18 +500,19 @@
     tinyYou: ['..............', '........#####.', '..........#...', '...###....#...', '..#####..#....', '..#oooo..#....', '..#####.#.....', '...###.#......',
       '..######......', '.#######......', '.#######......', '.#######......', '.#######......', '..............']
   };
-  /* role props on the unit (top: the head prop's top, where the head string ends; under 5 the prop hangs from the bar) */
+  /* role props on the unit (top: the head prop's top, where the head string ends; under 5 the prop hangs from the bar).
+     fill: i ink, p the raised paper (--o55-nier-raised, gen.mjs ROLE's 'p'). */
   var PN_ROLE = {
     crown: { top: 3.9, d: 'M10.9 7.3 10.6 4.4 12.5 5.9 14 3.9 15.5 5.9 17.4 4.4 17.1 7.3Z', fill: 'i' },
-    hardhat: { top: 5.7, d: 'M10.5 9.2A3.5 3.5 0 0 1 17.5 9.2ZM9.4 9.4H18.6', fill: 'g' },
+    hardhat: { top: 5.7, d: 'M10.5 9.2A3.5 3.5 0 0 1 17.5 9.2ZM9.4 9.4H18.6', fill: 'p' },
     lens: { line: 'M21.6 15.8m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0M19.8 17.6 18.4 19' },
     jester: { line: 'M10.7 8.6Q9.8 5 7.2 6.8M17.3 8.6Q18.2 5 20.8 6.8M10.6 8.7H17.4', dots: [[7, 7.6], [21, 7.6]] },
     orbit: { line: 'M14 10m-6.6 0a6.6 2.1 0 1 0 13.2 0a6.6 2.1 0 1 0 -13.2 0', moon: [20.2, 8.4] },
-    page: { d: 'M11.4 15.6H16.6V20.2H11.4Z', fill: 'g', line: 'M12.4 17.2H15.6M12.4 18.7H14.6' },
-    square: { d: 'M19.4 19.6V13.6L24.4 19.6Z', fill: 'g' },
+    page: { d: 'M11.4 15.6H16.6V20.2H11.4Z', fill: 'p', line: 'M12.4 17.2H15.6M12.4 18.7H14.6' },
+    square: { d: 'M19.4 19.6V13.6L24.4 19.6Z', fill: 'p' },
     pennant: { line: 'M20.2 19.4V10.6', d: 'M20.2 10.8 24.6 12.4 20.2 14Z', fill: 'i' },
     gavel: { line: 'M20.2 18.4 22.4 12.8', d: 'M24.7 12.5 24 14.2 20.3 12.7 21 11Z', fill: 'i' },
-    grill: { d: 'M8.6 19.6A5.4 3.8 0 0 1 19.4 19.6ZM8.6 20.4A5.4 3.6 0 0 0 19.4 20.4Z', fill: 'g', line: 'M7.4 20H20.6M10.4 23.2 9.2 26.6M17.6 23.2 18.8 26.6M14 24V26.6M12.6 15.2H15.4M14 15.2V15.8' }
+    grill: { d: 'M8.6 19.6A5.4 3.8 0 0 1 19.4 19.6ZM8.6 20.4A5.4 3.6 0 0 0 19.4 20.4Z', fill: 'p', line: 'M7.4 20H20.6M10.4 23.2 9.2 26.6M17.6 23.2 18.8 26.6M14 24V26.6M12.6 15.2H15.4M14 15.2V15.8' }
   };
   var PN_TINY_ROLE = {
     crown: [[5, 2], [7, 2], [9, 2]], hardhat: [[5, 2], [6, 2], [7, 2], [8, 2], [9, 2], [4, 3], [10, 3]], lens: [[11, 9], [12, 9], [11, 10], [12, 10]],
@@ -561,10 +556,10 @@
     s = pnR('i', I.bar[0], I.bar[1], I.bar[2], I.bar[3]);
     if (M.g3) I.studs.forEach(function (x) { s += pnSQ('i', x, I.studY, I.studS); });
     var top = R0.top != null ? (R0.top < 5 ? '' : 'M14 3.9V' + R0.top) : I.headStr;
-    var fig = (top ? pnP('str', top) : '') + (M.g2 ? pnP('str', I.handStr) : '');
+    var fig = (top ? pnP('str', top) : '') + (M.g2 ? pnP('str hs', I.handStr) : '');
     fig += pnP('sl', I.legs) + pnR('i', I.boots[0][0], I.boots[0][1], 2, 2) + pnR('i', I.boots[1][0], I.boots[1][1], 2, 2);
     if (big) I.knees.forEach(function (k) { fig += pnSQ('g sj', k[0], k[1], I.kneeS); });
-    fig += pnP('sl', I.arms) + pnP('i', I.coat) + (M.g3 ? pnP('i', I.collar) : '');
+    fig += pnP('sl', I.arms) + pnP('i coat', I.coat) + (M.g3 ? pnP('i', I.collar) : '');
     if (big) I.shoulders.forEach(function (k) { fig += pnSQ('g sj', k[0], k[1], I.pinS); });
     if (M.g3) I.hands.forEach(function (k) { fig += pnSQ('g sj', k[0], k[1], I.handS); });
     fig += pnP('g so', I.head) + pnR('i', I.visor[0], I.visor[1], I.visor[2], I.visor[3]);
@@ -839,7 +834,7 @@
      sit closer than its minimum pitch is left out, so the slot yields to the next one (J-2: never scaled). */
   var CAST = {
     full: { W: 576, M: 12, s: 1.5, sy: 1.25, bar: 29, paperW: 150, paperH: 50, bus: 64, drop: 10, name: 13, sub: 16, pmin: 84, pmax: 128, wing: 24 },
-    compact: { W: 512, M: 12, s: 1.25, sy: 1, bar: 20, paperW: 96, paperH: 28, bus: 46, drop: 8, name: 13, sub: 0, pmin: 70, pmax: 108, wing: 22 },
+    compact: { W: 512, M: 12, s: 1.25, sy: 1, bar: 20, paperW: 96, paperH: 30, bus: 46, drop: 8, name: 13, sub: 0, pmin: 70, pmax: 108, wing: 22 },
     strip: { W: 500, M: 12, s: 1, sy: 1, row: 24, H: 60, name: 13, pmin: 58, pmax: 84, wing: 24 },
     line: { W: 576, M: 12, s: .86, sy: .86, row: 20, H: 40 },
     /* a lean compact (BrainStorm's recorded draft: the guide strip leaves its slot about 94 tall): seats at .86, no bus */
@@ -945,10 +940,10 @@
         edgeFrom = jx + 4;
         if (sp.out) {
           var ow = castW(sp.out.label, 10.5);
-          /* the words sit in the line, 9 clear of its strokes on either side (J-2: text >= 8 from a line) */
+          /* the words sit in the line, 10 clear of its strokes' caps on either side (J-2: text >= 8 from a line) */
           out += P.line({ key: kp + 'out', from: { x: jx + 4, y: BY }, to: { x: jx + 18, y: BY }, style: 'fixed', part: sp.out.part });
-          out += P.label({ x: jx + 28, y: BY + 4, text: esc(sp.out.label), cls: 'sub', part: sp.out.part });
-          edgeFrom = jx + 28 + ow + 9;
+          out += P.label({ x: jx + 30, y: BY + 4, text: esc(sp.out.label), cls: 'sub', part: sp.out.part });
+          edgeFrom = jx + 30 + ow + 10;
         }
         stem = { x: jx, y: BY + 4 };
       }

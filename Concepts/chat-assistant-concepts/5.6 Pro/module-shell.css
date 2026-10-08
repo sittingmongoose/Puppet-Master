@@ -240,8 +240,14 @@ body[data-theme^="friendly"]{
 .pmx-sheet .pmx-q-n::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--pmx-q-n-r,5px);background:var(--pmx-seat-fill-accent);box-shadow:inset 0 0 0 1px var(--pmx-focus-edge);
   transition:background-color var(--pmx-t-light) var(--pmx-ease-linear),box-shadow var(--pmx-t-light) var(--pmx-ease-linear);}
 /* dark themes set the numeral in the lighter accent their focus outline already uses (about 6:1 on the tile, where
-   the accent itself is about 4:1) */
+   the accent itself is about 4:1); the tinted light themes in a deeper accent, precomputed (the accent on its own
+   tile measured 4.4:1 in basic, 4.2 in glass, 3.0 in friendly; these 6.6, 6.4 and 5.6). Retro-light's outline tile
+   has no fill, and its accent stands at 5.4:1 on the sheet. */
 body[data-theme$="-dark"] .pmx-sheet .pmx-q-n{color:var(--pmx-focus-outline);}
+body[data-theme="basic-light"] .pmx-sheet{--pmx-q-n-ink:#4c3ea7;}
+body[data-theme="friendly-light"] .pmx-sheet{--pmx-q-n-ink:#8d415a;}
+body[data-theme="glass-light"] .pmx-sheet{--pmx-q-n-ink:#5c4098;}
+body[data-theme$="-light"] .pmx-sheet .pmx-q-n{color:var(--pmx-q-n-ink,var(--accent));}
 body[data-theme^="friendly"] .pmx-sheet{--pmx-q-n-r:6px;}
 body[data-theme^="retro"] .pmx-sheet{--pmx-q-n-r:2px;}
 .pmx-sheet :is(.pmx-q, .pmx-shelf):focus-within > .pmx-q-head > .pmx-q-n, .pmx-sheet .pmx-hero:focus-within > .pmx-hero-main > .pmx-q-head > .pmx-q-n{color:var(--on-accent);}
@@ -601,7 +607,7 @@ body[data-theme$="-light"] .pmx-sheet .pmx-primary[data-tone="warm"]{color:#fff;
 .pmx-pp-full{display:var(--pmx-pp-full);} .pmx-pp-bust{display:var(--pmx-pp-bust);}
 .pmx-pp-g2{display:var(--pmx-pp-g2);} .pmx-pp-g3{display:var(--pmx-pp-g3);}
 /* family-only parts (each family turns its own on below) */
-.pmx-pp-hair, .pmx-pp-shine, .pmx-pp-core, .pmx-pp-corehi, .pmx-pp-facet, .pmx-pp-cheek, .pmx-pp-smile, .pmx-pp-visor, .pmx-pp-vtail, .pmx-pp-nstud, .pmx-pp-njoint{display:none;}
+.pmx-pp-hair, .pmx-pp-shine, .pmx-pp-core, .pmx-pp-corehi, .pmx-pp-facet, .pmx-pp-cheek, .pmx-pp-smile{display:none;}
 /* the bust: the head, its headwear and the shoulders, a size up (no hand strings, no hand props) */
 .pmx-mark[data-size="12"] .pmx-pp-v{transform:translateY(-.6px) scale(1.16);transform-origin:14px 12px;}
 /* paint: Basic (and the base every family restates) */
@@ -678,13 +684,15 @@ body[data-theme="retro-light"] .pmx-pp{--pmx-px-wood:#9a5a22;--pmx-px-hair:#4a2e
 .pmx-mark[data-state="failed"], .pmx-p-mark[data-state="failed"]{opacity:.5;}
 .pmx-mark[data-state="abstained"], .pmx-p-mark[data-state="abstained"]{opacity:.6;}
 body[data-theme^="retro"] .pmx-m-nc, body[data-theme^="retro"] .pmx-m-nw, body[data-theme^="retro"] .pmx-m-nx, body[data-theme^="retro"] .pmx-m-sw{stroke-linecap:square;stroke-linejoin:miter;}
-/* motion: module marks are lit and still (the pmx loop budget is the sheen's); a puppet only acts once, when it mounts
-   in a state or changes into one: picked up and swung on its strings as it starts working, a hop when it is done or
-   needs you. Nothing moves at 12 px; the voice is the family's (--nx-ease / --nx-le: retro and NieR step); reduced
-   motion (the media query and body.pm56-reduced through pmx-system.css, html[data-motion] here) leaves the rest pose. */
+/* motion: module marks are lit and still (the pmx loop budget is the sheen's). In run cards and run views a puppet
+   only acts once, when it mounts in a state or changes into one: picked up and swung on its strings as it starts
+   working, a hop when it is done or needs you. Inside a setup sheet (.pmx-sheet: rosters, the specialist shelf, the
+   plate) puppets hold still (integrator direction 2026-10-08, pending Jared). Nothing moves at 12 px; the voice is the
+   family's (--nx-ease / --nx-le: retro and NieR step); reduced motion (the media query and body.pm56-reduced through
+   pmx-system.css, html[data-motion] here) leaves the rest pose. */
 .pmx-mark[data-state="working"] .pmx-pp, .pmx-p-mark[data-state="working"] .pmx-pp{animation:pmx-pp-pick calc(var(--pmx-t-settle) * 2) var(--nx-ease) backwards;}
 .pmx-mark[data-state="done"] .pmx-pp, .pmx-p-mark[data-state="done"] .pmx-pp, .pmx-mark[data-state="needs"] .pmx-pp, .pmx-p-mark[data-state="needs"] .pmx-pp{animation:pmx-pp-hop var(--pmx-t-settle) var(--nx-ease) backwards;}
-.pmx-mark[data-size="12"] .pmx-pp{animation:none;}
+.pmx-mark[data-size="12"] .pmx-pp, .pmx-sheet :is(.pmx-mark, .pmx-p-mark)[data-state] .pmx-pp{animation:none;}
 @keyframes pmx-pp-pick{0%{transform:translateY(1.4px);}22%{transform:translateY(-.6px) rotate(-5deg);}46%{transform:rotate(3.4deg);}70%{transform:rotate(-1.5deg);}86%{transform:rotate(.5deg);}100%{transform:none;}}
 @keyframes pmx-pp-hop{0%, 100%{transform:none;}38%{transform:translateY(-2.2px);}68%{transform:translateY(.4px);}}
 html[data-motion="reduced"] .pmx-pp{animation:none !important;}

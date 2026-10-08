@@ -74,7 +74,6 @@
 .collab-view-ruled{display:flex;align-items:flex-start;gap:10px;margin-top:20px;min-width:0;}
 .collab-view-ruled > svg{flex:none;margin-top:3px;color:var(--danger);}
 .collab-view-ruled > p{margin:0;min-width:0;font:var(--pmx-fs-body);color:var(--text);}
-.collab-view-ruled small{display:block;margin-top:6px;}
 .collab-view .pmx-quote + .pmx-quote{margin-top:12px;}
 
 /* ---------------------------------------------------------------- the participant view (D5) */
