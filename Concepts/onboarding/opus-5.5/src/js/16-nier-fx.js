@@ -51,7 +51,9 @@
          Pod 042 and its speech strip; its words type on. With stage (the window's art panel) the strip takes the
          first of two lanes, just below the control bar's line ('bar') or low over the stage lip ('lip'; lane: 'lip'
          tries it first), that crosses no actor, hung sign or card, or the stage kicker (rule 8).        [pod / voice]
-     pod.lanes(stage, { w?, h?, lane?, avoid? }) -> { lanes, obstacles, pick }   that choice, for the window and tests
+     pod.lanes(stage, { w?, h?, lane?, avoid? }) -> { stage, lanes, obstacles, props, pick: { lane, x, y, clear } }
+         that choice, for the window and tests (on a short stage, the 760 px band, the strip is compact: one or two
+         lines without the name band, and the bar's lane is the band's top edge when the bar is cropped above it)
      pod.chirp() -> bool   pod.hush(now?)   the Pod's signal and sound; send the Pod away (now: in this frame)
    Shared
      has(key) -> bool      a NieR part is painted (the onboarding preview's parts first)
@@ -1216,8 +1218,10 @@
           unit.animate([{ translate: `${dx}px ${dy}px`, opacity: 0 }, { translate: '0px 0px', opacity: 1 }], { duration: 200, easing: 'steps(4, end)' });
         }
       }
+      /* it opens from a line; the small strip blinks once as it lands (a wide compact one never blinks: rule 3) */
+      const blink = node.hasAttribute('data-compact') ? [] : [{ transform: 'scaleY(1)', opacity: 0.4, offset: 0.88, easing: 'step-end' }];
       strip.animate([{ transform: 'scaleY(.04)', opacity: 0, offset: 0, easing: 'step-end' }, { transform: 'scaleY(.04)', opacity: 1, offset: 0.25, easing: 'steps(4, end)' },
-        { transform: 'scaleY(1)', opacity: 1, offset: 0.8, easing: 'step-end' }, { transform: 'scaleY(1)', opacity: 0.4, offset: 0.88, easing: 'step-end' }, { transform: 'scaleY(1)', opacity: 1, offset: 1 }],
+        { transform: 'scaleY(1)', opacity: 1, offset: 0.8, easing: 'step-end' }, ...blink, { transform: 'scaleY(1)', opacity: 1, offset: 1 }],
       { duration: 280, delay: stripDelay, fill: 'backwards' });
       /* the words type on once the strip is open (their layout is the final one from the first frame) */
       P.typed = true;
