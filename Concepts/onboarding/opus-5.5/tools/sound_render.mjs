@@ -219,11 +219,12 @@ try {
       await wait(300); n0 = S.log.length;
       S.play('select', { kit: k }); await wait(40); S.rest(150); S.play('tap', { kit: k }); await wait(80); S.play('cheer', { kit: k, voice: 2 }); await wait(120); S.play('chapter', { kit: k, chapter: 'ready', depth: 4 });
       await wait(300); out.rest = since(n0);
-      /* the celebration: sparkles 650 ms after a commit, full 1.16 s after a save, sparkles 650 ms after a save */
+      /* the celebration: sparkles 650 ms after a commit, full 650 ms after a save (the Project made), sparkles 1.1 s
+         after a resolution (a depth-4 sting) */
       await wait(1500); n0 = S.log.length;
       S.play('commit', { kit: k }); await wait(650); S.play('celebrate', { kit: k });
-      await wait(2200); S.play('save', { kit: k }); await wait(1160); S.play('celebrate', { kit: k });
-      await wait(2400); S.play('save', { kit: k }); await wait(650); S.play('celebrate', { kit: k });
+      await wait(2200); S.play('save', { kit: k }); await wait(650); S.play('celebrate', { kit: k });
+      await wait(2600); S.play('chapter', { kit: k, chapter: 'ready', depth: 4 }); await wait(1100); S.play('celebrate', { kit: k });
       await wait(300); out.celebrate = since(n0);
       /* foley sits under texture and under a move; at most three landings in 400 ms; a stage sound sits at its voice */
       await wait(400); n0 = S.log.length;
@@ -260,7 +261,7 @@ try {
       S.play('finish', { kit: k }); await wait(500);
       out.tour = since(n0);
       /* the Project made: a commit asked for on the Creating screen plays as the save (the Create press commits from
-         Review); then a celebration 650 ms later is its sparkles */
+         Review); then the confetti's celebration 650 ms later plays in full */
       const SS = window.O55.S;
       await wait(400); n0 = S.log.length;
       if (SS) {
@@ -300,7 +301,7 @@ try {
       const r = h.rest;
       V.rest = !!(r.find((e) => e.event === 'select' && e.played) && r.find((e) => e.event === 'tap' && e.dropped === 'rest') && r.find((e) => e.event === 'cheer' && e.dropped === 'rest') && r.find((e) => e.event === 'chapter' && e.played));
       const ce = h.celebrate.filter((e) => e.event === 'celebrate');
-      V.celebrate = ce.length === 3 && ce[0].layerOf === 'commit' && ce[0].layer && !ce[1].layer && ce[1].played && ce[2].layerOf === 'save' && ce[2].layer;
+      V.celebrate = ce.length === 3 && ce[0].layerOf === 'commit' && ce[0].layer && !ce[1].layer && ce[1].played && ce[2].layerOf === 'resolve' && ce[2].layer;
       const f = h.foley;
       V.foleyUnder = !!(f.find((e) => e.event === 'move' && e.played) && f.find((e) => e.event === 'string' && e.played) && f.find((e) => e.event === 'next' && e.played) && f.find((e) => e.event === 'bow' && e.played && e.pan === 0.35));
       const lands = f.filter((e) => e.event === 'land');
@@ -311,7 +312,7 @@ try {
       const ts = h.tour.filter((e) => e.event === 'chapter'), fin = h.tour.find((e) => e.event === 'finish');
       V.tourRun = ts.map((e) => e.depth).join(',') === '1,2' && !!(fin && fin.deferred === 150 && fin.played) && h.tour.some((e) => e.event === 'rest');
       const sv = h.save.filter((e) => e.event === 'commit' || e.event === 'save' || e.event === 'celebrate');
-      V.saveOnCreating = sv.length === 3 && sv[0].event === 'commit' && sv[0].played && sv[1].event === 'save' && sv[1].asked === 'commit' && sv[1].played && sv[2].event === 'celebrate' && sv[2].layerOf === 'save';
+      V.saveOnCreating = sv.length === 3 && sv[0].event === 'commit' && sv[0].played && sv[1].event === 'save' && sv[1].asked === 'commit' && sv[1].played && sv[2].event === 'celebrate' && sv[2].played && !sv[2].layer;
       const qn = h.quests.filter((e) => e.asked === 'next' || e.event === 'next');
       V.questsOwnSting = qn.length === 2 && qn[0].event === 'next' && qn[0].kit === 'nier' && qn[1].event === 'chapter' && qn[1].kit === 'nier';
       report.live.heroVerdict = V;

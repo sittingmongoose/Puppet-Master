@@ -40,8 +40,8 @@
                                    opts { family?, kit?, voice? 0..2, intensity?, pan? -1..1, chapter?, step?, depth? 0..4,
                                    priority?, variant? }. An event a kit lacks follows FALLBACK; 'hover' is silent outside
                                    NieR. A 'found' or 'success' asked for less than 500 ms after a 'quest' or 'chapter'
-                                   plays 500 ms after it; a 'celebrate' within 1.2 s of a 'commit' or 'finish' (1 s of a
-                                   'save') plays as their layer, sparkles only.
+                                   plays 500 ms after it; a 'celebrate' within 1.2 s of a 'commit' or 'finish' (1.6 s
+                                   of a depth-4 chapter sting) plays as their layer, sparkles only.
      setContext({ chapter?, step?, progress?, run?, sting? })   the music's place in the journey (onboarding go(), tour
                                    goStep()). run (any id) starts a run with no chapter stung; sting: false says the
                                    caller plays this chapter's sting itself (no automatic conversion). A move into the
@@ -1235,8 +1235,9 @@
   }
   const MERGE_MS = 70;
   /* a celebration this soon (story time, ms) after the big chord it follows is that chord's sparkles: 1.2 s after a
-     commit or a finish, 1 s after a save (the NieR Created moment's stamp comes 1.16 s after its save: full) */
-  const LAYER_AFTER = { commit: 1200, finish: 1200, save: 1000 };
+     commit or a finish, 1.6 s after a resolution (a sting at depth 4: Ready's motif, complete). After a 'save'
+     it plays in full: the Project made is the run's one full celebration (save, then the confetti's hooray) */
+  const LAYER_AFTER = { commit: 1200, finish: 1200, resolve: 1600 };
   /* the least time between two of the same event (ms). type 120 (one typing tick per 120 ms, as the chat's cues);
      phase 70, so rows that step in 80 to 120 ms apart each tick; checkpoint 250 */
   const RATE = { type: 120, hover: 45, move: 110, decode: 90, phase: 70, spot: 110, tap: 30, select: 30, pod: 150, copy: 100, pointer: 150, arrive: 60,
@@ -1443,7 +1444,10 @@
     /* a burst (six sounds in half a second) keeps only what matters; texture, foley and ticks have their own limits */
     if (win.prio < 60 && !BURST_FREE.has(win.event) && starts.length >= 6 && now - starts[starts.length - 6] < 500) { batch.forEach((it) => drop(it, 'busy')); return; }
     const h = voice(win);
-    if (h) { playedAt[win.event] = m; if (win.prio >= 75 && !win.layer) big = { m, prio: win.prio, event: win.event }; }
+    if (h) {
+      playedAt[win.event] = m; if ((win.event === 'chapter' || win.event === 'quest') && win.opts.depth >= 4) playedAt.resolve = m;
+      if (win.prio >= 75 && !win.layer) big = { m, prio: win.prio, event: win.event };
+    }
     if (h && !win.layer) recent = { t: now, prio: win.prio, event: win.event, handle: h, entry: win.entry };
     for (let i = 1; i < batch.length; i++) {
       const it = batch[i];
@@ -1499,6 +1503,8 @@
     if (!hasGesture()) { entry.dropped = 'gesture'; return false; }
     const prio = o.priority != null ? +o.priority : (PRIO[event] || 30);
     if (m < restUntil && prio < 75) { entry.dropped = 'rest'; return false; }
+    /* the Project's save is that moment's sting: a goal card's 'quest' right after it says the same thing again */
+    if (event === 'quest' && playedAt.save != null && m - playedAt.save < 1000) { entry.dropped = 'merged'; entry.by = 'save'; return false; }
     if (late && late.since != null && big.m >= late.since && big.prio >= prio && big.event !== event) { entry.dropped = 'merged'; entry.by = big.event; return false; }
     const rate = RATE[event];
     if (rate && now - (lastAt[event] || -1e9) < rate * (lowres ? 1.8 : 1)) { entry.dropped = 'rate'; return false; }
