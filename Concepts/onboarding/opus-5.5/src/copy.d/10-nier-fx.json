@@ -1,0 +1,54 @@
+{
+  "nierFx": {
+    "pod": {
+      "name": "Pod 042",
+      "leads": {
+        "report": "Report:",
+        "proposal": "Proposal:",
+        "alert": "Alert:",
+        "query": "Query:",
+        "analysis": "Analysis:"
+      }
+    },
+    "banner": {
+      "kickers": {
+        "goalUpdated": "Goal updated",
+        "newGoal": "New goal",
+        "goalComplete": "Goal complete",
+        "stepDone": "Step done",
+        "chapterDone": "Chapter complete"
+      }
+    },
+    "band": {
+      "kicker": "Puppet Master · system",
+      "ok": "OK",
+      "lines": {
+        "setupStart": "Starting setup",
+        "setupDone": "Setup complete",
+        "tourStart": "Starting the guided tour",
+        "tourDone": "Tour complete",
+        "nierOn": "Loading NieR Mode",
+        "nierOff": "Restoring your look"
+      }
+    },
+    "demo": {
+      "kicker": "Effects bench",
+      "title": "Pick a look",
+      "slice": "Slice open",
+      "sliceSub": "A panel opens from one line.",
+      "wipe": "Page wipe",
+      "wipeSub": "A band covers it and steps away.",
+      "glitch": "Glitch",
+      "glitchSub": "A short tear.",
+      "alert": "Alert",
+      "alertSub": "A tear, a scan line and ink shards.",
+      "rowA": "Start a new Project",
+      "rowB": "Open a Project I already have",
+      "rowC": "Connect to another computer",
+      "podButton": "Ask Pod 042",
+      "podLine": "Proposal: Choose a look, then press Continue.",
+      "bannerTitle": "Look chosen",
+      "bannerSub": "Pictures, movement and sound follow it."
+    }
+  }
+}
