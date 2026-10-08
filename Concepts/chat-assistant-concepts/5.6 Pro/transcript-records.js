@@ -71,10 +71,11 @@
   /* ---- Work stretches: the read-only subagent feed (Jared, card 7) ------------------------------------------------
      Consecutive agent-work records between two pieces of prose are ONE stretch, drawn as one quiet row: a compact
      Step Rail (one disc per record: finished discs lit green, the live one the dark disc rimmed in its phase hue,
-     pulsing, its glyph acting), a plain count of what the records say ("Ran 3 tools · read 2 files"), the time of the
+     pulsing, its glyph acting), a plain count of what the records say ("Ran 3 tools · read 2 files"; live, the Step
+     Rail's shimmering verb: "Benchmarking the index under concurrent writes · 2 tools so far"), the time of the
      stretch's last record and a chevron. The row is a real toggle; open, it lists the stretch's records, one line
-     each, with the full detail in the app hover card. app.js groups the records (renderTranscriptItems) and calls
-     feedStretch; the parent transcript never draws a stretch.
+     each, with the full detail in the app hover card, and a line and its disc light together. app.js groups the
+     records (renderTranscriptItems) and calls feedStretch; the parent transcript never draws a stretch.
      A record's step comes from what it says: an output reference first (a file change, an inspection, an activity
      owner), else the verb its title leads with ("Read", "Ran", "Created", "Checked", "Handed"), else the first past
      participle in it ("Union computed", "Rollback rehearsed"). A detail that reports passing tests or green

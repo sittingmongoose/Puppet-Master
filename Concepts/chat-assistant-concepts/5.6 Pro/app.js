@@ -885,7 +885,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         i=j-1;
         const html=renderFeedStretch(run, !!t.live && j>=msgs.length);
         if(!html) continue;
-        const fam=familyOf(m);
+        /* one family for every stretch (agent work's own), whatever its first
+           record references, so each meets the spine with the same tick */
+        const fam=FAMILY_BY_TYPE['agent-work']||familyOf(m);
         items.push({m,html,fam,turn,side:'assistant'});
         continue;
       }
