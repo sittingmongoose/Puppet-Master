@@ -158,10 +158,11 @@
     '.pm6-chat-slash-item', '.pm6-fab-item', '.chat-thread-item', '.pm6-dash-catalog-item', '[role="menuitem"]', '[role="option"]:not([aria-disabled="true"])'].join(',');
   /* tabs and places a click chooses, where the brackets lock on (menu items close with their menu) */
   const CHOSEN_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm7u-navbtn, .domain-link, .side-link, .index-link, .page-index-title, .pm-segtab-item, .activity-bar .icon, .resource-row';
-  /* items in a horizontal strip: the cursor sits under them (a neighbour sits where the left side would be); the look
-     menu's Adjust button shares its row with the NieR Mode checkbox, so it is one of them */
-  const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode, .pm7u-range button, .o55-looknier-adjust';
-  const targetOf = e => (e && e.target && e.target.closest ? e.target.closest(CURSOR_SEL) : null);
+  /* items in a horizontal strip: the cursor sits under them (a neighbour sits where the left side would be) */
+  const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode, .pm7u-range button';
+  /* the onboarding window and the tour draw their own cursor (O55.nierFx and their skins): the page's stays out of them,
+     or one row of a look menu got a second square (it matched role=menuitem, its neighbours did not) */
+  const targetOf = e => { const t = e && e.target && e.target.closest ? e.target.closest(CURSOR_SEL) : null; return t && !inO55(t) ? t : null; };
   let cur = null, curT = null, curHide = 0;
   /* while the reboot cover is up nothing points through it (the cursor and the reticle sit above the window) */
   let coverUp = false;
