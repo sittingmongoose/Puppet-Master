@@ -742,7 +742,8 @@
     return M.delay(banded ? 640 : 60);
   }
   function showCard(f) {
-    const fx = FX(), quick = still(), pod = has('pod');
+    /* Reduced Motion and Still (no Motion parts) show the card's end state at once */
+    const fx = FX(), quick = still() || !has('slice'), pod = has('pod');
     const card = f.card = document.createElement('section');
     card.id = 'o55t-results'; card.className = 'o55t-results'; card.setAttribute('role', 'status');
     card.setAttribute('aria-label', T('results.kicker'));
