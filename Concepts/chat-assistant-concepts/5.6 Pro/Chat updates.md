@@ -1498,15 +1498,15 @@ Each module supplies only its own content.
   slot, and every agent is a puppet (see *Puppet agents*) that holds still in a
   sheet and acts only once in a run card or run view. The previews in the
   configuration sheets keep the same lit marks.
-<!-- C56-CONFIRM (item 12, step tiles): after the merge check the tile size (20px), corners (5px; Friendly 6, Retro 2), the accent fill (none in Retro, an outline there), the focus fill and on-accent numeral, the warm error tile and the NieR ink square with its 2px hairline frame on focus (module-shell.css .pmx-q-n, nier-parts.css). Also note that Crew Auto's sheet numbers its questions too (collaboration.js), so "only in the four collaboration kinds" was already inexact; settle that wording. -->
-- **Numbered questions** (1-4) appear only in the four collaboration kinds,
-  where the order is real (job, team, how, extras). Settings-style sheets use
+- **Numbered questions** appear only where the order is real: the four
+  collaboration kinds (1-4: job, team, how, extras) and Crew Auto (1-3). Settings-style sheets use
   unnumbered questions. Each number is a step tile, so the order reads as
   steps: a 20px tile in the theme's small corner (5px; 6 in Friendly, 2 in
   Retro), tinted with the accent and ringed in the focus edge, its numeral in
   the accent (Retro draws the tile as an outline, with no fill). The question
   that holds focus is the step you are on: its tile fills with the accent and
-  its numeral turns on-accent (colour only; instant under reduced motion). A
+  its numeral turns to the theme's on-accent ink, at least 4.5:1 on the
+  accent in every theme (colour only; instant under reduced motion). A
   question in error turns its tile warm. Under NieR the tile is an inverted ink
   square, and the step that holds focus is framed by an ink hairline 2px out.
 - **Fixed sizes.** Wide 1120×780 (1120×760 at 1280×800, 976×728 at 1024×768);
