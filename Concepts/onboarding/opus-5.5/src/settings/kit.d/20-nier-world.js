@@ -18,7 +18,7 @@
    two numbers on the chat's own events and every 20 s while shown, and writes only what changed. Motion is CSS or Web
    Animations of transform and opacity, one shot, scaled by Animation speed; sounds are the parts' synth
    (PM_NIER_PARTS.play), so they follow Menu sounds and general.interaction.sound-effects. Every word is copy
-   (src/copy.d/60-nier-settings.json, nierSettings.boot / quest / readout / save, through o55NierCopy). */
+   (src/copy.d/55-nier-chips.json, nierSettings.boot / quest / readout / save, through o55NierCopy). */
 (function o55NierWorldModule() {
   const root = document.documentElement;
   const NIER = () => window.PM_NIER || null;
@@ -194,6 +194,8 @@
   document.addEventListener('visibilitychange', () => { if (!document.hidden && ro) roUpdate(); });
 
   /* ---------- quest banners ------------------------------------------------------------------------------------------ */
+  /* the banner's place, the one source for its geometry (the tour's landing note sits clear of it: bannerRect below) */
+  const QUEST = { topVh: 23, height: 92 };
   let quest = null;
   function questEnd(el) { if (el && el.isConnected) el.remove(); if (quest === el) quest = null; }
   function banner(kicker, title, line) {
@@ -201,6 +203,7 @@
     if (quest) questEnd(quest);
     const el = quest = document.createElement('div');
     el.id = 'o55nw-quest'; el.setAttribute('role', 'status');
+    el.style.top = `${QUEST.topVh}vh`; el.style.height = `${QUEST.height}px`;
     el.innerHTML = `<div class="o55nw-q-band"></div><div class="o55nw-q-copy"><span class="o55nw-q-mark" aria-hidden="true"></span><span class="o55nw-q-kicker">${esc(kicker)}</span>`
       + `<span class="o55nw-q-title">${esc(title)}</span><span class="o55nw-q-line">${esc(line)}</span></div>`;
     document.body.appendChild(el);
@@ -302,6 +305,12 @@
     live: () => [...live],
     sync,
     readout: () => (ro ? { ai: ro.querySelector('.o55nw-ai').textContent, hp: ro.querySelector('.o55nw-hp').style.getPropertyValue('--hp'), ctx: ro.querySelector('.o55nw-ctx').textContent } : null),
+    /* the quest banner's band in viewport px, { top, height }: measured while one shows, else from its own constants */
+    bannerRect: () => {
+      if (quest && quest.isConnected) { const r = quest.getBoundingClientRect(); return { top: Math.round(r.top), height: Math.round(r.height) }; }
+      const z = (document.body && Number.parseFloat(document.body.style.zoom)) || 1;
+      return { top: Math.round(window.innerHeight * QUEST.topVh / 100), height: Math.round(QUEST.height * z) };
+    },
     art: key => ART[key] || ''
   });
 })();

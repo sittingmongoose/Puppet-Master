@@ -245,10 +245,30 @@
   const isAppSound = s => !!(s && s.o55 && typeof s.o55 === 'object' && s.o55.kit);
   const appCollection = s => s.o55.kit === 'nier' ? APP_NIER : APP_SETUP;
   const appStyle = c => typeof c.style === 'string' && c.style.trim() ? c.style.trim() : c.kit === 'nier' ? APP_NIER : `${APP_SETUP} · ${lookName(c.kit)}`;
-  /* The moment a sound plays at, in plain words, from SOUND's catalog (its `about`, else `description`): the card's
-     own line. The group around the card already says the set plays in setup and the tour, so without it the card
-     says nothing more (never the name again). */
+  /* The card's line says the moment the sound plays at, in plain words: SOUND's copy soundLibrary.moments.<event>
+     (read when the card is drawn, so a new moment needs no table here), else a catalog entry's own `about` /
+     `description`; with neither, the older line (the moment's name and the shared "plays during setup"). */
   const appAbout = c => { const v = c ? (typeof c.about === 'string' ? c.about : typeof c.description === 'string' ? c.description : '') : ''; return v.trim(); };
+  const APP_WHEN_FALLBACK = 'Plays during setup and the Guided Tour';
+  function appCopy(key) {
+    const o = window.O55; if (!o) return null;
+    if (typeof o.tx === 'function') { const node = o.tx(key); return node == null ? null : node; }
+    if (typeof o.t !== 'function') return null;
+    const text = o.t(key); return text == null || text === key ? null : text;
+  }
+  function appMoment(s) {
+    const ev = s && s.o55 ? s.o55.event : '';
+    const m = ev ? appCopy(`soundLibrary.moments.${ev}`) : null;
+    if (typeof m === 'string' && m.trim()) return m.trim();
+    return s && s.o55 && s.o55.about ? s.o55.about : '';
+  }
+  function appWhen(s) {
+    const ev = s && s.o55 ? s.o55.event : '', events = appCopy('soundLibrary.events');
+    const phrase = events && typeof events === 'object' && typeof events[ev] === 'string' ? events[ev] : '';
+    const usedNode = appCopy('soundLibrary.usedBy');
+    const used = typeof usedNode === 'string' && usedNode.trim() ? usedNode.trim() : APP_WHEN_FALLBACK;
+    return phrase ? `${phrase}. ${used}` : used;
+  }
   /* Inside its group the card drops the look's prefix the catalog name carries ("NieR · Tap" reads "Tap" under NieR);
      the stored name, which alerts pick by, keeps it, and so do the event picker and the card's spoken label. */
   const appShortName = s => { const pre = `${lookName(s.o55.kit)} · `; const n = String(s.name || ''); return n.startsWith(pre) && n.length > pre.length ? n.slice(pre.length) : n; };
@@ -414,8 +434,9 @@
   /* Options for every event-sound dropdown: No sound / Built-in / Uploaded; a missing upload says so. */
   function soundOptions(current) {
     const g = groups();
-    /* a setup sound's other takes stay out of the list (Use for events on its card reaches them), unless chosen */
-    const rows = sounds().filter(s => isMainTake(s) || s.name === current).map(s => ({ value: s.name, label: s.name, group: isBuiltInSound(s) ? styleOf(s) : g.uploaded, meta: soundAvailable(s) ? durationText(s.duration) : isAppSound(s) ? 'Cannot play here' : 'File missing', rank: rankOf(s) }));
+    /* setup, tour and NieR sounds stay out of the picker (Use for events on their cards assigns them), unless one is
+       this event's sound now: the picker keeps the library's own sounds, about two dozen in their groups */
+    const rows = sounds().filter(s => !isAppSound(s) || s.name === current).map(s => ({ value: s.name, label: s.name, group: isBuiltInSound(s) ? styleOf(s) : g.uploaded, meta: soundAvailable(s) ? durationText(s.duration) : isAppSound(s) ? 'Cannot play here' : 'File missing', rank: rankOf(s) }));
     rows.sort((x, y) => x.rank - y.rank);
     if (current && current !== 'None' && !soundByName(current)) rows.push({ value: current, label: current, group: g.uploaded, meta: 'File missing' });
     return [{ value: 'None', label: 'None', group: g.none }, ...rows];
@@ -646,8 +667,8 @@
     const available = soundAvailable(s);
     const playing = state.soundPlaying === s.id;
     const used = eventsUsing(s).map(e => e.name);
-    const about = app && s.o55.about ? s.o55.about : '';
-    const usedText = about ? about + (used.length ? ' Used by ' + used.join(', ') + '.' : '') : used.length ? 'Used by ' + used.join(', ') : 'Not used yet';
+    const about = app ? appMoment(s) || appWhen(s) : '';
+    const usedText = about ? about + (used.length ? ' · Used by ' + used.join(', ') : '') : used.length ? 'Used by ' + used.join(', ') : 'Not used yet';
     const shown = app ? appShortName(s) : s.name;
     const missing = app ? APP_UNPLAYABLE : 'The uploaded file is missing. Choose Replace file from its menu to attach it again.';
     const disabled = available ? '' : ` aria-disabled="true" data-disabled-reason="${a(missing)}" data-pm-hover-label="${a(s.name)} is unavailable" data-pm-hover-detail="${app ? 'Its player did not load on this page.' : 'The uploaded file is missing.'}"`;
@@ -726,9 +747,10 @@
     const all = sounds(); const app = all.filter(isAppSound); const plain = all.filter(s => !isAppSound(s));
     const styles = ['All', ...STYLE_ORDER().filter(st => all.some(s => filterOf(s) === st))];
     const styleNow = styles.includes(PM51.s().notifSoundStyle) ? PM51.s().notifSoundStyle : 'All';
-    /* V2 appends a newly delivered built-in. Order the plain grid by style, then by name, so it sits with its style. */
+    /* V2 appends a newly delivered built-in. Inside one style the grid is ordered by name, so it sits with its style;
+       under All the cards keep their stored order, as they always had. */
     const pool = styleNow === 'All' ? plain : plain.filter(s => styleOf(s) === styleNow);
-    const shown = pool.slice().sort((x, y) => rankOf(x) - rankOf(y) || String(x.name || '').localeCompare(String(y.name || ''), undefined, { numeric: true, sensitivity: 'base' }));
+    const shown = styleNow === 'All' ? pool.slice() : pool.slice().sort((x, y) => rankOf(x) - rankOf(y) || String(x.name || '').localeCompare(String(y.name || ''), undefined, { numeric: true, sensitivity: 'base' }));
     const listed = styleNow === APP_SETUP ? appSetupBody(app) : styleNow === APP_NIER ? appNierBody(app)
       : styleNow === 'All' ? (shown.length ? soundGrid(shown) : '') + appGroup(APP_SETUP, app) + appGroup(APP_NIER, app)
       : shown.length ? soundGrid(shown) : '';

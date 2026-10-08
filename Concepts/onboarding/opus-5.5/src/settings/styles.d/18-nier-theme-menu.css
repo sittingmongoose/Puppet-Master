@@ -4,7 +4,7 @@
    reboot cover (#o55np-reboot, 2147483600 in styles.d/14-nier-parts.css). No side bars, no blur, no colour literals. */
 
 /* ---------- theme menu row ---------- */
-/* Two lines: the toggle is laid out exactly like a family row (name at the left, the swatch where the families' two
+/* Two lines (the menu keeps its own width, about 210 px): the toggle is laid out exactly like a family row (name at the left, the swatch where the families' two
    chips sit), and Adjust NieR look sits under it, aligned with the label (12px padding + the 13px box + the 8px gap),
    so the menu cursor beside it never lands on the label above. */
 #themeMenu .o55-nier-tt-row {
@@ -12,9 +12,10 @@
   flex-direction: column;
   align-items: stretch;
   width: 100%;
-  min-width: max-content;
+  min-width: 0;
 }
-#themeMenu .o55-nier-tt-toggle.pm6-tb-menu-item { width: 100%; }
+/* the row never widens the menu: the toggle shrinks like a family row, Adjust says "Adjust" */
+#themeMenu .o55-nier-tt-toggle.pm6-tb-menu-item { flex: 1 1 auto; width: 100%; min-width: 0; }
 #themeMenu .o55-nier-tt-toggle .pm6-tt-name { flex: 1 1 auto; min-width: 0; }
 #themeMenu .o55-nier-tt-box { flex: 0 0 auto; display: block; }
 #themeMenu .o55-nier-tt-mark { opacity: 0; }
@@ -111,10 +112,18 @@ html[data-theme^="glass"] .o55nc-pop-dialog { background: var(--rg-menu, var(--s
   padding: 12px 14px;
   border-bottom: 1px solid var(--border);
 }
-/* the head is the editor's own kicker band, as in the onboarding window's panel: [ ■ PLUG-IN CHIPS ] running on as a
-   rule with a square cap, in the look's ink (NieR's while it is painted); then the title the opening button says */
+/* Outside NieR the head keeps the look's own dialog: a small eyebrow over the title the opening button says. Under NieR it
+   is the editor's kicker band, as in the onboarding window's panel: [ ■ PLUG-IN CHIPS ] running on as a rule with a
+   square cap (machine glyphs ride it), and the title in wide capitals. */
 .o55nc-pop-titles { flex: 1 1 auto; min-width: 0; }
 .o55nc-pop-eye {
+  margin: 0;
+  font: 600 10px/1.3 var(--mono-font, ui-monospace, monospace);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+html[data-o55-nier] .o55nc-pop-eye {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -122,27 +131,25 @@ html[data-theme^="glass"] .o55nc-pop-dialog { background: var(--rg-menu, var(--s
   padding: 3px 0 3px 9px;
   font: 500 10.5px/1.2 var(--mono-font, ui-monospace, monospace);
   letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--text-primary);
+  color: var(--o55-nier-ink);
   background: linear-gradient(currentColor, currentColor) 0 0 / 1px 100% no-repeat, linear-gradient(currentColor, currentColor) 0 0 / 4px 1px no-repeat,
     linear-gradient(currentColor, currentColor) 0 100% / 4px 1px no-repeat;
 }
-.o55nc-pop-eye::before { content: ""; flex: none; width: 6px; height: 6px; background: currentColor; }
-.o55nc-pop-eye::after {
+html[data-o55-nier] .o55nc-pop-eye::before { content: ""; flex: none; width: 6px; height: 6px; background: currentColor; }
+html[data-o55-nier] .o55nc-pop-eye::after {
   content: "";
   flex: 1;
   align-self: stretch;
   min-width: 24px;
   background: linear-gradient(currentColor, currentColor) 4px 0 / 1px 100% no-repeat, linear-gradient(currentColor, currentColor) 0 0 / 5px 1px no-repeat,
     linear-gradient(currentColor, currentColor) 0 100% / 5px 1px no-repeat, linear-gradient(currentColor, currentColor) right center / 5px 5px no-repeat,
-    linear-gradient(color-mix(in srgb, currentColor 45%, transparent), color-mix(in srgb, currentColor 45%, transparent)) left 14px center / calc(100% - 22px) 1px no-repeat;
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) left 14px center / calc(100% - 22px) 1px no-repeat;
 }
-html[data-o55-nier] .o55nc-pop-eye { color: var(--o55-nier-ink); }
 html[data-o55-nier-parts~="glyphs"] .o55nc-pop-eye::after {
   background: linear-gradient(currentColor, currentColor) 4px 0 / 1px 100% no-repeat, linear-gradient(currentColor, currentColor) 0 0 / 5px 1px no-repeat,
     linear-gradient(currentColor, currentColor) 0 100% / 5px 1px no-repeat, linear-gradient(currentColor, currentColor) right center / 5px 5px no-repeat,
     var(--o55nw-art-glyphs) right 12px top 0 / 126px 5px no-repeat,
-    linear-gradient(color-mix(in srgb, currentColor 45%, transparent), color-mix(in srgb, currentColor 45%, transparent)) left 14px center / calc(100% - 22px) 1px no-repeat;
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) left 14px center / calc(100% - 22px) 1px no-repeat;
 }
 .o55nc-pop-title { margin: 2px 0 0; font: 600 17px/1.3 var(--display-font, var(--body-font, inherit)); color: var(--text-primary); }
 html[data-o55-nier-parts~="headers"] .o55nc-pop-title { font-size: 18px; letter-spacing: .14em; text-transform: uppercase; }

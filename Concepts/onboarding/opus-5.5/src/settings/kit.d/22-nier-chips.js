@@ -17,7 +17,7 @@
    Styles: styles.d/17-nier-chips.css. The sheet follows the store's onChange while it is open and writes only what changed.
    The same markup renders in the Settings drawer (open), in a body-level dialog (popup) and inside any host (mount).
    Reads and writes go through a store, PM_NIER.store(kind) (kit.d/18-nier.js). The words around the editor (kicker,
-   title, leads, Done) are copy (src/copy.d/60-nier-settings.json, nierSettings.chips) read through o55NierCopy. */
+   title, leads, Done) are copy (src/copy.d/55-nier-chips.json, nierSettings.chips) read through o55NierCopy. */
 (function o55NierChipsModule() {
   const ID = 'general.visual.nier-parts', BG = 'general.visual.nier-background';
   const NIER = () => window.PM_NIER || null;
@@ -58,7 +58,7 @@
     const N = window.PM_NIER;
     try { return N && typeof N.store === 'function' ? N.store(kind || 'live') || null : null; } catch (e) { return null; }
   }
-  const say = (key, fallback) => (typeof o55NierCopy === 'function' ? o55NierCopy('nierSettings.chips.' + key, fallback) : fallback);
+  const say = (key, fallback) => (typeof o55NierCopy === 'function' ? o55NierCopy(key === 'done' ? 'chrome.done' : 'nierSettings.chips.' + key, fallback) : fallback);
   /* The lead line under the title, the drawer's summary; a preview store's changes land with the look. */
   const LEAD_LIVE = 'Install or remove each part. A change applies at once and is saved.';
   const LEAD_PREVIEW = 'Install or remove each part. You see each change now; it is kept with your look when setup finishes.';
@@ -223,7 +223,7 @@
   /* Focus goes back where the person was, decided when the dialog closes (the opener may have been redrawn meanwhile:
      a chip change repaints the tour's bar and replaces its look button). In order: opts.returnFocus(), opts.from (an
      element, or a function returning one), the running tour's look button, the title-bar theme button. */
-  const pick = v => { try { const el = typeof v === 'function' ? v() : v; return el && el.isConnected && typeof el.focus === 'function' ? el : null; } catch (e) { return null; } };
+  const pick = v => { try { const el = typeof v === 'function' ? v() : v; return el && el.isConnected && typeof el.focus === 'function' && el.getClientRects().length ? el : null; } catch (e) { return null; } };
   function restoreFocus(opts) {
     const tour = document.querySelector('#pm-o55-tour .o55t-bar [data-o55t="lookMenu"]');
     const list = [pick(opts.returnFocus), pick(opts.from), tour && tour.isConnected ? tour : null, document.getElementById('themeSelect')];

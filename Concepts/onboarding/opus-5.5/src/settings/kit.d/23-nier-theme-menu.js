@@ -2,11 +2,13 @@
    After the last family row: a divider and one row. Its first line is laid out like a family row: a menuitemcheckbox
    "NieR Mode" with its checkbox glyph, and at the right, under the families' two swatches, NieR's own swatch (ink and
    parchment carrying the three kicker squares, hero spec H6), so it lines up with the looks and still reads as another
-   kind of option. Under it, aligned with the label, "Adjust NieR look" opens PM_NIER_CHIPS.popup on the live store.
-   The checkbox shows the requested state at once (PM_NIER.set paints on the next frame) and syncs from
-   PM_NIER.onChange. Toggle leaves the menu open; Adjust closes it; Escape closes the menu and gives focus back to the
-   theme button (Tab leaves from there). Both buttons opt out of the page's hover tag: its card covered the row it
-   described ("Choose this option."). The words are copy (nierSettings.themeMenu, through o55NierCopy).
+   kind of option. Under it, aligned with the label, "Adjust" (named "Adjust NieR look" for assistive tech and its
+   title) opens PM_NIER_CHIPS.popup on the live store; the row adds no width to the menu. The checkbox shows the
+   requested state at once (PM_NIER.set paints on the next frame) and syncs from PM_NIER.onChange. Toggle leaves the
+   menu open; Adjust closes it. Focus never falls to <body>: Escape and Tab close the menu and give focus back to the
+   theme button, and so does picking a look (the base menu closes under the focused row). Both buttons opt out of the
+   page's hover tag: its card covered the row it described ("Choose this option."). The words are copy
+   (nierSettings.themeMenu, through o55NierCopy).
    The menu's own click handler only acts on .pm6-tt-mode and .pm6-tt-family[data-family]; this row is neither, and
    its clicks stop on this listener so they never reach that handler. */
 (function o55NierThemeMenu() {
@@ -26,7 +28,7 @@
   const ROW = () => `<div class="pm6-tt-divider" data-o55-nier-tt="divider" aria-hidden="true"></div>`
     + `<div class="o55-nier-tt-row" data-o55-nier-tt="row" role="none">`
     + `<button type="button" class="pm6-tb-menu-item o55-nier-tt-toggle" role="menuitemcheckbox" aria-checked="false" data-o55-nier-tt="toggle" data-pm-hover-exempt="true">${BOX}<span class="pm6-tt-name">${esc(say('toggle', 'NieR Mode'))}</span>${SWATCH}</button>`
-    + `<button type="button" class="o55-nier-tt-adjust" role="menuitem" data-o55-nier-tt="adjust" data-pm-hover-exempt="true"><span>${esc(say('adjust', 'Adjust NieR look'))}</span>${SLIDERS}</button>`
+    + `<button type="button" class="o55-nier-tt-adjust" role="menuitem" data-o55-nier-tt="adjust" data-pm-hover-exempt="true" aria-label="${esc(say('adjust', 'Adjust NieR look'))}" title="${esc(say('adjust', 'Adjust NieR look'))}"><span>${esc(say('adjustShort', 'Adjust'))}</span>${SLIDERS}</button>`
     + `</div>`;
   const ITEM = '.pm6-tt-mode, .pm6-tt-family, [data-o55-nier-tt="toggle"], [data-o55-nier-tt="adjust"]';
   /* null follows the painted state; a boolean is the click's request, shown until onChange agrees */
@@ -43,10 +45,11 @@
     const v = shown() ? 'true' : 'false';
     if (el.getAttribute('aria-checked') !== v) el.setAttribute('aria-checked', v);
     /* the copy loads after this script: the words follow it once it is there */
-    const name = el.querySelector('.pm6-tt-name'), adj = document.querySelector('#themeMenu [data-o55-nier-tt="adjust"] > span');
-    const n = say('toggle', 'NieR Mode'), a = say('adjust', 'Adjust NieR look');
+    const name = el.querySelector('.pm6-tt-name'), btn = document.querySelector('#themeMenu [data-o55-nier-tt="adjust"]'), adj = btn && btn.querySelector('span');
+    const n = say('toggle', 'NieR Mode'), a = say('adjustShort', 'Adjust'), full = say('adjust', 'Adjust NieR look');
     if (name && name.textContent !== n) name.textContent = n;
     if (adj && adj.textContent !== a) adj.textContent = a;
+    if (btn && btn.getAttribute('aria-label') !== full) { btn.setAttribute('aria-label', full); btn.setAttribute('title', full); }
   }
   function closeMenu() {
     const menu = document.getElementById('themeMenu');
@@ -78,16 +81,29 @@
     syncBox();
     if (N.set(next) === false) { pending = null; syncBox(); }
   }
+  /* focus goes back to the theme button when the menu has closed under it (on the next tick, after the base's close) */
+  function refocus(menu, force) {
+    const btn = document.getElementById('themeSelect'); if (!btn) return;
+    let tries = 0;
+    const check = () => {
+      if (menu.classList.contains('is-open') && !force) { if (++tries < 20) window.requestAnimationFrame(check); return; }
+      const a = document.activeElement;
+      if (force || !a || a === document.body || menu.contains(a)) { try { btn.focus(); } catch (x) { /* the title bar is gone */ } }
+    };
+    window.setTimeout(check, 0);
+  }
   function onMenuKey(e) {
-    /* Escape (and Tab) leave the menu from the theme button, never from <body> */
+    /* Escape and Tab leave the menu from the theme button, never from <body> */
     if (e.key === 'Escape' || e.key === 'Tab') {
-      const btn = document.getElementById('themeSelect');
-      if (!btn || !e.currentTarget.contains(document.activeElement)) return;
-      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); }
+      const menu = e.currentTarget;
+      if (!document.getElementById('themeSelect') || !menu.contains(document.activeElement)) return;
+      e.preventDefault(); e.stopPropagation();
       closeMenu();
-      try { btn.focus(); } catch (x) { /* the title bar is gone */ }
+      refocus(menu, true);
       return;
     }
+    /* picking a look or a mode with the keyboard: the base closes the menu under the row */
+    if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.closest && e.target.closest('.pm6-tt-family[data-family], .pm6-tt-mode')) refocus(e.currentTarget, false);
     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Home' && e.key !== 'End') return;
     const menu = e.currentTarget;
     const list = listItems(menu);
@@ -101,10 +117,15 @@
     else i = i < 0 ? list.length - 1 : (i - 1 + list.length) % list.length;
     if (list[i]) list[i].focus();
   }
+  function onPick(e) {
+    const row = e.target && e.target.closest ? e.target.closest('.pm6-tt-family[data-family], .pm6-tt-mode') : null;
+    if (row) refocus(e.currentTarget, false);
+  }
   function wire(menu) {
     if (!menu || menu.dataset.o55NierTtWired === '1') return;
     menu.dataset.o55NierTtWired = '1';
     menu.addEventListener('click', onMenuClick);
+    menu.addEventListener('click', onPick, true);
     menu.addEventListener('keydown', onMenuKey);
   }
   function inject() {
@@ -149,12 +170,15 @@
         e.preventDefault();
         btn.click();
       } else e.preventDefault();
-      window.setTimeout(() => {
-        if (!menu.classList.contains('is-open')) return;
+      /* the menu may open a frame or two after the click: wait for it (about 300 ms at most) before moving focus in */
+      let tries = 0;
+      const enter = () => {
+        if (!menu.classList.contains('is-open')) { if (++tries < 18) window.requestAnimationFrame(enter); return; }
         const list = listItems(menu);
         const el = e.key === 'ArrowUp' ? list[list.length - 1] : list[0];
         if (el) el.focus();
-      }, 0);
+      };
+      window.setTimeout(enter, 0);
     });
   }
   function boot() {

@@ -78,10 +78,10 @@
                           BACKGROUNDS, onChange(cb) }; kind 'live' commits through Settings, kind 'preview' previews
                           (the Plug-in Chips editor reads and writes through one of these); on() is the request
    A live write while a preview is shown moves the preview too, so what is painted is always the latest request; a live
-   write to a NieR row while a preview lingers saves what is painted (the preview's other rows with it), so NieR Mode
-   never turns off under an edit made on what was shown.
+   write to the parts or the background while a preview lingers saves what is painted (the preview's other rows with
+   it), so NieR Mode never turns off under an edit made on what was shown; a write to the switch itself drops it.
 
-   o55NierCopy(key, fallback, vars) reads the build's copy (src/copy.d/60-nier-settings.json, merged into
+   o55NierCopy(key, fallback, vars) reads the build's copy (src/copy.d/55-nier-chips.json, merged into
    window.O55_COPY) when it is there, so every NieR Settings word lives in copy; the literal is only the fallback for a
    page without the onboarding layer. */
 const O55_NIER_IDS = ['general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'];
@@ -299,7 +299,9 @@ commitSettingValue = function (id, value) {
 function o55NierPreviewDrop() { o55NierPv = null; o55NierPvLoose = false; o55NierPvWithin = null; o55NierPvProject = ''; }
 function o55NierFollowWrite(id, value) {
   if (!o55NierPv) return;
-  if (o55NierPvLoose && O55_NIER_IDS.includes(id)) { o55NierAdopt(id); return; }
+  /* a parts or background edit adopts the lingering preview; a switch written on its own keeps the drop (the person
+     turned NieR Mode on or off: that is what is saved) */
+  if (o55NierPvLoose && (id === 'general.visual.nier-parts' || id === 'general.visual.nier-background')) { o55NierAdopt(id); return; }
   if (o55NierPvLoose) { o55NierPreviewDrop(); o55NierRun(); return; }
   if (id === 'general.visual.nier-mode') o55NierPv.on = o55On(value);
   else if (id === 'general.visual.nier-parts') o55NierPv.parts = o55NierKeys((Array.isArray(value) ? value : []).map(l => o55NierByLabel.get(String(l))));

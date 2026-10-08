@@ -156,10 +156,6 @@ html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .pm7u-iconbtn.spinning) svg
 html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .pm7u-iconbtn.spinning) svg > * { visibility: hidden; }
 @keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation: none !important; }
-/* the onboarding window holds the app beneath still (performance rule 6; src/css/10-window.css pauses it): the
-   shorthand above sets the play state back to running, so the app's own loaders pause again under the window, while
-   the window's loaders (not inert) keep turning */
-html[data-o55-open][data-o55-nier-parts~="diamonds"] body > [inert] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation-play-state: paused !important; }
 
 /* ====================================================================================================== Motion */
 
