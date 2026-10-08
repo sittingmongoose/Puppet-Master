@@ -619,7 +619,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   /* A child thread is a read-only Turn Stage feed. It must not use .transcript:
      the editor pane precedes the chat, and unscoped querySelector('.transcript')
-     calls would bind the chat's spine, stream and sound to this feed. */
+     calls would bind the chat's spine, stream and sound to this feed. Its head is
+     one row: name, status, underlined model, parent and one Read-only marker
+     ("Read-only · live" while the agent works); the marker's hover card carries
+     the "Read-only child thread" label and what read-only means here. */
   let readOnlyRender=false;
   function renderReadOnlyItems(agent){
     readOnlyRender=true;
@@ -632,7 +635,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderAgentEditor(agent){
     const live=agent.status==='working';
     const name=esc(agent.name);
-    return `<article class="editor-doc agent-feed-doc" data-k="agent-feed:${esc(agent.id)}"><header class="agent-feed-head"><h1>${name}</h1><span class="agent-feed-status">${statusMark(agent.status,14)}<span>${esc(lblOf('subagentStatus',agent.status))}</span><span class="agent-feed-elapsed">${esc(agent.elapsed)}</span></span><u class="agent-model">${esc(agent.model)}</u><span class="agent-feed-parent">Parent: ${esc(agent.parent)}</span><span class="meta-pill">Read-only child thread</span>${live?'<span class="meta-pill">Read-only · live</span>':''}</header><div class="tx-feed" data-variant="16" data-voice="${motionVoice()}" data-readonly="1"${live?' data-feed-live="1"':''} role="log" aria-live="polite" aria-label="${name} live transcript"><div class="tx-spine-layer" data-k="tx-spine:${esc(agent.id)}" data-pm-keep aria-hidden="true"></div><div class="tx-feed-inner">${renderReadOnlyItems(agent)}</div></div><p class="chat-meta">Read-only: this agent's work streams here; there is no composer.</p></article>`;
+    return `<article class="editor-doc agent-feed-doc" data-k="agent-feed:${esc(agent.id)}"><header class="agent-feed-head"><h1>${name}</h1><span class="agent-feed-status">${statusMark(agent.status,14)}<span>${esc(lblOf('subagentStatus',agent.status))}</span><span class="agent-feed-elapsed">${esc(agent.elapsed)}</span></span><u class="agent-model">${esc(agent.model)}</u><span class="agent-feed-parent" data-hover-key="agent-feed-parent-${esc(agent.id)}" data-hover-tip="Parent thread&#10;${esc(agent.parent)}">Parent: ${esc(agent.parent)}</span><span class="meta-pill agent-feed-ro" data-hover-key="agent-feed-ro-${esc(agent.id)}" data-hover-tip="Read-only child thread&#10;${live?'This agent\'s work streams here as it happens. ':''}There is no composer, and nothing in this feed acts on the parent thread.">Read-only${live?' · live':''}</span></header><div class="tx-feed" data-variant="16" data-voice="${motionVoice()}" data-readonly="1"${live?' data-feed-live="1"':''} role="log" aria-live="polite" aria-label="${name} live transcript"><div class="tx-spine-layer" data-k="tx-spine:${esc(agent.id)}" data-pm-keep aria-hidden="true"></div><div class="tx-feed-inner">${renderReadOnlyItems(agent)}</div></div><p class="chat-meta">Read-only: this agent's work streams here; there is no composer.</p></article>`;
   }
   function renderArtifactEditor(art){
     if(art.revisions && art.kind!=='plan_document' && window.PM56_ARTIFACTS)return PM56_ARTIFACTS.editor({artifact_id:art.id,artifact_version:Number(art.version),...PM56_ARTIFACTS.scopeOf(art)});

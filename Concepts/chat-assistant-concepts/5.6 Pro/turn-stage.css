@@ -361,10 +361,39 @@ body[data-theme] { --tx-gutter: 24px; }
 @media (prefers-reduced-motion: reduce) { :is(.transcript, .tx-feed)[data-variant="16"] :is(.transcript-inner, .tx-feed-inner) > [data-family], :is(.transcript, .tx-feed)[data-variant="16"] :is(.transcript-inner, .tx-feed-inner) > [data-family] .live-agent-row { animation: none !important; } }
 
 /* read-only child feed (item 10). The editor document's p rule would mute the prose. */
-.agent-feed-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 6px; }
+/* The head is one row at the default editor width (754px with the Activity panel open): name, status, underlined
+   model, parent and the Read-only marker inline at the row's end. The parent takes the flexible slot and ellipsizes
+   (its full name is in its hover card), so Retro's wider mono stays on one row; a narrower editor still wraps. */
+.agent-feed-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 10px; }
 .agent-feed-head h1 { font-size: 18px; line-height: 1.2; margin: 0; letter-spacing: -.02em; }
 .agent-feed-status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text); }
 .agent-feed-elapsed, .agent-feed-parent { color: var(--muted); font-size: 12px; }
+.agent-feed-head .agent-feed-parent { flex: 1 1 0; min-width: 9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.agent-feed-head .agent-feed-ro { flex: 0 0 auto; white-space: nowrap; }
+/* A dense live transcript: the hover chrome (meta, Copy, More details) reserves no height under each message, so
+   consecutive messages sit one item gap apart like paragraphs of one stream (14px, where the reserved row made it
+   48px). On hover or focus it floats as a small bordered 26px tool row at the message's top-right corner, centred
+   on the gap above it: it reaches 6px into each neighbouring line, which is leading on the hovered message and only
+   descenders on the previous item, so no text is cut. The first message, which has the head above it, floats it
+   on the gap below instead. The agent's model and provider are in the head, so the row keeps only the time and
+   worked chips. The main chat's chrome is untouched. */
+.tx-feed-inner > .message > .message-chrome {
+  position: absolute; top: -20px; right: 0; z-index: 2; margin: 0; max-width: calc(100% - 8px);
+  container-type: normal; padding: 1px 2px 1px 5px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--surface-2); box-shadow: 0 8px 20px -12px rgb(0 0 0 / .55);
+}
+.tx-feed-inner > .message:first-child > .message-chrome { top: auto; bottom: -20px; }
+.tx-feed-inner > .message > .message-chrome :is(.meta-provider, .meta-model) { display: none; }
+.tx-feed-inner > .message > .message-chrome .message-actions { margin-left: 2px; }
+.tx-feed-inner > .message > .message-chrome .message-actions .text-button { min-height: 22px; height: 22px; }
+.tx-feed-inner > .message:focus-within > .message-chrome { opacity: 1; visibility: visible; transform: none; transition: opacity 150ms, transform 150ms, visibility 0s; }
+/* All three reduced routes: the tool row appears and goes without a fade. */
+@media (prefers-reduced-motion: reduce) { .tx-feed-inner > .message > .message-chrome { transition: none !important; } }
+body.pm56-reduced .tx-feed-inner > .message > .message-chrome,
+html[data-motion="reduced"] .tx-feed-inner > .message > .message-chrome { transition: none !important; }
+@media (max-width: 590px) {
+  .tx-feed-inner > .message > .message-chrome, .tx-feed-inner > .message:first-child > .message-chrome { position: static; margin-top: 6px; padding: 0; border: 0; background: none; box-shadow: none; }
+}
 .agent-feed-doc u.agent-model { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 60%, transparent); color: inherit; }
 .agent-feed-doc .message-body p { color: var(--text); max-width: none; }
 .agent-feed-doc > .chat-meta { margin-top: 14px; }
