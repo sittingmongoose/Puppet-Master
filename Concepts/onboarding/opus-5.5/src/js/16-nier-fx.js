@@ -294,6 +294,8 @@
     const gone = (g) => { if (f.gone === g) return; f.gone = g; node.toggleAttribute('data-gone', g); };
     f.place = () => {
       if (!el.isConnected || !node.isConnected || closing(host) || el.closest('.o55-out, [hidden]')) { f.off(); return; }
+      /* inside a folded surface (the window folding to its line) it stays aside until the surface opens again */
+      for (const fe of folds.keys()) if (fe.contains(el)) { gone(true); return; }
       if (f.port === undefined) f.port = scrollBox(el, host);
       const r = rectOf(el);
       const p = f.port && f.port.isConnected ? f.port.getBoundingClientRect() : null;
@@ -580,6 +582,7 @@
     folds.delete(el);
     if (f.off) f.off();
     try { f.a.cancel(); } catch (_) {}
+    raf(() => followers.forEach((x) => { if (el.contains(x.el)) x.place(); }));
   }
   FX.unfold = unfoldNow;
   /* el stays folded (a filled scale animation) until it opens again; its surface being hidden also restores it (the
@@ -598,14 +601,14 @@
     unfoldNow(el);
     const ms = clamp(Number(o.ms) || 260, 80, 1200);
     quiet(ms + 600);
-    /* what follows something inside it (brackets, the cursor) stands aside at once rather than squash with it */
-    followers.forEach((f) => { if (el.contains(f.el)) f.hide(); });
     const line = newLine({ left: r.left, top: r.top + r.height / 2 - 1, width: r.width });
     /* the surface squashes to its centre line in 4 held steps; on the last one it is gone and the line is there */
     const a = el.animate([{ scale: '1 1' }, { scale: '1 0' }], { duration: ms, easing: 'steps(4, end)', fill: 'forwards' });
     const show = line.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms, easing: 'step-end', fill: 'both' });
     const rec = { a, off: null };
     folds.set(el, rec);
+    /* what follows something inside it (brackets, the cursor) stands aside at once rather than squash with it */
+    followers.forEach((f) => { if (el.contains(f.el)) f.hide(); });
     rec.off = foldWatch(el, () => { if (folds.get(el) === rec) unfoldNow(el); });
     const job = run(hostOf(el), () => { unfoldNow(el); lineDrop(line); }, () => { try { a.finish(); show.finish(); } catch (_) {} });
     return ended(a).then((ok) => { finish(job); if (!ok || !line.isConnected) { lineDrop(line); return null; } line.o55fxFrom = el; return line; });
