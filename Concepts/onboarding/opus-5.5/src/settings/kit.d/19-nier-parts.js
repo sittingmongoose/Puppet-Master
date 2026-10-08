@@ -13,7 +13,7 @@
      sweep               one one-shot Web Animation every 12 s (a timer; nothing runs between sweeps)
      glitch              a one-shot split of an arriving error or warning toast
      sounds              a small Web Audio synth: ticks, select, confirm, cancel, the Pod's chirp; only while
-                         general.interaction.sound-effects is on
+                         general.interaction.sound-effects is on, through O55.sound's context and mute when present
      voice               CSS leads (Report / Alert / Proposal) and the POD 042 band; a proposal is tagged at arrival
      pod                 #o55np-pod bobbing by CSS; it turns toward each arriving toast and sends it
    Toasts: window.toast and PM_TITLEBAR_NOTIFY.push are wrapped once (straight through while NieR Mode is off); the card
@@ -58,53 +58,84 @@
     hooks();
   }
 
-  /* ---------- sounds: a small synth of the game's menu blips ------------------------------------------------------ */
-  let ac = null, bus = null, lastTick = 0;
+  /* ---------- sounds: a small synth of the game's menu blips ------------------------------------------------------
+     One audio path: with the onboarding layer present (src/js/15-sound.js) every blip plays through O55.sound.synth,
+     on its context and master and under its mute (no second AudioContext); this module's own context is only the
+     fallback for a page without it. The table takes its bus as a parameter (5.6 Pro's nier-parts.js has the same
+     numbers), so any context can play or render it. Inside the onboarding window O55 owns sound (its NieR kit plays
+     these same blips), so the document-wide menu sounds stay quiet there, on the tour's own controls and on synthetic
+     clicks (a tour's Show Me presses the real control; O55.sound.suppress(ms) holds them too). Outside onboarding
+     they also follow general.interaction.sound-effects, the Settings value (Settings_System 4.4). */
+  let ac = null, acBus = null, lastTick = 0;
+  const buses = new WeakMap();
+  function busFor(ctx, out) {
+    /* the synth's own level into the destination's chain, one per context and destination */
+    let m = buses.get(ctx); if (!m) { m = new Map(); buses.set(ctx, m); }
+    let b = m.get(out);
+    if (!b) { b = ctx.createGain(); b.gain.value = 0.6; b.connect(out); m.set(out, b); }
+    return b;
+  }
   function audio() {
     const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
     if (!ac) {
       try {
-        ac = new AC(); bus = ac.createGain(); bus.gain.value = 0.6;
+        ac = new AC(); acBus = ac.createGain(); acBus.gain.value = 1;
         const comp = ac.createDynamicsCompressor(); comp.threshold.value = -20; comp.ratio.value = 3;
-        bus.connect(comp); comp.connect(ac.destination);
+        acBus.connect(comp); comp.connect(ac.destination);
       } catch (e) { ac = null; return null; }
     }
     if (ac.state === 'suspended') ac.resume().catch(() => {});
     return ac.state === 'closed' ? null : ac;
   }
   const soundAllowed = () => { try { return o55On(PM51.value('general.interaction.sound-effects')); } catch (e) { return false; } };
-  function blip(c, t, f, dur, gain, type, f2) {
+  const o55Sound = () => { const S = window.O55 && window.O55.sound; return S && typeof S.synth === 'function' ? S : null; };
+  /* the onboarding window and the tour's own chrome: O55 plays there */
+  const O55_SURFACE = '#pm-o55-onboarding, #pm-o55-tour';
+  const inO55 = t => !!(t && t.closest && t.closest(O55_SURFACE));
+  function blip(c, bus, t, f, dur, gain, type, f2) {
     const o = c.createOscillator(), g = c.createGain();
     o.type = type || 'sine'; o.frequency.setValueAtTime(f, t);
     if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     o.connect(g); g.connect(bus); o.start(t); o.stop(t + dur + 0.03);
   }
-  const SFX = {
-    tick: (c, t) => blip(c, t, 2640, 0.026, 0.028),
-    select: (c, t) => { blip(c, t, 1480, 0.05, 0.045, 'triangle'); blip(c, t + 0.038, 2220, 0.07, 0.035); },
-    confirm: (c, t) => { blip(c, t, 988, 0.08, 0.05, 'triangle'); blip(c, t + 0.07, 1480, 0.17, 0.05, 'triangle'); },
-    cancel: (c, t) => { blip(c, t, 1318, 0.07, 0.045, 'triangle'); blip(c, t + 0.06, 880, 0.16, 0.045, 'triangle'); },
-    pod: (c, t) => { blip(c, t, 1760, 0.05, 0.03); blip(c, t + 0.06, 2350, 0.05, 0.026); blip(c, t + 0.12, 1975, 0.09, 0.026); },
-    alert: (c, t) => { blip(c, t, 523, 0.09, 0.05, 'triangle'); blip(c, t + 0.1, 523, 0.09, 0.05, 'triangle'); blip(c, t + 0.2, 392, 0.2, 0.05, 'triangle'); },
-    sweepOn: (c, t) => sweepTone(c, t, true),
-    sweepOff: (c, t) => sweepTone(c, t, false)
-  };
-  function sweepTone(c, t, up) {
+  function sweepTone(c, bus, t, up) {
     const o = c.createOscillator(), f = c.createBiquadFilter(), g = c.createGain();
     o.type = 'sawtooth'; o.frequency.setValueAtTime(up ? 98 : 196, t); o.frequency.exponentialRampToValueAtTime(up ? 196 : 98, t + 0.55);
     f.type = 'lowpass'; f.Q.value = 7; f.frequency.setValueAtTime(up ? 260 : 3400, t); f.frequency.exponentialRampToValueAtTime(up ? 3400 : 260, t + 0.5);
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.04); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.62);
     o.connect(f); f.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.66);
-    blip(c, t + (up ? 0.5 : 0.02), up ? 1760 : 880, 0.12, 0.03);
+    blip(c, bus, t + (up ? 0.5 : 0.02), up ? 1760 : 880, 0.12, 0.03);
   }
+  const SFX = {
+    tick: (c, b, t) => blip(c, b, t, 2640, 0.026, 0.028),
+    select: (c, b, t) => { blip(c, b, t, 1480, 0.05, 0.045, 'triangle'); blip(c, b, t + 0.038, 2220, 0.07, 0.035); },
+    confirm: (c, b, t) => { blip(c, b, t, 988, 0.08, 0.05, 'triangle'); blip(c, b, t + 0.07, 1480, 0.17, 0.05, 'triangle'); },
+    cancel: (c, b, t) => { blip(c, b, t, 1318, 0.07, 0.045, 'triangle'); blip(c, b, t + 0.06, 880, 0.16, 0.045, 'triangle'); },
+    pod: (c, b, t) => { blip(c, b, t, 1760, 0.05, 0.03); blip(c, b, t + 0.06, 2350, 0.05, 0.026); blip(c, b, t + 0.12, 1975, 0.09, 0.026); },
+    alert: (c, b, t) => { blip(c, b, t, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.1, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.2, 392, 0.2, 0.05, 'triangle'); },
+    sweepOn: (c, b, t) => sweepTone(c, b, t, true),
+    sweepOff: (c, b, t) => sweepTone(c, b, t, false)
+  };
+  /* which of these matter when two sounds meet (O55.sound keeps the more important one) */
+  const SFX_PRIO = { tick: 20, select: 45, confirm: 60, cancel: 55, pod: 48, alert: 84, sweepOn: 93, sweepOff: 93 };
   /* force: the reboot plays while NieR Mode is still off (turning on), so it asks for the installed part instead */
   function sfx(name, force) {
-    if (!(force ? installed('sounds') : live.has('sounds')) || !soundAllowed() || !SFX[name]) return false;
+    if (!(force ? installed('sounds') : live.has('sounds')) || !SFX[name]) return false;
+    /* the onboarding window holds the app beneath still and plays its own NieR kit */
+    if (!force && onboarding()) return false;
     const now = performance.now();
-    if (name === 'tick') { if (now - lastTick < 45) return false; lastTick = now; }
-    const c = audio(); if (!c) return false;
-    try { SFX[name](c, c.currentTime + 0.004); } catch (e) { return false; }
+    if (name === 'tick' && now - lastTick < 45) return false;
+    if (!soundAllowed()) return false;
+    const O = o55Sound();
+    let ok = false;
+    if (O) ok = O.synth((c, out, t) => SFX[name](c, busFor(c, out), t), { force: !!force, name: 'nier:' + name, priority: SFX_PRIO[name] });
+    else {
+      const c = audio(); if (!c) return false;
+      try { SFX[name](c, busFor(c, acBus), c.currentTime + 0.004); ok = true; } catch (e) { return false; }
+    }
+    if (!ok) return false;
+    if (name === 'tick') lastTick = now;
     sfxLog.push({ name, t: Math.round(now) }); if (sfxLog.length > 60) sfxLog.shift();
     return true;
   }
@@ -454,13 +485,22 @@
   const CONFIRM_SEL = '.btn.primary, button[type="submit"], .n-btn.primary, .pm6-dash-btn:not(.pm6-dash-btn--ghost), .primary-button, .o55-btn-primary, [data-o55-preview="keep"]';
   const CANCEL_SEL = '[data-action="close-overlay"], .n-x, [aria-label="Close"], [aria-label="Dismiss"], .n-btn.danger, [data-o55-preview="back"], [data-o55-nier-note="close"]';
   const TOGGLE_SEL = '[role="switch"], [role="checkbox"], input[type="checkbox"], input[type="radio"], .toggle, .switch';
+  /* a click the person made, outside O55's own surfaces, while nothing holds the menu sounds */
+  const menuSoundFor = e => {
+    const O = o55Sound();
+    return !!(e && e.isTrusted && e.target && e.target.closest && !inO55(e.target) && !(O && O.suppressed && O.suppressed()));
+  };
   function soundClick(e) {
-    const t = e.target; if (!t || !t.closest) return;
+    if (!menuSoundFor(e)) return;
+    const t = e.target;
     if (t.closest(CANCEL_SEL)) sfx('cancel');
     else if (t.closest(CONFIRM_SEL)) sfx('confirm');
     else if (t.closest(CURSOR_SEL) || t.closest(TOGGLE_SEL) || t.closest('.page-tab, .pm-segtab-item')) sfx('select');
   }
-  function soundKey(e) { if (e.key === 'Escape') sfx('cancel'); else if (e.key === 'Enter' && e.target && e.target.closest && e.target.closest(CURSOR_SEL)) sfx('select'); }
+  function soundKey(e) {
+    if (!menuSoundFor(e)) return;
+    if (e.key === 'Escape') sfx('cancel'); else if (e.key === 'Enter' && e.target.closest(CURSOR_SEL)) sfx('select');
+  }
   PARTS.sounds = {
     on() { document.addEventListener('click', soundClick, true); document.addEventListener('keydown', soundKey, true); },
     off() { document.removeEventListener('click', soundClick, true); document.removeEventListener('keydown', soundKey, true); }
@@ -523,6 +563,8 @@
     decode: el => decode(el),
     /* the synth for the World parts (kit.d/20-nier-world.js): plays only while Menu sounds is live and sounds are on */
     play: name => sfx(name),
+    /* the blips themselves, fn(ctx, bus, t0), for renders and parity checks (read-only) */
+    SFX: Object.freeze(Object.assign({}, SFX)),
     sync
   });
 })();
