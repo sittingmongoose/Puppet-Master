@@ -1268,8 +1268,8 @@
       if (r.width >= 2 && r.height >= 2) obs.push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z });
     });
     const onb = document.getElementById('pm-o55-onboarding');
+    let hb = null;
     if (onb && !closing(onb)) {
-      let hb = null;
       onb.querySelectorAll(HEADING).forEach((e) => {
         const r = e.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return;
         hb = hb ? { l: Math.min(hb.l, r.left / z), t: Math.min(hb.t, r.top / z), r: Math.max(hb.r, r.right / z), b: Math.max(hb.b, r.bottom / z) } : { l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z };
@@ -1278,6 +1278,8 @@
     }
     const at = (f) => Math.round(clamp(s.top + s.height * f - h / 2, s.top + 4, Math.max(s.top + 4, s.top + s.height - h - 4)));
     for (const f of ats) { const t = at(f); if (!meets(s.left, t, s.width, h, obs)) return t; }
+    /* every place meets something: at least never the heading the person is reading */
+    if (hb) for (const f of ats.concat([0.85, 0.15])) { const t = at(f); if (!meets(s.left, t, s.width, h, [hb])) return t; }
     return at(ats[0]);
   }
   const bannerCopy = (kicker, title, sub) => '<div class="o55fx-bn-band"></div><div class="o55fx-bn-copy"><span class="o55fx-bn-mark"></span>'
