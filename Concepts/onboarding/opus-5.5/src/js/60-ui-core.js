@@ -8,6 +8,9 @@
   const SCREENS = O55.screens = { defs: {}, define(id, def) { def.id = id; this.defs[id] = def; } };
   const ROOT_ID = 'pm-o55-onboarding';
   const KEY = 'onboarding';
+  /* NieR Mode's skin of the window (66-nier-window.js, O55.nierWindow) hears the window's moments here and answers
+     only while NieR Mode is painted; a hook that answers true has drawn the moment its own way */
+  const skin = (name, a, b) => { const k = O55.nierWindow; if (!k || !k[name]) return false; try { return k[name](a, b); } catch (e) { console.warn('O55: NieR skin', name, e); return false; } };
 
   const S = O55.S = {
     env: null, sess: null, root: null, open: false, busyNav: false,
@@ -155,8 +158,9 @@
     S.save();
     renderRail();
     const n = S.root.querySelector(`.o55-railitem[data-chapter="${ch}"] .o55-railnode`);
-    if (n && !O55.motion.reduced()) O55.motion.play(n, O55.theme().family === 'retro' ? [{ opacity: 0.2 }, { opacity: 1 }] : [{ transform: 'scale(1.5)' }, { transform: 'scale(1)' }],
-      { duration: 320, easing: O55.theme().family === 'retro' ? 'steps(2, end)' : 'cubic-bezier(0.34,1.56,0.64,1)' });
+    const th = O55.theme();
+    if (n && !O55.motion.reduced()) O55.motion.play(n, th.family === 'retro' ? [{ opacity: 0.2 }, { opacity: 1 }] : [{ transform: 'scale(1.5)' }, { transform: 'scale(1)' }],
+      { duration: 320, easing: th.family === 'retro' ? 'steps(2, end)' : th.nier ? 'steps(3, end)' : 'cubic-bezier(0.34,1.56,0.64,1)' });
   }
 
   /* ---------------------------------------------------------------- render */
@@ -215,9 +219,10 @@
     U.morph(layer, paneHtml(def));
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
-    if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() ? 'auto' : 'smooth' });
+    if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
     renderScene(); renderSound();
     def.mounted && def.mounted(S, layer, false);
+    skin('refresh', layer);
   }
 
   function transition(dir) {
@@ -257,13 +262,14 @@
     const focusHeading = () => O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
     U.announce(O55.stages.progress(S, def).announce + '. ' + (val(def.title) || ''), S.root.querySelector('.o55-win'));
     def.mounted && def.mounted(S, layer, true);
-    if (!hold) { leave(); focusHeading(); return; }
+    if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); return; }
     O55.motion.release(() => {
       layer.classList.remove('o55-hold');
       S.root.classList.remove('o55-hold');
       O55.art.release(S.root.querySelector('.o55-stage'));
       leave(); focusHeading();
       if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
+      if (layer.isConnected) skin('screen', layer, dir);
     });
   }
 
@@ -321,7 +327,7 @@
       const reason = t.getAttribute('data-disabled-reason');
       if (reason) U.announce(reason, S.root.querySelector('.o55-win'));
       O55.sound.play('warn'); /* a refusal with its reason is a soft warning, not a failure */
-      O55.motion.play(t, [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' });
+      if (!skin('refused', t)) O55.motion.play(t, [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' });
       showReason(t, reason);
       return;
     }
@@ -404,7 +410,7 @@
     const el = S.root.querySelector(`.o55-pane > .o55-layer:not(.o55-out) [data-key="field-${bind}"]`);
     if (!el) return;
     const k = [{ transform: 'translateX(0)', opacity: 0.55 }, { transform: 'translateX(-6px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(-3px)' }, { transform: 'translateX(0)', opacity: 1 }];
-    O55.motion.play(el, k, { duration: 300, easing: S.root.getAttribute('data-family') === 'retro' ? 'steps(4, end)' : 'ease-out', fill: 'none' });
+    if (!skin('shake', el)) O55.motion.play(el, k, { duration: 300, easing: S.root.getAttribute('data-family') === 'retro' ? 'steps(4, end)' : 'ease-out', fill: 'none' });
     const i = el.querySelector('input, textarea'); if (i) { i.focus({ preventScroll: true }); i.select && i.select(); }
   }
   function nudge() { const w = S.root.querySelector('.o55-win'); O55.motion.play(w, [{ transform: 'scale(1)' }, { transform: 'scale(1.008)' }, { transform: 'scale(1)' }], { duration: 240 }); }
@@ -491,6 +497,10 @@
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
     const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
+    /* a resumed run starts on its own chapter's chord */
+    const cur = SCREENS.defs[S.sess.screen];
+    O55.sound.setContext({ chapter: (cur.chapterFor ? cur.chapterFor(S) : cur.chapter) || 'welcome', step: S.sess.history.length });
+    skin('open', { resumed: S.resumed, shown: wasShown });
     transition('open');
     O55.sound.play('open');
     const chip = document.getElementById('o55-resume'); if (chip) chip.remove();
@@ -512,6 +522,7 @@
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
+    skin('close', reason, handoff);
     const finish = () => {
       r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
       document.documentElement.removeAttribute('data-o55-open');
@@ -532,5 +543,5 @@
     startOver() { open({ fresh: true }); }
   };
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake });
+  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin });
 })();

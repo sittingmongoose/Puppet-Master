@@ -48,6 +48,8 @@
       if (st.state === 'done') { const ev = snd.done === undefined ? 'success' : snd.done; if (ev && showing()) O55.sound.play(ev, { step: st.phases.length, intensity: snd.intensity }); opts.onDone && opts.onDone(S, st); }
       if (st.state === 'failed') { const ev = snd.fail === undefined ? 'error' : snd.fail; if (ev && showing()) O55.sound.play(ev); opts.onFail && opts.onFail(S, st); }
       if (!opts.quiet) O55.ui.refresh();
+      /* NieR Mode's Pod reports a finished operation that the screen still shows (66-nier-window.js) */
+      if (st.state === 'done' && !opts.quiet && showing()) O55.ui.skin('op', key, st);
     })).then((res) => {
       if (stale()) return null;
       inflight.delete(key);
