@@ -211,7 +211,11 @@
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
     if (!layer) return transition(null);
+    const hadSheet = !!layer.querySelector('.o55-sheet[data-open="true"]');
     U.morph(layer, paneHtml(def));
+    /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
+    const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
+    if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() ? 'auto' : 'smooth' });
     renderScene(); renderSound();
     def.mounted && def.mounted(S, layer, false);
   }
@@ -291,7 +295,8 @@
     S.sess.screen = id; S.save();
     const def = SCREENS.defs[id];
     if (def.enter) def.enter(S, opts);
-    /* the music follows the journey: the chapter's chord, and how far along the person is */
+    /* the music follows the journey: the chapter's chord, and how far along the person is (the first forward sound
+       after a chapter change becomes that chapter's own sting, O55.sound's chapterSting) */
     O55.sound.setContext({ chapter: (def.chapterFor ? def.chapterFor(S) : def.chapter) || 'welcome', step: S.sess.history.length });
     if (!opts.silent) O55.sound.play(opts.dir === 'back' ? 'back' : 'next');
     transition(opts.dir || 'fwd');
@@ -315,7 +320,7 @@
       e.preventDefault();
       const reason = t.getAttribute('data-disabled-reason');
       if (reason) U.announce(reason, S.root.querySelector('.o55-win'));
-      O55.sound.play('error');
+      O55.sound.play('warn'); /* a refusal with its reason is a soft warning, not a failure */
       O55.motion.play(t, [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' });
       showReason(t, reason);
       return;
@@ -331,9 +336,15 @@
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
     if (!fn) { const g = O55.actions[action]; if (g) return g(S, arg, t, e); console.warn('O55: no action', action); return; }
-    /* controls whose handler plays its own sound (e.g. a look tile plays the new family's kit) opt out */
-    if (!t.classList.contains('o55-primary') && t.getAttribute('data-o55-sound') !== 'self') O55.sound.play(t.classList.contains('o55-card') || t.classList.contains('o55-tile') ? 'select' : 'tap');
+    /* the handler's own sound (a sheet opening, a finding, a screen change) is the click's one sound; otherwise the
+       generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
+    const log = O55.sound.log, last = log[log.length - 1], checked = t.getAttribute('aria-checked'), open = t.getAttribute('aria-expanded');
     fn(S, arg, t, e);
+    if (t.classList.contains('o55-primary') || t.getAttribute('data-o55-sound') === 'self' || log[log.length - 1] !== last) return;
+    const role = t.getAttribute('role');
+    O55.sound.play(t.classList.contains('o55-card') || t.classList.contains('o55-tile') ? 'select'
+      : role === 'switch' || role === 'checkbox' ? (checked === 'true' ? 'toggleOff' : 'toggleOn')
+      : open != null ? (open === 'true' ? 'unsheet' : 'reveal') : 'tap');
   }
   function showReason(t, reason) {
     if (!reason) return;
@@ -346,7 +357,7 @@
   function onInput(e) {
     const t = e.target.closest('[data-o55-bind]'); if (!t) return;
     /* typing ticks quietly in the family's material (never for a protected field) */
-    if (t.type !== 'password' && !t.hasAttribute('data-o55-protected') && performance.now() - lastType > 45) { lastType = performance.now(); O55.sound.play('type'); }
+    if (e.type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && performance.now() - lastType > 45) { lastType = performance.now(); O55.sound.play('type'); }
     const def = SCREENS.defs[S.sess.screen];
     const key = t.getAttribute('data-o55-bind');
     const fn = def && def.bind && def.bind[key];
@@ -375,7 +386,7 @@
       const items = Array.from(group.querySelectorAll('.o55-card:not([aria-disabled="true"]), .o55-tile'));
       const i = items.indexOf(e.target.closest('.o55-card, .o55-tile')); if (i < 0) return;
       const n = items[(i + (e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : -1) + items.length) % items.length];
-      if (n) { e.preventDefault(); n.focus(); }
+      if (n) { e.preventDefault(); n.focus(); O55.sound.play('move', { step: items.indexOf(n) }); }
     }
   }
   function trapTab(e) {
@@ -500,7 +511,7 @@
     const r = S.root;
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
-    if (!handoff) O55.sound.play('close');
+    if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
     const finish = () => {
       r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
       document.documentElement.removeAttribute('data-o55-open');
@@ -516,8 +527,8 @@
   /* shared actions any screen can use */
   O55.actions = {
     skip() { close('skip'); },
-    'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); } },
-    details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); },
+    'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); O55.sound.play('unsheet'); } },
+    details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); O55.sound.play(S.sess.ui[k] ? 'reveal' : 'unsheet'); },
     startOver() { open({ fresh: true }); }
   };
 
