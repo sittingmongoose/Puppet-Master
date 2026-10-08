@@ -239,5 +239,7 @@ html:not([data-motion="reduced"]) .o55fx-bd-caret { animation: o55fx-blink 480ms
 @media (prefers-reduced-motion: reduce) {
   .o55fx-layer *, .o55fx-layer *::before, .o55fx-layer *::after { animation: none !important; transition: none !important; }
 }
-/* (the three that have transitions, by class: a bare `*` here would make each Reduced Motion switch restyle the whole page) */
-html[data-motion="reduced"] :is(.o55fx-brk, .o55fx-cur, .o55fx-pod) { transition: none !important; }
+/* Every part of an effect, pseudo-elements too: the window's Reduced Motion rule gives everything under it a 0.01 ms
+   transition of all properties, which held a banner's or Pod's parts at their unplaced, hidden values for the frame
+   the read phase shows them. Reduced Motion is a look switch (the lint allows it: the whole page restyles on it). */
+html[data-motion="reduced"] .o55fx-layer *, html[data-motion="reduced"] .o55fx-layer *::before, html[data-motion="reduced"] .o55fx-layer *::after { transition: none !important; }

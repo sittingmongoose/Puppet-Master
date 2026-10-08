@@ -63,6 +63,10 @@
      podSvg(cls, { part?, fill?, ink? }) -> string   the one Pod 042 drawing (part 'body' or 'shadow'); its fill and ink
                            paths carry `${cls}-fill` / `${cls}-ink` (or the classes given)
      snap(host?)           running words, logs, slices and lines jump to their end state (a key or press)
+     measure(fn)           run fn in the read phase: after the frame's style and layout, before its paint (the frame
+                           of a call made in an animation frame, else the next one); reads there cost no style or
+                           layout pass of their own. A function fn returns runs after every read of that phase (its
+                           writes). Never call it from inside a ResizeObserver callback of your own.
      clear(host?)          stop every effect (in host, or everywhere) and send every follower and Pod away now
      version
 
@@ -344,6 +348,7 @@
     if (!RO) { if (reads.length === 1) raf(() => phase(reads.splice(0))); return; }
     if (inRead) raf(arm); else arm();
   }
+  FX.measure = (fn) => { if (typeof fn === 'function') measure(fn); };
 
   /* running one-shot effects, so clear() can stop them and snap() can finish them */
   const running = new Set();
