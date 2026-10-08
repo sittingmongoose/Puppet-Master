@@ -248,6 +248,9 @@
     const d = s.sess.drafts.main || {}, laterMode = d.project_mode === 'later';
     R.spoken.add('creating');
     later(320, () => {
+      /* the line about creating it goes with the banner that says it is made; Pod's report follows the banner */
+      if (F.pod) F.pod.hush();
+      podUntil = 0;
       const go = F.enabled('banner')
         ? F.banner({ kicker: O55.t('nierFx.banner.kickers.goalComplete'), title: T(laterMode ? 'banner.serverReady' : 'banner.created'), sub: laterMode ? '' : (d.project_name || ''), ms: 1800 })
         : Promise.resolve(false);
