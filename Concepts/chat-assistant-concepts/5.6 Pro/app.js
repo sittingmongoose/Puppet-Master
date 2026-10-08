@@ -1186,7 +1186,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<span class="${cls}" data-state="${esc(st)}">${S.pmxMark({role:a?(turn?turn.runtime.persona:a.name):'coordinator',seat,size,state:st})}</span>`;
   }
   function renderLiveAgentRow(a){
-    return `<button class="live-agent-row" data-action="open-agent" data-id="${esc(a.id)}" title="Open the read-only live child thread">${agentPuppet('agent-mark',a,24)}<span><span class="agent-name">${esc(a.name)}</span><span class="agent-now">${esc(a.current)}</span><span class="agent-progress"><i style="width:${a.progress}%"></i></span></span><span class="agent-state ${a.status}">${esc(lblOf('subagentStatus',a.status))}</span></button>`;
+    return `<button class="live-agent-row" data-action="open-agent" data-id="${esc(a.id)}" data-hover-key="live-agent:${esc(a.id)}" data-hover-tip="Open the read-only live child thread">${agentPuppet('agent-mark',a,24)}<span><span class="agent-name">${esc(a.name)}</span><span class="agent-now">${esc(a.current)}</span><span class="agent-progress"><i style="width:${a.progress}%"></i></span></span><span class="agent-state ${a.status}">${esc(lblOf('subagentStatus',a.status))}</span></button>`;
   }
 
   const EVENT_STATUS={offline:'waiting-dep',waiting:'waiting-dep','tool-error':'failed',reconnected:'complete',blocked:'blocked'};
