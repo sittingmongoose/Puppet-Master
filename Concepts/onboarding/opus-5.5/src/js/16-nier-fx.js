@@ -983,42 +983,51 @@
 
   /* ---- the narrator's lanes (rule 8). On the window's stage the strip never covers an actor (the units, You, the
      machine), a hung sign or card, or the stage kicker. It has two lanes: just below the control bar's line, and low
-     over the stage lip; in each it tries the stage's right end, then its left end, then the middle, and takes the
-     first place that crosses none of those. With none free it takes the place that covers least and stands back. */
+     over the stage lip; in each it tries five places along the stage (its right end, its left end, the middle and the
+     quarters). A place that crosses an actor, a sign, a card or the kicker is out; of the rest it takes the one that
+     covers least of the scene's subject (the computer, the plan, the map's nodes: the stage's other props), the first
+     lane winning a tie. With no place clear it takes the one that covers least and stands back. */
   const ACTORS = '.o55-nier-unit, .o55-nier-you, .o55-nier-mach, .o55-nier-kicker, .o55-it[data-key="sign"], .o55-it[data-key="ok"], .o55-it[data-key="ready"], [data-o55fx-avoid]';
+  /* props that are set, light or ground rather than subject: the slab, the bar and its link, the sparks, the curtain */
+  const SET = /^(stage|bar|link|dim|curtain|you|mach|sign|ok|ready|sp\d+|h\d+)$/;
   function lanesOf(stage, size, o) {
     o = o || {};
     const z = zoom(), S = rectOf(stage);
     if (!S) return null;
-    const obs = [];
-    const add = (r) => { if (r && r.width >= 2 && r.height >= 2) obs.push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z }); };
+    const obs = [], soft = [];
+    const add = (r, to) => { if (r && r.width >= 2 && r.height >= 2) (to || obs).push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z }); };
     stage.querySelectorAll(ACTORS).forEach((e) => { if (!e.closest('.o55-out')) add(e.getBoundingClientRect()); });
+    stage.querySelectorAll('.o55-it[data-key]').forEach((e) => { if (!SET.test(e.getAttribute('data-key')) && !e.closest('.o55-out')) add(e.getBoundingClientRect(), soft); });
     document.querySelectorAll('.o55fx-banner[data-hang] .o55fx-bn-card').forEach((e) => add(e.getBoundingClientRect()));
     (Array.isArray(o.avoid) ? o.avoid : o.avoid ? [o.avoid] : []).forEach((a) => add(toRect(a)));
     const bar = stage.querySelector('.o55-nier-bar'), slab = stage.querySelector('.o55-nier-stage');
     const br = bar ? bar.getBoundingClientRect() : null, sr = slab ? slab.getBoundingClientRect() : null;
     const s = { l: S.left / z, t: S.top / z, r: S.right / z, b: S.bottom / z };
-    const barY = br && br.height > 1 ? br.bottom / z : s.t + (s.b - s.t) * 0.24;
+    /* the bar's line; on the narrow band the scene is cropped from the top and the bar lies above it: its lane is then
+       the band's own top edge */
+    const barY = br && br.height > 1 ? Math.max(br.bottom / z, s.t - 4) : s.t + (s.b - s.t) * 0.24;
     const lipY = sr && sr.height > 1 ? sr.top / z : s.b - (s.b - s.t) * 0.12;
     const w = size.w, h = size.h, PAD = 8;
     const all = { bar: { name: 'bar', top: Math.round(barY + 10) }, lip: { name: 'lip', top: Math.round(lipY - 8 - h) } };
     const order = o.lane === 'lip' ? ['lip', 'bar'] : o.lane === 'bar' ? ['bar'] : ['bar', 'lip'];
     if (o.lane === 'bar') order.push('lip');
     const lanes = order.map((k) => Object.assign({}, all[k], { left: s.l, right: s.r, bottom: all[k].top + h }));
-    const xs = [s.r - PAD - w, s.l + PAD, Math.round((s.l + s.r - w) / 2)];
+    const span = s.r - s.l - 2 * PAD - w;
+    const xs = [1, 0, 0.5, 0.75, 0.25].map((f) => s.l + PAD + span * f);
     let pick = null, best = null;
-    for (const ln of lanes) {
-      if (ln.top < s.t + 2 || ln.bottom > s.b - 2) continue;
-      for (const x0 of xs) {
+    lanes.forEach((ln, rank) => {
+      if (ln.top < s.t + 2 || ln.bottom > s.b - 2) return;
+      xs.forEach((x0) => {
         const x = Math.round(clamp(x0, s.l + 2, Math.max(s.l + 2, s.r - 2 - w)));
-        const cost = overlap(x, ln.top, w, h, obs);
-        if (!cost) { pick = { lane: ln.name, x, y: ln.top, clear: true }; break; }
-        if (!best || cost < best.cost) best = { lane: ln.name, x, y: ln.top, clear: false, cost };
-      }
-      if (pick) break;
-    }
+        const hard = overlap(x, ln.top, w, h, obs), cover = overlap(x, ln.top, w, h, soft);
+        /* the lane's rank weighs as a 20 x 20 px patch: a later lane wins only by covering clearly less */
+        const score = cover + rank * 400;
+        if (!hard) { if (!pick || score < pick.score) pick = { lane: ln.name, x, y: ln.top, clear: true, cover: Math.round(cover), score }; }
+        else if (!best || hard * 10 + cover < best.cost) best = { lane: ln.name, x, y: ln.top, clear: false, cost: hard * 10 + cover };
+      });
+    });
     if (!pick) pick = best || { lane: 'lip', x: Math.round(s.r - PAD - w), y: Math.round(clamp(lipY - 8 - h, s.t, s.b - h)), clear: false };
-    return { stage: s, lanes, obstacles: obs, pick };
+    return { stage: s, lanes, obstacles: obs, props: soft, pick };
   }
 
   /* where the Pod may stand: inside the onboarding window (it is a bounded modal), else the viewport */
@@ -1169,6 +1178,11 @@
     const span = node.querySelector('.o55fx-pod-text > span'), strip = node.querySelector('.o55fx-pod-strip');
     span.textContent = words;
     P.size = null; P.anchor = anchor; P.side = o.side || null; P.stage = stage; P.lane = o.lane || null; P.avoid = o.avoid || null;
+    /* a short stage (the 760 px band): a compact strip, one or two lines without the name band, beside a smaller Pod,
+       so it fits over the units' heads */
+    const sr = stage ? rectOf(stage) : null, compact = !!(sr && sr.height / zoom() < 260);
+    node.toggleAttribute('data-compact', compact);
+    if (compact) node.style.setProperty('--o55fx-pod-max', `${Math.max(220, Math.round(sr.width / zoom() - 96))}px`); else node.style.removeProperty('--o55fx-pod-max');
     const p = new Promise((r) => { P.res = r; });
     let placed = false;
     if (!stage && anchor && anchor.nodeType === 1) P.f = follow(anchor, node, host, () => { podPlace(P, fresh && !placed); placed = true; }, () => podGo(host, false), { now: true });

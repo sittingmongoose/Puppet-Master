@@ -116,6 +116,16 @@ html:not([data-motion="reduced"]):not([data-o55-lowres]) .o55fx-pod-shadow { ani
 .o55fx-pod-head > i:nth-child(3) { opacity: .3; margin-right: 6px; }
 .o55fx-pod-text { margin: 0; padding: 8px 12px 10px; font: 500 12.5px/1.5 var(--body-font); letter-spacing: .02em; text-wrap: pretty; }
 .o55fx-pod-text > b { font-weight: 700; margin-right: .42em; }
+/* compact (a short stage): no name band, one or two lines, a Pod at 0.6 (its footprint shrunk by margins, so the
+   flight and the hover keep their own transforms) */
+.o55fx-pod[data-compact] { gap: 8px; }
+.o55fx-pod[data-compact] .o55fx-pod-unit { scale: .6; margin: -10.4px -8px; }
+.o55fx-pod[data-compact] .o55fx-pod-head { display: none; }
+#pm-o55-onboarding > .o55fx-layer .o55fx-pod[data-compact] .o55fx-pod-strip, .o55fx-pod[data-compact] .o55fx-pod-strip { max-width: var(--o55fx-pod-max, 520px); min-width: 0; box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .28); }
+.o55fx-pod[data-compact] .o55fx-pod-strip::before { width: 8px; }
+.o55fx-pod[data-compact] .o55fx-pod-strip::after { right: calc(100% + 7px); }
+.o55fx-pod[data-compact][data-side="left"] .o55fx-pod-strip::after { right: auto; left: calc(100% + 7px); }
+.o55fx-pod[data-compact] .o55fx-pod-text { padding: 4px 10px 5px; font-size: 12px; line-height: 1.4; }
 .o55fx-pod[data-lead="alert"] .o55fx-pod-text > b { padding: 0 4px; margin-left: -1px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 
 /* ---- quest banner: a wide ink band with two paper hairlines, the diamond, the kicker (squares and a rule) ---- */
