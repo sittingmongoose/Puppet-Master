@@ -140,8 +140,18 @@
       + `</div><div class="o55nw-boot-plate o55nw-boot-live">${plate}</div>`;
     el.addEventListener('animationend', e => { if (e.animationName && /^o55nw-boot-tear/.test(e.animationName) && e.target.style.getPropertyValue('--o') === '2') bootEnd(); });
     document.addEventListener('keydown', bootEnd, true); document.addEventListener('pointerdown', bootEnd, true);
-    later(bootEnd, 1600); /* in case the page never paints the animation (a hidden tab) */
+    later(bootLate, 1600); /* in case the page never paints the animation (a hidden tab) */
     return true;
+  }
+  /* The animations start at the log's first frame, which a heavy open can hold back for a few hundred ms; a tear still
+     running then is waited for (it runs on the compositor), so the fallback never cuts it short. */
+  function bootLate() {
+    const el = bootEl; if (!el) return;
+    let runs = [];
+    try { runs = document.hidden || typeof el.getAnimations !== 'function' ? [] : el.getAnimations({ subtree: true }).filter(a => a.playState === 'running'); } catch (e) { runs = []; }
+    if (!runs.length) { bootEnd(); return; }
+    Promise.all(runs.map(a => a.finished.catch(() => null))).then(() => { if (bootEl === el) bootEnd(); });
+    later(() => { if (bootEl === el) bootEnd(); }, 1600);
   }
   PARTS.boot = { on() {}, off() { bootEnd(); } };
 

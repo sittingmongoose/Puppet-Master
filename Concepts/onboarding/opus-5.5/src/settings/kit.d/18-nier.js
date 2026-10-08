@@ -133,9 +133,27 @@ function o55NierIsPainted() {
     if (!o55NierReady()) return false;
     o55NierPainted = o55NierWanted();
     o55NierWriteAttrs();
-    if (o55NierPainted) window.queueMicrotask(() => o55NierEmit('init'));
+    if (o55NierPainted) { o55NierPaintStored(); window.queueMicrotask(() => o55NierEmit('init')); }
   }
   return o55NierPainted;
+}
+/* The app opens in Basic Dark (the head's boot paint), and the Settings engine paints the stored theme only once the
+   page has loaded (DOMContentLoaded, then a timeout: about 3 s into a heavy open). Under NieR Mode that left a person
+   on Light in NieR Dark for those seconds: the boot log tore away onto the dark app, which then flipped to parchment
+   (film finding TM-07). So when NieR Mode is on as the Settings state loads, the stored theme is painted at once,
+   before the boot log's first frame, and again right after PM_THEME's own boot puts Basic Dark back at
+   DOMContentLoaded: a listener on window runs after every one on document, in the same task, so no frame shows the
+   dark one. The engine's later pass then finds nothing to change. The four families keep the engine's own timing. */
+let o55NierStoredPaintArmed = false;
+function o55NierPaintStored() {
+  const T = window.PM7_SETTINGS_TOME;
+  if (!T || typeof T.applyPaint !== 'function') return;
+  try { T.applyPaint(state); } catch (e) { return; /* the engine paints it on its own schedule */ }
+  if (o55NierStoredPaintArmed || document.readyState !== 'loading') return;
+  o55NierStoredPaintArmed = true;
+  window.addEventListener('DOMContentLoaded', () => {
+    if (o55NierPainted && !o55NierPv) { try { T.applyPaint(state); } catch (e) { /* as above */ } }
+  }, { once: true });
 }
 const o55NierKeys = keys => { const want = new Set((Array.isArray(keys) ? keys : []).map(String)); return O55_NIER_PARTS.filter(p => want.has(p.key)).map(p => p.key); };
 function o55NierStoredParts() {

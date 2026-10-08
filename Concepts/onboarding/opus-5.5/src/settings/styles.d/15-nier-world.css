@@ -44,7 +44,10 @@
 #o55nw-boot .o55nw-boot-done .o55nw-boot-meter > i { transform: scaleX(1); animation: none; will-change: auto; }
 @keyframes o55nw-boot-line { to { opacity: 1; } }
 @keyframes o55nw-boot-meter { to { transform: scaleX(1); } }
-@keyframes o55nw-boot-hand { to { visibility: hidden; } }
+/* the hand-over is an opacity step, not visibility: the compositor runs it through the boot's long main-thread tasks,
+   so the slats beneath show their tear (a visibility step waited for the main thread, and the finished log stood over
+   the torn slats until it cut away in one frame) */
+@keyframes o55nw-boot-hand { to { opacity: 0; } }
 @keyframes o55nw-boot-tear-l { to { transform: translateX(-101%); } }
 @keyframes o55nw-boot-tear-r { to { transform: translateX(101%); } }
 #o55nw-boot[data-skip] { visibility: hidden; }
