@@ -223,6 +223,18 @@
       pending = later(podUntil - now, () => { pending = null; say(text, Object.assign({}, o, { now: true })); });
       return true;
     }
+    /* the stage's actors are still arriving (an entrance lowers the units through the lanes): the line waits until
+       they stand, at most 1.2 s, so its lane is judged where they stay (on the narrow band Creating's units were still
+       dropping through the top lane when its line was placed, and it stood back at 22 %); an alert never waits */
+    if (!o.arrived && o.lead !== 'alert' && O55.art && O55.art.arrivedAt) {
+      const wait = Math.min(1200, O55.art.arrivedAt(stageEl()) - now);
+      if (wait > 16) {
+        if (pending) pending.cancel();
+        podUntil = now + wait + readMs(text);
+        pending = later(wait, () => { pending = null; say(text, Object.assign({}, o, { now: true, arrived: true })); });
+        return true;
+      }
+    }
     lastLine = text; lastAt = now;
     const ms = readMs(text);
     podUntil = now + ms;
@@ -748,11 +760,13 @@
       R.claim = { kind: 'card', from: prev, to: pr.current };
       return true;
     },
-    /* the end of an act: the old troupe bows together while its scene stays 240 ms longer */
+    /* the end of an act: the old troupe bows together while its scene stays 240 ms longer (the scene it leaves waits
+       as .o55-scene-waiting, 50-art-core.js; the PERF pass renamed it from .o55-wait, and this hook, still asking for
+       the old name, found no troupe: the act card's bow and the stage's 240 ms had gone) */
     stageDelay() {
       const R = runState(), st = stageEl(), tr = troupe();
       if (!painted() || !R.claim || R.claim.kind !== 'card' || !st || !tr || !tr.bow) return 0;
-      if (!st.querySelector(':scope > .o55-scene-wrap.o55-wait .o55-nier-unit') || !tr.acts(st)) return 0;
+      if (!st.querySelector(':scope > .o55-scene-wrap.o55-scene-waiting .o55-nier-unit') || !tr.acts(st)) return 0;
       tr.bow(st, { together: true });
       return 240;
     },

@@ -168,7 +168,18 @@
     } catch (_) { return null; }
   }
 
-  function confetti(svg, fam, at, count, small, down) {
+  /* a placed prop's box in scene units, from its markup (its .o55-nier-body box and its anchor's translate and scale):
+     nothing is measured on the page */
+  function boxOf(it) {
+    const b = it.querySelector('.o55-nier-body'), tf = it.style.transform || '';
+    const m = /translate\(\s*(-?[\d.]+)px,\s*(-?[\d.]+)px\)/.exec(tf), sm = /scale\(\s*(-?[\d.]+)\)/.exec(tf);
+    if (!b || !m) return null;
+    const s = sm ? +sm[1] || 1 : 1, n = (k) => +b.getAttribute(k) || 0;
+    return [+m[1] + s * n('x'), +m[2] + s * n('y'), +m[1] + s * (n('x') + n('width')), +m[2] + s * (n('y') + n('height'))];
+  }
+  /* src.from: a prop the burst comes from (NieR's name sign at Created): the pieces start on its outline, each where its
+     own flight leaves it, and fly behind it (the group sits just under the prop), so none ever sits on its words */
+  function confetti(svg, fam, at, count, small, down, src) {
     const fx = svg.querySelector('g.o55-fx') || svg, tok = A.tokens(svg), NS = 'http://www.w3.org/2000/svg';
     const colors = [tok.blue, tok.magenta, tok.lime, tok.orange, tok.warn];
     const nier = fam === 'nier';
@@ -176,13 +187,17 @@
     if (nier && !small) count = Math.max(8, Math.round(count * 0.45)); /* 46 -> 21; a fleck keeps its 1-3 */
     const nt = nier && A.nier && A.nier.tokens ? A.nier.tokens(tok, svg.classList.contains('o55-m-light') ? 'light' : 'dark') : tok, ink = nt.text, rust = nt.error;
     const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'o55-confetti'); g.setAttribute('aria-hidden', 'true');
-    fx.appendChild(g);
+    const box = src && src.from ? boxOf(src.from) : null;
+    if (box) { at = [(box[0] + box[2]) / 2, (box[1] + box[3]) / 2]; src.from.parentNode.insertBefore(g, src.from); } else fx.appendChild(g);
     let longest = 0;
     for (let i = 0; i < count; i++) {
       /* a fleck leaves up and to the right of the word, short and small; a celebration bursts up and all round */
       const c = colors[(i + (small ? Math.floor(Math.random() * 5) : 0)) % colors.length];
       /* (down: from a sign hung high, the burst fans out sideways and down over the troupe) */
-      const ang = small ? -Math.PI / 2 + 0.7 + (Math.random() - 0.5) * 1.1 : down ? Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.5 : -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.25;
+      /* (src.sideways: out of the prop's two ends, a little upward, over the gaps between the units: the narrow band's
+         sign hangs just above their heads, and a downward burst fell in a clump on the middle one's visor) */
+      const side = src && src.sideways ? (i % 2 ? 0 : Math.PI) + (i % 2 ? -1 : 1) * (Math.random() * 0.75 - 0.15) : null;
+      const ang = side != null ? side : small ? -Math.PI / 2 + 0.7 + (Math.random() - 0.5) * 1.1 : down ? Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.5 : -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.25;
       const sp = small ? 26 + Math.random() * 30 : down ? 70 + Math.random() * 150 : 120 + Math.random() * 170;
       const dx = Math.cos(ang) * sp, dy = Math.sin(ang) * sp, fall = small ? 26 + Math.random() * 24 : down ? 90 + Math.random() * 110 : 170 + Math.random() * 120;
       let el;
@@ -199,18 +214,24 @@
       else { el = document.createElementNS(NS, 'rect'); el.setAttribute('width', i % 2 ? 9 : 6); el.setAttribute('height', i % 2 ? 5 : 8); el.setAttribute('x', -4); el.setAttribute('y', -3); el.setAttribute('rx', '1.2'); el.setAttribute('fill', c); el.setAttribute('stroke', 'rgba(0,0,0,0.25)'); el.setAttribute('stroke-width', '0.6'); }
       el.style.transformBox = 'fill-box'; el.style.transformOrigin = 'center';
       g.appendChild(el);
-      const x0 = at[0] + (Math.random() - 0.5) * (small ? 6 : 30), y0 = at[1];
+      let x0 = at[0] + (Math.random() - 0.5) * (small ? 6 : 30), y0 = at[1];
+      /* from a prop: where the line from its centre along this piece's flight leaves its outline (2 units in) */
+      if (box) { const hw = (box[2] - box[0]) / 2 - 2, hh = (box[3] - box[1]) / 2 - 2, k = Math.min(hw / Math.abs(dx || 1e-6), hh / Math.abs(dy || 1e-6)); x0 = at[0] + dx * k; y0 = at[1] + dy * k; }
       const spin = fam === 'retro' ? 0 : nier ? 90 * Math.round((Math.random() - 0.5) * 4) : (Math.random() - 0.5) * 720; /* pixels never rotate; NieR turns in quarter turns */
       if (nier) {
         /* NieR: the flight is the same path on the separate translate property, falling in steps; the turn runs on the
            separate rotate property with one step per quarter turn, so every sampled angle is a multiple of 90 degrees
-           (inside one stepped transform the turn was interpolated with the flight, and pieces sat at any angle) */
+           (inside one stepped transform the turn was interpolated with the flight, and pieces sat at any angle). A
+           burst's pieces are unseen until their first step, which they take as they start (jump-start: held at their
+           start for a twelfth of the flight, they sat in a clump on the sign's words before flying) */
         const path = [[x0, y0, 1, 0], [x0 + dx * 0.85, y0 + dy * 0.85, 1, 0.38], [x0 + dx + (i % 2 ? 12 : -12), y0 + dy + fall * 0.6, 1, 0.72], [x0 + dx * 1.05, y0 + dy + fall, 0, 1]];
+        if (!small) { const f1 = 1 / 12, u = f1 / 0.38; path.splice(1, 0, [x0 + dx * 0.85 * u, y0 + dy * 0.85 * u, 1, f1]); path[0][2] = 0; }
         if (small) el.style.scale = '0.7';
-        const dur = small ? 620 + Math.random() * 240 : 1300 + Math.random() * 500, delay = small ? Math.random() * 60 : Math.random() * 160;
+        /* (from a prop, every other piece leaves on the stamp's own frame and the rest within 90 ms: one burst) */
+        const dur = small ? 620 + Math.random() * 240 : 1300 + Math.random() * 500, delay = small ? Math.random() * 60 : box ? (i % 2 ? Math.random() * 90 : 0) : Math.random() * 160;
         longest = Math.max(longest, dur + delay);
         try {
-          el.animate(path.map(([x, y, op, offset]) => ({ translate: `${x}px ${y}px`, opacity: op, offset })), { duration: dur, delay, easing: small ? 'steps(4, end)' : 'steps(12, end)', fill: 'both' });
+          el.animate(path.map(([x, y, op, offset]) => ({ translate: `${x}px ${y}px`, opacity: op, offset })), { duration: dur, delay, easing: small ? 'steps(4, end)' : 'steps(12, jump-start)', fill: 'both' });
           if (spin) el.animate([{ rotate: '0deg' }, { rotate: `${spin}deg` }], { duration: dur, delay, easing: `steps(${Math.abs(spin) / 90}, end)`, fill: 'both' });
         } catch (_) {}
         continue;
@@ -317,12 +338,35 @@
   }
   /* a unit's visor answers a new face at once (joy): any boot still running on it ends */
   const visorDone = (g) => g.querySelectorAll('.nv-scan, .nv-rest').forEach((el) => { if (el.getAnimations) el.getAnimations().forEach((a) => { if (typeof CSSAnimation === 'undefined' || !(a instanceof CSSAnimation)) a.finish(); }); });
-  /* the stepped head dip of a bow (the .o55-bow class holds it once dipped) */
-  function dip(p, g, delay) {
-    p.anim(g.querySelector('.nv-head'), [{ translate: '0px 0px' }, { translate: '0px 4px' }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
+  /* a bow in 2 held steps, 120 ms apart: the upper body pitches toward the audience about the hips and the head goes
+     down below its knot (30-art.css .o55-bow holds it once bowed; it was a 4-unit head dip, too small to read). A
+     waving unit's raised hand moves with its body, so the rig measures its strings while it bows (the caller watches).
+     nod: the head alone goes down 4 below its knot, no pitch (.o55-nod: the Created act on the narrow window's band,
+     where the troupe is lowered so far that a full bow takes its visors below the band) */
+  const BOW = { k: 0.8, head: 6, nod: 4 };
+  function dip(p, g, delay, nod) {
+    if (nod) {
+      p.anim(g.querySelector('.nv-head'), [{ translate: '0px 0px' }, { translate: `0px ${BOW.nod}px` }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
+      p.at(delay, () => g.classList.add('o55-bow', 'o55-nod', 'o55-rest'));
+      return;
+    }
+    const torso = g.querySelector('.nv-torso'), hip = torso ? parseFloat(torso.style.getPropertyValue('--o55-hip')) || -24 : -24;
+    if (torso) p.anim(torso, [{ transform: 'translate(0px, 0px) scale(1, 1)' }, { transform: `translate(0px, ${(hip * (1 - BOW.k)).toFixed(2)}px) scale(1, ${BOW.k})` }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
+    p.anim(g.querySelector('.nv-head'), [{ translate: '0px 0px' }, { translate: `0px ${BOW.head}px` }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
     p.at(delay, () => g.classList.add('o55-bow', 'o55-rest'));
   }
-  const unbow = (g) => g.classList.remove('o55-bow', 'o55-rest');
+  /* the rig follows the bowing bodies' hands for ms (a waving unit's hand string), then measures them standing again */
+  const bowWatch = (svg, ms) => { if (A.rig && svg.querySelector('.o55-ens-h .o55-arm')) A.rig.watch(svg, { settle: ms }); };
+  const unbow = (g) => g.classList.remove('o55-bow', 'o55-nod', 'o55-rest');
+  /* a bowing unit stands again in 2 held steps, 60 ms apart, from the beat it is asked on (the curtain call's rise) */
+  function standUp(p, g) {
+    if (!g.classList.contains('o55-bow')) return;
+    const torso = g.querySelector('.nv-torso'), hip = torso ? parseFloat(torso.style.getPropertyValue('--o55-hip')) || -24 : -24, nod = g.classList.contains('o55-nod');
+    unbow(g);
+    if (nod) { p.anim(g.querySelector('.nv-head'), [{ translate: `0px ${BOW.nod}px` }, { translate: '0px 0px' }], { duration: 120, easing: 'steps(2, jump-start)' }); return; }
+    if (torso) p.anim(torso, [{ transform: `translate(0px, ${(hip * (1 - BOW.k)).toFixed(2)}px) scale(1, ${BOW.k})` }, { transform: 'translate(0px, 0px) scale(1, 1)' }], { duration: 120, easing: 'steps(2, jump-start)' });
+    p.anim(g.querySelector('.nv-head'), [{ translate: `0px ${BOW.head}px` }, { translate: '0px 0px' }], { duration: 120, easing: 'steps(2, jump-start)' });
+  }
   /* a performance timed on its scene's own clock: the beat at `ms` after the scene arrived, now if it is past (late:
      the whole performance shifts so its first beat is now) */
   function since(svg) { const t0 = +svg.getAttribute('data-o55-t0'); return Number.isFinite(t0) && t0 > 0 ? Math.max(0, M.now() - t0) : 0; }
@@ -346,8 +390,11 @@
     if (fam !== 'nier') return enterFamily(p, svg, wrap, hs, ens, wasHeld);
     const order = (o.order || ['h1', 'h0', 'h2']).map((k) => item(svg, k)).filter((g) => g && ens.includes(g)), gap = o.gap == null ? 120 : o.gap;
     const you = item(svg, 'you'), link = item(svg, 'link'), signal = o.signal !== false && !!you;
-    /* the entrance each unit had (CSS) is ended where it stands, so it never plays again over the fly-in */
-    const ended = () => ens.forEach((g) => { const el = inner(g); if (el && el.getAnimations) el.getAnimations().forEach((a) => { if (typeof CSSAnimation !== 'undefined' && a instanceof CSSAnimation) a.finish(); }); });
+    /* the entrance each unit had (CSS) is off from here, so it never plays again over the fly-in (and under Reduced
+       Motion and the instant paths never starts): one attribute on the layer (30-art.css [data-o55-entered]). Finishing
+       each CSS animation asked the page for its animations, which made the browser style the whole page (3.2 s under
+       Reduced Motion on the VM, films M4) */
+    const ended = () => wrap.setAttribute('data-o55-entered', '');
     p.end(() => {
       wrap.classList.remove('o55-ens-hold'); ended();
       ens.forEach((g) => g.classList.remove('o55-nier-flyin', 'o55-rest'));
@@ -399,7 +446,8 @@
   function enterFamily(p, svg, wrap, hs, ens, wasHeld) {
     const fam = svg.getAttribute('data-family'), bar = svg.querySelector('.o55-ens-bar');
     const css = (g) => { const el = inner(g); return el && el.getAnimations ? el.getAnimations().filter((a) => typeof CSSAnimation !== 'undefined' && a instanceof CSSAnimation) : []; };
-    p.end(() => { wrap.classList.remove('o55-ens-hold'); [bar].concat(ens).filter(Boolean).forEach((g) => css(g).forEach((a) => a.finish())); });
+    /* (its end state: the entrance off, 30-art.css [data-o55-entered], with nothing asked of the page) */
+    p.end(() => { wrap.classList.remove('o55-ens-hold'); wrap.setAttribute('data-o55-entered', ''); });
     if (!wasHeld || !acts(svg)) { p.finish(); return p.promise; }
     const land = FAM_LAND[fam] || 400;
     if (bar) css(bar).forEach((a) => { try { a.effect.updateTiming({ delay: 0 }); a.currentTime = 0; } catch (_) {} });
@@ -515,6 +563,7 @@
     if (!hs.length || !acts(svg)) return Promise.resolve(false);
     const p = perf(svg, 'bow');
     p.end(() => { hs.forEach((g) => { if (o.hold != null) unbow(g); else g.classList.add('o55-bow', 'o55-rest'); }); });
+    bowWatch(svg, (o.together === false ? (hs.length - 1) * 120 : 0) + 240 + (o.hold || 0) + 300);
     hs.forEach((g, i) => { const d = o.together === false ? i * 120 : 0; dip(p, g, d); if (o.sound !== false && (o.together === false || !i)) p.at(d, () => SND('bow', o.together === false ? voiceOf(g) : { voice: 0, pan: 0, intensity: 0.5 })); });
     const dipped = (o.together === false ? (hs.length - 1) * 120 : 0) + 240;
     if (o.hold != null) { p.at(dipped + o.hold, () => hs.forEach(unbow)); p.at(dipped + o.hold + 40, () => p.finish()); }
@@ -584,9 +633,10 @@
        ms from now (a small stage timed by its caller: the tour's results card) */
     const s0 = o.at != null ? CC.bows[0] - o.at : since(svg), shift = o.at == null && s0 > CC.bows[0] - 200 ? s0 - (CC.bows[0] - 200) : 0, t = (ms) => Math.max(0, ms - s0 + shift);
     hs.forEach((g, i) => { const d = t(CC.bows[i] != null ? CC.bows[i] : CC.bows[2] + (i - 2) * 120); dip(p, g, d); p.at(d, () => SND('bow', Object.assign(voiceOf(g), { chapter: chord }))); });
+    p.at(Math.max(0, t(CC.bows[0]) - 20), () => bowWatch(svg, CC.rise - CC.bows[0] + 380));
     p.at(t(CC.rest), () => { if (O55.sound && O55.sound.rest) O55.sound.rest(150); });
     p.at(t(CC.rise), () => {
-      rose = true; hs.forEach(unbow); hs.forEach((g, i) => joy(g, 620, i * 40));
+      rose = true; hs.forEach((g) => standUp(p, g)); hs.forEach((g, i) => joy(g, 620, i * 40));
       sting();
       if (pt) jab(p, pt, 0);
     });
@@ -595,7 +645,16 @@
   };
 
   /* ---------------------------------------------------------------- the Created act (NieR) */
-  const CA = { land: 560, bow: 600, stamp: 1160 };
+  /* Its beats follow the picture's own clock, not timers from the call: the units' glide down and the sign's lowering
+     are the scene's CSS (a transition and an entrance), which start with the frame after the refresh that turned the
+     scene to done, a few hundred ms after the call on a slow frame, so timers from the call played the landing and
+     the celebration that long before their pictures (films: celebrate 200-350 ms ahead of the stamp). The units' glide
+     ending (transitionend) lands them: `land`, and their bow 40 ms after; the sign's lowering ending (animationend)
+     shows the stamp's frame, and 90 ms later its ink block lands in one beat with the celebration: `celebrate`, joy,
+     the lock-on on the sign and the confetti from behind it. Each beat also has a timer, late, in case its event never
+     comes (nothing to glide, a re-render). The stamp is drawn shown, and is held back (.o55-stamp-wait, 30-art.css)
+     only while the act runs, so any other drawing of the scene (Reduced Motion, a reopened window) shows it stamped. */
+  const CA = { land: 560, bow: 40, stamp: 1160, ink: 90, late: 500 };
   A.createdAct = function createdAct(host, o) {
     o = o || {};
     const svg = sceneSvg(host);
@@ -604,26 +663,45 @@
     }
     snapSvg(svg);
     const p = perf(svg, 'createdAct'), hs = units(svg), sign = item(svg, 'sign');
+    /* (the narrow window's band: a drawing whose viewBox does not start at the top; there the troupe is lowered only
+       BAND_DROP and its visors sit at the band's foot, so it nods instead of bowing, and the burst leaves sideways) */
+    const banded = () => !/^\s*\S+\s+0\s/.test(svg.getAttribute('viewBox') || '');
     if (o.name && sign) relabel(svg, sign, o.name);
-    const signAt = () => { const m = /translate\(\s*(-?[\d.]+)px,\s*(-?[\d.]+)px\)/.exec(sign ? sign.style.transform : ''); return m ? [+m[1], +m[2]] : [240, 68]; };
+    const shown = () => { if (sign) sign.classList.remove('o55-stamp-wait', 'o55-stamp-frame'); };
     let stamped = false;
     const stamp = () => {
       if (stamped) return; stamped = true;
-      hs.forEach(unbow);
+      shown(); hs.forEach(unbow);
       if (!acts(svg)) { SND('celebrate'); return; }
       hs.forEach((g, i) => joy(g, 620, i * 60));
       if (A.rig) A.rig.cheer(svg, 'all', { hop: 8, dur: 360, stagger: 60, steps: 2, arm: 0.6, lean: 0 });
       if (sign) lockOn(svg, sign, 0);
-      confetti(svg, 'nier', signAt(), 46, false, true);
+      confetti(svg, 'nier', [240, 68], 46, false, true, sign ? { from: sign, sideways: banded() } : null);
       SND('celebrate', { pan: 0 });
     };
     p.end(stamp);
     if (!acts(svg)) { p.finish(); return p.promise; }
     const now = since(svg), t = (ms) => Math.max(0, ms - now);
-    if (now < CA.land + 100) p.at(t(CA.land), () => SND('land', { voice: 1, pan: 0 }));
-    if (now < CA.stamp - 240) p.at(t(CA.bow), () => { hs.forEach((g) => dip(p, g, 0)); });
-    p.at(t(CA.stamp), stamp);
-    p.at(t(CA.stamp) + 640, () => p.finish());
+    /* a beat on its picture's event, or on its timer when the event is late; once only */
+    const on = (el, type, name, ms, fn) => {
+      let done = false;
+      const go = () => { if (done || p.done) return; done = true; if (el) el.removeEventListener(type, ev); fn(); };
+      const ev = (e) => { if (e.target === el && (e.animationName === name || e.propertyName === name)) go(); };
+      if (el) el.addEventListener(type, ev);
+      p.at(ms, go);
+      p.end(() => { if (el) el.removeEventListener(type, ev); });
+    };
+    if (now < CA.land + 100) {
+      on(item(svg, 'h1') || hs[0], 'transitionend', 'transform', t(CA.land) + CA.late, () => {
+        SND('land', { voice: 1, pan: 0 });
+        p.at(CA.bow, () => { const nod = banded(); hs.forEach((g) => dip(p, g, 0, nod)); });
+      });
+    }
+    if (sign) sign.classList.add('o55-stamp-wait');
+    on(sign && sign.querySelector(':scope > .o55-in'), 'animationend', 'o55-nier-hang', now < CA.stamp ? t(CA.stamp) + CA.late : 0, () => {
+      if (sign) { sign.classList.remove('o55-stamp-wait'); sign.classList.add('o55-stamp-frame'); }
+      p.at(CA.ink, () => { stamp(); p.at(640, () => p.finish()); });
+    });
     return p.promise;
   };
   /* the name on the sign, when the scene was drawn without it (a caller that does not pass params.name): the sign is
@@ -636,8 +714,12 @@
     const ctx = { pal: A.nier.palette(mode, tok), tok, mode, items: null };
     const NS = 'http://www.w3.org/2000/svg', box = document.createElementNS(NS, 'svg');
     const lab = O55.t('art.nier.stamp'), stampWord = lab === 'art.nier.stamp' ? 'created' : lab;
-    box.innerHTML = A.nier.props.badge(ctx, { x: xy ? +xy[1] : 240, y: xy ? +xy[2] : 68, s: m ? +m[1] : 1.4, opts: { label: want, accent: true, hang: -30, stamp: stampWord } });
+    const at = { x: xy ? +xy[1] : 240, y: xy ? +xy[2] : 68, s: m ? +m[1] : 1.4 };
+    /* (its strings, when they are their own prop, are drawn again for the new width too) */
+    const hangs = item(svg, 'signhang'), hAm = hangs && hangs.querySelector(':scope > .o55-in > .o55-am');
+    box.innerHTML = A.nier.props.badge(ctx, Object.assign({}, at, { opts: { label: want, accent: true, hang: -30, hangApart: !!hAm, stamp: stampWord } }));
     if (amEl && box.firstElementChild) { amEl.innerHTML = ''; amEl.appendChild(box.firstElementChild); }
+    if (hAm && A.nier.props.hangs) { box.innerHTML = A.nier.props.hangs(ctx, Object.assign({}, at, { opts: { label: want, hang: -30 } })); if (box.firstElementChild) { hAm.innerHTML = ''; hAm.appendChild(box.firstElementChild); } }
   }
 
   /* ---------------------------------------------------------------- the thumbnail's peek (H6, H1) */

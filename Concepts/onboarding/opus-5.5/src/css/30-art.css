@@ -146,9 +146,19 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) .o55-nier-maplabel
    of them goes straight to its end state under Reduced Motion and on a low-resource computer (59-cheer.js), and the
    one-shot CSS ones are in the lists at the end of this file. Slint: the states are `states` of the unit component,
    the steps a Timer, the alternates Paths with `visible`. */
-/* a unit bows: its head dips 4 below the knot (the stub of string shows; 59-cheer.js steps it in 2) */
-.o55-f-nier .o55-bow .nv-head { translate: 0px 4px; }
+/* a unit bows to the audience: its upper body (.nv-torso, 54-art-nier.js) pitches toward us about the hips, which a
+   figure facing us shows as the coat and shoulders shortening to 0.8 about the hip line (--o55-hip) while the legs
+   stand, and its head goes down 6 more, below the knot (the stub of string shows): the head drops about 14 of its 66
+   units, so the bow reads at 760 px as at 1600. 59-cheer.js (dip) steps it in 2 held steps; Slint: the torso's
+   transform-scale-y with its origin on the hip line, the head's y. */
+.o55-f-nier .o55-bow .nv-torso { transform: translate(0px, calc(var(--o55-hip, -24px) * 0.2)) scale(1, 0.8); }
+.o55-f-nier .o55-bow .nv-head { translate: 0px 6px; }
 .o55-f-nier .o55-bow .nv-stub { opacity: 1; }
+/* a nod (59-cheer.js dip): the head alone goes down 4 below its knot. The Created act nods on the narrow window's
+   band, where its lowered troupe's visors sit at the band's foot and a full bow would take them out of view. Slint:
+   the same state with the head's y only. */
+.o55-f-nier .o55-bow.o55-nod .nv-torso { transform: none; }
+.o55-f-nier .o55-bow.o55-nod .nv-head { translate: 0px 4px; }
 /* a unit's right arm in another pose (54-art-nier.js draws them hidden); a unit without that alternate never gets the
    class (59-cheer.js asks first) */
 .o55-f-nier :is(.o55-arm-stand, .o55-arm-mid, .o55-arm-up, .o55-arm-aim, .o55-arm-pt) .nv-arm-r { display: none; }
@@ -164,6 +174,10 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) .o55-nier-maplabel
 .o55-f-nier .o55-nier-slump .nv-stub, .o55-nier-asleep .o55-ens-h .nv-stub { opacity: 1; }
 .o55-nier-asleep .o55-ens-h .nv-scan { opacity: 0; }
 .o55-nier-asleep .o55-ens-h .nv-rest { opacity: 1; }
+/* the cold open's asleep stage decodes each string in with the unit it holds (its --d, 50-art-core.js): a string has no
+   entrance of its own, and they hung alone in the empty window for about 200 ms before the set (films H2) */
+.o55-nier-asleep .o55-tie { animation: o55-nier-in 420ms steps(1, end) var(--d, 0ms) both; }
+html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-nier-asleep .o55-tie { animation-name: o55-fade; animation-timing-function: steps(4, end); }
 /* You: the arm raised (as drawn), half raised or resting on the knee; the slit dark; the head bowed. Asleep: bowed,
    dark, the arm down; while the ensemble is held: the arm down (the signal raises it) */
 .o55-nier-asleep .o55-nier-op-arm, .o55-ens-hold[data-family="nier"] .o55-nier-op-arm { display: none; }
@@ -196,6 +210,10 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) .o55-nier-maplabel
 .o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot, .o55-f-nier .o55-nier-flyin .nv-knot { visibility: visible; }
 .o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot-hand, .o55-f-nier .o55-nier-flyin .nv-knot-hand { display: inline; }
 .o55-ens-hold:not([data-family="nier"]) :is(.o55-ens-bar, .o55-ens-h) > .o55-in { animation-play-state: paused !important; }
+/* a troupe that has been lowered in (O55.art.troupe.enter, 59-cheer.js) has had its entrance: its own CSS one is off
+   from then on, in its end state, and asked of nobody (it used to be finished through getAnimations(), a style pass of
+   the whole page) */
+.o55-scene-wrap[data-o55-entered] .o55-ens-h > .o55-in, .o55-scene-wrap[data-o55-entered] .o55-ens-bar > .o55-in { animation: none !important; }
 .o55-ens-hold:not([data-family="nier"]) .o55-ens-bar, .o55-ens-hold:not([data-family="nier"]) .o55-ens-h, .o55-ens-hold:not([data-family="nier"]) .o55-ties { visibility: hidden; }
 /* Creating: a unit comes online as the work goes on (57-scenes-journey.js): its rest dashes hold a moment, then the scan
    notch shows and sweeps the visor once (4 steps out, one back). No fill: once done, the unit's own state rules (a
@@ -205,9 +223,10 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) .o55-nier-maplabel
 @keyframes o55-nier-off { from { opacity: 1; } to { opacity: 0; } }
 @keyframes o55-nier-on { from { opacity: 0; } to { opacity: 1; } }
 @keyframes o55-nier-boot { 0% { opacity: 0; transform: none; } 25% { opacity: 1; transform: none; } 37.5% { opacity: 1; transform: translateX(3.6px); } 50% { opacity: 1; transform: translateX(7.2px); } 62.5% { opacity: 1; transform: translateX(10.8px); } 75% { opacity: 1; transform: translateX(14.4px); } 87.5%, 100% { opacity: 1; transform: none; } }
-/* the stamp on the name sign inverts onto it in two steps once the sign has landed (its frame, then the filled block) */
-.o55-f-nier .o55-nier-stamp .nv-stamp-frame { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) - 40ms) both; }
-.o55-f-nier .o55-nier-stamp .nv-stamp-fill { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) + 50ms) both; }
+/* the stamp on the name sign inverts onto it in two steps once the sign has landed (its frame, then the filled block).
+   It is drawn shown; the Created act (59-cheer.js) holds it back while the sign is lowered (.o55-stamp-wait) and steps
+   it on from the sign's landing (.o55-stamp-frame: the frame alone), with the celebration on the ink block's frame */
+.o55-f-nier .o55-stamp-wait .nv-stamp-frame, .o55-f-nier .o55-stamp-wait .nv-stamp-fill, .o55-f-nier .o55-stamp-frame .nv-stamp-fill { opacity: 0; }
 /* a drawing that never idles (A.mount ctx.still: the look screen's NieR thumbnail while NieR Mode is off) */
 .o55-still .o55-amb, .o55-still .o55-ring, .o55-still .o55-gl, .o55-still .o55-nier-scan, .o55-still .o55-nier-mk, .o55-still .o55-nier-blink, .o55-still .o55-led, .o55-still .o55-px-blink, .o55-still .o55-px-twinkle, .o55-still .o55-star, .o55-still .o55-core, .o55-still .o55-ripple, .o55-still .o55-pulse, .o55-still .o55-beam { animation: none !important; }
 @keyframes o55-sway { from { transform: rotate(-1.4deg); } to { transform: rotate(1.4deg); } }
@@ -312,7 +331,13 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="slice"]) .o55-scene-host .o
 .o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-cur-l,
 .o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-cur-r,
 .o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-cur-sl,
-.o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-cur-sr { animation-play-state: paused !important; }
+.o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-cur-sr,
+.o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55-tie,
+.o55-scene-wrap.o55-cc-in.o55-scene-held .o55-bg,
+.o55-scene-wrap.o55-cc-in.o55-scene-held .o55-sl-back,
+.o55-scene-wrap.o55-cc-in.o55-scene-held .o55-sl-mid,
+.o55-scene-wrap.o55-cc-in.o55-scene-held .o55-fx,
+.o55-scene-wrap.o55-cc-in.o55-scene-held .o55-sl-front > .o55-it { animation-play-state: paused !important; }
 [data-o55-ambient="off"] .o55-amb, [data-o55-ambient="off"] .o55-led, [data-o55-ambient="off"] .o55-px-blink,
 [data-o55-ambient="off"] .o55-px-twinkle, [data-o55-ambient="off"] .o55-star, [data-o55-ambient="off"] .o55-core,
 [data-o55-ambient="off"] .o55-ripple, [data-o55-ambient="off"] .o55-pulse, [data-o55-ambient="off"] .o55-ring, [data-o55-ambient="off"] .o55-px-march > rect, [data-o55-ambient="off"] .o55-beam,
@@ -348,15 +373,32 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 @keyframes o55-cur-flare { 0% { opacity: 0; transform: scaleX(1); } 30% { opacity: 1; transform: scaleX(6); } 100% { opacity: 0; transform: scaleX(40); } }
 .o55-f-retro .o55-cur-px { animation: o55-cur-px 1ms steps(1, end) calc(300ms + var(--k, 0) * 110ms) both; }
 @keyframes o55-cur-px { to { opacity: 0; } }
-/* NieR: the cover is cut into horizontal slices that slide off to alternate sides, one after another (o55-cur-sl /
-   o55-cur-sr, --k the slice's index); the plate across the middle is cut first. Whatever the NieR curtain is drawn as,
-   the whole of it is gone once it has opened (o55-cur-all), so it can never stay over the stage. */
-/* (it is open by about 0.95 s, so the curtain call's first bow at 1 s plays on a clear stage: design/hero-spec.md H4b) */
-.o55-f-nier .o55-cur-sl { animation: o55-nier-cur-l 480ms steps(6, end) calc(180ms + var(--k, 0) * 30ms) both; }
-.o55-f-nier .o55-cur-sr { animation: o55-nier-cur-r 480ms steps(6, end) calc(180ms + var(--k, 0) * 30ms) both; }
-.o55-f-nier .o55-cur-plate { animation: o55-cut 40ms linear 140ms both; }
-.o55-f-nier .o55-cur-all { animation: o55-cut 60ms linear 940ms both; } /* linear: a 1 ms steps(1) cut after a long delay can end a hair short of 1 and hold */
-@keyframes o55-nier-cur-l { to { transform: translateX(-500px); } }
-@keyframes o55-nier-cur-r { to { transform: translateX(500px); } }
+/* NieR: a theatre curtain of two panels (54-art-nier.js). Its edges move in held steps and stand only in the gaps
+   between the units (scene x 30 / 180 / 240 / 300 / 450; the units stand at 128, 240 and 352), so no frame shows part
+   of a unit: closing, the outer two units go behind it first, then the middle one; opening, the middle one shows
+   first, then all three. A scene that replaces another on the stage (A.mount: .o55-cc-in on the new layer) shows only
+   its curtain while it closes over the old scene, then its own drawing behind the closed curtain (160 ms), holds still
+   (200 ms) and opens: the old troupe leaves whole and the new one is found standing in a line. A first scene slices in
+   on the closed curtain and opens it at 560 ms. Either way it is open by 0.8 s, before the curtain call's first bow at
+   1 s (design/hero-spec.md H4b), and the whole of it is gone after (o55-cur-all), so it can never stay over the stage.
+   Without the Slice open part, on a low-resource computer and under Reduced Motion there is no curtain. */
+.o55-f-nier .o55-cur-pl { animation: o55-nier-cur-open-l 840ms steps(1, end) both; }
+.o55-f-nier .o55-cur-pr { animation: o55-nier-cur-open-r 840ms steps(1, end) both; }
+.o55-scene-wrap.o55-cc-in .o55-f-nier .o55-cur-pl { animation: o55-nier-cur-cc-l 640ms steps(1, end) both; }
+.o55-scene-wrap.o55-cc-in .o55-f-nier .o55-cur-pr { animation: o55-nier-cur-cc-r 640ms steps(1, end) both; }
+.o55-f-nier .o55-cur-all { animation: o55-cut 60ms linear 900ms both; } /* linear: a 1 ms steps(1) cut after a long delay can end a hair short of 1 and hold */
+@keyframes o55-nier-cur-open-l { 0%, 66.6% { transform: translateX(0px); } 66.7% { transform: translateX(-60px); } 80.9% { transform: translateX(-210px); } 95.2%, 100% { transform: translateX(-280px); } }
+@keyframes o55-nier-cur-open-r { 0%, 66.6% { transform: translateX(0px); } 66.7% { transform: translateX(60px); } 80.9% { transform: translateX(210px); } 95.2%, 100% { transform: translateX(280px); } }
+@keyframes o55-nier-cur-cc-l { 0% { transform: translateX(-210px); } 12.5% { transform: translateX(-60px); } 25%, 56.2% { transform: translateX(0px); } 56.3% { transform: translateX(-60px); } 75% { transform: translateX(-210px); } 93.7%, 100% { transform: translateX(-280px); } }
+@keyframes o55-nier-cur-cc-r { 0% { transform: translateX(210px); } 12.5% { transform: translateX(60px); } 25%, 56.2% { transform: translateX(0px); } 56.3% { transform: translateX(60px); } 75% { transform: translateX(210px); } 93.7%, 100% { transform: translateX(280px); } }
+/* the replacing scene: no slice, and its drawing waits unseen behind the closing curtain (the old scene shows around it) */
+.o55-scene-host .o55-scene-wrap.o55-scene-wrap[data-family="nier"].o55-cc-in:not(.o55-out) { animation: none; }
+.o55-scene-wrap.o55-cc-in .o55-bg { animation: o55-cc-show 1ms steps(1, end) 160ms both; }
+.o55-scene-wrap.o55-cc-in .o55-sl-back { animation: o55-cc-show 1ms steps(1, end) 160ms both; }
+.o55-scene-wrap.o55-cc-in .o55-sl-mid { animation: o55-cc-show 1ms steps(1, end) 160ms both; }
+.o55-scene-wrap.o55-cc-in .o55-fx { animation: o55-cc-show 1ms steps(1, end) 160ms both; }
+.o55-scene-wrap.o55-cc-in .o55-sl-front > .o55-it:not([data-key="curtain"]) { animation: o55-cc-show 1ms steps(1, end) 160ms both; }
+@keyframes o55-cc-show { from { opacity: 0; } to { opacity: 1; } }
+html[data-o55-nier-parts]:not([data-o55-nier-parts~="slice"]) .o55-f-nier .o55-cur-all, html[data-o55-lowres] .o55-f-nier .o55-cur-all { display: none; }
 html[data-motion="reduced"] .o55-cur-all { display: none; }
 @media (prefers-reduced-motion: reduce) { .o55-cur-all { display: none; } }

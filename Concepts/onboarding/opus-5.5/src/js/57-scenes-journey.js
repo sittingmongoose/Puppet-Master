@@ -117,7 +117,9 @@
      (creatingNier below). */
   const NT = (k, fb) => { const v = O55.t('art.nier.' + k); return v === 'art.nier.' + k ? fb : v; };
   A.defineScene('creating', {
-    label: 'art.hero', band: [0, 170, 480, 280],
+    /* (NieR's narrow band is centred on y 300: the level-hung heads and, once done, the name sign above the lowered
+       troupe's visors; see creatingNier) */
+    label: 'art.hero', band: [0, 170, 480, 280], bandNier: [0, 160, 480, 280],
     compose(ctx) {
       const pr = ctx.params || {}, step = pr.step || 0, total = Math.max(1, pr.total || 5), done = ctx.beat === 'done', m = A.metrics(ctx.family);
       if (ctx.family === 'nier') return creatingNier(ctx, m, pr, step, total, done);
@@ -138,22 +140,29 @@
      with the first phase, the third near the end. The middle unit carries the plug-in chip (the scene's ochre).
      Done: the same troupe lowered to the slab (the beat change glides them down) and, hung from the top of the frame at
      signY (clear of the heads and the strings), the name sign the person lettered on the Name screen (params.name; READY
-     when the screen does not pass it), lowered on its own two strings at 840 ms and stamped CREATED at 1160 ms (its
-     entrance and the stamp's are CSS, so the end state needs nothing else). O55.art.createdAct adds the landing, the
-     bow, the joy, the lock-on and the confetti from the sign. */
-  const LEVEL = 40, BAND_SIGN = 214;
+     when the screen does not pass it), lowered on its own two strings at 840 ms (its entrance is CSS) and stamped
+     CREATED as it lands (O55.art.createdAct, 59-cheer.js, which also adds the landing, the bow, the joy, the lock-on and
+     the confetti from behind the sign; any other drawing of the scene shows the sign stamped).
+     The narrow window's 170 px band shows only about 112 units of the scene, centred on y 300 (bandNier): Pod's lane
+     along its top (to about y 269 at 760 px, lower on a narrower window), the level-hung heads below it while the work
+     runs (from y 314). Done, the troupe is lowered BAND_DROP units only (not to the slab, which the band never shows),
+     so the visors stay in view (y 336..345, clear of the window's ruler along the band's foot), and the sign hangs just
+     above their heads (y 277..318 with its stamp), below Pod's lane on any narrow window: the whole hero picture, sign,
+     stamp and troupe, is on screen. */
+  const LEVEL = 40, BAND_SIGN = 214, BAND_DROP = 10, BAND_SIGN_Y = 294;
   function creatingNier(ctx, m, pr, step, total, done) {
     const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }];
     const online = done ? 3 : Math.min(3, Math.ceil((step * 3) / total));
-    A.ensemble(ctx, { poses: ['stand', 'carry', 'stand'], level: done ? null : LEVEL }).forEach((it, i) => {
+    A.ensemble(ctx, { poses: ['stand', 'carry', 'stand'], level: done ? (ctx.band ? LEVEL - BAND_DROP : null) : LEVEL }).forEach((it, i) => {
       if (it.prop === 'helper') it.cls += i - 1 < online ? ' o55-nier-online' : ' o55-rest';
       items.push(it);
     });
     if (done) {
-      const name = String(pr.name || '').trim().slice(0, 22);
-      /* (a narrow window shows the scene's band, y 170..450: there the sign hangs inside it, above the heads) */
-      items.push({ key: 'sign', prop: 'badge', x: 240, y: ctx.band ? BAND_SIGN : m.signY || 68, s: 1.4, layer: 'front', anim: 'hang', delay: 840, dur: 320,
-        opts: { label: name || L('ready', 'ready'), accent: true, hang: -30, stamp: NT('stamp', 'created') } });
+      const name = String(pr.name || '').trim().slice(0, 22), label = name || L('ready', 'ready');
+      const at = { x: 240, y: ctx.band ? BAND_SIGN_Y : m.signY || 68, s: ctx.band ? 1.2 : 1.4, layer: 'front', anim: 'hang', delay: 840, dur: 320 };
+      /* (its two strings are their own prop, lowered with it, behind it) */
+      items.push(Object.assign({ key: 'signhang', prop: 'hangs', opts: { label, hang: -30 } }, at),
+        Object.assign({ key: 'sign', prop: 'badge', opts: { label, accent: true, hang: -30, hangApart: !!(ctx.fam && ctx.fam.props.hangs), stamp: NT('stamp', 'created') } }, at));
     }
     return items;
   }
@@ -161,7 +170,8 @@
   /* What powers Puppet Master: the helpers wait on the stage; each connected account lights a spark on the bar;
      Free Models brings extra helpers onto the stage. */
   A.defineScene('power', {
-    label: 'art.hero', band: [0, 170, 480, 280],
+    /* (NieR's narrow band: the troupe's heads and shoulders, as at Ready, where its curtain closes over this scene) */
+    label: 'art.hero', band: [0, 170, 480, 280], bandNier: [0, 210, 480, 280],
     compose(ctx) {
       const pr = ctx.params || {}, n = pr.n || 0, m = A.metrics(ctx.family);
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: n ? ['wave', 'carry', 'stand'] : ['stand', 'stand', 'stand'] }));
@@ -176,14 +186,19 @@
 
   /* Ready: the curtain lifts, the helpers bow, a sign reads ready. */
   A.defineScene('ready', {
-    label: 'art.hero', band: [0, 170, 480, 280],
+    /* (NieR's narrow band frames the troupe's heads, visors and shoulders, so the curtain call's bows read there, with
+       Pod's lane just above the heads: on the 170 px band of a 760 px window the scene shows about y 294..406) */
+    label: 'art.hero', band: [0, 170, 480, 280], bandNier: [0, 210, 480, 280],
     compose(ctx) {
       /* NieR's troupe stands in a line for its curtain call (O55.art.curtainCall bows it and rises it), and the unit
-         nearest the pane ends pointing at it: the next thing to press is the Guided Tour */
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: ctx.family === 'nier' ? ['stand', 'wave', 'point'] : ['bow', 'wave', 'bow'] }));
-      items.push({ key: 'sign', prop: 'badge', x: 240, y: ctx.family === 'nier' && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
+         nearest the pane ends pointing at it: the next thing to press is the Guided Tour. The curtain opens on it
+         standing there: the set and the troupe have no entrance of their own. */
+      const nier = ctx.family === 'nier';
+      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: nier ? null : 'rise' }].concat(A.ensemble(ctx, { poses: nier ? ['stand', 'wave', 'point'] : ['bow', 'wave', 'bow'], standing: nier }));
+      items.push({ key: 'sign', prop: 'badge', x: 240, y: nier && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
-      items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' }); /* it opens on the troupe */
+      /* it opens on the troupe (NieR's, on the narrow band, is centred on what the band shows: its plate in view) */
+      items.push({ key: 'curtain', prop: 'curtain', x: 240, y: nier && ctx.band ? 350 : 300, layer: 'front' });
       return items;
     }
   });
