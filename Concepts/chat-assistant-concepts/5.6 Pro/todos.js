@@ -564,7 +564,7 @@
     var names = item.depends_on.map(function(id){ var d=findItem(list,id); return d?d.title:id; }).join(', ');
     if(item.status==='pending' && unmet.length){
       var waiting = unmet.map(function(d){ return d.title; }).join(', ');
-      return '<span class="todo-chip todo-chip-dep is-waiting" data-hover-key="todo-dep:'+esc(item.todo_id)+'" data-hover-tip="Pending until its dependency finishes; not blocked.">Waiting on: '+esc(waiting)+'</span>';
+      return '<span class="todo-chip todo-chip-dep is-waiting" data-hover-key="todo-dep:'+esc(item.todo_id)+'" data-hover-tip="'+esc('Waiting on: '+waiting)+'&#10;'+esc('Pending until its dependency finishes; not blocked.')+'">Waiting on: '+esc(waiting)+'</span>';
     }
     return '<span class="todo-chip todo-chip-dep">Depends on: '+esc(names)+'</span>';
   }

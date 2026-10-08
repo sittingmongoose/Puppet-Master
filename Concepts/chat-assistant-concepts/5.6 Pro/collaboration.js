@@ -2616,7 +2616,7 @@
     var many = d.rows.length >= 5;
     var cols = (parts.rosterCols || []).map(function (c) {
       var hover = c.hover || COL_HOVER[c.label];
-      return { label: hover ? '<span data-hover-key="collab-col-' + esc(c.label) + '" data-hover-tip="' + esc(hover) + '">' + esc(c.label) + '</span>' : esc(c.label), helper: many ? '' : esc(c.helper || '') };
+      return { label: esc(c.label), helper: many ? '' : esc(c.helper || ''), hoverKey: hover ? 'collab-col-' + c.label : '', hoverTip: hover || '' };
     });
     var rows = d.rows.map(function (r, i) { return draftRowHtml(ctx, d, r, i, parts); }).join('');
     var n = d.rows.length, max = R.max || KIND_PARTICIPANT_LIMIT[d.kind][1];

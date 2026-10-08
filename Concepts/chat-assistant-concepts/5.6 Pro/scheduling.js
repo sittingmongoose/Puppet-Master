@@ -1862,7 +1862,7 @@
     var mine = d.timezone === deviceZone(), resolved;
     if (!w.ok) resolved = 'Pick a date and a time.';
     else if (w.past) resolved = '<b>' + inked('when', w.day + ' · ' + w.clock) + '</b> <span class="pmx-sched-late">has already passed. Pick a later time.</span>';
-    else resolved = '<b>' + inked('when', w.day + ' · ' + w.clock) + '</b> ' + (mine ? 'your time (' + esc(zoneCity(d.timezone)) + ')' : esc(zoneCity(d.timezone)) + ' time') + ' · <span class="pmx-sched-rel">' + esc(w.rel) + '</span>';
+    else resolved = '<b>' + inked('when', w.day + ' · ' + w.clock) + '</b><span class="pmx-sched-zone">' + (mine ? 'your time (' + esc(zoneCity(d.timezone)) + ')' : esc(zoneCity(d.timezone)) + ' time') + ' ·</span><span class="pmx-sched-rel">' + esc(w.rel) + '</span>';
     var dstSay = w.ok && w.kind === 'gap_forward' ? 'Clocks jump forward that night, so this sends at ' + w.clock + '.'
       : w.ok && w.kind === 'fold_first' ? 'That hour happens twice that night, so we’ll send the first time.' : '';
     var inputs = '<div class="pmx-sched-inputs" data-k="sched-msg-inputs">' +

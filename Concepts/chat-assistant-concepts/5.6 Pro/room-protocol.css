@@ -77,3 +77,9 @@ body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-summary, body.p
 /* the receipt's headline wins width over its expand chevron under 520 px ("2 rounds · 1 To-Do" in retro's mono
    needs ~140 px); More opens the finished face there, as it does on every receipt */
 @container pmxrun (max-width: 519.98px){.pmx-receipt[data-pmx-kind="chat_room"] .pmx-run-foot [data-action="collab-toggle-expand"]{display:none;}}
+/* Chat Room's decision sentence is one line. The shared row reserves 37px (54px under 360),
+   which left an empty band above the buttons. This card sizes to its words; other kinds keep the reserve. */
+.pmx-run[data-pmx-kind="chat_room"] .pmx-decision-say{height:auto;min-height:0;}
+@container pmxrun (max-width: 359.98px){
+  .pmx-run[data-pmx-kind="chat_room"] .pmx-decision-say{height:auto;min-height:0;}
+}
