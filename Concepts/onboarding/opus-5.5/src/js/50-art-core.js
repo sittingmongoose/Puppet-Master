@@ -20,21 +20,81 @@
      null when not known (a preview while NieR Mode is off: draw as if every part were installed). */
   const tokCache = new Map();
   const PREVIEW = /^(dark|light)$/;
-  A.tokens = function tokens(el) {
-    const root = document.documentElement; el = el || root;
-    const owner = (el.closest && el.closest('[data-theme], [data-o55-nier-preview]')) || root;
+  const ownerOf = (el) => (el.closest && el.closest('[data-theme], [data-o55-nier-preview]')) || document.documentElement;
+  function keyOf(owner) {
+    const root = document.documentElement;
+    const pv = owner !== root ? owner.getAttribute('data-o55-nier-preview') : null, preview = PREVIEW.test(pv || '') ? pv : null;
+    const nier = root.hasAttribute('data-o55-nier') ? 'nier:' + (root.getAttribute('data-o55-nier-parts') || '') + '|' : '';
+    return (owner === root ? 'r|' : 'o|') + nier + (preview ? 'pv:' + preview + ':' + (owner.getAttribute('data-o55-nier-parts') || '') + '|' : '')
+      + owner.getAttribute('data-theme') + '|' + (root.getAttribute('style') || '');
+  }
+  function entryOf(owner, el) {
+    const root = document.documentElement;
     const pv = owner !== root ? owner.getAttribute('data-o55-nier-preview') : null, preview = PREVIEW.test(pv || '') ? pv : null;
     const partsAttr = (owner !== root && owner.getAttribute('data-o55-nier-parts')) || (root.hasAttribute('data-o55-nier') ? root.getAttribute('data-o55-nier-parts') || '' : null);
-    const nier = root.hasAttribute('data-o55-nier') ? 'nier:' + (root.getAttribute('data-o55-nier-parts') || '') + '|' : '';
-    const key = (owner === root ? 'r|' : 'o|') + nier + (preview ? 'pv:' + preview + ':' + (owner.getAttribute('data-o55-nier-parts') || '') + '|' : '')
-      + owner.getAttribute('data-theme') + '|' + (root.getAttribute('style') || '');
-    const hit = tokCache.get(key); if (hit) return Object.assign({}, hit);
     const t = readTokens(el);
-    t.nier = (!!nier && owner === root) || !!preview;
+    t.nier = (root.hasAttribute('data-o55-nier') && owner === root) || !!preview;
     t.nierPreview = preview; t.root = owner === root;
     t.nierParts = t.nier && partsAttr != null ? partsAttr.split(/\s+/).filter(Boolean) : null;
+    return t;
+  }
+  /* A miss inside the window or the tour reads every other look on that surface in the same pass (the look screen's
+     tiles, its swatches, a NieR preview): the look screen's tiles each asked in turn, after the one before had mounted
+     its scene, and each miss styled and laid out the screen again (12, 29 and 45 ms of style and 34 ms of layout on the
+     VM). Two probes stand in for a NieR preview of the current look (data-o55-nier-preview, with and without its basic
+     data-theme: the preview scope of design/hero-spec.md 2.2), whose attributes its host writes only after the tiles
+     have mounted; they are made before the first read and removed after the last, so the pass is still one. */
+  const probe = (scope, theme, preview) => {
+    const p = document.createElement('i'); p.hidden = true; p.setAttribute('aria-hidden', 'true');
+    if (theme) p.setAttribute('data-theme', theme);
+    if (preview) p.setAttribute('data-o55-nier-preview', preview);
+    scope.appendChild(p); return p;
+  };
+  const previewProbes = (scope, m) => [probe(scope, 'basic-' + m, m), probe(scope, null, m)];
+  function surfaceOf(owner) {
+    const scope = owner.closest && owner.closest('#pm-o55-onboarding, #pm-o55-tour'); if (!scope) return null;
+    const list = [];
+    scope.querySelectorAll('[data-theme], [data-o55-nier-preview]').forEach((o) => { if (o !== owner && list.length < 24) list.push(o); });
+    const probes = previewProbes(scope, O55.theme().mode);
+    return { list: list.concat(probes), probes };
+  }
+  /* The looks a surface will ask for are also read ahead, once per light or dark, NieR state and root variables, after
+     the window or the tour first mounts a scene: each family's look tile in the current light or dark and a NieR
+     preview of it. The probes are made in an idle moment and read in the next frame's read phase (O55.nierFx.measure),
+     where the frame has already styled them, and removed with that phase's writes; the look screen then finds every
+     look it draws cached, where its first read styled and laid out the whole new screen inside its build (20 ms of
+     style and 53 ms of layout on the VM: the page's size containers make a forced style pass lay out as well). */
+  const warmed = new Set();
+  function warm(scope) {
+    const root = document.documentElement, m = O55.theme().mode, FX = O55.nierFx;
+    if (!scope || !(FX && FX.measure)) return;
+    const sig = m + '|' + (root.getAttribute('data-o55-nier') || '') + ':' + (root.getAttribute('data-o55-nier-parts') || '') + '|' + (root.getAttribute('style') || '');
+    if (warmed.has(sig)) return;
+    warmed.add(sig);
+    const idle = window.requestIdleCallback ? (f) => window.requestIdleCallback(f, { timeout: 3000 }) : (f) => O55.motion.after(600, f);
+    idle(() => {
+      if (!scope.isConnected || O55.theme().mode !== m) { warmed.delete(sig); return; }
+      const probes = ['basic', 'friendly', 'glass', 'retro'].map((f) => probe(scope, f + '-' + m, null)).concat(previewProbes(scope, m));
+      FX.measure(() => {
+        if (tokCache.size > 40) tokCache.clear();
+        for (const p of probes) { const k = keyOf(p); if (p.isConnected && !tokCache.has(k)) tokCache.set(k, entryOf(p, p)); }
+        return () => probes.forEach((p) => p.remove());
+      });
+    });
+  }
+  A.tokens = function tokens(el) {
+    const root = document.documentElement; el = el || root;
+    const owner = ownerOf(el), key = keyOf(owner);
+    const hit = tokCache.get(key); if (hit) return Object.assign({}, hit);
     if (tokCache.size > 40) tokCache.clear();
-    tokCache.set(key, t); return Object.assign({}, t);
+    const surface = owner !== root ? surfaceOf(owner) : null;
+    const t = entryOf(owner, el);
+    tokCache.set(key, t);
+    if (surface) {
+      for (const o of surface.list) { const k = keyOf(o); if (!tokCache.has(k)) tokCache.set(k, entryOf(o, o)); }
+      surface.probes.forEach((p) => p.remove());
+    }
+    return Object.assign({}, t);
   };
   function readTokens(el) {
     const cs = getComputedStyle(el);
@@ -564,6 +624,7 @@
        restyles only those) */
     if (ctx && ctx.hold) { wrap.classList.add('o55-scene-held'); if (current) current.classList.add('o55-scene-waiting'); }
     host.appendChild(wrap);
+    warm(host.closest && host.closest('#pm-o55-onboarding, #pm-o55-tour'));
     O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
     /* a held ensemble that nobody lowers in (its caller failed or never came) is lowered in by itself */
     if (ctx && ctx.ensembleHold) O55.motion.after(9000, () => { if (wrap.isConnected && wrap.classList.contains('o55-ens-hold') && A.troupe) A.troupe.enter(host); });

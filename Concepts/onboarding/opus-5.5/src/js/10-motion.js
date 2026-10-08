@@ -58,18 +58,50 @@
   M.release = function release(fn) { real.raf(() => real.raf(fn)); };
 
   /* softwareRendered(): true when this browser draws without a GPU (no WebGL, or WebGL on a software rasteriser such as
-     SwiftShader or llvmpipe); then the page is composited on the CPU too. Read once. */
-  let sw = null;
-  M.softwareRendered = function softwareRendered() {
-    if (sw !== null) return sw;
+     SwiftShader or llvmpipe); then the page is composited on the CPU too. Read once, off the main thread: at load a
+     worker makes the WebGL context on an OffscreenCanvas and reports the renderer. Made on the main thread, at the
+     window's first opening, the context cost about 210 ms of that opening's one long task on the VM (the window asks
+     in open(), 60-ui-core.js). Until the worker has answered the answer is false, "not known yet", and the window
+     measures its first opening instead (checkSolid), as it does on any computer this cannot tell; where the worker
+     cannot run (no Worker or OffscreenCanvas, or its WebGL is missing) the context is made here, on first ask. */
+  const SOFT = /swiftshader|llvmpipe|softpipe|software|basic render/i;
+  let sw = null, swAsking = false;
+  function probeHere() {
     try {
       const c = document.createElement('canvas'), gl = c.getContext('webgl') || c.getContext('experimental-webgl');
-      if (!gl) return (sw = true);
+      if (!gl) return true;
       const ext = gl.getExtension('WEBGL_debug_renderer_info');
-      sw = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)));
+      const r = SOFT.test(String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)));
       const lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();
-    } catch (_) { sw = true; }
-    return sw;
+      return r;
+    } catch (_) { return true; }
+  }
+  (function probeAway() {
+    if (typeof Worker !== 'function' || typeof OffscreenCanvas !== 'function' || typeof Blob !== 'function' || !window.URL || !URL.createObjectURL) return;
+    const src = 'try{var c=new OffscreenCanvas(1,1),g=c.getContext("webgl")||c.getContext("experimental-webgl");'
+      + 'if(!g)postMessage({r:null});else{var e=g.getExtension("WEBGL_debug_renderer_info");'
+      + 'postMessage({r:String(e?g.getParameter(e.UNMASKED_RENDERER_WEBGL):g.getParameter(g.RENDERER))});'
+      + 'var l=g.getExtension("WEBGL_lose_context");if(l)l.loseContext();}}catch(x){postMessage({r:null});}';
+    let url = null, w = null;
+    const end = (r) => {
+      if (!swAsking) return;
+      swAsking = false;
+      if (sw === null && typeof r === 'string') sw = SOFT.test(r);
+      try { w.terminate(); } catch (_) {}
+      try { URL.revokeObjectURL(url); } catch (_) {}
+    };
+    try {
+      url = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+      w = new Worker(url); swAsking = true;
+      w.onmessage = (e) => end(e.data && e.data.r);
+      w.onerror = () => end(null);
+      real.setTimeout(() => end(null), 5000);
+    } catch (_) { swAsking = false; }
+  })();
+  M.softwareRendered = function softwareRendered() {
+    if (sw !== null) return sw;
+    if (swAsking) return false;
+    return (sw = probeHere());
   };
 
   /* sampleFrames(ms) -> Promise<{median, p90, n}>: the intervals between painted frames over a short window (it asks

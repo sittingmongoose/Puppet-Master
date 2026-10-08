@@ -119,9 +119,16 @@
     syncButtons();
     window.dispatchEvent(new CustomEvent('o55:sound', detail));
   }
-  /* re-read the current Project's value (or the unbound default) and reflect it; plays nothing, writes nothing */
-  let refreshedAt = -1e9;
+  /* re-read the current Project's value (or the unbound default) and reflect it; plays nothing, writes nothing.
+     A read holds for the rest of the run of script it was made in (until the next microtask checkpoint): a screen
+     change asks several times in one run (the sound button's render, its 'next', a cue), and each read copies the
+     Project's whole Settings snapshot through the owner (about 1 ms on the VM). Writes, toggles, the Settings page's
+     own clicks and a Project switch always read again. */
+  let refreshedAt = -1e9, held = false;
+  const FRESH = new Set(['write', 'toggle', 'settings', 'project', 'project-switched', 'load', 'dom']);
   S.refresh = function refresh(source) {
+    if (held && !FRESH.has(source)) return S.binding();
+    held = true; queueMicrotask(() => { held = false; });
     refreshedAt = performance.now();
     const p = currentProject();
     if (!p) {
