@@ -191,6 +191,15 @@
 .todo-line-status[data-tone="working"]{color:var(--accent)}
 .todo-line-status[data-tone="blocked"]{color:var(--danger)}
 .todo-line-status[data-tone="done"]{color:var(--positive)}
+/* Explicit ownership assignment (TDR-011 primary visibility): a compact muted trailing label before the status
+   word. It is an extra auto grid column, capped so the title's 1fr column keeps priority; the full label is in
+   the row hover card and the selected detail. */
+.todo-virtual-row.has-assign{grid-template-columns:16px minmax(0,1fr) auto auto}
+.todo-virtual-row.is-parent.has-assign{grid-template-columns:12px 16px minmax(0,1fr) auto auto}
+.todo-virtual-row.no-status.has-assign{grid-template-columns:16px minmax(0,1fr) auto}
+.todo-assign{min-width:0;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;line-height:14px;color:var(--subtle)}
+@container (max-width:300px){.todo-virtual-row .todo-assign{max-width:60px}}
+.todo-detail-assign{margin:0 0 8px;font-size:11px;color:var(--muted)}
 /* activity-panel.css sets `.activity-panel[data-variant] .activity-scroll{display:block}` at 0,3,0, which beats a bare `.activity-scroll:has(> .todo-panel)`. The extra `.activity-panel[data-variant]` keeps this in todos.css and still wins. */
 .activity-panel[data-variant] .activity-scroll:has(> .todo-panel){display:flex;flex-direction:column;scrollbar-gutter:auto;padding-right:2px}
 .activity-scroll > .todo-panel{flex:1 0 auto;min-width:0}

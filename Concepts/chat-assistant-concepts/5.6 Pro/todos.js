@@ -652,8 +652,9 @@
      step, so a leaf has no caret spacer and every row's status mark lands on the same column as its siblings', one
      12px step right of its parent's (under the start of the parent's title). The status word is the preview's
      tone-coloured word; a finished leaf drops it, since its check, struck title and colour already say Done, and a
-     parent shows done/total. The full title and the waiting or blocker reason live in the app hover card
-     (data-hover-tip on the row), not in native title tooltips. */
+     parent shows done/total. An explicit ownership assignment (TDR-011 primary visibility) renders as a compact
+     muted trailing label before the status word, ellipsized so the title keeps priority; the full label lives in
+     the app hover card with the title and reason (data-hover-tip on the row), not in native title tooltips. */
   function virtualRows(ctx,tid,rows,top,height){
     const list=itemsOf(tid),start=Math.max(0,Math.floor(top/ROW_HEIGHT)-3),end=Math.min(rows.length,Math.ceil((top+height)/ROW_HEIGHT)+3);
     return rows.slice(start,end).map((row,n)=>{
@@ -666,18 +667,20 @@
       const leafWord=waiting?'Waiting':(HOVER_STATUS[t.status]||STATUS_LABEL[t.status]);
       const statusLine=kids.length?reason:(reason&&reason.toLowerCase().startsWith(leafWord.toLowerCase())?reason:[leafWord,reason].filter(Boolean).join(' · '));
       const word=kids.length?kids.filter(k=>k.status==='completed').length+'/'+kids.length:(doneLeaf?'':leafWord);
-      const tip=esc(t.title)+'&#10;'+esc(statusLine);
-      return '<div class="todo-node todo-virtual-row todo-line '+(kids.length?'is-parent':'is-leaf')+(word?'':' no-status')+'" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+(Math.min(row.depth,3)*12)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'" data-hover-key="todo-row:'+esc(tid)+':'+esc(t.todo_id)+'" data-hover-tip="'+tip+'">'+
+      const assign=t.explicit_assignment_label||'';
+      const tip=esc(t.title)+(assign?'&#10;'+esc(assign):'')+'&#10;'+esc(statusLine);
+      return '<div class="todo-node todo-virtual-row todo-line '+(kids.length?'is-parent':'is-leaf')+(word?'':' no-status')+(assign?' has-assign':'')+'" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+(Math.min(row.depth,3)*12)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'" data-hover-key="todo-row:'+esc(tid)+':'+esc(t.todo_id)+'" data-hover-tip="'+tip+'">'+
         (kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'')+
         '<span class="todo-glyph todo-glyph-'+esc(t.status)+'">'+glyph(t.status)+'</span>'+
         '<button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span></button>'+
+        (assign?'<small class="todo-assign">'+esc(assign)+'</small>':'')+
         (word?'<span class="todo-line-status" data-tone="'+esc(tone)+'">'+esc(word)+'</span>':'<span class="todo-sr">'+esc(STATUS_LABEL[t.status])+'</span>')+'</div>';
     }).join('');
   }
   function selectedDetail(ctx,tid){
     const view=treeView(tid),list=itemsOf(tid),item=findItem(list,view.selected);if(!item)return '';
     const outcome=esc(item.expected_outcome||childSummary(list,item));
-    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header class="todo-detail-head"><strong class="todo-detail-title">'+esc(item.title)+'</strong><button class="icon-button todo-detail-close" data-action="todo-toggle-detail"'+rowScope(tid,item)+' data-hover-key="todo-detail-close-'+esc(item.todo_id)+'" data-hover-tip="Close details" aria-label="Close details">'+ctx.icon('close',13)+'</button></header><div class="todo-detail-well"><span class="todo-detail-label">Expected</span><p class="todo-detail-outcome">'+outcome+'</p></div>'+depChip(list,item)+rowActions(ctx,list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
+    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header class="todo-detail-head"><strong class="todo-detail-title">'+esc(item.title)+'</strong><button class="icon-button todo-detail-close" data-action="todo-toggle-detail"'+rowScope(tid,item)+' data-hover-key="todo-detail-close-'+esc(item.todo_id)+'" data-hover-tip="Close details" aria-label="Close details">'+ctx.icon('close',13)+'</button></header>'+(item.explicit_assignment_label?'<p class="todo-detail-assign">Owner · '+esc(item.explicit_assignment_label)+'</p>':'')+'<div class="todo-detail-well"><span class="todo-detail-label">Expected</span><p class="todo-detail-outcome">'+outcome+'</p></div>'+depChip(list,item)+rowActions(ctx,list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
       (view.work?.todo_id===item.todo_id?'<div class="todo-opened-work" data-k="todo-opened-work"><strong>Exact work · '+esc(view.work.attempt_id)+'</strong><p>'+esc(view.work.work_id)+'</p><pre>'+esc(JSON.stringify(view.work.detail,null,2))+'</pre></div>':'')+'</section>';
   }
   function renderPanel(ctx){
