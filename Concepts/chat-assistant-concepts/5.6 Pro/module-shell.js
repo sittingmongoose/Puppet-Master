@@ -755,8 +755,9 @@
         '<path class="pmx-p-paper" d="M0 0H' + (w - 10) + 'L' + w + ' 10V' + h + 'H0z"/><path class="pmx-p-fold" d="M' + (w - 10) + ' 0V10H' + w + '"/>' +
         words + (o.lock ? glyphIn('lock', w - 18, h - 16, 11) : '') + '</g>';
     },
-    /* you({x,y,label,sub,anchor,part,s,at}) - s scales the 28-grid figure about its point (2026-10-07; without it the
-       legacy .79); at:'below' sets the label under the figure (a one-row strip) */
+    /* you({x,y,label,sub,anchor,part,s,at,ly,subY}) - s scales the 28-grid figure about its point (2026-10-07; without it
+       the legacy .79); at:'below' sets the label under the figure (a one-row strip); ly and subY place the two lines'
+       baselines (the cast's top bar puts them on its hub's, -3 and 13) */
     you: function (o) {
       o = o || {};
       var sc = o.s != null && num(o.s, 0) > 0 ? num(o.s, 1) : .79, half = Math.round(14 * sc * 10) / 10;
@@ -764,7 +765,7 @@
       var lx = below ? 0 : end ? -dx : dx, ly = o.ly != null ? num(o.ly, 0) : below ? Math.round(half + 14) : o.at === 'inline' || (o.s != null && !o.sub) ? 4 : -1, an = below ? 'middle' : o.anchor;
       return '<g class="pmx-p-you"' + pos(o.x, o.y) + part(o.part || 'you') + '>' +
         '<g transform="translate(' + (-half) + ' ' + (-half) + ') scale(' + sc + ')"><g class="pmx-p-mark" data-sil="you" data-state="idle" style="--pmx-seat:var(--pmx-seat-you);--pmx-seat-fill:var(--pmx-seat-fill-you)">' + SIL.you + '</g></g>' +
-        (o.label ? svgText('pmx-p-lab', lx, ly, o.label, an) : '') + (o.sub ? svgText('pmx-p-sub', lx, below ? ly + 16 : o.s != null ? 15 : 17, o.sub, an) : '') + '</g>';
+        (o.label ? svgText('pmx-p-lab', lx, ly, o.label, an) : '') + (o.sub ? svgText('pmx-p-sub', lx, o.subY != null ? num(o.subY, 15) : below ? ly + 16 : o.s != null ? 15 : 17, o.sub, an) : '') + '</g>';
     },
     chapter: function (o) {
       o = o || {};
@@ -868,12 +869,13 @@
        tall at 1280 x 800 where the caption used to stand alone; this line is drawn 32 tall with 22 px puppets (5 clear of
        the floor's edges; 7 before the Moderator's figure, and 11 after You's name so the words keep 12 from the plate's
        edge, J-2), as wide as its row, and keeps every name whole, so it shows only where it fits cleanly, else the
-       caption (a default room fits the 516 px column of a 1024 window too, retro's mono names do not) */
+       caption (a default room, 516 wide with its 22 px edge to You, fits the 514-516 px column of a 1024 window in the
+       Basic, Glass and NieR themes; Friendly's rounder names, 528, and retro's mono ones, 543, keep the caption there) */
     /* stripLine (2026-10-08): the Chat Room's stacked fallback, for a room whose names do not fit beside the marks (the
        specialists on, a big room): the strip at .86, 48 tall and 576 wide (a 500 px draw would cut names a 576 one keeps
        whole; the room's slot is this tall only from 1440 x 900 up), so it fits the room's 48-53 px slot at 1440 x 900 */
     stripLine: { W: 576, M: 12, s: .86, sy: .86, row: 15, H: 48, name: 12, pmin: 58, pref: 76, pmax: 128, wing: 24 },
-    leanLine: { W: 576, M: 7, Mr: 11, s: .79, sy: .79, row: 16, H: 32, whole: 1, gaps: { gap: 10, hub: 18, you: 26, wing: 13 } },
+    leanLine: { W: 576, M: 7, Mr: 11, s: .79, sy: .79, row: 16, H: 32, whole: 1, gaps: { gap: 10, hub: 18, you: 22, wing: 13 } },
     /* lean: a mode of its own between compact and strip (BrainStorm: 95 tall, so a slot of 95-117, the recorded draft's
        beside its guide strip or a 1280 x 800 window's, keeps the chapters and the strings): seats at .86 hanging right
        off the bus, names 11 under the figures */
@@ -951,11 +953,15 @@
     var longest = Math.max.apply(null, core.map(function (c) { return castW(c.label, 11); })), cap = Math.max(G.pmax, longest + 6);
     var needs = core.map(function (c) { return castW(c.label, 11) + 6; });
     var pitch = Math.min(cap, Math.floor((W - 2 * M - gap - wingW) / n));
+    /* a short name's cell may give way down to its figure and 18 (9 either side of a screen), never below its own
+       name: the row's even pitch keeps G.pmin, but "Product" lending its spare to "Adversarial Review" and
+       "Implementation" is what keeps retro's four BrainStorm names whole beside both specialists (2026-10-08) */
+    var floor = Math.min(G.pmin, Math.round(2 * half) + 18);
     /* the helpers' names come first: when one would be cut, the specialists' second lines give way */
-    if (m && wingSub && !castFitsAll(needs, pitch, G.pmin)) { var w2 = cells(false), p2 = Math.min(cap, Math.floor((W - 2 * M - gap - sum(w2)) / n)); if (p2 > pitch) { wcs = w2; wingW = sum(w2); pitch = p2; wingSub = false; } }
+    if (m && wingSub && !castFitsAll(needs, pitch, floor)) { var w2 = cells(false), p2 = Math.min(cap, Math.floor((W - 2 * M - gap - sum(w2)) / n)); if (p2 > pitch) { wcs = w2; wingW = sum(w2); pitch = p2; wingSub = false; } }
     if (pitch < G.pmin) return '';
     var x0 = Math.round((W - (n * pitch + gap + wingW)) / 2);
-    var scw = castCells(needs, pitch, G.pmin), xs = castXs(scw, x0);
+    var scw = castCells(needs, pitch, floor), xs = castXs(scw, x0);
     var wx = x0 + n * pitch + gap, wxs = wcs.map(function (w) { var c = Math.round(wx + w / 2); wx += w; return c; });
     var lab = pitch - 6, out = '', stem = null, busY = G.bus, BY = G.bar;
     var you = sp.you || { label: 'You' }, ys = G.sy, yh = 14 * ys;
@@ -970,11 +976,20 @@
       var lastMax = Math.min(youX - Math.round(yh) - 22, youX - Math.ceil(ylw / 2) - 6 - Math.ceil(cw[cw.length - 1] / 2)), first = M + Math.ceil(cw[0] / 2);
       var q = ch.length > 1 ? Math.min(92, (lastMax - first) / (ch.length - 1)) : 0;
       var cx = ch.map(function (c, i) { return Math.round(first + q * i); });
+      /* the stops keep one even step while every pair of neighbouring names keeps 12 of measured ink apart. Where one
+         pair would not (retro's mono "Understand" and "Draft alone" sat 4 apart) and the line has room, each step is
+         as long as its two names need, plus an even share of what is left (2026-10-08) */
+      var ink = function (i) { return (cw[i] - 1) / 1.04; }, steps = [], stepSum = 0;
+      for (var si = 0; si < cw.length - 1; si++) { steps.push((ink(si) + ink(si + 1)) / 2 + 12); stepSum += steps[si]; }
+      if (steps.length && q < 92 && steps.some(function (d) { return d > q; }) && stepSum <= lastMax - first) {
+        var share = (lastMax - first - stepSum) / steps.length, at = first;
+        cx = [first].concat(steps.map(function (d) { at += d + share; return Math.round(at); }));
+      }
       /* neighbouring names keep 4 apart: where a pair would not, the longer one is fitted. The pair is judged on its
          measured ink (castW less its 4 % and 1 px of spare: two spares side by side cut retro's "Draft alone" by a
          pixel it never needed) */
       for (var ci = 0; ci < cw.length - 1; ci++) {
-        var room = 2 * (q - 4);
+        var room = 2 * (cx[ci + 1] - cx[ci] - 4);
         if ((cw[ci] + cw[ci + 1] - 2) / 1.04 > room) { if (cw[ci] >= cw[ci + 1]) cw[ci] = Math.max(24, room - cw[ci + 1]); else cw[ci + 1] = Math.max(24, room - cw[ci]); }
       }
       cw[cw.length - 1] = Math.min(cw[cw.length - 1], 2 * (youX - Math.ceil(ylw / 2) - 6 - cx[cx.length - 1]));
@@ -1001,7 +1016,10 @@
         var hb = sp.hub, hx = after + (inp ? 26 : 0) + Math.round(half);
         var hlw = Math.max(castW(hb.label, 11), hb.sub ? castW(hb.sub, 10.5) : 0);
         if (inp) out += P.line({ key: kp + 'in', from: { x: after, y: BY }, to: { x: hx - Math.round(half) + 2, y: BY }, style: 'fixed', part: inp.part });
-        out += '<g class="pmx-p-hub"' + part(hb.part) + '>' + P.seat({ key: hb.key, x: hx, y: BY, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, at: 'right', ly: hb.sub ? -2 : 4,
+        /* the hub's name and second line sit 16 apart, on -3 and 13 (You's two lines take the same baselines): Friendly's
+           Poppins name no longer touches "This chat's assistant" under it (14 apart, -2 and 12, it overlapped by 1 px),
+           and the second line still keeps 9 above a compact plate's bus (2026-10-08) */
+        out += '<g class="pmx-p-hub"' + part(hb.part) + '>' + P.seat({ key: hb.key, x: hx, y: BY, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, at: 'right', ly: hb.sub ? -3 : 4, subDy: 16,
           label: esc(hb.label), sub: hb.sub ? esc(hb.sub) : '' }) + '</g>';
         edgeFrom = hx + Math.round(half) + 3 + hlw + 10;
         stem = { x: hx, y: BY + Math.round(half) + 1 };
@@ -1022,7 +1040,7 @@
       }
       if (yx - Math.round(yh) - 2 - edgeFrom < 18) return '';
       out += P.line({ key: kp + 'toyou', from: { x: edgeFrom, y: BY }, to: { x: yx - Math.round(yh) - 2, y: BY }, style: 'toyou', part: you.part || 'you' });
-      out += P.you({ x: yx, y: BY, s: ys, label: esc(you.label), sub: you.sub ? esc(you.sub) : '', part: you.part || 'you' });
+      out += P.you({ x: yx, y: BY, s: ys, ly: you.sub ? -3 : null, subY: 13, label: esc(you.label), sub: you.sub ? esc(you.sub) : '', part: you.part || 'you' });
     }
     /* the strings, then the seats on them */
     var top = busY + G.drop, SY = Math.round(top + half);

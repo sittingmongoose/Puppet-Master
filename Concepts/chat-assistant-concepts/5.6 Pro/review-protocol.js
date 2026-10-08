@@ -181,9 +181,9 @@
  function renderActions(c,r){return '<div class="review-action-row">'+(window.PM56_REVIEW_DEMOS?.controls(c,r)||'')+(r.review.report?'<button class="soft-button" data-action="review-open-report" data-run="'+c.esc(r.id)+'">Open report</button>':'')+'<button class="soft-button" data-action="collab-review-run-again" data-run="'+c.esc(r.id)+'">Run another review…</button></div>';}
  /* The Plain text view and the Export (REVIEW-B's view reads both from here, so they never differ): the report in
     the report's own words (9.0; DON'T 18/22): the 8.5 count line, reviewers by name and model, findings by number with
-    their proof by label and who found them by name. Engine ids, the report version and the snapshot hash go to one
-    closing "Technical details" section. b10 anchors kept: '## Agreement matrix' (multi only), every dissent reason,
-    the frozen hash, every claim. */
+    their proof by label and who found them by name. Engine ids, the report version and the snapshot hash are not
+    written (no Technical details, 2026-10-08). b10 anchors kept: '## Agreement matrix' (multi only), every dissent
+    reason, every claim; the frozen hash is no longer in the text (b10's "Markdown same target" check predates this). */
  function markdown(report){
   const t=report.target||{},evid=id=>((t.evidence||[]).find(e=>e.id===id)||{}).label||id;
   const who=new Map((report.reviewers||[]).map(p=>[p.id,p.role||p.id]));
@@ -213,10 +213,8 @@
   }
   if(!single)out.push('','## Agreement matrix',fs.map(f=>num.get(f.id)+'. '+f.claim+'\n'+((f.reviewerVotes||[]).length?f.reviewerVotes.map(v=>'- '+nameOf(v.participantId)+': '+word(v.disposition)+' · '+v.reason).join('\n'):'- Not compared.')).join('\n\n'));
   else out.push('','One reviewer, so nothing was double-checked.');
-  out.push('','## Technical details','Report V'+report.version+' · '+report.id,'Snapshot '+((t.targetHashes&&t.targetHashes.primary)||''),
-   'Reviewers: '+(report.reviewers||[]).map(p=>p.role+' = '+p.id).join(', '),
-   fs.map(f=>'Finding '+num.get(f.id)+' = '+f.id+' · evidence '+(f.evidenceRefs||[]).join(', ')+' · found by '+(f.originatingReviewerIds||[]).join(', ')).join('\n')+
-   (dups.length?'\n'+dups.map(d=>'Same note: '+d.originalFindingId+' = '+d.canonicalFindingId).join('\n'):''));
+  /* no closing "Technical details" (2026-10-08, Jared: the report is not a setup sheet's Advanced page): engine ids,
+     the report version and the snapshot hash stay in the record and on the report's elements (data-target-hash) */
   return out.join('\n')+'\n';
  }
  /* =====================================================================================================
