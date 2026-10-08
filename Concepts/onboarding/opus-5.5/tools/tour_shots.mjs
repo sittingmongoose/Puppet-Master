@@ -1,6 +1,6 @@
 /* Guided Tour screenshots: every step in every theme, taken once the spotlight and the callout have settled, plus the
  * after-state of steps that have one and the dock step mid-drag (the "Let go" state). Themes run in parallel browsers.
- * node tools/tour_shots.mjs <out-dir> [--themes basic-dark,glass-light] [--width 1600] [--height 1000]
+ * node tools/tour_shots.mjs <out-dir> [--themes basic-dark,glass-light] [--width 1600] [--height 1000] [--page <path>]
  * Writes <out>/<theme>/NN-<step>[-after|-drag].png and <out>/shots.json; tools/tour_sheets.py tiles them. */
 import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
@@ -15,10 +15,10 @@ const dropProfile = async (dir, chrome) => {
 };
 
 const here = dirname(fileURLToPath(import.meta.url));
-const PAGE = resolve(here, '../../../TestOpus5.5PmConcept.html');
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/tourshots');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
+const PAGE = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
 const ALL = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 const themes = opt('themes', '') ? opt('themes', '').split(',') : ALL;
 const W = Number(opt('width', 1600)), H = Number(opt('height', 1000));

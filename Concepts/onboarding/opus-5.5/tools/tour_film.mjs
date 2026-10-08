@@ -1,5 +1,5 @@
 /* Slow-motion filming of Guided Tour moments: the tour opening, every Show Me, the ELI5 rewrite and the finish.
- * node tools/tour_film.mjs <out-dir> [--scenes sm-dock,finish] [--themes basic-dark,...] [--rate 0.1] [--size 1440x900]
+ * node tools/tour_film.mjs <out-dir> [--scenes sm-dock,finish] [--themes basic-dark,...] [--rate 0.1] [--size 1440x900] [--page <path>]
  * Same method as tools/film.mjs: CDP Animation.setPlaybackRate slows CSS and Web Animations, O55.motion.setTimeScale
  * slows the tour's own timers, tweens and springs (the Show Me pointer, the spotlight spring, the callout). One
  * screenshot per 16.667/rate ms of wall time is one 60 fps frame; frames.json keeps each frame's real motion time.
@@ -19,10 +19,10 @@ const dropProfile = async (dir, chrome) => {
 };
 
 const here = dirname(fileURLToPath(import.meta.url));
-const pageFile = resolve(here, '../../../TestOpus5.5PmConcept.html');
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/tourfilm');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
+const pageFile = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
 const RATE = Number(opt('rate', '0.1'));
 const STEP = 16.667 / RATE;
 const ALL = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];

@@ -1,15 +1,18 @@
 /* Data-level draft matrix: builds setup-plan drafts through O55.draft.set() for every journey, forge, visibility,
  * remote mode and settings-transfer combination the onboarding can produce, then writes them for
  * tools/schema_check.py validate. (UI-path drivers in scenarios.mjs capture the drafts that real clicks produce.)
- * node tools/draft_matrix.mjs <out.json> */
+ * node tools/draft_matrix.mjs <out.json> [--page <path>] */
 import { launch, sleep } from './chrome.mjs';
 import { writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const pageFile = resolve(here, '../../../TestOpus5.5PmConcept.html');
-const out = resolve(process.argv[2] || '/tmp/o55/drafts.json');
+const raw = process.argv.slice(2);
+const pageIdx = raw.indexOf('--page');
+const argv = pageIdx >= 0 ? raw.filter((_, i) => i !== pageIdx && i !== pageIdx + 1) : raw;
+const pageFile = pageIdx >= 0 && raw[pageIdx + 1] ? resolve(raw[pageIdx + 1]) : resolve(here, '../../../TestOpus5.5PmConcept.html');
+const out = resolve(argv[0] || '/tmp/o55/drafts.json');
 const { page, close } = await launch({ width: 1200, height: 800 });
 try {
   await page.goto(pathToFileURL(pageFile).href + '?o55=off');

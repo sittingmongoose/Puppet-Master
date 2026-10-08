@@ -1,5 +1,5 @@
 /* M0 tour spike: prove the real-shell mechanics the Guided Tour depends on, in the built concept.
- * Usage: node tools/spike_tour.mjs <out-dir>
+ * Usage: node tools/spike_tour.mjs <out-dir> [--page <path>]
  * Checks: guided Teacher thread through the real composer (local stream, zero usage), ELI5 toggle, Teacher persona,
  * Chat drag to dock_left via real pointer input, layout snapshot -> o55RestoreSnapshot, Approval queue widget add,
  * Planning Wizard workspace stage structure. Writes spike.json + screenshots to <out-dir>. */
@@ -9,8 +9,11 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const built = resolve(here, '../../../TestOpus5.5PmConcept.html');
-const out = resolve(process.argv[2] || '/tmp/o55/spike');
+const raw = process.argv.slice(2);
+const pageIdx = raw.indexOf('--page');
+const argv = pageIdx >= 0 ? raw.filter((_, i) => i !== pageIdx && i !== pageIdx + 1) : raw;
+const built = pageIdx >= 0 && raw[pageIdx + 1] ? resolve(raw[pageIdx + 1]) : resolve(here, '../../../TestOpus5.5PmConcept.html');
+const out = resolve(argv[0] || '/tmp/o55/spike');
 mkdirSync(out, { recursive: true });
 const facts = {};
 const { page, close } = await launch({ width: 1600, height: 1000 });

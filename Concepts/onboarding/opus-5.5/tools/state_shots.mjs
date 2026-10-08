@@ -2,7 +2,7 @@
  * secret-free session record resume uses), so a finding such as "text runs past the pane on nas-signin" can be looked at
  * in every theme and window size instead of only in the state the crawler happened to reach first.
  *   node tools/state_shots.mjs <graph.json> <out-dir> [--screens nas-signin,review] [--where "S.nas && S.nas.self"]
- *        [--limit 3] [--themes basic-dark,retro-light] [--size 1440x900,390x844] [--scenario <from report.json>]
+ *        [--limit 3] [--themes basic-dark,retro-light] [--size 1440x900,390x844] [--scenario <from report.json>] [--page <path>]
  * --where is a JavaScript expression over the saved session S. Writes <screen>--<n>--<theme>--<WxH>.png, and
  * states.json with each shot's state key, click path length and the text that runs past the pane (with its rectangles). */
 import { launch, sleep } from './chrome.mjs';
@@ -11,11 +11,11 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const PAGE = resolve(here, '../../../TestOpus5.5PmConcept.html');
 const argv = process.argv.slice(2);
 const graphPath = resolve(argv[0]);
 const out = resolve(argv[1] && !argv[1].startsWith('--') ? argv[1] : '/tmp/o55/state-shots');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
+const PAGE = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
 const reportPath = join(dirname(graphPath), 'report.json');
 const scenario = opt('scenario', existsSync(reportPath) ? JSON.parse(readFileSync(reportPath, 'utf8')).scenario : 'fresh');
 const screens = opt('screens', '').split(',').filter(Boolean);

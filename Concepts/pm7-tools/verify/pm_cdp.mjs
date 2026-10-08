@@ -6,16 +6,18 @@ import { tmpdir } from 'node:os';
 
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
 
+// GPU rule: Chrome renders on the VM's GPU, never --disable-gpu/SwiftShader; see /mnt/Cursor/Agent-Guides/gpu-recording.md.
 export async function launch({ width = 1600, height = 1000, scale = 1, profile, args = [] } = {}) {
   profile = profile || `${process.env.PM_CDP_PROFILE_DIR || tmpdir()}/pm-cdp-profile-${process.pid}`;
   mkdirSync(profile, { recursive: true });
+  const safeArgs = args.filter((a) => a !== '--disable-gpu' && a !== '--use-gl=swiftshader' && a !== '--use-angle=swiftshader' && a !== '--enable-unsafe-swiftshader');
   const chrome = spawn(CHROME, [
-    '--headless=new', '--remote-debugging-pipe', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage',
+    '--headless=new', '--remote-debugging-pipe', '--no-sandbox', '--enable-gpu', '--disable-dev-shm-usage',
     '--allow-file-access-from-files', '--hide-scrollbars', `--force-device-scale-factor=${scale}`,
     '--no-first-run', '--no-default-browser-check', '--disable-background-timer-throttling',
     '--disable-renderer-backgrounding', '--disable-features=TranslateUI', '--mute-audio',
-    `--user-data-dir=${profile}`, `--window-size=${width},${height}`, ...args, 'about:blank'
-  ], { stdio: ['ignore', 'pipe', 'pipe', 'pipe', 'pipe'] });
+    `--user-data-dir=${profile}`, `--window-size=${width},${height}`, ...safeArgs, 'about:blank'
+  ], { stdio: ['ignore', 'pipe', 'pipe', 'pipe', 'pipe'], env: { ...process.env, DISPLAY: process.env.DISPLAY || ':0', XAUTHORITY: process.env.XAUTHORITY || '/home/sittingmongoose/.Xauthority' } });
   const wr = chrome.stdio[3], rd = chrome.stdio[4];
   let buf = '', id = 0;
   const pending = new Map();

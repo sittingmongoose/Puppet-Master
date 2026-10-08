@@ -1,6 +1,6 @@
 /* Slow-motion 60 fps filming of onboarding moments for frame-by-frame review.
  * node tools/film.mjs <out-dir> [--scenes open,next,pick-family,...] [--themes basic-dark,...] [--rate 0.05]
- *      [--size 1440x900] [--freeze]   (--freeze films with playback rate 0: every frame must be identical)
+ *      [--size 1440x900] [--freeze] [--page <path>]   (--freeze films with playback rate 0: every frame must be identical)
  * Method (validated for the Settings refresh films, 2026-09-08): CDP Animation.setPlaybackRate slows CSS and Web
  * Animations; O55.motion.setTimeScale slows every JS timer, tween and spring on the onboarding's own clock.
  * One screenshot per 16.667/rate ms of wall time = one true 60 fps frame. frames.json records each frame's motion
@@ -11,10 +11,10 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const pageFile = resolve(here, '../../../TestOpus5.5PmConcept.html');
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/film');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
+const pageFile = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
 const flag = (k) => argv.includes('--' + k);
 const RATE = flag('freeze') ? 0 : Number(opt('rate', '0.05'));
 const STEP = 16.667 / (RATE || 0.05);
