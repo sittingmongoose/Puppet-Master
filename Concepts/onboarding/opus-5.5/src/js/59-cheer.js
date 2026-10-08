@@ -340,9 +340,16 @@
   const visorDone = (g) => g.querySelectorAll('.nv-scan, .nv-rest').forEach((el) => { if (el.getAnimations) el.getAnimations().forEach((a) => { if (typeof CSSAnimation === 'undefined' || !(a instanceof CSSAnimation)) a.finish(); }); });
   /* a bow in 2 held steps, 120 ms apart: the upper body pitches toward the audience about the hips and the head goes
      down below its knot (30-art.css .o55-bow holds it once bowed; it was a 4-unit head dip, too small to read). A
-     waving unit's raised hand moves with its body, so the rig measures its strings while it bows (the caller watches) */
-  const BOW = { k: 0.8, head: 6 };
-  function dip(p, g, delay) {
+     waving unit's raised hand moves with its body, so the rig measures its strings while it bows (the caller watches).
+     nod: the head alone goes down 4 below its knot, no pitch (.o55-nod: the Created act on the narrow window's band,
+     where the troupe is lowered so far that a full bow takes its visors below the band) */
+  const BOW = { k: 0.8, head: 6, nod: 4 };
+  function dip(p, g, delay, nod) {
+    if (nod) {
+      p.anim(g.querySelector('.nv-head'), [{ translate: '0px 0px' }, { translate: `0px ${BOW.nod}px` }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
+      p.at(delay, () => g.classList.add('o55-bow', 'o55-nod', 'o55-rest'));
+      return;
+    }
     const torso = g.querySelector('.nv-torso'), hip = torso ? parseFloat(torso.style.getPropertyValue('--o55-hip')) || -24 : -24;
     if (torso) p.anim(torso, [{ transform: 'translate(0px, 0px) scale(1, 1)' }, { transform: `translate(0px, ${(hip * (1 - BOW.k)).toFixed(2)}px) scale(1, ${BOW.k})` }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
     p.anim(g.querySelector('.nv-head'), [{ translate: '0px 0px' }, { translate: `0px ${BOW.head}px` }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
@@ -350,12 +357,13 @@
   }
   /* the rig follows the bowing bodies' hands for ms (a waving unit's hand string), then measures them standing again */
   const bowWatch = (svg, ms) => { if (A.rig && svg.querySelector('.o55-ens-h .o55-arm')) A.rig.watch(svg, { settle: ms }); };
-  const unbow = (g) => g.classList.remove('o55-bow', 'o55-rest');
+  const unbow = (g) => g.classList.remove('o55-bow', 'o55-nod', 'o55-rest');
   /* a bowing unit stands again in 2 held steps, 60 ms apart, from the beat it is asked on (the curtain call's rise) */
   function standUp(p, g) {
     if (!g.classList.contains('o55-bow')) return;
-    const torso = g.querySelector('.nv-torso'), hip = torso ? parseFloat(torso.style.getPropertyValue('--o55-hip')) || -24 : -24;
+    const torso = g.querySelector('.nv-torso'), hip = torso ? parseFloat(torso.style.getPropertyValue('--o55-hip')) || -24 : -24, nod = g.classList.contains('o55-nod');
     unbow(g);
+    if (nod) { p.anim(g.querySelector('.nv-head'), [{ translate: `0px ${BOW.nod}px` }, { translate: '0px 0px' }], { duration: 120, easing: 'steps(2, jump-start)' }); return; }
     if (torso) p.anim(torso, [{ transform: `translate(0px, ${(hip * (1 - BOW.k)).toFixed(2)}px) scale(1, ${BOW.k})` }, { transform: 'translate(0px, 0px) scale(1, 1)' }], { duration: 120, easing: 'steps(2, jump-start)' });
     p.anim(g.querySelector('.nv-head'), [{ translate: `0px ${BOW.head}px` }, { translate: '0px 0px' }], { duration: 120, easing: 'steps(2, jump-start)' });
   }
@@ -655,6 +663,9 @@
     }
     snapSvg(svg);
     const p = perf(svg, 'createdAct'), hs = units(svg), sign = item(svg, 'sign');
+    /* (the narrow window's band: a drawing whose viewBox does not start at the top; there the troupe is lowered only
+       BAND_DROP and its visors sit at the band's foot, so it nods instead of bowing, and the burst leaves sideways) */
+    const banded = () => !/^\s*\S+\s+0\s/.test(svg.getAttribute('viewBox') || '');
     if (o.name && sign) relabel(svg, sign, o.name);
     const shown = () => { if (sign) sign.classList.remove('o55-stamp-wait', 'o55-stamp-frame'); };
     let stamped = false;
@@ -665,8 +676,7 @@
       hs.forEach((g, i) => joy(g, 620, i * 60));
       if (A.rig) A.rig.cheer(svg, 'all', { hop: 8, dur: 360, stagger: 60, steps: 2, arm: 0.6, lean: 0 });
       if (sign) lockOn(svg, sign, 0);
-      /* (the narrow window's band: a drawing whose viewBox does not start at the top) */
-      confetti(svg, 'nier', [240, 68], 46, false, true, sign ? { from: sign, sideways: !/^\s*\S+\s+0\s/.test(svg.getAttribute('viewBox') || '') } : null);
+      confetti(svg, 'nier', [240, 68], 46, false, true, sign ? { from: sign, sideways: banded() } : null);
       SND('celebrate', { pan: 0 });
     };
     p.end(stamp);
@@ -684,7 +694,7 @@
     if (now < CA.land + 100) {
       on(item(svg, 'h1') || hs[0], 'transitionend', 'transform', t(CA.land) + CA.late, () => {
         SND('land', { voice: 1, pan: 0 });
-        p.at(CA.bow, () => hs.forEach((g) => dip(p, g, 0)));
+        p.at(CA.bow, () => { const nod = banded(); hs.forEach((g) => dip(p, g, 0, nod)); });
       });
     }
     if (sign) sign.classList.add('o55-stamp-wait');

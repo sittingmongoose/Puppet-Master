@@ -154,6 +154,11 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) .o55-nier-maplabel
 .o55-f-nier .o55-bow .nv-torso { transform: translate(0px, calc(var(--o55-hip, -24px) * 0.2)) scale(1, 0.8); }
 .o55-f-nier .o55-bow .nv-head { translate: 0px 6px; }
 .o55-f-nier .o55-bow .nv-stub { opacity: 1; }
+/* a nod (59-cheer.js dip): the head alone goes down 4 below its knot. The Created act nods on the narrow window's
+   band, where its lowered troupe's visors sit at the band's foot and a full bow would take them out of view. Slint:
+   the same state with the head's y only. */
+.o55-f-nier .o55-bow.o55-nod .nv-torso { transform: none; }
+.o55-f-nier .o55-bow.o55-nod .nv-head { translate: 0px 4px; }
 /* a unit's right arm in another pose (54-art-nier.js draws them hidden); a unit without that alternate never gets the
    class (59-cheer.js asks first) */
 .o55-f-nier :is(.o55-arm-stand, .o55-arm-mid, .o55-arm-up, .o55-arm-aim, .o55-arm-pt) .nv-arm-r { display: none; }
