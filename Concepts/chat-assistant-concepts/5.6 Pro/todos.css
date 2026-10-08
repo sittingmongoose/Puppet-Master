@@ -172,11 +172,18 @@
 .todo-tree-navigation .text-button{font-size:10.5px;white-space:nowrap;flex:0 0 auto}
 .todo-viewport{position:relative;overflow:auto;overscroll-behavior:contain;flex:1 1 0;min-height:200px;max-height:none;scrollbar-gutter:stable;contain:layout paint}
 .todo-virtual-space{display:block!important;position:relative;width:100%;min-width:0}
-.todo-virtual-row{box-sizing:border-box;position:absolute;left:0;right:0;height:32px;overflow:hidden;border:0;border-radius:6px;background:transparent;display:grid;grid-template-columns:14px 16px minmax(0,1fr) auto;gap:6px;align-items:center;padding:0 6px 0 calc(6px + var(--todo-indent,0));margin-left:0}
+/* Width goes to the title. Every status mark sits at 18px + the depth step (12px a level, capped at three), so
+   siblings align whether or not they carry a caret; a parent's 12px caret fills the 18px left of its mark and a
+   leaf leaves that space empty instead of rendering a spacer column. A child's mark is one step right of its
+   parent's, under the start of the parent's title. A finished leaf drops the status column. */
+.todo-virtual-row{box-sizing:border-box;position:absolute;left:0;right:0;height:32px;overflow:hidden;border:0;border-radius:6px;background:transparent;display:grid;grid-template-columns:16px minmax(0,1fr) auto;column-gap:6px;align-items:center;padding:0 4px 0 calc(18px + var(--todo-indent,0px));margin-left:0}
+.todo-virtual-row.is-parent{grid-template-columns:12px 16px minmax(0,1fr) auto;padding-left:var(--todo-indent,0px)}
+.todo-virtual-row.no-status{grid-template-columns:16px minmax(0,1fr)}
 .todo-virtual-row:hover{background:var(--surface-3)}
 .todo-virtual-row[aria-selected="true"]{background:color-mix(in srgb,var(--accent) 10%,transparent)}
-.todo-virtual-row .todo-caret,.todo-virtual-row .todo-caret-spacer{width:14px;height:14px;margin:0}
+.todo-virtual-row .todo-caret{width:12px;height:14px;margin:0}
 .todo-virtual-row .todo-glyph{width:16px;height:16px;margin:0}
+.todo-virtual-row .todo-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .todo-virtual-row .todo-title-button{display:block;min-width:0;max-width:100%;overflow:hidden;margin:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;line-height:16px;text-align:left;cursor:pointer;min-height:0}
 .todo-virtual-row .todo-title{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11.5px;line-height:16px;font-weight:550;color:var(--muted)}
 .todo-virtual-row[data-status="in_progress"] .todo-title{color:var(--text);font-weight:650}

@@ -648,6 +648,12 @@
     if(!bindings.length)return '';
     return '<button class="text-button" data-action="todo-open-work"'+rowScope(item.thread_id,item)+' data-binding="'+esc(bindings.at(-1).binding_id)+'">Open work</button>';
   }
+  /* One 32px line per item, the To-Do preview's checklist form. Only parents carry a caret: it sits in the indent
+     step, so a leaf has no caret spacer and every row's status mark lands on the same column as its siblings', one
+     12px step right of its parent's (under the start of the parent's title). The status word is the preview's
+     tone-coloured word; a finished leaf drops it, since its check, struck title and colour already say Done, and a
+     parent shows done/total. The full title and the waiting or blocker reason live in the app hover card
+     (data-hover-tip on the row), not in native title tooltips. */
   function virtualRows(ctx,tid,rows,top,height){
     const list=itemsOf(tid),start=Math.max(0,Math.floor(top/ROW_HEIGHT)-3),end=Math.min(rows.length,Math.ceil((top+height)/ROW_HEIGHT)+3);
     return rows.slice(start,end).map((row,n)=>{
@@ -655,13 +661,17 @@
       const wait=t.owner_wait||workOwner(t)?.waitState?.(t.workflow_ref,t);
       const reason=kids.length?childSummary(list,t):(wait?.reason||wait?.kind||t.blocked_reason_ref||(t.status==='pending'&&!runnable(list,t)?'Waiting for dependencies':''));
       const waiting=!kids.length&&t.status==='pending'&&(!!wait||!runnable(list,t));
-      const word=kids.length?kids.filter(k=>k.status==='completed').length+'/'+kids.length:(waiting?'Waiting':(HOVER_STATUS[t.status]||STATUS_LABEL[t.status]));
+      const doneLeaf=!kids.length&&t.status==='completed';
       const tone=waiting?'idle':(STATUS_TONE[t.status]||'idle');
-      return '<div class="todo-node todo-virtual-row todo-line" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+Math.min(row.depth*10,30)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'" title="'+esc(reason)+'">'+
-        (kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>')+
-        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'" title="'+esc(STATUS_LABEL[t.status])+'">'+glyph(t.status)+'</span>'+
-        '<button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'" title="'+esc(t.title)+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span></button>'+
-        '<span class="todo-line-status" data-tone="'+esc(tone)+'">'+esc(word)+'</span></div>';
+      const leafWord=waiting?'Waiting':(HOVER_STATUS[t.status]||STATUS_LABEL[t.status]);
+      const statusLine=kids.length?reason:(reason&&reason.toLowerCase().startsWith(leafWord.toLowerCase())?reason:[leafWord,reason].filter(Boolean).join(' · '));
+      const word=kids.length?kids.filter(k=>k.status==='completed').length+'/'+kids.length:(doneLeaf?'':leafWord);
+      const tip=esc(t.title)+'&#10;'+esc(statusLine);
+      return '<div class="todo-node todo-virtual-row todo-line '+(kids.length?'is-parent':'is-leaf')+(word?'':' no-status')+'" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+(Math.min(row.depth,3)*12)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'" data-hover-key="todo-row:'+esc(tid)+':'+esc(t.todo_id)+'" data-hover-tip="'+tip+'">'+
+        (kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'')+
+        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'">'+glyph(t.status)+'</span>'+
+        '<button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span></button>'+
+        (word?'<span class="todo-line-status" data-tone="'+esc(tone)+'">'+esc(word)+'</span>':'<span class="todo-sr">'+esc(STATUS_LABEL[t.status])+'</span>')+'</div>';
     }).join('');
   }
   function selectedDetail(ctx,tid){
