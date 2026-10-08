@@ -602,8 +602,13 @@
          re-render that moved no prop (the name sign relettered) is re-measured at once instead of held still */
       const was = A.rig ? A.rig.layout(svg) : '', restore = A.rig ? A.rig.hold(svg) : null;
       for (const { name, value } of Array.from(next.attributes)) svg.setAttribute(name, value);
+      /* (the morph drops attributes the render does not write: the props it keeps keep when their entrance started,
+         and those it adds start theirs now) */
+      const borns = [...svg.querySelectorAll('[data-o55-born]')].map((el) => [el, el.getAttribute('data-o55-born')]);
       U.morphFrom(svg, next);
       if (restore) restore();
+      borns.forEach(([el, v]) => { if (el.isConnected && !el.hasAttribute('data-o55-born')) el.setAttribute('data-o55-born', v); });
+      born(svg);
       if (current.getAttribute('data-family') !== out.family) current.setAttribute('data-family', out.family);
       current.classList.add('o55-beat');
       svg.setAttribute('data-o55-t0', String(Math.round(O55.motion.now())));
@@ -634,6 +639,7 @@
        O55.art.release (.o55-scene-held / .o55-scene-waiting: 30-art.css pauses the parts that move, so the release
        restyles only those) */
     if (ctx && ctx.hold) { wrap.classList.add('o55-scene-held'); if (current) current.classList.add('o55-scene-waiting'); }
+    else born(wrap);
     host.appendChild(wrap);
     warm(host.closest && host.closest('#pm-o55-onboarding, #pm-o55-tour'));
     O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
@@ -643,7 +649,30 @@
     return wrap;
   };
   A.release = function release(host) {
-    if (host) host.querySelectorAll(':scope > .o55-scene-wrap.o55-scene-held, :scope > .o55-scene-wrap.o55-scene-waiting').forEach((w) => w.classList.remove('o55-scene-held', 'o55-scene-waiting'));
+    if (!host) return;
+    host.querySelectorAll(':scope > .o55-scene-wrap.o55-scene-held, :scope > .o55-scene-wrap.o55-scene-waiting').forEach((w) => {
+      if (w.classList.contains('o55-scene-held')) born(w); /* (a held scene's entrances start now) */
+      w.classList.remove('o55-scene-held', 'o55-scene-waiting');
+    });
+  };
+  /* A.arrivedAt(host) -> the motion-clock time the drawing on the host has its actors in place: the end of the last
+     entrance of its units and its hung sign, each counted from when it started (data-o55-born: the drawing's mount, its
+     release when it was held, or the beat change that added it) and read from its own markup (--d, --dur), nothing
+     measured; 0 when none is arriving. A narrator placed before then judged its lane against units still on their way
+     down through it (Pod on Creating at 760 px, 66-nier-window.js say). */
+  const ACTOR = '.o55-ens-h > .o55-in.o55-an, .o55-it[data-key="sign"] > .o55-in.o55-an', ENTRANCE = { drop: 520, rise: 460, hang: 320 };
+  function born(scope) { const t = String(Math.round(O55.motion.now())); scope.querySelectorAll(ACTOR).forEach((el) => { if (!el.hasAttribute('data-o55-born')) el.setAttribute('data-o55-born', t); }); }
+  A.arrivedAt = function arrivedAt(host) {
+    const wrap = host && host.querySelector(':scope > .o55-scene-wrap:not(.o55-out)');
+    if (!wrap) return 0;
+    if (wrap.classList.contains('o55-scene-held')) return O55.motion.now() + 400;
+    let end = 0;
+    wrap.querySelectorAll(ACTOR).forEach((el) => {
+      const t0 = +el.getAttribute('data-o55-born'); if (!Number.isFinite(t0) || !t0) return;
+      const st = el.getAttribute('style') || '', d = /--d:\s*(-?[\d.]+)ms/.exec(st), du = /--dur:\s*([\d.]+)ms/.exec(st), k = /o55-an-(\w+)/.exec(el.getAttribute('class') || '');
+      end = Math.max(end, t0 + (d ? +d[1] : 0) + (du ? +du[1] : ENTRANCE[k && k[1]] || 420));
+    });
+    return end;
   };
 
   /* Shared parametric helpers used by several families. */

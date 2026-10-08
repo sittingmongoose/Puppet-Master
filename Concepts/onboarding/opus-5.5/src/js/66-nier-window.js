@@ -222,6 +222,18 @@
       pending = later(podUntil - now, () => { pending = null; say(text, Object.assign({}, o, { now: true })); });
       return true;
     }
+    /* the stage's actors are still arriving (an entrance lowers the units through the lanes): the line waits until
+       they stand, at most 1.2 s, so its lane is judged where they stay (on the narrow band Creating's units were still
+       dropping through the top lane when its line was placed, and it stood back at 22 %); an alert never waits */
+    if (!o.arrived && o.lead !== 'alert' && O55.art && O55.art.arrivedAt) {
+      const wait = Math.min(1200, O55.art.arrivedAt(stageEl()) - now);
+      if (wait > 16) {
+        if (pending) pending.cancel();
+        podUntil = now + wait + readMs(text);
+        pending = later(wait, () => { pending = null; say(text, Object.assign({}, o, { now: true, arrived: true })); });
+        return true;
+      }
+    }
     lastLine = text; lastAt = now;
     const ms = readMs(text);
     podUntil = now + ms;
