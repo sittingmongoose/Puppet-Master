@@ -9,25 +9,46 @@
      alert(el)                               -> Promise  the tear, a scan line down el [+sweep], ink shards [+particles] [glitch]
      brackets(el, on)                        -> element  four ink corners locked on el (call again to re-place)     [brackets]
      cursor(el, on)                          -> element  the menu cursor: el becomes an ink bar, a square steps beside it [cursor]
-     banner({ kicker?, title, sub?, ms?, within?, sound? }) -> Promise  a wide quest band ("Goal updated")        [quests]
-     band(text, ms?, { kicker?, within?, sound? })          -> Promise  a reboot band: a status line types on, ticks fill [reboot]
-     pod.say(text, { lead?, anchor?, side?, ms?, sound? })  -> Promise  Pod 042 and its speech strip near anchor   [pod / voice]
+     banner({ kicker?, title, sub?, ms?, at?, within?, layer?, sound? }) -> Promise  a wide quest band ("Goal updated") [quests]
+     band(text, ms?, { kicker?, within?, layer?, sound? })  -> Promise  a reboot band: a status line types on, ticks fill [reboot]
+       (also band(text, { ms, ... }))
+     pod.say(text, { lead?, anchor?, side?, ms?, sound?, layer? }) -> Promise  Pod 042 and its speech strip near anchor [pod / voice]
      pod.chirp() -> bool   pod.hush()        the Pod's signal and sound; send the Pod away now
      enabled(name) -> bool   clear(host?)   version   demo(host) -> { el, names, run(name), runAll(), dispose() }
 
    Sounds (O55.sound, so the window's mute governs them; each pairs with the visual that plays it): banner plays
    'quest', band 'reboot', pod.say and pod.chirp 'pod' (opts.sound: false silences one, a string picks another event);
    decode plays 'decode' only when asked (opts.sound: true). The other effects are silent: their callers own the sound.
+   pod.chirp plays only with a Pod on screen to turn (ours, or the app's corner Pod); with none it is silent (false).
    Pod 042 is one character: while pod.say speaks, the app's corner Pod (#o55np-pod, shown in the tour and the app)
-   steps away and this one flies out from its place and back. In the onboarding window it stays inside the window.
+   steps away and this one flies out from its place and back. In the onboarding window it stays inside the window,
+   and it stands where it meets no reading text (the tour's callout and bar, the window's head) and covers no control,
+   or stands back (faint) when there is no such place.
+
+   Where banners, bands and Pods are drawn, and the hand-over. opts.layer: 'page' (or within: document.body) draws in
+   the page layer, above the window and the tour; within: el draws in el's surface across el's box; with neither, the
+   open window, else the running tour, else the page. A surface that is going (the window's close() adds o55-closing,
+   the tour's end adds o55t-closing) is never chosen. When the surface of a running banner or band starts to go, the
+   banner or band moves into the page layer, keeps its place and finishes there, resolving true at its normal end; a
+   Pod in that surface leaves at once and resolves false. So the reboot band for "Ready hands over to the tour" can
+   start at the end of setup with no layer of its own (or with layer: 'page'), before or after close('done'), and
+   play out whole over the tour's first callout; a key or a press still ends it early.
+
+   Screen readers: decode writes glyphs into the live text, so the element that takes its name from those words (a
+   heading such as the window's #o55-h, which labels its dialog; a button; an option; anything named through
+   aria-labelledby) carries its final words as aria-label for the decode and lets go after. Effects overlays sit in
+   aria-hidden layers. opts.announce on banner and pod.say reads their words through the window's live region.
 
    Rules every effect keeps:
    - It is a no-op (a resolved promise, false) unless NieR Mode is painted (html[data-o55-nier="on"], live or the
-     onboarding preview) and its part is installed (html[data-o55-nier-parts] / PM_NIER.has). decode(el, { text }) still
-     writes the words: that is its end state.
+     onboarding preview) and its part is installed. The painted html[data-o55-nier-parts] is the only source while it
+     is there (the onboarding preview paints it without touching the stored parts); only while it is absent is
+     PM_NIER.previewing(), then PM_NIER.has, asked. decode(el, { text }) still writes the words: that is its end state.
    - Reduced Motion (O55.motion.reduced: html[data-motion="reduced"] or the system setting) gives the end state at once:
      the words, the brackets, the ink bar and the Pod's words without motion; slice, wipe, glitch, alert and band
-     draw nothing; a banner stands still for its time.
+     draw nothing; a banner stands still for its time. A low-resource computer (O55.motion.lowResource,
+     html[data-o55-lowres]) gets the same end states for the heavy effects (slice, wipe, alert's scan line and
+     shards) and a Pod that does not hover.
    - Everything is drawn in a layer of the surface that owns the element: #pm-o55-onboarding (above the window, even
      while html[data-o55-open] switches the page-wide NieR parts off), #pm-o55-tour (above the callout and the bar,
      under the Show Me pointer), else a page layer. A call without an element (banner, band, pod.say without anchor)
@@ -57,15 +78,31 @@
   const PART = { decode: 'decode', slice: 'slice', wipe: 'wipe', glitch: 'glitch', alert: 'glitch', brackets: 'brackets', cursor: 'cursor',
     banner: 'quests', band: 'reboot', pod: 'pod', voice: 'voice', scan: 'sweep', shards: 'particles' };
   const painted = () => html.getAttribute('data-o55-nier') === 'on';
-  /* The painted attributes are the truth (they are what the CSS reads, and the onboarding preview paints them too);
-     PM_NIER.has is asked as well so a store that is ahead of its paint still counts. */
+  /* The painted attributes are the truth: they are what the CSS reads, and the onboarding preview paints them while
+     the stored parts stay as they were (a part removed in the preview, or a Quiet / Still / Colors only preset chosen
+     there, must not fire). So while html carries data-o55-nier-parts it is the only source. Only while it is absent
+     (a transition repainting) is the preview asked, then PM_NIER.has. */
+  function partsNow() {
+    const a = html.getAttribute('data-o55-nier-parts');
+    if (a != null) return a;
+    const N = window.PM_NIER;
+    try {
+      const pv = N && typeof N.previewing === 'function' ? N.previewing() : null;
+      if (pv && Array.isArray(pv.parts)) return pv.parts.join(' ');
+    } catch (_) { /* no preview: ask has() below */ }
+    return null;
+  }
   function has(key) {
     if (!painted()) return false;
-    if ((' ' + (html.getAttribute('data-o55-nier-parts') || '') + ' ').indexOf(' ' + key + ' ') >= 0) return true;
+    const a = partsNow();
+    if (a != null) return (' ' + a + ' ').indexOf(' ' + key + ' ') >= 0;
     const N = window.PM_NIER;
     try { return !!(N && typeof N.has === 'function' && N.has(key)); } catch (_) { return false; }
   }
   const still = () => { try { return !!M.reduced(); } catch (_) { return false; } };
+  /* a software-rendered or struggling computer (O55.motion.lowResource, html[data-o55-lowres]): the heavy effects
+     (slice's clip, the wipe, the scan line, the shards) go straight to their end state, as under Reduced Motion */
+  const heavy = () => still() || !!M.lowResource;
   /* enabled('slice') -> would slice() draw (NieR painted and its part installed)? Reduced Motion is not counted. */
   FX.enabled = (name) => has(PART[name] || name) || (name === 'pod' && has('voice'));
 
@@ -81,11 +118,21 @@
 
   /* ------------------------------------------------------------------ hosts and layers */
   const ROOTS = '#pm-o55-onboarding, #pm-o55-tour';
+  /* a surface that is going: hidden, gone, or playing its way out (the window's close() adds o55-closing at once and
+     hides the root up to 0.7 s later; on the hand-over to the tour the window fades in 140 ms; the tour's end adds
+     o55t-closing and hides its root 360 ms later) */
+  function closing(host) {
+    if (!host || host === document.body) return false;
+    if (!host.isConnected || host.hidden || host.classList.contains('o55-closing') || host.classList.contains('o55t-closing')) return true;
+    if (host.id === 'pm-o55-onboarding') return !html.hasAttribute('data-o55-open');
+    if (host.id === 'pm-o55-tour') return !html.hasAttribute('data-o55-tour');
+    return false;
+  }
   function openRoot() {
     const onb = document.getElementById('pm-o55-onboarding');
-    if (onb && !onb.hidden && html.hasAttribute('data-o55-open')) return onb;
+    if (onb && !closing(onb)) return onb;
     const tour = document.getElementById('pm-o55-tour');
-    if (tour && !tour.hidden && html.hasAttribute('data-o55-tour')) return tour;
+    if (tour && !closing(tour)) return tour;
     return null;
   }
   /* the surface that owns el: its onboarding window or tour root, else the open one (a tour target lives in the app,
@@ -94,7 +141,38 @@
     const r = el && el.closest ? el.closest(ROOTS) : null;
     return r || openRoot() || document.body;
   }
-  const closed = (host) => host !== document.body && (!host.isConnected || host.hidden);
+  const closed = closing;
+  /* where a banner, band or Pod without an element of its own is drawn: { layer: 'page' } or within: document.body
+     is the page layer; within: el is el's surface; else the open window, else the running tour, else the page.
+     A surface that is already going is never chosen: the page layer takes it. */
+  const PAGE = (o) => !!o && (o.layer === 'page' || o.within === document.body || o.within === html);
+  function flyHost(o, el) {
+    if (PAGE(o)) return document.body;
+    const h = el && el.nodeType === 1 ? hostOf(el) : hostOf(null);
+    return closing(h) ? document.body : h;
+  }
+  /* A banner, band or Pod watches its surface: when the surface starts to go, onGo() runs once (banners and bands
+     move into the page layer and finish there; a Pod leaves). One observer serves them all, only while one lives. */
+  const flyers = new Set();
+  let flyMo = null;
+  function flyCheck() { Array.from(flyers).forEach((f) => { if (closing(f.host)) { flyers.delete(f); try { f.onGo(); } catch (_) {} } }); flyIdle(); }
+  function flyIdle() { if (!flyers.size && flyMo) { flyMo.disconnect(); flyMo = null; } }
+  function flyWatch(host, onGo) {
+    if (host === document.body) return () => {};
+    const f = { host, onGo };
+    flyers.add(f);
+    if (!flyMo) { flyMo = new MutationObserver(flyCheck); flyMo.observe(html, { attributes: true, attributeFilter: ['data-o55-open', 'data-o55-tour'] }); }
+    flyMo.observe(host, { attributes: true, attributeFilter: ['class', 'hidden'] });
+    return () => { flyers.delete(f); flyIdle(); };
+  }
+  /* move a flying node into the page layer, where it keeps its place (every root and the page layer cover the
+     viewport) and its running animations */
+  function toPage(node) {
+    const from = node.parentElement, L = layerOf(document.body);
+    if (from === L) return;
+    L.appendChild(node);
+    prune(from);
+  }
   function layerOf(host) {
     for (const c of host.children) if (c.classList.contains('o55fx-layer')) return c;
     const L = document.createElement('div');
@@ -216,7 +294,7 @@
     if (!b) return null;
     const cs = getComputedStyle(b);
     if (cs.display === 'inline' || cs.display === 'contents' || !/px$/.test(cs.width) || !/px$/.test(cs.height)) return null;
-    const h = { b, w: b.style.width, h: b.style.height, sw: cs.width, sh: cs.height };
+    const h = { b, had: b.hasAttribute('style'), w: b.style.width, h: b.style.height, sw: cs.width, sh: cs.height };
     b.style.width = h.sw; b.style.height = h.sh;
     return h;
   }
@@ -224,6 +302,64 @@
     if (!h) return;
     if (h.b.style.width === h.sw) h.b.style.width = h.w;
     if (h.b.style.height === h.sh) h.b.style.height = h.h;
+    /* hold() made the style attribute: leave none behind */
+    if (!h.had && !(h.b.getAttribute('style') || '').trim()) h.b.removeAttribute('style');
+  }
+  /* The scrambled glyphs are written into the live text node, so whatever takes its accessible name from those words
+     (the heading the window's dialog is labelled by, a button, an option) is given its final words as aria-label for
+     the decode, then let go: a screen reader reads "Pick a look" at every frame, never the glyphs. The carrier is the
+     nearest element, from the text's parent up, that takes its name from its content (h1-h6, button, a[href],
+     summary, or a role such as heading, button, option, tab, treeitem) or is named by aria-labelledby or
+     aria-describedby; the climb stops at a container its author names (dialog, group, list ...) and at the surface.
+     An element that already has an aria-label is left as it is; text under aria-hidden needs nothing. Plain text
+     with no such carrier is read as it stands for the 420 ms. */
+  const NAME_ROLE = /^(heading|button|link|option|menuitem|menuitemcheckbox|menuitemradio|tab|radio|checkbox|switch|treeitem|cell|gridcell|columnheader|rowheader|tooltip)$/;
+  const NAME_TAG = /^(H[1-6]|BUTTON|SUMMARY)$/;
+  const named = new WeakMap(); /* carrier -> { n, value } */
+  function referenced(e) {
+    if (!e.id) return false;
+    const id = e.id.replace(/["\\]/g, '\\$&');
+    try { return !!document.querySelector(`[aria-labelledby~="${id}"], [aria-describedby~="${id}"]`); } catch (_) { return false; }
+  }
+  function carrierOf(node) {
+    const p = node.parentElement;
+    if (!p || p.closest('[aria-hidden="true"]')) return null;
+    for (let e = p; e && e !== document.body && e !== html && !e.matches(ROOTS); e = e.parentElement) {
+      const role = (e.getAttribute('role') || '').trim().split(/\s+/)[0];
+      if (role ? NAME_ROLE.test(role) : (NAME_TAG.test(e.tagName) || (e.tagName === 'A' && e.hasAttribute('href')))) return e;
+      if (referenced(e)) return e;
+      if (role && role !== 'none' && role !== 'presentation' && role !== 'generic') return null;
+    }
+    return null;
+  }
+  /* the words a carrier reads (its visible text, icons and aria-hidden parts left out) */
+  function wordsOf(c) {
+    let s = '';
+    const w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT);
+    for (let n = w.nextNode(); n; n = w.nextNode()) {
+      let skip = false;
+      for (let q = n.parentElement; q && q !== c.parentElement; q = q.parentElement) {
+        if (q.namespaceURI === SVG_NS || q.getAttribute('aria-hidden') === 'true' || q.hidden) { skip = true; break; }
+      }
+      if (!skip) s += n.nodeValue;
+    }
+    return s.replace(/\s+/g, ' ').trim();
+  }
+  function nameHold(node) {
+    const c = carrierOf(node); if (!c) return null;
+    const rec = named.get(c);
+    if (rec) { rec.n++; return c; }
+    if (c.hasAttribute('aria-label')) return null;
+    const value = wordsOf(c); if (!value) return null;
+    c.setAttribute('aria-label', value);
+    named.set(c, { n: 1, value });
+    return c;
+  }
+  function nameFree(c) {
+    const rec = c && named.get(c); if (!rec) return;
+    if (--rec.n > 0) return;
+    named.delete(c);
+    if (c.getAttribute('aria-label') === rec.value) c.removeAttribute('aria-label');
   }
   FX.decode = function decode(el, o) {
     o = o || {};
@@ -235,8 +371,9 @@
       if (node.nodeValue !== text) node.nodeValue = text;
       return no();
     }
-    if (node.nodeValue !== text) node.nodeValue = text; /* measured with its final words */
+    if (node.nodeValue !== text) node.nodeValue = text; /* measured (and named) with its final words */
     const held = hold(node, el);
+    const carrier = nameHold(node); /* before the first scrambled frame */
     const ms = clamp(o.ms || 420, 140, 2400), dt = 35, n = Math.max(4, Math.round(ms / dt)), len = text.length;
     /* each character resolves on its own step: left to right, a little out of order, all by the last step */
     const at = [];
@@ -252,6 +389,7 @@
       /* if anything else wrote the words meanwhile (the window's refresh), that write stands */
       if (restore && node.isConnected && node.nodeValue === last) node.nodeValue = text;
       unhold(held);
+      nameFree(carrier);
       res(true);
     }
     const tick = () => {
@@ -275,7 +413,7 @@
   const slicing = new WeakMap();
   FX.slice = function slice(el, o) {
     o = o || {};
-    if (!el || typeof el.animate !== 'function' || !has('slice') || still() || document.hidden) return no();
+    if (!el || typeof el.animate !== 'function' || !has('slice') || heavy() || document.hidden) return no();
     const r = rectOf(el); if (!r) return no();
     const prev = slicing.get(el); if (prev) prev();
     const ms = clamp(o.ms || 240, 140, 900), host = hostOf(el), L = layerOf(host);
@@ -308,7 +446,7 @@
      and steps off to the right, so what was drawn under it is revealed (a page change). */
   FX.wipe = function wipe(el, o) {
     o = o || {};
-    if (!el || !has('wipe') || still() || document.hidden) return no();
+    if (!el || !has('wipe') || heavy() || document.hidden) return no();
     const r = rectOf(el); if (!r) return no();
     const ms = clamp(o.ms || 380, 160, 1200), host = hostOf(el), L = layerOf(host);
     const b = box(L, r, 'o55fx-wipe', '<i><b></b></i>');
@@ -371,8 +509,8 @@
     }
     anims.push(...tear(L, r, ground, 260));
     if (kind === 'alert') {
-      if (has('sweep')) anims.push(scan(L, r));
-      if (has('particles')) anims.push(...shards(L, r));
+      if (has('sweep') && !heavy()) anims.push(scan(L, r));
+      if (has('particles') && !heavy()) anims.push(...shards(L, r));
     }
     const job = run(host, () => anims.forEach((a) => a.cancel()));
     return Promise.all(anims.map(ended)).then(() => { finish(job); prune(L); return true; });
@@ -392,11 +530,16 @@
     const node = document.createElement('div');
     node.className = 'o55fx-brk'; node.innerHTML = '<i></i><i></i><i></i><i></i>';
     L.appendChild(node);
-    const GAP = 4;
+    const GAP = 4, EDGE = 2;
     const put = (r, first) => {
       node.toggleAttribute('data-jump', first);
-      node.style.transform = `translate(${z1(r.left) - GAP}px, ${z1(r.top) - GAP}px)`;
-      node.style.width = `${z1(r.width) + GAP * 2}px`; node.style.height = `${z1(r.height) + GAP * 2}px`;
+      /* kept inside the layer, at least 2 px in from its edges (a target at the viewport's edge, the tour's Chat
+         icon at left 0, still shows all four corners) */
+      const Lr = node.parentElement, W = (Lr && Lr.clientWidth) || z1(innerWidth), H = (Lr && Lr.clientHeight) || z1(innerHeight);
+      const x0 = clamp(z1(r.left) - GAP, EDGE, W - EDGE - 24), y0 = clamp(z1(r.top) - GAP, EDGE, H - EDGE - 24);
+      const x1 = clamp(z1(r.right) + GAP, x0 + 24, W - EDGE), y1 = clamp(z1(r.bottom) + GAP, y0 + 24, H - EDGE);
+      node.style.transform = `translate(${x0}px, ${y0}px)`;
+      node.style.width = `${x1 - x0}px`; node.style.height = `${y1 - y0}px`;
       if (first && !still()) {
         Array.from(node.children).forEach((c, i) => {
           const sx = i % 2 ? 1 : -1, sy = i > 1 ? 1 : -1;
@@ -446,6 +589,32 @@
     cursors.delete(host);
     drop(c.node);
   }
+  /* Where the square goes. Beside the row's left edge when 16 px there are free (no neighbouring element, inside
+     its scroll box and the viewport). Else (a tile in the second column of a grid, a row flush with its box) inside
+     the ink bar, a paper square in its left padding beside the first line of words; with no padding for it, above
+     the bar's left corner. */
+  function roomLeft(el, r, port) {
+    if (r.left < 16) return false;
+    if (port && port.isConnected && r.left - port.getBoundingClientRect().left < 16) return false;
+    const y = r.top + r.height / 2;
+    for (const dx of [3, 9, 15]) {
+      const t = document.elementFromPoint(r.left - dx, y);
+      if (t && !t.contains(el)) return false;
+    }
+    return true;
+  }
+  function curSpot(el, r, port) {
+    if (roomLeft(el, r, port)) return { side: 'left', x: z1(r.left) - 14, y: Math.round(z1(r.top + r.height / 2) - 4.5) };
+    let room = 0, mid = r.top + r.height / 2;
+    const n = textNodeOf(el);
+    if (n) {
+      const rg = document.createRange(); rg.selectNodeContents(n);
+      const line = rg.getClientRects()[0];
+      if (line) { room = line.left - r.left; mid = line.top + line.height / 2; }
+    }
+    if (room >= 11 * zoom()) return { side: 'in', x: z1(r.left + (room - 7 * zoom()) / 2), y: Math.round(z1(mid) - 3.5) };
+    return { side: 'top', x: z1(r.left), y: z1(r.top) - 13 };
+  }
   FX.cursor = function cursor(el, on) {
     if (!el) return null;
     const host = hostOf(el), c = cursors.get(host);
@@ -473,14 +642,12 @@
     }
     cur.mo = new MutationObserver(() => { if (cur.el === el && !el.hasAttribute(CUR)) el.setAttribute(CUR, ''); });
     cur.mo.observe(el, { attributes: true, attributeFilter: [CUR] });
-    const node = cur.node;
+    const node = cur.node, port = scrollBox(el, host);
     const put = (r, again) => {
-      /* beside the row's left edge; right of it when the row starts at the surface's edge */
       if (again && node.getAttribute('data-gone') != null) node.setAttribute('data-jump', '');
-      let x = z1(r.left) - 14, side = 'left';
-      if (r.left < 16) { x = z1(r.right) + 5; side = 'right'; }
-      node.style.transform = `translate(${x}px, ${Math.round(z1(r.top + r.height / 2) - 4.5)}px)`;
-      if (node.dataset.side !== side) node.dataset.side = side;
+      const s = curSpot(el, r, port);
+      node.style.transform = `translate(${s.x}px, ${s.y}px)`;
+      if (node.dataset.side !== s.side) node.dataset.side = s.side;
       if (node.hasAttribute('data-jump')) M.release(() => node.removeAttribute('data-jump'));
     };
     cur.f = follow(el, node, host, put, () => { if (cursors.get(host) === cur && cur.el === el) cursorOff(host); });
@@ -530,6 +697,21 @@
     }
     return false;
   }
+  /* reading text the Pod must not stand on either: the tour's callout and bar, the window's head (one that holds
+     the anchor, or lies inside it, does not count) */
+  const OBSTACLE = '.o55t-callout, .o55t-bar, .o55-head';
+  function obstacles(anchor) {
+    const z = zoom(), out = [], el = anchor && anchor.nodeType === 1 ? anchor : null;
+    document.querySelectorAll(OBSTACLE).forEach((e) => {
+      if (el && (e === el || e.contains(el) || el.contains(e))) return;
+      const root = e.closest(ROOTS);
+      if ((root && closing(root)) || e.closest('[hidden]')) return;
+      const r = e.getBoundingClientRect();
+      if (r.width >= 2 && r.height >= 2) out.push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z });
+    });
+    return out;
+  }
+  const meets = (x, y, w, h, obs) => obs.some((o) => x < o.r && x + w > o.l && y < o.b && y + h > o.t);
   /* where the Pod may stand: inside the onboarding window (it is a bounded modal), else the viewport */
   function podBounds(P) {
     const z = zoom(), win = P.host.id === 'pm-o55-onboarding' ? rectOf(P.host.querySelector('.o55-win')) : null;
@@ -538,27 +720,35 @@
   function podPlace(P, first) {
     const n = P.node, z = zoom(), B = podBounds(P), GAP = 12;
     const ar = anchorRect(P.anchor);
-    /* a side is possible when the Pod fits beside the anchor along that side's axis (the other axis slides within the
-       bounds); the first possible side that covers no control wins, else the first possible one stands back (shy) */
+    /* a side is possible when the Pod fits beside the anchor along that side's axis; along the other axis it tries
+       centred on the anchor, then lined up with the anchor's start, then its end (each slid inside the bounds). The
+       first spot that meets no reading text (the callout, the bar, the window's head) and covers no control wins;
+       else the first possible side stands back (shy) */
     let pick = null, last = null;
     const order = P.side ? [P.side, 'right', 'left', 'top', 'bottom'] : ['right', 'left', 'top', 'bottom'];
     const sides = ar ? order.filter((s, i) => order.indexOf(s) === i) : ['dock'];
-    for (const side of sides) {
+    const obs = obstacles(P.anchor);
+    search: for (const side of sides) {
       if (n.dataset.side !== side) n.dataset.side = side;
       const w = n.offsetWidth, h = n.offsetHeight;
       const a = ar ? { l: ar.left / z, t: ar.top / z, r: ar.right / z, b: ar.bottom / z, cx: (ar.left + ar.width / 2) / z, cy: (ar.top + ar.height / 2) / z } : null;
-      let x, y;
-      if (side === 'right') { x = a.r + GAP; y = a.cy - h / 2; }
-      else if (side === 'left') { x = a.l - GAP - w; y = a.cy - h / 2; }
-      else if (side === 'bottom') { x = a.cx - w / 2; y = a.b + GAP; }
-      else if (side === 'top') { x = a.cx - w / 2; y = a.t - GAP - h; }
-      else { x = B.r - w - 10; y = B.b - h - (P.host.id === 'pm-o55-onboarding' ? 72 : 56); }
-      const fits = side === 'dock' || (side === 'left' || side === 'right' ? x >= B.l && x + w <= B.r : y >= B.t && y + h <= B.b);
-      x = clamp(x, B.l, Math.max(B.l, B.r - w)); y = clamp(y, B.t, Math.max(B.t, B.b - h));
-      const spot = { side, x: Math.round(x), y: Math.round(y), w, h, fits };
-      if (!fits) { if (!last) last = spot; continue; }
-      if (!pick) pick = spot;
-      if (!covers(x, y, w, h, P.anchor)) { pick = spot; pick.clear = true; break; }
+      let x, y, slide = [];
+      if (side === 'right') { x = a.r + GAP; slide = [a.cy - h / 2, a.t, a.b - h]; }
+      else if (side === 'left') { x = a.l - GAP - w; slide = [a.cy - h / 2, a.t, a.b - h]; }
+      else if (side === 'bottom') { y = a.b + GAP; slide = [a.cx - w / 2, a.l, a.r - w]; }
+      else if (side === 'top') { y = a.t - GAP - h; slide = [a.cx - w / 2, a.l, a.r - w]; }
+      else { x = B.r - w - 10; y = B.b - h - (P.host.id === 'pm-o55-onboarding' ? 72 : 56); slide = [null]; }
+      const across = side === 'left' || side === 'right';
+      const fits = side === 'dock' || (across ? x >= B.l && x + w <= B.r : y >= B.t && y + h <= B.b);
+      for (const v of slide) {
+        let sx = x, sy = y;
+        if (v != null) { if (across) sy = v; else sx = v; }
+        sx = Math.round(clamp(sx, B.l, Math.max(B.l, B.r - w))); sy = Math.round(clamp(sy, B.t, Math.max(B.t, B.b - h)));
+        const spot = { side, x: sx, y: sy, w, h, fits };
+        if (!fits) { if (!last) last = spot; break; }
+        if (!pick) pick = spot;
+        if (!meets(sx, sy, w, h, obs) && !covers(sx, sy, w, h, P.anchor)) { pick = spot; pick.clear = true; break search; }
+      }
     }
     /* nowhere beside it: the side with the most room, slid inside the bounds */
     if (!pick) pick = last || { side: 'dock', x: Math.round(B.l), y: Math.round(B.t) };
@@ -581,12 +771,14 @@
       { duration: 480, delay: 160 + i * 80, easing: 'steps(6, end)', fill: 'backwards' });
     });
   }
-  function podGo(host, now) {
+  /* the Pod leaves (now: at once); its promise resolves ok (false when its surface went before it had finished) */
+  function podGo(host, now, ok) {
     const P = pods.get(host); if (!P) return;
     pods.delete(host);
     if (P.timer) P.timer.cancel();
     if (P.f) { followers.delete(P.f); unwire(); }
-    const end = () => { drop(P.node); P.res(true); homeSync(); };
+    if (P.unwatch) P.unwatch();
+    const end = () => { drop(P.node); P.res(ok !== false); homeSync(); };
     if (now || still() || !P.node.isConnected || document.hidden) { end(); return; }
     const strip = P.node.querySelector('.o55fx-pod-strip'), unit = P.node.querySelector('.o55fx-pod-unit');
     strip.animate([{ transform: 'scaleY(1)', opacity: 1 }, { transform: 'scaleY(.04)', opacity: 1, offset: 0.7 }, { transform: 'scaleY(.04)', opacity: 0 }], { duration: 180, easing: 'steps(3, end)', fill: 'forwards' });
@@ -605,12 +797,13 @@
     const unitOn = has('pod'), voice = has('voice');
     let words = String(text == null ? '' : text).trim();
     if ((!unitOn && !voice) || !words || document.hidden) return no();
+    if (o.anchor && o.anchor.nodeType === 1) { const r = o.anchor.closest(ROOTS); if (r && closing(r)) return no(); }
     let lead = o.lead ? String(o.lead).replace(/:$/, '').toLowerCase() : '';
     const m = /^(report|proposal|alert|query|analysis)\s*:\s*/i.exec(words);
     if (m) { if (!lead) lead = m[1].toLowerCase(); words = words.slice(m[0].length); }
     if (LEADS.indexOf(lead) < 0) lead = 'report';
     const anchor = o.anchor || null;
-    const host = anchor && anchor.nodeType === 1 ? hostOf(anchor) : hostOf(null);
+    const host = flyHost(o, anchor);
     const ms = clamp(o.ms || 1700 + words.length * 45, 1600, 12000);
     let P = pods.get(host);
     const fresh = !P;
@@ -625,6 +818,8 @@
       P = { host, node, from: unitOn ? home() : null, home: document.getElementById('o55np-pod') };
       pods.set(host, P);
       homeSync();
+      /* its surface going (the window closing, the tour ending) sends it away at once, resolving false */
+      P.unwatch = flyWatch(host, () => podGo(host, true, false));
     }
     const node = P.node;
     node.toggleAttribute('data-unit', unitOn);
@@ -668,11 +863,19 @@
   }
   FX.pod = {
     say: podSay,
-    /* the Pod's signal: it turns toward its anchor and sends three signals, with its chirp (a Pod on screen, or the
-       sound alone when none is; the sound pairs with the Pod's words that called for it) */
+    /* the Pod's signal: it turns toward its anchor and sends three signals, with its chirp. A sound never plays
+       without something to see: with none of our Pods out it is the app's corner Pod (#o55np-pod, the tour and the
+       app) that turns; with neither on screen it is silent and returns false. */
     chirp() {
       if (!has('pod') && !has('voice')) return false;
-      pods.forEach((P) => podTurn(P));
+      if (pods.size) { pods.forEach((P) => podTurn(P)); play('pod'); return true; }
+      const app = has('pod') && home() ? document.getElementById('o55np-pod') : null;
+      const body = app && app.querySelector('.o55np-pod-body');
+      if (!body || typeof body.animate !== 'function') return false;
+      if (!still()) {
+        body.animate([{ transform: 'rotate(0deg) translate(0, 0)' }, { transform: 'rotate(-12deg) translate(-2px, -3px)', offset: 0.22 },
+          { transform: 'rotate(-12deg) translate(-2px, -3px)', offset: 0.7 }, { transform: 'rotate(0deg) translate(0, 0)' }], { duration: 900, easing: 'steps(6, end)' });
+      }
       play('pod');
       return true;
     },
@@ -681,36 +884,54 @@
 
   /* ================================================================== quest banner */
   /* A wide ink band across the surface: it draws as a line, opens in steps, its words flicker on (the title decodes),
-     holds, and folds back to a line. Kicker words: copy nierFx.banner.kickers.* (Goal updated by default). */
+     holds, and folds back to a line. Kicker words: copy nierFx.banner.kickers.* (Goal updated by default). Its height
+     follows its words (a long title takes two lines at a narrow width). Where it stands: opts.at (a fraction of the
+     span's height, 0 top .. 1 bottom); else the first of 30 % (23 % in the tour), 62 %, 50 % and 80 % of the span
+     where it covers neither the tour's callout nor its bar (the span is the window, within's box, or the viewport). */
   const banners = new Map();
   function spanOf(host, within) {
     const z = zoom();
-    const el = within && within.nodeType === 1 ? within : (host.id === 'pm-o55-onboarding' ? host.querySelector('.o55-win') : null);
+    const w = within && within.nodeType === 1 && within !== document.body && within !== html ? within : null;
+    const el = w || (host.id === 'pm-o55-onboarding' ? host.querySelector('.o55-win') : null);
     const r = el ? rectOf(el) : null;
-    return r ? { top: r.top / z, height: r.height / z, left: within ? r.left / z : 0, width: within ? r.width / z : innerWidth / z }
+    return r ? { top: r.top / z, height: r.height / z, left: w ? r.left / z : 0, width: w ? r.width / z : innerWidth / z }
       : { top: 0, height: innerHeight / z, left: 0, width: innerWidth / z };
+  }
+  /* the top of a band h tall in span s: the first place that covers neither the tour's callout nor its bar */
+  function bandTop(s, h, ats) {
+    const z = zoom(), obs = [];
+    document.querySelectorAll('#pm-o55-tour .o55t-callout, #pm-o55-tour .o55t-bar').forEach((e) => {
+      if (closing(e.closest(ROOTS))) return;
+      const r = e.getBoundingClientRect();
+      if (r.width >= 2 && r.height >= 2) obs.push({ l: r.left / z, t: r.top / z, r: r.right / z, b: r.bottom / z });
+    });
+    const at = (f) => Math.round(clamp(s.top + s.height * f - h / 2, s.top + 4, Math.max(s.top + 4, s.top + s.height - h - 4)));
+    for (const f of ats) { const t = at(f); if (!meets(s.left, t, s.width, h, obs)) return t; }
+    return at(ats[0]);
   }
   FX.banner = function banner(o) {
     o = o || {};
     const title = String(o.title == null ? '' : o.title);
     if (!has('quests') || !title || document.hidden) return no();
-    const host = o.within && o.within.nodeType === 1 ? hostOf(o.within) : hostOf(null);
+    let host = flyHost(o, o.within);
     const prev = banners.get(host); if (prev) prev(true);
     const L = layerOf(host), s = spanOf(host, o.within);
     const ms = clamp(o.ms || 1800, 900, 8000);
     const kicker = o.kicker != null ? String(o.kicker) : T('banner.kickers.goalUpdated');
     const el = document.createElement('div');
     el.className = 'o55fx-banner';
-    const H = 96;
-    el.style.cssText = `left:${Math.round(s.left)}px;width:${Math.round(s.width)}px;top:${Math.round(s.top + s.height * (host.id === 'pm-o55-tour' ? 0.23 : 0.3) - H / 2)}px;height:${H}px`;
+    el.style.cssText = `left:${Math.round(s.left)}px;width:${Math.round(s.width)}px;top:0`;
     el.innerHTML = '<div class="o55fx-bn-band"></div><div class="o55fx-bn-copy"><span class="o55fx-bn-mark"></span>'
       + `<span class="o55fx-bn-kicker"><i></i><i></i><i></i><span>${esc(kicker)}</span></span><span class="o55fx-bn-title">${esc(title)}</span>`
       + (o.sub ? `<span class="o55fx-bn-sub">${esc(o.sub)}</span>` : '') + '</div>';
     L.appendChild(el);
+    const H = el.offsetHeight || 96;
+    const ats = Number.isFinite(o.at) ? [clamp(o.at, 0, 1)] : [host.id === 'pm-o55-tour' ? 0.23 : 0.3, 0.62, 0.5, 0.8];
+    el.style.top = `${bandTop(s, H, ats)}px`;
     const band = el.firstElementChild, copy = el.lastElementChild, mark = copy.firstElementChild;
     let res, timer = null, gone = false;
     const p = new Promise((r) => { res = r; });
-    const end = () => { if (gone) return; gone = true; if (timer) timer.cancel(); finish(job); if (banners.get(host) === stop) banners.delete(host); drop(el); res(true); };
+    const end = () => { if (gone) return; gone = true; if (timer) timer.cancel(); unwatch(); finish(job); if (banners.get(host) === stop) banners.delete(host); drop(el); res(true); };
     function stop(now) {
       if (gone) return;
       if (now || still() || !el.isConnected) { end(); return; }
@@ -722,6 +943,14 @@
     }
     const job = run(host, () => stop(true));
     banners.set(host, stop);
+    /* its surface going (setup handing over to the tour): it carries on in the page layer, in the same place */
+    const unwatch = flyWatch(host, () => {
+      if (gone) return;
+      if (banners.get(host) === stop) banners.delete(host);
+      const there = banners.get(document.body); if (there) there(true);
+      host = job.host = document.body; banners.set(host, stop);
+      toPage(el);
+    });
     if (!still()) {
       band.animate([{ transform: 'scale(0, .012)', offset: 0, easing: 'steps(3, end)' }, { transform: 'scale(1, .012)', offset: 0.4, easing: 'steps(4, end)' }, { transform: 'scale(1, 1)', offset: 1 }],
         { duration: 300, fill: 'backwards' });
@@ -739,16 +968,18 @@
   /* ================================================================== reboot band */
   /* A full-width ink band: a line draws across and opens, the kicker (small squares, the unit's name, a rule) shows,
      the status line types on behind a block caret while a row of thirty-two ticks fills in steps, OK lands, and the
-     band flickers out. A key or a press anywhere ends it at once (it never takes the press). */
+     band flickers out. A key or a press anywhere ends it at once (it never takes the press).
+     band(text, ms?, opts?) or band(text, opts) with opts.ms. */
   const bands = new Map();
   FX.band = function band(text, ms, o) {
+    if (ms && typeof ms === 'object') { o = ms; ms = o.ms; }
     o = o || {};
     const words = String(text == null ? '' : text).trim();
     if (!has('reboot') || !words || still() || document.hidden) return no();
-    const host = o.within && o.within.nodeType === 1 ? hostOf(o.within) : hostOf(null);
+    let host = flyHost(o, o.within);
     const prev = bands.get(host); if (prev) prev(true);
     const L = layerOf(host), s = spanOf(host, o.within);
-    const total = clamp(ms || 1500, 900, 6000), H = 108;
+    const total = clamp(Number(ms) || 1500, 900, 6000), H = 108;
     const el = document.createElement('div');
     el.className = 'o55fx-band';
     el.style.cssText = `left:${Math.round(s.left)}px;width:${Math.round(s.width)}px;top:${Math.round(s.top + s.height / 2 - H / 2)}px;height:${H}px`;
@@ -759,7 +990,7 @@
     L.appendChild(el);
     const bandEl = el.firstElementChild, copy = el.lastElementChild, out = el.querySelector('.o55fx-bd-text');
     const fill = el.querySelector('.o55fx-bd-fill'), fillIn = fill.firstElementChild;
-    let res, gone = false, closing = false;
+    let res, gone = false, leaving = false;
     const timers = [];
     const later = (t, fn) => { const h = M.after(t, () => { if (!gone) fn(); }); timers.push(h); return h; };
     const p = new Promise((r) => { res = r; });
@@ -767,13 +998,14 @@
     const end = () => {
       if (gone) return; gone = true;
       timers.forEach((t) => t.cancel());
+      unwatch();
       document.removeEventListener('keydown', skip, true); document.removeEventListener('pointerdown', skip, true);
       finish(job); if (bands.get(host) === stop) bands.delete(host);
       drop(el); res(true);
     };
     function stop(now) {
-      if (gone || closing) { if (now) end(); return; }
-      closing = true;
+      if (gone || leaving) { if (now) end(); return; }
+      leaving = true;
       if (now || !el.isConnected) { end(); return; }
       const a = el.animate([{ opacity: 1 }, { opacity: 0, offset: 0.2 }, { opacity: 0.8, offset: 0.36 }, { opacity: 0, offset: 0.52 }, { opacity: 0.35, offset: 0.68 }, { opacity: 0, offset: 0.84 }, { opacity: 0 }],
         { duration: 300, easing: 'step-end', fill: 'forwards' });
@@ -781,6 +1013,15 @@
     }
     const job = run(host, () => stop(true));
     bands.set(host, stop);
+    /* its surface going (setup handing over to the tour): it carries on in the page layer, in the same place, and
+       resolves at its normal end */
+    const unwatch = flyWatch(host, () => {
+      if (gone) return;
+      if (bands.get(host) === stop) bands.delete(host);
+      const there = bands.get(document.body); if (there) there(true);
+      host = job.host = document.body; bands.set(host, stop);
+      toPage(el);
+    });
     document.addEventListener('keydown', skip, true); document.addEventListener('pointerdown', skip, true);
     /* timeline: line + open 280 ms, typing to 55 %, ticks from 300 ms to 82 %, OK at 84 %, flicker out in the last 300 ms */
     const openMs = 280, outMs = 300, tickMs = Math.max(320, total * 0.82 - openMs), typeMs = Math.max(180, total * 0.55 - openMs);
