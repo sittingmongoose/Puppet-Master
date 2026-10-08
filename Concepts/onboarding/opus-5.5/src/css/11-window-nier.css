@@ -487,6 +487,16 @@ html #pm-o55-onboarding[data-o55nw-hand][data-o55nw-scrim="off"].o55-closing .o5
 .o55nw-podfly .o55nw-pod-fill { fill: var(--o55-nier-raised); }
 .o55nw-podfly .o55nw-pod-ink { fill: currentColor; }
 
+/* ===================================================================================== Q7: the footer's key prompts */
+/* the keys the window answers (60-ui-core.js footHtml), between Back and the primary: ink keycaps, mono words; only
+   under YoRHa headers, on a window 900 px wide or more, with a fine pointer */
+.o55nw-keys { display: none; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55nw-keys { display: flex; align-items: center; gap: 18px; width: max-content; margin: 0 auto; white-space: nowrap;
+  font: 500 10px/1 var(--mono-font); letter-spacing: .2em; text-transform: uppercase; color: var(--text-secondary); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-key { display: inline-flex; align-items: center; gap: 8px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-key > b { padding: 3px 5px 3px 6px; font-weight: 600; letter-spacing: .14em; color: var(--o55-nier-on-ink); background: var(--o55-nier-ink); }
+@media (max-width: 947px), (pointer: coarse) { #pm-o55-onboarding .o55nw-keys { display: none !important; } }
+
 /* ===================================================================================================== Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   html[data-o55-nier="on"] #pm-o55-onboarding .o55nw-stage *, html[data-o55-nier="on"] #pm-o55-onboarding .o55-phases::after, html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph::after,

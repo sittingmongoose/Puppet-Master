@@ -208,13 +208,22 @@
 
   /* ---------------------------------------------------------------- render */
   const val = (v) => (typeof v === 'function' ? v(S) : v);
-  function footHtml(foot, def) {
+  function footHtml(foot, def, choose) {
     foot = foot || {};
     const back = foot.back === false ? '' : `<button type="button" class="o55-btn o55-ghost o55-back" data-o55-do="back" data-pm-hover-exempt="true">${backIcon()}<span>${U.esc(T('chrome.back'))}</span></button>`;
-    const sec = (foot.secondary || []).filter(Boolean).map((b) => btn(b, 'o55-secondary')).join('');
+    const secs = (foot.secondary || []).filter(Boolean), sec = secs.map((b) => btn(b, 'o55-secondary')).join('');
     const pri = foot.primary ? btn(foot.primary, 'o55-primary') : '';
     const note = foot.note ? `<span class="o55-footnote">${U.esc(foot.note)}</span>` : '';
-    return `<footer class="o55-foot o55-st" style="--i:4">${back}${note}<span class="o55-footgrow"></span>${sec}${pri}</footer>`;
+    return `<footer class="o55-foot o55-st" style="--i:4">${back}${note}<span class="o55-footgrow">${secs.length || note ? '' : keysHtml(foot, choose)}</span>${sec}${pri}</footer>`;
+  }
+  /* NieR Mode's key prompts (hero spec Q7): the keys the window answers, between Back and the primary, as ink keycaps
+     with mono words; only while NieR Mode is painted (shown under YoRHa headers on a wide window with a fine pointer,
+     11-window-nier.css), never beside other buttons, and hidden from screen readers (the keys are the window's own) */
+  function keysHtml(foot, choose) {
+    if (!O55.theme().nier) return '';
+    const k = (cap, word) => `<span class="o55nw-key"><b>${U.esc(cap)}</b>${U.esc(word)}</span>`;
+    return `<span class="o55nw-keys" aria-hidden="true">${foot.primary ? k(T('nierWindow.keys.enterCap'), T('nierWindow.keys.enter')) : ''}`
+      + `${k(T('nierWindow.keys.escCap'), T('nierWindow.keys.esc'))}${choose ? k('\u2190 \u2192', T('nierWindow.keys.choose')) : ''}</span>`;
   }
   const backIcon = () => '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
   function btn(b, cls) {
@@ -230,7 +239,7 @@
       + (eyebrow ? `<p class="o55-eyebrow o55-st" style="--i:0">${U.esc(eyebrow)}</p>` : '')
       + `<h1 class="o55-title o55-st" style="--i:1" id="o55-h" tabindex="-1">${U.esc(title || '')}</h1>`
       + (lead ? `<p class="o55-lead o55-st" style="--i:2">${U.esc(lead)}</p>` : '')
-      + `<div class="o55-main o55-st" style="--i:3" data-key="main">${resumedBanner(def)}${body}</div></div></div>` + footHtml(def.foot ? def.foot(S) : {}, def);
+      + `<div class="o55-main o55-st" style="--i:3" data-key="main">${resumedBanner(def)}${body}</div></div></div>` + footHtml(def.foot ? def.foot(S) : {}, def, /o55-choices|o55-tiles/.test(body));
   }
 
   /* Reopening lands on the exact saved screen with a quiet "Picking up where you left off" and Start over; the banner
@@ -635,6 +644,7 @@
     /* a look waiting to be saved into the new Project is written once the window has gone (finish() times its own) */
     if (reason !== 'done' && O55.shell && O55.shell.flushLook) O55.shell.flushLook(400);
     const finish = () => {
+      if (S.open) return; /* opened again before this close had finished (Run Onboarding Again): it stays */
       r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
       document.documentElement.removeAttribute('data-o55-open');
       setInert(false);

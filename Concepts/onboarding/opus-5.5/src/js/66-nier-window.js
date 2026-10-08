@@ -649,7 +649,9 @@
          first arrival in a chapter */
       if (s && s.sess) (s.sess.history || []).concat([s.sess.screen]).forEach((id) => { const d = O55.screens.defs[id]; if (d) R.maxIdx = Math.max(R.maxIdx, O55.stages.progress(s, d).index); });
       cancelAll(); podUntil = 0;
+      handTok++; /* a hand-over still playing out (the window reopened within its hold) stops where it is */
       if (r) ['data-o55nw-cold', 'data-o55nw-go', 'data-o55nw-hand', 'data-o55nw-scrim'].forEach((a) => r.removeAttribute(a));
+      if (r) { const win = r.querySelector('.o55-win'); if (win && O55.nierFx && O55.nierFx.unfold) O55.nierFx.unfold(win); }
       podHold(false);
       if (!r || !painted() || o.shown || calm() || !has('boot')) return false;
       R.cold = { kind: o.resumed ? 'resume' : 'start', asleep: !o.resumed && o.screen === 'welcome' && nierArt() };
