@@ -1459,7 +1459,14 @@
 
      Statuses cover the whole enum, including the four never exercised
      before: queued, failed, retrying, fallback. No agent has fewer than
-     four transcript messages; Query Analyzer has thirteen.
+     four transcript messages; Query Analyzer has twenty-two.
+
+     Query Analyzer's feed is the showcase for the read-only feed's work
+     stretches: its 14 agent-work records (its counts.tools) come in runs of
+     two or three between the prose, a few seconds apart (`gap`), and its
+     last run is the one still going while it works. The regenerated fixture
+     names the file it rewrote (`outputRef`, a file change), so that
+     stretch can say "edited 1 file".
      ===================================================================== */
   const agentRoute = (k) => ({ provider:ROUTES[k].provider, account:ROUTES[k].account, model:ROUTES[k].model, modelId:ROUTES[k].modelId, label:`${ROUTES[k].provider} · ${ROUTES[k].account.split(' · ')[0]}` });
 
@@ -1473,17 +1480,26 @@
       messages:turns('agent-query', { route:'sonnet', startMin:414, mode:'agent', persona:'Systems Analyst', contextStart:14200 }, [
         ['a','I have the read path isolated. Three queries do a full table scan and two of them are inside a per-tenant loop, so the cost scales with tenant count rather than with the page size.'],
         ['e','agent-work',{ title:'Read src/analytics/queries.rs', detail:'Found three full table scans and two N+1 patterns at lines 128 and 196.' }],
+        ['e','agent-work',{ title:'Searched src/analytics for per-tenant loops', detail:'2 call sites, both in dashboard.rs: each calls events_for_tenant() once per tenant.', gap:9 }],
+        ['e','agent-work',{ title:'Read src/analytics/dashboard.rs', detail:'The N+1 is at lines 41 and 88; both loops can take one tenant-scoped query.', gap:14 }],
         ['a','The composite index is the safer first step. A materialized view would also work but it adds refresh lag and a second piece of operational state, and the read win is available without it.'],
         ['a','Column order matters more than I expected here. tenant_id has to lead: every read is tenant-scoped, so it is the highest-selectivity equality predicate, and created_at then serves both the range filter and the ORDER BY without a sort node.'],
-        ['e','agent-work',{ title:'Ran EXPLAIN ANALYZE on the candidate index', detail:'Planner switches from Seq Scan to Index Scan using idx_events_tenant_created.' }],
+        ['e','agent-work',{ title:'Created idx_events_tenant_created on the scratch database', detail:'(tenant_id, created_at) on the benchmark copy, built in 3.1 s. Production is untouched.' }],
+        ['e','agent-work',{ title:'Ran EXPLAIN ANALYZE on the candidate index', detail:'Planner switches from Seq Scan to Index Scan using idx_events_tenant_created.', gap:18 }],
+        ['e','agent-work',{ title:'Ran EXPLAIN ANALYZE with created_at leading', detail:'The planner keeps a Sort node and reads 9x more pages: the reversed column order loses.', gap:22 }],
         ['a','Baseline is worse than the ticket said. p95 is 482 ms, not 310 ms — the ticket measured against the old 8x400 benchmark fixture, which is small enough that a sequential scan actually wins.'],
-        ['e','agent-work',{ title:'Regenerated the benchmark fixture', detail:'214 tenants x 600 events = 128,400 rows, matching production row shape.' }],
+        ['e','agent-work',{ title:'Read benches/fixtures/events.rs', detail:'The old fixture is 8 tenants x 400 events = 3,200 rows, small enough that a sequential scan wins.' }],
+        ['e','agent-work',{ title:'Regenerated the benchmark fixture', detail:'214 tenants x 600 events = 128,400 rows, matching production row shape.', gap:31, outputRef:{ kind:'change', path:'benches/fixtures/events.rs' } }],
+        ['e','agent-work',{ title:'Ran the read benchmark', detail:'3 cold and 3 warm runs per variant. p95 482 ms to 71 ms, p50 118 ms to 24 ms.', gap:40 }],
         ['a','With the corrected fixture: p95 482 ms to 71 ms, p50 118 ms to 24 ms. Throughput goes from 1,420 to 3,980 rows per second.'],
         ['a','The honest cost is on the write side. Inserts are 4.8% slower with the extra index, measured over 50,000 inserts. That is worth stating next to the read win rather than only reporting the improvement.'],
-        ['e','agent-work',{ title:'Checked write amplification', detail:'+4.8% insert cost across 50,000 inserts; no change to the p99 tail.' }],
+        ['e','agent-work',{ title:'Ran the insert benchmark', detail:'50,000 inserts with the index and 50,000 without, on the same fixture.' }],
+        ['e','agent-work',{ title:'Checked write amplification', detail:'+4.8% insert cost across 50,000 inserts; no change to the p99 tail.', gap:12 }],
+        ['e','agent-work',{ title:'Ran the analytics test suite', detail:'42 passed, 0 failed (cargo test -p analytics) with the index in place.', gap:26 }],
         ['a','One caveat for the migration: CREATE INDEX CONCURRENTLY takes two table passes and cannot run inside a transaction block, so it has to be its own migration file rather than part of the batch.'],
         ['a','I also want to say what I did not test. I have not measured this under concurrent write load, and I have not checked whether the index survives a statistics refresh with the current autovacuum settings. Both are cheap to check and both are ways this quietly regresses later, so I would rather flag them than let the benchmark read as more complete than it is.', { long:true }],
-        ['e','agent-work',{ title:'Handed the benchmark artifact to the parent', detail:'dashboard-query version 6 · read win and write cost recorded together.' }]
+        ['e','agent-work',{ title:'Handed the benchmark artifact to the parent', detail:'dashboard-query version 6 · read win and write cost recorded together.' }],
+        ['e','agent-work',{ title:'Benchmarking the index under concurrent writes', detail:'4 writer threads beside the read benchmark, run 2 of 3. The first run held p95 at 74 ms.', gap:16 }]
       ]) },
 
     { id:'agent-schema', name:'Schema Reviewer', model:'Qwen 3.8', status:'blocked',
