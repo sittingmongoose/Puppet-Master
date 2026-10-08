@@ -614,9 +614,10 @@
     /* T240 the content steps out (one way, two steps), leaving the frame and the header rule; the Pod lifts off */
     at(240, () => {
       r.setAttribute('data-o55nw-hand', 'out');
-      play('close');
       detachPod().then((fly) => hand.podRes(fly));
     });
+    /* the window's close sound as its content has stepped out, clear of the last cheer */
+    at(340, () => play('close'));
     /* T400-T660 the window folds to a 2 px ink line at its centre, which holds (blinking) until the tour moves it */
     at(400, () => {
       F.fold(win, { ms: 260 }).then((ln) => {
