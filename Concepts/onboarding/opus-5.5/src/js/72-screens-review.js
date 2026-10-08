@@ -44,9 +44,14 @@
       O55.ui.refresh();
       made(S);
     };
-    /* after the look's write (queued by publishProject before this), two frames, then the first idle moment */
+    /* after the look's write (queued by publishProject before this): the first two frames in a row under 34 ms each
+       (at most 1.6 s), so the moment starts on a frame of its own, never at the tail of the app's re-measuring */
     const R = O55.motion.real;
-    R.setTimeout(() => R.raf(() => R.raf(() => { if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(show, { timeout: 700 }); else R.setTimeout(show, 60); })), 0);
+    R.setTimeout(() => {
+      const t0 = performance.now(); let last = 0, n = 0, calm = 0;
+      const step = (t) => { if (last) calm = t - last < 34 ? calm + 1 : 0; last = t; n++; if ((n >= 3 && calm >= 2) || performance.now() - t0 > 1600) show(); else R.raf(step); };
+      R.raf(step);
+    }, 0);
     R.setTimeout(show, 2400); /* a hidden page draws no frames */
   }
 
