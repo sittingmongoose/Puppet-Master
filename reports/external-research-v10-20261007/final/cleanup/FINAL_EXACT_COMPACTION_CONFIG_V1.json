@@ -1,0 +1,27 @@
+{
+  "schema": "ER10_ROOT_EXACT_VERIFIED_COMPACTION_CONFIG_V1",
+  "owned_runtime_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "publication_checkout": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+  "full_corpus_deletion_authorized": false,
+  "actual_quiet_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+    "sha256": "9990707a8872b25e6e3d2b03799d2f11e0a598d79463c576a8c3d8cda7ff443e"
+  },
+  "verified_publication_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_GITHUB_PUBLICATION_VERIFICATION_V1.json",
+    "sha256": "cf6f4a87969a7566586b70bd30d9fc23163d6ffa02ac7a1e3e560c45d57fc5ba"
+  },
+  "verified_private_archive_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_PRIVATE_ARCHIVE_VERIFICATION_V1.json",
+    "sha256": "6ca515aea757329034d3cd8102afbf92be7ff1d9d5d4117439acb5cf14e63f89"
+  },
+  "fixed_source_reconstruction_catalog": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FIXED_SOURCE_RECONSTRUCTION_CATALOG.json",
+    "sha256": "c4fb2b386deaa80009158f6e4459b8558532cc92778e5ac23f76c3660722564f"
+  },
+  "exact_action_plan": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_EXACT_COMPACTION_ACTION_PLAN_V1.json",
+    "sha256": "cebf63d668b55d89258cd4e06da6c61e3103e328f7927051d97b8fe86f29f8a8"
+  },
+  "limits": "No directory-wide deletion, shared provider-state cleanup, source hash repair, semantic repair, source requalification, main/canon change or current T3-bound worktree removal. Unique unqualified sources remain narrow explicit holds; only exact duplicate aliases and independently verified fixed whole-source cache removals are admitted."
+}

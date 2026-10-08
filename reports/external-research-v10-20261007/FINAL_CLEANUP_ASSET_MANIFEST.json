@@ -1,0 +1,138 @@
+{
+  "schema": "ER10_ROOT_FINAL_ASSET_MANIFEST_V1",
+  "config_sha256": "0023a0f08e959e5dbce4a82270b12dc37d983b61cc9fd72b986633ae273ac01d",
+  "campaign_scientific_results_frozen": true,
+  "original_results_overwritten": false,
+  "raw_source_bodies_or_native_tickets_or_transcripts_included": false,
+  "files": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-cleanup-handoff-v1/CLEANUP.md",
+      "target": "reports/external-research-v10-20261007/final/CLEANUP.md",
+      "sha256": "12ac032ab17d3aa26f3663411b6879e75f52dd083e2539d7ea2d6bfc13027b5d",
+      "bytes": 3704,
+      "git_blob_sha1": "c9efb444a8b22fcd63556d75937af82403f326a4",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "ROOT_FINAL_CLOSEOUT"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-cleanup-handoff-v1/FINAL_CLOSEOUT.md",
+      "target": "reports/external-research-v10-20261007/final/FINAL_CLOSEOUT.md",
+      "sha256": "54fa1a2f790c4db37903262498d5dc03ebb8786c580d3623fc323094c10df371",
+      "bytes": 1551,
+      "git_blob_sha1": "10bc1a536e7f16cd5e4f3b232725bb7352101c80",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "ROOT_FINAL_CLOSEOUT"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_EXACT_COMPACTION_ACTION_PLAN_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_EXACT_COMPACTION_ACTION_PLAN_V1.json",
+      "sha256": "cebf63d668b55d89258cd4e06da6c61e3103e328f7927051d97b8fe86f29f8a8",
+      "bytes": 5450210,
+      "git_blob_sha1": "3cb0d2e26cfc4b3ae2cebad152cc76d2c1038aa3",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_EXACT_COMPACTION_CONFIG_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_EXACT_COMPACTION_CONFIG_V1.json",
+      "sha256": "fa5caeea1ad248b292f9e0f5652fd7f253b79241349379851a4d1717f7f12f75",
+      "bytes": 1941,
+      "git_blob_sha1": "7f0353d41dd0460d05aa43a5f74afe5961df5f4b",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_EXACT_COMPACTION_DRY_RUN_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_EXACT_COMPACTION_DRY_RUN_V1.json",
+      "sha256": "edc13e940a3800eae44e0f0d34a1e1939bbdaeb78e3e67fe29aaf2b890a9e4e6",
+      "bytes": 5608095,
+      "git_blob_sha1": "bb8ecba5e97f573d199ba5d1d78b59c0653c0354",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_EXECUTED_EXACT_COMPACTION_RECEIPT_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_EXECUTED_EXACT_COMPACTION_RECEIPT_V1.json",
+      "sha256": "cdc54dcf4eba13df649beb9375d7bf17b15e311507ba3794bc83a0ec38bc6796",
+      "bytes": 6351363,
+      "git_blob_sha1": "d74934284b79f72c3f943b7040c8e0e7d0c2dd97",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_ACTUAL_CLEANUP_INVENTORY_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_ACTUAL_CLEANUP_INVENTORY_V1.json",
+      "sha256": "254fa47be0b0df977c03a660f1c9a859f116a52ae7603df0595b5fc351c447fd",
+      "bytes": 1134059,
+      "git_blob_sha1": "0c4ee736ba194d74cab448b488eaed37d8fa833c",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_DISPOSABLE_CACHE_CLEANUP_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_DISPOSABLE_CACHE_CLEANUP_V1.json",
+      "sha256": "3d61d3cc5f861e7f9ce2dd895754234b823fdfcd529c7c5c289079d38193b5bd",
+      "bytes": 2079,
+      "git_blob_sha1": "06e9ca4378aa7923ad2d7e8b5099a25a9b7cffd2",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_ROOT_RESOURCE_METADATA_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_ROOT_RESOURCE_METADATA_V1.json",
+      "sha256": "268895eed032dfd8f8599272778e15cff0a0496a673c824d4b3b3a73e6168099",
+      "bytes": 2745,
+      "git_blob_sha1": "f26bf7d5d2b9b9507b73a922c35d0026872a6c8d",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_GITHUB_PUBLICATION_VERIFICATION_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_GITHUB_PUBLICATION_VERIFICATION_V1.json",
+      "sha256": "cf6f4a87969a7566586b70bd30d9fc23163d6ffa02ac7a1e3e560c45d57fc5ba",
+      "bytes": 4558,
+      "git_blob_sha1": "22e2e727c392b3c5c14b64a58b419fc708170560",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_GITHUB_CAMPAIGN_TREE_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_GITHUB_CAMPAIGN_TREE_V1.json",
+      "sha256": "07a3f993c3e87c27ec58a7abbee8580ecf073c702abf669200fa199dd80da7ba",
+      "bytes": 2685930,
+      "git_blob_sha1": "82787372a54825141951dd18387ada0ad45ab48d",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_PUBLICATION_LOCAL_IDENTITY_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_PUBLICATION_LOCAL_IDENTITY_V1.json",
+      "sha256": "5747b0ddb9df90d2590ef37dbaaaa02dfde3e557f9b93f7b4e8e3db2b5c176e9",
+      "bytes": 159017,
+      "git_blob_sha1": "716d5c4fd1f4e0e36e529a82ddeff0e24c42a6b6",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_EXACT_STAGED_SCOPE_CHECK_V1.json",
+      "target": "reports/external-research-v10-20261007/final/cleanup/FINAL_EXACT_STAGED_SCOPE_CHECK_V1.json",
+      "sha256": "676e1ae91844ae7e0663c6499f8963bd88bec615ba99ee58200998cbb849f6b8",
+      "bytes": 18687,
+      "git_blob_sha1": "e5b3c5db1bf4644c1747b3aa4a3e8bda3b597558",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/prepare_final_compaction.py",
+      "target": "reports/external-research-v10-20261007/final/cleanup/prepare_final_compaction.py",
+      "sha256": "f7ca240eb8d4b37ed0ac014d1def342600e98ccd11ff6fd996e3ed0876b408c4",
+      "bytes": 6235,
+      "git_blob_sha1": "d9c150b81a608b445adb29842d46e0eed62f3b97",
+      "kind": "NEW_EXACT_COPY",
+      "asset_role": "EXACT_EXECUTED_CLEANUP_METADATA_OR_CODE"
+    }
+  ],
+  "equivalent_source_aliases": [],
+  "scope": "One actual cleanup follow-up: executed proof-gated compaction, immutable source holds, current binding/resource exceptions, and initial actual GitHub verification. No scientific record regrade.",
+  "source_retention_limits": "No full source bodies, private witness fragments, native tickets or model transcripts. Explicit unique original source and current worktree holds."
+}
