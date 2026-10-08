@@ -1,16 +1,17 @@
 {
-  "look": {
-    "nier": {
-      "label": "NieR Mode",
-      "tag": "Add-on",
-      "sub": "An ink-and-parchment look inspired by NieR: Automata. It paints over the look you pick; turn it off any time.",
-      "subOn": "Painting over {name} now. The look you pick above shows again when you turn NieR Mode off.",
-      "adjust": "Adjust NieR look",
-      "adjustShort": "Adjust",
-      "panelTitle": "Adjust NieR look",
-      "nowOn": "NieR Mode is on. Your look is kept for when you turn it off.",
-      "nowOff": "NieR Mode is off. Your look is back.",
-      "missing": "The NieR Mode parts cannot be changed here right now. You can change them later in Settings."
-    }
-  }
+ "look": {
+  "nier": {
+   "label": "NieR Mode",
+   "tag": "Add-on",
+   "sub": "An ink-and-parchment look inspired by NieR: Automata. It paints over the look you pick; turn it off any time.",
+   "subOn": "Painting over {name} now. The look you pick above shows again when you turn NieR Mode off.",
+   "adjust": "Adjust NieR look",
+   "adjustShort": "Adjust",
+   "panelTitle": "Adjust NieR look",
+   "nowOn": "NieR Mode is on. Your look is kept for when you turn it off.",
+   "nowOff": "NieR Mode is off. Your look is back.",
+   "missing": "The NieR Mode parts cannot be changed here right now. You can change them later in Settings."
+  },
+  "modeHint": "Light or dark starts from your computer's setting."
+ }
 }

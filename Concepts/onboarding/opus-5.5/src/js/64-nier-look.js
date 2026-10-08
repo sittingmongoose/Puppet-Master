@@ -62,9 +62,14 @@
 
   /* NieR Mode on or off. In the window the control shows the new state in the same frame and the reboot plays
      inside the window; after setup it is saved at once (Settings' own reboot moment, in NieR's voice). */
+  /* repainting the page for NieR Mode (or for a change of its parts) is expected heavy work: the long tasks it makes
+     never count toward the window's low-resource mode, which would silence NieR's own texture for the rest of the run
+     (O55.motion.quiet; the reboot's repaint measured 1.3 + 1.1 s of long tasks on the VM) */
+  const heavy = (ms) => O55.motion.quiet(ms || 2500);
   function toggle(source, el) {
     const n = N(); if (!n) return false;
     const next = !state().on;
+    heavy(4500);
     O55.sound.play(next ? 'nierOn' : 'nierOff');
     if (!inWindow()) return n.set(next, { sound: false });
     const S = O55.S;
@@ -89,8 +94,16 @@
     const n = N(), C = window.PM_NIER_CHIPS;
     if (inWindow()) return openPanel(el);
     if (!n || !n.store || !C || !C.popup) return null;
+    heavy();
     O55.sound.play('sheet');
-    return C.popup({ store: n.store('live'), from: el || null });
+    /* focus comes back to what is there when the dialog closes: a change of parts redraws the tour's bar, which
+       replaces the look button that opened it (PM_NIER_CHIPS.popup asks returnFocus at close; from stays the fallback) */
+    const returnFocus = () => {
+      const tour = document.getElementById('pm-o55-tour');
+      const live = tour && !tour.hidden ? tour.querySelector('.o55t-bar [data-o55t="lookMenu"]') : null;
+      return live || (el && el.isConnected ? el : null);
+    };
+    return C.popup({ store: n.store('live'), from: el || null, title: T('look.nier.panelTitle'), returnFocus });
   }
 
   /* The editor inside the window: a panel over the window's interior (the stage and the pane), under its header. The
@@ -108,23 +121,26 @@
       set(on) {
         if (!!on === s.on()) return true;
         /* the editor's Turn on: the same moment as the checkbox (its sound, the reboot inside the window) */
+        heavy(4500);
         O55.sound.play(on ? 'nierOn' : 'nierOff');
         N().preview({ on: !!on }, { within: within(), sound: false }); after(null); paint(!!on); return true;
       },
       setParts(keys) {
         const before = s.parts(), list = Array.isArray(keys) ? keys : [];
         const one = Math.abs(before.length - list.length) === 1 && (before.length > list.length ? list.every((k) => before.includes(k)) : before.every((k) => list.includes(k)));
+        heavy();
         const ok = s.setParts(list);
         after(one ? (list.length > before.length ? 'toggleOn' : 'toggleOff') : 'select');
         return ok;
       },
-      setBackground(label) { const ok = s.setBackground(label); after('select'); return ok; }
+      setBackground(label) { heavy(); const ok = s.setBackground(label); after('select'); return ok; }
     });
   }
   function openPanel(from) {
     const S = O55.S, w = win(), n = N(), C = window.PM_NIER_CHIPS;
     if (!w || !n || !n.store) return null;
     if (panel) { const h = panel.host.querySelector('.o55-nierpanel-h'); if (h) h.focus({ preventScroll: true }); return panel; }
+    heavy(); /* mounting the editor is a large build of its own */
     /* the look menu gives way to the editor */
     if (S.lookOpen) { S.lookOpen = false; O55.ui.refresh(); }
     const body = w.querySelector('.o55-body');
@@ -144,11 +160,17 @@
       mountEl.innerHTML = `<p class="o55-note o55-note-info">${O55.c.small('spark', 14)}<span>${U.esc(T('look.nier.missing'))}</span></p>`
         + `<div class="o55-nierpanel-fallback"><button type="button" class="o55-btn o55-secondary" data-o55-nierpanel="done" data-pm-hover-exempt="true"><span>${U.esc(T('chrome.done'))}</span></button></div>`;
     }
-    /* Escape closes the panel first (before the window's own Escape); caught on the document as well, in case the
-       control that had focus went away (the editor's Turn on hides itself once used) */
+    /* The panel is the window's topmost layer: Escape closes it first, wherever focus is in the window (the header's
+       Close included; a second Escape closes the window), unless the look menu is open, which closes before it. It is
+       caught on the document as well, in case the control that had focus went away (the editor's Turn on hides itself
+       once used). Enter on the panel's heading does nothing (the screen hidden beneath never hears it). */
     const onKey = (e) => {
-      if (e.key !== 'Escape' || !panel || panel.host !== host) return;
-      if (!(host.contains(e.target) || e.target === document.body || e.target === document.documentElement)) return;
+      if (!panel || panel.host !== host) return;
+      const t = e.target, root = S.root;
+      if (e.key === 'Enter' && t && t.classList && t.classList.contains('o55-nierpanel-h')) { e.preventDefault(); e.stopPropagation(); return; }
+      if (e.key !== 'Escape') return;
+      const inside = host.contains(t) || t === document.body || t === document.documentElement || (root && root.contains(t) && !S.lookOpen);
+      if (!inside) return;
       e.preventDefault(); e.stopPropagation(); closePanel();
     };
     const onClickHost = (e) => { if (e.target.closest && e.target.closest('[data-o55-nierpanel="done"]')) { e.preventDefault(); closePanel(); } };

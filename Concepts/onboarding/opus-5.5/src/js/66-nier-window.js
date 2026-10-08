@@ -27,12 +27,16 @@
   const html = document.documentElement;
   const T = (k, v) => O55.t('nierWindow.' + k, v);
   const painted = () => html.getAttribute('data-o55-nier') === 'on';
-  const has = (key) => painted() && (' ' + (html.getAttribute('data-o55-nier-parts') || '') + ' ').indexOf(' ' + key + ' ') >= 0;
+  /* one gate for every NieR part, O55.nierFx's when it offers it (it also reads a preview's parts while the painted
+     attribute is briefly absent), else the painted attribute */
+  const has = (key) => painted() && (O55.nierFx && typeof O55.nierFx.has === 'function' ? !!O55.nierFx.has(key)
+    : (' ' + (html.getAttribute('data-o55-nier-parts') || '') + ' ').indexOf(' ' + key + ' ') >= 0);
   const fx = () => (painted() && O55.nierFx && O55.nierFx.enabled ? O55.nierFx : null);
   const reduced = () => M.reduced();
-  /* the one-shot effects (wipe, slice) are end states under Reduced Motion; like O55.nierFx they still play on a low
-     resource computer (they are short and stepped), while the overlay's loops stop there (11-window-nier.css) */
-  const calm = () => M.reduced();
+  /* One low-resource rule for both directions, O55.nierFx's: the heavy one-shots (the page wipe, the slice) are end
+     states under Reduced Motion and on a low-resource computer, forward and Back alike; the overlay's loops stop
+     there too (11-window-nier.css) */
+  const calm = () => M.reduced() || !!M.lowResource;
   const rootEl = () => (O55.S && O55.S.root) || null;
   const shown = () => { const s = O55.S; return !!(s && s.open && s.root && !s.root.hidden); };
   const layerNow = () => { const r = rootEl(); return r ? r.querySelector('.o55-pane > .o55-layer:not(.o55-out)') : null; };
@@ -51,6 +55,7 @@
   }
   /* timers belong to the screen that set them: a screen change, the window closing or NieR Mode going cancels them */
   let token = 0;
+  let backWipe = null; /* the running Back wipe: a screen change, the window closing or NieR Mode going stops it */
   const timers = new Set();
   function later(ms, fn) {
     const t = token;
@@ -58,7 +63,7 @@
     timers.add(h);
     return h;
   }
-  function cancelAll() { token++; timers.forEach((h) => h.cancel()); timers.clear(); pending = null; }
+  function cancelAll() { token++; timers.forEach((h) => h.cancel()); timers.clear(); pending = null; if (backWipe) backWipe(); }
 
   /* ------------------------------------------------------------------ the stage overlay and the brand */
   /* PMConcept7's ink-line Pod (the same drawing as kit.d/19-nier-parts.js and O55.nierFx), resting by the art panel's
@@ -96,16 +101,99 @@
   }
 
   /* ------------------------------------------------------------------ Pod 042 */
-  /* Pod speaks from its corner of the art panel, its words to the left over the art's top edge (the side that covers
-     no control). One line at a time: a line asked for while another is still being read waits for it (an alert does
-     not wait); a later line replaces a waiting one. */
-  let podUntil = 0, pending = null, lastLine = '', lastAt = 0;
-  function anchor() {
-    const r = rootEl(); if (!r) return null;
-    const pod = r.querySelector('.o55nw-pod'), pr = pod && has('pod') ? pod.getBoundingClientRect() : null;
-    if (pr && pr.width > 4) return { left: pr.right + 12, top: pr.top + pr.height / 2 - 1, width: 2, height: 2 };
+  /* Pod is the narrator, and the narrator never covers an actor, a hung sign or card, or the stage kicker (hero spec
+     section 1 rule 8). Its strip speaks in one of two lanes of the art panel:
+       'bar' just below the control bar's line (the sky between the bar and the heads);
+       'lip' low over the stage lip (in front of the slab, under the actors' feet).
+     anchor(o) takes the first lane, then the first place along it (by the resting Pod's corner, then the far side,
+     then the middle), whose strip crosses none of those rects; o.lane asks for one lane first. When neither lane is
+     clear it looks down the panel for any clear band, then takes the place that covers the least (an actor counts
+     most). On the narrow window's short band the strip is one compact row (11-window-nier.css), so it fits a lane.
+     The geometry is read once per line, at the start of a frame, never between frames (README Performance rule 3).
+     One line at a time: a line asked for while another is still being read waits for it (an alert does not wait); a
+     later line replaces a waiting one. Its dwell follows its length (1.3 s and 22 ms a letter, at most 3.2 s), and both
+     clocks (this queue and the strip's own timer in O55.nierFx) use the same number (review W4). */
+  let podUntil = 0, pending = null, lastLine = '', lastAt = 0, podFrame = 0;
+  const readMs = (text) => Math.round(Math.min(3200, 1300 + String(text).length * 22));
+  /* what the narrator must not cover: props it is not ('stage' the slab, 'bar' the control bar is the lane's own edge,
+     the operator's 'link' and the 'dim' rule, the 'curtain' cloth, the sparks 'sp<n>' and the review's routes are set
+     dressing it may pass over), the actors (weighted most), and the stage kicker; plus a card or banner hung in it */
+  const SET = /^(stage|bar|link|dim|curtain|sp\d+|path\d+)$/;
+  function stageMap(r) {
     const st = r.querySelector('.o55-stage'), sr = st ? st.getBoundingClientRect() : null;
-    return sr && sr.width > 4 ? { left: sr.right - 6, top: sr.top + 44, width: 2, height: 2 } : null;
+    if (!sr || sr.width < 80 || sr.height < 60) return null;
+    const wrap = st.querySelector(':scope > .o55-scene-wrap:not(.o55-out)');
+    /* every rect keeps a margin of 5 px, so the strip never touches what it stands beside */
+    const box = (e) => { const b = e.getBoundingClientRect(); return b.width > 1 && b.height > 1 ? { l: b.left - 5, t: b.top - 5, r: b.right + 5, b: b.bottom + 5 } : null; };
+    const avoid = [];
+    let bar = null, lowest = -Infinity;
+    if (wrap) {
+      const b = wrap.querySelector('.o55-nier-bar'); if (b) { bar = box(b); if (bar) avoid.push(Object.assign({}, bar, { w: 2 })); }
+      wrap.querySelectorAll('.o55-nier-unit, .o55-nier-you, .o55-nier-mach').forEach((e) => { const x = box(e); if (x) { avoid.push(Object.assign(x, { w: 4 })); lowest = Math.max(lowest, x.b); } });
+      const k = wrap.querySelector('.o55-nier-kicker'); if (k) { const x = box(k); if (x) avoid.push(Object.assign(x, { w: 3 })); }
+      wrap.querySelectorAll('.o55-it').forEach((it) => {
+        const key = it.getAttribute('data-key') || '';
+        if (SET.test(key) || it.querySelector('.o55-nier-unit, .o55-nier-you, .o55-nier-mach')) return;
+        const x = box(it); if (x) avoid.push(Object.assign(x, { w: /sign|ok|ready/.test(key) ? 3 : 1.5 }));
+      });
+    }
+    r.querySelectorAll(':scope > .o55fx-layer :is(.o55fx-banner, .o55fx-band)').forEach((e) => { const x = box(e); if (x) avoid.push(Object.assign(x, { w: 3 })); });
+    /* the panel's own furniture: the rulers along its left and bottom edges, the resting Pod's corner */
+    const narrow = sr.height < 220;
+    return { s: { l: sr.left + 22, t: sr.top + (narrow ? 6 : 10), r: sr.right - 12, b: sr.bottom - 18 }, bar, lowest, avoid, narrow };
+  }
+  /* the strip's box before it is drawn (unit + gap + strip): 11-window-nier.css caps the strip's width (260 px, 196
+     slim; on the narrow window a compact row up to 520 px with its head inline, or a stacked 200 px strip beside a
+     subject as tall as the band) and its height follows its lines */
+  function stripSize(text, narrow, slim) {
+    const n = String(text).length, cw = 6.8;
+    if (narrow && !slim) {
+      const sw = Math.min(520, 124 + n * cw), lines = Math.ceil((n * cw) / (sw - 124));
+      return { w: 25 + 8 + sw, h: Math.max(34, lines * 17.5 + 17) };
+    }
+    if (narrow) { const lines = Math.ceil(n / (176 / cw)); return { w: 25 + 8 + 200, h: 20 + lines * 17.5 + 18 }; }
+    const sw = slim ? 196 : 260, lines = Math.ceil(n / ((sw - 24) / cw));
+    return { w: 40 + 12 + sw, h: 20 + lines * 18.75 + 20 };
+  }
+  const cross = (a, o) => Math.max(0, Math.min(a.r, o.r) - Math.max(a.l, o.l)) * Math.max(0, Math.min(a.b, o.b) - Math.max(a.t, o.t));
+  function anchor(text, o) {
+    const r = rootEl(); if (!r) return null;
+    const m = stageMap(r); if (!m) return null;
+    const P = m.s, GAP = 4;
+    const fits = (box) => box.t >= P.t && box.b <= P.b && box.l >= P.l - 1 && box.r <= P.r + 1;
+    const score = (box) => m.avoid.reduce((t, a) => t + cross(box, a) * a.w, 0);
+    let best = null;
+    /* along a lane: by the resting Pod's corner (right), the far side, the middle */
+    const tryAt = (lane, top, size, slim) => {
+      const xs = [P.r - size.w, P.l, Math.round((P.l + P.r - size.w) / 2)];
+      for (const x of xs) {
+        const box = { l: x, t: top, r: x + size.w, b: top + size.h };
+        if (!fits(box)) continue;
+        const c = score(box);
+        if (!best || c < best.c) best = { c, box, lane, slim, side: x === xs[0] ? 'left' : 'right' };
+        if (c === 0) return true;
+      }
+      return false;
+    };
+    const lanes = {
+      bar: () => (m.bar ? Math.max(P.t, m.bar.b + GAP) : P.t + (m.narrow ? 0 : 30)),
+      lip: (size) => (m.narrow || m.lowest < 0 ? P.b - size.h : Math.min(P.b - size.h, m.lowest + GAP))
+    };
+    const order = o && o.lane === 'lip' ? ['lip', 'bar'] : ['bar', 'lip'];
+    const sizes = [[stripSize(text, m.narrow), false], [stripSize(text, m.narrow, true), true]];
+    let done = false;
+    for (const lane of order) {
+      for (const [size, slim] of sizes) if (tryAt(lane, Math.round(lanes[lane](size)), size, slim)) { done = true; break; }
+      if (done) break;
+    }
+    /* neither lane is clear: any clear band down the panel */
+    if (!done) scan: for (const [size, slim] of sizes) for (let y = P.t; y + size.h <= P.b; y += 8) if (tryAt('band', y, size, slim)) break scan;
+    if (!best) return null;
+    /* O55.nierFx places the strip beside a point: to its right (side 'right') from the left edge of the box, or to
+       its left (side 'left') ending at the box's right edge, centred on the point's height */
+    const b = best.box, cy = Math.round(b.t + (b.b - b.t) / 2) - 1;
+    const point = best.side === 'right' ? { left: b.l - 14, top: cy, width: 2, height: 2 } : { left: b.r + 12, top: cy, width: 2, height: 2 };
+    return { point, side: best.side, lane: best.lane, slim: best.slim, box: b, clear: best.c === 0, avoid: m.avoid };
   }
   function say(text, o) {
     o = o || {};
@@ -118,11 +206,18 @@
       pending = later(wait, () => { pending = null; say(text, Object.assign({}, o, { now: true })); });
       return;
     }
-    const a = anchor(); if (!a) return;
     lastLine = text; lastAt = now;
-    /* read time: the strip stays at least this long before a waiting line may take its place */
-    podUntil = now + Math.min(3200, 1300 + text.length * 22);
-    F.pod.say(text, { anchor: a, side: 'left', lead: o.lead });
+    const ms = readMs(text);
+    podUntil = now + ms;
+    /* placed at the start of the next frame, when the screen's style and layout are already computed */
+    const t = token, f = ++podFrame;
+    M.real.raf(() => {
+      if (t !== token || f !== podFrame || !shown() || !painted()) return;
+      const a = anchor(text, o), r = rootEl();
+      if (!a || !r) return;
+      if (r.hasAttribute('data-o55nw-slim') !== !!a.slim) r.toggleAttribute('data-o55nw-slim', !!a.slim);
+      F.pod.say(text, { anchor: a.point, side: a.side, lead: o.lead, ms, lane: a.lane, avoid: a.avoid });
+    });
   }
   function podScreen(def) {
     const R = runState(), s = O55.S, id = def.id;
@@ -167,9 +262,18 @@
     if (cur && O55.nierFx) O55.nierFx.cursor(cur, false);
     cur = null;
     if (!el || !F || !F.enabled('cursor')) return;
-    F.cursor(el, true); cur = el;
+    curNode = F.cursor(el, true); cur = el;
+    tint();
     const now = performance.now();
     if (now - tick > 80) { tick = now; O55.sound.play('hover'); }
+  }
+  /* the cursor's square on a choice that is not chosen is drawn in ink (the choice is tinted, not inverted) */
+  let curNode = null;
+  const chosen = (el) => el.classList.contains('o55-on') || el.getAttribute('data-on') === 'true';
+  function tint() {
+    if (!cur || !curNode || !curNode.isConnected) return;
+    const t = !chosen(cur);
+    if (curNode.hasAttribute('data-o55nw-tint') !== t) curNode.toggleAttribute('data-o55nw-tint', t);
   }
   const choiceOf = (t) => { const c = t && t.closest ? t.closest(CHOICE) : null; return c && !c.closest('.o55-out') ? c : null; };
   const wired = new WeakSet();
@@ -186,7 +290,15 @@
       if (choiceOf(e.target) === cur && document.activeElement !== cur) point(null);
     });
     r.addEventListener('focusin', (e) => { if (painted()) { point(choiceOf(e.target)); M.release(reticle); } });
-    r.addEventListener('scroll', () => { if (painted()) { reticle(); M.after(200, reticle); } }, { capture: true, passive: true });
+    /* a scroll checks the reticle once per frame (at the frame's start, never forcing a layout between frames) and
+       once more when the scrolling has stopped: one pending frame and one pending timer, however many events */
+    let scrollRaf = 0, scrollT = null;
+    r.addEventListener('scroll', () => {
+      if (!painted()) return;
+      if (!scrollRaf) scrollRaf = M.real.raf(() => { scrollRaf = 0; reticle(); });
+      if (scrollT) scrollT.cancel();
+      scrollT = M.after(200, () => { scrollT = null; M.real.raf(reticle); });
+    }, { capture: true, passive: true });
   }
   /* The page-wide focus reticle (Target brackets) frames what holds focus, and after a scroll it comes back to it. In
      the window a heading or card the pane has scrolled out of view would leave the reticle drawn over the header or
@@ -197,7 +309,11 @@
     const r = rootEl(), a = document.activeElement;
     let hide = false;
     if (r && shown() && painted() && a && r.contains(a)) {
-      const box = a.closest(SCROLLER);
+      /* a heading the window focuses by script (the screen's and the Adjust panel's, tabindex -1) is not a control the
+         person reached: the skin's own brackets mark the choice, and a reticle round a whole-column heading framed
+         empty space (review W10) */
+      if (a.matches('[tabindex="-1"]')) hide = true;
+      const box = !hide && a.closest(SCROLLER);
       if (box) { const A = a.getBoundingClientRect(), B = box.getBoundingClientRect(); hide = A.top < B.top - 2 || A.bottom > B.bottom + 2 || A.left < B.left - 2 || A.right > B.right + 2; }
     }
     if (ret.hasAttribute('data-o55nw-hide') !== hide) ret.toggleAttribute('data-o55nw-hide', hide);
@@ -248,11 +364,12 @@
     const d = s.sess.drafts.main || {}, laterMode = d.project_mode === 'later';
     R.spoken.add('creating');
     later(320, () => {
-      /* the line about creating it goes with the banner that says it is made; Pod's report follows the banner */
+      /* the line about creating it goes with the banner that says it is made; Pod's report follows the banner. The
+         banner is silent: the commit's chord already marks the moment and the celebration layers on it (review W7) */
       if (F.pod) F.pod.hush();
       podUntil = 0;
       const go = F.enabled('banner')
-        ? F.banner({ kicker: O55.t('nierFx.banner.kickers.goalComplete'), title: T(laterMode ? 'banner.serverReady' : 'banner.created'), sub: laterMode ? '' : (d.project_name || ''), ms: 1800 })
+        ? F.banner({ kicker: O55.t('nierFx.banner.kickers.goalComplete'), title: T(laterMode ? 'banner.serverReady' : 'banner.created'), sub: laterMode ? '' : (d.project_name || ''), ms: 1800, sound: false })
         : Promise.resolve(false);
       const t = token;
       go.then(() => { if (t === token) later(160, () => say(line(laterMode ? 'pod.creatingDoneLater' : 'pod.creatingDone'))); });
@@ -263,6 +380,7 @@
   /* the same ruled band in the pane, mirrored: it steps off to the left, so Back reads as going back */
   function wipeBack(pane) {
     const F = fx(); if (!F || !F.enabled('wipe') || calm() || !pane) return;
+    if (backWipe) backWipe();
     const b = document.createElement('div');
     b.className = 'o55fx-wipe o55nw-wipe'; b.setAttribute('aria-hidden', 'true'); b.innerHTML = '<i><b></b></i>';
     const win = pane.closest('.o55-win'), ground = win ? getComputedStyle(win).backgroundColor : '';
@@ -270,7 +388,9 @@
     pane.appendChild(b);
     const a = b.firstElementChild.animate([{ transform: 'translateX(0)', offset: 0 }, { transform: 'translateX(0)', offset: 0.16, easing: 'steps(8, end)' }, { transform: 'translateX(101%)', offset: 1 }],
       { duration: 380, fill: 'forwards' });
-    const end = () => b.remove();
+    const end = () => { b.remove(); if (backWipe === stop) backWipe = null; };
+    const stop = () => { try { a.cancel(); } catch (_) {} end(); };
+    backWipe = stop;
     a.finished.then(end, end);
   }
 
@@ -302,6 +422,43 @@
     return pr;
   }
 
+  /* ------------------------------------------------------------------ a screen's entrance under NieR Mode */
+  function draw(layer, dir, def, pr, prevIdx, prevChapter, F) {
+    const R = runState(), pane = layer.parentElement, h = layer.querySelector('#o55-h');
+    const chapterMove = dir !== 'open' && prevChapter && prevChapter !== pr.current;
+    /* 1. the reveal: a page wipe when the chapter changes (mirrored going back), else the content slices open */
+    if (!calm()) {
+      if (chapterMove && F.enabled('wipe')) { if (dir === 'back') wipeBack(pane); else F.wipe(pane); }
+      else if (dir !== 'open') F.slice(layer.querySelector('.o55-scroll'));
+    }
+    /* 2. the title resolves from scrambled glyphs, with its decode chatter under the screen change */
+    if (h) F.decode(h, { sound: true });
+    /* 3. what comes next: the opening band, or a chapter finished, then Pod's line for the screen */
+    let wait = 760;
+    const t = token, then = (fn) => () => { if (t === token) fn(); };
+    const podNext = () => (dir === 'open' && opening === 'resume' ? say(line('pod.resumed')) : podScreen(def));
+    if (dir === 'open') {
+      const kind = opening; opening = null;
+      if (kind && has('boot') && F.enabled('band') && !reduced()) {
+        wait = -1;
+        later(260, () => F.band(kind === 'resume' ? T('band.resume') : O55.t('nierFx.band.lines.setupStart'), 1500)
+          .then(then(() => later(220, podNext))));
+      }
+    } else if (dir === 'fwd' && prevIdx >= 0 && pr.index > prevIdx && prevChapter && !R.chapters.has(prevChapter) && F.enabled('banner')) {
+      R.chapters.add(prevChapter);
+      wait = -1;
+      later(reduced() ? 120 : 420, () => F.banner({ kicker: O55.t('nierFx.banner.kickers.chapterDone'), title: O55.t('chapters.' + prevChapter),
+        sub: T('banner.next', { chapter: O55.t('chapters.' + pr.current) }), ms: 1700 }).then(then(() => later(180, podNext))));
+    }
+    if (wait >= 0) later(wait, podNext);
+    /* 4. brackets lock on to the chosen card once the entrance has settled (its blocks have stopped arriving), at the
+       start of a frame */
+    M.settled(layer, { fallback: 2600 }).then(() => {
+      if (t !== token) return;
+      M.real.raf(() => { if (t === token && layer.isConnected && shown() && painted()) { R.marksAt = 0; marks(layer); } });
+    });
+  }
+
   /* ================================================================== the hooks */
   let opening = null; /* the band the window opens with: 'start' or 'resume' */
   O55.nierWindow = {
@@ -314,51 +471,39 @@
       return false;
     },
 
+    /* a screen change begins (the click, two frames before the new screen is released): what the skin follows on the
+       old screen lets go now, so no bracket, cursor or Pod line is left over the pane once the old screen has gone;
+       the old screen's words go with it */
+    leaving() {
+      if (!painted()) return false;
+      point(null); marks(null);
+      cancelAll(); podUntil = 0;
+      if (O55.nierFx && O55.nierFx.pod) O55.nierFx.pod.hush();
+      return false;
+    },
+
     screen(layer, dir) {
       sync();
       if (!painted() || !layer || !layer.isConnected) return false;
       const s = O55.S, def = O55.screens.defs[s.sess.screen]; if (!def) return false;
       point(null);
       cancelAll();
-      /* the last screen's words go with it (the new screen's line comes after its entrance) */
-      if (O55.nierFx && O55.nierFx.pod) O55.nierFx.pod.hush();
+      if (O55.nierFx && O55.nierFx.pod) O55.nierFx.pod.hush(); /* none left after leaving(); the opening has no old screen */
       podUntil = 0;
-      const R = runState(), prevIdx = R.idx, prevChapter = R.chapter, h = layer.querySelector('#o55-h');
+      const R = runState(), prevIdx = R.idx, prevChapter = R.chapter;
       /* error surfaces already on the new screen are part of it, not news */
       const pr = adopt(layer, def);
-      R.at = M.now(); R.marksAt = R.at + (reduced() ? 0 : 460);
-      meter(layer);
+      /* the brackets wait for the entrance to settle (step 4) */
+      R.at = M.now(); R.marksAt = Infinity;
+      meter(layer); brand(true);
       const F = fx(); if (!F) return false;
-      const pane = layer.parentElement;
-      const chapterMove = dir !== 'open' && prevChapter && prevChapter !== pr.current;
-      /* 1. the reveal: a page wipe when the chapter changes (mirrored going back), else the content slices open */
-      if (!calm()) {
-        if (chapterMove && F.enabled('wipe')) { if (dir === 'back') wipeBack(pane); else F.wipe(pane); }
-        else if (dir !== 'open') F.slice(layer.querySelector('.o55-scroll'));
-      }
-      /* 2. the title resolves from scrambled glyphs, with its decode chatter under the screen change */
-      if (h) F.decode(h, { sound: true });
-      /* 3. what comes next: the opening band, or a chapter finished, then Pod's line for the screen */
-      let wait = 760;
-      const t = token, then = (fn) => () => { if (t === token) fn(); };
-      const podNext = () => (dir === 'open' && opening === 'resume' ? say(line('pod.resumed')) : podScreen(def));
-      if (dir === 'open') {
-        const kind = opening; opening = null;
-        if (kind && has('boot') && F.enabled('band') && !reduced()) {
-          wait = -1;
-          later(260, () => F.band(kind === 'resume' ? T('band.resume') : O55.t('nierFx.band.lines.setupStart'), 1500)
-            .then(then(() => later(220, podNext))));
-        }
-      } else if (dir === 'fwd' && prevIdx >= 0 && pr.index > prevIdx && prevChapter && !R.chapters.has(prevChapter) && F.enabled('banner')) {
-        R.chapters.add(prevChapter);
-        wait = -1;
-        later(calm() ? 120 : 420, () => F.banner({ kicker: O55.t('nierFx.banner.kickers.chapterDone'), title: O55.t('chapters.' + prevChapter),
-          sub: T('banner.next', { chapter: O55.t('chapters.' + pr.current) }), ms: 1700 }).then(then(() => later(180, podNext))));
-      }
-      if (wait >= 0) later(wait, podNext);
-      /* 4. brackets lock on to the chosen card once the entrance has settled; the brand counter follows */
-      later(reduced() ? 0 : 460, () => marks(layer));
-      brand(true);
+      /* The effects start at the next frame. This frame (the release) styles and lays out the new screen once; the
+         effects' measurements (the wipe's and the slice's rects, the title's box, the ground) then read a finished
+         layout instead of forcing it again in the middle of it (films M1: those forced passes made every NieR screen
+         change a long task and switched the window into low-resource mode). Nothing shows early: the entrance's
+         blocks are still unseen for their first steps, and the old screen still holds for its first step. */
+      const t = token;
+      M.real.raf(() => { if (t === token && layer.isConnected && !layer.classList.contains('o55-out') && shown() && painted()) draw(layer, dir, def, pr, prevIdx, prevChapter, F); });
       return true;
     },
 
@@ -371,6 +516,7 @@
       if (R.layer !== layer) return false;
       /* brackets wait for the screen's entrance (until then the cards are still arriving) */
       if (M.now() >= (R.marksAt || 0)) marks(layer);
+      tint(); /* a pick under the cursor turns its tint into the chosen inversion */
       brand(true);
       /* the heading's words changed in place (Creating finished, a retry): they decode */
       const h = layer.querySelector('#o55-h'), title = h ? h.textContent : '';

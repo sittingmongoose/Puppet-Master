@@ -54,33 +54,60 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-step-active .o55-phmark { box-s
 /* the working mark keeps the ink (the Diamond loaders part turns it into a hollow diamond drawn in currentColor) */
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-active .o55-phmark { color: var(--o55-nier-ink); border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-inlinecheck { background: transparent; border-color: rgba(var(--o55-nier-ink-rgb), .45); }
-/* provider marks lose their hues: an ink letter in a hairline square */
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-plogo { background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .45); font: 600 15px/1 var(--mono-font); }
+/* provider marks lose their hues, so each carries a two-letter code instead (73-screens-ai.js): mono ink capitals in a
+   hairline square with an ink corner tab, read like a unit's designation; a ready provider's mark is inverted */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-plogo { position: relative; background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .45); border-radius: 0; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-plogo::before { content: ""; position: absolute; left: 0; top: 0; width: 5px; height: 5px; background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-plogo-l { display: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-plogo-m { display: block; padding-left: .16em; font: 600 11.5px/1 var(--mono-font); letter-spacing: .16em; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-provider[data-state="ready"] .o55-plogo { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-provider[data-state="ready"] .o55-plogo::before { background: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-provider[data-state="ready"] .o55-row { border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-scroll { scrollbar-color: rgba(var(--o55-nier-ink-rgb), .5) transparent; }
 
 /* the page-wide focus reticle stands aside while its target is scrolled out of the pane (66-nier-window.js) */
 html[data-o55-open] #o55np-reticle[data-o55nw-hide] { visibility: hidden !important; }
-/* Pod's speech strip in the window is narrower than the app's, so it fits over the art panel beside its Pod */
-#pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 236px; }
-@media (min-width: 1100px) { #pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 300px; } }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip { max-width: 340px; }
+/* Pod's speech strip in the window: the narrator speaks in a lane of the art panel (66-nier-window.js anchor()), so
+   its size is known before it is drawn: at most 260 px wide (196 px when a lane is only clear for a slimmer strip).
+   On the narrow window's short band it is one compact row: the POD 042 head inline beside the words, the unit at
+   five eighths of its size, so it fits the band above or below the scene's subject; beside a subject as tall as the
+   band it is a stacked strip 200 px wide. */
+#pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 260px; }
+#pm-o55-onboarding[data-o55nw-slim] > .o55fx-layer .o55fx-pod-strip { max-width: 196px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod { gap: 8px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-unit { margin: -9.75px -7.5px; transform: scale(.625); }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch; max-width: 520px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-head { padding: 0 10px; align-self: stretch; }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-text { align-self: center; padding: 7px 10px 8px; line-height: 1.4; }
+/* beside a subject as tall as the band: a stacked strip 200 px wide, its head on top */
+#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-strip { display: block; max-width: 200px; }
+#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-head { padding: 3px 10px 2px; }
+#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-text { padding: 7px 11px 9px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip::before { width: 8px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip::after { right: calc(100% + 7px); }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod[data-side="left"] .o55fx-pod-strip::after { right: auto; left: calc(100% + 7px); }
 
-/* ---- the stepped screen change: blocks blink in on the cut, the old screen flickers out ---- */
+/* ---- the stepped screen change: one cut, never a flash ----
+   The old screen leaves in a two-step fade (one way), and the new one's blocks step in one way (unseen, a faint step,
+   then in place, a little to the right of it on the way), so the pane is blank for one step at most and nothing larger
+   than a card reverses its opacity (hero spec section 1 rule 3; the old on-off-on, with the old screen flashing back
+   dimmed, read as a broken render: films M8). The footer holds still: the new screen's footer is whole from its first
+   frame and lies over the old one, so Back and Continue never blink. */
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-st,
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :is(.o55-card, .o55-row, .o55-tile),
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-promise li { animation-name: o55nw-in; animation-timing-function: step-end; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-st,
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :is(.o55-card, .o55-row, .o55-tile) { animation-name: o55nw-in-back; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main.o55-st { animation-name: o55nw-blink; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-foot.o55-st { animation-name: o55nw-blink; animation-duration: 240ms; animation-timing-function: step-end; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main.o55-st { animation-name: o55nw-fade; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-foot.o55-st { animation: none; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-pane > .o55-layer:is(.o55-out-fwd, .o55-out-back) { animation: o55nw-out 220ms step-end both; }
-@keyframes o55nw-in { 0% { opacity: 0; transform: translateX(10px); } 28% { opacity: 1; transform: translateX(10px); } 42% { opacity: .3; transform: translateX(5px); }
-  56% { opacity: 1; transform: translateX(5px); } 74%, 100% { opacity: 1; transform: none; } }
-@keyframes o55nw-in-back { 0% { opacity: 0; transform: translateX(-10px); } 28% { opacity: 1; transform: translateX(-10px); } 42% { opacity: .3; transform: translateX(-5px); }
-  56% { opacity: 1; transform: translateX(-5px); } 74%, 100% { opacity: 1; transform: none; } }
-@keyframes o55nw-blink { 0% { opacity: 0; } 36% { opacity: 1; } 52% { opacity: .35; } 68%, 100% { opacity: 1; } }
-@keyframes o55nw-out { 0% { opacity: 1; } 24% { opacity: 0; } 40% { opacity: .5; } 56%, 100% { opacity: 0; } }
+@keyframes o55nw-in { 0% { opacity: 0; transform: translateX(10px); } 30% { opacity: .45; transform: translateX(10px); } 52% { opacity: 1; transform: translateX(5px); }
+  74%, 100% { opacity: 1; transform: none; } }
+@keyframes o55nw-in-back { 0% { opacity: 0; transform: translateX(-10px); } 30% { opacity: .45; transform: translateX(-10px); } 52% { opacity: 1; transform: translateX(-5px); }
+  74%, 100% { opacity: 1; transform: none; } }
+/* a large surface arrives in two steps, one way */
+@keyframes o55nw-fade { 0% { opacity: 0; } 36% { opacity: .5; } 64%, 100% { opacity: 1; } }
+@keyframes o55nw-out { 0% { opacity: 1; } 30% { opacity: .35; } 55%, 100% { opacity: 0; } }
 /* Back's page wipe (66-nier-window.js draws O55.nierFx's band in the pane, mirrored, so it steps off to the left) */
 #pm-o55-onboarding .o55-pane > .o55nw-wipe { position: absolute; inset: 0; z-index: 3; pointer-events: none; transform: scaleX(-1); }
 
@@ -129,16 +156,32 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile)
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-tag { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .6); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-on > .o55-check { border-color: var(--o55-nier-on-ink); background: var(--o55-nier-on-ink); box-shadow: inset 0 0 0 3px var(--o55-nier-ink); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding [data-o55fx-cursor] .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
-/* the look screen's NieR row (LOOK's .o55-nierlook) reads as a chosen tile while NieR Mode is on, and under the cursor */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile).o55-on[data-o55fx-cursor] .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
+/* One meaning, one treatment (review art-direction-hover-vs-chosen). Chosen is the full ink inversion above; the menu
+   cursor on a choice that is not chosen is a hairline ink frame over a faint ink tint, with the square stepping beside
+   it: the tint slides in on O55.nierFx's stepped bar, and the words keep their own inks. This overrides the cursor's
+   inversion (05-nier-fx.css) for the window's choices only. */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile):not(.o55-on)[data-o55fx-cursor],
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook:not([data-on="true"])[data-o55fx-cursor] {
+  background-image: linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .13) 0 var(--o55fx-cur), transparent 0) !important;
+  color: var(--text-primary) !important; border-color: var(--o55-nier-ink) !important; box-shadow: inset 0 0 0 1px var(--o55-nier-ink) !important; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile):not(.o55-on)[data-o55fx-cursor] :is(.o55-cardsub, .o55-tilesub),
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook:not([data-on="true"])[data-o55fx-cursor] .o55-niersub { color: var(--text-secondary) !important; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile):not(.o55-on)[data-o55fx-cursor] :is(.o55-cardtitle, .o55-tilename, .o55-glyph, .o55-tag),
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook:not([data-on="true"])[data-o55fx-cursor] :is(.o55-niername, .o55-niercheck, .o55-nieradjust) { color: var(--o55-nier-ink) !important; }
+/* the square inside a choice that is not inverted is ink, not paper (it would vanish on the parchment) */
+#pm-o55-onboarding > .o55fx-layer .o55fx-cur[data-o55nw-tint][data-side="in"] > i {
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 5px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 5px 100% no-repeat; }
+#pm-o55-onboarding > .o55fx-layer .o55fx-cur[data-o55nw-tint][data-side="in"] > i::after { background: var(--o55-nier-paper); }
+/* the look screen's NieR row (LOOK's .o55-nierlook) reads as a chosen tile while NieR Mode is on */
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) :is(.o55-niercheck, .o55-niername, .o55-niersub) { color: var(--o55-nier-on-ink); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nierbox { border-color: var(--o55-nier-on-ink); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nierbox::after { background: var(--o55-nier-on-ink); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-niertag { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; box-shadow: none; }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nierthumb { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nieradjust { background: transparent; color: var(--o55-nier-on-ink); border-color: rgba(var(--o55-nier-paper-rgb), .6); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nieradjust:hover { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] :is(.o55-niercheck, .o55-niername, .o55-niersub) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierbox { border-color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierbox::after { background: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-niertag { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierthumb { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nieradjust { background: transparent; color: var(--o55-nier-on-ink) !important; border-color: rgba(var(--o55-nier-paper-rgb), .6); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nieradjust:hover { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink); }
 /* segmented choices: the chosen one an ink block, the track a hairline */
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-seg { background: transparent; border-color: rgba(var(--o55-nier-ink-rgb), .45); padding: 2px; gap: 2px; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-seg button { color: var(--text-secondary); font-weight: 500; }
@@ -297,8 +340,10 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55nw-stage { display: block; posit
 .o55nw-stage > * { position: absolute; display: none; }
 /* -- Pod companion [pod]: resting at the corner, hovering in steps; it steps away while O55.nierFx's Pod speaks -- */
 html[data-o55-nier-parts~="pod"] #pm-o55-onboarding .o55nw-pod { display: block; right: 18px; top: 36px; width: 40px; height: 52px; }
+/* Hidden, its hover keeps running on the compositor at no cost. Never pause it with a rule whose last part is `*`
+   under an html attribute: each Pod line toggles that attribute, and such a rule restyled the whole page twice per
+   line (about 210 ms each on the VM; README Performance rule 1). */
 html[data-o55fx-pod] #pm-o55-onboarding .o55nw-pod { visibility: hidden; }
-html[data-o55fx-pod] #pm-o55-onboarding .o55nw-pod * { animation-play-state: paused !important; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55nw-pod { top: 18px; right: 14px; }
 .o55nw-pod-bob, .o55nw-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
 .o55nw-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
@@ -348,7 +393,8 @@ html[data-o55-nier-parts~="sweep"]:not([data-motion="reduced"]):not([data-o55-lo
 /* ======================================================================================== Slice open: the window */
 /* the window opens from one line drawn across the middle, in steps, and folds back to it when it closes */
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening .o55-win { animation: o55nw-win-in 520ms linear both; }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening .o55-scrim { animation: o55nw-blink 300ms step-end both; }
+/* the scrim covers the page: it arrives in two steps, one way */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening .o55-scrim { animation: o55nw-fade 300ms step-end both; }
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-closing:not(.o55-handoff) .o55-win { animation: o55nw-win-out 300ms linear both; }
 @keyframes o55nw-win-in {
   0% { opacity: 1; clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); animation-timing-function: steps(4, end); }

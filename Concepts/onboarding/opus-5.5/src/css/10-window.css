@@ -11,6 +11,10 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
    dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
    makes the app inert, which the window's first held frame already pays for. */
 html[data-o55-open] body > [inert], html[data-o55-open] body > [inert] * { animation-play-state: paused !important; }
+/* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
+   resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
+   Mode in the window never wakes the app beneath (performance rule 6; review W9) */
+html[data-o55-open][data-o55-nier-parts] body > [inert] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation-play-state: paused !important; }
 /* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
    not drawn at all while the window is open; the scrim then lies over the page's own ground */
 html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !important; }
