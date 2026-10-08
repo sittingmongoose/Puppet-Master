@@ -135,6 +135,9 @@
    keeps 8 px from lines, controls keep 10 px apart, rows keep 12 px between blocks.
    =========================================================================== */
 .pmx-sheet .pmx-collab-pinned{flex:none;min-width:0;}
+/* the pinned row sits outside the scrolling rows: once they scroll (the runtime marks data-scroll="1"), it keeps the
+   same thin gutter so its 1fr Job track lines up with theirs (no gutter with overlay scrollbars, as theirs) */
+.pmx-sheet .pmx-collab-pinned:has(+ .pmx-roster-rows[data-scroll="1"]){overflow:hidden;scrollbar-gutter:stable;scrollbar-width:thin;}
 .pmx-sheet .pmx-collab-modrow input.pmx-row-job{color:var(--text);}
 /* Review's hero (8.5): the target trigger beside "Anything specific?", the helper under both */
 .pmx-sheet .pmx-collab-hero--before .pmx-hero-main{display:grid;grid-template-columns:236px minmax(0,1fr);column-gap:12px;align-items:start;}
