@@ -1,0 +1,369 @@
+/* ---- NieR Mode's onboarding window ------------------------------------------------------------------------------
+   The window while NieR Mode is painted (html[data-o55-nier="on"], live or the look screen's preview): ink on
+   parchment from the NieR tokens only (styles.d/13-nier.css), hairlines, square marks, stepped motion, no glow. The
+   base below (the window's colours, its flat ink controls and its stepped screen changes) follows NieR Mode itself;
+   everything else follows the installed part it belongs to (html[data-o55-nier-parts~="<key>"]), so the Quiet, Still
+   and Colors only presets degrade to Basic in ink. Nothing here applies while NieR Mode is off.
+   The script half is src/js/66-nier-window.js (the stage overlay, the brand's counter, the block meter's numbers, and
+   the one-shot effects drawn by O55.nierFx). Rules carry html[...] so they outrank 12-components.css and 20-motion.css,
+   which load later. Continuous motion is transform or opacity only and stops under Reduced Motion, on a low resource
+   computer and while the window's ambient motion is off. */
+
+/* =============================================================================================== base: NieR Mode */
+html[data-o55-nier="on"] #pm-o55-onboarding {
+  --o55-accent: var(--o55-nier-ink); --o55-on-accent: var(--o55-nier-on-ink); --o55-card-bg: var(--o55-nier-raised);
+  /* the stepped choreography (20-motion.css reads these): short, cut in steps, never eased */
+  --o55-ui-ease: steps(4, end); --o55-step: 340ms; --o55-out: 220ms; --o55-stagger: 45ms; --o55-enter-delay: 40ms;
+}
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-head { background: var(--o55-win-bg); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-foot { background: var(--o55-win-bg); border-top-color: rgba(var(--o55-nier-ink-rgb), .38); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-stage { border-right-color: rgba(var(--o55-nier-ink-rgb), .38); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-title { font-weight: 600; letter-spacing: .005em; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-eyebrow { color: var(--o55-nier-ink); }
+
+/* flat ink controls: the primary is an ink block, nothing glows, a hover is a tone of the ground */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; text-shadow: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-primary:hover { background: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .3); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-primary[aria-disabled="true"] { opacity: 1; color: rgba(var(--o55-nier-ink-rgb), .62); border-color: rgba(var(--o55-nier-ink-rgb), .4); box-shadow: none;
+  background: repeating-linear-gradient(135deg, rgba(var(--o55-nier-ink-rgb), .2) 0 1px, transparent 1px 5px), var(--o55-nier-secondary); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-secondary { border-color: rgba(var(--o55-nier-ink-rgb), .45); background: transparent; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-secondary:hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-btn:active { transform: translate(1px, 1px); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-card:hover, html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile:hover { transform: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-card.o55-on { background: var(--o55-nier-selected); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile.o55-on { box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-glyph { color: var(--o55-nier-ink); background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .4); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-tag { color: var(--o55-nier-ink); background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .5); font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
+/* status in ink: ready is an ink block, waiting a hairline, a problem the error ink */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill { font: 500 10px/1 var(--mono-font); letter-spacing: .14em; text-transform: uppercase; padding: 5px 8px; background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-ready { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-needs { color: var(--o55-nier-warn-text); box-shadow: inset 0 0 0 1px var(--o55-nier-warn); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-fail { background: var(--o55-nier-error); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-hint .o55-sg, .o55-chip .o55-sg, .o55-keep .o55-sg, .o55-note-ok .o55-sg) { color: var(--o55-nier-ok-text); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-chip-ok { background: transparent; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner { background: var(--o55-nier-secondary); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .3); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner-warn { background: var(--o55-nier-error-surface); box-shadow: inset 0 0 0 1px var(--o55-nier-error); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner-warn .o55-sg, html[data-o55-nier="on"] #pm-o55-onboarding .o55-hint.o55-err { color: var(--o55-nier-error-text); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-field.o55-invalid input { border-color: var(--o55-nier-error); }
+/* the phase marks: waiting a hollow square, done an ink square with a paper tick, failed the error ink */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-phmark { width: 14px; height: 14px; margin: 3px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .5); color: var(--o55-nier-on-ink); font: 700 10px/1 var(--mono-font); }
+html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-ph-done, .o55-step-done) .o55-phmark { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-failed { color: var(--o55-nier-error-text); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-failed .o55-phmark { background: var(--o55-nier-error); border-color: var(--o55-nier-error); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-step-active .o55-phmark { box-shadow: none; border-color: var(--o55-nier-ink); }
+/* the working mark keeps the ink (the Diamond loaders part turns it into a hollow diamond drawn in currentColor) */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-active .o55-phmark { color: var(--o55-nier-ink); border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-inlinecheck { background: transparent; border-color: rgba(var(--o55-nier-ink-rgb), .45); }
+/* provider marks lose their hues: an ink letter in a hairline square */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-plogo { background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .45); font: 600 15px/1 var(--mono-font); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-provider[data-state="ready"] .o55-row { border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-scroll { scrollbar-color: rgba(var(--o55-nier-ink-rgb), .5) transparent; }
+
+/* the page-wide focus reticle stands aside while its target is scrolled out of the pane (66-nier-window.js) */
+html[data-o55-open] #o55np-reticle[data-o55nw-hide] { visibility: hidden !important; }
+/* Pod's speech strip in the window is narrower than the app's, so it fits over the art panel beside its Pod */
+#pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 236px; }
+@media (min-width: 1100px) { #pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 300px; } }
+#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip { max-width: 340px; }
+
+/* ---- the stepped screen change: blocks blink in on the cut, the old screen flickers out ---- */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-st,
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :is(.o55-card, .o55-row, .o55-tile),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-promise li { animation-name: o55nw-in; animation-timing-function: step-end; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-st,
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :is(.o55-card, .o55-row, .o55-tile) { animation-name: o55nw-in-back; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main.o55-st { animation-name: o55nw-blink; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-foot.o55-st { animation-name: o55nw-blink; animation-duration: 240ms; animation-timing-function: step-end; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pane > .o55-layer:is(.o55-out-fwd, .o55-out-back) { animation: o55nw-out 220ms step-end both; }
+@keyframes o55nw-in { 0% { opacity: 0; transform: translateX(10px); } 28% { opacity: 1; transform: translateX(10px); } 42% { opacity: .3; transform: translateX(5px); }
+  56% { opacity: 1; transform: translateX(5px); } 74%, 100% { opacity: 1; transform: none; } }
+@keyframes o55nw-in-back { 0% { opacity: 0; transform: translateX(-10px); } 28% { opacity: 1; transform: translateX(-10px); } 42% { opacity: .3; transform: translateX(-5px); }
+  56% { opacity: 1; transform: translateX(-5px); } 74%, 100% { opacity: 1; transform: none; } }
+@keyframes o55nw-blink { 0% { opacity: 0; } 36% { opacity: 1; } 52% { opacity: .35; } 68%, 100% { opacity: 1; } }
+@keyframes o55nw-out { 0% { opacity: 1; } 24% { opacity: 0; } 40% { opacity: .5; } 56%, 100% { opacity: 0; } }
+/* Back's page wipe (66-nier-window.js draws O55.nierFx's band in the pane, mirrored, so it steps off to the left) */
+#pm-o55-onboarding .o55-pane > .o55nw-wipe { position: absolute; inset: 0; z-index: 3; pointer-events: none; transform: scaleX(-1); }
+
+/* ================================================================================================== Square hairlines */
+/* fields are ruled lines of ink: a mono caps label, an underline that thickens on focus, a block caret */
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-field label { font: 500 10.5px/1.3 var(--mono-font); letter-spacing: .16em; text-transform: uppercase; color: var(--text-secondary); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding :is(.o55-field input, .o55-field textarea, .o55-inputwrap) {
+  border-width: 0 0 1px; border-color: rgba(var(--o55-nier-ink-rgb), .55); background: rgba(var(--o55-nier-ink-rgb), .04); box-shadow: none; caret-color: var(--o55-nier-ink); caret-shape: block; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-inputwrap input { background: transparent; border: 0; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding :is(.o55-field input, .o55-field textarea):focus,
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-inputwrap:focus-within { border-color: var(--o55-nier-ink); box-shadow: inset 0 -1px 0 var(--o55-nier-ink); background: rgba(var(--o55-nier-ink-rgb), .07); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-inputwrap:focus-within input { box-shadow: none !important; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-field.o55-invalid :is(input, .o55-inputwrap) { border-color: var(--o55-nier-error); box-shadow: inset 0 -1px 0 var(--o55-nier-error); }
+/* the field holding focus: a square marks its label, blinking in steps */
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-field label::before { content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 7px 1px 0; background: currentColor; opacity: .35; vertical-align: middle; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-field:focus-within label { color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-field:focus-within label::before { opacity: 1; }
+html[data-o55-nier-parts~="square"]:not([data-motion="reduced"]) #pm-o55-onboarding .o55-field:focus-within label::before { animation: o55nw-pulse 1s step-end infinite; }
+@keyframes o55nw-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .2; } }
+/* switches: a ruled track, a square knob that steps across */
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-switch { width: 34px; height: 16px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .6); transition: none; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-switch span { top: 3px; left: 3px; width: 10px; height: 10px; background: rgba(var(--o55-nier-ink-rgb), .6); box-shadow: none; transition: transform 150ms steps(3, end); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-toggle.o55-on .o55-switch { background: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-toggle.o55-on .o55-switch span { transform: translateX(18px); background: var(--o55-nier-on-ink); }
+/* the radio mark: a square; chosen, a paper square with an ink core (it sits on the ink block) */
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-check { width: 14px; height: 14px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .5); background: transparent; transition: none; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-on > .o55-check { border-color: var(--o55-nier-ink); background: var(--o55-nier-ink); box-shadow: inset 0 0 0 3px var(--o55-nier-paper); }
+/* the "?" disclosure, the sheet, the code lines: hairline boxes */
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-q { border-width: 1px; font-family: var(--mono-font); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-detbody { background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .3); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding :is(.o55-codeline, .o55-path, .o55-kitwords span) { background: var(--o55-nier-code-bg); color: var(--o55-nier-code-fg); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .25); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-codeline code { font-family: var(--mono-font); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding :is(.o55-routeline, .o55-paircard, .o55-saferow, .o55-summary, .o55-kit, .o55-devicecode, .o55-preview, .o55-install, .o55-identity-chip) { background: var(--o55-nier-raised); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-suggestchip { border-style: solid; border-color: rgba(var(--o55-nier-ink-rgb), .4); font: 500 11px/1 var(--mono-font); letter-spacing: .08em; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-suggestchip:is(:hover, .o55-on) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink::before { border-top: 1px dashed var(--o55-nier-ink); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink span { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-lookmenu { border: 1px solid var(--o55-nier-ink); background: var(--o55-nier-overlay); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .28); }
+
+/* ======================================================================================================= Menu cursor */
+/* The chosen card, tile or segment is an inverted ink block with paper words (O55.nierFx.cursor slides the same ink
+   in under the pointer and keeps its square stepping beside it). The tile's living art keeps its own look. */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on,
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-tile.o55-on { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile).o55-on :where(.o55-cardsub, .o55-tilesub, .o55-tilename, .o55-cardtitle, .o55-glyph, .o55-tag) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-tag { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .6); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-on > .o55-check { border-color: var(--o55-nier-on-ink); background: var(--o55-nier-on-ink); box-shadow: inset 0 0 0 3px var(--o55-nier-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding [data-o55fx-cursor] .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
+/* the look screen's NieR row (LOOK's .o55-nierlook) reads as a chosen tile while NieR Mode is on, and under the cursor */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) :is(.o55-niercheck, .o55-niername, .o55-niersub) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nierbox { border-color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nierbox::after { background: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-niertag { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nierthumb { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nieradjust { background: transparent; color: var(--o55-nier-on-ink); border-color: rgba(var(--o55-nier-paper-rgb), .6); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-nierlook[data-on="true"], .o55-nierlook[data-o55fx-cursor]) .o55-nieradjust:hover { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink); }
+/* segmented choices: the chosen one an ink block, the track a hairline */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-seg { background: transparent; border-color: rgba(var(--o55-nier-ink-rgb), .45); padding: 2px; gap: 2px; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-seg button { color: var(--text-secondary); font-weight: 500; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-seg button:hover { background: var(--o55-nier-hover); color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-seg button.o55-on { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+/* Continue: an ink block with a paper square that steps in front of the words on hover and focus */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-primary { position: relative; padding-left: 30px; letter-spacing: .04em; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-primary::before { content: ""; position: absolute; left: 12px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: currentColor; opacity: .45; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-primary:is(:hover, :focus-visible)::before { opacity: 1; }
+html[data-o55-nier-parts~="cursor"]:not([data-motion="reduced"]) #pm-o55-onboarding .o55-primary:is(:hover, :focus-visible)::before { animation: o55nw-step 900ms step-end infinite; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-primary[aria-disabled="true"]::before { opacity: .3; animation: none; }
+@keyframes o55nw-step { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
+/* Back: words in capitals behind an ink caret pointing back */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-back { font: 500 11px/1 var(--mono-font); letter-spacing: .2em; text-transform: uppercase; gap: 9px; color: var(--text-secondary); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-back > svg { display: none; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-back::before { content: ""; width: 6px; height: 9px; background: currentColor; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-btn.o55-back:hover { background: transparent !important; color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="cursor"]:not([data-motion="reduced"]) #pm-o55-onboarding .o55-back:hover::before { animation: o55nw-step-back 900ms step-end infinite; }
+@keyframes o55nw-step-back { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-3px); } }
+/* the footer's quiet choices (Skip, Not now) read like Back, without the caret */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-foot .o55-btn.o55-ghost:not(.o55-back) { font: 500 11px/1 var(--mono-font); letter-spacing: .2em; text-transform: uppercase; color: var(--text-secondary); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-foot .o55-btn.o55-ghost:not(.o55-back):hover { background: transparent !important; color: var(--o55-nier-ink); text-decoration: underline; text-underline-offset: 4px; }
+/* the narrow window keeps Back as its caret alone (its name stays for screen readers) */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 12px; }
+/* links read as ink, underlined in a hairline */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-link { color: var(--o55-nier-ink); text-decoration-color: rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-link:hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); text-decoration-color: transparent; }
+
+/* ===================================================================================================== YoRHa headers */
+/* the window's frame: a parchment mat and an outer hairline around the ink edge */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-family][data-mode] .o55-win {
+  border-color: rgba(var(--o55-nier-ink-rgb), .75);
+  box-shadow: 0 0 0 5px var(--o55-nier-paper), 0 0 0 6px rgba(var(--o55-nier-ink-rgb), .42), 0 34px 70px -32px rgba(var(--o55-nier-shadow-rgb), .6); }
+/* the header: an ink rule under it with square caps, over a hairline */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-head {
+  border-bottom-color: rgba(var(--o55-nier-ink-rgb), .55); padding-left: 12px;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left 10px bottom 3px / 5px 5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 10px bottom 3px / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .55), rgba(var(--o55-nier-ink-rgb), .55)) center bottom 5px / calc(100% - 30px) 1px no-repeat, var(--o55-win-bg); }
+/* the brand: a chamfered ink block, three kicker squares, PUPPET MASTER and the chapter count */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-brand {
+  display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto; align-items: center; column-gap: 9px; row-gap: 4px; align-self: center;
+  padding: 7px 20px 7px 10px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+  font: 600 11.5px/1 var(--display-font); letter-spacing: .26em; text-transform: uppercase; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-brand > .o55-logo { display: none; }
+.o55nw-kick, .o55nw-sub { display: none; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick { grid-row: 1 / span 2; display: grid; gap: 2px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i { display: block; width: 4px; height: 4px; background: currentColor; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i:nth-child(2) { opacity: .6; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i:nth-child(3) { opacity: .3; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-sub { display: block; font: 500 8.5px/1 var(--mono-font); letter-spacing: .24em; opacity: .72; }
+/* the chapter rail: an ink ruler with square caps; strings hang to a tab per chapter; where you are is an ink block,
+   a chapter done carries a small square tick, one still to come a hollow square */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railbar {
+  top: 8px; left: 8px; right: 8px; height: 5px; border-radius: 0; box-shadow: none; opacity: 1;
+  background: linear-gradient(rgba(var(--o55-nier-ink-rgb), .7), rgba(var(--o55-nier-ink-rgb), .7)) 0 0 / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .38) 0 1px, transparent 1px 8px) 0 1px / 100% 3px no-repeat,
+    repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .7) 0 1px, transparent 1px 40px) 0 1px / 100% 4px no-repeat; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railbar::before, html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railbar::after {
+  content: ""; position: absolute; top: -2px; width: 5px; height: 5px; background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railbar::before { left: -3px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railbar::after { right: -3px; left: auto; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem {
+  --o55-node-w: 8px; --o55-str-w: 1px; z-index: 0; gap: 8px; padding: 7px 13px 0 12px; color: var(--text-muted); transition: none;
+  font: 500 10.5px/1 var(--display-font); letter-spacing: .2em; text-transform: uppercase; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem::after { content: ""; position: absolute; z-index: -1; left: 4px; right: 4px; top: 22px; height: 23px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railstring { top: 13px; height: 9px; background: rgba(var(--o55-nier-ink-rgb), .4); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railnode { position: relative; width: 8px; height: 8px; border: 1px solid currentColor; border-radius: 0; background: transparent; box-shadow: none; transition: none; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="done"] { color: var(--text-secondary); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="done"]::after { box-shadow: inset 0 -1px 0 rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="done"] .o55-railstring { background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="done"] .o55-railnode { border-color: var(--o55-nier-ink); background: transparent; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="done"] .o55-railnode::after {
+  content: ""; position: absolute; left: 1.5px; top: -1px; width: 3px; height: 5px; border: solid var(--o55-nier-ink); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="current"] { color: var(--o55-nier-on-ink); font-weight: 600; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="current"]::after { background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-railstring { background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-railnode { border-color: var(--o55-nier-on-ink); background: var(--o55-nier-on-ink); }
+/* the header's buttons: square hairline boxes that fill with ink */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-headctl { gap: 6px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-headctl :is(.o55-iconbtn, .o55-sound) {
+  height: 30px; min-width: 30px; padding: 0 6px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .4); color: var(--o55-nier-ink); background: transparent; transition: none; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-headctl :is(.o55-iconbtn, .o55-sound):hover,
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-headctl .o55-lookbtn.o55-on { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-headctl .o55-sound[aria-pressed="false"] { color: var(--text-muted); border-style: dashed; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-close { padding: 0 10px 0 8px; gap: 7px; font: 500 10px/1 var(--mono-font); letter-spacing: .22em; text-transform: uppercase; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-close > svg { width: 13px; height: 13px; }
+/* the eyebrow is a bracketed kicker, [ ■ WORDS ], running on as a rule with a square cap (machine glyphs ride it) */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding :is(.o55-eyebrow, .o55-nierpanel-eye) { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; padding: 3px 0 3px 9px;
+  font: 500 10.5px/1.2 var(--mono-font); letter-spacing: .26em; color: var(--o55-nier-ink);
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 1px 100% no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 4px 1px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 100% / 4px 1px no-repeat; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-eyebrow::before, html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-nierpanel-eye::before { content: ""; flex: none; width: 6px; height: 6px; background: currentColor; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-eyebrow::after, html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-nierpanel-eye::after { content: ""; flex: 1; align-self: stretch; min-width: 24px;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 4px 0 / 1px 100% no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 5px 1px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 100% / 5px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right center / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) left 14px center / calc(100% - 22px) 1px no-repeat; }
+html[data-o55-nier-parts~="headers"][data-o55-nier-parts~="glyphs"] #pm-o55-onboarding .o55-eyebrow::after, html[data-o55-nier-parts~="headers"][data-o55-nier-parts~="glyphs"] #pm-o55-onboarding .o55-nierpanel-eye::after {
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 4px 0 / 1px 100% no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 5px 1px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 100% / 5px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right center / 5px 5px no-repeat,
+    var(--o55nw-art-glyphs) right 12px top 0 / 126px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) left 14px center / calc(100% - 22px) 1px no-repeat; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-nierpanel-eye { margin-bottom: 4px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-nierpanel-titles { flex: 1; }
+/* group titles are YoRHa headers: wide capitals over a rule with square caps */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-grouptitle { padding-bottom: 8px; font: 500 10.5px/1.2 var(--mono-font); letter-spacing: .24em; color: var(--o55-nier-ink);
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left bottom / 5px 5px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right bottom / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) center bottom 2px / calc(100% - 12px) 1px no-repeat; }
+/* the interior sheet's head is an ink title band */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-sheet { padding-top: 0; background: var(--o55-nier-raised); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .2); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-sheethead { margin: 0 -16px; padding: 4px 6px 4px 16px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-sheethead h2 { font: 500 11px/1.3 var(--mono-font); letter-spacing: .22em; text-transform: uppercase; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-sheethead .o55-iconbtn { height: 28px; min-width: 28px; color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-sheethead .o55-iconbtn:hover { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); }
+/* the footer's rule carries square caps */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-foot {
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left 10px top 3px / 5px 5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 10px top 3px / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .3), rgba(var(--o55-nier-ink-rgb), .3)) center top 5px / calc(100% - 30px) 1px no-repeat, var(--o55-win-bg); }
+
+/* ===================================================================================================== Parchment ground */
+/* a faint map grid behind the words, and scanlines on the scrim */
+html[data-o55-nier-parts~="ground"] #pm-o55-onboarding .o55-pane {
+  background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px);
+  background-size: 32px 32px; background-position: -1px -1px; }
+html[data-o55-nier-parts~="ground"] #pm-o55-onboarding .o55-scrim {
+  background-image: repeating-linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), .05) 0 1px, transparent 1px 3px); }
+
+/* ====================================================================================================== Block progress */
+/* A phase list carries a row of ink cells above it (66-nier-window.js writes how many, how many are done and which one
+   works): the finished cells fill in steps, the working one blinks, a failed one is the error ink, and a count sits
+   at the end of the row. */
+html[data-o55-nier-parts~="blocks"] #pm-o55-onboarding .o55-phases[data-o55nw-meter] { position: relative; padding-top: 20px; --o55nw-w: calc(100% - 56px); }
+html[data-o55-nier-parts~="blocks"] #pm-o55-onboarding .o55-phases[data-o55nw-meter]::before,
+html[data-o55-nier-parts~="blocks"] #pm-o55-onboarding .o55-phases[data-o55nw-meter]::after { content: ""; position: absolute; left: 0; top: 2px; width: var(--o55nw-w); height: 7px; }
+html[data-o55-nier-parts~="blocks"] #pm-o55-onboarding .o55-phases[data-o55nw-meter]::before {
+  background: repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .16) 0 calc(100% / var(--o55nw-n) - 3px), transparent 0 calc(100% / var(--o55nw-n))); }
+html[data-o55-nier-parts~="blocks"] #pm-o55-onboarding .o55-phases[data-o55nw-meter]::after {
+  background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 calc(100% / var(--o55nw-n) - 3px), transparent 0 calc(100% / var(--o55nw-n)));
+  clip-path: inset(0 calc(100% - 100% * var(--o55nw-k) / var(--o55nw-n)) 0 0); transition: clip-path 300ms steps(3, end); }
+html[data-o55-nier-parts~="blocks"] #pm-o55-onboarding .o55-phases[data-o55nw-meter] > .o55-ph:first-child::before { content: var(--o55nw-count); position: absolute; right: 0; top: 0; width: 48px; text-align: right;
+  font: 500 10px/11px var(--mono-font); letter-spacing: .14em; color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="blocks"] #pm-o55-onboarding .o55-phases[data-o55nw-meter] > :is(.o55-ph-active, .o55-ph-failed)::after { content: ""; position: absolute; top: 2px; height: 7px;
+  left: calc(var(--o55nw-w) * var(--o55nw-a) / var(--o55nw-n)); width: calc(var(--o55nw-w) / var(--o55nw-n) - 3px); background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="blocks"] #pm-o55-onboarding .o55-phases[data-o55nw-meter] > .o55-ph-failed::after { background: var(--o55-nier-error); }
+html[data-o55-nier-parts~="blocks"]:not([data-motion="reduced"]) #pm-o55-onboarding .o55-phases[data-o55nw-meter] > .o55-ph-active::after { animation: o55nw-pulse 760ms step-end infinite; }
+
+/* ========================================================================================= the art panel's overlay */
+/* Pod 042 at the panel's top corner, drifting ink motes, map rulers along two edges and one scan line now and then.
+   The overlay lies over the stage's grid cell (absolutely placed in it), takes no click and leaves the puppets clear. */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-body { position: relative; }
+.o55nw-stage { display: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55nw-stage { display: block; position: absolute; inset: 0; grid-column: 1 / 2; grid-row: 1 / 2; z-index: 2; pointer-events: none; overflow: hidden;
+  contain: strict; color: var(--o55-nier-ink); }
+.o55nw-stage > * { position: absolute; display: none; }
+/* -- Pod companion [pod]: resting at the corner, hovering in steps; it steps away while O55.nierFx's Pod speaks -- */
+html[data-o55-nier-parts~="pod"] #pm-o55-onboarding .o55nw-pod { display: block; right: 18px; top: 36px; width: 40px; height: 52px; }
+html[data-o55fx-pod] #pm-o55-onboarding .o55nw-pod { visibility: hidden; }
+html[data-o55fx-pod] #pm-o55-onboarding .o55nw-pod * { animation-play-state: paused !important; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55nw-pod { top: 18px; right: 14px; }
+.o55nw-pod-bob, .o55nw-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
+.o55nw-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
+.o55nw-pod .o55nw-pod-fill { fill: var(--o55-nier-raised); }
+.o55nw-pod .o55nw-pod-ink { fill: currentColor; }
+.o55nw-pod-shadow { transform-origin: 20px 48px; }
+html[data-o55-nier-parts~="pod"]:not([data-motion="reduced"]):not([data-o55-lowres]) #pm-o55-onboarding[data-o55-ambient="on"] .o55nw-pod-bob { animation: o55nw-bob 3.6s steps(6, end) infinite alternate; }
+html[data-o55-nier-parts~="pod"]:not([data-motion="reduced"]):not([data-o55-lowres]) #pm-o55-onboarding[data-o55-ambient="on"] .o55nw-pod-shadow { animation: o55nw-bob-shadow 3.6s steps(6, end) infinite alternate; }
+@keyframes o55nw-bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@keyframes o55nw-bob-shadow { from { transform: scaleX(1); opacity: .9; } to { transform: scaleX(.7); opacity: .5; } }
+/* -- Drifting particles [particles]: eight small ink squares drifting slowly across the panel -- */
+html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote { display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .26); will-change: transform; }
+html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .3); }
+html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote:nth-of-type(4n + 1) { width: 3px; height: 3px; }
+.o55nw-mote:nth-of-type(2) { left: 9%; top: 24%; --d: 46s; --dl: -12s; }
+.o55nw-mote:nth-of-type(3) { left: 22%; top: 70%; --d: 58s; --dl: -31s; }
+.o55nw-mote:nth-of-type(4) { left: 37%; top: 12%; --d: 52s; --dl: -6s; }
+.o55nw-mote:nth-of-type(5) { left: 48%; top: 46%; --d: 64s; --dl: -40s; }
+.o55nw-mote:nth-of-type(6) { left: 61%; top: 84%; --d: 49s; --dl: -22s; }
+.o55nw-mote:nth-of-type(7) { left: 72%; top: 33%; --d: 61s; --dl: -48s; }
+.o55nw-mote:nth-of-type(8) { left: 84%; top: 62%; --d: 55s; --dl: -15s; }
+.o55nw-mote:nth-of-type(9) { left: 15%; top: 50%; --d: 68s; --dl: -57s; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-lowres]) #pm-o55-onboarding[data-o55-ambient="on"] .o55nw-mote { animation: o55nw-drift var(--d, 55s) linear var(--dl, 0s) infinite; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]):not([data-o55-lowres]) #pm-o55-onboarding[data-o55-ambient="on"] .o55nw-mote:nth-of-type(even) { animation-name: o55nw-drift-b; }
+@keyframes o55nw-drift { 0% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(26px, -44px) rotate(90deg); } 50% { transform: translate(58px, -14px) rotate(180deg); }
+  75% { transform: translate(28px, 28px) rotate(270deg); } 100% { transform: translate(0, 0) rotate(360deg); } }
+@keyframes o55nw-drift-b { 0% { transform: translate(0, 0); } 33% { transform: translate(-36px, 22px); } 66% { transform: translate(-12px, -48px); } 100% { transform: translate(0, 0); } }
+/* -- Map ticks [ticks]: graduated rulers inside the panel's left and bottom edges, square caps at the ends -- */
+html[data-o55-nier-parts~="ticks"] #pm-o55-onboarding .o55nw-ruler { display: block; opacity: .62; }
+html[data-o55-nier-parts~="ticks"] #pm-o55-onboarding .o55nw-ruler-y { left: 6px; top: 26px; bottom: 26px; width: 9px;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left 0 top 0 / 1px 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--o55-nier-ink) 0 1px, transparent 1px 8px) left 0 top 0 / 4px 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--o55-nier-ink) 0 1px, transparent 1px 40px) left 0 top 0 / 9px 100% no-repeat; }
+html[data-o55-nier-parts~="ticks"] #pm-o55-onboarding .o55nw-ruler-x { left: 26px; right: 26px; bottom: 6px; height: 9px;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left 0 bottom 0 / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 1px, transparent 1px 8px) left 0 bottom 0 / 100% 4px no-repeat,
+    repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 1px, transparent 1px 40px) left 0 bottom 0 / 100% 9px no-repeat; }
+html[data-o55-nier-parts~="ticks"] #pm-o55-onboarding .o55nw-ruler-x::before { content: ""; position: absolute; left: -22px; bottom: -2px; width: 5px; height: 5px; background: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="ticks"] #pm-o55-onboarding .o55nw-ruler-x::after { content: ""; position: absolute; right: -20px; bottom: -2px; width: 5px; height: 5px; background: var(--o55-nier-ink); }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55nw-ruler-y { top: 18px; bottom: 22px; }
+/* -- Scan sweep [sweep]: a faint line crosses the panel from top to bottom every twelve seconds -- */
+html[data-o55-nier-parts~="sweep"] #pm-o55-onboarding .o55nw-sweep { display: block; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; transform: translateY(-100%); will-change: transform, opacity;
+  background: linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), 0) calc(100% - 46px), rgba(var(--o55-nier-ink-rgb), .05) calc(100% - 8px), rgba(var(--o55-nier-ink-rgb), .2) calc(100% - 1px), rgba(var(--o55-nier-ink-rgb), 0)); }
+html[data-o55-nier-parts~="sweep"]:not([data-motion="reduced"]):not([data-o55-lowres]) #pm-o55-onboarding[data-o55-ambient="on"] .o55nw-sweep { animation: o55nw-sweep 12s linear 2.4s infinite; }
+@keyframes o55nw-sweep { 0% { transform: translateY(-100%); opacity: 0; } 2% { opacity: 1; } 22% { transform: translateY(0); opacity: 1; } 24%, 100% { transform: translateY(0); opacity: 0; } }
+
+/* ======================================================================================== Slice open: the window */
+/* the window opens from one line drawn across the middle, in steps, and folds back to it when it closes */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening .o55-win { animation: o55nw-win-in 520ms linear both; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening .o55-scrim { animation: o55nw-blink 300ms step-end both; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-closing:not(.o55-handoff) .o55-win { animation: o55nw-win-out 300ms linear both; }
+@keyframes o55nw-win-in {
+  0% { opacity: 1; clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); animation-timing-function: steps(4, end); }
+  30% { opacity: 1; clip-path: inset(calc(50% - 1px) 0 calc(50% - 1px) 0); animation-timing-function: steps(5, end); }
+  86% { opacity: 1; clip-path: inset(0 0 0 0); animation-timing-function: step-end; }
+  100% { opacity: 1; clip-path: inset(-80px -80px -80px -80px); } }
+@keyframes o55nw-win-out {
+  0% { opacity: 1; clip-path: inset(0 0 0 0); animation-timing-function: steps(4, end); }
+  60% { opacity: 1; clip-path: inset(calc(50% - 1px) 0 calc(50% - 1px) 0); animation-timing-function: steps(3, end); }
+  100% { opacity: 0; clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); } }
+
+/* ===================================================================================================== Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier="on"] #pm-o55-onboarding .o55nw-stage *, html[data-o55-nier="on"] #pm-o55-onboarding .o55-phases::after, html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph::after,
+  html[data-o55-nier="on"] #pm-o55-onboarding .o55-primary::before, html[data-o55-nier="on"] #pm-o55-onboarding .o55-back::before,
+  html[data-o55-nier="on"] #pm-o55-onboarding .o55-field label::before { animation: none !important; transition: none !important; }
+}
+html[data-o55-nier="on"][data-motion="reduced"] #pm-o55-onboarding .o55-phases::after { transition: none; }

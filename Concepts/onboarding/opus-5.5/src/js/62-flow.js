@@ -24,16 +24,32 @@
     inflight.add(key);
     /* an operation belongs to the run that started it: after Run Onboarding Again its late reports are dropped */
     const epoch = S.epoch || 0, stale = () => (S.epoch || 0) !== epoch;
+    /* opts.sound = { done?: event|false (default 'success'), fail?: event|false (default 'error'),
+       phase?: false | { [finishedPhaseKey]: event }, intensity?: 0..1 }. Each phase after the first ticks as it starts
+       (the first starts with the press), climbing; a phase map names a finding instead (an approval on the other
+       device, servers appearing). Every sound waits for the screen that started the operation to still show it. */
+    const snd = opts.sound || {}, here = S.sess.screen, showing = () => S.open && S.sess.screen === here;
+    let shown = -1;
     S.sess.ops[key] = { state: 'running', phases: phases.map((p) => ({ key: p.key, status: 'waiting' })), code: null };
     S.save(); O55.ui.refresh();
     return O55.owners.dispatch(cmdId, opts.payload || {}, Object.assign(S.ctx(), opts.ctx || {}), () => O55.owners.operation(key, phases, (st) => {
       if (stale()) return;
       S.sess.ops[key] = { state: st.state, phases: st.phases, code: st.code, failedAt: st.failedAt, receipt: O55.owners.opState(key) && O55.owners.opState(key).receipt };
       S.save();
+      if (st.state === 'running' && st.current && !opts.quiet && snd.phase !== false) {
+        const i = st.phases.findIndex((p) => p.key === st.current);
+        if (shown >= 0 && i > shown && showing()) {
+          const ev = (snd.phase && snd.phase[st.phases[i - 1].key]) || 'phase';
+          O55.sound.play(ev, ev === 'phase' ? { step: i, intensity: 0.3 + 0.5 * i / Math.max(1, st.phases.length - 1) } : { step: i, intensity: snd.intensity });
+        }
+        if (i > shown) shown = i;
+      }
       /* owners' completion handlers update the session first, so the refresh shows the settled state in one frame */
-      if (st.state === 'done') { O55.sound.play('success'); opts.onDone && opts.onDone(S, st); }
-      if (st.state === 'failed') { O55.sound.play('error'); opts.onFail && opts.onFail(S, st); }
+      if (st.state === 'done') { const ev = snd.done === undefined ? 'success' : snd.done; if (ev && showing()) O55.sound.play(ev, { step: st.phases.length, intensity: snd.intensity }); opts.onDone && opts.onDone(S, st); }
+      if (st.state === 'failed') { const ev = snd.fail === undefined ? 'error' : snd.fail; if (ev && showing()) O55.sound.play(ev); opts.onFail && opts.onFail(S, st); }
       if (!opts.quiet) O55.ui.refresh();
+      /* NieR Mode's Pod reports a finished operation that the screen still shows (66-nier-window.js) */
+      if (st.state === 'done' && !opts.quiet && showing()) O55.ui.skin('op', key, st);
     })).then((res) => {
       if (stale()) return null;
       inflight.delete(key);
@@ -98,6 +114,6 @@
   /* Copy-to-clipboard button with a transient "Copied" state (no fake success: it reports the clipboard result). */
   F.copyBtn = (text, key) => `<button type="button" class="o55-btn o55-secondary o55-small" data-o55-do="copyText" data-arg="${U.esc(text)}" data-pm-hover-exempt="true" data-key="copy-${U.esc(key || U.slug(text))}">${U.esc(T('chrome.copy'))}</button>`;
   O55.actions.copyText = function (S, text, el) {
-    U.copyText(text).then((ok) => { if (!ok || !el || !document.contains(el)) return; el.textContent = T('chrome.copied'); O55.motion.after(1400, () => { if (document.contains(el)) el.textContent = T('chrome.copy'); }); });
+    U.copyText(text).then((ok) => { if (!ok || !el || !document.contains(el)) return; el.textContent = T('chrome.copied'); O55.sound.play('copy'); O55.motion.after(1400, () => { if (document.contains(el)) el.textContent = T('chrome.copy'); }); });
   };
 })();

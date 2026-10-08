@@ -8,6 +8,9 @@
   const SCREENS = O55.screens = { defs: {}, define(id, def) { def.id = id; this.defs[id] = def; } };
   const ROOT_ID = 'pm-o55-onboarding';
   const KEY = 'onboarding';
+  /* NieR Mode's skin of the window (66-nier-window.js, O55.nierWindow) hears the window's moments here and answers
+     only while NieR Mode is painted; a hook that answers true has drawn the moment its own way */
+  const skin = (name, a, b) => { const k = O55.nierWindow; if (!k || !k[name]) return false; try { return k[name](a, b); } catch (e) { console.warn('O55: NieR skin', name, e); return false; } };
 
   const S = O55.S = {
     env: null, sess: null, root: null, open: false, busyNav: false,
@@ -159,8 +162,9 @@
     S.save();
     renderRail();
     const n = S.root.querySelector(`.o55-railitem[data-chapter="${ch}"] .o55-railnode`);
-    if (n && !O55.motion.reduced()) O55.motion.play(n, O55.theme().family === 'retro' ? [{ opacity: 0.2 }, { opacity: 1 }] : [{ transform: 'scale(1.5)' }, { transform: 'scale(1)' }],
-      { duration: 320, easing: O55.theme().family === 'retro' ? 'steps(2, end)' : 'cubic-bezier(0.34,1.56,0.64,1)' });
+    const th = O55.theme();
+    if (n && !O55.motion.reduced()) O55.motion.play(n, th.family === 'retro' ? [{ opacity: 0.2 }, { opacity: 1 }] : [{ transform: 'scale(1.5)' }, { transform: 'scale(1)' }],
+      { duration: 320, easing: th.family === 'retro' ? 'steps(2, end)' : th.nier ? 'steps(3, end)' : 'cubic-bezier(0.34,1.56,0.64,1)' });
   }
 
   /* ---------------------------------------------------------------- render */
@@ -215,9 +219,14 @@
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
     if (!layer) return transition(null);
+    const hadSheet = !!layer.querySelector('.o55-sheet[data-open="true"]');
     U.morph(layer, paneHtml(def));
+    /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
+    const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
+    if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
     renderScene(); renderSound();
     def.mounted && def.mounted(S, layer, false);
+    skin('refresh', layer);
   }
 
   function transition(dir) {
@@ -257,13 +266,14 @@
     const focusHeading = () => O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
     U.announce(O55.stages.progress(S, def).announce + '. ' + (val(def.title) || ''), S.root.querySelector('.o55-win'));
     def.mounted && def.mounted(S, layer, true);
-    if (!hold) { leave(); focusHeading(); return; }
+    if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); return; }
     O55.motion.release(() => {
       layer.classList.remove('o55-hold');
       S.root.classList.remove('o55-hold');
       O55.art.release(S.root.querySelector('.o55-stage'));
       leave(); focusHeading();
       if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
+      if (layer.isConnected) skin('screen', layer, dir);
     });
   }
 
@@ -295,7 +305,8 @@
     S.sess.screen = id; S.save();
     const def = SCREENS.defs[id];
     if (def.enter) def.enter(S, opts);
-    /* the music follows the journey: the chapter's chord, and how far along the person is */
+    /* the music follows the journey: the chapter's chord, and how far along the person is (the first forward sound
+       after a chapter change becomes that chapter's own sting, O55.sound's chapterSting) */
     O55.sound.setContext({ chapter: (def.chapterFor ? def.chapterFor(S) : def.chapter) || 'welcome', step: S.sess.history.length });
     if (!opts.silent) O55.sound.play(opts.dir === 'back' ? 'back' : 'next');
     transition(opts.dir || 'fwd');
@@ -319,8 +330,8 @@
       e.preventDefault();
       const reason = t.getAttribute('data-disabled-reason');
       if (reason) U.announce(reason, S.root.querySelector('.o55-win'));
-      O55.sound.play('error');
-      O55.motion.play(t, [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' });
+      O55.sound.play('warn'); /* a refusal with its reason is a soft warning, not a failure */
+      if (!skin('refused', t)) O55.motion.play(t, [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' });
       showReason(t, reason);
       return;
     }
@@ -336,9 +347,15 @@
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
     if (!fn) { const g = O55.actions[action]; if (g) return g(S, arg, t, e); console.warn('O55: no action', action); return; }
-    /* controls whose handler plays its own sound (e.g. a look tile plays the new family's kit) opt out */
-    if (!t.classList.contains('o55-primary') && t.getAttribute('data-o55-sound') !== 'self') O55.sound.play(t.classList.contains('o55-card') || t.classList.contains('o55-tile') ? 'select' : 'tap');
+    /* the handler's own sound (a sheet opening, a finding, a screen change) is the click's one sound; otherwise the
+       generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
+    const log = O55.sound.log, last = log[log.length - 1], checked = t.getAttribute('aria-checked'), open = t.getAttribute('aria-expanded');
     fn(S, arg, t, e);
+    if (t.classList.contains('o55-primary') || t.getAttribute('data-o55-sound') === 'self' || log[log.length - 1] !== last) return;
+    const role = t.getAttribute('role');
+    O55.sound.play(t.classList.contains('o55-card') || t.classList.contains('o55-tile') ? 'select'
+      : role === 'switch' || role === 'checkbox' ? (checked === 'true' ? 'toggleOff' : 'toggleOn')
+      : open != null ? (open === 'true' ? 'unsheet' : 'reveal') : 'tap');
   }
   function showReason(t, reason) {
     if (!reason) return;
@@ -351,7 +368,7 @@
   function onInput(e) {
     const t = e.target.closest('[data-o55-bind]'); if (!t) return;
     /* typing ticks quietly in the family's material (never for a protected field) */
-    if (t.type !== 'password' && !t.hasAttribute('data-o55-protected') && performance.now() - lastType > 45) { lastType = performance.now(); O55.sound.play('type'); }
+    if (e.type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && performance.now() - lastType > 45) { lastType = performance.now(); O55.sound.play('type'); }
     const def = SCREENS.defs[S.sess.screen];
     const key = t.getAttribute('data-o55-bind');
     const fn = def && def.bind && def.bind[key];
@@ -380,7 +397,7 @@
       const items = Array.from(group.querySelectorAll('.o55-card:not([aria-disabled="true"]), .o55-tile'));
       const i = items.indexOf(e.target.closest('.o55-card, .o55-tile')); if (i < 0) return;
       const n = items[(i + (e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : -1) + items.length) % items.length];
-      if (n) { e.preventDefault(); n.focus(); }
+      if (n) { e.preventDefault(); n.focus(); O55.sound.play('move', { step: items.indexOf(n) }); }
     }
   }
   function trapTab(e) {
@@ -398,7 +415,7 @@
     const el = S.root.querySelector(`.o55-pane > .o55-layer:not(.o55-out) [data-key="field-${bind}"]`);
     if (!el) return;
     const k = [{ transform: 'translateX(0)', opacity: 0.55 }, { transform: 'translateX(-6px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(-3px)' }, { transform: 'translateX(0)', opacity: 1 }];
-    O55.motion.play(el, k, { duration: 300, easing: S.root.getAttribute('data-family') === 'retro' ? 'steps(4, end)' : 'ease-out', fill: 'none' });
+    if (!skin('shake', el)) O55.motion.play(el, k, { duration: 300, easing: S.root.getAttribute('data-family') === 'retro' ? 'steps(4, end)' : 'ease-out', fill: 'none' });
     const i = el.querySelector('input, textarea'); if (i) { i.focus({ preventScroll: true }); i.select && i.select(); }
   }
   function nudge() { const w = S.root.querySelector('.o55-win'); O55.motion.play(w, [{ transform: 'scale(1)' }, { transform: 'scale(1.008)' }, { transform: 'scale(1)' }], { duration: 240 }); }
@@ -485,6 +502,10 @@
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
     const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
+    /* a resumed run starts on its own chapter's chord */
+    const cur = SCREENS.defs[S.sess.screen];
+    O55.sound.setContext({ chapter: (cur.chapterFor ? cur.chapterFor(S) : cur.chapter) || 'welcome', step: S.sess.history.length });
+    skin('open', { resumed: S.resumed, shown: wasShown });
     transition('open');
     O55.sound.play('open');
     const chip = document.getElementById('o55-resume'); if (chip) chip.remove();
@@ -515,7 +536,8 @@
     const r = S.root;
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
-    if (!handoff) O55.sound.play('close');
+    if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
+    skin('close', reason, handoff);
     const finish = () => {
       r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
       document.documentElement.removeAttribute('data-o55-open');
@@ -531,10 +553,10 @@
   /* shared actions any screen can use */
   O55.actions = {
     skip() { close('skip'); },
-    'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); } },
-    details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); },
+    'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); O55.sound.play('unsheet'); } },
+    details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); O55.sound.play(S.sess.ui[k] ? 'reveal' : 'unsheet'); },
     startOver() { open({ fresh: true }); }
   };
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake });
+  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin });
 })();
