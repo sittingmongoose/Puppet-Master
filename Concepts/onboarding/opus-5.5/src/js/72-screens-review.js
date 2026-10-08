@@ -191,7 +191,7 @@
     if (!st) return 'settings_owner_missing';
     if (cm.stagedSettings) return null;
     const cats = (S.sess.like && S.sess.like.categories) || (st.categories ? st.categories() : []);
-    const res = PR().stagePendingSettings(st, cm, d, d.settings_transfer.source_project_id, cats, { credentials: 'Keep existing destination credential ownership', conflicts: 'Preview every changed value', rollback: true, excludedSettings: ['general.visual.theme', 'general.visual.theme-mode'] });
+    const res = PR().stagePendingSettings(st, cm, d, d.settings_transfer.source_project_id, cats, { credentials: 'Keep existing destination credential ownership', conflicts: 'Preview every changed value', rollback: true, excludedSettings: ['general.visual.theme', 'general.visual.theme-mode', 'general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'] });
     if (res.ok) { cm.receipts = cm.receipts || {}; cm.receipts.settings = cm.stagedSettings.receipt; cm.settingsCount = cm.stagedSettings.count; cm.settingsFixture = cm.stagedSettings.fixture; return null; }
     if (/No canonical transferable values differ/i.test(res.reason || '')) { cm.receipts = cm.receipts || {}; cm.receipts.settings = 'no-change'; cm.settingsCount = 0; return null; }
     cm.settingsError = res.reason || 'unknown';
