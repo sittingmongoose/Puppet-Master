@@ -81,7 +81,7 @@ Use `agent-browser` for browser tests and test videos: each agent gets its own C
 
 - Record: `agent-browser start --record /abs/path.mp4 --url <url>`, drive it with Playwright `connectOverCDP(cdp_endpoint)` on the page whose URL does not start with `recorder_url`, finish with `agent-browser stop <id>`.
 - Headless: `agent-browser start --url <url>`. Never use Playwright `recordVideo`, CPU screen recorders, `--disable-gpu` or SwiftShader.
-- Nas1 Intel VM (`ubuntu-agent-nas1`, DHCP `192.168.50.136`) is under validation and unavailable for production work. Single-stream GPU capture failed; recording, Moonlight and independent GUI limits are not established. Use the P1000 VM (`192.168.50.179`) until the canonical guide marks Nas1 ready.
+- Nas1 (`ubuntu-agent-nas1`, DHCP `192.168.50.136`) uses plain virtio 2D graphics after both UHD630 passthrough and VirGL caused GPU hangs. Use it for coding, ordinary pages and screenshots: at most 4 independent CDP browsers and 1 agent driving the shared Xfce desktop. Video recording and Moonlight limit: zero. Route all recording, hardware-video and GPU/WebGL tasks to the P1000 VM (`192.168.50.179`). Software rendering is intentional on Nas1; see the canonical guide for measurements and limits.
 
 ## Extra worker agents
 
