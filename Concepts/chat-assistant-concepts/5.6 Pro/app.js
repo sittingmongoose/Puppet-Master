@@ -625,7 +625,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      calls would bind the chat's spine, stream and sound to this feed. Its head is
      one row: name, status, underlined model, parent and one Read-only marker
      ("Read-only · live" while the agent works); the marker's hover card carries
-     the "Read-only child thread" label and what read-only means here. */
+     the "Read-only child thread" label and what read-only means here.
+     Agent-work records, which the parent transcript hides as notes, stay in this
+     feed as one quiet line between the prose. */
   let readOnlyRender=false;
   function renderReadOnlyItems(agent){
     readOnlyRender=true;
@@ -864,7 +866,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const items=[];
     let turn=0;
     for(const m of t.messages){
-      if(!messageVisible(m)) continue;
+      /* Parent transcript: agent-work notes stay hidden (messageVisible). The
+         read-only feed is that agent's live record, so every agent-work row
+         stays in place. Nothing else this gate hides is pulled back in. */
+      if(!messageVisible(m) && !(readOnlyRender && m.type==='agent-work')) continue;
       const html=renderMessage(m,t);
       if(!html||!String(html).trim()) continue;
       const fam=familyOf(m);
@@ -985,7 +990,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
     return true;
   }
+  /* Compact agent-work line for the read-only feed only. Glyph and wording come
+     from the work-record slot (PM56_RECORDS.feedLine); the detail is the hover
+     card, not a native title, and the row is not a control. */
+  function renderFeedWorkLine(m){
+    const line=window.PM56_RECORDS&&typeof window.PM56_RECORDS.feedLine==='function'
+      ? window.PM56_RECORDS.feedLine(m)
+      : {glyph:'document', label:m.title||'Work note', detail:m.detail||''};
+    const tip=esc(line.label)+(line.detail?'&#10;'+esc(line.detail):'');
+    const aria=line.detail?line.label+'. '+line.detail:line.label;
+    return `<div class="tx-work-line" data-hover-key="feed-work-${esc(m.id)}" data-hover-tip="${tip}" aria-label="${esc(aria)}"><span class="tx-work-glyph" aria-hidden="true">${icon(line.glyph,13)}</span><span class="tx-work-label">${esc(line.label)}</span><span class="tx-work-time">${esc(msgClock(m))}</span></div>`;
+  }
   function renderMessage(m,t){
+    if(readOnlyRender && m.type==='agent-work') return renderFeedWorkLine(m);
     /* Assistant-redesign wave: feature modules own whole transcript card families
        (Plan cards, collaborative run cards, BSD advice, attachment-bearing turns).
        They register `transcriptMessage` and return '' to decline, which falls

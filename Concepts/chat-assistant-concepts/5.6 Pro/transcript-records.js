@@ -24,10 +24,24 @@
      mark, not the Subagents people) */
   const DOMAIN_GLYPH={goal:'goal',todo:'todo',subagents:'users',crew:'kind-crew',brainstorm:'kind-brainstorm',review:'kind-review',chat_room:'kind-chat_room',changes:'changes',artifacts:'page'};
   function kindLabel(ref){return ({change:'File change',inspection:'File inspection',activity:ref.label||'Activity',artifact:'Artifact',plan:'Plan'})[ref.kind]||'Work note';}
+  /* The same glyph the work card uses: a file edit, an inspection, the activity
+     domain's mark, or the document mark for a work note. */
+  function workGlyphName(ref){
+    return ref.kind==='change'?'file-edit':ref.kind==='inspection'?'search':ref.kind==='activity'?(DOMAIN_GLYPH[ref.domain]||'users'):'document';
+  }
+  /* One line for the read-only subagent feed: the recorded title is already the
+     short verb plus object; the detail (and a linked path) stays off the line. */
+  function feedLine(m){
+    const ref=reference(m||{});
+    const label=String((m&&m.title)||'').trim()||kindLabel(ref);
+    let detail=String((m&&m.detail)||'').trim();
+    if(ref.path) detail=detail?(ref.path+' — '+detail):ref.path;
+    return {glyph:workGlyphName(ref), label, detail, kind:ref.kind};
+  }
   E.slot('workRecord',ctx=>{
     const m=ctx.m;if(m?.type!=='agent-work')return '';
     const ref=reference(m),c=ref.path&&D.changes.find(c=>c.path===ref.path);
-    const label=kindLabel(ref),icon=ref.kind==='change'?'file-edit':ref.kind==='inspection'?'search':ref.kind==='activity'?(DOMAIN_GLYPH[ref.domain]||'users'):'document';
+    const label=kindLabel(ref),icon=workGlyphName(ref);
     return '<article class="work-output" data-output-kind="'+ctx.esc(ref.kind)+'" data-message-id="'+ctx.esc(m.id)+'"><button class="work-output-open" type="button" data-action="open-work-record" data-id="'+ctx.esc(m.id)+'"><span class="work-output-icon">'+ctx.icon(icon,16)+'</span><span class="work-output-copy"><span class="work-output-kind">'+ctx.esc(label)+'</span><strong>'+ctx.esc(m.title||label)+'</strong>'+ (ref.path?'<span class="work-output-path">'+ctx.esc(ref.path)+'</span>':'')+'</span><span class="work-output-target">'+(c&&ref.kind==='change'?'<span class="work-output-diff"><span class="diff-added">+'+c.add+'</span> <span class="diff-removed">−'+c.del+'</span></span>':'')+ctx.icon('chevron',13)+'</span></button><div class="work-output-summary">'+formatRecord(ctx,m.detail)+'</div></article>';
   });
   E.action('open-work-record',(ctx,btn)=>{
@@ -53,5 +67,5 @@
     return '<article class="editor-doc work-record-document"><div class="editor-meta"><span class="meta-pill">Work note</span><span class="meta-pill">No linked file or artifact</span></div><h1>'+ctx.esc(m.title||'Work note')+'</h1><div class="work-record-body">'+formatRecord(ctx,m.detail)+'</div><div class="work-record-source"><span>Source thread</span><button class="text-button" data-action="work-record-source" data-thread="'+ctx.esc(hit.t.id)+'" data-id="'+ctx.esc(m.id)+'">'+ctx.esc(hit.t.title)+'</button></div></article>';
   });
   E.action('work-record-source',(ctx,btn)=>{ctx.state.editorRevealed=false;ctx.switchThread(btn.dataset.thread);requestAnimationFrame(()=>document.querySelector('[data-message-id="'+CSS.escape(btn.dataset.id)+'"]')?.scrollIntoView({block:'center',behavior:'smooth'}));return true;});
-  window.PM56_RECORDS={reference,kindLabel,formatRecord};
+  window.PM56_RECORDS={reference,kindLabel,formatRecord,feedLine};
 })();

@@ -397,3 +397,61 @@ html[data-motion="reduced"] .tx-feed-inner > .message > .message-chrome { transi
 .agent-feed-doc u.agent-model { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; text-decoration-color: color-mix(in srgb, currentColor 60%, transparent); color: inherit; }
 .agent-feed-doc .message-body p { color: var(--text); max-width: none; }
 .agent-feed-doc > .chat-meta { margin-top: 14px; }
+
+/* Agent-work in the read-only feed: one quiet line on the spine. Not a card,
+   no left strip, no family entrance. The main transcript never has this class.
+   The sheet/roster animations target [data-family] at (0,4,0); this wins. */
+.tx-feed[data-variant="16"] > .tx-feed-inner > .tx-work-line[data-family] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+  min-height: 24px;
+  max-height: 24px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-left: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 24px;
+  animation: none;
+  clip-path: none;
+}
+.tx-feed .tx-feed-inner > .tx-work-line .tx-work-glyph {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  color: var(--muted);
+}
+.tx-feed .tx-feed-inner > .tx-work-line .tx-work-glyph > svg.nx-r-concept { --nx-hi-a: 0; }
+.tx-feed .tx-feed-inner > .tx-work-line:is(:hover, :focus-within) .tx-work-glyph { color: var(--text); }
+.tx-feed .tx-feed-inner > .tx-work-line:is(:hover, :focus-within) .tx-work-glyph > svg.nx-r-concept {
+  --nx-hi-a: var(--nx-h-swell-i);
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+.tx-feed .tx-feed-inner > .tx-work-line .tx-work-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+}
+.tx-feed .tx-feed-inner > .tx-work-line .tx-work-time {
+  flex: none;
+  margin-left: auto;
+  color: var(--subtle);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
