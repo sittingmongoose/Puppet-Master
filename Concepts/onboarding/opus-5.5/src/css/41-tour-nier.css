@@ -27,6 +27,7 @@ html[data-o55-nier="on"] #pm-o55-tour .o55t-scrimpath { transition: fill 200ms s
    debrief the callout folds to its line instead, so it is not faded: 85-tour-nier.js) */
 html[data-o55-nier="on"] #pm-o55-tour.o55t-nend :is(.o55t-callout, .o55t-bar, .o55t-ringbox, .o55t-scrim, .o55t-pointer) { opacity: 0 !important; transition: opacity 120ms steps(2, end) !important; pointer-events: none; }
 html[data-o55-nier="on"] #pm-o55-tour.o55t-nend.o55t-nfin .o55t-callout { opacity: 1 !important; transition: none !important; }
+html[data-o55-nier="on"] #pm-o55-tour.o55t-nend.o55t-ngone .o55t-callout { visibility: hidden; transition: none !important; }
 /* the hand-over from setup: the window's line carries it here. The first callout and the bar are built and placed
    unseen, and the scrim stands at once (no fade) in the window's own tone; it steps to the tour's dim when the
    callout opens from the line */

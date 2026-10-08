@@ -707,7 +707,7 @@
     const fx = FX(); if (f.line && fx) fx.lineDrop(f.line);
     html.removeAttribute(RESULTS);
     const cp = cornerPod(); if (cp) cp.removeAttribute(AWAY);
-    if (st.root) st.root.classList.remove('o55t-nfin');
+    if (st.root) st.root.classList.remove('o55t-nfin', 'o55t-ngone');
   }
   const later = (f, ms, fn) => { const t = M.after(Math.max(0, ms), () => { if (fin === f) fn(); }); f.timers.push(t); return t; };
   function stats(keep) {
@@ -731,7 +731,8 @@
     /* the callout folds to its line at once (no ghost); everything else of the tour steps back in two held steps */
     const folds = !!(c && f.at && f.at.width && has('slice') && !quick);
     root.classList.add('o55t-nend');
-    if (folds) root.classList.add('o55t-nfin');
+    /* it folds; or, where it cannot (Reduced Motion, Still), it is gone at once, so the card never stands beside it */
+    root.classList.add(folds ? 'o55t-nfin' : 'o55t-ngone');
     const lineP = folds ? fx.fold(c, { ms: 120 }) : Promise.resolve(null);
     lineP.then((l) => { if (fin === f) f.line = l; else if (l) fx.lineDrop(l); });
     const banded = fx.enabled('band') && !quick;
@@ -836,12 +837,12 @@
   TR.on('end', (d) => {
     /* a layout that could not go back keeps the tour: its callout and bar come back, and there is no debrief */
     if (d.status === 'restore-pending') { finaleOff(); const fx = FX(), c = calloutEl(); if (fx && c && fx.unfold) fx.unfold(c); }
-    if (st.root) st.root.classList.remove('o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout', 'o55t-nhand', 'o55t-nhandbar', ...(d.status === 'restore-pending' ? ['o55t-nend', 'o55t-nfin'] : []));
+    if (st.root) st.root.classList.remove('o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout', 'o55t-nhand', 'o55t-nhandbar', ...(d.status === 'restore-pending' ? ['o55t-nend', 'o55t-nfin', 'o55t-ngone'] : []));
     st.barHold = null; hand = null; homeFly = null;
     spoken = null; back = 0; focusOff(); cursorOff(); frameOff(); stringOff(); trailsOff(); anticipOff();
     const fx = FX(); if (fx && cued) { fx.brackets(cued, false); cued = null; }
   });
-  TR.on('closed', () => { if (st.root) st.root.classList.remove('o55t-nend', 'o55t-nfin'); });
+  TR.on('closed', () => { if (st.root) st.root.classList.remove('o55t-nend', 'o55t-nfin', 'o55t-ngone'); });
 
   /* The landing note comes in Pod's voice. After the debrief it waits for the card (about T2900) and opens from the
      card's line. Otherwise it comes at once, and the page's own Tour complete banner (kit.d/20-nier-world.js
