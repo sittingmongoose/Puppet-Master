@@ -604,12 +604,25 @@
      and docks: the travelling Pod goes and the docked one shows in one frame, with its chirp. No line: the callout
      slices open as usual; no Pod: the corner Pod flies in as usual once the callout stands. */
   let hand = null;
+  /* an app hover tag already open (the pointer still on Take the Guided Tour, or later on Restore) must not draw over
+     the hand-over line or the results card. The CSS hides the root while html carries the attribute; this closes the
+     tag so it does not pop back open the moment the attribute goes. */
+  function dismissHover() {
+    try { const c = window.PM_HOVER_TAG_CONTROLLER; if (c && typeof c.close === 'function') c.close(true); } catch (_) {}
+    const tag = document.getElementById('pm-hover-tag-visual') || document.querySelector('#pm-hover-tag-root .pm-hover-tag');
+    if (tag && tag.getAttribute('data-open') === 'true') { tag.setAttribute('data-open', 'false'); tag.hidden = true; }
+  }
+  function handGuard(on) {
+    if (on) { html.setAttribute('data-o55nw-hand', ''); dismissHover(); }
+    else html.removeAttribute('data-o55nw-hand');
+  }
   TR.on('start', (d) => {
     const fx = FX(), root = st.root;
     finaleOff();
     hand = null;
     if (d.handoff && painted() && fx) {
       hand = { h: d.handoff, at: Number.isFinite(d.handoff.at) ? d.handoff.at : M.now() };
+      handGuard(true);
       d.noMorph = true; d.sound = null;
       uncover();
       root.classList.remove('o55t-opening');
@@ -634,11 +647,11 @@
     const fx = FX(), c = calloutEl();
     let line = null;
     try { line = await Promise.race([Promise.resolve(hd.h.line), M.delay(2600).then(() => null)]); } catch (_) { line = null; }
-    if (!handLive(hd) || !fx || !c) { if (line && fx) fx.lineDrop(line); if (handLive(hd)) handOpen(null); return false; }
+    if (!handLive(hd) || !fx || !c) { if (line && fx) fx.lineDrop(line); if (handLive(hd)) handOpen(null); else handGuard(false); return false; }
     if (line && line.isConnected && !still() && has('slice')) {
       sound('pointer', { intensity: 0.35 });
       await fx.lineTo(line, c, { ms: 280 });
-      if (!handLive(hd)) { fx.lineDrop(line); return false; }
+      if (!handLive(hd)) { fx.lineDrop(line); handGuard(false); return false; }
     } else if (line) { fx.lineDrop(line); line = null; }
     handOpen(line);
     return true;
@@ -647,8 +660,12 @@
   function handOpen(line) {
     const fx = FX(), root = st.root, c = calloutEl();
     root.classList.remove('o55t-nhand');
-    if (fx && c && has('slice') && !still()) fx.slice(c, line ? { from: line, ms: 260 } : { ms: 260 });
+    const opening = !!(fx && c && has('slice') && !still());
+    if (opening) fx.slice(c, line ? { from: line, ms: 260 } : { ms: 260 });
     else if (line && fx) fx.lineDrop(line);
+    /* the line is gone once the slice has taken it (or at once, when there is no slice). Hover tags stay down until then. */
+    const hd = hand;
+    M.after(line && opening ? 260 : 0, () => { if (hand === hd) handGuard(false); });
     /* its arrival sound, as at any opening of the tour: the first chapter is not stung here (the sound kit would turn
        the first sound of a new chapter into its sting) */
     try { O55.sound.setContext({ sting: false }); } catch (_) {}
@@ -729,6 +746,7 @@
     f.rows = stats(f.keep);
     f.at = c ? c.getBoundingClientRect() : null;
     html.setAttribute(RESULTS, '');
+    dismissHover();
     const cp = cornerPod(); if (cp) cp.setAttribute(AWAY, '');
     cursorOff();
     /* the callout folds to its line at once (no ghost); everything else of the tour steps back in two held steps */
@@ -842,7 +860,7 @@
     /* a layout that could not go back keeps the tour: its callout and bar come back, and there is no debrief */
     if (d.status === 'restore-pending') { finaleOff(); const fx = FX(), c = calloutEl(); if (fx && c && fx.unfold) fx.unfold(c); }
     if (st.root) st.root.classList.remove('o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout', 'o55t-nhand', 'o55t-nhandbar', ...(d.status === 'restore-pending' ? ['o55t-nend', 'o55t-nfin', 'o55t-ngone'] : []));
-    st.barHold = null; hand = null; homeFly = null;
+    st.barHold = null; hand = null; homeFly = null; handGuard(false);
     spoken = null; back = 0; focusOff(); cursorOff(); frameOff(); stringOff(); trailsOff(); anticipOff();
     const fx = FX(); if (fx && cued) { fx.brackets(cued, false); cued = null; }
   });
