@@ -811,7 +811,19 @@
      reveal they floated on the still-whole plate and on the slats yet to move (films M7) */
   function rbRelease(ctx) {
     if (ctx.host) { ctx.host.removeAttribute('data-o55np-cover'); ctx.host = null; }
+    if (ctx.unhold) ctx.unhold();
     coverUp = false;
+  }
+
+  /* the page's cover leaves the pointer to the page (pointer-events: none), so what is hovered under it never changes:
+     taking the pointer, the whole hovered chain lost :hover at once, and the Menu cursor part's ':hover :where(*)' rule
+     restyled the page (trace FR: 112 ms over 2,465 elements on the plate's first frame, again at the reveal). Presses
+     are held instead, until the reveal: what is under the cover is not what will be there */
+  const HELD = ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'click', 'dblclick', 'auxclick', 'contextmenu'];
+  function holdPresses(ctx) {
+    const hold = e => { if (e.isTrusted) { e.preventDefault(); e.stopImmediatePropagation(); } };
+    HELD.forEach(k => window.addEventListener(k, hold, true));
+    ctx.unhold = () => { HELD.forEach(k => window.removeEventListener(k, hold, true)); ctx.unhold = null; };
   }
 
   /* the onboarding window opening over the page's moment (films minor 13: slat blocks tore out over the opening
@@ -849,7 +861,7 @@
     /* the window's own effects (brackets on the chosen card, the cursor, Pod's strip) sit above the window in its root:
        they hold off while the cover is up (an attribute that restyles only those layers), and so do the page's pointers */
     if (!page) { const host = ctx.host = scope.closest('#pm-o55-onboarding'); if (host) host.setAttribute('data-o55np-cover', ''); }
-    else watchOpen(ctx);
+    else { watchOpen(ctx); holdPresses(ctx); }
     coverUp = true; curOff(); retOff();
     let t0 = tl();
     const box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
@@ -910,7 +922,7 @@
       const slats = rbSlats(cover, set, 'out', 160);
       set.remove();
       await ctx.wait(rbWait(cover, 160));
-      cover.style.pointerEvents = 'none';
+      cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
       ctx.cue('reveal');
       await ctx.wait(slats.done);
       rbRelease(ctx);
@@ -921,7 +933,7 @@
     const to = home(rbBox(cover));
     await ctx.wait(rbWait(cover, 120));
     log.style.display = 'none';
-    cover.style.pointerEvents = 'none';
+    cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
     ctx.cue('reveal');
     const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
     const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
@@ -993,7 +1005,7 @@
        once, the cover gone, the pointers back */
     let stop = null;
     const CUT = {}, abort = new Promise(res => { stop = res; });
-    const ctx = { cover: null, host: null, paint, cue, unwatch: null };
+    const ctx = { cover: null, host: null, paint, cue, unwatch: null, unhold: null };
     ctx.wait = p => Promise.race([p, abort]).then(v => { if (life.cut) throw CUT; return v; });
     ctx.snap = () => {
       if (life.cut) return;
