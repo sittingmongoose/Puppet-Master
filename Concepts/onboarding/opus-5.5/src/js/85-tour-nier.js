@@ -649,6 +649,9 @@
     root.classList.remove('o55t-nhand');
     if (fx && c && has('slice') && !still()) fx.slice(c, line ? { from: line, ms: 260 } : { ms: 260 });
     else if (line && fx) fx.lineDrop(line);
+    /* its arrival sound, as at any opening of the tour: the first chapter is not stung here (the sound kit would turn
+       the first sound of a new chapter into its sting) */
+    try { O55.sound.setContext({ sting: false }); } catch (_) {}
     sound('callout', { step: 0 });
     if (c) typeOn(c.querySelector('.o55t-kicker'));
     typeTitle(); speak({ silent: true });
