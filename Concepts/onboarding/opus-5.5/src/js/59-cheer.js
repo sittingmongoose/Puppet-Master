@@ -109,7 +109,9 @@
     const svg = sceneSvg(host); if (!svg || quiet()) return false;
     const fam = svg.getAttribute('data-family'), hs = helpers(svg), sc = svg.getAttribute('data-scene'), beat = svg.getAttribute('data-beat');
     if (fam === 'nier' && !o.direct && sc === 'creating' && beat === 'done' && A.createdAct) return A.createdAct(host, {});
-    if (fam === 'nier' && !o.direct && sc === 'ready' && A.curtainCall) return A.curtainCall(host, {});
+    /* (no sting from the redirect: a caller still asking for celebrate has not claimed the chapter's sting, which the
+       screen change already played) */
+    if (fam === 'nier' && !o.direct && sc === 'ready' && A.curtainCall) return A.curtainCall(host, { sting: false });
     if (A.rig && hs.some((g) => tied(svg, g.getAttribute('data-key')))) A.rig.cheer(svg, 'all', { big: true });
     hs.filter((g) => !tied(svg, g.getAttribute('data-key'))).forEach((g, i) => hop(g, fam, true, i * 110));
     /* NieR: every unit shows joy for its cheer (tied ones cheer one after another, 110 ms apart, as A.rig.cheer does);
@@ -291,7 +293,7 @@
   T.busy = function busy(host) { return !!host && [...host.querySelectorAll('svg.o55-scene')].some((svg) => { const set = perfs.get(svg); return !!(set && set.size); }); };
   /* a value held in steps: keyframes that hold each value for `ms` (no interpolation) */
   const held = (prop, values) => values.map((v, i) => ({ [prop]: v, offset: i / values.length, easing: 'steps(1, end)' })).concat([{ [prop]: values[values.length - 1], offset: 1 }]);
-  /* the visor boot: rest dashes for 160 ms, then the scan notch shows and sweeps once (the CSS o55-nier-boot) */
+  /* the visor boot: rest dashes for 130 ms, then the scan notch shows and sweeps once (the CSS o55-nier-boot) */
   const BOOT = [{ opacity: 0, transform: 'none', easing: 'steps(1, end)' }, { opacity: 1, transform: 'none', offset: 0.25, easing: 'steps(1, end)' },
     { opacity: 1, transform: 'translateX(3.6px)', offset: 0.375, easing: 'steps(1, end)' }, { opacity: 1, transform: 'translateX(7.2px)', offset: 0.5, easing: 'steps(1, end)' },
     { opacity: 1, transform: 'translateX(10.8px)', offset: 0.625, easing: 'steps(1, end)' }, { opacity: 1, transform: 'translateX(14.4px)', offset: 0.75, easing: 'steps(1, end)' },
