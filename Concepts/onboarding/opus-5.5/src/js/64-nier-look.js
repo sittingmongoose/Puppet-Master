@@ -84,11 +84,12 @@
   function pageFlip(n, next, el) {
     heavy(4500);
     let at = null, woke = false;
+    const opened = () => document.documentElement.hasAttribute('data-o55-open');
     const onReveal = (phase) => {
-      if (phase === 'start' && at == null) { at = O55.motion.now(); O55.sound.play(next ? 'nierOn' : 'nierOff'); return; }
+      if (phase === 'start' && at == null) { at = O55.motion.now(); if (!opened()) O55.sound.play(next ? 'nierOn' : 'nierOff'); return; }
       if (phase !== 'reveal' || woke || at == null) return;
       woke = true;
-      if (document.documentElement.hasAttribute('data-o55-open')) return;
+      if (opened()) return;
       const wait = at + 120 - O55.motion.now();
       if (wait > 0) O55.motion.after(wait, () => O55.sound.play('wake')); else O55.sound.play('wake');
     };

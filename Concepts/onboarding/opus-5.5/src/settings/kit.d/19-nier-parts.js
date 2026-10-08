@@ -797,6 +797,16 @@
     coverUp = false;
   }
 
+  /* the onboarding window opening over the page's moment (films minor 13: slat blocks tore out over the opening
+     window): the moment ends at once, painted, with no tear-out and no wake (the window's opening speaks). Only the one
+     attribute on <html> is watched, and only while the page's cover is up */
+  function watchOpen(ctx) {
+    if (typeof MutationObserver !== 'function') return;
+    const mo = new MutationObserver(() => { if (onboarding()) ctx.snap(); });
+    mo.observe(html, { attributes: true, attributeFilter: ['data-o55-open'] });
+    ctx.unwatch = () => mo.disconnect();
+  }
+
   /* ---- the moment, one plate for both stagings: inside the onboarding window (scope, the window) or over the whole
      page (scope null). Each grows from the control pressed (in the window, else its NieR thumbnail; on the page, the
      row or switch, else the middle of the screen), types its list through the repaint and tears out as slats; unticking
@@ -820,6 +830,7 @@
     /* the window's own effects (brackets on the chosen card, the cursor, Pod's strip) sit above the window in its root:
        they hold off while the cover is up (an attribute that restyles only those layers), and so do the page's pointers */
     if (!page) { const host = ctx.host = scope.closest('#pm-o55-onboarding'); if (host) host.setAttribute('data-o55np-cover', ''); }
+    else watchOpen(ctx);
     coverUp = true; curOff(); retOff();
     let t0 = tl();
     const box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
@@ -842,9 +853,9 @@
         fr.push({ t: TOTAL, v: { transform: poses[5][j], opacity: 1 } });
         el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
       });
-      t0 = await started;
+      t0 = await ctx.wait(started);
       ctx.cue('start');
-      await settled(grow);
+      await ctx.wait(settled(grow));
       /* T450: full cover; the decorations keep their last place inline (so the slats' copies carry them) */
       set.querySelectorAll('.o55np-deco > i').forEach(el => el.getAnimations().forEach(a => { try { a.commitStyles(); } catch (e) { /* not rendered */ } a.cancel(); }));
       ground.style.opacity = '1'; grow.cancel(); growIn.cancel();
@@ -856,9 +867,9 @@
       ground.style.opacity = '1';
       cover.setAttribute('data-hold', '');
       const shut = rbSlats(cover, set, 'in', page ? 60 : 300);
-      t0 = await rbStart(shut.first, t0);
+      t0 = await ctx.wait(rbStart(shut.first, t0));
       ctx.cue('start');
-      await shut.done;
+      await ctx.wait(shut.done);
       cover.removeAttribute('data-hold');
       shut.wrap.remove();
     }
@@ -867,11 +878,11 @@
     log.setAttribute('data-on', '');
     plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
-    await settledStart(typing.anims);
+    await ctx.wait(settledStart(typing.anims));
     quiet(5000);
     ctx.paint();
-    await rbIdle(4000);
-    await rbAt(cover, t0, plan.done);
+    await ctx.wait(rbIdle(4000));
+    await ctx.wait(rbAt(cover, t0, plan.done));
     rbClear(log, typing, plan, t0);
     if (!cover.isConnected) return;
     if (!folding) {
@@ -879,17 +890,17 @@
          middle pair's first step (one timeline, started together): that frame takes input again and sounds the wake */
       const slats = rbSlats(cover, set, 'out', 160);
       set.remove();
-      await rbWait(cover, 160);
+      await ctx.wait(rbWait(cover, 160));
       cover.style.pointerEvents = 'none';
       ctx.cue('reveal');
-      await slats.done;
+      await ctx.wait(slats.done);
       rbRelease(ctx);
       return;
     }
     /* R: hold 120 ms; then the plate, as one, folds back into where it grew from (measured now: the window re-rendered,
        the page redrew the row) */
     const to = home(rbBox(cover));
-    await rbWait(cover, 120);
+    await ctx.wait(rbWait(cover, 120));
     log.style.display = 'none';
     cover.style.pointerEvents = 'none';
     ctx.cue('reveal');
@@ -907,7 +918,7 @@
       fr.push({ t: TOTAL, v: { transform: j < 4 ? poses[6][j] : let1[j], opacity: 0 } });
       el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
     });
-    await settled(fold);
+    await ctx.wait(settled(fold));
     rbRelease(ctx);
   }
 
@@ -940,12 +951,14 @@
     /* a change made inside the onboarding window plays inside it (info.within, the window): the app beneath holds still */
     const within = info.within && info.within.isConnected ? info.within : null;
     const snd = rbSounds(info, on, rebooting || document.hidden);
+    /* cut: the moment was ended early (the window opened over it); its remaining sounds stay silent */
+    const life = { cut: false };
     /* the phases, each once and in order: 'start' (the cover's first frame, or at once), 'reveal', 'gone' */
     const seen = new Set(), cue = phase => {
       ['start', 'reveal', 'gone'].some(p => {
         if (!seen.has(p)) {
           seen.add(p);
-          if (p === 'start') snd.hum(); else if (p === 'reveal') snd.wake();
+          if (!life.cut) { if (p === 'start') snd.hum(); else if (p === 'reveal') snd.wake(); }
           try { if (typeof info.onReveal === 'function') info.onReveal(p); } catch (e) { /* the caller's beat never stops the moment */ }
         }
         return p === phase;
@@ -957,11 +970,23 @@
       cue('start'); paint(); cue('reveal'); cue('gone'); return;
     }
     rebooting = true;
-    const ctx = { cover: null, paint, cue };
+    /* ctx.wait(p): every wait of the moment, which ends early (throws) once the moment is cut; snap() cuts it: painted at
+       once, the cover gone, the pointers back */
+    let stop = null;
+    const CUT = {}, abort = new Promise(res => { stop = res; });
+    const ctx = { cover: null, host: null, paint, cue, unwatch: null };
+    ctx.wait = p => Promise.race([p, abort]).then(v => { if (life.cut) throw CUT; return v; });
+    ctx.snap = () => {
+      if (life.cut) return;
+      life.cut = true; paint();
+      if (ctx.cover) ctx.cover.remove();
+      rbRelease(ctx); stop();
+    };
     try {
       const folding = !on && reason !== 'replay';
       await rebootPlate(ctx, info, within, folding);
-    } catch (e) { /* the moment is decoration; the repaint is not */ } finally {
+    } catch (e) { /* the moment is decoration (or was cut); the repaint is not */ } finally {
+      if (ctx.unwatch) ctx.unwatch();
       paint();
       if (ctx.cover) ctx.cover.remove();
       rbRelease(ctx);
