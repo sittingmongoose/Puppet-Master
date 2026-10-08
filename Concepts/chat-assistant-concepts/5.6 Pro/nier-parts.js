@@ -10,8 +10,9 @@
  *   cursor     one shared cursor (#o55np-cursor) beside the hovered or keyboard-focused menu item, picker row, thread
  *              row or wand row, placed by transform on pointerover and focusin
  *   brackets   one reticle of four corners (#o55np-reticle) on keyboard focus, and for 1.2 s on a chosen thread or tab
- *   reboot     PM_NIER.setTransition: an ink band down over the old look, the theme picked under full cover, then a
- *              six-slat tear-out (Demo Studio's theme list, PM_NIER.set, Play reboot moment; nier.js switchTo)
+ *   reboot     PM_NIER.setTransition: the plate grows from the pressed control in that look's NieR ground, the theme
+ *              is picked under full cover, then a six-slat tear-out (and, turning off, slats close and the plate folds
+ *              back). Demo Studio's theme row, PM_NIER.set, Play reboot moment (nier.js switchTo)
  *   decode     the thread title on a thread switch, the head of an arriving assistant turn or card, arriving toasts
  *   wipe       a band over the transcript while a switched-to thread draws, sliding off (#o55np-wipe)
  *   particles  twelve ink motes drifting over the transcript (#o55np-ground, CSS-anchored to it), and a burst of six
@@ -94,6 +95,25 @@
     o.connect(f); f.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.66);
     blip(c, bus, t + (up ? 0.5 : 0.02), up ? 1760 : 880, 0.12, 0.03);
   }
+  /* the world waking: A3, E4 and A4, two sawtooths each, detuned ±6 cents, through a low-pass that opens, plus one
+     sine at 1318.5 Hz. About 1.6 s. Played on the reveal when NieR turns on or the moment is replayed, never after
+     turning off (this concept has no family reveal sound). */
+  function wakeChord(c, bus, t) {
+    [220, 329.63, 440].forEach(function (f, i) {
+      var lp = c.createBiquadFilter(), g = c.createGain(), peak = 0.016 - i * 0.003;
+      lp.type = 'lowpass'; lp.Q.value = 0.7;
+      lp.frequency.setValueAtTime(500, t); lp.frequency.linearRampToValueAtTime(1500, t + 0.5);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + 0.28);
+      g.gain.setValueAtTime(peak, t + 0.9); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+      lp.connect(g); g.connect(bus);
+      [-6, 6].forEach(function (cents) {
+        var o = c.createOscillator();
+        o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = cents;
+        o.connect(lp); o.start(t); o.stop(t + 1.65);
+      });
+    });
+    blip(c, bus, t + 0.04, 1318.5, 1.1, 0.022);
+  }
   var SFX = {
     tick: function (c, b, t) { blip(c, b, t, 2640, 0.026, 0.028); },
     select: function (c, b, t) { blip(c, b, t, 1480, 0.05, 0.045, 'triangle'); blip(c, b, t + 0.038, 2220, 0.07, 0.035); },
@@ -102,7 +122,8 @@
     pod: function (c, b, t) { blip(c, b, t, 1760, 0.05, 0.03); blip(c, b, t + 0.06, 2350, 0.05, 0.026); blip(c, b, t + 0.12, 1975, 0.09, 0.026); },
     alert: function (c, b, t) { blip(c, b, t, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.1, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.2, 392, 0.2, 0.05, 'triangle'); },
     sweepOn: function (c, b, t) { sweepTone(c, b, t, true); },
-    sweepOff: function (c, b, t) { sweepTone(c, b, t, false); }
+    sweepOff: function (c, b, t) { sweepTone(c, b, t, false); },
+    wake: wakeChord
   };
   /* force: the reboot plays while NieR Mode is still off (turning on), so it asks for the installed part instead */
   function sfx(name, force) {
@@ -124,8 +145,11 @@
   var STRIP_SEL = '.editor-tab, [role="tab"]';
   var targetOf = function (e) { return e && e.target && e.target.closest ? e.target.closest(CURSOR_SEL) : null; };
   var cur = null, curT = null, curHide = 0;
+  /* while the reboot cover is up the cursor does not point through it or tick for a hover the cover is hiding */
+  var coverUp = false;
   function curPlace(t) {
     if (!cur) return;
+    if (coverUp) { curOff(); return; }
     var r = t.getBoundingClientRect();
     if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > window.innerHeight) { curOff(); return; }
     var x = r.left - 12, y = r.top + r.height / 2 - 4.5, side = 'left';
@@ -143,12 +167,12 @@
     if (!t) { if (!curHide && curT) curHide = window.setTimeout(function () { curHide = 0; curOff(); }, 90); return; }
     if (curHide) { window.clearTimeout(curHide); curHide = 0; }
     curT = t; curPlace(t);
-    sfx('tick');
+    if (!coverUp) sfx('tick');
   }
   function curFocus(e) {
     var t = targetOf(e); if (!t) return;
     var fv = false; try { fv = e.target.matches(':focus-visible'); } catch (x) { fv = false; }
-    if (fv) { curT = t; curPlace(t); sfx('tick'); }
+    if (fv) { curT = t; curPlace(t); if (!coverUp) sfx('tick'); }
   }
   PARTS.cursor = {
     on: function () {
@@ -168,7 +192,7 @@
   var ret = null, retT = null, retLock = 0, retScroll = 0;
   var RET_GAP = 3, RET_S = 10;
   function retPlace(t) {
-    if (!ret || !t || !t.isConnected) { retOff(); return; }
+    if (!ret || !t || !t.isConnected || coverUp) { retOff(); return; }
     var r = t.getBoundingClientRect();
     if (r.width < 2 || r.height < 2 || r.bottom < 0 || r.top > window.innerHeight) { retOff(); return; }
     var l = r.left - RET_GAP, tp = r.top - RET_GAP, rt = r.right + RET_GAP - RET_S, b = r.bottom + RET_GAP - RET_S;
@@ -471,85 +495,458 @@
   };
 
   /* ---------- reboot moment ---------------------------------------------------------------------------------------------- */
-  /* The plate leaves as six horizontal slats (hero-spec §1 rule 3, the page-wide path). Even bands slide left and odd
-     bands slide right, translateX ±101%, steps(4) over 180 ms, 30 ms stagger from the middle pair outward (2-3, 1-4, 0-5),
-     matching PMConcept7's settings reboot. Each slat clips one
-     band of the plate so the log stays aligned, and the slats ignore the pointer. Opacity never reverses: a
-     window-sized plate must not flash. Reduced motion, the Still preset (the reboot part is off) and a hidden tab
-     still take the instant path in reboot(). */
-  function tear(cover, band) {
-    /* the meter is full when the plate tears (its fill has finished); a clone does not keep the animation */
-    var meterBar = cover.querySelector('.o55np-rb-meter > i');
-    if (meterBar) {
-      if (typeof meterBar.getAnimations === 'function') meterBar.getAnimations().forEach(function (a) { a.cancel(); });
-      meterBar.style.transform = 'scaleX(1)';
-    }
-    if (typeof band.getAnimations === 'function') band.getAnimations().forEach(function (a) { a.cancel(); });
-    var h = cover.clientHeight || window.innerHeight, y0 = 0, slats = [];
-    for (var i = 0; i < 6; i++) {
-      var y1 = Math.round((i + 1) * h / 6);
-      var slat = document.createElement('div');
-      slat.className = 'o55np-slat';
-      slat.style.top = y0 + 'px';
-      slat.style.height = (y1 - y0 + (i < 5 ? 1 : 0)) + 'px';   /* 1px overlap so no seam shows between bands */
-      var slice = band.cloneNode(true);
-      slice.style.transform = 'none';
-      slice.style.top = (-y0) + 'px';
-      slice.style.height = h + 'px';
-      slice.style.left = '0';
-      slice.style.right = 'auto';
-      slice.style.bottom = 'auto';
-      slice.style.width = '100%';
-      slat.appendChild(slice);
-      slats.push(slat);
-      y0 = y1;
-    }
-    band.remove();
-    /* the slats live in one .o55np-slats layer, PMConcept7's class names (#o55np-reboot > .o55np-slats > .o55np-slat) */
-    var layer = document.createElement('div');
-    layer.className = 'o55np-slats';
-    slats.forEach(function (s) { layer.appendChild(s); });
-    cover.appendChild(layer);
-    return Promise.all(slats.map(function (slat, i) {
-      var dist = Math.abs(i - 2.5) - 0.5;
-      var dir = (i % 2) ? '101%' : '-101%';
-      return slat.animate([{ transform: 'translateX(0%)' }, { transform: 'translateX(' + dir + ')' }],
-        { duration: 180, delay: dist * 30, easing: 'steps(4, end)', fill: 'forwards' }).finished;
-    }));
+  /* The page plate (PMConcept7's rebootPlate, page staging). It grows from the control just pressed, in NieR's ground
+     of that look's tone, types a check list through the repaint and tears out as six slats. Turning off, the slats
+     close in and the plate folds back into the control. No large surface reverses its brightness: only the slats move.
+     Reduced motion, the reboot part off, or a hidden tab repaints at once. No requestAnimationFrame loop and no
+     MutationObserver: the waits are one-shot animations. */
+  var speed = function () { return 1; };
+  function tl() {
+    return document.timeline && typeof document.timeline.currentTime === 'number' ? document.timeline.currentTime : performance.now();
   }
-  var REBOOT_COPY = {
-    on: ['NieR Mode', 'Rebooting the interface', 'Ink and parchment loaded'],
-    off: ['NieR Mode', 'Shutting down the unit', 'Your theme restored'],
-    replay: ['NieR Mode', 'Rebooting the interface', 'All parts reinstalled']
-  };
+  function since(t0) { return (tl() - t0) / speed(); }
+  function rbWait(el, ms) {
+    return new Promise(function (res) {
+      var a = null, dur = Math.max(0, ms);
+      try { a = el.animate(null, { duration: dur }); } catch (e) { a = null; }
+      if (!a) { window.setTimeout(res, dur); return; }
+      a.onfinish = function () { res(); };
+      a.oncancel = function () { res(); };
+      window.setTimeout(res, dur * speed() * 30 + 2000);
+    });
+  }
+  function rbAt(el, t0, T) { return rbWait(el, T - since(t0)); }
+  function settled(a) {
+    return a && a.finished ? a.finished.then(function () { return true; }, function () { return false; }) : Promise.resolve(false);
+  }
+  function settledStart(anims) {
+    return Promise.race([
+      Promise.all(anims.map(function (a) { return a.ready.catch(function () { return null; }); })),
+      new Promise(function (res) { window.setTimeout(res, 250); })
+    ]).then(function () { return frames(2); });
+  }
+  function rbStart(a, fallback) {
+    return Promise.resolve(a && a.ready).then(function () {
+      return a && typeof a.startTime === 'number' ? a.startTime : fallback;
+    }, function () { return fallback; });
+  }
+  function RB(fallback, vars) {
+    return String(fallback).replace(/\{(\w+)\}/g, function (m, k) { return vars && vars[k] != null ? String(vars[k]) : m; });
+  }
+  function familyName() {
+    var theme = (document.body && document.body.getAttribute('data-theme')) || 'basic';
+    var f = String(theme).split('-')[0];
+    if (html.getAttribute('data-o55-nier') === 'on') {
+      try {
+        var fam = window.PM_THEME && window.PM_THEME.getFamily && window.PM_THEME.getFamily();
+        if (fam) f = String(fam);
+      } catch (e) { /* the painted one */ }
+    }
+    if (!f) f = 'basic';
+    return f.charAt(0).toUpperCase() + f.slice(1);
+  }
+  function rbLines(info, kind) {
+    var ok = 'OK';
+    if (info && Array.isArray(info.lines) && info.lines.length) {
+      return info.lines.slice(0, 5).map(function (l) {
+        return { text: String(l && typeof l === 'object' ? l.text : l), stamp: String(l && typeof l === 'object' && l.stamp != null ? l.stamp : ok) };
+      });
+    }
+    var fam = familyName();
+    var last = installed('pod') || installed('voice') ? { text: 'Pod 042', stamp: 'Online' }
+      : installed('sounds') ? { text: 'Menu sounds', stamp: ok } : { text: 'Ready', stamp: ok };
+    var keep = { text: RB('Keeping {family} for later', { family: fam }), stamp: ok };
+    var ink = { text: 'Ink and parchment', stamp: ok };
+    var restore = { text: RB('Restoring {family}', { family: fam }), stamp: ok };
+    var boot = { text: 'Rebooting the interface', stamp: ok };
+    if (kind === 'pageOff') return [{ text: 'Shutting down the unit', stamp: ok }, restore];
+    if (kind === 'replay') return [boot, ink, last, { text: 'All parts reinstalled', stamp: ok }];
+    return [boot, keep, ink, last];
+  }
+  function rbPlan(n, folding) {
+    var P = folding ? { first: 700, last: 850, meter: [560, 870], sync: 920 } : { first: 600, last: 1050, meter: [480, 1080], sync: 1100 };
+    var gap = n > 1 ? Math.min(150, (P.last - P.first) / (n - 1)) : 0;
+    P.stamps = [];
+    for (var i = 0; i < n; i++) P.stamps.push(Math.round(P.first + i * gap));
+    P.done = n ? Math.max(P.meter[1], P.stamps[n - 1] + 90) : P.meter[1];
+    return P;
+  }
+  function rbShift(plan, now) {
+    var late = Math.max(0, now + 30 - Math.min(plan.stamps[0] - 120, plan.meter[0]));
+    if (!late) return plan;
+    return {
+      first: plan.first, last: plan.last,
+      stamps: plan.stamps.map(function (x) { return x + late; }),
+      meter: plan.meter.map(function (x) { return x + late; }),
+      sync: plan.sync + late, done: plan.done + late, late: late
+    };
+  }
+  function rbLog(lines) {
+    var log = document.createElement('div');
+    log.className = 'o55np-log';
+    log.innerHTML = '<div class="o55np-kick"><i></i><i></i><i></i><span class="o55np-kick-t">' + esc('NieR Mode') + '</span></div>'
+      + '<div class="o55np-lns">' + lines.map(function (l) {
+        return '<div class="o55np-ln"><span class="o55np-ln-t">' + esc(l.text) + '</span><span class="o55np-ln-dots"></span><b class="o55np-stamp">' + esc(l.stamp) + '</b><i class="o55np-ln-mask"></i></div>';
+      }).join('') + '</div>'
+      + '<div class="o55np-meter"><i></i></div>'
+      + '<div class="o55np-ln o55np-sync"><span class="o55np-ln-t">' + esc('Synchronising') + '</span><i class="o55np-caret"></i><span class="o55np-ln-dots"></span><b class="o55np-stamp">' + esc('OK') + '</b></div>';
+    return log;
+  }
+  function rbType(log, plan, now) {
+    var anims = [];
+    var A = function (el, kf, o) {
+      var opt = { fill: 'backwards' };
+      Object.keys(o).forEach(function (k) { opt[k] = o[k]; });
+      var a = el.animate(kf, opt);
+      anims.push(a);
+      return a;
+    };
+    var d = function (t) { return Math.max(0, t - now); };
+    Array.prototype.forEach.call(log.querySelectorAll('.o55np-lns > .o55np-ln'), function (ln, i) {
+      var st = plan.stamps[i];
+      A(ln.querySelector('.o55np-ln-mask'), [{ transform: 'translateX(0)' }, { transform: 'translateX(calc(100% + 10px))' }],
+        { duration: 120, delay: d(st - 120), easing: 'steps(8, end)' });
+      A(ln.querySelector('.o55np-stamp'), [
+        { opacity: 0, easing: 'step-end' }, { opacity: 1, offset: 0.34, easing: 'step-end' },
+        { opacity: 0, offset: 0.67, easing: 'step-end' }, { opacity: 1 }
+      ], { duration: 120, delay: Math.max(0, d(st) - 40) });
+    });
+    A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+      { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)' });
+    var sync = log.querySelector('.o55np-sync');
+    A(sync, [{ opacity: 0 }, { opacity: 0 }], { duration: Math.max(1, d(plan.sync)) });
+    A(sync.querySelector('.o55np-caret'), [
+      { opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }
+    ], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
+    return { anims: anims };
+  }
+  function rbClear(log, typing, plan, t0) {
+    var synced = since(t0) >= plan.sync;
+    typing.anims.forEach(function (a) { try { a.cancel(); } catch (e) { /* already gone */ } });
+    var s = log.querySelector('.o55np-sync');
+    if (synced) s.setAttribute('data-ok', ''); else s.style.display = 'none';
+    log.setAttribute('data-done', '');
+    log.querySelector('.o55np-kick-t').textContent = 'All clear';
+  }
+  var BR = 12;
+  function rbBox(cover) {
+    var r = cover.getBoundingClientRect(), w = cover.offsetWidth || r.width || 1, h = cover.offsetHeight || r.height || 1;
+    return { r: r, w: w, h: h, k: r.width / w || 1 };
+  }
+  var press = null;
+  var PRESSABLE = 'button, a[href], input, select, label, summary, [role="button"], [role="switch"], [role="checkbox"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="menuitem"], [role="option"], [role="tab"]';
+  function notePress(e) {
+    var t = e.target;
+    if (!e.isTrusted || !(t instanceof Element) || (t.closest && t.closest('#o55np-reboot'))) return;
+    if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+    var el = (t.closest && t.closest(PRESSABLE)) || t;
+    var host = el.closest ? el.closest('[id]') : null;
+    var role = el.getAttribute ? el.getAttribute('role') : '';
+    press = {
+      el: el, at: performance.now(), id: host ? host.id : '',
+      sel: host && host !== el ? el.localName + (role ? '[role="' + role + '"]' : '') : '',
+      pt: e.type === 'pointerdown' ? { left: e.clientX - 12, top: e.clientY - 12, width: 24, height: 24 } : null
+    };
+  }
+  document.addEventListener('pointerdown', notePress, true);
+  document.addEventListener('keydown', notePress, true);
+  function lastPress() { return press && performance.now() - press.at < 2000 ? press : null; }
+  function pressEl(p) {
+    if (!p) return null;
+    if (p.el && p.el.isConnected) return p.el;
+    var host = p.id ? document.getElementById(p.id) : null;
+    if (!host || !p.sel) return host;
+    var same = host.querySelectorAll(p.sel);
+    return same.length === 1 ? same[0] : null;
+  }
+  function givenFrom(info) {
+    try { return info && typeof info.from === 'function' ? info.from() : info && info.from; } catch (e) { return null; }
+  }
+  function rbFrom(cands, scope, box) {
+    for (var i = 0; i < cands.length; i++) {
+      var c = cands[i], r = null;
+      if (!c) continue;
+      if (typeof c.getBoundingClientRect === 'function' && typeof c.isConnected === 'boolean') {
+        if (!c.isConnected || (scope && scope.contains && !scope.contains(c))) continue;
+        r = c.getBoundingClientRect();
+      } else if (typeof c.left === 'number' && typeof c.width === 'number') r = c;
+      if (!r || r.width < 8 || r.height < 8) continue;
+      var x = (r.left - box.r.left) / box.k, y = (r.top - box.r.top) / box.k, w = r.width / box.k, h = r.height / box.k;
+      if (x + w <= 0 || y + h <= 0 || x >= box.w || y >= box.h) continue;
+      var cx = Math.max(0, x), cy = Math.max(0, y);
+      return { x: cx, y: cy, w: Math.min(box.w, x + w) - cx, h: Math.min(box.h, y + h) - cy };
+    }
+    return { x: box.w / 2 - 80, y: box.h / 2 - 50, w: 160, h: 100 };
+  }
+  function lerpRect(a, b, f) {
+    return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, w: a.w + (b.w - a.w) * f, h: a.h + (b.h - a.h) * f };
+  }
+  function clipOf(r, box) {
+    var x = Math.round(r.x), y = Math.round(r.y), sx = Math.max(1, Math.round(r.w)) / box.w, sy = Math.max(1, Math.round(r.h)) / box.h;
+    return ['translate(' + x + 'px, ' + y + 'px) scale(' + sx.toFixed(5) + ', ' + sy.toFixed(5) + ')',
+      'scale(' + (1 / sx).toFixed(5) + ', ' + (1 / sy).toFixed(5) + ') translate(' + (-x) + 'px, ' + (-y) + 'px)'];
+  }
+  function rbPose(r, o, box) {
+    var sx = Math.max(r.w, 1) / box.w, sy = Math.max(r.h, 1) / box.h;
+    var x = Math.round(r.x), y = Math.round(r.y), x2 = Math.round(r.x + r.w), y2 = Math.round(r.y + r.h), k = Math.round(o);
+    return [
+      'translate(' + x + 'px, ' + y + 'px) scaleX(' + sx.toFixed(4) + ')',
+      'translate(' + x + 'px, ' + (y2 - 1) + 'px) scaleX(' + sx.toFixed(4) + ')',
+      'translate(' + x + 'px, ' + y + 'px) scaleY(' + sy.toFixed(4) + ')',
+      'translate(' + (x2 - 1) + 'px, ' + y + 'px) scaleY(' + sy.toFixed(4) + ')',
+      'translate(' + (x - k) + 'px, ' + (y - k) + 'px) scale(1, 1)',
+      'translate(' + (x2 + k - BR) + 'px, ' + (y - k) + 'px) scale(-1, 1)',
+      'translate(' + (x - k) + 'px, ' + (y2 + k - BR) + 'px) scale(1, -1)',
+      'translate(' + (x2 + k - BR) + 'px, ' + (y2 + k - BR) + 'px) scale(-1, -1)'
+    ];
+  }
+  function walk(frames, total) {
+    return frames.map(function (f) {
+      var o = { offset: Math.min(1, f.t / total), easing: 'step-end' };
+      Object.keys(f.v).forEach(function (k) { o[k] = f.v[k]; });
+      return o;
+    });
+  }
+  function rbSet(lines) {
+    var set = document.createElement('div');
+    set.className = 'o55np-set';
+    var ground = document.createElement('div');
+    ground.className = 'o55np-plate';
+    ground.innerHTML = '<div class="o55np-plate-in"></div>';
+    var log = rbLog(lines);
+    ground.firstElementChild.appendChild(log);
+    set.appendChild(ground);
+    var deco = document.createElement('div');
+    deco.className = 'o55np-deco';
+    deco.innerHTML = '<i class="o55np-edge" data-e="t"></i><i class="o55np-edge" data-e="b"></i><i class="o55np-edge" data-e="l"></i><i class="o55np-edge" data-e="r"></i>'
+      + '<i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i>';
+    set.appendChild(deco);
+    return { set: set, ground: ground, inner: ground.firstElementChild, log: log, deco: deco.querySelectorAll('i') };
+  }
+  function rbSlats(cover, src, mode, delay) {
+    var wrap = document.createElement('div');
+    wrap.className = 'o55np-slats';
+    var order = mode === 'out' ? [2, 1, 0, 0, 1, 2] : [0, 1, 2, 2, 1, 0];
+    var anims = [], i, s;
+    for (i = 0; i < 6; i++) {
+      s = document.createElement('div');
+      s.className = 'o55np-slat';
+      s.style.setProperty('--i', String(i));
+      s.appendChild(src.cloneNode(true));
+      wrap.appendChild(s);
+    }
+    cover.appendChild(wrap);
+    for (i = 0; i < wrap.children.length; i++) {
+      s = wrap.children[i];
+      var away = 'translateX(' + (i % 2 ? 101 : -101) + '%)';
+      anims.push(s.animate(mode === 'out'
+        ? [{ transform: 'translateX(0)' }, { transform: away }]
+        : [{ transform: away }, { transform: 'translateX(0)' }],
+        { duration: 180, delay: delay + order[i] * 30, easing: mode === 'out' ? 'steps(4, jump-start)' : 'steps(4, end)', fill: mode === 'out' ? 'forwards' : 'both' }));
+    }
+    return { wrap: wrap, first: anims[0], done: Promise.all(anims.map(settled)) };
+  }
+  function rbRelease(ctx) {
+    if (ctx && ctx.unhold) ctx.unhold();
+    coverUp = false;
+  }
+  var HELD = ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'click', 'dblclick', 'auxclick', 'contextmenu'];
+  function holdPresses(ctx) {
+    var hold = function (e) { if (e.isTrusted) { e.preventDefault(); e.stopImmediatePropagation(); } };
+    HELD.forEach(function (k) { window.addEventListener(k, hold, true); });
+    ctx.unhold = function () {
+      HELD.forEach(function (k) { window.removeEventListener(k, hold, true); });
+      ctx.unhold = null;
+    };
+  }
+  function rbSounds(info, on, quiet) {
+    var own = info.sound !== false && !quiet;
+    var humAt = -1e9, woke = false;
+    var up = !!(on || (info && info.reason === 'replay'));
+    return {
+      hum: function () { if (own && sfx(up ? 'sweepOn' : 'sweepOff', true)) humAt = performance.now(); },
+      wake: function () {
+        if (!own || woke || !up) return;
+        woke = true;
+        var wait = humAt + 120 - performance.now();
+        if (wait > 0) window.setTimeout(function () { sfx('wake', true); }, wait);
+        else sfx('wake', true);
+      }
+    };
+  }
+  function rebootPlate(ctx, info, folding) {
+    var kind = folding ? 'pageOff' : (info.reason === 'replay' ? 'replay' : 'pageOn');
+    var lines = rbLines(info, kind);
+    var plan = rbPlan(lines.length, folding);
+    var cover = ctx.cover = document.createElement('div');
+    cover.id = 'o55np-reboot';
+    cover.className = 'o55np-page';
+    cover.setAttribute('aria-hidden', 'true');
+    cover.dataset.tone = tone();
+    cover.dataset.dir = folding ? 'off' : 'on';
+    var built = rbSet(lines);
+    var set = built.set, ground = built.ground, inner = built.inner, log = built.log, deco = built.deco;
+    cover.appendChild(set);
+    var given = givenFrom(info), pr = given ? null : lastPress();
+    var startEl = given || pressEl(pr);
+    var startRect = startEl && startEl.isConnected ? startEl.getBoundingClientRect() : null;
+    var home = function (box) { return rbFrom([startEl, pressEl(pr), startRect, pr && pr.pt], html, box); };
+    document.body.appendChild(cover);
+    holdPresses(ctx);
+    coverUp = true; curOff(); retOff();
+    var t0 = tl();
+    var box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
+    var chain = Promise.resolve();
+    if (!folding) {
+      var from = home(box);
+      var F = [0, 0.3, 0.55, 0.75, 0.9, 1];
+      var rects = F.map(function (f) { return lerpRect(from, full, f); });
+      var off = F.map(function (f) { return 3 - 17 * f; });
+      var at = function (k) { return 90 + 60 * k; };
+      var TOTAL = 450;
+      var clips = rects.map(function (r) { return clipOf(r, box); });
+      var idle = clipOf(full, box);
+      var growFrames = [{ t: 0, v: { transform: clips[0][0], opacity: 0 } }];
+      var inFrames = [{ t: 0, v: { transform: clips[0][1] } }];
+      clips.forEach(function (c, k) {
+        growFrames.push({ t: at(k), v: { transform: c[0], opacity: 1 } });
+        inFrames.push({ t: at(k), v: { transform: c[1] } });
+      });
+      growFrames.push({ t: TOTAL, v: { transform: idle[0], opacity: 1 } });
+      inFrames.push({ t: TOTAL, v: { transform: idle[1] } });
+      var grow = ground.animate(walk(growFrames, TOTAL), { duration: TOTAL, fill: 'forwards' });
+      var growIn = inner.animate(walk(inFrames, TOTAL), { duration: TOTAL, fill: 'forwards' });
+      var poses = rects.map(function (r, k) { return rbPose(r, off[k], box); });
+      var lock = [12, 8, 5].map(function (o) { return rbPose(rects[0], o, box); });
+      Array.prototype.forEach.call(deco, function (el, j) {
+        var fr = [], isBr = j >= 4;
+        if (isBr) lock.forEach(function (p, s) { fr.push({ t: s * 30, v: { transform: p[j], opacity: 1 } }); });
+        else fr.push({ t: 0, v: { transform: poses[0][j], opacity: 0 } });
+        poses.forEach(function (p, k) { fr.push({ t: at(k), v: { transform: p[j], opacity: 1 } }); });
+        fr.push({ t: TOTAL, v: { transform: poses[5][j], opacity: 1 } });
+        el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
+      });
+      chain = rbStart(grow, t0).then(function (started) {
+        t0 = started;
+        ctx.cue('start');
+        return settled(grow);
+      }).then(function () {
+        if (!cover.isConnected) return;
+        Array.prototype.forEach.call(set.querySelectorAll('.o55np-deco > i'), function (el) {
+          el.getAnimations().forEach(function (a) { try { a.commitStyles(); } catch (e) { /* not rendered */ } a.cancel(); });
+        });
+        ground.style.opacity = '1';
+        grow.cancel(); growIn.cancel();
+      });
+    } else {
+      var shutPose = rbPose(full, -14, box);
+      Array.prototype.forEach.call(deco, function (el, j) { el.style.transform = shutPose[j]; el.style.opacity = '1'; });
+      ground.style.opacity = '1';
+      cover.setAttribute('data-hold', '');
+      var shut = rbSlats(cover, set, 'in', 60);
+      chain = rbStart(shut.first, t0).then(function (started) {
+        t0 = started;
+        ctx.cue('start');
+        return shut.done;
+      }).then(function () {
+        if (!cover.isConnected) return;
+        cover.removeAttribute('data-hold');
+        shut.wrap.remove();
+      });
+    }
+    return chain.then(function () {
+      if (!cover.isConnected) return;
+      log.setAttribute('data-on', '');
+      plan = rbShift(plan, since(t0));
+      var typing = rbType(log, plan, since(t0));
+      return settledStart(typing.anims).then(function () {
+        ctx.paint();
+        return frames(2);
+      }).then(function () { return rbAt(cover, t0, plan.done); }).then(function () {
+        if (!cover.isConnected) return;
+        rbClear(log, typing, plan, t0);
+        if (!cover.isConnected) return;
+        if (!folding) {
+          var slats = rbSlats(cover, set, 'out', 160);
+          set.remove();
+          return rbWait(cover, 160).then(function () {
+            if (ctx.unhold) ctx.unhold();
+            ctx.cue('reveal');
+            return slats.done;
+          }).then(function () { rbRelease(ctx); });
+        }
+        var to = home(rbBox(cover));
+        return rbWait(cover, 120).then(function () {
+          log.style.display = 'none';
+          if (ctx.unhold) ctx.unhold();
+          ctx.cue('reveal');
+          var G = [0.1, 0.25, 0.45, 0.7, 0.9, 1];
+          var rects = G.map(function (f) { return lerpRect(full, to, f); });
+          var off = G.map(function (f) { return -14 + 17 * f; });
+          var TOTAL = 450;
+          var clips = rects.map(function (r) { return clipOf(r, box); });
+          var idle = clipOf(full, box), last = clipOf(to, box);
+          var foldFrames = [{ t: 0, v: { transform: idle[0], opacity: 1 } }];
+          var backFrames = [{ t: 0, v: { transform: idle[1] } }];
+          clips.forEach(function (c, k) {
+            foldFrames.push({ t: 60 * (k + 1), v: { transform: c[0], opacity: 1 } });
+            backFrames.push({ t: 60 * (k + 1), v: { transform: c[1] } });
+          });
+          foldFrames.push({ t: 390, v: { transform: last[0], opacity: 0 } });
+          foldFrames.push({ t: TOTAL, v: { transform: last[0], opacity: 0 } });
+          backFrames.push({ t: TOTAL, v: { transform: last[1] } });
+          var fold = ground.animate(walk(foldFrames, TOTAL), { duration: TOTAL, fill: 'forwards' });
+          inner.animate(walk(backFrames, TOTAL), { duration: TOTAL, fill: 'forwards' });
+          var poses = [rbPose(full, -14, box)].concat(rects.map(function (r, k) { return rbPose(r, off[k], box); }));
+          var letGo = rbPose(to, 7, box);
+          Array.prototype.forEach.call(deco, function (el, j) {
+            var fr = poses.map(function (p, k) { return { t: 60 * k, v: { transform: p[j], opacity: 1 } }; });
+            if (j < 4) fr.push({ t: 390, v: { transform: poses[6][j], opacity: 0 } });
+            else fr.push({ t: 420, v: { transform: letGo[j], opacity: 1 } }, { t: 450, v: { transform: letGo[j], opacity: 0 } });
+            fr.push({ t: TOTAL, v: { transform: j < 4 ? poses[6][j] : letGo[j], opacity: 0 } });
+            el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
+          });
+          return settled(fold);
+        }).then(function () { rbRelease(ctx); });
+      });
+    });
+  }
   var rebooting = false;
   function reboot(repaint, info) {
-    var on = !!(info && info.on), reason = info && info.reason;
-    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body) { repaint(); sync(); return Promise.resolve(); }
+    info = info || {};
+    var on = !!info.on, reason = info.reason;
+    var snd = rbSounds(info, on, rebooting || document.hidden);
+    var seen = {};
+    var cue = function (phase) {
+      var order = ['start', 'reveal', 'gone'], i, p;
+      for (i = 0; i < order.length; i++) {
+        p = order[i];
+        if (!seen[p]) {
+          seen[p] = 1;
+          if (p === 'start') snd.hum();
+          else if (p === 'reveal') snd.wake();
+          try { if (typeof info.onReveal === 'function') info.onReveal(p); } catch (e) { /* the caller's beat never stops the moment */ }
+        }
+        if (p === phase) break;
+      }
+    };
+    var painted = false;
+    var paint = function () { if (painted) return; painted = true; try { repaint(); } catch (e) { /* the repaint is the caller's */ } sync(); };
+    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body) {
+      cue('start'); paint(); cue('reveal'); cue('gone');
+      return Promise.resolve();
+    }
     rebooting = true;
-    var copy = REBOOT_COPY[reason === 'replay' ? 'replay' : on ? 'on' : 'off'];
-    var cover = document.createElement('div');
-    cover.id = 'o55np-reboot'; cover.setAttribute('aria-hidden', 'true'); cover.dataset.tone = tone();
-    cover.innerHTML = '<div class="o55np-rb-band"><div class="o55np-rb-lines"></div><div class="o55np-rb-copy"><div class="o55np-rb-title">' + esc(copy[0]) + '</div>'
-      + '<div class="o55np-rb-line">' + esc(copy[1]) + '</div><div class="o55np-rb-line">' + esc(copy[2]) + '</div><div class="o55np-rb-meter"><i></i></div></div></div>';
-    document.body.appendChild(cover);
-    var band = cover.firstElementChild, meter = cover.querySelector('.o55np-rb-meter > i'), lines = cover.querySelectorAll('.o55np-rb-line'), fill = null;
-    var finish = function () { cover.remove(); rebooting = false; };
-    sfx(on || reason === 'replay' ? 'sweepOn' : 'sweepOff', true);
-    return band.animate([{ transform: 'translateY(-101%)' }, { transform: 'translateY(0)' }], { duration: 320, easing: 'cubic-bezier(.6, 0, .3, 1)', fill: 'forwards' }).finished
-      .then(function () {
-        fill = meter.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 560, easing: 'steps(12, end)', fill: 'forwards' });
-        lines[0].setAttribute('data-ok', '');
-        repaint();
-        sync();
-        return frames(2); /* the repaint's long frame is drawn here, under full cover; the meter runs on the compositor */
-      })
-      .then(function () { return fill.finished; })
-      .then(function () {
-        lines[1].setAttribute('data-ok', '');
-        return tear(cover, band);
-      })
-      .then(finish, function () { repaint(); sync(); finish(); });
+    var ctx = { cover: null, unhold: null, paint: paint, cue: cue };
+    return Promise.resolve().then(function () {
+      return rebootPlate(ctx, info, !on && reason !== 'replay');
+    }).then(function () { /* the moment is decoration */ }, function () { /* a thrown animation still repaints */ }).then(function () {
+      paint();
+      if (ctx.cover && ctx.cover.parentNode) ctx.cover.remove();
+      rbRelease(ctx);
+      rebooting = false;
+      cue('gone');
+    });
   }
   PARTS.reboot = { on: function () {}, off: function () {} };
 

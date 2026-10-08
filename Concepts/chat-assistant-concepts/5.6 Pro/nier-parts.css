@@ -9,7 +9,7 @@
  * styles.d/14-nier-parts.css; #o55np-fx, the alert effects, is the concept's own), so the
  * parts read the same in both apps; what is the concept's own is the selector lists (menus, pickers, thread rows,
  * wand rows, sheets, dialogs, transcript cards, toasts). Colours are the palette's helper tokens only (the pointer
- * images and the reboot cover's inks, which must exist as literals, are in nier.css's generated block).
+ * images and the reboot cover's ground and ink, which must exist as literals, are in nier.css's generated block).
  * Motion rules (PMConcept7's): transform and opacity only, stepped; nothing animates a filter, clip-path, box-shadow
  * or background; every motion is off under reduced motion (the media query, html[data-motion="reduced"] and the
  * concept's body.pm56-reduced). Selector rules (tests/shell-selfcheck.cjs): one selector per class rather than a
@@ -209,30 +209,67 @@ html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: n
 /* ====================================================================================================== Motion */
 
 /* ---- Reboot moment [reboot]: the cover (nier-parts.js runs it inside PM_NIER.setTransition) ----
-   The cover exists before the palette is painted (turning NieR Mode on), so its two inks are custom properties written
-   by nier_palette_56.py into nier.css's generated block, keyed by the cover's own tone (the look it covers). */
-#o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict; }
-#o55np-reboot > .o55np-rb-band { position: absolute; inset: 0; background: var(--rb-ink); transform: translateY(-101%); will-change: transform; }
-#o55np-reboot .o55np-rb-band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--rb-ink); box-shadow: 0 -3px 0 var(--rb-ink); }
-#o55np-reboot .o55np-rb-band > .o55np-rb-lines { position: absolute; inset: 0;
-  background: repeating-linear-gradient(to bottom, rgba(var(--rb-ink-rgb), 0) 0 2px, rgba(var(--rb-shade-rgb), .09) 2px 3px); opacity: .9; }
-#o55np-reboot .o55np-rb-copy { position: absolute; left: 50%; top: 50%; width: 360px; margin: -44px 0 0 -180px; color: var(--rb-paper);
-  font: 500 11px/1.7 "PM NieR Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .22em; text-transform: uppercase; }
-#o55np-reboot .o55np-rb-title { font: 600 15px/1.4 "PM NieR Sans", "Inter", system-ui, sans-serif; letter-spacing: .3em; margin-bottom: 10px;
-  padding-bottom: 8px; background: linear-gradient(var(--rb-paper), var(--rb-paper)) left bottom / 5px 5px no-repeat, linear-gradient(var(--rb-paper), var(--rb-paper)) right bottom / 5px 5px no-repeat,
-  linear-gradient(var(--rb-paper), var(--rb-paper)) center calc(100% - 2px) / calc(100% - 12px) 1px no-repeat; }
-#o55np-reboot .o55np-rb-meter { position: relative; height: 6px; margin-top: 12px; border: 1px solid var(--rb-paper); }
-#o55np-reboot .o55np-rb-meter > i { position: absolute; left: 1px; top: 1px; bottom: 1px; right: 1px; background: repeating-linear-gradient(90deg, var(--rb-paper) 0 10px, transparent 10px 13px);
-  transform-origin: left center; transform: scaleX(0); will-change: transform; }
-#o55np-reboot .o55np-rb-line { display: flex; gap: 10px; }
-#o55np-reboot .o55np-rb-line::after { content: "- - -"; margin-left: auto; opacity: .6; }
-#o55np-reboot .o55np-rb-line[data-ok]::after { content: "OK"; opacity: 1; }
-/* Tear-out: six horizontal slats, each clipping one band of the plate (the slice is the full plate, shifted up by
-   this slat's top). They slide off in script (translateX ±101%, steps(4), 30 ms from the middle outward) and ignore
-   the pointer, so the window shows through band by band and stays clickable. */
-#o55np-reboot > .o55np-slats { position: absolute; inset: 0; pointer-events: none; }
-#o55np-reboot > .o55np-slats > .o55np-slat { position: absolute; left: 0; right: 0; overflow: hidden; pointer-events: none; will-change: transform; }
-#o55np-reboot > .o55np-slats > .o55np-slat > .o55np-rb-band { position: absolute; left: 0; width: 100%; background: var(--rb-ink); transform: none; will-change: auto; }
+   The cover exists before the palette is painted (turning NieR Mode on), so --rb-ground, --rb-text and --rb-text-rgb
+   are written by nier_palette_56.py into nier.css, keyed by the cover's own tone (the look it covers): NieR's canvas
+   and NieR's ink, never the inverse sheet. One plate over the page: that ground, the 32 px map grid with a 128 px
+   major grid, a hairline frame and four brackets (.o55np-deco, placed by transform so they ride the plate while it
+   grows or folds). The check list (.o55np-log) sits on the ground; the ink is only the kicker band, the caret, the
+   hairline and the brackets. It leaves as six slats (.o55np-slat, each a copy of the set moved up by its own place).
+   The page cover is pointer-events: none so a hover under it does not change; the script holds presses until the
+   reveal. Motion is transform or opacity only, all one-shot. */
+#o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict;
+  color: var(--rb-text); }
+#o55np-reboot .o55np-set { position: absolute; inset: 0; }
+#o55np-reboot[data-hold] > .o55np-set { visibility: hidden; }
+/* the plate is an overflow box stepped onto its rect by transform; its ground (.o55np-plate-in) is moved back by the
+   inverse, so the map holds still while the box grows or folds */
+#o55np-reboot .o55np-plate { position: absolute; inset: 0; opacity: 0; overflow: hidden; transform-origin: 0 0; will-change: transform, opacity; }
+#o55np-reboot .o55np-plate-in { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; background-color: var(--rb-ground);
+  background-image: linear-gradient(rgba(var(--rb-text-rgb), .075) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--rb-text-rgb), .075) 1px, transparent 1px),
+    linear-gradient(rgba(var(--rb-text-rgb), .04) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--rb-text-rgb), .04) 1px, transparent 1px);
+  background-size: 128px 128px, 128px 128px, 32px 32px, 32px 32px; background-position: -1px -1px; }
+#o55np-reboot .o55np-plate-in::before, #o55np-reboot .o55np-plate-in::after { content: ""; position: absolute; left: 12px; top: 12px; opacity: .5; pointer-events: none; }
+#o55np-reboot .o55np-plate-in::before { right: 12px; height: 7px;
+  background: repeating-linear-gradient(90deg, var(--rb-text) 0 1px, transparent 1px 32px) 0 0 / 100% 7px no-repeat,
+    repeating-linear-gradient(90deg, var(--rb-text) 0 1px, transparent 1px 8px) 0 0 / 100% 3px no-repeat; }
+#o55np-reboot .o55np-plate-in::after { bottom: 12px; width: 7px;
+  background: repeating-linear-gradient(180deg, var(--rb-text) 0 1px, transparent 1px 32px) 0 0 / 7px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--rb-text) 0 1px, transparent 1px 8px) 0 0 / 3px 100% no-repeat; }
+#o55np-reboot .o55np-deco { position: absolute; inset: 0; pointer-events: none; }
+#o55np-reboot .o55np-edge { position: absolute; left: 0; top: 0; opacity: 0; transform-origin: 0 0; background: rgba(var(--rb-text-rgb), .6); will-change: transform; }
+#o55np-reboot .o55np-edge[data-e="t"], #o55np-reboot .o55np-edge[data-e="b"] { width: 100%; height: 1px; }
+#o55np-reboot .o55np-edge[data-e="l"], #o55np-reboot .o55np-edge[data-e="r"] { width: 1px; height: 100%; }
+#o55np-reboot .o55np-br { position: absolute; left: 0; top: 0; width: 12px; height: 12px; opacity: 0; will-change: transform;
+  background: linear-gradient(var(--rb-text), var(--rb-text)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--rb-text), var(--rb-text)) 0 0 / 2px 100% no-repeat; }
+/* the list sits on its own panel of the ground, so the masks that hide the untyped words match what is under them */
+#o55np-reboot .o55np-log { position: absolute; left: 50%; top: 50%; box-sizing: border-box; width: min(448px, calc(100% - 40px)); padding: 16px 18px 14px;
+  transform: translate(-50%, -50%); visibility: hidden; background: var(--rb-ground); border: 1px solid rgba(var(--rb-text-rgb), .26);
+  color: var(--rb-text); font: 500 11px/24px "PM NieR Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .2em; text-transform: uppercase; }
+#o55np-reboot .o55np-log[data-on] { visibility: visible; }
+#o55np-reboot .o55np-kick { display: flex; align-items: center; gap: 4px; height: 24px; margin-bottom: 12px; padding: 0 10px; background: var(--rb-text); color: var(--rb-ground);
+  font: 600 11px/24px "PM NieR Mono", ui-monospace, monospace; letter-spacing: .28em; }
+#o55np-reboot .o55np-kick > i { flex: none; width: 6px; height: 6px; background: currentColor; }
+#o55np-reboot .o55np-kick > i:nth-of-type(3) { margin-right: 9px; }
+#o55np-reboot .o55np-kick-t { white-space: nowrap; overflow: hidden; }
+#o55np-reboot .o55np-ln { position: relative; display: flex; align-items: center; gap: 10px; height: 24px; overflow: hidden; }
+#o55np-reboot .o55np-ln-t { flex: none; white-space: nowrap; }
+#o55np-reboot .o55np-ln-dots { flex: 1 1 auto; min-width: 18px; height: 1px; opacity: .55; background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 4px); }
+#o55np-reboot .o55np-stamp { flex: none; font-weight: 600; letter-spacing: .24em; }
+#o55np-reboot .o55np-ln-mask { position: absolute; inset: 0; background: var(--rb-ground); transform: translateX(calc(100% + 10px)); will-change: transform; }
+#o55np-reboot .o55np-ln-mask::before { content: ""; position: absolute; left: -8px; top: 6px; bottom: 6px; width: 8px; background: var(--rb-text); }
+#o55np-reboot .o55np-meter { position: relative; height: 8px; margin-top: 12px; border: 1px solid currentColor; }
+#o55np-reboot .o55np-meter > i { position: absolute; inset: 1px; transform-origin: left center; will-change: transform;
+  background: repeating-linear-gradient(90deg, currentColor 0 calc(8.333% - 2px), transparent calc(8.333% - 2px) 8.333%); }
+#o55np-reboot .o55np-sync { margin-top: 8px; }
+#o55np-reboot .o55np-caret { flex: none; width: 8px; height: 12px; background: currentColor; }
+#o55np-reboot .o55np-sync .o55np-ln-dots, #o55np-reboot .o55np-sync .o55np-stamp { visibility: hidden; }
+#o55np-reboot .o55np-sync[data-ok] .o55np-caret { display: none; }
+#o55np-reboot .o55np-sync[data-ok] .o55np-ln-dots, #o55np-reboot .o55np-sync[data-ok] .o55np-stamp { visibility: visible; opacity: 1; }
+/* six slats (.o55np-slats > .o55np-slat): a sixth of the cover each (1px overlap), each holding the whole set moved up */
+#o55np-reboot .o55np-slats { position: absolute; inset: 0; pointer-events: none; }
+#o55np-reboot .o55np-slat { position: absolute; left: 0; right: 0; top: calc(var(--i) * 100% / 6); height: calc(100% / 6 + 1px); overflow: hidden; will-change: transform; }
+#o55np-reboot .o55np-slat > .o55np-set { inset: auto 0 auto 0; top: calc(var(--i) * (1px - 100%)); height: calc(600% - 6px); }
+@media (max-width: 520px) { #o55np-reboot .o55np-log { letter-spacing: .12em; } }
 
 /* ---- Slice open [slice]: menus, pickers, dialogs, the context drawer and wand sheets unfold from a 1px line, one
    flicker step. They mount once per opening (the app's patch keeps an open overlay's node), so the animation runs once.

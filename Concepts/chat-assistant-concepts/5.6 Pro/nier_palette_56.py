@@ -25,8 +25,9 @@ concept's own body[data-theme] blocks (0,1,1):
   the NieR helpers PMConcept7's parts code against (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb), plus
   -on-ink-rgb (the cursor bar's paper as "r,g,b", so a quiet tone on the bar is a tint of it: neon-icons.css);
 and the literal-carrying bits of the parts: the Square pointer part's cursor images (data URIs must carry literal
-colours; the part's other rules are in nier-parts.css), the Reboot moment cover's inks per tone (#o55np-reboot: it is
-drawn before the palette is painted) and the World parts' line art (--o55nw-art-pod / machine / flower / glyphs:
+colours; the part's other rules are in nier-parts.css), the Reboot moment cover's ground and ink per tone
+(#o55np-reboot --rb-ground / --rb-text: NieR's canvas and text of the covered look, drawn before the palette is
+painted) and the World parts' line art (--o55nw-art-pod / machine / flower / glyphs:
 PMConcept7's original drawings from kit.d/20-nier-world.js, the glyph strip from the same seeded generator). nier.css's hand-written rules below the block may use only these tokens (rgba(var(--o55-nier-ink-rgb), a) and
 var(--...)); --check fails on a colour literal anywhere outside the block.
 """
@@ -226,13 +227,14 @@ def pointer(mode: str, c: dict) -> str:
 
 
 def reboot(t: dict) -> str:
-    """The Reboot moment part's cover (nier-parts.css, PMConcept7 styles.d/14-nier-parts.css): it is drawn before the
-    palette is painted (turning NieR Mode on), so its inks are written here per tone, keyed by the look it covers: the
-    theme's text on its on-ink paper, and a near-black for the band's scanlines."""
+    """The Reboot moment cover (nier-parts.css). It is drawn before the palette is painted, so its ground and ink are
+    written here per tone of the look it covers: NieR's canvas (--rb-ground) and NieR's text (--rb-text). The ink's
+    r,g,b (--rb-text-rgb) paints the map grid, the hairline and the brackets without color-mix(). tone() in
+    nier-parts.js sets data-tone from the covered look."""
     L, D = t['light'], t['dark']
     return '\n'.join([
-        f'#o55np-reboot {{ --rb-ink: {L["text"]}; --rb-paper: {L["accentForeground"]}; --rb-ink-rgb: {trip(L["text"])}; --rb-shade-rgb: {trip(L["text"])}; }}',
-        f'#o55np-reboot[data-tone="dark"] {{ --rb-ink: {D["text"]}; --rb-paper: {D["accentForeground"]}; --rb-ink-rgb: {trip(D["text"])}; --rb-shade-rgb: {trip(D["canvas"])}; }}'])
+        f'#o55np-reboot {{ --rb-ground: {L["canvas"]}; --rb-text: {L["text"]}; --rb-text-rgb: {trip(L["text"])}; }}',
+        f'#o55np-reboot[data-tone="dark"] {{ --rb-ground: {D["canvas"]}; --rb-text: {D["text"]}; --rb-text-rgb: {trip(D["text"])}; }}'])
 
 
 def _js_num(n: float) -> str:
@@ -313,7 +315,7 @@ def generate() -> str:
     for mode in ('light', 'dark'):
         out.append(f'/* the Square pointer part, {mode} */')
         out.append(pointer(mode, t[mode]))
-    out.append("/* the Reboot moment part's cover inks, per tone (it is drawn before the palette is painted) */")
+    out.append("/* the Reboot moment cover's ground and ink, per tone (it is drawn before the palette is painted) */")
     out.append(reboot(t))
     for mode in ('light', 'dark'):
         out.append(art(mode, t[mode]))
