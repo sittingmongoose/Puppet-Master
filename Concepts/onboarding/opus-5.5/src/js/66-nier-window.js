@@ -197,8 +197,9 @@
     M.quiet(700);
     const anim = blk.animate([{ transform: 'translate(0px, 0px) scale(1, 1)' }, { transform: `translate(${Math.round(b.x - a.x)}px, ${Math.round(b.y - a.y)}px) scale(${(b.w / a.w).toFixed(4)}, ${(b.h / a.h).toFixed(4)})` }],
       { duration: 300, easing: 'steps(5, end)', fill: 'forwards' });
-    /* a tick on each step of the block (texture under the sting) */
-    for (let i = 1; i <= 5; i++) M.after(i * 60, () => { if (blk.isConnected) play('move', { step: i }); });
+    /* a tick on each step of the block (texture under the sting); walk asks past RATE.move and the same-event
+       merge, so all five steps tick (final review minor 7) */
+    for (let i = 1; i <= 5; i++) M.after(i * 60, () => { if (blk.isConnected) play('move', { step: i, walk: true }); });
     const end = () => { blk.remove(); if (!nav.querySelector(':scope > .o55nw-railcur')) nav.removeAttribute('data-o55nw-walk'); return true; };
     return anim.finished.then(end, end);
   }
