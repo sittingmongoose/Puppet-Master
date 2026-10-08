@@ -12,9 +12,11 @@
   M.now = function now() { const r = performance.now(); vNow += (r - last) * M.timeScale; last = r; return vNow; };
   M.setTimeScale = function setTimeScale(k) { M.now(); M.timeScale = Math.max(0, Number(k) || 0); };
 
+  /* the media query is made once (its .matches follows the system setting live): made on every call, it was a new
+     MediaQueryList each time the rig, the effects or the sound asked, several times a frame */
+  const reduceMq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   M.reduced = function reduced() {
-    return document.documentElement.getAttribute('data-motion') === 'reduced'
-      || !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    return document.documentElement.getAttribute('data-motion') === 'reduced' || !!(reduceMq && reduceMq.matches);
   };
   M.delay = function delay(ms) {
     return new Promise((res) => {
