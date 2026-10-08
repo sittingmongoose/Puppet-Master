@@ -309,10 +309,11 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 /* NieR: the cover is cut into horizontal slices that slide off to alternate sides, one after another (o55-cur-sl /
    o55-cur-sr, --k the slice's index); the plate across the middle is cut first. Whatever the NieR curtain is drawn as,
    the whole of it is gone once it has opened (o55-cur-all), so it can never stay over the stage. */
-.o55-f-nier .o55-cur-sl { animation: o55-nier-cur-l 760ms steps(8, end) calc(340ms + var(--k, 0) * 40ms) both; }
-.o55-f-nier .o55-cur-sr { animation: o55-nier-cur-r 760ms steps(8, end) calc(340ms + var(--k, 0) * 40ms) both; }
-.o55-f-nier .o55-cur-plate { animation: o55-cut 40ms linear 300ms both; }
-.o55-f-nier .o55-cur-all { animation: o55-cut 60ms linear 1880ms both; } /* linear: a 1 ms steps(1) cut after a long delay can end a hair short of 1 and hold */
+/* (it is open by about 0.95 s, so the curtain call's first bow at 1 s plays on a clear stage: design/hero-spec.md H4b) */
+.o55-f-nier .o55-cur-sl { animation: o55-nier-cur-l 480ms steps(6, end) calc(180ms + var(--k, 0) * 30ms) both; }
+.o55-f-nier .o55-cur-sr { animation: o55-nier-cur-r 480ms steps(6, end) calc(180ms + var(--k, 0) * 30ms) both; }
+.o55-f-nier .o55-cur-plate { animation: o55-cut 40ms linear 140ms both; }
+.o55-f-nier .o55-cur-all { animation: o55-cut 60ms linear 940ms both; } /* linear: a 1 ms steps(1) cut after a long delay can end a hair short of 1 and hold */
 @keyframes o55-nier-cur-l { to { transform: translateX(-500px); } }
 @keyframes o55-nier-cur-r { to { transform: translateX(500px); } }
 html[data-motion="reduced"] .o55-cur-all { display: none; }

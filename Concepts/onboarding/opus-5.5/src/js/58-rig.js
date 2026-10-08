@@ -396,7 +396,11 @@
     if (B.am) put(B.am, 'transform', `translate(0 ${(B.drop - B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
     for (const h of st.helpers.values()) {
       if (h.armA) { h.armOff = stepped(h.armA, now); if (now >= h.armA.t0 + h.armA.ms) { h.armOff = h.armA.to; h.armA = null; } }
-      if (!h.head || !h.am || h.heads.some((t) => !t.fromLocal)) continue; /* a string not measured yet */
+      if (!h.head || !h.am || h.heads.some((t) => !t.fromLocal)) {
+        /* a string not measured yet; a held arm (asleep) is held from the first frame all the same */
+        if (h.arm && h.armOff) { h.ang = h.armOff; put(h.arm, 'transform', `rotate(${h.ang.toFixed(2)} ${h.pivot[0]} ${h.pivot[1]})`); }
+        continue;
+      }
       /* a prop hung by two strings (the name sign) tilts with the bar and rises by the mean of its two points */
       const shift = (l) => { const r = rot(l, B.tilt); return [r[0] - l[0], r[1] - l[1] - B.lift + B.drop]; };
       const moves = h.heads.map((t) => shift(t.fromLocal)), dx = moves.reduce((a, m) => a + m[0], 0) / moves.length, dy = moves.reduce((a, m) => a + m[1], 0) / moves.length;

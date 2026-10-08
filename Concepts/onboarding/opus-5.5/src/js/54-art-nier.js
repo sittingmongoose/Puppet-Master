@@ -417,7 +417,7 @@
     bar, helper, stage, operator, machine,
     curtain(ctx) {
       /* ten slices of parchment, each with an ink hairline, leave to alternate sides (30-art.css .o55-cur-sl/-sr, --k);
-         the ink plate across the middle is cut first (.o55-cur-plate); all of it is gone at 1.94 s (.o55-cur-all) */
+         the ink plate across the middle is cut first (.o55-cur-plate); all of it is gone at 1 s (.o55-cur-all) */
       const p = ctx.pal, n = 10, h = A.H / n;
       let out = '';
       for (let i = 0; i < n; i++) {
