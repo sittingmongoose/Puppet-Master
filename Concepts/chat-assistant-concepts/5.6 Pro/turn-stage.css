@@ -398,21 +398,132 @@ html[data-motion="reduced"] .tx-feed-inner > .message > .message-chrome { transi
 .agent-feed-doc .message-body p { color: var(--text); max-width: none; }
 .agent-feed-doc > .chat-meta { margin-top: 14px; }
 
-/* Agent-work in the read-only feed: one quiet line on the spine. Not a card,
-   no left strip, no family entrance. The main transcript never has this class.
-   The sheet/roster animations target [data-family] at (0,4,0); this wins. */
-.tx-feed[data-variant="16"] > .tx-feed-inner > .tx-work-line[data-family] {
+/* Agent work in the read-only feed: one row per STRETCH (Jared, card 7: "one collapsed row per stretch of work",
+   moving like the Step Rail). transcript-records.js feedStretch draws it; the main transcript never has these
+   classes. The row is one 26px line on the spine, not a card: no surface, no border, no left strip, no family
+   entrance (the family tick stays: turn-stage.js draws it 17px below the item's top, which is the head's centre
+   with the 4px the item takes back from the gap above). In it: a compact Step Rail (one disc per record; finished
+   discs lit green on a neutral tile, the live one the dark disc rimmed in its phase hue, pulsing, its glyph acting),
+   the count, the time of the last record and a chevron. Open, the stretch lists its records, one line each.
+   The sheet/roster entrances target [data-family] at (0,4,0); the item rule is (0,5,0). */
+.tx-feed[data-variant="16"] > .tx-feed-inner > .tx-stretch[data-family] {
+  display: block;
+  margin-top: -4px;
+  padding: 4px 0 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+  clip-path: none;
+  --nx-disc: var(--canvas);
+  --nx-disc-text: var(--text);
+}
+body[data-theme$="-light"] .tx-stretch { --nx-disc: var(--text); --nx-disc-text: var(--canvas); }
+.tx-stretch > .tx-stretch-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: calc(100% + 6px);
+  height: 26px;
+  margin: 0 0 0 -6px;
+  padding: 0 4px 0 6px;
+  font: inherit;
+  font-size: 12px;
+  line-height: 26px;
+  text-align: left;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  box-shadow: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.tx-stretch > .tx-stretch-head:hover { background: color-mix(in srgb, var(--text) 5%, transparent); }
+.tx-stretch > .tx-stretch-head:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* the rail: Step Rail discs at row size (16px; the live disc 20px, as the Step Rail's current disc is larger) */
+.tx-stretch-rail { flex: none; display: flex; align-items: center; gap: 3px; }
+.tx-stretch-node {
+  position: relative;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-3);
+  color: var(--positive);
+}
+.tx-stretch-node > svg { width: 10px; height: 10px; --nx-stroke-base: 3; --nx-hi-a: var(--nx-h-quiet-i); }
+.tx-stretch-node.is-fold { width: auto; min-width: 16px; padding: 0 3px; border-radius: 8px; color: var(--muted); }
+.tx-stretch-node.is-fold > b { font-size: 9px; font-weight: 650; line-height: 1; font-variant-numeric: tabular-nums; }
+.tx-stretch-node.is-live {
+  width: 20px;
+  height: 20px;
+  color: var(--pm-step, var(--accent));
+  border: 1.5px solid var(--pm-step, var(--accent));
+  background: var(--nx-disc);
+  /* inside the dark disc the dark themes' glow strengths apply on every theme (the Step Rail's rule) */
+  --nx-hi-w: 3.6px;
+  --nx-h-working-i: .20;
+}
+.tx-stretch-node.is-live > svg { width: 12px; height: 12px; --nx-stroke-base: 2.6; --nx-hi-a: var(--nx-h-working-i); }
+/* the working animation, the Step Rail's: the glyph acts on the 2.2 s loop and a ring grows out of the disc and
+   fades every 1.9 s (transform and opacity, on the compositor) */
+.tx-stretch-node.is-live > svg .nx-p {
+  animation: var(--kl) 2200ms var(--nx-le) infinite;
+  animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms);
+}
+.tx-stretch-node.is-live::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--pm-step, var(--accent));
+  opacity: 0;
+  pointer-events: none;
+  animation: orbit-strip-ring 1900ms var(--ease) 600ms infinite;
+}
+
+/* the words: muted, one line; the verb a step stronger. Live, the verb is the Step Rail's shimmering verb. */
+.tx-stretch-sum { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
+.tx-stretch-verb { font-weight: 620; color: color-mix(in srgb, var(--text) 74%, var(--muted)); }
+.tx-stretch-verb.pm-shimmer { --pm-ink: color-mix(in srgb, var(--text) 74%, var(--muted)); color: transparent; }
+.tx-stretch-time { flex: none; color: var(--subtle); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tx-stretch-chev {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  color: var(--subtle);
+  transition: transform var(--pm-t-handoff) var(--pm-ease-pop);
+}
+.tx-stretch-chev > svg { width: 12px; height: 12px; }
+.tx-stretch-head[aria-expanded="true"] .tx-stretch-chev { transform: rotate(180deg); }
+.tx-stretch-head:is(:hover, :focus-visible) :is(.tx-stretch-sum, .tx-stretch-chev) { color: var(--text); }
+.tx-stretch-head:is(:hover, :focus-visible) .tx-stretch-verb:not(.pm-shimmer) { color: var(--text); }
+
+/* open: the records, one line each, glyph under the rail's first disc; the detail is the hover card (and a
+   clipped preview on the line). The list clips its own height while it opens and closes. */
+.tx-stretch-rows { display: flex; flex-direction: column; overflow: hidden; padding: 2px 0 2px; }
+.tx-stretch-rows[hidden] { display: none; }
+
+/* A record line: the stretch's open list (and, without the records module, the fallback line per record). */
+.tx-feed .tx-work-line {
   display: flex;
   align-items: center;
   gap: 8px;
   height: 24px;
   min-height: 24px;
-  max-height: 24px;
   margin: 0;
   padding: 0;
   background: transparent;
   border: 0;
-  border-left: 0;
   border-radius: 0;
   box-shadow: none;
   color: var(--muted);
@@ -422,10 +533,13 @@ html[data-motion="reduced"] .tx-feed-inner > .message > .message-chrome { transi
   animation: none;
   clip-path: none;
 }
-.tx-feed .tx-feed-inner > .tx-work-line .tx-work-glyph {
+.tx-feed .tx-stretch-row { margin: 0 0 0 -6px; padding: 0 4px 0 7px; border-radius: 6px; outline: none; }
+.tx-feed .tx-stretch-row:is(:hover, :focus-visible) { background: color-mix(in srgb, var(--text) 5%, transparent); }
+.tx-feed .tx-stretch-row:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.tx-feed .tx-work-line .tx-work-glyph {
   flex: none;
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   display: grid;
   place-items: center;
   background: none;
@@ -433,21 +547,31 @@ html[data-motion="reduced"] .tx-feed-inner > .message > .message-chrome { transi
   box-shadow: none;
   color: var(--muted);
 }
-.tx-feed .tx-feed-inner > .tx-work-line .tx-work-glyph > svg.nx-r-concept { --nx-hi-a: 0; }
-.tx-feed .tx-feed-inner > .tx-work-line:is(:hover, :focus-within) .tx-work-glyph { color: var(--text); }
-.tx-feed .tx-feed-inner > .tx-work-line:is(:hover, :focus-within) .tx-work-glyph > svg.nx-r-concept {
+.tx-feed .tx-work-line .tx-work-glyph > svg.nx-r-concept { --nx-hi-a: 0; }
+.tx-feed .tx-work-line.is-live .tx-work-glyph { color: var(--pm-step, var(--accent)); }
+.tx-feed .tx-work-line:is(:hover, :focus-within) .tx-work-glyph { color: var(--text); }
+.tx-feed .tx-work-line:is(:hover, :focus-within) .tx-work-glyph > svg.nx-r-concept {
   --nx-hi-a: var(--nx-h-swell-i);
   --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
-.tx-feed .tx-feed-inner > .tx-work-line .tx-work-label {
-  flex: 1 1 auto;
+.tx-feed .tx-work-line .tx-work-label {
+  flex: 0 1 auto;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--muted);
+  color: color-mix(in srgb, var(--text) 74%, var(--muted));
 }
-.tx-feed .tx-feed-inner > .tx-work-line .tx-work-time {
+.tx-feed .tx-work-line .tx-work-detail {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--subtle);
+  font-size: 11.5px;
+}
+.tx-feed .tx-work-line .tx-work-time {
   flex: none;
   margin-left: auto;
   color: var(--subtle);
@@ -455,3 +579,36 @@ html[data-motion="reduced"] .tx-feed-inner > .message > .message-chrome { transi
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+
+/* Retro (and NieR, which moves in Retro's voice): the ring, the shimmer band and the chevron step. */
+.tx-feed[data-voice="retro"] .tx-stretch-node.is-live::before { animation-timing-function: steps(5, end); }
+.tx-feed[data-voice="retro"] .tx-stretch-verb.pm-shimmer { animation-timing-function: steps(12, end); }
+.tx-feed[data-voice="retro"] .tx-stretch-chev { transition-timing-function: steps(3, end); }
+/* NieR: ink, square (the Square part squares every disc), stepped, no glow. Finished discs take the olive ink; the
+   live disc is the ink block and blinks in one step (the Step Rail's NieR current disc), with no ring and no
+   shimmer band. */
+html[data-o55-nier="on"] .tx-stretch-node.is-done { color: var(--positive); border-color: var(--o55-nier-ok); background: var(--surface-3); }
+html[data-o55-nier="on"] .tx-stretch-node.is-fold { color: var(--muted); border-color: var(--border-strong); }
+html[data-o55-nier="on"] .tx-stretch-node.is-live {
+  background: var(--o55-nier-ink);
+  border-color: var(--o55-nier-ink);
+  color: var(--o55-nier-on-ink);
+  animation: o55n-blink 1900ms steps(1, end) 600ms infinite;
+}
+html[data-o55-nier="on"] .tx-stretch-node.is-live::before { display: none; }
+html[data-o55-nier="on"] .tx-stretch-verb.pm-shimmer { animation: none; background: none; color: var(--text); }
+html[data-o55-nier="on"] .tx-stretch > .tx-stretch-head:hover,
+html[data-o55-nier="on"] .tx-feed .tx-stretch-row:is(:hover, :focus-visible) { background: rgba(var(--o55-nier-ink-rgb), .08); }
+/* Reduced motion, all three routes: the end state with no motion. The live disc stays the lit disc (or NieR's ink
+   block) without its ring or blink; the shimmering verb is painted text; the chevron turns at once; the glyph's act
+   is stopped by neon-icons.css section 10, and the list opens at once (feedStretch's toggle reads the same routes). */
+@media (prefers-reduced-motion: reduce) {
+  .tx-stretch-node.is-live, .tx-stretch-node.is-live::before { animation: none !important; }
+  .tx-stretch-verb.pm-shimmer { animation: none; background: none; color: color-mix(in srgb, var(--text) 74%, var(--muted)); }
+  .tx-stretch-chev { transition: none !important; }
+}
+body.pm56-reduced .tx-stretch-node.is-live, body.pm56-reduced .tx-stretch-node.is-live::before,
+html[data-motion="reduced"] .tx-stretch-node.is-live, html[data-motion="reduced"] .tx-stretch-node.is-live::before { animation: none !important; }
+body.pm56-reduced .tx-stretch-verb.pm-shimmer,
+html[data-motion="reduced"] .tx-stretch-verb.pm-shimmer { animation: none; background: none; color: color-mix(in srgb, var(--text) 74%, var(--muted)); }
+body.pm56-reduced .tx-stretch-chev, html[data-motion="reduced"] .tx-stretch-chev { transition: none !important; }

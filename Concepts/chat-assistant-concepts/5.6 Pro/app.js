@@ -627,12 +627,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      ("Read-only · live" while the agent works); the marker's hover card carries
      the "Read-only child thread" label and what read-only means here.
      Agent-work records, which the parent transcript hides as notes, stay in this
-     feed as one quiet line between the prose. */
+     feed: each run of them between the prose is one stretch row (a compact Step
+     Rail, a count, a toggle that lists them; PM56_RECORDS.feedStretch). While
+     the agent works, the stretch the feed ends on is live. */
   let readOnlyRender=false;
   function renderReadOnlyItems(agent){
     readOnlyRender=true;
     try{
-      return renderTranscriptItems({id:'agent:'+agent.id, messages:agent.messages||[], readOnly:true});
+      return renderTranscriptItems({id:'agent:'+agent.id, messages:agent.messages||[], readOnly:true, live:agent.status==='working'});
     }finally{
       readOnlyRender=false;
     }
@@ -865,11 +867,29 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderTranscriptItems(t){
     const items=[];
     let turn=0;
-    for(const m of t.messages){
+    const msgs=t.messages;
+    for(let i=0;i<msgs.length;i++){
+      const m=msgs[i];
       /* Parent transcript: agent-work notes stay hidden (messageVisible). The
-         read-only feed is that agent's live record, so every agent-work row
-         stays in place. Nothing else this gate hides is pulled back in. */
-      if(!messageVisible(m) && !(readOnlyRender && m.type==='agent-work')) continue;
+         read-only feed is that agent's live record, so its agent-work records
+         stay in place, gathered into stretches: every agent-work record up to
+         the next item the feed shows is one item. Nothing else this gate
+         hides is pulled back in. */
+      if(readOnlyRender && m.type==='agent-work'){
+        const run=[m];
+        let j=i+1;
+        for(;j<msgs.length;j++){
+          if(msgs[j].type==='agent-work') run.push(msgs[j]);
+          else if(messageVisible(msgs[j])) break;
+        }
+        i=j-1;
+        const html=renderFeedStretch(run, !!t.live && j>=msgs.length);
+        if(!html) continue;
+        const fam=familyOf(m);
+        items.push({m,html,fam,turn,side:'assistant'});
+        continue;
+      }
+      if(!messageVisible(m)) continue;
       const html=renderMessage(m,t);
       if(!html||!String(html).trim()) continue;
       const fam=familyOf(m);
@@ -989,6 +1009,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(m.revealAfter&&!(state.works[m.revealAfter]&&state.works[m.revealAfter].completed)) return false;
     if(m.type==='working'&&m.workId&&!state.works[m.workId]) return false;
     return true;
+  }
+  /* One stretch of agent work in the read-only feed (PM56_RECORDS.feedStretch
+     owns the markup and the toggle). The stretch id is its first record's id. A
+     stretch is live while the agent works and nothing follows it in the feed.
+     Without the records module each record falls back to its one-line row. */
+  function renderFeedStretch(run, live){
+    const R=window.PM56_RECORDS;
+    if(R&&typeof R.feedStretch==='function') return R.feedStretch(run,{id:run[0].id, live, esc, icon, clock:msgClock});
+    return `<div class="tx-stretch-fallback">${run.map(renderFeedWorkLine).join('')}</div>`;
   }
   /* Compact agent-work line for the read-only feed only. Glyph and wording come
      from the work-record slot (PM56_RECORDS.feedLine); the detail is the hover
