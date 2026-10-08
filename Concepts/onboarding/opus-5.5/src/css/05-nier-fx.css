@@ -162,7 +162,7 @@ html:not([data-motion="reduced"]):not([data-o55-lowres]) .o55fx-pod-shadow { ani
 
 /* ---- boot log: a kicker, lines revealed by a paper block stepping across (its leading edge an ink block caret),
    dot leaders, stamps, a cell meter, the underline that closes onto the eyebrow rule ---- */
-.o55fx-log { color: var(--o55-nier-ink); font: 500 11.5px/1.5 var(--mono-font); letter-spacing: .16em; text-transform: uppercase; }
+.o55fx-log { color: var(--o55-nier-ink); font: 500 12px/1.5 var(--mono-font); letter-spacing: .16em; text-transform: uppercase; }
 .o55fx-log-body { display: grid; gap: 8px; transform-origin: 50% 100%; will-change: transform; }
 .o55fx-log-kick { position: relative; display: flex; align-items: center; gap: 4px; overflow: hidden; font-size: 9.5px; letter-spacing: .3em; white-space: nowrap; }
 .o55fx-log-kick::after { content: ""; flex: 1; height: 1px; margin-left: 12px; background: currentColor; opacity: .45; }
@@ -174,7 +174,9 @@ html:not([data-motion="reduced"]):not([data-o55-lowres]) .o55fx-pod-shadow { ani
 .o55fx-log-tx { flex: none; max-width: 72%; overflow: hidden; text-overflow: clip; }
 .o55fx-log-ld { flex: 1; min-width: 16px; height: 2px; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 6px); opacity: .5; }
 .o55fx-log-st { flex: none; font-weight: 700; letter-spacing: .24em; opacity: 0; }
-.o55fx-log-mask { position: absolute; inset: 0; display: block; background: var(--o55fx-ground, var(--o55-nier-paper)); will-change: transform; }
+/* the paper block starts .62 em left of its line, so its caret waits outside the line's clip and shows only once the
+   block steps */
+.o55fx-log-mask { position: absolute; top: 0; bottom: 0; left: -.62em; right: 0; display: block; background: var(--o55fx-ground, var(--o55-nier-paper)); will-change: transform; }
 .o55fx-log-mask::before { content: ""; position: absolute; left: 0; top: 2px; bottom: 2px; width: .62em; background: var(--o55-nier-ink); }
 .o55fx-log-slot { opacity: 0; }
 .o55fx-log-caret { flex: none; width: .62em; height: 1.2em; align-self: center; background: currentColor; }

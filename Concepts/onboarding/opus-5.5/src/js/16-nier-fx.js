@@ -598,6 +598,8 @@
     unfoldNow(el);
     const ms = clamp(Number(o.ms) || 260, 80, 1200);
     quiet(ms + 600);
+    /* what follows something inside it (brackets, the cursor) stands aside at once rather than squash with it */
+    followers.forEach((f) => { if (el.contains(f.el)) f.hide(); });
     const line = newLine({ left: r.left, top: r.top + r.height / 2 - 1, width: r.width });
     /* the surface squashes to its centre line in 4 held steps; on the last one it is gone and the line is there */
     const a = el.animate([{ scale: '1 1' }, { scale: '1 0' }], { duration: ms, easing: 'steps(4, end)', fill: 'forwards' });
