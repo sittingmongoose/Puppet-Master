@@ -101,6 +101,18 @@
     return items;
   }
 
+  /* A curtain call on a small stage (the Guided Tour's results card, design/hero-spec.md H5c, optional): the look tile's
+     troupe standing in a line, framed as a landscape band, for O55.art.curtainCall (bows on the chord, then the rise).
+     The caller mounts it still (ctx.still) once the call is over, so it never idles on the app. */
+  A.defineScene('curtaincall', {
+    label: 'art.hero', band: [0, 92, 480, 408],
+    compose(ctx) {
+      const m = A.metrics(ctx.family);
+      return [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + (ctx.family === 'retro' ? 38 : 28) - 40, layer: 'back', anim: 'rise', delay: 40 }]
+        .concat(A.ensemble(ctx, { floor: m.floor - 40, barY: m.barY + 20, poses: ['stand', 'wave', 'stand'] }));
+    }
+  });
+
   /* Review route map: the user's own choices, assembled as a zigzag route down the pane.
      params.nodes = [{icon,label,sub}], plus optional online / backup / inherit labels. */
   A.defineScene('route', {

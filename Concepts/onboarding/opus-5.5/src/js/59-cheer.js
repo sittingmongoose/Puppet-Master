@@ -238,9 +238,10 @@
                        cheer chord (only: one unit: h0's first hello)
        A.troupe.snap(host)                           every performance on the host's drawings to its end state now
        A.troupe.busy(host)                           a performance is running
-       A.curtainCall(host, { chord, point, target, sting, onRise })   Ready (NieR): the bows spell the chord, a rest,
-                       then the rise with joy and the point at the tour; plays the resolving chapter sting at the rise
-                       unless sting is false (onRise is called at that frame)
+       A.curtainCall(host, { chord, point, target, sting, onRise, at })   Ready (NieR): the bows spell the chord, a
+                       rest, then the rise with joy and the point at the tour; plays the resolving chapter sting at the
+                       rise unless sting is false (onRise is called at that frame); at: the first bow at that many ms
+                       from now instead of 1000 ms after the scene arrived (the 'curtaincall' scene: a small stage)
        A.createdAct(host, { name })                  Created (NieR): landed, a bow, the name sign comes back and is
                        stamped; joy, a lock-on on the sign and the run's one confetti from it; plays land and celebrate
        A.peek(host, { joy })                         the look screen's NieR thumbnail: its bar dips, its units hop once
@@ -364,7 +365,7 @@
       });
       wrap.classList.remove('o55-ens-hold'); ended();
       if (A.rig) { A.rig.watch(svg, { settle: t + (order.length - 1) * gap + 560 + 300, payout: true }); if (signal) p.at(firstLand, () => A.rig.bar(svg, 0, { ms: 120, steps: 2 })); }
-      t += (order.length - 1) * gap + 700;
+      t += (order.length - 1) * gap + 460; /* 40 ms after the last landing */
     }
     /* the visors boot one after another, then the troupe answers: joy, a small stepped hop and the chord */
     hs.forEach((g, i) => bootVisor(p, g, t + i * 90));
@@ -563,8 +564,9 @@
     /* until the rise the unit that will point stands like the others (the curtain opens on a line); asked for after the
        scene arrived, it keeps pointing (no arm vanishes on screen) */
     if (pt && pose(pt) === 'point' && has(pt, '.nv-alt-stand') && since(svg) < 300) pt.classList.add('o55-arm-stand');
-    /* on the scene's own clock; asked late (after 800 ms), the bows start 200 ms from now */
-    const s0 = since(svg), shift = s0 > CC.bows[0] - 200 ? s0 - (CC.bows[0] - 200) : 0, t = (ms) => Math.max(0, ms - s0 + shift);
+    /* on the scene's own clock; asked late (after 800 ms), the bows start 200 ms from now; o.at: the first bow that many
+       ms from now (a small stage timed by its caller: the tour's results card) */
+    const s0 = o.at != null ? CC.bows[0] - o.at : since(svg), shift = o.at == null && s0 > CC.bows[0] - 200 ? s0 - (CC.bows[0] - 200) : 0, t = (ms) => Math.max(0, ms - s0 + shift);
     hs.forEach((g, i) => { const d = t(CC.bows[i] != null ? CC.bows[i] : CC.bows[2] + (i - 2) * 120); dip(p, g, d); p.at(d, () => SND('bow', Object.assign(voiceOf(g), { chapter: chord }))); });
     p.at(t(CC.rest), () => { if (O55.sound && O55.sound.rest) O55.sound.rest(150); });
     p.at(t(CC.rise), () => {
