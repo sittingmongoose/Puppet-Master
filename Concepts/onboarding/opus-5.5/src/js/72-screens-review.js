@@ -16,7 +16,8 @@
   const FLOW = ['where', 'begin', 'name', 'like', 'safe', 'away', 'review'];
   /* No numeric priority: O55.sound ranks coinciding events itself. The reviewed
      commit is one designed moment: Create sounds `commit` and carries the change to Creating (go silent); the Project
-     made sounds `commit` once (the transport's own done sound is off) and the troupe's celebration follows 650 ms later. */
+     made sounds `save` (the transport's own done sound is off) and the troupe's celebration follows (NieR: the Created
+     act, hero spec H4a). */
   const SND = { success: { intensity: 0.7 }, create: { intensity: 0.8 }, prepare: { intensity: 0.6 }, made: { intensity: 1 } };
   const RECHECK_PHASES = [{ key: 'check', ms: 650 }];
   const RECHECK_QUIET = { done: false };
@@ -246,12 +247,32 @@
     cm.receipts.original_terminal = cm.recovery.original_terminal_result_ref;
     cm.receipts.recovery = 'recovery:' + cm.recovery.recovery_id;
     const sure = publishSure(S, cm);
-    if (sure && showing('creating')) O55.sound.play('commit', SND.made);
+    if (sure && showing('creating')) O55.sound.play('save', SND.made);
     if (!publishProject(S, cm.publishable.project_id, 'owner')) { cm.state = 'recovery'; cm.code = 'settings_rejected'; S.save(); O55.ui.refresh(); return; }
-    cm.state = 'done'; cm.code = null; S.save();
-    if (!sure && showing('creating')) O55.sound.play('commit', SND.made);
-    O55.motion.after(650, () => { if (O55.art.celebrate && S.open) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true }); });
+    cm.state = 'done'; cm.code = null; cm.doneAt = Date.now(); S.save();
+    if (!sure && showing('creating')) O55.sound.play('save', SND.made);
     O55.ui.refresh();
+    made(S);
+  }
+  /* The Project is made (hero spec H4a). Under NieR's art the stage performs the Created act in the same task as the
+     refresh that turns its scene to done: the units land and bow, the name sign the person lettered comes back down
+     and is stamped, and the run's one confetti bursts from it with the celebration (O55.art.createdAct plays its own
+     land and celebrate). In the looks the troupe celebrates once the scene has taken its bow beat, as before. */
+  function made(S) {
+    const stage = S.root && S.root.querySelector('.o55-stage');
+    if (O55.theme().art === 'nier' && O55.art.createdAct) { if (stage && S.open && showing('creating')) O55.art.createdAct(stage, { name: md(S).project_name }); return; }
+    O55.motion.after(650, () => { if (O55.art.celebrate && S.open) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true }); });
+  }
+  /* NieR's saved line under the meter (H4a): "Saved · 8 Oct 2026 · 10:42" in the person's own date and time format */
+  function savedLine(S, cm) {
+    if (cm.state !== 'done' || !O55.theme().nier || md(S).project_mode === 'later') return '';
+    const at = new Date(cm.doneAt || Date.now());
+    let date = '', time = '';
+    try {
+      date = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' }).format(at);
+      time = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit' }).format(at);
+    } catch (_) { date = at.toDateString(); }
+    return `<p class="o55nw-saved" data-key="saved">${U.esc(T('nierWindow.saved', { date, time }))}</p>`;
   }
   function repoDisplay(S) {
     const d = md(S), owner = d.repository_container || O55.official.accountFor(S, d.forge) || '';
@@ -266,7 +287,7 @@
         payload: { idempotency_key: cm.key, draft: d.project_draft_ref },
         onFail: (S2, st) => { cm.state = 'failed'; cm.code = st.code; S.save(); },
         sound: { intensity: 0.8 },
-        onDone: () => { cm.state = 'done'; cm.code = null; S.save(); O55.ui.refresh(); }
+        onDone: () => { cm.state = 'done'; cm.code = null; cm.doneAt = Date.now(); S.save(); O55.ui.refresh(); }
       });
       return;
     }
@@ -298,13 +319,13 @@
       onFail: (S2, st) => { cm.state = 'failed'; cm.code = st.code; discardStaged(S); S.save(); },
       onDone: () => {
         const sure = publishSure(S, cm);
-        if (sure && showing('creating')) O55.sound.play('commit', SND.made);
+        if (sure && showing('creating')) O55.sound.play('save', SND.made);
         if (!publishProject(S, cm.fixtureProjectId, 'fixture')) { cm.state = 'failed'; cm.code = 'settings_rejected'; S.save(); O55.ui.refresh(); if (showing('creating')) O55.sound.play('error'); return; }
-        cm.state = 'done'; cm.code = null; S.save();
-        if (!sure && showing('creating')) O55.sound.play('commit', SND.made);
-        /* the Project is made: the troupe celebrates (after the scene has taken its bow beat) */
-        O55.motion.after(650, () => { if (O55.art.celebrate && S.open) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true }); });
+        cm.state = 'done'; cm.code = null; cm.doneAt = Date.now(); S.save();
+        if (!sure && showing('creating')) O55.sound.play('save', SND.made);
+        /* the Project is made: the troupe celebrates (NieR: the Created act) */
         O55.ui.refresh();
+        made(S);
       }
     });
   }
@@ -412,7 +433,8 @@
   }
   def('creating', {
     chapter: 'project', stage: 'automatic_preparation',
-    scene: (S) => { const st = F.state(S, (S.sess.commit || {}).key); const done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0; return { id: 'creating', beat: S.sess.commit && S.sess.commit.state === 'done' ? 'done' : 'build', params: { step: done, total: phasesFor(S).length } }; },
+    /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
+    scene: (S) => { const st = F.state(S, (S.sess.commit || {}).key); const done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0; return { id: 'creating', beat: S.sess.commit && S.sess.commit.state === 'done' ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },
     eyebrow: () => T('creating.eyebrow'),
     title: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later', nm = later ? P().serverName(S) : md(S).project_name; return cm.state === 'done' ? T(later ? 'creating.doneTitleLater' : 'creating.doneTitle', { name: nm }) : cm.state === 'failed' ? T('creating.failTitle') : T(later ? 'creating.titleLater' : 'creating.title', { name: nm }); },
     lead: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later'; return cm.state === 'done' ? T(later ? 'creating.doneLeadLater' : 'creating.doneLead') : cm.state === 'failed' && PR().isGithubRemoteChain(md(S)) ? T('creating.recovery.failedLead') : cm.state === 'failed' ? T('creating.failLead') : T('creating.lead'); },
@@ -420,7 +442,7 @@
       const d = md(S), cm = S.sess.commit || {}, svc = forgeName(d), github = PR().isGithubRemoteChain(d);
       const labels = { folder: T('creating.phases.folder'), device: T('creating.phases.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || P().serverName(S) }), clone: T('creating.phases.clone', { service: svc }), restore: T('creating.phases.restore'),
         history: T('creating.phases.history', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), historyInstall: T('creating.phases.historyInstall', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), online: T('creating.phases.online', { service: svc }), settings: T('creating.phases.settings', { project: (S.sess.like && S.sess.like.name) || '' }), remote: T('creating.phases.remote'), check: T('creating.phases.check') };
-      let out = F.phases(S, cm.key, phasesFor(S), labels, cm.settingsCount != null ? { settings: cm.settingsCount ? cm.settingsCount + ' settings' : '' } : null);
+      let out = F.phases(S, cm.key, phasesFor(S), labels, cm.settingsCount != null ? { settings: cm.settingsCount ? cm.settingsCount + ' settings' : '' } : null) + savedLine(S, cm);
       if (github) {
         out += githubStatus(S);
         if (cm.state === 'done') out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key]])));

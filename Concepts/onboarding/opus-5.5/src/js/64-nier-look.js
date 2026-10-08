@@ -9,7 +9,9 @@
      Plug-in Chips editor as a panel that replaces the window's interior (no nested dialog), on the preview store;
    - after setup (the tour) it is live: a change is saved at once and Adjust opens the chips dialog on the live store.
    API: state() -> { on, previewing }; toggle(source, el); adjust(el); and for the window: reapply(S) on open,
-   commit(S) with the look, closed(reason) when the window closes unfinished, panelOpen(). */
+   commit(S) with the look, closed(reason) when the window closes unfinished, panelOpen(), busy() (a toggle's cover is
+   up: the stage re-renders with its cast held in the wings) and snap() (a key or a press: the toggle's stage beats to
+   their end state). */
 (function () {
   'use strict';
   const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v);
@@ -56,12 +58,14 @@
   }
   /* closed without finishing: the preview stays on screen as the theme preview does, until Settings writes or loads */
   function closed() {
+    if (flight) { flight.timers.forEach((t) => t.cancel()); flight = null; }
     closePanel({ silent: true, keepFocus: true });
     const n = N(); if (n && n.previewing && n.previewing() && n.linger) n.linger();
   }
 
-  /* NieR Mode on or off. In the window the control shows the new state in the same frame and the reboot plays
-     inside the window; after setup it is saved at once (Settings' own reboot moment, in NieR's voice). */
+  /* NieR Mode on or off. In the window the control shows the new state in the same frame and the moment plays inside
+     the window (hero spec H1, flip below); after setup it is saved at once (Settings' own reboot moment, in NieR's
+     voice). */
   /* repainting the page for NieR Mode (or for a change of its parts) is expected heavy work: the long tasks it makes
      never count toward the window's low-resource mode, which would silence NieR's own texture for the rest of the run
      (O55.motion.quiet; the reboot's repaint measured 1.3 + 1.1 s of long tasks on the VM) */
@@ -69,18 +73,102 @@
   function toggle(source, el) {
     const n = N(); if (!n) return false;
     const next = !state().on;
+    if (!inWindow()) { heavy(4500); O55.sound.play(next ? 'nierOn' : 'nierOff'); return n.set(next, { sound: false }); }
+    return flip(next, el);
+  }
+
+  /* ---------------------------------------------------------------- H1: "The little world opens" / "Back into the box"
+     Ticking: the NieR thumbnail's units peek (joy) as the cover's brackets lock onto it; the cover (kit.d/19-nier-parts.js,
+     SETTINGS) grows from the thumbnail into a plate in NieR's ground, types its check list through the repaint and tears
+     out in slats on the first idle frame. Under it the window re-renders, and the new cast is mounted waiting in the
+     wings (busy(): the stage's ensemble hold, 60-ui-core.js syncTheme). At the reveal the choir arrives (wake), You
+     signals, the units are lowered in on their strings and land on the chord (O55.art.troupe.enter), and the resting
+     Pod hops back in and confirms. Unticking: Pod hushes, the units power down, the cover closes in, and at the reveal
+     the plate folds back into the thumbnail while the look's own troupe drops in. A key or a press after the reveal
+     snaps the rest to its end state (snap, from O55.nierWindow.input); a second toggle plays from the first one's end
+     state. Reduced Motion, Still, Colors only and a low-resource computer repaint at once and show the end state. */
+  let flight = null, flights = 0;
+  const stageEl = () => (O55.S && O55.S.root ? O55.S.root.querySelector('.o55-stage') : null);
+  const troupe = () => (O55.art && O55.art.troupe) || null;
+  const thumbNow = () => { const r = O55.S && O55.S.root; return r ? r.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-nier-thumb]') : null; };
+  /* where the cover grows from and folds back to: the control's own thumbnail (the row on Pick a look), the look menu's
+     row, the Adjust panel's Turn on, else the NieR thumbnail on screen (asked again after the repaint) */
+  const fromOf = (el) => () => {
+    const ok = el && el.isConnected;
+    const row = ok ? el.closest('.o55-nierlook') : null;
+    if (row) { const t = row.querySelector('[data-nier-thumb]'); if (t) return t; }
+    if (ok && el.closest('.o55-lookmenu, .o55-nierpanel')) return el;
+    return thumbNow() || (ok ? el : null);
+  };
+  /* the stage's moment, until the cover has lifted: the window re-renders the stage with its cast held in the wings */
+  const busy = () => !!(flight && !flight.revealed);
+  function flip(next, el) {
+    const n = N(); if (!n || !inWindow()) return false;
+    const S = O55.S, A = O55.art, tr = troupe(), NW = O55.nierWindow, FX = O55.nierFx;
     heavy(4500);
     O55.sound.play(next ? 'nierOn' : 'nierOff');
-    if (!inWindow()) return n.set(next, { sound: false });
-    const S = O55.S;
     look(S);
-    const done = n.preview({ on: next }, { within: within(), sound: false });
+    /* a second toggle: the first one's beats end where they stand */
+    if (flight) { snap(); flight.timers.forEach((t) => t.cancel()); }
+    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false };
+    const st = stageEl();
+    if (next) {
+      /* T0: the thumbnail's units peek with joy as the brackets lock on; the resting Pod waits off stage */
+      const thumb = thumbNow();
+      if (thumb && A.peek) A.peek(thumb, { joy: true });
+      if (NW && NW.podHold) NW.podHold(true);
+    } else {
+      /* T0: Pod hushes now, and the units power down (the cover waits 300 ms for them) */
+      if (FX && FX.pod) FX.pod.hush(true);
+      if (st && tr && tr.powerDown) tr.powerDown(st);
+    }
+    const done = n.preview({ on: next }, { within: within(), sound: false, from: fromOf(el), onReveal: (phase) => reveal(F, phase) });
     remember(S);
     paint(next);
     U.announce(T(next ? 'look.nier.nowOn' : 'look.nier.nowOff'), win());
-    /* once the new look is up, the troupe takes it in (the window re-rendered under the reboot's cover) */
-    done.then(() => { if (S.open && O55.art.react) O55.motion.after(160, () => { const st = S.root.querySelector('.o55-stage'); if (st && S.open) O55.art.react(st); }); });
+    /* (a cover that never reported: the end state once it has gone) */
+    Promise.resolve(done).then(() => { reveal(F, 'reveal'); reveal(F, 'gone'); });
     return true;
+  }
+  function at(F, ms, fn) { const t = O55.motion.after(ms, () => { if (flight === F && !F.snapped && inWindow()) fn(); }); F.timers.push(t); return t; }
+  const instant = () => O55.motion.reduced() || !!O55.motion.lowResource || !within();
+  function reveal(F, phase) {
+    if (phase === 'gone') { F.gone = true; return; }
+    if (phase !== 'reveal' || F.revealed) return;
+    F.revealed = true; F.revealAt = O55.motion.now();
+    if (flight !== F || !inWindow()) return;
+    /* the choir (NieR) or the look's own reveal (unticking), on the frame the window shows again */
+    O55.sound.play('wake');
+    if (instant()) { enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
+    if (F.on) { at(F, 260, () => enter(F)); at(F, 1940, () => speak(F)); }
+    else at(F, 360, () => enter(F));
+  }
+  /* the new cast is lowered in (NieR: You's signal, the units on their strings, the chord; a look: its own drop) */
+  function enter(F) {
+    if (F.entered) return;
+    F.entered = true;
+    const st = stageEl(), tr = troupe();
+    if (st && tr && tr.enter) tr.enter(st);
+  }
+  /* the resting Pod steps back in and confirms (Quiet: no Pod, no line) */
+  function speak(F) {
+    if (F.spoke || !F.on) return;
+    F.spoke = true;
+    const NW = O55.nierWindow; if (!NW || !NW.say) return;
+    const words = T('look.nier.podOn', { name: T('look.families.' + O55.theme().chosen + '.name') });
+    const go = () => { if (flight === F && inWindow()) NW.say(words, { lane: 'bar', announce: true, now: true }); };
+    if (NW.podIn && !F.snapped && !instant()) NW.podIn().then(go); else { if (NW.podHold) NW.podHold(false); go(); }
+  }
+  /* a key or a press after the reveal: units standing, the arm up, Pod's line static */
+  function snap() {
+    const F = flight;
+    if (!F || !F.revealed || F.snapped || (F.entered && F.spoke) || O55.motion.now() - F.revealAt > 4500) return;
+    F.timers.forEach((t) => t.cancel());
+    const st = stageEl(), tr = troupe();
+    enter(F);
+    if (st && tr && tr.snap) tr.snap(st);
+    if (F.on) speak(F);
+    F.snapped = true;
   }
   /* every NieR checkbox on screen shows the request at once (the window re-renders from state() after the repaint) */
   function paint(on) {
@@ -120,10 +208,9 @@
       on: () => s.on(), parts: () => s.parts(), background: () => s.background(), onChange: (cb) => s.onChange(cb),
       set(on) {
         if (!!on === s.on()) return true;
-        /* the editor's Turn on: the same moment as the checkbox (its sound, the reboot inside the window) */
-        heavy(4500);
-        O55.sound.play(on ? 'nierOn' : 'nierOff');
-        N().preview({ on: !!on }, { within: within(), sound: false }); after(null); paint(!!on); return true;
+        /* the editor's Turn on: the same moment as the checkbox, grown from the button pressed */
+        const a = document.activeElement;
+        flip(!!on, a && panel && panel.host.contains(a) ? a : null); after(null); return true;
       },
       setParts(keys) {
         const before = s.parts(), list = Array.isArray(keys) ? keys : [];
@@ -207,5 +294,5 @@
     if (back) try { back.focus({ preventScroll: true }); } catch (_) {}
   }
 
-  O55.nierLook = { IDS, state, toggle, adjust, reapply, commit, closed, look, panelOpen: () => !!panel, closePanel, icon: () => SLIDERS };
+  O55.nierLook = { IDS, state, toggle, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => SLIDERS };
 })();

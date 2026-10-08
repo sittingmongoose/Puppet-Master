@@ -1,20 +1,31 @@
 {
   "nierWindow": {
     "brand": {
-      "sub": "Setup · {n}/{total}"
+      "sub": "Setup · {n}/{total}",
+      "complete": "Setup · Complete"
     },
-    "band": {
-      "resume": "Resuming setup"
+    "log": {
+      "kicker": "Puppet Master // Setup",
+      "check": "Checking this computer",
+      "look": "Loading your look",
+      "wake": "Waking the puppets",
+      "pod": "Pod 042",
+      "online": "Online",
+      "ready": "Ready when you are",
+      "resume": "Resuming setup",
+      "kept": "Your choices are kept"
     },
     "banner": {
       "next": "Next: {chapter}",
       "created": "Project created",
       "serverReady": "Server ready"
     },
+    "saved": "Saved · {date} · {time}",
+    "card": "Setup data · {name}",
     "meter": "{done}/{total}",
     "pod": {
       "resumed": "Report: Welcome back. Setup continues where you left off.",
-      "creatingDone": "Report: Project created and checked. Everything is in place.",
+      "creatingDone": "Report: Project saved and checked. Everything is in place.",
       "creatingDoneLater": "Report: Server set up and checked. A Project can come later.",
       "readyLater": "Report: Puppet Master is set up. A Project can be created whenever you like.",
       "alert": "Alert: That did not work. The note on screen says what to do next.",

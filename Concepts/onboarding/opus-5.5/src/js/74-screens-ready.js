@@ -47,12 +47,14 @@
     if (projectId) O55.shell.selectProject(projectId, name);
     S.sess.finished = { at: new Date().toISOString(), tour: !!o.tour, project: projectId || null };
     const tour = !!(o.tour && O55.tour && O55.tour.start);
-    /* the tour path: the window becomes the tour's first callout (a morph from its rectangle); the tour itself ends on
-       the Planning Wizard, so the page is not switched here */
+    /* the tour path: the window becomes the tour's first callout (a morph from its rectangle; under NieR Mode one ink
+       line carries it there, with the same Pod flying along: O55.nierWindow.handoff(), results/h4c-handover-contract.md);
+       the tour itself ends on the Planning Wizard, so the page is not switched here */
     const win = S.root && S.root.querySelector('.o55-win'), from = tour && win ? win.getBoundingClientRect() : null;
+    const handoff = tour && from && O55.nierWindow && O55.nierWindow.handoff ? O55.nierWindow.handoff() : null;
     O55.ui.close('done', { handoff: tour && !!from });
     /* a tour taken at the end of an onboarding run always starts at its first step (only the resume chip continues one) */
-    if (tour) O55.tour.start({ source: 'onboarding', fresh: true, project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null });
+    if (tour) O55.tour.start({ source: 'onboarding', fresh: true, project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null, handoff });
     else O55.shell.openWizard();
   };
 
@@ -71,13 +73,20 @@
     scene: () => ({ id: 'ready', beat: 'curtain' }),
     /* the end of the flow: once the curtain scene has arrived, the troupe celebrates. Its celebration is the one sound
        of that moment (it played a commit on top); Reduced Motion has no celebration, and so no sound then either. */
-    mounted(S, layer, fresh) { if (fresh) O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true, count: 46, at: [240, 260] }); }); },
+    /* (under NieR's art the troupe takes a curtain call instead, and points at the next step: O55.nierWindow.ready, hero
+       spec H4b; no second confetti) */
+    mounted(S, layer, fresh) {
+      if (!fresh || (O55.nierWindow && O55.nierWindow.ready && O55.nierWindow.ready(layer, fresh))) return;
+      O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true, count: 46, at: [240, 260] }); });
+    },
     eyebrow: () => T('ready.eyebrow'),
     title: () => T('ready.title'),
     lead: (S) => (md(S).project_mode !== 'later' && S.sess.commit && S.sess.commit.state === 'done' ? T('ready.lead', { name: md(S).project_name }) : T('ready.leadLater')),
     body(S) {
       const later = md(S).project_mode === 'later' || !(S.sess.commit && S.sess.commit.state === 'done');
-      let out = later ? '' : `<div class="o55-summary" data-key="summary">${summary(S)}</div>`;
+      /* under NieR Mode's headers the summary reads as a setup card: an ink kicker band naming the Project, rows with dot
+         leaders whose values type in (11-window-nier.css, O55.nierWindow); the same rows and words otherwise */
+      let out = later ? '' : `<div class="o55-summary" data-key="summary" data-o55nw-card="" data-o55nw-kicker="${U.esc(T('nierWindow.card', { name: md(S).project_name }))}">${summary(S)}</div>`;
       if (!later && O55.tour && O55.tour.start) out += C.note(T('ready.tourSub', { m: O55.tour.minutes ? O55.tour.minutes() : 4 }), 'info', 'spark');
       out += `<p class="o55-note o55-note-info" data-key="help">${C.small('person', 14)}<span>${U.esc(T('ready.help'))}</span></p>`;
       return out;

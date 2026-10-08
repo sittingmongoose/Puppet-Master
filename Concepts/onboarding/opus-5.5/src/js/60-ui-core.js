@@ -292,16 +292,19 @@
     if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); return; }
     O55.motion.release(() => {
       S.root.classList.remove('o55-hold');
-      if (stageWait) O55.motion.after(stageWait, releaseStage); else releaseStage();
       if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
       /* The opening may be the skin's to play first (NieR's cold open: the window opens empty, a boot log runs where the
-         title will be and its line becomes the title's rule). The stage shows at once; the screen waits for the
-         skin's promise, or for a key or a press, which shows it at once (a key also lands on its primary). */
+         title will be and its line becomes the title's rule). The screen waits for the skin's promise, or for a key or
+         a press, which shows it at once (a key also lands on its primary); the stage shows when the promise says
+         (gate.stageAt ms: the cold open's set decodes in as the header assembles), or at once. */
       const gate = dir === 'open' && layer.isConnected ? skin('openGate', layer) : null;
+      const stageAt = gate && +gate.stageAt > 0 ? +gate.stageAt : stageWait;
+      if (stageAt) O55.motion.after(stageAt, releaseStage); else releaseStage();
       let shown = false;
       const show = (byKey) => {
         if (shown) return; shown = true;
         if (off) off();
+        if (gate) releaseStage(); /* a gate shown early (a key, a press, the cap) shows the stage with it */
         if (!layer.isConnected || layer.classList.contains('o55-out')) return;
         layer.classList.remove('o55-hold');
         leave();
@@ -418,10 +421,11 @@
   let lastType = -1e9;
   function onInput(e) {
     const t = e.target.closest('[data-o55-bind]'); if (!t) return;
-    /* typing ticks quietly in the family's material (never for a protected field) */
-    if (e.type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && performance.now() - lastType >= TYPE_MS) { lastType = performance.now(); O55.sound.play('type'); }
     const def = SCREENS.defs[S.sess.screen];
     const key = t.getAttribute('data-o55-bind');
+    /* typing ticks quietly in the family's material (never for a protected field); a screen whose stage answers each
+       letter with a sound of its own says so (def.typing: the Name screen's sign sings the name) */
+    if (e.type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && !(def && def.typing && def.typing(S, key)) && performance.now() - lastType >= TYPE_MS) { lastType = performance.now(); O55.sound.play('type'); }
     const fn = def && def.bind && def.bind[key];
     const v = t.type === 'checkbox' ? t.checked : t.value;
     if (fn) fn(S, v, t, e);

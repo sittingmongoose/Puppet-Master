@@ -31,7 +31,10 @@
       const L = O55.nierLook; if (!L || !window.PM_NIER) return '';
       const on = L.state().on;
       return `<div class="o55-looknier" role="none"><button type="button" class="o55-looknier-check${on ? ' o55-on' : ''}" ${attr}="lookNier" data-arg="nier" role="menuitemcheckbox" aria-checked="${on}" data-o55-nier-check data-pm-hover-exempt="true">`
-        + `<span class="o55-nierbox" aria-hidden="true"></span><span>${U.esc(T('look.nier.label'))}</span></button>`
+        /* its swatch in the families' swatch column (hero spec H6): ink and parchment with the kicker's three squares, in
+           NieR's own tokens through the preview scope whatever look is painted, then its box and its name */
+        + `<span class="o55-lookswatch o55-nierswatch" data-o55-nier-preview="${O55.theme().mode === 'light' ? 'light' : 'dark'}" aria-hidden="true"><i></i><i></i><i></i><b></b></span>`
+        + `<span class="o55-nierbox" aria-hidden="true"></span><span class="o55-looknier-name">${U.esc(T('look.nier.label'))}</span></button>`
         + `<button type="button" class="o55-looknier-adjust" ${attr}="lookNierAdjust" data-arg="nier-adjust" role="menuitem" aria-label="${U.esc(T('look.nier.adjust'))}" title="${U.esc(T('look.nier.adjust'))}" data-pm-hover-exempt="true">`
         + `${L.icon()}<span>${U.esc(T('look.nier.adjustShort'))}</span></button></div>`;
     },

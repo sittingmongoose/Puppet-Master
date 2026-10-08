@@ -114,9 +114,30 @@
 #pm-o55-onboarding[data-family="retro"] .o55-nierpanel.o55-nierpanel-in { animation-timing-function: steps(4, end); }
 @keyframes o55-nierpanel-in { from { opacity: 0; transform: translateY(14px); } }
 
-/* ---------------------------------------------------------------- the reboot moment inside the window */
-/* kit.d/19-nier-parts.js plays it inside the element it is given (the window) instead of over the page */
-#o55np-reboot.o55np-within { position: absolute; inset: 0; z-index: 60; border-radius: inherit; }
+/* ---------------------------------------------------------------- the troupe in the wings (hero spec H6) */
+/* Hovering or focusing the NieR row, a mono kicker types across its thumbnail's top in 200 ms (65-screens-welcome.js,
+   with O55.art.peek's hop), holds, and leaves in two steps; in NieR's own tokens (the thumbnail's preview scope), the
+   same in every look; never under Reduced Motion. */
+.o55-nierkick { position: absolute; left: 4px; top: 4px; z-index: 2; display: flex; align-items: center; gap: 2px; padding: 2px 5px 2px 3px; pointer-events: none; opacity: 0;
+  font: 500 7.5px/1 var(--mono-font); letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; color: var(--o55-nier-on-ink); background: var(--o55-nier-ink); }
+.o55-nierkick > i { width: 3px; height: 3px; background: currentColor; }
+.o55-nierkick > i:nth-child(2) { opacity: .7; }
+.o55-nierkick > i:nth-child(3) { opacity: .4; }
+.o55-nierkick > span { margin-left: 3px; }
+.o55-nierkick.o55-nierkick-on { animation: o55-nierkick 1500ms linear both; }
+@keyframes o55-nierkick { 0% { opacity: 1; clip-path: inset(0 100% 0 0); animation-timing-function: steps(8, end); } 13% { opacity: 1; clip-path: inset(0 0 0 0); animation-timing-function: step-end; }
+  88% { opacity: 1; clip-path: inset(0 0 0 0); animation-timing-function: step-end; } 94% { opacity: .5; clip-path: inset(0 0 0 0); animation-timing-function: step-end; } 100% { opacity: 0; clip-path: inset(0 0 0 0); } }
+html[data-motion="reduced"] .o55-nierkick { display: none; }
+@media (prefers-reduced-motion: reduce) { .o55-nierkick { display: none; } }
+/* the look menu's NieR row: its swatch in the families' swatch column, ink and parchment with the kicker's three squares
+   and its rule (the same size as a family's), then its box and its name */
+.o55-lookswatch.o55-nierswatch { position: relative; width: 35px; height: 24px; box-sizing: border-box; padding: 0; border-radius: 0; border: 1px solid var(--o55-nier-ink); background: var(--o55-nier-on-ink); }
+.o55-lookswatch.o55-nierswatch > i { position: absolute; top: 9px; width: 4px; height: 4px; border: 0; border-radius: 0; background: var(--o55-nier-ink); }
+.o55-lookswatch.o55-nierswatch > i:nth-child(1) { left: 4px; }
+.o55-lookswatch.o55-nierswatch > i:nth-child(2) { left: 10px; }
+.o55-lookswatch.o55-nierswatch > i:nth-child(3) { left: 16px; }
+.o55-lookswatch.o55-nierswatch > b { position: absolute; left: 22px; right: 4px; top: 10px; height: 1px; background: var(--o55-nier-ink); }
+.o55-looknier-check .o55-looknier-name { min-width: 0; }
 
 /* ---------------------------------------------------------------- under NieR Mode */
 /* ink on parchment, square boxes with an inked square for the tick, a ruled YoRHa title */

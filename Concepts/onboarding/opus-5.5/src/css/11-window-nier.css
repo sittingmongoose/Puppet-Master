@@ -67,25 +67,10 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-scroll { scrollbar-color: rgba(
 
 /* the page-wide focus reticle stands aside while its target is scrolled out of the pane (66-nier-window.js) */
 html[data-o55-open] #o55np-reticle[data-o55nw-hide] { visibility: hidden !important; }
-/* Pod's speech strip in the window: the narrator speaks in a lane of the art panel (66-nier-window.js anchor()), so
-   its size is known before it is drawn: at most 260 px wide (196 px when a lane is only clear for a slimmer strip).
-   On the narrow window's short band it is one compact row: the POD 042 head inline beside the words, the unit at
-   five eighths of its size, so it fits the band above or below the scene's subject; beside a subject as tall as the
-   band it is a stacked strip 200 px wide. */
+/* Pod's speech strip in the window: the narrator speaks in a lane of the art panel (O55.nierFx pod.say with the stage,
+   66-nier-window.js say()), at most 260 px wide; on the narrow window's short band O55.nierFx draws it compact itself
+   (data-compact: one or two lines, a smaller Pod), so nothing here scales it again. */
 #pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 260px; }
-#pm-o55-onboarding[data-o55nw-slim] > .o55fx-layer .o55fx-pod-strip { max-width: 196px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod { gap: 8px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-unit { margin: -9.75px -7.5px; transform: scale(.625); }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: stretch; max-width: 520px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-head { padding: 0 10px; align-self: stretch; }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-text { align-self: center; padding: 7px 10px 8px; line-height: 1.4; }
-/* beside a subject as tall as the band: a stacked strip 200 px wide, its head on top */
-#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-strip { display: block; max-width: 200px; }
-#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-head { padding: 3px 10px 2px; }
-#pm-o55-onboarding[data-o55-layout="narrow"][data-o55nw-slim] > .o55fx-layer .o55fx-pod-text { padding: 7px 11px 9px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip::before { width: 8px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod-strip::after { right: calc(100% + 7px); }
-#pm-o55-onboarding[data-o55-layout="narrow"] > .o55fx-layer .o55fx-pod[data-side="left"] .o55fx-pod-strip::after { right: auto; left: calc(100% + 7px); }
 
 /* ---- the stepped screen change: one cut, never a flash ----
    The old screen leaves in a two-step fade (one way), and the new one's blocks step in one way (unseen, a faint step,
@@ -108,8 +93,6 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-pane > .o55-layer:is(.o55-out-f
 /* a large surface arrives in two steps, one way */
 @keyframes o55nw-fade { 0% { opacity: 0; } 36% { opacity: .5; } 64%, 100% { opacity: 1; } }
 @keyframes o55nw-out { 0% { opacity: 1; } 30% { opacity: .35; } 55%, 100% { opacity: 0; } }
-/* Back's page wipe (66-nier-window.js draws O55.nierFx's band in the pane, mirrored, so it steps off to the left) */
-#pm-o55-onboarding .o55-pane > .o55nw-wipe { position: absolute; inset: 0; z-index: 3; pointer-events: none; transform: scaleX(-1); }
 
 /* ================================================================================================== Square hairlines */
 /* fields are ruled lines of ink: a mono caps label, an underline that thickens on focus, a block caret */
@@ -340,10 +323,11 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55nw-stage { display: block; posit
 .o55nw-stage > * { position: absolute; display: none; }
 /* -- Pod companion [pod]: resting at the corner, hovering in steps; it steps away while O55.nierFx's Pod speaks -- */
 html[data-o55-nier-parts~="pod"] #pm-o55-onboarding .o55nw-pod { display: block; right: 18px; top: 36px; width: 40px; height: 52px; }
-/* Hidden, its hover keeps running on the compositor at no cost. Never pause it with a rule whose last part is `*`
-   under an html attribute: each Pod line toggles that attribute, and such a rule restyled the whole page twice per
-   line (about 210 ms each on the VM; README Performance rule 1). */
-html[data-o55fx-pod] #pm-o55-onboarding .o55nw-pod { visibility: hidden; }
+/* While O55.nierFx's Pod speaks it hides this one (05-nier-fx.css, #pm-o55-onboarding[data-o55fx-pod]); held off stage
+   (data-away: a NieR toggle's cover, the cold open) it waits hidden in place for its hop back in. Hidden, its hover
+   keeps running on the compositor at no cost. Never pause it with a rule whose last part is `*` under an html
+   attribute: such a rule restyles the whole page (README Performance rule 1). */
+#pm-o55-onboarding .o55nw-pod[data-away] { visibility: hidden; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55nw-pod { top: 18px; right: 14px; }
 .o55nw-pod-bob, .o55nw-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
 .o55nw-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
@@ -405,6 +389,98 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboardi
   0% { opacity: 1; clip-path: inset(0 0 0 0); animation-timing-function: steps(4, end); }
   60% { opacity: 1; clip-path: inset(calc(50% - 1px) 0 calc(50% - 1px) 0); animation-timing-function: steps(3, end); }
   100% { opacity: 0; clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); } }
+
+/* ============================================================================ H2: the cold open, "strings up" */
+/* A fresh open (66-nier-window.js open(): root data-o55nw-cold, the Boot sequence part, motion on). T0-T120 the window
+   waits unseen under the dimming scrim; T120-T300 one ink hairline draws from the centre outward, only as wide as the
+   window (steps(6)); T300-T560 it opens into an empty window (its frame, the header's rule, the ground and the grid);
+   from T560 the header assembles left to right: the brand block slices in, the rail's ruler draws in 8 steps and the
+   chapter boxes step in 40 ms apart, then the header's buttons. The boot log runs in the pane meanwhile (O55.nierFx),
+   and the screen shows when its line has become the eyebrow's rule. The times run from the window's release. */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening[data-o55nw-cold] .o55-win { animation: o55nw-win-cold 560ms linear both; }
+@keyframes o55nw-win-cold {
+  0% { clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); animation-timing-function: step-end; }
+  21.4% { clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); animation-timing-function: steps(6, end); }
+  53.6% { clip-path: inset(calc(50% - 1px) 0 calc(50% - 1px) 0); animation-timing-function: steps(5, end); }
+  96% { clip-path: inset(0 0 0 0); animation-timing-function: step-end; }
+  100% { clip-path: inset(-80px -80px -80px -80px); } }
+/* the hairline is ink (it is the window's middle, drawn over in ink until the window opens from it) */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening[data-o55nw-cold] .o55-win::after {
+  content: ""; position: absolute; z-index: 9; left: 0; right: 0; top: calc(50% - 1px); height: 2px; background: var(--o55-nier-ink); pointer-events: none;
+  animation: o55nw-cold-line 560ms step-end both; }
+@keyframes o55nw-cold-line { 0%, 53.5% { opacity: 1; } 53.6%, 100% { opacity: 0; } }
+html[data-o55-nier-parts~="headers"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-brand { animation: o55nw-cold-brand 120ms steps(4, end) 560ms both; }
+@keyframes o55nw-cold-brand { from { clip-path: polygon(0 0, 0 0, 0 calc(100% - 9px), 0 100%, 0 100%); } to { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%); } }
+html[data-o55-nier="on"]:not([data-o55-nier-parts~="headers"]):not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-brand { animation: o55nw-cold-in 1ms step-end 560ms both; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railbar { transform-origin: 0 50%; animation: o55nw-cold-rule 240ms steps(8, end) 560ms both; }
+@keyframes o55nw-cold-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem { animation: o55nw-cold-in 1ms step-end 600ms both; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(2) { animation-delay: 640ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(3) { animation-delay: 680ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(4) { animation-delay: 720ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(5) { animation-delay: 760ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(6) { animation-delay: 800ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-headctl { animation: o55nw-cold-in 1ms step-end 760ms both; }
+@keyframes o55nw-cold-in { from { opacity: 0; } to { opacity: 1; } }
+/* the screen the log opened on: its eyebrow is there at once (the log's line has just become its rule), and the
+   promise rows step in 80 ms apart from 440 ms (each with a phase tick) */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-cold] .o55-eyebrow { animation: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-cold].o55-entering .o55-promise li { animation-delay: calc(440ms + var(--ci, 0) * 80ms); }
+
+/* ============================================================================== H3: the rail walk, the counter roll */
+/* The current chapter's ink block walks the rail (66-nier-window.js railWalk): a block of the same size steps from the
+   old chapter to the new by its left edge and its width, while the new chapter shows as still to come; a box finished
+   on the way draws its check in 2 steps (Ready re-stamps them all, 60 ms apart); the brand's counter turns over in 3. */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-railcur { position: absolute; z-index: 0; background: var(--o55-nier-ink); transform-origin: 0 0; pointer-events: none; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55nw-walk] .o55-railitem[data-state="current"] { color: var(--text-muted); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55nw-walk] .o55-railitem[data-state="current"]::after { background: transparent; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55nw-walk] .o55-railitem[data-state="current"] .o55-railnode { border-color: currentColor; background: transparent; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55nw-walk] .o55-railitem[data-state="current"] .o55-railstring { background: rgba(var(--o55-nier-ink-rgb), .4); }
+html[data-o55-nier-parts~="headers"]:not([data-motion="reduced"]) #pm-o55-onboarding .o55-railitem.o55nw-tick[data-state="done"] .o55-railnode::after { animation: o55nw-tick 140ms linear var(--o55nw-d, 0ms) forwards; }
+@keyframes o55nw-tick { 0% { clip-path: inset(100% 0 0 0); animation-timing-function: step-end; } 50% { clip-path: inset(55% 0 0 0); animation-timing-function: step-end; } 100% { clip-path: inset(0 0 0 0); } }
+#pm-o55-onboarding .o55nw-roll { display: inline-block; height: 1em; overflow: hidden; vertical-align: top; }
+#pm-o55-onboarding .o55nw-roll > span { display: block; }
+#pm-o55-onboarding .o55nw-roll i { display: block; height: 1em; font-style: normal; }
+
+/* ===================================================================== H4a and H4b: the saved line and the setup card */
+/* under the Creating meter, the moment the Project is saved: a mono line, its date and time in the person's format */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55nw-saved { margin: 12px 0 0; font: 500 10.5px/1.3 var(--mono-font); letter-spacing: .2em; text-transform: uppercase; color: var(--o55-nier-ink); }
+/* Ready's summary as a setup card (YoRHa headers): an ink kicker band naming the Project, then the same rows with dot
+   leaders between each label and its value; the values type in one by one (66-nier-window.js setupCard), held unseen
+   until then, never longer than 1.6 s */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding [data-o55nw-card] { padding: 0 14px 4px; border-radius: 0; border-color: rgba(var(--o55-nier-ink-rgb), .55); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding [data-o55nw-card]::before { content: attr(data-o55nw-kicker); display: block; margin: 0 -14px 4px; padding: 6px 14px 6px 34px;
+  font: 500 10.5px/1.2 var(--mono-font); letter-spacing: .24em; text-transform: uppercase; color: var(--o55-nier-on-ink);
+  background: linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 12px center / 4px 4px no-repeat, linear-gradient(rgba(var(--o55-nier-paper-rgb), .7), rgba(var(--o55-nier-paper-rgb), .7)) 18px center / 4px 4px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-paper-rgb), .4), rgba(var(--o55-nier-paper-rgb), .4)) 24px center / 4px 4px no-repeat, var(--o55-nier-ink); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding [data-o55nw-card] .o55-revrow { grid-template-columns: auto minmax(24px, 1fr) minmax(0, auto) auto; border-bottom-color: rgba(var(--o55-nier-ink-rgb), .2); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding [data-o55nw-card] .o55-revk { grid-column: 1; font: 500 10.5px/1.3 var(--mono-font); letter-spacing: .2em; text-transform: uppercase; color: var(--text-secondary); }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding [data-o55nw-card] .o55-revk::after { content: ""; position: absolute; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding [data-o55nw-card] .o55-revrow::before { content: ""; grid-column: 2; grid-row: 1; align-self: end; height: 6px; margin-bottom: 4px;
+  background: radial-gradient(circle, rgba(var(--o55-nier-ink-rgb), .55) 0 .9px, transparent 1.2px) 0 100% / 6px 3px repeat-x; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding [data-o55nw-card] .o55-revv { grid-column: 3; grid-row: 1; text-align: right; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding [data-o55nw-card] .o55-revrow > :nth-child(3) { grid-column: 4; grid-row: 1; }
+html[data-o55-nier-parts~="headers"]:not([data-motion="reduced"]) #pm-o55-onboarding [data-o55nw-card="typing"] .o55-revv:not([data-o55nw-on]) { visibility: hidden; animation: o55nw-show 1ms step-end 1600ms forwards; }
+@keyframes o55nw-show { to { visibility: visible; } }
+
+/* ============================================================================ H4c: one line carries you into the tour */
+/* With a hand-over (66-nier-window.js close: root data-o55nw-hand) the window's own exits give way: the scrim holds the
+   dim until the tour's scrim has taken over (data-o55nw-scrim="off", or "out" at T1140: two steps, one way, if the
+   tour never takes it), the content steps out in two steps leaving the frame and the header's rule (T240), and the
+   window folds to its line (O55.nierFx.fold, T400-T660). The window takes no click meanwhile. */
+html #pm-o55-onboarding[data-o55nw-hand].o55-closing .o55-win, html #pm-o55-onboarding[data-o55nw-hand].o55-closing.o55-handoff .o55-win { animation: none !important; }
+html #pm-o55-onboarding[data-o55nw-hand].o55-closing .o55-scrim { animation: none !important; }
+html #pm-o55-onboarding[data-o55nw-hand][data-o55nw-scrim="out"].o55-closing .o55-scrim { animation: o55nw-stepout 160ms step-end both !important; }
+html #pm-o55-onboarding[data-o55nw-hand][data-o55nw-scrim="off"].o55-closing .o55-scrim { visibility: hidden; }
+#pm-o55-onboarding[data-o55nw-hand] { pointer-events: none; }
+#pm-o55-onboarding[data-o55nw-hand="out"] :is(.o55-head > *, .o55-body) { animation: o55nw-stepout 160ms step-end both; }
+@keyframes o55nw-stepout { 0% { opacity: 1; } 50% { opacity: .45; } 100% { opacity: 0; } }
+/* the same Pod, lifted off its corner into the page, above the tour, until the tour's dock takes it */
+.o55nw-podfly { position: fixed; z-index: 2147482700; width: 40px; height: 52px; pointer-events: none; color: var(--o55-nier-ink); }
+.o55nw-podfly .o55nw-pod-bob { position: absolute; left: 0; top: 0; width: 40px; height: 52px; }
+.o55nw-podfly svg { display: block; width: 40px; height: 52px; overflow: visible; }
+.o55nw-podfly .o55nw-pod-fill { fill: var(--o55-nier-raised); }
+.o55nw-podfly .o55nw-pod-ink { fill: currentColor; }
 
 /* ===================================================================================================== Reduced Motion */
 @media (prefers-reduced-motion: reduce) {

@@ -5,7 +5,8 @@
 
   def('welcome', {
     chapter: 'welcome', stage: 'welcome',
-    scene: () => ({ id: 'hero', beat: 'intro' }),
+    /* (NieR's cold open draws the troupe asleep on slack strings until the boot log wakes it: O55.nierWindow) */
+    scene: () => ({ id: 'hero', beat: O55.nierWindow && O55.nierWindow.asleep && O55.nierWindow.asleep() ? 'asleep' : 'intro' }),
     eyebrow: () => T('welcome.eyebrow'),
     title: () => T('welcome.title'),
     lead: () => T('welcome.lead'),
@@ -41,6 +42,26 @@
       + `<button type="button" class="o55-btn o55-secondary o55-small o55-nieradjust" data-o55-do="adjustNier" data-o55-sound="self" data-key="nier-adjust" data-pm-hover-exempt="true">${O55.nierLook.icon()}<span>${U.esc(T('look.nier.adjust'))}</span></button></div>`;
   }
   let nierSub = null;
+  /* The troupe in the wings (hero spec H6): hovering or focusing the NieR row, its thumbnail's control bar dips, the
+     three units hop once and sweep their visors (O55.art.peek, at most once a second), and a mono kicker types
+     across the thumbnail's top. All of it stays inside the thumbnail, is silent, and is skipped under Reduced Motion. */
+  const peeking = new WeakSet();
+  function wings(row) {
+    if (!row || peeking.has(row)) return;
+    peeking.add(row);
+    const go = (e) => {
+      if (e.type === 'pointerenter' && e.pointerType === 'touch') return;
+      if (O55.motion.reduced() || (O55.nierLook && O55.nierLook.busy && O55.nierLook.busy())) return;
+      const thumb = row.querySelector('[data-nier-thumb]');
+      if (!thumb || !O55.art.peek || !O55.art.peek(thumb)) return;
+      let k = thumb.querySelector(':scope > .o55-nierkick');
+      if (!k) { k = document.createElement('span'); k.className = 'o55-nierkick'; k.setAttribute('aria-hidden', 'true'); thumb.appendChild(k); }
+      k.innerHTML = `<i></i><i></i><i></i><span>${U.esc(T('look.nier.label'))}</span>`;
+      k.classList.remove('o55-nierkick-on'); void k.offsetWidth; k.classList.add('o55-nierkick-on');
+    };
+    row.addEventListener('pointerenter', go);
+    row.addEventListener('focusin', (e) => { if (!row.contains(e.relatedTarget)) go(e); });
+  }
   function ack(el, sel) {
     const group = el.parentElement;
     group.querySelectorAll(':scope > ' + sel).forEach((n) => { const on = n === el; n.classList.toggle('o55-on', on); n.setAttribute('aria-checked', String(on)); });
@@ -96,7 +117,8 @@
           O55.art.mount(thumb, 'tile', { family: 'basic', mode: th.mode, beat: 'default', tok: O55.art.tokens(thumb), params: {}, instance: 'nier', band: true, still: !th.nier });
         }
       }
-      /* a look picked under NieR Mode changes the line that names it: NieR resolves it from scrambled letters */
+      wings(layer.querySelector('.o55-nierlook'));
+      /* a look picked under NieR Mode changes the line that names it: NieR types it on */
       const sub = layer.querySelector('.o55-niersub'), text = sub ? sub.textContent : null;
       if (sub && !first && nierSub !== null && text !== nierSub && th.nier && O55.nierFx && O55.nierFx.decode) O55.nierFx.decode(sub);
       nierSub = text;

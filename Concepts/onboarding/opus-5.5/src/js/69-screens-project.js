@@ -191,6 +191,10 @@
   /* each letter lands on the sign: it swings (alternately left and right), a fleck of ink leaves the word, and a helper
      cheers the moment the name becomes one that can be used */
   function lettered(S, v, grew, wasOk) {
+    /* the sign sings the name (hero spec H6): each letter plucks its string on the next chord tone up, deleting walks
+       back down, panned the way the sign swings; it stands for the typing tick on this field (def.typing below).
+       Reduced Motion shows no swing, so the field keeps its plain typing tick there */
+    O55.sound.play(O55.motion.reduced() ? 'type' : 'string', { step: v.length, pan: v.length % 2 ? 0.12 : -0.12 });
     if (!O55.art.poke) return;
     O55.art.poke(stage(S), 'sign', { amp: grew ? 1 : 0.55, dir: v.length % 2 ? 1 : -1, fleck: grew });
     if (!wasOk && F.nonEmpty(v) && !nameProblem(S, v)) O55.motion.after(180, () => O55.art.react(stage(S)));
@@ -198,6 +202,7 @@
   def('name', {
     chapter: 'project', stage: 'first_project', charmSlot: 'name',
     scene: (S) => ({ id: 'name', beat: 'type', params: { name: md(S).project_name || '' } }),
+    typing: (S, key) => key === 'name',
     eyebrow: () => T('name.eyebrow'),
     title: () => T('name.title'),
     lead: () => T('name.lead'),
