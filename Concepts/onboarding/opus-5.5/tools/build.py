@@ -109,6 +109,164 @@ def copy_json() -> dict:
 # Embedded font files (src/settings/nier/fonts) are inlined by settings_layer.py, never read as text.
 BINARY_SUFFIXES = {'.woff2', '.woff', '.ttf', '.otf'}
 
+# Page-wide universal tails. A selector that starts at html (or :root, or body) with an attribute or class, and whose
+# last compound is a bare universal (`*`, `*::before`, `:where(*)`, `*:not(.x)`: nothing a style invalidation set can
+# key on), makes Blink restyle the whole ~17k-node document each time that attribute or class changes. That one rule
+# (`html[data-o55fx-pod] ... .o55nw-pod *`) made every Pod 042 line freeze the page for about 220 ms, twice. Only the
+# look's own switches may do it, because changing them repaints the whole page anyway; each is listed with why.
+PAGE_STATE_OK = {
+    'data-theme': 'the look family or mode changes: the whole page is restyled anyway',
+    'data-motion': 'Reduced Motion is turned on or off: the whole page is restyled anyway',
+    'data-o55-nier': 'NieR Mode is painted or removed: the whole page is restyled anyway',
+    'data-o55-nier-mode': 'NieR Mode switches light/dark: the whole page is restyled anyway',
+    'data-o55-nier-parts': 'a NieR part is installed or removed: the NieR repaint restyles the whole page anyway',
+    'data-focus': 'the focus ring style is changed in Settings: a look change',
+}
+# Runtime switches that already have such a rule, named exactly (file, selector) so that no new one gets in. Each is a
+# NOTE in every build until its owner gives it a class tail; the rule is then simply gone from here. Measured
+# 2026-10-08 on the NieR look screen (16.7k elements, h-fx2-work/attrcost2.mjs): a toggle with no rule costs 0 ms.
+PAGE_WIDE_DEBT = {
+    ('src/css/10-window.css', 'html[data-o55-open] body > [inert] *'):
+        'WINDOW: about 240 ms of style each time the onboarding window opens or closes; name the animated parts '
+        '(the next rule already does) instead of every element of the app',
+    ('src/css/30-art.css', 'html[data-o55-lowres] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, '
+                           '.o55-nier-linkrun path[style], .o55-nier-linkoff path[style], .o55-nier-stamp *)'):
+        'ART: the `.o55-nier-stamp *` arm makes each low-resource switch cost about 260 ms instead of 135 ms, and it '
+        'switches when the computer is already struggling; name the stamp\'s parts (`.o55-nier-stamp :is(path, rect)`)',
+}
+CSS_STRING = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
+
+
+def css_selectors(text: str):
+    """(line, selector) for every style rule's selector, inside @media/@supports/@layer/@container blocks too, but not
+    the frames of @keyframes or the bodies of @font-face/@property/@page. Strings and comments are blanked first, so
+    a brace in content: "{" or in a comment never counts."""
+    clean = re.sub(r'/\*[\s\S]*?\*/', lambda m: re.sub(r'[^\n]', ' ', m.group(0)), text)
+    clean = CSS_STRING.sub(lambda m: m.group(0)[0] + re.sub(r'[{};,]', ' ', m.group(0)[1:-1]) + m.group(0)[-1], clean)
+    out, stack, start = [], [], 0
+    for i, ch in enumerate(clean):
+        if ch == '{':
+            prelude = clean[start:i].strip()
+            nests = prelude.startswith('@') and re.match(r'@(media|supports|layer|container|document|scope)\b', prelude)
+            if not prelude.startswith('@') and all(kind == 'group' for kind in stack):
+                line = clean.count('\n', 0, start + len(clean[start:i]) - len(clean[start:i].lstrip())) + 1
+                for sel in split_top(prelude, ','):
+                    if sel.strip():
+                        out.append((line, ' '.join(sel.split())))
+            stack.append('group' if nests else 'block')
+            start = i + 1
+        elif ch == '}':
+            if stack:
+                stack.pop()
+            start = i + 1
+        elif ch == ';' and (not stack or stack[-1] == 'group'):
+            start = i + 1  # @import / @charset / @layer a, b;
+    return out
+
+
+def split_top(s: str, seps: str) -> list[str]:
+    """Split s on any of seps outside (), [] and strings."""
+    parts, depth, cur, quote = [], 0, '', ''
+    for ch in s:
+        if quote:
+            cur += ch
+            if ch == quote:
+                quote = ''
+            continue
+        if ch in '"\'':
+            quote = ch
+        elif ch in '([':
+            depth += 1
+        elif ch in ')]':
+            depth -= 1
+        elif depth == 0 and ch in seps:
+            parts.append(cur)
+            cur = ''
+            continue
+        cur += ch
+    parts.append(cur)
+    return parts
+
+
+def compounds(sel: str) -> list[str]:
+    """The compound selectors of one complex selector, left to right (combinators dropped)."""
+    spaced = re.sub(r'\s*([>+~])\s*', r' \1 ', sel)
+    return [c for c in split_top(spaced, ' ') if c and c not in '>+~']
+
+
+def bare_universal(comp: str) -> bool:
+    """True when a compound gives a style invalidation set nothing to key on: no type, class, id or attribute of its
+    own, and no :is()/:where() whose every arm ends in one (`*`, `*::after`, `:where(*)`, `*:not(.x)`, `:focus-visible`,
+    `:is(.a, *)`). :not() and the other pseudo-classes key on nothing; `:is(.a, .b)` keys on .a and .b."""
+    rest, depth, args, name, keyed = '', 0, '', '', False
+    i = 0
+    while i < len(comp):
+        ch = comp[i]
+        if depth == 0 and ch == '[':
+            m = re.match(r'\[(?:"[^"]*"|\'[^\']*\'|[^\]])*\]', comp[i:])
+            rest += m.group(0) if m else ch
+            i += m.end() if m else 1
+            continue
+        if depth == 0 and ch == ':':
+            m = re.match(r'::?([\w-]+)', comp[i:])
+            name = m.group(1).lower() if m else ''
+            i += m.end() if m else 1
+            continue
+        if ch == '(':
+            depth += 1
+            if depth == 1:
+                args = ''
+                i += 1
+                continue
+        elif ch == ')':
+            depth -= 1
+            if depth == 0:
+                if name in ('is', 'where', 'matches', '-webkit-any') and args.strip():
+                    arms = [a for a in split_top(args, ',') if a.strip()]
+                    if arms and all(not bare_universal(compounds(a)[-1]) for a in arms if compounds(a)):
+                        keyed = True
+                name = ''
+                i += 1
+                continue
+        if depth >= 1:
+            args += ch
+        elif depth == 0:
+            rest += ch
+        i += 1
+    return not keyed and rest.strip() in ('', '*')
+
+
+def page_wide_universal(sel: str) -> list[str] | None:
+    """The html/:root/body state names a selector depends on, if its last compound is a bare universal; else None."""
+    comps = compounds(sel)
+    if len(comps) < 2 or not bare_universal(comps[-1]):
+        return None
+    names = []
+    for comp in comps[:-1]:
+        if not re.match(r'(?:html|body|:root)(?![\w-])', comp):
+            continue
+        names += re.findall(r'\[\s*([\w-]+)', comp) + ['.' + c for c in re.findall(r'\.([\w-]+)', comp)]
+    return names or None
+
+
+def lint_page_wide_universal(rel: str, text: str, notes: list[str] | None = None) -> list[str]:
+    problems = []
+    for line, sel in css_selectors(text):
+        names = page_wide_universal(sel)
+        if names is None:
+            continue
+        bad = [n for n in names if n not in PAGE_STATE_OK]
+        debt = PAGE_WIDE_DEBT.get((rel.removeprefix('Concepts/onboarding/opus-5.5/'), sel))
+        if bad and debt:
+            if notes is not None:
+                notes.append(f'known page-wide universal selector in {rel}:{line} ({", ".join(bad)}): {debt}')
+        elif bad:
+            problems.append(f'page-wide universal selector in {rel}:{line}: `{sel[:120]}` ends in a bare `*`, so each '
+                            f'change of {", ".join(bad)} on <html>/<body> restyles the whole page (about 220 ms on the '
+                            f'Pod 042 rule this replaced). End it in a class (`:is(.a, .b)`) or put the state on the '
+                            f'element that needs it.')
+    return problems
+
 
 def lint_sources() -> list[str]:
     problems = []
@@ -129,6 +287,10 @@ def lint_sources() -> list[str]:
                 width = re.search(r'(\d+(?:\.\d+)?)px', m.group(1))
                 if width and float(width.group(1)) >= 2:
                     problems.append(f'left accent border in {p.relative_to(PKG)}: {m.group(0)}')
+            notes: list[str] = []
+            problems.extend(lint_page_wide_universal(p.relative_to(PKG).as_posix(), text, notes))
+            for n in notes:
+                print('NOTE:', n, file=sys.stderr)
     def walk(node, path):
         if isinstance(node, dict):
             for k, v in node.items():

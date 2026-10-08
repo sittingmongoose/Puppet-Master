@@ -9,6 +9,8 @@
 .o55fx-layer.o55fx-page { position: fixed; z-index: 2147482650; }
 #pm-o55-tour > .o55fx-layer { z-index: 1; }
 .o55fx-layer > * { position: absolute; pointer-events: none; box-sizing: border-box; }
+/* a banner, band or Pod line made at its call waits unseen for the read phase that places and shows it */
+.o55fx-layer > [data-wait] { visibility: hidden; }
 .o55fx-layer *, .o55fx-layer *::before, .o55fx-layer *::after { box-sizing: border-box; }
 
 /* ---- slice: the edges of the opening (a hairline with square caps, drawn across, then riding the clip apart) ---- */
@@ -78,9 +80,9 @@ html:not([data-motion="reduced"]) .o55fx-cur[data-side="in"] > i { animation-nam
 
 /* ---- Pod 042: the unit hovering in steps, a hairline to its speech strip (POD 042 band, lead, words); the app's own
    Pod steps away while this one is out (it flies from that Pod's place and back) ---- */
-/* the mark sits on the Pods that step away (never on <html>: a page-wide attribute restyled the whole page) */
-#o55np-pod[data-o55fx-away] { visibility: hidden !important; }
-#pm-o55-onboarding[data-o55fx-pod] .o55nw-pod { visibility: hidden; }
+/* the mark sits on the Pods that step away, each on itself (never on <html> or a root: a mark there made the browser
+   restyle, or search, everything under it) */
+#o55np-pod[data-o55fx-away], .o55nw-pod[data-o55fx-away] { visibility: hidden !important; }
 .o55fx-pod { left: 0; top: 0; display: flex; align-items: center; gap: 12px; will-change: transform; transition: transform 160ms steps(4, end), opacity 120ms steps(2, end); }
 .o55fx-pod[data-jump] { transition: opacity 120ms steps(2, end); }
 .o55fx-pod[data-side="left"] { flex-direction: row-reverse; }
@@ -237,4 +239,7 @@ html:not([data-motion="reduced"]) .o55fx-bd-caret { animation: o55fx-blink 480ms
 @media (prefers-reduced-motion: reduce) {
   .o55fx-layer *, .o55fx-layer *::before, .o55fx-layer *::after { animation: none !important; transition: none !important; }
 }
+/* Every part of an effect, pseudo-elements too: the window's Reduced Motion rule gives everything under it a 0.01 ms
+   transition of all properties, which held a banner's or Pod's parts at their unplaced, hidden values for the frame
+   the read phase shows them. Reduced Motion is a look switch (the lint allows it: the whole page restyles on it). */
 html[data-motion="reduced"] .o55fx-layer *, html[data-motion="reduced"] .o55fx-layer *::before, html[data-motion="reduced"] .o55fx-layer *::after { transition: none !important; }
