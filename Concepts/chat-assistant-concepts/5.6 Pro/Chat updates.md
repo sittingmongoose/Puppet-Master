@@ -199,10 +199,16 @@ removes every NieR attribute, layer and font.
   paper text and a stepping square cursor), YoRHa headers, the parchment
   ground, target brackets on focus and the chosen thread, diamond loaders, the
   square pointer and square icon strokes.
-- **Motion:** the reboot band when entering or leaving NieR, whose cover
-  leaves by tearing out in six horizontal slats (no large surface ever
-  flashes; only small elements flicker); the stepped slice
-  on menus, dialogs and sheets; the title decode on a thread switch; the page
+- **Motion:** the reboot moment when NieR turns on or off, as PMConcept7
+  draws it: a plate in the look's own NieR ground (never a full ink or
+  parchment sheet) grows in held steps from the control you pressed, types a
+  short check list while the look repaints under it, and tears out in six
+  horizontal slats; turning off, the slats close in and the plate folds back
+  into the control. Presses wait until the reveal, and the `wake` chord plays
+  once at the reveal when NieR turns on or the moment is replayed, never after
+  turning off. No large surface ever flashes; only small elements flicker.
+  The other motion parts: the stepped slice on menus, dialogs and sheets; the
+  title decode (titles and labels unscramble) on a thread switch; the page
   wipe; drifting particles; the ambient sweep; and a glitch on alert toasts,
   refusals and failed steps.
 - **Sound & voice:** NieR's ticks play through the chat's own sound switch and
@@ -1126,8 +1132,10 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   context suite after the port; static markup or a closed-drawer-only check is
   not sufficient runtime evidence.
 - When this chat's NieR Mode is ported, use the names PMConcept7 already has
-  rather than this concept's: the `O55.sound` events `wake`, `string`, `land`,
-  `bow` and `save` (with their motif, sting and rest behaviour); the
+  rather than this concept's: the `O55.sound` events `string`, `land`, `bow`
+  and `save` (with their motif, sting and rest behaviour; `wake` is already
+  here, ported with the reboot moment from PMConcept7 704b3d1888 under its own
+  names: `rebootPlate`, `rbPlan`, `rbSlats` and the rest); the
   `O55.nierFx` functions `type` (typed text in a reserved layout, used instead
   of the decode for text longer than 8 characters), `bootlog`, the hung banner
   variant, `fold`, `lineTo`, `lineHold`, `slice({from})` and `trail`; and the
