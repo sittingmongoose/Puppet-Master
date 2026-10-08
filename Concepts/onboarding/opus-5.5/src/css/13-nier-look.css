@@ -14,20 +14,22 @@
 [aria-checked="true"] .o55-nierbox::after { transform: rotate(45deg) scale(1); }
 
 /* ---------------------------------------------------------------- "Pick a look": the row under the tiles */
-.o55-nierlook { position: relative; display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; margin-top: 14px; padding: 8px 14px 8px 8px;
+/* The checkbox (scene + title + help) spans the row; Adjust sits under the help text, on top of the checkbox's lower
+   edge (the text keeps room for it), so the scene runs the row's full height beside both. */
+.o55-nierlook { position: relative; display: grid; grid-template-columns: 136px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 16px; margin-top: 14px; padding: 8px;
   border-radius: var(--o55-card-r); border: 1px solid var(--o55-line); background: var(--o55-card-bg); transition: border-color 200ms ease, box-shadow 220ms ease; }
 .o55-nierlook[data-on="true"] { border-color: var(--o55-accent); box-shadow: inset 0 0 0 1px var(--o55-accent); }
-.o55-niercheck { flex: 1 1 340px; min-width: 0; display: grid; grid-template-columns: 136px minmax(0, 1fr); align-items: center; gap: 14px; padding: 0; border: 0;
+.o55-niercheck { grid-column: 1 / -1; grid-row: 1 / -1; min-width: 0; display: grid; grid-template-columns: subgrid; align-items: stretch; padding: 0; border: 0;
   border-radius: calc(var(--o55-card-r) * 0.7); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-.o55-nierthumb { position: relative; display: block; width: 136px; height: 76px; border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background);
+.o55-nierthumb { position: relative; display: block; min-height: 96px; border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-primary) 10%, transparent); transition: transform 200ms ease; }
 .o55-niercheck:hover .o55-nierthumb { transform: translateY(-1px); }
-.o55-niertext { display: grid; gap: 5px; min-width: 0; }
+.o55-niertext { display: grid; align-content: start; gap: 5px; min-width: 0; padding: 4px 6px 48px 0; }
 .o55-niertitle { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
 .o55-niername { font: 700 14.5px/1.2 var(--body-font); }
 .o55-niertag { padding: 4px 7px; font-size: 10px; }
 .o55-niersub { font: 400 12.5px/1.45 var(--body-font); color: var(--text-secondary); max-width: 62ch; }
-.o55-nieradjust { flex: none; margin-left: auto; gap: 7px; }
+.o55-nieradjust { grid-column: 2; grid-row: 2; justify-self: start; align-self: end; position: relative; z-index: 1; margin: 0 0 4px; gap: 7px; }
 .o55-nieradjust .o55-sg { opacity: 0.85; }
 .o55-niercheck:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 4px; }
 
@@ -46,10 +48,8 @@
 #pm-o55-onboarding[data-family="retro"] .o55-nierbox::after { transition: none; }
 #pm-o55-onboarding[data-family="retro"] .o55-niername { font-family: var(--display-font); text-transform: uppercase; font-size: 13.5px; letter-spacing: 0.03em; }
 
-/* narrow window: the scene keeps its place, Adjust drops under the text */
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-niercheck { grid-template-columns: 104px minmax(0, 1fr); gap: 12px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-nierthumb { width: 104px; height: 64px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-nieradjust { margin-left: 116px; }
+/* narrow window: a smaller scene */
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-nierlook { grid-template-columns: 104px minmax(0, 1fr); column-gap: 12px; }
 
 /* ---------------------------------------------------------------- the look menu: NieR Mode under Light / Dark */
 .o55-looknier { display: flex; align-items: stretch; gap: 4px; padding-top: 8px; border-top: 1px solid var(--border); }
@@ -66,7 +66,9 @@
 :is(#pm-o55-onboarding, .o55t-root)[data-family="retro"] .o55-looknier { border-top: 2px dashed color-mix(in srgb, var(--text-primary) 45%, transparent); }
 
 /* ---------------------------------------------------------------- Adjust NieR look: the panel inside the window */
-/* it takes the interior's grid cell (the window is header / interior), so the header, the rail and Close stay */
+/* it takes the interior's grid cell (the window is header / interior), so the header, the rail and Close stay; the
+   interior is pinned to that cell too (where it always is), or auto-placement would push it to a third row */
+.o55-win > .o55-body { grid-area: 2 / 1; }
 .o55-nierpanel { grid-row: 2; grid-column: 1; position: relative; z-index: 3; min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); background: var(--o55-win-bg); border-top: 1px solid var(--o55-line); }
 .o55-nierpanel-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 18px var(--o55-pad) 12px; border-bottom: 1px solid var(--o55-line); }
 .o55-nierpanel-titles { display: grid; gap: 4px; min-width: 0; }
