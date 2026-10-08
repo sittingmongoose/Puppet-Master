@@ -133,9 +133,69 @@ function o55NierIsPainted() {
     if (!o55NierReady()) return false;
     o55NierPainted = o55NierWanted();
     o55NierWriteAttrs();
-    if (o55NierPainted) window.queueMicrotask(() => o55NierEmit('init'));
+    if (o55NierPainted) { o55NierPaintStored(); window.queueMicrotask(() => o55NierEmit('init')); }
   }
   return o55NierPainted;
+}
+/* The app opens in Basic Dark (the head's boot paint), and the Settings engine paints the stored theme only once the
+   page has loaded (DOMContentLoaded, then a timeout: about 3 s into a heavy open). Under NieR Mode that left a person
+   on Light in NieR Dark for those seconds: the boot log tore away onto the dark app, which then flipped to parchment
+   (film finding TM-07). So when NieR Mode is on as the Settings state loads, the stored theme is painted at once,
+   before the boot log's first frame. PM_THEME's own boot (wireTheme, a DOMContentLoaded listener) then adopts Basic
+   Dark: its write to <html> is held back for that one call (o55NierHoldBootDark), and a listener on window, which runs
+   after every one on document in the same task, gives PM_THEME the stored family and mode. Letting the write through
+   and painting Light back there showed no frame either, but it restyled the whole page twice inside the open (about
+   130 to 420 ms). The engine's later pass then finds nothing to change. The four families keep the engine's own
+   timing. */
+let o55NierStoredPaintArmed = false;
+function o55NierPaintStored() {
+  const T = window.PM7_SETTINGS_TOME;
+  if (!T || typeof T.applyPaint !== 'function') return;
+  try { T.applyPaint(state); } catch (e) { return; /* the engine paints it on its own schedule */ }
+  if (o55NierStoredPaintArmed || document.readyState !== 'loading') return;
+  o55NierStoredPaintArmed = true;
+  let held = null;
+  /* registered while the Settings script runs, so it is called before PM_THEME's boot listener (a later script) */
+  document.addEventListener('DOMContentLoaded', () => { held = o55NierHoldBootDark(); }, { once: true });
+  window.addEventListener('DOMContentLoaded', () => {
+    if (held && held.release()) o55NierSyncThemeState();
+    if (o55NierPainted && !o55NierPv) { try { T.applyPaint(state); } catch (e) { /* as above */ } }
+  }, { once: true });
+}
+/* While the stored look is painted and is not Basic Dark, the first write of data-theme="basic-dark" to <html> (the
+   boot adoption) is dropped; a write of anything else, or a second one, goes through. An own property on the element
+   shadows Element.prototype.setAttribute for this one task, and release() removes it. */
+function o55NierHoldBootDark() {
+  const html = document.documentElement, native = Element.prototype.setAttribute;
+  if (html.getAttribute('data-theme') === 'basic-dark' || Object.prototype.hasOwnProperty.call(html, 'setAttribute')) return null;
+  let swallowed = false;
+  const release = () => { if (html.setAttribute === shim) delete html.setAttribute; return swallowed; };
+  function shim(name, value) {
+    if (!swallowed && name === 'data-theme' && String(value) === 'basic-dark') { swallowed = true; release(); return undefined; }
+    return native.call(this, name, value);
+  }
+  try { Object.defineProperty(html, 'setAttribute', { value: shim, configurable: true, writable: true }); } catch (e) { return null; }
+  return { release };
+}
+/* PM_THEME's themeState after the held adoption says basic / dark; give it the family and mode Settings stores (the
+   applyPaint reading) in one write that keeps the painted value (a same-value write restyles nothing): set(slug) takes
+   family and scheme together, and Auto, which a slug cannot say, follows with the same scheme. Two separate writes
+   (setFamily, setMode) would paint a family with the old mode for a moment wherever the hook answers the family. */
+function o55NierSyncThemeState() {
+  const P = window.PM_THEME, T = window.PM7_SETTINGS_TOME;
+  if (!P || typeof P.set !== 'function' || typeof P.setMode !== 'function') return;
+  let project = null; try { project = T && typeof T.project === 'function' ? T.project() : null; } catch (e) { project = null; }
+  const settings = (state && state.settings) || {};
+  const slug = project ? String(settings['general.visual.theme'] || 'Basic Dark').trim().toLowerCase().replace(/\s+/g, '-') : 'basic-dark';
+  const family = slug.split('-')[0] || 'basic', explicit = slug.split('-')[1] || 'dark';
+  let mode = project ? String(settings['general.visual.theme-mode'] || explicit).toLowerCase() : 'dark';
+  if (!['light', 'dark', 'auto'].includes(mode)) mode = explicit;
+  const scheme = mode === 'auto' ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : mode;
+  const quiet = { persist: false, dispatch: false };
+  try {
+    if (P.getFamily() !== family || P.getMode() !== mode) P.set(family + '-' + scheme, quiet);
+    if (mode === 'auto') P.setMode('auto', quiet);
+  } catch (e) { /* applyPaint below repaints from the stored values */ }
 }
 const o55NierKeys = keys => { const want = new Set((Array.isArray(keys) ? keys : []).map(String)); return O55_NIER_PARTS.filter(p => want.has(p.key)).map(p => p.key); };
 function o55NierStoredParts() {
