@@ -137,7 +137,12 @@ html[data-motion="reduced"] .o55-nierkick { display: none; }
 .o55-lookswatch.o55-nierswatch > i:nth-child(2) { left: 10px; }
 .o55-lookswatch.o55-nierswatch > i:nth-child(3) { left: 16px; }
 .o55-lookswatch.o55-nierswatch > b { position: absolute; left: 22px; right: 4px; top: 10px; height: 1px; background: var(--o55-nier-ink); }
-.o55-looknier-check .o55-looknier-name { min-width: 0; }
+/* two lines, as in the title-bar menu: the swatch, the box and the name on the first (like a family row), Adjust under
+   the name */
+.o55-looknier { flex-wrap: wrap; row-gap: 2px; }
+.o55-looknier-check { flex: 1 0 100%; }
+.o55-looknier-check .o55-looknier-name { min-width: 0; white-space: nowrap; }
+.o55-looknier-adjust { margin-left: 68px; min-height: 28px; }
 
 /* ---------------------------------------------------------------- under NieR Mode */
 /* ink on parchment, square boxes with an inked square for the tick, a ruled YoRHa title */
