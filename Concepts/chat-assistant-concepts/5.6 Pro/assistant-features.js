@@ -1056,8 +1056,8 @@
      Commands (8.15): Name it for me = cmd.chat.thread.regenerate_title,
      Rename = cmd.chat.rename; Explain simply in new chats and Name new chats
      are Settings transactions; Thought Stream is a UI preference with no
-     command (E-13). The concept dispatches none of them; the sheet's
-     Technical details line names them.
+     command (E-13). The concept dispatches none of them, and (card 8)
+     the sheet names none of them either.
      ===================================================================== */
   function readyModels(){ return (D.models||[]).filter(function(m){ return m.status==='ready'; }); }
   function modelById(id){
@@ -1481,9 +1481,7 @@
     return true;
   });
 
-  /* A1-53: the one Technical details line (fine print: the words "Technical details"; the whole sentence is its hover text) */
   var THOUGHT_PREVIEW='Preview: Thought Stream is shown here but doesn’t change replies yet.';
-  var DFLT_TECH_TIP='In the chat, Name it for me sends cmd.chat.thread.regenerate_title and Rename sends cmd.chat.rename. Explain simply in new chats (Explain Terms Everywhere) and Name new chats are Settings changes. Thought Stream is a display preference with no command. Done sends nothing. This demo names chats locally from your first message: no AI is contacted.';
   /* The name the naming specimen shows: what the concept would name a chat that asks this */
   var DFLT_EXAMPLE_NAME='Speed up tenant dashboard';
   /* a question's label carries its whole explanation in the app hover card (VIS-06): retro clamps helper lines to
@@ -1552,9 +1550,9 @@
       '<figure class="pmx-plate pmx-dflt-plate" data-k="dflt-plate" aria-label="How a new chat looks">'+s1+s2+s3+'</figure></div>';
     var foot=S.pmxFoot({ cls:'pmx-dflt-foot',
       readback:S.pmxReadback({ key:'pmx-readback', parts:[{ html:'<b>Changes apply as you pick them.</b> ' }, { html:'Your chats keep their names and answers.' }] }),
-      /* the fine line under it: the demo note, then "Technical details", whose hover names every command id (a
-         command id is never shown cut in half) */
-      estimate:S.pmxEstimate({ text:'Demo: resets when you reload.<span class="pmx-dflt-tech" data-hover-key="dflt-tech" data-hover-tip="'+e(DFLT_TECH_TIP)+'"> · Technical details</span>' }),
+      /* the fine line under it: the demo note alone (card 8: no Technical details outside a setup
+         sheet's Advanced page) */
+      estimate:S.pmxEstimate({ text:'Demo: resets when you reload.' }),
       primary:{ action:'close-dialog', label:'Done' } });
     /* choices apply at once, so a Cancel would undo nothing: one primary, Done (FOUNDATION REQUEST, as in ELI5:
        pmxFoot({cancel:false})) */

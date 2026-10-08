@@ -252,12 +252,6 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
    '<button type="button" class="text-button" data-action="memory-discard" data-id="'+id+'" data-pmx-affects="notes meter">Discard</button></div>'+
    '<p class="pmx-mem-acts-help">Verify: re-test whether this is still true · '+(g.pinned?'Unpin: allow cleaning this up again':'Pin: never clean this up')+' · Discard: forget it</p>';
  }
- /* raw ids, scopes and the canonical commands live only here (DON'T 18; 8.15 rule 1) */
- function techHtml(e,g){
-  const cl=(g.claims||[])[0]||{};
-  return '<p class="pmx-mem-tech">Note '+e(g.id)+' · '+e(g.kind||'Note')+' · covers '+e(cl.support_scope||'unassessed')+' · proof '+e(cl.currentness||'source_unavailable')+'</p>'+
-   '<p class="pmx-mem-tech">Verify runs cmd.chat.memory.verify · Pin cmd.chat.memory.pin · Discard and Keep my rule cmd.chat.memory.discard · Edit my rule cmd.chat.teach.capture (mode correct) · the next-message list cmd.chat.memory.preview_capsule · Also keep notes that aren’t verified yet cmd.chat.memory.toggle_auto_save_unverified · Export memory: new command request cmd.chat.memory.export {scope} (N-7, owner answer E-32; a local file in this concept) · Done: no command (view state)</p>';
- }
  function detailHtml(e,g,doc){
   const k=groupOf(g),p=proofOf(g);
   return '<div class="pmx-mem-detail" data-k="md:'+e(g.id)+'">'+
@@ -269,7 +263,8 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
    disc(e,'history:'+g.id,'Its story',storyHtml(e,g),true)+
    checkedLine(e,g)+
    (k==='decide'||k==='discarded'?'':actsHtml(e,g))+
-   (doc?disc(e,'tech:'+g.id,'Technical details',techHtml(e,g),false)+disc(e,'raw:'+g.id,'Show raw data','<pre class="pmx-mem-code">'+e(JSON.stringify(g,null,2))+'</pre>',false):'')+
+   /* card 8: no Technical details outside a setup sheet's Advanced page — "Show raw data" stands on its own */
+   (doc?disc(e,'raw:'+g.id,'Show raw data','<pre class="pmx-mem-code">'+e(JSON.stringify(g,null,2))+'</pre>',false):'')+
    '</div>';
  }
  /* the next-message list (the ribbon's link, and the document's action): what rides along and what is left out */
