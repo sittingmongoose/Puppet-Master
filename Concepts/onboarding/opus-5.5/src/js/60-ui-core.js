@@ -52,6 +52,11 @@
     root.addEventListener('change', onInput);
     ['keydown', 'keyup', 'keypress'].forEach((ev) => root.addEventListener(ev, onKey));
     root.addEventListener('pointerdown', (e) => { if (e.target.closest('.o55-scrim')) nudge(); });
+    /* Input never waits for a performance (hero spec section 1 rule 7): a press or a key while the stage or the skin is
+       still playing a moment snaps it to its end state. Caught on the way down, never prevented, so it still acts. */
+    const snap = (e) => { if (e.type === 'keydown' && /^(Shift|Control|Alt|Meta|CapsLock|Fn)$/.test(e.key)) return; skin('input', e); };
+    root.addEventListener('pointerdown', snap, true);
+    root.addEventListener('keydown', snap, true);
     new MutationObserver(() => { if (S.open) syncTheme(true); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
     document.addEventListener('visibilitychange', () => { root.setAttribute('data-o55-ambient', document.hidden ? 'off' : 'on'); });
     window.addEventListener('resize', () => { if (S.open) layoutClass(); });
@@ -85,7 +90,15 @@
     const look = th.family + '-' + th.mode + (document.documentElement.hasAttribute('data-o55-nier') ? '-nier' : '');
     S.root.setAttribute('data-family', th.family); S.root.setAttribute('data-mode', th.mode);
     S.root.querySelector('.o55-stage').setAttribute('data-family', th.family);
-    if (lastLook && lastLook !== look && fromObserver) { renderScene(true); renderRail(); refresh(); renderLook(); }
+    if (lastLook && lastLook !== look && fromObserver) {
+      /* NieR Mode turned on or off on the look screen (O55.nierLook.busy(): its moment is playing under the reboot's
+         cover): the new cast is mounted waiting in the wings (ensembleHold) and lowered in at the reveal. When only NieR
+         Mode changed (the chosen look and mode are the same), the four look tiles keep their scenes: the stage, the
+         rail, the look menu and the NieR row redraw, and the pane's morph leaves the tiles' hosts alone */
+      const busy = !!(O55.nierLook && O55.nierLook.busy && O55.nierLook.busy());
+      renderScene(true, false, { ensembleHold: busy });
+      renderRail(); refresh(); renderLook();
+    }
     lastLook = look;
   }
   /* Look reveal: a circular (Retro: stepped) reveal of the new world from the chosen tile. Browser View Transitions
@@ -139,7 +152,9 @@
   function renderRail() {
     const nav = S.root.querySelector('.o55-rail');
     const def = SCREENS.defs[S.sess.screen] || {};
-    const pr = O55.stages.progress(S, def);
+    /* S.railHold: the skin holds the rail in its old state until its own beat moves it (NieR's rail walk on the act
+       card's landing, the opening's header assembly) */
+    const pr = S.railHold || O55.stages.progress(S, def);
     const fam = O55.theme().family;
     const items = pr.chapters.map((ch, i) => {
       const state = i < pr.index ? 'done' : i === pr.index ? 'current' : 'next';
@@ -202,7 +217,7 @@
     if (!S.resumed || S.resumedShownOn !== def.id || def.id === 'welcome') return '';
     return `<div class="o55-banner" data-key="resumed">${O55.c.small('history', 18)}<span>${U.esc(T('welcome.resumed'))}</span>${O55.c.link(T('welcome.startOver'), 'startOver')}</div>`;
   }
-  function renderScene(force, hold) {
+  function renderScene(force, hold, o) {
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     const sc = def.scene ? def.scene(S) : { id: 'hero' };
     const host = S.root.querySelector('.o55-stage');
@@ -210,7 +225,7 @@
     const band = S.root.getAttribute('data-o55-layout') === 'narrow';
     const key = `${sc.id}|${th.family}|${th.mode}|${band}`;
     if (force || host.getAttribute('data-scene-key') !== key || host.getAttribute('data-beat') !== (sc.beat || 'default') || JSON.stringify(sc.params || {}) !== host.getAttribute('data-params')) {
-      O55.art.mount(host, sc.id, { family: th.family, mode: th.mode, beat: sc.beat || 'default', params: sc.params || {}, band, instance: band ? 'band' : '', hold: !!hold });
+      O55.art.mount(host, sc.id, { family: th.family, mode: th.mode, beat: sc.beat || 'default', params: sc.params || {}, band, instance: band ? 'band' : '', hold: !!hold, ensembleHold: !!(o && o.ensembleHold) });
       host.setAttribute('data-scene-key', key); host.setAttribute('data-beat', sc.beat || 'default'); host.setAttribute('data-params', JSON.stringify(sc.params || {}));
     }
   }
@@ -265,6 +280,10 @@
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
     renderScene(false, hold); renderRail(); renderSound();
+    /* the end of an act: the skin may keep the old scene a moment longer (its troupe bows) before the new one shows */
+    const stageWait = old && hold ? Math.max(0, +skin('stageDelay', dir) || 0) : 0;
+    const stageTok = S.stageTok = (S.stageTok || 0) + 1;
+    const releaseStage = () => { if (S.stageTok === stageTok) O55.art.release(S.root.querySelector('.o55-stage')); };
     const h = layer.querySelector('#o55-h');
     /* the scene heading takes programmatic focus when the screen settles, unless the person is already inside it */
     const focusHeading = () => O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
@@ -272,12 +291,33 @@
     def.mounted && def.mounted(S, layer, true);
     if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); return; }
     O55.motion.release(() => {
-      layer.classList.remove('o55-hold');
       S.root.classList.remove('o55-hold');
-      O55.art.release(S.root.querySelector('.o55-stage'));
-      leave(); focusHeading();
+      if (stageWait) O55.motion.after(stageWait, releaseStage); else releaseStage();
       if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
-      if (layer.isConnected) skin('screen', layer, dir);
+      /* The opening may be the skin's to play first (NieR's cold open: the window opens empty, a boot log runs where the
+         title will be and its line becomes the title's rule). The stage shows at once; the screen waits for the
+         skin's promise, or for a key or a press, which shows it at once (a key also lands on its primary). */
+      const gate = dir === 'open' && layer.isConnected ? skin('openGate', layer) : null;
+      let shown = false;
+      const show = (byKey) => {
+        if (shown) return; shown = true;
+        if (off) off();
+        if (!layer.isConnected || layer.classList.contains('o55-out')) return;
+        layer.classList.remove('o55-hold');
+        leave();
+        if (byKey) { const pri = layer.querySelector('.o55-primary'); O55.motion.after(0, () => { if (S.open && pri && pri.isConnected) pri.focus({ preventScroll: true }); }); }
+        else focusHeading();
+        skin('screen', layer, dir);
+      };
+      let off = null;
+      if (gate && typeof gate.then === 'function') {
+        const onKey = (e) => { if (!/^(Shift|Control|Alt|Meta|CapsLock|Fn)$/.test(e.key)) { skin('openSnap', e); show(true); } };
+        const onPress = (e) => { skin('openSnap', e); show(false); };
+        document.addEventListener('keydown', onKey, true); document.addEventListener('pointerdown', onPress, true);
+        const cap = O55.motion.after(4200, () => show(false)); /* never longer than the opening itself */
+        off = () => { document.removeEventListener('keydown', onKey, true); document.removeEventListener('pointerdown', onPress, true); cap.cancel(); };
+        gate.then(() => show(false), () => show(false));
+      } else show(false);
     });
   }
 
@@ -311,7 +351,10 @@
     if (def.enter) def.enter(S, opts);
     /* the music follows the journey: the chapter's chord, and how far along the person is (the first forward sound
        after a chapter change becomes that chapter's own sting, O55.sound's chapterSting) */
-    O55.sound.setContext({ chapter: (def.chapterFor ? def.chapterFor(S) : def.chapter) || 'welcome', step: S.sess.history.length });
+    /* (a skin that plays this chapter's sting itself, on a beat of its own, claims it: NieR's act card lands on it and
+       its curtain call resolves on it, so the move itself stays a plain one) */
+    const claim = skin('claimSting', from, def, opts.dir || 'fwd') === true;
+    O55.sound.setContext(Object.assign({ chapter: (def.chapterFor ? def.chapterFor(S) : def.chapter) || 'welcome', step: S.sess.history.length }, claim ? { sting: false } : {}));
     if (!opts.silent) O55.sound.play(opts.dir === 'back' ? 'back' : 'next');
     transition(opts.dir || 'fwd');
   }
@@ -515,10 +558,14 @@
     const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
     /* a resumed run starts on its own chapter's chord */
     const cur = SCREENS.defs[S.sess.screen];
-    O55.sound.setContext({ chapter: (cur.chapterFor ? cur.chapterFor(S) : cur.chapter) || 'welcome', step: S.sess.history.length });
-    skin('open', { resumed: S.resumed, shown: wasShown });
+    /* (each onboarding run is a run of the score: its chapters sting once each, O55.sound) */
+    O55.sound.setContext({ chapter: (cur.chapterFor ? cur.chapterFor(S) : cur.chapter) || 'welcome', step: S.sess.history.length, run: S.sess.started + '|' + (S.epoch || 0) });
+    S.railHold = null;
+    /* the skin may open with a silence of its own: the window's first sound then waits that many ms */
+    const quietOpen = skin('open', { resumed: S.resumed, shown: wasShown, screen: S.sess.screen });
     transition('open');
-    O55.sound.play('open');
+    if (typeof quietOpen === 'number' && quietOpen > 0) O55.motion.after(quietOpen, () => { if (S.open) O55.sound.play('open'); });
+    else O55.sound.play('open');
     const chip = document.getElementById('o55-resume'); if (chip) chip.remove();
     if (waitNote) O55.motion.after(700, () => O55.ui.toast(T('chrome.startOverWait')));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: 'opened', screen: S.sess.screen, resumed: S.resumed } }));
@@ -548,7 +595,10 @@
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
-    skin('close', reason, handoff);
+    /* the skin may keep the root (and its scrim) a while: NieR folds the window to a line that carries on into the
+       Guided Tour, and the scrim stays until the tour's own has taken over, so the app never comes up lit between */
+    const hold = skin('close', reason, handoff);
+    S.railHold = null;
     const finish = () => {
       r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
       document.documentElement.removeAttribute('data-o55-open');
@@ -557,7 +607,8 @@
       if (reason !== 'done' && returnFocus && document.contains(returnFocus)) { try { returnFocus.focus(); } catch (_) {} }
       O55.boot && O55.boot.chip && O55.boot.chip();
     };
-    if (O55.motion.reduced()) finish(); else O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }).then(finish);
+    if (typeof hold === 'number' && hold > 0) O55.motion.after(hold, finish);
+    else if (O55.motion.reduced()) finish(); else O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }).then(finish);
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: reason === 'skip' ? 'skipped' : reason === 'done' ? 'finished' : 'closed', screen: S.sess.screen } }));
   }
 
