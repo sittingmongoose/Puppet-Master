@@ -107,11 +107,13 @@ html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-promise li { a
 html[data-motion="reduced"] #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-opening .o55-win, html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeonly 160ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation-name: o55-fadeout !important; }
-html[data-motion="reduced"] #pm-o55-onboarding * { transition-duration: 0.01ms !important; }
+/* (no transition at all: a 0.01 ms one made every style change in the window, transitioned or not, a transition that
+   showed its value a frame late; nothing waits for a transition's end) */
+html[data-motion="reduced"] #pm-o55-onboarding * { transition-duration: 0s !important; transition-delay: 0s !important; }
 @media (prefers-reduced-motion: reduce) {
   #pm-o55-onboarding .o55-entering .o55-st, #pm-o55-onboarding .o55-entering .o55-main *, #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
   #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
   #pm-o55-onboarding.o55-opening .o55-win { animation: o55-fadeonly 160ms ease both !important; }
   #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeout 160ms ease both !important; }
-  #pm-o55-onboarding * { transition-duration: 0.01ms !important; }
+  #pm-o55-onboarding * { transition-duration: 0s !important; transition-delay: 0s !important; }
 }
