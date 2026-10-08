@@ -24,9 +24,10 @@
      step {same} once it is drawn · callout {step, missing, done, count, tryLabel, pod} (fill d.pod with markup for
      the callout, before its buttons) · render {focus} · bar {chapter, ci, si, total, pip} (d.pip[chapter]: markup
      after that chapter's ticks) · target {el, prev} · complete {step} · showMe {step} · showMeEnd (hold: the
-     pointer comes home first) · cue {el} · press {el, x, y} · pointerFrom {at} · missing {on} · interrupt · pause
-     {paused} · ending {status, keep, silent} (hold, alongside the restore) · end {status, keep} · landing {lead}
-     (hold, then the note) · landed {note}. A listener that throws is logged and skipped. */
+     pointer comes home first) · showMeDone · cue {el} · press {el, x, y} · pointerFrom {at} · missing {on} ·
+     interrupt · pause {paused} · ending {status, keep, silent} (hold, alongside the restore) · end {status, keep}
+     (status 'restore-pending' when the layout could not go back and the tour stays) · landing {lead} (hold, then
+     the note) · landed {note}. A listener that throws is logged and skipped. */
   const hooks = {};
   TR.on = (name, fn) => { (hooks[name] = hooks[name] || []).push(fn); return () => { hooks[name] = (hooks[name] || []).filter((f) => f !== fn); }; };
   function emit(name, d) {
@@ -441,6 +442,7 @@
     if (st.show === me && !me.cancelled) await settle(emit('showMeEnd', { step: s }), 1200);
     if (st.show !== me) return; /* a real input took over meanwhile and has already put the pointer away */
     st.show = null; st.root.removeAttribute('data-showme'); P.hide();
+    emit('showMeDone', { step: s });
   }
   function interruptShow() {
     if (!st.show) return;
@@ -725,6 +727,7 @@
         thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page, restored: res });
       O55.pageToast(T('tour.restoreFailed'));
       showRecovery(O55.store.get(KEY, null));
+      emit('end', { status: 'restore-pending', keep: !!keep });
       return { ...res, status: 'restore-pending' };
     }
     TR.running = false;
