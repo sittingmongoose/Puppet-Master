@@ -23,8 +23,8 @@
      parts()           -> installed part keys, in PARTS order (whether or not NieR Mode is on)
      has(key)          -> true only while on() AND that part is installed
      PARTS             -> [{ key, label, group, name }] in canonical order (groups: Look, Motion, Sound & voice, Pointer,
-                          World); label is the stored option (canon), name what a person reads (they differ only where
-                          canon's option names the game: headers reads "Ruled headers", hero spec rule 13)
+                          World); label is the stored option (canon), name what a person reads (today every name is its label:
+                          the headers part keeps canon's "YoRHa headers", the name approved with the Settings inventory)
      keyFor(label)     -> key, or null;  labelFor(key) -> label, or null
      set(on, opts?)    -> commits general.visual.nier-mode through the real settings path; returns false if refused;
                           opts.sound === false keeps the transition quiet (the caller plays its own sounds: the hum
@@ -91,7 +91,7 @@
 const O55_NIER_IDS = ['general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'];
 /* [group, stored label (Plans/settings_inventory.json), key, the name shown when it differs from the label] */
 const O55_NIER_PARTS = Object.freeze([
-  ['Look', 'Square hairlines', 'square'], ['Look', 'Menu cursor', 'cursor'], ['Look', 'YoRHa headers', 'headers', 'Ruled headers'],
+  ['Look', 'Square hairlines', 'square'], ['Look', 'Menu cursor', 'cursor'], ['Look', 'YoRHa headers', 'headers'],
   ['Look', 'Parchment ground', 'ground'], ['Look', 'Target brackets', 'brackets'], ['Look', 'Diamond loaders', 'diamonds'],
   ['Motion', 'Reboot moment', 'reboot'], ['Motion', 'Slice open', 'slice'], ['Motion', 'Text decode', 'decode'],
   ['Motion', 'Page wipe', 'wipe'], ['Motion', 'Drifting particles', 'particles'], ['Motion', 'Scan sweep', 'sweep'],

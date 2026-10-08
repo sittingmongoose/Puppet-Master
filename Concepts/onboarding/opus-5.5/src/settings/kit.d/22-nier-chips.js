@@ -96,7 +96,7 @@
   }
   function chip(p) {
     const [help, size] = HELP[p.key] || ['', 1];
-    /* the name a person reads (PM_NIER.PARTS name: never the game's own words), not the stored option label */
+    /* the name a person reads (PM_NIER.PARTS name), not the stored option label */
     const name = p.name || p.label;
     return `<button type="button" class="o55nc-chip" role="switch" aria-checked="false" data-o55nc-key="${esc(p.key)}" aria-label="${esc(name)}">`
       + '<span class="o55nc-chip-pins" aria-hidden="true"><i></i><i></i><i></i></span>'
