@@ -4385,7 +4385,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(state.hover?.type==='text'){
       const anchor=e.target.closest?.('[data-hover-tip]');
       if(!anchor||(anchor.dataset.hoverKey||'')!==(state.hover.key||'')){
-        clearTimeout(hoverTimer);state.hover=null;syncHoverCard();
+        /* A direct anchor-to-anchor move arms the new anchor's dwell in pointerover before this move arrives;
+           that residence timer belongs to the new anchor, so only the stale open tip is dropped here. */
+        if(!(anchor&&tipPending&&(anchor.dataset.hoverKey||'')===tipPending.key)) clearTimeout(hoverTimer);
+        state.hover=null;syncHoverCard();
       }
     }
   },{passive:true});
