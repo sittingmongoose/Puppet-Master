@@ -1,4 +1,5 @@
 /* Driver toolkit for onboarding scenarios: real CDP mouse clicks and typing against the built concept.
+ * Pass --page <path> on the command line to drive a private build instead of the built concept.
  * import { open } from './drive.mjs'; const d = await open({ scenario: 'fresh', theme: 'basic-dark' });
  * d.primary(), d.act('pick', 'this'), d.type('name', 'Book club website'), d.screen(), d.until(fn), d.snap(), d.close()
  * Every step waits for the screen to settle and records page errors, so a scenario reads like the person's clicks. */
@@ -7,7 +8,8 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-export const PAGE = resolve(here, '../../../TestOpus5.5PmConcept.html');
+const pageIdx = process.argv.indexOf('--page');
+export const PAGE = pageIdx >= 0 && process.argv[pageIdx + 1] ? resolve(process.argv[pageIdx + 1]) : resolve(here, '../../../TestOpus5.5PmConcept.html');
 
 export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1440, height = 900, query = '', snapDir = null, snapPrefix = '' } = {}) {
   const { page, close } = await launch({ width, height });

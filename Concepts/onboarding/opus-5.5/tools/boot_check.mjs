@@ -1,5 +1,5 @@
 /* Boot check: load the base and the built concept, compare console errors and load timing, and confirm the
- * strip/patch results live in the page.  Usage: node tools/boot_check.mjs <out-dir> [themes=basic-dark,...]
+ * strip/patch results live in the page.  Usage: node tools/boot_check.mjs <out-dir> [themes=basic-dark,...] [--page <path>]
  * Writes boot.json and a screenshot per page/theme into <out-dir> (never into the repository). */
 import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -8,11 +8,14 @@ import { resolve, join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const concepts = resolve(here, '../../..');
-const out = resolve(process.argv[2] || '/tmp/o55-boot');
-const themes = (process.argv[3] || 'basic-dark').split(',');
+const raw = process.argv.slice(2);
+const pageIdx = raw.indexOf('--page');
+const argv = pageIdx >= 0 ? raw.filter((_, i) => i !== pageIdx && i !== pageIdx + 1) : raw;
+const out = resolve(argv[0] || '/tmp/o55-boot');
+const themes = (argv[1] || 'basic-dark').split(',');
 mkdirSync(out, { recursive: true });
 
-const pages = { base: join(concepts, 'TestPMConcept.html'), built: join(concepts, 'TestOpus5.5PmConcept.html') };
+const pages = { base: join(concepts, 'TestPMConcept.html'), built: pageIdx >= 0 && raw[pageIdx + 1] ? resolve(raw[pageIdx + 1]) : join(concepts, 'TestOpus5.5PmConcept.html') };
 const report = {};
 for (const [name, file] of Object.entries(pages)) {
   const { page, close } = await launch({ width: 1600, height: 1000 });

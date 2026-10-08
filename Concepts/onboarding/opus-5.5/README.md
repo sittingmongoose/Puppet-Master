@@ -75,6 +75,10 @@ Recorded media (screenshots, contact sheets, film frames, videos, audio renders)
 `~/pm-scratch`, is reviewed, and is deleted when the work is finished (Jared, 2026-09-24). Results are written down
 inline in the landing records and in `REPORT.md` instead. Every tool deletes its Chrome profile when it exits.
 
+The tools launch Chrome on the GPU (no `--disable-gpu`) and accept `--page <built html>` to test a private build
+(`python3 tools/build.py --out <path>`) instead of the checked-in `Concepts/TestOpus5.5PmConcept.html`; without
+`--page` they test the checked-in page.
+
 ## Settings
 
 Settings keeps the shell's layout (chapter rail, Settings Home, page index, manager tabs) and reworks what is inside

@@ -2,7 +2,7 @@
  * valid sample into every field it knows, from every reachable state, the way a curious person would. The page is
  * reloaded for every click so nothing leaks between paths; a state is restored from its saved session (the same
  * secret-free record resume uses), so no path has to be replayed. It records where every click leads.
- *   node tools/onboarding_explorer.mjs <out-dir> [--scenario fresh] [--max 1200] [--workers 10] [--size 1440x900]
+ *   node tools/onboarding_explorer.mjs <out-dir> [--scenario fresh] [--max 1200] [--workers 10] [--size 1440x900] [--page <path>]
  * Writes graph.json (states, transitions) and report.json, and prints a summary:
  *   - screens reached and never reached, of every screen the onboarding defines
  *   - dead ends: states where the primary is disabled and no control reaches another screen
@@ -17,10 +17,10 @@ import { resolve, join, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const PAGE = resolve(here, '../../../TestOpus5.5PmConcept.html');
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/explore');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
+const PAGE = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
 const SCENARIO = opt('scenario', 'fresh');
 const MAX = Number(opt('max', 1200));
 /* at most this many states per screen, so the budget reaches every screen instead of one screen's combinations */

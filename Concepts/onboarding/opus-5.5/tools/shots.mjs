@@ -1,6 +1,6 @@
 /* Settled screenshots of onboarding screens across themes and window sizes, cropped to the onboarding window.
  * Usage: node tools/shots.mjs <out-dir> [--screens welcome,look,where] [--themes basic-dark,friendly-light]
- *        [--size 1440x900] [--scenario fresh] [--settle 1600] [--full]
+ *        [--size 1440x900] [--scenario fresh] [--settle 1600] [--full] [--page <path>]
  * Each screen is reached through O55.ui.go on one live page per theme (the same path a person clicks), so the shot
  * shows the real session state. Writes <screen>--<theme>--<WxH>.png and shots.json (errors, rects) into <out-dir>. */
 import { launch, sleep } from './chrome.mjs';
@@ -9,10 +9,10 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const page_ = resolve(here, '../../../TestOpus5.5PmConcept.html');
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/shots');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
+const page_ = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
 const flag = (k) => argv.includes('--' + k);
 const screens = opt('screens', 'welcome,look,where').split(',');
 const themes = opt('themes', 'basic-dark,basic-light,friendly-dark,friendly-light,glass-dark,glass-light,retro-dark,retro-light').split(',');

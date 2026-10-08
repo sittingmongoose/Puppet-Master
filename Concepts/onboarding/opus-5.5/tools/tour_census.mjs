@@ -1,5 +1,5 @@
 /* Guided Tour census: meaningful actions and dwell time per chapter, measured on the real tour.
- * node tools/tour_census.mjs <out-dir> [--wpm 200]
+ * node tools/tour_census.mjs <out-dir> [--wpm 200] [--page <path>]
  * The tour is walked the way t2 walks it (Show Me for each action, Next for each explanation). For every step it
  * records the learner's meaningful actions (an action step is one; adding and then placing the widget, and opening
  * Why before answering, are two), the words on screen the step asks the learner to read (the callout, plus the
@@ -19,10 +19,10 @@ const dropProfile = async (dir, chrome) => {
 };
 
 const here = dirname(fileURLToPath(import.meta.url));
-const PAGE = resolve(here, '../../../TestOpus5.5PmConcept.html');
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/census');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
+const PAGE = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
 const WPM = Number(opt('wpm', 200));
 mkdirSync(out, { recursive: true });
 

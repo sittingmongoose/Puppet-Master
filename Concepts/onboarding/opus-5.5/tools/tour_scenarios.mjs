@@ -1,5 +1,5 @@
 /* Guided Tour acceptance, driven by real CDP input against the built concept.
- * node tools/tour_scenarios.mjs <out-dir> [--only t1,t2] [--theme basic-dark] [--snaps]
+ * node tools/tour_scenarios.mjs <out-dir> [--only t1,t2] [--theme basic-dark] [--snaps] [--page <path>]
  * t1 every step by hand (real clicks, a real mouse drag) then Restore; t2 every action through Show Me then Keep;
  * t3 Skip restores everything; t4 fails closed after reload without owner basis; t5 a missing target offers Take me there; t6 Back rewinds a
  * step so it can be done again or watched with Show Me; t7 Run Onboarding Again (and a replay) start the tour over.
@@ -17,10 +17,10 @@ const dropProfile = async (dir, chrome) => {
 };
 
 const here = dirname(fileURLToPath(import.meta.url));
-const PAGE = resolve(here, '../../../TestOpus5.5PmConcept.html');
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/tour');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
+const PAGE = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
 const only = opt('only', '') ? opt('only', '').split(',') : null;
 const theme = opt('theme', 'basic-dark');
 const snaps = argv.includes('--snaps');
