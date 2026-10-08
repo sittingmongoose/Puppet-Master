@@ -93,9 +93,10 @@
      write the words: that is their end state.
    - Reduced Motion gives the end state at once: the words, the brackets, the ink bar and the Pod's words without
      motion; slice, wipe, fold, glitch, alert, band, bootlog and trail draw nothing; a banner stands still for its time
-     (a hung card stands in place and onLand runs at once). A low-resource computer (O55.motion.lowResource) gets the
-     same end states for the main-thread effects (slice's clip, the scan line, the shards) and a Pod that does not
-     hover; the wipe and the fold are compositor transforms and play in both directions.
+     (a hung card stands in place and onLand runs on its first frame). A low-resource computer
+     (O55.motion.lowResource) gets the same end states for the main-thread effects (slice's clip, the scan line, the
+     shards) and a Pod that does not hover; the wipe and the fold are compositor transforms and play in both
+     directions.
    - No flashes (rule 3): nothing larger than 340x256 reverses its opacity more than once a second. Large surfaces
      leave one way (a fold to a line, slats, a 2-step fade); only small things blink (carets, stamps, ticks, the Pod).
      Multi-step flickers put their step easing on each keyframe, never on the whole iteration.
