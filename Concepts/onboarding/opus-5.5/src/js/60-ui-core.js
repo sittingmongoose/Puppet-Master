@@ -103,6 +103,8 @@
        the look menu redraw for the pick themselves (the painted look did not change, so nothing else redraws them) */
     const now = O55.theme();
     if (now.chosen === family && now.mode === mode) return;
+    /* repainting the page for a look is expected heavy work: it never counts toward low-resource mode */
+    O55.motion.quiet(2500);
     if (now.nier && now.mode === mode) { apply(); refresh(); return; }
     if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
     if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
@@ -247,6 +249,8 @@
       O55.motion.after(900, kill);
       old.addEventListener('animationend', (e) => { if (e.target === old) kill(); });
     };
+    /* what the skin follows on the old screen (target brackets, the menu cursor) lets go now, before it leaves */
+    if (old) skin('leaving', old, dir);
     if (old) {
       old.classList.add('o55-out');
       old.setAttribute('inert', ''); old.setAttribute('aria-hidden', 'true');
@@ -322,9 +326,10 @@
 
   /* ---------------------------------------------------------------- events */
   function onClick(e) {
-    if (S.lookOpen && !e.target.closest('.o55-lookslot')) { S.lookOpen = false; renderLook(); }
-    const t = e.target.closest('[data-o55-do]');
-    if (!t || !S.root.contains(t)) return;
+    const t = e.target.closest('[data-o55-do]'), acts = !!(t && S.root.contains(t));
+    /* a click outside the look menu closes it; when nothing else answers the click, the menu's own close sound does */
+    if (S.lookOpen && !e.target.closest('.o55-lookslot')) { S.lookOpen = false; renderLook(); if (!acts) O55.sound.play('unsheet'); }
+    if (!acts) return;
     const action = t.getAttribute('data-o55-do'), arg = t.getAttribute('data-arg');
     if (t.getAttribute('aria-disabled') === 'true') {
       e.preventDefault();
@@ -339,7 +344,8 @@
     if (action === 'close') return close('close');
     if (action === 'back') return back();
     if (action === 'sound') { O55.sound.toggle('onboarding'); renderSound(); return; }
-    if (action === 'lookMenu') { S.lookOpen = !S.lookOpen; O55.sound.play(S.lookOpen ? 'toggleOn' : 'toggleOff'); renderLook(); return; }
+    /* the look menu is a small sheet: it opens and closes with the sheet sounds, as in the tour's bar */
+    if (action === 'lookMenu') { S.lookOpen = !S.lookOpen; O55.sound.play(S.lookOpen ? 'sheet' : 'unsheet'); renderLook(); return; }
     if (action === 'lookFamily') { applyLook(arg, O55.theme().mode, t); return; }
     if (action === 'lookMode') { applyLook(O55.theme().chosen, arg, t); return; }
     if (action === 'lookNier' || action === 'lookNierAdjust') { if (O55.lookMenu && O55.lookMenu.nier) O55.lookMenu.nier(action, t); return; }
@@ -364,11 +370,13 @@
     if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.querySelector('.o55-foot').appendChild(tip); }
     tip.textContent = reason; tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
   }
-  let lastType = 0;
+  /* typing ticks at most one per 120 ms, the chat's rate (ACD-475; O55.sound's RATE.type matches it) */
+  const TYPE_MS = 120;
+  let lastType = -1e9;
   function onInput(e) {
     const t = e.target.closest('[data-o55-bind]'); if (!t) return;
     /* typing ticks quietly in the family's material (never for a protected field) */
-    if (e.type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && performance.now() - lastType > 45) { lastType = performance.now(); O55.sound.play('type'); }
+    if (e.type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && performance.now() - lastType >= TYPE_MS) { lastType = performance.now(); O55.sound.play('type'); }
     const def = SCREENS.defs[S.sess.screen];
     const key = t.getAttribute('data-o55-bind');
     const fn = def && def.bind && def.bind[key];
@@ -379,7 +387,7 @@
     e.stopPropagation(); /* shell trap: typed keys never reach the app's global shortcuts */
     if (e.type !== 'keydown') return;
     if (e.key === 'Escape') {
-      if (S.lookOpen) { S.lookOpen = false; renderLook(); e.preventDefault(); const b = S.root.querySelector('.o55-lookbtn'); if (b) b.focus(); return; }
+      if (S.lookOpen) { S.lookOpen = false; renderLook(); O55.sound.play('unsheet'); e.preventDefault(); const b = S.root.querySelector('.o55-lookbtn'); if (b) b.focus(); return; }
       const pop = S.root.querySelector('.o55-sheet[data-open="true"], .o55-popover[data-open="true"]');
       if (pop) { const c = pop.querySelector('[data-o55-do="sheet-close"]'); if (c) c.click(); e.preventDefault(); return; }
       e.preventDefault(); close('escape'); return;
@@ -388,8 +396,11 @@
     if (e.key === 'Enter' && !e.shiftKey && !e.metaKey) {
       const tag = (e.target.tagName || '').toLowerCase();
       if (tag === 'textarea' || tag === 'button' || tag === 'a' || e.target.closest('[role="radio"],[role="option"]')) return;
+      /* Adjust NieR look lies over the interior (O55.nierLook): Enter there never moves the screen hidden beneath it,
+         and a primary inside an inert subtree is never pressed (a programmatic click would still reach it) */
+      if (e.target.closest('.o55-nierpanel') || (O55.nierLook && O55.nierLook.panelOpen && O55.nierLook.panelOpen())) return;
       const pri = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-primary');
-      if (pri) { e.preventDefault(); pri.click(); }
+      if (pri && !pri.closest('[inert]')) { e.preventDefault(); pri.click(); }
       return;
     }
     if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {

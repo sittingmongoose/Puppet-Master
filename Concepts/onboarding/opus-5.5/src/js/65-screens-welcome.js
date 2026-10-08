@@ -79,14 +79,19 @@
       });
       /* the NieR row's scene is drawn in NieR's own tokens whether NieR Mode is on or off: while off it previews them
          (data-o55-nier-preview over Basic, the look NieR Mode paints over); while on it takes the painted ones */
+      /* While NieR Mode is off the thumbnail is a still picture of it: drawn whole, its ambient loops and the rig's
+         idle sway held (data-o55-ambient="off" on its host, which 30-art.css and the rig read; ART's still mount, when
+         it has one, is asked for too), so the look screen keeps four live scenes, not five. Once NieR Mode is painted it
+         lives like the tiles. */
       const th = O55.theme(), thumb = layer.querySelector('[data-nier-thumb]');
       if (thumb) {
         const key = 'nier-' + th.mode + (th.nier ? '-on' : '');
         if (thumb.getAttribute('data-look') !== key) {
           thumb.setAttribute('data-look', key); thumb.setAttribute('data-o55-nier-preview', th.mode);
           if (th.nier) thumb.removeAttribute('data-theme'); else thumb.setAttribute('data-theme', 'basic-' + th.mode);
+          if (th.nier) thumb.removeAttribute('data-o55-ambient'); else thumb.setAttribute('data-o55-ambient', 'off');
           thumb.innerHTML = '';
-          O55.art.mount(thumb, 'tile', { family: 'basic', mode: th.mode, beat: 'default', tok: O55.art.tokens(thumb), params: {}, instance: 'nier', band: true });
+          O55.art.mount(thumb, 'tile', { family: 'basic', mode: th.mode, beat: 'default', tok: O55.art.tokens(thumb), params: {}, instance: 'nier', band: true, still: !th.nier });
         }
       }
       /* a look picked under NieR Mode changes the line that names it: NieR resolves it from scrambled letters */

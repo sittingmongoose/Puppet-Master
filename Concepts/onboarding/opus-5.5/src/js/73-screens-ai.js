@@ -11,6 +11,12 @@
   const host = (S) => (md(S).server_mode === 'this_device' ? T('where.this.title').toLowerCase() : O55.project.serverName(S));
   const onServer = (S) => md(S).server_mode !== 'this_device';
   const pname = (p) => O55.tx('ai.names')[p.id] || p.name;
+  /* Each provider's mark: its initial in its hue; under NieR Mode, where hues give way to ink, a two-letter code (the
+     hue was the only thing telling Claude, ChatGPT and Cursor apart). Fixed per provider so no two codes meet. */
+  const MONO = { claude: 'CL', codex: 'GP', antigravity: 'AG', cursor: 'CU', grok: 'GK', muse: 'MU', copilot: 'CP', 'qwen-coding': 'QC', 'qwen-token': 'QT',
+    zai: 'ZA', kimi: 'KM', minimax: 'MM', 'opencode-go': 'OG', 'opencode-zen': 'OZ', 'opencode-runtime': 'OC', 'anthropic-api': 'AN', 'gemini-api': 'GM', vertex: 'VX',
+    'xai-api': 'XA', 'meta-api': 'ME' };
+  const mono = (p) => MONO[p.id] || String(p.name || p.id).replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase();
   const DETECT_PHASES = [{ key: 'likely', ms: 900 }, { key: 'copied', ms: 500 }];
   const DETECT_FOUND = { done: 'found', intensity: 0.55 };
   const DETECT_QUIET = { done: 'phase', intensity: 0.55 };
@@ -81,7 +87,7 @@
       extra = `<div class="o55-rowextra" data-key="key-${p.id}">${C.field({ bind: 'key:' + p.id, id: 'o55f-key-' + p.id, type: 'password', protected: true, label: T('ai.keyLabel', { name: pname(p) }), value: '', hint: T('ai.keyHint'), error: ks && ks.state === 'failed' ? T('ai.keyBad') : '', invalid: !!(ks && ks.state === 'failed') })}`
         + O55.ui.btn({ label: T('ai.verify'), do: 'keyCheck', arg: p.id, cls: 'o55-small', disabled: !a.keyTyped || st === 'keyChecking', reason: T('ai.keyLabel', { name: pname(p) }) }, 'o55-secondary') + '</div>';
     }
-    const lead = `<span class="o55-plogo" style="--plh:${U.hash(p.vendor) % 360}" aria-hidden="true">${U.esc(pname(p).slice(0, 1))}</span>`;
+    const lead = `<span class="o55-plogo" style="--plh:${U.hash(p.vendor) % 360}" aria-hidden="true"><span class="o55-plogo-l">${U.esc(pname(p).slice(0, 1))}</span><span class="o55-plogo-m">${U.esc(mono(p))}</span></span>`;
     return `<div class="o55-provider" data-key="pv-${p.id}" data-state="${st}">` + C.row({ key: p.id, lead, title: pname(p), meta, state: pill, action }) + extra + '</div>';
   }
 

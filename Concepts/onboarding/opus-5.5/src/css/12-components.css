@@ -138,6 +138,7 @@
 #pm-o55-onboarding[data-mode="light"] .o55-plogo { color: hsl(var(--plh, 210) 60% 38%); }
 #pm-o55-onboarding[data-family="friendly"] .o55-plogo { border-radius: 50%; }
 #pm-o55-onboarding[data-family="retro"] .o55-plogo { border-radius: 0; }
+.o55-plogo-m { display: none; } /* the two-letter code NieR Mode shows instead (11-window-nier.css) */
 .o55-provider[data-state="ready"] .o55-row { border-color: color-mix(in srgb, var(--accent-lime) 45%, var(--o55-line)); }
 .o55-rowextra { display: grid; gap: 8px; margin: -2px 0 0; padding: 10px 14px 12px 62px; border: 1px solid var(--o55-line); border-top: 0; border-radius: 0 0 var(--o55-card-r) var(--o55-card-r); background: color-mix(in srgb, var(--text-primary) 3%, transparent); font-size: 13.5px; color: var(--text-secondary); }
 .o55-provider:has(.o55-rowextra) > .o55-row { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
