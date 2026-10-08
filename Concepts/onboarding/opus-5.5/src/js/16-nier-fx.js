@@ -23,6 +23,8 @@
      lineHold(line) -> bool           the line blinks where it is until it is moved or used
      lineDrop(line)                   the line goes
      trail(x, y, { ms?, layer? }) -> Promise   a 3 px ink square left behind by a held hop, gone in 2 steps   [pod]
+     hops(el, to, { n = 9, ms = 540, arc?, trail = true }) -> Promise   el travels in n held hops (its translate
+                                      property), each leaving a trail square: the Pod's flights                 [pod]
    Moments
      bootlog(host, [{ text, stamp? }], { kicker?, lineMs = 210, meterCells = 16, sound = true, at?, delay?, part? })
          -> { el, stamps: Promise[], done: Promise, hold(text, { at? }) -> { cancel }, close({ to?, edge? }) ->
@@ -659,6 +661,34 @@
     const a = b.animate([{ opacity: 1, offset: 0, easing: 'step-end' }, { opacity: 0.45, offset: 0.5, easing: 'step-end' }, { opacity: 0, offset: 1 }],
       { duration: clamp(Number(o.ms) || 140, 40, 1000), fill: 'forwards' });
     return ended(a).then((ok) => { drop(b); return ok; });
+  };
+
+  /* hops(el, to, { n = 9, ms = 540, arc = 0, trail = true, fill = 'forwards' }) -> Promise<bool>: el (the Pod) travels
+     to `to` (a { dx, dy } offset, or an element or rect whose centre it goes to) in n held hops along a line lifted by
+     `arc` px at its middle, each hop leaving a trail square where it was. Moved by its separate translate property
+     (never its transform); with fill 'forwards' it stays there until the caller places it (then cancel()s the
+     returned promise's animation: el.getAnimations()). Reduced Motion: no travel (false), the caller jumps. [pod] */
+  FX.hops = function hops(el, to, o) {
+    o = o || {};
+    if (!el || typeof el.animate !== 'function' || !has('pod') || still() || document.hidden) return no();
+    const r = rectOf(el); if (!r) return no();
+    const z = zoom();
+    let dx, dy;
+    if (to && Number.isFinite(to.dx)) { dx = to.dx; dy = to.dy || 0; }
+    else { const t = toRect(to); if (!t) return no(); dx = (t.left + t.width / 2 - (r.left + r.width / 2)) / z; dy = (t.top + t.height / 2 - (r.top + r.height / 2)) / z; }
+    const n = clamp(Math.round(Number(o.n) || 9), 1, 24), ms = clamp(Number(o.ms) || 540, 60, 4000), arc = Number(o.arc) || 0;
+    const pt = (i) => { const f = i / n; return [Math.round(dx * f), Math.round(dy * f - arc * Math.sin(Math.PI * f))]; };
+    const kf = [];
+    for (let i = 0; i <= n; i++) { const [x, y] = pt(i); kf.push({ translate: `${x}px ${y}px`, offset: i / n, easing: 'step-end' }); }
+    quiet(ms + 300);
+    const a = el.animate(kf, { duration: ms, fill: o.fill || 'forwards' });
+    const timers = [];
+    if (o.trail !== false) {
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      for (let i = 0; i < n; i++) { const [x, y] = pt(i); timers.push(M.after(ms * (i + 1) / n, () => FX.trail(cx + x * z, cy + y * z, { layer: o.layer }))); }
+    }
+    const job = run(hostOf(el), () => { a.cancel(); timers.forEach((t) => t.cancel()); }, () => { try { a.finish(); } catch (_) {} });
+    return ended(a).then((ok) => { finish(job); return ok; });
   };
 
   /* ================================================================== slice */

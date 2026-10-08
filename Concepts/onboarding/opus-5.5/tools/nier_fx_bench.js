@@ -86,6 +86,7 @@
         return log.done.then(() => log.close({ to: at('eyebrow') }));
       },
       fold: () => FX.fold(at('callout')).then((line) => (line ? FX.lineTo(line, at('pane')).then(() => FX.slice(at('callout'), { from: line })) : false)),
+      hops: () => { const u = document.createElement('i'); u.style.cssText = 'position:fixed;left:120px;top:520px;width:20px;height:26px;z-index:2147482100;background:var(--o55-nier-ink)'; document.body.appendChild(u); return FX.hops(u, { dx: 520, dy: -140 }, { arc: 60 }).then((ok) => { u.remove(); return ok; }); },
       trail: () => { const r = at('pod').getBoundingClientRect(); for (let i = 0; i < 9; i++) O55.motion.after(i * 50, () => FX.trail(r.right + 10 + i * 14, r.top + 6 - i * 3)); return O55.motion.delay(600).then(() => true); }
     };
     const runOne = (name) => (RUN[name] ? RUN[name]() : Promise.resolve(false));
