@@ -1474,8 +1474,10 @@
     else {
       a.onfinish = end;
       a.oncancel = end;
-      setTimeout(end, (opts && opts.duration ? opts.duration : 0) + 80);
     }
+    /* Each step also ends on the wall clock: on a loaded machine late frames stretch animation.finished, and a chained
+       close (pill <-> card) could otherwise outlive its budget. The first of the two to fire wins (once). */
+    setTimeout(end, (opts && opts.delay ? opts.delay : 0) + (opts && opts.duration ? opts.duration : 0) + 80);
     return a;
   }
   function playOpen(shell) {
