@@ -628,6 +628,20 @@
   /* the repaint's long tasks are expected here: the window's low-resource watch should not count them (films M1) */
   const quiet = ms => { try { const M = window.O55 && window.O55.motion; if (M && typeof M.quiet === 'function') M.quiet(ms); } catch (e) { /* none */ } };
 
+  /* a list that starts late (a busy frame before it) keeps its rhythm: the whole schedule moves later, never two lines
+     typing at once */
+  function rbShift(plan, now) {
+    const late = Math.max(0, now + 30 - Math.min(plan.stamps[0] - 120, plan.meter[0]));
+    if (!late) return plan;
+    return Object.assign({}, plan, { stamps: plan.stamps.map(x => x + late), meter: plan.meter.map(x => x + late), sync: plan.sync + late, done: plan.done + late, late });
+  }
+  /* the moment's T0 is when its first animation really started (the click's own work can hold the first frame), so
+     every later time lines up with what is on screen */
+  async function rbStart(a, fallback) {
+    try { await a.ready; } catch (e) { return fallback; }
+    return typeof a.startTime === 'number' ? a.startTime : fallback;
+  }
+
   /* the check list's motion, all created now with delays (design ms from t0): the caret block steps across each line,
      the stamp blinks in, the meter fills; "Synchronising" waits at plan.sync and blinks its caret until R */
   function rbType(log, plan, now) {
@@ -720,7 +734,7 @@
       return s.animate(mode === 'out' ? [{ transform: 'translateX(0)' }, { transform: away }] : [{ transform: away }, { transform: 'translateX(0)' }],
         { duration: 180, delay: delay + order[i] * 30, easing: 'steps(4, end)', fill: mode === 'out' ? 'forwards' : 'both' });
     });
-    return { wrap, done: Promise.all(anims.map(settled)) };
+    return { wrap, first: anims[0], done: Promise.all(anims.map(settled)) };
   }
 
   /* the window's effects and the pointers come back with the reveal */
@@ -732,7 +746,8 @@
   /* ---- inside the onboarding window */
   async function rebootWithin(ctx, info, within, folding) {
     const kind = folding ? 'fold' : info.reason === 'replay' ? 'replay' : 'on';
-    const lines = rbLines(info, kind), plan = rbPlan(lines.length, folding), t = tone();
+    const lines = rbLines(info, kind), t = tone();
+    let plan = rbPlan(lines.length, folding);
     const cover = ctx.cover = document.createElement('div');
     cover.id = 'o55np-reboot'; cover.className = 'o55np-within'; cover.setAttribute('aria-hidden', 'true');
     cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
@@ -744,7 +759,8 @@
     const host = ctx.host = within.closest('#pm-o55-onboarding');
     if (host) host.setAttribute('data-o55np-cover', '');
     coverUp = true; curOff(); retOff();
-    const t0 = tl(), box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
+    let t0 = tl();
+    const box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
     if (!folding) {
       /* T0-T90 the brackets lock on in 3 steps; T90 the plate is born on the rect; T90-T390 it grows in 6 held steps */
       const from = rbFrom(info, within, box);
@@ -753,6 +769,7 @@
       const plate = walk([{ t: 0, v: { clipPath: insetOf(rects[0], box), opacity: 0 } }, ...rects.map((r, k) => ({ t: at(k), v: { clipPath: insetOf(r, box), opacity: 1 } })),
         { t: TOTAL, v: { clipPath: insetOf(full, box), opacity: 1 } }], TOTAL);
       const grow = ground.animate(plate, { duration: TOTAL, fill: 'forwards' });
+      const started = rbStart(grow, t0);
       const poses = rects.map((r, k) => rbPose(r, off[k], box)), lock = [12, 8, 5].map(o => rbPose(rects[0], o, box));
       deco.forEach((el, j) => {
         const isBr = j >= 4;
@@ -761,6 +778,7 @@
         fr.push({ t: TOTAL, v: { transform: poses[5][j], opacity: 1 } });
         el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
       });
+      t0 = await started;
       await settled(grow);
       /* T450: full cover; the decorations keep their last place inline (so the slats' copies carry them) */
       set.querySelectorAll('.o55np-deco > i').forEach(el => el.getAnimations().forEach(a => { try { a.commitStyles(); } catch (e) { /* not rendered */ } a.cancel(); }));
@@ -772,6 +790,7 @@
       ground.style.opacity = '1';
       cover.setAttribute('data-hold', '');
       const shut = rbSlats(cover, set, 'in', 300);
+      t0 = await rbStart(shut.first, t0);
       await shut.done;
       cover.removeAttribute('data-hold');
       shut.wrap.remove();
@@ -779,6 +798,7 @@
     if (!cover.isConnected) return;
     /* the list appears in one step; every animation of it exists before the repaint */
     log.setAttribute('data-on', '');
+    plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
     await twoFrames();
     quiet(5000);
@@ -822,22 +842,25 @@
   /* ---- the whole page: the ink band, stepped down, the list, the tear-out */
   async function rebootPage(ctx, info, folding) {
     const kind = folding ? 'pageOff' : info.reason === 'replay' ? 'replay' : 'pageOn';
-    const lines = rbLines(info, kind), plan = rbPlan(lines.length, folding), t = tone();
+    const lines = rbLines(info, kind), t = tone();
+    let plan = rbPlan(lines.length, folding);
     const cover = ctx.cover = document.createElement('div');
     cover.id = 'o55np-reboot'; cover.setAttribute('aria-hidden', 'true'); cover.setAttribute('data-page', '');
     cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
     const { set, ground, log } = rbSet(lines, false);
     cover.appendChild(set);
     document.body.appendChild(cover);
-    const t0 = tl();
+    let t0 = tl();
     /* 6 held steps down: on T90-T390 (nierOn's six ticks), off T60-T360 */
     const first = folding ? 60 : 90, TOTAL = first + 360;
     const drop = ground.animate(walk([{ t: 0, v: { transform: 'translateY(-101%)' } }, ...[83.3, 66.7, 50, 33.3, 16.7, 0].map((y, k) => ({ t: first + 60 * k, v: { transform: `translateY(${-y}%)` } })),
       { t: TOTAL, v: { transform: 'translateY(0%)' } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
+    t0 = await rbStart(drop, t0);
     await settled(drop);
     ground.style.transform = 'none'; drop.cancel();
     if (!cover.isConnected) return;
     log.setAttribute('data-on', '');
+    plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
     await twoFrames();
     ctx.paint();
