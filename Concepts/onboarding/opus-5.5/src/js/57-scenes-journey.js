@@ -20,10 +20,12 @@
         /* the beginning hangs from the control bar on a real string */
         { key: 'hero', prop: 'node', x: 240, y: 318, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon, accent: true, tie: 'a1' } }];
       if (b === 'online') items.push({ key: 'cl', prop: 'cloud', x: 360, y: 214, s: 0.9, layer: 'back', anim: 'drop', delay: 320, amb: 'float' });
-      if (b === 'device') items.push({ key: 'nas', prop: 'nas', x: 372, y: 450, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'rise', delay: 320, opts: { label: L('homeNas', 'home nas') } });
+      /* NieR's units are solid ink, so the helper on the right steps aside for the NAS rather than hiding it */
+      const nd = b === 'device' && ctx.family === 'nier';
+      if (b === 'device') items.push({ key: 'nas', prop: 'nas', x: nd ? 398 : 372, y: nd ? 452 : 450, s: R(ctx) ? 1 : nd ? 1 : 1.1, layer: 'mid', anim: 'rise', delay: 320, opts: { label: L('homeNas', 'home nas') } });
       if (b === 'restore') items.push({ key: 'rings', prop: 'rings', x: 240, y: 318, s: 1.6, layer: 'back', anim: 'fade', delay: 300, amb: 'pulse' });
-      items.push(helper(ctx, 'h0', 110, floorY(ctx) - 20, 0, b === 'new' ? 'wave' : 'point', 380), helper(ctx, 'h2', 370, floorY(ctx) - 20, 2, 'carry', 460));
-      items.push(...sparks([[84, 110, 0], [404, 96, 2], [412, 380, 1]], 900));
+      items.push(helper(ctx, 'h0', 110, floorY(ctx) - 20, 0, b === 'new' ? 'wave' : 'point', 380), helper(ctx, 'h2', nd ? 318 : 370, floorY(ctx) - 20, 2, 'carry', 460));
+      items.push(...sparks([[84, 110, 0], [404, 96, 2], nd ? [416, 300, 1] : [412, 380, 1]], 900));
       return items;
     }
   });
@@ -66,8 +68,9 @@
       const pr = ctx.params || {}, s = R(ctx) ? 1 : 1.35;
       const folder = { key: 'folder', prop: 'folder', x: 240, y: 448, s: R(ctx) ? 2 : 1.6, layer: 'mid', anim: 'rise', delay: 60 };
       const hist = { key: 'hist', prop: 'node', x: 240, y: 268, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'history', accent: true, label: L('safeHistory', 'safe history') } };
-      /* the line down to the folder starts below the node's label, not through it */
-      const down = A.link(ctx, hist, folder); down[0] = [down[0][0], down[0][1] + 20];
+      /* the line down to the folder starts below the node's label, not through it (NieR's node is measured without
+         its caption, which sits lower: its route starts further down) */
+      const down = A.link(ctx, hist, folder); down[0] = [down[0][0], down[0][1] + (ctx.family === 'nier' ? 30 : 20)];
       const items = [folder, hist, { key: 'p0', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: down } }];
       if (pr.online) { const cl = { key: 'cl', prop: 'cloud', x: 108, y: 150, s: 1, layer: 'mid', anim: 'drop', delay: 120, amb: 'float' }; items.push(cl, { key: 'p1', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 200, opts: { pts: A.link(ctx, hist, cl) } }); }
       if (pr.backup) { const vault = { key: 'vault', prop: 'node', x: 378, y: 150, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'pop', delay: 140, opts: { icon: 'vault' } }; items.push(vault, { key: 'p2', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: A.link(ctx, hist, vault) } }); }
@@ -136,7 +139,8 @@
       /* each connected account lights a spark just above the bar, centred on it (they sat off the bar, left-aligned) */
       const k = Math.min(4, n);
       for (let i = 0; i < k; i++) items.push({ key: 'pw' + i, prop: 'node', x: 240 + (i - (k - 1) / 2) * 58, y: m.barY - 46, s: R(ctx) ? 1 : 0.7, layer: 'front', anim: 'pop', delay: 120 + i * 90, opts: { icon: 'spark', accent: true } });
-      if (ctx.beat === 'free') [[70, 380], [410, 380]].forEach(([x, y], i) => items.push({ key: 'fx' + i, prop: 'helper', x, y: m.floor - 6, s: m.helperScale * 0.7, layer: 'front', anim: 'drop', delay: 300 + i * 140, amb: 'bob', opts: { variant: (i + 1) % 3, pose: 'wave', px: m.helperPx } }));
+      /* NieR has a fourth unit (v3, the pauldron); the extra helpers show it and the long coat */
+      if (ctx.beat === 'free') [[70, 380], [410, 380]].forEach(([x, y], i) => items.push({ key: 'fx' + i, prop: 'helper', x, y: m.floor - 6, s: m.helperScale * 0.7, layer: 'front', anim: 'drop', delay: 300 + i * 140, amb: 'bob', opts: { variant: ctx.family === 'nier' ? [3, 0][i] : (i + 1) % 3, pose: 'wave', px: m.helperPx } }));
       return items;
     }
   });

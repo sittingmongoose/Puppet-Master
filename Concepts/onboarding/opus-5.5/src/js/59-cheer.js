@@ -67,6 +67,16 @@
     });
   }
 
+  /* NieR's hero: the machine lifeform watching from the stage's broken corner glances at the cheering unit, one step of
+     its eyes toward it for 600 ms (one-shot, transform only; skipped with the cheer under Reduced Motion) */
+  function glance(svg, g) {
+    const eyes = svg.querySelector('.o55-it[data-key="mach"] .o55-nier-eyes'), mach = eyes && eyes.closest('.o55-it');
+    if (!eyes || !eyes.animate || !g) return;
+    const x = (el) => { const m = /translate\(\s*(-?[\d.]+)px/.exec(el.style.transform || ''); return m ? +m[1] : 0; };
+    const dx = x(g) < x(mach) ? -1 : 1;
+    try { eyes.animate([{ transform: `translateX(${dx}px)` }, { transform: `translateX(${dx}px)` }], { duration: 600, easing: 'steps(1, end)' }); } catch (_) {}
+  }
+
   /* one helper cheers for a choice (the one nearest the middle, turn about) */
   let turn = 0;
   A.react = function react(host) {
@@ -75,7 +85,7 @@
     const i = turn++ % hs.length, g = hs[i], key = g.getAttribute('data-key'), fam = svg.getAttribute('data-family');
     O55.sound.play('cheer', { voice: i }); /* each helper has its own voice */
     const isTied = tied(svg, key) && A.rig;
-    if (fam === 'nier') { joy(g, isTied ? 760 : 620, 0); lockOn(svg, g, 0); }
+    if (fam === 'nier') { joy(g, isTied ? 760 : 620, 0); lockOn(svg, g, 0); glance(svg, g); }
     if (isTied) return A.rig.cheer(svg, key);
     hop(g, fam, false, 0);
     return true;
@@ -93,7 +103,7 @@
     if (fam === 'nier') {
       let ti = 0, fi = 0;
       hs.forEach((g) => { const t = tied(svg, g.getAttribute('data-key')); joy(g, t ? 1300 : 900, (t ? ti++ : fi++) * 110); });
-      const mid = hs.find((g) => g.getAttribute('data-key') === 'h1'); if (mid) lockOn(svg, mid, 110);
+      const mid = hs.find((g) => g.getAttribute('data-key') === 'h1'); if (mid) { lockOn(svg, mid, 110); glance(svg, mid); }
     }
     confetti(svg, fam, o.at || [240, 300], o.count || 34);
     O55.sound.play('celebrate');

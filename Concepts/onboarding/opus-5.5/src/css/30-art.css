@@ -141,6 +141,7 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="sweep"]) .o55-nier-scan, ht
 .o55-f-retro[data-scene="begin"] [data-key="hero"] .o55-gl { animation: o55-gl-px 1.6s steps(1, end) infinite; }
 .o55-f-retro[data-scene="begin"] [data-key="hero"] .o55-gl-rewind { animation: o55-gl-px-rw 1.2s steps(1, end) infinite; }
 .o55-f-retro[data-scene="begin"] [data-key="hero"] .o55-gl-cloud { animation: o55-gl-px-drift 2.4s steps(1, end) infinite; }
+.o55-f-nier[data-scene="begin"] [data-key="hero"] .o55-gl:not(.o55-gl-rewind) { animation-timing-function: steps(6, end); } /* NieR: the same idles, in square steps */
 @keyframes o55-gl-sprout { 0%, 100% { transform: rotate(0deg) scale(1, 1); } 30% { transform: rotate(-6deg) scale(1.04, 0.97); } 65% { transform: rotate(5deg) scale(0.98, 1.06); } }
 @keyframes o55-gl-peek { 0%, 55%, 100% { transform: rotate(0deg) translateY(0); } 66% { transform: rotate(-9deg) translateY(-1.5px); } 76% { transform: rotate(-2deg) translateY(0); } 84% { transform: rotate(-6deg) translateY(-0.5px); } }
 @keyframes o55-gl-drift { from { transform: translate(-1.8px, 0.6px); } to { transform: translate(1.8px, -1.6px); } }
