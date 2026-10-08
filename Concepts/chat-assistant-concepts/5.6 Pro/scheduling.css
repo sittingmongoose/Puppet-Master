@@ -54,18 +54,13 @@
 .pmx-sheet .pmx-sched-dstsay{margin:10px 0 0;display:flex;align-items:flex-start;gap:8px;font:var(--pmx-fs-help);color:var(--muted);}
 .pmx-sheet .pmx-sched-dstsay > svg{flex:none;margin-top:2px;}
 
-/* ---- who answers, if it's missed, the promises, Technical details */
+/* ---- who answers, if it's missed, the promises */
 .pmx-sheet .pmx-sched-lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 32px;margin-top:20px;align-items:start;min-width:0;}
 /* "Skip it if it's more than 30 min late": the real minutes input sits beside the trigger (10 px apart, J-2) */
 .pmx-sheet .pmx-sched-missrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;min-width:0;}
 .pmx-sheet .pmx-sched-cell{min-width:0;display:flex;flex-direction:column;}
 .pmx-sheet .pmx-sched-cell > .pmx-ctl:first-child{margin-top:0;}
-/* Technical details: the one disclosure, in the sheets and in a scheduled message's record in the chat */
-:is(.pmx-sheet, .sched-card) .pmx-sched-tech{margin-top:12px;min-width:0;}
-:is(.pmx-sheet, .sched-card) .pmx-sched-techbtn{display:inline-flex;align-items:center;gap:6px;height:32px;min-height:32px;margin-left:-10px;padding:0 10px;color:var(--muted);font:600 12px/17.5px var(--font-ui);}
-:is(.pmx-sheet, .sched-card) .pmx-sched-techbtn:hover{color:var(--text);background:none;}
-:is(.pmx-sheet, .sched-card) .pmx-sched-techsay{margin:6px 0 0;display:flex;flex-direction:column;gap:2px;font:var(--pmx-fs-fine);color:var(--subtle);overflow-wrap:anywhere;min-width:0;}
-:is(.pmx-sheet, .sched-card) .pmx-sched-techsay > span{display:block;}
+/* card 8: no Technical details outside a setup sheet's Advanced page (.pmx-sched-tech* removed) */
 
 /* ---- the foot carries See all scheduled beside Cancel (FOUNDATION REQUEST: pmxFoot sizes its grid for `extra`) */
 .pmx-sheet .pmx-foot.pmx-sched-foot:has(> .pmx-sched-all){grid-template-columns:minmax(0,1fr) auto auto auto;}
@@ -107,9 +102,8 @@
 /* ---- Build At: the week map over the two columns */
 .pmx-sheet .pmx-sched-week{margin:12px 0 0;padding:0;border:0;border-radius:0;background:none;overflow:visible;flex:none;min-width:0;align-self:stretch;}
 .pmx-sheet .pmx-sched-slot--week{height:154px;}
-/* under the week map: Technical details on the left, the legend on the right */
+/* under the week map: the legend, right-aligned (its auto left margin) */
 .pmx-sheet .pmx-sched-weekfoot{display:flex;align-items:flex-start;justify-content:space-between;gap:4px 24px;margin-top:6px;min-width:0;}
-.pmx-sheet .pmx-sched-weekfoot > .pmx-sched-tech{margin-top:0;min-width:0;}
 .sched-dialog--build .pmx-body{margin-top:20px;}
 /* retro: helper lines and promises wrap here instead of ending in an ellipsis (J-2: wrap first; a promise is never
    cut). FOUNDATION REQUEST: module-shell.css makes them nowrap + ellipsis in retro on every sheet. */
@@ -249,7 +243,7 @@ body.pm56-reduced .pmx-sched-marker{transition:none;}
 .pmx-bubble .pmx-decision-say > span{display:block;-webkit-line-clamp:unset;overflow:visible;overflow-wrap:anywhere;}
 .pmx-bubble-fine{margin:6px 0 0;font:var(--pmx-fs-fine);color:var(--subtle);overflow-wrap:anywhere;}
 .pmx-bubble-note{margin:4px 0 0;}
-/* the record, opened in place: a hairline, then plain facts; ids only in Technical details */
+/* the record, opened in place: a hairline, then plain facts (card 8: no ids on the face) */
 .pmx-sched-rec{margin-top:12px;padding-top:12px;box-shadow:0 -1px 0 var(--border);min-width:0;}
 .sched-card:not(.pmx-bubble) > .pmx-sched-rec{margin:0;padding:12px 2px 14px 26px;box-shadow:none;}
 .pmx-sched-rectext{margin:0 0 12px;max-height:180px;overflow:hidden auto;scrollbar-width:thin;font:var(--pmx-w-reg) 13px/19.5px var(--font-ui);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;}

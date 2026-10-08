@@ -1658,13 +1658,7 @@
   function tzTrigger(ctx, action, anchor, zone) {
     return SH.pickerButton({ action: action, anchor: anchor, strong: esc(zoneCity(zone)), small: esc(zoneShort(zone)), iconHtml: ctx.icon('down', 11) });
   }
-  /* Technical details: the one disclosure (spec 8.7 / 8.8), naming the command the primary dispatches (IMPACT A1-53) */
-  function techBlock(key, lines) {
-    var open = !!(ui.techOpen && ui.techOpen[key]);
-    return '<div class="pmx-sched-tech" data-k="sched-tech-' + key + '"><button type="button" class="text-button pmx-sched-techbtn" data-action="sched-toggle-tech" data-value="' + key + '" aria-expanded="' + open + '">' +
-      SH.pmxGlyph(open ? 'chevron-down' : 'chevron-right', 13) + '<span>Technical details</span></button>' +
-      (open ? '<p class="pmx-sched-techsay">' + lines.map(function (l) { return '<span>' + esc(l) + '</span>'; }).join('') + '</p>' : '') + '</div>';
-  }
+  /* card 8 (2026-10-08): no Technical details outside a setup sheet's Advanced page (techBlock removed) */
   /* the missed-slot trigger; with "Skip it if…" chosen, the real minutes input (a stepper) sits beside it and
      writes grace_seconds (IMPACT A1-42) */
   function missedControl(ctx, action, anchor, opt, d, graceKey) {
@@ -1804,7 +1798,7 @@
     var a = zp(d.timezone, now), b = zp(d.timezone, nx), gap = Math.round((Date.UTC(b.y, b.mo - 1, b.d) - Date.UTC(a.y, a.mo - 1, a.d)) / 86400000);
     return gap === 0 ? 'tonight' : gap === 1 ? 'tomorrow night' : DAY_LABELS[T0.weekday(b)] + ' night';
   }
-  function weekPlate(d, now, techHtml) {
+  function weekPlate(d, now) {
     function one(mode, W) { return SH.pmxPlate({ key: 'sched-week-' + mode, kind: 'build-at', mode: mode, w: W, h: WEEK_H, fitH: WEEK_H, svg: weekSvg(d, now, W), cls: 'pmx-sched-plate' }); }
     var nw = nextWords(d, now), once = d.kind === 'one_time' ? T0.resolve(d.timezone, T0.parse(d.date, d.time)) : null;
     var legend = once ? '<ul class="pmx-sched-legend" aria-hidden="true">' + (once.ok ? '<li data-pmx-part="when"><i class="pmx-sched-sw" data-kind="dot"></i>Builds ' + esc(dayLabel(once.at, d.timezone) + ' at ' + clockAt(once.at, d.timezone)) + '</li>' : '') +
@@ -1815,7 +1809,7 @@
       '<li data-pmx-part="when"><i class="pmx-sched-sw" data-kind="now"></i>Now</li></ul>';
     return '<div class="mdl-section pmx-sched-week" data-k="sched-week"><div class="pmx-sched-slot pmx-sched-slot--week" data-k="sched-week-slot">' +
       SH.pmxPlateFit({ key: 'sched-week', kind: 'build-at', affects: 'when', plates: [one('full', 904), one('compact', 580)] }) + '</div>' +
-      '<div class="pmx-sched-weekfoot">' + (techHtml || '') + legend + '</div></div>';
+      '<div class="pmx-sched-weekfoot">' + legend + '</div></div>';
   }
 
   /* ---------------------------------------------------------------- Schedule Message (8.7) */
@@ -1879,8 +1873,8 @@
       (dstSay ? '<p class="pmx-sched-dstsay">' + SH.pmxGlyph('clock', 13) + '<span>' + esc(dstSay) + '</span></p>' : '');
     var when = SH.pmxQuestion({ key: 'sched-msg-when', cls: 'pmx-sched-when', title: 'When should it send?', meta: presets, body: trackPlate(d, w, now) + inputs });
     /* lower: who answers it and what happens if it is missed. Schedule Message
-       has no promise lines and no Technical details (Build At, the manager and
-       the record still use techBlock). */
+       has no promise lines and no Technical details (card 8: Build At, the
+       manager and the record have none either). */
     var missed = optionOf(MISSED_MSG_OPTIONS, d.missed);
     var route = SH.pmxCtl({ key: 'sched-msg-route', layout: 'stack', label: 'Answered by', affects: 'route',
       helper: 'We’ll use exactly this model and account. If it isn’t available then, we’ll hold the message and ask you. We never swap it.',
@@ -1956,7 +1950,7 @@
     var d = ui.buildDraft; if (!d || d.planId !== x.planId) d = ui.buildDraft = defaultBuildDraft(x.planId, x.version);
     if (d.executionTopology === 'crew' && !crewAllowed(d.planId) && !d.crewDefinition) d.executionTopology = 'agent';
     var one = d.kind === 'one_time', now = nowMinute(), editing = !!ui.editingBuildId;
-    var hash = d.contentHash || demoHash(d.planId + ':' + d.version), base = buildSheetBase(editing, d.version);
+    var base = buildSheetBase(editing, d.version);
     var guide = window.PM56_SCHEDULE_DEMOS ? window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx) : '';
     /* when */
     var sw = SH.pmxSwitch({ key: 'sched-bld-kind', action: 'sched-set-build-kind', current: d.kind, affects: 'when', label: 'When', options: [
@@ -1976,7 +1970,7 @@
         items: MON_FIRST.map(function (i) { return { value: String(i), label: DAY_LABELS[i], on: d.days.indexOf(i) >= 0, attrs: 'data-day="' + i + '"' }; }) }) }) +
       SH.pmxCtl({ key: 'sched-bld-wind', label: 'Wrap-up time', helper: 'Stop starting new tasks this many minutes before the end, so nothing is cut off mid-way.', affects: 'wind',
         control: stepBy(SH.pmxStepper({ key: 'sched-bld-wind-step', input: { key: 'build-wind', attrs: 'data-sched-input="build-wind"' }, value: Math.round(Number(d.windDown) || 0), min: 0, max: 60, unit: 'min', cells: false, affects: 'wind' }), 5) });
-    /* who, if missed, promises, Technical details */
+    /* who, if missed, promises */
     var topo = optionOf(TOPOLOGY_OPTIONS, d.executionTopology || 'agent');
     /* the Crew's own action sits under its trigger; the cast (once set up) is a block under the row */
     var cast = topo.value === 'crew' ? crewStrip(d.crewDefinition) : '';
@@ -1994,14 +1988,13 @@
       SH.pmxPromise({ key: 'sched-bp1', glyph: 'lock', text: 'If you edit the plan, we’ll ask before building the new version.' }) +
       SH.pmxPromise({ key: 'sched-bp2', glyph: 'pause', text: '<b>Pause all automations</b> always wins.' })) +
       '<p class="pmx-fine pmx-sched-pausefine">In Scheduled › Resume &amp; Safety Policy: it holds every scheduled send and build.</p>';
-    var tech = techBlock('build', [(editing ? 'Command: cmd.execution_window.update' : 'Command: cmd.chat.plan.schedule_build'), 'Plan ' + d.planId + ' · version V' + d.version + ' · hash ' + hash]);
     /* foot */
     var words = buildWords(d), reason = !one && !d.days.length ? 'Pick at least one night.' : !one && d.startTime === d.pauseTime ? 'Start and stop must be different times.'
       : topo.value === 'crew' && !d.crewDefinition ? 'Set up the Crew first.' : '';
     /* a printed reason needs the foot's second row: the read-back keeps one line */
     if (reason) words.parts = !one && (!d.days.length || d.startTime === d.pauseTime) ? [{ part: 'when', html: 'Builds <b>' + esc(slotText(d.startTime, d.pauseTime)) + '</b> (' + esc(zoneCity(d.timezone)) + ') on the nights you pick.' }] : words.parts.slice(0, 1);
     base.guide = guide;
-    base.hero = weekPlate(d, now, tech);
+    base.hero = weekPlate(d, now);
     base.main = whenQ + nightly;
     base.side = who + crew + miss + grace + keep + promises;
     base.foot = SH.pmxFoot({ cls: 'pmx-sched-foot', readback: SH.pmxReadback({ key: 'sched-bld-rb', parts: !reason && autoPause().paused ? [words.parts[0], pausePart('sched-bld-pausenote')] : words.parts }) + EMPTY_ALERT, refusal: refusalSlot(d),
@@ -2014,7 +2007,7 @@
     var base = buildSheetBase(c.editing, c.version);
     base.guide = window.PM56_SCHEDULE_DEMOS ? window.PM56_SCHEDULE_DEMOS.dialogGuide(ctx) : '';
     /* the picture of what was scheduled stays: the week map, sealed (no entrance), with the next occurrence lit */
-    base.body = SH.pmxConfirm({ key: 'sched-bld-confirm', cls: 'pmx-sched-confirm pmx-sched-confirm--build', markHtml: c.draft ? '<div class="pmx-sched-confirmweek" data-k="sched-confirm-week">' + weekPlate(c.draft, nowMinute(), '') + '</div>' : '<span class="pmx-sched-confirmmark">' + SH.pmxKindMark('build-at', 36) + '</span>', headline: esc(c.headline),
+    base.body = SH.pmxConfirm({ key: 'sched-bld-confirm', cls: 'pmx-sched-confirm pmx-sched-confirm--build', markHtml: c.draft ? '<div class="pmx-sched-confirmweek" data-k="sched-confirm-week">' + weekPlate(c.draft, nowMinute()) + '</div>' : '<span class="pmx-sched-confirmmark">' + SH.pmxKindMark('build-at', 36) + '</span>', headline: esc(c.headline),
       text: 'Builds V' + esc(c.version) + ' of ' + esc(c.title) + ' while you’re away. If you edit the plan, we’ll ask before building the new version.' + (autoPause().paused ? ' ' + PAUSE_NOTE : ''), actions: tryNow(c.id) });
     base.foot = SH.pmxFoot({ cls: 'pmx-sched-foot pmx-sched-foot--done', readback: SH.pmxReadback({ key: 'sched-bld-rb-done', parts: [{ html: c.readback }] }) + EMPTY_ALERT,
       cancel: { action: 'sched-open-plan-record', attrs: 'data-id="' + esc(c.id) + '"', label: 'See it in Scheduled' }, primary: { action: 'sched-close-dialog', label: 'Done' } });
@@ -2257,8 +2250,7 @@
       '<header class="pmx-sched-dhead"><h3 class="pmx-q-title">' + (st === 'sent' ? 'Sent on schedule' : 'Scheduled message') + '</h3>' +
       '<button type="button" class="icon-button pmx-sched-dclose" data-action="sched-focus-clear" aria-label="Back to the whole list">' + SH.pmxGlyph('close', 14) + '</button></header>' +
       '<p class="pmx-sched-dsay">' + s.html + '</p><p class="pmx-sched-dtext">' + esc(m.text) + '</p>' + lifeTrack(m, now) + recordFacts(m, now) +
-      '<div class="pmx-sched-dacts">' + rowActs(m, false).replace(/<button[^>]*data-action="sched-focus-record"[^>]*>Details<\/button>/, '') + '</div>' +
-      techBlock('mgr-' + cssId(m.scheduled_dispatch_id), techLines(m)) + '</section>';
+      '<div class="pmx-sched-dacts">' + rowActs(m, false).replace(/<button[^>]*data-action="sched-focus-record"[^>]*>Details<\/button>/, '') + '</div></section>';
   }
   function messagesBody(ctx, now, focusId) {
     var left = tools(ctx, 'messages') + messageAgenda(visibleSchedules(P().scheduledMessages, 'messages'), now, focusId);
@@ -2568,7 +2560,7 @@
   }
   function fileWords(a) { var v = a && a.artifact_version; return attachmentLabel(a) + (v != null && v !== '' ? ' (' + (/^v/i.test(String(v)) ? v : 'v' + v) + ')' : ''); }
   function goneFile(rec) { return list(rec.attachment_refs).filter(function (a) { return a.availability === 'missing' || a.availability === 'unavailable'; })[0] || null; }
-  /* what was not done and why, in plain words (the owner's code stays in the record and in Technical details) */
+  /* what was not done and why, in plain words (the owner's code stays in the record data) */
   function heldWhy(rec) {
     var code = attemptCode(rec), gone = goneFile(rec), model = rec.requested_runtime && rec.requested_runtime.modelName;
     if (code === 'missed_time_held') return 'missed at ' + clockAt(Date.parse(rec.scheduled_at_utc), viewZone()) + '. You asked us to check with you first.';
@@ -2624,16 +2616,12 @@
     if (['held', 'failed', 'expired'].indexOf(st) >= 0) rows.splice(1, 0, ['What happened', chatSentence(m, now).html]);
     return '<dl class="pmx-sched-facts">' + rows.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('') + '</dl>';
   }
-  function techLines(m) {
-    return ['Command: cmd.chat.schedule_message', 'Schedule id ' + m.scheduled_dispatch_id + ' · revision ' + m.revision, 'Sends at ' + m.scheduled_at_utc + ' (UTC) · ' + m.timezone,
-      'Idempotency key ' + (m.idempotencyKey || m.scheduled_dispatch_id)].concat(attemptCode(m) ? ['Last check: ' + attemptCode(m)] : []);
-  }
   function recordHtml(m, now) {
     var id = m.scheduled_dispatch_id, raw = !!(ui.techOpen && ui.techOpen['raw:' + id]), long = String(m.text || '').length > 240 || ['sent', 'canceled', 'expired', 'failed'].indexOf(stateOf(m)) >= 0;
+    /* card 8: no Technical details on the record; "Show raw data" stands on its own (it used to sit inside it) */
     return '<div class="pmx-sched-rec" data-k="sched-rec-' + esc(id) + '">' + (long ? '<p class="pmx-sched-rectext">' + esc(m.text) + '</p>' : '') + recordFacts(m, now) +
-      techBlock('rec:' + id, techLines(m)) +
-      (ui.techOpen && ui.techOpen['rec:' + id] ? SH.pmxDisclosure({ key: 'sched-raw-' + id, cls: 'pmx-sched-raw-disc', attrs: 'data-sched-raw="' + esc(id) + '"', open: raw, summary: 'Show raw data',
-        body: '<pre class="pmx-sched-raw">' + esc(JSON.stringify({ attachments: attachmentSnapshots(m), attempts: list(m.dispatch_attempts) }, null, 2)) + '</pre>' }) : '') +
+      SH.pmxDisclosure({ key: 'sched-raw-' + id, cls: 'pmx-sched-raw-disc', attrs: 'data-sched-raw="' + esc(id) + '"', open: raw, summary: 'Show raw data',
+        body: '<pre class="pmx-sched-raw">' + esc(JSON.stringify({ attachments: attachmentSnapshots(m), attempts: list(m.dispatch_attempts) }, null, 2)) + '</pre>' }) +
       '<p class="pmx-sched-recacts"><button type="button" class="text-button" data-action="sched-focus-record" data-id="' + esc(id) + '">All scheduled</button></p></div>';
   }
   /* a 14 px clock ring: the track and the part of the wait that has passed (redrawn by the template each minute; not a loop) */
@@ -3142,10 +3130,7 @@
     d.date = p.date; d.time = p.time; clearRefusal(d);
     ctx.renderOverlays();
   };
-  ACT['sched-toggle-tech'] = function (ctx, btn) {
-    var k = btn.dataset.value || 'sheet'; ui.techOpen = ui.techOpen || {}; ui.techOpen[k] = !ui.techOpen[k];
-    if (/^(rec|raw):/.test(k)) ctx.renderApp(); else ctx.renderOverlays();
-  };
+  /* card 8: sched-toggle-tech removed with techBlock; ui.techOpen keeps only the 'raw:' (Show raw data) keys */
   ACT['sched-toggle-autoresume'] = function (ctx) {
     if (!ui.buildDraft) return;
     ui.buildDraft.autoResumeNext = !ui.buildDraft.autoResumeNext;

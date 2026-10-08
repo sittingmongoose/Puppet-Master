@@ -160,8 +160,9 @@ async function main() {
      secondary action behind the card's "More" list (plans.js cardFooter), and
      it opens scheduling.js's own Build At sheet directly (plans.js's
      mini-dialog and its pd-at-bind hand-off only run when scheduling.js is
-     absent). The plan id, version and hash left the header pill for the
-     sheet's Technical details. */
+     absent). Re-baselined 2026-10-08 (card 8): the plan id, version and hash
+     left the sheet entirely — no Technical details outside a setup sheet's
+     Advanced page. */
   await ev(() => window.PM56_DEMO.selectThread('query'));
   await page.waitForTimeout(300);
   const cardSel = '.plan-doc[data-plan-id="ap-index"]';
@@ -197,15 +198,15 @@ async function main() {
   });
   check('the real execution-window dialog opens from the mouse click',
     buildDlg.present, JSON.stringify(buildDlg));
-  await click('.sched-dialog--build [data-action="sched-toggle-tech"]');
-  await page.waitForTimeout(250);
-  const tech = await ev(() => {
-    const t = document.querySelector('.sched-dialog--build .pmx-sched-tech');
-    const b = t && t.querySelector('[data-action="sched-toggle-tech"]');
-    return t ? { open: b ? b.getAttribute('aria-expanded') : null, text: t.textContent } : null;
+  const buildNoTech = await ev(() => {
+    const d = document.querySelector('.sched-dialog--build');
+    if (!d) return null;
+    return { toggle: !!d.querySelector('[data-action="sched-toggle-tech"]'),
+      block: !!d.querySelector('.pmx-sched-tech'),
+      words: /Technical details/.test(d.textContent || '') };
   });
-  check('the Build At dialog names the exact plan/version/hash (in its Technical details)',
-    !!tech && tech.open === 'true' && /ap-index/.test(tech.text) && /V5/.test(tech.text) && /hash/.test(tech.text), JSON.stringify(tech));
+  check('Build At has no Technical details (card 8: a setup sheet\'s Advanced page only)',
+    buildNoTech && !buildNoTech.toggle && !buildNoTech.block && !buildNoTech.words, JSON.stringify(buildNoTech));
 
   /* ================================================================
      3. an execution window with start / wind-down / pause / recurring
@@ -763,6 +764,59 @@ async function main() {
   }
   await runAction('sched-close-dialog');
   await page.waitForTimeout(200);
+
+  /* ================================================================
+     7c. CARD 8: no Technical details outside a setup sheet's Advanced
+         page — the Scheduled manager (with a record focused) and the
+         in-chat records have none either.
+     ================================================================ */
+  await ensureWandOpen();
+  await click(sel('sched-open-manage'));
+  await page.waitForTimeout(400);
+  await click(sel('sched-manage-tab', { tab: 'messages' }));
+  await page.waitForTimeout(300);
+  await click('[data-schedule-id="sm-nightly-digest"] [data-action="sched-focus-record"]');
+  await page.waitForTimeout(400);
+  const mgrNoTech = await ev(() => {
+    const d = document.querySelector('.sched-dialog--manage');
+    if (!d) return null;
+    return { focused: !!d.querySelector('[data-k="sched-detail"]'),
+      toggle: !!d.querySelector('[data-action="sched-toggle-tech"]'),
+      block: !!d.querySelector('.pmx-sched-tech'),
+      words: /Technical details/.test(d.textContent || '') };
+  });
+  check('the Scheduled manager, with a record focused, has no Technical details',
+    mgrNoTech && mgrNoTech.focused && !mgrNoTech.toggle && !mgrNoTech.block && !mgrNoTech.words, JSON.stringify(mgrNoTech));
+  await click(sel('sched-close-dialog'));
+  await page.waitForTimeout(200);
+
+  /* the sent-message record, Details open, in whichever thread holds it */
+  let sentThread = null;
+  for (const t of ['query', 'recovery-scheduling']) {
+    await ev(x => window.PM56_DEMO.selectThread(x), t);
+    await page.waitForTimeout(350);
+    if (await ev(() => !!document.querySelector('.transcript .sched-card-sent [data-action="sched-card-details"]'))) { sentThread = t; break; }
+  }
+  check('a sent-message record exists to probe', !!sentThread, String(sentThread));
+  if (sentThread) {
+    const wasOpen = await ev(() => document.querySelector('.transcript .sched-card-sent [data-action="sched-card-details"]').getAttribute('aria-expanded'));
+    if (wasOpen !== 'true') {
+      await click('.transcript .sched-card-sent [data-action="sched-card-details"]');
+      await page.waitForTimeout(350);
+    }
+    const recNoTech = await ev(() => {
+      const card = document.querySelector('.transcript .sched-card-sent');
+      const rec = card && card.querySelector('.pmx-sched-rec');
+      if (!card || !rec) return { card: !!card, rec: !!rec };
+      return { card: true, rec: true,
+        toggle: !!rec.querySelector('[data-action="sched-toggle-tech"]'),
+        block: !!rec.querySelector('.pmx-sched-tech'),
+        words: /Technical details/.test(rec.textContent || ''),
+        raw: !!rec.querySelector('[data-sched-raw]') };
+    });
+    check('a sent-message record, Details open, has no Technical details ("Show raw data" stands on its own)',
+      recNoTech.rec && !recNoTech.toggle && !recNoTech.block && !recNoTech.words && recNoTech.raw, JSON.stringify(recNoTech));
+  }
 
   /* ================================================================
      8. console is clean; final reset
