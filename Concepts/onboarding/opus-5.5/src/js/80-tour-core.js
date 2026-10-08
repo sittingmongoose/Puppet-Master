@@ -773,7 +773,8 @@
     document.documentElement.setAttribute('data-o55-tour', 'true');
     if (window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.pause) { try { window.PM_DEMO.clock.pause(); st.pausedClock = true; } catch (_) {} }
     TR.chat && TR.chat.install();
-    st.root.hidden = false; st.root.classList.add('o55t-opening');
+    /* the scrim covers the page from the tour's first frame (a skin's opening moment plays over it before any step) */
+    st.root.hidden = false; st.root.classList.add('o55t-opening'); st.hole = null; drawHole(null);
     M.after(700, () => st.root && st.root.classList.remove('o55t-opening'));
     O55.sound.play('open');
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: resume ? 'resumed' : 'started' } }));
