@@ -7,7 +7,9 @@
      cursor              one shared cursor (#o55np-cursor), placed by transform on pointerover and keyboard focus
      brackets            one reticle of four corners (#o55np-reticle), placed by transform on keyboard focus and on a
                          chosen tab or item
-     reboot              PM_NIER.setTransition: an ink band down, the repaint under full cover, a stepped flicker back
+     reboot              PM_NIER.setTransition: the reboot cover (in the onboarding window it grows from the pressed control,
+                         types a check list through the repaint and tears out as six slats; elsewhere an ink band
+                         steps down and tears out the same way; never a flicker)
      decode              page titles on a page change (PM_PAGES.go, a Settings page) and arriving toasts, ~250 ms
      wipe                PM_PAGES.go: a band over the page area while the new page draws, sliding off
      sweep               one one-shot Web Animation every 12 s (a timer; nothing runs between sweeps)
@@ -517,43 +519,344 @@
     off() { document.removeEventListener('click', soundClick, true); document.removeEventListener('keydown', soundKey, true); }
   };
 
-  /* ---------- reboot moment ---------------------------------------------------------------------------------------------- */
-  const REBOOT_COPY = {
-    on: ['NieR Mode', 'Rebooting the interface', 'Ink and parchment loaded'],
-    off: ['NieR Mode', 'Shutting down the unit', 'Your theme restored'],
-    replay: ['NieR Mode', 'Rebooting the interface', 'All parts reinstalled']
-  };
+  /* ---------- reboot moment ----------------------------------------------------------------------------------------------
+     PM_NIER.setTransition(reboot). Two stagings share one plate, one check list and one exit (hero spec H1; rules 2, 3
+     and 6):
+     - inside the onboarding window (info.within), "the little world opens". Ticking: four ink brackets lock onto the
+       control that was pressed (info.from, else the NieR thumbnail) in 3 steps; at T90 a plate in NieR's ground (its
+       hairline frame, the 32 px map grid, the brackets riding its corners) is born on that rect and grows to the window
+       in 6 held steps of 60 ms. At T450 the kicker band, the line slots and the meter appear in one step and the check
+       list types on: a block caret steps across each line (8 steps, 120 ms), then its stamp blinks in (T600, 750, 900,
+       1050, where nierOn's ticks land); the meter fills from T480 to T1080. All of it is created before repaint(), so
+       the compositor runs it through the repaint's long frames; a fifth line, "Synchronising" with a blinking caret,
+       shows only if the repaint still runs at T1100. R, the reveal, is the first frame after two frame intervals under
+       34 ms, two frames or more after repaint() returned, never before the list is done and at most 4 s after: the
+       kicker reads "All clear" in one step, holds 160 ms, and the plate tears out as six slats sliding off to
+       alternate sides from the middle outward (steps(4), 30 ms apart). info.onReveal('reveal') fires as they start (the
+       window takes input again from then) and 'gone' once they are off.
+       Unticking, "back into the box": the stage powers down first (300 ms, the window's beat), six slats close in from
+       both sides (T300-T540), two lines type (stamps at T700 and T850), then the repaint; at R "All clear" for 120 ms,
+       'reveal', and the plate, as one, shrinks in 6 held steps into the NieR thumbnail with the brackets riding its
+       corners; the brackets let go 60 ms after, then 'gone'.
+     - anywhere else (the Settings page, the title-bar menu): the ink band over the whole page, stepped down in 6 held
+       steps, with the same check list; it leaves by the same slat tear-out. The old flicker-out was a large-area strobe
+       over the WCAG three-flash limit (films KEY-H1-dark-strobe); no surface here reverses its brightness twice.
+     The cover takes NieR's tokens from the preview scope (data-o55-nier-preview, styles.d/13-nier.css), because it
+     exists before the palette is painted. Every time is on the animation timeline (document.timeline, scaled by
+     Animation speed like every animation here), so slow-motion filming slows all of it together. Reduced motion, a
+     hidden tab, a missing Reboot moment part, or the onboarding without a window (low resource) repaint at once and
+     still report 'reveal' and 'gone'. The class names are shared with 5.6 Pro's nier-parts.js. */
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const RB = (key, fallback, vars) => (typeof o55NierCopy === 'function' ? o55NierCopy('nierSettings.reboot.' + key, fallback, vars)
+    : String(fallback).replace(/\{(\w+)\}/g, (m, k) => (vars && vars[k] != null ? String(vars[k]) : m)));
+  /* the look kept for later (ticking: the family painted now) or coming back (unticking: the family NieR paints over) */
+  function familyName() {
+    let f = String(html.getAttribute('data-theme') || 'basic').split('-')[0];
+    if (html.hasAttribute('data-o55-nier')) { try { const c = window.PM_THEME && window.PM_THEME.getFamily && window.PM_THEME.getFamily(); if (c) f = String(c); } catch (e) { /* the painted one */ } }
+    const named = typeof o55NierCopy === 'function' ? o55NierCopy('look.families.' + f + '.name', '') : '';
+    return named || f.charAt(0).toUpperCase() + f.slice(1);
+  }
+  /* the check list: what the caller passed (already worded and gated by parts), else the plate's own words */
+  function rbLines(info, kind) {
+    const ok = RB('ok', 'OK');
+    if (Array.isArray(info.lines) && info.lines.length) return info.lines.slice(0, 5).map(l => ({ text: String(l && typeof l === 'object' ? l.text : l), stamp: String(l && typeof l === 'object' && l.stamp != null ? l.stamp : ok) }));
+    const fam = familyName();
+    const last = installed('pod') || installed('voice') ? { text: RB('pod', 'Pod 042'), stamp: RB('online', 'Online') }
+      : installed('sounds') ? { text: RB('menuSounds', 'Menu sounds'), stamp: ok } : { text: RB('ready', 'Ready'), stamp: ok };
+    const keep = { text: RB('keepLook', 'Keeping {family} for later', { family: fam }), stamp: ok }, ink = { text: RB('inkParchment', 'Ink and parchment'), stamp: ok };
+    const restore = { text: RB('restoreLook', 'Restoring {family}', { family: fam }), stamp: ok }, boot = { text: RB('pageOn', 'Rebooting the interface'), stamp: ok };
+    if (kind === 'fold') return [{ text: RB('saveNier', 'Saving NieR Mode for later'), stamp: ok }, restore];
+    if (kind === 'pageOff') return [{ text: RB('pageOff', 'Shutting down the unit'), stamp: ok }, restore];
+    if (kind === 'replay') return [boot, ink, last, { text: RB('pageReplayDone', 'All parts reinstalled'), stamp: ok }];
+    if (kind === 'pageOn') return [boot, keep, ink, last];
+    return [keep, ink, { text: RB('puppets', 'NieR puppets'), stamp: ok }, last];
+  }
+  /* when the stamps land: ticking at T600..T1050 every 150 ms (nierOn's stamp ticks), unticking at T700 and T850 */
+  function rbPlan(n, folding) {
+    const P = folding ? { first: 700, last: 850, meter: [560, 870], sync: 920 } : { first: 600, last: 1050, meter: [480, 1080], sync: 1100 };
+    const gap = n > 1 ? Math.min(150, (P.last - P.first) / (n - 1)) : 0;
+    P.stamps = Array.from({ length: n }, (_, i) => Math.round(P.first + i * gap));
+    P.done = Math.max(P.meter[1], P.stamps[n - 1] + 90);
+    return P;
+  }
+  function rbLog(lines) {
+    const log = document.createElement('div');
+    log.className = 'o55np-log';
+    log.innerHTML = `<div class="o55np-kick"><i></i><i></i><i></i><span class="o55np-kick-t">${esc(RB('kicker', 'NieR Mode'))}</span></div>`
+      + `<div class="o55np-lns">${lines.map(l => `<div class="o55np-ln"><span class="o55np-ln-t">${esc(l.text)}</span><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(l.stamp)}</b><i class="o55np-ln-mask"></i></div>`).join('')}</div>`
+      + '<div class="o55np-meter"><i></i></div>'
+      + `<div class="o55np-ln o55np-sync"><span class="o55np-ln-t">${esc(RB('syncing', 'Synchronising'))}</span><i class="o55np-caret"></i><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(RB('ok', 'OK'))}</b></div>`;
+    return log;
+  }
+
+  /* the animation clock: design ms since t0 on the document timeline (Element.animate scales durations and delays by
+     Animation speed, so the clock is divided by it) */
+  const tl = () => (document.timeline && typeof document.timeline.currentTime === 'number' ? document.timeline.currentTime : performance.now());
+  const since = t0 => (tl() - t0) / speed();
+  /* resolves once the timeline has run ms (an empty animation on el, slowed like the others); a timer is the floor for
+     an element taken out of the page meanwhile */
+  function rbWait(el, ms) {
+    return new Promise(res => {
+      let a = null; try { a = el.animate(null, { duration: Math.max(0, ms) }); } catch (e) { a = null; }
+      if (!a) { later(res, ms); return; }
+      a.onfinish = () => res(); a.oncancel = () => res();
+      window.setTimeout(res, Math.max(0, ms) * speed() * 30 + 2000);
+    });
+  }
+  const rbAt = (el, t0, T) => rbWait(el, T - since(t0));
+  const settled = a => (a && a.finished ? a.finished.then(() => true, () => false) : Promise.resolve(false));
+  /* R: the first frame after two frame intervals under 34 ms, at least two frames after now, at most maxMs later */
+  function rbIdle(maxMs) {
+    return new Promise(res => {
+      const t0 = performance.now(); let last = 0, prev = Infinity, n = 0, done = false;
+      const end = () => { if (!done) { done = true; res(); } };
+      const step = now => {
+        if (done) return;
+        const dt = last ? now - last : Infinity; last = now; n++;
+        if ((n >= 3 && dt < 34 && prev < 34) || now - t0 >= maxMs) { end(); return; }
+        prev = dt; window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+      window.setTimeout(end, maxMs + 250); /* a tab hidden meanwhile draws no frames */
+    });
+  }
+  const twoFrames = () => Promise.race([frames(2), new Promise(res => window.setTimeout(res, 120))]);
+  /* the repaint's long tasks are expected here: the window's low-resource watch should not count them (films M1) */
+  const quiet = ms => { try { const M = window.O55 && window.O55.motion; if (M && typeof M.quiet === 'function') M.quiet(ms); } catch (e) { /* none */ } };
+
+  /* the check list's motion, all created now with delays (design ms from t0): the caret block steps across each line,
+     the stamp blinks in, the meter fills; "Synchronising" waits at plan.sync and blinks its caret until R */
+  function rbType(log, plan, now) {
+    const anims = [], A = (el, kf, o) => { const a = el.animate(kf, o); anims.push(a); return a; };
+    const d = t => Math.max(0, t - now);
+    log.querySelectorAll('.o55np-lns > .o55np-ln').forEach((ln, i) => {
+      const st = plan.stamps[i];
+      A(ln.querySelector('.o55np-ln-mask'), [{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }], { duration: 120, delay: d(st - 120), easing: 'steps(8, end)', fill: 'forwards' });
+      A(ln.querySelector('.o55np-stamp'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 80, delay: d(st), fill: 'forwards' });
+    });
+    A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)', fill: 'forwards' });
+    const sync = log.querySelector('.o55np-sync');
+    const show = A(sync, [{ opacity: 1 }, { opacity: 1 }], { duration: 1, delay: d(plan.sync), fill: 'forwards' });
+    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity });
+    return { anims, show, blink };
+  }
+  /* at R: the list in its end state (by attribute, so the slats' copies show it too), "All clear" in one step */
+  function rbClear(log, typing, plan, t0) {
+    const synced = since(t0) >= plan.sync;
+    typing.anims.forEach(a => a.cancel());
+    if (synced) { const s = log.querySelector('.o55np-sync'); s.setAttribute('data-shown', ''); s.setAttribute('data-ok', ''); }
+    log.setAttribute('data-done', '');
+    log.querySelector('.o55np-kick-t').textContent = RB('allClear', 'All clear');
+  }
+
+  /* ---- the in-window plate's geometry: rects in the cover's own CSS px, the hairline edges and brackets as transforms */
+  const BR = 12;
+  function rbBox(cover) { const r = cover.getBoundingClientRect(), w = cover.offsetWidth || r.width || 1, h = cover.offsetHeight || r.height || 1; return { r, w, h, k: r.width / w || 1 }; }
+  function rbFrom(info, within, box) {
+    let given = null; try { given = typeof info.from === 'function' ? info.from() : info.from; } catch (e) { given = null; }
+    const thumb = within.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-nier-thumb]') || within.querySelector('[data-nier-thumb]');
+    for (const c of [given, thumb, document.activeElement]) {
+      let r = null;
+      if (c && typeof c.getBoundingClientRect === 'function') { if (!c.isConnected || !within.contains(c)) continue; r = c.getBoundingClientRect(); }
+      else if (c && typeof c.left === 'number' && typeof c.width === 'number') r = c;
+      if (!r || r.width < 8 || r.height < 8) continue;
+      const x = (r.left - box.r.left) / box.k, y = (r.top - box.r.top) / box.k, w = r.width / box.k, h = r.height / box.k;
+      if (x + w <= 0 || y + h <= 0 || x >= box.w || y >= box.h) continue;
+      const cx = Math.max(0, x), cy = Math.max(0, y);
+      return { x: cx, y: cy, w: Math.min(box.w, x + w) - cx, h: Math.min(box.h, y + h) - cy };
+    }
+    return { x: box.w / 2 - 80, y: box.h / 2 - 50, w: 160, h: 100 };
+  }
+  const lerpRect = (a, b, f) => ({ x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, w: a.w + (b.w - a.w) * f, h: a.h + (b.h - a.h) * f });
+  const px = v => `${Math.round(v)}px`;
+  const insetOf = (r, box) => `inset(${px(r.y)} ${px(box.w - r.x - r.w)} ${px(box.h - r.y - r.h)} ${px(r.x)})`;
+  /* the eight decorations for a rect: edges top, bottom, left, right, then brackets tl, tr, bl, br, o px outside it */
+  function rbPose(r, o, box) {
+    const sx = Math.max(r.w, 1) / box.w, sy = Math.max(r.h, 1) / box.h, x = Math.round(r.x), y = Math.round(r.y), x2 = Math.round(r.x + r.w), y2 = Math.round(r.y + r.h), k = Math.round(o);
+    return [`translate(${x}px, ${y}px) scaleX(${sx.toFixed(4)})`, `translate(${x}px, ${y2 - 1}px) scaleX(${sx.toFixed(4)})`,
+      `translate(${x}px, ${y}px) scaleY(${sy.toFixed(4)})`, `translate(${x2 - 1}px, ${y}px) scaleY(${sy.toFixed(4)})`,
+      `translate(${x - k}px, ${y - k}px) scale(1, 1)`, `translate(${x2 + k - BR}px, ${y - k}px) scale(-1, 1)`,
+      `translate(${x - k}px, ${y2 + k - BR}px) scale(1, -1)`, `translate(${x2 + k - BR}px, ${y2 + k - BR}px) scale(-1, -1)`];
+  }
+  function rbSet(lines, inWindow) {
+    const set = document.createElement('div');
+    set.className = 'o55np-set';
+    const ground = document.createElement('div');
+    ground.className = inWindow ? 'o55np-plate' : 'o55np-band';
+    if (!inWindow) ground.innerHTML = '<div class="o55np-rb-lines"></div>';
+    const log = rbLog(lines);
+    ground.appendChild(log);
+    set.appendChild(ground);
+    if (inWindow) {
+      const deco = document.createElement('div');
+      deco.className = 'o55np-deco';
+      deco.innerHTML = '<i class="o55np-edge" data-e="t"></i><i class="o55np-edge" data-e="b"></i><i class="o55np-edge" data-e="l"></i><i class="o55np-edge" data-e="r"></i>'
+        + '<i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i>';
+      set.appendChild(deco);
+    }
+    return { set, ground, log, deco: set.querySelectorAll('.o55np-deco > i') };
+  }
+  /* keyframes for a stepped walk: frames [{ t, ... }] in ms over total ms, every segment held (step-end) */
+  const walk = (frames, total) => frames.map(f => Object.assign({ offset: Math.min(1, f.t / total), easing: 'step-end' }, f.v));
+  /* six slats, each a copy of the set moved up by its own place; 'out' slides them off to alternate sides from the middle
+     outward, 'in' slides them in from the outside inward; steps(4), 30 ms apart */
+  function rbSlats(cover, src, mode, delay) {
+    const wrap = document.createElement('div');
+    wrap.className = 'o55np-slats';
+    const order = mode === 'out' ? [2, 1, 0, 0, 1, 2] : [0, 1, 2, 2, 1, 0];
+    for (let i = 0; i < 6; i++) {
+      const s = document.createElement('div');
+      s.className = 'o55np-slat'; s.style.setProperty('--i', String(i));
+      s.appendChild(src.cloneNode(true));
+      wrap.appendChild(s);
+    }
+    cover.appendChild(wrap);
+    const anims = [...wrap.children].map((s, i) => {
+      const away = `translateX(${i % 2 ? 101 : -101}%)`;
+      return s.animate(mode === 'out' ? [{ transform: 'translateX(0)' }, { transform: away }] : [{ transform: away }, { transform: 'translateX(0)' }],
+        { duration: 180, delay: delay + order[i] * 30, easing: 'steps(4, end)', fill: mode === 'out' ? 'forwards' : 'both' });
+    });
+    return { wrap, done: Promise.all(anims.map(settled)) };
+  }
+
+  /* ---- inside the onboarding window */
+  async function rebootWithin(ctx, info, within, folding) {
+    const kind = folding ? 'fold' : info.reason === 'replay' ? 'replay' : 'on';
+    const lines = rbLines(info, kind), plan = rbPlan(lines.length, folding), t = tone();
+    const cover = ctx.cover = document.createElement('div');
+    cover.id = 'o55np-reboot'; cover.className = 'o55np-within'; cover.setAttribute('aria-hidden', 'true');
+    cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
+    const { set, ground, log, deco } = rbSet(lines, true);
+    cover.appendChild(set);
+    within.appendChild(cover);
+    const t0 = tl(), box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
+    if (!folding) {
+      /* T0-T90 the brackets lock on in 3 steps; T90 the plate is born on the rect; T90-T390 it grows in 6 held steps */
+      const from = rbFrom(info, within, box);
+      const F = [0, 0.3, 0.55, 0.75, 0.9, 1], rects = F.map(f => lerpRect(from, full, f)), off = F.map(f => 3 - 17 * f);
+      const at = k => 90 + 60 * k, TOTAL = 450;
+      const plate = walk([{ t: 0, v: { clipPath: insetOf(rects[0], box), opacity: 0 } }, ...rects.map((r, k) => ({ t: at(k), v: { clipPath: insetOf(r, box), opacity: 1 } })),
+        { t: TOTAL, v: { clipPath: insetOf(full, box), opacity: 1 } }], TOTAL);
+      const grow = ground.animate(plate, { duration: TOTAL, fill: 'forwards' });
+      const poses = rects.map((r, k) => rbPose(r, off[k], box)), lock = [12, 8, 5].map(o => rbPose(rects[0], o, box));
+      deco.forEach((el, j) => {
+        const isBr = j >= 4;
+        const fr = isBr ? lock.map((p, s) => ({ t: s * 30, v: { transform: p[j], opacity: 1 } })) : [{ t: 0, v: { transform: poses[0][j], opacity: 0 } }];
+        poses.forEach((p, k) => fr.push({ t: at(k), v: { transform: p[j], opacity: 1 } }));
+        fr.push({ t: TOTAL, v: { transform: poses[5][j], opacity: 1 } });
+        el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
+      });
+      await settled(grow);
+      /* T450: full cover; the decorations keep their last place inline (so the slats' copies carry them) */
+      set.querySelectorAll('.o55np-deco > i').forEach(el => el.getAnimations().forEach(a => { try { a.commitStyles(); } catch (e) { /* not rendered */ } a.cancel(); }));
+      ground.style.opacity = '1'; ground.style.clipPath = 'none'; grow.cancel();
+    } else {
+      /* the stage powers down (the window's beat), then T300-T540 six slats close in from both sides */
+      const poses = rbPose(full, -14, box);
+      deco.forEach((el, j) => { el.style.transform = poses[j]; el.style.opacity = '1'; });
+      ground.style.opacity = '1';
+      cover.setAttribute('data-hold', '');
+      const shut = rbSlats(cover, set, 'in', 300);
+      await shut.done;
+      cover.removeAttribute('data-hold');
+      shut.wrap.remove();
+    }
+    if (!cover.isConnected) return;
+    /* the list appears in one step; every animation of it exists before the repaint */
+    log.setAttribute('data-on', '');
+    const typing = rbType(log, plan, since(t0));
+    await twoFrames();
+    quiet(5000);
+    ctx.paint();
+    await rbIdle(4000);
+    await rbAt(cover, t0, plan.done);
+    rbClear(log, typing, plan, t0);
+    if (!cover.isConnected) return;
+    if (!folding) {
+      /* R: hold 160 ms, then the slats tear out and the window shows band by band */
+      const slats = rbSlats(cover, set, 'out', 160);
+      set.remove();
+      await rbWait(cover, 160);
+      cover.style.pointerEvents = 'none';
+      ctx.cue('reveal');
+      await slats.done;
+      return;
+    }
+    /* R: hold 120 ms; then the plate, as one, folds back into the NieR thumbnail (measured now: the window re-rendered) */
+    const to = rbFrom(info, within, rbBox(cover));
+    await rbWait(cover, 120);
+    log.style.visibility = 'hidden';
+    cover.style.pointerEvents = 'none';
+    ctx.cue('reveal');
+    const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
+    const fold = ground.animate(walk([{ t: 0, v: { clipPath: insetOf(full, box), opacity: 1 } }, ...rects.map((r, k) => ({ t: 60 * (k + 1), v: { clipPath: insetOf(r, box), opacity: 1 } })),
+      { t: 390, v: { clipPath: insetOf(to, box), opacity: 0 } }, { t: TOTAL, v: { clipPath: insetOf(to, box), opacity: 0 } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
+    const poses = [rbPose(full, -14, box), ...rects.map((r, k) => rbPose(r, off[k], box))], let1 = rbPose(to, 7, box);
+    deco.forEach((el, j) => {
+      const fr = poses.map((p, k) => ({ t: 60 * k, v: { transform: p[j], opacity: 1 } }));
+      if (j < 4) fr.push({ t: 390, v: { transform: poses[6][j], opacity: 0 } });
+      else fr.push({ t: 420, v: { transform: let1[j], opacity: 1 } }, { t: 450, v: { transform: let1[j], opacity: 0 } });
+      fr.push({ t: TOTAL, v: { transform: j < 4 ? poses[6][j] : let1[j], opacity: 0 } });
+      el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
+    });
+    await settled(fold);
+  }
+
+  /* ---- the whole page: the ink band, stepped down, the list, the tear-out */
+  async function rebootPage(ctx, info, folding) {
+    const kind = folding ? 'pageOff' : info.reason === 'replay' ? 'replay' : 'pageOn';
+    const lines = rbLines(info, kind), plan = rbPlan(lines.length, folding), t = tone();
+    const cover = ctx.cover = document.createElement('div');
+    cover.id = 'o55np-reboot'; cover.setAttribute('aria-hidden', 'true'); cover.setAttribute('data-page', '');
+    cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
+    const { set, ground, log } = rbSet(lines, false);
+    cover.appendChild(set);
+    document.body.appendChild(cover);
+    const t0 = tl();
+    /* 6 held steps down: on T90-T390 (nierOn's six ticks), off T60-T360 */
+    const first = folding ? 60 : 90, TOTAL = first + 360;
+    const drop = ground.animate(walk([{ t: 0, v: { transform: 'translateY(-101%)' } }, ...[83.3, 66.7, 50, 33.3, 16.7, 0].map((y, k) => ({ t: first + 60 * k, v: { transform: `translateY(${-y}%)` } })),
+      { t: TOTAL, v: { transform: 'translateY(0%)' } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
+    await settled(drop);
+    ground.style.transform = 'none'; drop.cancel();
+    if (!cover.isConnected) return;
+    log.setAttribute('data-on', '');
+    const typing = rbType(log, plan, since(t0));
+    await twoFrames();
+    ctx.paint();
+    await rbIdle(4000);
+    await rbAt(cover, t0, plan.done);
+    rbClear(log, typing, plan, t0);
+    if (!cover.isConnected) return;
+    const slats = rbSlats(cover, set, 'out', 160);
+    set.remove();
+    await rbWait(cover, 160);
+    ctx.cue('reveal');
+    await slats.done;
+  }
+
   let rebooting = false;
   async function reboot(repaint, info) {
-    const on = !!(info && info.on), reason = info && info.reason;
+    info = info || {};
+    const on = !!info.on, reason = info.reason;
     /* a change made inside the onboarding window plays inside it (info.within, the window): the app beneath holds still */
-    const within = info && info.within && info.within.isConnected ? info.within : null;
-    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) { repaint(); sync(); return; }
+    const within = info.within && info.within.isConnected ? info.within : null;
+    const seen = new Set(), cue = phase => { if (seen.has(phase)) return; seen.add(phase); try { if (typeof info.onReveal === 'function') info.onReveal(phase); } catch (e) { /* the caller's beat never stops the moment */ } };
+    let painted = false;
+    const paint = () => { if (painted) return; painted = true; repaint(); sync(); };
+    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) { paint(); cue('reveal'); cue('gone'); return; }
     rebooting = true;
-    const copy = REBOOT_COPY[reason === 'replay' ? 'replay' : on ? 'on' : 'off'];
-    const cover = document.createElement('div');
-    cover.id = 'o55np-reboot'; cover.setAttribute('aria-hidden', 'true'); cover.dataset.tone = tone();
-    if (within) cover.classList.add('o55np-within');
-    cover.innerHTML = `<div class="o55np-rb-band"><div class="o55np-rb-lines"></div><div class="o55np-rb-copy"><div class="o55np-rb-title">${copy[0]}</div>`
-      + `<div class="o55np-rb-line">${copy[1]}</div><div class="o55np-rb-line">${copy[2]}</div><div class="o55np-rb-meter"><i></i></div></div></div>`;
-    (within || document.body).appendChild(cover);
-    const band = cover.firstElementChild, meter = cover.querySelector('.o55np-rb-meter > i'), lines = cover.querySelectorAll('.o55np-rb-line');
+    const ctx = { cover: null, paint, cue };
     try {
       /* info.sound false: the caller plays its own (the onboarding's NieR checkbox plays nierOn / nierOff) */
-      if (!(info && info.sound === false)) sfx(on || reason === 'replay' ? 'sweepOn' : 'sweepOff', true);
-      await band.animate([{ transform: 'translateY(-101%)' }, { transform: 'translateY(0)' }], { duration: 320, easing: 'cubic-bezier(.6, 0, .3, 1)', fill: 'forwards' }).finished;
-      const fill = meter.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 560, easing: 'steps(12, end)', fill: 'forwards' });
-      lines[0].setAttribute('data-ok', '');
-      repaint();
-      sync();
-      await frames(2); /* the repaint's long frame is drawn here, under full cover; the meter runs on the compositor */
-      await fill.finished;
-      lines[1].setAttribute('data-ok', '');
-      await cover.animate([{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.16, easing: 'step-end' }, { opacity: 0.85, offset: 0.3, easing: 'step-end' },
-        { opacity: 0, offset: 0.46, easing: 'step-end' }, { opacity: 0.4, offset: 0.6, easing: 'step-end' }, { opacity: 0, offset: 0.74 }, { opacity: 0 }],
-      { duration: 480, fill: 'forwards' }).finished;
-    } catch (e) { repaint(); sync(); } finally {
-      cover.remove(); rebooting = false;
+      if (info.sound !== false) sfx(on || reason === 'replay' ? 'sweepOn' : 'sweepOff', true);
+      const folding = !on && reason !== 'replay';
+      if (within) await rebootWithin(ctx, info, within, folding); else await rebootPage(ctx, info, folding);
+    } catch (e) { /* the moment is decoration; the repaint is not */ } finally {
+      paint();
+      if (ctx.cover) ctx.cover.remove();
+      rebooting = false;
+      cue('reveal'); cue('gone');
     }
   }
 
