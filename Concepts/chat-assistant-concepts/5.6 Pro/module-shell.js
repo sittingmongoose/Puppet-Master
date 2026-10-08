@@ -26,11 +26,24 @@
      retired: every wand module now builds from the pmx builders below, and no *.js called them. pickerButton
      stays (Collaboration, Scheduling, BSD, ELI5, New chat defaults, Review, BrainStorm and the run views call it). */
 
+  /* Open state is read at render time from the app menu, when one exists. shell-selfcheck
+     evals this file with a stub ctx() that has no state, so the attribute stays false there. */
+  function pickerExpanded(anchor) {
+    var menu = null;
+    try {
+      var ext = window.PM56_EXT;
+      var ctx = ext && typeof ext.ctx === 'function' ? ext.ctx() : null;
+      menu = ctx && ctx.state && ctx.state.menu;
+    } catch (err) { menu = null; }
+    return !!(menu && menu.scopedPicker && menu.anchor === anchor);
+  }
+
   /* pickerButton({action,anchor,strong,small,markHtml,iconHtml,extra}) —
      markup-compatible with PM56_PICKERS.modelButton and bsd.js choices(). */
   function pickerButton(o) {
     o = o || {};
-    return '<button type="button" class="shared-picker-button" data-action="' + esc(o.action) + '" data-menu-anchor="' + esc(o.anchor) + '"' + (o.extra ? ' ' + o.extra : '') + '>' +
+    var open = pickerExpanded(o.anchor);
+    return '<button type="button" class="shared-picker-button" data-action="' + esc(o.action) + '" data-menu-anchor="' + esc(o.anchor) + '" aria-haspopup="listbox" aria-expanded="' + (open ? 'true' : 'false') + '"' + (o.extra ? ' ' + o.extra : '') + '>' +
       (o.markHtml || '') +
       '<span class="shared-picker-copy"><strong>' + (o.strong || '') + '</strong>' + (o.small ? '<small>' + o.small + '</small>' : '') + '</span>' +
       (o.iconHtml || chevron()) +
