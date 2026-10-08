@@ -63,7 +63,7 @@
   const ORIENT = [() => q('.page-tabs'), () => document.getElementById('pm-home-workspace'), () => document.getElementById('chatPanel')];
   S({ id: 'workspace_orientation', chapter: 'workspace', kind: 'info',
     enter(st) { goPage('dashboard'); st.orient = 0; st.orientAt = performance.now(); st.orientLoops = 0; },
-    tick(st) { if (performance.now() - st.orientAt > 1700) { st.orient = (st.orient + 1) % ORIENT.length; st.orientAt = performance.now(); if (st.orient === 0) st.orientLoops++; O55.sound.play('spot'); } },
+    tick(st) { if (performance.now() - st.orientAt > 1700) { st.orient = (st.orient + 1) % ORIENT.length; st.orientAt = performance.now(); if (st.orient === 0) st.orientLoops++; O55.sound.play('move', { step: st.orient }); } },
     target: (st) => ORIENT[st.orient || 0](),
     avoid: () => [ORIENT[0](), ORIENT[2]()],
     ready: (st) => st.orientLoops > 0 || st.orient === ORIENT.length - 1 });
@@ -141,7 +141,7 @@
   S({ id: 'widget_action', chapter: 'workspace', kind: 'action', after: true,
     enter(st) { goPage('dashboard'); st.wlog = dashLogs().command_log.length; st.wphase = null; },
     /* two moves in one step: add it from the real catalog, then place it (drag its grip, or choose a size) */
-    tick(st) { const ph = aqWidget() ? 'place' : 'add'; if (st.wphase !== ph) { const first = st.wphase === null; st.wphase = ph; if (!first) { st.side = null; O55.sound.play('step'); TR.refresh(); } } },
+    tick(st) { const ph = aqWidget() ? 'place' : 'add'; if (st.wphase !== ph) { const first = st.wphase === null; st.wphase = ph; if (!first) { st.side = null; O55.sound.play('phase'); TR.refresh(); } } },
     /* while placing, the callout stands beside the dashboard column, never over the cards the widget can drop onto */
     place: (st) => (st.wphase === 'place' ? 'left' : 'auto'),
     doKey: (st) => (st.wphase === 'place' ? 'place' : 'do'),
@@ -217,7 +217,7 @@
       if (st.partsDone || ++st.partTicks < 19) return; /* about 2.7 s per part */
       st.partTicks = 0;
       if (st.part < PARTS.length - 1) st.part++; else st.partsDone = true;
-      O55.sound.play('spot'); TR.refresh();
+      O55.sound.play('move', { step: st.part }); TR.refresh();
     },
     doKey: (st) => (st.partsDone ? 'do' : 'part' + ((st.part || 0) + 1)),
     target: (st) => (st.partsDone ? document.getElementById('pm6WizDoc') : q(`#pm6WizDoc [data-key="${PARTS[st.part || 0]}"]`) || document.getElementById('pm6WizDoc')),
@@ -244,20 +244,24 @@
   S({ id: 'completion_boundary', chapter: 'plan', kind: 'info', planning: true, place: 'left',
     target: () => q('.o55p-fence'),
     render(st, h) {
-      return `<p class="o55t-kicker">${U.esc(T('tour.chapters.plan'))}</p><h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(h.copy('completion_boundary', 'title'))}</h2>`
+      return h.kicker(T('tour.chapters.plan')) + `<h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(h.copy('completion_boundary', 'title'))}</h2>`
         + `<p class="o55t-body">${U.esc(h.copy('completion_boundary', 'do'))}</p>`
         + `<div class="o55t-finish" role="group" aria-label="${U.esc(T('tour.finish.title'))}">`
         + `<button type="button" class="o55t-choice o55t-on" data-o55t="finish" data-arg="restore" data-pm-hover-exempt="true"><strong>${U.esc(T('tour.finish.restore'))}</strong><span>${U.esc(T('tour.finish.restoreSub'))}</span></button>`
         + `<button type="button" class="o55t-choice" data-o55t="finish" data-arg="keep" data-pm-hover-exempt="true"><strong>${U.esc(T('tour.finish.keep'))}</strong><span>${U.esc(T('tour.finish.keepSub'))}</span></button></div>`
-        + `<div class="o55t-actions">${h.btn('back', T('tour.controls.back'), 'ghost')}</div>`;
+        + h.actions(h.btn('back', T('tour.controls.back'), 'ghost'));
     } });
 
-  /* landing: a short note on the real Planning Wizard once the tour has gone */
-  TR.landing = function landing() {
-    const host = document.querySelector('#pm6WizStageIntake .pm6-wiz-intake-scroll'); if (!host) return;
+  /* landing: a short note on the real Planning Wizard once the tour has gone (a skin may hold it back until its own
+     finish has folded away, so nothing lands on top of it, and may give it a lead word) */
+  TR.landing = async function landing() {
+    const deco = { lead: '' };
+    await TR.settle(TR.emit('landing', deco), 7000);
+    const host = document.querySelector('#pm6WizStageIntake .pm6-wiz-intake-scroll'); if (!host || TR.running) return;
     let note = document.getElementById('o55tLanding');
     if (!note) { note = document.createElement('div'); note.id = 'o55tLanding'; note.className = 'o55t-landing'; note.setAttribute('role', 'status'); const hero = host.querySelector('.pm6-wiz-hero'); host.insertBefore(note, hero ? hero.nextSibling : host.firstChild); }
-    note.innerHTML = `${O55.c.small('seed', 16)}<span>${U.esc(T('tour.landing'))}</span>`;
+    note.innerHTML = `${O55.c.small('seed', 16)}<span>${deco.lead ? `<b class="o55t-landlead">${U.esc(deco.lead)}</b> ` : ''}${U.esc(T('tour.landing'))}</span>`;
+    TR.emit('landed', { note });
     M.after(9000, () => { if (note.isConnected) note.classList.add('o55t-leaving'); M.after(500, () => note.remove()); });
     /* a phone-width window may have Chat over the Wizard again: say it where it will be seen as well */
     if (innerWidth < 600) O55.pageToast(T('tour.landing'), 6000);
