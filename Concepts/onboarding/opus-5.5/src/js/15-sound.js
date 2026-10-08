@@ -23,18 +23,37 @@
    tour IV, ii and V per chapter, resolving to I at the finish; NieR its own modal chords), forward steps climb the
    chord with progress inside a chapter, a sound sits left or right toward the click, and opts.intensity (0..1, 0.6
    when absent) scales level and brightness. Several events in the same moment (one task, or within MERGE_MS) play the
-   most important one (PRIO), except pairs designed to layer (LAYERS); very frequent events are rate limited (RATE).
+   most important one (PRIO), except pairs designed to layer (layers()); very frequent events are rate limited (RATE).
    Levels are matched across kits by TRIM, measured by tools/sound_render.mjs and written by tools/sound_catalog.py.
+
+   A score and a stage (the hero pass). Each look has a four-note motif (MOTIF) that its chapter stings build one note
+   per chapter (opts.depth, 0..4: Computer 1, Project 2, AI 3, Ready 4 with the look's colour; the tour again from 1)
+   and that resolves at Ready; a chapter is stung once per run (Back then forward plays a plain 'next'). The stage has
+   foley in each look's material: 'string' (strings going taut, the name sign's letters, Show Me's string), 'land' (a
+   puppet or prop set down) and 'bow'; each takes its helper's chord tone from opts.voice (0 root, 1 third, 2 fifth)
+   and its place from opts.pan, sits under anything as texture, and is skipped under Reduced Motion (it describes
+   motion that is not shown). 'wake' is the NieR world opening (the choir that left nierOn), 'save' the Project saved.
+   Before a resolution (Ready's sting, a finish) rest(150) leaves 150 ms of silence.
 
    API
      play(event, opts) -> bool     queued to sound (false: muted, silent, rate limited, before a gesture, no audio).
-                                   opts { family?, kit?, voice?, intensity?, pan? -1..1, chapter?, step?, priority?,
-                                   variant? }. An event a kit lacks follows FALLBACK; 'hover' is silent outside NieR.
-     setContext({ chapter?, step?, progress? })   the music's place in the journey (onboarding go(), tour goStep()).
+                                   opts { family?, kit?, voice? 0..2, intensity?, pan? -1..1, chapter?, step?, depth? 0..4,
+                                   priority?, variant? }. An event a kit lacks follows FALLBACK; 'hover' is silent outside
+                                   NieR. A 'found' or 'success' asked for less than 500 ms after a 'quest' or 'chapter'
+                                   plays 500 ms after it; a 'celebrate' within 1.2 s of a 'commit' or 'finish' (1 s of a
+                                   'save') plays as their layer, sparkles only.
+     setContext({ chapter?, step?, progress?, run?, sting? })   the music's place in the journey (onboarding go(), tour
+                                   goStep()). run (any id) starts a run with no chapter stung; sting: false says the
+                                   caller plays this chapter's sting itself (no automatic conversion). A move into the
+                                   other journey (setup or tour) starts a run too.
+     context() -> { chapter, step, n, progress, depth, run }   depth: the motif notes the current chapter's sting plays.
+     rest(ms = 150) -> bool        for ms, events under PRIO 75 are dropped and every sound playing fades out in 20 ms.
      synth(fn, opts) -> bool       fn(ctx, out, t0) through this context, master, mute and gesture rule (the NieR menu
                                    blips, kit.d/19-nier-parts.js); opts { force?, name?, priority? }.
      suppress(ms) / suppressed()   holds the NieR document-wide menu blips (a tour-driven synthetic click).
-     CATALOG                       [{ id, name, style, kit, event, variant, variants, duration, featured, source }]
+     CATALOG                       [{ id, name, title, about, style, kit, event, variant, variants, duration, featured,
+                                   source }]: every take a real moment plays (title: the name without its look; about:
+                                   the moment, one plain sentence). Takes no moment reaches are not listed (RETIRED).
      renderBuffer(kit, event, variant, opts) -> Promise<AudioBuffer>   offline, independent of mute.
      renderWav(kit, event, seconds?, variant?) -> Promise<{ base64, peak, peakDb, rmsDb, seconds }>
      preview(id, { volume? }) -> Promise<{ ok, id, duration }>   one CATALOG entry now (an explicit gesture: not muted).
@@ -151,7 +170,7 @@
     for (let k = 1; k < n; k++) im[k] = (2 / (k * Math.PI)) * Math.sin(k * Math.PI * duty);
     return (m[duty] = ctx.createPeriodicWave(re, im));
   }
-  const pulse25 = (ctx) => pulseWave(ctx, 0.25), pulse12 = (ctx) => pulseWave(ctx, 0.125);
+  const pulse25 = (ctx) => pulseWave(ctx, 0.25), pulse12 = (ctx) => pulseWave(ctx, 0.125), square = (ctx) => pulseWave(ctx, 0.5);
   function tone(ctx, out, t0, o) {
     const osc = ctx.createOscillator();
     if (o.wave) osc.setPeriodicWave(o.wave(ctx)); else osc.type = o.type || 'sine';
@@ -240,6 +259,46 @@
   function chip(ctx, out, t0, midi, dur, gain, glideTo, wave) {
     tone(ctx, out, t0, { f: note(midi), f2: glideTo ? note(glideTo) : null, glide: dur, dur, gain: gain == null ? 0.07 : gain, wave: wave || pulse25, a: 0.001, lp: 6000 });
   }
+  /* a chip note whose pitch moves in held steps (fs, one every `step` s), as an 8-bit channel would */
+  function chipSteps(ctx, out, t0, fs, step, gain, wave) {
+    const osc = ctx.createOscillator(); osc.setPeriodicWave((wave || pulse12)(ctx));
+    fs.forEach((f, i) => osc.frequency.setValueAtTime(f, t0 + i * step));
+    const dur = fs.length * step + 0.02, f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 6000; f.Q.value = 0.7;
+    const g = envGain(ctx, t0, gain, 0.001, dur, 'hold');
+    osc.connect(f); f.connect(g); g.connect(out); osc.start(t0); osc.stop(t0 + dur + 0.05);
+  }
+  /* a plucked string (Karplus-Strong): an 8 ms burst of noise fed into a delay line one period long that loses a
+     little on every pass through a low-pass, so it rings at the note and darkens as it dies. The loss per pass is set
+     so every note rings `ring` seconds (the same length at any pitch); the low-pass's own delay is taken out of the
+     line so the note stays in tune. Rendered once per context, note and colour into a buffer and played like a sample:
+     any pitch, and nothing left ringing in a feedback loop when the play is torn down. */
+  const ksBufs = new WeakMap();
+  function ksBuffer(ctx, f, ring, bright) {
+    let m = ksBufs.get(ctx); if (!m) { m = new Map(); ksBufs.set(ctx, m); }
+    const key = f.toFixed(2) + ':' + ring + ':' + bright;
+    let b = m.get(key); if (b) return b;
+    const sr = ctx.sampleRate, len = Math.ceil(sr * (ring + 0.04)), a = Math.exp(-2 * Math.PI * (900 + bright * 3000) / sr);
+    const N = Math.max(2, Math.round(sr / f - a / (1 - a))), burst = Math.round(sr * 0.008), loss = Math.pow(0.001, 1 / (ring * f));
+    const line = new Float32Array(N), r = O55.util.rng('ks:' + key);
+    b = ctx.createBuffer(1, len, sr); const y = b.getChannelData(0);
+    let idx = 0, lp = 0, peak = 1e-6;
+    for (let n = 0; n < len; n++) {
+      const x = line[idx] + (n < burst ? (r() * 2 - 1) * Math.pow(1 - n / burst, 2) * 0.5 : 0);
+      lp = (1 - a) * x + a * lp; line[idx] = lp * loss; y[n] = x; idx = (idx + 1) % N;
+      if (Math.abs(x) > peak) peak = Math.abs(x);
+    }
+    const fade = Math.round(sr * 0.03); /* the end leaves on a short fade, never a click */
+    for (let n = 0; n < len; n++) y[n] *= 0.8 / peak * (n > len - fade ? (len - n) / fade : 1);
+    m.set(key, b);
+    return b;
+  }
+  function pluck(ctx, out, t0, f, o) {
+    const src = ctx.createBufferSource(), g = ctx.createGain();
+    src.buffer = ksBuffer(ctx, f, o.ring || 0.3, o.bright == null ? 0.5 : o.bright);
+    g.gain.value = o.gain == null ? 0.1 : o.gain; src.connect(g); g.connect(out);
+    if (o.send) g.connect(o.send);
+    src.start(t0);
+  }
   /* a bell: the fundamental and two inharmonic partials, the high ones only while they stay under PARTIAL_MAX */
   function bell(ctx, out, t0, f, dur, gain, send) {
     tone(ctx, out, t0, { f, dur, gain, a: 0.002, send });
@@ -257,14 +316,15 @@
     o.connect(g); g.connect(out); o.start(t0); o.stop(t0 + dur + 0.03);
   }
   const nchk = (ctx, out, t0, gain) => noise(ctx, out, t0, { dur: 0.005, f: 4800, q: 2.5, gain: gain == null ? 0.03 : gain, a: 0.0008 });
-  /* NieR: the reboot hum — a saw an octave on its way up (or down) behind a resonant low-pass that opens with it */
-  function hum(ctx, out, t0, up, dur, gain, hp) {
+  /* NieR: the reboot hum — a saw an octave on its way up (or down) behind a resonant low-pass that opens with it;
+     `swell` (s) is how long it takes to reach full level (a short rise by default, a slow swell for nierOn) */
+  function hum(ctx, out, t0, up, dur, gain, hp, swell) {
     dur = dur || 0.62;
     const o = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
     if (hp) { const h = ctx.createBiquadFilter(); h.type = 'highpass'; h.frequency.value = hp; h.Q.value = 0.6; h.connect(out); out = h; }
     o.type = 'sawtooth'; o.frequency.setValueAtTime(up ? 98 : 196, t0); o.frequency.exponentialRampToValueAtTime(up ? 196 : 98, t0 + dur * 0.89);
     f.type = 'lowpass'; f.Q.value = 7; f.frequency.setValueAtTime(up ? 260 : 3400, t0); f.frequency.exponentialRampToValueAtTime(up ? 3400 : 260, t0 + dur * 0.8);
-    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(gain || 0.05, t0 + 0.04); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(gain || 0.05, t0 + (swell || 0.04)); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
     o.connect(f); f.connect(g); g.connect(out); o.start(t0); o.stop(t0 + dur + 0.04);
   }
   /* NieR: a low filtered buzz (refusals): a saw through a band-pass, trembling a little (am Hz); its fundamental is
@@ -329,6 +389,8 @@
   /* a note of a celebration placed somewhere across the stereo field */
   function panned(c, o) { if (!c.createStereoPanner) return o; const p = c.createStereoPanner(); p.pan.value = (R() - 0.5) * 1.4; p.connect(o); return p; }
   const sparkle = (c, o, t, dur, n, fn) => { for (let i = 0; i < n; i++) { const at = t + Math.pow(i / n, 0.8) * dur + R() * 0.03; fn(at, i); } };
+  /* the look's motif to the sting's depth: note i at t + i * gap; fn(at, i, last) plays one (the last is held) */
+  function motifRun(k, t, gap, fn) { for (let i = 0; i < k.depth; i++) fn(t + i * gap, i, i === k.depth - 1); }
 
   /* ---- music: the journey has a key. Each chapter plays on its own chord, so choices vary but always fit; moving
      forward climbs the chord with progress inside the chapter (k.n) and Back descends; choices rotate through the
@@ -342,7 +404,17 @@
   const NIER_CHORDS = { welcome: [0, 3, 7, 10], computer: [8, 12, 15, 19], project: [3, 7, 10, 14], ai: [7, 10, 14, 17], ready: [5, 9, 12, 14],
     tour: [0, 3, 7, 10], 'tour-ask': [0, 3, 7, 10], 'tour-workspace': [8, 12, 15, 19], 'tour-plan': [10, 14, 17, 19] };
   const ROOT = { basic: 72, friendly: 67, glass: 72, retro: 72, nier: 69 };
-  const music = { chapter: 'welcome', step: 0, base: 0, progress: 0, x: 0.5, rot: {}, changedAt: -1e9, prev: null };
+  /* each look's four-note motif (semitones over its root), built one note per chapter and resolved at Ready: Basic
+     E G B D over C (an upper structure: sine and click), Friendly G A B D (pentatonic, marimba), Glass C G D A (fifths,
+     FM bells), Retro C E G C (a chip arpeggio), NieR A C E G (Am7). Each reads as colour over every chapter's chord. */
+  const MOTIF = { basic: [4, 7, 11, 14], friendly: [12, 14, 16, 19], glass: [0, 7, 14, 21], retro: [0, 4, 7, 12], nier: [12, 15, 19, 22] };
+  /* a chapter's place in its journey, which is how many motif notes its sting plays (the tour starts over at 1) */
+  const ORD = { welcome: 0, computer: 1, project: 2, ai: 3, ready: 4, tour: 0, 'tour-ask': 0, 'tour-workspace': 1, 'tour-plan': 2 };
+  const journeyOf = (ch) => (/^tour/.test(ch || '') ? 'tour' : 'setup');
+  /* the default intensity of a sting by its depth: the arc rises 0.45, 0.55, 0.65 to 0.85 at the resolution */
+  const ARC = [0.4, 0.45, 0.55, 0.65, 0.85];
+  const music = { chapter: 'welcome', step: 0, base: 0, progress: 0, x: 0.5, rot: {}, changedAt: -1e9, prev: null, run: null, journey: 'setup', stung: new Set() };
+  function newRun(id, ch) { music.run = id === undefined ? null : id; music.stung = new Set(); music.journey = journeyOf(ch || music.chapter); }
   S.setContext = function setContext(o) {
     o = o || {};
     let ch = o.chapter;
@@ -350,27 +422,47 @@
     if (ch === 'tour') { try { const s = O55.tour && O55.tour.st && O55.tour.st.step; if (s && s.chapter && CHORDS['tour-' + s.chapter]) ch = 'tour-' + s.chapter; } catch (_) {} }
     if (o.step != null) music.step = o.step;
     if (o.progress != null) music.progress = Math.max(0, Math.min(1, o.progress));
+    /* a run: no chapter stung yet. The caller's id (the onboarding session), or crossing into the other journey */
+    if (o.run !== undefined && o.run !== music.run) newRun(o.run, ch);
+    else if (ch && journeyOf(ch) !== music.journey) newRun(music.run, ch);
     if (ch && ch !== music.chapter) { music.prev = music.chapter; music.chapter = ch; music.base = music.step; music.changedAt = performance.now(); music.announced = false; }
+    /* the caller plays this chapter's sting itself (the NieR act card): it counts as stung, nothing converts */
+    if (o.sting === false && music.chapter) music.stung.add(music.chapter);
   };
-  /* the first forward move into a new chapter (a screen of the next chapter, the tour's next part) is a chapter sting,
-     unless the window has only just opened */
+  /* how many motif notes chapter ch's sting plays: its place in the journey, or (for a chapter with no place) how many
+     chapters this run has stung, the journey's first chapter not counted; at most 4 */
+  function depthOf(ch) {
+    if (ORD[ch] === 0) return 0;
+    let n = 0; music.stung.forEach((c) => { if (ORD[c] !== 0) n++; });
+    return Math.min(4, Math.max(ORD[ch] || 0, n));
+  }
+  /* the first forward move into a chapter this run has not stung (a screen of the next chapter, the tour's next part)
+     is a chapter sting, unless the window has only just opened; Back then forward plays a plain move */
   function chapterSting(event, now) {
-    if (music.announced || !music.prev || now - music.changedAt > 1500 || now - (lastAt.open || -1e9) < 800) return event;
+    if (music.announced || !music.prev || music.stung.has(music.chapter) || now - music.changedAt > 1500 || now - (lastAt.open || -1e9) < 800) return event;
     if (event === 'next' || (/^tour-/.test(music.chapter) && (event === 'step' || event === 'spot' || event === 'callout'))) return 'chapter';
     return event;
   }
-  S.context = () => ({ chapter: music.chapter, step: music.step, n: Math.max(0, music.step - music.base), progress: music.progress });
+  S.context = () => ({ chapter: music.chapter, step: music.step, n: Math.max(0, music.step - music.base), progress: music.progress, depth: depthOf(music.chapter), run: music.run });
+  /* the name sign's climb: the step walks up 8 chord tones and back down again (0..7..1), so a long name never jumps */
+  const climb = (s) => { const p = ((s | 0) % 14 + 14) % 14; return p > 7 ? 14 - p : p; };
   function mk(kit, ev, o, pure, variant, rng) {
     o = o || {};
-    const table = kit === 'nier' ? NIER_CHORDS : CHORDS;
-    const ch = table[o.chapter || (pure ? 'welcome' : music.chapter)] || table.welcome, len = ch.length, root = ROOT[kit] || 72;
+    const table = kit === 'nier' ? NIER_CHORDS : CHORDS, chName = o.chapter || (pure ? 'welcome' : music.chapter);
+    const ch = table[chName] || table.welcome, len = ch.length, root = ROOT[kit] || 72, mo = MOTIF[kit] || MOTIF.basic;
     const key = kit + ':' + ev, rot = pure ? (variant || 0) : (music.rot[key] = (music.rot[key] || 0) + 1);
     const n = o.step != null ? Math.max(0, o.step | 0) : (pure ? 0 : Math.max(0, music.step - music.base));
+    const fold = (x) => { while (x > 104) x -= 12; return x; };
     return {
       kit, rot, n, step: o.step != null ? o.step : (pure ? 0 : music.step), idx: o.step != null ? Math.max(0, o.step | 0) : rot,
-      voice: o.voice || 0, variant: variant || 0, layer: !!o.layer, r: rng,
+      voice: Math.max(0, o.voice | 0), variant: variant || 0, layer: !!o.layer, r: rng,
+      /* a library preview hears the whole motif (depth 4); live, the chapter's place in the journey */
+      depth: o.depth != null ? Math.max(0, Math.min(4, o.depth | 0)) : (pure ? 4 : depthOf(chName)),
+      climb: o.step != null ? climb(o.step) : 0,
       intensity: Math.max(0, Math.min(1, o.intensity == null ? 0.6 : +o.intensity || 0)),
-      m: (i, oct) => { let x = root + ch[((i % len) + len) % len] + 12 * (Math.floor(i / len) + (oct || 0)); while (x > 104) x -= 12; return x; }
+      m: (i, oct) => fold(root + ch[((i % len) + len) % len] + 12 * (Math.floor(i / len) + (oct || 0))),
+      /* motif note i (0..3) of this look, an octave up or down by oct */
+      motif: (i, oct) => fold(root + mo[Math.max(0, Math.min(3, i))] + 12 * (oct || 0))
     };
   }
 
@@ -434,7 +526,36 @@
         (c, o, t) => noise(c, o, t, { dur: 0.012 + R() * 0.012, f: 2600 + R() * 900, q: 3, gain: 0.022 }),
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 4400 + R() * 900, q: 3, gain: 0.016 }); tone(c, o, t, { f: note(k.m(Math.floor(R() * 3), 2)), dur: 0.018, gain: 0.008 }); }
       ],
-      chapter: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.07, f: 4600, q: 1.6, gain: 0.032 }); tone(c, o, t, { f: note(k.m(0, 0)), dur: 0.7, gain: 0.026, a: 0.02 }); [0, 1, 2, 3, 4].forEach((i) => tone(c, o, t + 0.01 + i * 0.045, { f: note(k.m(i, 1)), dur: i === 4 ? 0.45 : 0.12, gain: 0.05 })); },
+      /* the chapter's chord, then the motif to the sting's depth in sine and click (the last note held); at the
+         resolution the chord's soft pad holds underneath */
+      chapter: (c, o, t, v, k) => {
+        const d = k.depth;
+        noise(c, o, t, { dur: 0.07, f: 4600, q: 1.6, gain: 0.03 });
+        tone(c, o, t, { f: note(k.m(0, -2)), dur: d ? 0.9 : 0.7, gain: 0.03, a: 0.02 });
+        [0, 1, 2].forEach((i) => tone(c, o, t + 0.01 + i * 0.045, { f: note(k.m(i, -1)), dur: d ? 0.16 : 0.5, gain: 0.05 }));
+        if (!d) tone(c, o, t + 0.15, { f: note(k.m(3, -1)), dur: 0.45, gain: 0.04 });
+        motifRun(k, t + 0.17, 0.12, (at, i, last) => { const f = note(k.motif(i, 0)); noise(c, o, at, { dur: 0.005, f: 5200, q: 3, gain: 0.024 }); tone(c, o, at, { f, dur: last ? 0.6 : 0.16, gain: 0.052 }); if (last) tone(c, o, at, { f: f * 2, dur: 0.22, gain: 0.006 }); });
+        if (d >= 4) [0, 1, 2].forEach((i) => { const f = note(k.m(i, -1)); tone(c, o, t + 0.12, { f, dur: 1.3, gain: 0.012, a: 0.14 }); tone(c, o, t + 0.12, { f: f * 1.003, dur: 1.3, gain: 0.009, a: 0.16 }); });
+      },
+      /* stage foley. string: a taut steel wire, the chord tone of its helper (or the name sign's next tone up) bent
+         down 2% with its 2.76x partial */
+      string: [
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); noise(c, o, t, { dur: 0.004, f: 5200, q: 3, gain: 0.02 }); tone(c, o, t, { f, f2: f * 0.98, glide: 0.14, dur: 0.14, gain: 0.05 }); tone(c, o, t, { f: f * 2.76, f2: f * 2.72, glide: 0.06, dur: 0.06, gain: 0.012 }); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); tone(c, o, t, { f, f2: f * 0.985, glide: 0.16, dur: 0.17, gain: 0.046 }); tone(c, o, t, { f: f * 2, dur: 0.05, gain: 0.009 }); tone(c, o, t, { f: f * 2.76, dur: 0.035, gain: 0.011 }); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); noise(c, o, t, { dur: 0.006, f: 4200, q: 3, gain: 0.024 }); tone(c, o, t, { f: f * 1.004, f2: f * 0.975, glide: 0.12, dur: 0.13, gain: 0.05, type: 'triangle' }); tone(c, o, t, { f: f * 2.76, dur: 0.045, gain: 0.008 }); }
+      ],
+      /* land: a felt tap, a low-passed knock with a soft thump on the helper's chord tone */
+      land: [
+        (c, o, t, v, k) => { const f = note(k.m(k.voice, -2)); noise(c, o, t, { dur: 0.025, filter: 'lowpass', f: 500, gain: 0.12 }); tone(c, o, t, { f: f * 1.4, f2: f, glide: 0.03, dur: 0.09, gain: 0.07 }); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice, -2)); noise(c, o, t, { dur: 0.03, filter: 'lowpass', f: 650, gain: 0.1 }); tone(c, o, t, { f: f * 1.2, f2: f, glide: 0.02, dur: 0.08, gain: 0.06 }); tone(c, o, t + 0.004, { f: f * 2, dur: 0.03, gain: 0.012 }); }
+      ],
+      /* bow: a falling sine pair that comes to rest on the helper's chord tone (three bows spell the chord) */
+      bow: [
+        (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(k.voice + 1, -1)), dur: 0.1, gain: 0.05 }); tone(c, o, t + 0.075, { f: note(k.m(k.voice, -1)), dur: 0.26, gain: 0.05 }); },
+        (c, o, t, v, k) => { const f1 = note(k.m(k.voice + 1, -1)), f0 = note(k.m(k.voice, -1)); tone(c, o, t, { f: f1, f2: f0, glide: 0.09, dur: 0.13, gain: 0.046 }); tone(c, o, t + 0.1, { f: f0, dur: 0.22, gain: 0.04, type: 'triangle' }); }
+      ],
+      /* save: the stamp (a click on a low thump), then root, fifth and a ringing octave */
+      save: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.005, f: 3200, q: 3, gain: 0.05 }); tone(c, o, t, { f: 170, f2: 120, glide: 0.06, dur: 0.08, gain: 0.07 }); tone(c, o, t + 0.05, { f: note(k.m(0, 0)), dur: 0.14, gain: 0.05 }); tone(c, o, t + 0.12, { f: note(k.m(2, 0)), dur: 0.2, gain: 0.05 }); const f = note(k.m(3, 0)); tone(c, o, t + 0.19, { f, dur: 0.6, gain: 0.05 }); tone(c, o, t + 0.19, { f: f * 2.76 < PARTIAL_MAX ? f * 2.76 : f * 2, dur: 0.12, gain: 0.008 }); },
       reveal: (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(0, 0)), f2: note(k.m(0, 1)), glide: 0.22, dur: 0.28, gain: 0.032 }); [2, 3, 4].forEach((i, j) => tone(c, o, t + 0.14 + j * 0.05, { f: note(k.m(i, 1)), dur: 0.22, gain: 0.04 })); },
       sheet: (c, o, t) => { tone(c, o, t, { f: 620, f2: 930, glide: 0.08, dur: 0.12, gain: 0.04 }); noise(c, o, t + 0.08, { dur: 0.01, f: 3600, q: 3, gain: 0.03 }); },
       unsheet: (c, o, t) => tone(c, o, t, { f: 930, f2: 620, glide: 0.08, dur: 0.11, gain: 0.035 }),
@@ -443,9 +564,9 @@
       warn: (c, o, t) => { tone(c, o, t, { f: 330, type: 'triangle', dur: 0.13, gain: 0.07 }); tone(c, o, t, { f: 660, dur: 0.05, gain: 0.015 }); },
       copy: (c, o, t, v) => { noise(c, o, t, { dur: 0.006, f: 5000, q: 3, gain: 0.02 }); tone(c, o, t, { f: 2093 * v, dur: 0.025, gain: 0.04 }); tone(c, o, t + 0.04, { f: 2637 * v, dur: 0.035, gain: 0.04 }); },
       move: [
-        (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(k.idx % 3, 2)), dur: 0.025, gain: 0.022 }); noise(c, o, t, { dur: 0.04, f: 4800, q: 2, gain: 0.01 }); },
-        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.07, f: 3000, f2: 5200, q: 2.2, gain: 0.05 }); tone(c, o, t + 0.04, { f: note(k.m(k.idx % 3 + 2, 2)), dur: 0.02, gain: 0.012 }); },
-        (c, o, t, v, k) => tone(c, o, t, { f: note(k.m(k.idx % 3 + 1, 2)), type: 'triangle', dur: 0.03, gain: 0.022 })
+        (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(k.idx % 3, 2)), dur: 0.025, gain: 0.019 }); noise(c, o, t, { dur: 0.04, f: 4800, q: 2, gain: 0.0085 }); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.07, f: 3000, f2: 5200, q: 2.2, gain: 0.072 }); tone(c, o, t + 0.04, { f: note(k.m(k.idx % 3 + 2, 2)), dur: 0.02, gain: 0.017 }); },
+        (c, o, t, v, k) => tone(c, o, t, { f: note(k.m(k.idx % 3 + 1, 2)), type: 'triangle', dur: 0.03, gain: 0.021 })
       ],
       callout: [
         (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(0, 1)), f2: note(k.m(1, 1)), glide: 0.06, dur: 0.12, gain: 0.04 }); noise(c, o, t, { dur: 0.01, f: 4200, q: 3, gain: 0.025 }); },
@@ -457,8 +578,17 @@
         (c, o, t, v, k) => { const j = k.n % 3; [0, 1, 3].forEach((i, x) => tone(c, o, t + x * 0.045, { f: note(k.m(j + i, 1)), dur: x === 2 ? 0.3 : 0.08, gain: 0.05 })); },
         (c, o, t, v, k) => { const j = k.n % 3; noise(c, o, t, { dur: 0.012, f: 4000, q: 3, gain: 0.03 }); tone(c, o, t, { f: note(k.m(j + 1, 1)), dur: 0.34, gain: 0.045 }); tone(c, o, t + 0.015, { f: note(k.m(j + 3, 1)), dur: 0.34, gain: 0.035 }); }
       ],
-      pointer: (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(0, 0)), f2: note(k.m(2, 0)), glide: 0.22, dur: 0.28, gain: 0.026, a: 0.05 }); noise(c, o, t, { dur: 0.22, f: 1800, f2: 3600, q: 1.4, gain: 0.008, a: 0.06 }); },
-      arrive: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 3200, q: 3, gain: 0.05 }); tone(c, o, t, { f: note(k.m(k.rot % 3, 1)) * v, dur: 0.08, gain: 0.05 }); },
+      /* Show Me's travel and landing: three takes each, turning through the chord */
+      pointer: [
+        (c, o, t, v, k) => { const r = k.rot % 3; tone(c, o, t, { f: note(k.m(r, 0)), f2: note(k.m(r + 2, 0)), glide: 0.22, dur: 0.28, gain: 0.026, a: 0.05 }); noise(c, o, t, { dur: 0.22, f: 1800, f2: 3600, q: 1.4, gain: 0.008, a: 0.06 }); },
+        (c, o, t, v, k) => { const r = k.rot % 3; tone(c, o, t, { f: note(k.m(r, 0)), f2: note(k.m(r + 1, 0)), glide: 0.16, dur: 0.22, gain: 0.028, a: 0.04 }); noise(c, o, t, { dur: 0.18, f: 2200, f2: 4200, q: 1.6, gain: 0.007, a: 0.05 }); },
+        (c, o, t, v, k) => { const r = k.rot % 3; tone(c, o, t, { f: note(k.m(r + 1, 0)), f2: note(k.m(r + 3, 0)), glide: 0.24, dur: 0.3, gain: 0.024, a: 0.06, type: 'triangle' }); noise(c, o, t, { dur: 0.24, f: 1600, f2: 3000, q: 1.2, gain: 0.009, a: 0.07 }); }
+      ],
+      arrive: [
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 3200, q: 3, gain: 0.05 }); tone(c, o, t, { f: note(k.m(k.rot % 3, 1)) * v, dur: 0.08, gain: 0.05 }); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.01, f: 3800, q: 3, gain: 0.045 }); tone(c, o, t, { f: note(k.m(k.rot % 3, 1)) * v, dur: 0.04, gain: 0.042 }); tone(c, o, t + 0.035, { f: note(k.m(k.rot % 3 + 1, 1)) * v, dur: 0.07, gain: 0.042 }); },
+        (c, o, t, v, k) => { const f = note(k.m(k.rot % 3 + 2, 1)) * v; noise(c, o, t, { dur: 0.014, f: 2800, q: 2.6, gain: 0.05 }); tone(c, o, t, { f, dur: 0.1, gain: 0.046 }); tone(c, o, t, { f: f * 2.76 < PARTIAL_MAX ? f * 2.76 : f * 1.5, dur: 0.03, gain: 0.008 }); }
+      ],
       missing: (c, o, t) => { tone(c, o, t, { f: 330, type: 'triangle', dur: 0.12, gain: 0.06 }); tone(c, o, t + 0.13, { f: 440, f2: 523, glide: 0.12, dur: 0.16, gain: 0.04 }); },
       interrupt: (c, o, t) => { tone(c, o, t, { f: 660, f2: 440, glide: 0.07, dur: 0.1, gain: 0.04 }); noise(c, o, t + 0.07, { dur: 0.01, f: 2400, q: 3, gain: 0.03 }); }
     },
@@ -509,17 +639,45 @@
         (c, o, t, v, k) => { const j = k.n % 3; marimba(c, o, t, k.m(3 + j, 1), 0.1); kalimba(c, o, t + 0.05, k.m(5 + j, 2), 0.05, 0.6); }
       ],
       finish: (c, o, t) => { [72, 76, 79, 84, 88].forEach((m, i) => marimba(c, o, t + i * 0.08, m, 0.1)); },
-      cheer: (c, o, t, v, k) => { const b = k.voice * 2; kalimba(c, o, t, k.m(b, 2), 0.07); kalimba(c, o, t + 0.07, k.m(b + 2, 2), 0.08); noise(c, o, t, { dur: 0.03, filter: 'lowpass', f: 900, gain: 0.04 }); },
+      /* each helper on its own chord tone (h0 root, h1 third, h2 fifth), so three cheers spell the chord */
+      cheer: (c, o, t, v, k) => { kalimba(c, o, t, k.m(k.voice, 1), 0.07); kalimba(c, o, t + 0.07, k.m(k.voice + 2, 1), 0.08); noise(c, o, t, { dur: 0.03, filter: 'lowpass', f: 900, gain: 0.04 }); },
       celebrate: (c, o, t, v, k) => {
         if (!k.layer) [0, 1, 2, 3, 4, 5].forEach((i) => marimba(c, o, t + i * 0.05, k.m(i, 1), 0.09));
         sparkle(c, o, t + (k.layer ? 0.1 : 0.3), 1.2, 12, (at, i) => { const p = panned(c, o); if (i % 3) kalimba(c, p, at, k.m(3 + (i % 4), 2), 0.04); else noise(c, p, at, { dur: 0.05, filter: 'highpass', f: 3000, gain: 0.03 }); });
       },
       type: [
-        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.02, f: 1500 + R() * 900, q: 1.6, gain: 0.03 }); if (R() < 0.3) marimba(c, o, t, k.m(Math.floor(R() * 3), 2), 0.025); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.02, f: 1500 + R() * 900, q: 1.6, gain: 0.022 }); if (R() < 0.3) marimba(c, o, t, k.m(Math.floor(R() * 3), 2), 0.018); },
         (c, o, t) => noise(c, o, t, { dur: 0.018, filter: 'lowpass', f: 1200 + R() * 400, gain: 0.08 }),
-        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.016, f: 1900 + R() * 600, q: 2, gain: 0.058 }); if (R() < 0.25) kalimba(c, o, t, k.m(Math.floor(R() * 3), 2), 0.02, 0.2); }
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.016, f: 1900 + R() * 600, q: 2, gain: 0.075 }); if (R() < 0.25) kalimba(c, o, t, k.m(Math.floor(R() * 3), 2), 0.026, 0.2); }
       ],
-      chapter: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.26, filter: 'lowpass', f: 2400, f2: 500, gain: 0.035 }); [0, 1, 2, 3, 4].forEach((i) => marimba(c, o, t + 0.02 + i * 0.055, k.m(i, 1), 0.1)); kalimba(c, o, t + 0.32, k.m(5, 2), 0.06, 0.7); },
+      /* a paper swish and the chord on marimba, then the motif; at the resolution the paper chime (a rustle and two
+         high kalimba tines) */
+      chapter: (c, o, t, v, k) => {
+        const d = k.depth;
+        noise(c, o, t, { dur: 0.24, filter: 'lowpass', f: 2400, f2: 500, gain: 0.034 });
+        [0, 1, 2].forEach((i) => marimba(c, o, t + 0.02 + i * 0.055, k.m(i, -1), 0.095));
+        if (!d) kalimba(c, o, t + 0.2, k.m(2, 1), 0.06, 0.7);
+        motifRun(k, t + 0.2, 0.13, (at, i, last) => { marimba(c, o, at, k.motif(i, 0), 0.105); if (last) kalimba(c, o, at + 0.01, k.motif(i, 1), 0.035, 0.7); });
+        if (d >= 4) { const at = t + 0.69; noise(c, o, at, { dur: 0.14, filter: 'highpass', f: 3000, gain: 0.014 }); kalimba(c, o, at + 0.02, k.motif(3, 1), 0.045, 0.9); kalimba(c, o, at + 0.1, k.motif(1, 1), 0.035, 0.8); }
+      },
+      /* string: a twine pluck (a real plucked-string model, warm and short) */
+      string: [
+        (c, o, t, v, k) => pluck(c, o, t, note(k.m(k.voice + k.climb, -1)), { ring: 0.3, bright: 0.45, gain: 0.11 }),
+        (c, o, t, v, k) => { pluck(c, o, t, note(k.m(k.voice + k.climb, -1)), { ring: 0.24, bright: 0.6, gain: 0.1 }); noise(c, o, t, { dur: 0.012, filter: 'highpass', f: 2500, gain: 0.012 }); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); pluck(c, o, t, f, { ring: 0.34, bright: 0.4, gain: 0.09 }); pluck(c, o, t + 0.006, f / 2, { ring: 0.28, bright: 0.3, gain: 0.05 }); }
+      ],
+      /* land: a wooden clack (two band-passed clicks) on a low marimba note */
+      land: [
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 900, q: 6, gain: 0.14 }); noise(c, o, t + 0.006, { dur: 0.01, f: 1500, q: 7, gain: 0.1 }); marimba(c, o, t, k.m(k.voice, -1), 0.06); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.014, f: 780, q: 5, gain: 0.13 }); noise(c, o, t + 0.008, { dur: 0.01, f: 1300, q: 6, gain: 0.08 }); marimba(c, o, t + 0.002, k.m(k.voice, -2), 0.07); }
+      ],
+      /* bow: a falling kalimba pair onto the helper's chord tone */
+      bow: [
+        (c, o, t, v, k) => { kalimba(c, o, t, k.m(k.voice + 1, 0), 0.06, 0.3); kalimba(c, o, t + 0.08, k.m(k.voice, 0), 0.065, 0.55); },
+        (c, o, t, v, k) => { marimba(c, o, t, k.m(k.voice + 1, 0), 0.07); kalimba(c, o, t + 0.09, k.m(k.voice, 0), 0.06, 0.5); }
+      ],
+      /* save: a wooden stamp, then root, fifth and octave rising on marimba, and a tine that rings on */
+      save: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.016, f: 1000, q: 5, gain: 0.1 }); marimba(c, o, t, k.m(0, -1), 0.08); [0, 2, 3].forEach((i, j) => marimba(c, o, t + 0.09 + j * 0.07, k.m(i, 1), 0.1)); kalimba(c, o, t + 0.32, k.m(4, 1), 0.06, 0.9); kalimba(c, o, t + 0.4, k.m(2, 2), 0.035, 0.7); },
       reveal: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.25, filter: 'lowpass', f: 600, f2: 2600, gain: 0.03 }); [0, 1, 2].forEach((i) => kalimba(c, o, t + 0.1 + i * 0.07, k.m(i, 2), 0.055, 0.5)); },
       sheet: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.12, filter: 'lowpass', f: 500, f2: 2200, gain: 0.03 }); marimba(c, o, t + 0.06, k.m(2, 1), 0.07); },
       unsheet: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.12, filter: 'lowpass', f: 2200, f2: 500, gain: 0.03 }); marimba(c, o, t + 0.02, k.m(0, 1), 0.05); },
@@ -542,8 +700,16 @@
         (c, o, t, v, k) => { const j = k.n % 3; [0, 1, 2].forEach((i) => marimba(c, o, t + i * 0.05, k.m(j + i, 1), 0.09)); },
         (c, o, t, v, k) => { const j = k.n % 3; [0, 1, 2].forEach((i) => kalimba(c, o, t + i * 0.06, k.m(j + i, 2), 0.06, 0.5)); }
       ],
-      pointer: (c, o, t) => { tone(c, o, t, { f: 600, f2: 900, glide: 0.24, dur: 0.3, gain: 0.025, a: 0.05 }); noise(c, o, t, { dur: 0.22, filter: 'lowpass', f: 700, f2: 1500, gain: 0.012, a: 0.06 }); },
-      arrive: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 1000, gain: 0.05 }); marimba(c, o, t, k.m(k.rot % 3, 1), 0.08); },
+      pointer: [
+        (c, o, t, v, k) => { const f = note(k.m(k.rot % 3, 0)); tone(c, o, t, { f, f2: f * 1.5, glide: 0.24, dur: 0.3, gain: 0.025, a: 0.05 }); noise(c, o, t, { dur: 0.22, filter: 'lowpass', f: 700, f2: 1500, gain: 0.012, a: 0.06 }); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.24, filter: 'lowpass', f: 600, f2: 1800, gain: 0.014, a: 0.06 }); kalimba(c, o, t + 0.16, k.m(k.rot % 3, 1), 0.026, 0.3); },
+        (c, o, t, v, k) => { const f = note(k.m(k.rot % 3 + 1, 0)); tone(c, o, t, { f, f2: f * 1.335, glide: 0.2, dur: 0.26, gain: 0.024, a: 0.05, type: 'triangle' }); noise(c, o, t, { dur: 0.2, filter: 'lowpass', f: 800, f2: 1400, gain: 0.011, a: 0.05 }); }
+      ],
+      arrive: [
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 1000, gain: 0.05 }); marimba(c, o, t, k.m(k.rot % 3, 1), 0.08); },
+        (c, o, t, v, k) => { kalimba(c, o, t, k.m(k.rot % 3, 1), 0.06, 0.3); noise(c, o, t, { dur: 0.015, filter: 'lowpass', f: 1300, gain: 0.04 }); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 1100, q: 5, gain: 0.08 }); marimba(c, o, t + 0.004, k.m(k.rot % 3 + 1, 1), 0.07); }
+      ],
       missing: (c, o, t) => { marimba(c, o, t, 60, 0.1); tone(c, o, t + 0.12, { f: 520, f2: 660, glide: 0.12, dur: 0.16, gain: 0.035 }); },
       interrupt: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.04, filter: 'lowpass', f: 1000, f2: 400, gain: 0.04 }); tone(c, o, t, { f: note(k.m(0, 1)), dur: 0.08, gain: 0.05 }); }
     },
@@ -604,7 +770,34 @@
         (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(Math.floor(R() * 3), 2)), ratio: 2, index: 0.6, dur: 0.04, gain: 0.012 }),
         (c, o, t) => noise(c, o, t, { dur: 0.015, f: 5200 + R() * 800, q: 4, gain: 0.055 })
       ],
-      chapter: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.4, f: 900, f2: 5000, q: 1.3, gain: 0.03, send: reverb(c, o) }); [0, 1, 2, 3].forEach((i) => fm(c, o, t + 0.14 + i * 0.06, { f: note(k.m(i, 1)), ratio: 1.4, index: 2.6, dur: 1.1, gain: 0.03, send: reverb(c, o) })); },
+      /* an airy rise and the chord on FM bells, then the motif in fifths; at the resolution a long bell tail rings out
+         through the room */
+      chapter: (c, o, t, v, k) => {
+        const d = k.depth, rv = reverb(c, o);
+        noise(c, o, t, { dur: 0.4, f: 900, f2: 5000, q: 1.3, gain: 0.028, send: rv });
+        [0, 1, 2].forEach((i) => fm(c, o, t + 0.1 + i * 0.06, { f: note(k.m(i, -1)), ratio: 1.4, index: 2.2, dur: d ? 0.9 : 1.2, gain: 0.027, send: rv }));
+        if (!d) fm(c, o, t + 0.3, { f: note(k.m(3, -1)), ratio: 1.4, index: 2.4, dur: 1.1, gain: 0.024, send: rv });
+        motifRun(k, t + 0.24, 0.14, (at, i, last) => fm(c, o, at, { f: note(k.motif(i, 0)), ratio: 1.4, index: 2.6, dur: last ? 1.3 : 0.7, gain: 0.03, send: rv }));
+        if (d >= 4) { const at = t + 0.74; bell(c, o, at, note(k.motif(3, 0)), 2.4, 0.016, rv); fm(c, o, at + 0.05, { f: note(k.motif(1, 1)), ratio: 3.5, index: 0.8, dur: 1.4, gain: 0.008, send: rv }); }
+      },
+      /* string: a glass-harmonica tick (FM, ratio 3.5) with a little room */
+      string: [
+        (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.voice + k.climb, 0)), ratio: 3.5, index: 1.2, dur: 0.22, gain: 0.03, send: reverb(c, o) }),
+        (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.voice + k.climb, 0)), ratio: 2.76, index: 0.9, dur: 0.18, gain: 0.032, send: reverb(c, o) }),
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, 0)); fm(c, o, t, { f, ratio: 3.5, index: 1, dur: 0.24, gain: 0.026, send: reverb(c, o) }); tone(c, o, t, { f: f * 2 < PARTIAL_MAX ? f * 2 : f, dur: 0.06, gain: 0.006 }); }
+      ],
+      /* land: a crystal tink with its 3.1x partial, on a soft low contact */
+      land: [
+        (c, o, t, v, k) => { const f = note(k.m(k.voice, 1)); noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 400, gain: 0.06 }); tone(c, o, t, { f, dur: 0.2, gain: 0.03, send: reverb(c, o) }); if (f * 3.1 < PARTIAL_MAX) tone(c, o, t, { f: f * 3.1, dur: 0.06, gain: 0.01 }); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice, 2)); noise(c, o, t, { dur: 0.018, filter: 'lowpass', f: 500, gain: 0.05 }); tone(c, o, t, { f, dur: 0.16, gain: 0.026, send: reverb(c, o) }); tone(c, o, t + 0.003, { f: f / 2, dur: 0.08, gain: 0.01 }); }
+      ],
+      /* bow: a falling bell pair with its tail in the room */
+      bow: [
+        (c, o, t, v, k) => { const rv = reverb(c, o); bell(c, o, t, note(k.m(k.voice + 1, 0)), 0.5, 0.03, rv); bell(c, o, t + 0.09, note(k.m(k.voice, 0)), 0.9, 0.032, rv); },
+        (c, o, t, v, k) => { fm(c, o, t, { f: note(k.m(k.voice + 1, 0)), ratio: 1.4, index: 1.8, dur: 0.4, gain: 0.028 }); fm(c, o, t + 0.1, { f: note(k.m(k.voice, 0)), ratio: 1.4, index: 2, dur: 0.8, gain: 0.03, send: reverb(c, o) }); }
+      ],
+      /* save: a glass seal (a short rise into the room), root and fifth bells and a high tink */
+      save: (c, o, t, v, k) => { const rv = reverb(c, o); noise(c, o, t, { dur: 0.18, f: 1200, f2: 4800, q: 1.6, gain: 0.02, send: rv }); fm(c, o, t + 0.08, { f: note(k.m(0, 0)), ratio: 1.4, index: 2.4, dur: 0.9, gain: 0.032, send: rv }); fm(c, o, t + 0.15, { f: note(k.m(2, 0)), ratio: 1.4, index: 2.2, dur: 1, gain: 0.03, send: rv }); fm(c, o, t + 0.24, { f: note(k.m(3, 1)), ratio: 3.5, index: 0.9, dur: 0.6, gain: 0.014, send: rv }); },
       reveal: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.5, f: 700, f2: 5000, q: 1.2, gain: 0.026, send: reverb(c, o) }); [2, 3, 4].forEach((i, j) => fm(c, o, t + 0.2 + j * 0.08, { f: note(k.m(i, 1)), ratio: 3.5, index: 1.4, dur: 0.6, gain: 0.025, send: reverb(c, o) })); },
       sheet: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.18, f: 1200, f2: 3600, q: 1.4, gain: 0.022, send: reverb(c, o) }); fm(c, o, t + 0.08, { f: note(k.m(2, 1)), ratio: 1.4, index: 2, dur: 0.4, gain: 0.025 }); },
       unsheet: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.16, f: 3600, f2: 1200, q: 1.4, gain: 0.024, send: reverb(c, o) }); fm(c, o, t + 0.05, { f: note(k.m(0, 1)), ratio: 1.4, index: 1.6, dur: 0.35, gain: 0.02 }); },
@@ -627,8 +820,16 @@
         (c, o, t, v, k) => { const j = k.n % 3; [0, 1, 2].forEach((i) => fm(c, o, t + i * 0.05, { f: note(k.m(j + i, 1)), ratio: 1.4, index: 2.2, dur: 0.7, gain: 0.028, send: reverb(c, o) })); },
         (c, o, t, v, k) => { const j = k.n % 3; noise(c, o, t, { dur: 0.2, f: 1800, f2: 4400, q: 1.6, gain: 0.014, send: reverb(c, o) }); fm(c, o, t + 0.06, { f: note(k.m(j + 3, 1)), ratio: 1.4, index: 2.6, dur: 0.9, gain: 0.032, send: reverb(c, o) }); }
       ],
-      pointer: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.3, f: 600, f2: 2400, q: 1.2, gain: 0.012, a: 0.06, send: reverb(c, o) }); fm(c, o, t + 0.12, { f: note(k.m(0, 1)), ratio: 1.4, index: 1.4, dur: 0.4, gain: 0.014 }); },
-      arrive: (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.rot % 3, 1)), ratio: 1.4, index: 2, dur: 0.5, gain: 0.032, send: reverb(c, o) }),
+      pointer: [
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.3, f: 600, f2: 2400, q: 1.2, gain: 0.012, a: 0.06, send: reverb(c, o) }); fm(c, o, t + 0.12, { f: note(k.m(k.rot % 3, 1)), ratio: 1.4, index: 1.4, dur: 0.4, gain: 0.014 }); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.26, f: 800, f2: 3000, q: 1.4, gain: 0.011, a: 0.05, send: reverb(c, o) }); fm(c, o, t + 0.1, { f: note(k.m(k.rot % 3 + 1, 1)), ratio: 3.5, index: 0.9, dur: 0.35, gain: 0.012, send: reverb(c, o) }); },
+        (c, o, t, v, k) => { fm(c, o, t, { f: note(k.m(k.rot % 3, 0)), ratio: 2.76, index: 0.8, dur: 0.3, gain: 0.011 }); fm(c, o, t + 0.09, { f: note(k.m(k.rot % 3 + 2, 0)), ratio: 1.4, index: 1.2, dur: 0.4, gain: 0.012, send: reverb(c, o) }); noise(c, o, t, { dur: 0.22, f: 1000, f2: 2600, q: 1.2, gain: 0.008, a: 0.05 }); }
+      ],
+      arrive: [
+        (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.rot % 3, 1)), ratio: 1.4, index: 2, dur: 0.5, gain: 0.032, send: reverb(c, o) }),
+        (c, o, t, v, k) => { fm(c, o, t, { f: note(k.m(k.rot % 3, 2)), ratio: 3.5, index: 1, dur: 0.25, gain: 0.022 }); fm(c, o, t + 0.02, { f: note(k.m(k.rot % 3, 1)), ratio: 1.4, index: 1.6, dur: 0.4, gain: 0.02, send: reverb(c, o) }); },
+        (c, o, t, v, k) => { const f = note(k.m(k.rot % 3 + 1, 1)); tone(c, o, t, { f, dur: 0.3, gain: 0.028, send: reverb(c, o) }); tone(c, o, t, { f: f * 3.1 < PARTIAL_MAX ? f * 3.1 : f * 2, dur: 0.08, gain: 0.008 }); }
+      ],
       missing: (c, o, t, v, k) => { fm(c, o, t, { f: 220, ratio: 1.01, index: 1.2, dur: 0.25, gain: 0.05 }); fm(c, o, t + 0.15, { f: note(k.m(1, 1)), ratio: 1.4, index: 1.6, dur: 0.4, gain: 0.02, send: reverb(c, o) }); },
       interrupt: (c, o, t) => { fm(c, o, t, { f: 1320, ratio: 2.76, index: 1.2, dur: 0.18, gain: 0.025 }); noise(c, o, t, { dur: 0.14, f: 3000, f2: 900, q: 1.4, gain: 0.018 }); }
     },
@@ -689,7 +890,33 @@
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.01, filter: 'highpass', f: 5000, gain: 0.026 }); chip(c, o, t, k.m(Math.floor(R() * 3), 1), 0.014, 0.018, null, pulse12); },
         (c, o, t, v, k) => chip(c, o, t, k.m(Math.floor(R() * 3), 2), 0.012, 0.05)
       ],
-      chapter: (c, o, t, v, k) => { [0, 1, 2, 3, 4].forEach((i) => chip(c, o, t + i * 0.05, k.m(i, 0), 0.045, 0.045)); tone(c, o, t, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.4, gain: 0.08 }); chip(c, o, t + 0.25, k.m(5, 0), 0.2, 0.04); },
+      /* a triangle bass and the chord in chips, then the motif; at the resolution a level-clear arpeggio runs up */
+      chapter: (c, o, t, v, k) => {
+        const d = k.depth;
+        tone(c, o, t, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.4, gain: 0.08 });
+        [0, 1, 2].forEach((i) => chip(c, o, t + i * 0.045, k.m(i, -1), 0.04, 0.045));
+        if (!d) chip(c, o, t + 0.16, k.m(3, -1), 0.2, 0.042);
+        motifRun(k, t + 0.16, 0.09, (at, i, last) => chip(c, o, at, k.motif(i, 0), last ? 0.22 : 0.07, 0.05));
+        if (d >= 4) { const at = t + 0.67; for (let i = 0; i < 8; i++) chip(c, o, at + i * 0.028, k.m(i, -1), 0.026, 0.03, null, pulse12); chip(c, o, at + 0.224, k.m(0, 1), 0.18, 0.036); tone(c, o, at, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.3, gain: 0.06 }); }
+      },
+      /* string: a 12.5% pulse boing that drops an octave in held steps */
+      string: [
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, 0)); chipSteps(c, o, t, [0, 1, 2, 3, 4].map((i) => f * Math.pow(2, -i / 4)), 0.016, 0.05, pulse12); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, 0)); chipSteps(c, o, t, [f, f * 0.75, f * 0.5], 0.022, 0.048, pulse25); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, 0)); chipSteps(c, o, t, [f * 0.5, f, f * 0.84, f * 0.71, f * 0.5], 0.015, 0.045, pulse12); }
+      ],
+      /* land: a noise-channel thud, two held noise frames on a square note */
+      land: [
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 1400, gain: 0.08 }); noise(c, o, t + 0.02, { dur: 0.02, filter: 'lowpass', f: 600, gain: 0.07 }); chip(c, o, t, k.m(k.voice, -2), 0.04, 0.06, null, square); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice, -2)); tone(c, o, t, { f: f * 1.3, f2: f, glide: 0.03, dur: 0.06, type: 'triangle', gain: 0.1 }); noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 1100, gain: 0.07 }); }
+      ],
+      /* bow: a falling chip pair onto the helper's chord tone */
+      bow: [
+        (c, o, t, v, k) => { chip(c, o, t, k.m(k.voice + 1, 0), 0.05, 0.045); chip(c, o, t + 0.06, k.m(k.voice, 0), 0.12, 0.045); },
+        (c, o, t, v, k) => { chip(c, o, t, k.m(k.voice + 1, 0), 0.04, 0.042, null, pulse12); chip(c, o, t + 0.05, k.m(k.voice, 0), 0.12, 0.042, null, pulse12); tone(c, o, t + 0.05, { f: note(k.m(k.voice, -2)), type: 'triangle', dur: 0.1, gain: 0.05 }); }
+      ],
+      /* save: the save-point jingle: a stamp (thump and a noise frame), a quick run up the chord and a held octave */
+      save: (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.08, gain: 0.08 }); noise(c, o, t, { dur: 0.02, filter: 'highpass', f: 4000, gain: 0.02 }); [0, 1, 2].forEach((i) => chip(c, o, t + 0.06 + i * 0.035, k.m(i, 0), 0.03, 0.045, null, pulse12)); chip(c, o, t + 0.165, k.m(3, 0), 0.24, 0.045); },
       reveal: (c, o, t, v, k) => { chip(c, o, t, k.m(0, 0), 0.2, 0.035, k.m(0, 1)); [2, 3, 4].forEach((i, j) => chip(c, o, t + 0.2 + j * 0.04, k.m(i, 1), 0.03, 0.03)); },
       sheet: (c, o, t, v, k) => chip(c, o, t, k.m(0, 0), 0.08, 0.04, k.m(2, 0)),
       unsheet: (c, o, t, v, k) => chip(c, o, t, k.m(2, 0), 0.08, 0.035, k.m(0, 0)),
@@ -712,8 +939,16 @@
         (c, o, t, v, k) => { const j = k.n % 3; [0, 1, 2].forEach((i) => chip(c, o, t + i * 0.04, k.m(j + i, 1), i === 2 ? 0.12 : 0.04, 0.045)); },
         (c, o, t, v, k) => { const j = k.n % 3; chip(c, o, t, k.m(j, 1), 0.05, 0.045); chip(c, o, t + 0.05, k.m(j + 2, 1), 0.1, 0.04); tone(c, o, t, { f: note(k.m(0, -1)), type: 'triangle', dur: 0.12, gain: 0.035 }); }
       ],
-      pointer: (c, o, t, v, k) => chip(c, o, t, k.m(0, 0), 0.2, 0.025, k.m(2, 0)),
-      arrive: (c, o, t, v, k) => { chip(c, o, t, k.m(k.rot % 3, 1), 0.04, 0.045); tone(c, o, t, { f: note(48), type: 'triangle', dur: 0.06, gain: 0.07 }); },
+      pointer: [
+        (c, o, t, v, k) => chip(c, o, t, k.m(k.rot % 3, 0), 0.2, 0.025, k.m(k.rot % 3 + 2, 0)),
+        (c, o, t, v, k) => chipSteps(c, o, t, [0, 1, 2].map((i) => note(k.m(k.rot % 3 + i, 0))), 0.05, 0.024, pulse25),
+        (c, o, t, v, k) => chip(c, o, t, k.m(k.rot % 3 + 1, 0), 0.18, 0.024, k.m(k.rot % 3 + 3, 0), pulse12)
+      ],
+      arrive: [
+        (c, o, t, v, k) => { chip(c, o, t, k.m(k.rot % 3, 1), 0.04, 0.045); tone(c, o, t, { f: note(48), type: 'triangle', dur: 0.06, gain: 0.07 }); },
+        (c, o, t, v, k) => { chip(c, o, t, k.m(k.rot % 3, 1), 0.025, 0.04, null, pulse12); chip(c, o, t + 0.03, k.m(k.rot % 3 + 1, 1), 0.04, 0.04, null, pulse12); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, filter: 'highpass', f: 5000, gain: 0.025 }); chip(c, o, t, k.m(k.rot % 3 + 2, 1), 0.05, 0.045); tone(c, o, t, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.05, gain: 0.06 }); }
+      ],
       missing: (c, o, t, v, k) => { chip(c, o, t, 57, 0.08, 0.05); chip(c, o, t + 0.1, k.m(1, 0), 0.1, 0.04, k.m(2, 0)); },
       interrupt: (c, o, t, v, k) => chip(c, o, t, k.m(2, 0), 0.06, 0.04, k.m(0, 0))
     }
@@ -740,6 +975,17 @@
     }
   }
   const POD = 0.32; /* the Pod's bleep level */
+  /* a log line's stamp ("OK"): a key strike, a low thunk and the menu tick */
+  function nstamp(c, o, t, g) { nchk(c, o, t, 0.03 * g); nb(c, o, t, 660, 0.035, 0.05 * g, 'triangle'); nb(c, o, t + 0.012, 2640, 0.012, 0.016 * g); }
+  /* the visors' ticks as the units power down one by one, falling */
+  const VISOR = [2640, 2349, 2093];
+  /* the plate's six growth steps climb A Dorian to the A above (C7 D7 E7 F#7 G7 A7) */
+  const GROW = [2093, 2349, 2640, 2960, 3136, 3520];
+  /* the NieR quest's ending: the motif to its depth (the last note a bell), or one high bell with none */
+  function questTop(c, o, t, k, top) {
+    if (!k.depth) { bell(c, o, t, note(top), 0.9, 0.019); return; }
+    motifRun(k, t, 0.11, (at, i, last) => { const f = note(k.motif(i, 0)); if (last) bell(c, o, at, f, 0.9, 0.021); else nb(c, o, at, f, 0.08, 0.03, 'triangle'); });
+  }
   KITS.nier = {
     hover: [
       (c, o, t) => nb(c, o, t, 2640, 0.026, 0.03),
@@ -802,19 +1048,50 @@
       [0.06, 0.17, 0.26, 0.33, 0.39, 0.44, 0.48].forEach((dt, i) => { nchk(c, o, t + dt, 0.018 + i * 0.004); nb(c, o, t + dt, 2640, 0.01, 0.012 + i * 0.002); });
       nb(c, o, t + 0.5, 1760, 0.12, 0.045); nb(c, o, t + 0.56, 2640, 0.1, 0.018);
     },
+    /* NieR Mode switching on, scored to the cover (H1): the hum swells from nothing and has faded by 1.15 s; six ticks
+       climb with the plate's growth steps (90..390 ms); the check list's four stamps (600, 750, 900, 1050 ms) and the
+       "log complete" blip (1080 ms). No choir: the world's arrival is 'wake', played at the reveal. */
     nierOn: (c, o, t) => {
-      hum(c, o, t, true, 0.62, 0.07, 190);
-      [0.08, 0.2, 0.29, 0.36, 0.42, 0.46].forEach((dt, i) => nchk(c, o, t + dt, 0.016 + i * 0.004));
-      nb(c, o, t + 0.5, 1760, 0.12, 0.045);
-      nb(c, o, t + 0.58, 880, 0.08, 0.05, 'triangle'); nb(c, o, t + 0.65, 1318, 0.2, 0.05, 'triangle');
-      choir(c, o, t + 0.62, { notes: [57, 64, 69], dur: 0.9, gain: 0.03, a: 0.12, vowel: 'ah' });
+      hum(c, o, t, true, 1.15, 0.07, 190, 0.42);
+      GROW.forEach((f, i) => { const at = t + 0.09 + i * 0.06; nchk(c, o, at, 0.014 + i * 0.003); nb(c, o, at, f, 0.012, 0.012 + i * 0.0025); });
+      [0.6, 0.75, 0.9, 1.05].forEach((dt) => nstamp(c, o, t + dt, 1));
+      nb(c, o, t + 1.08, 1760, 0.12, 0.045); nb(c, o, t + 1.14, 2640, 0.08, 0.014);
     },
+    /* switching off: the hum falls; the visors tick out one by one (0, 90, 180 ms); the two log stamps (700, 850 ms) */
     nierOff: (c, o, t) => {
       hum(c, o, t, false, 0.62, 0.07, 190);
-      nb(c, o, t + 0.02, 880, 0.12, 0.045);
-      [0.06, 0.1, 0.15, 0.22, 0.31, 0.43].forEach((dt, i) => nchk(c, o, t + dt, 0.03 - i * 0.004));
-      nb(c, o, t + 0.5, 440, 0.14, 0.04, 'triangle');
+      VISOR.forEach((f, i) => { nchk(c, o, t + i * 0.09, 0.024 - i * 0.003); nb(c, o, t + i * 0.09, f, 0.014, 0.024 - i * 0.004); });
+      nb(c, o, t + 0.46, 440, 0.14, 0.04, 'triangle');
+      [0.7, 0.85].forEach((dt) => nstamp(c, o, t + dt, 0.9));
     },
+    /* the NieR world opens (H1's reveal, as the slats tear away): four slat ticks under the A minor "aah" choir, and one
+       bell */
+    wake: (c, o, t) => {
+      [2960, 2640, 2349, 2093].forEach((f, i) => { nchk(c, o, t + i * 0.06, 0.012); nb(c, o, t + i * 0.06, f, 0.01, 0.012); });
+      choir(c, o, t, { notes: [57, 64, 69], dur: 1.6, gain: 0.05, a: 0.22, vowel: 'ah' });
+      bell(c, o, t + 0.26, note(88), 1.1, 0.022);
+    },
+    /* stage foley. string: a servo tick, rising a fourth in 50 ms, on its helper's chord tone (an octave lower when it
+       climbs with the name sign) */
+    string: [
+      (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, k.climb ? 0 : 1)); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.05, dur: 0.055, gain: 0.05, a: 0.002 }); nchk(c, o, t, 0.03); },
+      (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, k.climb ? 0 : 1)); nchk(c, o, t, 0.022); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.04, dur: 0.045, gain: 0.042, type: 'triangle', a: 0.002 }); nchk(c, o, t + 0.018, 0.014); },
+      (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, k.climb ? 0 : 1)); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.05, dur: 0.06, gain: 0.04, a: 0.002 }); tone(c, o, t, { f: f * 1.5, f2: f * 2, glide: 0.05, dur: 0.04, gain: 0.01, a: 0.002 }); nchk(c, o, t + 0.004, 0.024); }
+    ],
+    /* land: a servo thunk on the helper's chord tone (A3, C4, E4 at Welcome), the second take settling in two steps */
+    land: [
+      (c, o, t, v, k) => { const f = note(k.m(k.voice, -1)); nb(c, o, t, f * 1.12, 0.075, 0.07, 'triangle', f); nchk(c, o, t, 0.03); noise(c, o, t, { dur: 0.03, filter: 'lowpass', f: 700, gain: 0.05 }); },
+      (c, o, t, v, k) => { const f = note(k.m(k.voice, -1)); nb(c, o, t, f * 1.12, 0.06, 0.065, 'triangle', f); nchk(c, o, t, 0.026); nb(c, o, t + 0.07, f, 0.05, 0.03, 'triangle'); nb(c, o, t + 0.016, 2640, 0.01, 0.012); }
+    ],
+    /* bow: a low triangle pair through 1.6 kHz falling onto the helper's chord tone, with a servo's sigh */
+    bow: [
+      (c, o, t, v, k) => { const lo = lpOut(c, o, 1600); nb(c, lo, t, note(k.m(k.voice + 1, 0)), 0.08, 0.06, 'triangle'); nb(c, lo, t + 0.075, note(k.m(k.voice, 0)), 0.2, 0.06, 'triangle'); tone(c, o, t + 0.02, { f: 1600, f2: 1150, glide: 0.16, dur: 0.18, gain: 0.006, a: 0.03 }); },
+      (c, o, t, v, k) => { const lo = lpOut(c, o, 1500), f1 = note(k.m(k.voice + 1, 0)), f0 = note(k.m(k.voice, 0)); nb(c, lo, t, f1, 0.16, 0.06, 'triangle', f0); nb(c, lo, t + 0.15, f0, 0.12, 0.035, 'triangle'); noise(c, o, t, { dur: 0.16, f: 1400, f2: 900, q: 2, gain: 0.008, a: 0.03 }); }
+    ],
+    /* while Pod 042 demonstrates (the tour's Show Me), its travel and its hand-back speak 8-bit: a square climbing the
+       chord in six held steps, and a falling three-step with a low drop */
+    showPointer: (c, o, t, v, k) => { const lo = lpOut(c, o, 3000); chipSteps(c, lo, t, [0, 1, 2, 3, 4, 5].map((i) => note(k.m(i, 0))), 0.03, 0.03, square); nchk(c, o, t, 0.02); nchk(c, o, t + 0.18, 0.016); },
+    showInterrupt: (c, o, t, v, k) => { const lo = lpOut(c, o, 2600); chipSteps(c, lo, t, [3, 2, 0].map((i) => note(k.m(i, 0))), 0.035, 0.034, square); nb(c, o, t + 0.1, note(k.m(0, -1)), 0.08, 0.05, 'triangle'); nchk(c, o, t, 0.022); },
     open: (c, o, t, v, k) => { const lo = lpOut(c, o, 2800); [0, 1, 2].forEach((i) => nb(c, lo, t + i * 0.04, note(k.m(i, 1)), 0.05, 0.04, 'square')); noise(c, o, t, { dur: 0.16, f: 1600, f2: 4200, q: 1.6, gain: 0.014 }); hum(c, o, t, true, 0.3, 0.035, 190); },
     close: (c, o, t, v, k) => { const lo = lpOut(c, o, 2400); [2, 1, 0].forEach((i, j) => nb(c, lo, t + j * 0.04, note(k.m(i, 1)), 0.05, 0.035, 'square')); noise(c, o, t, { dur: 0.14, f: 4200, f2: 1600, q: 1.6, gain: 0.012 }); },
     sheet: (c, o, t, v, k) => { nb(c, o, t, 2640, 0.012, 0.018); const lo = lpOut(c, o, 2600); nb(c, lo, t + 0.02, note(k.m(1, 1)), 0.04, 0.04, 'square'); nb(c, lo, t + 0.055, note(k.m(3, 1)), 0.06, 0.035, 'square'); },
@@ -852,7 +1129,9 @@
       if (!k.layer) choir(c, o, t, { notes: [57, 64, 69, 71, 76], dur: 1.6, gain: 0.045, a: 0.22, vowel: 'ah' });
       sparkle(c, o, t + (k.layer ? 0.05 : 0.25), 1.2, k.layer ? 7 : 9, (at, i) => bell(c, panned(c, o), at, note(k.m(4 + (i * 3) % 6, 0)), 0.7, 0.016));
     },
-    cheer: (c, o, t, v, k) => { const f = podF(k.m(k.voice % 4, 0)); podSay(c, o, t, [[0, f, 2, 0.05, ['ee', 'eh', 'oh', 'ah'][k.voice % 4]], [0.06, f * 1.26, 1, 0.07, 'ah']], POD); },
+    /* a unit's cheer is its visor's blip: two square tones a fifth apart through a 2.2 kHz low-pass on its chord tone,
+       with a servo tick (Pod 042 is the only voice that speaks in vowels) */
+    cheer: (c, o, t, v, k) => { const lo = lpOut(c, o, 2200), f = note(k.m(k.voice, 1)); nb(c, lo, t, f, 0.04, 0.05, 'square'); nb(c, lo, t + 0.045, f * 1.5, 0.07, 0.045, 'square'); nb(c, o, t, 2640, 0.012, 0.016); nchk(c, o, t + 0.045, 0.02); },
     pod: [
       (c, o, t) => { podSay(c, o, t, [[0, 440, 1, 0.05, 'eh'], [0.06, 587, 2, 0.05, 'ee'], [0.12, 494, -1, 0.08, 'ah']], POD); nb(c, o, t, 1760, 0.05, 0.01); nb(c, o, t + 0.06, 2350, 0.05, 0.009); nb(c, o, t + 0.12, 1975, 0.09, 0.009); },
       (c, o, t, v, k) => { const f = podF(k.m(1, 0)); podSay(c, o, t, [[0, f, 0, 0.05, 'oh'], [0.065, f * 1.12, 3, 0.09, 'ee']], POD * 0.7); },
@@ -873,46 +1152,86 @@
     ],
     phase: (c, o, t, v, k) => nb(c, o, t, note(k.m(k.idx % 4, 2)), 0.02, 0.028),
     copy: (c, o, t) => { nb(c, o, t, 2640, 0.016, 0.026); nb(c, o, t + 0.035, 2960, 0.02, 0.024); const lo = lpOut(c, o, 2600); nb(c, lo, t + 0.06, 1318, 0.04, 0.035, 'square'); },
-    pointer: (c, o, t, v, k) => { const f = note(k.m(0, 1)); tone(c, o, t, { f, f2: f * 1.5, glide: 0.16, dur: 0.2, gain: 0.022, a: 0.03 }); noise(c, o, t, { dur: 0.16, f: 1800, f2: 3600, q: 2.4, gain: 0.006, a: 0.04 }); },
-    arrive: (c, o, t) => { nb(c, o, t, 2640, 0.012, 0.03); nb(c, o, t + 0.03, 2640, 0.014, 0.024); nb(c, o, t + 0.03, 330, 0.06, 0.055, 'triangle'); },
-    quest: [
-      (c, o, t) => { pad(c, o, t, [65, 69, 72], 0.5, 0.03); pad(c, o, t + 0.3, [64, 69, 71, 72], 1.1, 0.026); bell(c, o, t + 0.32, note(88), 0.9, 0.018); },
-      (c, o, t) => { pad(c, o, t, [62, 65, 69], 0.5, 0.03); pad(c, o, t + 0.3, [64, 69, 72], 1.1, 0.03); bell(c, o, t + 0.32, note(81), 0.9, 0.02); },
-      (c, o, t) => { pad(c, o, t, [62, 67, 71], 0.5, 0.03); pad(c, o, t + 0.3, [64, 69, 71, 72], 1.1, 0.026); bell(c, o, t + 0.32, note(84), 0.9, 0.018); }
+    /* the Pod's travel and its landing: three takes each, turning through the chord (the landing's tick from TICK) */
+    pointer: [
+      (c, o, t, v, k) => { const f = note(k.m(k.rot % 4, 1)); tone(c, o, t, { f, f2: f * 1.5, glide: 0.16, dur: 0.2, gain: 0.022, a: 0.03 }); noise(c, o, t, { dur: 0.16, f: 1800, f2: 3600, q: 2.4, gain: 0.006, a: 0.04 }); },
+      (c, o, t, v, k) => { const r = k.rot % 4; [0, 1, 2].forEach((i) => nb(c, o, t + i * 0.045, note(k.m(r + i, 1)), 0.03, 0.022 + i * 0.003)); noise(c, o, t, { dur: 0.14, f: 2000, f2: 3800, q: 2.4, gain: 0.005, a: 0.03 }); },
+      (c, o, t, v, k) => { const f = note(k.m(k.rot % 4 + 1, 1)); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.12, dur: 0.16, gain: 0.022, a: 0.02, type: 'triangle' }); nchk(c, o, t + 0.13, 0.016); }
     ],
-    chapter: (c, o, t, v, k) => { nb(c, o, t, 2640, 0.014, 0.022); const f = note(k.m(0, 1)); nb(c, o, t + 0.02, f, 0.08, 0.065, 'triangle'); nb(c, o, t + 0.09, f * 1.5, 0.2, 0.065, 'triangle'); pad(c, o, t + 0.02, [k.m(0, 0), k.m(1, 0), k.m(2, 0)], 0.7, 0.016); }
+    arrive: [
+      (c, o, t, v, k) => { const tk = TICK[k.rot % 4]; nb(c, o, t, tk, 0.012, 0.03); nb(c, o, t + 0.03, tk, 0.014, 0.024); nb(c, o, t + 0.03, note(k.m(k.rot % 4, -1)), 0.06, 0.055, 'triangle'); },
+      (c, o, t, v, k) => { nchk(c, o, t, 0.03); nb(c, o, t, TICK[(k.rot + 1) % 4], 0.016, 0.026); nb(c, o, t + 0.02, note(k.m(k.rot % 4, 0)), 0.05, 0.045, 'triangle'); },
+      (c, o, t, v, k) => { [0, 1, 2].forEach((i) => nb(c, o, t + i * 0.022, TICK[(k.rot + i) % 4], 0.01, 0.024 - i * 0.004)); nb(c, o, t + 0.05, note(k.m(k.rot % 4, -1)), 0.07, 0.05, 'triangle'); }
+    ],
+    /* "objective updated": a soft pad leans into the chapter's chord (its own chord, from NIER_CHORDS), and the motif to
+       the sting's depth rings out above it */
+    quest: [
+      (c, o, t, v, k) => { pad(c, o, t, [k.m(1, -1), k.m(2, -1), k.m(3, -1)], 0.5, 0.03); pad(c, o, t + 0.3, [k.m(0, -1), k.m(1, -1), k.m(2, -1), k.m(3, -1)], 1.1, 0.024); questTop(c, o, t + 0.34, k, k.m(2, 1)); },
+      (c, o, t, v, k) => { pad(c, o, t, [k.m(0, -1), k.m(2, -1), k.m(0, 0)], 0.5, 0.03); pad(c, o, t + 0.3, [k.m(0, -1), k.m(1, -1), k.m(2, -1), k.m(1, 0)], 1.1, 0.026); questTop(c, o, t + 0.34, k, k.m(0, 1)); },
+      (c, o, t, v, k) => { pad(c, o, t, [k.m(1, -1), k.m(3, -1), k.m(4, -1)], 0.5, 0.03); pad(c, o, t + 0.3, [k.m(0, -1), k.m(2, -1), k.m(3, -1), k.m(4, -1)], 1.1, 0.025); questTop(c, o, t + 0.34, k, k.m(1, 1)); }
+    ],
+    /* a tick, the chord's two-tone and a pad, then the motif (the last note a bell); at the resolution a soft "oo"
+       choir holds the chord */
+    chapter: (c, o, t, v, k) => {
+      const d = k.depth, f = note(k.m(0, 0));
+      nb(c, o, t, 2640, 0.014, 0.022); nb(c, o, t + 0.02, f, 0.08, 0.06, 'triangle'); nb(c, o, t + 0.09, f * 1.5, 0.2, 0.06, 'triangle');
+      pad(c, o, t + 0.02, [k.m(0, -1), k.m(1, -1), k.m(2, -1)], d ? 0.9 : 0.7, 0.016);
+      motifRun(k, t + 0.2, 0.12, (at, i, last) => { const m = note(k.motif(i, 0)); nb(c, o, at, 2640, 0.008, 0.01); if (last) bell(c, o, at, m, 0.8, 0.026); else nb(c, o, at, m, 0.1, 0.05, 'triangle'); });
+      if (d >= 4) choir(c, o, t + 0.18, { notes: [k.m(0, -1), k.m(1, -1), k.m(2, -1)], dur: 1.5, gain: 0.034, a: 0.25, vowel: 'oo' });
+    }
   };
 
   /* ---- events, fallbacks, priorities ---- */
   const EVENTS = ['tap', 'select', 'next', 'back', 'toggleOn', 'toggleOff', 'success', 'error', 'commit', 'open', 'close', 'pickup', 'drop', 'spot',
     'step', 'finish', 'cheer', 'celebrate', 'type', 'chapter', 'reveal', 'sheet', 'unsheet', 'phase', 'found', 'warn', 'copy', 'move', 'callout',
-    'pointer', 'arrive', 'checkpoint', 'missing', 'interrupt', 'pod', 'reboot', 'decode', 'glitch', 'save', 'quest', 'nierOn', 'nierOff', 'hover'];
+    'pointer', 'arrive', 'checkpoint', 'missing', 'interrupt', 'pod', 'reboot', 'decode', 'glitch', 'save', 'quest', 'nierOn', 'nierOff', 'hover',
+    'wake', 'string', 'land', 'bow', 'showPointer', 'showInterrupt'];
   /* an event a kit lacks plays its fallback (CONTRACT "O55.sound"); hover is silent outside NieR */
   const FALLBACK = { chapter: 'next', reveal: 'open', sheet: 'open', unsheet: 'close', phase: 'tap', found: 'success', warn: 'error', copy: 'tap',
     move: 'tap', callout: 'spot', pointer: 'pickup', arrive: 'drop', checkpoint: 'step', missing: 'error', interrupt: 'back', pod: 'tap',
-    reboot: 'open', decode: 'type', glitch: 'error', save: 'success', quest: 'step', nierOn: 'open', nierOff: 'close', hover: null };
+    reboot: 'open', decode: 'type', glitch: 'error', save: 'success', quest: 'step', nierOn: 'open', nierOff: 'close', hover: null,
+    wake: 'reveal', string: 'tap', land: 'drop', bow: 'back', showPointer: 'pointer', showInterrupt: 'interrupt' };
   /* several events at once: the most important one plays */
-  const PRIO = { commit: 100, celebrate: 95, finish: 94, nierOn: 93, nierOff: 93, reboot: 92, success: 90, save: 89, found: 86, error: 85, missing: 85,
+  const PRIO = { commit: 100, celebrate: 95, finish: 94, nierOn: 93, nierOff: 93, wake: 93, reboot: 92, success: 90, save: 89, found: 86, error: 85, missing: 85,
     glitch: 84, warn: 82, quest: 80, chapter: 75, open: 72, close: 71, reveal: 70, next: 65, back: 65, checkpoint: 62, step: 60, callout: 58,
-    sheet: 56, unsheet: 55, interrupt: 54, pickup: 52, drop: 52, cheer: 50, pod: 48, select: 45, toggleOn: 44, toggleOff: 44, phase: 40, spot: 38,
-    pointer: 36, arrive: 35, copy: 34, tap: 30, move: 20, decode: 15, type: 10, hover: 5 };
-  /* ...except pairs designed to layer: decode chatter sits under anything, a celebration's sparkles over the big
-     chord (played as sparkles only), and the Pod speaks just after a tip, a quest banner, a chapter or a step */
+    sheet: 56, unsheet: 55, interrupt: 54, showInterrupt: 54, pickup: 52, drop: 52, cheer: 50, pod: 48, bow: 46, select: 45, toggleOn: 44, toggleOff: 44,
+    phase: 40, spot: 38, pointer: 36, showPointer: 36, arrive: 35, copy: 34, tap: 30, string: 22, land: 21, move: 20, decode: 15, type: 10, hover: 5 };
+  /* texture and stage foley sit under anything, never in its place: decode chatter, ticks, typing, the cursor, and a
+     string, a landing or a bow (they describe the stage while something else speaks; their own rate limits keep them
+     apart). Designed pairs: a celebration's sparkles over the big chord it belongs to (played as sparkles only), and
+     the Pod speaking just after a tip, a quest card, a chapter or a step */
+  const UNDER = new Set(['decode', 'type', 'move', 'hover', 'string', 'land', 'bow']);
   function layers(main, other) {
-    if (other === 'decode') return main !== 'decode';
-    if (other === 'celebrate') return main === 'commit' || main === 'finish';
+    if (UNDER.has(other)) return other !== main;
+    if (other === 'celebrate') return main === 'commit' || main === 'finish' || main === 'save';
     if (other === 'pod') return main === 'callout' || main === 'quest' || main === 'chapter' || main === 'step';
     return false;
   }
   const MERGE_MS = 70;
-  /* the least time between two of the same event (ms) */
-  const RATE = { type: 50, hover: 45, move: 110, decode: 90, phase: 80, spot: 110, tap: 30, select: 30, pod: 150, copy: 100, pointer: 150, arrive: 60 };
-  /* texture: quiet, frequent, rate limited on its own */
-  const TEXTURE = new Set(['type', 'move', 'hover', 'decode']);
+  /* a celebration this soon (story time, ms) after the big chord it follows is that chord's sparkles: 1.2 s after a
+     commit or a finish, 1 s after a save (the NieR Created moment's stamp comes 1.16 s after its save: full) */
+  const LAYER_AFTER = { commit: 1200, finish: 1200, save: 1000 };
+  /* the least time between two of the same event (ms). type 120 (one typing tick per 120 ms, as the chat's cues);
+     phase 70, so rows that step in 80 to 120 ms apart each tick; checkpoint 250 */
+  const RATE = { type: 120, hover: 45, move: 110, decode: 90, phase: 70, spot: 110, tap: 30, select: 30, pod: 150, copy: 100, pointer: 150, arrive: 60,
+    checkpoint: 250, wake: 800, string: 60, land: 90, bow: 90, showPointer: 150 };
+  /* at most three landings in any 400 ms (a troupe lowered in at once is three, never a clatter) */
+  const LAND_MAX = 3, LAND_SPAN = 400;
+  /* texture: quiet, frequent, rate limited on its own (and never counted as a burst) */
+  const TEXTURE = new Set(['type', 'move', 'hover', 'decode', 'string', 'land']);
+  const BURST_FREE = new Set([...TEXTURE, 'bow', 'phase']);
+  /* the stage's foley: skipped under Reduced Motion, where the motion it describes is not shown */
+  const FOLEY = new Set(['string', 'land', 'bow']);
+  /* events played from the stage: without a pan they sit where their helper stands (h0 left, h1 middle, h2 right) */
+  const STAGE = new Set(['cheer', 'string', 'land', 'bow']);
+  const STAGE_PAN = [-0.35, 0, 0.35];
   /* texture that waits while the computer is struggling */
-  const LOWRES_SKIP = new Set(['spot', 'move', 'hover', 'decode']);
+  const LOWRES_SKIP = new Set(['spot', 'move', 'hover', 'decode', 'string', 'land']);
   /* events that read the Project binding at most every 250 ms (they can fire many times a second) */
-  const LAZY_REFRESH = new Set(['type', 'hover', 'move', 'decode', 'phase']);
+  const LAZY_REFRESH = new Set(['type', 'hover', 'move', 'decode', 'phase', 'string', 'land']);
+  /* takes no moment plays: 'spot' (every look has a 'callout', so it is never reached) and 'step' (only the fallback of
+     'quest' and 'checkpoint', which every look has). They stay as fallbacks of the chain and leave the library. */
+  const RETIRED = new Set(['spot', 'step']);
 
   const KIT_NAMES = ['basic', 'friendly', 'glass', 'retro', 'nier'];
   const poolOf = (kit, ev) => { const x = KITS[kit] && KITS[kit][ev]; return !x ? [] : Array.isArray(x) ? x : [x]; };
@@ -1021,17 +1340,32 @@
 
   /* ---- playing: queue, merge, voice ---- */
   let queue = [], flushing = false, recent = null, playSeed = 1;
-  const lastAt = {}, starts = [];
+  const lastAt = {}, starts = [], playedAt = {}, landAt = [], active = [];
+  /* story time (the motion clock, which slow-motion filming stretches) for what is choreographed: a rest, a deferral, a
+     celebration's layer window. Merges and rate limits stay in real time: they are about sounds overlapping. */
+  const mNow = () => (O55.motion && typeof O55.motion.now === 'function' ? O55.motion.now() : performance.now());
+  const later = (ms, fn) => (O55.motion && typeof O55.motion.after === 'function' ? O55.motion.after(ms, fn) : window.setTimeout(fn, ms));
+  const reducedMotion = () => { try { return !!(O55.motion && O55.motion.reduced && O55.motion.reduced()); } catch (_) { return false; } };
+  let restUntil = -1e9, restAt = -1e9, stingAt = -1e9;
   function logEntry(o) { S.log.push(o); if (S.log.length > 400) S.log.shift(); return o; }
   function drop(item, why, by) { item.entry.dropped = why; if (by) item.entry.by = by; }
-  /* one sound: its chain (level and trim, darker when quiet, placed toward the click) and the kit's recipe */
+  /* one playing sound fades out over s seconds (it gives way, or a rest begins) */
+  function fade(h, s) {
+    if (!h || !S.ctx) return;
+    const t = S.ctx.currentTime;
+    [h.gain, h.send].forEach((n) => { if (!n) return; try { n.gain.cancelScheduledValues(t); n.gain.setValueAtTime(n.gain.value, t); n.gain.linearRampToValueAtTime(0, t + s); } catch (_) {} });
+  }
+  /* one sound: its chain (level and trim, darker when quiet, placed toward the click or where its helper stands) and
+     the kit's recipe */
   function voice(item) {
     const ctx = ensureContext();
     if (!ctx || ctx.state === 'closed') { drop(item, 'no-audio'); return null; }
     const { kit, ev, opts, entry } = item, fns = poolOf(kit, ev);
     const vi = opts.variant != null ? Math.max(0, Math.min(fns.length - 1, opts.variant | 0)) : pick(kit, ev, fns.length);
     const k = mk(kit, ev, Object.assign({}, opts, { layer: item.layer }), false, vi, O55.util.rng(0x5eed + (playSeed++) * 7919));
-    const inten = k.intensity, pan = opts.pan != null && Number.isFinite(+opts.pan) ? +opts.pan : (music.x - 0.5) * 0.9;
+    const inten = k.intensity;
+    const pan = opts.pan != null && Number.isFinite(+opts.pan) ? +opts.pan
+      : STAGE.has(item.event) && opts.voice != null ? STAGE_PAN[Math.max(0, opts.voice | 0) % 3] : (music.x - 0.5) * 0.9;
     /* the play's chain, which a Glass room send copies (reverb, chainOf) */
     const spec = {
       level: dB(trimOf(kit, ev) + (item.layer && ev === 'decode' ? -2 : 0)) * (0.9 + k.r() * 0.2) * (0.72 + inten * 0.47),
@@ -1047,30 +1381,36 @@
     catch (err) { entry.error = String(err && err.message || err); }
     const send = sendOf.get(g); if (spec.sendNodes) nodes.push(...spec.sendNodes);
     window.setTimeout(() => { nodes.forEach((n) => { try { n.disconnect(); } catch (_) {} }); }, Math.round((tailOf(kit, ev) + 2.6) * 1000));
-    if (!TEXTURE.has(item.event)) { starts.push(performance.now()); if (starts.length > 12) starts.shift(); }
-    return { gain: g, send };
+    if (!BURST_FREE.has(item.event)) { starts.push(item.at); if (starts.length > 12) starts.shift(); }
+    /* what is sounding, so a rest can fade it */
+    const h = { gain: g, send, until: t0 + tailOf(kit, ev) + 0.5 };
+    for (let i = active.length - 1; i >= 0; i--) if (active[i].until < ctx.currentTime) active.splice(i, 1);
+    active.push(h);
+    return h;
   }
-  /* a lesser sound already under way gives way to a more important one that arrives within MERGE_MS */
-  function duck(h) {
-    if (!h || !S.ctx) return;
-    const t = S.ctx.currentTime;
-    [h.gain, h.send].forEach((n) => { if (!n) return; try { n.gain.cancelScheduledValues(t); n.gain.setValueAtTime(n.gain.value, t); n.gain.linearRampToValueAtTime(0, t + 0.03); } catch (_) {} });
-  }
+  /* several asked for in one moment: the most important plays. The moment is when each was asked for (a long render
+     between the ask and the flush must not let a lesser sound stack on top) */
   function flush() {
     flushing = false;
     const batch = queue; queue = [];
     if (!batch.length) return;
     batch.sort((a, b) => b.prio - a.prio);
-    const win = batch[0], now = performance.now();
+    const win = batch[0], now = win.at, m = mNow();
+    /* a celebration right after the big chord it belongs to plays as that chord's sparkles */
+    if (win.event === 'celebrate') {
+      const of = Object.keys(LAYER_AFTER).find((e) => playedAt[e] != null && m - playedAt[e] < LAYER_AFTER[e]);
+      if (of) { win.layer = true; win.entry.layerOf = of; }
+    }
     if (recent && now - recent.t < MERGE_MS) {
       if (win.prio <= recent.prio) {
         if (layers(recent.event, win.event)) win.layer = true;
         else { batch.forEach((it) => drop(it, 'merged', recent.event)); return; }
-      } else if (!layers(win.event, recent.event)) { duck(recent.handle); if (recent.entry) recent.entry.cut = win.event; }
+      } else if (!layers(win.event, recent.event)) { fade(recent.handle, 0.03); if (recent.entry) recent.entry.cut = win.event; }
     }
-    /* a burst (six sounds in half a second) keeps only what matters; texture has its own rate limits */
-    if (win.prio < 60 && !TEXTURE.has(win.event) && starts.length >= 6 && now - starts[starts.length - 6] < 500) { batch.forEach((it) => drop(it, 'busy')); return; }
+    /* a burst (six sounds in half a second) keeps only what matters; texture, foley and ticks have their own limits */
+    if (win.prio < 60 && !BURST_FREE.has(win.event) && starts.length >= 6 && now - starts[starts.length - 6] < 500) { batch.forEach((it) => drop(it, 'busy')); return; }
     const h = voice(win);
+    if (h) playedAt[win.event] = m;
     if (h && !win.layer) recent = { t: now, prio: win.prio, event: win.event, handle: h, entry: win.entry };
     for (let i = 1; i < batch.length; i++) {
       const it = batch[i];
@@ -1078,25 +1418,84 @@
     }
   }
 
-  S.play = function play(asked, opts) {
-    const o = opts || {};
-    const now = performance.now();
-    if (!LAZY_REFRESH.has(asked) || now - refreshedAt > 250) S.refresh('play'); /* Project/Settings changes gate this sound synchronously */
-    const event = S.muted ? asked : chapterSting(asked, now);
-    if (event === 'chapter') music.announced = true;
-    const kit = kitFor(event, o), ev = resolve(kit, event);
-    const entry = logEntry({ t: Math.round(now), event, kit, family: kit, muted: S.muted });
-    if (event !== asked) entry.asked = asked;
-    if (ev && ev !== event) entry.resolved = ev;
-    if (S.muted) return false;
+  const tour = () => { try { return O55.tour && O55.tour.st ? O55.tour : null; } catch (_) { return null; } };
+  S.play = function play(asked, opts) { return request(asked, opts || {}, null); };
+  /* late: { event, entry } when a deferred sound comes back to play (its gates are checked again, its entry reused) */
+  function request(asked, o, late) {
+    const now = performance.now(), m = mNow();
+    if (!LAZY_REFRESH.has(asked) || now - refreshedAt > 250) S.refresh('play');
+    let event = late ? late.event : chapterSting(asked, now);
+    const converted = !late && event === 'chapter' && asked !== 'chapter';
+    /* Pod 042's demonstration in NieR (the tour's Show Me): its travel and its hand-back take their 8-bit voice (the
+       tour plays 'interrupt' only when a demonstration hands control back) */
+    if (!late && (event === 'pointer' || event === 'interrupt') && kitFor(event, o) === 'nier') {
+      const T = tour();
+      if (event === 'pointer' && T && T.st.show) event = 'showPointer';
+      else if (event === 'interrupt' && T && T.running) event = 'showInterrupt';
+    }
+    /* a sting: its chapter counts as stung this run (it never stings again), with the motif to its depth and the
+       intensity arc unless the caller sets them */
+    const sting = event === 'chapter' || event === 'quest';
+    let po = o;
+    if (sting && !late) {
+      const ch = o.chapter || music.chapter;
+      music.stung.add(ch); if (ch === music.chapter) music.announced = true;
+      const depth = o.depth != null ? Math.max(0, Math.min(4, o.depth | 0)) : depthOf(ch);
+      po = Object.assign({}, o, { depth, intensity: o.intensity != null ? o.intensity : ARC[depth] });
+    }
+    const kit = kitFor(event, po), ev = resolve(kit, event);
+    const entry = late ? late.entry : logEntry({ t: Math.round(now), event, kit, family: kit, muted: S.muted });
+    if (!late) {
+      if (event !== asked) entry.asked = asked;
+      if (ev && ev !== event) entry.resolved = ev;
+      if (sting) entry.depth = po.depth;
+      if (o.voice != null) entry.voice = o.voice | 0;
+      if (o.pan != null && Number.isFinite(+o.pan)) entry.pan = +(+o.pan).toFixed(2);
+      if (o.step != null) entry.step = o.step | 0;
+    } else { entry.kit = entry.family = kit; if (ev && ev !== event) entry.resolved = ev; }
+    if (S.muted) { entry.muted = true; return false; }
     if (!ev) { entry.dropped = Object.prototype.hasOwnProperty.call(FALLBACK, event) || EVENTS.includes(event) ? 'silent' : 'unknown'; return false; }
-    if (O55.motion && O55.motion.lowResource && LOWRES_SKIP.has(event)) { entry.dropped = 'lowres'; return false; }
+    const lowres = !!(O55.motion && O55.motion.lowResource);
+    if (lowres && LOWRES_SKIP.has(event)) { entry.dropped = 'lowres'; return false; }
+    /* foley describes motion; under Reduced Motion that motion is not shown, so neither is its sound */
+    if (FOLEY.has(event) && reducedMotion()) { entry.dropped = 'reduced'; return false; }
     if (!hasGesture()) { entry.dropped = 'gesture'; return false; }
+    const prio = o.priority != null ? +o.priority : (PRIO[event] || 30);
+    if (m < restUntil && prio < 75) { entry.dropped = 'rest'; return false; }
     const rate = RATE[event];
-    if (rate && now - (lastAt[event] || -1e9) < rate * (O55.motion && O55.motion.lowResource ? 1.8 : 1)) { entry.dropped = 'rate'; return false; }
+    if (rate && now - (lastAt[event] || -1e9) < rate * (lowres ? 1.8 : 1)) { entry.dropped = 'rate'; return false; }
+    if (event === 'land') {
+      while (landAt.length && now - landAt[0] > LAND_SPAN) landAt.shift();
+      if (landAt.length >= LAND_MAX) { entry.dropped = 'rate'; return false; }
+      landAt.push(now);
+    }
+    if (!late) {
+      /* a resolution waits behind 150 ms of silence: the sting into the journey's last chapter (Ready) when it comes by
+         itself, and a finish whose caller has not just rested */
+      if ((converted && ORD[music.chapter] === 4) || (event === 'finish' && m - restAt > 600)) { S.rest(150); return defer(150, entry, event, po); }
+      /* a 'found' or 'success' that would land on a sting waits for it: it plays 500 ms after the sting */
+      if ((event === 'found' || event === 'success') && m - stingAt < 500) return defer(stingAt + 500 - m, entry, event, po);
+    }
     lastAt[event] = now;
-    queue.push({ kit, ev, event, opts: o, entry, prio: o.priority != null ? +o.priority : (PRIO[event] || 30) });
+    if (sting) stingAt = m;
+    queue.push({ kit, ev, event, opts: po, entry, prio, at: now });
     if (!flushing) { flushing = true; queueMicrotask(flush); }
+    return true;
+  }
+  function defer(ms, entry, event, opts) {
+    entry.deferred = Math.max(0, Math.round(ms));
+    later(ms, () => request(event, opts, { event, entry }));
+    return true;
+  }
+  /* 150 ms (by default) of silence before a resolution: events under PRIO 75 are dropped meanwhile, and everything
+     sounding fades out in 20 ms */
+  S.rest = function rest(ms) {
+    const span = Math.max(0, ms == null ? 150 : +ms || 0), m = mNow();
+    restUntil = Math.max(restUntil, m + span); restAt = m;
+    queue.forEach((it) => { if (it.prio < 75) drop(it, 'rest'); });
+    queue = queue.filter((it) => it.prio >= 75);
+    active.forEach((h) => fade(h, 0.02)); active.length = 0;
+    logEntry({ t: Math.round(performance.now()), event: 'rest', ms: span, kit: null, family: null, muted: S.muted, rest: true });
     return true;
   };
 
@@ -1111,12 +1510,14 @@
     if (now - refreshedAt > 250) S.refresh('synth');
     if (S.muted || (!o.force && S.suppressed()) || !hasGesture()) return false;
     const prio = o.priority != null ? +o.priority : 40;
+    if (!o.force && mNow() < restUntil && prio < 75) return false;
     if (!o.force && recent && now - recent.t < MERGE_MS && recent.prio >= prio) return false;
     const ctx = ensureContext(); if (!ctx || ctx.state === 'closed') return false;
     const g = ctx.createGain(); g.gain.value = 1; g.connect(S.master);
     try { fn(ctx, g, ctx.currentTime + 0.004); } catch (_) { try { g.disconnect(); } catch (e) {} return false; }
     logEntry({ t: Math.round(now), event: 'synth', name: o.name || null, kit: 'synth', muted: false, played: true });
-    if (!recent || now - recent.t >= MERGE_MS || prio > recent.prio) recent = { t: now, prio, event: o.name || 'synth', handle: { gain: g }, entry: null };
+    const h = { gain: g, until: ctx.currentTime + 1.5 }; active.push(h);
+    if (!recent || now - recent.t >= MERGE_MS || prio > recent.prio) recent = { t: now, prio, event: o.name || 'synth', handle: h, entry: null };
     window.setTimeout(() => { try { g.disconnect(); } catch (_) {} }, 3500);
     return true;
   };
@@ -1184,16 +1585,20 @@
       + `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path('M4 9.5h3.5L12 5.5v13l-4.5-4H4z')}${wave}</svg></button>`;
   };
 
-  /* ---- the library: every sound a kit makes, by plain name; renders and previews (independent of mute) ---- */
+  /* ---- the library: every sound a moment plays, by plain name, with the moment it plays at; renders and previews
+     (independent of mute) ---- */
   const kebab = (s) => s.replace(/[A-Z]/g, (ch) => '-' + ch.toLowerCase());
   function buildCatalog() {
     const L = (kit) => O55.t('soundLibrary.looks.' + kit), E = (ev) => O55.t('soundLibrary.events.' + ev), out = [];
     KIT_NAMES.forEach((kit) => EVENTS.forEach((ev) => {
+      if (RETIRED.has(ev)) return;
       const n = poolOf(kit, ev).length;
       for (let v = 0; v < n; v++) {
         out.push(Object.freeze({
           id: 'o55-' + kit + '-' + kebab(ev) + (n > 1 ? '-' + (v + 1) : ''),
           name: n > 1 ? O55.t('soundLibrary.entryNumbered', { look: L(kit), name: E(ev), n: v + 1 }) : O55.t('soundLibrary.entry', { look: L(kit), name: E(ev) }),
+          title: n > 1 ? O55.t('soundLibrary.titleNumbered', { name: E(ev), n: v + 1 }) : E(ev),
+          about: O55.t('soundLibrary.about.' + ev),
           style: kit === 'nier' ? O55.t('soundLibrary.styleNier') : O55.t('soundLibrary.styleSetup', { look: L(kit) }),
           kit, event: ev, variant: v, variants: n, duration: +durOf(kit, ev, v).toFixed(2), featured: v === 0, source: O55.t('soundLibrary.source')
         }));
