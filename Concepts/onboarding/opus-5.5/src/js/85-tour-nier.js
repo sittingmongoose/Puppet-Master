@@ -369,10 +369,21 @@
   TR.on('landing', (d) => { if (has('voice')) d.lead = O55.t('nierFx.pod.leads.proposal'); });
   TR.on('landed', ({ note }) => {
     if (!painted() || !note) return;
-    if (has('quests')) clearBanner(note);
-    const fx = FX(); if (!fx) return;
-    if (has('slice')) fx.slice(note, { ms: 280 });
-    typeOn(note.querySelector('.o55t-landwords'));
+    const open = () => { note.style.opacity = ''; const fx = FX(); if (fx && has('slice')) fx.slice(note, { ms: 280 }); typeOn(note.querySelector('.o55t-landwords')); };
+    if (!has('quests')) { open(); return; }
+    /* the Wizard's page is still coming in: the page it replaces keeps its room for a moment (0.4 to 0.7 s), so the
+       new page stands far below its place and then jumps up. The note waits unseen (still read out) until its page
+       stands at the top of its column and its place has held for a second look (at most 1.6 s), is placed once, and
+       then opens. */
+    note.style.opacity = '0';
+    const page = note.closest('[id^="panel-"]') || note.parentNode, t0 = M.now(); let last = null;
+    const look = () => {
+      if (!note.isConnected) return;
+      const up = !page.parentElement || page.getBoundingClientRect().top - page.parentElement.getBoundingClientRect().top < 100;
+      const y = Math.round(note.getBoundingClientRect().top), held = up && y === last; last = y;
+      if (held || M.now() - t0 > 1600) { clearBanner(note); open(); } else M.after(80, look);
+    };
+    M.after(80, look);
   });
   /* where the note goes clear of the banner, from one reading of the page (all the reads, then one move): moved after
      a sibling, the note starts where the next sibling starts now, less the room it leaves behind */
