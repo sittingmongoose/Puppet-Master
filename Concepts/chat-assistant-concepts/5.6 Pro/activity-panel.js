@@ -348,7 +348,8 @@
           progress: a.progress == null ? null : Number(a.progress) || 0,
           state: sm.label, action: 'open-agent',
           attrs: ' data-id="' + esc(ctx, a.id) + '"',
-          initials: String(a.name || '?').split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2),
+          /* a subagent's face is its puppet mark (app.js agentPuppet, the Crew members' size), never initials */
+          mark: ctx.agentPuppet ? ctx.agentPuppet('pmap-agent-mark', a, 18) : '',
           group: a.group || a.parent || 'Unassigned', meta: counts, raw: a
         };
       });
@@ -838,8 +839,6 @@
   function boardCard(ctx, it) {
     var on = isSelected(ctx, it.domain, it.id);
     var face = it.mark ? '<span class="pmap-av pmap-av-glyph">' + it.mark + '</span>'
-      : it.initials
-      ? '<span class="pmap-av">' + esc(ctx, it.initials) + '</span>'
       : '<span class="pmap-av pmap-av-glyph">' + ctx.icon(ICONS[it.domain], 12) + '</span>';
     return '<button class="pmap-card' + (on ? ' is-selected' : '') + '" data-k="pmap-c:' + esc(ctx, it.domain + ':' + it.id) +
       '" data-action="' + it.action + '" data-domain="' + it.domain + '"' + it.attrs + '>' + face +

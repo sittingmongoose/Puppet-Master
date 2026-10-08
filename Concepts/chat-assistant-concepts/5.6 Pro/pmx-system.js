@@ -518,18 +518,20 @@
       if (getComputedStyle(slot).getPropertyValue('--pmx-fit-free').trim() === '1') h = Infinity;
       /* a mode fits when its drawing fits at scale 1: its natural height in the slot's height and its viewBox
          width in the slot's width (a drawing is never scaled down, review cycle 1); a caption always fits */
+      /* 1 % of width is layout rounding, not a scale (Basic's 1.26fr main column is 575.4 px for a 576 drawing) */
+      var fitsW = function (kid) { var svg = kid.querySelector(':scope > .pmx-plate-svg'), fw = svg && svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal.width : 0; return !fw || fw <= w * 1.01 + 0.5; };
       for (var j = 0; j < kids.length; j++) {
-        var fh = parseFloat(kids[j].getAttribute('data-fit-h')), svg = kids[j].querySelector(':scope > .pmx-plate-svg');
-        var fw = svg && svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal.width : 0;
-        /* 1 % of width is layout rounding, not a scale (Basic's 1.26fr main column is 575.4 px for a 576 drawing) */
-        if (isFinite(fh) && fh <= h + 0.5 && (!fw || fw <= w * 1.01 + 0.5)) { pick = kids[j]; break; }
+        var fh = parseFloat(kids[j].getAttribute('data-fit-h'));
+        if (isFinite(fh) && fh <= h + 0.5 && fitsW(kids[j])) { pick = kids[j]; break; }
       }
       /* nothing fits at scale 1: the caption mode if the slot has one (a lane passes pmxPlateFit({caption})),
          else the leanest mode (the one case left where a drawing is scaled; a lane avoids it with a caption) */
       if (!pick) { for (var c = 0; c < kids.length; c++) if (kids[c].getAttribute('data-mode') === 'caption') pick = kids[c]; }
       if (!pick) pick = kids[kids.length - 1];
       var lk = slot.getAttribute('data-k') || String(i);
-      if (lean && lean[lk]) { var at0 = Array.prototype.indexOf.call(kids, pick); pick = kids[Math.min(kids.length - 1, at0 + lean[lk])]; }
+      /* a yield step never lands on a mode too wide for the slot (a mode after the caption, pmxPlateFit tail): the
+         drawing would be scaled down; the slot keeps the leanest step that fits */
+      if (lean && lean[lk]) { var at0 = Array.prototype.indexOf.call(kids, pick), to = Math.min(kids.length - 1, at0 + lean[lk]); while (to > at0 && !fitsW(kids[to]) && kids[to].getAttribute('data-mode') !== 'caption') to--; pick = kids[to]; }
       var mode = pick.getAttribute('data-mode') || '', key = slot.getAttribute('data-k'), was = slot.getAttribute('data-fit');
       if (key) plateFitMem[key] = mode;
       if (was !== mode) {

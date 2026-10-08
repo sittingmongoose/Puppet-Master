@@ -718,6 +718,12 @@ html[data-motion="reduced"] .pmx-pp{animation:none !important;}
 @media (prefers-reduced-motion: reduce){.live-agent-row > .agent-mark, .agent-lane > .lane-mark{animation:none !important;}}
 body.pm56-reduced .live-agent-row > .agent-mark, body.pm56-reduced .agent-lane > .lane-mark, html[data-motion="reduced"] .live-agent-row > .agent-mark, html[data-motion="reduced"] .agent-lane > .lane-mark{animation:none !important;}
 .live-agent-row .pmx-mark, .agent-lane .pmx-mark{--pmx-notch-bg:var(--surface-3);}
+/* the other agent rows (2026-10-08): the Activity Detail's subagent lines and the Agent Board's cards (app.js and
+   activity-panel.js) carry the puppet where the initials were too (Orbit's rows and satellites: orbit.css). They keep
+   no loop: a puppet acts once as it starts working or finishes, like a run card's. */
+.activity-line > .activity-agent-mark{flex:none;display:grid;place-items:center;width:22px;height:22px;}
+.activity-line .pmx-mark{--pmx-notch-bg:var(--surface);}
+.pmap-av > .pmap-agent-mark{display:grid;place-items:center;line-height:0;}
 .pmx-run .pmx-mark, .pmx-dock .pmx-mark{--pmx-notch-bg:var(--pmx-card);}
 .pmx-run[data-tone="warm"] .pmx-mark, .pmx-run[data-density="attention"]:not([data-tone="accent"]) .pmx-mark, .pmx-dock-line[data-tone="needs"] .pmx-mark{--pmx-notch-bg:var(--pmx-card-warm);}
 .pmx-sheet .pmx-mark{--pmx-notch-bg:var(--surface-2);}
@@ -807,6 +813,8 @@ body[data-theme^="retro"] .pmx-p-hatch{stroke-dasharray:1.2 2.2;}
 .pmx-p-chap{fill:var(--pmx-floor);stroke:var(--muted);stroke-width:1.4;}
 .pmx-p-chapter[data-state="done"] .pmx-p-chap{fill:var(--positive);stroke:var(--positive);}
 .pmx-p-chapter[data-state="now"] .pmx-p-chap{fill:var(--accent);stroke:var(--accent);}
+.pmx-p-chap-ring{fill:none;stroke:var(--accent);stroke-width:1.2;opacity:.6;}
+.pmx-p-chapter[data-state="now"] > .pmx-p-sub{fill:var(--text);}
 .pmx-p-table{fill:var(--pmx-table-fill);stroke:var(--pmx-line);stroke-width:1.2;}
 /* (the puppet marks have no pmx-m-floor: a working seat shows its own stage floor, path.pmx-pp-floor in the mark) */
 body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
@@ -1406,11 +1414,12 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
      three full lines; the reference's field was 66), which gives every collaboration sheet its room at 1280 x 800 */
   .pmx-sheet:is([data-pmx-kind="crew"], [data-pmx-kind="crew-auto"], [data-pmx-kind="crew_auto"], [data-pmx-kind="chat_room"], [data-pmx-kind="brainstorm"], [data-pmx-kind="review"]) textarea.pmx-hero-field{height:calc(2 * var(--pmx-hero-lh) + 10px);}
   .pmx-sheet .pmx-hero-main > .pmx-help{display:none;}
-  /* the preview takes the hero's whole height beside the two-line field (110 px): its "In your chat" caption drops
-     with the hero helper (the figure keeps the words as its label), and the side column narrows to the 308 px that
-     height can fill (owner tweak 2026-10-07) */
+  /* the preview takes the hero's whole height beside the two-line field (110 px): its "In your chat" caption leaves
+     the screen with the hero helper, hidden visually only so it still names the figure, and the side column narrows to
+     the 308 px that height can fill (owner tweak 2026-10-07) */
   .pmx-sheet .pmx-hero{--pmx-hero-side-w:308px;}
-  .pmx-sheet .pmx-hero-side .pmx-preview > figcaption{display:none;}
+  .pmx-sheet .pmx-hero-side .pmx-preview{position:relative;}
+  .pmx-sheet .pmx-hero-side .pmx-preview > figcaption{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
   .pmx-sheet .pmx-hero-side .pmx-preview-tray{margin-top:0;}
   .pmx-sheet .pmx-col--side .pmx-ctl-copy .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .pmx-sheet .pmx-col--side .pmx-shelf > .pmx-help{display:none;}

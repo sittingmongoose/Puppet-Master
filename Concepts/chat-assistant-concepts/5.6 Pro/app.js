@@ -338,7 +338,7 @@
   function extCtx(extra){
     return Object.assign({
       /* data */
-      state, D, M, clone, clamp, esc, uid, icon, hasIcon, providerMark,
+      state, D, M, clone, clamp, esc, uid, icon, hasIcon, providerMark, agentPuppet,
       thread: activeThread(), model: selectedModel(),
       activeThread, selectedModel, statusLabel, activityDefs, activityScope, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
@@ -1127,7 +1127,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const S=window.PM56_SHELL; if(!S||typeof S.pmxMark!=='function') return '';
     const st=state||(a?AGENT_MARK_STATE[a.status]:'')||'idle';
     const turn=a&&(a.messages||[]).find(m=>m&&m.runtime&&m.runtime.persona);
-    const seat=a?Math.max(0,(D.subagents||[]).indexOf(a))%8+1:1;
+    /* the seat follows the agent's place in the roster, found by id too: Orbit hands over a merged copy of the record */
+    const seat=a?Math.max(0,(D.subagents||[]).findIndex(x=>x===a||(x&&a.id!=null&&x.id===a.id)))%8+1:1;
     return `<span class="${cls}" data-state="${esc(st)}">${S.pmxMark({role:a?(turn?turn.runtime.persona:a.name):'coordinator',seat,size,state:st})}</span>`;
   }
   function renderLiveAgentRow(a){
@@ -1914,7 +1915,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const scope=activityScope();
     if(id==='goal') return extReplace('goalSection',{}, `<div class="activity-line"><span class="status-dot working"></span><div class="copy"><strong>Optimize analytics query performance</strong><span>Running · Phase 2/4 · 68% · Revision 4</span></div><span class="right">2m 06s</span></div><div class="activity-line"><span class="event-icon" style="width:20px;height:20px">${icon('warning',10)}</span><div class="copy"><strong>Exact blocker</strong><span>Production schema modification requires explicit approval.</span></div></div><div class="plan-actions"><button class="soft-button" data-action="open-goal">View Goal</button><button class="soft-button" data-action="edit-goal">Edit</button><button class="soft-button" data-action="pause-goal">Pause</button><button class="soft-button" data-action="resume-goal">Resume</button><button class="soft-button" data-action="stop-goal">Stop</button><button class="text-button danger" data-action="clear-goal">Clear</button></div>`);
     if(id==='todo') return scope.todos.map(x=>`<div class="activity-line"><span class="event-icon" style="width:20px;height:20px"${lineTone(x.status)}>${lineMark(x.status,'todo')}</span><div class="copy"><strong>${esc(x.label)}</strong><span>${esc(x.source)}${x.blocker?` · ${esc(x.blocker)}`:''}</span></div><span class="right">${esc(x.status)}</span></div>`).join('');
-    if(id==='subagents') return scope.subagents.map(a=>`<button class="activity-line" data-action="open-agent" data-id="${esc(a.id)}"><span class="agent-avatar" style="width:22px;height:22px;border-radius:7px">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="copy"><strong>${esc(a.name)} · ${esc(a.model)}</strong><span>${esc(a.current)}${a.blocker?` · ${esc(a.blocker)}`:''}</span></span><span class="right">${esc(lblOf('subagentStatus',a.status))} · ${esc(a.elapsed)}</span></button>`).join('');
+    /* a subagent's face is its puppet mark (item 14), never initials */
+    if(id==='subagents') return scope.subagents.map(a=>`<button class="activity-line" data-action="open-agent" data-id="${esc(a.id)}">${agentPuppet('activity-agent-mark',a,22)}<span class="copy"><strong>${esc(a.name)} · ${esc(a.model)}</strong><span>${esc(a.current)}${a.blocker?` · ${esc(a.blocker)}`:''}</span></span><span class="right">${esc(lblOf('subagentStatus',a.status))} · ${esc(a.elapsed)}</span></button>`).join('');
     if(id==='crew') return `<div class="activity-line"><span class="copy"><strong>No Crews in this chat yet.</strong><span>A Crew you start in this chat shows up here.</span></span></div>`;
     if(id==='changes') return scope.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" data-tone="done">+${c.add} <i data-tone="blocked">−${c.del}</i></span></button>`).join('');
     return scope.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px"${a.status==='error'?' data-tone="blocked"':a.status==='stale'?' data-tone="attention"':''}>${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');

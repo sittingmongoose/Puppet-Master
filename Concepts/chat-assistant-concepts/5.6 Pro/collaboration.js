@@ -2805,7 +2805,8 @@
 
   /* Chat Room (8.3): the topic goes to the Moderator, who calls on the helpers hanging under it; You pick what to keep.
      The turn policy is one note line, never arcs; the strip names sit beside the marks (40 tall: the Chat Room's
-     slot is the shortest, because the roster pins the Moderator's row). */
+     slot is the shortest, because the roster pins the Moderator's row). Below the strip, the lean line (32 tall, every
+     name whole: module-shell CAST.leanLine) takes the 32-34 px slot of a 1280 x 800 window before the caption does. */
   /* the topic's words are the job's (liveWords mirrors both papers with jobWords while you type) */
   function roomTopic(d) { return jobWords(d); }
   function roomCast(d, live) {
@@ -2813,7 +2814,7 @@
     var R = pol.value === 'ask_everyone_once' ? 1 : clamp(cfg.maxRounds || 5, 1, 20);
     var note = pol.label + ' · ' + (live && live.rounds ? live.rounds : (R === 1 ? 'one round' : 'up to ' + R + ' rounds'));
     var caption = n + ' helpers and the Moderator talk it through. You pick what, if anything, to keep.';
-    return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line',
+    return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line', modes: ['full', 'compact', 'strip', 'lean'],
       input: { label: 'The topic', text: roomTopic(d), mirror: 'job', part: 'job' },
       hub: { key: 'pmx-p-seat:room:mod', role: 'moderator', label: 'Moderator', sub: cfg.moderatorPersona || 'Product Manager', state: (live && live.lead) || 'idle', part: 'moderator' },
       seats: castSeats(d, 'chat_room', live, { noun: 'Helper', part: 'team', dash: false }), wing: castWing(d, 'chat_room', live),
@@ -2848,7 +2849,11 @@
     o = o || {};
     if (!run || !CAST_SPEC[run.kind]) return '';
     var ps = run.participants || [], sk = function (p) { return CAST_SPECIAL[String(p.additiveRoleKind || 'none').toLowerCase()] || ''; };
-    var core = ps.filter(function (p) { return !sk(p); }), specs = ps.filter(function (p) { return !!sk(p); });
+    /* a run whose Coordinator is one of its own participants (run.coordinator names its id: "extract the report
+       renderer") draws that participant on the bar, in its own state, never a second time among the helpers */
+    var hubP = null;
+    if (typeof run.coordinator === 'string') ps.forEach(function (p) { if (p.id === run.coordinator) hubP = p; });
+    var core = ps.filter(function (p) { return !sk(p) && p !== hubP; }), specs = ps.filter(function (p) { return !!sk(p); });
     if (!core.length) return '';
     var st = presentState(run), notYet = st === 'waiting', paused = st === 'paused', short = function (n) { return String(n || '').split(' · ')[0].replace(/^Claude /, ''); };
     var states = {};
@@ -2873,8 +2878,13 @@
     var d = { kind: run.kind, rows: rows, config: cfg, wonderer: specs.some(function (p) { return sk(p) === 'wonderer'; }), grillMe: specs.some(function (p) { return sk(p) === 'grill'; }),
       purpose: run.purpose || run.title || '', name: run.title || '', mustHaves: '', reviewTargetChoice: tgt ? tgt.value : 'changes' };
     var cr = run.chatRoom, R = cfg.turnPolicy === 'ask_everyone_once' ? 1 : (+cfg.maxRounds || 0);
-    var live = Object.assign({ states: states, lead: run.status === 'completed' ? 'done' : 'idle', done: run.status === 'completed',
-      coordinator: run.coordinator && run.coordinator.kind === 'parent_assistant' ? 'This chat’s assistant' : (run.coordinator && run.coordinator.label) || '',
+    var hubState = function () {
+      var s = notYet ? 'idle' : (CAST_STATE[hubP.status] || 'idle');
+      if (!notYet && /^(failed|timed_out|unavailable)$/.test(String(hubP.outcome || ''))) s = 'failed';
+      return paused && s === 'working' ? 'idle' : s;
+    };
+    var live = Object.assign({ states: states, lead: hubP ? hubState() : run.status === 'completed' ? 'done' : 'idle', done: run.status === 'completed',
+      coordinator: hubP ? short(hubP.effectiveModelName || hubP.requestedModelName || hubP.requestedModelId) : run.coordinator && run.coordinator.kind === 'parent_assistant' ? 'This chat’s assistant' : (run.coordinator && run.coordinator.label) || '',
       rounds: run.kind === 'chat_room' && cr && cr.roundsSoFar && R ? 'round ' + cr.roundsSoFar + ' of ' + R : '' }, o.live || {});
     if (o.live && o.live.states) live.states = Object.assign(states, o.live.states);
     return castView(run.kind, d, live, { key: o.key || ('cv-plate:' + run.id), w: o.w });
