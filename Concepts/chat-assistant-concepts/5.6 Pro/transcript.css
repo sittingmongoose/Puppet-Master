@@ -38,20 +38,17 @@
   transition: opacity 150ms, transform 150ms, visibility 0s;
 }
 .message-chrome.is-overflow-open {
-  flex-direction: column;
-  align-items: flex-start;
+  flex-wrap: wrap;
 }
-.message-chrome-user.is-overflow-open {
-  align-items: flex-end;
+.message-chrome.is-overflow-open > .message-meta {
+  flex: 1 1 0%;
+  max-width: max-content;
 }
-.message-chrome.is-overflow-open .message-meta,
-.message-chrome.is-overflow-open .message-actions,
-.message-chrome.is-overflow-open .pm-msg-overflow {
+.message-chrome.is-overflow-open > .pm-msg-overflow {
+  flex: 0 0 100%;
   width: 100%;
   margin-left: 0;
-}
-.message-chrome.is-overflow-open .message-meta {
-  flex: 0 0 auto;
+  order: 10;
 }
 .message-chrome-user {
   width: min(88%, 820px);

@@ -362,7 +362,7 @@
     return '<' + tag + attrs + '>' +
       (opts.lead || '') +
       '<span class="ab-row-copy"><b>' + esc(opts.main) + '</b>' +
-      (opts.sub ? '<i>' + esc(opts.sub) + '</i>' : '') + '</span>' +
+      ((opts.subHtml || opts.sub) ? '<i>' + (opts.subHtml || esc(opts.sub)) + '</i>' : '') + '</span>' +
       (opts.right || '') +
       '</' + tag + '>';
   }
@@ -441,6 +441,8 @@
         attrs: ' data-id="' + esc(a.id) + '"',
         main: a.name,
         sub: [a.model, a.blocker || a.current].filter(Boolean).join(' · '),
+        subHtml: (a.model ? '<u class="agent-model">' + esc(a.model) + '</u>' : '') +
+          ((a.blocker || a.current) ? (a.model ? ' · ' : '') + esc(a.blocker || a.current) : ''),
         right: '<span class="ab-row-right"><b data-tone="' + s.tone + '">' + esc(s.label) + '</b>' +
           (a.elapsed ? '<i>' + esc(a.elapsed) + '</i>' : '') + '</span>',
         title: 'Open ' + (a.name || 'agent')
