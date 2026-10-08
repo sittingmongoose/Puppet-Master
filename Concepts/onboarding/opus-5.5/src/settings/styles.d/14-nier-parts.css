@@ -185,7 +185,17 @@ html[data-o55-open][data-o55-nier-parts~="diamonds"] body > [inert] :is(.pm6-wiz
   background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb), .075) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .075) 1px, transparent 1px),
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .04) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .04) 1px, transparent 1px);
   background-size: 128px 128px, 128px 128px, 32px 32px, 32px 32px; background-position: -1px -1px; }
+/* map rulers inside the frame, top and left: a tick every 8 px, a long one every 32 px (they show as the plate grows) */
+#o55np-reboot .o55np-plate::before, #o55np-reboot .o55np-plate::after { content: ""; position: absolute; left: 12px; top: 12px; opacity: .5; pointer-events: none; }
+#o55np-reboot .o55np-plate::before { right: 12px; height: 7px;
+  background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 1px, transparent 1px 32px) 0 0 / 100% 7px no-repeat,
+    repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 1px, transparent 1px 8px) 0 0 / 100% 3px no-repeat; }
+#o55np-reboot .o55np-plate::after { bottom: 12px; width: 7px;
+  background: repeating-linear-gradient(180deg, var(--o55-nier-ink) 0 1px, transparent 1px 32px) 0 0 / 7px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--o55-nier-ink) 0 1px, transparent 1px 8px) 0 0 / 3px 100% no-repeat; }
 #o55np-reboot .o55np-deco { position: absolute; inset: 0; pointer-events: none; }
+/* the window's own effect layers hold off while the cover is up (kit.d/19-nier-parts.js marks the onboarding root) */
+#pm-o55-onboarding[data-o55np-cover] > .o55fx-layer { visibility: hidden !important; }
 #o55np-reboot .o55np-edge { position: absolute; left: 0; top: 0; opacity: 0; transform-origin: 0 0; background: rgba(var(--o55-nier-ink-rgb), .6); will-change: transform; }
 #o55np-reboot .o55np-edge:is([data-e="t"], [data-e="b"]) { width: 100%; height: 1px; }
 #o55np-reboot .o55np-edge:is([data-e="l"], [data-e="r"]) { width: 1px; height: 100%; }
@@ -197,7 +207,10 @@ html[data-o55-open][data-o55-nier-parts~="diamonds"] body > [inert] :is(.pm6-wiz
 #o55np-reboot .o55np-rb-lines { position: absolute; inset: 0; opacity: .9;
   background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(var(--o55-nier-paper-rgb), .09) 2px 3px); }
 /* the check list */
-#o55np-reboot .o55np-log { position: absolute; left: 50%; top: 50%; width: min(408px, calc(100% - 48px)); transform: translate(-50%, -50%); visibility: hidden;
+/* the list sits on its own panel of the ground (a hairline frame on the grid or the band), so the masks that hide the
+   untyped words match what is under them exactly */
+#o55np-reboot .o55np-log { position: absolute; left: 50%; top: 50%; box-sizing: border-box; width: min(448px, calc(100% - 40px)); padding: 16px 18px 14px;
+  transform: translate(-50%, -50%); visibility: hidden; background: var(--rb-ground); border: 1px solid color-mix(in srgb, var(--rb-text) 26%, transparent);
   color: var(--rb-text); font: 500 11px/24px "PM NieR Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .2em; text-transform: uppercase; }
 #o55np-reboot .o55np-log[data-on] { visibility: visible; }
 #o55np-reboot .o55np-kick { display: flex; align-items: center; gap: 4px; height: 24px; margin-bottom: 12px; padding: 0 10px; background: var(--rb-text); color: var(--rb-ground);
@@ -210,7 +223,9 @@ html[data-o55-open][data-o55-nier-parts~="diamonds"] body > [inert] :is(.pm6-wiz
 #o55np-reboot .o55np-ln-dots { flex: 1 1 auto; min-width: 18px; height: 1px; opacity: .55; background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 4px); }
 #o55np-reboot .o55np-stamp { flex: none; font-weight: 600; letter-spacing: .24em; opacity: 0; }
 #o55np-reboot .o55np-ln-mask { position: absolute; inset: 0; background: var(--rb-ground); will-change: transform; }
-#o55np-reboot .o55np-ln-mask::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 8px; background: var(--rb-text); }
+/* the caret block rides just left of the mask's edge: hidden by the line's clip until the mask moves, then always at the
+   last letter shown, and gone with the mask at the end */
+#o55np-reboot .o55np-ln-mask::before { content: ""; position: absolute; left: -8px; top: 6px; bottom: 6px; width: 8px; background: var(--rb-text); }
 #o55np-reboot .o55np-meter { position: relative; height: 8px; margin-top: 12px; border: 1px solid currentColor; }
 #o55np-reboot .o55np-meter > i { position: absolute; inset: 1px; transform-origin: left center; transform: scaleX(0); will-change: transform;
   background: repeating-linear-gradient(90deg, currentColor 0 calc(8.333% - 2px), transparent calc(8.333% - 2px) 8.333%); }
@@ -218,7 +233,7 @@ html[data-o55-open][data-o55-nier-parts~="diamonds"] body > [inert] :is(.pm6-wiz
 #o55np-reboot .o55np-caret { flex: none; width: 8px; height: 12px; background: currentColor; }
 #o55np-reboot .o55np-sync :is(.o55np-ln-dots, .o55np-stamp) { visibility: hidden; }
 /* the list's end state (R): set by attribute, so the slats' copies show it too */
-#o55np-reboot .o55np-log[data-done] .o55np-ln-mask { transform: translateX(101%); }
+#o55np-reboot .o55np-log[data-done] .o55np-ln-mask { transform: translateX(calc(100% + 10px)); }
 #o55np-reboot .o55np-log[data-done] .o55np-lns .o55np-stamp { opacity: 1; }
 #o55np-reboot .o55np-log[data-done] .o55np-meter > i { transform: scaleX(1); }
 #o55np-reboot .o55np-log[data-done] .o55np-sync[data-shown] { opacity: 1; }

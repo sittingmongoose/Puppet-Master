@@ -29,7 +29,7 @@
     square: ['Square corners and fine ink lines everywhere.', 4], cursor: ['The item under the pointer becomes an ink bar with a small cursor.', 5],
     headers: ['Section titles in wide capitals over a ruled line.', 4], ground: ['A faint grid behind the whole app.', 3],
     brackets: ['Four corner brackets mark what has keyboard focus.', 5], diamonds: ['Spinners become a slowly turning diamond.', 3],
-    reboot: ['An ink band sweeps over the window when NieR Mode turns on or off.', 8], slice: ['Menus and dialogs open from a thin line.', 4],
+    reboot: ['A short check list covers the window while NieR Mode turns on or off, then tears away.', 8], slice: ['Menus and dialogs open from a thin line.', 4],
     decode: ['Page titles and notices resolve from scrambled letters.', 5], wipe: ['A quick band crosses the page when you switch pages.', 4],
     particles: ['A few small ink squares drift behind the app.', 3], sweep: ['A faint line crosses the screen every few seconds.', 2],
     glitch: ['Warnings and errors arrive with a short jitter.', 4], sounds: ['Soft ticks and tones when you move and choose.', 5],

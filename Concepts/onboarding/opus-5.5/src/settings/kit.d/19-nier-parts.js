@@ -163,8 +163,11 @@
   const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode, .pm7u-range button, .o55-looknier-adjust';
   const targetOf = e => (e && e.target && e.target.closest ? e.target.closest(CURSOR_SEL) : null);
   let cur = null, curT = null, curHide = 0;
+  /* while the reboot cover is up nothing points through it (the cursor and the reticle sit above the window) */
+  let coverUp = false;
   function curPlace(t) {
     if (!cur) return;
+    if (coverUp) { curOff(); return; }
     const r = t.getBoundingClientRect(), z = zoom();
     if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > window.innerHeight) { curOff(); return; }
     let x = r.left - 12, y = r.top + r.height / 2 - 4.5, side = 'left';
@@ -207,7 +210,7 @@
   let ret = null, retT = null, retLock = 0, retScroll = 0;
   const RET_GAP = 3, RET_S = 10;
   function retPlace(t) {
-    if (!ret || !t || !t.isConnected) { retOff(); return; }
+    if (!ret || !t || !t.isConnected || coverUp) { retOff(); return; }
     const r = t.getBoundingClientRect(), z = zoom();
     if (r.width < 2 || r.height < 2 || r.bottom < 0 || r.top > window.innerHeight) { retOff(); return; }
     const l = r.left - RET_GAP, tp = r.top - RET_GAP, rt = r.right + RET_GAP - RET_S, b = r.bottom + RET_GAP - RET_S;
@@ -631,7 +634,7 @@
     const d = t => Math.max(0, t - now);
     log.querySelectorAll('.o55np-lns > .o55np-ln').forEach((ln, i) => {
       const st = plan.stamps[i];
-      A(ln.querySelector('.o55np-ln-mask'), [{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }], { duration: 120, delay: d(st - 120), easing: 'steps(8, end)', fill: 'forwards' });
+      A(ln.querySelector('.o55np-ln-mask'), [{ transform: 'translateX(0)' }, { transform: 'translateX(calc(100% + 10px))' }], { duration: 120, delay: d(st - 120), easing: 'steps(8, end)', fill: 'forwards' });
       A(ln.querySelector('.o55np-stamp'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 80, delay: d(st), fill: 'forwards' });
     });
     A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)', fill: 'forwards' });
@@ -719,6 +722,12 @@
     return { wrap, done: Promise.all(anims.map(settled)) };
   }
 
+  /* the window's effects and the pointers come back with the reveal */
+  function rbRelease(ctx) {
+    if (ctx.host) { ctx.host.removeAttribute('data-o55np-cover'); ctx.host = null; }
+    coverUp = false;
+  }
+
   /* ---- inside the onboarding window */
   async function rebootWithin(ctx, info, within, folding) {
     const kind = folding ? 'fold' : info.reason === 'replay' ? 'replay' : 'on';
@@ -729,6 +738,11 @@
     const { set, ground, log, deco } = rbSet(lines, true);
     cover.appendChild(set);
     within.appendChild(cover);
+    /* the window's own effects (brackets on the chosen card, the cursor, Pod's strip) sit above the window in its root:
+       they hold off while the cover is up (an attribute that restyles only those layers), and so do the page's pointers */
+    const host = ctx.host = within.closest('#pm-o55-onboarding');
+    if (host) host.setAttribute('data-o55np-cover', '');
+    coverUp = true; curOff(); retOff();
     const t0 = tl(), box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
     if (!folding) {
       /* T0-T90 the brackets lock on in 3 steps; T90 the plate is born on the rect; T90-T390 it grows in 6 held steps */
@@ -778,6 +792,7 @@
       set.remove();
       await rbWait(cover, 160);
       cover.style.pointerEvents = 'none';
+      rbRelease(ctx);
       ctx.cue('reveal');
       await slats.done;
       return;
@@ -787,6 +802,7 @@
     await rbWait(cover, 120);
     log.style.visibility = 'hidden';
     cover.style.pointerEvents = 'none';
+    rbRelease(ctx);
     ctx.cue('reveal');
     const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
     const fold = ground.animate(walk([{ t: 0, v: { clipPath: insetOf(full, box), opacity: 1 } }, ...rects.map((r, k) => ({ t: 60 * (k + 1), v: { clipPath: insetOf(r, box), opacity: 1 } })),
@@ -855,6 +871,7 @@
     } catch (e) { /* the moment is decoration; the repaint is not */ } finally {
       paint();
       if (ctx.cover) ctx.cover.remove();
+      rbRelease(ctx);
       rebooting = false;
       cue('reveal'); cue('gone');
     }
