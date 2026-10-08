@@ -451,7 +451,8 @@
       const go = F.banner({
         kicker: O55.t('nierFx.banner.kickers.chapterDone'), title: O55.t('chapters.' + claim.from),
         sub: T('banner.next', { chapter: O55.t('chapters.' + claim.to) }),
-        within: st, hang: true, inset: 0.08, at: 0.36, ms: reduced() ? 1200 : 1660, sound: false,
+        /* (Reduced Motion: the card stands still for 1.2 s; FX counts the haul's 260 ms inside ms) */
+        within: st, hang: true, inset: 0.08, at: 0.36, ms: reduced() ? 1460 : 1660, sound: false,
         onLand: () => {
           if (t !== token || landed) return;
           landed = true;

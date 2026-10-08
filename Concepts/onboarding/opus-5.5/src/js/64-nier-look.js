@@ -137,9 +137,11 @@
     if (phase !== 'reveal' || F.revealed) return;
     F.revealed = true; F.revealAt = O55.motion.now();
     if (flight !== F || !inWindow()) return;
-    /* the choir (NieR) or the look's own reveal (unticking), on the frame the window shows again */
+    /* the choir (NieR) or the look's own reveal (unticking), on the frame the window shows again; on the instant path
+       (Reduced Motion, Still, Colors only, a low-resource computer) the repaint is the same task as the click, so it
+       follows the toggle's own sound just after, rather than merging into it */
+    if (instant()) { O55.motion.after(120, () => { if (flight === F && inWindow()) O55.sound.play('wake'); }); enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
     O55.sound.play('wake');
-    if (instant()) { enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
     if (F.on) { at(F, 260, () => enter(F)); at(F, 1940, () => speak(F)); }
     else at(F, 360, () => enter(F));
   }
