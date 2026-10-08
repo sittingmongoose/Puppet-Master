@@ -59,20 +59,21 @@
   }
 
   /* ---------- sounds: a small synth of the game's menu blips ------------------------------------------------------
-     One audio path: with the onboarding layer present (src/js/15-sound.js) every blip plays through O55.sound.synth,
-     on its context and master and under its mute (no second AudioContext); this module's own context is only the
-     fallback for a page without it. The table takes its bus as a parameter (5.6 Pro's nier-parts.js has the same
-     numbers), so any context can play or render it. Inside the onboarding window O55 owns sound (its NieR kit plays
-     these same blips), so the document-wide menu sounds stay quiet there, on the tour's own controls and on synthetic
-     clicks (a tour's Show Me presses the real control; O55.sound.suppress(ms) holds them too). Outside onboarding
-     they also follow general.interaction.sound-effects, the Settings value (Settings_System 4.4). */
+     One audio path: with the onboarding layer present (src/js/15-sound.js) every blip plays through O55.sound.synth
+     (the reboot's hum as O55.sound.play('nierOn' | 'nierOff'), see O55_EVENT), on its context and master and under its
+     mute (no second AudioContext); this module's own context is only the fallback for a page without it. The table
+     takes its bus as a parameter (5.6 Pro's nier-parts.js has the same numbers), so any context can play or render
+     it. Inside the onboarding window O55 owns sound (its NieR kit plays these same blips), so the document-wide menu
+     sounds stay quiet there, on the tour's own controls and on synthetic clicks (a tour's Show Me presses the real
+     control; O55.sound.suppress(ms) holds them too). Outside onboarding they also follow
+     general.interaction.sound-effects, the Settings value (Settings_System 4.4). */
   let ac = null, acBus = null, lastTick = 0;
+  /* the synth's own level into a destination, one per destination node. Keyed weakly by that node: O55.sound.synth
+     hands every blip a fresh node, so an entry lives only as long as its blip (no cache that grows with each sound) */
   const buses = new WeakMap();
   function busFor(ctx, out) {
-    /* the synth's own level into the destination's chain, one per context and destination */
-    let m = buses.get(ctx); if (!m) { m = new Map(); buses.set(ctx, m); }
-    let b = m.get(out);
-    if (!b) { b = ctx.createGain(); b.gain.value = 0.6; b.connect(out); m.set(out, b); }
+    let b = buses.get(out);
+    if (!b) { b = ctx.createGain(); b.gain.value = 0.6; b.connect(out); buses.set(out, b); }
     return b;
   }
   function audio() {
@@ -119,6 +120,10 @@
   };
   /* which of these matter when two sounds meet (O55.sound keeps the more important one) */
   const SFX_PRIO = { tick: 20, select: 45, confirm: 60, cancel: 55, pod: 48, alert: 84, sweepOn: 93, sweepOff: 93 };
+  /* the reboot's hum is O55's own NieR moment when O55 is present (its NieR kit plays the hum, the ticks and the
+     choir): one designed sound, and a caller that also plays nierOn or nierOff for the same toggle merges into it
+     instead of a second hum (O55.sound keeps one of two equal events in the same moment) */
+  const O55_EVENT = { sweepOn: 'nierOn', sweepOff: 'nierOff' };
   /* force: the reboot plays while NieR Mode is still off (turning on), so it asks for the installed part instead */
   function sfx(name, force) {
     if (!(force ? installed('sounds') : live.has('sounds')) || !SFX[name]) return false;
@@ -129,7 +134,8 @@
     if (!soundAllowed()) return false;
     const O = o55Sound();
     let ok = false;
-    if (O) ok = O.synth((c, out, t) => SFX[name](c, busFor(c, out), t), { force: !!force, name: 'nier:' + name, priority: SFX_PRIO[name] });
+    if (O && O55_EVENT[name] && typeof O.play === 'function') ok = O.play(O55_EVENT[name], { kit: 'nier' });
+    else if (O) ok = O.synth((c, out, t) => SFX[name](c, busFor(c, out), t), { force: !!force, name: 'nier:' + name, priority: SFX_PRIO[name] });
     else {
       const c = audio(); if (!c) return false;
       try { SFX[name](c, busFor(c, acBus), c.currentTime + 0.004); ok = true; } catch (e) { return false; }
