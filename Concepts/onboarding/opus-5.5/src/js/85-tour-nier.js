@@ -9,19 +9,23 @@
      brackets   four ink corners on the callout and on the spotlight, locking on in steps; the spotlight jumps in
                 steps; keyboard focus gets the tour's own corners (the page's reticle stands down while it runs)
      square     a square spotlight
-     decode     the callout's title and the Pod's words resolve from scrambled glyphs
-     slice      each new callout slices open where it stands; the bar slices open at the start
-     reboot     a reboot band opens the tour, and plays while the layout goes back at the end
+     decode     the callout's title, the Pod's words and the landing note type on behind a block caret
+                (O55.nierFx.type: their layout is held from the first frame, so nothing reflows or overprints)
+     slice      each new callout slices open where it stands; the bar slices open at the start and wherever it
+                moves (bottom or top)
+     reboot     a reboot band opens the tour over the NieR ground, and plays while the layout goes back at the end
+                (the callout, the bar, the spotlight and the scrim step back first; the app's own notices keep quiet)
      quests     a quest banner names each new chapter while the spotlight moves on; the landing note keeps out of
                 the way of the page's own Tour complete banner, so nothing lands on top of it
-     glitch     a missing target is an Alert: the callout tears
+     glitch     a missing target is an Alert: the callout tears, with the glitch sound
      sweep      a scan line steps down each newly locked target    ticks   map ticks on the spotlight's edges
      blocks     the bar's progress as ink blocks                     cursor  ink hover, and the menu cursor on the
                                                                              finish choices (with its tick)
    Reduced Motion gives end states only (O55.nierFx and the CSS keep to it); timers run on the motion clock. Sounds
    are O55.sound events, so the tour's mute governs them: the core plays callout, checkpoint, pointer, arrive,
-   missing, interrupt and the rest; here the Pod's chirp ('pod', its press), decode (under the title), 'quest' and
-   'reboot' (the banner and the band) and the cursor's 'hover'. */
+   missing, interrupt and the rest; here the Pod's chirp ('pod', its press; at most one in two seconds), 'glitch' (the
+   Alert's tear), 'quest' and 'reboot' (the banner and the band) and the cursor's 'hover' (only for a pointer that
+   really moved). */
 (function () {
   'use strict';
   const O55 = window.O55, M = O55.motion, TR = O55.tour, U = O55.util;
@@ -55,7 +59,7 @@
   function lineFor(d) {
     const s = d.step, k = (x) => { const v = O55.tx('tour.nier.pod.steps.' + s.id + '.' + x); return typeof v === 'string' ? v : ''; };
     if (d.missing) return { kind: 'missing', text: T('pod.missing') };
-    if (st.show) return { kind: 'show', text: T('pod.showMe') };
+    if (st.show && st.show.step === s) return { kind: 'show', text: T('pod.showMe') };
     if (st.paused) return { kind: 'paused', text: T('pod.paused') };
     if (back && M.now() - back < 6000) return { kind: 'back', text: T('pod.interrupted') };
     if (d.done) return { kind: 'done', text: k('done') || T('pod.done.' + ['first', 'second', 'third'][s.index % 3]) };
@@ -66,16 +70,24 @@
   function podHtml(line, unit, voice) {
     const m = LEAD.exec(line.text), lead = m ? m[1].toLowerCase() : 'report', words = m ? line.text.slice(m[0].length) : line.text;
     return `<div class="o55t-pod" data-key="o55t-pod" data-lead="${lead}" data-kind="${line.kind}"${unit ? ' data-unit' : ''}${voice ? ' data-voice' : ''}>`
-      + (unit ? `<span class="o55t-pod-unit" aria-hidden="true"><svg viewBox="0 0 40 52" ${STROKE}>${POD}</svg><i></i><i></i><i></i></span>` : '')
+      + (unit ? `<span class="o55t-pod-unit" aria-hidden="true"><span class="o55t-pod-bob"><svg viewBox="0 0 40 52" ${STROKE}>${POD}</svg></span><i></i><i></i><i></i></span>` : '')
       + '<div class="o55t-pod-copy">'
       + (voice ? `<span class="o55t-pod-head" aria-hidden="true"><i></i><i></i><i></i><span>${U.esc(O55.t('nierFx.pod.name'))}</span></span>` : '')
       + `<p class="o55t-pod-line">${voice ? `<b class="o55t-pod-lead">${U.esc(O55.t('nierFx.pod.leads.' + lead))}</b> ` : ''}<span class="o55t-pod-words">${U.esc(words)}</span></p>`
       + '</div></div>';
   }
-  /* the docked Pod turns to its words and sends three signals, with its chirp */
+  /* the docked Pod sends three signals toward its words, with its chirp. Pod 042 chirps at most once in two seconds:
+     its Show Me press is a chirp, and the next step's line arriving right after it stays silent (one voice per beat).
+     The signals are Web Animations (a CSS restart would force a layout of this very large page). */
+  let podAt = -1e9;
   function chirp() {
+    if (M.now() - podAt < 2000) return;
+    podAt = M.now();
     const u = st.root && st.root.querySelector('.o55t-callout .o55t-pod-unit');
-    if (u && !still()) { u.classList.remove('o55t-sig'); void u.offsetWidth; u.classList.add('o55t-sig'); }
+    if (u && !still() && typeof u.animate === 'function') {
+      u.querySelectorAll(':scope > i').forEach((i, k) => i.animate([{ transform: 'translate(0px, 0px)', opacity: 0 }, { opacity: 1, offset: 0.15 }, { transform: 'translate(30px, -4px)', opacity: 0 }],
+        { duration: 480, delay: k * 80, easing: 'steps(6, end)', fill: 'backwards' }));
+    }
     sound('pod');
   }
   const dock = () => {
@@ -121,7 +133,16 @@
     if (line.text) d.pod = podHtml(line, unit, voice);
   });
 
-  /* a new line from the Pod resolves from glyphs (a fresh step's line or a report that it is ready also chirps) */
+  /* Words arrive readable: anything longer than a label types on, left to right, behind a block caret, with its whole
+     layout held from the first frame (O55.nierFx.type), so nothing reflows and no scrambled glyph ever prints over
+     the next line. Without the typewriter the words simply stand (the end state). Screen readers keep the real words
+     throughout (the typewriter holds them as the label). */
+  function typeOn(el, o) {
+    const fx = FX();
+    if (!fx || !el || typeof fx.type !== 'function' || !has('decode') || still()) return null;
+    return fx.type(el, o || {});
+  }
+  /* a new line from the Pod types on (a fresh step's line, or a report that it is ready, also chirps) */
   let spoken = null;
   function speak(arrival) {
     const c = calloutEl(), strip = c && c.querySelector('.o55t-pod'), w = strip && strip.querySelector('.o55t-pod-words');
@@ -129,20 +150,14 @@
     if (!arrival && spoken && spoken.text === text) return;
     const was = spoken; spoken = { text, kind, step: st.step && st.step.id };
     if (!w || !text) return;
-    const fx = FX();
-    if (fx && (arrival || !was || was.text !== text)) fx.decode(w, { ms: Math.min(900, 300 + text.length * 6) });
+    if (arrival || !was || was.text !== text) typeOn(w);
     if (arrival ? !arrival.silent : (kind === 'line' && was && was.kind === 'wait' && was.step === spoken.step)) chirp();
   }
   /* (a step's arrival speaks in 'step', once the callout stands where it goes) */
   TR.on('render', () => { if (!painted()) spoken = null; else if (!st.entering) speak(null); });
 
-  /* the title resolves too; screen readers hear the real words from the label while the glyphs settle */
-  function decodeTitle(sound) {
-    const fx = FX(), c = calloutEl(), h = c && c.querySelector('#o55t-h'); if (!fx || !h) return;
-    const words = h.textContent;
-    h.setAttribute('aria-label', words);
-    fx.decode(h, { ms: Math.min(560, 260 + words.length * 4), sound: !!sound }).then(() => { if (h.isConnected && h.getAttribute('aria-label') === words) h.removeAttribute('aria-label'); });
-  }
+  /* the title types on too */
+  function typeTitle() { const c = calloutEl(); typeOn(c && c.querySelector('#o55t-h')); }
   /* the callout's corners lock on in three steps */
   function lockCallout() {
     const c = calloutEl(); if (!c || !has('brackets') || still() || typeof c.animate !== 'function') return;
@@ -150,7 +165,10 @@
   }
 
   /* ------------------------------------------------------------------ the spotlight */
+  /* The corners lock on where the spotlight lands, never while it is still travelling: each lock waits for the
+     glide to arrive (TR.landed), so the lock, the scan line and the eye arrive together. */
   let lockedAt = -1e9;
+  const lockLanded = () => { if (TR.landed) TR.landed(lockRing); else lockRing(); };
   function lockRing() {
     if (!has('brackets') || still() || !st.root || performance.now() - lockedAt < 120) return;
     lockedAt = performance.now();
@@ -167,7 +185,8 @@
       { duration: 480, delay: 160, easing: 'steps(8, end)', fill: 'backwards' });
     }
   }
-  TR.on('target', (d) => { if (painted() && d.el && TR.running && !st.entering) lockRing(); });
+  /* (the target changes before the glide toward it starts: look once the placement has run) */
+  TR.on('target', (d) => { if (painted() && d.el && TR.running && !st.entering) Promise.resolve().then(lockLanded); });
 
   /* ------------------------------------------------------------------ steps arrive */
   TR.on('arrive', (d) => {
@@ -194,40 +213,46 @@
     const fx = FX(), c = calloutEl();
     if (fx && c) {
       if (has('slice')) fx.slice(c, { ms: 260 });
-      decodeTitle(!d.silent);
+      typeTitle();
       if (d.first && has('slice')) fx.slice(root.querySelector('.o55t-bar'), { ms: 300 });
     }
     if (d.first) M.after(220, podArrives);
-    lockCallout(); lockRing();
+    lockCallout(); lockLanded();
     speak(d);
+    /* the new chapter's pip flickers on (a small element): each keyframe holds its value (easing per keyframe; one
+       step-end over the whole effect would hold the first value for its whole length and then cut) */
     if (d.chapterChanged && !still()) {
       const pip = root.querySelector('.o55t-pip.o55t-cur');
-      if (pip) pip.animate([{ opacity: 0 }, { opacity: 1, offset: 0.25 }, { opacity: 0.3, offset: 0.5 }, { opacity: 1, offset: 0.75 }, { opacity: 1 }], { duration: 420, easing: 'step-end' });
+      if (pip) pip.animate(flick([0, 1, 0.3, 1, 1]), { duration: 420 });
     }
     M.release(() => root.classList.remove('o55t-njump'));
   });
+  const flick = (ops) => ops.map((opacity, i) => ({ opacity, offset: i / (ops.length - 1), easing: 'step-end' }));
 
   /* done: the kicker says Complete and flickers once, the spotlight's corners lock again */
   TR.on('complete', () => {
     if (!painted() || still()) return;
     const k = st.root.querySelector('.o55t-callout .o55t-kicker');
-    if (k && has('headers')) k.animate([{ opacity: 1 }, { opacity: 0.2, offset: 0.25 }, { opacity: 1, offset: 0.5 }, { opacity: 0.2, offset: 0.75 }, { opacity: 1 }], { duration: 360, easing: 'step-end' });
+    if (k && has('headers')) k.animate(flick([1, 0.2, 1, 0.2, 1]), { duration: 360 });
     lockedAt = -1e9; lockRing();
   });
 
-  /* a missing target: Alert, and the callout tears */
+  /* a missing target: Alert, and the callout tears; the tear is the glitch sound (in place of the plain 'missing') */
   TR.on('missing', (d) => {
     if (!d.on || !painted()) return;
     const fx = FX(), c = calloutEl();
-    if (fx && c) { fx.alert(c); decodeTitle(false); }
+    if (fx && c) { fx.alert(c); typeTitle(); if (has('glitch') && !still() && d.sound) d.sound = 'glitch'; }
   });
 
   /* ------------------------------------------------------------------ Show Me: Pod 042 */
+  /* It leaves from its dock every time, in the same frame as the dock empties (no blink, no fade: one Pod). */
   TR.on('showMe', () => {
     if (!painted()) return;
-    if (has('pod')) TR.pointer.pos = null; /* it leaves from its dock every time */
     TR.refresh();
+    if (has('pod')) { const at = dock(); TR.pointer.pos = null; if (at) TR.pointer.show(at.x, at.y); }
   });
+  /* its press is its chirp (the engine plays it): the next line keeps quiet for a moment */
+  TR.on('press', () => { if (has('pod')) podAt = M.now(); });
   TR.on('pointerFrom', (d) => { if (has('pod')) { const at = dock(); if (at) d.at = at; } });
   /* at the start, the app's own Pod (the corner one, which stands down while the tour runs) flies to its dock in the
      first callout: one Pod, never two */
@@ -241,11 +266,25 @@
     const done = () => { root.classList.remove('o55t-npodout'); if (!st.show) { P.hide(); P.pos = null; } };
     M.delay(60).then(() => (st.show ? null : P.moveTo(at.x, at.y, 460, { quiet: true }))).then(done, done);
   }
-  TR.on('showMeEnd', () => {
+  /* Home after the demonstration. When what it pressed has finished the step and the next one comes in a moment (no
+     "after" line to read here), the old callout is about to go: the Pod waits over what it pressed, and flies
+     straight into the next callout's dock once that callout stands (its dock stays empty until it lands). Otherwise
+     it flies home to this callout's dock. Either way there is only ever one Pod on screen. */
+  TR.on('showMeEnd', (d) => {
     if (!has('pod') || still()) return null;
+    const me = st.show, s = d.step;
+    if (st.advancing && s && !s.after && !s.stay) return nextDock().then((at) => (at && st.show === me ? TR.pointer.moveTo(at.x, at.y, 380, { quiet: true }) : null));
     const at = dock(); if (!at) return null;
     return TR.pointer.moveTo(at.x, at.y, 300, { quiet: true });
   });
+  /* the dock of the next step's callout, once it stands (or this one's, if no step comes within 2 s) */
+  function nextDock() {
+    return new Promise((res) => {
+      let off = null;
+      const t = M.after(2000, () => { if (off) off(); res(dock()); });
+      off = TR.on('step', () => { off(); t.cancel(); res(dock()); });
+    });
+  }
   TR.on('showMeDone', () => { if (painted() && TR.running) TR.refresh(); });
   TR.on('interrupt', () => { if (!painted() || !TR.running) return; back = M.now(); TR.refresh(); M.after(6100, () => { if (back && TR.running) { back = 0; TR.refresh(); } }); });
   TR.on('pause', () => { if (painted() && TR.running) TR.refresh(); });
@@ -263,7 +302,17 @@
   });
 
   /* ------------------------------------------------------------------ the bar */
-  TR.on('bar', (d) => { if (has('headers')) d.pip[d.chapter] = `<span class="o55t-readout" aria-hidden="true">${two(d.si + 1)}/${two(d.total)}</span>`; });
+  TR.on('bar', (d) => {
+    if (!has('headers')) return;
+    d.pip[d.chapter] = `<span class="o55t-readout" aria-hidden="true">${two(d.si + 1)}/${two(d.total)}</span>`;
+    /* on a narrow window the band keeps a short name, so its squares never stand alone */
+    d.brand = `<b class="o55t-brandshort" aria-hidden="true">${U.esc(T('barShort'))}</b>`;
+  });
+  /* the bar moving between the bottom and the top slices open where it lands (it never jumps across the window) */
+  TR.on('barMove', () => {
+    const fx = FX(), bar = st.root && st.root.querySelector('.o55t-bar');
+    if (fx && bar && TR.running && painted()) fx.slice(bar, { ms: 200 });
+  });
 
   /* ------------------------------------------------------------------ open and close */
   TR.on('start', (d) => {
@@ -274,36 +323,60 @@
     const done = () => root.classList.remove('o55t-nboot');
     return fx.band(T(d.resume ? 'band.resume' : 'band.start'), 1500, { kicker: T('band.kicker'), within: root }).then(done, done);
   });
+  /* The close: the callout, the bar, the spotlight and the scrim step back at once (two held steps; they stay back
+     until the root has gone, so nothing pops back as it fades), the band plays while the layout goes back beneath it,
+     and the notices the restore raises in the app stay quiet (the band already says what is happening). */
   TR.on('ending', (d) => {
+    if (d.silent || !painted()) return null;
+    d.hush = true;
     const fx = FX();
-    if (d.silent || !painted() || !fx || !fx.enabled('band') || still()) return null;
+    if (!fx || !fx.enabled('band') || still()) return null;
     const key = d.status === 'done' ? (d.keep ? 'band.keep' : 'band.restore') : 'band.skip';
     st.root.classList.add('o55t-nend');
+    cursorOff();
     /* short: the layout goes back beneath it, and the prompt on the Planning Wizard should not wait */
     return fx.band(T(key), 900, { kicker: T('band.kicker'), within: st.root });
   });
-  TR.on('end', () => {
-    if (st.root) st.root.classList.remove('o55t-nend', 'o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout');
+  TR.on('end', (d) => {
+    /* a layout that could not go back keeps the tour: its callout and bar come back */
+    if (st.root) st.root.classList.remove('o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout', ...(d.status === 'restore-pending' ? ['o55t-nend'] : []));
     spoken = null; back = 0; focusOff(); cursorOff();
     const fx = FX(); if (fx && cued) { fx.brackets(cued, false); cued = null; }
   });
+  TR.on('closed', () => { if (st.root) st.root.classList.remove('o55t-nend'); });
 
-  /* The landing note comes at once, in Pod's voice. The page's own Tour complete banner (kit.d/20-nier-world.js, a
-     92 px band at 23 % of the window, about 0.7 s after the tour finishes, for about 3 s) would sit on it where it
-     usually goes, under the Wizard's heading: there it moves down past the band's reach instead, so the two never
-     overlap and nothing has to wait. It slices in and its words resolve. */
+  /* The landing note comes at once, in Pod's voice. The page's own Tour complete banner (kit.d/20-nier-world.js
+     #o55nw-quest: fixed at 23 % of the window, about 92 px tall, about 0.7 s after the tour finishes, for about 3 s)
+     would sit on it where it usually goes, under the Wizard's heading: there it moves down past the band's reach
+     instead, so the two never overlap and nothing has to wait. It slices in and its words type on. */
   TR.on('landing', (d) => { if (has('voice')) d.lead = O55.t('nierFx.pod.leads.proposal'); });
   TR.on('landed', ({ note }) => {
     if (!painted() || !note) return;
-    if (has('quests')) {
-      const top = innerHeight * 0.23 - 10, bottom = innerHeight * 0.23 + 92 + 12;
-      const hits = () => { const r = note.getBoundingClientRect(); return r.bottom > top && r.top < bottom; };
-      for (let next = note.nextElementSibling; hits() && next; next = note.nextElementSibling) next.after(note);
-    }
+    if (has('quests')) clearBanner(note);
     const fx = FX(); if (!fx) return;
     if (has('slice')) fx.slice(note, { ms: 280 });
-    const span = note.lastElementChild, node = span && span.lastChild;
-    if (node && node.nodeType === 3) fx.decode(node, { ms: 520 });
+    typeOn(note.querySelector('.o55t-landwords'));
+  });
+  /* where the note goes clear of the banner, from one reading of the page (all the reads, then one move): moved after
+     a sibling, the note starts where the next sibling starts now, less the room it leaves behind */
+  function clearBanner(note) {
+    const top = innerHeight * 0.23 - 10, bottom = innerHeight * 0.23 + 92 + 12;
+    const r = note.getBoundingClientRect(); if (!(r.bottom > top && r.top < bottom)) return;
+    const sibs = []; for (let n = note.nextElementSibling; n; n = n.nextElementSibling) sibs.push(n);
+    const rs = sibs.map((n) => n.getBoundingClientRect()), room = (rs[0] ? rs[0].top : r.bottom) - r.top;
+    for (let k = 0; k < sibs.length; k++) {
+      const at = k + 1 < rs.length ? rs[k + 1].top - room : rs[k].bottom - r.height;
+      if (at >= bottom) { sibs[k].after(note); return; }
+    }
+  }
+  /* it leaves by folding shut in three held steps, so the cards below step up into its place (no jump) */
+  TR.on('unland', ({ note }) => {
+    if (!painted() || still() || typeof note.animate !== 'function') return null;
+    const cs = getComputedStyle(note), h = note.offsetHeight;
+    note.style.overflow = 'hidden';
+    const a = note.animate([{ height: h + 'px', marginTop: cs.marginTop, marginBottom: cs.marginBottom, paddingTop: cs.paddingTop, paddingBottom: cs.paddingBottom, opacity: 1 },
+      { height: '0px', marginTop: '0px', marginBottom: '0px', paddingTop: '0px', paddingBottom: '0px', opacity: 0 }], { duration: 300, easing: 'steps(3, end)', fill: 'forwards' });
+    return a.finished.catch(() => null);
   });
 
   /* ------------------------------------------------------------------ keyboard focus and the menu cursor */
@@ -337,13 +410,18 @@
     if (!rows.length) { if (curRow) cursorOff(); return; }
     if (!curRow && has('cursor')) cursorOn(c.querySelector('.o55t-choice.o55t-on') || rows[0], false);
   });
+  /* the tick is for a hand that moved: a button appearing under a resting pointer (a new callout, a closing one)
+     also fires pointerover, and stays silent */
+  let movedAt = -1e9;
+  document.addEventListener('pointermove', (e) => { if (TR.running && e.isTrusted && (e.movementX || e.movementY)) movedAt = performance.now(); }, { capture: true, passive: true });
+  const moved = () => performance.now() - movedAt < 100;
   TR.on('build', ({ root }) => {
     root.addEventListener('pointerover', (e) => {
       if (!painted() || !e.target.closest) return;
       const row = e.target.closest('.o55t-choice');
-      if (row) { cursorOn(row, true); return; }
+      if (row) { cursorOn(row, moved()); return; }
       const b = e.target.closest('.o55t-btn, .o55t-barbtn, .o55t-seg button');
-      if (b && has('cursor') && !(e.relatedTarget && b.contains(e.relatedTarget))) sound('hover');
+      if (b && has('cursor') && moved() && !(e.relatedTarget && b.contains(e.relatedTarget))) sound('hover');
     });
     root.addEventListener('focusin', (e) => { const row = painted() && e.target.closest ? e.target.closest('.o55t-choice') : null; if (row) cursorOn(row, true); });
   });

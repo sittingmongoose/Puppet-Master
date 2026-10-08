@@ -138,6 +138,8 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff .o55-win { animation-
 .o55t-bar { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 6px 8px 6px 14px; pointer-events: auto; border-radius: 999px;
   background: var(--o55t-bg); border: 1px solid var(--o55t-line); box-shadow: 0 12px 34px -12px rgba(0, 0, 0, 0.5); font-size: 12.5px; white-space: nowrap; transition: bottom 360ms cubic-bezier(0.2, 0, 0, 1), top 360ms cubic-bezier(0.2, 0, 0, 1); }
 .o55t-bar.o55t-top { bottom: auto; top: 50px; }
+/* with the bar at the top, the look menu opens downward (upward it would leave the window, showing only its last row) */
+.o55t-bar.o55t-top .o55t-lookslot .o55-lookmenu { top: calc(100% + 12px); bottom: auto; animation-name: o55-lookin; }
 .o55t-root[data-family="retro"] .o55t-bar { border-radius: 0; border: 2px solid var(--text-primary); font-family: var(--display-font); }
 .o55t-brand { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--o55t-accent); }
 .o55t-pips { display: inline-flex; align-items: center; gap: 10px; }

@@ -12,7 +12,7 @@
      owner identities, never composer text, inline layout or per-step DOM snapshots. A reload without the basis
      stays unavailable until the person explicitly acknowledges recovery. */
   const recovery = new Map();
-  const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false, entries: {}, rewinding: false, entering: false, pendingBack: false, seq: 0 };
+  const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false, entries: {}, rewinding: false, entering: false, ending: false, pendingBack: false, seq: 0 };
   const CHAPTERS = ['ask', 'workspace', 'plan'];
   TR.CHAPTERS = CHAPTERS;
 
@@ -26,9 +26,12 @@
      the callout, before its buttons) · render {focus} · bar {chapter, ci, si, total, pip} (d.pip[chapter]: markup
      after that chapter's ticks) · target {el, prev} · complete {step} · showMe {step} · showMeEnd (hold: the
      pointer comes home first) · showMeDone · cue {el} · press {el, x, y} · pointerFrom {at} · missing {on} ·
-     interrupt · pause {paused} · ending {status, keep, silent} (hold, alongside the restore) · end {status, keep}
-     (status 'restore-pending' when the layout could not go back and the tour stays) · landing {lead} (hold, then
-     the note) · landed {note}. A listener that throws is logged and skipped. */
+     interrupt · pause {paused} · ending {status, keep, silent, hush} (hold, alongside the restore; hush: true keeps
+     the app's own notices quiet while the restore runs) · end {status, keep} (status 'restore-pending' when the
+     layout could not go back and the tour stays) · closed (the root has gone) · landing {lead} (hold, then the note)
+     · landed {note} · unland {note} (the note's exit: a listener that returns a promise plays it; else a fade) ·
+     barMove {top} (the bar moved between the bottom and the top) · missing {on, sound} (sound: the event that marks
+     it, 'missing'; a listener may change it). A listener that throws is logged and skipped. */
   const hooks = {};
   TR.on = (name, fn) => { (hooks[name] = hooks[name] || []).push(fn); return () => { hooks[name] = (hooks[name] || []).filter((f) => f !== fn); }; };
   function emit(name, d) {
@@ -139,7 +142,14 @@
     document.body.appendChild(r);
     st.root = r;
     r.addEventListener('click', onClick);
-    ['keydown', 'keyup', 'keypress'].forEach((ev) => r.addEventListener(ev, (e) => { e.stopPropagation(); if (ev === 'keydown' && e.key === 'Escape') { e.preventDefault(); togglePause(); } }));
+    /* Escape closes the look menu first (focus back on its button); with no menu open it pauses */
+    ['keydown', 'keyup', 'keypress'].forEach((ev) => r.addEventListener(ev, (e) => {
+      e.stopPropagation();
+      if (ev !== 'keydown' || e.key !== 'Escape') return;
+      e.preventDefault();
+      if (st.lookOpen) { lookMenu(false); const b = r.querySelector('.o55t-bar [data-o55t="lookMenu"]'); if (b) b.focus({ preventScroll: true }); return; }
+      togglePause();
+    }));
     /* any real input during Show Me hands control back at once */
     ['pointerdown', 'keydown', 'wheel'].forEach((ev) => document.addEventListener(ev, (e) => { if (st.show && e.isTrusted && !r.contains(e.target)) interruptShow(); }, true));
     window.addEventListener('resize', () => { if (TR.running) { st.fixed = null; place(true); } });
@@ -157,23 +167,31 @@
   }
 
   /* ------------------------------------------------------------------ bar */
+  /* The bar is morphed, not rewritten: the control that has focus (a look row toggled by keyboard, the look button a
+     dialog will hand focus back to) is the same element after every redraw, and its tick blink keeps its phase. */
   function renderBar() {
     const bar = st.root.querySelector('.o55t-bar'), s = st.step, ch = s ? s.chapter : 'ask';
     const ci = CHAPTERS.indexOf(ch), inCh = TR.defs.filter((d) => d.chapter === ch), si = inCh.indexOf(s);
-    const deco = { chapter: ch, ci, si, total: inCh.length, pip: {} };
+    /* brand: markup a skin adds at the end of the bar's name (its short form on a narrow window) */
+    const deco = { chapter: ch, ci, si, total: inCh.length, pip: {}, brand: '' };
     emit('bar', deco);
     const pips = CHAPTERS.map((c, i) => {
       const steps = TR.defs.filter((d) => d.chapter === c);
       const ticks = steps.map((d) => `<i class="o55t-tick${st.sess.done.includes(d.id) ? ' o55t-on' : ''}${d === s ? ' o55t-cur' : ''}"></i>`).join('');
       return `<span class="o55t-pip${i < ci ? ' o55t-done' : i === ci ? ' o55t-cur' : ''}" title="${U.esc(T('tour.chapters.' + c))}"><span class="o55t-pipname">${U.esc(T('tour.chapters.' + c))}</span><span class="o55t-ticks">${ticks}</span>${deco.pip[c] || ''}</span>`;
     }).join('');
-    bar.innerHTML = `<span class="o55t-brand">${O55.c.small('spark', 14)}<span>${U.esc(T('tour.bar.label'))}</span></span><span class="o55t-pips" aria-label="${U.esc(T('tour.bar.progress', { n: ci + 1, name: T('tour.chapters.' + ch), s: si + 1, total: inCh.length }))}">${pips}</span>`
+    U.morph(bar, `<span class="o55t-brand">${O55.c.small('spark', 14)}<span>${U.esc(T('tour.bar.label'))}</span>${deco.brand}</span><span class="o55t-pips" aria-label="${U.esc(T('tour.bar.progress', { n: ci + 1, name: T('tour.chapters.' + ch), s: si + 1, total: inCh.length }))}">${pips}</span>`
       + `<span class="o55t-seg" role="radiogroup" aria-label="${U.esc(T('tour.bar.tips'))}"><span class="o55t-seglabel">${U.esc(T('tour.bar.tips'))}</span>`
       + ['normal', 'eli5'].map((v) => `<button type="button" role="radio" aria-checked="${st.tips === v}" class="${st.tips === v ? 'o55t-on' : ''}" data-o55t="tips" data-arg="${v}" data-pm-hover-exempt="true">${U.esc(T('tour.bar.' + v))}</button>`).join('') + '</span>'
       + `<button type="button" class="o55t-barbtn" data-o55t="pause" data-pm-hover-exempt="true">${U.esc(st.paused ? T('tour.bar.resume') : T('tour.bar.pause'))}</button>`
       + `<button type="button" class="o55t-barbtn" data-o55t="skip" data-pm-hover-exempt="true">${U.esc(T('tour.bar.skip'))}</button>`
       + (O55.lookMenu ? `<span class="o55t-lookslot">${O55.lookMenu.button('o55t-barbtn o55t-sound', 'data-o55t', st.lookOpen)}${st.lookOpen ? O55.lookMenu.panel('data-o55t') : ''}</span>` : '')
-      + O55.sound.buttonHtml('o55t-barbtn o55t-sound').replace('data-o55-do="sound"', 'data-o55t="sound"');
+      + O55.sound.buttonHtml('o55t-barbtn o55t-sound').replace('data-o55-do="sound"', 'data-o55t="sound"'));
+  }
+  /* the look menu opens and closes like a sheet, and sounds like one ('sheet', 'unsheet') */
+  function lookMenu(open) {
+    if (!!st.lookOpen === open) return;
+    st.lookOpen = open; O55.sound.play(open ? 'sheet' : 'unsheet'); renderBar();
   }
 
   /* ------------------------------------------------------------------ callout */
@@ -244,26 +262,29 @@
     putStyle(sh, 'clipPath', st.step && st.step.block ? `polygon(evenodd, 0 0, ${W}px 0, ${W}px ${H}px, 0 ${H}px, 0 0, ${x}px ${y}px, ${x}px ${y + hh}px, ${x + w}px ${y + hh}px, ${x + w}px ${y}px, ${x}px ${y}px)` : 'inset(50%)');
   }
   /* the hole glides to each new target on a critically damped spring (no overshoot), retargeting mid-flight */
+  const near = (a, b) => ['x', 'y', 'w', 'h'].every((k) => Math.abs(a[k] - b[k]) < 0.5);
   function moveHole(to) {
     if (!st.hole || !to) { st.hole = to; drawHole(to); return; }
     if (st.spring) { st.spring.retarget(to); return; }
     /* already there (the watch loop re-places every 140 ms): no spring; the redraw still applies this step's click
        shield, and writes nothing that has not changed */
-    if (['x', 'y', 'w', 'h'].every((k) => Math.abs(st.hole[k] - to[k]) < 0.5)) { drawHole(st.hole); return; }
+    if (near(st.hole, to)) { drawHole(st.hole); return; }
     const from = Object.assign({}, st.hole);
     const g = st.look && st.look.glide === 'steps' ? stepGlide(from, to) : M.spring({ from, to, stiffness: 190, onUpdate: (v) => { st.hole = v; drawHole(v); } });
     st.spring = g;
     g.finished.then(() => { if (st.spring === g) st.spring = null; });
   }
-  /* a stepped glide (a skin's choice): the hole jumps to its target in five held steps on the motion clock, and a new
-     target mid-flight starts a new glide from where it stands; it answers like the spring (retarget, cancel, finished) */
+  /* a stepped glide (a skin's choice): the hole jumps to its target in five held steps over 280 ms on the motion
+     clock, and always lands then. The watch loop re-places every 140 ms, so a retarget only moves the end of the
+     glide in flight (the tween reads its destination each frame): restarting it from where the hole stands would cover
+     a fraction of the gap each time and creep for seconds. It answers like the spring (retarget, cancel, finished). */
   function stepGlide(from, to) {
-    let tw = null, done;
-    const finished = new Promise((res) => { done = res; });
-    const go = (a, b) => { if (tw) tw.cancel(); const t = tw = M.tween({ from: a, to: b, duration: 280, ease: M.ease.steps(5), onUpdate: (v) => { st.hole = v; drawHole(v); } }); t.finished.then((ok) => { if (ok && tw === t) done(true); }); };
-    go(from, to);
-    return { retarget(b) { go(Object.assign({}, st.hole), b); }, cancel() { if (tw) tw.cancel(); tw = null; done(false); }, finished };
+    const dest = Object.assign({}, to);
+    const tw = M.tween({ from, to: dest, duration: 280, ease: M.ease.steps(5), onUpdate: (v) => { st.hole = v; drawHole(v); } });
+    return { retarget(b) { if (!near(dest, b)) Object.assign(dest, b); }, cancel() { tw.cancel(); }, finished: tw.finished };
   }
+  /* run fn once the spotlight stands where it is going (at once when it is not moving) */
+  TR.landed = (fn) => { const g = st.spring; if (g && g.finished) g.finished.then((ok) => { if (ok !== false && TR.running) fn(); }); else fn(); };
   function place(snap) {
     const el = targetEl(), h = holeFor(el);
     if (el !== st.target) { const prev = st.target; st.target = el; emit('target', { el, prev }); }
@@ -332,9 +353,14 @@
   function placeBar(h) {
     const bar = st.root.querySelector('.o55t-bar'); if (!bar) return;
     if (document.body.classList.contains('pm-home-dragging')) return; /* the bar holds still while something is carried */
+    /* and for the whole of a Show Me, in every look: the demonstration's own targets come and go (a menu opening at
+       the bottom), and a bar that leaps across the window mid-demo pulls the eye off what is being shown */
+    if (st.show) return;
     const H = innerHeight, bh = bar.offsetHeight || 44, bottomY = H - bh - 14;
-    const hitsBottom = h && h.y + h.h > bottomY - 6;
-    bar.classList.toggle('o55t-top', !!hitsBottom);
+    const top = !!(h && h.y + h.h > bottomY - 6);
+    if (bar.classList.contains('o55t-top') === top) return;
+    bar.classList.toggle('o55t-top', top);
+    emit('barMove', { top });
   }
 
   /* ------------------------------------------------------------------ the pointer (Show Me) */
@@ -396,54 +422,79 @@
       await P.press(false);
       return true;
     },
-    /* a real drag: pointerdown on the grip, a stream of pointermoves, pointerup at the destination */
+    /* a real drag: pointerdown on the grip, a stream of pointermoves, pointerup at the destination. The carry runs on
+       the clock, not on a count of moves: each move makes the workspace re-lay its drop preview, and on a busy page a
+       fixed 42 moves took twice their time, so a slow page sends fewer moves and the carry still lasts dur. The path
+       is a gentle arc over the straight line; o.via sends it down first and then across through that point (see
+       carryPath). Its drop sounds as the hand lets go, before the workspace's receipt sounds the step done. */
     async drag(el, to, o) {
       if (!el || SM.cancelled()) return false;
       const a = center(el); SM.cue(el); await M.delay(90); await P.moveTo(a.x, a.y); if (SM.cancelled()) return false;
       await P.press(true); O55.sound.play('pickup');
       const base = { bubbles: true, cancelable: true, button: 0, buttons: 1, pointerId: 7, pointerType: 'mouse', isPrimary: true };
+      const move = (x, y) => (document.elementFromPoint(x, y) || document).dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
       el.dispatchEvent(new PointerEvent('pointerdown', Object.assign({ clientX: a.x, clientY: a.y }, base)));
-      const span = Math.hypot(to.x - a.x, to.y - a.y), steps = (o && o.steps) || 42, dur = (o && o.dur) || Math.round(Math.min(1500, Math.max(900, 700 + span * 0.5)));
-      const mx = (a.x + to.x) / 2, my = Math.min(a.y, to.y) - 60, ease = (st.look && st.look.drag) || (family() === 'retro' ? M.ease.steps(12) : M.ease.hand);
-      for (let i = 1; i <= steps; i++) {
-        if (SM.cancelled()) break;
-        const t = ease(i / steps), x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * mx + t * t * to.x, y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * to.y;
-        P.pos = { x, y }; P.el().style.transform = `translate(${x}px, ${y}px)`;
-        const tgt = document.elementFromPoint(x, y) || document;
-        tgt.dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
-        await M.delay(dur / steps);
+      const span = Math.hypot(to.x - a.x, to.y - a.y), dur = (o && o.dur) || Math.round(Math.min(1500, Math.max(900, 700 + span * 0.5)));
+      const at = carryPath(a, to, o && o.via), ease = (st.look && st.look.drag) || (family() === 'retro' ? M.ease.steps(12) : M.ease.hand);
+      const t0 = M.now(); let last = '';
+      while (!SM.cancelled()) {
+        const p = Math.min(1, (M.now() - t0) / dur), [x, y] = at(ease(p)), k = Math.round(x) + ',' + Math.round(y);
+        /* a held step (NieR, Retro) sends nothing new until the hand moves */
+        if (k !== last) { last = k; P.pos = { x, y }; P.el().style.transform = `translate(${x}px, ${y}px)`; move(x, y); }
+        if (p >= 1) break;
+        await M.delay(16);
       }
       /* dwell on the destination the way a hand does: the workspace adopts a new drop target only after
          it has held for two frames, so a few small moves across several frames let the preview settle */
-      for (let j = 0; j < 4 && !SM.cancelled(); j++) {
-        const x = to.x + (j % 2), y = to.y + j * 0.5;
-        (document.elementFromPoint(x, y) || document).dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
-        await M.delay(48);
-      }
+      for (let j = 0; j < 4 && !SM.cancelled(); j++) { move(to.x + (j % 2), to.y + j * 0.5); await M.delay(48); }
       await M.delay(260); /* the destination has reacted (preview) before the drop */
-      const end = document.elementFromPoint(to.x, to.y) || document;
-      end.dispatchEvent(new PointerEvent('pointerup', Object.assign({ clientX: to.x, clientY: to.y }, base, { buttons: 0 })));
-      await P.press(false); O55.sound.play('drop');
+      if (SM.cancelled()) return false;
+      O55.sound.play('drop');
+      (document.elementFromPoint(to.x, to.y) || document).dispatchEvent(new PointerEvent('pointerup', Object.assign({ clientX: to.x, clientY: to.y }, base, { buttons: 0 })));
+      await P.press(false);
       return true;
     },
+    /* typing into a field it pressed: a letter every 18 ms, and the type tick at most every 120 ms (a chat cue's
+       spacing), so a long word is a patter rather than a buzz */
     async type(el, text) {
       if (!el || SM.cancelled()) return false;
       await SM.click(el, { noClick: true }); el.focus();
-      for (const ch of text) { if (SM.cancelled()) return false; el.value += ch; el.dispatchEvent(new Event('input', { bubbles: true })); if (/\S/.test(ch)) O55.sound.play('type'); await M.delay(18); }
+      let ticked = -1e9;
+      for (const ch of text) {
+        if (SM.cancelled()) return false;
+        el.value += ch; el.dispatchEvent(new Event('input', { bubbles: true }));
+        if (/\S/.test(ch) && M.now() - ticked >= 120) { ticked = M.now(); O55.sound.play('type'); }
+        await M.delay(18);
+      }
       return true;
     }
   };
+  /* where a carry is at t (0..1). By default a gentle arc over the straight line. With via: down first, then across
+     through via (a curve from a whose control point stands straight below a at via's height, then a straight run from
+     via into b). A carry from a high corner to a side dock then never sweeps along the top edge, where the workspace
+     would preview (and latch) its top dock. Each leg takes time in proportion to its length. */
+  function carryPath(a, b, via) {
+    if (!via) { const mx = (a.x + b.x) / 2, my = Math.min(a.y, b.y) - 60; return (t) => [(1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * mx + t * t * b.x, (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * b.y]; }
+    const c = { x: a.x, y: via.y }, q = (u) => [(1 - u) * (1 - u) * a.x + 2 * (1 - u) * u * c.x + u * u * via.x, (1 - u) * (1 - u) * a.y + 2 * (1 - u) * u * c.y + u * u * via.y];
+    let l1 = 0; for (let i = 1, p = q(0); i <= 8; i++) { const n = q(i / 8); l1 += Math.hypot(n[0] - p[0], n[1] - p[1]); p = n; }
+    const l2 = Math.hypot(b.x - via.x, b.y - via.y), f = l1 / Math.max(1, l1 + l2);
+    return (t) => { if (t <= f && f > 0) return q(t / f); const u = f < 1 ? (t - f) / (1 - f) : 1; return [via.x + (b.x - via.x) * u, via.y + (b.y - via.y) * u]; };
+  }
   async function showMe() {
     const s = st.step; if (!s || !s.showMe || st.show) return;
-    const me = st.show = { cancelled: false };
+    const me = st.show = { cancelled: false, step: s };
     st.root.setAttribute('data-showme', 'true');
     emit('showMe', { step: s }); /* the pointer's travel is its sound ('pointer'), so the button itself is quiet */
     try { await s.showMe(SM, st); } catch (err) { console.warn('O55 tour: Show Me stopped', err); }
     await M.delay(600); /* settle: the result stays visible while the guide names the change */
-    if (st.show === me && !me.cancelled) await settle(emit('showMeEnd', { step: s }), 1200);
+    /* the pointer comes home (a skin may wait for the next step's callout and fly there: allow for its arrival) */
+    if (st.show === me && !me.cancelled) await settle(emit('showMeEnd', { step: s }), 2800);
     if (st.show !== me) return; /* a real input took over meanwhile and has already put the pointer away */
     st.show = null; st.root.removeAttribute('data-showme'); P.hide();
     emit('showMeDone', { step: s });
+    /* a step that arrived during the demonstration could not take focus then (see renderCallout): it takes it now */
+    if (st.step !== s && TR.running) { const h = st.root.querySelector('.o55t-callout #o55t-h'); if (h) h.focus({ preventScroll: true }); }
+    if (TR.running && st.step) place(false); /* the bar may move now (it holds still during a Show Me) */
   }
   function interruptShow() {
     if (!st.show) return;
@@ -504,11 +555,20 @@
   function watch() {
     if (st.poll) st.poll.cancel();
     const tick = () => {
-      if (!TR.running || !st.step) { st.poll = null; return; } /* the tour has ended (or is between runs): the loop stops */
+      /* the tour has ended or is closing (its restore moves things about), or Back is rewinding (the rewind's receipts
+         would count the step done again): the loop stops */
+      if (!TR.running || !st.step || st.ending || st.rewinding) { st.poll = null; return; }
       if (st.paused) { st.poll = M.after(250, tick); return; }
       const s = st.step, el = targetEl();
-      /* a surface being dragged is hidden by the workspace on purpose; that is never a missing target */
-      if (s.target && !el && !document.body.classList.contains('pm-home-dragging')) { if (!st.missingSince) st.missingSince = performance.now(); if (!st.missing && performance.now() - st.missingSince > 1600) { st.missing = true; renderCallout(true); O55.sound.play('missing'); emit('missing', { on: true }); } }
+      /* a surface being dragged is hidden by the workspace on purpose; that is never a missing target. Its grace runs
+         on the motion clock, like everything it waits beside. */
+      if (s.target && !el && !document.body.classList.contains('pm-home-dragging')) {
+        if (!st.missingSince) st.missingSince = M.now();
+        if (!st.missing && M.now() - st.missingSince > 1600) {
+          st.missing = true; renderCallout(true);
+          const d = { on: true, sound: 'missing' }; emit('missing', d); if (d.sound) O55.sound.play(d.sound);
+        }
+      }
       else { st.missingSince = 0; if (st.missing) { st.missing = false; renderCallout(false); emit('missing', { on: false }); } }
       if (s.tick) { try { s.tick(st); } catch (_) {} }
       if (s.kind === 'info' && s.ready) { const r = !!s.ready(st); if (r !== st.lastReady) { st.lastReady = r; renderCallout(false); } }
@@ -522,12 +582,12 @@
     st.poll = M.after(140, tick);
     /* a command receipt (a panel moved, a widget placed) re-checks at once, so success is acknowledged in the frame
        the app confirms it rather than at the next poll */
-    st.kick = () => { if (!TR.running || st.paused) return; if (st.poll) st.poll.cancel(); tick(); };
+    st.kick = () => { if (!TR.running || st.paused || st.ending || st.rewinding) return; if (st.poll) st.poll.cancel(); tick(); };
   }
   window.addEventListener('pm:dispatch-receipt', () => { if (st.kick && TR.running) queueMicrotask(st.kick); });
   /* success: acknowledge in the same frame, show the "after" line, then move on (the advance guard stops doubles) */
   function complete(s) {
-    if (st.advancing) return; st.advancing = true;
+    if (st.advancing || st.rewinding || st.ending) return; st.advancing = true;
     if (!st.sess.done.includes(s.id)) st.sess.done.push(s.id);
     save(); O55.sound.play('checkpoint', { step: s.index }); renderBar(); renderCallout(false);
     const hold = s.after ? 2200 : 900;
@@ -538,7 +598,7 @@
   TR.complete = () => st.step && complete(st.step);
 
   function onClick(e) {
-    if (st.lookOpen && !e.target.closest('.o55t-lookslot')) { st.lookOpen = false; renderBar(); }
+    if (st.lookOpen && !e.target.closest('.o55t-lookslot')) lookMenu(false);
     const b = e.target.closest('[data-o55t]'); if (!b) return;
     e.preventDefault(); e.stopPropagation();
     if (st.ending) return; /* the tour is closing: one Finish or Skip is enough */
@@ -552,7 +612,7 @@
     if (a === 'tips') { st.tips = arg; st.sess.tips = arg; save(); O55.sound.play('select'); renderBar(); renderCallout(false); return; }
     if (a === 'sound') { O55.sound.toggle('tour'); renderBar(); return; }
     /* the look, after setup: saved through Settings at once (the tour follows the change) */
-    if (a === 'lookMenu') { st.lookOpen = !st.lookOpen; renderBar(); return; }
+    if (a === 'lookMenu') { lookMenu(!st.lookOpen); return; }
     if (a === 'lookFamily') { O55.lookMenu.save(arg, O55.theme().mode); return; }
     if (a === 'lookMode') { O55.lookMenu.save(O55.theme().chosen, arg); return; }
     /* NieR Mode in the look menu: the checkbox and Adjust NieR look (O55.lookMenu.nier, after setup: live) */
@@ -560,8 +620,10 @@
       if (!(O55.lookMenu && O55.lookMenu.nier)) return;
       /* Adjust opens the Plug-in Chips dialog: the menu closes first, so the dialog returns focus to the bar's look
          button (the redrawn one) rather than to a control the redraw removed */
-      if (a === 'lookNierAdjust') { st.lookOpen = false; renderBar(); }
+      if (a === 'lookNierAdjust') lookMenu(false);
       O55.lookMenu.nier(a, (a === 'lookNierAdjust' && st.root.querySelector('.o55t-bar [data-o55t="lookMenu"]')) || b);
+      /* the checkbox shows the request in this frame (the repaint it asks for follows) */
+      if (a === 'lookNier') renderBar();
       return;
     }
     if (a === 'takeMe') { O55.sound.play('select'); if (st.step.goTo) st.step.goTo(st); st.missing = false; st.missingSince = 0; renderCallout(false); emit('missing', { on: false }); return; }
@@ -726,9 +788,12 @@
     ++st.seq; st.entering = false;
     if (st.poll) { st.poll.cancel(); st.poll = null; } interruptShow();
     if (st.step && st.step.leave) { try { st.step.leave(st); } catch (_) {} }
-    /* a skin's closing moment plays while the layout goes back beneath it */
-    const ceremony = settle(emit('ending', { status, keep: !!keep, silent: !!(o && o.silent) }), 2400);
-    const res = await restore(st.snap, keep);
+    /* a skin's closing moment plays while the layout goes back beneath it; it may ask for the app's own notices
+       ("Widget removed", "Applied from the next turn") to stay quiet meanwhile, since its band already says what
+       is happening */
+    const closing = { status, keep: !!keep, silent: !!(o && o.silent), hush: false };
+    const ceremony = settle(emit('ending', closing), 2400);
+    const res = await hushed(closing.hush, () => restore(st.snap, keep));
     await ceremony;
     if (res.layout === 'failed' || res.widgets === 'failed' || !res.chat || res.chat.status !== 'restored') {
       st.sess.restored = res; st.sess.status = 'restore-pending';
@@ -753,8 +818,16 @@
     if (st.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
     st.root.classList.add('o55t-closing'); if (!(o && o.silent)) O55.sound.play(status === 'done' ? 'finish' : 'close');
     emit('end', { status, keep: !!keep });
-    M.after(360, () => { st.root.hidden = true; st.root.classList.remove('o55t-closing'); st.step = null; st.hole = null; st.target = null; });
+    /* (a new run started inside these 360 ms keeps its root, its step and its spotlight) */
+    M.after(360, () => { st.root.classList.remove('o55t-closing'); if (TR.running) return; st.root.hidden = true; st.step = null; st.hole = null; st.target = null; emit('closed', {}); });
     return res;
+  }
+  /* run fn with the page's toasts silenced (only when asked): what the tour's own restore raises is dropped */
+  async function hushed(on, fn) {
+    const t = window.toast;
+    if (!on || typeof t !== 'function') return fn();
+    const quiet = window.toast = function () {};
+    try { return await fn(); } finally { if (window.toast === quiet) window.toast = t; }
   }
   /* a toast that belongs to the page (the tour root and the onboarding window may both be gone) */
   O55.pageToast = function pageToast(text, ms) {

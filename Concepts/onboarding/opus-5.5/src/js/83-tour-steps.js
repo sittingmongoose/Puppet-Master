@@ -112,7 +112,10 @@
     done: () => { const s = chatSurface(); return !!(s && s.visible && (s.host === 'dock_left' || s.host === 'dock_top')); },
     showMe: async (sm) => {
       if (stacked()) { await sm.click(document.querySelector('#pm-o55-tour [data-o55t="moveChatTop"]')); return; }
-      const b = leftBand(); if (b) await sm.drag(q('[data-pm-home-handle="chat"]'), { x: b.x + 12, y: b.y + b.h * 0.45 });
+      /* down out of the right dock first, then straight across into the left band: an arc over the top would pass
+         the workspace's top-dock band, which previews (and holds) Top dock for most of the carry */
+      const b = leftBand(), ws = document.getElementById('pm-home-workspace');
+      if (b && ws) { const r = ws.getBoundingClientRect(), y = b.y + b.h * 0.45; await sm.drag(q('[data-pm-home-handle="chat"]'), { x: b.x + 12, y }, { via: { x: r.left + r.width * 0.5, y } }); }
     },
     goTo: () => goPage('dashboard') });
 
@@ -254,15 +257,27 @@
 
   /* landing: a short note on the real Planning Wizard once the tour has gone (a skin may hold it back until its own
      finish has folded away, so nothing lands on top of it, and may give it a lead word) */
+  /* the note's exit: a skin's (a listener on 'unland' that returns a promise), else a fade; then it goes. A second
+     landing while one shows takes the note over, and the first one's exit is cancelled. */
+  let leaving = null;
+  async function unland(note) {
+    if (!note.isConnected) return;
+    const out = TR.emit('unland', { note });
+    if (out.length) await TR.settle(out, 900);
+    else { note.classList.add('o55t-leaving'); await M.delay(500); }
+    note.remove();
+  }
   TR.landing = async function landing() {
     const deco = { lead: '' };
     await TR.settle(TR.emit('landing', deco), 7000);
     const host = document.querySelector('#pm6WizStageIntake .pm6-wiz-intake-scroll'); if (!host || TR.running) return;
     let note = document.getElementById('o55tLanding');
+    if (leaving) { leaving.cancel(); leaving = null; }
     if (!note) { note = document.createElement('div'); note.id = 'o55tLanding'; note.className = 'o55t-landing'; note.setAttribute('role', 'status'); const hero = host.querySelector('.pm6-wiz-hero'); host.insertBefore(note, hero ? hero.nextSibling : host.firstChild); }
-    note.innerHTML = `${O55.c.small('seed', 16)}<span>${deco.lead ? `<b class="o55t-landlead">${U.esc(deco.lead)}</b> ` : ''}${U.esc(T('tour.landing'))}</span>`;
+    note.classList.remove('o55t-leaving');
+    note.innerHTML = `${O55.c.small('seed', 16)}<span>${deco.lead ? `<b class="o55t-landlead">${U.esc(deco.lead)}</b> ` : ''}<span class="o55t-landwords">${U.esc(T('tour.landing'))}</span></span>`;
     TR.emit('landed', { note });
-    M.after(9000, () => { if (note.isConnected) note.classList.add('o55t-leaving'); M.after(500, () => note.remove()); });
+    const mine = leaving = M.after(9000, () => { if (leaving === mine) leaving = null; unland(note); });
     /* a phone-width window may have Chat over the Wizard again: say it where it will be seen as well */
     if (innerWidth < 600) O55.pageToast(T('tour.landing'), 6000);
   };
