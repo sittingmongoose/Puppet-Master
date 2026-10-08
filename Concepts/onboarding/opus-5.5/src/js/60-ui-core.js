@@ -66,9 +66,18 @@
     return `<svg class="o55-logo" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M5 9h22M16 4v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`
       + `<path d="M8 9v9M24 9v9M16 18v5" stroke="currentColor" stroke-width="1.2" stroke-dasharray="1.6 2.2"/><circle cx="8" cy="21" r="2.6" fill="currentColor"/><circle cx="24" cy="21" r="2.6" fill="currentColor"/><circle cx="16" cy="26" r="2.6" fill="currentColor"/></svg>`;
   }
+  /* the window's size from the viewport, by its own rule in 10-window.css (min(1080px, 100vw - 48px) by min(720px,
+     100vh - 48px); 100vw - 16px by 100vh - 16px under 560 px), so opening it never forces a layout of the page in
+     the middle of its build (films: 150 ms); measured only when the page is zoomed (Settings' interface scale) */
+  function winSize() {
+    const z = document.body ? Number.parseFloat(document.body.style.zoom) : NaN;
+    if (Number.isFinite(z) && z > 0 && z !== 1) { const w = S.root.querySelector('.o55-win'); if (w) { const r = w.getBoundingClientRect(); return { width: r.width, height: r.height }; } }
+    const vw = window.innerWidth, vh = window.innerHeight, small = vw <= 560;
+    return { width: small ? vw - 16 : Math.min(1080, vw - 48), height: small ? vh - 16 : Math.min(720, vh - 48) };
+  }
   function layoutClass() {
-    const w = S.root.querySelector('.o55-win'); if (!w) return;
-    const r = w.getBoundingClientRect(), layout = r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide';
+    if (!S.root.querySelector('.o55-win')) return;
+    const r = winSize(), layout = r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide';
     if (S.root.getAttribute('data-o55-layout') !== layout) S.root.setAttribute('data-o55-layout', layout);
     /* the concept demo pill folds into a slim tab beside a narrow window (12-components.css) */
     const demo = document.getElementById('o55-demo');
@@ -309,10 +318,10 @@
       /* The opening may be the skin's to play first (NieR's cold open: the window opens empty, a boot log runs where the
          title will be and its line becomes the title's rule). The screen waits for the skin's promise, or for a key or
          a press, which shows it at once (a key also lands on its primary); the stage shows when the promise says
-         (gate.stageAt ms: the cold open's set decodes in as the header assembles), or at once. */
+         (gate.stage, a promise: the cold open's set decodes in as the header assembles), or at once. */
       const gate = dir === 'open' && layer.isConnected ? skin('openGate', layer) : null;
-      const stageAt = gate && +gate.stageAt > 0 ? +gate.stageAt : stageWait;
-      if (stageAt) O55.motion.after(stageAt, releaseStage); else releaseStage();
+      if (gate && gate.stage && typeof gate.stage.then === 'function') gate.stage.then(releaseStage, releaseStage);
+      else if (stageWait) O55.motion.after(stageWait, releaseStage); else releaseStage();
       let shown = false;
       const show = (byKey) => {
         if (shown) return; shown = true;
@@ -526,6 +535,10 @@
     });
   }
   O55.solid = { get: () => SOLID, set(v) { SOLID = v == null ? null : !!v; setSolid(!!SOLID && S.open); } };
+  /* (asking the browser whether it renders in software builds a WebGL context, 180 ms on the VM: done once while the
+     page is idle after it loads, never inside the window's opening) */
+  const warm = () => { try { O55.motion.softwareRendered(); } catch (_) {} };
+  if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(warm, { timeout: 6000 }); else window.setTimeout(warm, 3000);
 
   function open(opts) {
     opts = opts || {};
@@ -578,10 +591,13 @@
     /* (each onboarding run is a run of the score: its chapters sting once each, O55.sound) */
     O55.sound.setContext({ chapter: (cur.chapterFor ? cur.chapterFor(S) : cur.chapter) || 'welcome', step: S.sess.history.length, run: S.sess.started + '|' + (S.epoch || 0) });
     S.railHold = null;
-    /* the skin may open with a silence of its own: the window's first sound then waits that many ms */
+    /* the skin may open with a silence of its own: the window's first sound then waits that many ms ('skin': the skin
+       plays it) */
     const quietOpen = skin('open', { resumed: S.resumed, shown: wasShown, screen: S.sess.screen });
     transition('open');
-    if (typeof quietOpen === 'number' && quietOpen > 0) O55.motion.after(quietOpen, () => { if (S.open) O55.sound.play('open'); });
+    /* (or the skin plays the window's first sound itself, with its own picture: 'skin') */
+    if (quietOpen === 'skin') { /* the skin's */ }
+    else if (typeof quietOpen === 'number' && quietOpen > 0) O55.motion.after(quietOpen, () => { if (S.open) O55.sound.play('open'); });
     else O55.sound.play('open');
     const chip = document.getElementById('o55-resume'); if (chip) chip.remove();
     if (waitNote) O55.motion.after(700, () => O55.ui.toast(T('chrome.startOverWait')));

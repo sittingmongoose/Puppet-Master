@@ -396,8 +396,13 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboardi
    window (steps(6)); T300-T560 it opens into an empty window (its frame, the header's rule, the ground and the grid);
    from T560 the header assembles left to right: the brand block slices in, the rail's ruler draws in 8 steps and the
    chapter boxes step in 40 ms apart, then the header's buttons. The boot log runs in the pane meanwhile (O55.nierFx),
-   and the screen shows when its line has become the eyebrow's rule. The times run from the window's release. */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening[data-o55nw-cold] .o55-win { animation: o55nw-win-cold 560ms linear both; }
+   and the screen shows when its line has become the eyebrow's rule. The times run from the moment the opening starts
+   (data-o55nw-go: the window's heavy first frames are over). */
+/* the window waits collapsed to nothing (the scrim dims the app meanwhile) until its heavy first frames are over
+   (data-o55nw-go, 66-nier-window.js openGate); then everything below starts together */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold]:not([data-o55nw-go]) .o55-win { animation: none; clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold]:not([data-o55nw-go]) :is(.o55-brand, .o55-rail, .o55-headctl) { visibility: hidden; }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-win { animation: o55nw-win-cold 560ms linear both; }
 @keyframes o55nw-win-cold {
   0% { clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); animation-timing-function: step-end; }
   21.4% { clip-path: inset(calc(50% - 1px) 50% calc(50% - 1px) 50%); animation-timing-function: steps(6, end); }
@@ -405,22 +410,22 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboardi
   96% { clip-path: inset(0 0 0 0); animation-timing-function: step-end; }
   100% { clip-path: inset(-80px -80px -80px -80px); } }
 /* the hairline is ink (it is the window's middle, drawn over in ink until the window opens from it) */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding.o55-opening[data-o55nw-cold] .o55-win::after {
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-win::after {
   content: ""; position: absolute; z-index: 9; left: 0; right: 0; top: calc(50% - 1px); height: 2px; background: var(--o55-nier-ink); pointer-events: none;
   animation: o55nw-cold-line 560ms step-end both; }
 @keyframes o55nw-cold-line { 0%, 53.5% { opacity: 1; } 53.6%, 100% { opacity: 0; } }
-html[data-o55-nier-parts~="headers"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-brand { animation: o55nw-cold-brand 120ms steps(4, end) 560ms both; }
+html[data-o55-nier-parts~="headers"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-brand { animation: o55nw-cold-brand 120ms steps(4, end) 560ms both; }
 @keyframes o55nw-cold-brand { from { clip-path: polygon(0 0, 0 0, 0 calc(100% - 9px), 0 100%, 0 100%); } to { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%); } }
-html[data-o55-nier="on"]:not([data-o55-nier-parts~="headers"]):not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-brand { animation: o55nw-cold-in 1ms step-end 560ms both; }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railbar { transform-origin: 0 50%; animation: o55nw-cold-rule 240ms steps(8, end) 560ms both; }
+html[data-o55-nier="on"]:not([data-o55-nier-parts~="headers"]):not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-brand { animation: o55nw-cold-in 1ms step-end 560ms both; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-railbar { transform-origin: 0 50%; animation: o55nw-cold-rule 240ms steps(8, end) 560ms both; }
 @keyframes o55nw-cold-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem { animation: o55nw-cold-in 1ms step-end 600ms both; }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(2) { animation-delay: 640ms; }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(3) { animation-delay: 680ms; }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(4) { animation-delay: 720ms; }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(5) { animation-delay: 760ms; }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-railitem:nth-child(6) { animation-delay: 800ms; }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold] .o55-headctl { animation: o55nw-cold-in 1ms step-end 760ms both; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-railitem { animation: o55nw-cold-in 1ms step-end 600ms both; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-railitem:nth-child(2) { animation-delay: 640ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-railitem:nth-child(3) { animation-delay: 680ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-railitem:nth-child(4) { animation-delay: 720ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-railitem:nth-child(5) { animation-delay: 760ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-railitem:nth-child(6) { animation-delay: 800ms; }
+html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-headctl { animation: o55nw-cold-in 1ms step-end 760ms both; }
 @keyframes o55nw-cold-in { from { opacity: 0; } to { opacity: 1; } }
 /* the screen the log opened on: its eyebrow is there at once (the log's line has just become its rule), and the
    promise rows step in 80 ms apart from 440 ms (each with a phase tick) */

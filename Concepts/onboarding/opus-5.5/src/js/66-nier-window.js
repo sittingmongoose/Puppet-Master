@@ -515,6 +515,31 @@
     return { left: r.left, top: r.bottom - 1, width: r.width, height: 1 };
   }
 
+  /* the first two frames in a row under 34 ms each (after at least three), or cap ms: the window's heavy first frames
+     are over */
+  function calmFrames(cap) {
+    return new Promise((res) => {
+      const raf = M.real.raf, t0 = performance.now();
+      let last = 0, n = 0, calm = 0;
+      const step = (t) => {
+        if (last) calm = t - last < 34 ? calm + 1 : 0;
+        last = t; n++;
+        if ((n >= 3 && calm >= 2) || performance.now() - t0 > cap) { res(); return; }
+        raf(step);
+      };
+      raf(step);
+      M.real.setTimeout(res, cap + 400); /* a hidden page draws no frames */
+    });
+  }
+  /* the cold open cannot play (no effects, no screen to caption): the window opens as it would without it */
+  function coldOff(cold) {
+    const R = runState(), r = rootEl();
+    if (r) ['data-o55nw-cold', 'data-o55nw-go'].forEach((a) => r.removeAttribute(a));
+    if (cold && R.cold === cold) { cold.asleep = false; R.cold = null; }
+    podHold(false);
+    if (cold && !cold.opened) { cold.opened = true; play('open'); }
+  }
+
   /* ------------------------------------------------------------------ a screen's entrance under NieR Mode */
   function draw(layer, dir, def, pr, F, o) {
     const R = runState(), pane = layer.parentElement, h = layer.querySelector('#o55-h');
@@ -623,7 +648,7 @@
          first arrival in a chapter */
       if (s && s.sess) (s.sess.history || []).concat([s.sess.screen]).forEach((id) => { const d = O55.screens.defs[id]; if (d) R.maxIdx = Math.max(R.maxIdx, O55.stages.progress(s, d).index); });
       cancelAll(); podUntil = 0;
-      if (r) ['data-o55nw-cold', 'data-o55nw-hand', 'data-o55nw-scrim'].forEach((a) => r.removeAttribute(a));
+      if (r) ['data-o55nw-cold', 'data-o55nw-go', 'data-o55nw-hand', 'data-o55nw-scrim'].forEach((a) => r.removeAttribute(a));
       podHold(false);
       if (!r || !painted() || o.shown || calm() || !has('boot')) return false;
       R.cold = { kind: o.resumed ? 'resume' : 'start', asleep: !o.resumed && o.screen === 'welcome' && nierArt() };
@@ -631,43 +656,55 @@
       const def = O55.screens.defs[s.sess.screen];
       if (def && has('headers')) s.railHold = Object.assign({}, O55.stages.progress(s, def), { index: -1 });
       podHold(true);
-      return 120;
+      /* (the window's first sound is the skin's: it plays with the line, once the window has started to open) */
+      return 'skin';
     },
     asleep() { return !!(run && run.cold && run.cold.asleep); },
     /* The boot log in the pane at the title's place: its lines caption the troupe's wake (each stamp is a beat of it),
-       then the log closes onto its underline, which slides up to become the eyebrow's rule, and the screen shows. The
-       stage shows at T560, asleep. */
+       then the log closes onto its underline, which slides up to become the eyebrow's rule, and the screen shows.
+       Building the window is the heaviest work of the run (its first visible frame styles and measures every scene of
+       it, most of a second on a slow computer), and a choreography started in that frame would be over before it was
+       seen (films: the window appeared already open). So the opening waits, the scrim dimming the app meanwhile and the
+       window collapsed to nothing, for the first two calm frames (at most 1.2 s), and everything starts there: the line,
+       the opening, the header assembling, the log, its first sound; the stage shows 560 ms later (promise.stage). */
     openGate(layer) {
       const R = runState(), cold = R.cold, F = fx();
-      if (!cold || !F || !painted() || !layer || !layer.isConnected) return null;
+      if (!cold || !F || !painted() || !layer || !layer.isConnected) { coldOff(cold); return null; }
       const pane = layer.parentElement, content = layer.querySelector('.o55-content');
       const anchor = layer.querySelector('.o55-eyebrow') || layer.querySelector('#o55-h');
-      if (!pane || !content || !anchor) return null;
-      const cr = content.getBoundingClientRect(), ar = anchor.getBoundingClientRect();
-      const lines = cold.kind === 'resume' ? [{ text: T('log.resume') }, { text: T('log.kept') }] : [{ text: T('log.check') }, { text: T('log.look') }, { text: T('log.wake') }, podLine()];
-      const log = F.bootlog(pane, lines, { kicker: T('log.kicker'), at: { left: cr.left, top: ar.top, width: cr.width, height: Math.max(10, ar.height) }, lineMs: 210, meterCells: 16, delay: cold.kind === 'resume' ? 560 : 800 });
-      if (!log.el) {
-        const r = rootEl(); if (r) r.removeAttribute('data-o55nw-cold');
-        R.cold = null; podHold(false);
-        return null;
-      }
-      cold.log = log;
-      /* the log's frame (its meter cells, its underline) shows with its kicker, not in the empty window before it */
-      const at0 = cold.kind === 'resume' ? 560 : 800;
-      if (log.el.animate) log.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: at0 - 20, fill: 'backwards' });
-      layer.setAttribute('data-o55nw-cold', cold.kind);
-      const st = stageEl(), tr = troupe();
-      if (cold.asleep && tr && tr.wake && st) {
-        tr.wake(st, { at: { slit: log.stamps[0], link: log.stamps[1], takeup: log.stamps[2], boot: log.stamps[3] } }).then(() => { cold.asleep = false; });
-      } else cold.asleep = false;
-      /* Pod hops into its corner at the last stamp (silent) */
-      log.stamps[lines.length - 1].then(() => { if (R.cold === cold && !cold.snapped) podIn({ hops: 6, ms: 360 }); });
-      const gate = log.done.then(() => {
-        if (R.cold !== cold || cold.snapped) return false;
-        const to = ruleOf(layer);
-        return log.close(to ? { to, edge: 'middle' } : {});
+      if (!pane || !content || !anchor) { coldOff(cold); return null; }
+      let stageRes;
+      const stage = new Promise((res) => { stageRes = res; });
+      const gate = calmFrames(1200).then(() => {
+        const r = rootEl();
+        if (R.cold !== cold || cold.snapped || !layer.isConnected || !r) { stageRes(); return false; }
+        r.setAttribute('data-o55nw-go', '');
+        M.quiet(2600);
+        M.after(120, () => { if (!cold.snapped && shown()) { cold.opened = true; play('open'); } });
+        M.after(560, stageRes);
+        /* reads first: where the log stands (the held screen is laid out) */
+        const cr = content.getBoundingClientRect(), ar = anchor.getBoundingClientRect();
+        const lines = cold.kind === 'resume' ? [{ text: T('log.resume') }, { text: T('log.kept') }] : [{ text: T('log.check') }, { text: T('log.look') }, { text: T('log.wake') }, podLine()];
+        const at0 = cold.kind === 'resume' ? 560 : 800;
+        const log = F.bootlog(pane, lines, { kicker: T('log.kicker'), at: { left: cr.left, top: ar.top, width: cr.width, height: Math.max(10, ar.height) }, lineMs: 210, meterCells: 16, delay: at0 });
+        if (!log.el) { coldOff(cold); return false; }
+        cold.log = log;
+        /* the log's frame (its meter cells, its underline) shows with its kicker, not in the empty window before it */
+        if (log.el.animate) log.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: at0 - 20, fill: 'backwards' });
+        layer.setAttribute('data-o55nw-cold', cold.kind);
+        const st = stageEl(), tr = troupe();
+        if (cold.asleep && tr && tr.wake && st) {
+          tr.wake(st, { at: { slit: log.stamps[0], link: log.stamps[1], takeup: log.stamps[2], boot: log.stamps[3] } }).then(() => { cold.asleep = false; });
+        } else cold.asleep = false;
+        /* Pod hops into its corner at the last stamp (silent) */
+        log.stamps[lines.length - 1].then(() => { if (R.cold === cold && !cold.snapped) podIn({ hops: 6, ms: 360 }); });
+        return log.done.then(() => {
+          if (R.cold !== cold || cold.snapped) return false;
+          const to = ruleOf(layer);
+          return log.close(to ? { to, edge: 'middle' } : {});
+        });
       });
-      gate.stageAt = 560;
+      gate.stage = stage;
       return gate;
     },
     /* a key or a press during the cold open: the log goes, the troupe stands, the window and header show whole */
@@ -678,8 +715,9 @@
       const st = stageEl(), tr = troupe();
       if (st && tr && tr.snap) tr.snap(st);
       const r = rootEl();
-      if (r) { r.classList.remove('o55-opening'); r.removeAttribute('data-o55nw-cold'); r.querySelectorAll('.o55-layer[data-o55nw-cold]').forEach((l) => l.removeAttribute('data-o55nw-cold')); }
+      if (r) { r.classList.remove('o55-opening'); ['data-o55nw-cold', 'data-o55nw-go'].forEach((a) => r.removeAttribute(a)); r.querySelectorAll('.o55-layer[data-o55nw-cold]').forEach((l) => l.removeAttribute('data-o55nw-cold')); }
       podHold(false);
+      if (!cold.opened) { cold.opened = true; play('open'); }
     },
 
     /* a screen change asks before it starts: the new chapter's sting is this skin's when an act card will land on it
@@ -746,7 +784,7 @@
       /* the brackets wait for the entrance to settle (step 4) */
       R.at = M.now(); R.marksAt = Infinity;
       meter(layer); brand(true);
-      if (cold) { const r = rootEl(); if (r) r.removeAttribute('data-o55nw-cold'); if (!cold.log) podHold(false); }
+      if (cold) { const r = rootEl(); if (r) ['data-o55nw-cold', 'data-o55nw-go'].forEach((a) => r.removeAttribute(a)); if (!cold.log) podHold(false); if (!cold.opened) { cold.opened = true; play('open'); } }
       const F = fx(); if (!F) return false;
       /* The effects start at the next frame. This frame (the release) styles and lays out the new screen once; the
          effects' measurements then read a finished layout instead of forcing it again in the middle of it (films M1).
@@ -866,7 +904,7 @@
       if (O55.nierFx && O55.nierFx.pod) O55.nierFx.pod.hush(true);
       const R = runState(), hand = R.hand, r = rootEl();
       R.hand = null; R.cold = null;
-      if (r) { r.removeAttribute('data-o55nw-cold'); if (!hand) ['data-o55nw-hand', 'data-o55nw-scrim'].forEach((a) => r.removeAttribute(a)); }
+      if (r) { r.removeAttribute('data-o55nw-cold'); r.removeAttribute('data-o55nw-go'); if (!hand) ['data-o55nw-hand', 'data-o55nw-scrim'].forEach((a) => r.removeAttribute(a)); }
       if (hand && handoff && reason === 'done' && painted()) return handOver(hand);
       if (hand) { hand.lineRes(null); hand.podRes(null); }
       return false;
