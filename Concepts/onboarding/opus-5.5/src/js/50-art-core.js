@@ -559,8 +559,10 @@
       const t = O55.motion.after(900, done);
       current.addEventListener('animationend', (e) => { if (e.target === current) { t.cancel(); done(); } });
     }
-    /* held (a screen change): the new scene waits unseen and the old one waits in place until O55.art.release */
-    if (ctx && ctx.hold) { wrap.classList.add('o55-hold'); if (current) current.classList.add('o55-wait'); }
+    /* held (a screen change): the new scene waits unseen and the old one waits in place, both paused, until
+       O55.art.release (.o55-scene-held / .o55-scene-waiting: 30-art.css pauses the parts that move, so the release
+       restyles only those) */
+    if (ctx && ctx.hold) { wrap.classList.add('o55-scene-held'); if (current) current.classList.add('o55-scene-waiting'); }
     host.appendChild(wrap);
     O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
     /* a held ensemble that nobody lowers in (its caller failed or never came) is lowered in by itself */
@@ -569,7 +571,7 @@
     return wrap;
   };
   A.release = function release(host) {
-    if (host) host.querySelectorAll(':scope > .o55-scene-wrap.o55-hold, :scope > .o55-scene-wrap.o55-wait').forEach((w) => w.classList.remove('o55-hold', 'o55-wait'));
+    if (host) host.querySelectorAll(':scope > .o55-scene-wrap.o55-scene-held, :scope > .o55-scene-wrap.o55-scene-waiting').forEach((w) => w.classList.remove('o55-scene-held', 'o55-scene-waiting'));
   };
 
   /* Shared parametric helpers used by several families. */

@@ -497,7 +497,7 @@
   /* ---------------------------------------------------------------- bow, rise, point, wave */
   T.bow = function bow(host, o) {
     o = o || {};
-    const svg = o.svg || (host && host.querySelector(':scope > .o55-scene-wrap.o55-wait svg.o55-scene')) || sceneSvg(host);
+    const svg = o.svg || (host && host.querySelector(':scope > .o55-scene-wrap.o55-scene-waiting svg.o55-scene')) || sceneSvg(host);
     if (!svg) return Promise.resolve(false);
     const hs = (o.keys ? o.keys.map((k) => item(svg, k)) : units(svg)).filter((g) => g && pose(g) && pose(g) !== 'bow');
     if (!hs.length || !acts(svg)) return Promise.resolve(false);

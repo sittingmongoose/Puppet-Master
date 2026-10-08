@@ -31,19 +31,23 @@
     return { cancel() { cancelled = true; if (id != null) real.clearTimeout(id); } };
   };
   /* settled(el, {subtree, fallback}) -> Promise: resolves when the element's running animations finish (or are
-     cancelled), with a clock-scaled fallback so a missed event never strands a class. */
+     cancelled), with a clock-scaled fallback so a missed event never strands a class. The animations are listed two
+     frames on, in that frame's read phase (O55.nierFx.measure: after its own style, before its paint): getAnimations()
+     brings style up to date first, and in the animation frame itself it made the browser style a just-released screen
+     early (about 3 ms over 70 elements on the VM, in a screen change's busiest frames). */
   M.settled = function settled(el, o) {
     o = o || {};
     return new Promise((res) => {
       let done = false; const finish = () => { if (!done) { done = true; t.cancel(); res(); } };
       const t = M.after(o.fallback || 2400, finish);
-      real.raf(() => real.raf(() => {
+      const list = () => {
         /* ambient loops and spinners never finish: only finite animations count */
         const anims = (el && el.getAnimations ? el.getAnimations({ subtree: o.subtree !== false }) : [])
           .filter((a) => { try { return Number.isFinite(a.effect.getComputedTiming().endTime); } catch (_) { return false; } });
-        if (!anims.length) return finish();
+        if (!anims.length) { finish(); return; }
         Promise.all(anims.map((a) => a.finished.catch(() => null))).then(finish);
-      }));
+      };
+      real.raf(() => real.raf(() => { const FX = O55.nierFx; if (FX && FX.measure) FX.measure(list); else list(); }));
     });
   };
 

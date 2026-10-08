@@ -271,22 +271,33 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="slice"]) .o55-scene-host .o
 @keyframes o55-cut { to { opacity: 0; } }
 
 /* pausing and preferences */
+/* A held scene (A.mount ctx.hold: a screen change) waits unseen, and the scene it replaces waits in place, both with
+   their motion paused, until O55.art.release. The pause names the parts that move (every class an animation of a
+   drawing's part is keyed on, in this file: entrances .o55-an, ambients .o55-amb, the families' loops, NieR's visor,
+   link and stamp states, the curtains), never every element: the window's own hold (.o55-hold *, 20-motion.css)
+   names every element, so a release restyled the whole of both drawings (about 350 elements, 25-30 ms on the VM) in
+   the very frame the motion starts. What script animates (the rig, the troupe, confetti) is not CSS and not paused. */
+.o55-scene-wrap.o55-scene-held { visibility: hidden; }
+.o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting),
+.o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) :is(.o55-an, .o55-amb, .o55-gl, .o55-draw, .o55-draw-g, .o55-fadeline, .o55-ring, .o55-pulse, .o55-core,
+  .o55-ripple, .o55-led, .o55-star, .o55-beam, .o55-dot, .o55-px-blink, .o55-px-twinkle, .o55-nier-blink, .o55-nier-scan, .o55-nier-mk, .nv-lk, .nv-rest, .nv-scan,
+  .nv-stamp-frame, .nv-stamp-fill, .o55-cur, .o55-cur-all, .o55-cur-plate, .o55-cur-sheet, .o55-cur-flare, .o55-cur-px, .o55-cur-l, .o55-cur-r, .o55-cur-sl, .o55-cur-sr) { animation-play-state: paused !important; }
 [data-o55-ambient="off"] .o55-amb, [data-o55-ambient="off"] .o55-led, [data-o55-ambient="off"] .o55-px-blink,
 [data-o55-ambient="off"] .o55-px-twinkle, [data-o55-ambient="off"] .o55-star, [data-o55-ambient="off"] .o55-core,
 [data-o55-ambient="off"] .o55-ripple, [data-o55-ambient="off"] .o55-pulse, [data-o55-ambient="off"] .o55-ring, [data-o55-ambient="off"] .o55-px-march > rect, [data-o55-ambient="off"] .o55-beam,
 [data-o55-ambient="off"] .o55-gl, [data-o55-ambient="off"] :is(.o55-nier-blink, .o55-nier-scan, .o55-nier-mk) { animation-play-state: paused !important; }
 html[data-o55-lowres] .o55-gl, html[data-o55-lowres] .o55-amb, html[data-o55-lowres] .o55-pulse, html[data-o55-lowres] .o55-ring, html[data-o55-lowres] .o55-core, html[data-o55-lowres] .o55-px-march > rect, html[data-o55-lowres] .o55-beam,
 html[data-o55-lowres] :is(.o55-nier-blink, .o55-nier-scan, .o55-nier-mk),
-html[data-o55-lowres] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun path[style], .o55-nier-linkoff path[style], .o55-nier-stamp *) { animation: none !important; }
+html[data-o55-lowres] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun .nv-lk, .o55-nier-linkoff .nv-lk, .o55-nier-stamp :is(.nv-stamp-frame, .nv-stamp-fill)) { animation: none !important; }
 html[data-motion="reduced"] .o55-amb, html[data-motion="reduced"] .o55-pulse, html[data-motion="reduced"] .o55-ring,
 html[data-motion="reduced"] .o55-core, html[data-motion="reduced"] .o55-ripple, html[data-motion="reduced"] .o55-star, html[data-motion="reduced"] .o55-gl,
 html[data-motion="reduced"] :is(.o55-nier-blink, .o55-nier-scan, .o55-nier-mk),
-html[data-motion="reduced"] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun path[style], .o55-nier-linkoff path[style], .o55-nier-stamp *) { animation: none !important; }
+html[data-motion="reduced"] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun .nv-lk, .o55-nier-linkoff .nv-lk, .o55-nier-stamp :is(.nv-stamp-frame, .nv-stamp-fill)) { animation: none !important; }
 html[data-motion="reduced"] .o55-an, html[data-motion="reduced"] .o55-draw, html[data-motion="reduced"] .o55-scene-wrap { animation-duration: 140ms !important; animation-name: o55-fade !important; animation-delay: 0ms !important; stroke-dashoffset: 0 !important; }
 html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 @media (prefers-reduced-motion: reduce) {
   .o55-amb, .o55-pulse, .o55-ring, .o55-core, .o55-ripple, .o55-star, .o55-gl, .o55-nier-blink, .o55-nier-scan, .o55-nier-mk { animation: none !important; }
-  .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun path[style], .o55-nier-linkoff path[style], .o55-nier-stamp *) { animation: none !important; }
+  .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, .o55-nier-linkrun .nv-lk, .o55-nier-linkoff .nv-lk, .o55-nier-stamp :is(.nv-stamp-frame, .nv-stamp-fill)) { animation: none !important; }
   .o55-an, .o55-draw, .o55-scene-wrap { animation-duration: 140ms !important; animation-name: o55-fade !important; animation-delay: 0ms !important; stroke-dashoffset: 0 !important; }
   .o55-it { transition-duration: 140ms !important; }
 }
