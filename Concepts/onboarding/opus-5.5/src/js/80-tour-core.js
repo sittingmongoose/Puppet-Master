@@ -158,8 +158,15 @@
       if (st.lookOpen) { lookMenu(false); const b = r.querySelector('.o55t-bar [data-o55t="lookMenu"]'); if (b) b.focus({ preventScroll: true }); return; }
       togglePause();
     }));
-    /* any real input during Show Me hands control back at once */
-    ['pointerdown', 'keydown', 'wheel'].forEach((ev) => document.addEventListener(ev, (e) => { if (st.show && e.isTrusted && !r.contains(e.target)) interruptShow(); }, true));
+    /* any real input during Show Me hands control back at once. A skin whose frame says "press any key to stop"
+       (st.look.anyKey) is held to it: a key pressed inside the tour stops it too (a modifier alone never does), and
+       the key that stopped it does not start the next one (Enter or Space on a focused Show Me) */
+    const MOD = /^(Shift|Control|Alt|AltGraph|Meta|CapsLock|Fn|OS)$/;
+    ['pointerdown', 'keydown', 'wheel'].forEach((ev) => document.addEventListener(ev, (e) => {
+      if (!st.show || !e.isTrusted) return;
+      if (!r.contains(e.target)) { interruptShow(); return; }
+      if (ev === 'keydown' && st.look && st.look.anyKey && !MOD.test(e.key)) { st.keyStop = M.now(); interruptShow(); }
+    }, true));
     window.addEventListener('resize', () => { if (TR.running) { st.fixed = null; place(true); } });
     document.addEventListener('visibilitychange', () => { if (st.root) st.root.toggleAttribute('data-hidden', document.hidden); });
     emit('build', { root: r });
@@ -167,10 +174,11 @@
   }
   const family = () => O55.theme().family;
   /* the tour's style for the look on screen: the spotlight's corner radius, how it glides ('spring' or 'steps'), how
-     the Show Me pointer travels and drags (null: the family's way) and the sound of its press; a skin may change it */
+     the Show Me pointer travels and drags (null: the family's way), the sound of its press, where it hovers to act
+     (hover), its arrival sound (arrive) and whether any key stops a Show Me (anyKey); a skin may change it */
   function syncTheme() {
     if (!st.root) return; const th = O55.theme(); st.root.setAttribute('data-family', th.family); st.root.setAttribute('data-mode', th.mode);
-    st.look = { radius: 14, glide: 'spring', travel: null, drag: null, press: 'tap' };
+    st.look = { radius: 14, glide: 'spring', travel: null, drag: null, press: 'tap', anyKey: false };
     emit('look', st.look);
   }
 
@@ -680,7 +688,7 @@
     if (st.entering && (a === 'next' || a === 'showMe' || a === 'skipStep')) return; /* the new step's own controls come with it */
     if (a === 'next') { O55.sound.play('next'); if (st.step.onNext) st.step.onNext(st); return goStep(st.step.index + 1); }
     if (a === 'back') { O55.sound.play('back'); return back(); }
-    if (a === 'showMe') return showMe();
+    if (a === 'showMe') { if (st.keyStop && M.now() - st.keyStop < 400) return; return showMe(); }
     if (a === 'skip') return skip();
     if (a === 'pause') return togglePause();
     if (a === 'tips') { st.tips = arg; st.sess.tips = arg; save(); O55.sound.play('select'); renderBar(); renderCallout(false); return; }
