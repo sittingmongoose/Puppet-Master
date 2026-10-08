@@ -629,9 +629,9 @@
 
   /* View-only virtual hierarchy. The complete graph remains in ToDoController.
      Fixed row geometry keeps deep/large trees bounded in DOM, never in data. */
-  const ROW_HEIGHT=78;
+  const ROW_HEIGHT=34;
   const treeViews=new Map();
-  function treeView(tid){if(!treeViews.has(tid))treeViews.set(tid,{query:'',searchCollapsed:{},top:0,selected:null,work:null});return treeViews.get(tid);}
+  function treeView(tid){if(!treeViews.has(tid))treeViews.set(tid,{query:'',searchCollapsed:{},top:0,selected:null,work:null,vh:480});return treeViews.get(tid);}
   function visibleTree(tid){
     const list=itemsOf(tid)||[],ix=graphIndex(list),view=treeView(tid),query=view.query.trim().toLocaleLowerCase(),included=new Set();
     if(query)for(const t of list)if((t.title+' '+t.todo_id).toLocaleLowerCase().includes(query)){
@@ -644,39 +644,37 @@
   function rowScope(tid,item){return ' data-thread="'+esc(tid)+'" data-id="'+esc(item.todo_id)+'" data-revision="'+item.revision+'" data-list-revision="'+(threadStore(tid).revision||1)+'"';}
   function rowActions(ctx,list,item){
     if(!isLeaf(list,item))return '';
-    const tid=item.thread_id,attrs=rowScope(tid,item),owner=workOwner(item),bindings=itemBindings(tid,item.todo_id);
-    let html='';
-    if(['pending','in_progress'].includes(item.status)){
-      const availability=owner?.availability?.(item.workflow_ref,item),can=!!owner?.execute&&runnable(list,item)&&availability?.ok!==false,reason=!owner?.execute?'No executable owner is attached to this historical or proposed item.':!runnable(list,item)?'Waiting for the named dependencies.':availability?.reason||'';
-      html+='<button class="text-button" data-action="'+(item.status==='pending'?'todo-admit':'todo-complete')+'"'+attrs+(can?'':' disabled title="'+esc(reason)+'"')+'>'+(item.status==='pending'?'Start work':'Run work')+'</button>';
-    }
-    if(bindings.length)html+='<button class="text-button" data-action="todo-open-work"'+attrs+' data-binding="'+esc(bindings.at(-1).binding_id)+'">Open work</button>';
-    return html;
+    const bindings=itemBindings(item.thread_id,item.todo_id);
+    if(!bindings.length)return '';
+    return '<button class="text-button" data-action="todo-open-work"'+rowScope(item.thread_id,item)+' data-binding="'+esc(bindings.at(-1).binding_id)+'">Open work</button>';
   }
   function virtualRows(ctx,tid,rows,top,height){
     const list=itemsOf(tid),start=Math.max(0,Math.floor(top/ROW_HEIGHT)-3),end=Math.min(rows.length,Math.ceil((top+height)/ROW_HEIGHT)+3);
     return rows.slice(start,end).map((row,n)=>{
       const t=row.item,kids=childrenOf(list,t.todo_id),view=treeView(tid),selected=view.selected===t.todo_id,scope=rowScope(tid,t),collapsed=!!(view.query.trim()?view.searchCollapsed[t.todo_id]:ui.collapsed[t.todo_id]);
-      const wait=t.owner_wait||workOwner(t)?.waitState?.(t.workflow_ref,t),next=kids.length?childSummary(list,t):wait?.reason||wait?.kind||t.blocked_reason_ref||(t.status==='pending'&&!runnable(list,t)?'Waiting for dependencies':STATUS_LABEL[t.status]);
-      const actions=rowActions(ctx,list,t);
-      const foot=(t.explicit_assignment_label||actions)?(t.explicit_assignment_label?'<small class="todo-assign">'+esc(t.explicit_assignment_label)+'</small>':'')+actions:'';
-      return '<div class="todo-node todo-virtual-row" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+Math.min(row.depth*12,48)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'">'+
-        '<div class="todo-row-top">'+(kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>')+
-        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'" title="'+esc(STATUS_LABEL[t.status])+'">'+glyph(t.status)+'</span><button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'" title="'+esc(t.title)+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span></button></div>'+
-        '<div class="todo-meta"><small>'+esc(next)+'</small>'+(foot?'<div class="todo-row-foot">'+foot+'</div>':'')+'</div></div>';
+      const wait=t.owner_wait||workOwner(t)?.waitState?.(t.workflow_ref,t);
+      const reason=kids.length?childSummary(list,t):(wait?.reason||wait?.kind||t.blocked_reason_ref||(t.status==='pending'&&!runnable(list,t)?'Waiting for dependencies':''));
+      const waiting=!kids.length&&t.status==='pending'&&(!!wait||!runnable(list,t));
+      const word=kids.length?kids.filter(k=>k.status==='completed').length+'/'+kids.length:(waiting?'Waiting':(HOVER_STATUS[t.status]||STATUS_LABEL[t.status]));
+      const tone=waiting?'idle':(STATUS_TONE[t.status]||'idle');
+      return '<div class="todo-node todo-virtual-row todo-line" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+Math.min(row.depth*10,30)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'" title="'+esc(reason)+'">'+
+        (kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>')+
+        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'" title="'+esc(STATUS_LABEL[t.status])+'">'+glyph(t.status)+'</span>'+
+        '<button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'" title="'+esc(t.title)+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span></button>'+
+        '<span class="todo-line-status" data-tone="'+esc(tone)+'">'+esc(word)+'</span></div>';
     }).join('');
   }
   function selectedDetail(ctx,tid){
     const view=treeView(tid),list=itemsOf(tid),item=findItem(list,view.selected);if(!item)return '';
     const outcome=esc(item.expected_outcome||childSummary(list,item));
-    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header class="todo-detail-head"><strong class="todo-detail-title">'+esc(item.title)+'</strong><button class="icon-button todo-detail-close" data-action="todo-toggle-detail"'+rowScope(tid,item)+' data-hover-key="todo-detail-close-'+esc(item.todo_id)+'" data-hover-tip="Close details" aria-label="Close details">'+ctx.icon('close',13)+'</button></header><div class="todo-detail-well"><span class="todo-detail-label">Expected</span><p class="todo-detail-outcome">'+outcome+'</p></div>'+depChip(list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
+    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header class="todo-detail-head"><strong class="todo-detail-title">'+esc(item.title)+'</strong><button class="icon-button todo-detail-close" data-action="todo-toggle-detail"'+rowScope(tid,item)+' data-hover-key="todo-detail-close-'+esc(item.todo_id)+'" data-hover-tip="Close details" aria-label="Close details">'+ctx.icon('close',13)+'</button></header><div class="todo-detail-well"><span class="todo-detail-label">Expected</span><p class="todo-detail-outcome">'+outcome+'</p></div>'+depChip(list,item)+rowActions(ctx,list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
       (view.work?.todo_id===item.todo_id?'<div class="todo-opened-work" data-k="todo-opened-work"><strong>Exact work · '+esc(view.work.attempt_id)+'</strong><p>'+esc(view.work.work_id)+'</p><pre>'+esc(JSON.stringify(view.work.detail,null,2))+'</pre></div>':'')+'</section>';
   }
   function renderPanel(ctx){
     if(panelDomain(ctx)!=='todo')return '';
     const tid=currentThreadId(ctx),list=itemsOf(tid);if(!list)return '<div class="todo-panel todo-panel-empty"><p>No To-Do list exists for this thread yet.</p></div>';
-    const view=treeView(tid),rows=visibleTree(tid),s=summary(tid),height=Math.min(440,Math.max(88,rows.length*ROW_HEIGHT));view.top=Math.max(0,Math.min(view.top,rows.length*ROW_HEIGHT-height));
-    return '<div class="todo-panel" data-k="todo-panel:'+esc(tid)+'"><div class="todo-panel-summary"><strong>'+s.completed+' of '+s.total+' complete</strong><span>'+s.active+' active'+(s.blocked?' · '+s.blocked+' blocked':'')+'</span></div><label class="todo-search"><span>Search this hierarchy</span><input type="search" data-todo-search="'+esc(tid)+'" value="'+esc(view.query)+'" placeholder="Title or exact item ID" aria-label="Search this hierarchy"></label><div class="todo-tree-navigation"><small>'+rows.length+' visible of '+list.length+' items</small><button class="text-button" data-action="todo-reveal-last" data-thread="'+esc(tid)+'">Last item</button><button class="text-button" data-action="todo-expand-all" data-thread="'+esc(tid)+'">Expand all</button></div><div class="todo-viewport" data-todo-viewport="'+esc(tid)+'" data-k="todo-viewport:'+esc(tid)+'" role="tree" aria-label="Current thread To-Dos" tabindex="0" style="height:'+height+'px"><div class="todo-tree todo-virtual-space" style="height:'+(rows.length*ROW_HEIGHT)+'px">'+virtualRows(ctx,tid,rows,view.top,height)+'</div></div>'+(!rows.length?'<p>No matching items.</p>':'')+selectedDetail(ctx,tid)+'<div class="todo-refusals-wrap">'+renderRefusals(tid)+'</div></div>';
+    const view=treeView(tid),rows=visibleTree(tid),s=summary(tid),spaceH=rows.length*ROW_HEIGHT;view.top=Math.max(0,Math.min(view.top,Math.max(0,spaceH-view.vh)));
+    return '<div class="todo-panel" data-k="todo-panel:'+esc(tid)+'"><div class="todo-panel-summary"><strong>'+s.completed+' of '+s.total+' complete</strong><span>'+s.active+' active'+(s.blocked?' · '+s.blocked+' blocked':'')+'</span></div><label class="todo-search"><span>Search this hierarchy</span><input type="search" data-todo-search="'+esc(tid)+'" value="'+esc(view.query)+'" placeholder="Title or exact item ID" aria-label="Search this hierarchy"></label><div class="todo-tree-navigation"><small>'+rows.length+' visible of '+list.length+' items</small><button class="text-button" data-action="todo-reveal-last" data-thread="'+esc(tid)+'">Last item</button><button class="text-button" data-action="todo-expand-all" data-thread="'+esc(tid)+'">Expand all</button></div><div class="todo-viewport" data-todo-viewport="'+esc(tid)+'" data-k="todo-viewport:'+esc(tid)+'" role="tree" aria-label="Current thread To-Dos" tabindex="0"><div class="todo-tree todo-virtual-space" style="height:'+spaceH+'px">'+virtualRows(ctx,tid,rows,view.top,view.vh)+'</div></div>'+(!rows.length?'<p>No matching items.</p>':'')+selectedDetail(ctx,tid)+'<div class="todo-refusals-wrap">'+renderRefusals(tid)+'</div></div>';
   }
   function revealItem(ctx,tid,id){
     if(tid!==currentThreadId(ctx))return;
@@ -714,9 +712,22 @@
   Object.entries(ACTIONS).forEach(([name,fn])=>EXT.action(name,(ctx,b,e)=>{fn(ctx,b,e);return true;}));
   if(typeof document!=='undefined'){
     document.addEventListener('input',e=>{const tid=e.target.dataset?.todoSearch;if(!tid)return;const ctx=activeCtx();if(currentThreadId(ctx)!==tid)return;const v=treeView(tid),pos=e.target.selectionStart;v.query=e.target.value;v.searchCollapsed={};v.top=0;ctx.renderApp();const field=document.querySelector('[data-todo-search="'+CSS.escape(tid)+'"]');field?.focus();try{field?.setSelectionRange(pos,pos);}catch(_){};});
-    document.addEventListener('scroll',e=>{const vp=e.target,tid=vp.dataset?.todoViewport;if(!tid)return;const view=treeView(tid);view.top=vp.scrollTop;const space=vp.querySelector('.todo-virtual-space');if(space)space.innerHTML=virtualRows(activeCtx(),tid,visibleTree(tid),view.top,vp.clientHeight);},true);
-    let restorePending=false;
-    new MutationObserver(()=>{if(restorePending)return;restorePending=true;requestAnimationFrame(()=>{restorePending=false;for(const vp of document.querySelectorAll('[data-todo-viewport]')){const v=treeView(vp.dataset.todoViewport);if(Math.abs(vp.scrollTop-v.top)>1)vp.scrollTop=v.top;}});}).observe(document,{childList:true,subtree:true});
+    function paintViewport(vp){
+      const tid=vp.dataset?.todoViewport;if(!tid)return;
+      const view=treeView(tid),rows=visibleTree(tid),spaceH=rows.length*ROW_HEIGHT,h=vp.clientHeight||view.vh;
+      view.vh=h;view.top=Math.max(0,Math.min(view.top,Math.max(0,spaceH-h)));
+      const space=vp.querySelector('.todo-virtual-space');
+      if(space)space.innerHTML=virtualRows(activeCtx(),tid,rows,view.top,h);
+      if(Math.abs(vp.scrollTop-view.top)>1)vp.scrollTop=view.top;
+    }
+    document.addEventListener('scroll',e=>{const vp=e.target,tid=vp.dataset?.todoViewport;if(!tid)return;treeView(tid).top=vp.scrollTop;paintViewport(vp);},true);
+    let restorePending=false;const viewportWatch=new WeakSet();
+    new MutationObserver(()=>{if(restorePending)return;restorePending=true;requestAnimationFrame(()=>{restorePending=false;for(const vp of document.querySelectorAll('[data-todo-viewport]')){
+      const v=treeView(vp.dataset.todoViewport);if(Math.abs(vp.scrollTop-v.top)>1)vp.scrollTop=v.top;
+      if(viewportWatch.has(vp))continue;viewportWatch.add(vp);
+      if(typeof ResizeObserver!=='undefined')new ResizeObserver(()=>{const h=vp.clientHeight;if(h&&Math.abs(h-treeView(vp.dataset.todoViewport).vh)>ROW_HEIGHT)paintViewport(vp);}).observe(vp);
+      if(vp.clientHeight)paintViewport(vp);
+    }});}).observe(document,{childList:true,subtree:true});
   }
 
   /* =====================================================================
