@@ -1,0 +1,73 @@
+{
+ "nierSettings": {
+  "reboot": {
+   "kicker": "NieR Mode",
+   "allClear": "All clear",
+   "syncing": "Synchronising",
+   "ok": "OK",
+   "online": "Online",
+   "keepLook": "Keeping {family} for later",
+   "inkParchment": "Ink and parchment",
+   "puppets": "NieR puppets",
+   "pod": "Pod 042",
+   "menuSounds": "Menu sounds",
+   "ready": "Ready",
+   "saveNier": "Saving NieR Mode for later",
+   "restoreLook": "Restoring {family}",
+   "pageOn": "Rebooting the interface",
+   "pageOnDone": "Ink and parchment loaded",
+   "pageOff": "Shutting down the unit",
+   "pageOffDone": "Your theme restored",
+   "pageReplayDone": "All parts reinstalled"
+  },
+  "boot": {
+   "kicker": "Puppet Master",
+   "title": "Boot sequence",
+   "check": "System check",
+   "settings": "Loading your settings",
+   "bunker": "Connecting to the Bunker",
+   "project": "Opening your Project",
+   "look": "Look",
+   "ok": "OK",
+   "lookValue": "NieR Mode"
+  },
+  "quest": {
+   "planKicker": "Planning Wizard",
+   "planTitle": "Plan approved",
+   "planNew": "Run {run} is set up; the Orchestrator shows it building.",
+   "planAgain": "This plan was already built as run {run}.",
+   "buildKicker": "Orchestrator",
+   "buildTitle": "Build complete",
+   "buildLine": "{what}. Create PR is unlocked in Source Control.",
+   "buildRun": "Run {id}",
+   "tourKicker": "Guided Tour",
+   "tourTitle": "Tour complete",
+   "tourKept": "You kept what you changed during the tour.",
+   "tourBack": "Your workspace is back the way it was before the tour."
+  },
+  "readout": {
+   "offline": "Offline",
+   "left": "{n} left",
+   "contextLeft": "Context left: {free} of {max} tokens",
+   "contextUnknown": "Context budget not known yet"
+  },
+  "save": {
+   "saving": "Saving…",
+   "saved": "Data saved"
+  },
+  "chips": {
+   "kicker": "Plug-in Chips",
+   "title": "Adjust NieR look",
+   "drawerTitle": "NieR Mode",
+   "leadLive": "Install or remove each part. A change applies at once and is saved.",
+   "leadPreview": "Install or remove each part. You see each change now; it is kept with your look when setup finishes.",
+   "close": "Close"
+  },
+  "themeMenu": {
+   "toggle": "NieR Mode",
+   "adjust": "Adjust NieR look",
+   "swatch": "Ink and parchment",
+   "adjustShort": "Adjust"
+  }
+ }
+}

@@ -10,14 +10,24 @@
 
 /* ================================================================================ Boot sequence [boot] */
 /* The script shows #o55nw-boot once, when the app opens with NieR Mode on: a mono log over the boot paint, about a
-   second, then it clears. It never takes a click, and a key or a click clears it at once. */
+   second, then it leaves as six slats torn away to alternate sides, middle first (hero spec rule 3: a large surface
+   leaves one way, never by flicker). It never takes a click, and a key or a click clears it at once. Its tone comes
+   from data-o55-nier-preview (the person's Light or dark setting), so its tokens are right before the page's are. The
+   live plate steps its lines in; at 780 ms it hands over, in one step, to the six slats beneath it, each holding a
+   finished copy of the plate moved up by its own place, which then slide off. */
 #o55nw-boot { position: fixed; inset: 0; z-index: 2147483400; pointer-events: none; contain: strict; overflow: hidden;
-  background: var(--o55-nier-paper, var(--background)); color: var(--o55-nier-ink, var(--text-primary));
-  font: 500 11px/1.9 var(--mono-font, ui-monospace, monospace); letter-spacing: .16em; text-transform: uppercase;
-  animation: o55nw-boot-out 1100ms linear both; will-change: opacity; }
-#o55nw-boot::before { content: ""; position: absolute; inset: 0;
+  color: var(--o55-nier-ink, var(--text-primary));
+  font: 500 11px/1.9 var(--mono-font, ui-monospace, monospace); letter-spacing: .16em; text-transform: uppercase; }
+#o55nw-boot .o55nw-boot-plate { position: absolute; left: 0; right: 0; top: 0; height: 100%; background: var(--o55-nier-paper, var(--background)); }
+#o55nw-boot .o55nw-boot-plate::before { content: ""; position: absolute; inset: 0;
   background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb, 0,0,0), .06) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb, 0,0,0), .06) 1px, transparent 1px);
   background-size: 32px 32px; background-position: -1px -1px; }
+#o55nw-boot .o55nw-boot-live { animation: o55nw-boot-hand 1ms step-end 780ms both; }
+#o55nw-boot .o55nw-boot-slat { position: absolute; left: 0; right: 0; top: calc(var(--i) * 100% / 6); height: calc(100% / 6 + 1px); overflow: hidden;
+  will-change: transform; animation: o55nw-boot-tear-l 180ms steps(4, end) calc(800ms + var(--o) * 30ms) both; }
+#o55nw-boot .o55nw-boot-slat.o55nw-boot-r { animation-name: o55nw-boot-tear-r; }
+/* the finished copy, shifted so every slat shows its own band of the one plate (slat height is a sixth plus 1px) */
+#o55nw-boot .o55nw-boot-slat > .o55nw-boot-plate { top: calc(var(--i) * (1px - 100%)); height: calc(600% - 6px); }
 #o55nw-boot .o55nw-boot-log { position: absolute; left: 50%; top: 50%; width: 400px; margin: -92px 0 0 -200px; }
 #o55nw-boot .o55nw-boot-head { font: 600 15px/1.4 var(--display-font, var(--body-font, sans-serif)); letter-spacing: .3em; padding-bottom: 8px; margin-bottom: 12px;
   background: linear-gradient(currentColor, currentColor) left bottom / 5px 5px no-repeat, linear-gradient(currentColor, currentColor) right bottom / 5px 5px no-repeat,
@@ -29,11 +39,15 @@
 #o55nw-boot .o55nw-boot-meter { position: relative; height: 8px; margin-top: 14px; border: 1px solid currentColor; }
 #o55nw-boot .o55nw-boot-meter > i { position: absolute; inset: 1px; background: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 13px);
   transform-origin: left center; transform: scaleX(0); animation: o55nw-boot-meter 640ms steps(12, end) 80ms both; will-change: transform; }
+/* the slats' copies are already finished */
+#o55nw-boot .o55nw-boot-done :is(.o55nw-boot-line, .o55nw-boot-line > b) { opacity: 1; animation: none; }
+#o55nw-boot .o55nw-boot-done .o55nw-boot-meter > i { transform: scaleX(1); animation: none; will-change: auto; }
 @keyframes o55nw-boot-line { to { opacity: 1; } }
 @keyframes o55nw-boot-meter { to { transform: scaleX(1); } }
-/* full cover, then the game's flicker off */
-@keyframes o55nw-boot-out { 0%, 70% { opacity: 1; } 76% { opacity: 0; } 82% { opacity: .8; } 88% { opacity: 0; } 93% { opacity: .35; } 100% { opacity: 0; } }
-#o55nw-boot[data-skip] { animation: none; opacity: 0; }
+@keyframes o55nw-boot-hand { to { visibility: hidden; } }
+@keyframes o55nw-boot-tear-l { to { transform: translateX(-101%); } }
+@keyframes o55nw-boot-tear-r { to { transform: translateX(101%); } }
+#o55nw-boot[data-skip] { visibility: hidden; }
 
 /* ================================================================================ Unit readouts [readouts] */
 /* The status bar reads like a unit's status panel: inverted mono labels (SYS, NET, AI, CTX) and square indicators; the

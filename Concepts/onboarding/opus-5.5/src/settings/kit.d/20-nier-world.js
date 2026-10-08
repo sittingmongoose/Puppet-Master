@@ -2,11 +2,14 @@
    parts kit.d/19-nier-parts.js, the Plug-in Chips editor kit.d/22-nier-chips.js). Contract: kit.d/18-nier.js. A part is
    live while PM_NIER.has(key); each part below installs when its key arrives and removes all it added when it goes, so
    every part is silent while NieR Mode is off.
-     boot       once, when the app opens with NieR Mode on: #o55nw-boot, a one-second mono log over the boot paint
+     boot       once, when the app opens with NieR Mode on: #o55nw-boot, a one-second mono log over the boot paint, in
+                the tone the person's Light or dark setting asks for (the page may still be painting the default),
+                leaving as six slats torn away to alternate sides (no flicker: hero spec rule 3)
      readouts   the status bar's SYS / NET / AI / CTX readout; CTX is the Usage context budget (PM7_USAGE.data.context,
                 else PM_DEMO's chat context) as a twelve-cell HP bar; AI is the providers' own summary
      quests     #o55nw-quest, a wide ink band on three real events: the Wizard's Approve And Build (PM_DEMO
-                'wizard.approved'), a run reaching complete (PM_DEMO 'run.state'), the Guided Tour finished ('o55:tour')
+                'wizard.approved'), a run reaching complete (PM_DEMO 'run.state'), the Guided Tour finished ('o55:tour';
+                not while the tour shows its own results card, html[data-o55-tour-results])
      save       #o55nw-save: every committed Settings change shows "Saving…" beside a turning diamond, then "Data saved"
      blocks, charts, ticks, glyphs, intel, icons, empty   CSS only (the parts attribute); glyphs and empty read the line art
                 that this file writes once as custom properties per mode (--o55nw-art-*)
@@ -14,7 +17,8 @@
    Performance (README "Performance rules"): no requestAnimationFrame loop and no MutationObserver; the readout reads
    two numbers on the chat's own events and every 20 s while shown, and writes only what changed. Motion is CSS or Web
    Animations of transform and opacity, one shot, scaled by Animation speed; sounds are the parts' synth
-   (PM_NIER_PARTS.play), so they follow Menu sounds and general.interaction.sound-effects. */
+   (PM_NIER_PARTS.play), so they follow Menu sounds and general.interaction.sound-effects. Every word is copy
+   (src/copy.d/55-nier-chips.json, nierSettings.boot / quest / readout / save, through o55NierCopy). */
 (function o55NierWorldModule() {
   const root = document.documentElement;
   const NIER = () => window.PM_NIER || null;
@@ -29,6 +33,8 @@
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const play = name => { try { const P = window.PM_NIER_PARTS; return !!(P && typeof P.play === 'function' && P.play(name)); } catch (e) { return false; } };
   const layer = (id, tag) => { const e = document.createElement(tag || 'div'); e.id = id; e.setAttribute('aria-hidden', 'true'); document.body.appendChild(e); return e; };
+  const say = (key, fallback, vars) => (typeof o55NierCopy === 'function' ? o55NierCopy('nierSettings.' + key, fallback, vars)
+    : String(fallback).replace(/\{(\w+)\}/g, (m, k) => (vars && vars[k] != null ? String(vars[k]) : m)));
 
   /* ---------- line art: written once as data: SVG custom properties, one set per mode ------------------------------ */
   /* An image cannot read a CSS variable, so the two inks are written here: the theme's own text colours
@@ -92,8 +98,30 @@
   }
 
   /* ---------- boot sequence ------------------------------------------------------------------------------------------ */
-  const BOOT_LINES = [['System check', 'OK'], ['Loading personal data', 'OK'], ['Connecting to Bunker', 'OK'], ['Mounting project data', 'OK'], ['Interface', 'NieR Mode']];
+  /* The log is drawn twice: live (its lines and meter step in) and, beneath it, six slats each holding a finished copy
+     of the whole plate shifted up by its own place. At 780 ms the live copy steps out over its identical slats, which
+     then tear away to alternate sides from the middle outward (steps(4), 30 ms apart): the plate leaves in pieces, one
+     way, and no surface flickers. Every animation is CSS with delays set now, so the compositor runs it through the
+     boot's long frames. The tone is the one the person's Light or dark setting asks for, through NieR's preview scope
+     (data-o55-nier-preview, styles.d/13-nier.css), because the page may still be painting the default mode. */
+  const BOOT_LINES = [['check', 'System check', 'ok', 'OK'], ['settings', 'Loading your settings', 'ok', 'OK'], ['bunker', 'Connecting to the Bunker', 'ok', 'OK'],
+    ['project', 'Opening your Project', 'ok', 'OK'], ['look', 'Look', 'lookValue', 'NieR Mode']];
   let bootChecked = false, bootEl = null;
+  function bootTone() {
+    let m = ''; try { m = String(PM51.value('general.visual.theme-mode') || ''); } catch (e) { m = ''; }
+    if (/^light$/i.test(m)) return 'light';
+    if (/^dark$/i.test(m)) return 'dark';
+    if (/^auto$/i.test(m) && window.matchMedia) return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    let t = ''; try { t = String(PM51.value('general.visual.theme') || ''); } catch (e) { t = ''; }
+    if (/light$/i.test(t)) return 'light';
+    if (/dark$/i.test(t)) return 'dark';
+    return /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark';
+  }
+  function bootPlate() {
+    return `<div class="o55nw-boot-log"><div class="o55nw-boot-head"><small>${esc(say('boot.kicker', 'Puppet Master'))}</small>${esc(say('boot.title', 'Boot sequence'))}</div>`
+      + BOOT_LINES.map(([k, t, ok, okText], i) => `<div class="o55nw-boot-line" style="--i:${i}"><span>${esc(say('boot.' + k, t))}</span><i></i><b>${esc(say('boot.' + ok, okText))}</b></div>`).join('')
+      + '<div class="o55nw-boot-meter"><i></i></div></div>';
+  }
   function bootEnd() {
     const el = bootEl; bootEl = null; if (!el) return;
     document.removeEventListener('keydown', bootEnd, true); document.removeEventListener('pointerdown', bootEnd, true);
@@ -104,10 +132,13 @@
     bootChecked = true;
     if (!has('boot') || still() || onboarding() || document.hidden || !document.body) return false;
     const el = bootEl = layer('o55nw-boot');
-    el.innerHTML = '<div class="o55nw-boot-log"><div class="o55nw-boot-head"><small>YoRHa unit · Puppet Master</small>Boot sequence</div>'
-      + BOOT_LINES.map(([t, ok], i) => `<div class="o55nw-boot-line" style="--i:${i}"><span>${esc(t)}</span><i></i><b>${esc(ok)}</b></div>`).join('')
-      + '<div class="o55nw-boot-meter"><i></i></div></div>';
-    el.addEventListener('animationend', e => { if (e.target === el) bootEnd(); });
+    el.setAttribute('data-o55-nier-preview', bootTone());
+    const plate = bootPlate();
+    /* middle out: slats 2 and 3 first, then 1 and 4, then 0 and 5; even slats leave left, odd ones right */
+    const order = [2, 1, 0, 0, 1, 2];
+    el.innerHTML = '<div class="o55nw-boot-slats">' + [0, 1, 2, 3, 4, 5].map(i => `<div class="o55nw-boot-slat${i % 2 ? ' o55nw-boot-r' : ''}" style="--i:${i};--o:${order[i]}"><div class="o55nw-boot-plate o55nw-boot-done">${plate}</div></div>`).join('')
+      + `</div><div class="o55nw-boot-plate o55nw-boot-live">${plate}</div>`;
+    el.addEventListener('animationend', e => { if (e.animationName && /^o55nw-boot-tear/.test(e.animationName) && e.target.style.getPropertyValue('--o') === '2') bootEnd(); });
     document.addEventListener('keydown', bootEnd, true); document.addEventListener('pointerdown', bootEnd, true);
     later(bootEnd, 1600); /* in case the page never paints the animation (a hidden tab) */
     return true;
@@ -129,12 +160,12 @@
     const key = `${ai}|${c ? c.used + '/' + c.max : ''}`;
     if (key === roLast) return; roLast = key;
     const aiEl = ro.querySelector('.o55nw-ai'), ind = ro.querySelector('.o55nw-ind'), bar = ro.querySelector('.o55nw-hp'), ctx = ro.querySelector('.o55nw-ctx');
-    aiEl.textContent = ai || 'Offline';
+    aiEl.textContent = ai || say('readout.offline', 'Offline');
     ind.dataset.state = !ai || /^0 ready/.test(ai) ? 'off' : /attention/.test(ai) ? 'warn' : 'on';
     bar.style.setProperty('--hp', String(hp));
     bar.toggleAttribute('data-low', !!c && free / c.max < 0.2);
-    ctx.textContent = c ? `${k(free)} left` : '—';
-    const words = c ? `Context left: ${k(free)} of ${k(c.max)} tokens` : 'Context budget not known yet';
+    ctx.textContent = c ? say('readout.left', '{n} left', { n: k(free) }) : '—';
+    const words = c ? say('readout.contextLeft', 'Context left: {free} of {max} tokens', { free: k(free), max: k(c.max) }) : say('readout.contextUnknown', 'Context budget not known yet');
     const item = bar.parentElement; item.setAttribute('aria-label', words); item.setAttribute('data-pm-hover-label', words);
   }
   function roInstall() {
@@ -163,6 +194,8 @@
   document.addEventListener('visibilitychange', () => { if (!document.hidden && ro) roUpdate(); });
 
   /* ---------- quest banners ------------------------------------------------------------------------------------------ */
+  /* the banner's place, the one source for its geometry (the tour's landing note sits clear of it: bannerRect below) */
+  const QUEST = { topVh: 23, height: 92 };
   let quest = null;
   function questEnd(el) { if (el && el.isConnected) el.remove(); if (quest === el) quest = null; }
   function banner(kicker, title, line) {
@@ -170,6 +203,7 @@
     if (quest) questEnd(quest);
     const el = quest = document.createElement('div');
     el.id = 'o55nw-quest'; el.setAttribute('role', 'status');
+    el.style.top = `${QUEST.topVh}vh`; el.style.height = `${QUEST.height}px`;
     el.innerHTML = `<div class="o55nw-q-band"></div><div class="o55nw-q-copy"><span class="o55nw-q-mark" aria-hidden="true"></span><span class="o55nw-q-kicker">${esc(kicker)}</span>`
       + `<span class="o55nw-q-title">${esc(title)}</span><span class="o55nw-q-line">${esc(line)}</span></div>`;
     document.body.appendChild(el);
@@ -196,20 +230,26 @@
     try { runState = D.state && D.state.run ? D.state.run.stage : null; } catch (e) { runState = null; }
     D.on('wizard.approved', p => {
       const run = (p && p.runId) || 'pcr-47';
-      banner('Planning Wizard', 'Plan approved', p && p.replay ? `This plan was already built as run ${run}.` : `Run ${run} is set up; the Orchestrator shows it building.`);
+      banner(say('quest.planKicker', 'Planning Wizard'), say('quest.planTitle', 'Plan approved'),
+        p && p.replay ? say('quest.planAgain', 'This plan was already built as run {run}.', { run }) : say('quest.planNew', 'Run {run} is set up; the Orchestrator shows it building.', { run }));
     });
     D.on('run.state', s => {
       const now = s && (s.state || s.stage), before = runState; runState = now;
       if (now !== 'complete' || !before || before === 'complete') return;
-      const h = (s.history || []).find(x => x && x.id === s.id), what = h && h.label ? h.label : `Run ${s.id || ''}`.trim();
-      banner('Orchestrator', 'Build complete', `${what}. Create PR is unlocked in Source Control.`);
+      const h = (s.history || []).find(x => x && x.id === s.id), what = h && h.label ? h.label : say('quest.buildRun', 'Run {id}', { id: s.id || '' }).trim();
+      banner(say('quest.buildKicker', 'Orchestrator'), say('quest.buildTitle', 'Build complete'), say('quest.buildLine', '{what}. Create PR is unlocked in Source Control.', { what }));
     });
     D.on('chat.state', () => { if (ro) roUpdate(); });
   }
+  /* the tour's NieR finish shows its own results card (html[data-o55-tour-results], hero spec H5c): no second banner */
+  const tourResults = () => root.hasAttribute('data-o55-tour-results');
   window.addEventListener('o55:tour', e => {
-    const d = e && e.detail; if (!d || d.type !== 'finished') return;
+    const d = e && e.detail; if (!d || d.type !== 'finished' || tourResults()) return;
     /* after the tour's own closing motion */
-    later(() => banner('Guided Tour', 'Tour complete', d.keep ? 'You kept what you changed during the tour.' : 'Your workspace is back the way it was before the tour.'), 700);
+    later(() => {
+      if (tourResults()) return;
+      banner(say('quest.tourKicker', 'Guided Tour'), say('quest.tourTitle', 'Tour complete'), d.keep ? say('quest.tourKept', 'You kept what you changed during the tour.') : say('quest.tourBack', 'Your workspace is back the way it was before the tour.'));
+    }, 700);
   });
 
   /* ---------- save signal ------------------------------------------------------------------------------------------- */
@@ -220,9 +260,9 @@
     if (!save) { save = layer('o55nw-save'); save.setAttribute('aria-hidden', 'false'); save.setAttribute('role', 'status'); save.innerHTML = '<i aria-hidden="true"></i><span></span>'; }
     saveClear();
     const text = save.lastElementChild, set = (st, words) => { save.dataset.state = st; if (words != null && text.textContent !== words) text.textContent = words; };
-    set('saving', 'Saving…');
+    set('saving', say('save.saving', 'Saving…'));
     saveTimers.push(later(() => {
-      set('done', 'Data saved');
+      set('done', say('save.saved', 'Data saved'));
       saveTimers.push(later(() => { set('gone'); saveTimers.push(later(() => { if (save) delete save.dataset.state; }, 220)); }, 1500));
     }, 520));
   }
@@ -265,6 +305,12 @@
     live: () => [...live],
     sync,
     readout: () => (ro ? { ai: ro.querySelector('.o55nw-ai').textContent, hp: ro.querySelector('.o55nw-hp').style.getPropertyValue('--hp'), ctx: ro.querySelector('.o55nw-ctx').textContent } : null),
+    /* the quest banner's band in viewport px, { top, height }: measured while one shows, else from its own constants */
+    bannerRect: () => {
+      if (quest && quest.isConnected) { const r = quest.getBoundingClientRect(); return { top: Math.round(r.top), height: Math.round(r.height) }; }
+      const z = (document.body && Number.parseFloat(document.body.style.zoom)) || 1;
+      return { top: Math.round(window.innerHeight * QUEST.topVh / 100), height: Math.round(QUEST.height * z) };
+    },
     art: key => ART[key] || ''
   });
 })();

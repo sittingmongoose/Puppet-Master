@@ -16,9 +16,8 @@
        be edited for later)
    Styles: styles.d/17-nier-chips.css. The sheet follows the store's onChange while it is open and writes only what changed.
    The same markup renders in the Settings drawer (open), in a body-level dialog (popup) and inside any host (mount).
-   Reads and writes go through a store: PM_NIER.store(kind) when that exists, otherwise localLiveStore() below, which
-   commits through the existing PM_NIER API and o55NierCommitRow for the background. */
-var localLiveStore;
+   Reads and writes go through a store, PM_NIER.store(kind) (kit.d/18-nier.js). The words around the editor (kicker,
+   title, leads, Done) are copy (src/copy.d/55-nier-chips.json, nierSettings.chips) read through o55NierCopy. */
 (function o55NierChipsModule() {
   const ID = 'general.visual.nier-parts', BG = 'general.visual.nier-background';
   const NIER = () => window.PM_NIER || null;
@@ -30,7 +29,7 @@ var localLiveStore;
     square: ['Square corners and fine ink lines everywhere.', 4], cursor: ['The item under the pointer becomes an ink bar with a small cursor.', 5],
     headers: ['Section titles in wide capitals over a ruled line.', 4], ground: ['A faint grid behind the whole app.', 3],
     brackets: ['Four corner brackets mark what has keyboard focus.', 5], diamonds: ['Spinners become a slowly turning diamond.', 3],
-    reboot: ['An ink band sweeps over the window when NieR Mode turns on or off.', 8], slice: ['Menus and dialogs open from a thin line.', 4],
+    reboot: ['A short check list covers the window while NieR Mode turns on or off, then tears away.', 8], slice: ['Menus and dialogs open from a thin line.', 4],
     decode: ['Page titles and notices resolve from scrambled letters.', 5], wipe: ['A quick band crosses the page when you switch pages.', 4],
     particles: ['A few small ink squares drift behind the app.', 3], sweep: ['A faint line crosses the screen every few seconds.', 2],
     glitch: ['Warnings and errors arrive with a short jitter.', 4], sounds: ['Soft ticks and tones when you move and choose.', 5],
@@ -55,14 +54,15 @@ var localLiveStore;
     ['Amusement Park', 'park'], ['Flooded City', 'flooded'], ['Follow the page', 'follow']];
   const same = (x, y) => x.length === y.length && x.every((v, i) => v === y[i]);
   const presetOf = keys => { const p = PRESETS.find(x => same(x.keys(), keys)); return p ? p.id : ''; };
-  /* PM_NIER.store(kind) when the look layer provides it; otherwise the live fallback assigned to localLiveStore. */
   function storeFor(kind) {
     const N = window.PM_NIER;
-    if (N && typeof N.store === 'function') {
-      try { const s = N.store(kind || 'live'); if (s) return s; } catch (e) { /* fall through to the live store */ }
-    }
-    return localLiveStore();
+    try { return N && typeof N.store === 'function' ? N.store(kind || 'live') || null : null; } catch (e) { return null; }
   }
+  const say = (key, fallback) => (typeof o55NierCopy === 'function' ? o55NierCopy(key === 'done' ? 'chrome.done' : 'nierSettings.chips.' + key, fallback) : fallback);
+  /* The lead line under the title, the drawer's summary; a preview store's changes land with the look. */
+  const LEAD_LIVE = 'Install or remove each part. A change applies at once and is saved.';
+  const LEAD_PREVIEW = 'Install or remove each part. You see each change now; it is kept with your look when setup finishes.';
+  const leadFor = store => (store && store.kind === 'preview' ? say('leadPreview', LEAD_PREVIEW) : say('leadLive', LEAD_LIVE));
   function sceneTiles(store) {
     const labels = store && Array.isArray(store.BACKGROUNDS) && store.BACKGROUNDS.length ? store.BACKGROUNDS : BG_TILES.map(t => t[0]);
     return labels.map(label => { const known = BG_TILES.find(t => t[0] === label); return [label, known ? known[1] : null]; });
@@ -204,10 +204,9 @@ var localLiveStore;
     return { destroy };
   }
   function open() {
-    if (!NIER()) return false;
-    const store = storeFor('live');
-    const wrap = PM51.panel({ title: 'NieR Mode', eyebrow: 'Plug-in Chips', icon: 'sliders', size: 'wide', cls: 'o55nc-panel', closeLabel: 'Done',
-      summary: 'Install or remove each part. A change applies at once and is saved.', body: body(store) });
+    const store = NIER() ? storeFor('live') : null; if (!store) return false;
+    const wrap = PM51.panel({ title: say('drawerTitle', 'NieR Mode'), eyebrow: say('kicker', 'Plug-in Chips'), icon: 'sliders', size: 'wide', cls: 'o55nc-panel', closeLabel: say('done', 'Done'),
+      summary: leadFor(store), body: body(store) });
     if (!wrap) return false;
     bind(wrap, store);
     return true;
@@ -221,38 +220,42 @@ var localLiveStore;
     if (el.disabled || el.getAttribute('aria-hidden') === 'true' || el.tabIndex < 0) return false;
     const s = getComputedStyle(el); return s.visibility !== 'hidden' && s.display !== 'none';
   });
-  function restoreFocus(from) {
-    if (from && from.isConnected && typeof from.focus === 'function') {
-      try { from.focus(); } catch (e) { /* the menu may be closed */ }
-      if (document.activeElement === from) return;
+  /* Focus goes back where the person was, decided when the dialog closes (the opener may have been redrawn meanwhile:
+     a chip change repaints the tour's bar and replaces its look button). In order: opts.returnFocus(), opts.from (an
+     element, or a function returning one), the running tour's look button, the title-bar theme button. */
+  const pick = v => { try { const el = typeof v === 'function' ? v() : v; return el && el.isConnected && typeof el.focus === 'function' && el.getClientRects().length ? el : null; } catch (e) { return null; } };
+  function restoreFocus(opts) {
+    const tour = document.querySelector('#pm-o55-tour .o55t-bar [data-o55t="lookMenu"]');
+    const list = [pick(opts.returnFocus), pick(opts.from), tour && tour.isConnected ? tour : null, document.getElementById('themeSelect')];
+    for (const el of list) {
+      if (!el) continue;
+      try { el.focus(); } catch (e) { /* the menu may be closed */ }
+      if (document.activeElement === el) return;
     }
-    const btn = document.getElementById('themeSelect');
-    if (btn) { try { btn.focus(); } catch (e) { /* leave focus where it is */ } }
   }
-  /* The lead line under the title, the drawer's summary; a preview store's changes land with the look. */
-  const LEAD_LIVE = 'Install or remove each part. A change applies at once and is saved.';
-  const LEAD_PREVIEW = 'Install or remove each part. You see each change now; it is kept with your look when setup finishes.';
-  const leadFor = store => (store && store.kind === 'preview' ? LEAD_PREVIEW : LEAD_LIVE);
   /* The page's hover/focus tag layer paints a label card over buttons; popup and mount opt out of it. */
   const exemptHover = root => root.querySelectorAll('button, [href], input, select, textarea, [tabindex]')
     .forEach(el => el.setAttribute('data-pm-hover-exempt', 'true'));
+  /* popup({ store, from, returnFocus, title, lead }): the editor as a body-level dialog. Its head is the editor's own
+     kicker band ("Plug-in Chips" on a ruled line with a square cap, the in-window panel's head) over the title the
+     opening button says, "Adjust NieR look"; Done is the ink primary at the right. Classes are shared with 5.6 Pro. */
   function popup(opts) {
     opts = opts || {};
     if (popApi) popApi.close();
     const store = opts.store || storeFor('live');
-    const title = opts.title ? String(opts.title) : 'NieR Mode';
-    const lead = leadFor(store);
-    const from = opts.from || null;
+    if (!store) return { close() {} };
+    const title = opts.title ? String(opts.title) : say('title', 'Adjust NieR look');
+    const lead = opts.lead ? String(opts.lead) : leadFor(store);
     const root = document.createElement('div');
     root.className = 'o55nc-pop'; root.id = 'o55nc-pop';
     root.innerHTML = `<div class="o55nc-pop-scrim" data-o55nc-pop="scrim"></div>`
       + `<div class="o55nc-pop-dialog o55nc-host" role="dialog" aria-modal="true" aria-labelledby="o55nc-pop-title" style="z-index:1">`
-      + `<header class="o55nc-pop-head"><div class="o55nc-pop-titles"><p class="o55nc-pop-eye">Plug-in Chips</p>`
+      + `<header class="o55nc-pop-head"><div class="o55nc-pop-titles"><p class="o55nc-pop-eye"><span>${esc(say('kicker', 'Plug-in Chips'))}</span></p>`
       + `<h2 class="o55nc-pop-title" id="o55nc-pop-title">${esc(title)}</h2><p class="pm51-hero-summary o55nc-pop-lead">${esc(lead)}</p></div>`
-      + `<button type="button" class="o55nc-pop-x" data-o55nc-pop="close" aria-label="Close">`
+      + `<button type="button" class="o55nc-pop-x" data-o55nc-pop="close" aria-label="${esc(say('close', 'Close'))}">`
       + `<svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 3 L11 11 M11 3 L3 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>`
       + `</button></header><div class="o55nc-pop-body">${body(store)}</div>`
-      + `<footer class="pm51-panel-foot o55nc-pop-foot"><button type="button" class="btn" data-o55nc-pop="close">Done</button></footer></div>`;
+      + `<footer class="pm51-panel-foot o55nc-pop-foot"><button type="button" class="btn primary o55nc-pop-done" data-o55nc-pop="close">${esc(say('done', 'Done'))}</button></footer></div>`;
     exemptHover(root);
     root.style.zIndex = String(POP_Z);
     const dialog = root.querySelector('.o55nc-pop-dialog');
@@ -274,7 +277,7 @@ var localLiveStore;
       session.destroy();
       root.remove();
       if (popApi && popApi.close === close) popApi = null;
-      restoreFocus(from);
+      restoreFocus(opts);
     }
     root.addEventListener('click', e => {
       const hit = e.target && e.target.closest ? e.target.closest('[data-o55nc-pop="close"], [data-o55nc-pop="scrim"]') : null;
@@ -290,15 +293,16 @@ var localLiveStore;
     popApi = { close };
     return popApi;
   }
+  /* mount(host, { store, onClose, lead }): the editor inside a host (the onboarding window's panel) */
   function mount(host, opts) {
     opts = opts || {};
-    if (!host || typeof host.appendChild !== 'function') return { unmount() {} };
     const store = opts.store || storeFor('live');
+    if (!host || typeof host.appendChild !== 'function' || !store) return { unmount() {} };
     host.classList.add('o55nc-host');
     const shell = document.createElement('div');
     shell.className = 'o55nc-mount';
-    shell.innerHTML = `<p class="pm51-hero-summary o55nc-mount-lead">${esc(leadFor(store))}</p>` + body(store)
-      + `<footer class="pm51-panel-foot o55nc-mount-foot"><button type="button" class="btn" data-o55nc-done>Done</button></footer>`;
+    shell.innerHTML = `<p class="pm51-hero-summary o55nc-mount-lead">${esc(opts.lead ? String(opts.lead) : leadFor(store))}</p>` + body(store)
+      + `<footer class="pm51-panel-foot o55nc-mount-foot"><button type="button" class="btn" data-o55nc-done>${esc(say('done', 'Done'))}</button></footer>`;
     host.appendChild(shell);
     exemptHover(shell);
     const session = bind(shell, store);
@@ -315,42 +319,6 @@ var localLiveStore;
       if (typeof opts.onClose === 'function') { try { opts.onClose(); } catch (e) { /* the host owns its own close */ } }
     } };
   }
-
-  /* Live fallback until kit.d/18-nier.js exports PM_NIER.store. File 23 calls this same function. */
-  localLiveStore = function () {
-    const listeners = new Set();
-    let upstream = null;
-    const emit = info => listeners.forEach(cb => { try { cb(info); } catch (e) { /* one listener never blocks the rest */ } });
-    function ensure() {
-      if (upstream) return;
-      const n = NIER();
-      if (n && typeof n.onChange === 'function') upstream = n.onChange(emit);
-    }
-    function drop() {
-      if (listeners.size || !upstream) return;
-      try { upstream(); } catch (e) { /* already dropped */ }
-      upstream = null;
-    }
-    return {
-      kind: 'live',
-      on: () => { const n = NIER(); return !!(n && n.on()); },
-      set: on => { const n = NIER(); return !!(n && n.set(!!on)); },
-      parts: () => { const n = NIER(); return n && n.parts ? n.parts().slice() : []; },
-      setParts: keys => { const n = NIER(); return !!(n && n.setParts(keys)); },
-      background: () => { const n = NIER(); return n && n.background ? n.background() : 'City Ruins'; },
-      setBackground: label => {
-        const n = NIER();
-        if (n && typeof n.setBackground === 'function') return !!n.setBackground(label);
-        return !!o55NierCommitRow(BG, label);
-      },
-      BACKGROUNDS: BG_TILES.map(t => t[0]),
-      onChange: cb => {
-        if (typeof cb !== 'function') return () => {};
-        ensure(); listeners.add(cb);
-        return () => { listeners.delete(cb); drop(); };
-      }
-    };
-  };
 
   PM51.on('o55-nier-chips', () => open());
   window.PM_NIER_CHIPS = Object.freeze({
