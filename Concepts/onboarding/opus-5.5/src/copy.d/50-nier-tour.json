@@ -1,0 +1,92 @@
+{
+  "tour": {
+    "nier": {
+      "objective": "Objective",
+      "complete": "Complete",
+      "band": {
+        "kicker": "Guided Tour",
+        "start": "Loading the guided tour",
+        "resume": "Resuming the guided tour",
+        "restore": "Putting your layout back",
+        "keep": "Keeping your new layout",
+        "skip": "Closing the guided tour"
+      },
+      "banner": {
+        "kicker": "New objective · Chapter {n} of 3",
+        "workspace": "Chapter 1 complete. Next: arrange the workspace your way.",
+        "plan": "Chapter 2 complete. Next: make a plan before anything is built."
+      },
+      "pod": {
+        "steps": {
+          "comfort_intro": {
+            "line": "Report: Pod 042 will guide you. On any step, Show Me sends this unit to do it for you."
+          },
+          "open_chat": {
+            "line": "Proposal: The Chat icon is at the top of the left edge. Show Me can press it for you."
+          },
+          "select_teacher": {
+            "line": "Report: Teacher only explains. It cannot change anything."
+          },
+          "send_question": {
+            "line": "Proposal: Use the ready-made question below. It is a good question."
+          },
+          "answer_stream": {
+            "wait": "Report: Teacher is answering. Stand by.",
+            "line": "Report: Answer received. It was written in advance, so no AI plan was used."
+          },
+          "same_answer_eli5": {
+            "line": "Query: Too many words? Ask for a simpler version.",
+            "done": "Report: A simpler reply was added. The answer above stayed as it was."
+          },
+          "workspace_orientation": {
+            "wait": "Report: Scanning the workspace.",
+            "line": "Report: Scan complete. Pages sit on top, and panels can move."
+          },
+          "move_or_dock_chat": {
+            "line": "Proposal: Put Chat where you look most. It can move again any time."
+          },
+          "widget_action": {
+            "line": "Proposal: Keep the Approval queue in view. Anything waiting for you shows up there."
+          },
+          "open_planning": {
+            "line": "Report: Planning Wizard turns a rough idea into a plan you can check."
+          },
+          "book_club_goal": {
+            "line": "Proposal: Practice on a pretend book club website. Nothing will be built."
+          },
+          "three_outcomes": {
+            "line": "Report: Three outcomes found. Open one to see what it needs."
+          },
+          "access_answer": {
+            "line": "Query: Who should update the site? Any answer is fine here."
+          },
+          "review": {
+            "line": "Proposal: Review before anything is built. Changes are easiest now."
+          },
+          "review_parts": {
+            "wait": "Report: Reading the plan one part at a time.",
+            "line": "Report: Plan read. Nothing has been built."
+          },
+          "answer_edit": {
+            "line": "Query: What changes when an answer changes? Watch the plan."
+          },
+          "consequence_changed": {
+            "line": "Report: Only the affected decisions changed. Everything else held still."
+          },
+          "completion_boundary": {
+            "line": "Report: Practice complete. Nothing begins until you decide."
+          }
+        },
+        "done": {
+          "first": "Report: Objective complete.",
+          "second": "Report: Confirmed. Well done.",
+          "third": "Report: That worked. Progress recorded."
+        },
+        "missing": "Alert: That part is not on screen. Take me there brings it back.",
+        "showMe": "Report: Demonstrating. Any key or click hands control back to you.",
+        "interrupted": "Report: Control returned. Carry on whenever you like.",
+        "paused": "Report: Tour paused. Nothing moves until you resume."
+      }
+    }
+  }
+}

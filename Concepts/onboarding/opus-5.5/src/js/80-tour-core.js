@@ -15,6 +15,33 @@
   const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false, entries: {}, rewinding: false, entering: false, pendingBack: false, seq: 0 };
   const CHAPTERS = ['ask', 'workspace', 'plan'];
   TR.CHAPTERS = CHAPTERS;
+
+  /* ------------------------------------------------------------------ hooks */
+  /* A skin follows the tour without the engine knowing it (NieR Mode, 85-tour-nier.js): TR.on(name, fn(d, st)) ->
+     off. Moments: build {root} · look (the style below, filled in place) · start {resume, from} (may hold the first
+     step: return a promise) · arrive {step, prev, index, chapterChanged, forward, back, silent, first, sound} before
+     the callout is drawn (a listener may set d.hold and return a promise: the spotlight moves on and the callout
+     waits; d.sound is the arrival's sound event, 'callout') ·
+     step {same} once it is drawn · callout {step, missing, done, count, tryLabel, pod} (fill d.pod with markup for
+     the callout, before its buttons) · render {focus} · bar {chapter, ci, si, total, pip} (d.pip[chapter]: markup
+     after that chapter's ticks) · target {el, prev} · complete {step} · showMe {step} · showMeEnd (hold: the
+     pointer comes home first) · showMeDone · cue {el} · press {el, x, y} · pointerFrom {at} · missing {on} ·
+     interrupt · pause {paused} · ending {status, keep, silent} (hold, alongside the restore) · end {status, keep}
+     (status 'restore-pending' when the layout could not go back and the tour stays) · landing {lead} (hold, then
+     the note) · landed {note}. A listener that throws is logged and skipped. */
+  const hooks = {};
+  TR.on = (name, fn) => { (hooks[name] = hooks[name] || []).push(fn); return () => { hooks[name] = (hooks[name] || []).filter((f) => f !== fn); }; };
+  function emit(name, d) {
+    const out = [];
+    (hooks[name] || []).slice().forEach((fn) => { try { const r = fn(d, st); if (r != null) out.push(r); } catch (err) { console.warn('O55 tour: hook failed', name, err); } });
+    return out;
+  }
+  /* what the listeners returned, waited for at most cap ms on the motion clock */
+  function settle(out, cap) {
+    const ps = out.filter((p) => p && typeof p.then === 'function');
+    return ps.length ? Promise.race([Promise.all(ps.map((p) => p.catch(() => null))), M.delay(cap)]) : Promise.resolve();
+  }
+  TR.emit = emit; TR.settle = settle;
   TR.define = (def) => { def.index = TR.defs.length; TR.defs.push(def); TR.byId[def.id] = def; return def; };
   const vis = (el) => !!(el && el.isConnected && el.getClientRects().length && el.getBoundingClientRect().width > 0);
   TR.vis = vis;
@@ -117,19 +144,28 @@
     ['pointerdown', 'keydown', 'wheel'].forEach((ev) => document.addEventListener(ev, (e) => { if (st.show && e.isTrusted && !r.contains(e.target)) interruptShow(); }, true));
     window.addEventListener('resize', () => { if (TR.running) { st.fixed = null; place(true); } });
     document.addEventListener('visibilitychange', () => { if (st.root) st.root.toggleAttribute('data-hidden', document.hidden); });
+    emit('build', { root: r });
     return r;
   }
   const family = () => O55.theme().family;
-  function syncTheme() { if (!st.root) return; const th = O55.theme(); st.root.setAttribute('data-family', th.family); st.root.setAttribute('data-mode', th.mode); }
+  /* the tour's style for the look on screen: the spotlight's corner radius, how it glides ('spring' or 'steps'), how
+     the Show Me pointer travels and drags (null: the family's way) and the sound of its press; a skin may change it */
+  function syncTheme() {
+    if (!st.root) return; const th = O55.theme(); st.root.setAttribute('data-family', th.family); st.root.setAttribute('data-mode', th.mode);
+    st.look = { radius: 14, glide: 'spring', travel: null, drag: null, press: 'tap' };
+    emit('look', st.look);
+  }
 
   /* ------------------------------------------------------------------ bar */
   function renderBar() {
     const bar = st.root.querySelector('.o55t-bar'), s = st.step, ch = s ? s.chapter : 'ask';
     const ci = CHAPTERS.indexOf(ch), inCh = TR.defs.filter((d) => d.chapter === ch), si = inCh.indexOf(s);
+    const deco = { chapter: ch, ci, si, total: inCh.length, pip: {} };
+    emit('bar', deco);
     const pips = CHAPTERS.map((c, i) => {
       const steps = TR.defs.filter((d) => d.chapter === c);
       const ticks = steps.map((d) => `<i class="o55t-tick${st.sess.done.includes(d.id) ? ' o55t-on' : ''}${d === s ? ' o55t-cur' : ''}"></i>`).join('');
-      return `<span class="o55t-pip${i < ci ? ' o55t-done' : i === ci ? ' o55t-cur' : ''}" title="${U.esc(T('tour.chapters.' + c))}"><span class="o55t-pipname">${U.esc(T('tour.chapters.' + c))}</span><span class="o55t-ticks">${ticks}</span></span>`;
+      return `<span class="o55t-pip${i < ci ? ' o55t-done' : i === ci ? ' o55t-cur' : ''}" title="${U.esc(T('tour.chapters.' + c))}"><span class="o55t-pipname">${U.esc(T('tour.chapters.' + c))}</span><span class="o55t-ticks">${ticks}</span>${deco.pip[c] || ''}</span>`;
     }).join('');
     bar.innerHTML = `<span class="o55t-brand">${O55.c.small('spark', 14)}<span>${U.esc(T('tour.bar.label'))}</span></span><span class="o55t-pips" aria-label="${U.esc(T('tour.bar.progress', { n: ci + 1, name: T('tour.chapters.' + ch), s: si + 1, total: inCh.length }))}">${pips}</span>`
       + `<span class="o55t-seg" role="radiogroup" aria-label="${U.esc(T('tour.bar.tips'))}"><span class="o55t-seglabel">${U.esc(T('tour.bar.tips'))}</span>`
@@ -144,22 +180,27 @@
   const copy = (id, k) => { const tips = st.tips === 'eli5'; const v = O55.tx('tour.steps.' + id + '.' + k + (tips ? 'Eli5' : '')); return typeof v === 'string' ? v : T('tour.steps.' + id + '.' + k); };
   function calloutHtml() {
     const s = st.step; if (!s) return '';
-    if (st.missing) return `<p class="o55t-kicker">${U.esc(T('tour.bar.label'))}</p><h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(T('tour.missing.title'))}</h2><p class="o55t-body">${U.esc(T('tour.missing.body'))}</p>`
-      + `<div class="o55t-actions">${btn('back', T('tour.controls.back'), 'ghost')}${btn('skipStep', T('tour.controls.next'), 'ghost')}${btn('takeMe', T('tour.controls.takeMe'), 'primary')}</div>`;
-    if (s.render) return s.render(st, { btn, copy });
     const done = st.sess.done.includes(s.id) && s.kind === 'action';
+    /* a skin may add a counter to the kicker, rename "Try it" and put a line of its own above the buttons */
+    const deco = { step: s, missing: !!st.missing, done, count: '', tryLabel: T('tour.controls.tryIt'), pod: '' };
+    emit('callout', deco);
+    const kicker = (text) => `<p class="o55t-kicker"${deco.count ? ` data-count="${U.esc(deco.count)}"` : ''}>${U.esc(text)}</p>`;
+    const actions = (inner) => `${deco.pod}<div class="o55t-actions">${inner}</div>`;
+    if (st.missing) return kicker(T('tour.bar.label')) + `<h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(T('tour.missing.title'))}</h2><p class="o55t-body">${U.esc(T('tour.missing.body'))}</p>`
+      + actions(`${btn('back', T('tour.controls.back'), 'ghost')}${btn('skipStep', T('tour.controls.next'), 'ghost')}${btn('takeMe', T('tour.controls.takeMe'), 'primary')}`);
+    if (s.render) return s.render(st, { btn, copy, kicker, actions });
     const title = copy(s.id, 'title'), body = done && s.after ? T('tour.steps.' + s.id + '.after') : copy(s.id, s.doKey ? s.doKey(st) : 'do');
     const extra = s.extra ? s.extra(st) : '';
-    const actions = [];
-    if (s.index > 0) actions.push(btn('back', T('tour.controls.back'), 'ghost'));
-    if (s.kind === 'action' && !done && s.showMe) actions.push(btn('showMe', T('tour.controls.showMe'), 'secondary'));
+    const btns = [];
+    if (s.index > 0) btns.push(btn('back', T('tour.controls.back'), 'ghost'));
+    if (s.kind === 'action' && !done && s.showMe) btns.push(btn('showMe', T('tour.controls.showMe'), 'secondary'));
     if (s.kind === 'info' || done) {
       const ready = s.kind !== 'info' || !s.ready || s.ready(st);
-      actions.push(ready ? btn('next', s.nextLabel ? s.nextLabel(st) : T('tour.controls.next'), 'primary') : `<button type="button" class="o55t-btn o55t-primary" aria-disabled="true" data-pm-hover-exempt="true">${U.esc(s.nextLabel ? s.nextLabel(st) : T('tour.controls.next'))}</button>`);
+      btns.push(ready ? btn('next', s.nextLabel ? s.nextLabel(st) : T('tour.controls.next'), 'primary') : `<button type="button" class="o55t-btn o55t-primary" aria-disabled="true" data-pm-hover-exempt="true">${U.esc(s.nextLabel ? s.nextLabel(st) : T('tour.controls.next'))}</button>`);
     }
-    return `<p class="o55t-kicker">${U.esc(T('tour.chapters.' + s.chapter))}</p><h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(title)}</h2>`
-      + (s.kind === 'action' && !done ? `<p class="o55t-try"><span class="o55t-trylabel">${U.esc(T('tour.controls.tryIt'))}</span>${U.esc(body)}</p>` : `<p class="o55t-body">${U.esc(body)}</p>`)
-      + extra + `<div class="o55t-actions">${actions.join('')}</div>`;
+    return kicker(T('tour.chapters.' + s.chapter)) + `<h2 class="o55t-title" id="o55t-h" tabindex="-1">${U.esc(title)}</h2>`
+      + (s.kind === 'action' && !done ? `<p class="o55t-try"><span class="o55t-trylabel">${U.esc(deco.tryLabel)}</span>${U.esc(body)}</p>` : `<p class="o55t-body">${U.esc(body)}</p>`)
+      + extra + actions(btns.join(''));
   }
   function btn(action, label, kind, arg) { return `<button type="button" class="o55t-btn o55t-${kind}" data-o55t="${action}"${arg != null ? ` data-arg="${U.esc(arg)}"` : ''} data-pm-hover-exempt="true">${U.esc(label)}</button>`; }
   TR.btn = btn;
@@ -168,6 +209,7 @@
     U.morph(c, calloutHtml());
     c.setAttribute('data-step', st.step ? st.step.id : '');
     place(false);
+    emit('render', { focus: !!focus });
     if (focus) M.after(80, () => { const h = c.querySelector('#o55t-h'); if (h && TR.running && !st.show) h.focus({ preventScroll: true }); });
   }
   TR.refresh = () => { if (TR.running) { renderBar(); renderCallout(false); } };
@@ -189,7 +231,7 @@
     put(svg, 'viewBox', `0 0 ${W} ${H}`); put(svg, 'width', W); put(svg, 'height', H);
     const outer = `M0 0H${W}V${H}H0Z`, sh = st.root.querySelector('.o55t-shield');
     if (!h || h.w <= 0) { put(svg.querySelector('.o55t-scrimpath'), 'd', outer); box.hidden = true; putStyle(sh, 'clipPath', 'inset(50%)'); return; }
-    const f = (n) => Math.round(n * 10) / 10, x = f(h.x), y = f(h.y), w = f(h.w), hh = f(h.h), r = Math.min(14, w / 2, hh / 2);
+    const f = (n) => Math.round(n * 10) / 10, x = f(h.x), y = f(h.y), w = f(h.w), hh = f(h.h), r = Math.max(0, Math.min(st.look ? st.look.radius : 14, w / 2, hh / 2));
     const hole = `M${x + r} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + hh - r}Q${x + w} ${y + hh} ${x + w - r} ${y + hh}H${x + r}Q${x} ${y + hh} ${x} ${y + hh - r}V${y + r}Q${x} ${y} ${x + r} ${y}Z`;
     put(svg.querySelector('.o55t-scrimpath'), 'd', outer + hole);
     /* the ring is a small layer of its own that glides with the hole: its pulse and its marching dashes repaint only
@@ -209,11 +251,22 @@
        shield, and writes nothing that has not changed */
     if (['x', 'y', 'w', 'h'].every((k) => Math.abs(st.hole[k] - to[k]) < 0.5)) { drawHole(st.hole); return; }
     const from = Object.assign({}, st.hole);
-    st.spring = M.spring({ from, to, stiffness: 190, onUpdate: (v) => { st.hole = v; drawHole(v); } });
-    st.spring.finished.then(() => { st.spring = null; });
+    const g = st.look && st.look.glide === 'steps' ? stepGlide(from, to) : M.spring({ from, to, stiffness: 190, onUpdate: (v) => { st.hole = v; drawHole(v); } });
+    st.spring = g;
+    g.finished.then(() => { if (st.spring === g) st.spring = null; });
+  }
+  /* a stepped glide (a skin's choice): the hole jumps to its target in five held steps on the motion clock, and a new
+     target mid-flight starts a new glide from where it stands; it answers like the spring (retarget, cancel, finished) */
+  function stepGlide(from, to) {
+    let tw = null, done;
+    const finished = new Promise((res) => { done = res; });
+    const go = (a, b) => { if (tw) tw.cancel(); const t = tw = M.tween({ from: a, to: b, duration: 280, ease: M.ease.steps(5), onUpdate: (v) => { st.hole = v; drawHole(v); } }); t.finished.then((ok) => { if (ok && tw === t) done(true); }); };
+    go(from, to);
+    return { retarget(b) { go(Object.assign({}, st.hole), b); }, cancel() { if (tw) tw.cancel(); tw = null; done(false); }, finished };
   }
   function place(snap) {
     const el = targetEl(), h = holeFor(el);
+    if (el !== st.target) { const prev = st.target; st.target = el; emit('target', { el, prev }); }
     /* the callout is placed against where the spotlight is going, not where it is, so both travel once, together */
     st.dest = h && !st.missing ? h : null;
     if (h && !st.missing) { if (snap) { st.hole = h; drawHole(h); } else moveHole(h); }
@@ -291,24 +344,34 @@
     show(x, y) { const p = P.el(); P.pos = { x, y }; p.style.transform = `translate(${x}px, ${y}px)`; p.classList.add('o55t-on'); },
     hide() { const p = P.el(); p.classList.remove('o55t-on', 'o55t-press'); },
     /* travel on a gentle arc; the destination is pre-cued before the pointer leaves */
-    async moveTo(x, y, dur) {
-      /* the pointer emerges from the Show Me button the learner just pressed (else from the callout's middle) */
-      if (!P.pos) { const b = st.root.querySelector('.o55t-callout [data-o55t="showMe"]'), c = (b || st.root.querySelector('.o55t-callout')).getBoundingClientRect(); P.show(c.left + c.width / 2, c.top + c.height / 2); await M.delay(80); }
+    async moveTo(x, y, dur, o) {
+      /* the pointer emerges from the Show Me button the learner just pressed (else from the callout's middle), or
+         from where a skin keeps it (pointerFrom) */
+      if (!P.pos) {
+        const from = { at: null }; emit('pointerFrom', from);
+        if (from.at) P.show(from.at.x, from.at.y);
+        else { const b = st.root.querySelector('.o55t-callout [data-o55t="showMe"]'), c = (b || st.root.querySelector('.o55t-callout')).getBoundingClientRect(); P.show(c.left + c.width / 2, c.top + c.height / 2); }
+        await M.delay(80);
+      }
       const from = Object.assign({}, P.pos), dist = Math.hypot(x - from.x, y - from.y), mx = (from.x + x) / 2, my = Math.min(from.y, y) - Math.min(120, dist * 0.25);
-      /* like a hand: time grows with distance (Fitts), speed up then settle into the target, in the family's manner */
-      const fam = family(), d = dur || Math.round(Math.min(760, Math.max(420, 360 + dist * 0.32)));
-      const ease = fam === 'retro' ? M.ease.steps(8) : fam === 'friendly' ? M.ease.handSpring : fam === 'glass' ? M.ease.handGlide : M.ease.hand;
+      /* like a hand: time grows with distance (Fitts), speed up then settle into the target, in the family's manner
+         (or the skin's: st.look.travel = { n, ease, frame }) */
+      const fam = family(), tv = st.look && st.look.travel, d = dur || Math.round(Math.min(760, Math.max(420, 360 + dist * 0.32)));
+      const ease = tv ? tv.ease : fam === 'retro' ? M.ease.steps(8) : fam === 'friendly' ? M.ease.handSpring : fam === 'glass' ? M.ease.handGlide : M.ease.hand;
       const at = (t) => [(1 - t) * (1 - t) * from.x + 2 * (1 - t) * t * mx + t * t * x, (1 - t) * (1 - t) * from.y + 2 * (1 - t) * t * my + t * t * y];
       const el = P.el(), end = () => { P.pos = { x, y }; el.style.transform = `translate(${x}px, ${y}px)`; };
       if (M.reduced()) { end(); return; }
+      const quiet = o && o.quiet;
+      if (!quiet && dist > 24) O55.sound.play('pointer');
       /* the travel is one Web Animation through points sampled from the same arc and easing (Retro: eight held steps),
          so the compositor carries the hand: the tour cannot hide the app beneath it, and a frame drawn by the main
          thread repaints that whole page on a computer without a GPU */
-      const n = fam === 'retro' ? 8 : 28, frames = [];
-      for (let k = 0; k <= n; k++) { const [px, py] = at(ease(k / n)); frames.push({ transform: `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px)`, easing: fam === 'retro' ? 'steps(1, end)' : 'linear' }); }
-      const a = el.animate(frames, { duration: fam === 'glass' ? Math.round(d * 1.12) : d, fill: 'forwards' });
+      const n = tv ? tv.n : fam === 'retro' ? 8 : 28, frame = tv ? tv.frame : fam === 'retro' ? 'steps(1, end)' : 'linear', frames = [];
+      for (let k = 0; k <= n; k++) { const [px, py] = at(ease(k / n)); frames.push({ transform: `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px)`, easing: frame }); }
+      const a = el.animate(frames, { duration: fam === 'glass' && !tv ? Math.round(d * 1.12) : d, fill: 'forwards' });
       await a.finished.catch(() => null);
       end(); a.cancel();
+      if (!quiet && dist > 24 && !SM.cancelled()) O55.sound.play('arrive');
     },
     async press(on) { P.el().classList.toggle('o55t-press', on !== false); await M.delay(on === false ? 60 : 140); }
   };
@@ -318,14 +381,14 @@
   const SM = TR.sm = {
     cancelled: () => !st.show || st.show.cancelled,
     wait: (ms) => M.delay(ms),
-    async cue(el) { if (!el) return; el.classList.add('o55t-cue'); await M.delay(360); el.classList.remove('o55t-cue'); },
+    async cue(el) { if (!el) return; el.classList.add('o55t-cue'); emit('cue', { el }); await M.delay(360); el.classList.remove('o55t-cue'); },
     async click(el, o) {
       if (!el || SM.cancelled()) return false;
       el.scrollIntoView && el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       /* the destination is cued as the pointer sets off, not before: the glow and the travel overlap */
       SM.cue(el); await M.delay(90); if (SM.cancelled()) return false;
       const c = center(el); await P.moveTo(c.x, c.y); if (SM.cancelled()) return false;
-      await P.press(true); O55.sound.play('tap');
+      await P.press(true); O55.sound.play((st.look && st.look.press) || 'tap'); emit('press', { el, x: c.x, y: c.y });
       const opts = { bubbles: true, cancelable: true, clientX: c.x, clientY: c.y, button: 0, pointerId: 1, pointerType: 'mouse', isPrimary: true };
       el.dispatchEvent(new PointerEvent('pointerdown', opts)); el.dispatchEvent(new MouseEvent('mousedown', opts));
       el.dispatchEvent(new PointerEvent('pointerup', opts)); el.dispatchEvent(new MouseEvent('mouseup', opts));
@@ -341,10 +404,10 @@
       const base = { bubbles: true, cancelable: true, button: 0, buttons: 1, pointerId: 7, pointerType: 'mouse', isPrimary: true };
       el.dispatchEvent(new PointerEvent('pointerdown', Object.assign({ clientX: a.x, clientY: a.y }, base)));
       const span = Math.hypot(to.x - a.x, to.y - a.y), steps = (o && o.steps) || 42, dur = (o && o.dur) || Math.round(Math.min(1500, Math.max(900, 700 + span * 0.5)));
-      const mx = (a.x + to.x) / 2, my = Math.min(a.y, to.y) - 60;
+      const mx = (a.x + to.x) / 2, my = Math.min(a.y, to.y) - 60, ease = (st.look && st.look.drag) || (family() === 'retro' ? M.ease.steps(12) : M.ease.hand);
       for (let i = 1; i <= steps; i++) {
         if (SM.cancelled()) break;
-        const t = (family() === 'retro' ? M.ease.steps(12) : M.ease.hand)(i / steps), x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * mx + t * t * to.x, y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * to.y;
+        const t = ease(i / steps), x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * mx + t * t * to.x, y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * to.y;
         P.pos = { x, y }; P.el().style.transform = `translate(${x}px, ${y}px)`;
         const tgt = document.elementFromPoint(x, y) || document;
         tgt.dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
@@ -366,22 +429,26 @@
     async type(el, text) {
       if (!el || SM.cancelled()) return false;
       await SM.click(el, { noClick: true }); el.focus();
-      for (const ch of text) { if (SM.cancelled()) return false; el.value += ch; el.dispatchEvent(new Event('input', { bubbles: true })); await M.delay(18); }
+      for (const ch of text) { if (SM.cancelled()) return false; el.value += ch; el.dispatchEvent(new Event('input', { bubbles: true })); if (/\S/.test(ch)) O55.sound.play('type'); await M.delay(18); }
       return true;
     }
   };
   async function showMe() {
     const s = st.step; if (!s || !s.showMe || st.show) return;
-    st.show = { cancelled: false };
+    const me = st.show = { cancelled: false };
     st.root.setAttribute('data-showme', 'true');
-    O55.sound.play('spot');
+    emit('showMe', { step: s }); /* the pointer's travel is its sound ('pointer'), so the button itself is quiet */
     try { await s.showMe(SM, st); } catch (err) { console.warn('O55 tour: Show Me stopped', err); }
     await M.delay(600); /* settle: the result stays visible while the guide names the change */
+    if (st.show === me && !me.cancelled) await settle(emit('showMeEnd', { step: s }), 1200);
+    if (st.show !== me) return; /* a real input took over meanwhile and has already put the pointer away */
     st.show = null; st.root.removeAttribute('data-showme'); P.hide();
+    emit('showMeDone', { step: s });
   }
   function interruptShow() {
     if (!st.show) return;
     st.show.cancelled = true; st.show = null; st.root.removeAttribute('data-showme'); P.hide();
+    O55.sound.play('interrupt'); emit('interrupt', {});
     U.announce(T('tour.controls.interrupted'), st.root);
   }
 
@@ -400,7 +467,8 @@
     st.step = TR.defs[Math.max(0, i)]; st.sess.index = st.step.index; st.missing = false; st.missingSince = 0; st.advancing = false; st.lastReady = undefined; st.side = null; st.fixed = null;
     if (!o.back) st.entries[st.step.id] = entrySnap();
     save();
-    O55.sound.setContext({ chapter: 'tour', step: st.step.index });
+    /* each chapter plays on its own chord (the sound kit's tour-ask, tour-workspace, tour-plan) */
+    O55.sound.setContext({ chapter: 'tour-' + st.step.chapter, step: st.step.index });
     /* the shared chrome controls rebind to the current Project at every step, so a Project switched mid-tour
        (or a resume onto a different Project) can never leave them showing a previous Project's value */
     if (O55.sound.refresh) O55.sound.refresh('tour');
@@ -408,8 +476,15 @@
     if (my !== st.seq) return;
     await stillTarget(); /* a page that slides in, a card that grows: place against where things come to rest */
     if (my !== st.seq) return;
+    /* a skin may hold the new callout back for a moment (a chapter banner) while the spotlight moves on */
+    const arrival = { step: st.step, prev: prev || null, index: st.step.index, chapterChanged: !!(prev && prev.chapter !== st.step.chapter),
+      forward: !!(prev && prev.index < st.step.index), back: !!o.back, silent: !!o.silent, first: !prev, hold: false, sound: 'callout' };
+    const held = emit('arrive', arrival);
+    if (arrival.hold) { renderBar(); place(false); await settle(held, 2600); if (my !== st.seq) return; }
     renderBar(); renderCallout(true);
-    if (!o.silent) O55.sound.play(st.step.kind === 'info' ? 'spot' : 'step');
+    /* the callout's arrival sound (a listener that already sounded the moment, a chapter banner, sets it to null) */
+    if (!o.silent && arrival.sound) O55.sound.play(arrival.sound, { step: st.step.index });
+    emit('step', arrival);
     U.announce(T('tour.bar.progress', { n: CHAPTERS.indexOf(st.step.chapter) + 1, name: T('tour.chapters.' + st.step.chapter), s: TR.defs.filter((d) => d.chapter === st.step.chapter).indexOf(st.step) + 1, total: TR.defs.filter((d) => d.chapter === st.step.chapter).length }) + '. ' + copy(st.step.id, 'title'), st.root);
     watch();
     st.entering = false;
@@ -429,11 +504,12 @@
   function watch() {
     if (st.poll) st.poll.cancel();
     const tick = () => {
-      if (!TR.running || st.paused) { st.poll = M.after(250, tick); return; }
+      if (!TR.running || !st.step) { st.poll = null; return; } /* the tour has ended (or is between runs): the loop stops */
+      if (st.paused) { st.poll = M.after(250, tick); return; }
       const s = st.step, el = targetEl();
       /* a surface being dragged is hidden by the workspace on purpose; that is never a missing target */
-      if (s.target && !el && !document.body.classList.contains('pm-home-dragging')) { if (!st.missingSince) st.missingSince = performance.now(); if (!st.missing && performance.now() - st.missingSince > 1600) { st.missing = true; renderCallout(true); } }
-      else { st.missingSince = 0; if (st.missing) { st.missing = false; renderCallout(false); } }
+      if (s.target && !el && !document.body.classList.contains('pm-home-dragging')) { if (!st.missingSince) st.missingSince = performance.now(); if (!st.missing && performance.now() - st.missingSince > 1600) { st.missing = true; renderCallout(true); O55.sound.play('missing'); emit('missing', { on: true }); } }
+      else { st.missingSince = 0; if (st.missing) { st.missing = false; renderCallout(false); emit('missing', { on: false }); } }
       if (s.tick) { try { s.tick(st); } catch (_) {} }
       if (s.kind === 'info' && s.ready) { const r = !!s.ready(st); if (r !== st.lastReady) { st.lastReady = r; renderCallout(false); } }
       place(false); /* the spring retargets in flight; the callout is placed against the destination */
@@ -453,9 +529,10 @@
   function complete(s) {
     if (st.advancing) return; st.advancing = true;
     if (!st.sess.done.includes(s.id)) st.sess.done.push(s.id);
-    save(); O55.sound.play('step'); renderBar(); renderCallout(false);
+    save(); O55.sound.play('checkpoint', { step: s.index }); renderBar(); renderCallout(false);
     const hold = s.after ? 2200 : 900;
     st.root.querySelector('.o55t-callout').classList.add('o55t-success');
+    emit('complete', { step: s });
     M.after(hold, () => { const c = st.root.querySelector('.o55t-callout'); c.classList.remove('o55t-success'); if (TR.running && st.step === s && !s.stay && !st.rewinding && !st.entering) goStep(s.index + 1); else st.advancing = false; });
   }
   TR.complete = () => st.step && complete(st.step);
@@ -464,6 +541,7 @@
     if (st.lookOpen && !e.target.closest('.o55t-lookslot')) { st.lookOpen = false; renderBar(); }
     const b = e.target.closest('[data-o55t]'); if (!b) return;
     e.preventDefault(); e.stopPropagation();
+    if (st.ending) return; /* the tour is closing: one Finish or Skip is enough */
     const a = b.getAttribute('data-o55t'), arg = b.getAttribute('data-arg');
     if (st.entering && (a === 'next' || a === 'showMe' || a === 'skipStep')) return; /* the new step's own controls come with it */
     if (a === 'next') { O55.sound.play('next'); if (st.step.onNext) st.step.onNext(st); return goStep(st.step.index + 1); }
@@ -477,8 +555,17 @@
     if (a === 'lookMenu') { st.lookOpen = !st.lookOpen; renderBar(); return; }
     if (a === 'lookFamily') { O55.lookMenu.save(arg, O55.theme().mode); return; }
     if (a === 'lookMode') { O55.lookMenu.save(O55.theme().chosen, arg); return; }
-    if (a === 'takeMe') { if (st.step.goTo) st.step.goTo(st); st.missing = false; st.missingSince = 0; renderCallout(false); return; }
-    if (a === 'skipStep') return goStep(st.step.index + 1);
+    /* NieR Mode in the look menu: the checkbox and Adjust NieR look (O55.lookMenu.nier, after setup: live) */
+    if (a === 'lookNier' || a === 'lookNierAdjust') {
+      if (!(O55.lookMenu && O55.lookMenu.nier)) return;
+      /* Adjust opens the Plug-in Chips dialog: the menu closes first, so the dialog returns focus to the bar's look
+         button (the redrawn one) rather than to a control the redraw removed */
+      if (a === 'lookNierAdjust') { st.lookOpen = false; renderBar(); }
+      O55.lookMenu.nier(a, (a === 'lookNierAdjust' && st.root.querySelector('.o55t-bar [data-o55t="lookMenu"]')) || b);
+      return;
+    }
+    if (a === 'takeMe') { O55.sound.play('select'); if (st.step.goTo) st.step.goTo(st); st.missing = false; st.missingSince = 0; renderCallout(false); emit('missing', { on: false }); return; }
+    if (a === 'skipStep') { O55.sound.play('next'); return goStep(st.step.index + 1); }
     if (a === 'finish') return finish(arg === 'keep');
     if (st.step && st.step.actions && st.step.actions[a]) return st.step.actions[a](st, arg, b);
   }
@@ -528,6 +615,7 @@
     st.paused = !st.paused; st.root.toggleAttribute('data-paused', st.paused);
     if (st.paused) interruptShow();
     renderBar(); O55.sound.play(st.paused ? 'toggleOff' : 'toggleOn');
+    emit('pause', { paused: st.paused });
   }
   function save() {
     O55.store.set(KEY, { v: 2, status: st.sess.status, index: st.sess.index, done: st.sess.done.slice(0, TR.defs.length),
@@ -600,8 +688,13 @@
     M.after(700, () => st.root && st.root.classList.remove('o55t-opening'));
     O55.sound.play('open');
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: resume ? 'resumed' : 'started' } }));
+    /* a skin may open the tour with a moment of its own before the first step (and take over the handoff) */
+    const opening = { resume: !!resume, from: o.from || null, noMorph: false };
+    const seq = st.seq;
+    await settle(emit('start', opening), 2400);
+    if (!TR.running || st.seq !== seq) return true;
     await goStep(st.sess.index, { silent: true });
-    if (o.from) morphIn(o.from);
+    if (o.from && !opening.noMorph) morphIn(o.from);
     return true;
   };
   /* the handoff from onboarding: a plain surface leaves the onboarding window's rectangle and settles into the first
@@ -618,16 +711,25 @@
       { left: from.left + 'px', top: from.top + 'px', width: from.width + 'px', height: from.height + 'px', borderRadius: retro ? '0px' : '22px' },
       { left: to.left + 'px', top: to.top + 'px', width: to.width + 'px', height: to.height + 'px', borderRadius: radius }
     ], { duration: 640, easing: retro ? 'steps(6, end)' : 'cubic-bezier(0.2, 0, 0, 1)', fill: 'forwards' });
-    O55.sound.play('spot');
+    O55.sound.play('callout', { step: 0 });
     a.finished.then(() => {
       c.classList.remove('o55t-morphing');
       g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'ease', fill: 'forwards' }).finished.then(() => g.remove());
     }).catch(() => { c.classList.remove('o55t-morphing'); g.remove(); });
   }
   async function end(status, keep, o) {
-    if (st.poll) st.poll.cancel(); interruptShow();
+    st.ending = true;
+    try { return await ending(status, keep, o); } finally { st.ending = false; }
+  }
+  async function ending(status, keep, o) {
+    /* a step still arriving (awaiting its page, its target or a skin's hold) stands down: it would restart the loop */
+    ++st.seq; st.entering = false;
+    if (st.poll) { st.poll.cancel(); st.poll = null; } interruptShow();
     if (st.step && st.step.leave) { try { st.step.leave(st); } catch (_) {} }
+    /* a skin's closing moment plays while the layout goes back beneath it */
+    const ceremony = settle(emit('ending', { status, keep: !!keep, silent: !!(o && o.silent) }), 2400);
     const res = await restore(st.snap, keep);
+    await ceremony;
     if (res.layout === 'failed' || res.widgets === 'failed' || !res.chat || res.chat.status !== 'restored') {
       st.sess.restored = res; st.sess.status = 'restore-pending';
       st.sess.requestedStatus = status;
@@ -637,6 +739,7 @@
         thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page, restored: res });
       O55.pageToast(T('tour.restoreFailed'));
       showRecovery(O55.store.get(KEY, null));
+      emit('end', { status: 'restore-pending', keep: !!keep });
       return { ...res, status: 'restore-pending' };
     }
     TR.running = false;
@@ -649,7 +752,8 @@
     document.documentElement.removeAttribute('data-o55-tour');
     if (st.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
     st.root.classList.add('o55t-closing'); if (!(o && o.silent)) O55.sound.play(status === 'done' ? 'finish' : 'close');
-    M.after(360, () => { st.root.hidden = true; st.root.classList.remove('o55t-closing'); st.step = null; st.hole = null; });
+    emit('end', { status, keep: !!keep });
+    M.after(360, () => { st.root.hidden = true; st.root.classList.remove('o55t-closing'); st.step = null; st.hole = null; st.target = null; });
     return res;
   }
   /* a toast that belongs to the page (the tour root and the onboarding window may both be gone) */
@@ -660,6 +764,7 @@
     M.after(ms || 4200, () => el.classList.remove('o55-on'));
   };
   async function skip() {
+    if (st.ending) return { status: 'ending' };
     if (!TR.running) { const saved = O55.store.get(KEY, null); if (saved && TR.hasUnresolved()) showRecovery(saved); return { status: saved && saved.status || 'not-running' }; }
     const result = await end('skipped', false);
     if (result.status === 'restore-pending') return result;
@@ -667,6 +772,7 @@
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'skipped' } }));
   }
   async function finish(keep) {
+    if (st.ending) return { status: 'ending' };
     if (!TR.running) { const saved = O55.store.get(KEY, null); if (saved && TR.hasUnresolved()) showRecovery(saved); return { status: saved && saved.status || 'not-running' }; }
     const res = await end('done', keep);
     if (res.status === 'restore-pending') return res;
