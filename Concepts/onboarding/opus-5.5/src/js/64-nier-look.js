@@ -73,8 +73,27 @@
   function toggle(source, el) {
     const n = N(); if (!n) return false;
     const next = !state().on;
-    if (!inWindow()) { heavy(4500); O55.sound.play(next ? 'nierOn' : 'nierOff'); return n.set(next, { sound: false }); }
+    if (!inWindow()) return pageFlip(n, next, el);
     return flip(next, el);
+  }
+  /* after setup (the tour's look menu): Settings' page-wide moment, grown from the row pressed, with the sounds played
+     here in O55's voice (they follow the tour's own sound control): the hum on the cover's first frame (its growth
+     ticks land on the plate's steps), then the world waking (NieR's choir, or the look's own reveal turning off) as
+     the cover tears out. Never closer than 120 ms to the hum (an instant change reveals at once), and not at all once
+     the onboarding window has opened over it (its own opening speaks then). */
+  function pageFlip(n, next, el) {
+    heavy(4500);
+    let at = null, woke = false;
+    const opened = () => document.documentElement.hasAttribute('data-o55-open');
+    const onReveal = (phase) => {
+      if (phase === 'start' && at == null) { at = O55.motion.now(); if (!opened()) O55.sound.play(next ? 'nierOn' : 'nierOff'); return; }
+      if (phase !== 'reveal' || woke || at == null) return;
+      woke = true;
+      if (opened()) return;
+      const wait = at + 120 - O55.motion.now();
+      if (wait > 0) O55.motion.after(wait, () => O55.sound.play('wake')); else O55.sound.play('wake');
+    };
+    return n.set(next, { sound: false, from: el && el.isConnected ? el : null, onReveal });
   }
 
   /* ---------------------------------------------------------------- H1: "The little world opens" / "Back into the box"
@@ -106,11 +125,14 @@
     const n = N(); if (!n || !inWindow()) return false;
     const S = O55.S, A = O55.art, tr = troupe(), NW = O55.nierWindow, FX = O55.nierFx;
     heavy(4500);
-    O55.sound.play(next ? 'nierOn' : 'nierOff');
+    /* unticking, nierOff at the press with the power-down it scores; ticking, nierOn on the plate's first frame (the
+       cover's 'start', hum() below), so its six growth ticks land on the plate's six steps (films minor 3: from the
+       press they ran about 200 ms ahead of a plate the press's own work held back) */
+    if (!next) O55.sound.play('nierOff');
     look(S);
     /* a second toggle: the first one's beats end where they stand */
     if (flight) { snap(); flight.timers.forEach((t) => t.cancel()); }
-    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false };
+    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false, humAt: next ? null : O55.motion.now() };
     const st = stageEl();
     if (next) {
       /* T0: the thumbnail's units peek with joy as the brackets lock on; the resting Pod waits off stage */
@@ -132,16 +154,29 @@
   }
   function at(F, ms, fn) { const t = O55.motion.after(ms, () => { if (flight === F && !F.snapped && inWindow()) fn(); }); F.timers.push(t); return t; }
   const instant = () => O55.motion.reduced() || !!O55.motion.lowResource || !within();
+  /* the switch's own sound, once per toggle (a toggle already replaced by the next one stays quiet) */
+  function hum(F) {
+    if (F.humAt != null) return;
+    F.humAt = O55.motion.now();
+    if (flight === F && inWindow()) O55.sound.play('nierOn');
+  }
   function reveal(F, phase) {
+    if (phase === 'start') { hum(F); return; }
     if (phase === 'gone') { F.gone = true; return; }
     if (phase !== 'reveal' || F.revealed) return;
+    hum(F); /* a moment that never reported its first frame */
     F.revealed = true; F.revealAt = O55.motion.now();
     if (flight !== F || !inWindow()) return;
     /* the choir (NieR) or the look's own reveal (unticking), on the frame the window shows again; on the instant path
-       (Reduced Motion, Still, Colors only, a low-resource computer) the repaint is the same task as the click, so it
-       follows the toggle's own sound just after, rather than merging into it */
-    if (instant()) { O55.motion.after(120, () => { if (flight === F && inWindow()) O55.sound.play('wake'); }); enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
-    O55.sound.play('wake');
+       (Reduced Motion, a low-resource computer) the repaint is the same task as the click, so it follows the toggle's
+       own sound just after, rather than merging into it */
+    const wake = () => { if (flight === F && inWindow()) O55.sound.play('wake'); };
+    if (instant()) { O55.motion.after(120, wake); enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
+    /* a reveal within 120 ms of that sound (no cover played: Still, Colors only, the Reboot moment part removed) waits
+       for the rest of the 120 ms, so wake still sounds as the state sound it is (hero spec rule 10; films minor 4, where
+       Still and Colors only dropped it); the stage keeps its own beats */
+    const early = F.humAt + 120 - F.revealAt;
+    if (early > 0) O55.motion.after(early, wake); else wake();
     if (F.on) { at(F, 260, () => enter(F)); at(F, 1940, () => speak(F)); }
     else at(F, 360, () => enter(F));
   }

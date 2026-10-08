@@ -110,6 +110,18 @@
     o.connect(f); f.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.66);
     blip(c, bus, t + (up ? 0.5 : 0.02), up ? 1760 : 880, 0.12, 0.03);
   }
+  /* the world waking: an A minor "aah" (A3 E4 A4, a soft sawtooth pair per note through a low-pass that opens) and one
+     bell at E6; about 1.6 s (O55's NieR kit plays its own, fuller 'wake') */
+  function wakeChord(c, bus, t) {
+    [220, 329.63, 440].forEach((f, i) => {
+      const lp = c.createBiquadFilter(), g = c.createGain();
+      lp.type = 'lowpass'; lp.Q.value = 0.7; lp.frequency.setValueAtTime(500, t); lp.frequency.linearRampToValueAtTime(1500, t + 0.5);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.016 - i * 0.003, t + 0.28); g.gain.setValueAtTime(0.016 - i * 0.003, t + 0.9); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+      lp.connect(g); g.connect(bus);
+      [-6, 6].forEach(cents => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = cents; o.connect(lp); o.start(t); o.stop(t + 1.65); });
+    });
+    blip(c, bus, t + 0.04, 1318.5, 1.1, 0.022);
+  }
   const SFX = {
     tick: (c, b, t) => blip(c, b, t, 2640, 0.026, 0.028),
     select: (c, b, t) => { blip(c, b, t, 1480, 0.05, 0.045, 'triangle'); blip(c, b, t + 0.038, 2220, 0.07, 0.035); },
@@ -118,14 +130,19 @@
     pod: (c, b, t) => { blip(c, b, t, 1760, 0.05, 0.03); blip(c, b, t + 0.06, 2350, 0.05, 0.026); blip(c, b, t + 0.12, 1975, 0.09, 0.026); },
     alert: (c, b, t) => { blip(c, b, t, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.1, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.2, 392, 0.2, 0.05, 'triangle'); },
     sweepOn: (c, b, t) => sweepTone(c, b, t, true),
-    sweepOff: (c, b, t) => sweepTone(c, b, t, false)
+    sweepOff: (c, b, t) => sweepTone(c, b, t, false),
+    wake: wakeChord
   };
   /* which of these matter when two sounds meet (O55.sound keeps the more important one) */
-  const SFX_PRIO = { tick: 20, select: 45, confirm: 60, cancel: 55, pod: 48, alert: 84, sweepOn: 93, sweepOff: 93 };
-  /* the reboot's hum is O55's own NieR moment when O55 is present (its NieR kit plays the hum, the ticks and the
-     choir): one designed sound, and a caller that also plays nierOn or nierOff for the same toggle merges into it
-     instead of a second hum (O55.sound keeps one of two equal events in the same moment) */
-  const O55_EVENT = { sweepOn: 'nierOn', sweepOff: 'nierOff' };
+  const SFX_PRIO = { tick: 20, select: 45, confirm: 60, cancel: 55, pod: 48, alert: 84, sweepOn: 93, sweepOff: 93, wake: 93 };
+  /* the reboot's hum and the world waking are O55's own NieR moments when O55 is present (its NieR kit plays the hum
+     and the ticks as nierOn, the choir as wake): one designed sound each, and a caller that also plays nierOn or
+     nierOff for the same toggle merges into it instead of a second hum (O55.sound keeps one of two equal events in the
+     same moment). wake takes the look painted when it plays: NieR's choir after turning on, the family's own reveal
+     after turning off. Without O55 there is no family's reveal, so the synth's choir sounds only while NieR is painted
+     (never after turning it off). */
+  const O55_EVENT = { sweepOn: 'nierOn', sweepOff: 'nierOff', wake: 'wake' };
+  const O55_KIT = { sweepOn: 'nier', sweepOff: 'nier' };
   /* force: the reboot plays while NieR Mode is still off (turning on), so it asks for the installed part instead */
   function sfx(name, force) {
     if (!(force ? installed('sounds') : live.has('sounds')) || !SFX[name]) return false;
@@ -136,7 +153,8 @@
     if (!soundAllowed()) return false;
     const O = o55Sound();
     let ok = false;
-    if (O && O55_EVENT[name] && typeof O.play === 'function') ok = O.play(O55_EVENT[name], { kit: 'nier' });
+    if (O && O55_EVENT[name] && typeof O.play === 'function') ok = O.play(O55_EVENT[name], O55_KIT[name] ? { kit: O55_KIT[name] } : {});
+    else if (name === 'wake' && !(NIER() && NIER().on())) return false;
     else if (O) ok = O.synth((c, out, t) => SFX[name](c, busFor(c, out), t), { force: !!force, name: 'nier:' + name, priority: SFX_PRIO[name] });
     else {
       const c = audio(); if (!c) return false;
@@ -186,12 +204,13 @@
     if (!t) { if (!curHide && curT) curHide = window.setTimeout(() => { curHide = 0; curOff(); }, 90); return; }
     if (curHide) { window.clearTimeout(curHide); curHide = 0; }
     curT = t; curPlace(t);
-    sfx('tick');
+    /* (the repaint under the reboot cover redraws what the pointer rests on: no tick for a cursor that is not shown) */
+    if (!coverUp) sfx('tick');
   }
   function curFocus(e) {
     const t = targetOf(e); if (!t) return;
     let fv = false; try { fv = e.target.matches(':focus-visible'); } catch (x) { fv = false; }
-    if (fv) { curT = t; curPlace(t); sfx('tick'); }
+    if (fv) { curT = t; curPlace(t); if (!coverUp) sfx('tick'); }
   }
   PARTS.cursor = {
     on() {
@@ -536,15 +555,20 @@
        shows only if the repaint still runs at T1100. R, the reveal, is the first frame after two frame intervals under
        34 ms, two frames or more after repaint() returned, never before the list is done and at most 4 s after: the
        kicker reads "All clear" in one step, holds 160 ms, and the plate tears out as six slats sliding off to
-       alternate sides from the middle outward (steps(4), 30 ms apart). info.onReveal('reveal') fires as they start (the
-       window takes input again from then) and 'gone' once they are off.
+       alternate sides from the middle outward (steps(4), 30 ms apart, the first step on the hold's last frame).
+       info.onReveal('start') fires on the cover's first frame (the hum is scored from there), 'reveal' on that frame (the window takes input again from then, and the wake sounds) and
+       'gone' once they are off; the window's own effects come back then, never over the plate.
        Unticking, "back into the box": the stage powers down first (300 ms, the window's beat), six slats close in from
        both sides (T300-T540), two lines type (stamps at T700 and T850), then the repaint; at R "All clear" for 120 ms,
        'reveal', and the plate, as one, shrinks in 6 held steps into the NieR thumbnail with the brackets riding its
        corners; the brackets let go 60 ms after, then 'gone'.
-     - anywhere else (the Settings page, the title-bar menu): the ink band over the whole page, stepped down in 6 held
-       steps, with the same check list; it leaves by the same slat tear-out. The old flicker-out was a large-area strobe
-       over the WCAG three-flash limit (films KEY-H1-dark-strobe); no surface here reverses its brightness twice.
+     - anywhere else (the Settings row, the title-bar menu, the tour's look menu): the same plate over the whole page,
+       in the same ground and ink (NieR's ground in the look's own tone: a dark user never sees a parchment sheet, a light
+       user never an ink one), grown from the control pressed (info.from, else the last press on a control: the same
+       control redrawn if the change redrew it, else the point pressed; else the middle) to the whole screen in the same 6 steps, with the same check list and the same slat tear-out; unticking,
+       the slats close in at once (there is no stage to power down), and at R the plate folds back into that control.
+       The old flicker-out was a large-area strobe over the WCAG three-flash limit (films KEY-H1-dark-strobe), and the
+       old page band an inverted sheet (films M6); no surface here reverses its brightness.
      The cover takes NieR's tokens from the preview scope (data-o55-nier-preview, styles.d/13-nier.css), because it
      exists before the palette is painted. Every time is on the animation timeline (document.timeline, scaled by
      Animation speed like every animation here), so slow-motion filming slows all of it together. Reduced motion, a
@@ -676,15 +700,46 @@
     log.querySelector('.o55np-kick-t').textContent = RB('allClear', 'All clear');
   }
 
-  /* ---- the in-window plate's geometry: rects in the cover's own CSS px, the hairline edges and brackets as transforms */
+  /* ---- the plate's geometry: rects in the cover's own CSS px, the hairline edges and brackets as transforms */
   const BR = 12;
   function rbBox(cover) { const r = cover.getBoundingClientRect(), w = cover.offsetWidth || r.width || 1, h = cover.offsetHeight || r.height || 1; return { r, w, h, k: r.width / w || 1 }; }
-  function rbFrom(info, within, box) {
-    let given = null; try { given = typeof info.from === 'function' ? info.from() : info.from; } catch (e) { given = null; }
-    const thumb = within.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-nier-thumb]') || within.querySelector('[data-nier-thumb]');
-    for (const c of [given, thumb, document.activeElement]) {
+  /* the control a page-wide change was asked from: a press (a pointer, or Enter or Space) on it at most 2 s before. The
+     page's cover grows from it and folds back into it, as the window's grows from the NieR thumbnail. Only the target is
+     kept (no rect is read until a cover needs one), with its nearest id and the point a pointer pressed: the change
+     can redraw the control before the cover starts (the Settings row redraws its switch on the write; films FR: the
+     page plate grew from the middle of the screen), and then the cover finds the redrawn one by that id, or grows from
+     the point */
+  let press = null;
+  const PRESSABLE = 'button, a[href], input, select, label, summary, [role="button"], [role="switch"], [role="checkbox"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="menuitem"], [role="option"], [role="tab"]';
+  function notePress(e) {
+    const t = e.target;
+    if (!e.isTrusted || !(t instanceof Element) || t.closest('#o55np-reboot')) return;
+    if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+    const el = t.closest(PRESSABLE) || t, host = el.closest('[id]'), role = el.getAttribute('role');
+    press = { el, at: performance.now(), id: host ? host.id : '', sel: host && host !== el ? el.localName + (role ? `[role="${role}"]` : '') : '',
+      pt: e.type === 'pointerdown' ? { left: e.clientX - 12, top: e.clientY - 12, width: 24, height: 24 } : null };
+  }
+  document.addEventListener('pointerdown', notePress, true);
+  document.addEventListener('keydown', notePress, true);
+  /* the last press if it came at most 2 s ago; its control as it is now (itself, else the one control of its kind
+     under the same id), else null */
+  const lastPress = () => (press && performance.now() - press.at < 2000 ? press : null);
+  function pressEl(p) {
+    if (!p) return null;
+    if (p.el.isConnected) return p.el;
+    const host = p.id ? document.getElementById(p.id) : null;
+    if (!host || !p.sel) return host;
+    const same = host.querySelectorAll(p.sel);
+    return same.length === 1 ? same[0] : null;
+  }
+  const givenFrom = info => { try { return typeof info.from === 'function' ? info.from() : info.from; } catch (e) { return null; } };
+  const thumbIn = scope => scope.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-nier-thumb]') || scope.querySelector('[data-nier-thumb]');
+  /* the first candidate on screen (an element inside scope, or a client rect), as a rect in the cover's px clipped to
+     it; else a small rect in the middle */
+  function rbFrom(cands, scope, box) {
+    for (const c of cands) {
       let r = null;
-      if (c && typeof c.getBoundingClientRect === 'function') { if (!c.isConnected || !within.contains(c)) continue; r = c.getBoundingClientRect(); }
+      if (c && typeof c.getBoundingClientRect === 'function') { if (!c.isConnected || !scope.contains(c)) continue; r = c.getBoundingClientRect(); }
       else if (c && typeof c.left === 'number' && typeof c.width === 'number') r = c;
       if (!r || r.width < 8 || r.height < 8) continue;
       const x = (r.left - box.r.left) / box.k, y = (r.top - box.r.top) / box.k, w = r.width / box.k, h = r.height / box.k;
@@ -695,7 +750,6 @@
     return { x: box.w / 2 - 80, y: box.h / 2 - 50, w: 160, h: 100 };
   }
   const lerpRect = (a, b, f) => ({ x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, w: a.w + (b.w - a.w) * f, h: a.h + (b.h - a.h) * f });
-  const px = v => `${Math.round(v)}px`;
   /* the plate's clip, on the compositor: the plate is an overflow box moved and scaled onto the rect, its ground inside
      scaled and moved back by the inverse, so the map stays put while the box around it steps (in Slint, a clipping
      Rectangle whose x, y, width and height step); [plate transform, ground transform] */
@@ -711,29 +765,29 @@
       `translate(${x - k}px, ${y - k}px) scale(1, 1)`, `translate(${x2 + k - BR}px, ${y - k}px) scale(-1, 1)`,
       `translate(${x - k}px, ${y2 + k - BR}px) scale(1, -1)`, `translate(${x2 + k - BR}px, ${y2 + k - BR}px) scale(-1, -1)`];
   }
-  function rbSet(lines, inWindow) {
+  /* the plate (its ground, the map grid and the list) and its decorations (the hairline frame and four brackets) */
+  function rbSet(lines) {
     const set = document.createElement('div');
     set.className = 'o55np-set';
     const ground = document.createElement('div');
-    ground.className = inWindow ? 'o55np-plate' : 'o55np-band';
-    if (!inWindow) ground.innerHTML = '<div class="o55np-rb-lines"></div>';
-    else ground.innerHTML = '<div class="o55np-plate-in"></div>';
+    ground.className = 'o55np-plate';
+    ground.innerHTML = '<div class="o55np-plate-in"></div>';
     const log = rbLog(lines);
-    (inWindow ? ground.firstElementChild : ground).appendChild(log);
+    ground.firstElementChild.appendChild(log);
     set.appendChild(ground);
-    if (inWindow) {
-      const deco = document.createElement('div');
-      deco.className = 'o55np-deco';
-      deco.innerHTML = '<i class="o55np-edge" data-e="t"></i><i class="o55np-edge" data-e="b"></i><i class="o55np-edge" data-e="l"></i><i class="o55np-edge" data-e="r"></i>'
-        + '<i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i>';
-      set.appendChild(deco);
-    }
+    const deco = document.createElement('div');
+    deco.className = 'o55np-deco';
+    deco.innerHTML = '<i class="o55np-edge" data-e="t"></i><i class="o55np-edge" data-e="b"></i><i class="o55np-edge" data-e="l"></i><i class="o55np-edge" data-e="r"></i>'
+      + '<i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i><i class="o55np-br"></i>';
+    set.appendChild(deco);
     return { set, ground, inner: ground.firstElementChild, log, deco: set.querySelectorAll('.o55np-deco > i') };
   }
   /* keyframes for a stepped walk: frames [{ t, ... }] in ms over total ms, every segment held (step-end) */
   const walk = (frames, total) => frames.map(f => Object.assign({ offset: Math.min(1, f.t / total), easing: 'step-end' }, f.v));
   /* six slats, each a copy of the set moved up by its own place; 'out' slides them off to alternate sides from the middle
-     outward, 'in' slides them in from the outside inward; steps(4), 30 ms apart */
+     outward, 'in' slides them in from the outside inward; steps(4), 30 ms apart. 'out' jumps at its start: the middle
+     pair's first step is on screen on the very frame the hold ends (films M7: with steps(4, end) the plate sat whole for
+     45 ms after the reveal, under the wake and the window's effects) */
   function rbSlats(cover, src, mode, delay) {
     const wrap = document.createElement('div');
     wrap.className = 'o55np-slats';
@@ -748,38 +802,72 @@
     const anims = [...wrap.children].map((s, i) => {
       const away = `translateX(${i % 2 ? 101 : -101}%)`;
       return s.animate(mode === 'out' ? [{ transform: 'translateX(0)' }, { transform: away }] : [{ transform: away }, { transform: 'translateX(0)' }],
-        { duration: 180, delay: delay + order[i] * 30, easing: 'steps(4, end)', fill: mode === 'out' ? 'forwards' : 'both' });
+        { duration: 180, delay: delay + order[i] * 30, easing: mode === 'out' ? 'steps(4, jump-start)' : 'steps(4, end)', fill: mode === 'out' ? 'forwards' : 'both' });
     });
     return { wrap, first: anims[0], done: Promise.all(anims.map(settled)) };
   }
 
-  /* the window's effects and the pointers come back with the reveal */
+  /* the window's effects and the pointers come back once the cover has left: they draw above it, so released at the
+     reveal they floated on the still-whole plate and on the slats yet to move (films M7) */
   function rbRelease(ctx) {
     if (ctx.host) { ctx.host.removeAttribute('data-o55np-cover'); ctx.host = null; }
+    if (ctx.unhold) ctx.unhold();
     coverUp = false;
   }
 
-  /* ---- inside the onboarding window */
-  async function rebootWithin(ctx, info, within, folding) {
-    const kind = folding ? 'fold' : info.reason === 'replay' ? 'replay' : 'on';
+  /* the page's cover leaves the pointer to the page (pointer-events: none), so what is hovered under it never changes:
+     taking the pointer, the whole hovered chain lost :hover at once, and the Menu cursor part's ':hover :where(*)' rule
+     restyled the page (trace FR: 112 ms over 2,465 elements on the plate's first frame, again at the reveal). Presses
+     are held instead, until the reveal: what is under the cover is not what will be there */
+  const HELD = ['pointerdown', 'pointerup', 'mousedown', 'mouseup', 'click', 'dblclick', 'auxclick', 'contextmenu'];
+  function holdPresses(ctx) {
+    const hold = e => { if (e.isTrusted) { e.preventDefault(); e.stopImmediatePropagation(); } };
+    HELD.forEach(k => window.addEventListener(k, hold, true));
+    ctx.unhold = () => { HELD.forEach(k => window.removeEventListener(k, hold, true)); ctx.unhold = null; };
+  }
+
+  /* the onboarding window opening over the page's moment (films minor 13: slat blocks tore out over the opening
+     window): the moment ends at once, painted, with no tear-out and no wake (the window's opening speaks). Only the one
+     attribute on <html> is watched, and only while the page's cover is up */
+  function watchOpen(ctx) {
+    if (typeof MutationObserver !== 'function') return;
+    const mo = new MutationObserver(() => { if (onboarding()) ctx.snap(); });
+    mo.observe(html, { attributes: true, attributeFilter: ['data-o55-open'] });
+    ctx.unwatch = () => mo.disconnect();
+  }
+
+  /* ---- the moment, one plate for both stagings: inside the onboarding window (scope, the window) or over the whole
+     page (scope null). Each grows from the control pressed (in the window, else its NieR thumbnail; on the page, the
+     row or switch, else the middle of the screen), types its list through the repaint and tears out as slats; unticking
+     closes in as slats, types two lines and folds back into that control. */
+  async function rebootPlate(ctx, info, scope, folding) {
+    const page = !scope, root = page ? html : scope;
+    const kind = folding ? (page ? 'pageOff' : 'fold') : info.reason === 'replay' ? 'replay' : page ? 'pageOn' : 'on';
     const lines = rbLines(info, kind), t = tone();
     let plan = rbPlan(lines.length, folding);
     const cover = ctx.cover = document.createElement('div');
-    cover.id = 'o55np-reboot'; cover.className = 'o55np-within'; cover.setAttribute('aria-hidden', 'true');
+    cover.id = 'o55np-reboot'; cover.className = page ? 'o55np-page' : 'o55np-within'; cover.setAttribute('aria-hidden', 'true');
     cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
-    const { set, ground, inner, log, deco } = rbSet(lines, true);
+    const { set, ground, inner, log, deco } = rbSet(lines);
     cover.appendChild(set);
-    within.appendChild(cover);
+    /* where it grows from and folds back to: on the page the control is kept from the start (with its rect, for a row
+       the repaint redraws in place) and found again by its id if it was redrawn, else the point pressed; in the window
+       it is asked again (the window re-renders) */
+    const given = page ? givenFrom(info) : null, pr = page && !given ? lastPress() : null;
+    const startEl = page ? (given || pressEl(pr)) : null;
+    const startRect = startEl && startEl.isConnected ? startEl.getBoundingClientRect() : null;
+    const home = box => rbFrom(page ? [startEl, pressEl(pr), startRect, pr && pr.pt] : [givenFrom(info), thumbIn(scope), document.activeElement], root, box);
+    (page ? document.body : scope).appendChild(cover);
     /* the window's own effects (brackets on the chosen card, the cursor, Pod's strip) sit above the window in its root:
        they hold off while the cover is up (an attribute that restyles only those layers), and so do the page's pointers */
-    const host = ctx.host = within.closest('#pm-o55-onboarding');
-    if (host) host.setAttribute('data-o55np-cover', '');
+    if (!page) { const host = ctx.host = scope.closest('#pm-o55-onboarding'); if (host) host.setAttribute('data-o55np-cover', ''); }
+    else { watchOpen(ctx); holdPresses(ctx); }
     coverUp = true; curOff(); retOff();
     let t0 = tl();
     const box = rbBox(cover), full = { x: 0, y: 0, w: box.w, h: box.h };
     if (!folding) {
       /* T0-T90 the brackets lock on in 3 steps; T90 the plate is born on the rect; T90-T390 it grows in 6 held steps */
-      const from = rbFrom(info, within, box);
+      const from = home(box);
       const F = [0, 0.3, 0.55, 0.75, 0.9, 1], rects = F.map(f => lerpRect(from, full, f)), off = F.map(f => 3 - 17 * f);
       const at = k => 90 + 60 * k, TOTAL = 450;
       const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box);
@@ -796,20 +884,23 @@
         fr.push({ t: TOTAL, v: { transform: poses[5][j], opacity: 1 } });
         el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
       });
-      t0 = await started;
-      await settled(grow);
+      t0 = await ctx.wait(started);
+      ctx.cue('start');
+      await ctx.wait(settled(grow));
       /* T450: full cover; the decorations keep their last place inline (so the slats' copies carry them) */
       set.querySelectorAll('.o55np-deco > i').forEach(el => el.getAnimations().forEach(a => { try { a.commitStyles(); } catch (e) { /* not rendered */ } a.cancel(); }));
       ground.style.opacity = '1'; grow.cancel(); growIn.cancel();
     } else {
-      /* the stage powers down (the window's beat), then T300-T540 six slats close in from both sides */
+      /* in the window the stage powers down first (the window's beat, 300 ms); on the page the slats close at once:
+         six slats close in from both sides */
       const poses = rbPose(full, -14, box);
       deco.forEach((el, j) => { el.style.transform = poses[j]; el.style.opacity = '1'; });
       ground.style.opacity = '1';
       cover.setAttribute('data-hold', '');
-      const shut = rbSlats(cover, set, 'in', 300);
-      t0 = await rbStart(shut.first, t0);
-      await shut.done;
+      const shut = rbSlats(cover, set, 'in', page ? 60 : 300);
+      t0 = await ctx.wait(rbStart(shut.first, t0));
+      ctx.cue('start');
+      await ctx.wait(shut.done);
       cover.removeAttribute('data-hold');
       shut.wrap.remove();
     }
@@ -818,30 +909,31 @@
     log.setAttribute('data-on', '');
     plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
-    await settledStart(typing.anims);
+    await ctx.wait(settledStart(typing.anims));
     quiet(5000);
     ctx.paint();
-    await rbIdle(4000);
-    await rbAt(cover, t0, plan.done);
+    await ctx.wait(rbIdle(4000));
+    await ctx.wait(rbAt(cover, t0, plan.done));
     rbClear(log, typing, plan, t0);
     if (!cover.isConnected) return;
     if (!folding) {
-      /* R: hold 160 ms, then the slats tear out and the window shows band by band */
+      /* R: hold 160 ms, then the slats tear out and what is under the cover shows band by band. The hold's end is the
+         middle pair's first step (one timeline, started together): that frame takes input again and sounds the wake */
       const slats = rbSlats(cover, set, 'out', 160);
       set.remove();
-      await rbWait(cover, 160);
-      cover.style.pointerEvents = 'none';
-      rbRelease(ctx);
+      await ctx.wait(rbWait(cover, 160));
+      cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
       ctx.cue('reveal');
-      await slats.done;
+      await ctx.wait(slats.done);
+      rbRelease(ctx);
       return;
     }
-    /* R: hold 120 ms; then the plate, as one, folds back into the NieR thumbnail (measured now: the window re-rendered) */
-    const to = rbFrom(info, within, rbBox(cover));
-    await rbWait(cover, 120);
+    /* R: hold 120 ms; then the plate, as one, folds back into where it grew from (measured now: the window re-rendered,
+       the page redrew the row) */
+    const to = home(rbBox(cover));
+    await ctx.wait(rbWait(cover, 120));
     log.style.display = 'none';
-    cover.style.pointerEvents = 'none';
-    rbRelease(ctx);
+    cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
     ctx.cue('reveal');
     const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
     const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
@@ -857,43 +949,30 @@
       fr.push({ t: TOTAL, v: { transform: j < 4 ? poses[6][j] : let1[j], opacity: 0 } });
       el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
     });
-    await settled(fold);
+    await ctx.wait(settled(fold));
+    rbRelease(ctx);
   }
 
-  /* ---- the whole page: the ink band, stepped down, the list, the tear-out */
-  async function rebootPage(ctx, info, folding) {
-    const kind = folding ? 'pageOff' : info.reason === 'replay' ? 'replay' : 'pageOn';
-    const lines = rbLines(info, kind), t = tone();
-    let plan = rbPlan(lines.length, folding);
-    const cover = ctx.cover = document.createElement('div');
-    cover.id = 'o55np-reboot'; cover.setAttribute('aria-hidden', 'true'); cover.setAttribute('data-page', '');
-    cover.dataset.tone = t; cover.dataset.dir = folding ? 'off' : 'on'; cover.setAttribute('data-o55-nier-preview', t);
-    const { set, ground, log } = rbSet(lines, false);
-    cover.appendChild(set);
-    document.body.appendChild(cover);
-    let t0 = tl();
-    /* 6 held steps down: on T90-T390 (nierOn's six ticks), off T60-T360 */
-    const first = folding ? 60 : 90, TOTAL = first + 360;
-    const drop = ground.animate(walk([{ t: 0, v: { transform: 'translateY(-101%)' } }, ...[83.3, 66.7, 50, 33.3, 16.7, 0].map((y, k) => ({ t: first + 60 * k, v: { transform: `translateY(${-y}%)` } })),
-      { t: TOTAL, v: { transform: 'translateY(0%)' } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
-    t0 = await rbStart(drop, t0);
-    await settled(drop);
-    ground.style.transform = 'none'; drop.cancel();
-    if (!cover.isConnected) return;
-    log.setAttribute('data-on', '');
-    plan = rbShift(plan, since(t0));
-    const typing = rbType(log, plan, since(t0));
-    await settledStart(typing.anims);
-    ctx.paint();
-    await rbIdle(4000);
-    await rbAt(cover, t0, plan.done);
-    rbClear(log, typing, plan, t0);
-    if (!cover.isConnected) return;
-    const slats = rbSlats(cover, set, 'out', 160);
-    set.remove();
-    await rbWait(cover, 160);
-    ctx.cue('reveal');
-    await slats.done;
+  /* The moment's own sounds, unless its caller plays them (info.sound false: the onboarding window's NieR checkbox and
+     the look menus play nierOn / nierOff and wake through O55 themselves, on the same cues): the hum (nierOn or
+     nierOff) on the cover's first frame ('start': its six growth ticks are scheduled from there and land on the plate's
+     six steps; films minor 3, where the hum started at the click and ran 200 ms ahead), and the world waking (wake:
+     NieR's choir after turning on, the look's own reveal after turning off) as the tear-out begins. Whoever plays the
+     hum plays the wake, so it sounds once. wake never follows the hum by less than 120 ms (an instant change: Reduced
+     Motion, no Reboot moment part), or the two would meet as one moment and the wake be dropped; it is a state sound
+     and always plays (hero spec rules 5 and 10). A hidden tab, or a change asked during another, plays neither. */
+  function rbSounds(info, on, quiet) {
+    const own = info.sound !== false && !quiet;
+    let humAt = -1e9, woke = false;
+    return {
+      hum() { if (own && sfx(on || info.reason === 'replay' ? 'sweepOn' : 'sweepOff', true)) humAt = performance.now(); },
+      wake() {
+        if (!own || woke) return;
+        woke = true;
+        const wait = humAt + 120 - performance.now();
+        if (wait > 0) window.setTimeout(() => sfx('wake', true), wait); else sfx('wake', true);
+      }
+    };
   }
 
   let rebooting = false;
@@ -902,23 +981,48 @@
     const on = !!info.on, reason = info.reason;
     /* a change made inside the onboarding window plays inside it (info.within, the window): the app beneath holds still */
     const within = info.within && info.within.isConnected ? info.within : null;
-    const seen = new Set(), cue = phase => { if (seen.has(phase)) return; seen.add(phase); try { if (typeof info.onReveal === 'function') info.onReveal(phase); } catch (e) { /* the caller's beat never stops the moment */ } };
+    const snd = rbSounds(info, on, rebooting || document.hidden);
+    /* cut: the moment was ended early (the window opened over it); its remaining sounds stay silent */
+    const life = { cut: false };
+    /* the phases, each once and in order: 'start' (the cover's first frame, or at once), 'reveal', 'gone' */
+    const seen = new Set(), cue = phase => {
+      ['start', 'reveal', 'gone'].some(p => {
+        if (!seen.has(p)) {
+          seen.add(p);
+          if (!life.cut) { if (p === 'start') snd.hum(); else if (p === 'reveal') snd.wake(); }
+          try { if (typeof info.onReveal === 'function') info.onReveal(p); } catch (e) { /* the caller's beat never stops the moment */ }
+        }
+        return p === phase;
+      });
+    };
     let painted = false;
     const paint = () => { if (painted) return; painted = true; repaint(); sync(); };
-    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) { paint(); cue('reveal'); cue('gone'); return; }
+    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) {
+      cue('start'); paint(); cue('reveal'); cue('gone'); return;
+    }
     rebooting = true;
-    const ctx = { cover: null, paint, cue };
+    /* ctx.wait(p): every wait of the moment, which ends early (throws) once the moment is cut; snap() cuts it: painted at
+       once, the cover gone, the pointers back */
+    let stop = null;
+    const CUT = {}, abort = new Promise(res => { stop = res; });
+    const ctx = { cover: null, host: null, paint, cue, unwatch: null, unhold: null };
+    ctx.wait = p => Promise.race([p, abort]).then(v => { if (life.cut) throw CUT; return v; });
+    ctx.snap = () => {
+      if (life.cut) return;
+      life.cut = true; paint();
+      if (ctx.cover) ctx.cover.remove();
+      rbRelease(ctx); stop();
+    };
     try {
-      /* info.sound false: the caller plays its own (the onboarding's NieR checkbox plays nierOn / nierOff) */
-      if (info.sound !== false) sfx(on || reason === 'replay' ? 'sweepOn' : 'sweepOff', true);
       const folding = !on && reason !== 'replay';
-      if (within) await rebootWithin(ctx, info, within, folding); else await rebootPage(ctx, info, folding);
-    } catch (e) { /* the moment is decoration; the repaint is not */ } finally {
+      await rebootPlate(ctx, info, within, folding);
+    } catch (e) { /* the moment is decoration (or was cut); the repaint is not */ } finally {
+      if (ctx.unwatch) ctx.unwatch();
       paint();
       if (ctx.cover) ctx.cover.remove();
       rbRelease(ctx);
       rebooting = false;
-      cue('reveal'); cue('gone');
+      cue('gone');
     }
   }
 
