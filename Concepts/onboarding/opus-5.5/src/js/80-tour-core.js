@@ -283,8 +283,8 @@
     const tw = M.tween({ from, to: dest, duration: 280, ease: M.ease.steps(5), onUpdate: (v) => { st.hole = v; drawHole(v); } });
     return { retarget(b) { if (!near(dest, b)) Object.assign(dest, b); }, cancel() { tw.cancel(); }, finished: tw.finished };
   }
-  /* run fn once the spotlight stands where it is going (at once when it is not moving) */
-  TR.landed = (fn) => { const g = st.spring; if (g && g.finished) g.finished.then((ok) => { if (ok !== false && TR.running) fn(); }); else fn(); };
+  /* TR.afterGlide(fn): run fn once the spotlight stands where it is going (at once when it is not moving) */
+  TR.afterGlide = (fn) => { const g = st.spring; if (g && g.finished) g.finished.then((ok) => { if (ok !== false && TR.running) fn(); }); else fn(); };
   function place(snap) {
     const el = targetEl(), h = holeFor(el);
     if (el !== st.target) { const prev = st.target; st.target = el; emit('target', { el, prev }); }
@@ -402,6 +402,8 @@
     async press(on) { P.el().classList.toggle('o55t-press', on !== false); await M.delay(on === false ? 60 : 140); }
   };
   const center = (el) => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+  /* the next rendered frame (a hidden page renders none: then a quarter second on the motion clock) */
+  const frame = () => Promise.race([new Promise((r) => requestAnimationFrame(() => r())), M.delay(250)]);
   TR.center = center;
   /* Show Me helpers: every action goes through the real control or the real handler */
   const SM = TR.sm = {
@@ -422,33 +424,47 @@
       await P.press(false);
       return true;
     },
-    /* a real drag: pointerdown on the grip, a stream of pointermoves, pointerup at the destination. The carry runs on
-       the clock, not on a count of moves: each move makes the workspace re-lay its drop preview, and on a busy page a
-       fixed 42 moves took twice their time, so a slow page sends fewer moves and the carry still lasts dur. The path
-       is a gentle arc over the straight line; o.via sends it down first and then across through that point (see
-       carryPath). Its drop sounds as the hand lets go, before the workspace's receipt sounds the step done. */
+    /* a real drag: pointerdown on the grip, a stream of pointermoves, pointerup at the destination. Each move waits for
+       a rendered frame (the workspace re-lays its drop preview in its frames, and adopts a drop target only after it
+       has held for two of them), and where the hand is comes from the clock, so a slow page sends fewer moves rather
+       than a longer carry; no move jumps more than a sixteenth of the way, so the path always shows. The path is a
+       gentle arc over the straight line; o.via sends it down first and then across through that point (carryPath).
+       o.ready() (optional) says the destination has been adopted: the hand holds over it (up to a moment) until it
+       has. The drop sounds as the hand lets go, before the workspace's receipt sounds the step done. */
     async drag(el, to, o) {
       if (!el || SM.cancelled()) return false;
       const a = center(el); SM.cue(el); await M.delay(90); await P.moveTo(a.x, a.y); if (SM.cancelled()) return false;
       await P.press(true); O55.sound.play('pickup');
       const base = { bubbles: true, cancelable: true, button: 0, buttons: 1, pointerId: 7, pointerType: 'mouse', isPrimary: true };
       const move = (x, y) => (document.elementFromPoint(x, y) || document).dispatchEvent(new PointerEvent('pointermove', Object.assign({ clientX: x, clientY: y }, base)));
+      const tick = () => Promise.all([M.delay(16), frame()]);
       el.dispatchEvent(new PointerEvent('pointerdown', Object.assign({ clientX: a.x, clientY: a.y }, base)));
+      /* the lift: the first move makes the workspace pick the panel up; the carry's clock starts once it has */
+      move(a.x, a.y + 1); await tick(); await frame();
       const span = Math.hypot(to.x - a.x, to.y - a.y), dur = (o && o.dur) || Math.round(Math.min(1500, Math.max(900, 700 + span * 0.5)));
       const at = carryPath(a, to, o && o.via), ease = (st.look && st.look.drag) || (family() === 'retro' ? M.ease.steps(12) : M.ease.hand);
-      const t0 = M.now(); let last = '';
+      const t0 = M.now(); let last = '', q = 0;
       while (!SM.cancelled()) {
-        const p = Math.min(1, (M.now() - t0) / dur), [x, y] = at(ease(p)), k = Math.round(x) + ',' + Math.round(y);
+        const p = q = Math.min(1, (M.now() - t0) / dur, q + 1 / 16), [x, y] = at(ease(p)), k = Math.round(x) + ',' + Math.round(y);
         /* a held step (NieR, Retro) sends nothing new until the hand moves */
         if (k !== last) { last = k; P.pos = { x, y }; P.el().style.transform = `translate(${x}px, ${y}px)`; move(x, y); }
         if (p >= 1) break;
-        await M.delay(16);
+        await tick();
       }
-      /* dwell on the destination the way a hand does: the workspace adopts a new drop target only after
-         it has held for two frames, so a few small moves across several frames let the preview settle */
-      for (let j = 0; j < 4 && !SM.cancelled(); j++) { move(to.x + (j % 2), to.y + j * 0.5); await M.delay(48); }
-      await M.delay(260); /* the destination has reacted (preview) before the drop */
-      if (SM.cancelled()) return false;
+      /* dwell on the destination the way a hand does: a few small moves, each held for two frames, and then (when
+         the step can tell) until the destination has been adopted */
+      for (let j = 0; j < 3 && !SM.cancelled(); j++) { move(to.x + (j % 2), to.y + j * 0.5); await tick(); await frame(); }
+      const ready = o && typeof o.ready === 'function' ? o.ready : null;
+      for (const t1 = M.now(); ready && !SM.cancelled() && !ready() && M.now() - t1 < 900;) { move(to.x, to.y); await tick(); await frame(); }
+      if (!SM.cancelled()) await M.delay(160); /* the preview reads before the drop */
+      /* taken over mid-carry: the hand lets go where it is, as a cancel (the workspace puts the panel back); a carry
+         that does not know cancel still ends there */
+      if (SM.cancelled()) {
+        const p = P.pos || a, at2 = document.elementFromPoint(p.x, p.y) || document, ev = Object.assign({ clientX: p.x, clientY: p.y }, base, { buttons: 0 });
+        at2.dispatchEvent(new PointerEvent('pointercancel', ev)); at2.dispatchEvent(new PointerEvent('pointerup', ev));
+        P.el().classList.remove('o55t-press');
+        return false;
+      }
       O55.sound.play('drop');
       (document.elementFromPoint(to.x, to.y) || document).dispatchEvent(new PointerEvent('pointerup', Object.assign({ clientX: to.x, clientY: to.y }, base, { buttons: 0 })));
       await P.press(false);

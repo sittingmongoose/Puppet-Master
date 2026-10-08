@@ -21,6 +21,8 @@ html[data-o55-nier="on"] #pm-o55-tour { --o55t-accent: var(--o55-nier-ink); --o5
 html[data-o55-nier="on"] #pm-o55-tour.o55t-nboot .o55t-scrimpath { fill: var(--o55-nier-paper); }
 html[data-o55-nier="on"] #pm-o55-tour.o55t-nboot .o55t-scrim { animation: none; }
 html[data-o55-nier="on"] #pm-o55-tour .o55t-scrimpath { transition: fill 200ms steps(2, end); }
+/* (the same ground over a page opened straight into the tour, until the tour's own takes over: 85-tour-nier.js) */
+.o55t-bootcover { position: fixed; inset: 0; z-index: 2147481499; background: var(--o55-nier-paper); pointer-events: none; }
 /* the close: everything of the tour but the band steps back at once and stays back until the root has gone */
 html[data-o55-nier="on"] #pm-o55-tour.o55t-nend :is(.o55t-callout, .o55t-bar, .o55t-ringbox, .o55t-scrim, .o55t-pointer) { opacity: 0 !important; transition: opacity 120ms steps(2, end) !important; pointer-events: none; }
 /* the callout slices open where it stands instead of gliding there */

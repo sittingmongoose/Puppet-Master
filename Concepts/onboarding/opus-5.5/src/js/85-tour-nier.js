@@ -17,15 +17,15 @@
                 (the callout, the bar, the spotlight and the scrim step back first; the app's own notices keep quiet)
      quests     a quest banner names each new chapter while the spotlight moves on; the landing note keeps out of
                 the way of the page's own Tour complete banner, so nothing lands on top of it
-     glitch     a missing target is an Alert: the callout tears, with the glitch sound
+     glitch     a missing target is an Alert: the callout tears
      sweep      a scan line steps down each newly locked target    ticks   map ticks on the spotlight's edges
      blocks     the bar's progress as ink blocks                     cursor  ink hover, and the menu cursor on the
                                                                              finish choices (with its tick)
    Reduced Motion gives end states only (O55.nierFx and the CSS keep to it); timers run on the motion clock. Sounds
    are O55.sound events, so the tour's mute governs them: the core plays callout, checkpoint, pointer, arrive,
-   missing, interrupt and the rest; here the Pod's chirp ('pod', its press; at most one in two seconds), 'glitch' (the
-   Alert's tear), 'quest' and 'reboot' (the banner and the band) and the cursor's 'hover' (only for a pointer that
-   really moved). */
+   missing (under NieR the sound kit gives it the glitch tear), interrupt and the rest; here the Pod's chirp ('pod',
+   its press; at most one in two seconds), 'quest' and 'reboot' (the banner and the band) and the cursor's 'hover'
+   (only for a pointer that really moved). */
 (function () {
   'use strict';
   const O55 = window.O55, M = O55.motion, TR = O55.tour, U = O55.util;
@@ -166,9 +166,9 @@
 
   /* ------------------------------------------------------------------ the spotlight */
   /* The corners lock on where the spotlight lands, never while it is still travelling: each lock waits for the
-     glide to arrive (TR.landed), so the lock, the scan line and the eye arrive together. */
+     glide to arrive (TR.afterGlide), so the lock, the scan line and the eye arrive together. */
   let lockedAt = -1e9;
-  const lockLanded = () => { if (TR.landed) TR.landed(lockRing); else lockRing(); };
+  const lockLanded = () => { if (TR.afterGlide) TR.afterGlide(lockRing); else lockRing(); };
   function lockRing() {
     if (!has('brackets') || still() || !st.root || performance.now() - lockedAt < 120) return;
     lockedAt = performance.now();
@@ -237,11 +237,11 @@
     lockedAt = -1e9; lockRing();
   });
 
-  /* a missing target: Alert, and the callout tears; the tear is the glitch sound (in place of the plain 'missing') */
+  /* a missing target: Alert, and the callout tears */
   TR.on('missing', (d) => {
     if (!d.on || !painted()) return;
     const fx = FX(), c = calloutEl();
-    if (fx && c) { fx.alert(c); typeTitle(); if (has('glitch') && !still() && d.sound) d.sound = 'glitch'; }
+    if (fx && c) { fx.alert(c); typeTitle(); }
   });
 
   /* ------------------------------------------------------------------ Show Me: Pod 042 */
@@ -315,11 +315,26 @@
   });
 
   /* ------------------------------------------------------------------ open and close */
+  /* A page opened straight into the tour (?o55=tour) paints the app, its bright preview included, about 140 ms before
+     the tour starts (the boot waits that long after the page is parsed). Under NieR with the band, the NieR ground
+     covers the page from the moment it is parsed until the tour's own ground and band take over, so the opening is
+     ground, band, then the app, and never a flash of the app before it. */
+  let bootCover = null;
+  const uncover = () => { if (bootCover) { bootCover.remove(); bootCover = null; } };
+  function coverBoot() {
+    let sw = ''; try { sw = new URLSearchParams(location.search).get('o55') || ''; } catch (_) {}
+    const fx = FX();
+    if (sw !== 'tour' || !painted() || !fx || !fx.enabled('band') || still() || !document.body) return;
+    bootCover = document.createElement('div'); bootCover.className = 'o55t-bootcover'; bootCover.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bootCover);
+    M.after(2600, uncover); /* a tour that does not start (a recovery to settle first) never leaves the page covered */
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', coverBoot, { once: true }); else coverBoot();
   TR.on('start', (d) => {
     const fx = FX(), root = st.root;
-    if (!painted() || !fx || !fx.enabled('band') || still()) return null;
+    if (!painted() || !fx || !fx.enabled('band') || still()) { uncover(); return null; }
     d.noMorph = true; /* the band is the handoff from the onboarding window */
-    root.classList.add('o55t-nboot');
+    root.classList.add('o55t-nboot'); uncover();
     const done = () => root.classList.remove('o55t-nboot');
     return fx.band(T(d.resume ? 'band.resume' : 'band.start'), 1500, { kicker: T('band.kicker'), within: root }).then(done, done);
   });
@@ -346,9 +361,10 @@
   TR.on('closed', () => { if (st.root) st.root.classList.remove('o55t-nend'); });
 
   /* The landing note comes at once, in Pod's voice. The page's own Tour complete banner (kit.d/20-nier-world.js
-     #o55nw-quest: fixed at 23 % of the window, about 92 px tall, about 0.7 s after the tour finishes, for about 3 s)
-     would sit on it where it usually goes, under the Wizard's heading: there it moves down past the band's reach
-     instead, so the two never overlap and nothing has to wait. It slices in and its words type on. */
+     #o55nw-quest, about 0.7 s after the tour finishes, for about 3 s; its place from PM_NIER_WORLD.bannerRect(), else
+     its constants: 23 % down the window, about 92 px tall) would sit on it where it usually goes, under the Wizard's
+     heading: there it moves down past the band's reach instead, so the two never overlap and nothing has to wait. It
+     slices in and its words type on. */
   TR.on('landing', (d) => { if (has('voice')) d.lead = O55.t('nierFx.pod.leads.proposal'); });
   TR.on('landed', ({ note }) => {
     if (!painted() || !note) return;
@@ -359,8 +375,13 @@
   });
   /* where the note goes clear of the banner, from one reading of the page (all the reads, then one move): moved after
      a sibling, the note starts where the next sibling starts now, less the room it leaves behind */
+  function bannerBand() {
+    const W = window.PM_NIER_WORLD;
+    let b = null; try { b = W && typeof W.bannerRect === 'function' ? W.bannerRect() : null; } catch (_) {}
+    return b && Number.isFinite(b.top) && Number.isFinite(b.height) ? b : { top: innerHeight * 0.23, height: 92 };
+  }
   function clearBanner(note) {
-    const top = innerHeight * 0.23 - 10, bottom = innerHeight * 0.23 + 92 + 12;
+    const b = bannerBand(), top = b.top - 10, bottom = b.top + b.height + 12;
     const r = note.getBoundingClientRect(); if (!(r.bottom > top && r.top < bottom)) return;
     const sibs = []; for (let n = note.nextElementSibling; n; n = n.nextElementSibling) sibs.push(n);
     const rs = sibs.map((n) => n.getBoundingClientRect()), room = (rs[0] ? rs[0].top : r.bottom) - r.top;

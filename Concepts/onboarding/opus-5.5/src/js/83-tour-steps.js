@@ -115,7 +115,7 @@
       /* down out of the right dock first, then straight across into the left band: an arc over the top would pass
          the workspace's top-dock band, which previews (and holds) Top dock for most of the carry */
       const b = leftBand(), ws = document.getElementById('pm-home-workspace');
-      if (b && ws) { const r = ws.getBoundingClientRect(), y = b.y + b.h * 0.45; await sm.drag(q('[data-pm-home-handle="chat"]'), { x: b.x + 12, y }, { via: { x: r.left + r.width * 0.5, y } }); }
+      if (b && ws) { const r = ws.getBoundingClientRect(), y = b.y + b.h * 0.45; await sm.drag(q('[data-pm-home-handle="chat"]'), { x: b.x + 12, y }, { via: { x: r.left + r.width * 0.5, y }, ready: () => { const h = hostEl('dock_left'); return !!(h && h.classList.contains('pm-home-drop-active')); } }); }
     },
     goTo: () => goPage('dashboard') });
 
