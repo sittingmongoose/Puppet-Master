@@ -1116,7 +1116,7 @@
       '<strong id="pm-tops-title">' + esc(o.title) + '</strong>' +
       (o.pill ? '<span class="meta-pill">' + esc(o.pill) + '</span>' : '') +
       '<span class="spacer"></span>' +
-      '<button class="icon-button" data-action="close-dialog" title="Cancel">' + ctx.icon('close', 13) + '</button>' +
+      '<button class="icon-button" data-action="close-dialog" data-hover-key="tops-cancel" data-hover-tip="Cancel" aria-label="Cancel">' + ctx.icon('close', 13) + '</button>' +
       '</div><div class="dialog-body">' + o.body + '</div></section>';
   }
 
@@ -1417,8 +1417,8 @@
           '<span class="menu-icon">' + icon('search', 12) + '</span>' +
           '<span class="menu-copy"><strong>' + esc(r.thread.title) + ' · turn ' + r.turn + '</strong>' +
           '<span>' + esc(snippet(r.msg, 110)) + '</span></span></button>' +
-          '<button class="icon-button pm-tops-result-op" data-action="copy-message-link" data-thread="' + esc(r.thread.id) + '" data-value="' + esc(r.msg.id) + '" title="Copy a link to this turn">' + svg('link', 12) + '</button>' +
-          '<button class="icon-button pm-tops-result-op" data-action="add-passage" data-thread="' + esc(r.thread.id) + '" data-value="' + esc(r.msg.id) + '" title="Add this passage to the context">' + svg('passage', 12) + '</button>' +
+          '<button class="icon-button pm-tops-result-op" data-action="copy-message-link" data-thread="' + esc(r.thread.id) + '" data-value="' + esc(r.msg.id) + '" data-hover-key="tops-copy:' + esc(r.msg.id) + '" data-hover-tip="Copy a link to this turn" aria-label="Copy a link to this turn">' + svg('link', 12) + '</button>' +
+          '<button class="icon-button pm-tops-result-op" data-action="add-passage" data-thread="' + esc(r.thread.id) + '" data-value="' + esc(r.msg.id) + '" data-hover-key="tops-pass:' + esc(r.msg.id) + '" data-hover-tip="Add this passage to the context" aria-label="Add this passage to the context">' + svg('passage', 12) + '</button>' +
           '</div>';
       }).join('');
     }

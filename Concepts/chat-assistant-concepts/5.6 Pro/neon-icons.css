@@ -85,10 +85,10 @@ body[data-theme^="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-
 body[data-theme^="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
 body[data-theme^="retro"] { --nx-ease: steps(4, end); --nx-le: steps(4, end); --nx-ease-c: steps(4, end); }
 /* Inside the transcript the voice follows .transcript[data-voice], which PM56_DEMO can pin apart from the theme. */
-.transcript[data-voice="basic"] { --nx-ease: cubic-bezier(.2, .75, .25, 1); --nx-le: cubic-bezier(.45, 0, .25, 1); --nx-ease-c: cubic-bezier(.3, .6, .3, 1); }
-.transcript[data-voice="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
-.transcript[data-voice="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
-.transcript[data-voice="retro"] { --nx-ease: steps(4, end); --nx-le: steps(4, end); --nx-ease-c: steps(4, end); }
+:is(.transcript, .tx-feed)[data-voice="basic"] { --nx-ease: cubic-bezier(.2, .75, .25, 1); --nx-le: cubic-bezier(.45, 0, .25, 1); --nx-ease-c: cubic-bezier(.3, .6, .3, 1); }
+:is(.transcript, .tx-feed)[data-voice="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
+:is(.transcript, .tx-feed)[data-voice="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
+:is(.transcript, .tx-feed)[data-voice="retro"] { --nx-ease: steps(4, end); --nx-le: steps(4, end); --nx-ease-c: steps(4, end); }
 
 /* ------------------------------------------------------------------ 2. the glyph */
 /* Halos and part travel run past the 24-unit box; the ink is inherited by every tube and halo; the weight is a
