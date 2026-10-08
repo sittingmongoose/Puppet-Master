@@ -83,8 +83,9 @@ body.pm-home-dragging .o55t-zonelabel { transform: translateY(-50%) scale(1.06);
    top of it wherever the mouse happens to rest */
 html[data-o55-tour] #pm-hover-tag-root { display: none !important; }
 /* the results card and the hand-over line outlive that root (85-tour-nier.js sets these on html, and dismisses a tag
-   that is already open). A tag left over the Restore click, or over a control the line passes, must not draw on them. */
-html:is([data-o55-tour-results], [data-o55nw-hand]) #pm-hover-tag-root { visibility: hidden !important; }
+   that is already open). An open tag sets visibility:visible on itself, so hiding the root is not enough: it is taken
+   out of the page, or the pill from the Restore click draws over the card and the line. */
+html:is([data-o55-tour-results], [data-o55nw-hand]) #pm-hover-tag-root { display: none !important; }
 /* while Chat is being dragged the guide steps back: the scrim thins and the callout fades so the learner sees the
    workspace make room, and the spotlight sits on the drop zone */
 body.pm-home-dragging .o55t-scrimpath { fill-opacity: 0.35; }
