@@ -169,6 +169,10 @@ svg:where(.nx) .nx-p {
 }
 /* self-centred parts (strike and scan about their own box) */
 svg:where(.nx) .nx-pf { transform-box: fill-box; transform-origin: center; }
+/* Act overlays (nx-ov: the Fast bolt's strike fills, the wand's sparkle bursts, the grill's smoke): drawn in the
+   glyph but hidden and still at rest everywhere, so no generic one-shot or loop ever shows them; only a context's own
+   keyframes light them (8b, 8c, 8d). They have no halo (neon-icons.js nh). Reduced motion leaves them hidden. */
+svg:where(.nx) .nx-ov { opacity: 0; animation: none; }
 /* continuous turns are linear in every voice (an eased orbit lurches); retro keeps its stepped texture */
 svg:where(.nx-a-spin) { --nx-le: linear; }
 body[data-theme^="retro"] svg:where(.nx-a-spin) { --nx-le: steps(16, end); }
@@ -219,25 +223,34 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 .primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
 
 /* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15; the strike, 3D) */
-/* OWNER of this block: Neon icons, surface step 3D (2026-10-02). The Fast bolt is drawn only while Fast mode is on
-   (the composer model chip and the picker's model row .fast-bolt, the transcript meta .meta-fast, the model sidecar's
-   Fast row .fast-row-bolt), so the class is the ON state: the bolt is lit in the warning tone, and it STRIKES like
-   lightning, never shaking or moving as a whole (Jared, 2026-10-02: "think of lightning being a crack, like you see
-   lightning coming down from the sky"):
-     1. the crack: the lit bolt snaps dark and its four bands (neon-icons.js lightning: spike, zig, neck, point) light
-        top to bottom, 40 ms apart, so the whole bolt cracks down in about 130 ms;
-     2. the flash: the halo and the backlight spike, dip, and flash again, like a real strike's return stroke;
-     3. the afterglow: both settle to the steady lit state over about 0.7 s;
-     4. the hold: about 4.2 s of steady light until the next strike (a 5.2 s cycle).
-   Everything animates opacity only (the bands, the merged halo path, the host's backlight), so it composites; there
-   is no clip, dash or stroke-opacity in the loop. The halo's stroke-opacity is a strong token (--nx-h-bolt-i) and its
-   element opacity carries the curve (.32 at rest = the attention tone's strength). The backlight is the ::before of
-   the .nx-bolt wrapper the hosts draw round the svg. Hovering the host re-strikes once: a one-shot copy joins the
-   animation list (the loop keeps running underneath, so leaving the host does not strike again). The keyframes are
-   one timeline in milliseconds, written out as percentages of the 5200 ms loop and of the 1100 ms one-shot: the bands
-   light (.12 -> 1) at 52, 92, 132 and 172 ms; the halo (element opacity) and the backlight are dark until 184 ms,
-   flash at 198, dip at 246, flash again at 286, ease to 366 and settle by 1040 (dark .32 halo / .08 backlight; light
-   themes a lower backlight curve, rest .07). Reduced motion: lit and static. NieR: an ink crack in steps, no flash. */
+/* OWNER of this block: Neon icons, surface step 3D (2026-10-02); the strike redrawn 2026-10-07. The Fast bolt is drawn
+   only while Fast mode is on (the composer model chip and the picker's model row .fast-bolt, the transcript meta
+   .meta-fast, the model sidecar's Fast row .fast-row-bolt), so the class is the ON state: the bolt is lit in the
+   warning tone, and it STRIKES like lightning coming down from the sky, never shaking or moving as a whole. Light is
+   only ever added: the outline tube stays at full ink, the halo never drops under its rest (.32) and the backlight
+   never under its rest, so the bolt never goes dark (Jared, 2026-10-07: the old crack blanked the bolt and relit four
+   bands, which read "like the bottom half is glitching out black and not really animating down from the top").
+     1. the leader: a bright fill runs down inside the bolt from the top. Five filled copies of the bolt, each clipped
+        (statically) to a 4-unit band, light top to bottom 40 ms apart, each with a short fading tail, so the light
+        pours from the spike to the point in about 180 ms;
+     2. the return stroke: the whole bolt flashes solid (the flash fill) with the halo and the backlight at their
+        peak, dips, and flashes again, like a real strike's re-stroke;
+     3. the afterglow: the fill fades out over about 0.7 s and the halo and backlight settle to the steady lit state;
+     4. the hold: about 4.1 s of steady light until the next strike (a 5.2 s cycle).
+   Everything animates opacity only (the overlays, the merged halo path, the host's backlight), so it composites; the
+   band clips are static (never animated) and there is no dash or stroke-opacity in the loop. The halo's
+   stroke-opacity is a strong token (--nx-h-bolt-i) and its element opacity carries the curve (.32 at rest = the
+   attention tone's strength). The backlight is the ::before of the .nx-bolt wrapper the hosts draw round the svg.
+   Hovering the host strikes once more: a one-shot copy joins the animation list (the loop keeps running underneath,
+   so leaving the host does not strike again). The keyframes are one timeline in milliseconds, written out as
+   percentages of the 5200 ms loop and of the 1100 ms one-shot: band k lights at 6 + 40k ms (to 1 in 10 ms, held
+   30 ms, then a comet tail gone 80 ms later), so the head reaches the point at 176 ms; at 208-220 ms every band, the
+   flash fill, the halo and the backlight fire together (the return stroke: the whole bolt white-hot on dark), the
+   bands clear by 264 while the fill dips to .5, the re-stroke at 304 flickers the bands to .6 and the fill to .95,
+   and the afterglow eases out: the fill is gone by 920 and the halo and backlight are at rest by 1100 (dark .32
+   halo / .08 backlight; light themes a lower backlight curve, rest .07). Reduced motion: lit and static, the
+   overlays hidden. NieR: the ink fill steps down band by band and the bolt flashes solid ink in held frames; no
+   halo, no backlight. */
 .nx-bolt {
   position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle;
   --nxb-bl: nx-bolt-bl; --nxb-blh: nx-bolt-bl-h; --nxb-rest: var(--nx-bl-attention);
@@ -252,44 +265,166 @@ body[data-theme$="-light"] .nx-bolt { --nxb-bl: nx-bolt-bl-l; --nxb-blh: nx-bolt
 }
 svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
 .nx-bolt > svg .nx-h { opacity: .32; }
+/* The strike overlays (neon-icons.js lightning: .nx-bk0-4 the leader bands, .nx-bkf the flash fill) are act overlays
+   (nx-ov, section 6): hidden and still everywhere until a strike lights them, so the Fast row's unlit glyph (no
+   .nx-bolt) never shows them and the generic one-shot never plays on them. The bands are clipped on the view box
+   (static clips). */
+svg:where([data-nx="lightning"]) .nx-bk0 { clip-path: inset(0px 0px 18px 0px) view-box; }
+svg:where([data-nx="lightning"]) .nx-bk1 { clip-path: inset(6px 0px 14px 0px) view-box; }
+svg:where([data-nx="lightning"]) .nx-bk2 { clip-path: inset(10px 0px 10px 0px) view-box; }
+svg:where([data-nx="lightning"]) .nx-bk3 { clip-path: inset(14px 0px 6px 0px) view-box; }
+svg:where([data-nx="lightning"]) .nx-bk4 { clip-path: inset(18px 0px 0px 0px) view-box; }
+/* The leader is white-hot on dark themes (a neon tube's core: the text ink, over the amber), so its head reads as
+   light pouring down even at 10 px; the flash fill (under the bands) is the bolt's own amber. On paper there is no
+   brighter-than-ink, so the bands are the warning ink, thinner (a full fill of the deep ink reads heavy there). */
+.nx-bolt > svg .nx-bk { fill: var(--text); }
+.nx-bolt > svg .nx-bkf { fill: var(--nx-ink, currentColor); }
+body[data-theme$="-light"] .nx-bolt > svg .nx-bk { fill: var(--nx-ink, currentColor); fill-opacity: .7; }
 /* the loop (the composer chip, the picker's model row, the Fast row: always while drawn) */
 .nx-bolt::before { animation: var(--nxb-bl) 5200ms linear infinite; }
 .nx-bolt > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite; }
-.nx-bolt > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
-.nx-bolt > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
-.nx-bolt > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
-.nx-bolt > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
+.nx-bolt > svg .nx-bk0 { animation: nx-bolt-k0 5200ms linear infinite; }
+.nx-bolt > svg .nx-bk1 { animation: nx-bolt-k1 5200ms linear infinite; }
+.nx-bolt > svg .nx-bk2 { animation: nx-bolt-k2 5200ms linear infinite; }
+.nx-bolt > svg .nx-bk3 { animation: nx-bolt-k3 5200ms linear infinite; }
+.nx-bolt > svg .nx-bk4 { animation: nx-bolt-k4 5200ms linear infinite; }
+.nx-bolt > svg .nx-bkf { animation: nx-bolt-fill 5200ms linear infinite; }
 /* The transcript meta's bolt (.nx-bolt-gated) sits in the message chrome, which is hidden until its message is
-   hovered (transcript.css), so it strikes only while the chrome shows: as the row appears the bolt cracks, then it
+   hovered (transcript.css), so it strikes only while the chrome shows: as the row appears the bolt strikes, then it
    keeps the cycle; a hidden row runs no animation (one per fast turn would otherwise tick unseen). */
-.nx-bolt-gated::before, .nx-bolt-gated > svg .nx-h, .nx-bolt-gated > svg .nx-p { animation: none; }
+.nx-bolt-gated::before, .nx-bolt-gated > svg .nx-h, .nx-bolt-gated > svg .nx-bk { animation: none; }
 :where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated::before { animation: var(--nxb-bl) 5200ms linear infinite; }
 :where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite; }
-:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
-:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
-:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
-:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
-/* hover re-strikes once (hosts: a button, a [data-action] row, the transcript's model chip) */
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-bk0 { animation: nx-bolt-k0 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-bk1 { animation: nx-bolt-k1 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-bk2 { animation: nx-bolt-k2 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-bk3 { animation: nx-bolt-k3 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-bk4 { animation: nx-bolt-k4 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-bkf { animation: nx-bolt-fill 5200ms linear infinite; }
+/* hover strikes once more (hosts: a button, a [data-action] row, the transcript's model chip) */
 :where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation: var(--nxb-bl) 5200ms linear infinite, var(--nxb-blh) 1100ms linear 1; }
 :where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite, nx-bolt-halo-h 1100ms linear 1; }
-:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite, nx-bolt-0h 1100ms linear 1; }
-:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite, nx-bolt-1h 1100ms linear 1; }
-:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite, nx-bolt-2h 1100ms linear 1; }
-:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite, nx-bolt-3h 1100ms linear 1; }
-@keyframes nx-bolt-0 { 0%, 1% { opacity: 0.12; } 1.23%, 100% { opacity: 1; } }
-@keyframes nx-bolt-0h { 0%, 4.73% { opacity: 0.12; } 5.82%, 100% { opacity: 1; } }
-@keyframes nx-bolt-1 { 0%, 1.77% { opacity: 0.12; } 2%, 100% { opacity: 1; } }
-@keyframes nx-bolt-1h { 0%, 8.36% { opacity: 0.12; } 9.45%, 100% { opacity: 1; } }
-@keyframes nx-bolt-2 { 0%, 2.54% { opacity: 0.12; } 2.77%, 100% { opacity: 1; } }
-@keyframes nx-bolt-2h { 0%, 12% { opacity: 0.12; } 13.09%, 100% { opacity: 1; } }
-@keyframes nx-bolt-3 { 0%, 3.31% { opacity: 0.12; } 3.54%, 100% { opacity: 1; } }
-@keyframes nx-bolt-3h { 0%, 15.64% { opacity: 0.12; } 16.73%, 100% { opacity: 1; } }
-@keyframes nx-bolt-halo { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 1; } 4.73% { opacity: 0.45; } 5.5% { opacity: 0.95; } 7.04% { opacity: 0.7; } 20%, 100% { opacity: 0.32; } }
-@keyframes nx-bolt-halo-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 1; } 22.36% { opacity: 0.45; } 26% { opacity: 0.95; } 33.27% { opacity: 0.7; } 94.55%, 100% { opacity: 0.32; } }
-@keyframes nx-bolt-bl { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.42; } 4.73% { opacity: 0.12; } 5.5% { opacity: 0.34; } 7.04% { opacity: 0.2; } 20%, 100% { opacity: 0.08; } }
-@keyframes nx-bolt-bl-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.42; } 22.36% { opacity: 0.12; } 26% { opacity: 0.34; } 33.27% { opacity: 0.2; } 94.55%, 100% { opacity: 0.08; } }
-@keyframes nx-bolt-bl-l { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.24; } 4.73% { opacity: 0.07; } 5.5% { opacity: 0.19; } 7.04% { opacity: 0.12; } 20%, 100% { opacity: 0.07; } }
-@keyframes nx-bolt-bl-lh { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.24; } 22.36% { opacity: 0.07; } 26% { opacity: 0.19; } 33.27% { opacity: 0.12; } 94.55%, 100% { opacity: 0.07; } }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-bk0 { animation: nx-bolt-k0 5200ms linear infinite, nx-bolt-k0h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-bk1 { animation: nx-bolt-k1 5200ms linear infinite, nx-bolt-k1h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-bk2 { animation: nx-bolt-k2 5200ms linear infinite, nx-bolt-k2h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-bk3 { animation: nx-bolt-k3 5200ms linear infinite, nx-bolt-k3h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-bk4 { animation: nx-bolt-k4 5200ms linear infinite, nx-bolt-k4h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-bkf { animation: nx-bolt-fill 5200ms linear infinite, nx-bolt-fill-h 1100ms linear 1; }
+@keyframes nx-bolt-k0 { 0%, 0.12% { opacity: 0; } 0.31%, 0.88% { opacity: 1; } 2.42%, 4% { opacity: 0; } 4.23% { opacity: 1; } 5.08%, 5.58% { opacity: 0; } 5.85% { opacity: 0.6; } 6.73%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k0h { 0%, 0.55% { opacity: 0; } 1.45%, 4.18% { opacity: 1; } 11.45%, 18.91% { opacity: 0; } 20% { opacity: 1; } 24%, 26.36% { opacity: 0; } 27.64% { opacity: 0.6; } 31.82%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k1 { 0%, 0.88% { opacity: 0; } 1.08%, 1.65% { opacity: 1; } 3.19%, 4% { opacity: 0; } 4.23% { opacity: 1; } 5.08%, 5.58% { opacity: 0; } 5.85% { opacity: 0.6; } 6.73%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k1h { 0%, 4.18% { opacity: 0; } 5.09%, 7.82% { opacity: 1; } 15.09%, 18.91% { opacity: 0; } 20% { opacity: 1; } 24%, 26.36% { opacity: 0; } 27.64% { opacity: 0.6; } 31.82%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k2 { 0%, 1.65% { opacity: 0; } 1.85%, 2.42% { opacity: 1; } 3.96%, 4% { opacity: 0; } 4.23% { opacity: 1; } 5.08%, 5.58% { opacity: 0; } 5.85% { opacity: 0.6; } 6.73%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k2h { 0%, 7.82% { opacity: 0; } 8.73%, 11.45% { opacity: 1; } 18.73%, 18.91% { opacity: 0; } 20% { opacity: 1; } 24%, 26.36% { opacity: 0; } 27.64% { opacity: 0.6; } 31.82%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k3 { 0%, 2.42% { opacity: 0; } 2.62%, 3.19% { opacity: 1; } 4% { opacity: 0.47; } 4.23% { opacity: 1; } 5.08%, 5.58% { opacity: 0; } 5.85% { opacity: 0.6; } 6.73%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k3h { 0%, 11.45% { opacity: 0; } 12.36%, 15.09% { opacity: 1; } 18.91% { opacity: 0.47; } 20% { opacity: 1; } 24%, 26.36% { opacity: 0; } 27.64% { opacity: 0.6; } 31.82%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k4 { 0%, 3.19% { opacity: 0; } 3.38%, 3.96% { opacity: 1; } 4% { opacity: 0.97; } 4.23% { opacity: 1; } 5.08%, 5.58% { opacity: 0; } 5.85% { opacity: 0.6; } 6.73%, 100% { opacity: 0; } }
+@keyframes nx-bolt-k4h { 0%, 15.09% { opacity: 0; } 16%, 18.73% { opacity: 1; } 18.91% { opacity: 0.97; } 20% { opacity: 1; } 24%, 26.36% { opacity: 0; } 27.64% { opacity: 0.6; } 31.82%, 100% { opacity: 0; } }
+@keyframes nx-bolt-fill { 0%, 4% { opacity: 0; } 4.23% { opacity: 1; } 5.08% { opacity: 0.5; } 5.85% { opacity: 0.95; } 6.92% { opacity: 0.72; } 17.69%, 100% { opacity: 0; } }
+@keyframes nx-bolt-fill-h { 0%, 18.91% { opacity: 0; } 20% { opacity: 1; } 24% { opacity: 0.5; } 27.64% { opacity: 0.95; } 32.73% { opacity: 0.72; } 83.64%, 100% { opacity: 0; } }
+@keyframes nx-bolt-halo { 0%, 4% { opacity: 0.32; } 4.23% { opacity: 1; } 5.08% { opacity: 0.5; } 5.85% { opacity: 0.95; } 6.92% { opacity: 0.72; } 21.15%, 100% { opacity: 0.32; } }
+@keyframes nx-bolt-halo-h { 0%, 18.91% { opacity: 0.32; } 20% { opacity: 1; } 24% { opacity: 0.5; } 27.64% { opacity: 0.95; } 32.73% { opacity: 0.72; } 100% { opacity: 0.32; } }
+@keyframes nx-bolt-bl { 0%, 4% { opacity: 0.08; } 4.23% { opacity: 0.42; } 5.08% { opacity: 0.14; } 5.85% { opacity: 0.34; } 6.92% { opacity: 0.2; } 21.15%, 100% { opacity: 0.08; } }
+@keyframes nx-bolt-bl-h { 0%, 18.91% { opacity: 0.08; } 20% { opacity: 0.42; } 24% { opacity: 0.14; } 27.64% { opacity: 0.34; } 32.73% { opacity: 0.2; } 100% { opacity: 0.08; } }
+@keyframes nx-bolt-bl-l { 0%, 4% { opacity: 0.07; } 4.23% { opacity: 0.24; } 5.08% { opacity: 0.09; } 5.85% { opacity: 0.19; } 6.92% { opacity: 0.12; } 21.15%, 100% { opacity: 0.07; } }
+@keyframes nx-bolt-bl-lh { 0%, 18.91% { opacity: 0.07; } 20% { opacity: 0.24; } 24% { opacity: 0.09; } 27.64% { opacity: 0.19; } 32.73% { opacity: 0.12; } 100% { opacity: 0.07; } }
+
+/* ------------------------------------------------------------------ 8c. the capabilities wand in colour (2026-10-07) */
+/* OWNER of this block: Neon icons (Jared, 2026-10-07: "The Assistant capabilities wand should be colored. Maybe silver
+   handle, gold star end, with the 3 sparkles being colored, maybe blue, pink, green? It should still read as neon ...
+   after the shake it should sparkle the colored sparkles"). The one deliberate exception to "colour is reserved for
+   status" (section 12): the composer's capabilities wand ([data-menu-anchor="wand"]) and its menu head (the
+   Assistant capabilities menu's .menu-head) paint the wand's element inks (neon-icons.js wand: nx-i-silver, -gold,
+   -blue, -pink, -green on each tube and on its own halo path), so each tube blooms in its own colour on dark themes.
+   The Skill step's wand (Orbit, the working card) is not in scope: it inks by status as before.
+   The inks are literal per theme brightness (like --nx-idle, section 1: no color-mix()), the deeper set on paper,
+   where halos are off and the ink alone carries the colour (each >= 3:1 on the light composer and menu fields). The
+   svg pins --nx-ink to the silver, so the hover ink rule (section 8, zero specificity) never greys it and neon-verify
+   17b reads it as a glyph with its own ink. NieR draws it in ink (no colour; the handle a lighter ink tone and the
+   star filled, so the star end still reads), with square caps and no glow. */
+body {
+  --nx-wand-silver: #c6cdda; --nx-wand-gold: #ffc940; --nx-wand-blue: #55aeff; --nx-wand-pink: #ff6fbc; --nx-wand-green: #46df93;
+  /* the sparkle's bloom at the peak of its twinkle (element opacity carries the curve, so it composites) */
+  --nx-h-spark-i: .8;
+}
+body[data-theme$="-light"] {
+  --nx-wand-silver: #6a7280; --nx-wand-gold: #a26f00; --nx-wand-blue: #1d6ccc; --nx-wand-pink: #c42f7c; --nx-wand-green: #16834a;
+  --nx-h-spark-i: 0;
+}
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"],
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] { --nx-ink: var(--nx-wand-silver); }
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-i-gold,
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] .nx-i-gold { stroke: var(--nx-wand-gold); }
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-i-blue,
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] .nx-i-blue { stroke: var(--nx-wand-blue); }
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-i-pink,
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] .nx-i-pink { stroke: var(--nx-wand-pink); }
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-i-green,
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] .nx-i-green { stroke: var(--nx-wand-green); }
+/* NieR: ink only; a lighter ink tone on the handle and a filled star tell the parts apart without colour */
+html[data-o55-nier="on"] [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-c.nx-i-silver,
+html[data-o55-nier="on"] .menu-head > svg[data-nx="wand"] .nx-c.nx-i-silver { stroke-opacity: .55; }
+html[data-o55-nier="on"] [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-c.nx-i-gold,
+html[data-o55-nier="on"] .menu-head > svg[data-nx="wand"] .nx-c.nx-i-gold { fill: var(--nx-ink, currentColor); }
+/* The sparkle. After the hover/focus flick (the rod's 440 ms bounce), the sparkles twinkle in turn, blue, pink,
+   green, 120 ms apart (240 ms + each sparkle's --ad: 360, 480, 600 ms): each dims, turns (a plus turned 90 degrees
+   lands on itself, so it reads as a glint, never a spin), bursts into an eight-point glint (its thin diagonal cross,
+   an nx-ov overlay, flashes) with its bloom flaring to --nx-h-spark-i, and settles; all done about 1.1 s after the
+   hover. Opacity and transform only. The bloom's flare is opacity: while hovered the sparkle's halo takes the strong
+   token as its stroke-opacity and the host's halo strength over it as its element opacity, and the keyframes name
+   only the peak (the rest is the underlying value). Light themes have no halo (the token is 0, so the halo stays at
+   stroke-opacity 0 whatever its element opacity): there the dip, the turn and the burst carry it. Retro and NieR step it
+   (their --nx-ease; NieR steps(2)). Reduced motion (section 10) stops all of it. */
+[data-menu-anchor="wand"]:where(:hover, :focus-visible) > svg[data-nx="wand"] .nx-wsp { animation: nx-wand-spark 520ms var(--nx-ease) calc(240ms + var(--ad, 0) * 1ms) backwards; }
+[data-menu-anchor="wand"]:where(:hover, :focus-visible) > svg[data-nx="wand"] .nx-wsp > .nx-wray { animation: nx-wand-ray 520ms linear calc(240ms + var(--ad, 0) * 1ms) backwards; }
+[data-menu-anchor="wand"]:where(:hover, :focus-visible) > svg[data-nx="wand"] .nx-wsp > .nx-h {
+  stroke-opacity: var(--nx-h-spark-i); opacity: calc(var(--nx-hi-a, 0) / var(--nx-h-spark-i));
+  animation: nx-wand-flare 520ms linear calc(240ms + var(--ad, 0) * 1ms) backwards;
+}
+html[data-o55-nier="on"] [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-wsp,
+html[data-o55-nier="on"] [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-wray { animation-timing-function: steps(2, end); }
+/* the glint's rays are thin (the tube's weight x .55), so the burst reads as a star, not a ball */
+svg:where([data-nx="wand"]) .nx-wray { stroke-width: calc(var(--nx-stroke-base, 1.8) * var(--nx-tone-k, 1) * .55); }
+@keyframes nx-wand-spark { 0% { transform: rotate(0deg); opacity: 1; } 28% { transform: rotate(40deg); opacity: .5; } 50% { transform: rotate(68deg); opacity: 1; } 100% { transform: rotate(90deg); opacity: 1; } }
+@keyframes nx-wand-ray { 0%, 34% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes nx-wand-flare { 50% { opacity: 1; } }
+
+/* ------------------------------------------------------------------ 8d. Grill Me's kettle grill (2026-10-07) */
+/* OWNER of this block: Neon icons. neon-icons.js grill: whenever a context plays the glyph's one-shot (--nx-1: a
+   hovered or focused host, a mounting still mark), the lid swings open about its left hinge, flames flicker in the
+   gap, a puff of smoke (two wisps, the second 60 ms behind) rises out of it and drifts off, and the lid drops shut
+   with a small clank, in about a second (the grill's own --nx-d1). The lid's keyframes are bespoke (lift, hold, an
+   accelerating drop in short segments, one bounce), so the voice's easing still shapes every segment (Retro and NieR
+   step it). The flames and the smoke are act overlays (nx-ov): hidden at rest, they take their keyframes from the same
+   --nx-1 (unset, the declaration is invalid and they stay still) and never play below 12 px (nx-z0), where the lid
+   does not move either. Transform and opacity only; reduced motion (section 10) stops all of it. */
+svg:where([data-nx="grill"]) { --nx-d1: 1000ms; }
+svg:where([data-nx="grill"]) .nx-glid { animation: nx-grill-lid var(--nx-1); }
+svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gfl { animation: nx-grill-flame var(--nx-1); }
+svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gsm1 { animation: nx-grill-smoke1 var(--nx-1); }
+svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gsm2 { animation: nx-grill-smoke2 var(--nx-1); }
+/* the smoke is a finer tube than the kettle */
+svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 1.8) * var(--nx-tone-k, 1) * .75); }
+@keyframes nx-grill-lid {
+  0% { transform: translate(0px, 0px) rotate(0deg); } 24%, 50% { transform: translate(0px, -1.2px) rotate(-20deg); }
+  58% { transform: translate(0px, -.96px) rotate(-16deg); } 63% { transform: translate(0px, -.54px) rotate(-9deg); }
+  67% { transform: translate(0px, 0px) rotate(0deg); } 73% { transform: translate(0px, -.19px) rotate(-3.2deg); }
+  79%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+@keyframes nx-grill-flame {
+  0%, 10% { opacity: 0; transform: translate(0px, .6px); } 18% { opacity: 1; transform: translate(0px, 0px); }
+  24% { opacity: .6; transform: translate(0px, .3px); } 30% { opacity: 1; transform: translate(0px, -.3px); }
+  37% { opacity: .7; transform: translate(0px, 0px); } 44% { opacity: 1; transform: translate(0px, -.2px); }
+  52% { opacity: .8; transform: translate(0px, 0px); } 60%, 100% { opacity: 0; transform: translate(0px, .6px); }
+}
+@keyframes nx-grill-smoke1 {
+  0%, 26% { opacity: 0; transform: translate(0px, 0px); } 36% { opacity: .85; transform: translate(.6px, -1.6px); }
+  62% { opacity: .55; transform: translate(1.8px, -4px); } 80%, 100% { opacity: 0; transform: translate(2.4px, -5.6px); }
+}
+@keyframes nx-grill-smoke2 {
+  0%, 32% { opacity: 0; transform: translate(0px, 0px); } 42% { opacity: .85; transform: translate(.4px, -1.6px); }
+  68% { opacity: .5; transform: translate(1.2px, -4.2px); } 86%, 100% { opacity: 0; transform: translate(1.6px, -6px); }
+}
 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired
@@ -363,10 +498,10 @@ body[data-theme$="-light"] .ph-status .nx-st-waiting:not(.nx-still)::before { an
    beads, the needs-you hop and backlight, blocked's blink and failed's stutter. (The data-motion route was missing
    until 3E2 fix cycle 1: only NieR's section 11 had it.) */
 @media (prefers-reduced-motion: reduce) {
-  svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
+  svg.nx, svg.nx .nx-p, svg.nx .nx-h, svg.nx .nx-ov, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
 }
-body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
-html[data-motion="reduced"] svg.nx, html[data-motion="reduced"] svg.nx .nx-p, html[data-motion="reduced"] svg.nx .nx-h, html[data-motion="reduced"] .nx-st, html[data-motion="reduced"] .nx-st::before, html[data-motion="reduced"] .nx-bolt::before { animation: none !important; transition: none !important; }
+body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced svg.nx .nx-ov, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] svg.nx, html[data-motion="reduced"] svg.nx .nx-p, html[data-motion="reduced"] svg.nx .nx-h, html[data-motion="reduced"] svg.nx .nx-ov, html[data-motion="reduced"] .nx-st, html[data-motion="reduced"] .nx-st::before, html[data-motion="reduced"] .nx-bolt::before { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
 /* OWNER of this section: NieR Mode, step N-A (2026-10-02); the rest of the file is the foundation's. Every rule is
@@ -421,9 +556,10 @@ html[data-o55-nier="on"] [data-action]:hover > :not([data-action]) > svg.nx-r-co
 html[data-o55-nier="on"] [role="button"]:hover > svg.nx-r-control .nx-c,
 html[data-o55-nier="on"] summary:hover > svg.nx-r-control .nx-c { animation: o55n-nx-flick 240ms steps(1, end); }
 @keyframes o55n-nx-flick { 0% { opacity: .45; } 33% { opacity: 1; } 66% { opacity: .45; } 100% { opacity: 1; } }
-/* The Fast bolt is an ink crack in steps (3D): the bands light top to bottom, every frame held; no flash, because the
-   halo and the backlight are gone. */
+/* The Fast bolt strikes in ink, in steps (3D; redrawn 2026-10-07): the ink fill steps down band by band, then the bolt
+   flashes solid ink, flickers once and clears, every frame held; the halo and the backlight are gone. */
 html[data-o55-nier="on"] .nx-bolt > svg.nx .nx-p { animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .nx-bolt > svg.nx .nx-bk { fill: var(--nx-ink, currentColor); }
 html[data-o55-nier="on"] .nx-bolt::before { display: none; }
 /* The status set keeps every silhouette apart, because NieR's inks are close:
    needs-you is an inverted ink block with paper strokes and a paper "?" (it outshines everything); */
