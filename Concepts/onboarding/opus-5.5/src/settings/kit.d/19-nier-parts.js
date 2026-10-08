@@ -4,7 +4,8 @@
    removes everything it added when the key goes, so every part is silent while NieR Mode is off.
      square, headers, diamonds, slice, pointer   CSS only (the parts attribute)
      ground, particles   one fixed layer (#o55np-ground) between the scene and the shell: the still grid, twelve motes
-     cursor              one shared cursor (#o55np-cursor), placed by transform on pointerover and keyboard focus
+     cursor              one shared cursor (#o55np-cursor), placed by transform on pointerover and keyboard focus;
+                         the bar's paper text is the class o55np-cur-over on the hovered item (pointer only, never focus)
      brackets            one reticle of four corners (#o55np-reticle), placed by transform on keyboard focus and on a
                          chosen tab or item
      reboot              PM_NIER.setTransition: the reboot cover (in the onboarding window it grows from the pressed control,
@@ -179,9 +180,24 @@
   /* items in a horizontal strip: the cursor sits under them (a neighbour sits where the left side would be) */
   const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode, .pm7u-range button';
   /* the onboarding window and the tour draw their own cursor (O55.nierFx and their skins): the page's stays out of them,
-     or one row of a look menu got a second square (it matched role=menuitem, its neighbours did not) */
-  const targetOf = e => { const t = e && e.target && e.target.closest ? e.target.closest(CURSOR_SEL) : null; return t && !inO55(t) ? t : null; };
-  let cur = null, curT = null, curHide = 0;
+     or one row of a look menu got a second square (it matched role=menuitem, its neighbours did not).
+     The ink on the words is separate from that square. CSS :hover still paints those rows, so the class follows the
+     same list with no onboarding exception; focus never adds it (a focused row is not an ink bar). */
+  const CUR_OVER = 'o55np-cur-over';
+  const barOf = e => { const n = e && e.target; return n && n.closest ? n.closest(CURSOR_SEL) : null; };
+  const targetOf = e => { const t = barOf(e); return t && !inO55(t) ? t : null; };
+  let cur = null, curT = null, curHide = 0, curBar = null;
+  function curMark(t) {
+    if (t === curBar) return;
+    if (curBar) curBar.classList.remove(CUR_OVER);
+    curBar = t || null;
+    if (curBar) curBar.classList.add(CUR_OVER);
+  }
+  /* a pointer already resting when the part turns on never sends pointerover: read :hover once so the paper matches */
+  function curSyncHover() {
+    let n = null; try { n = document.querySelector(':hover'); } catch (e) { n = null; }
+    curMark(n && n.closest ? n.closest(CURSOR_SEL) : null);
+  }
   /* while the reboot cover is up nothing points through it (the cursor and the reticle sit above the window) */
   let coverUp = false;
   function curPlace(t) {
@@ -199,7 +215,9 @@
   }
   function curOff() { curT = null; if (cur && cur.hasAttribute('data-on')) cur.removeAttribute('data-on'); }
   function curOver(e) {
-    const t = targetOf(e);
+    const bar = barOf(e);
+    curMark(bar);
+    const t = bar && !inO55(bar) ? bar : null;
     if (t === curT) { if (curHide) { window.clearTimeout(curHide); curHide = 0; } return; }
     if (!t) { if (!curHide && curT) curHide = window.setTimeout(() => { curHide = 0; curOff(); }, 90); return; }
     if (curHide) { window.clearTimeout(curHide); curHide = 0; }
@@ -207,6 +225,9 @@
     /* (the repaint under the reboot cover redraws what the pointer rests on: no tick for a cursor that is not shown) */
     if (!coverUp) sfx('tick');
   }
+  /* leaving the window clears :hover and sends no pointerover: drop the class in that same turn. The square still
+     waits on its own 90 ms timer, which only curOver arms. */
+  function curAway(e) { if (!e.relatedTarget) curMark(null); }
   function curFocus(e) {
     const t = targetOf(e); if (!t) return;
     let fv = false; try { fv = e.target.matches(':focus-visible'); } catch (x) { fv = false; }
@@ -216,12 +237,16 @@
     on() {
       cur = layer('o55np-cursor'); cur.innerHTML = '<i></i>';
       document.addEventListener('pointerover', curOver, true);
+      document.addEventListener('pointerout', curAway, true);
       document.addEventListener('focusin', curFocus, true);
+      curSyncHover();
     },
     off() {
       document.removeEventListener('pointerover', curOver, true);
+      document.removeEventListener('pointerout', curAway, true);
       document.removeEventListener('focusin', curFocus, true);
       if (curHide) window.clearTimeout(curHide); curHide = 0; curT = null;
+      curMark(null);
       if (cur) cur.remove(); cur = null;
     }
   };
