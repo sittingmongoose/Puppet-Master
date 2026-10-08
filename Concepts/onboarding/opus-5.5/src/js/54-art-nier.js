@@ -186,8 +186,9 @@
   /* the head group: tilted about the hook, or (the bow) dipped 4 below it behind a stub of string, so the knot and the
      string's end never move. Every unit draws all three display faces: scan, joy (opacity 0) and rest (opacity 0 but
      in the bow), so a class on the unit's item can show any of them on any pose (.o55-rest, .o55-joy: 30-art.css). A
-     unit that is not bowing also carries the bow's stub of string, hidden (.nv-stub): a bow played on it (.o55-bow,
-     59-cheer.js) dips its head below the knot and shows the stub. */
+     unit that is not bowing also carries the bow's stub of string, hidden (.nv-stub), long enough for the deepest bow
+     and drawn behind the head (helper below puts it outside the upper body, on the knot): a bow played on it (.o55-bow,
+     59-cheer.js) lowers the head below the knot and shows the stub. Returns [stub, head] for a unit that is not bowing. */
   function head(K, v, vi, pose, scan, s) {
     const dip = pose === 'bow' ? 4 : 0, look = pose === 'bow' ? 1.4 : pose === 'carry' ? 1 : 0, tilt = dip ? 0 : (TILT[pose] || TILT.stand)[vi] || 0;
     let h = '';
@@ -198,8 +199,9 @@
     }
     h += face(K, v, 'scan', look, scan, !!dip) + face(K, v, 'rest', look, scan, !dip) + face(K, v, 'joy', look, scan);
     const tf = dip ? `translate(0 ${dip})` : tilt ? `rotate(${tilt} 0 ${HOOK})` : '';
-    const stub = K.P(`M0 ${HOOK}V${HOOK + 4}`, 's2', 0.85 / s, dip ? '' : 'nv-stub', dip ? '' : ' opacity="0"');
-    return (dip ? '' : stub) + `<g class="nv-head"${tf ? ` transform="${tf}"` : ''}>${h}</g>` + (dip ? stub : '');
+    const stub = K.P(`M0 ${HOOK}V${HOOK + (dip ? 4 : 18)}`, 's2', 0.85 / s, dip ? '' : 'nv-stub', dip ? '' : ' opacity="0"');
+    const g = `<g class="nv-head"${tf ? ` transform="${tf}"` : ''}>${h}</g>`;
+    return dip ? ['', g + stub] : [stub, g];
   }
   const collar = (K) => K.P('M-5.5 -49.5L-1.5 -47.3L0 -45.6L1.5 -47.3L5.5 -49.5L6.5 -42.5H-6.5Z', 'i') + K.P('M-6.9 -42.4H6.9', 'ko', 0.7) + K.P('M-1.5 -47.3L-2.6 -43.2M1.5 -47.3L2.6 -43.2', 'ko', 0.55);
   const arm = (K, side, pts, hand) => K.P(`M${side * SH} ${SY}L${f(pts[0][0])} ${f(pts[0][1])}L${f(pts[1][0])} ${f(pts[1][1])}`, 's', W.limb)
@@ -219,7 +221,10 @@
   const chip = (K, och) => K.R(-8, -36.5, 16, 11, 'p s', 1) + K.P(PINS, 's', 0.8) + K.R(-3, -33.4, 6, 4.8, och ? 'och' : 'i');
 
   /* opts: variant (any, % 4), pose stand | wave | carry | bow | point, rig (tied: the knot), anchor [x, y] in scene units
-     (untied: its own string from the hook). One outer <g> ending in </g>; drawn back to front. */
+     (untied: its own string from the hook). One outer <g> ending in </g>; drawn back to front. Everything above the
+     legs (coat, arms, the waving arm, collar, head) is one group, .nv-torso, so a bow can pitch it toward the audience
+     about the hips (--o55-hip, the variant's hip line: 30-art.css .o55-bow, 59-cheer.js dip) while the legs stand and
+     the knot, its stub of string and the rig's hook stay where the string holds them. */
   function helper(ctx, item) {
     const K = kit(ctx.pal), o = item.opts || {}, s = item.s || 1, vi = (((o.variant | 0) % 4) + 4) % 4, v = VARS[vi];
     const pose = ARMS[o.pose] ? o.pose : 'stand', Ar = ARMS[pose], wave = pose === 'wave', key = String(item.key || '');
@@ -228,25 +233,28 @@
     /* the body box a lock-on frames (59-cheer.js), whatever the arms do; invisible */
     let out = '<rect class="o55-nier-body" x="-18" y="-70" width="36" height="71" fill="none"/>';
     if (o.anchor) { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; out += K.P(`M0 ${HOOK}L${f(dx)} ${f(dy)}`, 's2', 0.85 / s); }
-    out += legs(K, v) + K.P(v.body, 'i') + K.P(v.ko, 'ko', W.ko);
-    if (v.buckle) out += K.SQ(v.buckle[0], v.buckle[1], 2.8, 'g');
-    if (v.emblem) out += K.DI(v.emblem[0], v.emblem[1], 1.6, 'g');
-    if (v.hood) out += collar(K);
-    out += arm(K, -1, Ar.L);
+    const [stub, hd] = head(K, v, vi, pose, scan, s);
+    out += legs(K, v) + stub;
+    let up = K.P(v.body, 'i') + K.P(v.ko, 'ko', W.ko);
+    if (v.buckle) up += K.SQ(v.buckle[0], v.buckle[1], 2.8, 'g');
+    if (v.emblem) up += K.DI(v.emblem[0], v.emblem[1], 1.6, 'g');
+    if (v.hood) up += collar(K);
+    up += arm(K, -1, Ar.L);
     /* the pose's own right arm (and the bow's hand on the chest, the pointer's tip) in one group, so a class can swap
        it for one of the alternates drawn beside it (alts above) */
-    if (!wave) out += `<g class="nv-arm-r">${arm(K, 1, Ar.R, pose !== 'carry')}${pose === 'point' ? K.P(TIP, 's', 1.2) : ''}</g>` + alts(K, pose);
-    if (pose === 'carry') out += chip(K, accentOf(ctx, item)) + K.SQ(-8.6, -30.5, 3, 'p s', W.hand) + K.SQ(8.6, -30.5, 3, 'p s', W.hand);
-    out += K.SQ(-SH, SY, 2.6, 'p s', W.joint) + (wave ? '' : K.SQ(SH, SY, 2.6, 'p s', W.joint));
-    if (v.over) out += K.P(v.over, 'i') + K.P(v.over, 'ko', 0.7) + (v.overKo ? K.P(v.overKo, 'ko', 0.7) : '');
-    out += head(K, v, vi, pose, scan, s);
-    if (!v.hood) out += collar(K);
-    if (v.clasp) out += K.DI(v.clasp[0], v.clasp[1], 1.6, 'g');
-    if (pose === 'bow') out += `<g class="nv-arm-r">${K.SQ(2.8, -37.5, 3, 'p s', W.hand)}</g>`;
+    if (!wave) up += `<g class="nv-arm-r">${arm(K, 1, Ar.R, pose !== 'carry')}${pose === 'point' ? K.P(TIP, 's', 1.2) : ''}</g>` + alts(K, pose);
+    if (pose === 'carry') up += chip(K, accentOf(ctx, item)) + K.SQ(-8.6, -30.5, 3, 'p s', W.hand) + K.SQ(8.6, -30.5, 3, 'p s', W.hand);
+    up += K.SQ(-SH, SY, 2.6, 'p s', W.joint) + (wave ? '' : K.SQ(SH, SY, 2.6, 'p s', W.joint));
+    if (v.over) up += K.P(v.over, 'i') + K.P(v.over, 'ko', 0.7) + (v.overKo ? K.P(v.overKo, 'ko', 0.7) : '');
+    up += hd;
+    if (!v.hood) up += collar(K);
+    if (v.clasp) up += K.DI(v.clasp[0], v.clasp[1], 1.6, 'g');
+    if (pose === 'bow') up += `<g class="nv-arm-r">${K.SQ(2.8, -37.5, 3, 'p s', W.hand)}</g>`;
     /* the waving arm is its own group: the rig turns it about the shoulder, and the hand's string follows its hook */
     /* (its hand string ends in a small knot too, shown only while the unit is held above the stage or flies in: then
        the hand is hidden or arriving and the string needs an end of its own; 30-art.css .nv-knot-hand) */
-    if (wave) out += `<g class="o55-arm" data-pivot="${SH} ${SY}">${arm(K, 1, Ar.R)}${K.SQ(SH, SY, 2.6, 'p s', W.joint)}${K.P(dia(HAND[0], HAND[1] - 2.2, 1.4), 'i', null, 'nv-knot nv-knot-hand', ' display="none"')}<circle class="o55-hook" data-hook="hand" cx="${HAND[0]}" cy="${HAND[1]}" r="0.01" fill="none"/></g>`;
+    if (wave) up += `<g class="o55-arm" data-pivot="${SH} ${SY}">${arm(K, 1, Ar.R)}${K.SQ(SH, SY, 2.6, 'p s', W.joint)}${K.P(dia(HAND[0], HAND[1] - 2.2, 1.4), 'i', null, 'nv-knot nv-knot-hand', ' display="none"')}<circle class="o55-hook" data-hook="hand" cx="${HAND[0]}" cy="${HAND[1]}" r="0.01" fill="none"/></g>`;
+    out += `<g class="nv-torso" style="--o55-hip:${v.hip}px">${up}</g>`;
     /* the knot keeps its own class: while the troupe is held above the stage (.o55-ens-hold) the unit is hidden but its
        knot shows, hanging in mid-air at the end of its string */
     if (o.rig || o.anchor) out += K.DI(0, HOOK, W.knot, 'i', null, 'nv-knot');

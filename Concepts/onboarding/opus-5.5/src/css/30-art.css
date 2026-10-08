@@ -146,8 +146,13 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) .o55-nier-maplabel
    of them goes straight to its end state under Reduced Motion and on a low-resource computer (59-cheer.js), and the
    one-shot CSS ones are in the lists at the end of this file. Slint: the states are `states` of the unit component,
    the steps a Timer, the alternates Paths with `visible`. */
-/* a unit bows: its head dips 4 below the knot (the stub of string shows; 59-cheer.js steps it in 2) */
-.o55-f-nier .o55-bow .nv-head { translate: 0px 4px; }
+/* a unit bows to the audience: its upper body (.nv-torso, 54-art-nier.js) pitches toward us about the hips, which a
+   figure facing us shows as the coat and shoulders shortening to 0.8 about the hip line (--o55-hip) while the legs
+   stand, and its head goes down 6 more, below the knot (the stub of string shows): the head drops about 14 of its 66
+   units, so the bow reads at 760 px as at 1600. 59-cheer.js (dip) steps it in 2 held steps; Slint: the torso's
+   transform-scale-y with its origin on the hip line, the head's y. */
+.o55-f-nier .o55-bow .nv-torso { transform: translate(0px, calc(var(--o55-hip, -24px) * 0.2)) scale(1, 0.8); }
+.o55-f-nier .o55-bow .nv-head { translate: 0px 6px; }
 .o55-f-nier .o55-bow .nv-stub { opacity: 1; }
 /* a unit's right arm in another pose (54-art-nier.js draws them hidden); a unit without that alternate never gets the
    class (59-cheer.js asks first) */

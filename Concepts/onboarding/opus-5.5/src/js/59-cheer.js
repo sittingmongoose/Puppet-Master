@@ -338,12 +338,27 @@
   }
   /* a unit's visor answers a new face at once (joy): any boot still running on it ends */
   const visorDone = (g) => g.querySelectorAll('.nv-scan, .nv-rest').forEach((el) => { if (el.getAnimations) el.getAnimations().forEach((a) => { if (typeof CSSAnimation === 'undefined' || !(a instanceof CSSAnimation)) a.finish(); }); });
-  /* the stepped head dip of a bow (the .o55-bow class holds it once dipped) */
+  /* a bow in 2 held steps, 120 ms apart: the upper body pitches toward the audience about the hips and the head goes
+     down below its knot (30-art.css .o55-bow holds it once bowed; it was a 4-unit head dip, too small to read). A
+     waving unit's raised hand moves with its body, so the rig measures its strings while it bows (the caller watches) */
+  const BOW = { k: 0.8, head: 6 };
   function dip(p, g, delay) {
-    p.anim(g.querySelector('.nv-head'), [{ translate: '0px 0px' }, { translate: '0px 4px' }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
+    const torso = g.querySelector('.nv-torso'), hip = torso ? parseFloat(torso.style.getPropertyValue('--o55-hip')) || -24 : -24;
+    if (torso) p.anim(torso, [{ transform: 'translate(0px, 0px) scale(1, 1)' }, { transform: `translate(0px, ${(hip * (1 - BOW.k)).toFixed(2)}px) scale(1, ${BOW.k})` }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
+    p.anim(g.querySelector('.nv-head'), [{ translate: '0px 0px' }, { translate: `0px ${BOW.head}px` }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
     p.at(delay, () => g.classList.add('o55-bow', 'o55-rest'));
   }
+  /* the rig follows the bowing bodies' hands for ms (a waving unit's hand string), then measures them standing again */
+  const bowWatch = (svg, ms) => { if (A.rig && svg.querySelector('.o55-ens-h .o55-arm')) A.rig.watch(svg, { settle: ms }); };
   const unbow = (g) => g.classList.remove('o55-bow', 'o55-rest');
+  /* a bowing unit stands again in 2 held steps, 60 ms apart, from the beat it is asked on (the curtain call's rise) */
+  function standUp(p, g) {
+    if (!g.classList.contains('o55-bow')) return;
+    const torso = g.querySelector('.nv-torso'), hip = torso ? parseFloat(torso.style.getPropertyValue('--o55-hip')) || -24 : -24;
+    unbow(g);
+    if (torso) p.anim(torso, [{ transform: `translate(0px, ${(hip * (1 - BOW.k)).toFixed(2)}px) scale(1, ${BOW.k})` }, { transform: 'translate(0px, 0px) scale(1, 1)' }], { duration: 120, easing: 'steps(2, jump-start)' });
+    p.anim(g.querySelector('.nv-head'), [{ translate: `0px ${BOW.head}px` }, { translate: '0px 0px' }], { duration: 120, easing: 'steps(2, jump-start)' });
+  }
   /* a performance timed on its scene's own clock: the beat at `ms` after the scene arrived, now if it is past (late:
      the whole performance shifts so its first beat is now) */
   function since(svg) { const t0 = +svg.getAttribute('data-o55-t0'); return Number.isFinite(t0) && t0 > 0 ? Math.max(0, M.now() - t0) : 0; }
@@ -536,6 +551,7 @@
     if (!hs.length || !acts(svg)) return Promise.resolve(false);
     const p = perf(svg, 'bow');
     p.end(() => { hs.forEach((g) => { if (o.hold != null) unbow(g); else g.classList.add('o55-bow', 'o55-rest'); }); });
+    bowWatch(svg, (o.together === false ? (hs.length - 1) * 120 : 0) + 240 + (o.hold || 0) + 300);
     hs.forEach((g, i) => { const d = o.together === false ? i * 120 : 0; dip(p, g, d); if (o.sound !== false && (o.together === false || !i)) p.at(d, () => SND('bow', o.together === false ? voiceOf(g) : { voice: 0, pan: 0, intensity: 0.5 })); });
     const dipped = (o.together === false ? (hs.length - 1) * 120 : 0) + 240;
     if (o.hold != null) { p.at(dipped + o.hold, () => hs.forEach(unbow)); p.at(dipped + o.hold + 40, () => p.finish()); }
@@ -605,9 +621,10 @@
        ms from now (a small stage timed by its caller: the tour's results card) */
     const s0 = o.at != null ? CC.bows[0] - o.at : since(svg), shift = o.at == null && s0 > CC.bows[0] - 200 ? s0 - (CC.bows[0] - 200) : 0, t = (ms) => Math.max(0, ms - s0 + shift);
     hs.forEach((g, i) => { const d = t(CC.bows[i] != null ? CC.bows[i] : CC.bows[2] + (i - 2) * 120); dip(p, g, d); p.at(d, () => SND('bow', Object.assign(voiceOf(g), { chapter: chord }))); });
+    p.at(Math.max(0, t(CC.bows[0]) - 20), () => bowWatch(svg, CC.rise - CC.bows[0] + 380));
     p.at(t(CC.rest), () => { if (O55.sound && O55.sound.rest) O55.sound.rest(150); });
     p.at(t(CC.rise), () => {
-      rose = true; hs.forEach(unbow); hs.forEach((g, i) => joy(g, 620, i * 40));
+      rose = true; hs.forEach((g) => standUp(p, g)); hs.forEach((g, i) => joy(g, 620, i * 40));
       sting();
       if (pt) jab(p, pt, 0);
     });
