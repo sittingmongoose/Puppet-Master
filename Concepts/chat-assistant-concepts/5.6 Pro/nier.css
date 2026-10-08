@@ -15,8 +15,8 @@
  * (styles.css), the Chat WOW tx and fam tokens (turn-stage.css), the pmx literals and seat fills (module-shell.css,
  * no color-mix: pmx-verify forbidden-props), the six context source inks (context.css, which the pmx seats reuse),
  * and PMConcept7's helper names (--o55-nier-ink, -ink-rgb, -on-ink, -paper ... -shadow-rgb) the parts code against;
- * after them the literal-carrying bits of the parts: the Square pointer images, the Reboot moment cover's inks (drawn
- * before the palette is painted) and the World parts' line art as data: SVG custom properties (--o55nw-art-*).
+ * after them the literal-carrying bits of the parts: the Square pointer images, the Reboot moment cover's ground
+ * and ink (drawn before the palette is painted) and the World parts' line art as data: SVG custom properties (--o55nw-art-*).
  * The rules after the block use only those tokens: var(--…) or rgba(var(--o55-nier-ink-rgb), a).
  *
  * Status in NieR is muted ink: the accent is the ink, success the olive, attention the warning ink, failure the rust.
@@ -277,9 +277,9 @@ html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="r
 html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="button"],
 html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="submit"] { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 1.5H12.5V8.5H8.5V12.5H1.5Z' fill='%23d1cdb7' stroke='%232f2d26' stroke-width='1'/%3E%3Cpath d='M4 4H8V8H4Z' fill='%232f2d26'/%3E%3C/svg%3E") 1 1, pointer; }
 html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] textarea, html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input:not([type]), html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="text"], html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] input[type="search"], html[data-o55-nier-parts~="pointer"] body[data-theme="basic-dark"] [contenteditable="true"] { cursor: text; }
-/* the Reboot moment part's cover inks, per tone (it is drawn before the palette is painted) */
-#o55np-reboot { --rb-ink: #211f1b; --rb-paper: #dcd8c2; --rb-ink-rgb: 33,31,27; --rb-shade-rgb: 33,31,27; }
-#o55np-reboot[data-tone="dark"] { --rb-ink: #d1cdb7; --rb-paper: #2f2d26; --rb-ink-rgb: 209,205,183; --rb-shade-rgb: 47,45,38; }
+/* the Reboot moment cover's ground and ink, per tone (it is drawn before the palette is painted) */
+#o55np-reboot { --rb-ground: #ccc8b1; --rb-text: #211f1b; --rb-text-rgb: 33,31,27; }
+#o55np-reboot[data-tone="dark"] { --rb-ground: #2f2d26; --rb-text: #d1cdb7; --rb-text-rgb: 209,205,183; }
 html[data-o55-nier="on"] body[data-theme="basic-light"] {
   /* the World parts' line art, light (PMConcept7 kit.d/20-nier-world.js ART) */
   --o55nw-art-pod: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%20stroke%3D%22%23211f1b%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cpath%20d%3D%22M22%2012H42L46%2016V40L41%2045H23L18%2040V16Z%20M20%2019.5H44%20M22%2036H42%20M22%2039.5H42%20M25%2045L27%2050H37L39%2045%22%2F%3E%3Cpath%20d%3D%22M10%2020H16V38H10Z%20M48%2020H54V38H48Z%20M16%2025H18%20M46%2025H48%20M13%2015V20%20M51%2015V20%22%2F%3E%3Cpath%20d%3D%22M25%2025H39V29H25Z%22%20fill%3D%22%23211f1b%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M24%2057H40%22%20stroke-opacity%3D%22.4%22%2F%3E%3C%2Fsvg%3E");
