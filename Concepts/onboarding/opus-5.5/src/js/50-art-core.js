@@ -74,24 +74,310 @@
 
   /* A prop's drawn outline, measured once per family, look and variant from the drawing itself (text, glows and
      shadows left out), so a string or a connector can end exactly on it: A.box(ctx, prop, opts) -> [x0, y0, x1, y1]
-     in the prop's own units, before its scale. */
+     in the prop's own units, before its scale. It is worked out from the drawing's markup (A.outline below), with no
+     element made and nothing read from the page: a getBBox() here, in the middle of building a new screen, forced the
+     style and layout of that whole screen (10-35 ms on the VM) once for every prop not measured before. Markup the
+     arithmetic does not cover is still measured in the document, the old way. */
   const boxes = new Map();
   A.box = function box(ctx, prop, opts) {
     const k = ctx.family + '|' + ctx.mode + '|' + prop + '|' + JSON.stringify(opts || {});
     if (boxes.has(k)) return boxes.get(k);
     const fam = A.families[ctx.family] || A.families.basic, draw = fam.props[prop] || (A.common[prop] && ((c, o) => A.common[prop](c, o, fam)));
     let r = [-20, -20, 20, 20];
-    if (draw && document.body) {
-      const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
-      svg.setAttribute('style', 'position:fixed;left:-9999px;top:0;width:10px;height:10px;visibility:hidden;pointer-events:none');
-      svg.innerHTML = `<g>${draw(ctx, { x: 0, y: 0, s: 1, opts: opts || {}, key: 'geo' })}</g>`;
-      svg.querySelectorAll('text, .o55-hook, [fill*="glow"], [class*="shade"], .o55-shadow').forEach((t) => t.remove());
-      document.body.appendChild(svg);
-      try { const b = svg.firstElementChild.getBBox(); if (b.width || b.height) r = [b.x, b.y, b.x + b.width, b.y + b.height]; } catch (_) {}
-      svg.remove();
+    if (draw) {
+      const markup = `<g>${draw(ctx, { x: 0, y: 0, s: 1, opts: opts || {}, key: 'geo' })}</g>`;
+      const b = A.outline(markup);
+      if (b !== undefined) { if (b && (b[2] - b[0] || b[3] - b[1])) r = b; }
+      else if (document.body) r = measured(markup) || r;
     }
     boxes.set(k, r); return r;
   };
+  /* the document's own measure, for markup A.outline gives up on */
+  function measured(markup) {
+    const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('style', 'position:fixed;left:-9999px;top:0;width:10px;height:10px;visibility:hidden;pointer-events:none');
+    svg.innerHTML = markup;
+    svg.querySelectorAll('text, .o55-hook, [fill*="glow"], [class*="shade"], .o55-shadow').forEach((t) => t.remove());
+    document.body.appendChild(svg);
+    let r = null;
+    try { const b = svg.firstElementChild.getBBox(); if (b.width || b.height) r = [b.x, b.y, b.x + b.width, b.y + b.height]; } catch (_) {}
+    svg.remove();
+    return r;
+  }
+
+  /* A.outline(markup) -> [x0, y0, x1, y1] | null | undefined: the geometry box of the markup's first element, read as
+     the browser's getBBox() reads it (Blink, measured against it on every prop of every family, look and beat), with
+     what A.box leaves out removed first: text, hook points, glows ([fill*="glow"]), shades ([class*="shade"]) and
+     .o55-shadow. null: nothing drawn; undefined: markup it does not cover (a <use>, an image, a length in %, a
+     transform or a geometry property in a style), which the caller measures in the document instead.
+     - a group is the union of its children's boxes, each mapped through that child's transform (its box's corners,
+       then their bounds); an empty shape (a rect or circle of size 0, a path with no segments) adds nothing; elements
+       shown nowhere (display none, defs, gradients, patterns, clip paths, masks, styles) add nothing;
+     - a path's box is its tight box (its points and the extrema of its curves, as Skia's computeTightBounds), its arcs
+       built as Skia builds them (arcInto);
+     - the result is rounded to single precision, as getBBox() returns it.
+     Slint draws the same shapes from the same numbers, so it needs no measuring at all. */
+  A.outline = (function () {
+    const f32 = Math.fround;
+    const TAG = /<(\/?)([A-Za-z][\w:-]*)((?:\s+[^\s=/>]+(?:\s*=\s*(?:"[^"]*"|'[^']*'))?)*)\s*(\/?)>|<!--|<!\[CDATA\[|<\?/g;
+    const ATTR = /([^\s=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'))?/g;
+    const HIDDEN = /^(defs|clipPath|mask|pattern|linearGradient|radialGradient|marker|symbol|filter|style|title|desc|metadata|stop|script|text)$/;
+    const GROUP = /^(g|a|switch)$/;
+    const SHAPE = /^(rect|circle|ellipse|line|polyline|polygon|path)$/;
+    const NUMRE = /^\s*[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?\s*$/;
+    const STYLE_GEO = /(?:^|;)\s*(?:transform|x|y|cx|cy|r|rx|ry|width|height|d)\s*:/i;
+    class Unsupported extends Error {}
+    const no = () => { throw new Unsupported(); };
+    const num = (v, d) => { if (v == null || v === '') return d; if (!NUMRE.test(v)) no(); return f32(+v); };
+    const nums = (s) => (String(s || '').match(/[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/g) || []).map((x) => f32(+x));
+    function parse(markup) {
+      const root = { tag: '#root', a: {}, kids: [] }, stack = [root];
+      let m; TAG.lastIndex = 0;
+      while ((m = TAG.exec(markup))) {
+        if (!m[2]) no(); /* a comment, CDATA or a processing instruction */
+        const top = stack[stack.length - 1];
+        if (m[1]) { if (top.tag !== m[2]) no(); stack.pop(); continue; }
+        const a = {}; let am; ATTR.lastIndex = 0;
+        while ((am = ATTR.exec(m[3] || ''))) a[am[1]] = am[2] != null ? am[2] : am[3] != null ? am[3] : '';
+        const node = { tag: m[2], a, kids: [] };
+        top.kids.push(node);
+        if (!m[4]) stack.push(node);
+      }
+      if (stack.length !== 1) no();
+      return root.kids[0] || null;
+    }
+    const cls = (n) => ' ' + (n.a.class || '') + ' ';
+    /* left out by A.box, or drawn nowhere */
+    function skipped(n) {
+      if (HIDDEN.test(n.tag)) return true;
+      const c = cls(n);
+      if (c.indexOf(' o55-hook ') >= 0 || c.indexOf(' o55-shadow ') >= 0 || (n.a.class || '').indexOf('shade') >= 0) return true;
+      if ((n.a.fill || '').indexOf('glow') >= 0) return true;
+      if ((n.a.display || '').trim() === 'none') return true;
+      const st = n.a.style || '';
+      if (st) { if (/(?:^|;)\s*display\s*:\s*none\s*(?:;|$)/i.test(st)) return true; if (STYLE_GEO.test(st)) no(); }
+      return false;
+    }
+    /* 2x3 matrices [a, b, c, d, e, f] */
+    const mul = (p, q) => [p[0] * q[0] + p[2] * q[1], p[1] * q[0] + p[3] * q[1], p[0] * q[2] + p[2] * q[3], p[1] * q[2] + p[3] * q[3], p[0] * q[4] + p[2] * q[5] + p[4], p[1] * q[4] + p[3] * q[5] + p[5]];
+    const deg = (x) => (x * Math.PI) / 180;
+    function transformOf(n) {
+      const t = n.a.transform; let M = [1, 0, 0, 1, 0, 0];
+      if (t && t.trim()) {
+        const re = /\s*(matrix|translate|scale|rotate|skewX|skewY)\s*\(([^)]*)\)\s*,?/gy; let m, at = 0;
+        while ((m = re.exec(t))) {
+          const v = nums(m[2]); at = re.lastIndex;
+          let T;
+          if (m[1] === 'matrix') { if (v.length !== 6) no(); T = v; }
+          else if (m[1] === 'translate') T = [1, 0, 0, 1, v[0] || 0, v[1] || 0];
+          else if (m[1] === 'scale') T = [v[0] == null ? 1 : v[0], 0, 0, v[1] == null ? (v[0] == null ? 1 : v[0]) : v[1], 0, 0];
+          else if (m[1] === 'rotate') {
+            const r = deg(v[0] || 0), c = Math.cos(r), s = Math.sin(r), R = [c, s, -s, c, 0, 0];
+            T = v.length >= 3 ? mul(mul([1, 0, 0, 1, v[1], v[2]], R), [1, 0, 0, 1, -v[1], -v[2]]) : R;
+          } else if (m[1] === 'skewX') T = [1, 0, Math.tan(deg(v[0] || 0)), 1, 0, 0];
+          else T = [1, Math.tan(deg(v[0] || 0)), 0, 1, 0, 0];
+          M = mul(M, T);
+        }
+        if (at !== t.length && t.slice(at).trim()) no();
+      }
+      if (n.tag === 'svg') {
+        /* a nested viewport: its place, then its viewBox fitted into its size (xMidYMid meet unless it says otherwise) */
+        M = mul(M, [1, 0, 0, 1, num(n.a.x, 0), num(n.a.y, 0)]);
+        if (n.a.viewBox) {
+          const vb = nums(n.a.viewBox), w = num(n.a.width, null), h = num(n.a.height, null);
+          if (vb.length !== 4 || w == null || h == null || !(vb[2] > 0 && vb[3] > 0)) no();
+          const par = (n.a.preserveAspectRatio || 'xMidYMid meet').trim().split(/\s+/);
+          let sx = w / vb[2], sy = h / vb[3], tx = -vb[0] * sx, ty = -vb[1] * sy;
+          if (par[0] !== 'none') {
+            const s = par[1] === 'slice' ? Math.max(sx, sy) : Math.min(sx, sy), al = par[0];
+            sx = sy = s; tx = -vb[0] * s; ty = -vb[1] * s;
+            const ax = /xMid/.test(al) ? 0.5 : /xMax/.test(al) ? 1 : 0, ay = /YMid/.test(al) ? 0.5 : /YMax/.test(al) ? 1 : 0;
+            tx += (w - vb[2] * s) * ax; ty += (h - vb[3] * s) * ay;
+          }
+          M = mul(M, [sx, 0, 0, sy, tx, ty]);
+        }
+      }
+      return M;
+    }
+    function mapBox(M, b) {
+      if (M[0] === 1 && M[1] === 0 && M[2] === 0 && M[3] === 1) return [b[0] + M[4], b[1] + M[5], b[2] + M[4], b[3] + M[5]];
+      const xs = [], ys = [];
+      [[b[0], b[1]], [b[2], b[1]], [b[2], b[3]], [b[0], b[3]]].forEach(([x, y]) => { xs.push(f32(M[0] * x + M[2] * y + M[4])); ys.push(f32(M[1] * x + M[3] * y + M[5])); });
+      return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)];
+    }
+    const unite = (u, b) => (!b ? u : !u ? b.slice() : [Math.min(u[0], b[0]), Math.min(u[1], b[1]), Math.max(u[2], b[2]), Math.max(u[3], b[3])]);
+    function boxOf(n) {
+      if (GROUP.test(n.tag) || n.tag === 'svg') {
+        let u = null;
+        for (const k of n.kids) { if (skipped(k)) continue; const b = boxOf(k); if (b) u = unite(u, mapBox(transformOf(k), b)); }
+        return u;
+      }
+      if (!SHAPE.test(n.tag)) no();
+      const a = n.a;
+      if (n.tag === 'rect') {
+        const x = num(a.x, 0), y = num(a.y, 0), w = num(a.width, 0), h = num(a.height, 0);
+        return w > 0 && h > 0 ? [x, y, f32(x + w), f32(y + h)] : null;
+      }
+      if (n.tag === 'circle') { const cx = num(a.cx, 0), cy = num(a.cy, 0), r = num(a.r, 0); return r > 0 ? [f32(cx - r), f32(cy - r), f32(cx + r), f32(cy + r)] : null; }
+      if (n.tag === 'ellipse') {
+        let rx = num(a.rx, null), ry = num(a.ry, null); if (rx == null) rx = ry; if (ry == null) ry = rx;
+        const cx = num(a.cx, 0), cy = num(a.cy, 0);
+        return rx > 0 && ry > 0 ? [f32(cx - rx), f32(cy - ry), f32(cx + rx), f32(cy + ry)] : null;
+      }
+      if (n.tag === 'line') { const x1 = num(a.x1, 0), y1 = num(a.y1, 0), x2 = num(a.x2, 0), y2 = num(a.y2, 0); return [Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2), Math.max(y1, y2)]; }
+      if (n.tag === 'polyline' || n.tag === 'polygon') {
+        const p = nums(a.points); if (p.length < 2) return null;
+        let b = null; for (let i = 0; i + 1 < p.length; i += 2) b = unite(b, [p[i], p[i + 1], p[i], p[i + 1]]);
+        return b;
+      }
+      return pathBox(a.d || '');
+    }
+    /* a cubic's or a quadratic's tight extent: its ends and the points where it turns */
+    function cubicInto(b, p0, p1, p2, p3) {
+      const pts = [p3];
+      for (let k = 0; k < 2; k++) {
+        const a = -p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k], bb = 2 * (p0[k] - 2 * p1[k] + p2[k]), c = p1[k] - p0[k];
+        const ts = [];
+        if (Math.abs(a) < 1e-12) { if (Math.abs(bb) > 1e-12) ts.push(-c / bb); }
+        else { const disc = bb * bb - 4 * a * c; if (disc >= 0) { const q = Math.sqrt(disc); ts.push((-bb + q) / (2 * a), (-bb - q) / (2 * a)); } }
+        for (const t of ts) if (t > 0 && t < 1) { const u = 1 - t; pts.push([u * u * u * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t * t * t * p3[0], u * u * u * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t * t * t * p3[1]]); }
+      }
+      return pts.reduce((acc, p) => unite(acc, [p[0], p[1], p[0], p[1]]), b);
+    }
+    function quadInto(b, p0, p1, p2) {
+      const pts = [p2];
+      for (let k = 0; k < 2; k++) { const den = p0[k] - 2 * p1[k] + p2[k]; if (Math.abs(den) > 1e-12) { const t = (p0[k] - p1[k]) / den; if (t > 0 && t < 1) { const u = 1 - t; pts.push([u * u * p0[0] + 2 * u * t * p1[0] + t * t * p2[0], u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1]]); } } }
+      return pts.reduce((acc, p) => unite(acc, [p[0], p[1], p[0], p[1]]), b);
+    }
+    /* an SVG arc's tight extent: the arc built as Skia's SkPath::arcTo builds it for Blink (its centre, angles and
+       conic segments of at most a third of a turn, in single precision: with radii scaled up to just fit, that float
+       arithmetic moves the centre by about a hundredth of a unit, which getBBox() shows), then each conic's end and
+       extrema as computeTightBounds finds them; false: drawn as a line (a zero radius, or no sweep) */
+    function arcInto(state, cur, rx, ry, angle, large, sweep, to) {
+      if (!rx || !ry || (to[0] === cur[0] && to[1] === cur[1])) return false;
+      const snap = (v) => (Math.abs(v) <= 1 / 4096 ? 0 : v);
+      const rotM = (dg) => { const r = f32(dg * f32(Math.PI / 180)), sn = snap(f32(Math.sin(r))), cs = snap(f32(Math.cos(r))); return [cs, -sn, 0, sn, cs, 0]; };
+      const cat = (A, B) => [f32(A[0] * B[0] + A[1] * B[3]), f32(A[0] * B[1] + A[1] * B[4]), f32(A[0] * B[2] + A[1] * B[5] + A[2]),
+        f32(A[3] * B[0] + A[4] * B[3]), f32(A[3] * B[1] + A[4] * B[4]), f32(A[3] * B[2] + A[4] * B[5] + A[5])];
+      const map = (M, p) => [f32(f32(f32(M[0] * p[0]) + f32(M[1] * p[1])) + M[2]), f32(f32(f32(M[3] * p[0]) + f32(M[4] * p[1])) + M[5])];
+      rx = f32(Math.abs(rx)); ry = f32(Math.abs(ry));
+      const mid = [f32(f32(cur[0] - to[0]) * 0.5), f32(f32(cur[1] - to[1]) * 0.5)], tm = map(rotM(-angle), mid);
+      const scale = f32(f32(f32(tm[0] * tm[0]) / f32(rx * rx)) + f32(f32(tm[1] * tm[1]) / f32(ry * ry)));
+      if (scale > 1) { const k = f32(Math.sqrt(scale)); rx = f32(rx * k); ry = f32(ry * k); }
+      let M = cat([f32(1 / rx), 0, 0, 0, f32(1 / ry), 0], rotM(-angle));
+      const u0 = map(M, cur), u1 = map(M, to);
+      let dx = f32(u1[0] - u0[0]), dy = f32(u1[1] - u0[1]);
+      const dd = f32(f32(dx * dx) + f32(dy * dy));
+      let sf = f32(Math.sqrt(Math.max(f32(f32(1 / dd) - 0.25), 0)));
+      if (!sweep !== !!large) sf = -sf;
+      dx = f32(dx * sf); dy = f32(dy * sf);
+      const c = [f32(f32(f32(u0[0] + u1[0]) * 0.5) - dy), f32(f32(f32(u0[1] + u1[1]) * 0.5) + dx)];
+      const th1 = f32(Math.atan2(f32(u0[1] - c[1]), f32(u0[0] - c[0]))), th2 = f32(Math.atan2(f32(u1[1] - c[1]), f32(u1[0] - c[0])));
+      let arc = f32(th2 - th1);
+      const PI = f32(Math.PI);
+      if (arc < 0 && sweep) arc = f32(arc + f32(PI * 2)); else if (arc > 0 && !sweep) arc = f32(arc - f32(PI * 2));
+      if (Math.abs(arc) < f32(PI / 1e6)) return false;
+      M = cat(rotM(angle), [rx, 0, 0, 0, ry, 0]);
+      const segs = Math.ceil(Math.abs(f32(arc / f32(f32(2 * PI) / 3)))), width = f32(arc / segs);
+      const t = f32(Math.tan(f32(0.5 * width))); if (!isFinite(t)) return true;
+      const w = f32(Math.sqrt(f32(0.5 + f32(f32(Math.cos(width)) * 0.5))));
+      const whole = (v) => v === Math.floor(v);
+      const ints = Math.abs(f32(f32(PI / 2) - Math.abs(width))) <= 1 / 4096 && whole(rx) && whole(ry) && whole(to[0]) && whole(to[1]);
+      let from = cur, th = th1, b = state.b;
+      for (let i = 0; i < segs; i++) {
+        const e = f32(th + width), se = snap(f32(Math.sin(e))), ce = snap(f32(Math.cos(e)));
+        const q1 = [f32(ce + c[0]), f32(se + c[1])], q0 = [f32(q1[0] + f32(t * se)), f32(q1[1] - f32(t * ce))];
+        let m0 = map(M, q0), m1 = map(M, q1);
+        if (ints) { m0 = m0.map(Math.round); m1 = m1.map(Math.round); }
+        if (i === segs - 1) m1 = to.slice(); /* setLastPt: the arc ends exactly where it was asked to */
+        b = conicInto(b, from, m0, m1, w);
+        from = m1; th = e;
+      }
+      state.b = b;
+      return true;
+    }
+    /* a conic's end and extrema, in single precision as Skia's conic_find_extrema, SkFindUnitQuadRoots and
+       SkConic::evalAt compute them, so the box is getBBox()'s to the last bit */
+    function unitDivide(nu, de, out) {
+      if (nu < 0) { nu = -nu; de = -de; }
+      if (de === 0 || nu === 0 || nu >= de) return;
+      const r = f32(nu / de); if (r > 0 && r === r) out.push(r);
+    }
+    function unitRoots(A, B, C) {
+      const out = [];
+      if (A === 0) { unitDivide(-C, B, out); return out; }
+      const dr = B * B - 4 * A * C; if (dr < 0) return out;
+      const R = f32(Math.sqrt(dr)); if (!isFinite(R)) return out;
+      const Q = B < 0 ? f32(-f32(B - R) / 2) : f32(-f32(B + R) / 2);
+      unitDivide(Q, A, out); unitDivide(C, Q, out);
+      if (out.length === 2) { if (out[0] > out[1]) out.reverse(); else if (out[0] === out[1]) out.pop(); }
+      return out;
+    }
+    function conicInto(b, p0, p1, p2, w) {
+      const pts = [p2], ts = [];
+      for (let k = 0; k < 2; k++) {
+        const P20 = f32(p2[k] - p0[k]), P10 = f32(p1[k] - p0[k]);
+        ts.push(...unitRoots(f32(f32(w * P20) - P20), f32(P20 - f32(f32(2 * w) * P10)), f32(w * P10)));
+      }
+      for (const t of ts) {
+        const ev = (k) => {
+          const pw = f32(p1[k] * w), A = f32(f32(p2[k] - f32(2 * pw)) + p0[k]), B = f32(2 * f32(pw - p0[k])), C = p0[k];
+          const dB = f32(2 * f32(w - 1)), dA = f32(0 - dB);
+          return f32(f32(f32(f32(A * t) + B) * t) + C) / f32(f32(f32(f32(dA * t) + dB) * t) + 1);
+        };
+        pts.push([f32(ev(0)), f32(ev(1))]);
+      }
+      return pts.reduce((acc, p) => unite(acc, [p[0], p[1], p[0], p[1]]), b);
+    }
+    function pathBox(d) {
+      const tok = String(d).match(/[MmLlHhVvCcSsQqTtAaZz]|[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/g);
+      if (!tok || !tok.length) return null;
+      if (String(d).replace(/[MmLlHhVvCcSsQqTtAaZz]|[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?|[\s,]/g, '').length) no();
+      const st = { b: null };
+      let i = 0, cmd = null, cur = [0, 0], start = [0, 0], lastC = null, lastQ = null, any = false;
+      const pt = (p) => { st.b = unite(st.b, [p[0], p[1], p[0], p[1]]); };
+      const isNum = (k) => k < tok.length && !/^[A-Za-z]$/.test(tok[k]);
+      const n = () => { if (!isNum(i)) no(); return f32(+tok[i++]); };
+      /* an arc's flags may be packed with the next number ("a5 5 0 016 0"); this tokenizer reads "016" as one number */
+      const flag = () => { if (!isNum(i)) no(); const v = tok[i]; if (v === '0' || v === '1') { i++; return +v; } no(); };
+      while (i < tok.length) {
+        if (/^[A-Za-z]$/.test(tok[i])) cmd = tok[i++];
+        else if (!cmd) no();
+        const rel = cmd === cmd.toLowerCase(), C = cmd.toUpperCase(), o = rel ? cur : [0, 0];
+        if (C === 'Z') { cur = start.slice(); lastC = lastQ = null; if (isNum(i)) no(); cmd = null; continue; }
+        if (C === 'M') { cur = [f32(o[0] + n()), f32(o[1] + n())]; start = cur.slice(); pt(cur); any = true; cmd = rel ? 'l' : 'L'; lastC = lastQ = null; continue; }
+        if (C === 'L') { cur = [f32(o[0] + n()), f32(o[1] + n())]; pt(cur); }
+        else if (C === 'H') { cur = [f32(o[0] + n()), cur[1]]; pt(cur); }
+        else if (C === 'V') { cur = [cur[0], f32((rel ? cur[1] : 0) + n())]; pt(cur); }
+        else if (C === 'C' || C === 'S') {
+          const p1 = C === 'C' ? [f32(o[0] + n()), f32(o[1] + n())] : lastC ? [f32(2 * cur[0] - lastC[0]), f32(2 * cur[1] - lastC[1])] : cur.slice();
+          const p2 = [f32(o[0] + n()), f32(o[1] + n())], p3 = [f32(o[0] + n()), f32(o[1] + n())];
+          st.b = cubicInto(st.b, cur, p1, p2, p3); lastC = p2; lastQ = null; cur = p3; any = true; continue;
+        } else if (C === 'Q' || C === 'T') {
+          const p1 = C === 'Q' ? [f32(o[0] + n()), f32(o[1] + n())] : lastQ ? [f32(2 * cur[0] - lastQ[0]), f32(2 * cur[1] - lastQ[1])] : cur.slice();
+          const p2 = [f32(o[0] + n()), f32(o[1] + n())];
+          st.b = quadInto(st.b, cur, p1, p2); lastQ = p1; lastC = null; cur = p2; any = true; continue;
+        } else if (C === 'A') {
+          const rx = n(), ry = n(), ang = n(), la = flag(), sw = flag(), to = [f32(o[0] + n()), f32(o[1] + n())];
+          if (!arcInto(st, cur, rx, ry, ang, la, sw, to)) pt(to);
+          cur = to;
+        } else no();
+        lastC = lastQ = null; any = true;
+      }
+      return any ? st.b : null;
+    }
+    return function outline(markup) {
+      try {
+        const n = parse(String(markup || ''));
+        if (!n) return null;
+        if (skipped(n)) return null;
+        const b = boxOf(n);
+        if (!b) return null;
+        const x = f32(b[0]), y = f32(b[1]), w = f32(f32(b[2]) - x), h = f32(f32(b[3]) - y);
+        return [x, y, x + w, y + h];
+      } catch (e) { if (e instanceof Unsupported) return undefined; throw e; }
+    };
+  })();
   /* the scene point on one side of a placed item: top, bottom, left, right, center, topLeft, topRight, bottomLeft,
      bottomRight; d nudges it (scene units) */
   A.attach = function attach(ctx, item, side, d) {
