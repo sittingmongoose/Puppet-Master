@@ -472,7 +472,8 @@
 
   /* ---------- reboot moment ---------------------------------------------------------------------------------------------- */
   /* The plate leaves as six horizontal slats (hero-spec §1 rule 3, the page-wide path). Even bands slide left and odd
-     bands slide right, translateX ±101%, steps(4), 30 ms stagger from the middle pair outward. Each slat clips one
+     bands slide right, translateX ±101%, steps(4) over 180 ms, 30 ms stagger from the middle pair outward (2-3, 1-4, 0-5),
+     matching PMConcept7's settings reboot. Each slat clips one
      band of the plate so the log stays aligned, and the slats ignore the pointer. Opacity never reverses: a
      window-sized plate must not flash. Reduced motion, the Still preset (the reboot part is off) and a hidden tab
      still take the instant path in reboot(). */
@@ -490,7 +491,7 @@
       var slat = document.createElement('div');
       slat.className = 'o55np-slat';
       slat.style.top = y0 + 'px';
-      slat.style.height = (y1 - y0) + 'px';
+      slat.style.height = (y1 - y0 + (i < 5 ? 1 : 0)) + 'px';   /* 1px overlap so no seam shows between bands */
       var slice = band.cloneNode(true);
       slice.style.transform = 'none';
       slice.style.top = (-y0) + 'px';
@@ -504,12 +505,16 @@
       y0 = y1;
     }
     band.remove();
-    slats.forEach(function (s) { cover.appendChild(s); });
+    /* the slats live in one .o55np-slats layer, PMConcept7's class names (#o55np-reboot > .o55np-slats > .o55np-slat) */
+    var layer = document.createElement('div');
+    layer.className = 'o55np-slats';
+    slats.forEach(function (s) { layer.appendChild(s); });
+    cover.appendChild(layer);
     return Promise.all(slats.map(function (slat, i) {
       var dist = Math.abs(i - 2.5) - 0.5;
       var dir = (i % 2) ? '101%' : '-101%';
       return slat.animate([{ transform: 'translateX(0%)' }, { transform: 'translateX(' + dir + ')' }],
-        { duration: 240, delay: dist * 30, easing: 'steps(4, end)', fill: 'forwards' }).finished;
+        { duration: 180, delay: dist * 30, easing: 'steps(4, end)', fill: 'forwards' }).finished;
     }));
   }
   var REBOOT_COPY = {
