@@ -139,7 +139,8 @@
      and the ticks as nierOn, the choir as wake): one designed sound each, and a caller that also plays nierOn or
      nierOff for the same toggle merges into it instead of a second hum (O55.sound keeps one of two equal events in the
      same moment). wake takes the look painted when it plays: NieR's choir after turning on, the family's own reveal
-     after turning off. */
+     after turning off. Without O55 there is no family's reveal, so the synth's choir sounds only while NieR is painted
+     (never after turning it off). */
   const O55_EVENT = { sweepOn: 'nierOn', sweepOff: 'nierOff', wake: 'wake' };
   const O55_KIT = { sweepOn: 'nier', sweepOff: 'nier' };
   /* force: the reboot plays while NieR Mode is still off (turning on), so it asks for the installed part instead */
@@ -153,6 +154,7 @@
     const O = o55Sound();
     let ok = false;
     if (O && O55_EVENT[name] && typeof O.play === 'function') ok = O.play(O55_EVENT[name], O55_KIT[name] ? { kit: O55_KIT[name] } : {});
+    else if (name === 'wake' && !(NIER() && NIER().on())) return false;
     else if (O) ok = O.synth((c, out, t) => SFX[name](c, busFor(c, out), t), { force: !!force, name: 'nier:' + name, priority: SFX_PRIO[name] });
     else {
       const c = audio(); if (!c) return false;
