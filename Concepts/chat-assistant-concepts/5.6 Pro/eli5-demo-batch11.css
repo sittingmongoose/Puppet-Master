@@ -1,12 +1,11 @@
 /* PREFS (DESIGN-SPEC 8.13 G-26, 4.3 G-25): the example answer reads like any reply (its code block takes the
    transcript's own message-body look); the guide is pmxGuide and the evidence page pmxView, both styled by the
-   foundation. Only the answer's "See your code (unchanged)" link and two quiet evidence lines live here. */
+   foundation. Only the answer's "See your code (unchanged)" link and one quiet evidence line live here. */
 .eli5-answer{min-width:0;}
 .eli5-answer .eli5-answer-see{display:inline-flex;align-items:center;gap:6px;min-height:32px;margin:6px 0 0 -10px;padding:0 10px;color:var(--muted);font:600 12px/16px var(--font-ui);}
 .eli5-answer .eli5-answer-see:hover{color:var(--text);}
 .eli5-answer .eli5-answer-see > svg{flex:none;}
 .eli5-evidence .pmx-view-status .eli5-evidence-rec{display:block;margin-top:6px;font:var(--pmx-fs-fine);color:var(--subtle);}
-.eli5-evidence .eli5-evidence-tech{margin-top:24px;}
 /* Narrow chats (card widths 391/311): the foundation guide keeps its two nowrap actions in a right column, which
    squeezed the step to a 69-149 px column. The guide is its own inline-size container; below 520 px its actions
    move under the step (the empty auto track collapses to 0) and the close stays at the top right.

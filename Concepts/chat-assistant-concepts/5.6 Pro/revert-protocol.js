@@ -215,7 +215,6 @@
  /* ------------------------------------------------------------ the confirm sheet (8.12) */
  const TITLE='Revert the assistant’s last changes?',LEAD='Your chat stays as it is. Only these files change: all of them together, or none.';
  const STATE_WORD={ready:'Ready to revert',held:'Not changed',back:'Nothing to do'};
- const TECH='<span class="pmx-revert-techline">Technical details: <code>cmd.chat.revert</code></span>';
  /* Cancel is where focus starts: the safe default of a destructive confirm (6.7) */
  const AF=' data-pmx-autofocus';
  /* dflt: on a list of three files or fewer the first row's mini diff starts open, so the reader sees exactly what goes
@@ -304,8 +303,9 @@
   const help=face==='blocked'?'To revert, put '+esc(whoChanged(changed))+' back the way the assistant left it, or leave your files as they are.':'';
   const body='<div class="pmx-revert-body" data-face="'+face+'">'+
    S.pmxQuestion({key:'rv-q',title:'What goes back',meta:esc(files)+(n>1?' · all or none':''),helper:help})+fileList(r,rows,st,p.token,!guide)+
-   /* the promise, and the one Technical details line naming the primary's command (8.15, IMPACT A1-53) */
-   (face==='ready'||face==='done'?S.pmxPromises(S.pmxPromise({key:'rv-check',glyph:'clock',text:face==='done'?'Checked once more right before reverting.':'We’ll check once more right before reverting.',extra:TECH})):'<p class="pmx-fine pmx-revert-tech">'+TECH+'</p>')+'</div>';
+   /* the promise (card 8: no Technical details outside a setup sheet's Advanced page, so faces without a
+      promise show nothing under the file list) */
+   (face==='ready'||face==='done'?S.pmxPromises(S.pmxPromise({key:'rv-check',glyph:'clock',text:face==='done'?'Checked once more right before reverting.':'We’ll check once more right before reverting.'})):'')+'</div>';
   return S.pmxSheet({type:'revert-confirm',kind:'revert',size:'compact',height:520,cls:'revert-confirm',closeAction:'revert-cancel',closeAttrs:tok,title:TITLE,lead:LEAD,ariaLabel:'Revert Last Agent Edit',
    attrs:'data-turn-id="'+esc(r.id)+'"',guide,body,foot});
  }
@@ -409,11 +409,9 @@
   const entries=[{key:'rvt:'+id+':turn',mid:id+':turn',markHtml:S.pmxGlyph('file-edit',16,'pmx-revert-tlg'),who:'The assistant',when:esc(clock(r.createdAt)),bodyHtml:'It '+esc(didWords(r))+'.'}]
    .concat(r.attempts.map(y=>({key:'rvt:'+y.id,mid:y.id,markHtml:S.pmxStatus(OUT_STATUS[y.outcome]||'attention',16,'pmx-revert-tlg'),who:'Revert',when:esc(clock(y.at)),bodyHtml:esc(outcomeSentence(r,y))})))
    .concat(later.length?[{key:'rvt:'+id+':later',mid:id+':later',markHtml:S.pmxGlyph('edit',16,'pmx-revert-tlg'),who:'Your files',when:'',bodyHtml:esc(whoChanged(later))+' changed after the assistant’s edit.'}]:[]);
-  const techKey=id+':tech',techOpen=disclosures.has(techKey)?disclosures.get(techKey):false;
   const main=(window.PM56_REVERT_DEMOS?.guide(c,true)||'')+
    S.pmxViewSection({key:'rv-happened',title:'What happened',body:S.pmxTimeline({key:'rv-tl:'+id,entries})})+
    S.pmxViewSection({key:'rv-files-doc',title:'Files',meta:esc(plural(t.n,'file'))+' · '+counts(t.add,t.del),body:r.manifest.map(f=>docFile(r,f,v)).join('')})+
-   '<details class="pmx-revert-more" data-revert-disclosure="'+esc(techKey)+'"'+(techOpen?' open':'')+'><summary class="pmx-revert-more-sum">'+S.pmxGlyph('chevron-right',12)+'<span>Technical details</span></summary><p class="pmx-fine">Revert Last Agent Edit runs <code>cmd.chat.revert</code> on this change. It checks every file again right before it changes anything, and puts back all of them or none. Turn <code>'+esc(id)+'</code> · '+plural(r.attempts.length,'attempt')+(w?' · workspace revision '+w.revision:'')+'.</p></details>'+
    (r.provenance==='recorded'?'<p class="pmx-fine pmx-revert-prov">'+esc(PROV())+'</p>':'');
   return S.pmxView({key:'revert:'+id,cls:'revert-document',kind:'revert',kindWord:'Revert Last Agent Edit',title:esc(title),statusHtml:status,actionsHtml:acts,mainHtml:main,attrs:'data-turn-id="'+esc(id)+'"'});
  }

@@ -23,15 +23,9 @@ body[data-theme^="retro"] .pmx-revert-files{--pmx-revert-row-h:52px;}
    settles (a face change, a mini diff) enter at once */
 .pmx-sheet .pmx-revert-body > .pmx-q{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) var(--pmx-t-at-q) backwards;}
 .pmx-sheet .pmx-revert-file{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-q) + (var(--i, 0) + 1) * var(--pmx-t-cascade)) backwards;}
-/* the promise (or the Technical details line) comes after the rows it speaks about */
-.pmx-sheet .pmx-revert-tech{animation:pmx-row-in var(--pmx-t-row) var(--pmx-ease-out) calc(var(--pmx-t-at-q) + 4 * var(--pmx-t-cascade)) backwards;}
+/* the promise comes after the rows it speaks about */
 .pmx-sheet .pmx-revert-body .pmx-promise{animation-delay:calc(var(--pmx-t-at-q) + 4 * var(--pmx-t-cascade));}
-#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-revert-body > .pmx-q, .pmx-revert-file, .pmx-revert-tech){animation-delay:0ms;}
-/* the one Technical details line: beside the promise, or on its own when a face has no promise */
-.pmx-revert-techline{flex:none;margin-left:auto;padding-left:16px;font:var(--pmx-fs-fine);color:var(--subtle);white-space:nowrap;}
-.pmx-revert-tech{flex:none;display:flex;margin:12px 0 0;}
-.pmx-revert-tech > .pmx-revert-techline{padding-left:0;}
-.pmx-revert-tech code, .pmx-revert-more code{font-size:11px;}
+#pmOverlayRoot.pmx-sheet-settled .pmx-sheet :is(.pmx-revert-body > .pmx-q, .pmx-revert-file){animation-delay:0ms;}
 
 /* ---- one file: a details row whose summary is the row; "Show the change" opens a three-line mini diff under it */
 .pmx-revert-file{position:relative;display:block;margin:0;padding:0 12px;border-radius:10px;min-width:0;}
@@ -193,14 +187,6 @@ svg.pmx-revert-tlg{color:var(--muted);}
    wash widening the view */
 .pmx-revert-dhead > .pmx-revert-state{padding-right:8px;}
 .pmx-revert-dfile[data-focus="1"]::before{content:"";position:absolute;inset:-8px -4px -8px -12px;border-radius:10px;background:var(--pmx-wash);opacity:0;pointer-events:none;animation:pmx-revert-pass calc(var(--pmx-t-ink-in) + var(--pmx-t-wash)) var(--pmx-ease-linear) 1;}
-.pmx-revert-more{margin-top:28px;}
-.pmx-revert-more-sum{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 10px;margin-left:-10px;list-style:none;cursor:pointer;font:var(--pmx-fs-meta);color:var(--muted);}
-.pmx-revert-more-sum::-webkit-details-marker{display:none;}
-.pmx-revert-more-sum::marker{content:"";}
-.pmx-revert-more-sum > svg{transition:transform var(--pmx-t-row) var(--pmx-ease-move);}
-.pmx-revert-more[open] > .pmx-revert-more-sum > svg{transform:rotate(90deg);}
-.pmx-revert-more-sum:hover{color:var(--text);}
-.pmx-revert-more > .pmx-fine{margin:6px 0 0;max-width:78ch;}
 .pmx-revert-prov{margin:12px 0 0;}
 
 /* the focus targets this module names (the files row after a revert, the document's switch at a file) ring in the

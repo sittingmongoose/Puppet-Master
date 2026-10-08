@@ -472,13 +472,6 @@
     (r.provenance==='recorded'?'<p class="pmx-teach-prov">'+S.pmxGlyph('play-ring',13)+'<span>'+e(S.PMX_COPY.cost.recorded)+'</span></p>':'')+
     '<div class="pmx-teach-racts">'+acts+'</div>'+help+notice+confirm+source+details+'</div></section>';
  }
- function techHtml(c,records){const e=c.esc;
-  return '<p class="pmx-teach-tech">Save rule, Save and replace and Save as version 2 run cmd.chat.teach.confirm. Here that action is af-teach-capture: canon calls opening Teach “capture” (Teach…, /teach, “remember that…”, Save as a rule…, Teach a rule, Edit: cmd.chat.teach.capture, mode correct for an edit).</p>'+
-   '<p class="pmx-teach-tech">Cancel, ×, Escape and the scrim: cmd.chat.teach.cancel · View on a receipt: cmd.chat.teach.open_memory · See what your next message will include: cmd.chat.memory.preview_capsule · Lock / Unlock and Turn off: new command requests cmd.chat.teach.set_lock and cmd.chat.teach.revoke · Export: new command request cmd.chat.memory.export {scope} (N-7, owner answer E-32; a local file in this concept).</p>'+
-   '<p class="pmx-teach-tech">/teach and “remember that…” open this sheet prefilled wherever you type them; there is no capture card in the chat (owner answer E-12). Followed / Missed on a reply: each rule’s check (its testable statement) is compared with the finished reply, here by plain word cues with no AI (owner answer E-36); a rule with no check gets no tick. Ask for a fix only fills the message box.</p>'+
-   '<p class="pmx-teach-tech">Kept in this session only. The safety check is a local password-and-key pattern check; saving a rule asks no AI anything.</p>'+
-   (records.length?'<p class="pmx-teach-tech">Rules: '+records.slice().reverse().map(r=>e(r.id)+' (version '+(r.version||1)+(r.provenance==='recorded'?', recorded':'')+')').join(' · ')+'</p>':'');
- }
  function history(c,tid){
   const e=c.esc,ctx=context(tid),td=' data-thread="'+e(tid)+'"';
   if(!ctx)return S.pmxView({key:'teach-doc:'+tid,cls:'teach-document pmx-teach-doc',kind:'teach',kindWord:'Teach',title:'Your rules',statusHtml:'The chat these rules belong to no longer exists.'});
@@ -491,8 +484,8 @@
   const bar=chosen?'<p class="pmx-teach-docbar"><span>Showing “'+e(short(chosen.text,60))+'” and its versions.</span><button type="button" class="text-button" data-action="teach-open"'+td+'>Show every rule</button></p>':'';
   const guide=window.PM56_TEACH_DEMOS?.editorGuide(tid)||'';
   const rows=chain.length?chain.slice().reverse().map((r,i)=>rowHtml(c,r,tid,v,up,ctx,i)).join(''):'<p class="pmx-teach-none">No rules yet. Teach a rule, or type /teach in the chat.</p>';
-  const foot='<p class="pmx-teach-persona-line"><span data-hover-key="teach-persona-doc" data-hover-tip="Teach isn’t the Teacher Persona\nThe Teacher Persona is a way a helper works: it explains as it goes. Teach saves a rule you wrote.">Teach isn’t the Teacher Persona.</span> Saving a rule asks no AI anything.</p>'+
-   tdisc(e,'tech:'+tid,'Technical details',techHtml(c,records));
+  /* card 8: no Technical details outside a setup sheet's Advanced page — the persona line stands on its own */
+  const foot='<p class="pmx-teach-persona-line"><span data-hover-key="teach-persona-doc" data-hover-tip="Teach isn’t the Teacher Persona\nThe Teacher Persona is a way a helper works: it explains as it goes. Teach saves a rule you wrote.">Teach isn’t the Teacher Persona.</span> Saving a rule asks no AI anything.</p>';
   return S.pmxView({key:'teach-doc:'+tid,cls:'teach-document pmx-teach-doc',kind:'teach',kindWord:'Teach',title:'Your rules',statusHtml:status,actionsHtml:acts,tabsHtml:bar,
    mainHtml:guide+(v.preview?nextHtml(c,up,ctx):'')+'<div class="pmx-teach-rows" data-k="teach-rows">'+rows+'</div>'+foot});
  }

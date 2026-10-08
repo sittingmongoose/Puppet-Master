@@ -62,14 +62,13 @@
    '<div class="message-chrome'+(opened?' is-overflow-open':'')+'">'+c.extRender('messageMeta',{message:m})+'<div class="message-actions"><button class="text-button icon-only" data-action="copy-message" data-id="'+c.esc(m.id)+'" aria-label="Copy reply">'+c.icon('copy',13)+'<span>Copy</span></button>'+more+'</div>'+panel+'</div></article>';});
  E.slot('messageMeta',c=>{const m=c.message;if(!m||!(m.type==='eli5-example-answer'||m.eli5ExplainsId)||!m.recordedExample)return '';return S().pmxTick({key:'eli5-rec:'+m.id,cls:'eli5-answer-rec',glyph:'play-ring',text:'Recorded example · no AI cost'});});
  function textButton(c,action,attr,value,label){return '<button type="button" class="text-button" data-action="'+action+'"'+(attr?' '+attr+'="'+c.esc(value)+'"':'')+'>'+label+'</button>';}
- function evidence(c){const t=c.thread,f=t.eli5Example;if(!f)return '';const plan=window.PM56_PLANS.get(f.planId),a=c.D.artifacts.find(x=>x.id===f.artifactId);if(!a)return '';
+ function evidence(c){const t=c.thread,f=t.eli5Example;if(!f)return '';const a=c.D.artifacts.find(x=>x.id===f.artifactId);if(!a)return '';
   const table=S().pmxMd('| Input | What it gives |\n|---|---|\n| `0` | `0` |\n| `null` | `3` |\n| `undefined` | `3` |',{mode:'full'});
   return S().pmxView({key:'eli5-evidence:'+t.id,cls:'eli5-evidence',kind:'eli5',kindWord:'ELI5 · '+c.esc(chatName(c,t.id)),title:'Your code, unchanged',
    statusHtml:'The same code and plan, whichever way answers are explained. <span class="eli5-evidence-rec">Recorded example · no AI cost</span>',
    actionsHtml:textButton(c,'open-artifact','data-id',f.artifactId,'Open the code file')+textButton(c,'eli5-demo-plan','data-id',f.planId,'Open the plan')+(active&&active.threads.includes(t.id)?textButton(c,'eli5-demo-replay','','','Start over'):''),
    mainHtml:S().pmxViewSection({key:'eli5-ev-code',title:'The code',meta:c.esc(a.name||'retry-limit.js'),body:'<pre class="pmx-code"><code>'+c.esc(a.content)+'</code></pre>'})+
-    S().pmxViewSection({key:'eli5-ev-results',title:'Observed results',meta:'What this code gives for each input',body:table})+
-    '<p class="pmx-fine eli5-evidence-tech">Technical details · artifact '+c.esc(f.artifactId)+' · plan '+c.esc(f.planId)+', version '+c.esc(plan?plan.version:1)+'</p>'});}
+    S().pmxViewSection({key:'eli5-ev-results',title:'Observed results',meta:'What this code gives for each input',body:table})});}
  /* An evidence tab of the other chat: it says whose page it is and offers the way back, never a dead end. */
  function away(c,tid){const name=chatName(c,tid),known=!!(active&&active.threads.includes(tid));
   return S().pmxView({key:'eli5-evidence-away',cls:'eli5-evidence',kind:'eli5',kindWord:'ELI5 · '+c.esc(name),title:'Your code, unchanged',

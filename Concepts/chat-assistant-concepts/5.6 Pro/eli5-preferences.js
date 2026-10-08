@@ -65,10 +65,7 @@
    {value:'off',label:'Off',description:'Chats in this project use the usual technical wording.'}]
  };
  const MENU_TITLE={application:'All chats',project:'Project default'};
- /* A1-53: the one Technical details line (fine print; the full sentence is its hover text) */
- const TECH='Technical details · cmd.chat.eli5.set (on, off, inherit) · All chats: general.interaction.eli5-default';
- const TECH_TIP='Standard, Simple and Follow my usual setting send cmd.chat.eli5.set with on, off or inherit (inherit removes this chat’s own choice). All chats is a Settings change to general.interaction.eli5-default. Project default has no Settings key yet in this concept. The wand row and Done send no command. Explain this reply simply, in a reply’s More menu, sends cmd.chat.eli5.explain_reply: it adds one simpler reply under that reply and changes no setting.';
-
+ /* Card 8: no Technical details outside a setup sheet's Advanced page — the sheet names no command ids. */
  /* ------------------------------------------------------------------ wand row (the assist group) */
  function kindMark(c,size){const S=window.PM56_SHELL;return S&&S.pmxKindMark?S.pmxKindMark('eli5',size):c.icon('chat',size);}
  function wand(c){
@@ -128,8 +125,7 @@
   const how='<details class="pmx-eli5-how eli5-defaults" data-k="eli5-defaults"'+(d.defaultsOpen!==false?' open':'')+'>'+
    '<summary class="pmx-eli5-how-sum"><span>How it’s decided</span>'+S.pmxGlyph('chevron-right',13)+'</summary>'+
    '<div class="pmx-eli5-trace" data-src="'+r.source+'">'+traceNode(c,S,r,'application',tid,p)+traceNode(c,S,r,'project',tid,p)+traceNode(c,S,r,'conversation',tid,p)+'</div>'+
-   '<p class="pmx-fine pmx-eli5-fine">All chats is the Explain Terms Everywhere setting.</p>'+
-   '<p class="pmx-fine pmx-eli5-fine pmx-eli5-tech" data-hover-key="eli5-tech" data-hover-tip="'+c.esc(TECH_TIP)+'">'+c.esc(TECH).replace(' · All chats:','<span class="pmx-eli5-tech-more"> · All chats:')+'</span></p></details>';
+   '<p class="pmx-fine pmx-eli5-fine">All chats is the Explain Terms Everywhere setting.</p></details>';
   return '<div class="pmx-eli5" data-k="eli5-body">'+plate+'<div class="pmx-eli5-under">'+follow+how+'</div></div>';
  }
  function streamingNow(c){return !!(c.thread&&c.thread.messages.some(m=>m.streaming));}

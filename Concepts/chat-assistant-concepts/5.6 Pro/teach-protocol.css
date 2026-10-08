@@ -225,8 +225,6 @@ body[data-theme^="retro"] .pmx-teach-rtext{font-size:14px;line-height:20.5px;}
 .pmx-teach-next li > span{min-width:0;overflow-wrap:anywhere;}
 .pmx-teach-next li small{grid-column:2;margin-top:2px;font:var(--pmx-fs-fine);color:var(--muted);}
 .pmx-teach-persona-line{margin:18px 0 0;font:var(--pmx-fs-fine);color:var(--muted);}
-.pmx-teach-tech{margin:0;font:var(--pmx-fs-fine);color:var(--muted);overflow-wrap:anywhere;}
-.pmx-teach-tech + .pmx-teach-tech{margin-top:6px;}
 
 /* keyboard focus (FOUNDATION REQUEST in MEMTEACH notes): the app's global button:focus-visible ring is a runtime
    color-mix (IMPACT A1-15 forbids it on pmx surfaces); inside Teach's own surfaces it takes the precomputed token */

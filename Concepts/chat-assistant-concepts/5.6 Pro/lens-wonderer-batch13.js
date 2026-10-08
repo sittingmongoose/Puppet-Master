@@ -8,7 +8,7 @@
   const D=window.PM56_DATA, L=window.PM56_LENS, BD=window.PM56_BRAINSTORM_DEMOS;
   const copy=x=>JSON.parse(JSON.stringify(x));
   const protocol=new window.PM56_WONDERER_ENGINE.Protocol(id=>D.artifacts.find(a=>a.id===id));
-  const sessions=new Map(), clocks=new Map(), reasons=new Map(), disclosures=new Set();let serial=0;
+  const sessions=new Map(), clocks=new Map(), reasons=new Map();let serial=0;
   const flows={
     shape:{title:'Shape, summarize, and restore',detail:'Mute → Focus → source preview → restore unchanged history',kind:'lens'},
     stale:{title:'A preview is not a promise',detail:'Change a source → reject stale Apply → review the new version',kind:'lens'},
@@ -140,7 +140,7 @@
     return payload;
   }
   /* ---- presentation (G-26 · the Wonderer workspace, STORM-B): a pmxView with the Wonderer mark; one row per idea;
-     "Bring the work together"; the run's Pause/Resume inside .b13-workspace; Technical details last. ---- */
+     "Bring the work together"; the run's Pause/Resume inside .b13-workspace (card 8: no Technical details). ---- */
   const S=window.PM56_SHELL;
   const STATE_WORD={hypothesis:'Hypothesis',research_pending:'Checking',researched:'Checked',unsubstantiated:'Not supported',user_decided:'Your choice',stale:'Out of date',dropped:'Set aside'};
   const PHASE_WORD={intake:'understanding the ask',blind_proposals:'drafting alone',normalize:'lining up the options',debate:'debating',evidence:'checking the facts',vote:'voting',synthesis:'ready to write the plan',completed:'plan written'};
@@ -202,15 +202,10 @@
       body:'<p class="b13-say">'+(g.ok?'Every idea has a decision.':'Decide on '+plural(g.unresolved.length,'idea')+' first.')+' The core votes and the disagreement stay as they are.</p>'+
         '<p class="b13-say">Core round: '+esc(PHASE_WORD[b.phase]||b.phase)+' · '+plural(b.dissent.length,'disagreement')+' kept.</p>'+
         '<div class="b13-acts">'+btn(c,'collab-brainstorm-synthesize',done?'Open Plan':'Write the plan',attrs,!done&&!!why,true)+'</div>'+(why?'<p class="pmx-reason b13-why">'+esc(why)+'</p>':'')});
-    const tech='<details class="b13-technical" data-b13-disclosure="'+esc(r.id)+'"'+(disclosures.has(r.id)?' open':'')+' data-k="technical:'+esc(r.id)+'"><summary>Technical details</summary>'+
-      '<p class="b13-say">Run '+esc(r.id)+' · '+esc(r.status)+' · stop epoch '+r.stopEpoch+' · definition '+r.definitionRevision+'. Checks refused because their source changed: '+w.rejected.length+'. This history lasts for this session only.</p>'+
-      '<p class="b13-say">Wonderer is a built-in Persona with a methodology Skill. It never votes (its ballot is “abstain”). Checks run on local samples only: no AI provider, no cost.</p>'+
-      '<div class="b13-acts">'+btn(c,'b13-source-change','Change the ordering sample',attrs,!running)+'</div><p class="b13-say">Changes the shared file’s version. A check still running is refused, and an idea already in the plan goes out of date.</p>'+
-      '<pre class="b13-pre">'+esc(JSON.stringify({defaultSpecialistVote:w.defaultVote,coreVotes:b.votes,dissent:b.dissent,rejected:w.rejected},null,2))+'</pre></details>';
     const aside='<ul class="b13-aside"><li><b>'+plural(core.length,'core helper')+'</b> and one Wonderer</li><li><b>'+g.additions.length+'</b> in the plan · <b>'+g.unresolved.length+'</b> to decide</li><li>Wonderer never votes, so the core ballot is unchanged.</li>'+
       (cp.errors.length?'<li class="pmx-reason">The core round stopped. Replay the example to try again.</li>':'')+'</ul>';
     return S.pmxView({key:'b13-view:'+r.id,cls:'b13-workspace',attrs:'data-wonderer-run="'+esc(r.id)+'"',kind:'wonderer',markHtml:wmark(20),kindWord:'Wonderer · BrainStorm',title:'Wonderer’s ideas',
-      statusHtml:status,actionsHtml:acts,mainHtml:'<div class="b13-leads">'+w.leads.map(l=>leadCard(c,r,l)).join('')+'</div>'+conv+tech,asideHtml:aside});
+      statusHtml:status,actionsHtml:acts,mainHtml:'<div class="b13-leads">'+w.leads.map(l=>leadCard(c,r,l)).join('')+'</div>'+conv,asideHtml:aside});
   }
   function plural(n,one){return n+' '+one+(n===1?'':'s');}
   function lensCard(c){
@@ -275,9 +270,8 @@
   E.action('b13-source-change',(c,b)=>{const r=run(b.dataset.run);if(!r||r.status!=='running')return true;const a=D.artifacts.find(a=>a.id===r.wonderer.artifactIds[0]);if(a){const x=JSON.parse(a.content);x.latestRequest++;x.arrivals.unshift({requestId:x.latestRequest,value:'new result'});a.version++;a.content=JSON.stringify(x,null,2);protocol.refresh(r);refresh();}return true;});
   E.action('b13-effective',c=>{c.openEditor('lens-effective:'+c.thread.id);return true;});
   E.action('b13-change-message',c=>{const s=session(),m=c.thread.messages.find(m=>m.id===s?.sourceId);if(m){m.body+=' Revision '+(++m.revision)+': preserve rank even when matching is case-insensitive.';L.engine.refresh(c.thread.id);refresh();}return true;});
-  document.addEventListener('toggle',e=>{const id=e.target?.dataset?.b13Disclosure;if(id){if(e.target.open)disclosures.add(id);else disclosures.delete(id);}},true);
   document.addEventListener('input',e=>{const key=e.target?.dataset?.b13Reason;if(key)reasons.set(key,e.target.value);});
-  E.chainAction('reset-all',()=>{for(const t of clocks.values())clearTimeout(t);clocks.clear();sessions.clear();reasons.clear();disclosures.clear();return false;});
+  E.chainAction('reset-all',()=>{for(const t of clocks.values())clearTimeout(t);clocks.clear();sessions.clear();reasons.clear();return false;});
   const G=window.PM56_REPAIR_DEMOS,previous=G.gallery;
   G.gallery=c=>'<section class="demo-section"><h3>Context Lens and Wonderer</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b13-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+previous(c);
   window.PM56_WONDERER={protocol,admit,convergence:r=>protocol.convergence(r),convergenceState:r=>convergenceState(r),convergenceReason:r=>convergenceReason(r),augmentPlan,sourceResult,research,playCore};
