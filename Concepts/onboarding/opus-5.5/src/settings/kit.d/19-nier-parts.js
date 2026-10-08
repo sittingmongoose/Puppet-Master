@@ -562,8 +562,8 @@
        corners; the brackets let go 60 ms after, then 'gone'.
      - anywhere else (the Settings row, the title-bar menu, the tour's look menu): the same plate over the whole page,
        in the same ground and ink (NieR's ground in the look's own tone: a dark user never sees a parchment sheet, a light
-       user never an ink one), grown from the control pressed (info.from, else the last press on a control, else the
-       middle) to the whole screen in the same 6 steps, with the same check list and the same slat tear-out; unticking,
+       user never an ink one), grown from the control pressed (info.from, else the last press on a control: the same
+       control redrawn if the change redrew it, else the point pressed; else the middle) to the whole screen in the same 6 steps, with the same check list and the same slat tear-out; unticking,
        the slats close in at once (there is no stage to power down), and at R the plate folds back into that control.
        The old flicker-out was a large-area strobe over the WCAG three-flash limit (films KEY-H1-dark-strobe), and the
        old page band an inverted sheet (films M6); no surface here reverses its brightness.
@@ -703,18 +703,33 @@
   function rbBox(cover) { const r = cover.getBoundingClientRect(), w = cover.offsetWidth || r.width || 1, h = cover.offsetHeight || r.height || 1; return { r, w, h, k: r.width / w || 1 }; }
   /* the control a page-wide change was asked from: a press (a pointer, or Enter or Space) on it at most 2 s before. The
      page's cover grows from it and folds back into it, as the window's grows from the NieR thumbnail. Only the target is
-     kept (no rect is read until a cover needs one) */
+     kept (no rect is read until a cover needs one), with its nearest id and the point a pointer pressed: the change
+     can redraw the control before the cover starts (the Settings row redraws its switch on the write; films FR: the
+     page plate grew from the middle of the screen), and then the cover finds the redrawn one by that id, or grows from
+     the point */
   let press = null;
   const PRESSABLE = 'button, a[href], input, select, label, summary, [role="button"], [role="switch"], [role="checkbox"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="menuitem"], [role="option"], [role="tab"]';
   function notePress(e) {
     const t = e.target;
     if (!e.isTrusted || !(t instanceof Element) || t.closest('#o55np-reboot')) return;
     if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
-    press = { el: t.closest(PRESSABLE) || t, at: performance.now() };
+    const el = t.closest(PRESSABLE) || t, host = el.closest('[id]'), role = el.getAttribute('role');
+    press = { el, at: performance.now(), id: host ? host.id : '', sel: host && host !== el ? el.localName + (role ? `[role="${role}"]` : '') : '',
+      pt: e.type === 'pointerdown' ? { left: e.clientX - 12, top: e.clientY - 12, width: 24, height: 24 } : null };
   }
   document.addEventListener('pointerdown', notePress, true);
   document.addEventListener('keydown', notePress, true);
-  const pressed = () => (press && press.el.isConnected && performance.now() - press.at < 2000 ? press.el : null);
+  /* the last press if it came at most 2 s ago; its control as it is now (itself, else the one control of its kind
+     under the same id), else null */
+  const lastPress = () => (press && performance.now() - press.at < 2000 ? press : null);
+  function pressEl(p) {
+    if (!p) return null;
+    if (p.el.isConnected) return p.el;
+    const host = p.id ? document.getElementById(p.id) : null;
+    if (!host || !p.sel) return host;
+    const same = host.querySelectorAll(p.sel);
+    return same.length === 1 ? same[0] : null;
+  }
   const givenFrom = info => { try { return typeof info.from === 'function' ? info.from() : info.from; } catch (e) { return null; } };
   const thumbIn = scope => scope.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-nier-thumb]') || scope.querySelector('[data-nier-thumb]');
   /* the first candidate on screen (an element inside scope, or a client rect), as a rect in the cover's px clipped to
@@ -822,10 +837,12 @@
     const { set, ground, inner, log, deco } = rbSet(lines);
     cover.appendChild(set);
     /* where it grows from and folds back to: on the page the control is kept from the start (with its rect, for a row
-       the repaint redraws in place); in the window it is asked again (the window re-renders) */
-    const startEl = page ? (givenFrom(info) || pressed()) : null;
+       the repaint redraws in place) and found again by its id if it was redrawn, else the point pressed; in the window
+       it is asked again (the window re-renders) */
+    const given = page ? givenFrom(info) : null, pr = page && !given ? lastPress() : null;
+    const startEl = page ? (given || pressEl(pr)) : null;
     const startRect = startEl && startEl.isConnected ? startEl.getBoundingClientRect() : null;
-    const home = box => rbFrom(page ? [startEl, startRect] : [givenFrom(info), thumbIn(scope), document.activeElement], root, box);
+    const home = box => rbFrom(page ? [startEl, pressEl(pr), startRect, pr && pr.pt] : [givenFrom(info), thumbIn(scope), document.activeElement], root, box);
     (page ? document.body : scope).appendChild(cover);
     /* the window's own effects (brackets on the chosen card, the cursor, Pod's strip) sit above the window in its root:
        they hold off while the cover is up (an attribute that restyles only those layers), and so do the page's pointers */
