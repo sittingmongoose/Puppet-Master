@@ -115,20 +115,36 @@
 
   /* ------------------------------------------------------------------ the engine's style under NieR */
   /* where Pod 042 hovers to reach el: 64 px above its middle (at least 47.5 above its top edge), its string lowered
-     onto the top edge; with under 80 px of room above, beside it to the right (else the left), its string run across */
-  const SHAFT = 15, ARM = 17;
+     onto the top edge; with under 80 px of room above, beside it to the right (else the left), its string run across.
+     A hover whose body would sit on the step's callout (the Chat icon's side hover lands on the kicker) moves below
+     the target instead, or to the free side, and the string runs up onto the target's bottom edge. */
+  const SHAFT = 15, ARM = 17, CROWN = 26;
+  const podBox = (p) => ({ left: p.x - 22, top: p.y - 28, right: p.x + 22, bottom: p.y + 28 });
+  const boxHits = (a, b) => !!(a && b && b.right > b.left && b.bottom > b.top && !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom));
   function hoverFor(el, c) {
     if (!el || typeof el.getBoundingClientRect !== 'function') return null;
     const r = el.getBoundingClientRect(); if (!r.width && !r.height) return null;
-    if (r.top >= 80) return { x: c.x, y: Math.max(30, Math.min(c.y - 64, r.top - 47.5)) };
-    const right = Math.max(c.x + 64, r.right + 41);
-    if (right + 26 <= innerWidth) return { x: right, y: c.y };
-    return { x: Math.min(c.x - 64, r.left - 41), y: c.y };
+    const co = calloutEl(), cr = co ? co.getBoundingClientRect() : null;
+    const above = r.top >= 80 ? { x: c.x, y: Math.max(30, Math.min(c.y - 64, r.top - 47.5)) } : null;
+    const rightX = Math.max(c.x + 64, r.right + 41);
+    const right = rightX + 26 <= innerWidth ? { x: rightX, y: c.y } : null;
+    const left = { x: Math.min(c.x - 64, r.left - 41), y: c.y };
+    const below = { x: c.x, y: Math.min(innerHeight - 36, Math.max(c.y + 64, r.bottom + 47.5)) };
+    const clear = (p) => !!(p && p.x >= 26 && p.y >= 30 && p.x <= innerWidth - 26 && p.y <= innerHeight - 36 && !boxHits(podBox(p), cr));
+    if (clear(above)) return above;
+    const side = right || left;
+    if (clear(side)) return side;
+    if (clear(below)) return below;
+    if (right && side !== left && clear(left)) return left;
+    if (above && !boxHits(podBox(above), cr)) return above;
+    if (!boxHits(podBox(below), cr)) return below;
+    return above || side;
   }
-  /* the string from where the Pod hovers to el: its direction and its length */
+  /* the string from where the Pod hovers to el: its direction and its length. Below the target, it runs up from the crown. */
   function stringTo(el, at) {
     const r = el.getBoundingClientRect();
     if (at.y + SHAFT <= r.top + 1) return { dir: 'down', len: r.top - (at.y + SHAFT) };
+    if (at.y - CROWN >= r.bottom - 1) return { dir: 'up', len: (at.y - CROWN) - r.bottom };
     if (at.x - ARM >= r.right - 1) return { dir: 'left', len: (at.x - ARM) - r.right };
     return { dir: 'right', len: r.left - (at.x + ARM) };
   }
@@ -341,7 +357,11 @@
   const frameEl = () => st.root && st.root.querySelector('.o55t-nframe');
   const cornerDir = (c) => [c.classList.contains('o55t-tl') || c.classList.contains('o55t-bl') ? -1 : 1, c.classList.contains('o55t-tl') || c.classList.contains('o55t-tr') ? -1 : 1];
   function frameStop() { if (frameT) { frameT.cancel(); frameT = null; } frameAnims.forEach((a) => { try { a.cancel(); } catch (_) {} }); frameAnims = []; }
-  function frameOff() { frameStop(); if (st.root) st.root.removeAttribute('data-nctl'); }
+  function frameOff() {
+    frameStop();
+    const f = frameEl(); if (f) f.querySelectorAll('.o55t-ntag-l').forEach((t) => { t.style.left = ''; t.style.top = ''; });
+    if (st.root) st.root.removeAttribute('data-nctl');
+  }
   function frameOn() {
     const f = frameEl(); if (!f || !has('brackets')) return;
     frameStop();
@@ -349,7 +369,7 @@
     const L = f.querySelector('.o55t-ntag-l .o55t-ntag-t'), R = f.querySelector('.o55t-ntag-r .o55t-ntag-t');
     L.textContent = T('frame.inControl'); R.textContent = T('frame.stop');
     st.root.setAttribute('data-nctl', 'on');
-    tagCover(st.target);
+    parkTag();
     if (!still() && has('slice')) {
       f.querySelectorAll('.o55t-nfc').forEach((c) => {
         const [sx, sy] = cornerDir(c);
@@ -366,6 +386,7 @@
     const tag = f.querySelector('.o55t-ntag-l');
     tag.querySelector('.o55t-ntag-t').textContent = T('frame.handBack');
     tag.removeAttribute('data-cover');
+    parkTag();
     if (!still()) {
       if (has('slice')) {
         f.querySelectorAll('.o55t-nfc').forEach((c) => {
@@ -378,6 +399,54 @@
     }
     frameT = M.after(still() ? 1200 : 600, () => { frameT = null; frameOff(); });
     return true;
+  }
+  /* "Pod 042 · In control" keeps its top-left place unless that place covers the app's title-bar wordmark. Then it
+     moves to the first spot that misses the wordmark, the project chip, the page tabs, the other tag, the callout
+     and the target. If none does, it stands down rather than sit on the name. */
+  function parkTag() {
+    const f = frameEl(); if (!f) return;
+    const tag = f.querySelector('.o55t-ntag-l');
+    if (tag) { tag.style.left = ''; tag.style.top = ''; }
+    tagCover(st.target);
+    if (!tag || tag.offsetWidth < 8) return;
+    const word = document.querySelector('.title-bar .app-name');
+    const wr = word && word.getBoundingClientRect();
+    if (!wr || wr.width < 2) return;
+    const hits = (rect, box) => !!(box && box.right > box.left && box.bottom > box.top && !(rect.right < box.left - 4 || rect.left > box.right + 4 || rect.bottom < box.top - 4 || rect.top > box.bottom + 4));
+    const home = tag.getBoundingClientRect();
+    if (!hits(home, wr)) return;
+    const w = home.width, h = home.height, rectAt = (s) => ({ left: s.left, top: s.top, right: s.left + w, bottom: s.top + h });
+    const obstacles = [wr];
+    const add = (el) => { const r = el && el.getBoundingClientRect && el.getBoundingClientRect(); if (r && r.width > 1 && r.height > 1) obstacles.push(r); };
+    add(document.querySelector('.title-bar #projectMenuWrap'));
+    add(document.querySelector('.title-bar .page-tabs'));
+    add(f.querySelector('.o55t-ntag-r'));
+    add(calloutEl());
+    add(st.root && st.root.querySelector('.o55t-bar'));
+    add(document.getElementById('activityBar'));
+    add(st.target);
+    const bar = document.querySelector('.title-bar'), br = bar && bar.getBoundingClientRect();
+    const rt = f.querySelector('.o55t-ntag-r'), rr = rt && rt.getBoundingClientRect();
+    const co = calloutEl(), cr = co && co.getBoundingClientRect();
+    const spots = [];
+    if (br && br.height) {
+      spots.push({ left: Math.round(wr.right + 12), top: 9 });
+      if (rr && rr.width) spots.push({ left: Math.round(rr.left - w - 12), top: 9 });
+      spots.push({ left: 32, top: Math.round(br.bottom + 8) });
+      spots.push({ left: Math.round(wr.right + 12), top: Math.round(br.bottom + 8) });
+    }
+    if (cr && cr.width && br && br.height) spots.push({ left: Math.round(cr.right + 12), top: Math.round(br.bottom + 8) });
+    const onScreen = (s) => s.left >= 8 && s.top >= 6 && s.left + w <= innerWidth - 8 && s.top + h <= innerHeight - 8;
+    const clean = spots.find((s) => onScreen(s) && !obstacles.some((o) => hits(rectAt(s), o)));
+    const offName = spots.find((s) => onScreen(s) && !hits(rectAt(s), wr));
+    const spot = clean || offName;
+    if (!spot) { tag.setAttribute('data-cover', ''); return; }
+    tag.style.left = spot.left + 'px'; tag.style.top = spot.top + 'px';
+    tagCover(st.target);
+    if (!clean) {
+      const now = tag.getBoundingClientRect();
+      if (hits(now, wr)) tag.setAttribute('data-cover', '');
+    }
   }
   /* a tag that would sit over what is being shown or pressed stands down */
   function tagCover(...els) {
@@ -445,8 +514,8 @@
     const n = npod(); if (n) n.removeAttribute('data-str');
   }
   /* the knot's offset back toward the Pod when the string is shorter by `by` px (for the lowering and the lift) */
-  const knotBack = (dir, by) => (dir === 'down' ? `0px ${-by}px` : dir === 'left' ? `${by}px 0px` : `${-by}px 0px`);
-  const lineScale = (dir, f) => (dir === 'down' ? `1 ${f}` : `${f} 1`);
+  const knotBack = (dir, by) => (dir === 'down' ? `0px ${-by}px` : dir === 'up' ? `0px ${by}px` : dir === 'left' ? `${by}px 0px` : `${-by}px 0px`);
+  const lineScale = (dir, f) => (dir === 'down' || dir === 'up' ? `1 ${f}` : `${f} 1`);
   function stringShow(dir, len, grow) {
     const e = strEls(); if (!e) return;
     stringOff();
@@ -600,16 +669,29 @@
      takes over from the window's scrim in the same frame; the first callout and the bar are built and placed, unseen.
      When the line comes (handoff.line), it travels to the callout's top edge and takes its width (a soft pointer), the
      callout slices open from it (callout), its kicker and title type on, the scrim steps to its usual dim and the bar
-     slices in just after. Meanwhile the same Pod (handoff.pod) flies in nine held hops, shrinking to the dock's size,
-     and docks: the travelling Pod goes and the docked one shows in one frame, with its chirp. No line: the callout
-     slices open as usual; no Pod: the corner Pod flies in as usual once the callout stands. */
+     slices in just after. Meanwhile the same Pod (handoff.pod) flies in seven held hops of 90 ms, shrinking to the
+     dock's size, and docks near T1300: the travelling Pod goes and the docked one shows in one frame, with its chirp.
+     No line: the callout slices open as usual; no Pod: the corner Pod flies in as usual once the callout stands. */
   let hand = null;
+  /* an app hover tag already open (the pointer still on Take the Guided Tour, or later on Restore) must not draw over
+     the hand-over line or the results card. The CSS hides the root while html carries the attribute; this closes the
+     tag so it does not pop back open the moment the attribute goes. */
+  function dismissHover() {
+    try { const c = window.PM_HOVER_TAG_CONTROLLER; if (c && typeof c.close === 'function') c.close(true); } catch (_) {}
+    const tag = document.getElementById('pm-hover-tag-visual') || document.querySelector('#pm-hover-tag-root .pm-hover-tag');
+    if (tag && tag.getAttribute('data-open') === 'true') { tag.setAttribute('data-open', 'false'); tag.hidden = true; }
+  }
+  function handGuard(on) {
+    if (on) { html.setAttribute('data-o55nw-hand', ''); dismissHover(); }
+    else html.removeAttribute('data-o55nw-hand');
+  }
   TR.on('start', (d) => {
     const fx = FX(), root = st.root;
     finaleOff();
     hand = null;
     if (d.handoff && painted() && fx) {
       hand = { h: d.handoff, at: Number.isFinite(d.handoff.at) ? d.handoff.at : M.now() };
+      handGuard(true);
       d.noMorph = true; d.sound = null;
       uncover();
       root.classList.remove('o55t-opening');
@@ -634,11 +716,11 @@
     const fx = FX(), c = calloutEl();
     let line = null;
     try { line = await Promise.race([Promise.resolve(hd.h.line), M.delay(2600).then(() => null)]); } catch (_) { line = null; }
-    if (!handLive(hd) || !fx || !c) { if (line && fx) fx.lineDrop(line); if (handLive(hd)) handOpen(null); return false; }
+    if (!handLive(hd) || !fx || !c) { if (line && fx) fx.lineDrop(line); if (handLive(hd)) handOpen(null); else handGuard(false); return false; }
     if (line && line.isConnected && !still() && has('slice')) {
       sound('pointer', { intensity: 0.35 });
       await fx.lineTo(line, c, { ms: 280 });
-      if (!handLive(hd)) { fx.lineDrop(line); return false; }
+      if (!handLive(hd)) { fx.lineDrop(line); handGuard(false); return false; }
     } else if (line) { fx.lineDrop(line); line = null; }
     handOpen(line);
     return true;
@@ -647,8 +729,12 @@
   function handOpen(line) {
     const fx = FX(), root = st.root, c = calloutEl();
     root.classList.remove('o55t-nhand');
-    if (fx && c && has('slice') && !still()) fx.slice(c, line ? { from: line, ms: 260 } : { ms: 260 });
+    const opening = !!(fx && c && has('slice') && !still());
+    if (opening) fx.slice(c, line ? { from: line, ms: 260 } : { ms: 260 });
     else if (line && fx) fx.lineDrop(line);
+    /* the line is gone once the slice has taken it (or at once, when there is no slice). Hover tags stay down until then. */
+    const hd = hand;
+    M.after(line && opening ? 260 : 0, () => { if (hand === hd) handGuard(false); });
     /* its arrival sound, as at any opening of the tour: the first chapter is not stung here (the sound kit would turn
        the first sound of a new chapter into its sting) */
     try { O55.sound.setContext({ sting: false }); } catch (_) {}
@@ -679,11 +765,14 @@
       else opened.then(() => { if (handLive(hd)) chirp(); });
       return;
     }
-    const wait = hd.at + 400 - M.now(); if (wait > 0) await M.delay(wait);
+    /* hops may start with the lift (at+240). The Pod is not handed over until the lift ends, and a heavy click
+       pushes that later, so nine hops of 100 ms finish into the callout's long task and the dock lands near T1700.
+       Seven even hops of 90 ms finish near T1300, before that task, on both a light click and a heavy one. */
+    const wait = hd.at + 240 - M.now(); if (wait > 0) await M.delay(wait);
     const unit = root.querySelector('.o55t-callout .o55t-pod-unit');
     if (!handLive(hd) || !unit) { drop(); root.classList.remove('o55t-npodout'); return; }
-    pod.animate([{ scale: '1' }, { scale: '.75' }], { duration: 900, easing: 'steps(3, end)', fill: 'forwards' });
-    await fx.hops(pod, unit, { n: 9, ms: 900 });
+    pod.animate([{ scale: '1' }, { scale: '.75' }], { duration: 630, easing: 'steps(3, end)', fill: 'forwards' });
+    await fx.hops(pod, unit, { n: 7, ms: 630 });
     /* it lands: the travelling Pod goes and the docked one shows in the same frame, with its voice */
     drop(); root.classList.remove('o55t-npodout');
     if (handLive(hd)) chirp();
@@ -717,7 +806,8 @@
     const acts = TR.defs.filter((x) => x.kind === 'action'), done = acts.filter((x) => st.sess.done.includes(x.id)).length;
     let secs = 0; try { secs = Math.max(0, Math.round((Date.now() - Date.parse(st.sess.started)) / 1000)); } catch (_) {}
     const rows = [['objectives', `${done} / ${acts.length}`]];
-    if (has('pod')) rows.push(['shown', String(st.sess.shown || 0)]);
+    /* a zero is not a count: when Show Me was never used the row is left out, so the card does not say 0 */
+    if (has('pod') && (st.sess.shown || 0) > 0) rows.push(['shown', String(st.sess.shown)]);
     rows.push(['layout', T(keep ? 'results.layoutKept' : 'results.layoutBack')], ['time', `${two(Math.min(99, Math.floor(secs / 60)))}:${two(secs % 60)}`]);
     return rows;
   }
@@ -729,6 +819,7 @@
     f.rows = stats(f.keep);
     f.at = c ? c.getBoundingClientRect() : null;
     html.setAttribute(RESULTS, '');
+    dismissHover();
     const cp = cornerPod(); if (cp) cp.setAttribute(AWAY, '');
     cursorOff();
     /* the callout folds to its line at once (no ghost); everything else of the tour steps back in two held steps */
@@ -750,6 +841,7 @@
     const card = f.card = document.createElement('section');
     card.id = 'o55t-results'; card.className = 'o55t-results'; card.setAttribute('role', 'status');
     card.setAttribute('aria-label', T('results.kicker'));
+    card.setAttribute('data-n', String(f.rows.length));
     card.innerHTML = `<p class="o55t-res-kicker"><span class="o55t-res-kt">${U.esc(T('results.kicker'))}</span></p>`
       + `<div class="o55t-res-body">${pod ? `<span class="o55t-res-pod" aria-hidden="true">${podSvg()}</span>` : ''}`
       + `<dl class="o55t-res-rows">${f.rows.map(([k, v], i) => `<div class="o55t-res-row" data-i="${i}"><dt>${U.esc(T('results.' + k))}</dt><i class="o55t-res-lead" aria-hidden="true"></i><dd>${U.esc(v)}</dd></div>`).join('')}</dl></div>`;
@@ -842,7 +934,7 @@
     /* a layout that could not go back keeps the tour: its callout and bar come back, and there is no debrief */
     if (d.status === 'restore-pending') { finaleOff(); const fx = FX(), c = calloutEl(); if (fx && c && fx.unfold) fx.unfold(c); }
     if (st.root) st.root.classList.remove('o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout', 'o55t-nhand', 'o55t-nhandbar', ...(d.status === 'restore-pending' ? ['o55t-nend', 'o55t-nfin', 'o55t-ngone'] : []));
-    st.barHold = null; hand = null; homeFly = null;
+    st.barHold = null; hand = null; homeFly = null; handGuard(false);
     spoken = null; back = 0; focusOff(); cursorOff(); frameOff(); stringOff(); trailsOff(); anticipOff();
     const fx = FX(); if (fx && cued) { fx.brackets(cued, false); cued = null; }
   });

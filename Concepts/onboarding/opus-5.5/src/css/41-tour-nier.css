@@ -154,6 +154,10 @@ html[data-o55-nier-parts~="pod"] #pm-o55-tour .o55t-npod { display: block; }
 #pm-o55-tour .o55t-npod-line { position: absolute; left: -.5px; top: 0; width: 1px; height: calc(var(--len) * 1px); background: var(--o55-nier-ink); transform-origin: 50% 0; }
 #pm-o55-tour .o55t-npod-knot { position: absolute; box-sizing: border-box; left: -3.5px; top: calc(var(--len) * 1px - 8.45px); width: 7px; height: 7px; background: var(--o55-nier-ink); border: 1px solid var(--o55-nier-on-ink); rotate: 45deg; }
 #pm-o55-tour .o55t-npod-sig { position: absolute; left: -1.5px; top: 0; width: 3px; height: 3px; background: var(--o55-nier-ink); opacity: 0; }
+/* below a target the string runs up from the crown (the Pod hovered under it so it would not sit on the callout) */
+#pm-o55-tour .o55t-npod[data-dir="up"] .o55t-npod-str { left: 0; top: -26px; }
+#pm-o55-tour .o55t-npod[data-dir="up"] .o55t-npod-line { top: calc(var(--len) * -1px); height: calc(var(--len) * 1px); transform-origin: 50% 100%; }
+#pm-o55-tour .o55t-npod[data-dir="up"] .o55t-npod-knot { top: calc(var(--len) * -1px + 1.45px); }
 /* beside a target the string runs across from an arm: toward the left (the Pod hovers to the right) or the right */
 #pm-o55-tour .o55t-npod[data-dir="left"] .o55t-npod-str { left: -17px; top: -4px; }
 #pm-o55-tour .o55t-npod[data-dir="right"] .o55t-npod-str { left: 17px; top: -4px; }
@@ -166,19 +170,23 @@ html[data-o55-nier-parts~="pod"] #pm-o55-tour .o55t-npod { display: block; }
 #pm-o55-tour .o55t-npod:is([data-dir="left"], [data-dir="right"]) .o55t-npod-sig { left: 0; top: -1.5px; }
 /* the tug (the press: 80-tour-core.js puts .o55t-press on the pointer for it), only with a string attached */
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="down"] :is(.o55t-npod-body, .o55t-npod-str) { translate: 0 -4px; }
+html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="up"] :is(.o55t-npod-body, .o55t-npod-str) { translate: 0 4px; }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="left"] :is(.o55t-npod-body, .o55t-npod-str) { translate: 4px 0; }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="right"] :is(.o55t-npod-body, .o55t-npod-str) { translate: -4px 0; }
-html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="down"] .o55t-npod-line { scale: 1 calc((var(--len) + 2) / var(--len)); }
+html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str]:is([data-dir="down"], [data-dir="up"]) .o55t-npod-line { scale: 1 calc((var(--len) + 2) / var(--len)); }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str]:is([data-dir="left"], [data-dir="right"]) .o55t-npod-line { scale: calc((var(--len) + 2) / var(--len)) 1; }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="down"] .o55t-npod-knot { translate: 0 2px; }
+html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="up"] .o55t-npod-knot { translate: 0 -2px; }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="left"] .o55t-npod-knot { translate: -2px 0; }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="right"] .o55t-npod-knot { translate: 2px 0; }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str] .o55t-npod-sig { animation: o55t-nsig-down 260ms steps(4, end) both; }
+html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="up"] .o55t-npod-sig { animation-name: o55t-nsig-up; }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="left"] .o55t-npod-sig { animation-name: o55t-nsig-left; }
 html:not([data-motion="reduced"]) #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod[data-str][data-dir="right"] .o55t-npod-sig { animation-name: o55t-nsig-right; }
 #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod-sig:nth-child(3) { animation-delay: 40ms; }
 #pm-o55-tour .o55t-pointer.o55t-press .o55t-npod-sig:nth-child(4) { animation-delay: 80ms; }
 @keyframes o55t-nsig-down { 0% { translate: 0 0; opacity: 1; } 100% { translate: 0 calc(var(--len) * 1px - 6px); opacity: 0; } }
+@keyframes o55t-nsig-up { 0% { translate: 0 0; opacity: 1; } 100% { translate: 0 calc(var(--len) * -1px + 6px); opacity: 0; } }
 @keyframes o55t-nsig-left { 0% { translate: 0 0; opacity: 1; } 100% { translate: calc(var(--len) * -1px + 6px) 0; opacity: 0; } }
 @keyframes o55t-nsig-right { 0% { translate: 0 0; opacity: 1; } 100% { translate: calc(var(--len) * 1px - 6px) 0; opacity: 0; } }
 /* Quiet (no Pod): the Basic pointer in NieR inks */
@@ -278,6 +286,9 @@ html[data-o55-nier="on"] .o55t-landing::before { content: ""; flex: none; width:
   background: linear-gradient(currentColor, currentColor) 0 0 / 5px 5px no-repeat, linear-gradient(color-mix(in srgb, currentColor 60%, transparent), color-mix(in srgb, currentColor 60%, transparent)) 9px 0 / 5px 5px no-repeat,
     linear-gradient(color-mix(in srgb, currentColor 30%, transparent), color-mix(in srgb, currentColor 30%, transparent)) 18px 0 / 5px 5px no-repeat; }
 .o55t-res-body { display: flex; align-items: flex-start; gap: 14px; }
+/* Show Me never used: the shown row is omitted. The shorter stack still frames the Pod, which sits in its middle. */
+.o55t-results[data-n="3"] .o55t-res-body { align-items: center; }
+.o55t-results[data-n="3"] .o55t-res-pod { margin-top: 0; }
 .o55t-res-pod { flex: none; width: 30px; height: 39px; margin: 1px 0 0 2px; }
 .o55t-res-pod svg { display: block; width: 30px; height: 39px; overflow: visible; }
 .o55t-res-rows { flex: 1; min-width: 0; display: grid; gap: 8px; margin: 0; }
