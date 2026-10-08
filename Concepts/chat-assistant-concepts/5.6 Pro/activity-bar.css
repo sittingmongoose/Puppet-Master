@@ -392,7 +392,8 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
    (.goal-compact-line, .goal-compact-list, .goal-compact-state,
    .goal-compact-blocker) are gone. goals.js's renderCompact now emits
    .goal-compact, .goal-compact-head, .goal-rev, .ab-objective
-   .goal-objective-2, .goal-blocker-line and .goal-compact-actions.
+   .goal-objective-2, .goal-blocker-line, the .goal-actions control row
+   (goals.css) and the .goal-history-toggle footer.
    The blocker rule is retargeted at the live class rather than deleted, so
    a blocked Goal keeps its warning treatment on this surface. */
 .hover-card.ab-card .goal-blocker-line {

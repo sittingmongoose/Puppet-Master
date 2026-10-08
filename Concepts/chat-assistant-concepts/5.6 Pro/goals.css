@@ -123,13 +123,24 @@
 .goal-compact-head{display:flex;align-items:center;gap:8px}
 .goal-objective-2{margin:0;font-size:12px;line-height:1.45;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .goal-blocker-line{margin:0;font-size:11px;color:var(--danger)}
-/* One tidy control layout, shared by renderCompact and renderSection. */
-.goal-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
-.goal-actions .soft-button{height:26px;padding:0 10px;font-size:11.5px}
-.goal-actions .spacer{flex:1 1 0}
-.goal-actions .goal-cancel-btn{color:var(--danger);height:26px;padding:0 8px;margin-left:auto}
+/* Goal controls: one row in every theme at the panel's default width. The safe pair (Pause or Resume, then Edit)
+   sits left as one group; Cancel Goal sits alone at the far edge in danger ink. Every control is the same 28px
+   height. The row is its own size container: Edit widens to "Edit objective" from 300px (the Activity Bar preview),
+   and below the default width (the panel's 240px minimum, or the Goal Tree leaf) the paddings tighten so the row
+   still fits; only narrower than that does Cancel Goal wrap, still right-aligned. */
+.goal-actions{container-type:inline-size;display:flex;align-items:center;justify-content:space-between;gap:6px 10px;flex-wrap:wrap;min-width:0}
+.goal-actions-safe{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.goal-actions .soft-button,.goal-actions .goal-cancel-btn{min-height:28px;height:28px;font-size:11.5px;white-space:nowrap}
+.goal-actions .soft-button{padding:0 10px}
+.goal-actions .goal-cancel-btn{color:var(--danger);padding:0 8px;margin-left:auto}
 .goal-actions .goal-cancel-btn:hover{background:color-mix(in srgb,var(--danger) 10%,transparent)}
 .goal-actions [disabled]{opacity:.45;cursor:not-allowed}
+.goal-actions .goal-lbl-more{display:none}
+@container (min-width:300px){.goal-actions .goal-lbl-more{display:inline}}
+@container (max-width:235px){
+  .goal-actions .soft-button{padding:0 7px}
+  .goal-actions .goal-cancel-btn{padding:0 5px}
+}
 .goal-bound{display:flex;gap:10px;flex-wrap:wrap}
 .goal-history-toggle small{margin-left:auto;margin-right:6px;color:var(--subtle);font-weight:500;font-size:11px}
 .goal-history-toggle svg{transition:transform 160ms var(--ease)}

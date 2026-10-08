@@ -664,7 +664,8 @@ u.agent-model { text-decoration: underline; text-decoration-thickness: 1px; text
    (.goal-compact-line, .goal-compact-list, .goal-compact-state,
    .goal-compact-blocker) are gone. goals.js's renderCompact now emits
    .goal-compact, .goal-compact-head, .goal-rev, .ab-objective
-   .goal-objective-2, .goal-blocker-line and .goal-compact-actions.
+   .goal-objective-2, .goal-blocker-line, the .goal-actions control row
+   (goals.css) and the .goal-history-toggle footer.
    The blocker rule is retargeted at the live class rather than deleted, so
    a blocked Goal keeps its warning treatment on this surface. */
 .pmap-statusboard .goal-blocker-line {
