@@ -71,8 +71,8 @@
    one, a string picks another event); type plays 'type' ticks (every 120 ms) and a short decode 'decode' only when
    asked (opts.sound: true). The other effects are silent: their callers own the sound.
    Pod 042 is one character: while pod.say speaks, the app's corner Pod (#o55np-pod) and the window's resting Pod
-   (.o55nw-pod) step away, marked on themselves (#o55np-pod[data-o55fx-away], #pm-o55-onboarding[data-o55fx-pod]),
-   never on <html>, so a Pod line restyles only those, and this one flies out from that place and back.
+   (.o55nw-pod) step away, each marked on itself (data-o55fx-away), never on <html> or a surface's root, so a Pod
+   line restyles only those two, and this one flies out from that place and back.
 
    Where banners, bands and Pods are drawn, and the hand-over. opts.layer: 'page' (or within: document.body) draws in
    the page layer, above the window and the tour; within: el draws in el's surface across el's box; with neither, the
@@ -1141,10 +1141,17 @@
      They are the same Pod: while this one speaks, those step away (the mark sits on them, never on <html>, so it
      restyles nothing else) and this one flies out from that place and back to it. */
   const RESTING = '.o55nw-pod';
+  /* the window's resting Pod (kept, so a line does not search the window for it) */
+  let rest = null;
+  function restingIn(host) {
+    if (!host) return null;
+    if (!(rest && rest.isConnected && host.contains(rest))) rest = host.querySelector(RESTING);
+    return rest;
+  }
   function home(host) {
     if (host && host.id === 'pm-o55-onboarding') {
-      const e = host.querySelector(RESTING);
-      if (e && !host.hasAttribute('data-o55fx-pod')) { const r = e.getBoundingClientRect(); if (r.width > 4) return { el: e, r }; }
+      const e = restingIn(host);
+      if (e && !e.hasAttribute('data-o55fx-away')) { const r = e.getBoundingClientRect(); if (r.width > 4) return { el: e, r }; }
       return null;
     }
     const e = document.getElementById('o55np-pod');
@@ -1154,14 +1161,15 @@
     const r = e.getBoundingClientRect();
     return r.width > 4 ? { el: e, r } : null;
   }
-  /* the resting Pods step away while one of ours is on screen (a line still waiting for its frame does not count) */
+  /* the resting Pods step away while one of ours is on screen (a line still waiting for its frame does not count).
+     The mark sits on each resting Pod itself: a mark on the window's root made the browser look through the whole
+     window for the rule's .o55nw-pod (about 1.7 ms a line). */
   function homeSync() {
     let away = false;
     pods.forEach((P) => { if (P.shown) away = true; });
-    const app = document.getElementById('o55np-pod');
-    if (app && app.hasAttribute('data-o55fx-away') !== away) app.toggleAttribute('data-o55fx-away', away);
-    const onb = document.getElementById('pm-o55-onboarding');
-    if (onb && onb.hasAttribute('data-o55fx-pod') !== away) onb.toggleAttribute('data-o55fx-pod', away);
+    const mark = (e) => { if (e && e.hasAttribute('data-o55fx-away') !== away) e.toggleAttribute('data-o55fx-away', away); };
+    mark(document.getElementById('o55np-pod'));
+    mark(restingIn(document.getElementById('pm-o55-onboarding')));
   }
 
   /* would a box at (x, y, w, h) cover a control of the page? (the Pod's layer takes no pointer, so it is not hit) */
@@ -1370,6 +1378,25 @@
       };
     });
   }
+  /* a line's words, lead and marks, and the side it most likely takes (the stage's lanes put the strip left of the
+     Pod; else the side asked for, else right): what decides the Pod's size and its row */
+  function podWrite(P, ln) {
+    const node = P.node;
+    if (P.typed) { const j = typeJobIn(node); if (j) j.stop(true); P.typed = false; }
+    node.toggleAttribute('data-unit', ln.unitOn);
+    node.toggleAttribute('data-voice', ln.voice);
+    node.setAttribute('data-lead', ln.lead);
+    node.querySelector('.o55fx-pod-text > b').textContent = ln.voice ? T('pod.leads.' + ln.lead) : '';
+    node.querySelector('.o55fx-pod-text > span').textContent = ln.words;
+    const side = ln.stage ? 'left' : ln.side === 'left' ? 'left' : ln.side || 'right';
+    if (node.dataset.side !== side) node.dataset.side = side;
+  }
+  /* the compact strip (cw: its widest, in px; 0: the usual strip) */
+  function podCompact(P, cw) {
+    P.compact = cw;
+    P.node.toggleAttribute('data-compact', cw > 0);
+    if (cw > 0) P.node.style.setProperty('--o55fx-pod-max', `${cw}px`); else P.node.style.removeProperty('--o55fx-pod-max');
+  }
   /* pod.say: the call makes the Pod (held unseen, data-wait) or takes the one that is out, and keeps the line; the
      line is shown in the read phase (podShow): its words written, the Pod measured and placed, then its motion, its
      typing, its sound and its time all start on the frame it is first drawn. */
@@ -1388,11 +1415,13 @@
     const host = flyHost(o, stage || anchor);
     const ms = clamp(Number(o.ms) || 1700 + words.length * 45, 1600, 12000);
     quiet(900);
-    let P = pods.get(host);
+    let P = pods.get(host), fresh = false;
     if (P) {
       if (P.timer) { P.timer.cancel(); P.timer = null; }
       if (P.f) { unfollow(P.f); P.f = null; }
       P.res(true);
+      /* a line not shown yet is still a new Pod's: its words are written again now */
+      if (!P.shown) podWrite(P, { words, lead, unitOn, voice, stage, side: o.side || null });
     } else {
       const node = document.createElement('div');
       node.className = 'o55fx-pod';
@@ -1400,14 +1429,16 @@
       node.innerHTML = `<div class="o55fx-pod-unit"><div class="o55fx-pod-shadow">${FX.podSvg('o55fx-pod', { part: 'shadow' })}</div><div class="o55fx-pod-bob"><div class="o55fx-pod-body">${FX.podSvg('o55fx-pod')}</div></div>`
         + '<i class="o55fx-pod-sig"></i><i class="o55fx-pod-sig"></i><i class="o55fx-pod-sig"></i></div>'
         + `<div class="o55fx-pod-strip"><div class="o55fx-pod-head"><i></i><i></i><i></i><span>${esc(T('pod.name'))}</span></div><p class="o55fx-pod-text"><b></b><span></span></p></div>`;
-      layerOf(host).appendChild(node);
-      P = { host, node, seq: 0, shown: false, from: null, home: host.id === 'pm-o55-onboarding' ? host.querySelector(RESTING) : document.getElementById('o55np-pod') };
+      P = { host, node, seq: 0, shown: false, compact: 0, from: null, home: host.id === 'pm-o55-onboarding' ? restingIn(host) : document.getElementById('o55np-pod') };
+      fresh = true;
       pods.set(host, P);
       /* its surface going (the window closing, the tour ending) sends it away at once, resolving false */
       P.unwatch = flyWatch(host, () => podGo(host, true, false));
     }
     const p = new Promise((r) => { P.res = r; });
     const line = { words, lead, unitOn, voice, ms, anchor, stage, side: o.side || null, lane: o.lane || null, avoid: o.avoid || null, sound: o.sound, announce: !!o.announce };
+    /* a new Pod is written before it is attached, so the frame styles it once with everything else */
+    if (fresh) { podWrite(P, line); layerOf(host).appendChild(P.node); }
     const seq = ++P.seq;
     measure(() => podShow(P, seq, line));
     return p;
@@ -1423,18 +1454,21 @@
     const follows = !ln.stage && ln.anchor && ln.anchor.nodeType === 1;
     P.size = null; P.anchor = ln.anchor; P.side = ln.side; P.stage = ln.stage; P.lane = ln.lane; P.avoid = ln.avoid;
     const R = follows ? null : podReads(P);
-    /* then the writes: the words (the line before stops typing), the lead, a short stage's compact strip (the 760 px
-       band: one or two lines without the name band, beside a smaller Pod, so it fits over the units' heads) */
-    if (P.typed) { const j = typeJobIn(node); if (j) j.stop(true); P.typed = false; }
-    node.toggleAttribute('data-unit', ln.unitOn);
-    node.toggleAttribute('data-voice', ln.voice);
-    node.setAttribute('data-lead', ln.lead);
-    node.querySelector('.o55fx-pod-text > b').textContent = ln.voice ? T('pod.leads.' + ln.lead) : '';
-    const span = node.querySelector('.o55fx-pod-text > span'), strip = node.querySelector('.o55fx-pod-strip');
-    span.textContent = ln.words;
-    const compact = !!(sr && sr.height / zoom() < 260);
-    node.toggleAttribute('data-compact', compact);
-    if (compact) node.style.setProperty('--o55fx-pod-max', `${Math.max(220, Math.round(sr.width / zoom() - 96))}px`); else node.style.removeProperty('--o55fx-pod-max');
+    /* then the writes. A Pod that is out takes its new words now (they must not show before they type); a new one
+       was written where it was made. A short stage (the 760 px band) takes the compact strip: one or two lines
+       without the name band, beside a smaller Pod, so it fits over the units' heads (a change re-measures) */
+    if (!fresh) podWrite(P, ln);
+    const cw = sr && sr.height / zoom() < 260 ? Math.max(220, Math.round(sr.width / zoom() - 96)) : 0;
+    if (cw !== P.compact) podCompact(P, cw);
+    const strip = node.querySelector('.o55fx-pod-strip'), span = node.querySelector('.o55fx-pod-text > span'), compact = cw > 0;
+    /* its size, once per line (a new Pod was styled with the rest of the frame, so this costs no pass of its own; its
+       layer contains its layout). A Pod that flies out also reads its unit here, where it was made (the layer's
+       origin: no transform yet) and turned to the side it most likely takes: where the unit stands after the
+       placement is that rect moved by the placement, so nothing is read after the writes (only a side that flips
+       the row reads again) */
+    P.size = { w: node.offsetWidth, h: node.offsetHeight };
+    const side0 = node.dataset.side;
+    const u0 = fresh && P.from && !still() ? node.querySelector('.o55fx-pod-unit').getBoundingClientRect() : null;
     let placed = false;
     if (follows) P.f = follow(ln.anchor, node, host, () => () => { podPlace(P, fresh && !placed); placed = true; }, () => podGo(host, false), { now: true });
     if (!placed) podPlace(P, fresh, R);
@@ -1447,8 +1481,9 @@
       if (fresh) {
         const unit = node.querySelector('.o55fx-pod-unit');
         if (P.from) {
-          /* out from its resting place to where it speaks (its layer contains its layout: this lays out the Pod only) */
-          const u = unit.getBoundingClientRect(), z = zoom();
+          /* out from its resting place to where it speaks */
+          const z = zoom(), at = P.at || { x: 0, y: 0 };
+          const u = u0 && (side === 'left') === (side0 === 'left') ? { left: u0.left + at.x * z, top: u0.top + at.y * z } : unit.getBoundingClientRect();
           unit.animate([{ translate: `${Math.round((P.from.left - u.left) / z)}px ${Math.round((P.from.top - u.top) / z)}px` }, { translate: '0px 0px' }], { duration: 360, easing: 'steps(6, end)' });
         } else {
           const dx = side === 'left' ? -10 : side === 'right' ? 10 : 0, dy = side === 'top' ? -8 : side === 'bottom' ? 8 : 0;

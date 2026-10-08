@@ -80,9 +80,9 @@ html:not([data-motion="reduced"]) .o55fx-cur[data-side="in"] > i { animation-nam
 
 /* ---- Pod 042: the unit hovering in steps, a hairline to its speech strip (POD 042 band, lead, words); the app's own
    Pod steps away while this one is out (it flies from that Pod's place and back) ---- */
-/* the mark sits on the Pods that step away (never on <html>: a page-wide attribute restyled the whole page) */
-#o55np-pod[data-o55fx-away] { visibility: hidden !important; }
-#pm-o55-onboarding[data-o55fx-pod] .o55nw-pod { visibility: hidden; }
+/* the mark sits on the Pods that step away, each on itself (never on <html> or a root: a mark there made the browser
+   restyle, or search, everything under it) */
+#o55np-pod[data-o55fx-away], .o55nw-pod[data-o55fx-away] { visibility: hidden !important; }
 .o55fx-pod { left: 0; top: 0; display: flex; align-items: center; gap: 12px; will-change: transform; transition: transform 160ms steps(4, end), opacity 120ms steps(2, end); }
 .o55fx-pod[data-jump] { transition: opacity 120ms steps(2, end); }
 .o55fx-pod[data-side="left"] { flex-direction: row-reverse; }
