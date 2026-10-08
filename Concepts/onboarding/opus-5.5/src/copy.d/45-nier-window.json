@@ -1,0 +1,75 @@
+{
+  "nierWindow": {
+    "brand": {
+      "sub": "Setup · {n}/{total}"
+    },
+    "band": {
+      "resume": "Resuming setup"
+    },
+    "banner": {
+      "next": "Next: {chapter}",
+      "created": "Project created",
+      "serverReady": "Server ready"
+    },
+    "meter": "{done}/{total}",
+    "pod": {
+      "resumed": "Report: Welcome back. Setup continues where you left off.",
+      "creatingDone": "Report: Project created and checked. Everything is in place.",
+      "creatingDoneLater": "Report: Server set up and checked. A Project can come later.",
+      "readyLater": "Report: Puppet Master is set up. A Project can be created whenever you like.",
+      "alert": "Alert: That did not work. The note on screen says what to do next.",
+      "alertField": "Alert: That entry was not accepted. Check it and try again.",
+      "ops": [
+        "Report: Done. Everything checked out.",
+        "Report: Complete. No problems found.",
+        "Report: Confirmed. Ready for the next step."
+      ],
+      "screens": {
+        "welcome": "Report: Pod 042 will assist with setup. It takes a few minutes, and every choice can be changed later.",
+        "look": "Proposal: Pick the look you like best. It can be changed later.",
+        "where": "Query: Where should the work happen? Most people choose this computer.",
+        "cRoute": "Report: Puppet Masters on your network appear here. Choose the one this device should use.",
+        "cReview": "Proposal: Check the name, then continue. The other computer will ask you to confirm.",
+        "cPair": "Proposal: Compare the two pictures. Continue only if they match.",
+        "cReady": "Report: Connection confirmed. This device can now use your Puppet Master.",
+        "sKind": "Query: What kind of computer will the Server be? It keeps working while this device sleeps.",
+        "sWait": "Report: Standing by. The Server appears here by itself once Puppet Master runs on it.",
+        "sConfirm": "Proposal: Give the Server a name you will recognise later.",
+        "sReady": "Report: Server ready. Other devices can join it with this code, now or later.",
+        "rSource": "Query: Where is the backup? Nothing on this computer is replaced without asking.",
+        "rUnlock": "Report: The recovery phrase is used once and never saved.",
+        "rPick": "Proposal: Choose the copy to bring back. The newest is usually the right one.",
+        "rPreview": "Analysis: This is everything that comes back. Nothing changes until you confirm.",
+        "rDone": "Report: Restore complete. AI accounts need a quick sign-in.",
+        "begin": "Query: How should your Project begin? A Project keeps one thing you are making.",
+        "exFolder": "Report: The folder is only read. Nothing in it changes until the Project is created.",
+        "name": "Proposal: Use words you will recognise later.",
+        "like": "Query: Reuse the setup of a Project you already trust, or start fresh?",
+        "onlineSignin": "Report: Puppet Master only asks for access to the Project you choose.",
+        "onlineService": "Query: Where should the online copy live? GitHub is free and common.",
+        "onlineDetails": "Proposal: Check the name the online copy will use. The suggestion is fine.",
+        "exRepos": "Proposal: Choose the Project to bring in. Only that one is copied.",
+        "safe": "Report: Every version is saved on this computer. Online copies and backups are optional.",
+        "away": "Query: Should your Puppet Master answer when you are away from home? This can change any time.",
+        "review": "Analysis: Nothing has been created yet. Check each line, then create it in one step.",
+        "creating": "Report: Creating your Project. The window can close; the work continues.",
+        "protect": "Proposal: One sign-in and one test, and your backup is protected.",
+        "ai": "Query: Which AI should power Puppet Master? An account you already have works.",
+        "aiAll": "Report: Every supported AI is listed here. Search to find one quickly.",
+        "aiNone": "Report: No AI account yet is fine. Pick whichever kind suits you.",
+        "free": "Analysis: Free models suit lighter tasks. Their limits can change without notice.",
+        "ready": "Report: Setup complete. Pod 042 remains on standby.",
+        "nasFind": "Report: Looking for storage devices on your network. Nothing is changed.",
+        "nasIdentity": "Proposal: Check this picture matches the one your device shows.",
+        "nasKey": "Query: Which key should Puppet Master use? A key replaces the password.",
+        "nasSignin": "Report: The password is needed once, only to add your key.",
+        "nasInstall": "Report: Setting up the secure connection. Stand by.",
+        "nasPmpair": "Proposal: Compare the pictures, then approve this computer.",
+        "nasFolder": "Query: Which folder holds the Project's files?",
+        "nasSmb": "Report: Your sign-in is kept in the system keychain, not in Puppet Master.",
+        "nasNfs": "Proposal: Choose the share. Puppet Master checks that it can read it.",
+        "nasMounted": "Query: Which drive holds the Project? These are the drives this computer already shows."
+      }
+    }
+  }
+}
