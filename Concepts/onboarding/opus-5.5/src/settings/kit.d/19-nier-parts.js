@@ -553,8 +553,9 @@
        shows only if the repaint still runs at T1100. R, the reveal, is the first frame after two frame intervals under
        34 ms, two frames or more after repaint() returned, never before the list is done and at most 4 s after: the
        kicker reads "All clear" in one step, holds 160 ms, and the plate tears out as six slats sliding off to
-       alternate sides from the middle outward (steps(4), 30 ms apart). info.onReveal('reveal') fires as they start (the
-       window takes input again from then) and 'gone' once they are off.
+       alternate sides from the middle outward (steps(4), 30 ms apart, the first step on the hold's last frame).
+       info.onReveal('reveal') fires on that frame (the window takes input again from then, and the wake sounds) and
+       'gone' once they are off; the window's own effects come back then, never over the plate.
        Unticking, "back into the box": the stage powers down first (300 ms, the window's beat), six slats close in from
        both sides (T300-T540), two lines type (stamps at T700 and T850), then the repaint; at R "All clear" for 120 ms,
        'reveal', and the plate, as one, shrinks in 6 held steps into the NieR thumbnail with the brackets riding its
@@ -767,7 +768,9 @@
   /* keyframes for a stepped walk: frames [{ t, ... }] in ms over total ms, every segment held (step-end) */
   const walk = (frames, total) => frames.map(f => Object.assign({ offset: Math.min(1, f.t / total), easing: 'step-end' }, f.v));
   /* six slats, each a copy of the set moved up by its own place; 'out' slides them off to alternate sides from the middle
-     outward, 'in' slides them in from the outside inward; steps(4), 30 ms apart */
+     outward, 'in' slides them in from the outside inward; steps(4), 30 ms apart. 'out' jumps at its start: the middle
+     pair's first step is on screen on the very frame the hold ends (films M7: with steps(4, end) the plate sat whole for
+     45 ms after the reveal, under the wake and the window's effects) */
   function rbSlats(cover, src, mode, delay) {
     const wrap = document.createElement('div');
     wrap.className = 'o55np-slats';
@@ -782,12 +785,13 @@
     const anims = [...wrap.children].map((s, i) => {
       const away = `translateX(${i % 2 ? 101 : -101}%)`;
       return s.animate(mode === 'out' ? [{ transform: 'translateX(0)' }, { transform: away }] : [{ transform: away }, { transform: 'translateX(0)' }],
-        { duration: 180, delay: delay + order[i] * 30, easing: 'steps(4, end)', fill: mode === 'out' ? 'forwards' : 'both' });
+        { duration: 180, delay: delay + order[i] * 30, easing: mode === 'out' ? 'steps(4, jump-start)' : 'steps(4, end)', fill: mode === 'out' ? 'forwards' : 'both' });
     });
     return { wrap, first: anims[0], done: Promise.all(anims.map(settled)) };
   }
 
-  /* the window's effects and the pointers come back with the reveal */
+  /* the window's effects and the pointers come back once the cover has left: they draw above it, so released at the
+     reveal they floated on the still-whole plate and on the slats yet to move (films M7) */
   function rbRelease(ctx) {
     if (ctx.host) { ctx.host.removeAttribute('data-o55np-cover'); ctx.host = null; }
     coverUp = false;
@@ -869,14 +873,15 @@
     rbClear(log, typing, plan, t0);
     if (!cover.isConnected) return;
     if (!folding) {
-      /* R: hold 160 ms, then the slats tear out and what is under the cover shows band by band */
+      /* R: hold 160 ms, then the slats tear out and what is under the cover shows band by band. The hold's end is the
+         middle pair's first step (one timeline, started together): that frame takes input again and sounds the wake */
       const slats = rbSlats(cover, set, 'out', 160);
       set.remove();
       await rbWait(cover, 160);
       cover.style.pointerEvents = 'none';
-      rbRelease(ctx);
       ctx.cue('reveal');
       await slats.done;
+      rbRelease(ctx);
       return;
     }
     /* R: hold 120 ms; then the plate, as one, folds back into where it grew from (measured now: the window re-rendered,
@@ -885,7 +890,6 @@
     await rbWait(cover, 120);
     log.style.display = 'none';
     cover.style.pointerEvents = 'none';
-    rbRelease(ctx);
     ctx.cue('reveal');
     const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
     const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
@@ -902,6 +906,7 @@
       el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
     });
     await settled(fold);
+    rbRelease(ctx);
   }
 
   /* The moment's own sounds, unless its caller plays them (info.sound false: the onboarding window's NieR checkbox and
