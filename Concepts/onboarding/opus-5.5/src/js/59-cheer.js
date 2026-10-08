@@ -194,7 +194,10 @@
       /* a fleck leaves up and to the right of the word, short and small; a celebration bursts up and all round */
       const c = colors[(i + (small ? Math.floor(Math.random() * 5) : 0)) % colors.length];
       /* (down: from a sign hung high, the burst fans out sideways and down over the troupe) */
-      const ang = small ? -Math.PI / 2 + 0.7 + (Math.random() - 0.5) * 1.1 : down ? Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.5 : -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.25;
+      /* (src.sideways: out of the prop's two ends, a little upward, over the gaps between the units: the narrow band's
+         sign hangs just above their heads, and a downward burst fell in a clump on the middle one's visor) */
+      const side = src && src.sideways ? (i % 2 ? 0 : Math.PI) + (i % 2 ? -1 : 1) * (Math.random() * 0.75 - 0.15) : null;
+      const ang = side != null ? side : small ? -Math.PI / 2 + 0.7 + (Math.random() - 0.5) * 1.1 : down ? Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.5 : -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.25;
       const sp = small ? 26 + Math.random() * 30 : down ? 70 + Math.random() * 150 : 120 + Math.random() * 170;
       const dx = Math.cos(ang) * sp, dy = Math.sin(ang) * sp, fall = small ? 26 + Math.random() * 24 : down ? 90 + Math.random() * 110 : 170 + Math.random() * 120;
       let el;
@@ -641,7 +644,8 @@
       hs.forEach((g, i) => joy(g, 620, i * 60));
       if (A.rig) A.rig.cheer(svg, 'all', { hop: 8, dur: 360, stagger: 60, steps: 2, arm: 0.6, lean: 0 });
       if (sign) lockOn(svg, sign, 0);
-      confetti(svg, 'nier', [240, 68], 46, false, true, sign ? { from: sign } : null);
+      /* (the narrow window's band: a drawing whose viewBox does not start at the top) */
+      confetti(svg, 'nier', [240, 68], 46, false, true, sign ? { from: sign, sideways: !/^\s*\S+\s+0\s/.test(svg.getAttribute('viewBox') || '') } : null);
       SND('celebrate', { pan: 0 });
     };
     p.end(stamp);
@@ -679,8 +683,12 @@
     const ctx = { pal: A.nier.palette(mode, tok), tok, mode, items: null };
     const NS = 'http://www.w3.org/2000/svg', box = document.createElementNS(NS, 'svg');
     const lab = O55.t('art.nier.stamp'), stampWord = lab === 'art.nier.stamp' ? 'created' : lab;
-    box.innerHTML = A.nier.props.badge(ctx, { x: xy ? +xy[1] : 240, y: xy ? +xy[2] : 68, s: m ? +m[1] : 1.4, opts: { label: want, accent: true, hang: -30, stamp: stampWord } });
+    const at = { x: xy ? +xy[1] : 240, y: xy ? +xy[2] : 68, s: m ? +m[1] : 1.4 };
+    /* (its strings, when they are their own prop, are drawn again for the new width too) */
+    const hangs = item(svg, 'signhang'), hAm = hangs && hangs.querySelector(':scope > .o55-in > .o55-am');
+    box.innerHTML = A.nier.props.badge(ctx, Object.assign({}, at, { opts: { label: want, accent: true, hang: -30, hangApart: !!hAm, stamp: stampWord } }));
     if (amEl && box.firstElementChild) { amEl.innerHTML = ''; amEl.appendChild(box.firstElementChild); }
+    if (hAm && A.nier.props.hangs) { box.innerHTML = A.nier.props.hangs(ctx, Object.assign({}, at, { opts: { label: want, hang: -30 } })); if (box.firstElementChild) { hAm.innerHTML = ''; hAm.appendChild(box.firstElementChild); } }
   }
 
   /* ---------------------------------------------------------------- the thumbnail's peek (H6, H1) */

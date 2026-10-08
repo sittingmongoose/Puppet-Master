@@ -503,7 +503,7 @@
     badge(ctx, item) {
       const K = kit(ctx.pal), o = item.opts || {}, lab = String(o.label || ''), w = Math.max(88, Math.ceil(lab.length * 6.6 + 34)), x0 = -w / 2, on = !!(o.accent || o.on);
       let hang = '', stamp = '';
-      if (o.hang != null) {
+      if (o.hang != null && !o.hangApart) {
         const sc = item.s || 1, top = Math.min(-20, (o.hang - (item.y || 0)) / sc), ins = (A.metrics('nier').edgeInset || 7);
         hang = K.P(`M${f(x0 + ins)} -14V${f(top)}M${f(-x0 - ins)} -14V${f(top)}`, 's2', 0.85 / sc, 'o55-nier-hangs');
       }
@@ -516,6 +516,14 @@
       return `${G}>${hang}${on ? K.R(x0 + 16, -14, w - 16, 28, 'i') + K.R(x0, -14, 16, 28, 'g s', 1.2) : K.R(x0, -14, w, 28, 'p s', 1.2) + K.R(x0, -14, 16, 28, 'i')}${K.DI(x0 + 8, 0, 3.4, on ? 'i' : 'g')}`
         + `${K.T(8, 3, lab, { size: 7.4, role: on ? 'txo' : 'txi', ls: 2.2 })}${K.P(`M${f(x0 + 22)} 9H${f(-x0 - 6)}`, on ? 'koi' : 's3', 0.7)}`
         + `${o.hang != null || o.stamp ? `<rect class="o55-nier-body" x="${f(x0)}" y="-14" width="${f(w)}" height="28" fill="none"/>` : ''}${stamp}</g>`;
+    },
+    /* the two strings a hung sign (badge with opts.hang and opts.hangApart) hangs by, from its top corners up to
+       opts.hang: a prop of their own, placed, scaled and lowered with the sign and drawn behind it, so that Pod's lanes
+       (O55.nierFx) find the sign where it is and not the hairlines above it, which crossed the narrow band's top lane */
+    hangs(ctx, item) {
+      const K = kit(ctx.pal), o = item.opts || {}, lab = String(o.label || ''), w = Math.max(88, Math.ceil(lab.length * 6.6 + 34)), x0 = -w / 2;
+      const sc = item.s || 1, top = Math.min(-20, (o.hang - (item.y || 0)) / sc), ins = (A.metrics('nier').edgeInset || 7);
+      return `${G}>${K.P(`M${f(x0 + ins)} -14V${f(top)}M${f(-x0 - ins)} -14V${f(top)}`, 's2', 0.85 / sc, 'o55-nier-hangs')}</g>`;
     },
     /* a chamfered square with target-bracket corners (left out of its measured outline, so strings and routes end on
        the square), the glyph in ink; on (state 'on' or accent): inverted. The family says round: false. */
