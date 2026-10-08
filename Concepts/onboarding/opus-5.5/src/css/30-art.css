@@ -205,9 +205,10 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) .o55-nier-maplabel
 @keyframes o55-nier-off { from { opacity: 1; } to { opacity: 0; } }
 @keyframes o55-nier-on { from { opacity: 0; } to { opacity: 1; } }
 @keyframes o55-nier-boot { 0% { opacity: 0; transform: none; } 25% { opacity: 1; transform: none; } 37.5% { opacity: 1; transform: translateX(3.6px); } 50% { opacity: 1; transform: translateX(7.2px); } 62.5% { opacity: 1; transform: translateX(10.8px); } 75% { opacity: 1; transform: translateX(14.4px); } 87.5%, 100% { opacity: 1; transform: none; } }
-/* the stamp on the name sign inverts onto it in two steps once the sign has landed (its frame, then the filled block) */
-.o55-f-nier .o55-nier-stamp .nv-stamp-frame { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) - 40ms) both; }
-.o55-f-nier .o55-nier-stamp .nv-stamp-fill { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) + 50ms) both; }
+/* the stamp on the name sign inverts onto it in two steps once the sign has landed (its frame, then the filled block).
+   It is drawn shown; the Created act (59-cheer.js) holds it back while the sign is lowered (.o55-stamp-wait) and steps
+   it on from the sign's landing (.o55-stamp-frame: the frame alone), with the celebration on the ink block's frame */
+.o55-f-nier .o55-stamp-wait .nv-stamp-frame, .o55-f-nier .o55-stamp-wait .nv-stamp-fill, .o55-f-nier .o55-stamp-frame .nv-stamp-fill { opacity: 0; }
 /* a drawing that never idles (A.mount ctx.still: the look screen's NieR thumbnail while NieR Mode is off) */
 .o55-still .o55-amb, .o55-still .o55-ring, .o55-still .o55-gl, .o55-still .o55-nier-scan, .o55-still .o55-nier-mk, .o55-still .o55-nier-blink, .o55-still .o55-led, .o55-still .o55-px-blink, .o55-still .o55-px-twinkle, .o55-still .o55-star, .o55-still .o55-core, .o55-still .o55-ripple, .o55-still .o55-pulse, .o55-still .o55-beam { animation: none !important; }
 @keyframes o55-sway { from { transform: rotate(-1.4deg); } to { transform: rotate(1.4deg); } }

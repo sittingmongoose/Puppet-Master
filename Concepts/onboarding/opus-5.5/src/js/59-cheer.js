@@ -168,7 +168,18 @@
     } catch (_) { return null; }
   }
 
-  function confetti(svg, fam, at, count, small, down) {
+  /* a placed prop's box in scene units, from its markup (its .o55-nier-body box and its anchor's translate and scale):
+     nothing is measured on the page */
+  function boxOf(it) {
+    const b = it.querySelector('.o55-nier-body'), tf = it.style.transform || '';
+    const m = /translate\(\s*(-?[\d.]+)px,\s*(-?[\d.]+)px\)/.exec(tf), sm = /scale\(\s*(-?[\d.]+)\)/.exec(tf);
+    if (!b || !m) return null;
+    const s = sm ? +sm[1] || 1 : 1, n = (k) => +b.getAttribute(k) || 0;
+    return [+m[1] + s * n('x'), +m[2] + s * n('y'), +m[1] + s * (n('x') + n('width')), +m[2] + s * (n('y') + n('height'))];
+  }
+  /* src.from: a prop the burst comes from (NieR's name sign at Created): the pieces start on its outline, each where its
+     own flight leaves it, and fly behind it (the group sits just under the prop), so none ever sits on its words */
+  function confetti(svg, fam, at, count, small, down, src) {
     const fx = svg.querySelector('g.o55-fx') || svg, tok = A.tokens(svg), NS = 'http://www.w3.org/2000/svg';
     const colors = [tok.blue, tok.magenta, tok.lime, tok.orange, tok.warn];
     const nier = fam === 'nier';
@@ -176,7 +187,8 @@
     if (nier && !small) count = Math.max(8, Math.round(count * 0.45)); /* 46 -> 21; a fleck keeps its 1-3 */
     const nt = nier && A.nier && A.nier.tokens ? A.nier.tokens(tok, svg.classList.contains('o55-m-light') ? 'light' : 'dark') : tok, ink = nt.text, rust = nt.error;
     const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'o55-confetti'); g.setAttribute('aria-hidden', 'true');
-    fx.appendChild(g);
+    const box = src && src.from ? boxOf(src.from) : null;
+    if (box) { at = [(box[0] + box[2]) / 2, (box[1] + box[3]) / 2]; src.from.parentNode.insertBefore(g, src.from); } else fx.appendChild(g);
     let longest = 0;
     for (let i = 0; i < count; i++) {
       /* a fleck leaves up and to the right of the word, short and small; a celebration bursts up and all round */
@@ -199,18 +211,24 @@
       else { el = document.createElementNS(NS, 'rect'); el.setAttribute('width', i % 2 ? 9 : 6); el.setAttribute('height', i % 2 ? 5 : 8); el.setAttribute('x', -4); el.setAttribute('y', -3); el.setAttribute('rx', '1.2'); el.setAttribute('fill', c); el.setAttribute('stroke', 'rgba(0,0,0,0.25)'); el.setAttribute('stroke-width', '0.6'); }
       el.style.transformBox = 'fill-box'; el.style.transformOrigin = 'center';
       g.appendChild(el);
-      const x0 = at[0] + (Math.random() - 0.5) * (small ? 6 : 30), y0 = at[1];
+      let x0 = at[0] + (Math.random() - 0.5) * (small ? 6 : 30), y0 = at[1];
+      /* from a prop: where the line from its centre along this piece's flight leaves its outline (2 units in) */
+      if (box) { const hw = (box[2] - box[0]) / 2 - 2, hh = (box[3] - box[1]) / 2 - 2, k = Math.min(hw / Math.abs(dx || 1e-6), hh / Math.abs(dy || 1e-6)); x0 = at[0] + dx * k; y0 = at[1] + dy * k; }
       const spin = fam === 'retro' ? 0 : nier ? 90 * Math.round((Math.random() - 0.5) * 4) : (Math.random() - 0.5) * 720; /* pixels never rotate; NieR turns in quarter turns */
       if (nier) {
         /* NieR: the flight is the same path on the separate translate property, falling in steps; the turn runs on the
            separate rotate property with one step per quarter turn, so every sampled angle is a multiple of 90 degrees
-           (inside one stepped transform the turn was interpolated with the flight, and pieces sat at any angle) */
+           (inside one stepped transform the turn was interpolated with the flight, and pieces sat at any angle). A
+           burst's pieces are unseen until their first step, which they take as they start (jump-start: held at their
+           start for a twelfth of the flight, they sat in a clump on the sign's words before flying) */
         const path = [[x0, y0, 1, 0], [x0 + dx * 0.85, y0 + dy * 0.85, 1, 0.38], [x0 + dx + (i % 2 ? 12 : -12), y0 + dy + fall * 0.6, 1, 0.72], [x0 + dx * 1.05, y0 + dy + fall, 0, 1]];
+        if (!small) { const f1 = 1 / 12, u = f1 / 0.38; path.splice(1, 0, [x0 + dx * 0.85 * u, y0 + dy * 0.85 * u, 1, f1]); path[0][2] = 0; }
         if (small) el.style.scale = '0.7';
-        const dur = small ? 620 + Math.random() * 240 : 1300 + Math.random() * 500, delay = small ? Math.random() * 60 : Math.random() * 160;
+        /* (from a prop, every other piece leaves on the stamp's own frame and the rest within 90 ms: one burst) */
+        const dur = small ? 620 + Math.random() * 240 : 1300 + Math.random() * 500, delay = small ? Math.random() * 60 : box ? (i % 2 ? Math.random() * 90 : 0) : Math.random() * 160;
         longest = Math.max(longest, dur + delay);
         try {
-          el.animate(path.map(([x, y, op, offset]) => ({ translate: `${x}px ${y}px`, opacity: op, offset })), { duration: dur, delay, easing: small ? 'steps(4, end)' : 'steps(12, end)', fill: 'both' });
+          el.animate(path.map(([x, y, op, offset]) => ({ translate: `${x}px ${y}px`, opacity: op, offset })), { duration: dur, delay, easing: small ? 'steps(4, end)' : 'steps(12, jump-start)', fill: 'both' });
           if (spin) el.animate([{ rotate: '0deg' }, { rotate: `${spin}deg` }], { duration: dur, delay, easing: `steps(${Math.abs(spin) / 90}, end)`, fill: 'both' });
         } catch (_) {}
         continue;
@@ -595,7 +613,16 @@
   };
 
   /* ---------------------------------------------------------------- the Created act (NieR) */
-  const CA = { land: 560, bow: 600, stamp: 1160 };
+  /* Its beats follow the picture's own clock, not timers from the call: the units' glide down and the sign's lowering
+     are the scene's CSS (a transition and an entrance), which start with the frame after the refresh that turned the
+     scene to done, a few hundred ms after the call on a slow frame, so timers from the call played the landing and
+     the celebration that long before their pictures (films: celebrate 200-350 ms ahead of the stamp). The units' glide
+     ending (transitionend) lands them: `land`, and their bow 40 ms after; the sign's lowering ending (animationend)
+     shows the stamp's frame, and 90 ms later its ink block lands in one beat with the celebration: `celebrate`, joy,
+     the lock-on on the sign and the confetti from behind it. Each beat also has a timer, late, in case its event never
+     comes (nothing to glide, a re-render). The stamp is drawn shown, and is held back (.o55-stamp-wait, 30-art.css)
+     only while the act runs, so any other drawing of the scene (Reduced Motion, a reopened window) shows it stamped. */
+  const CA = { land: 560, bow: 40, stamp: 1160, ink: 90, late: 500 };
   A.createdAct = function createdAct(host, o) {
     o = o || {};
     const svg = sceneSvg(host);
@@ -605,25 +632,41 @@
     snapSvg(svg);
     const p = perf(svg, 'createdAct'), hs = units(svg), sign = item(svg, 'sign');
     if (o.name && sign) relabel(svg, sign, o.name);
-    const signAt = () => { const m = /translate\(\s*(-?[\d.]+)px,\s*(-?[\d.]+)px\)/.exec(sign ? sign.style.transform : ''); return m ? [+m[1], +m[2]] : [240, 68]; };
+    const shown = () => { if (sign) sign.classList.remove('o55-stamp-wait', 'o55-stamp-frame'); };
     let stamped = false;
     const stamp = () => {
       if (stamped) return; stamped = true;
-      hs.forEach(unbow);
+      shown(); hs.forEach(unbow);
       if (!acts(svg)) { SND('celebrate'); return; }
       hs.forEach((g, i) => joy(g, 620, i * 60));
       if (A.rig) A.rig.cheer(svg, 'all', { hop: 8, dur: 360, stagger: 60, steps: 2, arm: 0.6, lean: 0 });
       if (sign) lockOn(svg, sign, 0);
-      confetti(svg, 'nier', signAt(), 46, false, true);
+      confetti(svg, 'nier', [240, 68], 46, false, true, sign ? { from: sign } : null);
       SND('celebrate', { pan: 0 });
     };
     p.end(stamp);
     if (!acts(svg)) { p.finish(); return p.promise; }
     const now = since(svg), t = (ms) => Math.max(0, ms - now);
-    if (now < CA.land + 100) p.at(t(CA.land), () => SND('land', { voice: 1, pan: 0 }));
-    if (now < CA.stamp - 240) p.at(t(CA.bow), () => { hs.forEach((g) => dip(p, g, 0)); });
-    p.at(t(CA.stamp), stamp);
-    p.at(t(CA.stamp) + 640, () => p.finish());
+    /* a beat on its picture's event, or on its timer when the event is late; once only */
+    const on = (el, type, name, ms, fn) => {
+      let done = false;
+      const go = () => { if (done || p.done) return; done = true; if (el) el.removeEventListener(type, ev); fn(); };
+      const ev = (e) => { if (e.target === el && (e.animationName === name || e.propertyName === name)) go(); };
+      if (el) el.addEventListener(type, ev);
+      p.at(ms, go);
+      p.end(() => { if (el) el.removeEventListener(type, ev); });
+    };
+    if (now < CA.land + 100) {
+      on(item(svg, 'h1') || hs[0], 'transitionend', 'transform', t(CA.land) + CA.late, () => {
+        SND('land', { voice: 1, pan: 0 });
+        p.at(CA.bow, () => hs.forEach((g) => dip(p, g, 0)));
+      });
+    }
+    if (sign) sign.classList.add('o55-stamp-wait');
+    on(sign && sign.querySelector(':scope > .o55-in'), 'animationend', 'o55-nier-hang', now < CA.stamp ? t(CA.stamp) + CA.late : 0, () => {
+      if (sign) { sign.classList.remove('o55-stamp-wait'); sign.classList.add('o55-stamp-frame'); }
+      p.at(CA.ink, () => { stamp(); p.at(640, () => p.finish()); });
+    });
     return p.promise;
   };
   /* the name on the sign, when the scene was drawn without it (a caller that does not pass params.name): the sign is
