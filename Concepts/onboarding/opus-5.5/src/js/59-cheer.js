@@ -328,10 +328,11 @@
     const order = (o.order || ['h1', 'h0', 'h2']).map((k) => item(svg, k)).filter((g) => g && ens.includes(g)), gap = o.gap == null ? 120 : o.gap;
     const you = item(svg, 'you'), link = item(svg, 'link'), signal = o.signal !== false && !!you;
     /* the entrance each unit had (CSS) is ended where it stands, so it never plays again over the fly-in */
+    const handTie = (g) => svg.querySelector(`.o55-tie-hand[data-to^="${keyOf(g)}:"]`);
     const ended = () => ens.forEach((g) => { const el = inner(g); if (el && el.getAnimations) el.getAnimations().forEach((a) => { if (typeof CSSAnimation !== 'undefined' && a instanceof CSSAnimation) a.finish(); }); });
     p.end(() => {
       wrap.classList.remove('o55-ens-hold'); ended();
-      ens.forEach((g) => g.classList.remove('o55-nier-flyin', 'o55-rest'));
+      ens.forEach((g) => { g.classList.remove('o55-nier-flyin', 'o55-rest'); const ht = handTie(g); if (ht) ht.classList.remove('o55-nier-tiewait'); });
       if (you) you.removeAttribute('data-arm');
       if (link) link.classList.remove('o55-nier-linkdark', 'o55-nier-linkrun');
       if (A.rig) { A.rig.finish(svg, { drop: 0 }); A.rig.watch(svg, { settle: 260 }); }
@@ -341,7 +342,7 @@
     if (wasHeld) {
       if (you) you.setAttribute('data-arm', 'dn');
       if (link) link.classList.add('o55-nier-linkdark');
-      ens.forEach((g) => g.classList.add('o55-nier-flyin', 'o55-rest'));
+      ens.forEach((g) => { g.classList.add('o55-nier-flyin', 'o55-rest'); const ht = handTie(g); if (ht) ht.classList.add('o55-nier-tiewait'); });
     }
     let t = 0;
     if (signal && wasHeld) {
@@ -358,6 +359,7 @@
         const el = inner(g), fly = parseFloat(el && el.style.getPropertyValue('--o55-fly')) || -91, sm = /scale\(\s*([\d.]+)\)/.exec(g.style.transform || ''), down = 2.5 / (sm ? +sm[1] || 1 : 1), d = t + i * gap;
         p.anim(el, [{ transform: `translateY(${fly}px)`, visibility: 'hidden', easing: 'steps(6, jump-start)' }, { transform: 'translateY(0px)', visibility: 'visible', offset: 420 / 560, easing: 'steps(1, end)' },
           { transform: `translateY(${down.toFixed(2)}px)`, visibility: 'visible', offset: 490 / 560, easing: 'steps(1, end)' }, { transform: 'translateY(0px)', visibility: 'visible' }], { duration: 560, delay: d, fill: 'both' });
+        p.at(d, () => { const ht = handTie(g); if (ht) ht.classList.remove('o55-nier-tiewait'); });
         p.at(d + 420, () => { g.classList.remove('o55-nier-flyin'); SND('land', voiceOf(g)); });
       });
       wrap.classList.remove('o55-ens-hold'); ended();
@@ -558,8 +560,9 @@
     const rise = () => { if (rose) return; rose = true; hs.forEach(unbow); if (pt) pt.classList.remove('o55-arm-stand'); sting(); };
     p.end(rise);
     if (!acts(svg)) { p.finish(); return p.promise; }
-    /* until the rise the unit that will point stands like the others (the curtain opens on a line) */
-    if (pt && pose(pt) === 'point' && has(pt, '.nv-alt-stand')) pt.classList.add('o55-arm-stand');
+    /* until the rise the unit that will point stands like the others (the curtain opens on a line); asked for after the
+       scene arrived, it keeps pointing (no arm vanishes on screen) */
+    if (pt && pose(pt) === 'point' && has(pt, '.nv-alt-stand') && since(svg) < 300) pt.classList.add('o55-arm-stand');
     /* on the scene's own clock; asked late (after 800 ms), the bows start 200 ms from now */
     const s0 = since(svg), shift = s0 > CC.bows[0] - 200 ? s0 - (CC.bows[0] - 200) : 0, t = (ms) => Math.max(0, ms - s0 + shift);
     hs.forEach((g, i) => { const d = t(CC.bows[i] != null ? CC.bows[i] : CC.bows[2] + (i - 2) * 120); dip(p, g, d); p.at(d, () => SND('bow', Object.assign(voiceOf(g), { chapter: chord }))); });

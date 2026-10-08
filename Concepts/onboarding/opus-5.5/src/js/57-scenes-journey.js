@@ -141,7 +141,7 @@
      when the screen does not pass it), lowered on its own two strings at 840 ms and stamped CREATED at 1160 ms (its
      entrance and the stamp's are CSS, so the end state needs nothing else). O55.art.createdAct adds the landing, the
      bow, the joy, the lock-on and the confetti from the sign. */
-  const LEVEL = 40;
+  const LEVEL = 40, BAND_SIGN = 214;
   function creatingNier(ctx, m, pr, step, total, done) {
     const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }];
     const online = done ? 3 : Math.min(3, Math.ceil((step * 3) / total));
@@ -151,7 +151,8 @@
     });
     if (done) {
       const name = String(pr.name || '').trim().slice(0, 22);
-      items.push({ key: 'sign', prop: 'badge', x: 240, y: m.signY || 68, s: 1.4, layer: 'front', anim: 'hang', delay: 840, dur: 320,
+      /* (a narrow window shows the scene's band, y 170..450: there the sign hangs inside it, above the heads) */
+      items.push({ key: 'sign', prop: 'badge', x: 240, y: ctx.band ? BAND_SIGN : m.signY || 68, s: 1.4, layer: 'front', anim: 'hang', delay: 840, dur: 320,
         opts: { label: name || L('ready', 'ready'), accent: true, hang: -30, stamp: NT('stamp', 'created') } });
     }
     return items;
@@ -180,7 +181,7 @@
       /* NieR's troupe stands in a line for its curtain call (O55.art.curtainCall bows it and rises it), and the unit
          nearest the pane ends pointing at it: the next thing to press is the Guided Tour */
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: ctx.family === 'nier' ? ['stand', 'wave', 'point'] : ['bow', 'wave', 'bow'] }));
-      items.push({ key: 'sign', prop: 'badge', x: 240, y: A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
+      items.push({ key: 'sign', prop: 'badge', x: 240, y: ctx.family === 'nier' && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
       items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' }); /* it opens on the troupe */
       return items;

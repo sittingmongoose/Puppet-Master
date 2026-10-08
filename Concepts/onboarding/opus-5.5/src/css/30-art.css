@@ -73,7 +73,7 @@
 html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-f-nier .o55-an:not(.o55-an-drop):not(.o55-an-rise):not(.o55-an-hang) { animation-name: o55-fade; animation-timing-function: steps(4, end); }
 /* a sign hung from the top of the frame is lowered on its own strings from above it (NieR's Created act) */
 .o55-f-nier .o55-an-hang { animation-name: o55-nier-hang; animation-timing-function: steps(6, end); --dur: 320ms; }
-@keyframes o55-nier-hang { from { transform: translateY(-58px); } to { transform: none; } }
+@keyframes o55-nier-hang { from { transform: translateY(-84px); } to { transform: none; } }
 @keyframes o55-nier-in { 0% { opacity: 0; } 20% { opacity: 0.6; } 35% { opacity: 0.1; } 55% { opacity: 1; } 70% { opacity: 0.5; } 85%, 100% { opacity: 1; } }
 @keyframes o55-nier-drop { from { opacity: 0; transform: translateY(-36px); } 17% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-nier-rise { from { opacity: 0; transform: translateY(12px); } 20% { opacity: 1; } to { opacity: 1; transform: none; } }
@@ -194,6 +194,8 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) :is(.o55-nier-mapl
    short strings; a family's control bar, strings and helpers wait unseen at the start of their own entrance */
 .o55-ens-hold[data-family="nier"] .o55-ens-h > .o55-in { animation: none !important; visibility: hidden; transform: translateY(var(--o55-fly, -91px)); }
 .o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot, .o55-f-nier .o55-nier-flyin .nv-knot { visibility: visible; }
+/* (a held unit's raised hand has nothing to hang from its string yet: that string shows when the unit flies in) */
+.o55-ens-hold[data-family="nier"] .o55-tie-hand, .o55-f-nier .o55-tie-hand.o55-nier-tiewait { visibility: hidden; }
 .o55-ens-hold:not([data-family="nier"]) :is(.o55-ens-bar, .o55-ens-h) > .o55-in { animation-play-state: paused !important; }
 .o55-ens-hold:not([data-family="nier"]) :is(.o55-ens-bar, .o55-ens-h, .o55-ties) { visibility: hidden; }
 /* Creating: a unit comes online as the work goes on (57-scenes-journey.js): its rest dashes hold a moment, then the scan
@@ -205,8 +207,8 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) :is(.o55-nier-mapl
 @keyframes o55-nier-on { from { opacity: 0; } to { opacity: 1; } }
 @keyframes o55-nier-boot { 0% { opacity: 0; transform: none; } 24% { opacity: 1; transform: none; } 38% { opacity: 1; transform: translateX(3.6px); } 52% { opacity: 1; transform: translateX(7.2px); } 66% { opacity: 1; transform: translateX(10.8px); } 80% { opacity: 1; transform: translateX(14.4px); } 92%, 100% { opacity: 1; transform: none; } }
 /* the stamp on the name sign inverts onto it in two steps once the sign has landed (its frame, then the filled block) */
-.o55-f-nier .o55-nier-stamp .nv-stamp-frame { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms)) both; }
-.o55-f-nier .o55-nier-stamp .nv-stamp-fill { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) + 90ms) both; }
+.o55-f-nier .o55-nier-stamp .nv-stamp-frame { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) - 40ms) both; }
+.o55-f-nier .o55-nier-stamp .nv-stamp-fill { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) + 50ms) both; }
 /* a drawing that never idles (A.mount ctx.still: the look screen's NieR thumbnail while NieR Mode is off) */
 .o55-still :is(.o55-amb, .o55-ring, .o55-gl, .o55-nier-scan, .o55-nier-mk, .o55-nier-blink, .o55-led, .o55-px-blink, .o55-px-twinkle, .o55-star, .o55-core, .o55-ripple, .o55-pulse, .o55-beam) { animation: none !important; }
 @keyframes o55-sway { from { transform: rotate(-1.4deg); } to { transform: rotate(1.4deg); } }

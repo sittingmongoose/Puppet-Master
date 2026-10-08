@@ -277,6 +277,8 @@
     if (ctx && ctx.hold) { wrap.classList.add('o55-hold'); if (current) current.classList.add('o55-wait'); }
     host.appendChild(wrap);
     O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
+    /* a held ensemble that nobody lowers in (its caller failed or never came) is lowered in by itself */
+    if (ctx && ctx.ensembleHold) O55.motion.after(9000, () => { if (wrap.isConnected && wrap.classList.contains('o55-ens-hold') && A.troupe) A.troupe.enter(host); });
     if (A.rig) A.rig.watch(wrap.querySelector('svg'));
     return wrap;
   };
