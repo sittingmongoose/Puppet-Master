@@ -108,6 +108,7 @@
        in_progress at once — the genuine concurrency TDR-003 requires. */
     Q({ todo_id:'tq-04', parent_todo_id:'tq-p2', display_order:2, depends_on:['tq-03'],
       title:'Inspect write amplification under the new index',
+      explicit_assignment_label:'Query Analyzer',
       expected_outcome:'Write amplification for the new index is measured and compared against the accepted 8% threshold from the Goal.',
       goal_id:'goal-query-perf', parallel_group_id:'pg-index-validate',
       active_work_ids:['work-tq04-wamp'], status:'in_progress', revision:2,
@@ -141,6 +142,7 @@
       transitions:[ TR('tq-p3','pending','blocked','child_rollup','rollup:tq-p3',1,'2026-08-27T10:05:00Z','A required child is blocked and nothing under this parent is running.') ] }),
     Q({ todo_id:'tq-07', parent_todo_id:'tq-p3', display_order:1,
       title:'Bound the event payload column size',
+      explicit_assignment_label:'Schema Reviewer',
       expected_outcome:'The event payload column enforces a maximum size, and existing rows already comply with it.',
       blocked_reason_ref:'Production schema modification requires an explicit user override before this item can run.',
       status:'blocked', revision:3, started_at:'2026-08-27T09:40:00Z',
