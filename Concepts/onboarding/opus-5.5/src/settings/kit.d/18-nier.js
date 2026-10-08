@@ -25,7 +25,8 @@
      PARTS             -> [{ key, label, group }] in canonical order (groups: Look, Motion, Sound & voice, Pointer, World)
      keyFor(label)     -> key, or null;  labelFor(key) -> label, or null
      set(on, opts?)    -> commits general.visual.nier-mode through the real settings path; returns false if refused;
-                          opts.sound === false keeps the transition quiet (the caller plays its own sound)
+                          opts.sound === false keeps the transition quiet (the caller plays its own sounds: the hum
+                          at 'start', wake at 'reveal'); opts.from and opts.onReveal(phase) as for preview() below
      setParts(keys)    -> commits general.visual.nier-parts (labels, in PARTS order); unknown keys are ignored
      background()      -> the chosen background option label ("City Ruins", ..., "Follow the page")
      setBackground(l)  -> commits general.visual.nier-background (one of BACKGROUNDS); BACKGROUNDS -> the eight labels
@@ -64,8 +65,9 @@
                           is quiet), instant (true: this change repaints at once, as a resumed onboarding does), and for
                           a switch's moment inside the window (kit.d/19-nier-parts.js, hero H1): from (the control, or a
                           function returning it, the cover grows from and folds back into), lines ([{ text, stamp }]
-                          for the check list; the cover words its own when absent) and onReveal(phase) ('reveal' as the
-                          window shows again, 'gone' when the cover has left). Returns a promise that settles at 'gone'
+                          for the check list; the cover words its own when absent) and onReveal(phase) ('start' on the
+                          cover's first frame, 'reveal' as the window shows again, 'gone' when the cover has left; each
+                          once and in that order, also when nothing animates). Returns a promise that settles at 'gone'
                           (after the repaint). A Project switch keeps it (every reader asks the preview first), which is
                           how the look survives Creating.
      previewing()      -> a copy of the preview { on?, parts?, background? } (loose: true once lingering), or null
@@ -273,9 +275,21 @@ function o55NierPaint(want) {
 function o55NierRun(reason, opts) {
   const o = opts || o55NierNextRun || {};
   if (!opts) o55NierNextRun = null;
+  /* the caller hears every phase once and in order (start, reveal, gone), whatever the transition reports: one that
+     skips a phase, throws, or never runs (nothing left to change) still reaches 'gone' */
+  const PHASES = ['start', 'reveal', 'gone'], told = new Set();
+  const tell = phase => {
+    if (typeof o.onReveal !== 'function' || told.has(phase)) return;
+    for (const p of PHASES) {
+      if (told.has(p)) continue;
+      told.add(p);
+      try { o.onReveal(p); } catch (e) { /* the caller's beat never stops the transition */ }
+      if (p === phase) break;
+    }
+  };
   const step = async () => {
     const want = o55NierWanted();
-    if (want === o55NierIsPainted()) { o55NierWriteAttrs(); o55NierEmit(); return; }
+    if (want === o55NierIsPainted()) { o55NierWriteAttrs(); o55NierEmit(); tell('gone'); return; }
     let done = false;
     /* the latest request is painted, so a change asked for while this transition plays is never undone by it; the
        parts hear 'on' / 'off' at once, so they install (or leave) under the transition's cover */
@@ -286,10 +300,10 @@ function o55NierRun(reason, opts) {
     if (o.sound === false) info.sound = false;
     if (o.from) info.from = o.from;
     if (Array.isArray(o.lines) && o.lines.length) info.lines = o.lines.slice();
-    if (typeof o.onReveal === 'function') info.onReveal = o.onReveal;
+    if (typeof o.onReveal === 'function') info.onReveal = phase => { if (PHASES.includes(phase)) tell(phase); };
     try { await o55NierTransition(repaint, info); }
     catch (e) { /* the transition is decoration; the repaint is not */ }
-    finally { repaint(); o55NierEmit(); }
+    finally { repaint(); o55NierEmit(); tell('gone'); }
     if (o55NierWanted() !== o55NierPainted) o55NierRun();
   };
   o55NierChain = o55NierChain.then(step, step);
@@ -453,7 +467,8 @@ function o55NierCommitRow(id, value) {
   return true;
 }
 function o55NierSet(on, opts) {
-  o55NierNextRun = opts && opts.sound === false ? { sound: false } : null;
+  const o = opts || {};
+  o55NierNextRun = o.sound === false || o.from || typeof o.onReveal === 'function' ? { sound: o.sound, from: o.from, onReveal: o.onReveal } : null;
   const ok = o55NierCommitRow('general.visual.nier-mode', !!on);
   if (!ok) o55NierNextRun = null;
   return ok;

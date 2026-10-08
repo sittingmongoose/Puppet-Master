@@ -110,6 +110,18 @@
     o.connect(f); f.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.66);
     blip(c, bus, t + (up ? 0.5 : 0.02), up ? 1760 : 880, 0.12, 0.03);
   }
+  /* the world waking: an A minor "aah" (A3 E4 A4, a soft sawtooth pair per note through a low-pass that opens) and one
+     bell at E6; about 1.6 s (O55's NieR kit plays its own, fuller 'wake') */
+  function wakeChord(c, bus, t) {
+    [220, 329.63, 440].forEach((f, i) => {
+      const lp = c.createBiquadFilter(), g = c.createGain();
+      lp.type = 'lowpass'; lp.Q.value = 0.7; lp.frequency.setValueAtTime(500, t); lp.frequency.linearRampToValueAtTime(1500, t + 0.5);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.016 - i * 0.003, t + 0.28); g.gain.setValueAtTime(0.016 - i * 0.003, t + 0.9); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+      lp.connect(g); g.connect(bus);
+      [-6, 6].forEach(cents => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = cents; o.connect(lp); o.start(t); o.stop(t + 1.65); });
+    });
+    blip(c, bus, t + 0.04, 1318.5, 1.1, 0.022);
+  }
   const SFX = {
     tick: (c, b, t) => blip(c, b, t, 2640, 0.026, 0.028),
     select: (c, b, t) => { blip(c, b, t, 1480, 0.05, 0.045, 'triangle'); blip(c, b, t + 0.038, 2220, 0.07, 0.035); },
@@ -118,14 +130,18 @@
     pod: (c, b, t) => { blip(c, b, t, 1760, 0.05, 0.03); blip(c, b, t + 0.06, 2350, 0.05, 0.026); blip(c, b, t + 0.12, 1975, 0.09, 0.026); },
     alert: (c, b, t) => { blip(c, b, t, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.1, 523, 0.09, 0.05, 'triangle'); blip(c, b, t + 0.2, 392, 0.2, 0.05, 'triangle'); },
     sweepOn: (c, b, t) => sweepTone(c, b, t, true),
-    sweepOff: (c, b, t) => sweepTone(c, b, t, false)
+    sweepOff: (c, b, t) => sweepTone(c, b, t, false),
+    wake: wakeChord
   };
   /* which of these matter when two sounds meet (O55.sound keeps the more important one) */
-  const SFX_PRIO = { tick: 20, select: 45, confirm: 60, cancel: 55, pod: 48, alert: 84, sweepOn: 93, sweepOff: 93 };
-  /* the reboot's hum is O55's own NieR moment when O55 is present (its NieR kit plays the hum, the ticks and the
-     choir): one designed sound, and a caller that also plays nierOn or nierOff for the same toggle merges into it
-     instead of a second hum (O55.sound keeps one of two equal events in the same moment) */
-  const O55_EVENT = { sweepOn: 'nierOn', sweepOff: 'nierOff' };
+  const SFX_PRIO = { tick: 20, select: 45, confirm: 60, cancel: 55, pod: 48, alert: 84, sweepOn: 93, sweepOff: 93, wake: 93 };
+  /* the reboot's hum and the world waking are O55's own NieR moments when O55 is present (its NieR kit plays the hum
+     and the ticks as nierOn, the choir as wake): one designed sound each, and a caller that also plays nierOn or
+     nierOff for the same toggle merges into it instead of a second hum (O55.sound keeps one of two equal events in the
+     same moment). wake takes the look painted when it plays: NieR's choir after turning on, the family's own reveal
+     after turning off. */
+  const O55_EVENT = { sweepOn: 'nierOn', sweepOff: 'nierOff', wake: 'wake' };
+  const O55_KIT = { sweepOn: 'nier', sweepOff: 'nier' };
   /* force: the reboot plays while NieR Mode is still off (turning on), so it asks for the installed part instead */
   function sfx(name, force) {
     if (!(force ? installed('sounds') : live.has('sounds')) || !SFX[name]) return false;
@@ -136,7 +152,7 @@
     if (!soundAllowed()) return false;
     const O = o55Sound();
     let ok = false;
-    if (O && O55_EVENT[name] && typeof O.play === 'function') ok = O.play(O55_EVENT[name], { kit: 'nier' });
+    if (O && O55_EVENT[name] && typeof O.play === 'function') ok = O.play(O55_EVENT[name], O55_KIT[name] ? { kit: O55_KIT[name] } : {});
     else if (O) ok = O.synth((c, out, t) => SFX[name](c, busFor(c, out), t), { force: !!force, name: 'nier:' + name, priority: SFX_PRIO[name] });
     else {
       const c = audio(); if (!c) return false;
@@ -186,12 +202,13 @@
     if (!t) { if (!curHide && curT) curHide = window.setTimeout(() => { curHide = 0; curOff(); }, 90); return; }
     if (curHide) { window.clearTimeout(curHide); curHide = 0; }
     curT = t; curPlace(t);
-    sfx('tick');
+    /* (the repaint under the reboot cover redraws what the pointer rests on: no tick for a cursor that is not shown) */
+    if (!coverUp) sfx('tick');
   }
   function curFocus(e) {
     const t = targetOf(e); if (!t) return;
     let fv = false; try { fv = e.target.matches(':focus-visible'); } catch (x) { fv = false; }
-    if (fv) { curT = t; curPlace(t); sfx('tick'); }
+    if (fv) { curT = t; curPlace(t); if (!coverUp) sfx('tick'); }
   }
   PARTS.cursor = {
     on() {
@@ -896,21 +913,48 @@
     await slats.done;
   }
 
+  /* The moment's own sounds, unless its caller plays them (info.sound false: the onboarding window's NieR checkbox and
+     the look menus play nierOn / nierOff and wake through O55 themselves): the hum (nierOn or nierOff) as the cover
+     starts, and the world waking (wake: NieR's choir after turning on, the look's own reveal after turning off) as the
+     tear-out begins. Whoever plays the hum plays the wake, so it sounds once. wake never follows the hum by less than
+     120 ms (an instant change: Reduced Motion, no Reboot moment part), or the two would meet as one moment and the
+     wake be dropped; it is a state sound and always plays (hero spec rules 5 and 10). */
+  function rbSounds(info, on) {
+    const own = info.sound !== false;
+    let humAt = -1e9, woke = false;
+    return {
+      hum() { if (own && sfx(on || info.reason === 'replay' ? 'sweepOn' : 'sweepOff', true)) humAt = performance.now(); },
+      wake() {
+        if (!own || woke) return;
+        woke = true;
+        const wait = humAt + 120 - performance.now();
+        if (wait > 0) window.setTimeout(() => sfx('wake', true), wait); else sfx('wake', true);
+      }
+    };
+  }
+
   let rebooting = false;
   async function reboot(repaint, info) {
     info = info || {};
     const on = !!info.on, reason = info.reason;
     /* a change made inside the onboarding window plays inside it (info.within, the window): the app beneath holds still */
     const within = info.within && info.within.isConnected ? info.within : null;
-    const seen = new Set(), cue = phase => { if (seen.has(phase)) return; seen.add(phase); try { if (typeof info.onReveal === 'function') info.onReveal(phase); } catch (e) { /* the caller's beat never stops the moment */ } };
+    const snd = rbSounds(info, on);
+    const seen = new Set(), cue = phase => {
+      if (seen.has(phase)) return; seen.add(phase);
+      if (phase === 'reveal') snd.wake();
+      try { if (typeof info.onReveal === 'function') info.onReveal(phase); } catch (e) { /* the caller's beat never stops the moment */ }
+    };
     let painted = false;
     const paint = () => { if (painted) return; painted = true; repaint(); sync(); };
-    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) { paint(); cue('reveal'); cue('gone'); return; }
+    if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) {
+      if (!rebooting && !document.hidden) snd.hum();
+      paint(); cue('reveal'); cue('gone'); return;
+    }
     rebooting = true;
     const ctx = { cover: null, paint, cue };
     try {
-      /* info.sound false: the caller plays its own (the onboarding's NieR checkbox plays nierOn / nierOff) */
-      if (info.sound !== false) sfx(on || reason === 'replay' ? 'sweepOn' : 'sweepOff', true);
+      snd.hum();
       const folding = !on && reason !== 'replay';
       if (within) await rebootWithin(ctx, info, within, folding); else await rebootPage(ctx, info, folding);
     } catch (e) { /* the moment is decoration; the repaint is not */ } finally {

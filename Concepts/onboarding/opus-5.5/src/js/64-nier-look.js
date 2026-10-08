@@ -73,8 +73,26 @@
   function toggle(source, el) {
     const n = N(); if (!n) return false;
     const next = !state().on;
-    if (!inWindow()) { heavy(4500); O55.sound.play(next ? 'nierOn' : 'nierOff'); return n.set(next, { sound: false }); }
+    if (!inWindow()) return pageFlip(n, next, el);
     return flip(next, el);
+  }
+  /* after setup (the tour's look menu): Settings' page-wide moment (from: the row pressed), with the sounds played
+     here in O55's voice (they follow the tour's own sound control): the hum, then the world waking (NieR's choir, or
+     the look's own reveal turning off) as the cover tears out. Never closer than 120 ms to the hum (an instant change
+     reveals at once), and not at all once the onboarding window has opened over it (its own opening speaks then). */
+  function pageFlip(n, next, el) {
+    heavy(4500);
+    O55.sound.play(next ? 'nierOn' : 'nierOff');
+    const at = O55.motion.now();
+    let woke = false;
+    const onReveal = (phase) => {
+      if (phase !== 'reveal' || woke) return;
+      woke = true;
+      if (document.documentElement.hasAttribute('data-o55-open')) return;
+      const wait = at + 120 - O55.motion.now();
+      if (wait > 0) O55.motion.after(wait, () => O55.sound.play('wake')); else O55.sound.play('wake');
+    };
+    return n.set(next, { sound: false, from: el && el.isConnected ? el : null, onReveal });
   }
 
   /* ---------------------------------------------------------------- H1: "The little world opens" / "Back into the box"
