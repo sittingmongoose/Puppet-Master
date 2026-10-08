@@ -201,11 +201,11 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="ticks"]) :is(.o55-nier-mapl
 /* Creating: a unit comes online as the work goes on (57-scenes-journey.js): its rest dashes hold a moment, then the scan
    notch shows and sweeps the visor once (4 steps out, one back). No fill: once done, the unit's own state rules (a
    cheer's joy hides the scan again). The same boot is played by Web Animations in 59-cheer.js (BOOT). */
-.o55-f-nier .o55-nier-online .nv-rest { animation: o55-nier-off 160ms steps(1, end); }
-.o55-f-nier .o55-nier-online .nv-scan { animation: o55-nier-boot 680ms steps(1, end); }
+.o55-f-nier .o55-nier-online .nv-rest { animation: o55-nier-off 130ms steps(1, end); }
+.o55-f-nier .o55-nier-online .nv-scan { animation: o55-nier-boot 520ms steps(1, end); }
 @keyframes o55-nier-off { from { opacity: 1; } to { opacity: 0; } }
 @keyframes o55-nier-on { from { opacity: 0; } to { opacity: 1; } }
-@keyframes o55-nier-boot { 0% { opacity: 0; transform: none; } 24% { opacity: 1; transform: none; } 38% { opacity: 1; transform: translateX(3.6px); } 52% { opacity: 1; transform: translateX(7.2px); } 66% { opacity: 1; transform: translateX(10.8px); } 80% { opacity: 1; transform: translateX(14.4px); } 92%, 100% { opacity: 1; transform: none; } }
+@keyframes o55-nier-boot { 0% { opacity: 0; transform: none; } 25% { opacity: 1; transform: none; } 37.5% { opacity: 1; transform: translateX(3.6px); } 50% { opacity: 1; transform: translateX(7.2px); } 62.5% { opacity: 1; transform: translateX(10.8px); } 75% { opacity: 1; transform: translateX(14.4px); } 87.5%, 100% { opacity: 1; transform: none; } }
 /* the stamp on the name sign inverts onto it in two steps once the sign has landed (its frame, then the filled block) */
 .o55-f-nier .o55-nier-stamp .nv-stamp-frame { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) - 40ms) both; }
 .o55-f-nier .o55-nier-stamp .nv-stamp-fill { animation: o55-nier-on 40ms steps(1, end) calc(var(--d, 0ms) + var(--dur, 320ms) + 50ms) both; }

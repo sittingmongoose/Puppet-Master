@@ -119,8 +119,10 @@
       hs.forEach((g) => { const t = tied(svg, g.getAttribute('data-key')); joy(g, t ? 1300 : 900, (t ? ti++ : fi++) * 110); });
       const mid = hs.find((g) => g.getAttribute('data-key') === 'h1'); if (mid) { lockOn(svg, mid, 110); glance(svg, mid); }
     }
-    if (o.confetti !== false) confetti(svg, fam, o.at || [240, 300], o.count || 34, false, !!o.down);
-    if (o.sound !== false) O55.sound.play('celebrate');
+    const at = o.at || [240, 300];
+    if (o.confetti !== false) confetti(svg, fam, at, o.count || 34, false, !!o.down);
+    /* placed where it bursts, as the cheers are (not toward the last click) */
+    if (o.sound !== false) O55.sound.play('celebrate', { pan: Math.round(Math.max(-0.7, Math.min(0.7, ((at[0] - 240) / 240) * 0.7)) * 100) / 100 });
     return true;
   };
 
@@ -290,15 +292,17 @@
   /* a value held in steps: keyframes that hold each value for `ms` (no interpolation) */
   const held = (prop, values) => values.map((v, i) => ({ [prop]: v, offset: i / values.length, easing: 'steps(1, end)' })).concat([{ [prop]: values[values.length - 1], offset: 1 }]);
   /* the visor boot: rest dashes for 160 ms, then the scan notch shows and sweeps once (the CSS o55-nier-boot) */
-  const BOOT = [{ opacity: 0, transform: 'none', easing: 'steps(1, end)' }, { opacity: 1, transform: 'none', offset: 0.24, easing: 'steps(1, end)' },
-    { opacity: 1, transform: 'translateX(3.6px)', offset: 0.38, easing: 'steps(1, end)' }, { opacity: 1, transform: 'translateX(7.2px)', offset: 0.52, easing: 'steps(1, end)' },
-    { opacity: 1, transform: 'translateX(10.8px)', offset: 0.66, easing: 'steps(1, end)' }, { opacity: 1, transform: 'translateX(14.4px)', offset: 0.8, easing: 'steps(1, end)' },
-    { opacity: 1, transform: 'none', offset: 0.92 }, { opacity: 1, transform: 'none' }];
+  const BOOT = [{ opacity: 0, transform: 'none', easing: 'steps(1, end)' }, { opacity: 1, transform: 'none', offset: 0.25, easing: 'steps(1, end)' },
+    { opacity: 1, transform: 'translateX(3.6px)', offset: 0.375, easing: 'steps(1, end)' }, { opacity: 1, transform: 'translateX(7.2px)', offset: 0.5, easing: 'steps(1, end)' },
+    { opacity: 1, transform: 'translateX(10.8px)', offset: 0.625, easing: 'steps(1, end)' }, { opacity: 1, transform: 'translateX(14.4px)', offset: 0.75, easing: 'steps(1, end)' },
+    { opacity: 1, transform: 'none', offset: 0.875 }, { opacity: 1, transform: 'none' }];
   function bootVisor(p, g, delay, fill) {
-    p.anim(g.querySelector('.nv-rest'), [{ opacity: 1 }, { opacity: 0 }], { duration: 163, delay, easing: 'steps(1, end)', fill: fill || 'backwards' });
-    p.anim(g.querySelector('.nv-scan'), BOOT, { duration: 680, delay, fill: fill || 'backwards' });
+    p.anim(g.querySelector('.nv-rest'), [{ opacity: 1 }, { opacity: 0 }], { duration: 130, delay, easing: 'steps(1, end)', fill: fill || 'backwards' });
+    p.anim(g.querySelector('.nv-scan'), BOOT, { duration: 520, delay, fill: fill || 'backwards' });
     p.at(delay, () => g.classList.remove('o55-rest'));
   }
+  /* a unit's visor answers a new face at once (joy): any boot still running on it ends */
+  const visorDone = (g) => g.querySelectorAll('.nv-scan, .nv-rest').forEach((el) => { if (el.getAnimations) el.getAnimations().forEach((a) => { if (typeof CSSAnimation === 'undefined' || !(a instanceof CSSAnimation)) a.finish(); }); });
   /* the stepped head dip of a bow (the .o55-bow class holds it once dipped) */
   function dip(p, g, delay) {
     p.anim(g.querySelector('.nv-head'), [{ translate: '0px 0px' }, { translate: '0px 4px' }], { duration: 240, delay, easing: 'steps(2, jump-start)', fill: 'backwards' });
@@ -371,7 +375,7 @@
     hs.forEach((g, i) => bootVisor(p, g, t + i * 90));
     const tj = t + 300;
     hs.forEach((g, i) => p.at(tj + i * 90, () => {
-      joy(g, 620, 0); SND('cheer', voiceOf(g));
+      visorDone(g); joy(g, 620, 0); SND('cheer', voiceOf(g));
       if (A.rig && tied(svg, keyOf(g))) A.rig.cheer(svg, keyOf(g), { hop: 6, dur: 300, steps: 2, arm: 0.5, lean: 0 });
       if (keyOf(g) === 'h1') { lockOn(svg, g, 0); glance(svg, g); }
     }));
@@ -599,7 +603,7 @@
       if (A.rig) A.rig.cheer(svg, 'all', { hop: 8, dur: 360, stagger: 60, steps: 2, arm: 0.6, lean: 0 });
       if (sign) lockOn(svg, sign, 0);
       confetti(svg, 'nier', signAt(), 46, false, true);
-      SND('celebrate');
+      SND('celebrate', { pan: 0 });
     };
     p.end(stamp);
     if (!acts(svg)) { p.finish(); return p.promise; }
