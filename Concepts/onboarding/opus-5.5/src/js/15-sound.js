@@ -53,7 +53,8 @@
      suppress(ms) / suppressed()   holds the NieR document-wide menu blips (a tour-driven synthetic click).
      CATALOG                       [{ id, name, title, about, style, kit, event, variant, variants, duration, featured,
                                    source }]: every take a real moment plays (title: the name without its look; about:
-                                   the moment, one plain sentence). Takes no moment reaches are not listed (RETIRED).
+                                   the moment, one plain sentence, copy soundLibrary.moments.<event>). Takes no moment
+                                   reaches are not listed (RETIRED).
      renderBuffer(kit, event, variant, opts) -> Promise<AudioBuffer>   offline, independent of mute.
      renderWav(kit, event, seconds?, variant?) -> Promise<{ base64, peak, peakDb, rmsDb, seconds }>
      preview(id, { volume? }) -> Promise<{ ok, id, duration }>   one CATALOG entry now (an explicit gesture: not muted).
@@ -267,24 +268,33 @@
     const g = envGain(ctx, t0, gain, 0.001, dur, 'hold');
     osc.connect(f); f.connect(g); g.connect(out); osc.start(t0); osc.stop(t0 + dur + 0.05);
   }
-  /* a plucked string (Karplus-Strong): an 8 ms burst of noise fed into a delay line one period long that loses a
-     little on every pass through a low-pass, so it rings at the note and darkens as it dies. The loss per pass is set
-     so every note rings `ring` seconds (the same length at any pitch); the low-pass's own delay is taken out of the
-     line so the note stays in tune. Rendered once per context, note and colour into a buffer and played like a sample:
-     any pitch, and nothing left ringing in a feedback loop when the play is torn down. */
+  /* a plucked string (Karplus-Strong): a delay line one period long holds the string's shape (pulled aside at a point
+     near one end, a triangle, with a little low-passed noise for the fibre) and loses a little on every pass through a
+     low-pass, so it rings at the note and darkens as it dies. The loss per pass allows for the low-pass's own loss at
+     the note, so every note rings `ring` seconds (to -60 dB) at any pitch; the low-pass rises with the pitch, so a
+     high note keeps some overtones; the line is read between samples and the low-pass's own delay taken out, so the
+     note is in tune (within about 6 cents). Rendered once per context, note and colour into a buffer and played like a
+     sample: any pitch, and nothing left ringing in a feedback loop when the play is torn down. */
   const ksBufs = new WeakMap();
   function ksBuffer(ctx, f, ring, bright) {
     let m = ksBufs.get(ctx); if (!m) { m = new Map(); ksBufs.set(ctx, m); }
     const key = f.toFixed(2) + ':' + ring + ':' + bright;
     let b = m.get(key); if (b) return b;
-    const sr = ctx.sampleRate, len = Math.ceil(sr * (ring + 0.04)), a = Math.exp(-2 * Math.PI * (900 + bright * 3000) / sr);
-    const N = Math.max(2, Math.round(sr / f - a / (1 - a))), burst = Math.round(sr * 0.008), loss = Math.pow(0.001, 1 / (ring * f));
-    const line = new Float32Array(N), r = O55.util.rng('ks:' + key);
+    const sr = ctx.sampleRate, len = Math.ceil(sr * (ring + 0.04));
+    const a = Math.exp(-2 * Math.PI * Math.min(sr * 0.4, Math.max(900 + bright * 3000, f * (2.5 + bright * 5))) / sr);
+    const w0 = 2 * Math.PI * f / sr, atF = (1 - a) / Math.hypot(1 - a * Math.cos(w0), a * Math.sin(w0));
+    const D = Math.max(2, sr / f - a / (1 - a)), loss = Math.min(0.9995, Math.pow(0.001, 1 / (ring * f)) / atF);
+    const M = Math.ceil(D) + 2, line = new Float32Array(M), P0 = Math.round(D), P = Math.max(1, Math.round(P0 * 0.22));
+    const r = O55.util.rng('ks:' + key), ae = Math.exp(-2 * Math.PI * 2000 / sr);
+    let ex = 0, mean = 0;
+    for (let i = 0; i < P0; i++) { ex = (1 - ae) * (r() * 2 - 1) + ae * ex; line[i] = (i < P ? i / P : (P0 - i) / (P0 - P)) + ex * 0.6; mean += line[i] / P0; }
+    for (let i = 0; i < P0; i++) line[i] -= mean; /* no offset: a pluck, not a push */
     b = ctx.createBuffer(1, len, sr); const y = b.getChannelData(0);
-    let idx = 0, lp = 0, peak = 1e-6;
+    let w = P0 % M, lp = 0, peak = 1e-6;
     for (let n = 0; n < len; n++) {
-      const x = line[idx] + (n < burst ? (r() * 2 - 1) * Math.pow(1 - n / burst, 2) * 0.5 : 0);
-      lp = (1 - a) * x + a * lp; line[idx] = lp * loss; y[n] = x; idx = (idx + 1) % N;
+      let rp = w - D; while (rp < 0) rp += M;
+      const i0 = Math.floor(rp), fr = rp - i0, x = line[i0 % M] * (1 - fr) + line[(i0 + 1) % M] * fr;
+      lp = (1 - a) * x + a * lp; line[w] = lp * loss; y[n] = x; w = (w + 1) % M;
       if (Math.abs(x) > peak) peak = Math.abs(x);
     }
     const fade = Math.round(sr * 0.03); /* the end leaves on a short fade, never a click */
@@ -443,10 +453,18 @@
   }
   /* the first forward move into a chapter this run has not stung (a screen of the next chapter, the tour's next part)
      is a chapter sting, unless the window has only just opened; Back then forward plays a plain move */
-  function chapterSting(event, now) {
+  function chapterSting(event, now, o) {
     if (music.announced || !music.prev || music.stung.has(music.chapter) || now - music.changedAt > 1500 || now - (lastAt.open || -1e9) < 800) return event;
+    /* in the window under NieR with its quests part, the chapter's card plays the sting ('quest'); no second one here */
+    if (questsOwnSting(o)) return event;
     if (event === 'next' || (/^tour-/.test(music.chapter) && (event === 'step' || event === 'spot' || event === 'callout'))) return 'chapter';
     return event;
+  }
+  function questsOwnSting(o) {
+    if (!document.documentElement.hasAttribute('data-o55-open') || kitFor('next', o) !== 'nier') return false;
+    const p = nierParts();
+    if (p) return p.includes('quests');
+    try { return !!(window.PM_NIER && window.PM_NIER.has && window.PM_NIER.has('quests')); } catch (_) { return false; }
   }
   S.context = () => ({ chapter: music.chapter, step: music.step, n: Math.max(0, music.step - music.base), progress: music.progress, depth: depthOf(music.chapter), run: music.run });
   /* the name sign's climb: the step walks up 8 chord tones and back down again (0..7..1), so a long name never jumps */
@@ -980,6 +998,8 @@
     }
   }
   const POD = 0.32; /* the Pod's bleep level */
+  /* the glitch's tear: five square buzz bursts of random pitch and colour, and a hiss */
+  function tear(c, o, t, g) { [0, 1, 2, 3, 4].forEach((i) => buzz(c, o, t + i * 0.028 + R() * 0.006, { f: 98 + R() * 220, dur: 0.016, gain: g, bp: 900 + R() * 1400, lp: 2600, am: 0, type: 'square', a: 0.002 })); noise(c, o, t + 0.02, { dur: 0.06, filter: 'highpass', f: 3200, gain: g * 0.31 }); }
   /* a log line's stamp ("OK"): a key strike, a low thunk and the menu tick */
   function nstamp(c, o, t, g) { nchk(c, o, t, 0.03 * g); nb(c, o, t, 660, 0.035, 0.05 * g, 'triangle'); nb(c, o, t + 0.012, 2640, 0.012, 0.016 * g); }
   /* the visors' ticks as the units power down one by one, falling */
@@ -1033,8 +1053,9 @@
     found: (c, o, t, v, k) => { nb(c, o, t, note(k.m(1, 1)), 0.06, 0.05, 'triangle'); nb(c, o, t + 0.06, note(k.m(2, 1)), 0.08, 0.05, 'triangle'); bell(c, o, t + 0.12, note(k.m(3, 1)), 0.4, 0.02); },
     error: (c, o, t) => { buzz(c, o, t, { f: 110, dur: 0.12, gain: 0.09, bp: 820 }); buzz(c, o, t + 0.16, { f: 110, f2: 98, dur: 0.18, gain: 0.08, bp: 700 }); nb(c, o, t, 523, 0.09, 0.03, 'triangle'); nb(c, o, t + 0.16, 392, 0.2, 0.03, 'triangle'); },
     warn: (c, o, t) => { buzz(c, o, t, { f: 123, dur: 0.11, gain: 0.075, bp: 900 }); nb(c, o, t, 523, 0.08, 0.03, 'triangle'); },
-    missing: (c, o, t, v, k) => { buzz(c, o, t, { f: 110, dur: 0.09, gain: 0.065, bp: 800 }); const f = note(k.m(1, 0)); nb(c, o, t + 0.12, f, 0.16, 0.05, 'triangle', f * 1.19); },
-    glitch: (c, o, t) => { [0, 1, 2, 3, 4].forEach((i) => buzz(c, o, t + i * 0.028 + R() * 0.006, { f: 98 + R() * 220, dur: 0.016, gain: 0.07, bp: 900 + R() * 1400, lp: 2600, am: 0, type: 'square', a: 0.002 })); noise(c, o, t + 0.02, { dur: 0.06, filter: 'highpass', f: 3200, gain: 0.022 }); nb(c, o, t + 0.16, 330, 0.09, 0.05, 'triangle'); },
+    /* the tour lost sight of its target: the screen's tear (the glitch), then Pod 042's querying rise */
+    missing: (c, o, t, v, k) => { tear(c, o, t, 0.06); const f = note(k.m(1, 0)); nb(c, o, t + 0.18, f, 0.16, 0.05, 'triangle', f * 1.19); },
+    glitch: (c, o, t) => { tear(c, o, t, 0.07); nb(c, o, t + 0.16, 330, 0.09, 0.05, 'triangle'); },
     interrupt: (c, o, t, v, k) => { const lo = lpOut(c, o, 1600); nb(c, lo, t, note(k.m(2, 1)), 0.05, 0.055, 'triangle'); nb(c, lo, t + 0.045, note(k.m(0, 1)), 0.09, 0.055, 'triangle'); },
     commit: (c, o, t, v, k) => {
       const lo = lpOut(c, o, 3200);
@@ -1234,9 +1255,12 @@
   const LOWRES_SKIP = new Set(['spot', 'move', 'hover', 'decode', 'string', 'land']);
   /* events that read the Project binding at most every 250 ms (they can fire many times a second) */
   const LAZY_REFRESH = new Set(['type', 'hover', 'move', 'decode', 'phase', 'string', 'land']);
-  /* takes no moment plays: 'spot' (every look has a 'callout', so it is never reached) and 'step' (only the fallback of
-     'quest' and 'checkpoint', which every look has). They stay as fallbacks of the chain and leave the library. */
-  const RETIRED = new Set(['spot', 'step']);
+  /* takes no moment plays leave the library (they stay in the kits as fallbacks of the chain): 'spot' (every look has a
+     'callout', so it is never reached); 'step' except in Basic (Basic's plays as the NieR goal card's sound when NieR is
+     painted without its Menu sounds; no other look is reached); 'glitch' (no moment plays it: NieR's tear sounds in
+     'missing', the tour's lost target) */
+  const RETIRED = { spot: null, step: ['friendly', 'glass', 'retro', 'nier'], glitch: null };
+  const retired = (kit, ev) => Object.prototype.hasOwnProperty.call(RETIRED, ev) && (RETIRED[ev] === null || RETIRED[ev].includes(kit));
 
   const KIT_NAMES = ['basic', 'friendly', 'glass', 'retro', 'nier'];
   const poolOf = (kit, ev) => { const x = KITS[kit] && KITS[kit][ev]; return !x ? [] : Array.isArray(x) ? x : [x]; };
@@ -1297,8 +1321,8 @@
   /* ---- generated by tools/sound_catalog.py from a tools/sound_render.mjs run (do not edit by hand):
      TRIM, dB per kit and event, brings every event to its loudness tier across the kits; DUR, seconds of audible sound
      per kit, event and variant (for the library). ---- */
-  const TRIM = /* TRIM:begin */{"basic":{"tap":-2.0,"select":-3.0,"next":-1.0,"toggleOff":1.5,"success":-3.0,"error":3.5,"commit":-2.0,"open":3.0,"close":3.5,"pickup":1.5,"drop":2.0,"spot":10.0,"step":-2.5,"finish":1.0,"cheer":-1.0,"celebrate":2.5,"type":7.0,"chapter":1.5,"reveal":-0.5,"sheet":4.0,"unsheet":3.5,"found":3.0,"copy":-2.0,"move":-2.0,"callout":1.5,"pointer":-1.0,"arrive":-2.5,"checkpoint":-2.0,"missing":5.0,"interrupt":4.0,"save":2.5,"string":-4.5,"land":-10.5,"bow":-2.5},"friendly":{"tap":-3.5,"select":-8.5,"next":-9.5,"back":-7.0,"toggleOn":-3.5,"toggleOff":-2.5,"success":-7.0,"error":-6.0,"commit":-4.5,"open":-4.5,"close":-0.5,"pickup":-2.5,"drop":-4.0,"spot":-5.0,"step":-7.5,"finish":-4.5,"cheer":-6.0,"celebrate":-2.0,"type":-3.0,"chapter":-5.5,"reveal":-5.0,"sheet":-3.5,"unsheet":0.5,"phase":-0.5,"found":-3.5,"warn":-7.0,"copy":-7.0,"move":-0.5,"callout":-3.0,"arrive":-7.5,"checkpoint":-7.5,"missing":-3.0,"interrupt":1.0,"save":-6.0,"string":-10.0,"land":-11.5,"bow":-6.5},"glass":{"tap":-2.0,"select":-1.0,"back":2.5,"toggleOn":1.0,"toggleOff":4.5,"success":-1.0,"error":2.0,"open":3.5,"close":7.0,"pickup":2.5,"drop":1.5,"spot":13.5,"step":1.0,"finish":1.5,"cheer":0.5,"celebrate":5.5,"type":0.5,"chapter":2.5,"reveal":1.0,"sheet":5.0,"unsheet":8.0,"phase":1.5,"found":3.5,"warn":1.0,"move":-0.5,"callout":3.0,"pointer":5.0,"arrive":-0.5,"checkpoint":1.0,"missing":5.5,"interrupt":5.0,"save":3.5,"string":-1.0,"land":-6.5,"bow":0.5},"retro":{"tap":4.5,"select":7.0,"next":7.5,"back":8.5,"toggleOn":2.0,"toggleOff":3.0,"success":8.5,"error":8.5,"commit":4.5,"open":10.0,"close":10.5,"pickup":9.0,"drop":2.0,"spot":8.0,"step":6.0,"finish":13.5,"cheer":5.5,"celebrate":4.0,"type":-2.5,"chapter":4.0,"reveal":10.5,"sheet":9.5,"unsheet":10.0,"phase":6.5,"found":9.5,"warn":8.0,"copy":6.0,"move":2.5,"callout":6.0,"pointer":7.0,"arrive":-2.5,"checkpoint":6.0,"missing":11.5,"interrupt":9.0,"save":6.5,"string":-5.0,"land":-2.5,"bow":0.5},"nier":{"tap":-1.5,"select":-1.0,"back":-1.0,"toggleOn":-0.5,"toggleOff":2.0,"success":3.5,"error":5.0,"commit":7.0,"open":1.0,"close":2.5,"pickup":2.5,"drop":2.5,"step":3.0,"finish":7.0,"cheer":-0.5,"celebrate":7.0,"type":-1.0,"chapter":4.0,"reveal":6.5,"sheet":2.0,"unsheet":2.0,"phase":3.5,"found":7.0,"warn":4.0,"move":-1.0,"callout":3.5,"pointer":1.0,"arrive":-1.0,"checkpoint":4.0,"missing":6.0,"interrupt":1.0,"pod":-1.0,"reboot":5.5,"decode":2.0,"glitch":4.0,"save":6.5,"quest":4.0,"nierOn":2.5,"nierOff":2.0,"hover":-4.5,"wake":8.0,"string":-4.5,"land":-9.5,"bow":-1.5,"showPointer":-2.0,"showInterrupt":3.5}}/* TRIM:end */;
-  const DUR = /* DUR:begin */{"basic":{"tap":[0.04,0.03,0.07,0.04],"select":[0.15,0.18,0.17,0.16],"next":[0.25,0.24,0.27],"back":[0.16,0.12,0.16],"toggleOn":[0.05,0.08,0.06],"toggleOff":[0.05,0.08,0.06],"success":0.39,"error":0.26,"commit":1.2,"open":0.16,"close":0.15,"pickup":0.08,"drop":0.09,"spot":0.1,"step":[0.23,0.26,0.24],"finish":0.94,"cheer":0.23,"celebrate":1.32,"type":[0.03,0.02,0.02],"chapter":1.38,"reveal":0.42,"sheet":0.1,"unsheet":0.09,"phase":0.03,"found":0.3,"warn":0.1,"copy":0.07,"move":[0.03,0.06,0.03],"callout":[0.1,0.18,0.21],"pointer":[0.22,0.17,0.23],"arrive":[0.06,0.09,0.08],"checkpoint":[0.3,0.31,0.29],"missing":0.27,"interrupt":0.09,"save":0.67,"string":[0.1,0.12,0.09],"land":[0.06,0.05],"bow":[0.26,0.26]},"friendly":{"tap":[0.03,0.15,0.37,0.06],"select":[0.36,0.41,0.38,0.43],"next":[0.51,0.54,0.42],"back":[0.46,0.52,0.36],"toggleOn":[0.07,0.46,0.21],"toggleOff":[0.07,0.47,0.09],"success":0.87,"error":0.49,"commit":1.3,"open":0.46,"close":0.48,"pickup":0.08,"drop":0.45,"spot":0.57,"step":[0.46,0.4,0.45],"finish":0.73,"cheer":0.73,"celebrate":2.08,"type":[0.35,0.02,0.02],"chapter":1.39,"reveal":0.6,"sheet":0.45,"unsheet":0.44,"phase":0.4,"found":0.43,"warn":0.37,"copy":0.18,"move":[0.11,0.37,0.02],"callout":[0.35,0.45,0.36],"pointer":[0.24,0.38,0.21],"arrive":[0.35,0.2,0.35],"checkpoint":[0.55,0.49,0.47],"missing":0.4,"interrupt":0.07,"save":0.96,"string":[0.08,0.06,0.1],"land":[0.3,0.31],"bow":[0.44,0.45]},"glass":{"tap":[0.12,0.09,0.71,0.1],"select":[1.23,1.22,1.17,1.11],"next":[1.43,1.34,1.47],"back":[1.3,1.2,1.25],"toggleOn":[1.07,0.97,0.19],"toggleOff":[0.25,0.21,0.18],"success":1.52,"error":0.28,"commit":2.25,"open":1.44,"close":1.2,"pickup":0.24,"drop":1.19,"spot":0.61,"step":[1.11,1.09,1.16],"finish":1.78,"cheer":1.24,"celebrate":3.02,"type":[0.04,0.03,0.02],"chapter":2.76,"reveal":1.48,"sheet":0.45,"unsheet":0.68,"phase":0.07,"found":1.37,"warn":0.2,"copy":0.12,"move":[0.06,0.17,0.05],"callout":[1.05,1.08,1.01],"pointer":[0.46,0.84,0.76],"arrive":[0.96,0.68,0.61],"checkpoint":[1.23,1.32,1.29],"missing":1.06,"interrupt":0.15,"save":1.55,"string":[0.56,0.56,0.54],"land":[0.27,0.27],"bow":[1.16,1.1]},"retro":{"tap":[0.03,0.03,0.03,0.02],"select":[0.11,0.12,0.1,0.06],"next":[0.12,0.15,0.14],"back":[0.13,0.08,0.11],"toggleOn":[0.05,0.07,0.04],"toggleOff":[0.05,0.07,0.04],"success":0.28,"error":0.16,"commit":0.61,"open":0.11,"close":0.1,"pickup":0.05,"drop":0.12,"spot":0.03,"step":[0.13,0.16,0.09],"finish":0.33,"cheer":0.14,"celebrate":1.32,"type":[0.02,0.02,0.02],"chapter":1.04,"reveal":0.31,"sheet":0.08,"unsheet":0.08,"phase":0.02,"found":0.13,"warn":0.11,"copy":0.07,"move":[0.02,0.02,0.02],"callout":[0.05,0.08,0.07],"pointer":[0.17,0.16,0.15],"arrive":[0.05,0.06,0.04],"checkpoint":[0.17,0.18,0.14],"missing":0.2,"interrupt":0.06,"save":0.36,"string":[0.09,0.08,0.09],"land":[0.04,0.05],"bow":[0.16,0.15]},"nier":{"tap":[0.03,0.02,0.03,0.03],"select":[0.1,0.1,0.09,0.11],"next":[0.2,0.22,0.26],"back":[0.18,0.18,0.14],"toggleOn":[0.08,0.08,0.1],"toggleOff":[0.08,0.08,0.1],"success":0.78,"error":0.33,"commit":1.48,"open":0.28,"close":0.13,"pickup":0.06,"drop":0.12,"spot":0.15,"step":[0.14,0.14,0.17],"finish":2.33,"cheer":0.1,"celebrate":1.96,"type":[0.02,0.02,0.02],"chapter":1.53,"reveal":0.77,"sheet":0.11,"unsheet":0.09,"phase":0.02,"found":0.47,"warn":0.1,"copy":0.1,"move":[0.02,0.02,0.04],"callout":[0.14,0.15,0.16],"pointer":[0.16,0.12,0.14],"arrive":[0.08,0.06,0.11],"checkpoint":[0.47,0.53,0.37],"missing":0.26,"interrupt":0.12,"pod":[0.19,0.12,0.1,0.16,0.06],"reboot":0.66,"decode":[0.22,0.2,0.18,0.21],"glitch":0.24,"save":0.83,"quest":[1.46,1.46,1.46],"nierOn":1.21,"nierOff":0.89,"hover":[0.02,0.02,0.02],"wake":1.47,"string":[0.04,0.04,0.05],"land":[0.05,0.1],"bow":[0.23,0.24],"showPointer":0.19,"showInterrupt":0.17}}/* DUR:end */;
+  const TRIM = /* TRIM:begin */{"basic":{"tap":-2.0,"select":-3.0,"next":-1.0,"toggleOff":1.5,"success":-3.0,"error":3.5,"commit":-2.0,"open":3.0,"close":3.5,"pickup":1.5,"drop":2.0,"spot":10.0,"step":-2.5,"finish":1.0,"cheer":-1.0,"celebrate":2.5,"type":7.0,"chapter":1.5,"reveal":-0.5,"sheet":4.0,"unsheet":3.5,"found":3.0,"copy":-2.0,"move":-2.0,"callout":1.5,"pointer":-1.0,"arrive":-2.5,"checkpoint":-2.0,"missing":5.0,"interrupt":4.0,"save":2.5,"string":-4.5,"land":-10.5,"bow":-2.5},"friendly":{"tap":-3.5,"select":-8.5,"next":-9.5,"back":-7.0,"toggleOn":-3.5,"toggleOff":-2.5,"success":-7.0,"error":-6.0,"commit":-4.5,"open":-4.5,"close":-0.5,"pickup":-2.5,"drop":-4.0,"spot":-5.0,"step":-7.5,"finish":-4.5,"cheer":-6.0,"celebrate":-2.0,"type":-3.0,"chapter":-5.5,"reveal":-5.0,"sheet":-3.5,"unsheet":0.5,"phase":-0.5,"found":-3.5,"warn":-7.0,"copy":-7.0,"move":-0.5,"callout":-3.0,"arrive":-7.5,"checkpoint":-7.5,"missing":-3.0,"interrupt":1.0,"save":-6.0,"string":-7.5,"land":-11.5,"bow":-6.5},"glass":{"tap":-2.0,"select":-1.0,"back":2.5,"toggleOn":1.0,"toggleOff":4.5,"success":-1.0,"error":2.0,"open":3.5,"close":7.0,"pickup":2.5,"drop":1.5,"spot":13.5,"step":1.0,"finish":1.5,"cheer":0.5,"celebrate":5.5,"type":0.5,"chapter":2.5,"reveal":1.0,"sheet":5.0,"unsheet":8.0,"phase":1.5,"found":3.5,"warn":1.0,"move":-0.5,"callout":3.0,"pointer":5.0,"arrive":-0.5,"checkpoint":1.0,"missing":5.5,"interrupt":5.0,"save":3.5,"string":-1.0,"land":-6.5,"bow":0.5},"retro":{"tap":4.5,"select":7.0,"next":7.5,"back":8.5,"toggleOn":2.0,"toggleOff":3.0,"success":8.5,"error":8.5,"commit":4.5,"open":10.0,"close":10.5,"pickup":9.0,"drop":2.0,"spot":8.0,"step":6.0,"finish":13.5,"cheer":5.5,"celebrate":4.0,"type":-2.5,"chapter":4.0,"reveal":10.5,"sheet":9.5,"unsheet":10.0,"phase":6.5,"found":9.5,"warn":8.0,"copy":6.0,"move":2.5,"callout":6.0,"pointer":7.0,"arrive":-2.5,"checkpoint":6.0,"missing":11.5,"interrupt":9.0,"save":6.5,"string":-5.0,"land":-2.5,"bow":0.5},"nier":{"tap":-1.5,"select":-1.0,"back":-1.0,"toggleOn":-0.5,"toggleOff":2.0,"success":3.5,"error":5.0,"commit":7.0,"open":1.0,"close":2.5,"pickup":2.5,"drop":2.5,"step":3.0,"finish":7.0,"cheer":-0.5,"celebrate":7.0,"type":-1.0,"chapter":4.0,"reveal":6.5,"sheet":2.0,"unsheet":2.0,"phase":3.5,"found":7.0,"warn":4.0,"move":-1.0,"callout":3.5,"pointer":1.0,"arrive":-1.0,"checkpoint":4.0,"missing":4.0,"interrupt":1.0,"pod":-1.0,"reboot":5.5,"decode":2.0,"glitch":4.0,"save":6.5,"quest":4.0,"nierOn":2.5,"nierOff":2.0,"hover":-4.5,"wake":8.0,"string":-4.5,"land":-9.5,"bow":-1.5,"showPointer":-2.0,"showInterrupt":3.5}}/* TRIM:end */;
+  const DUR = /* DUR:begin */{"basic":{"tap":[0.04,0.03,0.07,0.04],"select":[0.15,0.18,0.17,0.16],"next":[0.25,0.24,0.27],"back":[0.16,0.12,0.16],"toggleOn":[0.05,0.08,0.06],"toggleOff":[0.05,0.08,0.06],"success":0.39,"error":0.26,"commit":1.2,"open":0.16,"close":0.15,"pickup":0.08,"drop":0.09,"spot":0.1,"step":[0.23,0.26,0.24],"finish":0.94,"cheer":0.23,"celebrate":1.32,"type":[0.03,0.02,0.02],"chapter":1.38,"reveal":0.42,"sheet":0.1,"unsheet":0.09,"phase":0.03,"found":0.3,"warn":0.1,"copy":0.07,"move":[0.03,0.06,0.03],"callout":[0.1,0.18,0.21],"pointer":[0.22,0.17,0.23],"arrive":[0.06,0.09,0.08],"checkpoint":[0.3,0.31,0.29],"missing":0.27,"interrupt":0.09,"save":0.67,"string":[0.1,0.12,0.09],"land":[0.06,0.05],"bow":[0.26,0.26]},"friendly":{"tap":[0.03,0.15,0.37,0.06],"select":[0.36,0.41,0.38,0.43],"next":[0.51,0.54,0.42],"back":[0.46,0.52,0.36],"toggleOn":[0.07,0.46,0.21],"toggleOff":[0.07,0.47,0.09],"success":0.87,"error":0.49,"commit":1.3,"open":0.46,"close":0.48,"pickup":0.08,"drop":0.45,"spot":0.57,"step":[0.46,0.4,0.45],"finish":0.73,"cheer":0.73,"celebrate":2.08,"type":[0.35,0.02,0.02],"chapter":1.39,"reveal":0.6,"sheet":0.45,"unsheet":0.44,"phase":0.4,"found":0.43,"warn":0.37,"copy":0.18,"move":[0.11,0.37,0.02],"callout":[0.35,0.45,0.36],"pointer":[0.24,0.38,0.21],"arrive":[0.35,0.2,0.35],"checkpoint":[0.55,0.49,0.47],"missing":0.4,"interrupt":0.07,"save":0.96,"string":[0.16,0.13,0.18],"land":[0.3,0.31],"bow":[0.44,0.45]},"glass":{"tap":[0.12,0.09,0.71,0.1],"select":[1.23,1.22,1.17,1.11],"next":[1.43,1.34,1.47],"back":[1.3,1.2,1.25],"toggleOn":[1.07,0.97,0.19],"toggleOff":[0.25,0.21,0.18],"success":1.52,"error":0.28,"commit":2.25,"open":1.44,"close":1.2,"pickup":0.24,"drop":1.19,"spot":0.61,"step":[1.11,1.09,1.16],"finish":1.78,"cheer":1.24,"celebrate":3.02,"type":[0.04,0.03,0.02],"chapter":2.76,"reveal":1.48,"sheet":0.45,"unsheet":0.68,"phase":0.07,"found":1.37,"warn":0.2,"copy":0.12,"move":[0.06,0.17,0.05],"callout":[1.05,1.08,1.01],"pointer":[0.46,0.84,0.76],"arrive":[0.96,0.68,0.61],"checkpoint":[1.23,1.32,1.29],"missing":1.06,"interrupt":0.15,"save":1.55,"string":[0.56,0.56,0.54],"land":[0.27,0.27],"bow":[1.16,1.1]},"retro":{"tap":[0.03,0.03,0.03,0.02],"select":[0.11,0.12,0.1,0.06],"next":[0.12,0.15,0.14],"back":[0.13,0.08,0.11],"toggleOn":[0.05,0.07,0.04],"toggleOff":[0.05,0.07,0.04],"success":0.28,"error":0.16,"commit":0.61,"open":0.11,"close":0.1,"pickup":0.05,"drop":0.12,"spot":0.03,"step":[0.13,0.16,0.09],"finish":0.33,"cheer":0.14,"celebrate":1.32,"type":[0.02,0.02,0.02],"chapter":1.04,"reveal":0.31,"sheet":0.08,"unsheet":0.08,"phase":0.02,"found":0.13,"warn":0.11,"copy":0.07,"move":[0.02,0.02,0.02],"callout":[0.05,0.08,0.07],"pointer":[0.17,0.16,0.15],"arrive":[0.05,0.06,0.04],"checkpoint":[0.17,0.18,0.14],"missing":0.2,"interrupt":0.06,"save":0.36,"string":[0.09,0.08,0.09],"land":[0.04,0.05],"bow":[0.16,0.15]},"nier":{"tap":[0.03,0.02,0.03,0.03],"select":[0.1,0.1,0.09,0.11],"next":[0.2,0.22,0.26],"back":[0.18,0.18,0.14],"toggleOn":[0.08,0.08,0.1],"toggleOff":[0.08,0.08,0.1],"success":0.78,"error":0.33,"commit":1.48,"open":0.28,"close":0.13,"pickup":0.06,"drop":0.12,"spot":0.15,"step":[0.14,0.14,0.17],"finish":2.33,"cheer":0.1,"celebrate":1.96,"type":[0.02,0.02,0.02],"chapter":1.53,"reveal":0.77,"sheet":0.11,"unsheet":0.09,"phase":0.02,"found":0.47,"warn":0.1,"copy":0.1,"move":[0.02,0.02,0.04],"callout":[0.14,0.15,0.16],"pointer":[0.16,0.12,0.14],"arrive":[0.08,0.06,0.11],"checkpoint":[0.47,0.53,0.37],"missing":0.32,"interrupt":0.12,"pod":[0.19,0.12,0.1,0.16,0.06],"reboot":0.66,"decode":[0.22,0.2,0.18,0.21],"glitch":0.24,"save":0.83,"quest":[1.46,1.46,1.46],"nierOn":1.21,"nierOff":0.89,"hover":[0.02,0.02,0.02],"wake":1.47,"string":[0.04,0.04,0.05],"land":[0.05,0.1],"bow":[0.23,0.24],"showPointer":0.19,"showInterrupt":0.17}}/* DUR:end */;
   const dB = (x) => Math.pow(10, (x || 0) / 20);
   const trimOf = (kit, ev) => (TRIM[kit] && TRIM[kit][ev]) || 0;
   const durOf = (kit, ev, v) => { const d = DUR[kit] && DUR[kit][ev]; return d ? (Array.isArray(d) ? d[Math.min(v || 0, d.length - 1)] : d) : 0.5; };
@@ -1428,12 +1452,16 @@
   }
 
   const tour = () => { try { return O55.tour && O55.tour.st ? O55.tour : null; } catch (_) { return null; } };
+  const creating = () => { try { return !!(O55.S && O55.S.open && O55.S.sess && O55.S.sess.screen === 'creating'); } catch (_) { return false; } };
   S.play = function play(asked, opts) { return request(asked, opts || {}, null); };
   /* late: { event, entry } when a deferred sound comes back to play (its gates are checked again, its entry reused) */
   function request(asked, o, late) {
     const now = performance.now(), m = mNow();
     if (!LAZY_REFRESH.has(asked) || now - refreshedAt > 250) S.refresh('play');
-    let event = late ? late.event : chapterSting(asked, now);
+    let event = late ? late.event : chapterSting(asked, now, o);
+    /* the Project saved: the onboarding plays its made moment as a 'commit' on the Creating screen (the Create press
+       commits from Review, a retry plays nothing at its press), so a commit there is the save */
+    if (!late && event === 'commit' && creating()) event = 'save';
     const converted = !late && event === 'chapter' && asked !== 'chapter';
     /* Pod 042's demonstration in NieR (the tour's Show Me): its travel and its hand-back take their 8-bit voice (the
        tour plays 'interrupt' only when a demonstration hands control back) */
@@ -1602,14 +1630,14 @@
   function buildCatalog() {
     const L = (kit) => O55.t('soundLibrary.looks.' + kit), E = (ev) => O55.t('soundLibrary.events.' + ev), out = [];
     KIT_NAMES.forEach((kit) => EVENTS.forEach((ev) => {
-      if (RETIRED.has(ev)) return;
+      if (retired(kit, ev)) return;
       const n = poolOf(kit, ev).length;
       for (let v = 0; v < n; v++) {
         out.push(Object.freeze({
           id: 'o55-' + kit + '-' + kebab(ev) + (n > 1 ? '-' + (v + 1) : ''),
           name: n > 1 ? O55.t('soundLibrary.entryNumbered', { look: L(kit), name: E(ev), n: v + 1 }) : O55.t('soundLibrary.entry', { look: L(kit), name: E(ev) }),
           title: n > 1 ? O55.t('soundLibrary.titleNumbered', { name: E(ev), n: v + 1 }) : E(ev),
-          about: O55.t('soundLibrary.about.' + ev),
+          about: O55.t('soundLibrary.moments.' + ev),
           style: kit === 'nier' ? O55.t('soundLibrary.styleNier') : O55.t('soundLibrary.styleSetup', { look: L(kit) }),
           kit, event: ev, variant: v, variants: n, duration: +durOf(kit, ev, v).toFixed(2), featured: v === 0, source: O55.t('soundLibrary.source')
         }));

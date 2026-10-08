@@ -259,6 +259,32 @@ try {
       S.setContext({ chapter: 'tour-plan', step: 9 }); S.play('next', { kit: k }); await wait(900);
       S.play('finish', { kit: k }); await wait(500);
       out.tour = since(n0);
+      /* the Project made: a commit asked for on the Creating screen plays as the save (the Create press commits from
+         Review); then a celebration 650 ms later is its sparkles */
+      const SS = window.O55.S;
+      await wait(400); n0 = S.log.length;
+      if (SS) {
+        /* a stand-in session for the two moments (the page runs with the window closed) */
+        const open = SS.open, sess = SS.sess; SS.sess = Object.assign({}, sess || {}, { screen: 'review' }); SS.open = true;
+        S.play('commit', { kit: k, intensity: 0.8 }); await wait(1300);
+        SS.sess.screen = 'creating'; S.play('commit', { kit: k, intensity: 1 }); await wait(650); S.play('celebrate', { kit: k }); await wait(300);
+        SS.open = open; SS.sess = sess;
+      }
+      out.save = since(n0);
+      /* under NieR with its quests part, inside the window: the chapter card owns the sting, so 'next' stays plain */
+      const html2 = document.documentElement, N = window.PM_NIER;
+      n0 = S.log.length;
+      if (N && N.set) {
+        N.set(true); await wait(1800);
+        html2.setAttribute('data-o55-open', 'true');
+        S.setContext({ run: 'check-q', chapter: 'welcome', step: 0 }); await wait(200);
+        S.setContext({ chapter: 'computer', step: 1 }); S.play('next'); await wait(300);
+        html2.removeAttribute('data-o55-open');
+        S.setContext({ run: 'check-q2', chapter: 'welcome', step: 0 }); await wait(200);
+        S.setContext({ chapter: 'computer', step: 1 }); S.play('next'); await wait(300);
+        N.set(false); await wait(1800);
+      }
+      out.quests = since(n0);
       return out;
     });
     /* the verdict, rule by rule */
@@ -284,6 +310,10 @@ try {
       V.show = h.show.length === 3 && h.show[0].event === 'showPointer' && h.show[0].asked === 'pointer' && h.show[1].event === 'showInterrupt' && h.show[2].event === 'pointer';
       const ts = h.tour.filter((e) => e.event === 'chapter'), fin = h.tour.find((e) => e.event === 'finish');
       V.tourRun = ts.map((e) => e.depth).join(',') === '1,2' && !!(fin && fin.deferred === 150 && fin.played) && h.tour.some((e) => e.event === 'rest');
+      const sv = h.save.filter((e) => e.event === 'commit' || e.event === 'save' || e.event === 'celebrate');
+      V.saveOnCreating = sv.length === 3 && sv[0].event === 'commit' && sv[0].played && sv[1].event === 'save' && sv[1].asked === 'commit' && sv[1].played && sv[2].event === 'celebrate' && sv[2].layerOf === 'save';
+      const qn = h.quests.filter((e) => e.asked === 'next' || e.event === 'next');
+      V.questsOwnSting = qn.length === 2 && qn[0].event === 'next' && qn[0].kit === 'nier' && qn[1].event === 'chapter' && qn[1].kit === 'nier';
       report.live.heroVerdict = V;
     }
     /* mute stops playback but keeps the trace; the binding stays a session preview without a Project */

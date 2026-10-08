@@ -29,7 +29,7 @@
       "pickup": "Pick up",
       "drop": "Put down",
       "spot": "Spotlight",
-      "step": "Tour step",
+      "step": "Goal updated",
       "finish": "All finished",
       "cheer": "Helper cheers",
       "celebrate": "Celebration",
@@ -65,7 +65,7 @@
       "showPointer": "Pod takes control",
       "showInterrupt": "Control handed back"
     },
-    "about": {
+    "moments": {
       "tap": "Plays when you press a button.",
       "select": "Plays when you pick a choice.",
       "next": "Plays when you go on to the next screen.",
@@ -96,12 +96,11 @@
       "pointer": "Plays as the Guided Tour's pointer sets off to show you something.",
       "arrive": "Plays when the Guided Tour's pointer reaches what it is showing you.",
       "checkpoint": "Plays when you finish a step of the Guided Tour.",
-      "missing": "Plays when the Guided Tour cannot find the part it wants to show.",
+      "missing": "Plays when the Guided Tour cannot find the part it wants to show. In NieR Mode the screen tears for a moment.",
       "interrupt": "Plays when you stop a demonstration and take over.",
       "pod": "Plays when Pod 042 speaks.",
       "reboot": "Plays with the NieR bands that start and end the Guided Tour.",
       "decode": "Plays as a NieR title appears letter by letter.",
-      "glitch": "Plays when the Guided Tour loses sight of what it was showing, in NieR Mode.",
       "save": "Plays the moment your Project is saved.",
       "quest": "Plays when a NieR card says you finished a part of setup or the tour.",
       "nierOn": "Plays while NieR Mode switches on and checks itself.",
@@ -112,7 +111,8 @@
       "land": "Plays when a puppet or a prop is set down on the stage.",
       "bow": "Plays when a puppet bows.",
       "showPointer": "Plays while Pod 042 takes control to show you something.",
-      "showInterrupt": "Plays when Pod 042 hands control back to you."
+      "showInterrupt": "Plays when Pod 042 hands control back to you.",
+      "step": "Plays when a NieR goal card appears while NieR Mode's Menu sounds are off."
     }
   }
 }
