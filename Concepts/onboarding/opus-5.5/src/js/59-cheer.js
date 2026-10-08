@@ -382,8 +382,11 @@
     if (fam !== 'nier') return enterFamily(p, svg, wrap, hs, ens, wasHeld);
     const order = (o.order || ['h1', 'h0', 'h2']).map((k) => item(svg, k)).filter((g) => g && ens.includes(g)), gap = o.gap == null ? 120 : o.gap;
     const you = item(svg, 'you'), link = item(svg, 'link'), signal = o.signal !== false && !!you;
-    /* the entrance each unit had (CSS) is ended where it stands, so it never plays again over the fly-in */
-    const ended = () => ens.forEach((g) => { const el = inner(g); if (el && el.getAnimations) el.getAnimations().forEach((a) => { if (typeof CSSAnimation !== 'undefined' && a instanceof CSSAnimation) a.finish(); }); });
+    /* the entrance each unit had (CSS) is off from here, so it never plays again over the fly-in (and under Reduced
+       Motion and the instant paths never starts): one attribute on the layer (30-art.css [data-o55-entered]). Finishing
+       each CSS animation asked the page for its animations, which made the browser style the whole page (3.2 s under
+       Reduced Motion on the VM, films M4) */
+    const ended = () => wrap.setAttribute('data-o55-entered', '');
     p.end(() => {
       wrap.classList.remove('o55-ens-hold'); ended();
       ens.forEach((g) => g.classList.remove('o55-nier-flyin', 'o55-rest'));
@@ -435,7 +438,8 @@
   function enterFamily(p, svg, wrap, hs, ens, wasHeld) {
     const fam = svg.getAttribute('data-family'), bar = svg.querySelector('.o55-ens-bar');
     const css = (g) => { const el = inner(g); return el && el.getAnimations ? el.getAnimations().filter((a) => typeof CSSAnimation !== 'undefined' && a instanceof CSSAnimation) : []; };
-    p.end(() => { wrap.classList.remove('o55-ens-hold'); [bar].concat(ens).filter(Boolean).forEach((g) => css(g).forEach((a) => a.finish())); });
+    /* (its end state: the entrance off, 30-art.css [data-o55-entered], with nothing asked of the page) */
+    p.end(() => { wrap.classList.remove('o55-ens-hold'); wrap.setAttribute('data-o55-entered', ''); });
     if (!wasHeld || !acts(svg)) { p.finish(); return p.promise; }
     const land = FAM_LAND[fam] || 400;
     if (bar) css(bar).forEach((a) => { try { a.effect.updateTiming({ delay: 0 }); a.currentTime = 0; } catch (_) {} });

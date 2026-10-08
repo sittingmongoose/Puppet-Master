@@ -205,6 +205,10 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-nier-asleep 
 .o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot, .o55-f-nier .o55-nier-flyin .nv-knot { visibility: visible; }
 .o55-ens-hold[data-family="nier"] .o55-ens-h .nv-knot-hand, .o55-f-nier .o55-nier-flyin .nv-knot-hand { display: inline; }
 .o55-ens-hold:not([data-family="nier"]) :is(.o55-ens-bar, .o55-ens-h) > .o55-in { animation-play-state: paused !important; }
+/* a troupe that has been lowered in (O55.art.troupe.enter, 59-cheer.js) has had its entrance: its own CSS one is off
+   from then on, in its end state, and asked of nobody (it used to be finished through getAnimations(), a style pass of
+   the whole page) */
+.o55-scene-wrap[data-o55-entered] .o55-ens-h > .o55-in, .o55-scene-wrap[data-o55-entered] .o55-ens-bar > .o55-in { animation: none !important; }
 .o55-ens-hold:not([data-family="nier"]) .o55-ens-bar, .o55-ens-hold:not([data-family="nier"]) .o55-ens-h, .o55-ens-hold:not([data-family="nier"]) .o55-ties { visibility: hidden; }
 /* Creating: a unit comes online as the work goes on (57-scenes-journey.js): its rest dashes hold a moment, then the scan
    notch shows and sweeps the visor once (4 steps out, one back). No fill: once done, the unit's own state rules (a
