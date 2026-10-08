@@ -115,7 +115,7 @@
     if (!painted()) return;
     const s = d.step, inCh = TR.defs.filter((x) => x.chapter === s.chapter);
     if (has('headers')) d.count = d.done ? T('complete') : two(inCh.indexOf(s) + 1) + '/' + two(inCh.length);
-    if (has('voice')) d.tryLabel = T('objective');
+    if (has('headers')) d.tryLabel = T('objective');
     const unit = has('pod'), voice = has('voice');
     if (!unit && !voice) return;
     const line = lineFor(d);
@@ -198,6 +198,7 @@
       decodeTitle(!d.silent);
       if (d.first && has('slice')) fx.slice(root.querySelector('.o55t-bar'), { ms: 300 });
     }
+    if (d.first) M.after(220, podArrives);
     lockCallout(); lockRing();
     speak(d);
     if (d.chapterChanged && !still()) {
@@ -229,6 +230,18 @@
     TR.refresh();
   });
   TR.on('pointerFrom', (d) => { if (has('pod')) { const at = dock(); if (at) d.at = at; } });
+  /* at the start, the app's own Pod (the corner one, which stands down while the tour runs) flies to its dock in the
+     first callout: one Pod, never two */
+  function podArrives() {
+    if (!has('pod') || still() || st.show) return;
+    const home = document.getElementById('o55np-pod'), at = dock(); if (!home || !at) return;
+    const r = home.getBoundingClientRect(); if (!r.width) return;
+    const P = TR.pointer, root = st.root;
+    root.classList.add('o55t-npodout');
+    P.pos = null; P.show(r.left + r.width / 2 - POD_DX, r.top + r.height / 2 - POD_DY);
+    const done = () => { root.classList.remove('o55t-npodout'); if (!st.show) { P.hide(); P.pos = null; } };
+    M.delay(60).then(() => (st.show ? null : P.moveTo(at.x, at.y, 460, { quiet: true }))).then(done, done);
+  }
   TR.on('showMeEnd', () => {
     if (!has('pod') || still()) return null;
     const at = dock(); if (!at) return null;
@@ -270,7 +283,7 @@
     return fx.band(T(key), d.status === 'done' ? 1400 : 1000, { kicker: T('band.kicker'), within: st.root });
   });
   TR.on('end', () => {
-    if (st.root) st.root.classList.remove('o55t-nend', 'o55t-nheld', 'o55t-njump', 'o55t-nboot');
+    if (st.root) st.root.classList.remove('o55t-nend', 'o55t-nheld', 'o55t-njump', 'o55t-nboot', 'o55t-npodout');
     spoken = null; back = 0; focusOff(); cursorOff();
     const fx = FX(); if (fx && cued) { fx.brackets(cued, false); cued = null; }
   });

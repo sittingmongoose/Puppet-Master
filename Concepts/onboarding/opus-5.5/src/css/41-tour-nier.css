@@ -54,7 +54,7 @@ html[data-o55-nier="on"] #pm-o55-tour .o55t-tips { background: rgba(var(--o55-ni
 #pm-o55-tour .o55t-pod-unit.o55t-sig > i:nth-of-type(3) { animation-delay: 160ms; }
 @keyframes o55t-nsig { 0% { transform: translate(0, 0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(30px, -4px); opacity: 0; } }
 /* the Pod is out doing the Show Me: its dock is empty until it flies home */
-#pm-o55-tour[data-showme] .o55t-pod-unit { visibility: hidden; }
+#pm-o55-tour[data-showme] .o55t-pod-unit, #pm-o55-tour.o55t-npodout .o55t-pod-unit { visibility: hidden; }
 #pm-o55-tour .o55t-pod-copy { flex: 1; min-width: 0; }
 #pm-o55-tour .o55t-pod-head { display: flex; align-items: center; gap: 4px; margin: 0 0 4px; font: 500 9px/1.4 var(--mono-font); letter-spacing: .3em; text-transform: uppercase; color: rgba(var(--o55-nier-ink-rgb), .78); white-space: nowrap; }
 #pm-o55-tour .o55t-pod-head > i { flex: none; width: 4px; height: 4px; background: currentColor; }
