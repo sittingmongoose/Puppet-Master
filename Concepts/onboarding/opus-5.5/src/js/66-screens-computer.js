@@ -4,8 +4,8 @@
   'use strict';
   const O55 = window.O55, C = O55.c, U = O55.util, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
 
-  /* sound options (priority: 1 a control's own sound over the generic tap, 2 an outcome, 3 a commitment) */
-  const FOUND = { intensity: 0.5, priority: 2 };
+  /* No numeric priority: when two sounds coincide, O55.sound keeps the more important event. */
+  const FOUND = { intensity: 0.5 };
 
   /* The quick read-only check of this computer (read_only_preflight): free space, Safe History tool, internet.
      Runs once per session when "This computer" is chosen; results are cached in the session. */

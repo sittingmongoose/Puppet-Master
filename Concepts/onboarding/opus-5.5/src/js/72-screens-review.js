@@ -14,11 +14,12 @@
   const P = () => O55.project;
   const forgeName = (d) => O55.safe.forgeName(d.forge, d.forge_provider_variant);
   const FLOW = ['where', 'begin', 'name', 'like', 'safe', 'away', 'review'];
-  /* sound options (priority: 1 a control's own sound over the generic tap, 2 an outcome, 3 a commitment). The reviewed
+  /* No numeric priority: O55.sound ranks coinciding events itself. The reviewed
      commit is one designed moment: Create sounds `commit` and carries the change to Creating (go silent); the Project
      made sounds `commit` once (the transport's own done sound is off) and the troupe's celebration follows 650 ms later. */
-  const SND = { own: { priority: 1 }, warn: { priority: 2 }, error: { priority: 2 }, success: { intensity: 0.7, priority: 2 },
-    create: { intensity: 0.8, priority: 3 }, prepare: { intensity: 0.6, priority: 3 }, made: { intensity: 1, priority: 3 } };
+  const SND = { success: { intensity: 0.7 }, create: { intensity: 0.8 }, prepare: { intensity: 0.6 }, made: { intensity: 1 } };
+  const RECHECK_PHASES = [{ key: 'check', ms: 650 }];
+  const RECHECK_QUIET = { done: false };
   /* results arrive later: they sound only while the screen that shows them is still the one on screen */
   const showing = (id) => O55.S.open && O55.S.sess.screen === id;
   /* Publication selects the new Project, and selecting it rebinds the speaker to that Project's own setting, which
@@ -116,8 +117,10 @@
       return out;
     },
     mounted(S) {
-      const d = md(S);
-      F.op(S, 'recheck:' + d.project_draft_revision, 'cmd.project.refresh', [{ key: 'check', ms: 650 }], { payload: { draft: d.project_draft_ref, revision: d.project_draft_revision }, sound: { done: false } });
+      const d = md(S), key = 'recheck:' + d.project_draft_revision;
+      const st = F.state(S, key);
+      if (st && st.state === 'done') return;
+      F.op(S, key, 'cmd.project.refresh', RECHECK_PHASES, { payload: { draft: d.project_draft_ref, revision: d.project_draft_revision }, sound: RECHECK_QUIET });
     },
     foot(S) {
       const d = md(S), miss = O55.draft.missing(d)[0], st = F.state(S, 'recheck:' + d.project_draft_revision);
@@ -224,8 +227,8 @@
     if (cm.publishable) return publishAccepted(S);
     cm.state = v.state === 'verified_created' ? 'recovery' : v.state === 'unknown' ? 'unknown' : 'failed';
     cm.code = v.state === 'failed_before_effect' ? (cm.recovery.failure_reason || 'create_failed') : v.state;
-    if (v.state === 'verified_created') { if (showing('creating')) O55.sound.play('error', SND.error); PR().armResumeRequest(OR, cm, d); }
-    else if (v.state === 'failed_before_effect' && showing('creating')) O55.sound.play('error', SND.error);
+    if (v.state === 'verified_created') { if (showing('creating')) O55.sound.play('error'); PR().armResumeRequest(OR, cm, d); }
+    else if (v.state === 'failed_before_effect' && showing('creating')) O55.sound.play('error');
     S.save(); O55.ui.refresh();
   }
   function adoptResumePhase(S) {
@@ -296,7 +299,7 @@
       onDone: () => {
         const sure = publishSure(S, cm);
         if (sure && showing('creating')) O55.sound.play('commit', SND.made);
-        if (!publishProject(S, cm.fixtureProjectId, 'fixture')) { cm.state = 'failed'; cm.code = 'settings_rejected'; S.save(); O55.ui.refresh(); if (showing('creating')) O55.sound.play('error', SND.error); return; }
+        if (!publishProject(S, cm.fixtureProjectId, 'fixture')) { cm.state = 'failed'; cm.code = 'settings_rejected'; S.save(); O55.ui.refresh(); if (showing('creating')) O55.sound.play('error'); return; }
         cm.state = 'done'; cm.code = null; S.save();
         if (!sure && showing('creating')) O55.sound.play('commit', SND.made);
         /* the Project is made: the troupe celebrates (after the scene has taken its bow beat) */
@@ -495,7 +498,7 @@
         S.sess.ui.returnTo = null; S.sess.commit.renaming = true; S.save(); O55.ui.go('online-details');
       },
       askSkip(S) { if (S.sess.commit.recovery) return; S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },
-      skipOnline(S) { if (S.sess.commit.recovery) return; const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); O55.sound.play('select', SND.own); runCommit(S); },
+      skipOnline(S) { if (S.sess.commit.recovery) return; const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); O55.sound.play('tap'); runCommit(S); },
       next(S) { O55.ui.go(md(S).project_mode === 'later' ? 'ready' : S.sess.backup.dest ? 'protect' : 'ai'); }
     },
     onBack: () => false
@@ -538,7 +541,7 @@
     O55.ui.refresh();
   }
   const kitNeedsStepUp = (next) => next === 'kit' || next === 'kitTest';
-  const kitWarn = () => { if (showing('protect')) O55.sound.play('warn', SND.warn); };
+  const kitWarn = () => { if (showing('protect')) O55.sound.play('warn'); };
   function kitAdopt(S, next) {
     const b = S.sess.backup, OR = O55.ownerResults;
     const req = b['or_' + next];
@@ -573,7 +576,7 @@
   function stepDone(S, n) {
     if (!showing('protect')) return;
     O55.sound.setContext({ step: S.sess.history.length + n });
-    O55.sound.play('success', { step: n, intensity: n === STEPS.length ? 0.9 : 0.45 + 0.08 * n, priority: 2 });
+    O55.sound.play('success', { step: n, intensity: n === STEPS.length ? 0.9 : 0.45 + 0.08 * n });
   }
   def('protect', {
     chapter: 'project', stage: 'automatic_preparation',
@@ -635,7 +638,7 @@
       stepUp(S) {
         const b = S.sess.backup, done = b.done || [], next = STEPS.find((s) => !done.includes(s));
         if (!kitGated(next) || !kitNeedsStepUp(next)) return;
-        O55.sound.play('select', SND.own);
+        O55.sound.play('tap');
         requestKitIdentity(S, next);
       },
       retry(S) {
@@ -647,7 +650,7 @@
       step(S, arg, el) {
         const b = S.sess.backup, done = b.done = b.done || [], next = STEPS.find((s) => !done.includes(s));
         if (!next) return;
-        const press = () => { if (el) O55.sound.play('select', SND.own); };
+        const press = () => { if (el) O55.sound.play('tap'); };
         if (kitGated(next)) {
           /* protected handoff: current step-up first, then transport, then adoption — never timer success */
           if (kitNeedsStepUp(next) && !kitRequested(S, next)) { press(); requestKitIdentity(S, next); return; }
@@ -677,7 +680,7 @@
           S.sess.nas = { purpose: 'dest', method: 'ssh', device: O55.backup.nas(S).id, trusted: false, installed: false, key: null };
           S.save(); return O55.ui.go(O55.nas.entry(S));
         }
-        if (next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessTake(S, b.dest, acc(S))) { O55.sound.play('warn', SND.warn); O55.ui.refresh(); return; } /* the secret field was empty */
+        if (next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessTake(S, b.dest, acc(S))) { O55.sound.play('warn'); O55.ui.refresh(); return; } /* the secret field was empty */
         press();
         if (next === 'signin' && (b.dest === 'gdrive' || b.dest === 'onedrive')) O55.official.open(S, { name: O55.backup.label(S, b.dest), url: O55.fixtures.OFFICIAL.backup[b.dest] || null });
         F.op(S, 'backup:' + next, cmd, phases, {

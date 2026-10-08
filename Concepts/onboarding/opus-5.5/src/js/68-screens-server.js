@@ -24,17 +24,18 @@
   };
   const serverNameOf = (S) => (S.sess.server.name == null ? suggestions(S)[0] : S.sess.server.name);
   const PLATFORM_NAMES = { truenas: 'TrueNAS', unraid: 'Unraid', synology: 'Synology', qnap: 'QNAP', linux: 'Linux', windows: 'Windows', macos: 'macOS' };
-  /* sound options (priority: 1 a control's own sound over the generic tap, 2 an outcome, 3 a commitment). A transport
-     that finishes is not an outcome here: the claim chain and the approvals stay quiet in O55.flow.op (sound.done
-     false) and sound when their owner result is adopted, or warn when the note under them does. */
-  const SND = { found: { intensity: 0.6, priority: 2 }, warn: { priority: 2 }, own: { priority: 1 }, reveal: { priority: 1 },
-    claim: { intensity: 0.6, priority: 3 }, restore: { intensity: 0.7, priority: 3 }, claimed: { intensity: 0.9, priority: 2 }, approved: { intensity: 0.8, priority: 2 } };
+  /* No numeric priority: O55.sound ranks coinciding events itself. A transport that finishes is not an outcome
+     here: the claim chain and the approvals stay quiet in O55.flow.op (sound.done false) and sound when their
+     owner result is adopted, or warn when the note under them does. */
+  const SND = { found: { intensity: 0.6 }, claim: { intensity: 0.6 }, restore: { intensity: 0.7 }, claimed: { intensity: 0.9 }, approved: { intensity: 0.8 } };
+  const DISCOVER_PHASES = [{ key: 'lan', ms: 2600 }];
+  const DISCOVER_OPTS = { payload: { scope: 'unclaimed' }, sound: { done: 'found', intensity: 0.6 } };
   const ADOPT_SOUND = { done: false, fail: 'warn' };
   /* results arrive later: they sound only while the screen that shows them is still the one on screen */
   const showing = (id) => O55.S.open && O55.S.sess.screen === id;
-  const chainStep = (k) => { if (showing('s-confirm')) O55.sound.play('phase', { step: k, intensity: 0.3 + 0.15 * k, priority: 2 }); };
+  const chainStep = (k) => { if (showing('s-confirm')) O55.sound.play('phase', { step: k, intensity: 0.3 + 0.15 * k }); };
   /* a pending owner (no host yet) is an info note and stays quiet; any other refusal shows a warning note */
-  const adoptRefused = (reason, id) => { if (reason !== 'host_unavailable' && reason !== 'pending_no_result' && showing(id || 's-confirm')) O55.sound.play('warn', SND.warn); };
+  const adoptRefused = (reason, id) => { if (reason !== 'host_unavailable' && reason !== 'pending_no_result' && showing(id || 's-confirm')) O55.sound.play('warn'); };
 
   /* Owner-result gating (SRV-004/SRV-005 §4.2): claim, bootstrap, waiting PairingRun, explicit human identity
      confirmation, and approve-with-ClientTrustRecord are five separate adopted outcomes. Claim/bootstrap never
@@ -121,7 +122,12 @@
       else if (kind !== 'cloud') out += `<div class="o55-sublinks" data-key="scanlink">${C.link(T('server.wait.scan'), 'manualOff')}</div>`;
       return out;
     },
-    mounted(S) { if (!S.sess.server.manual && !cloud(S)) F.op(S, 'discover:server', 'cmd.server.discovery.refresh', [{ key: 'lan', ms: 2600 }], { payload: { scope: 'unclaimed' }, sound: { done: 'found', intensity: 0.6 } }); },
+    mounted(S) {
+      if (S.sess.server.manual || cloud(S)) return;
+      const st = F.state(S, 'discover:server');
+      if (st && st.state === 'done') return; /* a finished look must not rebuild its options on every refresh */
+      F.op(S, 'discover:server', 'cmd.server.discovery.refresh', DISCOVER_PHASES, DISCOVER_OPTS);
+    },
     foot: (S) => ({ primary: { label: T('server.wait.choose'), do: 'next', disabled: !S.sess.server.target, reason: T('server.wait.looking') } }),
     do: {
       pick(S, id, el) { S.sess.server.target = id; S.save(); O55.ui.refresh(); },
@@ -246,7 +252,15 @@
         const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T('server.confirm.codeHint', { name: u.name }) : '';
         return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
       }
-      if (!sv.orClaimOk || !sv.orBootOk || !sv.orRunOk) return { primary: { label: T('server.confirm.retry'), do: 'retry' } };
+      if (!sv.orClaimOk || !sv.orBootOk || !sv.orRunOk) {
+        /* A wrong setup code is not a pending adoption. Check again only retries the owner result, so a corrected
+           code could never be sent. Set up Server submits it again; a pending owner keeps Check again. */
+        if (!sv.orClaimOk && sv.orClaimErr === 'setup_code_mismatch') {
+          const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T('server.confirm.codeHint', { name: u.name }) : '';
+          return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
+        }
+        return { primary: { label: T('server.confirm.retry'), do: 'retry' } };
+      }
       if (!sv.selfConfirmed || !(EPH() && EPH().getWords('self:' + u.id))) return { primary: { label: T('server.confirm.approveSelf'), do: 'approveSelf', disabled: true, reason: T('server.confirm.matchWords') } };
       if (F.state(S, 'selfapprove:' + u.id) && !sv.orApproveErr) return { primary: { label: T('server.confirm.retry'), do: 'retry' } };
       return { primary: { label: T('server.confirm.approveSelf'), do: 'approveSelf' } };
@@ -254,7 +268,7 @@
     do: {
       suggest(S, v) { S.sess.server.name = v; S.save(); O55.ui.refresh(); },
       noop() {},
-      selfMatch(S) { if (!(EPH() && EPH().getWords('self:' + unclaimed(S).id))) return; S.sess.server.selfConfirmed = !S.sess.server.selfConfirmed; S.save(); O55.ui.refresh(); },
+      selfMatch(S) { if (!(EPH() && EPH().getWords('self:' + unclaimed(S).id))) return; S.sess.server.selfConfirmed = !S.sess.server.selfConfirmed; S.save(); O55.ui.refresh(); O55.sound.play(S.sess.server.selfConfirmed ? 'toggleOn' : 'toggleOff'); },
       confirm(S) {
         const sv = S.sess.server, u = unclaimed(S), name = serverNameOf(S).trim();
         const ok = String(setupCodes.get(u.id) || '').replace(/\s/g, '') === u.setupCode.replace(/\s/g, '');
@@ -273,6 +287,7 @@
         });
       },
       retry(S) {
+        O55.sound.play('tap'); /* a primary has no generic press sound; Check again still retries a pending adoption */
         const sv = S.sess.server;
         if (!sv.orClaimOk) return adoptClaim(S);
         if (!sv.orBootOk) return adoptBoot(S);
@@ -285,7 +300,7 @@
         if (!sv.orRunOk || !sv.selfConfirmed || sv.claimed || !sv.selfRun || sv.selfRun.expires_at <= Date.now() || !(EPH() && EPH().getWords('self:' + u.id))) return;
         if (!sv.orApproveReq) sv.orApproveReq = OR().begin('cmd.client.pair.approve', { server: u.id, candidate: selfCandidate(S), client: S.env.client.id, generation: sv.selfPairGen, run_id: sv.selfRun.id });
         sv.orApproveErr = null; S.save();
-        O55.sound.play('select', SND.own);
+        O55.sound.play('tap');
         F.reset(S, 'selfapprove:' + u.id);
         F.op(S, 'selfapprove:' + u.id, 'cmd.client.pair.approve', [{ key: 'approve', ms: 800 }], {
           payload: { server: u.id, pairing_candidate_id: selfCandidate(S), client: S.env.client.id }, sound: ADOPT_SOUND,
@@ -350,7 +365,7 @@
     if (c.state !== 'waiting' || c.gen !== sv.pairGen || !inviteOpen(S) || c.run_until <= Date.now() || !c.confirmed || !(EPH() && EPH().getWords(c.id))) { sv.approveErr = 'stale_generation'; S.save(); O55.ui.refresh(); adoptRefused(sv.approveErr, 's-ready'); return; }
     const res = OR().take(req.id);
     const v = tryAdopt(req, sv.pairGen);
-    if (!v.ok) { sv.approveErr = v.reason; S.save(); O55.ui.refresh(); if (showing('s-ready')) O55.sound.play('warn', SND.warn); return; } /* its note is always a warning */
+    if (!v.ok) { sv.approveErr = v.reason; S.save(); O55.ui.refresh(); if (showing('s-ready')) O55.sound.play('warn'); return; } /* its note is always a warning */
     sv.approveErr = null;
     c.state = 'approved';
     const trustId = res.trust.id;
@@ -414,7 +429,7 @@
     mounted(S) { F.ticker(S, 's-ready', 1000); pollGuestRun(S); if (S.open && S.sess.screen === 's-ready') O55.ui.refresh(); },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
-      match(S, id) { const sv = S.sess.server, c = (sv.candidates || []).find((x) => x.id === id); if (!c || !(EPH() && EPH().getWords(c.id))) return; c.confirmed = !c.confirmed; S.save(); O55.ui.refresh(); },
+      match(S, id) { const sv = S.sess.server, c = (sv.candidates || []).find((x) => x.id === id); if (!c || !(EPH() && EPH().getWords(c.id))) return; c.confirmed = !c.confirmed; S.save(); O55.ui.refresh(); O55.sound.play(c.confirmed ? 'toggleOn' : 'toggleOff'); },
       checkRun(S) { pollGuestRun(S); O55.ui.refresh(); },
       approve(S, id) {
         const sv = S.sess.server, c = (sv.candidates || []).find((x) => x.id === id);
@@ -441,7 +456,7 @@
           onDone: () => { if (EPH()) EPH().clearWords(id); sv.candidates = sv.candidates.filter((x) => x.id !== id); S.save(); O55.ui.refresh(); }
         });
       },
-      newCode(S) { newInvite(S); O55.ui.refresh(); O55.sound.play('reveal', SND.reveal); }, /* rotates the invite only: trusted devices stay paired; a new code and QR are drawn */
+      newCode(S) { newInvite(S); O55.ui.refresh(); O55.sound.play('reveal'); }, /* rotates the invite only: trusted devices stay paired; a new code and QR are drawn */
       restore(S) { S.sess.restore = { scope: 'server' }; S.save(); O55.ui.go('r-source'); },
       next(S) { S.sess.active = 'main'; S.save(); O55.ui.go('begin'); }
     },
@@ -499,7 +514,7 @@
           S.save(); return O55.ui.go(O55.nas.entry(S)); /* a NAS running Puppet Master pairs instead (PWIZ-029) */
         }
         if (r.source === 'cloud' && r.cloud === 's3' && !r.cloudSignedIn) {
-          if (!O55.backup.accessTake(S, 's3', racc(S))) { O55.sound.play('warn', SND.warn); return O55.ui.refresh(); } /* the secret field was empty: Continue waits for it */
+          if (!O55.backup.accessTake(S, 's3', racc(S))) { O55.sound.play('warn'); return O55.ui.refresh(); } /* the secret field was empty: Continue waits for it */
           return F.op(S, 'restore-s3', 'cmd.auth_profile.sign_in', [{ key: 'check', ms: 900 }], { payload: { service: 's3', method: 'access_key', credential_ref: 'credential:restore:s3' },
             onDone: () => { r.cloudSignedIn = true; S.save(); O55.ui.go('r-unlock', { silent: true }); } }); /* like every cloud source; the sign-in's own sound carries the screen change */
         }
@@ -527,7 +542,7 @@
         if (!r.unlocked) {
           const input = S.root.querySelector('#o55f-phrase');
           const v = input ? input.value.trim().toLowerCase().replace(/\s+/g, ' ') : '';
-          if (v !== S.env.recoveryPhrase) { r.bad = true; S.save(); O55.sound.play('warn', SND.warn); O55.ui.refresh(); O55.ui.shake('phrase'); return; }
+          if (v !== S.env.recoveryPhrase) { r.bad = true; S.save(); O55.sound.play('warn'); O55.ui.refresh(); O55.ui.shake('phrase'); return; }
           r.unlocked = true; r.bad = false; if (input) input.value = '';
         }
         S.save(); O55.ui.go('r-pick');

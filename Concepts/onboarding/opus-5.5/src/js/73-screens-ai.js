@@ -11,8 +11,10 @@
   const host = (S) => (md(S).server_mode === 'this_device' ? T('where.this.title').toLowerCase() : O55.project.serverName(S));
   const onServer = (S) => md(S).server_mode !== 'this_device';
   const pname = (p) => O55.tx('ai.names')[p.id] || p.name;
-  /* sound options (priority: 1 a control's own sound over the generic tap) */
-  const SND = { own: { priority: 1 }, reveal: { priority: 1 } };
+  const DETECT_PHASES = [{ key: 'likely', ms: 900 }, { key: 'copied', ms: 500 }];
+  const DETECT_FOUND = { done: 'found', intensity: 0.55 };
+  const DETECT_QUIET = { done: 'phase', intensity: 0.55 };
+  function onDetect(S) { autoReady(S); O55.ui.refresh(); }
 
   /* What the work computer already has: this computer's providers, or the Server's ready accounts. */
   function detected(S, p) {
@@ -101,10 +103,12 @@
       return out;
     },
     mounted(S) {
-      /* bounded detection on the selected work computer, once per host (cached) */
-      /* the rows flip from Checking to what was found; nothing found is only the check's last tick */
-      const any = PROV().some((p) => detected(S, p));
-      F.op(S, 'detect:' + host(S), 'cmd.integration.connection.detect', [{ key: 'likely', ms: 900 }, { key: 'copied', ms: 500 }], { payload: { host: host(S), bounded: 4 }, sound: { done: any ? 'found' : 'phase', intensity: 0.55 }, onDone: () => { autoReady(S); O55.ui.refresh(); } });
+      /* bounded detection on the selected work computer, once per host (cached). refresh() calls mounted every time,
+         and a finished check must not scan providers or build a new options object. */
+      const key = 'detect:' + host(S), st = F.state(S, key);
+      if (st && st.state === 'done') return;
+      const any = !st && PROV().some((p) => detected(S, p));
+      F.op(S, key, 'cmd.integration.connection.detect', DETECT_PHASES, { payload: { host: host(S), bounded: 4 }, sound: any ? DETECT_FOUND : DETECT_QUIET, onDone: onDetect });
     },
     foot(S) {
       const a = A(S), n = readyIds(S).length;
@@ -115,7 +119,7 @@
       install(S, id) { A(S).accounts[id] = Object.assign(A(S).accounts[id] || {}, { confirmInstall: true }); S.save(); O55.ui.refresh(); },
       installGo(S, id) {
         const p = PROV().find((x) => x.id === id), acc = A(S).accounts[id] = Object.assign(A(S).accounts[id] || {}, { confirmInstall: false, state: 'installing' });
-        S.save(); O55.ui.refresh(); O55.sound.play('select', SND.own);
+        S.save(); O55.ui.refresh(); O55.sound.play('tap');
         F.op(S, 'install:' + id, 'cmd.tool_product.install', [{ key: 'download', ms: 1300 }, { key: 'install', ms: 1100 }, { key: 'verify', ms: 700 }], {
           payload: { product: p.cli, host: host(S), official: true },
           onDone: () => { acc.state = p.auth === 'key' ? 'key' : 'signin'; acc.installed = true; S.save(); O55.ui.refresh(); }
@@ -128,7 +132,7 @@
         O55.ui.refresh();
         F.op(S, 'signin:' + id + ':' + acc.attempt, 'cmd.integration.connection.add', [{ key: 'browser', ms: 2400 }, { key: 'verify', ms: 600 }], { quiet: true, payload: { provider: id, host: host(S), method: 'browser' }, onDone: () => { acc.state = 'ready'; acc.via = 'signin'; S.save(); O55.ui.refresh(); O55.ui.charm(S.root.querySelector(`[data-key="pv-${id}"]`), pname(p), 'spark'); } });
       },
-      key(S, id) { A(S).accounts[id] = Object.assign(A(S).accounts[id] || {}, { state: 'keyEntry' }); S.save(); O55.ui.refresh(); O55.sound.play('reveal', SND.reveal); const i = S.root.querySelector('#o55f-key-' + id); if (i) i.focus(); },
+      key(S, id) { A(S).accounts[id] = Object.assign(A(S).accounts[id] || {}, { state: 'keyEntry' }); S.save(); O55.ui.refresh(); O55.sound.play('reveal'); const i = S.root.querySelector('#o55f-key-' + id); if (i) i.focus(); },
       keyCheck(S, id) {
         const p = PROV().find((x) => x.id === id), acc = A(S).accounts[id], i = S.root.querySelector('#o55f-key-' + id), v = i ? i.value.trim() : '';
         if (i) i.value = '';

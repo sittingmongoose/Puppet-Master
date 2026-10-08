@@ -10,10 +10,18 @@
   const server = (S, id) => allServers(S).find((s) => s.id === (id || cd(S).server_ref)) || null;
   const words = (seed) => O55.art.identity(seed).words.join(' ');
   const nProjects = (n) => T(n === 1 ? 'connect.route.oneProject' : 'connect.route.projects', { n });
-  /* sound options (priority: 1 a control's own sound over the generic tap, 2 an outcome, 3 a commitment). Owner
-     operations name their done/fail/phase sounds in opts.sound (O55.flow.op); a typed address that names a Server
+  /* No numeric priority: O55.sound ranks coinciding events itself. Owner operations name their
+     done/fail/phase sounds in opts.sound (O55.flow.op); a typed address that names a Server
      sounds `found` once, as the hint under the field turns into that Server's name. */
-  const SND = { found: { intensity: 0.55, priority: 2 }, reveal: { priority: 1 }, connect: { intensity: 0.5, priority: 3 } };
+  const SND = { found: { intensity: 0.55 }, connect: { intensity: 0.5 } };
+  /* discovery sounds, built once: mounted() runs on every refresh, and the list grows as each network answers */
+  const SCAN_PHASES_LAN = [{ key: 'lan', ms: 1100 }];
+  const SCAN_PHASES_VPN = [{ key: 'lan', ms: 1100 }, { key: 'vpn', ms: 800 }];
+  const SCAN_SOUND = {
+    lanAll: { phase: { lan: 'found' }, done: 'found', intensity: 0.55 }, /* LAN Servers, then more on the VPN (or no VPN) */
+    lanOnly: { phase: { lan: 'found' }, done: false, intensity: 0.55 }, /* LAN Servers, the VPN adds none */
+    vpnOnly: { phase: false, done: 'found', intensity: 0.55 },
+    none: { phase: false, done: 'warn', intensity: 0.55 } };
   const PAIR_SOUND = { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 };
   const CODE_SOUND = { fail: 'warn', intensity: 0.8 };
   function foundIf(before, srv) { if (srv && srv.id !== before) O55.sound.play('found', SND.found); }
@@ -26,10 +34,11 @@
   function scan(S) {
     const vpn = vpnOn(S);
     if (cd(S).include_vpn_networks !== vpn) { O55.draft.set(cd(S), { include_vpn_networks: vpn }); S.save(); }
-    /* the list grows as each network answers: `found` when its Servers appear, a soft `warn` with the "none found" note */
+    const key = scanKey(S);
+    if ((F.state(S, key) || {}).state === 'done') return; /* a finished scan must not rebuild its options on every refresh */
     const lan = S.env.pmServers.length > 0, more = vpn && (S.env.vpnServers || []).length > 0;
-    const sound = { phase: lan ? { lan: 'found' } : false, done: more || (!vpn && lan) ? 'found' : lan ? false : 'warn', intensity: 0.55 };
-    F.op(S, scanKey(S), 'cmd.server.discovery.refresh', [{ key: 'lan', ms: 1100 }].concat(vpn ? [{ key: 'vpn', ms: 800 }] : []), { payload: { scope: vpn ? 'lan+vpn' : 'lan' }, sound });
+    const sound = lan ? (more || !vpn ? SCAN_SOUND.lanAll : SCAN_SOUND.lanOnly) : more ? SCAN_SOUND.vpnOnly : SCAN_SOUND.none;
+    F.op(S, key, 'cmd.server.discovery.refresh', vpn ? SCAN_PHASES_VPN : SCAN_PHASES_LAN, { payload: { scope: vpn ? 'lan+vpn' : 'lan' }, sound });
   }
   function found(S) {
     const st = F.state(S, scanKey(S)); if (!st) return [];
@@ -105,9 +114,9 @@
     },
     do: {
       pickServer(S, id, el) { const s = server(S, id); choose(S, s, { server_connection_mode: 'discover' }); O55.ui.refresh(); O55.ui.charm(el, s.name, 'server'); },
-      manualOn(S) { S.sess.connect.manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal', SND.reveal); const i = S.root.querySelector('#o55f-addr'); if (i) i.focus(); },
-      /* back to the list: a Server found only through the typed address is not chosen any more (C24) */
-      manualOff(S) { const c = S.sess.connect; if (c.manual) choose(S, null, { server_connection_mode: 'discover' }); c.manual = false; S.save(); O55.ui.refresh(); },
+      manualOn(S) { S.sess.connect.manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); const i = S.root.querySelector('#o55f-addr'); if (i) i.focus(); },
+      /* back to the list: a Server found only through the typed address is not chosen any more (C24). The field folds away. */
+      manualOff(S) { const c = S.sess.connect; if (c.manual) choose(S, null, { server_connection_mode: 'discover' }); c.manual = false; S.save(); O55.ui.refresh(); O55.sound.play('unsheet'); },
       more(S) { O55.draft.set(cd(S), { remote_more: !cd(S).remote_more }); S.save(); O55.ui.refresh(); },
       /* A different route starts clean (C24): the Server found through the old one is not chosen any more, and the
          other routes' details (a web address, a Remote Link) leave the draft. The same route again changes nothing. */

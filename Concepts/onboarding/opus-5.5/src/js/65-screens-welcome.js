@@ -70,7 +70,8 @@
       pickFamily(S, f, el) {
         ack(el, '.o55-tile');
         /* in the picked family's own voice; under NieR Mode the painted look (and its kit) stays NieR */
-        O55.sound.play('select', O55.theme().nier ? { priority: 1 } : { family: f, priority: 1 });
+        if (O55.theme().nier) O55.sound.play('select');
+        else O55.sound.play('select', { family: f });
         O55.ui.charm(el, T('look.families.' + f + '.name'), 'spark');
         O55.ui.applyLook(f, O55.theme().mode, el);
       },
