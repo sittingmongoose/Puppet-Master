@@ -243,6 +243,7 @@ html[data-o55-nier-parts~="headers"][data-o55-nier-parts~="glyphs"] #pm-o55-onbo
     var(--o55nw-art-glyphs) right 12px top 0 / 126px 5px no-repeat,
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) left 14px center / calc(100% - 22px) 1px no-repeat; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-nierpanel-eye { margin-bottom: 4px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-nierpanel-titles { flex: 1; }
 /* group titles are YoRHa headers: wide capitals over a rule with square caps */
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-grouptitle { padding-bottom: 8px; font: 500 10.5px/1.2 var(--mono-font); letter-spacing: .24em; color: var(--o55-nier-ink);
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left bottom / 5px 5px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right bottom / 5px 5px no-repeat,

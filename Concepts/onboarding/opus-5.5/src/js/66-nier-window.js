@@ -150,10 +150,13 @@
   const locked = new Set();
   function marks(layer) {
     const F = fx(), want = new Set();
-    if (F && F.enabled('brackets') && layer && layer.isConnected && shown()) layer.querySelectorAll('.o55-card.o55-on, .o55-tile.o55-on, .o55-nierlook[data-on="true"]').forEach((el) => want.add(el));
+    if (F && F.enabled('brackets') && layer && layer.isConnected && shown() && !covered()) layer.querySelectorAll('.o55-card.o55-on, .o55-tile.o55-on, .o55-nierlook[data-on="true"]').forEach((el) => want.add(el));
     locked.forEach((el) => { if (!want.has(el)) { locked.delete(el); if (O55.nierFx) O55.nierFx.brackets(el, false); } });
     want.forEach((el) => { if (!locked.has(el)) { locked.add(el); F.brackets(el, true); } });
   }
+  /* LOOK's Adjust NieR look panel (.o55-nierpanel) lies over the window's interior: the screen's brackets and cursor
+     stand down while it is there (they follow elements it covers), and come back when it closes */
+  const covered = () => { const r = rootEl(); return !!(r && r.querySelector(':scope .o55-win > .o55-nierpanel')); };
   /* the menu cursor: the card, tile or switch under the pointer (or holding focus) becomes an ink bar with the square
      cursor stepping beside it, with the cursor's tick (O55.sound 'hover', silent outside the NieR kit) */
   const CHOICE = '.o55-card:not([aria-disabled="true"]), .o55-tile, .o55-toggle, .o55-nierlook';
@@ -174,6 +177,8 @@
     const r = rootEl(); if (!r || wired.has(r)) return;
     wired.add(r);
     r.addEventListener('pointerover', (e) => { if (!painted() || e.pointerType === 'touch') return; const c = choiceOf(e.target); if (c) point(c); });
+    const win = r.querySelector('.o55-win');
+    if (win) new MutationObserver(() => { if (!painted() || !shown()) return; if (covered()) point(null); marks(layerNow()); }).observe(win, { childList: true });
     r.addEventListener('pointerout', (e) => {
       if (!cur || !painted()) return;
       const to = e.relatedTarget;
