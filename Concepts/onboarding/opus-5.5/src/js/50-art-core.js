@@ -12,17 +12,27 @@
   const A = O55.art = { families: {}, scenes: {}, W: 480, H: 600 };
 
   /* Read live theme tokens so light/dark re-light the same drawings from the app's real palette. They depend only on
-     the look that owns the element (html, or a look tile's own data-theme), on NieR Mode (painted over Basic on html,
-     with its parts) and on the root's inline variables, so they are read once per look: a getComputedStyle here forced
-     a style pass of the whole page on every scene render. */
+     the look that owns the element (html, a look tile's own data-theme, or an element that previews NieR Mode with
+     data-o55-nier-preview="dark|light"), on NieR Mode (painted over Basic on html, with its parts) and on the root's
+     inline variables, so they are read once per look: a getComputedStyle here forced a style pass of the whole page on
+     every scene render. tok.nier: the tokens are NieR's (root-owned while NieR Mode is painted, or a NieR preview);
+     tok.nierPreview: 'dark' | 'light' for a preview owner, else null; tok.nierParts: the installed parts' keys, or
+     null when not known (a preview while NieR Mode is off: draw as if every part were installed). */
   const tokCache = new Map();
+  const PREVIEW = /^(dark|light)$/;
   A.tokens = function tokens(el) {
     const root = document.documentElement; el = el || root;
-    const owner = (el.closest && el.closest('[data-theme]')) || root;
+    const owner = (el.closest && el.closest('[data-theme], [data-o55-nier-preview]')) || root;
+    const pv = owner !== root ? owner.getAttribute('data-o55-nier-preview') : null, preview = PREVIEW.test(pv || '') ? pv : null;
+    const partsAttr = (owner !== root && owner.getAttribute('data-o55-nier-parts')) || (root.hasAttribute('data-o55-nier') ? root.getAttribute('data-o55-nier-parts') || '' : null);
     const nier = root.hasAttribute('data-o55-nier') ? 'nier:' + (root.getAttribute('data-o55-nier-parts') || '') + '|' : '';
-    const key = (owner === root ? 'r|' : 'o|') + nier + owner.getAttribute('data-theme') + '|' + (root.getAttribute('style') || '');
+    const key = (owner === root ? 'r|' : 'o|') + nier + (preview ? 'pv:' + preview + ':' + (owner.getAttribute('data-o55-nier-parts') || '') + '|' : '')
+      + owner.getAttribute('data-theme') + '|' + (root.getAttribute('style') || '');
     const hit = tokCache.get(key); if (hit) return Object.assign({}, hit);
-    const t = readTokens(el); t.nier = !!nier && owner === root;
+    const t = readTokens(el);
+    t.nier = (!!nier && owner === root) || !!preview;
+    t.nierPreview = preview; t.root = owner === root;
+    t.nierParts = t.nier && partsAttr != null ? partsAttr.split(/\s+/).filter(Boolean) : null;
     if (tokCache.size > 40) tokCache.clear();
     tokCache.set(key, t); return Object.assign({}, t);
   };
@@ -34,7 +44,10 @@
       text2: get('--text-secondary', '#aaa'), muted: get('--text-muted', '#888'), border: get('--border', '#333'),
       blue: get('--accent-blue', '#64b5f6'), magenta: get('--accent-magenta', '#ff69b4'), lime: get('--accent-lime', '#3dd68c'),
       orange: get('--accent-orange', '#ffa347'), warn: get('--accent-warning', '#f5c542'), error: get('--accent-error', '#ef5350'),
-      primary: get('--accent-primary', get('--accent-blue', '#64b5f6'))
+      primary: get('--accent-primary', get('--accent-blue', '#64b5f6')),
+      /* raised: a raised face (a NieR prop's body); onInk: text and detail drawn on an ink block (NieR Mode's own token,
+         the ground elsewhere). Read for every look, used by the 'nier' art family only. */
+      raised: get('--surface-elevated', get('--surface', '#1e1e1e')), onInk: get('--o55-nier-on-ink', get('--background', '#121212'))
     };
   }
 
@@ -86,12 +99,14 @@
     const p = { top: [cx, b[1]], bottom: [cx, b[3]], left: [b[0], cy], right: [b[2], cy], topLeft: [b[0], b[1]], topRight: [b[2], b[1]], bottomLeft: [b[0], b[3]], bottomRight: [b[2], b[3]] }[side] || [cx, cy];
     return [item.x + s * p[0] + ((d && d[0]) || 0), item.y + s * p[1] + ((d && d[1]) || 0)];
   };
-  /* where the line from an item's centre toward a point leaves its outline (a circle for round props) */
+  /* where the line from an item's centre toward a point leaves its outline (a circle for round props: sparks, rings,
+     and a node unless its family says `round: false`, as NieR's square node does) */
   A.edge = function edge(ctx, item, toward) {
     const b = A.box(ctx, item.prop, item.opts), s = A.scaleOf(ctx, item);
     const c = [item.x + s * (b[0] + b[2]) / 2, item.y + s * (b[1] + b[3]) / 2], hw = s * (b[2] - b[0]) / 2, hh = s * (b[3] - b[1]) / 2;
     const dx = toward[0] - c[0], dy = toward[1] - c[1], len = Math.hypot(dx, dy) || 1;
-    if (/^(node|spark|rings)$/.test(item.prop)) { const r = Math.min(hw, hh); return [c[0] + (dx / len) * r, c[1] + (dy / len) * r]; }
+    const round = /^(spark|rings)$/.test(item.prop) || (item.prop === 'node' && (A.families[ctx.family] || {}).round !== false);
+    if (round) { const r = Math.min(hw, hh); return [c[0] + (dx / len) * r, c[1] + (dy / len) * r]; }
     const k = Math.min(hw / Math.abs(dx || 1e-6), hh / Math.abs(dy || 1e-6));
     return [c[0] + dx * k, c[1] + dy * k];
   };
@@ -114,20 +129,36 @@
       + `<g class="o55-in${anim}" style="${style}"><g class="o55-am${amb}">${inner}</g></g></g>`;
   }
 
-  /* render(sceneId, {family, mode, beat, params}) -> svg markup */
-  A.render = function render(sceneId, ctx) {
+  /* The art family a scene is drawn in. NieR Mode paints the Basic family (O55.theme().family stays 'basic' for the
+     window's skin), but its art is the 'nier' family: a scene whose tokens belong to the root while NieR Mode is painted
+     (O55.theme().art === 'nier'), or whose owning element previews NieR Mode (data-o55-nier-preview, the look screen's
+     NieR thumbnail), is drawn in 'nier' when that family is defined. A family asked for by name other than the painted
+     one (a look tile with its own data-theme) keeps its own art; ctx.nier === false opts out. Unknown -> 'basic'. */
+  A.artFamily = function artFamily(family, tok, ctx, th) {
+    th = th || O55.theme(); family = family || th.family;
+    if (A.families.nier && !(ctx && ctx.nier === false) && tok) {
+      if (tok.nierPreview) return 'nier';
+      if (tok.nier && tok.root && th.art === 'nier' && family === th.family) return 'nier';
+    }
+    return A.families[family] ? family : 'basic';
+  };
+
+  /* render(sceneId, {family, mode, beat, params, tok}) -> svg markup */
+  A.render = function render(sceneId, ctx) { return drawScene(sceneId, ctx).svg; };
+  function drawScene(sceneId, ctx) {
     ctx = Object.assign({ beat: 'default', params: {} }, ctx || {});
     const th = O55.theme();
-    ctx.family = ctx.family || th.family; ctx.mode = ctx.mode || th.mode;
-    const fam = A.families[ctx.family] || A.families.basic;
-    const scene = A.scenes[sceneId] || A.scenes.hero;
     ctx.tok = ctx.tok || A.tokens();
+    ctx.family = A.artFamily(ctx.family, ctx.tok, ctx, th); ctx.mode = ctx.mode || ctx.tok.nierPreview || th.mode;
+    const fam = A.families[ctx.family];
+    const scene = A.scenes[sceneId] || A.scenes.hero;
     /* Stable per scene/family/mode so a beat morph keeps its <defs> ids; two layers of different looks never collide. */
     ctx.uid = 'o55' + U.hash(`${sceneId}|${ctx.family}|${ctx.mode}|${ctx.instance || ''}`).toString(36);
     ctx.url = (name) => `url(#${ctx.uid}-${name})`;
     ctx.pal = fam.palette(ctx.mode, ctx.tok, ctx);
     ctx.fam = fam; ctx.sceneId = sceneId;
     const items = (scene.compose(ctx) || []).filter(Boolean);
+    ctx.items = items; /* the whole composition, for a family that spends something once per scene (NieR's ochre) */
     const layers = { back: [], mid: [], front: [] };
     /* Marionette strings. A helper tied to the control bar (opts.tie) does not draw its own string: the scene gets one
        string per tie, in the family's own string style, from the bar's hook to the helper's head (and, for a raised
@@ -155,8 +186,9 @@
       const d = (a, b) => `M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
       const strings = ties.map((it) => {
         let out = hookPts.get(it).map(([name, local, bh]) => `<g class="o55-tie" data-key="tie-${U.esc(it.key)}-${name}" data-from="${U.esc(bar.key)}:${U.esc(bh)}" data-to="${U.esc(it.key)}:${name}">${fam.string(ctx, d(pt(bar, hooks[bh] || [0, 0]), pt(it, local)))}</g>`).join('');
-        const hand = it.opts.pose === 'wave' && it.opts.handTie && fam.hand && fam.hand.wave;
-        if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand">${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie] || from), pt(it, fam.hand.wave)), true)}</g>`;
+        /* a raised hand's string, when the bar has the hook it names (barHooks always has w0 and w2) */
+        const hand = it.opts.pose === 'wave' && it.opts.handTie && hooks[it.opts.handTie] && fam.hand && fam.hand.wave;
+        if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand">${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie]), pt(it, fam.hand.wave)), true)}</g>`;
         return out;
       }).join('');
       layers.mid.push(`<g class="o55-ties" data-key="ties">${strings}</g>`);
@@ -177,21 +209,26 @@
     const label = scene.label ? O55.t(scene.label) : '';
     const band = ctx.band ? (scene.band || [0, 170, A.W, 280]) : null;
     const vb = band ? band.join(' ') : `0 0 ${A.W} ${A.H}`;
-    return `<svg class="o55-scene o55-f-${ctx.family} o55-m-${ctx.mode}" viewBox="${vb}" preserveAspectRatio="xMidYMid slice"`
+    const svg = `<svg class="o55-scene o55-f-${ctx.family} o55-m-${ctx.mode}" viewBox="${vb}" preserveAspectRatio="xMidYMid slice"`
       + ` role="img" aria-label="${U.esc(label)}" data-scene="${U.esc(sceneId)}" data-beat="${U.esc(ctx.beat)}" data-family="${ctx.family}" xmlns="http://www.w3.org/2000/svg">`
       + `<defs>${defs}</defs><g class="o55-bg" data-key="bg">${bg}</g>`
       + `<g class="o55-sl o55-sl-back" data-key="back">${layers.back.join('')}</g>`
       + `<g class="o55-sl o55-sl-mid" data-key="mid">${layers.mid.join('')}</g>`
       + `<g class="o55-sl o55-sl-front" data-key="front">${layers.front.join('')}</g>`
       + `<g class="o55-fx" data-key="fx">${fx}</g></svg>`;
-  };
+    return { svg, family: ctx.family };
+  }
 
   /* mount(host, sceneId, ctx): first mount plays the entrance; the same scene with a new beat morphs (keyed props
      glide to new positions, new props enter, removed props exit); a different scene cross-transitions with an inert
      outgoing layer so there is never a blank frame. */
   A.mount = function mount(host, sceneId, ctx) {
     const current = host.querySelector(':scope > .o55-scene-wrap:not(.o55-out)');
-    const html = A.render(sceneId, ctx);
+    const out = drawScene(sceneId, ctx), html = out.svg;
+    /* the host, and each scene layer, name the art family they show: 'nier' while NieR Mode is painted, although the
+       window's skin stays Basic. The layer's own attribute is what NieR's cross-transition keys on (30-art.css), so a
+       host attribute rewritten by its owner between mounts never restarts a running entrance. */
+    if (host.getAttribute('data-family') !== out.family) host.setAttribute('data-family', out.family);
     if (current && current.getAttribute('data-scene') === sceneId) {
       const svg = current.querySelector('svg');
       const tpl = document.createElement('template'); tpl.innerHTML = html;
@@ -202,13 +239,14 @@
       for (const { name, value } of Array.from(next.attributes)) svg.setAttribute(name, value);
       U.morphFrom(svg, next);
       if (restore) restore();
+      if (current.getAttribute('data-family') !== out.family) current.setAttribute('data-family', out.family);
       current.classList.add('o55-beat');
       if (A.rig) A.rig.watch(svg, { quick: A.rig.layout(svg) === was });
       return current;
     }
     const wrap = document.createElement('div');
     wrap.className = 'o55-scene-wrap o55-enter';
-    wrap.setAttribute('data-scene', sceneId);
+    wrap.setAttribute('data-scene', sceneId); wrap.setAttribute('data-family', out.family);
     wrap.innerHTML = html;
     if (current) {
       current.classList.add('o55-out');
@@ -295,8 +333,17 @@
     const pick = () => words[Math.floor(r() * words.length)];
     return { cells, hue, words: [pick(), pick(), pick(), pick()] };
   };
-  A.identitySvg = function identitySvg(seed, size, family) {
+  /* NieR Mode draws it in ink, square, with no hue (NieR keeps to ink on parchment): for family 'nier', and for the
+     painted family while NieR Mode is painted (the identity chip in the window asks with O55.theme().family). `ink`
+     (optional) is the cells' colour; currentColor otherwise. */
+  A.identitySvg = function identitySvg(seed, size, family, ink) {
     const id = A.identity(seed), s = size || 44, c = s / 5;
+    if (family === 'nier' || (family && family === O55.theme().family && O55.theme().art === 'nier')) {
+      const cells = id.cells.map(([x, y]) => `<rect x="${x * c + 1}" y="${y * c + 1}" width="${c - 2}" height="${c - 2}" fill="${ink || 'currentColor'}"/>`).join('');
+      const t = Math.max(3, c * 0.6), corner = (x, y, dx, dy) => `M${x + dx * t} ${y}H${x}V${y + dy * t}`;
+      const frame = `<path d="${corner(0.5, 0.5, 1, 1)}${corner(s - 0.5, 0.5, -1, 1)}${corner(0.5, s - 0.5, 1, -1)}${corner(s - 0.5, s - 0.5, -1, -1)}" fill="none" stroke="${ink || 'currentColor'}" stroke-opacity="0.6" stroke-linecap="square"/>`;
+      return `<svg class="o55-identity o55-identity-nier" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}" aria-hidden="true" shape-rendering="crispEdges">${frame}${cells}</svg>`;
+    }
     const fill = `hsl(${id.hue} 62% ${family === 'retro' ? 55 : 60}%)`;
     const rx = family === 'friendly' ? c * 0.35 : family === 'glass' ? c * 0.25 : 0;
     const rects = id.cells.map(([x, y]) => `<rect x="${x * c + 0.5}" y="${y * c + 0.5}" width="${c - 1}" height="${c - 1}" rx="${rx}" fill="${fill}"${family === 'glass' ? ' fill-opacity="0.8"' : ''}/>`).join('');

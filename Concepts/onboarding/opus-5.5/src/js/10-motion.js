@@ -110,11 +110,12 @@
     handGlide: bezier(0.32, 0.08, 0.12, 1),
     steps: (n) => (t) => Math.min(1, Math.floor(t * n + 1e-9) / n)
   };
-  /* Per-family curves: Basic crisp standard, Friendly springy overshoot, Glass long emphasized glide, Retro stepped. */
+  /* Per-family curves: Basic crisp standard, Friendly springy overshoot, Glass long emphasized glide, Retro stepped;
+     NieR (the art family while NieR Mode is painted, O55.theme().art) steps square, finer than Retro. */
   M.familyEase = function familyEase(family) {
-    return ({ basic: M.ease.standard, friendly: M.ease.overshoot, glass: M.ease.emphasized, retro: M.ease.steps(6) })[family] || M.ease.standard;
+    return ({ basic: M.ease.standard, friendly: M.ease.overshoot, glass: M.ease.emphasized, retro: M.ease.steps(6), nier: M.ease.steps(8) })[family] || M.ease.standard;
   };
-  M.familyCss = { basic: 'cubic-bezier(0.2,0,0,1)', friendly: 'cubic-bezier(0.34,1.56,0.64,1)', glass: 'cubic-bezier(0.05,0.7,0.1,1)', retro: 'steps(6, end)' };
+  M.familyCss = { basic: 'cubic-bezier(0.2,0,0,1)', friendly: 'cubic-bezier(0.34,1.56,0.64,1)', glass: 'cubic-bezier(0.05,0.7,0.1,1)', retro: 'steps(6, end)', nier: 'steps(8, end)' };
 
   /* tween({from,to,duration,ease,onUpdate}) -> {cancel(), finished} ; interruptible and clock-scaled. */
   M.tween = function tween(opts) {

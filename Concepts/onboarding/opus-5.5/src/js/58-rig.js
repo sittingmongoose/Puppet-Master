@@ -25,8 +25,14 @@
     basic: { tilt: 1.7, period: 6400, bob: 1.6, lift: 1, swing: 0.55, lean: 0.12, arm: 1.1, wave: 4, waveHz: 0.9, k: 60, c: 15 },
     friendly: { tilt: 3.4, period: 3900, bob: 2.4, lift: 1, swing: 0.75, lean: 0.2, arm: 1.5, wave: 9, waveHz: 1.3, k: 95, c: 7 },
     glass: { tilt: 2.1, period: 8200, bob: 3, lift: 1, swing: 0.6, lean: 0.1, arm: 1, wave: 5, waveHz: 0.7, k: 28, c: 8 },
-    retro: { step: 380, hop: 4 }
+    retro: { step: 380, hop: 4 },
+    /* NieR: crisp and mechanical, little overshoot (near critical damping), and stepped: the idle sway is sampled on a
+       `tick` clock (ms) and redrawn only once a tick (8 Hz), the springs integrated over the tick in small sub-steps;
+       the bar's tilt (deg), its lift and a cheer's hop (units) move in quantum steps (qTilt, qLift, qHop). Arrivals,
+       cheers and plucks keep the full frame rate and stay smooth. */
+    nier: { tilt: 1.2, period: 7200, bob: 1.2, lift: 1, swing: 0.5, lean: 0.08, arm: 1, wave: 3, waveHz: 0.8, k: 70, c: 18, tick: 125, qTilt: 0.3, qLift: 0.5, qHop: 3 }
   };
+  const quant = (v, q) => (q ? Math.round(v / q) * q : v);
   const rigs = new Map();
   let raf = 0;
   const rad = (d) => (d * Math.PI) / 180;
@@ -153,6 +159,19 @@
      speed no one can tell 30 from 60. Arrivals, cheers and plucks run at the full frame rate. */
   const IDLE_MS = 1000 / 30 - 4;
   let lastIdle = 0;
+  /* when every live rig has a stepped feel (NieR: a 125 ms tick), the wait (ms) to the nearest next tick, so a stepped
+     troupe wakes the page 8 times a second rather than 30; 0 otherwise (any other family keeps the 30 Hz timer) */
+  function stepWait() {
+    const n = M.now();
+    let wait = Infinity;
+    for (const [svg, st] of rigs) {
+      if (!svg.isConnected || !ambientOn(svg)) continue;
+      if (!st.feel.tick || st.amb0 == null) return 0;
+      wait = Math.min(wait, st.feel.tick - ((n - st.amb0) % st.feel.tick));
+    }
+    if (!isFinite(wait) || !(M.timeScale > 0)) return 0;
+    return Math.max(4, Math.min(250, wait / M.timeScale + 2));
+  }
   function frame() {
     raf = 0;
     const real = performance.now();
@@ -165,7 +184,7 @@
     }
     /* between idle redraws a timer waits, not a frame callback: a callback alone makes the browser run a whole
        rendering pass of the page */
-    if (!busy && live && real - lastIdle < IDLE_MS) { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, IDLE_MS - (real - lastIdle)); return; }
+    if (!busy && live && real - lastIdle < IDLE_MS) { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, Math.max(IDLE_MS - (real - lastIdle), stepWait())); return; }
     lastIdle = real;
     let any = false;
     const now = M.now(), measuring = [], settled = [];
@@ -182,6 +201,8 @@
     for (const [st, moving] of settled) {
       const cheering = st.until && now < st.until;
       if (!moving && !cheering && st.drawnStill) continue;
+      /* a stepped feel (NieR) redraws its idle sway once a tick, not at 30 Hz: nothing is read or written in between */
+      if (moving && !cheering && st.feel.tick && st.amb0 != null && st.drawnTick === Math.floor((now - st.amb0) / st.feel.tick)) { any = true; continue; }
       drive(st, now, moving);
       computed(st);
       st.drawnStill = !moving && !cheering;
@@ -190,7 +211,7 @@
     if (!any) return;
     /* idle: the next redraw is a timer away (see above); arrivals, cheers and plucks ask for the very next frame */
     if (busy || !live) raf = requestAnimationFrame(frame);
-    else { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, IDLE_MS); }
+    else { raf = -1; M.real.setTimeout(() => { raf = requestAnimationFrame(frame); }, stepWait() || IDLE_MS); }
   }
 
   /* ---------------------------------------------------------------- while props arrive: measured, reads first */
@@ -250,14 +271,18 @@
       dip: c.amp * 3.2 * Math.exp(-p / (0.17 * soft)) * Math.cos((2 * Math.PI * p) / (0.3 * soft)) };
   }
   function drive(st, now, moving) {
-    const dt = Math.min(0.05, Math.max(0, (now - st.last) / 1000)); st.last = now;
+    const f = st.feel, span = Math.max(0, (now - st.last) / 1000); st.last = now;
+    /* the springs' time step: one step of at most 50 ms; a stepped feel, drawn once a tick, integrates its tick (at most
+       a quarter second) in sub-steps of at most 20 ms, so its springs move as fast as at the full rate */
+    const subs = f.tick ? Math.max(1, Math.ceil(Math.min(0.25, span) / 0.02)) : 1, dt = f.tick ? Math.min(0.25, span) / subs : Math.min(0.05, span);
     if (st.amb0 == null) st.amb0 = now; /* the ambient motion starts from rest, never mid-swing */
-    const t = moving ? (now - st.amb0) / 1000 : 0, f = st.feel;
+    const el = moving ? now - st.amb0 : 0, tick = f.tick ? Math.floor(el / f.tick) : 0, t = (f.tick ? tick * f.tick : el) / 1000; /* a stepped feel samples the sway on its tick */
+    st.drawnTick = moving ? tick : null;
     if (st.fam === 'retro') return driveRetro(st, now, moving);
     const w = (p) => (2 * Math.PI * t) / (p / 1000);
     const B = st.bar;
-    B.tilt = moving ? f.tilt * Math.sin(w(f.period)) + f.tilt * 0.25 * Math.sin(w(f.period * 0.41)) : B.tilt;
-    B.lift = moving ? f.bob * Math.sin(w(f.period * 1.7)) : B.lift;
+    B.tilt = moving ? quant(f.tilt * Math.sin(w(f.period)) + f.tilt * 0.25 * Math.sin(w(f.period * 0.41)), f.qTilt) : B.tilt;
+    B.lift = moving ? quant(f.bob * Math.sin(w(f.period * 1.7)), f.qLift) : B.lift;
     if (B.am) put(B.am, 'transform', `translate(0 ${(-B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
     for (const h of st.helpers.values()) {
       if (!h.head || !h.am || h.heads.some((t) => !t.fromLocal)) continue; /* a string not measured yet */
@@ -267,9 +292,9 @@
       /* with the ambient motion held, a helper keeps the place it stopped at, and a pluck settles back to it */
       if (moving) h.still = null; else if (h.still == null) h.still = h.x;
       const target = moving ? dx * f.swing + 1.2 * Math.sin(w(2900 + h.i * 530) + h.i * 1.7) : h.still;
-      const acc = f.k * (target - h.x) - f.c * h.v; h.v += acc * dt; h.x += h.v * dt;
+      for (let i = 0; i < subs; i++) { const acc = f.k * (target - h.x) - f.c * h.v; h.v += acc * dt; h.x += h.v * dt; }
       const ch = cheerAt(h, now), pk = pluckAt(h, now, f);
-      h.up = Math.max(0, -dy) * f.lift + (ch ? ch.up : 0) - (pk ? pk.dip : 0);
+      h.up = Math.max(0, -dy) * f.lift + (ch ? quant(ch.up, f.qHop) : 0) - (pk ? pk.dip : 0);
       h.lean = h.heads.length > 1 ? B.tilt + (ch ? ch.lean * 0.4 : 0) + (pk ? pk.rot : 0) : Math.max(-8, Math.min(8, (dx - h.x) * f.lean + h.v * 0.02 + (ch ? ch.lean : 0) + (pk ? pk.rot : 0)));
       const s = h.pos.s || 1;
       put(h.am, 'transform', `translate(${(h.x / s).toFixed(2)} ${(-h.up / s).toFixed(2)}) rotate(${h.lean.toFixed(2)})`);

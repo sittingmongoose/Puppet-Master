@@ -14,7 +14,13 @@
     basic: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136, hook: [0, -63] },
     friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140, hook: [0, -73.5], edgeInset: 17 },
     glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136, hook: [0, -68.5], edgeInset: 17 },
-    retro: { anchors: [[-96, -4], [0, 36], [96, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7, hook: [0, -100] }
+    retro: { anchors: [[-96, -4], [0, 36], [96, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7, hook: [0, -100] },
+    /* NieR Mode's art (54-art-nier.js), the unit marionettes (design/puppets-final/spec.md): Basic's three bar studs (so
+       barHooks derive unchanged), hook = the unit's diamond knot on its head top (every variant and pose), edgeInset =
+       the props' 4-5 unit chamfer + 2, signY = the centre of the "ready" sign above the bar (Ready, Creating done),
+       between the kicker's rule (y 42) and the control unit's top (y 103); a family without signY keeps its own place
+       (64 on Ready, 72 on Creating). */
+    nier: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136, hook: [0, -66], edgeInset: 7, signY: 68 }
   };
   Object.values(METRICS).forEach((m) => { m.barHooks = hooks(m.anchors); });
   A.metrics = (family) => METRICS[family] || METRICS.basic;
@@ -42,6 +48,7 @@
     band: [0, 190, 480, 320],
     compose(ctx) {
       const m = A.metrics(ctx.family);
+      if (ctx.family === 'nier' && ctx.beat !== 'ready') return heroNier(ctx, m);
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + (ctx.family === 'retro' ? 38 : 28), layer: 'back', anim: 'rise', delay: 80 }];
       items.push(...A.ensemble(ctx, {}));
       items.push(...sparks([[74, 262, 0], [410, 230, 1], [398, 352, 2], [88, 380, 3]]));
@@ -53,6 +60,29 @@
       return items;
     }
   });
+
+  /* NieR's welcome (hero intro / look; its Ready beat keeps the shared composition): the troupe as everywhere, plus You,
+     seated on a broken column at stage left and steering the floating control unit by a stepped signal (`link`, from
+     You's raised hand to the bar's left end cap; it is scenery, never a string, so the rig does not see it), and a small
+     machine lifeform watching from the stage's broken corner. Props a family does not draw are skipped (the link is
+     added only with You). Numbers: spec.md section 6. */
+  /* You sits 12 to the right of the design sheet's x 50 and the ruler 14 to the left of its x 440: the wide art pane
+     shows about x 34..446 of the scene, and there You's head and the ruler's label were cut off */
+  const YOU = { x: 62, y: 384, s: 1.32, hand: [16, -43.2] };
+  function heroNier(ctx, m) {
+    const items = [{ key: 'stage', prop: 'stage', x: 240, y: m.floor + 28, layer: 'back', anim: 'rise', delay: 80 }];
+    items.push(...A.ensemble(ctx, {}));
+    items.push(...sparks([[78, 236, 0], [410, 226, 1], [400, 352, 2], [306, 250, 3]]).map((it) => Object.assign(it, { layer: 'back' })));
+    items.push({ key: 'dim', prop: 'dimv', x: 426, y: m.barY, layer: 'back', anim: 'fade', delay: 700, opts: { h: m.floor - m.barY, label: L('strings', 'strings') } });
+    items.push({ key: 'n-plan', prop: 'note', x: 252, y: m.floor - 62, layer: 'front', anim: 'fade', delay: 1300, opts: { text: L('plan', 'the plan'), dx: 62, dy: 118 } });
+    if (ctx.fam && ctx.fam.props.operator) {
+      items.push({ key: 'you', prop: 'operator', x: YOU.x, y: YOU.y, s: YOU.s, layer: 'back', anim: 'fade', delay: 200 });
+      const hand = [YOU.x + YOU.s * YOU.hand[0], YOU.y + YOU.s * YOU.hand[1]], cap = [240 - 114, m.barY + 8];
+      items.push({ key: 'link', prop: 'link', x: 0, y: 0, layer: 'mid', anim: 'fade', delay: 400, opts: { pts: [hand, cap] } });
+    }
+    items.push({ key: 'mach', prop: 'machine', x: 392, y: m.floor + 28, s: 1.15, layer: 'front', anim: 'fade', delay: 600 });
+    return items;
+  }
 
   /* Review route map: the user's own choices, assembled as a zigzag route down the pane.
      params.nodes = [{icon,label,sub}], plus optional online / backup / inherit labels. */
