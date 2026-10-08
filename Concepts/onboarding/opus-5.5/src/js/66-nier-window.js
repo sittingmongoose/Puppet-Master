@@ -759,11 +759,13 @@
       R.claim = { kind: 'card', from: prev, to: pr.current };
       return true;
     },
-    /* the end of an act: the old troupe bows together while its scene stays 240 ms longer */
+    /* the end of an act: the old troupe bows together while its scene stays 240 ms longer (the scene it leaves waits
+       as .o55-scene-waiting, 50-art-core.js; the PERF pass renamed it from .o55-wait, and this hook, still asking for
+       the old name, found no troupe: the act card's bow and the stage's 240 ms had gone) */
     stageDelay() {
       const R = runState(), st = stageEl(), tr = troupe();
       if (!painted() || !R.claim || R.claim.kind !== 'card' || !st || !tr || !tr.bow) return 0;
-      if (!st.querySelector(':scope > .o55-scene-wrap.o55-wait .o55-nier-unit') || !tr.acts(st)) return 0;
+      if (!st.querySelector(':scope > .o55-scene-wrap.o55-scene-waiting .o55-nier-unit') || !tr.acts(st)) return 0;
       tr.bow(st, { together: true });
       return 240;
     },
