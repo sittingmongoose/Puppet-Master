@@ -1,0 +1,29 @@
+/* Notifications & Sounds › Sounds › Sound library: the setup and tour sets (managers/05-notifications.js). The cards
+   are the page's own (.sound-row in the manager's two-column grid, unchanged); this file draws only what groups them.
+   Under All, each set (Setup & tour, NieR) is one closed group whose head opens it in place; Setup & tour shows one
+   look at a time behind a second choice; a one-line explanation says when the shown sounds play. Every colour is a
+   --k3 token, so the Settings themes and NieR Mode's tables repaint it, and NieR's square part squares it. */
+#panel-settings .pm51-mgr .pm51-sound-group { margin-top: 10px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-bg-1); }
+#panel-settings .pm51-mgr .pm51-sound-grid + .pm51-sound-group { margin-top: 14px; }
+#panel-settings .pm51-mgr .pm51-sound-group-head { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; margin: 0; padding: 9px 16px 9px 14px; border: 0; border-radius: inherit; background: none; color: var(--k3-text-2); font: inherit; text-align: left; cursor: pointer; transition: color var(--k3-dur-fast) var(--k3-ease-out); }
+#panel-settings .pm51-mgr .pm51-sound-group-head:hover { color: var(--k3-text-1); }
+#panel-settings .pm51-mgr .pm51-sound-group-head:focus-visible { outline: 2px solid rgba(var(--accent-primary-rgb), .9); outline-offset: 2px; }
+#panel-settings .pm51-mgr .pm51-sound-group-head > .icon { display: inline-flex; flex: none; color: var(--k3-text-3); }
+#panel-settings .pm51-mgr .pm51-sound-group-head > .icon svg { width: 14px; height: 14px; stroke: currentColor; transition: transform 200ms var(--k3-ease-out); }
+#panel-settings .pm51-mgr .pm51-sound-group-head[aria-expanded="true"] > .icon svg { transform: rotate(90deg); }
+#panel-settings .pm51-mgr .pm51-sound-group-copy { display: flex; flex-direction: column; gap: 2px; flex: 1 1 auto; min-width: 0; }
+#panel-settings .pm51-mgr .pm51-sound-group-title { font-size: 12.5px; font-weight: 650; color: var(--k3-text-1); }
+#panel-settings .pm51-mgr .pm51-sound-group-help { font-size: 11.5px; line-height: 1.4; color: var(--k3-text-3); }
+#panel-settings .pm51-mgr .pm51-sound-group-count { flex: none; font-size: 11.5px; color: var(--k3-text-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#panel-settings .pm51-mgr .pm51-sound-group-body { padding: 12px 14px 14px; border-top: 1px solid var(--k3-line); }
+#panel-settings .pm51-mgr .pm51-sound-looks { margin: 0 0 8px; overflow-x: auto; scrollbar-width: none; }
+#panel-settings .pm51-mgr .pm51-sound-sub { margin: 0 0 10px; font-size: 11.5px; line-height: 1.45; color: var(--k3-text-3); }
+html[data-motion="reduced"] #panel-settings .pm51-mgr .pm51-sound-group-head > .icon svg { transition: none; }
+@container settings-host (max-width: 600px) {
+  #panel-settings .pm51-mgr .pm51-sound-group-head { flex-wrap: wrap; gap: 4px 12px; padding: 9px 12px; }
+  #panel-settings .pm51-mgr .pm51-sound-group-copy { flex-basis: calc(100% - 26px); }
+  #panel-settings .pm51-mgr .pm51-sound-group-count { margin-left: 26px; }
+  #panel-settings .pm51-mgr .pm51-sound-group-body { padding: 10px; }
+}
+/* NieR Mode's YoRHa headers part: the group title reads like the section titles above it. */
+html[data-o55-nier-parts~="headers"] #panel-settings .pm51-mgr .pm51-sound-group-title { text-transform: uppercase; letter-spacing: .16em; }

@@ -249,6 +249,18 @@ PATCHES = [
     ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer'];",
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
      'teacher persona'),
+    # Setup and tour previews stop on the same events as the built-in tone preview. That player is frozen, so these
+    # call the hook the notifications manager exposes (window.PM51_NOTIF_APP_PREVIEW_STOP), which calls
+    # O55.sound.stopPreview(). The close line stays a prefix of SETTINGS_ANCHOR so the exposure splice still matches.
+    ("settingsSoundPreview.stop('settings-surface-close');hideTooltip();",
+     "settingsSoundPreview.stop('settings-surface-close');if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP();hideTooltip();",
+     'setup sound preview: settings close'),
+    ("case 'notification-tab': settingsSoundPreview.stop('notification-tab');switchManagerTab(el);return;",
+     "case 'notification-tab': settingsSoundPreview.stop('notification-tab');if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP();switchManagerTab(el);return;",
+     'setup sound preview: notification tab'),
+    ("clearFiles: () => { stop('project-changed'); localFiles.clear(); },",
+     "clearFiles: () => { stop('project-changed'); if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP(); localFiles.clear(); },",
+     'setup sound preview: project change'),
 ]
 
 
