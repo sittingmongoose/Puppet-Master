@@ -186,10 +186,13 @@
   let workTimer = null;
   let seqTimer = null;
   let hoverTimer = null;
-  /* Label tips: 1s cold, 120ms while a tip is up or within 300ms after one closed.
-     Activity previews dwell 650ms. A press suppresses that anchor's tip until the pointer leaves. */
-  const TIP_OPEN_MS=1000, TIP_WARM_MS=120, TIP_WARM_WINDOW_MS=300, ACT_PREVIEW_MS=650;
-  let tipLastVisibleAt=0, tipSuppressKey=null;
+  /* Text label tips (F3-523): the pointer must reside on the anchor 1600ms AND hold still within a 5px radius for
+     the last 1100ms; continuous keyboard focus opens after 1000ms. No warm handoff. Activity previews dwell 650ms.
+     A press suppresses that anchor's tip until the pointer leaves; closes take 160ms. */
+  const TIP_RESIDE_MS=1600, TIP_STILL_MS=1100, TIP_STILL_PX=5, TIP_FOCUS_MS=1000, TIP_CLOSE_MS=160, ACT_PREVIEW_MS=650;
+  let tipSuppressKey=null;
+  /* Pending pointer dwell: motion restarts the still clock, never residence. */
+  let tipPending=null;
   let copyFlashTimer = null;
   let submenuTimer = null;
   let dragState = null;
@@ -3071,23 +3074,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.hover.type==='activity') return !state.menu;
     return false;
   }
-  function noteTextTipGone(el){
-    if(el && String(el.dataset.hoverSig||'').startsWith('text|')) tipLastVisibleAt=performance.now();
-  }
   function syncHoverCard(){
     const root=document.getElementById('pmOverlayRoot');
     if(!root) return;
     let el=root.querySelector(':scope > [data-overlay="hover"]');
     if(!hoverCardAllowed()){
-      if(el){ noteTextTipGone(el); el.remove(); }
+      if(el){ el.remove(); }
       return;
     }
     const html=renderHoverCard();
-    if(!html){ if(el){ noteTextTipGone(el); el.remove(); } return; }
+    if(!html){ if(el){ el.remove(); } return; }
     const wrap=document.createElement('div');
     wrap.innerHTML=html;
     const next=wrap.firstElementChild;
-    if(!next){ if(el){ noteTextTipGone(el); el.remove(); } return; }
+    if(!next){ if(el){ el.remove(); } return; }
     /* Remount only when the tip identity changes. Same key with updated copy
        (e.g. live Orbit disc status) patches text in place so the card does
        not blink across work ticks. */
@@ -3097,7 +3097,6 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       root.appendChild(next);
       el=next;
     } else if(el.dataset.hoverSig!==idSig){
-      noteTextTipGone(el);
       el.replaceWith(next);
       el=next;
     } else {
@@ -3110,10 +3109,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let lastPointer={x:0,y:0};
   function retainHoverAfterRender(){
     if(!state.hover||state.hover.type!=='text') return;
+    const key=state.hover.key||'';
     const under=document.elementFromPoint(lastPointer.x,lastPointer.y);
     const tip=under&&under.closest&&under.closest('[data-hover-tip]');
-    if(tip&&(tip.dataset.hoverKey||'')===(state.hover.key||'')){
-      state.hover.tip=tip.dataset.hoverTip||state.hover.tip;
+    /* A focus-opened tip has no pointer over its anchor; it survives while
+       focus stays inside the anchor. */
+    const anchor=document.querySelector(`[data-hover-key="${CSS.escape(key)}"]`);
+    const focused=!!(anchor&&anchor.contains(document.activeElement));
+    if((tip&&(tip.dataset.hoverKey||'')===key)||focused){
+      state.hover.tip=(tip&&(tip.dataset.hoverKey||'')===key?tip.dataset.hoverTip:anchor.dataset.hoverTip)||state.hover.tip;
       syncHoverCard();
       requestAnimationFrame(()=>positionHoverCard());
     } else {
@@ -3141,8 +3145,27 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       el.style.top=`${clamp(top,8,window.innerHeight-r.height-8)}px`;
     } else if(!anchor&&el&&state.hover.type==='text'){
       state.hover=null;
-      noteTextTipGone(el);
       el.remove();
+    }
+  }
+  /* F3-523 residence gate: the residence timer fires first; the tip opens only
+     if the pointer also held still for the last TIP_STILL_MS. Drift past the
+     deadline re-arms the still remainder instead of opening, so a pointer that
+     never settles never opens a tip. */
+  function tipTryOpen(){
+    const p=tipPending;
+    if(!p) return;
+    const under=document.elementFromPoint(lastPointer.x,lastPointer.y);
+    if(!p.el.isConnected||!(under&&p.el.contains(under))){ tipPending=null; return; }
+    const held=performance.now()-p.stillSince;
+    if(held>=TIP_STILL_MS){
+      tipPending=null;
+      state.hover={type:'text',tip:p.tipText,key:p.key};
+      /* Tip-only: do not re-patch menus/drawers in #pmOverlayRoot. */
+      syncHoverCard();
+      requestAnimationFrame(()=>positionHoverCard());
+    } else {
+      hoverTimer=setTimeout(tipTryOpen,Math.max(0,TIP_STILL_MS-held));
     }
   }
 
@@ -4337,6 +4360,11 @@ suggested path                    migration 0043, reversible</div></div></sectio
 
   document.addEventListener('pointermove',e=>{
     lastPointer={x:e.clientX,y:e.clientY};
+    /* Leaving the 5px still circle restarts the stationary timer, never residence. */
+    if(tipPending){
+      const dx=e.clientX-tipPending.x,dy=e.clientY-tipPending.y;
+      if(dx*dx+dy*dy>TIP_STILL_PX*TIP_STILL_PX){ tipPending.stillSince=performance.now();tipPending.x=e.clientX;tipPending.y=e.clientY; }
+    }
     if(state.hover?.type==='text'){
       const anchor=e.target.closest?.('[data-hover-tip]');
       if(!anchor||(anchor.dataset.hoverKey||'')!==(state.hover.key||'')){
@@ -4346,26 +4374,20 @@ suggested path                    migration 0043, reversible</div></div></sectio
   },{passive:true});
   document.addEventListener('pointerover',e=>{
     /* Plain-text hover tips first so they still work inside open menus and
-       drawers (those surfaces live under state.menu / overlay root). Instant
-       tips feel twitchy while scanning dense chrome, so tip cards dwell. */
+       drawers (those surfaces live under state.menu / overlay root). Tips wait
+       for deliberate intent (F3-523): 1600ms of residence plus a still pointer. */
     const tip=e.target.closest('[data-hover-tip]');
     if(tip){
       const key=tip.dataset.hoverKey||'';
       /* A press on this anchor dismissed its tip; keep it shut until pointerout. */
-      if(key===tipSuppressKey){ clearTimeout(hoverTimer); return; }
+      if(key===tipSuppressKey){ clearTimeout(hoverTimer); tipPending=null; return; }
       if(state.hover && state.hover.type==='text' && state.hover.key===key) return;
+      /* Crossing between an anchor's children must not restart residence. */
+      if(tipPending && tipPending.key===key) return;
       clearTimeout(hoverTimer);
-      const tipText=tip.dataset.hoverTip||'';
-      /* The pointer usually crosses a gap that hides the first tip before this
-         event, so the warm window is what makes an adjacent icon hand off. */
-      const warm=(state.hover&&state.hover.type==='text')||(performance.now()-tipLastVisibleAt<TIP_WARM_WINDOW_MS);
-      hoverTimer=setTimeout(()=>{
-        if(!tip.isConnected || !tip.contains(document.elementFromPoint(lastPointer.x,lastPointer.y))) return;
-        state.hover={type:'text',tip:tipText,key};
-        /* Tip-only: do not re-patch menus/drawers in #pmOverlayRoot. */
-        syncHoverCard();
-        requestAnimationFrame(()=>positionHoverCard());
-      },warm?TIP_WARM_MS:TIP_OPEN_MS);
+      const now=performance.now();
+      tipPending={key,tipText:tip.dataset.hoverTip||'',el:tip,stillSince:now,x:e.clientX,y:e.clientY};
+      hoverTimer=setTimeout(tipTryOpen,TIP_RESIDE_MS);
       return;
     }
     if(state.menu){
@@ -4398,13 +4420,45 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const act=e.target.closest('[data-hover-domain],[data-hover-tip]');
     if(act&&!act.contains(e.relatedTarget)){
       clearTimeout(hoverTimer);
+      tipPending=null;
       if(act.hasAttribute('data-hover-tip') && (act.dataset.hoverKey||'')===tipSuppressKey) tipSuppressKey=null;
       hoverTimer=setTimeout(()=>{
         if(!document.querySelector('.hover-card:hover')){
           state.hover=null;
           syncHoverCard();
         }
-      },160);
+      },TIP_CLOSE_MS);
+    }
+  });
+  /* Keyboard focus opens a text tip after 1000ms of continuous focus (F3-523).
+     Activity-bar domain buttons keep their own immediate focus preview in
+     activity-bar.js, so focus there is left entirely alone. */
+  document.addEventListener('focusin',e=>{
+    if(!e.target||!e.target.closest||e.target.closest('[data-hover-domain]')) return;
+    const tip=e.target.closest('[data-hover-tip]');
+    clearTimeout(hoverTimer);
+    tipPending=null;
+    if(!tip) return;
+    const key=tip.dataset.hoverKey||'';
+    if(key===tipSuppressKey) return;
+    if(state.hover&&state.hover.type==='text'&&state.hover.key===key) return;
+    const tipText=tip.dataset.hoverTip||'';
+    hoverTimer=setTimeout(()=>{
+      if(!tip.isConnected||!tip.contains(document.activeElement)) return;
+      state.hover={type:'text',tip:tipText,key};
+      syncHoverCard();
+      requestAnimationFrame(()=>positionHoverCard());
+    },TIP_FOCUS_MS);
+  });
+  document.addEventListener('focusout',e=>{
+    if(!e.target||!e.target.closest||e.target.closest('[data-hover-domain]')) return;
+    const tip=e.target.closest('[data-hover-tip]');
+    if(!tip) return;
+    clearTimeout(hoverTimer);
+    tipPending=null;
+    const key=tip.dataset.hoverKey||'';
+    if(state.hover&&state.hover.type==='text'&&state.hover.key===key){
+      hoverTimer=setTimeout(()=>{ state.hover=null; syncHoverCard(); },TIP_CLOSE_MS);
     }
   });
 
@@ -4412,7 +4466,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     /* Send/Stop (send-stop.js): a pressed chip drops its tip, a pending one too, so no tip re-renders over the hero */
     if(e.target.closest('.sendstop')){clearTimeout(hoverTimer);if(state.hover){state.hover=null;syncHoverCard();}}
     const ta=e.target.closest('[data-hover-tip]');
-    if(ta){clearTimeout(hoverTimer); tipSuppressKey=ta.dataset.hoverKey||''; if(state.hover?.type==='text'){state.hover=null;syncHoverCard();}}
+    if(ta){clearTimeout(hoverTimer); tipPending=null; tipSuppressKey=ta.dataset.hoverKey||''; if(state.hover?.type==='text'){state.hover=null;syncHoverCard();}}
     const actBtn=e.target.closest('[data-action="open-activity"]');
     /* A preview footer must survive through click. Removing its overlay on
        pointerdown disconnects the button before click can dispatch. Bar
