@@ -22,7 +22,9 @@
      on()              -> true while NieR Mode is painted (false during a transition, until its repaint runs)
      parts()           -> installed part keys, in PARTS order (whether or not NieR Mode is on)
      has(key)          -> true only while on() AND that part is installed
-     PARTS             -> [{ key, label, group }] in canonical order (groups: Look, Motion, Sound & voice, Pointer, World)
+     PARTS             -> [{ key, label, group, name }] in canonical order (groups: Look, Motion, Sound & voice, Pointer,
+                          World); label is the stored option (canon), name what a person reads (they differ only where
+                          canon's option names the game: headers reads "Ruled headers", hero spec rule 13)
      keyFor(label)     -> key, or null;  labelFor(key) -> label, or null
      set(on, opts?)    -> commits general.visual.nier-mode through the real settings path; returns false if refused;
                           opts.sound === false keeps the transition quiet (the caller plays its own sounds: the hum
@@ -87,8 +89,9 @@
    window.O55_COPY) when it is there, so every NieR Settings word lives in copy; the literal is only the fallback for a
    page without the onboarding layer. */
 const O55_NIER_IDS = ['general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'];
+/* [group, stored label (Plans/settings_inventory.json), key, the name shown when it differs from the label] */
 const O55_NIER_PARTS = Object.freeze([
-  ['Look', 'Square hairlines', 'square'], ['Look', 'Menu cursor', 'cursor'], ['Look', 'YoRHa headers', 'headers'],
+  ['Look', 'Square hairlines', 'square'], ['Look', 'Menu cursor', 'cursor'], ['Look', 'YoRHa headers', 'headers', 'Ruled headers'],
   ['Look', 'Parchment ground', 'ground'], ['Look', 'Target brackets', 'brackets'], ['Look', 'Diamond loaders', 'diamonds'],
   ['Motion', 'Reboot moment', 'reboot'], ['Motion', 'Slice open', 'slice'], ['Motion', 'Text decode', 'decode'],
   ['Motion', 'Page wipe', 'wipe'], ['Motion', 'Drifting particles', 'particles'], ['Motion', 'Scan sweep', 'sweep'],
@@ -99,7 +102,7 @@ const O55_NIER_PARTS = Object.freeze([
   ['World', 'Ink charts', 'charts'], ['World', 'Map ticks', 'ticks'], ['World', 'Machine glyphs', 'glyphs'],
   ['World', 'Intel tooltips', 'intel'], ['World', 'Square icon strokes', 'icons'], ['World', 'Pod 042 in Chat', 'pod042'],
   ['World', 'Quest banners', 'quests'], ['World', 'Ink empty states', 'empty'], ['World', 'Save signal', 'save']
-].map(([group, label, key]) => Object.freeze({ key, label, group })));
+].map(([group, label, key, name]) => Object.freeze({ key, label, group, name: name || label })));
 const o55NierByLabel = new Map(O55_NIER_PARTS.map(p => [p.label, p.key]));
 const o55NierByKey = new Map(O55_NIER_PARTS.map(p => [p.key, p.label]));
 const O55_NIER_LABEL = 'NieR: Automata';

@@ -29,8 +29,8 @@
     square: ['Square corners and fine ink lines everywhere.', 4], cursor: ['The item under the pointer becomes an ink bar with a small cursor.', 5],
     headers: ['Section titles in wide capitals over a ruled line.', 4], ground: ['A faint grid behind the whole app.', 3],
     brackets: ['Four corner brackets mark what has keyboard focus.', 5], diamonds: ['Spinners become a slowly turning diamond.', 3],
-    reboot: ['A short check list covers the window while NieR Mode turns on or off, then tears away.', 8], slice: ['Menus and dialogs open from a thin line.', 4],
-    decode: ['Page titles and notices resolve from scrambled letters.', 5], wipe: ['A quick band crosses the page when you switch pages.', 4],
+    reboot: ['A check list covers the screen while NieR Mode turns on or off.', 8], slice: ['Menus and dialogs open from a thin line.', 4],
+    decode: ['Titles and labels unscramble; longer text types on.', 5], wipe: ['A quick band crosses the page when you switch pages.', 4],
     particles: ['A few small ink squares drift behind the app.', 3], sweep: ['A faint line crosses the screen every few seconds.', 2],
     glitch: ['Warnings and errors arrive with a short jitter.', 4], sounds: ['Soft ticks and tones when you move and choose.', 5],
     voice: ['Notices begin with Report, Alert or Proposal.', 3],
@@ -96,9 +96,11 @@
   }
   function chip(p) {
     const [help, size] = HELP[p.key] || ['', 1];
-    return `<button type="button" class="o55nc-chip" role="switch" aria-checked="false" data-o55nc-key="${esc(p.key)}" aria-label="${esc(p.label)}">`
+    /* the name a person reads (PM_NIER.PARTS name: never the game's own words), not the stored option label */
+    const name = p.name || p.label;
+    return `<button type="button" class="o55nc-chip" role="switch" aria-checked="false" data-o55nc-key="${esc(p.key)}" aria-label="${esc(name)}">`
       + '<span class="o55nc-chip-pins" aria-hidden="true"><i></i><i></i><i></i></span>'
-      + `<span class="o55nc-chip-copy"><span class="o55nc-chip-name">${esc(p.label)}</span><span class="o55nc-chip-help">${esc(help)}</span>`
+      + `<span class="o55nc-chip-copy"><span class="o55nc-chip-name">${esc(name)}</span><span class="o55nc-chip-help">${esc(help)}</span>`
       + `<span class="o55nc-chip-foot"><span>Size ${size}</span><span class="o55nc-chip-state">Removed</span></span></span></button>`;
   }
   function body(store) {
