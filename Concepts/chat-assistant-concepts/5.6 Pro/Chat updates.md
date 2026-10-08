@@ -897,6 +897,13 @@ otherwise idle), so a Crew with a blocked helper reads amber like its card.
 Hover-card heads and Activity Detail chips are lit in the domain tone without
 loops.
 
+Activity Detail's domain tabs never cut a word. They are sized to their words;
+when the panel is too narrow for every label (the 280px pinned panel), the tabs
+you are not on show their icon only, named by the hover tag and their
+accessible name, and the selected tab keeps icon and label. A To-Do's
+**Waiting on** chip keeps to one line; its hover tag lists every task it waits
+on.
+
 Presence:
 
 - **Goal** — attached (`D.goal.thread` or `thread.goalId` while `D.goal` is
