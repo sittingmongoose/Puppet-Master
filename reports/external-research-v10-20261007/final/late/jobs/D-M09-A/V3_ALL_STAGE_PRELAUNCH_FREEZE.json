@@ -1,0 +1,556 @@
+{
+  "schema": "COHORT3-finalfinite-v3-prelaunch-freeze",
+  "case": "D-M09-A",
+  "root_schedule": {
+    "owner": "targeted-cohort3",
+    "family": "GLM",
+    "new_version": 3,
+    "common_stages": [
+      {
+        "assignment": "fresh-untrusted-proposal",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "control": [
+      {
+        "assignment": "single-full-critic-final",
+        "native_goals": 1,
+        "minutes": 60,
+        "logical_phases": [
+          45,
+          15
+        ],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "independent-evidence-critic",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": "complementary-critics"
+      },
+      {
+        "assignment": "independent-operations-critic",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": "complementary-critics"
+      },
+      {
+        "assignment": "fresh-source-reconcile-final",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 80,
+    "common_absolute_pair_wall_minutes": 120,
+    "arm_overlap": false,
+    "whole_wall_exception_reason": "Preserves original control-first order and two genuine parallel treatment critics under globalGLM2. Each fresh GLM assignment gets >=20min rather than a12min final beneath observed13.07min native seed latency. Cold aggregate allowances equal; one common120min maximum includes counterpart wait, never claimed as original15min. Ceilings do not require spending all allotted time.",
+    "original_case_card_sha256": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "control",
+      "treatment"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "root_schedule_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "binding": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    },
+    "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+  },
+  "carrier": "prospectivepassivev2 actualstate, missingrawAPI explicit",
+  "original_science_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/case-card.json": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/INPUT_MAP.json": "ed9dd9463335f525692ae90c4356f15752705c1cba3a60caa75187adec474f47",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/SEED_INPUT_MAP.json": "830fda2b6e08897678048f97058c3ced97a4c03f85e310f619923612556edfbd",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md": "ba41c3231b2443c64c22947308c4098c652bf8a8aa7f8c6fab4a332ae92159c5",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json": "9292d8d0d2d4b8e14b6e7e3a9c5ec6292c0d995b64f590961a6097c5b05fb36f"
+  },
+  "all_stages": [
+    {
+      "stage": "D-M09-A/common/fresh-untrusted-proposal-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/assignment.md",
+      "task_sha256": "c4322370e1443f04cbc3a838ae93d093335650ad2cf33528ea77c614f9ed40ee",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "sqlbackup",
+            "url": "https://www.sqlite.org/backup.html",
+            "version_or_capture": "SQLite documentation captured 2026-10-07; reconcile behavior to SQLite 3.51.3 code",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupapi",
+            "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+            "version_or_capture": "SQLite C API documentation capture 2026-10-07",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupcode",
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+            "version_or_capture": "SQLite version-3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/boundary.json"
+      },
+      "input_map_sha256": "8291e769df97e2b9dfbed4223c7143e72872aefe34ccd1cdba1add9d3adaba95",
+      "assignment": {
+        "assignment": "fresh-untrusted-proposal",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/draft.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/case-card.json": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/INPUT_MAP.json": "ed9dd9463335f525692ae90c4356f15752705c1cba3a60caa75187adec474f47",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/SEED_INPUT_MAP.json": "830fda2b6e08897678048f97058c3ced97a4c03f85e310f619923612556edfbd",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md": "ba41c3231b2443c64c22947308c4098c652bf8a8aa7f8c6fab4a332ae92159c5",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json": "9292d8d0d2d4b8e14b6e7e3a9c5ec6292c0d995b64f590961a6097c5b05fb36f"
+      },
+      "objective": "Execute ER10 D-M09-A v3 fresh-untrusted-proposal",
+      "clientRequestId": "er10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3",
+      "dispatch_task": "/goal Execute ER10 D-M09-A v3 fresh-untrusted-proposal. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/assignment.md.",
+      "dispatch_task_sha256": "b41f06d2bcc52ca38106fde15f6b64002e356288b53ab6428ab21143c1f41a1e",
+      "tool_policy": {
+        "goal": "literal installed /goal only; no model-native Goal tools or second Goal",
+        "science": "exact declared map; primary checks permitted within original scope; no descendants",
+        "carrier": "passive-v2 actual installed driver state, not inferred T3 task",
+        "expiry": "clock_guard passive_cancel; no ordinary live worker steer",
+        "host_startup_observation": "ONE exact-thread activity read actual installed Goal-loop startup event after actual IDs registration; then root nomination; export only one exact assigned nominated state; no polling/steer/retry/secondGoal",
+        "startup_gate_sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0"
+      }
+    },
+    {
+      "stage": "D-M09-A/control/single-full-critic-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/assignment.md",
+      "task_sha256": "0046b9492c570a5f0df51cdca64ba350cdb09c612463c2b65a8f2294c5f24e3d",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "sqlbackup",
+            "url": "https://www.sqlite.org/backup.html",
+            "version_or_capture": "SQLite documentation captured 2026-10-07; reconcile behavior to SQLite 3.51.3 code",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupapi",
+            "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+            "version_or_capture": "SQLite C API documentation capture 2026-10-07",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupcode",
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+            "version_or_capture": "SQLite version-3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "84d1c353fa32a97777864a8dd144effdcc222dbdb8728904ec6cdc03575f0f98",
+      "assignment": {
+        "assignment": "single-full-critic-final",
+        "native_goals": 1,
+        "minutes": 60,
+        "logical_phases": [
+          45,
+          15
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/case-card.json": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/INPUT_MAP.json": "ed9dd9463335f525692ae90c4356f15752705c1cba3a60caa75187adec474f47",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/SEED_INPUT_MAP.json": "830fda2b6e08897678048f97058c3ced97a4c03f85e310f619923612556edfbd",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md": "ba41c3231b2443c64c22947308c4098c652bf8a8aa7f8c6fab4a332ae92159c5",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json": "9292d8d0d2d4b8e14b6e7e3a9c5ec6292c0d995b64f590961a6097c5b05fb36f"
+      },
+      "objective": "Execute ER10 D-M09-A v3 single-full-critic-final",
+      "clientRequestId": "er10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+      "dispatch_task": "/goal Execute ER10 D-M09-A v3 single-full-critic-final. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/assignment.md.",
+      "dispatch_task_sha256": "3955c7da79bdaae2a5ab588ee4b0f476c2f177e4cfe60470706d689540d3ab1d",
+      "tool_policy": {
+        "goal": "literal installed /goal only; no model-native Goal tools or second Goal",
+        "science": "exact declared map; primary checks permitted within original scope; no descendants",
+        "carrier": "passive-v2 actual installed driver state, not inferred T3 task",
+        "expiry": "clock_guard passive_cancel; no ordinary live worker steer",
+        "host_startup_observation": "ONE exact-thread activity read actual installed Goal-loop startup event after actual IDs registration; then root nomination; export only one exact assigned nominated state; no polling/steer/retry/secondGoal",
+        "startup_gate_sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0"
+      }
+    },
+    {
+      "stage": "D-M09-A/treatment/independent-evidence-critic-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3/assignment.md",
+      "task_sha256": "9dd36cd2ccffe952dce9960a4e7219d57ae5fa86415b919441f297f77168705f",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "sqlbackup",
+            "url": "https://www.sqlite.org/backup.html",
+            "version_or_capture": "SQLite documentation captured 2026-10-07; reconcile behavior to SQLite 3.51.3 code",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupapi",
+            "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+            "version_or_capture": "SQLite C API documentation capture 2026-10-07",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupcode",
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+            "version_or_capture": "SQLite version-3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "acd3fadb0b962dd47af2a787462712bc842dd89c7e379af274e52a337cd0402d",
+      "assignment": {
+        "assignment": "independent-evidence-critic",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": "complementary-critics"
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3/critique.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/case-card.json": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/INPUT_MAP.json": "ed9dd9463335f525692ae90c4356f15752705c1cba3a60caa75187adec474f47",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/SEED_INPUT_MAP.json": "830fda2b6e08897678048f97058c3ced97a4c03f85e310f619923612556edfbd",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md": "ba41c3231b2443c64c22947308c4098c652bf8a8aa7f8c6fab4a332ae92159c5",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json": "9292d8d0d2d4b8e14b6e7e3a9c5ec6292c0d995b64f590961a6097c5b05fb36f"
+      },
+      "objective": "Execute ER10 D-M09-A v3 independent-evidence-critic",
+      "clientRequestId": "er10-cohort3-D-M09-A-treatment-independent-evidence-critic-v3",
+      "dispatch_task": "/goal Execute ER10 D-M09-A v3 independent-evidence-critic. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3/assignment.md.",
+      "dispatch_task_sha256": "9053d46d964634c857509c7fd4b0b5762bf6d1d52a16c8c333994ee6b5f8d594",
+      "tool_policy": {
+        "goal": "literal installed /goal only; no model-native Goal tools or second Goal",
+        "science": "exact declared map; primary checks permitted within original scope; no descendants",
+        "carrier": "passive-v2 actual installed driver state, not inferred T3 task",
+        "expiry": "clock_guard passive_cancel; no ordinary live worker steer",
+        "host_startup_observation": "ONE exact-thread activity read actual installed Goal-loop startup event after actual IDs registration; then root nomination; export only one exact assigned nominated state; no polling/steer/retry/secondGoal",
+        "startup_gate_sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0"
+      }
+    },
+    {
+      "stage": "D-M09-A/treatment/independent-operations-critic-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/assignment.md",
+      "task_sha256": "004ef4477353d5bce3d6784920ea66acbb352837090eba9b5a65364fc2a31e6b",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "sqlbackup",
+            "url": "https://www.sqlite.org/backup.html",
+            "version_or_capture": "SQLite documentation captured 2026-10-07; reconcile behavior to SQLite 3.51.3 code",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupapi",
+            "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+            "version_or_capture": "SQLite C API documentation capture 2026-10-07",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupcode",
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+            "version_or_capture": "SQLite version-3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "b01b5bb089267e3f8b061c22e774b3b3e95879e6df0e6e07c703e327c5e99de3",
+      "assignment": {
+        "assignment": "independent-operations-critic",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": "complementary-critics"
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/critique.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/case-card.json": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/INPUT_MAP.json": "ed9dd9463335f525692ae90c4356f15752705c1cba3a60caa75187adec474f47",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/SEED_INPUT_MAP.json": "830fda2b6e08897678048f97058c3ced97a4c03f85e310f619923612556edfbd",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md": "ba41c3231b2443c64c22947308c4098c652bf8a8aa7f8c6fab4a332ae92159c5",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json": "9292d8d0d2d4b8e14b6e7e3a9c5ec6292c0d995b64f590961a6097c5b05fb36f"
+      },
+      "objective": "Execute ER10 D-M09-A v3 independent-operations-critic",
+      "clientRequestId": "er10-cohort3-D-M09-A-treatment-independent-operations-critic-v3",
+      "dispatch_task": "/goal Execute ER10 D-M09-A v3 independent-operations-critic. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/assignment.md.",
+      "dispatch_task_sha256": "0a464c9ab096e10f715058ee6b9c07dbf7e79183f0303ee5d01bc6f7f98e7e26",
+      "tool_policy": {
+        "goal": "literal installed /goal only; no model-native Goal tools or second Goal",
+        "science": "exact declared map; primary checks permitted within original scope; no descendants",
+        "carrier": "passive-v2 actual installed driver state, not inferred T3 task",
+        "expiry": "clock_guard passive_cancel; no ordinary live worker steer",
+        "host_startup_observation": "ONE exact-thread activity read actual installed Goal-loop startup event after actual IDs registration; then root nomination; export only one exact assigned nominated state; no polling/steer/retry/secondGoal",
+        "startup_gate_sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0"
+      }
+    },
+    {
+      "stage": "D-M09-A/treatment/fresh-source-reconcile-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/fresh-source-reconcile-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/fresh-source-reconcile-final-v3/assignment.md",
+      "task_sha256": "3279c5505a9b0802735135bda4a2da72ce47a5fb8d074cf69b030a05cfec0985",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "sqlbackup",
+            "url": "https://www.sqlite.org/backup.html",
+            "version_or_capture": "SQLite documentation captured 2026-10-07; reconcile behavior to SQLite 3.51.3 code",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupapi",
+            "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+            "version_or_capture": "SQLite C API documentation capture 2026-10-07",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlbackupcode",
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+            "version_or_capture": "SQLite version-3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/fresh-source-reconcile-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        },
+        "evidence_critique": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3/critique.md"
+        },
+        "operations_critique": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/critique.md"
+        }
+      },
+      "input_map_sha256": "c429fc8039694b055b222141f1f0e21714647c6304fb236b937cf8b5ad48860e",
+      "assignment": {
+        "assignment": "fresh-source-reconcile-final",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/fresh-source-reconcile-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "EXPLICIT_ROOT_GLM2_TRANSFER"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/case-card.json": "7ee36fc9c76696a8aed39483f1e82813472c68ab7582b56fede51997e28d7180",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/INPUT_MAP.json": "ed9dd9463335f525692ae90c4356f15752705c1cba3a60caa75187adec474f47",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/SEED_INPUT_MAP.json": "830fda2b6e08897678048f97058c3ced97a4c03f85e310f619923612556edfbd",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md": "ba41c3231b2443c64c22947308c4098c652bf8a8aa7f8c6fab4a332ae92159c5",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json": "9292d8d0d2d4b8e14b6e7e3a9c5ec6292c0d995b64f590961a6097c5b05fb36f"
+      },
+      "objective": "Execute ER10 D-M09-A v3 fresh-source-reconcile-final",
+      "clientRequestId": "er10-cohort3-D-M09-A-treatment-fresh-source-reconcile-final-v3",
+      "dispatch_task": "/goal Execute ER10 D-M09-A v3 fresh-source-reconcile-final. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/fresh-source-reconcile-final-v3/assignment.md.",
+      "dispatch_task_sha256": "4dcce6a5d8b36a75880840a40405ea43ff854629e3fc3140c38386998f7cd154",
+      "tool_policy": {
+        "goal": "literal installed /goal only; no model-native Goal tools or second Goal",
+        "science": "exact declared map; primary checks permitted within original scope; no descendants",
+        "carrier": "passive-v2 actual installed driver state, not inferred T3 task",
+        "expiry": "clock_guard passive_cancel; no ordinary live worker steer",
+        "host_startup_observation": "ONE exact-thread activity read actual installed Goal-loop startup event after actual IDs registration; then root nomination; export only one exact assigned nominated state; no polling/steer/retry/secondGoal",
+        "startup_gate_sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0"
+      }
+    }
+  ],
+  "attempt_limit": 1,
+  "old_versions": "immutable; costs retained inclusive separate, no priorfailedscience inputs/no bestof",
+  "frozen_at": "2026-10-07T22:36:07.184715+00:00",
+  "administrative_original": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M09-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+    "sha256": "1817b065c52dae9cf9112f75f0d2a72c88f051bdbca40894447e8f68da484d17"
+  },
+  "prospective_live_catalog_binding_at": "2026-10-07T22:36:07.184715+00:00",
+  "capacity_authority": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/cohort3-glm2-explicit-transfer-v1.json",
+  "activation_registration_order_policy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/prospective-activation-notice-registration-order-v1.json",
+  "prospective_startup_event_gate": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/PROSPECTIVE_GLM_STARTUP_EVENT_GATE_V1.md",
+    "sha256": "06d5922e3442c963b988dc510c99976f98872ad543f215f7ca3dc0bda326e8f0",
+    "hash_bound_at": "2026-10-07T22:50:35.483361+00:00",
+    "prior_overlay_sha256": "60a1966e5f52ba6fe255f6ecef06aede3cc00f019a0028efef0a765d15146687",
+    "prior_overlay_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M09-A/administrative-prebinding-originals/before-startup-event-gate.json",
+    "registration_before_observation": true,
+    "activity_startup_read_limit": 1,
+    "activation_export_requires_one_exact_nominated_state": true,
+    "missing_startup_event": "PENDING; supported lifecycle notification only",
+    "no_time_extension": true
+  }
+}

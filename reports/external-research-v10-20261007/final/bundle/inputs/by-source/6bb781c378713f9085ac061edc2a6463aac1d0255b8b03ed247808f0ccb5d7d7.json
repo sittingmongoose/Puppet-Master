@@ -1,0 +1,77 @@
+{
+  "schema": "ER10_COHORT3_FINAL_SIX_DISPOSITIONS_V1",
+  "completed_at": "2026-10-08T00:52:35.028082+00:00",
+  "assigned_cases": [
+    "D-M07-A",
+    "D-M07-B",
+    "D-M08-A",
+    "D-M08-B",
+    "D-M09-A",
+    "D-M10-A"
+  ],
+  "results": [
+    {
+      "case": "D-M07-A",
+      "control": "FullSourceFAIL",
+      "treatment": "FullSourceFAIL",
+      "is_method_comparison": false,
+      "disposition": "COMPLETE_DIAGNOSTIC_FULL_SOURCE_PAIR_BOTH_FAIL_COMPARATIVE_HOLD",
+      "frozen_result_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/PAIR_COMPARISON.json"
+    },
+    {
+      "case": "D-M07-B",
+      "control": "FullSourceFAIL",
+      "treatment": "FullSourceFAIL",
+      "is_method_comparison": false,
+      "disposition": "COMPLETE_DIAGNOSTIC_FULL_SOURCE_PAIR_BOTH_FAIL_COMPARATIVE_SEED_HOLD",
+      "frozen_result_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/PAIR_COMPARISON.json"
+    },
+    {
+      "case": "D-M08-A",
+      "control": "FullSourcePASS",
+      "treatment": "FullSourceFAIL",
+      "is_method_comparison": true,
+      "disposition": "COMPLETE_FULL_SOURCE_PAIR",
+      "frozen_result_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-A-v3/PAIR_COMPARISON.json"
+    },
+    {
+      "case": "D-M08-B",
+      "control": "FullSourceFAIL",
+      "treatment": "FullSourcePASS",
+      "is_method_comparison": true,
+      "disposition": "COMPLETE_FULL_SOURCE_PAIR",
+      "frozen_result_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-B-v3/PAIR_COMPARISON.json"
+    },
+    {
+      "case": "D-M09-A",
+      "control": "FullSourceFAIL",
+      "treatment": "NO_FINAL_UNASSESSED",
+      "is_method_comparison": false,
+      "disposition": "FINAL_V3_STAGE_FAILURE_PLUS_CONTROL_FULL_SOURCE_FAIL_COMPARATIVE_HOLD",
+      "frozen_result_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/CONTROL_SOURCE_DIAGNOSTIC.json"
+    },
+    {
+      "case": "D-M10-A",
+      "control": "FullSourceFAIL",
+      "treatment": "FullSourceFAIL",
+      "is_method_comparison": true,
+      "disposition": "COMPLETE_FULL_SOURCE_PAIR_BOTH_FAIL",
+      "frozen_result_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M10-A-v3/PAIR_COMPARISON.json"
+    }
+  ],
+  "all_owned_tasks_settled": true,
+  "owned_task_count": 42,
+  "remaining_finite_queue": [],
+  "capacity": {
+    "GLM": 0,
+    "Luna": 0,
+    "Muse": 0
+  },
+  "GLM2_release_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/GLM2_FINAL_RELEASE.json",
+  "prior_versions_failures_costs_grades_retained": true,
+  "no_best_of_or_grade_rewrite_or_candidate_rescue": true,
+  "M09_failed_evidence_stage_and_unentered_reconciler_preserved": true,
+  "COMPARISONS_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/COMPARISONS.json",
+  "COMPARISONS_sha256": "40415773e95b55eb53c88789a259870bdaeb86bf2e877f35c243bb0e68c0f45c",
+  "unknown_billing_generated_cache_remain_null": true
+}

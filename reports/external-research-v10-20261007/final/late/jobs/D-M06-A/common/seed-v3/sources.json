@@ -1,0 +1,68 @@
+{
+  "case_id": "D-M06-A",
+  "seed": "seed-v3",
+  "sources_policy": "FROZEN_PUBLIC_PRIMARY_CORPUS; only the mapped allowed inputs were read; no additional network fetches were made by this arm.",
+  "sources": [
+    {
+      "source_id": "jcs",
+      "title": "JSON Canonicalization Scheme (JCS)",
+      "identifier": "RFC 8785, Independent Submission, Informational, June 2020",
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.txt",
+      "version_or_capture": "RFC 8785 June 2020; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240",
+      "sha256_recheck_utc": "2026-10-08T00:44:32.943684492Z",
+      "sha256_recheck_result": "match with INPUT_MAP.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+      "kind": "public primary raw bytes",
+      "bytes": 41879,
+      "read_completely": true,
+      "sections_consulted": [
+        "3.1 Creation of Input Data",
+        "3.2.1 Whitespace",
+        "3.2.2.1 Serialization of Literals",
+        "3.2.2.2 Serialization of Strings",
+        "3.2.2.3 Serialization of Numbers",
+        "3.2.3 Sorting of Object Properties",
+        "3.2.4 UTF-8 Generation",
+        "Appendix A ECMAScript Sample Canonicalizer",
+        "Appendix B Number Serialization Samples",
+        "Appendix D Dealing with Big Numbers",
+        "Appendix E String Subtype Handling",
+        "Appendix F Implementation Guidelines"
+      ]
+    }
+  ],
+  "other_allowed_inputs_read": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/brief.md",
+      "role": "task brief (not a public primary source)"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/INPUT_MAP.json",
+      "role": "input map"
+    }
+  ],
+  "references_cited_within_frozen_bytes_but_not_independently_fetched": [
+    {
+      "id": "RFC 7493 (I-JSON)",
+      "role": "input-domain constraint invoked by RFC 8785 section 3.1",
+      "status": "accessed only as quoted/cited within the frozen RFC 8785 bytes"
+    },
+    {
+      "id": "ECMA-262 section 7.1.12.1 (Number::toString) including Note 2",
+      "role": "number serialization",
+      "status": "accessed only as cited within the frozen bytes; Appendix B Table 1 is the only number-sample evidence available to this arm"
+    },
+    {
+      "id": "ECMA-262 section 24.3.2.2 (JSON.stringify quote)",
+      "role": "string serialization",
+      "status": "accessed only as cited within the frozen bytes"
+    }
+  ],
+  "limitations": [
+    "Single frozen source read completely; no live re-capture of the RFC URL was performed.",
+    "No code was executed in this arm per the assignment; all claims in draft.md are untested here.",
+    "The RFC's development-portal test corpus (Appendix I) was not fetched."
+  ]
+}

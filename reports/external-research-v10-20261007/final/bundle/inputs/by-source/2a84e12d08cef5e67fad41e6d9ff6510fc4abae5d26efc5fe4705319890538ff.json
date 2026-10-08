@@ -1,0 +1,23 @@
+{
+  "task": "closed-slot-ledger-v1",
+  "start": "2026-10-07T22:47:31.641198+00:00",
+  "deadline": "2026-10-07T23:17:31.641198+00:00",
+  "writing_reserve_seconds": 300,
+  "account": "codex_gmail",
+  "model": "gpt-6.1-sol",
+  "reasoningEffort": "xhigh",
+  "serviceTier": "priority",
+  "logical_slots": 40,
+  "closed_slots": 35,
+  "held_or_live_final_slots": [
+    "D-M06-A",
+    "D-M06-B",
+    "D-M07-A",
+    "D-M07-B",
+    "D-M09-A"
+  ],
+  "extra_linked_metadata_max_files": 180,
+  "extra_linked_metadata_max_bytes": 33554432,
+  "no_own_goal_or_workers": true,
+  "no_scientific_regrade": true
+}

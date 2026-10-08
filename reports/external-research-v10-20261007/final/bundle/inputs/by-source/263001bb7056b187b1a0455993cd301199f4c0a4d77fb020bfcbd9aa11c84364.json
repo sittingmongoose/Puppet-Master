@@ -1,0 +1,1258 @@
+{
+ "schema": "pm.independent-frozen-source-science-review.v2",
+ "case_id": "D-M03-B",
+ "review_status": "COMPLETE_SOURCE_SCIENCE_ASSESSMENT",
+ "reviewer": {
+  "role": "independent review sub-agent",
+  "user_declared_identity": "codex_gmail sittingmongoose@gmail.com / gpt-6.1-sol xhigh priority",
+  "usage": null
+ },
+ "timing": {
+  "preparation_utc": "2026-10-07T20:00:01.435065+00:00",
+  "hard_ceiling_utc": "2026-10-07T20:20:01.435065+00:00",
+  "first_observed_check_utc": "2026-10-07T20:00:10.933682+00:00",
+  "initial_complete_reports_saved_utc": "2026-10-07T20:07:47.688604+00:00",
+  "final_validation_utc": "2026-10-07T20:09:54.027488+00:00",
+  "completed_utc": "2026-10-07T20:09:54.027488+00:00",
+  "clock_reset": false,
+  "elapsed_seconds_from_preparation": 592.592423,
+  "completed_before_hard_ceiling": true
+ },
+ "scope": {
+  "temporal_gate": "User attests both trees held/quiet and outputs frozen before evaluator work; accepted as prerequisite, not independently lifecycle-verified.",
+  "reviewed": "Brief, manifest, both complete finals, all six required intermediates, all frozen source lines and the relevant released primary dependencies/data ranges listed below.",
+  "excluded": "Case cards/READY, supervisor/lifecycle/timing files, identity maps, other grades/reviews/cases, parent analysis/economics/metrics, candidate rescue/edits/feedback/new candidates.",
+  "candidate_edits": false,
+  "delegation": false,
+  "native_goal_created": false,
+  "scope_limitations": "No artifact mapped null. No scientific assertion was left unadjudicated due to missing artifact or time. Empirical runtime and candidate-process claims remain explicitly unassessed."
+ },
+ "blinding": {
+  "status": "PARTIAL_METHOD_BLINDING",
+  "visible_clues": [
+   "X headings say control, normal_retrieval-v2 and finalize-v2.",
+   "Y headings say treatment, navigate-v2, focused_read-v2, expand-v2 and finalize-v2; intermediate-4 also contains a native Goal statement."
+  ],
+  "identity_map_consulted": false,
+  "winner_rank_economics_target_metrics_other_grades_consulted": false,
+  "limitation": "Method clues are present in authorized artifacts, so strict method blinding is impossible. No winner/rank/cost or lifecycle/provenance inference is made."
+ },
+ "input_hashes": [
+  {
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/brief.md",
+   "sha256": "f2883527565efec006d62f4066c9578f01339eb35bbb4fcf21b6c53360230c60",
+   "read_scope": "full file"
+  },
+  {
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources.json",
+   "sha256": "73f74502cba5442210467e83f98a2edc08d5492161c654b574ccf8ab52030cd6",
+   "read_scope": "full file"
+  }
+ ],
+ "reviewed_artifacts": [
+  {
+   "label": "X",
+   "artifact": "final.md",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/final.md",
+   "sha256": "c6a0a9bb5bdb2ddc2bbc264199c1256b87d22349d35ebfcdbd5657858a469e0f",
+   "hash_match": true,
+   "bytes": 6388,
+   "lines": 45,
+   "whitespace_words": 754,
+   "read_scope": "entire artifact"
+  },
+  {
+   "label": "X",
+   "artifact": "intermediate-1.md",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/intermediate-1.md",
+   "sha256": "efbc663b19492bec983184b5c09e619d771458760bd01d9852b5b2d888a9451a",
+   "hash_match": true,
+   "bytes": 7086,
+   "lines": 47,
+   "whitespace_words": 850,
+   "read_scope": "entire artifact"
+  },
+  {
+   "label": "X",
+   "artifact": "intermediate-2.md",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/X/intermediate-2.md",
+   "sha256": "192e2574880aaa665f52740ee2b96435be590d9111ba1efc9cf6d1699f4438ec",
+   "hash_match": true,
+   "bytes": 7179,
+   "lines": 62,
+   "whitespace_words": 842,
+   "read_scope": "entire artifact"
+  },
+  {
+   "label": "Y",
+   "artifact": "final.md",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/final.md",
+   "sha256": "cdf6c9e9b93a950e7f09fa481937279d3f7f014257013be88988029bed49d1a6",
+   "hash_match": true,
+   "bytes": 8271,
+   "lines": 133,
+   "whitespace_words": 988,
+   "read_scope": "entire artifact"
+  },
+  {
+   "label": "Y",
+   "artifact": "intermediate-1.md",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-1.md",
+   "sha256": "d7d434be06608c199766a0a7943e4dc6a506d31fb4c96d231a1ad8254a45198f",
+   "hash_match": true,
+   "bytes": 6593,
+   "lines": 53,
+   "whitespace_words": 696,
+   "read_scope": "entire artifact"
+  },
+  {
+   "label": "Y",
+   "artifact": "intermediate-2.md",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-2.md",
+   "sha256": "5493bc03b12527a8c2e2d42789924235d88779183a2d433b2cc03b50d5cefc7a",
+   "hash_match": true,
+   "bytes": 8813,
+   "lines": 50,
+   "whitespace_words": 1074,
+   "read_scope": "entire artifact"
+  },
+  {
+   "label": "Y",
+   "artifact": "intermediate-3.md",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-3.md",
+   "sha256": "154d2c4198e0555628dbc59fc283cabccd47c9799598f2fadc4c6fb47459bb6e",
+   "hash_match": true,
+   "bytes": 8712,
+   "lines": 50,
+   "whitespace_words": 954,
+   "read_scope": "entire artifact"
+  },
+  {
+   "label": "Y",
+   "artifact": "intermediate-4.md",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/frozen/Y/intermediate-4.md",
+   "sha256": "ceca68c3428c61e6c4036f59aa4a4fc3dc1473e5f688d1d60fefa0a9ad16b142",
+   "hash_match": true,
+   "bytes": 2912,
+   "lines": 61,
+   "whitespace_words": 333,
+   "read_scope": "entire artifact"
+  }
+ ],
+ "frozen_source_integrity": [
+  {
+   "source_id": "projdoc",
+   "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+   "version_or_capture": "pyproj 3.6.1",
+   "capture_date_utc": "2026-10-07",
+   "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources/projdoc.rst",
+   "kind": "public primary raw bytes",
+   "hash_match": true,
+   "read_scope": "full file",
+   "reviewed_lines": [
+    1,
+    47
+   ]
+  },
+  {
+   "source_id": "projcode",
+   "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+   "version_or_capture": "pyproj 3.6.1; underlying PROJ 9.3.0 assumed by brief, no execution implied",
+   "capture_date_utc": "2026-10-07",
+   "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/inputs/sources/projcode.py",
+   "kind": "public primary raw bytes",
+   "hash_match": true,
+   "read_scope": "full file",
+   "reviewed_lines": [
+    1,
+    1339
+   ]
+  }
+ ],
+ "source_integrity_conclusion": "All 10 supplied source/artifact SHA-256 values match. Both tagged remote frozen source files independently match their pinned bytes. Source IDs and pertinent line ranges are genuine; identified defects concern interpretation/conditions, not altered source bytes. Hash matching does not authenticate candidate reading/execution history.",
+ "additional_primary_checks": [
+  {
+   "source_id": "remote-projdoc",
+   "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/docs/api/transformer.rst",
+   "version": "3.6.1",
+   "captured_utc": "2026-10-07T20:00:52.239057+00:00",
+   "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51",
+   "bytes": 1337,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/remote-projdoc.rst",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "full bytes compared to frozen source"
+   ]
+  },
+  {
+   "source_id": "remote-projcode",
+   "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/transformer.py",
+   "version": "3.6.1",
+   "captured_utc": "2026-10-07T20:00:52.210129+00:00",
+   "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda",
+   "bytes": 44983,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/remote-projcode.py",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "full bytes compared to frozen source"
+   ]
+  },
+  {
+   "source_id": "pyx",
+   "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.6.1/pyproj/_transformer.pyx",
+   "version": "pyproj 3.6.1",
+   "captured_utc": "2026-10-07T20:00:52.246346+00:00",
+   "sha256": "15bef90ba8ec7f45cefc243415521a70fd78d6fc513a914423cb5610a1a0ea17",
+   "bytes": 39998,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/pyx.pyx",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "280-345",
+    "525-604",
+    "636-654",
+    "657-744",
+    "748-829",
+    "838-942"
+   ]
+  },
+  {
+   "source_id": "webmerc-doc",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/docs/source/operations/projections/webmerc.rst",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:00:52.222586+00:00",
+   "sha256": "0b77c51e435726db8c821aa42f55217c57d81de0d55f863162a97961ac4b1017",
+   "bytes": 3338,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/webmerc-doc.rst",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "1-100"
+   ]
+  },
+  {
+   "source_id": "proj-functions",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/docs/source/development/reference/functions.rst",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:00:52.229408+00:00",
+   "sha256": "54317fb5e41d7c517891814a784df0c0f303592398a50167b61d9475de9b9a4c",
+   "bytes": 38818,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-functions.rst",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "80-270"
+   ]
+  },
+  {
+   "source_id": "proj-merc-code",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/projections/merc.cpp",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:00:52.225259+00:00",
+   "sha256": "007679b914de512ada5818ac8980673a66f7544d331b2d704d1cf9732a6ac604",
+   "bytes": 2240,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-merc-code.cpp",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "1-84"
+   ]
+  },
+  {
+   "source_id": "proj-projected-crs",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/projected_crs.sql",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:00:52.442530+00:00",
+   "sha256": "d9ae3d9ace69911acaa55528abbef8a5c067a132d9f18c16251a8f429efa9f0e",
+   "bytes": 1346167,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-projected-crs.sql",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "3655-3656"
+   ]
+  },
+  {
+   "source_id": "proj-geodetic-crs",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/geodetic_crs.sql",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:00:52.393913+00:00",
+   "sha256": "d86dec56da2f70bc1ceb2e527005d96617b2c7fab83ee43ee1ee5f3aa42515d8",
+   "bytes": 253205,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-geodetic-crs.sql",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "523-524"
+   ]
+  },
+  {
+   "source_id": "proj-axis",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/axis.sql",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:00:52.338476+00:00",
+   "sha256": "e3326ee7d15d1732886a32a8896cf32d5467e300736ddbec64a3044a96df4159",
+   "bytes": 29702,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-axis.sql",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "158-159",
+    "263-264"
+   ]
+  },
+  {
+   "source_id": "proj-extent",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/extent.sql",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:00:52.444766+00:00",
+   "sha256": "a40cc136c826de390c2e668458148e8fad508066c092d6909184a0d7610769f0",
+   "bytes": 719568,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-extent.sql",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "2523"
+   ]
+  },
+  {
+   "source_id": "proj-unit",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/unit_of_measure.sql",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:00:52.350457+00:00",
+   "sha256": "619e1dfcaebafb732f4308ae82d8578213abaf93f540efde0a58c9c13f996ae7",
+   "bytes": 10021,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-unit.sql",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "20",
+    "83"
+   ]
+  },
+  {
+   "source_id": "proj-usage",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/usage.sql",
+   "version": "PROJ 9.3.0",
+   "status": "FETCH_FAILED",
+   "error": "HTTP Error 404: Not Found",
+   "captured_utc": "2026-10-07T20:00:52.346193+00:00",
+   "reviewed_ranges": []
+  },
+  {
+   "source_id": "proj-fwd",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/fwd.cpp",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:02:18.464946+00:00",
+   "sha256": "f323098658bbbc714353bd508f23567808192aec89fb2e989f23276bd42adcdb",
+   "bytes": 9115,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-fwd.cpp",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "40-88",
+    "119-161"
+   ]
+  },
+  {
+   "source_id": "proj-crs",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/iso19111/crs.cpp",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:02:18.536644+00:00",
+   "sha256": "9d6c5fcad3801e8ea5deb7aaee4ef57936c442a6c3b48f095b72aaf8e7ae2dba",
+   "bytes": 289534,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-crs.cpp",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "878-955",
+    "1138-1181"
+   ]
+  },
+  {
+   "source_id": "proj-c-api",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/src/iso19111/c_api.cpp",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:02:18.534300+00:00",
+   "sha256": "5824211de61a42df3d4ab1d09d5c266adda2e0c4a775c6a371194b546b223faf",
+   "bytes": 377950,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-c-api.cpp",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "9022-9154"
+   ]
+  },
+  {
+   "source_id": "proj-ellipsoid",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/ellipsoid.sql",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:02:18.495851+00:00",
+   "sha256": "94580c4da9a232ff038bc7d4fbfd8fb53951daad08562393c5c159e3c99f8ed4",
+   "bytes": 7123,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-ellipsoid.sql",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "32"
+   ]
+  },
+  {
+   "source_id": "proj-schema",
+   "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.3.0/data/sql/proj_db_table_defs.sql",
+   "version": "PROJ 9.3.0",
+   "captured_utc": "2026-10-07T20:02:18.470151+00:00",
+   "sha256": "e8566d61bd3338741b4d939afa518bb69a314d8e91ef5c4fb0f5073771146a3f",
+   "bytes": 81959,
+   "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/proj-schema.sql",
+   "status": "FETCHED_RAW_NOT_EXECUTED",
+   "reviewed_ranges": [
+    "64-76",
+    "220-234",
+    "245-264",
+    "693-713"
+   ]
+  }
+ ],
+ "browser_checks": {
+  "attempts": 3,
+  "results": [
+   "Tagged raw Cython browser representation opened but was not relied on for exact line/hash evidence; direct raw capture governs.",
+   "PROJ versioned Web Mercator rendered page returned Internal Error.",
+   "PROJ versioned functions rendered page returned Internal Error."
+  ],
+  "fallback": "Released-tag raw primary files fetched as non-executable bytes; no reliance on mutable latest docs."
+ },
+ "evidence_key": {
+  "E1": "projcode:99-115,325-359,553-637,716-726,818-860; pyx:525-584,636-654",
+  "E2": "projdoc:14-20; projcode:179-182,525-528,583-586,1230-1233,1302-1305; proj-functions:119-153; proj-geodetic-crs:523; proj-axis:263-264; proj-c-api:9040-9050",
+  "E3": "projcode:759-763,791-811,888-892,1046-1048,1223-1225,1295-1297; pyx:704-743,799-828",
+  "E4": "proj-projected-crs:3655; proj-axis:158-159; proj-unit:20; projcode:473-503,1241-1244; proj-fwd:139-149",
+  "E5": "projcode:146-152,156-219,221-297,389-406,432-471,587-618; pyx:280-345; proj-functions:145-153,193-223,242-266",
+  "E6": "projcode:764-766,893-895,953-986,1049-1051,1226-1229; pyx:697-698,723-732,808-819; proj-fwd:40-85; proj-projected-crs:3656; proj-extent:2523",
+  "E7": "projcode:778-815,905-948,1323-1325; analytic-counterexamples (reviewer arithmetic, not pyproj execution)",
+  "E8": "projcode:990-1069, especially geographic-destination antecedent at 1009-1010",
+  "E9": "projcode:514,545-550,1210-1211,1256-1258,1274-1275,1337-1339; switch at 883-885,978-986; pyx:886-914",
+  "E10": "All exact artifacts and input hashes below; measured final word counts X=754/Y=988; X intermediate-2 embedded final equals frozen X final after stripping section-delimiting whitespace"
+ },
+ "claim_groups": [
+  {
+   "id": "G01",
+   "claim_group": "Required EPSG:4326 to EPSG:3857 lon/lat-degree constructor and call contract",
+   "artifact_locations": "X final recommendation; Y final recommendation; X intermediates 1-2; Y intermediates 2-4",
+   "evidence": [
+    "E1",
+    "E2",
+    "E3"
+   ],
+   "X": {
+    "disposition": "SUPPORTED",
+    "assessment": "always_xy=True at creation and degree input with radians=False/FORWARD are correct; error policy is explicit."
+   },
+   "Y": {
+    "disposition": "SUPPORTED",
+    "assessment": "Same configuration/call is correct; rejecting radians=True for degree-encoded input is justified."
+   }
+  },
+  {
+   "id": "G02",
+   "claim_group": "Construction, maker/thread-local and scalar/array consuming-call trace; signatures",
+   "artifact_locations": "X F1-F2; Y finding 1; X intermediates 1-2; Y intermediate 1 §1, intermediate 2 §1, intermediate 3 E1",
+   "evidence": [
+    "E1"
+   ],
+   "X": {
+    "disposition": "SUPPORTED_WITH_BOUNDARY",
+    "assessment": "Python creation and call trace is sufficient for this bounded brief; the Cython body is acknowledged as absent. It does not trace both transform branches in detail."
+   },
+   "Y": {
+    "disposition": "SUPPORTED",
+    "assessment": "Exact signatures, flag passthrough and scalar/array branches are supported. Constructor checks TransformerMaker generally, not an exclusive enumeration of all public constructors."
+   }
+  },
+  {
+   "id": "G03",
+   "claim_group": "Caller order separated from native CRS axes; default behavior and frozen metadata gap",
+   "artifact_locations": "X F3; Y finding 2; all substantive intermediates",
+   "evidence": [
+    "E2"
+   ],
+   "X": {
+    "disposition": "SUPPORTED_CONDITIONAL",
+    "assessment": "The two frozen files do not contain the EPSG axis registry. Conditional native-order treatment is honest, rather than proof that the axis order is unknowable. Reviewer primary data confirms 4326 latitude then longitude."
+   },
+   "Y": {
+    "disposition": "SUPPORTED_CONDITIONAL",
+    "assessment": "Same separation and justified two-file metadata limitation. Correctly ordered native tuples remain valid with always_xy=False."
+   }
+  },
+  {
+   "id": "G04",
+   "claim_group": "always_xy meaning, both endpoints, default False, geographic/projected scope and limitations",
+   "artifact_locations": "X F3-F4; Y finding 3; X intermediates 1-2; Y intermediate 1 §3, intermediate 2 §3, intermediate 3 E2",
+   "evidence": [
+    "E2",
+    "E3",
+    "E5"
+   ],
+   "X": {
+    "disposition": "SUPPORTED",
+    "assessment": "GIS ordering on both ends and most-projected qualifier are preserved. It does not validate ranges or set angular encoding/accuracy."
+   },
+   "Y": {
+    "disposition": "SUPPORTED",
+    "assessment": "Both endpoint ordering and default are correct. Absence of a statement in the frozen files is not a general proof of unrelated dependency behavior; the final appropriately calls it absence."
+   }
+  },
+  {
+   "id": "G05",
+   "claim_group": "itransform switch is separate; deprecated from_proj/module paths",
+   "artifact_locations": "X F4/F2; Y findings 1/3 and rejected claims; Y intermediates 1-3",
+   "evidence": [
+    "E9"
+   ],
+   "X": {
+    "disposition": "SUPPORTED",
+    "assessment": "switch is a per-iteration flag distinct from constructor ordering; transform method has no always_xy parameter."
+   },
+   "Y": {
+    "disposition": "SUPPORTED",
+    "assessment": "Deprecation and passthrough are real. Rejection is a recommendation against deprecated APIs, not evidence they cannot work. switch does not generally reproduce normalized input and output order for this pair."
+   }
+  },
+  {
+   "id": "G06",
+   "claim_group": "Radians: angular inputs/outputs versus linear projected domains; pipeline and worked examples",
+   "artifact_locations": "X F5; Y finding 4 L59-64; X intermediates 1-2 F5; Y intermediate 1 §4, intermediate 2 §4, intermediate 3 E3",
+   "evidence": [
+    "E3",
+    "E4"
+   ],
+   "X": {
+    "disposition": "NEEDS_QUALIFICATION",
+    "assessment": "Correct for this geographic degree input, but final shorthand radians=False means degrees should explicitly remain scoped to geographic/angular coordinates. It does not say non-geographic output becomes degrees."
+   },
+   "Y": {
+    "disposition": "CONTRADICTED",
+    "assessment": "The added else degrees after if geographic is false for projected output. The flag changes geographic angular encoding, not 3857 linear units. This error recurs through required intermediates 1-3."
+   }
+  },
+  {
+   "id": "G07",
+   "claim_group": "EPSG:3857 output units, geocentric/metre text and introspection claims",
+   "artifact_locations": "X F5/P4; Y finding 5 and units sections in intermediates",
+   "evidence": [
+    "E3",
+    "E4"
+   ],
+   "X": {
+    "disposition": "SUPPORTED_UNCERTAINTY_WITH_INCOMPLETE_DOMAIN",
+    "assessment": "It is true no frozen sentence explicitly declares 3857 metres. Conditioning metres and proposing axis_info/target_crs is legitimate; still distinguish projected linear units from radians/degrees. Released PROJ data independently resolves metre units."
+   },
+   "Y": {
+    "disposition": "SUPPORTED_GAP_BUT_INCONSISTENT",
+    "assessment": "The corpus gap itself is genuine and geocentric/z wording is faithfully reported as source text, not a 3857 proof. Deferring units does not neutralize finding 4's false projected-degree implication. No runtime witness is necessary merely to read released CRS unit metadata."
+   }
+  },
+  {
+   "id": "G08",
+   "claim_group": "AOI, authority, accuracy, ballpark, force_over, only_best, environment/ini and version gates",
+   "artifact_locations": "X F6/F8; Y finding 6/8; required intermediates' selection sections",
+   "evidence": [
+    "E5"
+   ],
+   "X": {
+    "disposition": "SUPPORTED",
+    "assessment": "AOI helps selection; ballpark allowed by default; only_best hypothetical accessible-grid condition and PROJ 9.2 gate are cited; unknown accuracy=-1 supported."
+   },
+   "Y": {
+    "disposition": "SUPPORTED",
+    "assessment": "Authority/accuracy/ballpark and 9/9.1/9.2 gates, plus only_best environment/ini override, are supported. No source proves particular grids or operation choice for the actual host."
+   }
+  },
+  {
+   "id": "G09",
+   "claim_group": "Candidate ordering, available/unavailable operations, accuracy/area/use and operation/network introspection",
+   "artifact_locations": "X F6/P6; Y finding 6 and introspection proposals; required intermediates",
+   "evidence": [
+    "E5"
+   ],
+   "X": {
+    "disposition": "SUPPORTED_WITH_OBJECT_QUALIFICATION",
+    "assessment": "Group sorting/availability are supported. P6 should obtain accuracy from each group.transformers member, not assume a group.accuracy property."
+   },
+   "Y": {
+    "disposition": "SUPPORTED_WITH_SCOPE_QUALIFICATION",
+    "assessment": "Group ordering is accurately summarized. operations is for a concatenated operation and can be absent; get_last_used_operation is version gated and must follow a transform. Listing hooks is not proof of a selected operation."
+   }
+  },
+  {
+   "id": "G10",
+   "claim_group": "Area-of-use and invalid-input/error handling limits, including structural validation",
+   "artifact_locations": "X F6/F7 and O5 partial; Y finding 6/7; X intermediates 1-2; Y intermediate 1 §5, intermediate 2 §5, intermediate 3 E4",
+   "evidence": [
+    "E5",
+    "E6"
+   ],
+   "X": {
+    "disposition": "PARTIAL_LIMIT_EXPLANATION",
+    "assessment": "Reported-error inf/raise contract is correct; one success cannot establish area validity. Missing explicit distinction: AOI is selection guidance, not a range fence; errcheck is not semantic coordinate/finite-output validation. Merely lacking a numerical range table is not itself an error."
+   },
+   "Y": {
+    "disposition": "PARTIAL_LIMIT_EXPLANATION",
+    "assessment": "Same missing selection-versus-validation distinction despite correct hooks and iterable structure rules. No generic finiteness check follows the transformation. Numeric registry area, mathematical pole singularity and application acceptance must be distinguished."
+   }
+  },
+  {
+   "id": "G11",
+   "claim_group": "Single-city success, source examples and unsupported extrapolation",
+   "artifact_locations": "X F7/P7; Y finding 7; X intermediates 1-2; Y intermediate 1 §6, intermediate 2 §6, intermediate 3 E5",
+   "evidence": [
+    "E2",
+    "E7"
+   ],
+   "X": {
+    "disposition": "SUPPORTED",
+    "assessment": "Plausible magnitude is not an independent location/unit oracle; one success does not establish error, edge, inverse or dependency behavior. Source (33,98) uses default order; it is not evidence that documented lon/lat (33,98) is valid."
+   },
+   "Y": {
+    "disposition": "SUPPORTED_MAIN_ARGUMENT",
+    "assessment": "Same limits are supported. Primary metadata and arithmetic identify the example as latitude 33/longitude 98, rather than latitude 98. Separate identity inference is assessed in G20."
+   }
+  },
+  {
+   "id": "G12",
+   "claim_group": "Axis-pair proposed check and its prediction",
+   "artifact_locations": "X P1 (final L37; intermediate-1 L41; intermediate-2 embedded P1); Y final L114-115 and intermediate-3 L40; Y intermediate-1 seeds/intermediate-2 proposal",
+   "evidence": [
+    "E2",
+    "E7"
+   ],
+   "X": {
+    "disposition": "SUPPORTED_PROPOSAL",
+    "assessment": "For a chosen unequal pair with both readings plausible, same raw pair under True/False differs. A comparison needs an independent expected location, not just different numbers."
+   },
+   "Y": {
+    "disposition": "CONTRADICTED_PREDICTION",
+    "assessment": "Not only True+(lon,lat) matches: False+(lat,lon) matches the same point too. At (2°,49°), both correctly ordered cases yield derived (222638.98158654713,6274861.394006575) metres. No pyproj runtime was executed."
+   }
+  },
+  {
+   "id": "G13",
+   "claim_group": "Unit-confusion proposed check and its prediction",
+   "artifact_locations": "X P2 in final/intermediates 1-2; Y final L116-117 and intermediate-3 L41; Y intermediate-1/2 proposals",
+   "evidence": [
+    "E3",
+    "E7"
+   ],
+   "X": {
+    "disposition": "AMBIGUOUS_OR_OVERSTRONG_PREDICTION",
+    "assessment": "Only one sane is ambiguous over the four encoding/flag combinations: degrees+False and converted radians+True both represent the same point. Mismatched encodings can also remain finite/plausible. If intended per fixed encoding, exactly one matching flag is correct; that qualifier/oracle is absent."
+   },
+   "Y": {
+    "disposition": "SUPPORTED_PROPOSAL",
+    "assessment": "A fixed degree-encoded point under False versus True is misread by True. Choose a nonzero discriminating point and independently known output; finiteness alone cannot discriminate units."
+   }
+  },
+  {
+   "id": "G14",
+   "claim_group": "Proposed invalid-input errcheck comparison",
+   "artifact_locations": "X P3; Y final L121-122; required intermediates' error proposals",
+   "evidence": [
+    "E2",
+    "E6"
+   ],
+   "X": {
+    "disposition": "SUPPORTED_CONDITIONAL_PROPOSAL",
+    "assessment": "Latitude 98 degrees in the correct input slot violates the mathematical latitude domain and is a reasonable reported-transform-error witness. No claim of executing it is made. Shape/type exceptions are not suppressed by errcheck=False."
+   },
+   "Y": {
+    "disposition": "SUPPORTED_CONDITIONAL_PROPOSAL",
+    "assessment": "The proposed reported-transformation-error comparison is sound; invalid input must be specified to trigger a reported projection error. A wrong-but-valid swapped/unit-misread point need not raise."
+   }
+  },
+  {
+   "id": "G15",
+   "claim_group": "Bounds, densification, antimeridian and geographic-destination governing condition",
+   "artifact_locations": "X P5; Y final L90/L123-124; Y intermediate-3 E4 L32; other intermediates' bounds locators",
+   "evidence": [
+    "E8"
+   ],
+   "X": {
+    "disposition": "SUPPORTED_PROPOSAL_WITH_SCOPE",
+    "assessment": "Boundary/near-pole/antimeridian exploration is appropriate. The cited right<left polygon rule is only for geographic destination output; forward 3857 is projected. X does not directly assert the unrestricted rule."
+   },
+   "Y": {
+    "disposition": "CONDITION_DROPPED_IN_REQUIRED_INTERMEDIATE",
+    "assessment": "Intermediate-3 E4 states right<left implies two polygons without the source's geographic-destination condition. It does not apply generally to projected 3857 output. Final bounds proposals do not correct that intermediate claim."
+   }
+  },
+  {
+   "id": "G16",
+   "claim_group": "Optional checks and dependency/environment uncertainty",
+   "artifact_locations": "X P4/P6/P7/P8,F8; Y findings 6/8, checks 3/6 and uncertainty; all substantive intermediates",
+   "evidence": [
+    "E1",
+    "E4",
+    "E5",
+    "E6",
+    "E7"
+   ],
+   "X": {
+    "disposition": "SUPPORTED_PROPOSALS_AND_UNCERTAINTY",
+    "assessment": "CRS/unit introspection, group audit, forward/inverse tolerance and environment recording are useful proposed checks; a round trip alone cannot prove label or unit correctness. PROJ 9.3 is assumed, never established as installed."
+   },
+   "Y": {
+    "disposition": "SUPPORTED_WITH_WORDING_LIMIT",
+    "assessment": "Operation/bounds/environment proposals are supported and not executed. Cython/registry gaps were genuinely outside the candidates' frozen corpus. Only observable via hooks is too exclusive if read as a universal claim: frozen grid-download docs also mention debug logs."
+   }
+  },
+  {
+   "id": "G17",
+   "claim_group": "Semantic preservation, accepted/amended/rejected/unresolved dispositions",
+   "artifact_locations": "X ledgers and intermediate-2 embedded final; Y handoffs, final dispositions and intermediate-4",
+   "evidence": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E9",
+    "E10"
+   ],
+   "X": {
+    "disposition": "PRESERVED_WITH_DEFICIENCIES",
+    "assessment": "Core contract, explicit uncertainties, examples, negative scope and P1-P8 are carried forward. Intermediate-1 geographic qualifier on default degrees is weakened in the final, and P2 ambiguity is preserved. No source-linked substantive rejection was required to manufacture a different recommendation."
+   },
+   "Y": {
+    "disposition": "PRESERVED_BUT_ERRORS_PROPAGATED",
+    "assessment": "Correct constructor/deprecated/radian-input/switch distinctions and uncertainties survive. The else degrees and unique-correct-axis prediction survive into final; the bounds antecedent and identity inference remain defects in required intermediate-3. Omission of an intermediate error is not evidence it was scientifically corrected."
+   }
+  },
+  {
+   "id": "G18",
+   "claim_group": "Source IDs, release/capture claims, cited ranges and apparent verification assurances",
+   "artifact_locations": "X Sources/claim ledger; Y frozen sources/line references/uncertainty; all required intermediates",
+   "evidence": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6",
+    "E8",
+    "E10"
+   ],
+   "X": {
+    "disposition": "INTEGRITY_CONFIRMED_CONTENT_ONLY",
+    "assessment": "Actual frozen hashes and remote release files match. Relevant line locators are valid. Geographic scope must still be interpreted correctly; stage reread/hash-check history remains unverified."
+   },
+   "Y": {
+    "disposition": "INTEGRITY_CONFIRMED_WITH_SEMANTIC_MISREADS",
+    "assessment": "Same authentic bytes and valid locators. Finding 4 misconstrues the angular qualifier; intermediate-3 omits bounds antecedent. Statements that nothing exceeds cited lines are therefore not fully borne out by content, without inferring reading history or intent."
+   }
+  },
+  {
+   "id": "G19",
+   "claim_group": "Bounded recommendation, six-obligation coverage, eight findings and soft word limit",
+   "artifact_locations": "Both complete finals and all required intermediates",
+   "evidence": [
+    "E10"
+   ],
+   "X": {
+    "disposition": "COMPLETE_ARTIFACT_WITH_PARTIAL_OBLIGATIONS",
+    "assessment": "Final has eight findings and 754 whitespace words; no full application plan. All six obligations are addressed, but domain/validation explanation and the unit-test prediction need qualification. No artifact scope limitation is present."
+   },
+   "Y": {
+    "disposition": "COMPLETE_ARTIFACT_WITH_SCIENTIFIC_ERRORS",
+    "assessment": "Final has eight findings and 988 whitespace words; no full application plan. All obligations are present, but units/check predictions and intermediate governing conditions are not scientifically sound as written. No artifact scope limitation is present."
+   }
+  },
+  {
+   "id": "G20",
+   "claim_group": "Identity example claimed to confirm order sensitivity",
+   "artifact_locations": "Y intermediate-3 E5 L36 only",
+   "evidence": [
+    "E7"
+   ],
+   "X": {
+    "disposition": "NOT_ASSERTED",
+    "assessment": "No corresponding claim in X."
+   },
+   "Y": {
+    "disposition": "UNSUPPORTED_INFERENCE",
+    "assessment": "4326-to-itself preserving (33,98) does not demonstrate order sensitivity or determine axis semantics. Identity preserves tuples under either consistent ordering; the example is not a discriminating axis witness."
+   }
+  }
+ ],
+ "candidates": {
+  "X": {
+   "artifact_scope_limit": null,
+   "artifact_completeness": "Complete final and every mapped required intermediate are readable and hash matched.",
+   "core_configuration_and_degree_input_call": "SUPPORTED",
+   "scientific_correctness_status": "SUPPORTED_CORE_WITH_QUALIFICATION_REQUIRED",
+   "full_artifact_scientific_pass": false,
+   "independent_conclusion": "The central constructor/call recommendation is source supported. The complete artifact requires qualification of the unit-check prediction and angular/validation boundaries; the declared metadata uncertainty is honest.",
+   "obligation_dispositions": [
+    {
+     "id": "O1",
+     "obligation": "Trace from_crs configuration into creation and transform use",
+     "claim_groups": [
+      "G01",
+      "G02"
+     ],
+     "disposition": "SATISFIED",
+     "evidence": [
+      "E1",
+      "E2",
+      "E3"
+     ]
+    },
+    {
+     "id": "O2",
+     "obligation": "Bind caller input order separately from native CRS axes",
+     "claim_groups": [
+      "G03",
+      "G12"
+     ],
+     "disposition": "SATISFIED_CONDITIONAL",
+     "evidence": [
+      "E2",
+      "E7"
+     ]
+    },
+    {
+     "id": "O3",
+     "obligation": "Meaning and limits of always_xy",
+     "claim_groups": [
+      "G04",
+      "G05"
+     ],
+     "disposition": "SATISFIED",
+     "evidence": [
+      "E2",
+      "E3",
+      "E5",
+      "E9"
+     ]
+    },
+    {
+     "id": "O4",
+     "obligation": "Radians and output unit domains",
+     "claim_groups": [
+      "G06",
+      "G07",
+      "G13"
+     ],
+     "disposition": "PARTIAL_DOMAIN_QUALIFICATION",
+     "evidence": [
+      "E3",
+      "E4",
+      "E7"
+     ]
+    },
+    {
+     "id": "O5",
+     "obligation": "Area-of-use and invalid-input/error handling limits",
+     "claim_groups": [
+      "G08",
+      "G09",
+      "G10",
+      "G14"
+     ],
+     "disposition": "PARTIAL_LIMIT_EXPLANATION",
+     "evidence": [
+      "E2",
+      "E5",
+      "E6"
+     ]
+    },
+    {
+     "id": "O6",
+     "obligation": "Boundary checks and dependency/environment uncertainty",
+     "claim_groups": [
+      "G11",
+      "G12",
+      "G13",
+      "G14",
+      "G15",
+      "G16"
+     ],
+     "disposition": "PARTIAL_CHECK_QUALIFICATION",
+     "evidence": [
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6",
+      "E7",
+      "E8"
+     ]
+    }
+   ],
+   "coverage": {
+    "material_obligations_total": 6,
+    "material_obligations_assessed": 6,
+    "material_obligations_unassessed": 0,
+    "scientific_claim_groups_total": 19,
+    "scientific_claim_groups_assessed": 19,
+    "scientific_claim_groups_unassessed": 0,
+    "process_claim_groups_unassessed": 2,
+    "all_applicable_claim_groups_total": 21,
+    "all_applicable_claim_groups_assessed": 19,
+    "all_applicable_claim_groups_unassessed": 2,
+    "empirical_runtime_groups_total": 4,
+    "empirical_runtime_groups_assessed": 0,
+    "empirical_runtime_groups_unassessed": 4
+   },
+   "issue_ids": [
+    "X-Q1",
+    "X-Q2"
+   ],
+   "runtime_validation": "UNASSESSED: no pyproj/PROJ witness executed; this is a released-source semantic assessment, not certification of an installed environment."
+  },
+  "Y": {
+   "artifact_scope_limit": null,
+   "artifact_completeness": "Complete final and every mapped required intermediate are readable and hash matched.",
+   "core_configuration_and_degree_input_call": "SUPPORTED",
+   "scientific_correctness_status": "CONSEQUENTIAL_SCIENTIFIC_ERRORS_PRESENT",
+   "full_artifact_scientific_pass": false,
+   "independent_conclusion": "The central constructor/call recommendation is source supported. The complete artifact contains a false projected-unit implication, a false axis-check prediction, and two additional defects in a required intermediate.",
+   "obligation_dispositions": [
+    {
+     "id": "O1",
+     "obligation": "Trace from_crs configuration into creation and transform use",
+     "claim_groups": [
+      "G01",
+      "G02"
+     ],
+     "disposition": "SATISFIED",
+     "evidence": [
+      "E1",
+      "E2",
+      "E3"
+     ]
+    },
+    {
+     "id": "O2",
+     "obligation": "Bind caller input order separately from native CRS axes",
+     "claim_groups": [
+      "G03",
+      "G12"
+     ],
+     "disposition": "SATISFIED_CONDITIONAL",
+     "evidence": [
+      "E2",
+      "E7"
+     ]
+    },
+    {
+     "id": "O3",
+     "obligation": "Meaning and limits of always_xy",
+     "claim_groups": [
+      "G04",
+      "G05"
+     ],
+     "disposition": "SATISFIED",
+     "evidence": [
+      "E2",
+      "E3",
+      "E5",
+      "E9"
+     ]
+    },
+    {
+     "id": "O4",
+     "obligation": "Radians and output unit domains",
+     "claim_groups": [
+      "G06",
+      "G07",
+      "G13"
+     ],
+     "disposition": "CONSEQUENTIAL_ERROR",
+     "evidence": [
+      "E3",
+      "E4",
+      "E7"
+     ]
+    },
+    {
+     "id": "O5",
+     "obligation": "Area-of-use and invalid-input/error handling limits",
+     "claim_groups": [
+      "G08",
+      "G09",
+      "G10",
+      "G14"
+     ],
+     "disposition": "PARTIAL_LIMIT_EXPLANATION",
+     "evidence": [
+      "E2",
+      "E5",
+      "E6"
+     ]
+    },
+    {
+     "id": "O6",
+     "obligation": "Boundary checks and dependency/environment uncertainty",
+     "claim_groups": [
+      "G11",
+      "G12",
+      "G13",
+      "G14",
+      "G15",
+      "G16"
+     ],
+     "disposition": "PARTIAL_WITH_INCORRECT_CHECKS",
+     "evidence": [
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6",
+      "E7",
+      "E8"
+     ]
+    }
+   ],
+   "coverage": {
+    "material_obligations_total": 6,
+    "material_obligations_assessed": 6,
+    "material_obligations_unassessed": 0,
+    "scientific_claim_groups_total": 20,
+    "scientific_claim_groups_assessed": 20,
+    "scientific_claim_groups_unassessed": 0,
+    "process_claim_groups_unassessed": 3,
+    "all_applicable_claim_groups_total": 23,
+    "all_applicable_claim_groups_assessed": 20,
+    "all_applicable_claim_groups_unassessed": 3,
+    "empirical_runtime_groups_total": 4,
+    "empirical_runtime_groups_assessed": 0,
+    "empirical_runtime_groups_unassessed": 4
+   },
+   "issue_ids": [
+    "Y-E1",
+    "Y-E2",
+    "Y-E3",
+    "Y-E4",
+    "Y-Q1"
+   ],
+   "runtime_validation": "UNASSESSED: no pyproj/PROJ witness executed; this is a released-source semantic assessment, not certification of an installed environment."
+  }
+ },
+ "issues": [
+  {
+   "id": "X-Q1",
+   "label": "X",
+   "kind": "ambiguous or overstrong check prediction",
+   "location": "final L37/P2; intermediate-1 L41; intermediate-2 embedded P2",
+   "claim_groups": [
+    "G13"
+   ],
+   "evidence": [
+    "E3",
+    "E7"
+   ],
+   "finding": "Two matched input encoding/flag combinations are valid. Only one sane needs a per-encoding qualifier and a known-value oracle; mere plausible magnitude is inadequate."
+  },
+  {
+   "id": "X-Q2",
+   "label": "X",
+   "kind": "incomplete governing-domain explanation",
+   "location": "final F5/F6; intermediate-1 F5/F6; intermediate-2 embedded findings",
+   "claim_groups": [
+    "G06",
+    "G07",
+    "G10"
+   ],
+   "evidence": [
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+   ],
+   "finding": "Explicit geographic-only angular scope and selection-versus-validation limits are incomplete. The declared EPSG metadata uncertainty is honest and is not by itself a false claim."
+  },
+  {
+   "id": "Y-E1",
+   "label": "Y",
+   "kind": "consequential unit-domain error",
+   "location": "final L59-64; intermediate-1 §4; intermediate-2 §4; intermediate-3 E3",
+   "claim_groups": [
+    "G06",
+    "G07"
+   ],
+   "evidence": [
+    "E3",
+    "E4"
+   ],
+   "finding": "Else degrees wrongly implies non-geographic/projected output is angular. EPSG:3857 x/y are projected metre quantities for either radians flag."
+  },
+  {
+   "id": "Y-E2",
+   "label": "Y",
+   "kind": "false proposed-check prediction",
+   "location": "final L114-115; intermediate-3 L40",
+   "claim_groups": [
+    "G12"
+   ],
+   "evidence": [
+    "E2",
+    "E7"
+   ],
+   "finding": "False+(lat,lon) and True+(lon,lat) both match the known location. The uniqueness prediction would reject correct native-order behavior."
+  },
+  {
+   "id": "Y-E3",
+   "label": "Y",
+   "kind": "dropped governing source condition",
+   "location": "intermediate-3 E4 L32",
+   "claim_groups": [
+    "G15"
+   ],
+   "evidence": [
+    "E8"
+   ],
+   "finding": "The right<left antimeridian polygon rule requires a geographic destination; that antecedent was omitted for a module whose forward destination is projected."
+  },
+  {
+   "id": "Y-E4",
+   "label": "Y",
+   "kind": "unsupported scientific inference",
+   "location": "intermediate-3 E5 L36",
+   "claim_groups": [
+    "G20"
+   ],
+   "evidence": [
+    "E7"
+   ],
+   "finding": "An identity transform preserving input cannot establish order sensitivity."
+  },
+  {
+   "id": "Y-Q1",
+   "label": "Y",
+   "kind": "incomplete validation explanation",
+   "location": "final finding 6 and required area/error sections",
+   "claim_groups": [
+    "G10",
+    "G16"
+   ],
+   "evidence": [
+    "E5",
+    "E6"
+   ],
+   "finding": "Selection metadata/errcheck do not provide application-level range, finite-result or semantic input validation. Numeric ranges may remain explicitly uncertain; that uncertainty does not explain this distinction by itself."
+  }
+ ],
+ "process_claim_groups": [
+  {
+   "id": "P01",
+   "applies_to": [
+    "X",
+    "Y"
+   ],
+   "disposition": "UNASSESSED",
+   "claim": "Candidate historical direct reads, hash verification, no-code/no-install/no-additional-source and export/cmp assertions.",
+   "reason": "The allowed artifacts assert them but contain no independent execution evidence. Reviewer hash matches confirm content integrity only; external export paths were not read."
+  },
+  {
+   "id": "P02",
+   "applies_to": [
+    "X",
+    "Y"
+   ],
+   "disposition": "UNASSESSED",
+   "claim": "Predecessors were used only as untrusted locators; every citation reverified; no forbidden state or other answers consulted.",
+   "reason": "Static content can establish citation correctness and preservation, not historical source-access process. No candidate process files were opened."
+  },
+  {
+   "id": "P03",
+   "applies_to": [
+    "Y"
+   ],
+   "disposition": "UNASSESSED_OUT_OF_SCOPE",
+   "claim": "Inline stage timing/allowance, native Goal completion and terminal-state-readback assertions in intermediate-4.",
+   "reason": "Lifecycle/timing evaluation belongs to parent. No timings.json, Goal/state or supervisor file was read and no Goal engineering was performed."
+  }
+ ],
+ "actual_executed_reviewer_checks": [
+  {
+   "id": "R01",
+   "check": "Static exact-file reads and SHA-256 checks",
+   "time_utc": "2026-10-07T20:00:10.933682+00:00",
+   "result": "12 allowed input/artifact files read and hashed; 10 supplied hashes all match; brief/manifest hashes independently recorded."
+  },
+  {
+   "id": "R02",
+   "check": "Released primary byte retrieval",
+   "time_utc": "2026-10-07T20:00:52.210129+00:00 through 2026-10-07T20:02:18.536644+00:00",
+   "result": "17 bounded direct raw fetch attempts: 16 captures and one usage.sql 404. Two captures reproduce frozen files and 14 expand primary source/data evidence."
+  },
+  {
+   "id": "R03",
+   "check": "Source/claim semantic read",
+   "time_utc": null,
+   "result": "All 47 projdoc lines and 1339 projcode lines read; every final/required-intermediate consequential group adjudicated against these bytes and relevant added ranges."
+  },
+  {
+   "id": "R04",
+   "check": "Reviewer-authored analytic counterexamples",
+   "time_utc": "2026-10-07T20:02:48.809858+00:00",
+   "result": "Computed axis/unit truth tables, (33,98) default-order example and finite mathematical output at latitude 86; no pyproj/PROJ/candidate/downloaded code executed.",
+   "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/analytic-counterexamples.json",
+   "sha256": "e3626beb70007d9e41f894ffecd3cc5ea033321f1f96f34aaf6a1acc3af2dbc2"
+  },
+  {
+   "id": "R05",
+   "check": "Artifact format and internal preservation",
+   "time_utc": "2026-10-07T20:01:49.127740+00:00",
+   "result": "Measured X final 754 words / Y final 988 words and eight findings each; X intermediate-2 embedded final equals frozen X final after section whitespace stripping. This is not verification of external export/cmp history."
+  },
+  {
+   "id": "R06",
+   "check": "JSON, evidence references, coverage arithmetic, clock ceiling and final frozen-hash recheck",
+   "time_utc": "2026-10-07T20:09:54.027488+00:00",
+   "result": "PASSED: JSON parse, evidence/group referential integrity, per-label obligation/claim coverage arithmetic, all 10 supplied frozen hashes unchanged, extra capture hashes stable, and completion before the original hard ceiling."
+  }
+ ],
+ "analytic_evidence": {
+  "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/reviewer-source-checks/analytic-counterexamples.json",
+  "sha256": "e3626beb70007d9e41f894ffecd3cc5ea033321f1f96f34aaf6a1acc3af2dbc2",
+  "method": "Reviewer-authored Python standard-library arithmetic only. No pyproj/PROJ code imported or executed, no candidate code executed. Interpretation premises come from pinned API/SQL/Cython source; mathematical formula from PROJ 9.3.0 webmerc/merc and fwd scaling.",
+  "limitations": "Analytic calculation and API contract counterexamples, not an executed pyproj 3.6.1 / PROJ 9.3.0 witness; does not certify runtime grids, error strings or environment.",
+  "key_results": {
+   "correct_axis_combinations": [
+    "True+(lon,lat)",
+    "False+(lat,lon)"
+   ],
+   "correct_unit_combinations": [
+    "degree values+radians=False",
+    "radian values+radians=True"
+   ],
+   "reference_xy_m": [
+    222638.98158654713,
+    6274861.394006575
+   ],
+   "latitude_86_formula_y_m": 21396567.252405386
+  }
+ },
+ "candidate_proposed_checks": {
+  "X": "P1-P8, explicitly proposals; candidate reports static hash/read operations, no runtime witnesses.",
+  "Y": "Six final checks plus seeds/intermediate proposals, explicitly no executed runtime witnesses. Their empty executed-check set does not mean no static reading was claimed."
+ },
+ "empirical_runtime_unassessed_groups": [
+  {
+   "id": "U01",
+   "scope": "Actual installed pyproj 3.6.1 / PROJ 9.3.0 coordinate, unit, inverse and array behavior"
+  },
+  {
+   "id": "U02",
+   "scope": "Actual invalid/NaN/infinity/mixed-batch/pole handling and exact exceptions"
+  },
+  {
+   "id": "U03",
+   "scope": "Actual operation identity, grid availability, network and environment defaults"
+  },
+  {
+   "id": "U04",
+   "scope": "Actual transformed bounds, wrapping and densification at antimeridian/poles"
+  }
+ ],
+ "remaining_uncertainty": "Released byte semantics and EPSG native axes/metre units are resolved for this review. Actual host binaries, grid/network/configuration, empirical behavior of the proposed witnesses, and candidate process/lifecycle claims are not established. No failure is attributed solely to not executing a forbidden witness or not browsing beyond the shared corpus.",
+ "no_comparative_inference": "Independent X/Y conclusions only; no winner, rank, cost, method-win, lifecycle or provenance conclusion.",
+ "primary_source_capture_limitations": "Additional captures are anonymous public released-tag raw bytes with SHA-256 and actual capture timestamps. Only the listed ranges were semantically read; neither downloaded code nor SQL was executed. Captures do not establish installed binary/configuration, candidate reading history, or release tag immutability beyond captured bytes. The two remote frozen-source reproductions were fully byte compared.",
+ "report_files": {
+  "json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json",
+  "readable": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/review.md"
+ }
+}

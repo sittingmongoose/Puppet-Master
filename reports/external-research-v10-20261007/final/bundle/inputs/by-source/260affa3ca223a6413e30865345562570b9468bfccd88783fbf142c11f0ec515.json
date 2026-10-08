@@ -1,0 +1,2251 @@
+{
+  "schema": "independent-source-review.rootreviewcarrier-v2.v1",
+  "case_id": "D-M15-A",
+  "role": "ordinary fresh review sub-agent",
+  "review_round": "first review of this exact frozen version",
+  "overall_grade": "FAIL",
+  "overall_status": "FULL_DECLARED_SCOPE_ASSESSED_WITH_MATERIAL_DEFECTS",
+  "overall_rationale": "Primary checking covers every material recommendation, finding, condition, uncertainty, negative lead and proposed check in the exact frozen final and all mapped source representations. The central local identity safety contract and several source/lifecycle/validation conclusions fail. This is a full-scope failure, not a localized diagnostic with unassessed remainder.",
+  "candidate_artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/final.md",
+    "expected_sha256": "cd06682f9415536d3e0a419ac8d3b2b67b95f2dcfd38181ebe4f04b5a8233e0c",
+    "actual_sha256": "cd06682f9415536d3e0a419ac8d3b2b67b95f2dcfd38181ebe4f04b5a8233e0c",
+    "hash_verified_before_assessment": true,
+    "candidate_modified": false,
+    "word_count_method": "whitespace-delimited tokens",
+    "word_count": 1135,
+    "soft_ceiling_violation_is_not_rejection_basis": true
+  },
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/INPUT_MAP.json",
+    "sha256": "1864a1b449029afc1cfe215b6f8993acde5a6fc339b4ff0f9b0fe3dd696c5787",
+    "advisory_scope_not_filesystem_firewall": true
+  },
+  "original_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/brief.md",
+      "sha256": "4e2794750fe7ea4bc467b935e5a062237c5a5c5de300b470076aeb306ffae552"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/sources.json",
+      "sha256": "d810ac6eb57c7cc49ddfd9a1b452b5427ce10c99ab9b687bf1b76a95e01ecf10"
+    }
+  ],
+  "assessment_extent": {
+    "declared_source_scope": "Original open-discovery brief/empty manifest, 19 mapped primary capture entries (10 distinct byte sets), all 3 mapped indices, exact frozen final. Four additional bounded primary documentation pages were captured solely to resolve claim-level conditions.",
+    "all_declared_obligations_assessed": true,
+    "all_consequential_claims_assessed": true,
+    "all_mapped_primary_byte_sets_checked": true,
+    "mapped_source_entries": 19,
+    "distinct_mapped_byte_sets": 10,
+    "mapped_indices": 3,
+    "consequential_claim_check_count": 58,
+    "six_axes_assessed": 6,
+    "unassessed_remainder": [],
+    "reading_extent": "Contextual primary checking of every subject-relevant claim and its governing conditions, including both RFC renditions and both tus views, with full-text negative searches and relevant section/body reads. This is not a claim to have reviewed unrelated HTTP clauses or every linked document. Hash matches, index labels and search hits were not treated as semantic correctness. Post-write evidence QA rechecked the SQLite failure assumptions, directory flush errors, and supplementary ETag context, then expanded exact multi-range locators where a source fact spans multiple sections.",
+    "m14_applicable": false,
+    "m14_reason": "This is D-M15-A with no authored-set/semantic/projection/preservation-view task or mapped M14 views.",
+    "not_executed": "No runtime fault injection, transfer service, downloaded-code execution, installer, account, purchase, global configuration, repository/canon/WorkNode mutation or third-party write. App behavior, hardware durability and server capability remain deployment questions; proposed validation is assessed rather than fabricated."
+  },
+  "blinding_and_scope_limits": {
+    "method_arm_visible": true,
+    "visible_information": "treatment, scout and synthesis stage names are visible in paths and final line 3; candidate self-dispositions and its source-index commentary were visible as untrusted claims.",
+    "not_supplied_or_consulted": [
+      "other arms/cases",
+      "candidate drafts",
+      "predecessor outputs",
+      "campaign/history/helpers",
+      "parent analysis",
+      "prior reviews/findings/unresolved objections",
+      "candidate timings",
+      "cost/winner/speed targets or comparative grades"
+    ],
+    "first_review_no_rescue_or_regrade": true,
+    "provenance_limit": "Document headers/body semantics and file hashes were verified. Candidate URLs/capture timestamps/method labels do not constitute trusted acquisition logs; network origin of historical captures and stage actions cannot be certified from these bytes alone. Additional reviewer fetches have actual UTC capture stamps and hashes.",
+    "no_delegation": true,
+    "no_own_goal_or_receipt_engineering": true,
+    "pending_children": 0
+  },
+  "six_axis_dispositions": [
+    {
+      "axis": 1,
+      "name": "All required obligations",
+      "disposition": "PARTIAL",
+      "reason": "All six are addressed and the module remains bounded. Retry safety, stable identity, lifecycle cleanup and discriminating validation have material gaps.",
+      "claim_ids": [
+        "C03",
+        "C08",
+        "C09",
+        "C10",
+        "C57"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D06",
+        "D07"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims and release/default/type/unit/path/authority conditions",
+      "disposition": "FAIL",
+      "reason": "Full claim checking finds an explicit retry-rule omission, incomplete durability, incorrect NFS attribution and unstated path/read/session binding conditions. Version/type/unit defaults were checked independently.",
+      "claim_ids": [
+        "C05",
+        "C06",
+        "C07",
+        "C19",
+        "C23",
+        "C27",
+        "C28",
+        "C50",
+        "C58"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Bounded useful discovery, negative and optional yield",
+      "disposition": "PARTIAL",
+      "reason": "Useful complementary primary corpus and several valid scoped negatives. Optional tus checksum/termination/expiration and S3 lifecycle conditions are not carried into the cleanup guarantee; a public S3 ETag lead is falsely called unpublished.",
+      "claim_ids": [
+        "C14",
+        "C16",
+        "C17",
+        "C40",
+        "C42",
+        "C48",
+        "C51"
+      ],
+      "defect_ids": [
+        "D02",
+        "D06",
+        "D08"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong rejection, correction and unjustified abstention",
+      "disposition": "FAIL",
+      "reason": "F7’s main byte-identity rejections are justified, with narrower semantics than some wording. NFS is rejected on an unsupported atomicity attribution; descriptor continuity is needlessly left unresolved despite explicit captured text.",
+      "claim_ids": [
+        "C23",
+        "C27",
+        "C36",
+        "C37",
+        "C38",
+        "C39",
+        "C47"
+      ],
+      "defect_ids": [
+        "D04",
+        "D05"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Preservation, traceability, uncertainties and options",
+      "disposition": "PARTIAL",
+      "reason": "Finding/uncertainty/validation IDs and most negative leads survive. Captured limits are not consistently preserved: whole-generation binding is not established, optional cleanup is missing, U3 is false documentary uncertainty and U4 broadens source scope.",
+      "claim_ids": [
+        "C33",
+        "C43",
+        "C45",
+        "C46",
+        "C47",
+        "C48",
+        "C49",
+        "C50",
+        "C56"
+      ],
+      "defect_ids": [
+        "D01",
+        "D05",
+        "D06",
+        "D08"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed checks",
+      "disposition": "PARTIAL",
+      "reason": "Fault injection is explicitly proposed, and no successful runtime result is asserted. Source hashes are checked, but one quote is not verbatim and acquisition/reverification process is not independently auditable. Proposed tests omit important discriminators.",
+      "claim_ids": [
+        "C01",
+        "C13",
+        "C52",
+        "C53",
+        "C54",
+        "C55"
+      ],
+      "defect_ids": [
+        "D07",
+        "M01"
+      ]
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "obligation_id": 1,
+      "obligation": "Address interrupted transfers and bounded retries.",
+      "addressed": true,
+      "disposition": "PARTIAL",
+      "assessment": "Interruption, retry caps and residue are discussed; method/replay stopping and cleanup conditions are incomplete.",
+      "claim_ids": [
+        "C08",
+        "C18",
+        "C19",
+        "C43",
+        "C55"
+      ],
+      "defect_ids": [
+        "D02",
+        "D06"
+      ]
+    },
+    {
+      "obligation_id": 2,
+      "obligation": "Address replacement/version identity during resume.",
+      "addressed": true,
+      "disposition": "PARTIAL",
+      "assessment": "Hash/validator identity is central, but stable source-generation binding and the fallback race are unresolved.",
+      "claim_ids": [
+        "C02",
+        "C03",
+        "C06",
+        "C12",
+        "C33",
+        "C45"
+      ],
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "obligation_id": 3,
+      "obligation": "Investigate transport-side and local-object-side mechanisms independently.",
+      "addressed": true,
+      "disposition": "PASS",
+      "assessment": "Both independent mechanism families were substantively investigated. Source correctness defects are counted on other axes, not erased by this breadth pass.",
+      "claim_ids": [
+        "C11",
+        "C14",
+        "C15",
+        "C21",
+        "C25",
+        "C28",
+        "C31"
+      ],
+      "defect_ids": []
+    },
+    {
+      "obligation_id": 4,
+      "obligation": "Reconcile their overlap instead of concatenating two answers.",
+      "addressed": true,
+      "disposition": "PARTIAL",
+      "assessment": "F6/F8 explicitly reconcile identity/progress and cleanup rather than concatenate two answers, but the join’s safety contract is incomplete.",
+      "claim_ids": [
+        "C32",
+        "C33",
+        "C34",
+        "C43"
+      ],
+      "defect_ids": [
+        "D01",
+        "D06"
+      ]
+    },
+    {
+      "obligation_id": 5,
+      "obligation": "Return at most eight supported material findings with negative leads/uncertainty retained.",
+      "addressed": true,
+      "disposition": "PARTIAL",
+      "assessment": "Exactly eight material findings and retained negatives/uncertainties; several findings contain consequential errors or omissions.",
+      "claim_ids": [
+        "C19",
+        "C23",
+        "C27",
+        "C48",
+        "C51",
+        "C57"
+      ],
+      "defect_ids": [
+        "D02",
+        "D04",
+        "D05",
+        "D08"
+      ]
+    },
+    {
+      "obligation_id": 6,
+      "obligation": "Give a bounded recommendation and discriminating validation without building a full sync service.",
+      "addressed": true,
+      "disposition": "PARTIAL",
+      "assessment": "Bounded recommendation and V1–V3 are present; no service was built. Their missing discriminators allow an unsafe mechanism to pass.",
+      "claim_ids": [
+        "C10",
+        "C53",
+        "C54",
+        "C55"
+      ],
+      "defect_ids": [
+        "D01",
+        "D03",
+        "D06",
+        "D07"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "candidate_finding_id": "F1",
+      "candidate_disposition": "accepted",
+      "review_claim_ids": [
+        "C11",
+        "C12"
+      ],
+      "review_disposition": "CONDITIONAL_OVERSTATEMENT"
+    },
+    {
+      "candidate_finding_id": "F2",
+      "candidate_disposition": "amended",
+      "review_claim_ids": [
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17"
+      ],
+      "review_disposition": "SUPPORTED_WITH_OPTIONAL_CONDITIONS"
+    },
+    {
+      "candidate_finding_id": "F3",
+      "candidate_disposition": "accepted",
+      "review_claim_ids": [
+        "C18",
+        "C19",
+        "C20"
+      ],
+      "review_disposition": "MATERIAL_ERROR"
+    },
+    {
+      "candidate_finding_id": "F4",
+      "candidate_disposition": "amended",
+      "review_claim_ids": [
+        "C21",
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26",
+        "C27"
+      ],
+      "review_disposition": "MATERIAL_ERRORS_AND_MISSING_DURABILITY"
+    },
+    {
+      "candidate_finding_id": "F5",
+      "candidate_disposition": "accepted",
+      "review_claim_ids": [
+        "C28",
+        "C29",
+        "C30"
+      ],
+      "review_disposition": "SUPPORTED_HAZARD_WITH_INFERENCE_LIMITS"
+    },
+    {
+      "candidate_finding_id": "F6",
+      "candidate_disposition": "accepted",
+      "review_claim_ids": [
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35"
+      ],
+      "review_disposition": "USEFUL_RECONCILIATION_UNSAFE_BINDING"
+    },
+    {
+      "candidate_finding_id": "F7",
+      "candidate_disposition": "rejected identity candidates",
+      "review_claim_ids": [
+        "C36",
+        "C37",
+        "C38",
+        "C39"
+      ],
+      "review_disposition": "CORE_REJECTIONS_SUPPORTED"
+    },
+    {
+      "candidate_finding_id": "F8",
+      "candidate_disposition": "accepted with open parameterization",
+      "review_claim_ids": [
+        "C40",
+        "C41",
+        "C42",
+        "C43",
+        "C44"
+      ],
+      "review_disposition": "USEFUL_LIFECYCLE_INCOMPLETE"
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "claim_id": "C01",
+      "candidate_locator": "final.md:3,33",
+      "claim": "Eight primary documents captured and SHA-256 pinned at this stage.",
+      "disposition": "SUPPORTED_CONTENT_BINDING_PROCESS_NOT_AUDITED",
+      "checked_source_facts": "The final-stage index contains eight primary document entries; every indexed hash and mapped original hash matches. Ten distinct byte sets exist across all mapped indices. New-fetch timing and who checked them cannot be established from permitted bytes.",
+      "inference_label": "Integrity observation; capture process remains reported provenance.",
+      "evidence_ids": [],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C02",
+      "candidate_locator": "final.md:7",
+      "claim": "SHA-256 of final local bytes at enqueue can key one photo-transfer identity.",
+      "disposition": "SUPPORTED_DESIGN_WITH_CONDITIONS",
+      "checked_source_facts": "Collision-resistant identity is supported as a design precedent; Git uses SHA-1 of header+content rather than this SHA-256 recipe. Hashing must be over a stable generation.",
+      "inference_label": "Engineering proposal, not a source-mandated algorithm.",
+      "evidence_ids": [
+        "E01",
+        "E18"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C03",
+      "candidate_locator": "final.md:7",
+      "claim": "Re-hash the attachment path before each resume; equality is sufficient to resume safely.",
+      "disposition": "INSUFFICIENT",
+      "checked_source_facts": "An open descriptor can remain attached to an old file while a path names a new one. Checking a path then reopening it has no atomic binding to the checked bytes. Single-writer does not prevent one writer racing a reader.",
+      "inference_label": "Counterexample inferred from documented path/descriptor semantics; not experimentally executed.",
+      "evidence_ids": [
+        "E15",
+        "E16",
+        "E18"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C04",
+      "candidate_locator": "final.md:7",
+      "claim": "On mismatch, abort/terminate the old remote session, remove temp files and start fresh.",
+      "disposition": "CONDITIONAL_DESIGN_INCOMPLETE",
+      "checked_source_facts": "New upload/session on a changed generation is useful. tus termination requires advertised optional support; expired uploads may already be gone; remote abort can fail or race active parts.",
+      "inference_label": "Engineering lifecycle recommendation with missing availability/confirmation conditions.",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E12",
+        "E14",
+        "E21"
+      ],
+      "defect_ids": [
+        "D06"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C05",
+      "candidate_locator": "final.md:7",
+      "claim": "Use byte-range GET with strong ETag If-Range as a transport identity gate.",
+      "disposition": "SUPPORTED_FOR_DOWNLOADS",
+      "checked_source_facts": "RFC Range/If-Range applies to retrieval, uses opaque representation validators, may be ignored where unsupported, and requires proper 200/206 handling. It does not by itself resume an upload.",
+      "inference_label": "Valid conditional download mechanism; applicability to the declared upload path remains unresolved.",
+      "evidence_ids": [
+        "E02",
+        "E06",
+        "E07",
+        "E08"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C06",
+      "candidate_locator": "final.md:7",
+      "claim": "Offset/part protocols can be preconditioned on the local hash where the server accepts preconditions.",
+      "disposition": "UNESTABLISHED_OPTION",
+      "checked_source_facts": "If-Match compares an existing representation ETag, not inherently the incoming payload hash. tus offsets/checksums and S3 part checksums do not establish the asserted whole-generation precondition.",
+      "inference_label": "Conditional custom server-contract proposal, not an existing captured protocol guarantee.",
+      "evidence_ids": [
+        "E05",
+        "E09",
+        "E10",
+        "E13"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C07",
+      "candidate_locator": "final.md:7,17",
+      "claim": "fsync-then-rename supplies durable local publication.",
+      "disposition": "INCOMPLETE",
+      "checked_source_facts": "Same-filesystem rename supplies visibility atomicity. Flushing file contents before rename does not itself persist the changed directory entry; SQLite uses a richer ordered discipline.",
+      "inference_label": "Incomplete extrapolation from database durability to generic file publication.",
+      "evidence_ids": [
+        "E15",
+        "E17",
+        "E19"
+      ],
+      "defect_ids": [
+        "D03"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C08",
+      "candidate_locator": "final.md:7",
+      "claim": "Bound retries by attempt count and byte-progress floor while honoring Retry-After.",
+      "disposition": "SUPPORTED_POLICY_WITH_MISSING_GOVERNING_RULES",
+      "checked_source_facts": "Exact caps are app policy; Retry-After defines date/seconds delay. RFC still supplies method restrictions and a SHOULD-NOT stopping recommendation; tus offsets must be reconciled after errors.",
+      "inference_label": "Reasonable policy proposal, not an unrestricted standards allowance.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ],
+      "defect_ids": [
+        "D02"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C09",
+      "candidate_locator": "final.md:7,25",
+      "claim": "Exhaustion/replacement becomes a terminal session with remote abort and local removal.",
+      "disposition": "INCOMPLETE",
+      "checked_source_facts": "Stopping locally and deleting a temp file does not confirm remote cleanup. Optional termination, unavailable transport and abort races require explicit cleanup-pending/confirmed meaning.",
+      "inference_label": "Lifecycle design claim with missing conditions.",
+      "evidence_ids": [
+        "E10",
+        "E12",
+        "E14",
+        "E21"
+      ],
+      "defect_ids": [
+        "D06"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C10",
+      "candidate_locator": "final.md:5–7,31–41",
+      "claim": "The recommendation remains one bounded diagnostic module, without a full sync service.",
+      "disposition": "SUPPORTED",
+      "checked_source_facts": "The artifact proposes mechanics and three validation scenarios, with no implementation, full application plan or WorkNodes.",
+      "inference_label": "Structural artifact observation.",
+      "evidence_ids": [],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C11",
+      "candidate_locator": "final.md:11",
+      "claim": "The quoted If-Range mismatch rule transfers the new selected representation instead of 412.",
+      "disposition": "SUPPORTED",
+      "checked_source_facts": "The normalized quoted substring is present in both RFC views and its surrounding section gives the matching rule.",
+      "inference_label": "Direct primary-source fact.",
+      "evidence_ids": [
+        "E06"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C12",
+      "candidate_locator": "final.md:11",
+      "claim": "Replacement yields clean full re-transfer, never mixed 206, but only if strong ETags exist.",
+      "disposition": "OVERSTATED",
+      "checked_source_facts": "Strong comparison and client handling of responses are required. Strong HTTP-date is also allowed under specific conditions. A server may ignore Range; receiving full content is not proof that the client discarded the old prefix.",
+      "inference_label": "Conditional system-safety inference stated as a source guarantee.",
+      "evidence_ids": [
+        "E02",
+        "E06",
+        "E07",
+        "E08"
+      ],
+      "defect_ids": [
+        "D07"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C13",
+      "candidate_locator": "final.md:13",
+      "claim": "tus offset mismatch returns 409 without modifying the upload resource.",
+      "disposition": "SUPPORTED_PARAPHRASE",
+      "checked_source_facts": "The source says 409 Conflict status without modifying the resource. The candidate omits status inside quotation marks.",
+      "inference_label": "Correct semantics; not a verbatim quote.",
+      "evidence_ids": [
+        "E09",
+        "E11"
+      ],
+      "defect_ids": [
+        "M01"
+      ],
+      "materiality": "minor quote fidelity"
+    },
+    {
+      "claim_id": "C14",
+      "candidate_locator": "final.md:13,29",
+      "claim": "tus core has no content-replacement/version mechanism.",
+      "disposition": "SUPPORTED_SCOPED_NEGATIVE",
+      "checked_source_facts": "Core binds a URL/offset/length and no whole-payload version identity; protocol-version headers are not payload generations. Optional metadata/checksums do not automatically add that binding.",
+      "inference_label": "Negative within the captured core, not all tus implementations.",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E11"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C15",
+      "candidate_locator": "final.md:13",
+      "claim": "S3 same-part-number reupload overwrites the part.",
+      "disposition": "SUPPORTED",
+      "checked_source_facts": "The exact sentence occurs in UploadPart; the scope is the same upload ID/key and valid part-number range.",
+      "inference_label": "Direct primary fact; silent substitution means no generation comparison, not absence of integrity checks.",
+      "evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C16",
+      "candidate_locator": "final.md:13,21",
+      "claim": "Offset/part position is content-blind.",
+      "disposition": "SUPPORTED_FOR_GENERATION_IDENTITY_WITH_LIMITS",
+      "checked_source_facts": "Position alone does not select an authored generation. Both protocols do have optional or supported part/request integrity mechanisms; these are different from whole-upload identity.",
+      "inference_label": "Valid conceptual distinction if checksum and session conditions are retained.",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E12",
+        "E13"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C17",
+      "candidate_locator": "final.md:13,29",
+      "claim": "No numeric retry count is specified in captured tus or S3 API pages.",
+      "disposition": "SUPPORTED_SCOPED_NEGATIVE",
+      "checked_source_facts": "Core and both captured S3 API documents do not prescribe an attempt-count/backoff policy. SDK behavior is not covered by those pages.",
+      "inference_label": "Page-bounded negative, not a claim about SDKs.",
+      "evidence_ids": [
+        "E09",
+        "E11",
+        "E12",
+        "E14"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C18",
+      "candidate_locator": "final.md:15",
+      "claim": "HTTP idempotent requests can be automatically repeated on communication failure.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "checked_source_facts": "The allowance concerns identical requests after failure before a response is read; method semantics and nonapplication knowledge constrain non-idempotent operations.",
+      "inference_label": "Direct source rule, incompletely reproduced in the final.",
+      "evidence_ids": [
+        "E03"
+      ],
+      "defect_ids": [
+        "D02"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C19",
+      "candidate_locator": "final.md:15,29",
+      "claim": "HTTP retries are unbounded; no bound exists anywhere in the captured RFC; boundedness is entirely client policy.",
+      "disposition": "CONTRADICTED",
+      "checked_source_facts": "Both RFC renditions expressly advise a client not to automatically retry a failed automatic retry. This is a normative SHOULD-NOT stopping rule, though not an absolute numeric cap without exceptions.",
+      "inference_label": "The candidate converts absence of a configurable count into absence of any governing bound.",
+      "evidence_ids": [
+        "E03"
+      ],
+      "defect_ids": [
+        "D02"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C20",
+      "candidate_locator": "final.md:15",
+      "claim": "Retry-After is a delay hint, not a retry-count policy.",
+      "disposition": "SUPPORTED",
+      "checked_source_facts": "It supplies a date or seconds to wait with status-specific semantics, and no attempt count.",
+      "inference_label": "Direct source fact.",
+      "evidence_ids": [
+        "E04"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C21",
+      "candidate_locator": "final.md:17",
+      "claim": "Atomic rename is a safe publication primitive.",
+      "disposition": "SUPPORTED_WITH_CONDITIONS",
+      "checked_source_facts": "Ordinary rename replaces an existing destination atomically without a missing-path gap, on the same mounted filesystem; atomic visibility does not make mutable existing inodes immutable.",
+      "inference_label": "Design inference from a filesystem API contract.",
+      "evidence_ids": [
+        "E15",
+        "E16"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C22",
+      "candidate_locator": "final.md:17",
+      "claim": "A failed rename leaves newpath in place.",
+      "disposition": "SUPPORTED_WITH_SCOPE_CAVEAT",
+      "checked_source_facts": "The statement requires newpath already exists; it guarantees an instance remains. On NFS, failure does not determine whether the rename happened.",
+      "inference_label": "Source fact with conditions narrower than the short sentence.",
+      "evidence_ids": [
+        "E15"
+      ],
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C23",
+      "candidate_locator": "final.md:17,29",
+      "claim": "The rename BUGS section disclaims NFS atomicity, so this mechanism excludes NFS.",
+      "disposition": "CONTRADICTED_ATTRIBUTION",
+      "checked_source_facts": "BUGS describes a completed rename followed by a crash/retransmission failure. That is ambiguity of observed success/failure, not an atomicity disclaimer.",
+      "inference_label": "Unsupported generalization and rejection.",
+      "evidence_ids": [
+        "E15"
+      ],
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C24",
+      "candidate_locator": "final.md:17,29",
+      "claim": "The rename page contains no durability/fsync statement.",
+      "disposition": "SUPPORTED_SCOPED_NEGATIVE",
+      "checked_source_facts": "Relevant API prose and complete page text have no fsync or crash-durability contract.",
+      "inference_label": "Bounded absence on this page.",
+      "evidence_ids": [
+        "E15"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C25",
+      "candidate_locator": "final.md:17",
+      "claim": "SQLite journals before modifying, flushes for power-loss recovery, commits by journal deletion, and hot journals indicate inconsistency.",
+      "disposition": "SUPPORTED_FOR_DOCUMENTED_ROLLBACK_MODE",
+      "checked_source_facts": "Ordered journal/data flushes and exclusive locking govern this example; deletion is a commit point with documented alternative journal truncation/header invalidation modes. A hot journal has specific existence/lock/header conditions.",
+      "inference_label": "Database-specific source facts, not a generic upload transaction.",
+      "evidence_ids": [
+        "E17"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C26",
+      "candidate_locator": "final.md:17",
+      "claim": "SQLite supplies the missing durability of a fsync-then-rename recipe.",
+      "disposition": "NOT_ESTABLISHED",
+      "checked_source_facts": "SQLite does not implement the proposed generic two-operation recipe; directory syncing and operating-system/device assumptions are material.",
+      "inference_label": "Extrapolation beyond the cited mechanism.",
+      "evidence_ids": [
+        "E17",
+        "E19"
+      ],
+      "defect_ids": [
+        "D03"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C27",
+      "candidate_locator": "final.md:17,29",
+      "claim": "Open-descriptor continuation across rename is only POSIX-implied and not captured verbatim.",
+      "disposition": "CONTRADICTED",
+      "checked_source_facts": "rename explicitly says open descriptors are unaffected; open explicitly says the descriptor reference survives pathname removal/rebinding. Actual app use of such a descriptor remains unknown.",
+      "inference_label": "False documentary uncertainty, distinct from genuine deployment uncertainty.",
+      "evidence_ids": [
+        "E15",
+        "E16"
+      ],
+      "defect_ids": [
+        "D05"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C28",
+      "candidate_locator": "final.md:19",
+      "claim": "O_TRUNC makes an opened file length zero.",
+      "disposition": "SUPPORTED_WITH_TYPE_AND_MODE",
+      "checked_source_facts": "This applies to an existing regular file opened with writing allowed, O_WRONLY/O_RDWR. FIFO/terminal and unspecified other cases are not covered by that shorthand.",
+      "inference_label": "Source fact in the normal regular-photo-file setting.",
+      "evidence_ids": [
+        "E16"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C29",
+      "candidate_locator": "final.md:19",
+      "claim": "A concurrent reader observes truncated/mixed bytes under in-place replacement.",
+      "disposition": "SUPPORTED_RISK_NOT_INEVITABLE_OUTCOME",
+      "checked_source_facts": "Truncation/mutation of the same object creates a possible race; observed output depends on timing, descriptor, offset and buffer behavior.",
+      "inference_label": "Concurrency inference, not an executed or universally inevitable observation.",
+      "evidence_ids": [
+        "E16"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C30",
+      "candidate_locator": "final.md:19",
+      "claim": "Identity gating detects replacement but cannot salvage a corrupted old partial.",
+      "disposition": "CONDITIONAL",
+      "checked_source_facts": "A before-attempt check can detect a completed change. It does not cover mutation after the check. Transport checks can reject/restart, but do not reconstruct lost original source bytes.",
+      "inference_label": "Reasonable hazard analysis with missing stable-read condition.",
+      "evidence_ids": [
+        "E09",
+        "E13",
+        "E16",
+        "E18"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C31",
+      "candidate_locator": "final.md:21",
+      "claim": "Git blob identity hashes header+content and retains both content versions.",
+      "disposition": "SUPPORTED",
+      "checked_source_facts": "The chapter uses SHA-1 of a blob header with byte length and NUL plus content; the two-version example is explicit.",
+      "inference_label": "Direct tutorial source fact.",
+      "evidence_ids": [
+        "E18"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C32",
+      "candidate_locator": "final.md:21",
+      "claim": "Content-addressing makes replacement decidable by hash comparison but says nothing about wire progress.",
+      "disposition": "SUPPORTED_DESIGN_WITH_CONDITIONS",
+      "checked_source_facts": "Stable generation data can be compared using a suitable digest, separately from offsets/parts. The chapter actually stores separate content objects; merely storing a digest does not do that.",
+      "inference_label": "Engineering inference, subject to stable bytes and hash assumptions.",
+      "evidence_ids": [
+        "E01",
+        "E09",
+        "E12",
+        "E18"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C33",
+      "candidate_locator": "final.md:21",
+      "claim": "One hash keys the session; local gate decides restart and transport gate makes the wire refuse to mix.",
+      "disposition": "INCOMPLETE",
+      "checked_source_facts": "No captured tus/S3 operation automatically maps that local full-file hash into a whole-generation precondition. The path-check fallback has a race.",
+      "inference_label": "Useful conceptual reconciliation whose asserted safety is not established.",
+      "evidence_ids": [
+        "E05",
+        "E09",
+        "E10",
+        "E13",
+        "E16"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C34",
+      "candidate_locator": "final.md:21",
+      "claim": "Neither gate alone suffices; identity without atomic publication still corrupts.",
+      "disposition": "OVERBROAD",
+      "checked_source_facts": "An immutable stored generation/read handle can remain stable across rename, and database locking can avoid partial reads. The sources support particular hazards, not impossibility of every single-gate design.",
+      "inference_label": "Generalization beyond the shown assumptions; does not require adopting another design.",
+      "evidence_ids": [
+        "E15",
+        "E16",
+        "E17",
+        "E18"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C35",
+      "candidate_locator": "final.md:21",
+      "claim": "Strong validators can change with unchanged data and cause a safe extra transfer.",
+      "disposition": "SUPPORTED_WITH_WORDING_LIMIT",
+      "checked_source_facts": "Metadata changes can alter a strong validator. If-Range mismatch causes a fresh response; it is not itself a protocol abort. Safety still requires the client response-combination rules.",
+      "inference_label": "Supported retry/restart consequence, assuming correct client handling.",
+      "evidence_ids": [
+        "E01",
+        "E06",
+        "E08"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C36",
+      "candidate_locator": "final.md:23",
+      "claim": "Reject mtime+size as sufficient byte identity: false resume and false abort are possible.",
+      "disposition": "SUPPORTED_INFERENCE",
+      "checked_source_facts": "Equal-length different byte sequences exist; authorized timestamp restoration/preservation is documented, and timestamps can change without changing desired bytes. RFC weak-validator discussion supports the concern but is not the full filesystem proof.",
+      "inference_label": "Reviewer independently completed the missing primary support; no app behavior observed.",
+      "evidence_ids": [
+        "E01",
+        "E20"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C37",
+      "candidate_locator": "final.md:23",
+      "claim": "Reject W/ weak ETags for byte resume; a replaced photo is not equivalent.",
+      "disposition": "REJECTION_SUPPORTED_REASON_OVERSTATED",
+      "checked_source_facts": "Weak tags can group semantically equivalent but byte-distinct representations and are forbidden in If-Range. A replaced/reencoded photo may remain semantically equivalent, so that example is not universally true.",
+      "inference_label": "Byte-identity rejection valid without the categorical semantic claim.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E06"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C38",
+      "candidate_locator": "final.md:23",
+      "claim": "Reject path/filename as a content-generation identifier.",
+      "disposition": "SUPPORTED",
+      "checked_source_facts": "The same pathname can refer to another file; open descriptions and rename behavior distinguish name from object.",
+      "inference_label": "Direct API facts support the identity inference.",
+      "evidence_ids": [
+        "E15",
+        "E16"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C39",
+      "candidate_locator": "final.md:23",
+      "claim": "Reject bare offset/part number as sufficient content identity.",
+      "disposition": "SUPPORTED",
+      "checked_source_facts": "tus offsets and S3 part overwrite do not bind original bytes/generation. F2 supports this; F3 retry rules do not demonstrate substitution.",
+      "inference_label": "Correct conclusion with one imprecise internal reference.",
+      "evidence_ids": [
+        "E09",
+        "E12"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C40",
+      "candidate_locator": "final.md:25",
+      "claim": "Incomplete S3 multipart parts persist and incur storage charges until complete/abort.",
+      "disposition": "SUPPORTED_S3_SCOPE",
+      "checked_source_facts": "Both API introductions say this. Configured lifecycle abort is an available server-side option for applicable buckets, so indefinitely manual-only abandonment is not the only route.",
+      "inference_label": "Vendor-specific fact, not a property of all transports.",
+      "evidence_ids": [
+        "E12",
+        "E14"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C41",
+      "candidate_locator": "final.md:25",
+      "claim": "Local staged/temp files persist when attempts simply stop.",
+      "disposition": "SUPPORTED_LIFECYCLE_INFERENCE",
+      "checked_source_facts": "Git retains example objects and these protocols do not remove arbitrary local temp files; an application must define its own staging/cleanup behavior. No actual app temp-file persistence was inspected.",
+      "inference_label": "Engineering risk rather than an observed incident.",
+      "evidence_ids": [
+        "E18"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C42",
+      "candidate_locator": "final.md:25,29",
+      "claim": "The Git chapter omits unreachable-object collection.",
+      "disposition": "SUPPORTED_SCOPED_NEGATIVE",
+      "checked_source_facts": "The authored chapter covers object storage/tree/commit construction and no GC/reflog expiry mechanism. Navigation links to other chapters are not that chapter’s coverage.",
+      "inference_label": "Chapter-bounded negative, not absence of Git GC.",
+      "evidence_ids": [
+        "E18"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C43",
+      "candidate_locator": "final.md:25",
+      "claim": "A cap should trigger two-sided cleanup rather than merely stop attempts.",
+      "disposition": "SUPPORTED_GOAL_INCOMPLETE_MECHANISM",
+      "checked_source_facts": "Remote residue is a real documented lifecycle issue; termination/abort availability, in-flight uploads and confirmation must be distinguished from a local terminal state.",
+      "inference_label": "Design recommendation needs cleanup conditions and bounded pending behavior.",
+      "evidence_ids": [
+        "E10",
+        "E12",
+        "E14",
+        "E21"
+      ],
+      "defect_ids": [
+        "D06"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C44",
+      "candidate_locator": "final.md:25,37",
+      "claim": "Retry constants are app-tunable and not source-derived; parameterization remains open.",
+      "disposition": "SUPPORTED",
+      "checked_source_facts": "The cited documents do not select app-specific count/progress constants; RFC normative retry rules still apply.",
+      "inference_label": "Explicit design parameter, not an omission requiring a fabricated numeric answer.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09",
+        "E12"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C45",
+      "candidate_locator": "final.md:29 U1",
+      "claim": "Without server validators/preconditions the transport gate collapses to the local gate.",
+      "disposition": "SUPPORTED_LIMITATION_UNSAFE_FALLBACK",
+      "checked_source_facts": "No captured server contract establishes whole-hash enforcement for the upload; the proposal explicitly relies on local checking in that case. That fallback is not proven safe against a writer between checking and reading.",
+      "inference_label": "Availability condition is retained, but its safety implication is incomplete.",
+      "evidence_ids": [
+        "E05",
+        "E09",
+        "E13",
+        "E16"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C46",
+      "candidate_locator": "final.md:29 U2",
+      "claim": "The app’s replace-via-rename versus in-place behavior is unresolved.",
+      "disposition": "APPROPRIATE_UNCERTAINTY",
+      "checked_source_facts": "The original brief permits replacement but supplies no implementation. The captured docs describe both mechanisms without establishing which is deployed.",
+      "inference_label": "Deployment unknown within the permitted input scope.",
+      "evidence_ids": [
+        "E15",
+        "E16"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C47",
+      "candidate_locator": "final.md:29 U3",
+      "claim": "Descriptor continuation is uncertain.",
+      "disposition": "FALSE_SOURCE_UNCERTAINTY",
+      "checked_source_facts": "The documentary answer is explicit in two mapped pages; only the app’s handle lifetime/use is unknown.",
+      "inference_label": "Unjustified documentary abstention.",
+      "evidence_ids": [
+        "E15",
+        "E16"
+      ],
+      "defect_ids": [
+        "D05"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C48",
+      "candidate_locator": "final.md:29 U4",
+      "claim": "S3 composite ETag semantics are unpublished.",
+      "disposition": "CONTRADICTED_GLOBAL_NEGATIVE",
+      "checked_source_facts": "They are absent from the captured API pages but described in a public primary AWS guide, separately captured by this reviewer.",
+      "inference_label": "A page-bounded negative was wrongly widened to global publication absence.",
+      "evidence_ids": [
+        "E14",
+        "E22"
+      ],
+      "defect_ids": [
+        "D08"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C49",
+      "candidate_locator": "final.md:29 U5",
+      "claim": "Rehash cost on rural devices is untested and bounded by photo sizes.",
+      "disposition": "UNCERTAINTY_RETAINED_BOUND_UNQUANTIFIED",
+      "checked_source_facts": "Re-reading a file has work proportional to bytes read; no device timing, app photo maximum, hash implementation or latency budget was provided. Finite photo size is not a measured wall-clock bound.",
+      "inference_label": "Design cost uncertainty, no measured performance claim accepted.",
+      "evidence_ids": [
+        "E18"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C50",
+      "candidate_locator": "final.md:29 U6",
+      "claim": "Published tus header is 1.0.0; drift against mutable master/tag is unchecked.",
+      "disposition": "APPROPRIATE_VERSION_LIMIT",
+      "checked_source_facts": "Both mapped views say 1.0.0 and 2016-03-25; checked relevant semantics agree. No immutable release-tag verification proves historical release identity.",
+      "inference_label": "Capture/version limit, not evidence of actual drift.",
+      "evidence_ids": [
+        "E09",
+        "E10",
+        "E11"
+      ],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C51",
+      "candidate_locator": "final.md:29",
+      "claim": "Negative leads include no mandated tus chunk size, no rename durability contract, no Git GC, no retry bounds anywhere.",
+      "disposition": "MIXED",
+      "checked_source_facts": "The first three negatives are valid in their named scopes; absence of a numeric tus/S3 retry policy is valid. The RFC-wide no-bound claim contradicts its normative stopping recommendation.",
+      "inference_label": "Scope-sensitive negatives, not an exhaustive unknown-answer key.",
+      "evidence_ids": [
+        "E03",
+        "E09",
+        "E10",
+        "E15",
+        "E18"
+      ],
+      "defect_ids": [
+        "D02"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C52",
+      "candidate_locator": "final.md:3,33",
+      "claim": "Every quotation was verified against bytes; no code or live fault injection was executed.",
+      "disposition": "MIXED_PROVENANCE",
+      "checked_source_facts": "Most quotes are present; the tus quote is a paraphrase. Integrity is verifiable; actual stage execution history was not inspected and absence of code execution cannot be independently certified from these artifacts. Tests are explicitly proposed, not reported results.",
+      "inference_label": "Artifact declaration separated from independently checked observations.",
+      "evidence_ids": [
+        "E11"
+      ],
+      "defect_ids": [
+        "M01"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C53",
+      "candidate_locator": "final.md:33 V1",
+      "claim": "Replace via rename and in place before resume; identity-gated resume restarts cleanly in both, offset-only mixes in at least one.",
+      "disposition": "USEFUL_BUT_INCOMPLETE_DISCRIMINATOR",
+      "checked_source_facts": "A completed replacement before hashing is detectable, but mutation/rebinding after the gate is not tested. A retained immutable descriptor can complete coherent old-generation data, and byte outcomes depend on fixtures/schedules.",
+      "inference_label": "Predicted experimental result, not an observation or inevitable control failure.",
+      "evidence_ids": [
+        "E09",
+        "E12",
+        "E15",
+        "E16"
+      ],
+      "defect_ids": [
+        "D01",
+        "D07"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C54",
+      "candidate_locator": "final.md:33 V2",
+      "claim": "Server replacement: mixed 206 versus clean restart discriminates strong If-Range deployments.",
+      "disposition": "NONUNIQUE_DISCRIMINATOR",
+      "checked_source_facts": "A server can ignore Range and return a full 200 without establishing the proposed validator contract. Client append/reset logic, status, Content-Range and stored validator are required observables; strong HTTP-date is another supported route.",
+      "inference_label": "Hypothesis needs more discriminating observables and applicability to the actual transfer direction.",
+      "evidence_ids": [
+        "E02",
+        "E06",
+        "E07",
+        "E08"
+      ],
+      "defect_ids": [
+        "D07"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C55",
+      "candidate_locator": "final.md:33 V3",
+      "claim": "Connection flaps until caps trigger; compare attempts-to-terminal and remote/local residue with cleanup enabled/disabled.",
+      "disposition": "USEFUL_WITH_MISSING_CONDITIONS",
+      "checked_source_facts": "Counting attempts/residue is useful, but local termination is not remote cleanup confirmation. Test unavailable/unsupported abort and in-flight races; S3 documents repeated abort and ListParts verification.",
+      "inference_label": "Proposed validation, not executed evidence.",
+      "evidence_ids": [
+        "E03",
+        "E10",
+        "E21"
+      ],
+      "defect_ids": [
+        "D06",
+        "D07"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C56",
+      "candidate_locator": "final.md:37",
+      "claim": "F1/F3/F5/F6/F8 accepted; F2/F4 amended; F7 candidates rejected; listed deployment parameters unresolved.",
+      "disposition": "PRESERVED_BUT_NOT_ALL_JUSTIFIED",
+      "checked_source_facts": "All original finding/disposition IDs are retained in the review. Their self-assigned acceptance does not override source contradictions or missing safety conditions.",
+      "inference_label": "Candidate judgments independently assessed, no adoption truth assumed.",
+      "evidence_ids": [
+        "E03",
+        "E15",
+        "E19"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C57",
+      "candidate_locator": "final.md:9–25,39–41",
+      "claim": "At most eight material findings and all six obligations covered.",
+      "disposition": "STRUCTURAL_COVERAGE_SUPPORTED_SUBSTANTIVE_COVERAGE_PARTIAL",
+      "checked_source_facts": "There are exactly F1–F8 and 1135 whitespace-delimited words, slightly over a soft 1100 ceiling, which is not a rejection basis. Each obligation is addressed, but support/conditions/validation are incomplete as detailed below.",
+      "inference_label": "Artifact structure independently counted, adequacy reviewed separately.",
+      "evidence_ids": [],
+      "defect_ids": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "C58",
+      "candidate_locator": "sources/index.json; INPUT_MAP.json",
+      "claim": "Candidate source identities, versions, locators and capture limits are reliable answers.",
+      "disposition": "CHECKED_AS_UNTRUSTED_METADATA",
+      "checked_source_facts": "All 19 mapped files and three indices match their declared hashes; headers identify the claimed documents. Errors include tus date/counts, RFC 412/range section labels, NFS semantics and descriptor uncertainty. Claimed capture timestamps/new-fetch methods lack independently trusted acquisition evidence.",
+      "inference_label": "Identity/content checks plus explicit provenance limitations, never hash-only SourcePASS.",
+      "evidence_ids": [
+        "E03",
+        "E09",
+        "E11",
+        "E15",
+        "E16"
+      ],
+      "defect_ids": [
+        "M02"
+      ],
+      "materiality": "material"
+    }
+  ],
+  "source_evidence": [
+    {
+      "evidence_id": "E01",
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "primary_locator": "RFC 9110 §8.8.1 Weak versus Strong",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "source_facts": "Strong validators change on observable representation-data changes, may also change for metadata reasons, and are unique per resource across time rather than across all resources. Collision-resistant content hashes can be sufficient. Weak validators need not distinguish every byte change.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          2755,
+          2830
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E02",
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "primary_locator": "RFC 9110 §8.8.2.2 and §8.8.3",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "source_facts": "Last-Modified is implicitly weak but can be deduced strong under specified origin/cache clock and timing conditions. ETags are opaque, default strong, and MUST be marked W/ if weak. Strong comparison requires two nonweak tags and matching opaque values.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          2868,
+          2978
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E03",
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "primary_locator": "RFC 9110 §9.2.2 Idempotent Methods",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "source_facts": "Identical idempotent requests may be retried on communication failure before reading a response. Non-idempotent retry requires known idempotence or nonapplication; a proxy MUST NOT automatically retry non-idempotent requests; a client SHOULD NOT automatically retry a failed automatic retry. This is a normative stopping recommendation, not a configurable numeric hard cap.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          3134,
+          3170
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E04",
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "primary_locator": "RFC 9110 §10.2.3 Retry-After",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "source_facts": "Retry-After is an HTTP-date or nonnegative decimal seconds delay; 503 describes expected unavailability and 3xx asks for a minimum redirect delay. It does not define an attempt count or a whole-transfer deadline.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          3889,
+          3906
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E05",
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "primary_locator": "RFC 9110 §13.1.1 If-Match",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "source_facts": "If-Match compares the selected representation’s current ETag with strong comparison before performing a method; a false condition prevents the operation, with 412 or already-applied-success handling. The validator is not automatically a hash of the incoming upload body.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          4660,
+          4725
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E06",
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "primary_locator": "RFC 9110 §13.1.5 If-Range",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "source_facts": "If-Range mismatch causes Range to be ignored and the new representation to be transferred rather than a precondition-failure response. Weak tags cannot be sent; a strong HTTP-date is also permitted if no ETag exists. Lack of Range support means If-Range is ignored.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          4915,
+          4969
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E07",
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "primary_locator": "RFC 9110 §§14.1.2, 14.2, 14.5",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "source_facts": "Byte offsets are zero-based inclusive positions in the encoded representation. Range handling here is defined for GET; a server may ignore it. Unsatisfiable ranges can produce 416. Partial PUT is a private-agreement mechanism with compatibility hazards, not the same as ranged GET.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          5122,
+          5177
+        ],
+        [
+          5178,
+          5240
+        ],
+        [
+          5332,
+          5350
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E08",
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "primary_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "primary_locator": "RFC 9110 §§15.3.7 and 15.3.7.3; §15.5.17",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "source_facts": "A 206 client MUST inspect Content-Type/Content-Range. Partial responses may only safely be combined with the same strong validator. A new 200 response is a complete-representation response, not permission to append it to old partial bytes; 416 cannot be relied on because Range may be ignored.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          5642,
+          5659
+        ],
+        [
+          5731,
+          5759
+        ],
+        [
+          6181,
+          6205
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E09",
+      "source_id": "S02",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/tus-resumable-upload-1.0.0.html",
+      "primary_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "primary_locator": "tus core: HEAD, PATCH, Headers, OPTIONS",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/02-tus-resumable-upload-1.0.0.txt",
+      "source_facts": "HEAD obtains Upload-Offset in bytes and must not be cached. PATCH applies bytes at current matching offset; mismatch returns 409 Conflict status without modifying the upload. Successful offset advances by bytes actually processed or stored, and network timeout handling is recommended. Core mandates no retry-count cap, content-version identity binding, or fixed chunk size. The 1GB OPTIONS example is a whole-upload limit, not chunk guidance.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          101,
+          215
+        ],
+        [
+          217,
+          228
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E10",
+      "source_id": "S02",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/tus-resumable-upload-1.0.0.html",
+      "primary_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "primary_locator": "tus Creation, Checksum, Expiration, Termination, Concatenation",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/02-tus-resumable-upload-1.0.0.txt",
+      "source_facts": "Creation and other extensions are negotiated via Tus-Extension. Checksums optionally protect each PATCH body, with SHA1 minimum and negotiated algorithms; mismatches discard the chunk without advancing offset. Expiration may remove stale uploads and 404/410 requires a new upload. Termination is optional and must be advertised; DELETE termination resource release is SHOULD. Concatenation preserves specified URL order and does not automatically copy partial metadata. None supplies an automatic whole-upload generation binding.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          230,
+          300
+        ],
+        [
+          338,
+          406
+        ],
+        [
+          429,
+          497
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E11",
+      "source_id": "S07",
+      "url": "https://raw.githubusercontent.com/tus/tus-resumable-upload-protocol/master/protocol.md",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/tus-protocol-1.0.0.md",
+      "primary_sha256": "dfc82027d295c80c3ff799f8f6944115e6fb383373a0b41d0eec296200535bb6",
+      "primary_locator": "tus raw master header, core and extensions",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/07-tus-protocol-1.0.0.txt",
+      "source_facts": "Version/date are 1.0.0 / 2016-03-25. Relevant HEAD/PATCH/checksum/expiration/termination/concatenation contracts agree with the published captured HTML. The printed 409 quote omits the word status, so it is an accurate paraphrase rather than a verified verbatim substring. No tagged-release drift check was supplied or performed.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          1,
+          3
+        ],
+        [
+          74,
+          183
+        ],
+        [
+          323,
+          395
+        ],
+        [
+          425,
+          497
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E12",
+      "source_id": "S08",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/aws-s3-uploadpart.html",
+      "primary_sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "primary_locator": "UploadPart introduction, request parameters and response/example",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/08-aws-s3-uploadpart.txt",
+      "source_facts": "Multipart initiation returns an upload ID; parts 1–10000 are identified by part number within that upload and same-number reupload overwrites the previous part. Storage charges stop with complete/abort. Key, bucket, partNumber and uploadId bindings are required; responses provide a per-part ETag to retain for completion.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          7,
+          25
+        ],
+        [
+          155,
+          164
+        ],
+        [
+          372,
+          373
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E13",
+      "source_id": "S08",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/aws-s3-uploadpart.html",
+      "primary_sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "primary_locator": "UploadPart Data integrity, Request Syntax and URI Request Parameters",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/08-aws-s3-uploadpart.txt",
+      "source_facts": "Part body integrity is supported through Content-MD5/checksum headers; directory buckets do not support MD5. SHA256 is a Base64-encoded 256-bit checksum, not a whole-upload current-generation If-Match precondition. UploadPart exposes no If-Match in its captured request syntax; 404 NoSuchUpload covers invalid, aborted or completed IDs.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          53,
+          62
+        ],
+        [
+          91,
+          95
+        ],
+        [
+          108,
+          164
+        ],
+        [
+          185,
+          194
+        ],
+        [
+          226,
+          236
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E14",
+      "source_id": "S03",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/s3-api-createmultipartupload.html",
+      "primary_sha256": "3f7f3e6a234b8e37d9a7a39e8cf5cac2f3e486acbb67f6356fde8a919c5b8d48",
+      "primary_locator": "CreateMultipartUpload introduction and Response Elements",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/03-s3-api-createmultipartupload.txt",
+      "source_facts": "The upload ID groups all parts for a particular multipart upload; the key and ID are returned/bound separately. Incomplete multipart uploads may be aborted automatically by configured lifecycle rules; directory buckets do not support S3 Lifecycle. The captured page does not publish a final ETag composition recipe or SDK retry-count bound.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          11,
+          29
+        ],
+        [
+          565,
+          579
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E15",
+      "source_id": "S04",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/man7-rename-2.html",
+      "primary_sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "primary_locator": "rename(2) DESCRIPTION, ERRORS/EXDEV and BUGS",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/04-man7-rename-2.txt",
+      "source_facts": "Open descriptors for oldpath are unaffected by rename. Existing newpath is atomically replaced without a missing-path gap; an existing destination has an instance retained on ordinary failure. EXDEV rejects different mounted filesystems. NFS BUGS warns failure can follow a successful rename when a server crash and retransmitted RPC occur; it does not say NFS rename is non-atomic.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          30,
+          46
+        ],
+        [
+          190,
+          193
+        ],
+        [
+          233,
+          239
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E16",
+      "source_id": "S05",
+      "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/man7-open-2.html",
+      "primary_sha256": "d665489cadb85624d98fae03a8d8d06209030f32735cff8aeba949ad8491c789",
+      "primary_locator": "open(2) DESCRIPTION and O_TRUNC",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/05-man7-open-2.txt",
+      "source_facts": "An open file description remains referenced by its descriptor when a pathname is removed or changed to refer to a different file. O_TRUNC reduces an existing regular file to zero length when opened O_WRONLY or O_RDWR. This establishes a possible concurrent-read hazard, not a mandatory mixed-byte result for every schedule.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          44,
+          50
+        ],
+        [
+          385,
+          393
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E17",
+      "source_id": "S09",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/sqlite-atomiccommit.html",
+      "primary_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "primary_locator": "Atomic Commit In SQLite §§2, 3.5–3.12, 4.2, 5.2, 9.2, 9.5",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/09-sqlite-atomiccommit.txt",
+      "source_facts": "Rollback-journal content is recorded before modification, journal/data flushing and exclusive locking precede journal invalidation/commit, and a hot journal requires recovery. Directory sync is explicitly used in documented scenarios. Journal deletion is one commit mode; truncation/header invalidation are alternatives. Flush/storage assumptions can fail. These are a database-specific ordered discipline, not proof of a generic two-operation durable rename.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          156,
+          171
+        ],
+        [
+          298,
+          347
+        ],
+        [
+          350,
+          432
+        ],
+        [
+          474,
+          502
+        ],
+        [
+          591,
+          595
+        ],
+        [
+          1000,
+          1049
+        ],
+        [
+          1065,
+          1098
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E18",
+      "source_id": "S10",
+      "url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/git-objects-chapter.html",
+      "primary_sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "primary_locator": "Pro Git §10.2 Git Objects / Object Storage",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/10-git-objects-chapter.txt",
+      "source_facts": "Git content addressing stores keys from SHA-1 of object header plus content; storing changed contents retains both example versions. This is a design precedent for identifying stable bytes, not a guarantee that hashing a mutable pathname creates an immutable snapshot. Chapter body contains no unreachable-object GC policy.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          269,
+          331
+        ],
+        [
+          468,
+          516
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E19",
+      "source_id": "S11",
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.html",
+      "primary_sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "primary_locator": "fsync(2) DESCRIPTION, RETURN VALUE, ERRORS",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.txt",
+      "source_facts": "File fsync does not necessarily persist the containing directory entry; the directory needs an explicit fsync. Thus flushing the new file before rename alone does not establish crash-durable publication. Filesystem/hardware support and syscall errors remain conditions.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          26,
+          39
+        ],
+        [
+          51,
+          75
+        ],
+        [
+          89,
+          92
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E20",
+      "source_id": "S12",
+      "url": "https://man7.org/linux/man-pages/man2/utimensat.2.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.html",
+      "primary_sha256": "d8cfbbcb7a7815d74313e02f9b0e20fcfc087bc955b197dd44b30f20ff4fbd64",
+      "primary_locator": "utimensat(2)/futimens(2) DESCRIPTION, timestamp permissions",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.txt",
+      "source_facts": "An owner or privileged caller can set the modification timestamp, and UTIME_OMIT can preserve it. Different equal-length byte sequences can therefore have equal size and chosen equal mtime; a timestamp can also change without the desired content changing. This supports the metadata-identity rejection as an inference, not an observation about this app.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          30,
+          66
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E21",
+      "source_id": "S13",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.html",
+      "primary_sha256": "dce987a4dd51d5f0c41f1efa579e28b05b8c585bcc879f5e503d242c524d0d02",
+      "primary_locator": "AbortMultipartUpload introductory semantics",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.txt",
+      "source_facts": "In-flight part uploads may still finish during abort; repeated aborts and an empty ListParts check can be necessary to establish all storage was freed. The request uses the specific key/uploadId. A disconnected client cannot equate locally stopping attempts with remote cleanup confirmation.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          6,
+          13
+        ],
+        [
+          42,
+          47
+        ]
+      ]
+    },
+    {
+      "evidence_id": "E22",
+      "source_id": "S14",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.html",
+      "primary_sha256": "120bba4c5fffd1ffa8a57aa6e08d1adad866decadc331a77ab195afb27d73c11",
+      "primary_locator": "S3 User Guide: Full object and composite checksum types; multipart ETag note",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.txt",
+      "source_facts": "Public AWS documentation describes a multipart ETag derived from part MD5 digests and a part-count suffix. This refutes the global claim that those semantics are unpublished; the original two API pages alone did not specify them. An ETag still cannot be treated as this proposal’s whole-file SHA-256.",
+      "limits": "Captured primary prose, checked in context; no runtime experiment. Review-text lines are derived locators; original source hash and section identify authoritative bytes.",
+      "review_text_line_ranges": [
+        [
+          108,
+          115
+        ]
+      ]
+    }
+  ],
+  "source_inventory": [
+    {
+      "source_id": "S01",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/rfc9110.html",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "bytes": 1187554,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/01-rfc9110.txt",
+      "review_text_sha256": "8a25f00a28bb5857d445a0cd4c412710e27ddf6ef0a4918a00320a6bde2e4616",
+      "map_entries": [
+        0,
+        11
+      ],
+      "verified_version": "RFC 9110 / STD 97, Standards Track, June 2022",
+      "scope_checked_and_limits": "HTML §§8.8.1–8.8.3, 9.2.2, 10.2.3, 13.1.1, 13.1.5, 14, 15.3.7, 15.5.17; relevant rules cross-checked against mapped text rendition. RFC obsoletes 7230 in part, 7231, 7232, 7233 and 7235, not 7234."
+    },
+    {
+      "source_id": "S02",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/tus-resumable-upload-1.0.0.html",
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "bytes": 210884,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/02-tus-resumable-upload-1.0.0.txt",
+      "review_text_sha256": "b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505",
+      "map_entries": [
+        1,
+        12
+      ],
+      "verified_version": "tus protocol header 1.0.0, Date 2016-03-25; published 1.0.x web page",
+      "scope_checked_and_limits": "Read core and creation, checksum, expiration, termination and concatenation conditions. Rendered/raw master relevant semantics agree; neither is an immutable repository tag. Raw HTML contains 46 Upload-Offset occurrences, not index claims of 24 or 48."
+    },
+    {
+      "source_id": "S03",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/s3-api-createmultipartupload.html",
+      "sha256": "3f7f3e6a234b8e37d9a7a39e8cf5cac2f3e486acbb67f6356fde8a919c5b8d48",
+      "bytes": 108900,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/03-s3-api-createmultipartupload.txt",
+      "review_text_sha256": "889414a547eed0201381555e27cb5979d88b7ea1a35d58530f4905e0956aa702",
+      "map_entries": [
+        2,
+        14
+      ],
+      "verified_version": "Amazon S3 CreateMultipartUpload API, 2006-03-01 XML namespace; captured unversioned latest documentation",
+      "scope_checked_and_limits": "Create/upload/session binding, completion/abort storage lifecycle, configured lifecycle abort, directory-bucket limits. Page HTML is 108900 bytes. No SDK retry behavior or final-object ETag algorithm specified here."
+    },
+    {
+      "source_id": "S04",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/man7-rename-2.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/04-man7-rename-2.txt",
+      "review_text_sha256": "1bcfe1b37be314a3bb1ddc4c8eb0376d9f34dd66627bf593c7d3767cb5e61678",
+      "map_entries": [
+        3,
+        8,
+        15
+      ],
+      "verified_version": "Linux man-pages 6.19, page date 2026-02-08, HTML rendering 2026-09-09",
+      "scope_checked_and_limits": "DESCRIPTION explicitly preserves open descriptors; replacement/failure rules; same-mounted-filesystem EXDEV restriction; BUGS concerns ambiguous NFS failure results, not a declaration of non-atomic NFS rename. No fsync/durability contract."
+    },
+    {
+      "source_id": "S05",
+      "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/man7-open-2.html",
+      "sha256": "d665489cadb85624d98fae03a8d8d06209030f32735cff8aeba949ad8491c789",
+      "bytes": 76506,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/05-man7-open-2.txt",
+      "review_text_sha256": "30d9b2277082646efd1e4611ecba161411a4c5db38e70bc803c83a90e3dfb454",
+      "map_entries": [
+        4,
+        16
+      ],
+      "verified_version": "Linux man-pages 6.19, page date 2026-02-08, HTML rendering 2026-09-09",
+      "scope_checked_and_limits": "DESCRIPTION open file description survives a pathname referring to another file; O_TRUNC regular-file/write-mode conditions; O_EXCL creation and NFS conditions; O_APPEND NFS caveat; stable directory-fd rationale. API prose, no observed application behavior."
+    },
+    {
+      "source_id": "S06",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/06-rfc9110.txt",
+      "review_text_sha256": "1010089f058db4f700b29ade830477af6e4a17e88f961bd21ead3e8a8a01db13",
+      "map_entries": [
+        5
+      ],
+      "verified_version": "RFC 9110 / STD 97, Standards Track, June 2022, plain-text rendition",
+      "scope_checked_and_limits": "Independent mapped view of S01. Source-index TOC/body locators were relocated to actual body. The complete retry section, range units/content coding, If-Match/If-Range, 200/206/416 and combining-parts rules were checked."
+    },
+    {
+      "source_id": "S07",
+      "url": "https://raw.githubusercontent.com/tus/tus-resumable-upload-protocol/master/protocol.md",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/tus-protocol-1.0.0.md",
+      "sha256": "dfc82027d295c80c3ff799f8f6944115e6fb383373a0b41d0eec296200535bb6",
+      "bytes": 25906,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/07-tus-protocol-1.0.0.txt",
+      "review_text_sha256": "8c356a2da3ac7ca18c2b326f2eac01af8905a49911964bb1ef6348904f0fc2c2",
+      "map_entries": [
+        6
+      ],
+      "verified_version": "tus protocol 1.0.0 header, Date 2016-03-25; captured mutable GitHub master markdown",
+      "scope_checked_and_limits": "Index date 2016-03-24 is wrong. Read core plus optional extension conditions, including no-store HEAD, PATCH actual stored-byte offset, checksum algorithm negotiation, expiration, termination, and concatenation order/metadata. Header version alone does not freeze an original release."
+    },
+    {
+      "source_id": "S08",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/aws-s3-uploadpart.html",
+      "sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "bytes": 67235,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/08-aws-s3-uploadpart.txt",
+      "review_text_sha256": "e22760684a54cbeb4c9bc857d53eced0c158471b4f9d48096ae09f0602c0b8e0",
+      "map_entries": [
+        7,
+        13
+      ],
+      "verified_version": "Amazon S3 UploadPart API, 2006-03-01 API namespace, unversioned latest documentation capture",
+      "scope_checked_and_limits": "Full operation semantics and request/response conditions relevant to resume, uploadId/key/partNumber, same-number overwrite, per-part integrity, ETag completion binding, NoSuchUpload, and cleanup. HTML is 67235 bytes. No If-Match or whole-upload identity precondition is documented on this operation; SDK retry bounds absent."
+    },
+    {
+      "source_id": "S09",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/sqlite-atomiccommit.html",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/09-sqlite-atomiccommit.txt",
+      "review_text_sha256": "61bf481ac63b1a0e4542e7c17034a016c9be4c399a76389d4c57b7f26f7c2978",
+      "map_entries": [
+        9,
+        17
+      ],
+      "verified_version": "SQLite Atomic Commit In SQLite; page updated 2026-04-21 10:28:59Z",
+      "scope_checked_and_limits": "Checked §§2, 3.5–3.12, 4.2, 5.2, 7, 9.1–9.5. Rollback journal/exclusive-lock/database-flush assumptions and alternate journal invalidation commit points matter. Directory syncing is described. No claim that this is an upload design or a fsync-then-rename recipe."
+    },
+    {
+      "source_id": "S10",
+      "url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/git-objects-chapter.html",
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "bytes": 145608,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/10-git-objects-chapter.txt",
+      "review_text_sha256": "10e7ec3170a6a28119f655c263cc4be22eefc3e9a0cc4d326ef782e6d1a89789",
+      "map_entries": [
+        10,
+        18
+      ],
+      "verified_version": "Pro Git second-edition web chapter 10.2, Git Objects; unversioned capture",
+      "scope_checked_and_limits": "Read authored chapter body, key-value content addressing, SHA-1(header+content), two stored versions, tree/commit and object storage. GC/reflog expiry not treated by this chapter; tutorial is primary project documentation, not a normative immutability or collision guarantee."
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+      "capture_at": "2026-10-07T21:23:12.455626+00:00",
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "bytes": 15152,
+      "locator": "DESCRIPTION: file fsync does not necessarily persist containing-directory entry; directory fsync required",
+      "limits": "One public HTML prose page; no downloaded code executed; Linux/POSIX contract, no crash test or hardware guarantee",
+      "elapsed_seconds": 0.44082249399798457,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.txt",
+      "source_id": "S11",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.html",
+      "verified_version": "Linux man-pages 6.19, 2026-02-08; version/date also independently read through web tool",
+      "review_text_sha256": "e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c"
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man2/utimensat.2.html",
+      "capture_at": "2026-10-07T21:24:16.215335+00:00",
+      "sha256": "d8cfbbcb7a7815d74313e02f9b0e20fcfc087bc955b197dd44b30f20ff4fbd64",
+      "bytes": 22528,
+      "elapsed_seconds": 0.46246110499851056,
+      "limits": "Additional bounded reviewer primary-document check; server HTML only; no code execution, accounts or service operations",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.txt",
+      "locator": "DESCRIPTION timestamp values and permissions, lines 30-66 of extracted text",
+      "source_id": "S12",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.html",
+      "verified_version": "Linux man-pages 6.19; page date 2025-10-29",
+      "review_text_sha256": "e1a970945efc96d9e5e1eb09886bb385cedfc698e96346ece117cf9c0bf6bdbd"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html",
+      "capture_at": "2026-10-07T21:24:16.418711+00:00",
+      "sha256": "dce987a4dd51d5f0c41f1efa579e28b05b8c585bcc879f5e503d242c524d0d02",
+      "bytes": 32489,
+      "elapsed_seconds": 0.20325610299914842,
+      "limits": "Additional bounded reviewer primary-document check; server HTML only; no code execution, accounts or service operations",
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.txt",
+      "locator": "Introductory operation semantics, in-flight parts and ListParts verification, lines 6-13",
+      "source_id": "S13",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.html",
+      "verified_version": "Amazon S3 API reference, API namespace 2006-03-01, current HTML captured 2026-10-07; no immutable doc revision",
+      "review_text_sha256": "18712c5ee66fae447d879feafdee0019c3bd440effdc8113c425016223efb712"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "capture_at": "2026-10-07T21:26:08.502813+00:00",
+      "sha256": "120bba4c5fffd1ffa8a57aa6e08d1adad866decadc331a77ab195afb27d73c11",
+      "bytes": 83175,
+      "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.txt",
+      "locator": "Full object and composite checksum types; multipart ETag construction note; Using Content-MD5 and the ETag to verify uploaded objects",
+      "limits": "Reviewer bounded check of the claim that S3 multipart ETag semantics are unpublished. Current page may postdate candidate capture; no implementation validation or code execution; code examples left inert. Web cached view separately reports crawl three weeks ago.",
+      "elapsed_seconds": 0.2198985619979794,
+      "source_id": "S14",
+      "primary_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.html",
+      "verified_version": "Amazon S3 User Guide, current public HTML captured 2026-10-07; no immutable documentation release ID",
+      "review_text_sha256": "c3bfe27835cf348ec6f84de4e7f5ff0ad7657cab4d32d69a95de75cf02b95475"
+    }
+  ],
+  "source_integrity_ledger": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/mapped-source-integrity.json",
+  "literal_check_artifacts": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/literal-checks.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/candidate-quote-audit.json"
+  ],
+  "defects": [
+    {
+      "defect_id": "D01",
+      "title": "The local identity gate does not bind checked bytes to transferred bytes",
+      "severity": "high",
+      "materiality": "A user replacement after hashing and before opening/reading can send new-generation bytes to an old session even with a single writer, especially in the explicitly allowed fallback without server whole-generation preconditions. In-place mutation during hashing/reading is likewise not excluded. This defeats the central identity/resume safety recommendation.",
+      "candidate_locators": [
+        "final.md:7",
+        "final.md:19",
+        "final.md:21",
+        "final.md:29 U1",
+        "final.md:33 V1"
+      ],
+      "evidence_ids": [
+        "E05",
+        "E09",
+        "E13",
+        "E15",
+        "E16",
+        "E18"
+      ],
+      "source_fact_vs_inference": "The path/descriptor distinctions are explicit facts. The interleaving counterexample is reviewer reasoning, not a reproduced test.",
+      "bounded_correction": "State a stable per-generation source/read binding, or synchronize generation selection/hash/read and revalidate before publication; bind the remote URL/uploadId/part ledger to that generation. Separate an opaque server ETag from the local full-file hash. Test replacement after the gate as well as before it; no full sync engine is necessary.",
+      "counterexample": "Allowed interleaving: remote session has prefix of generation A; the resume gate hashes path -> A; the user atomically replaces that path with generation B; transfer reopens the path and sends B’s suffix into A’s session. If the hash-read descriptor is retained immutably or reads/replacement are synchronized, this interleaving is prevented, but the final does not state that binding."
+    },
+    {
+      "defect_id": "D02",
+      "title": "The RFC retry conclusion omits an explicit normative stopping recommendation",
+      "severity": "high",
+      "materiality": "The repeated assertion of no retry bound in RFC 9110 is false and could authorize repeated automatic retries of operations whose method/application state is not known safe. Exact numeric caps are policy, but retry permissions and SHOULD-NOT rules are not entirely client policy.",
+      "candidate_locators": [
+        "final.md:7",
+        "final.md:15",
+        "final.md:29"
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ],
+      "source_fact_vs_inference": "Explicit text in both mapped RFC views, not a reviewer-selected preferred retry count. SHOULD NOT is not an absolute hard cap and justified exceptions are possible.",
+      "bounded_correction": "Retain the failed-automatic-retry stopping rule and non-idempotent constraints; distinguish idempotent replays from tus PATCH state reconciliation and upload creation. App caps must be a justified policy within those rules."
+    },
+    {
+      "defect_id": "D03",
+      "title": "fsync-before-rename is insufficient to establish durable publication",
+      "severity": "medium",
+      "materiality": "The mechanism promoted as the durability amendment can lose the published name after a crash because directory-entry durability and syscall error handling are absent. SQLite’s database journal/lock sequence does not prove this shorter recipe.",
+      "candidate_locators": [
+        "final.md:7",
+        "final.md:17"
+      ],
+      "evidence_ids": [
+        "E15",
+        "E17",
+        "E19"
+      ],
+      "source_fact_vs_inference": "Directory fsync requirement is explicit primary documentation; applying it to a renamed publication is engineering inference.",
+      "bounded_correction": "Specify same-filesystem staging, successful file flush, rename and required directory flush after the name change, with storage/API support assumptions; separate atomic visibility from crash durability."
+    },
+    {
+      "defect_id": "D04",
+      "title": "The NFS warning is misclassified as an atomicity disclaimer",
+      "severity": "medium",
+      "materiality": "The final rejects NFS for a source-attributed reason that the primary page does not state, and loses the actual risk: failure does not determine whether rename occurred. This changes both supported rejection and recovery conditions.",
+      "candidate_locators": [
+        "final.md:17",
+        "final.md:29"
+      ],
+      "evidence_ids": [
+        "E15"
+      ],
+      "source_fact_vs_inference": "Direct semantic discrepancy with the BUGS paragraph. The review does not certify every NFS deployment as suitable.",
+      "bounded_correction": "Retain ambiguous-result handling and validate filesystem support separately. A conservative local-filesystem scope is an allowable engineering choice, but cannot be called this page’s NFS atomicity prohibition."
+    },
+    {
+      "defect_id": "D05",
+      "title": "An explicitly documented descriptor property is left as an uncaptured uncertainty",
+      "severity": "medium",
+      "materiality": "U3 withholds a documented mechanism directly relevant to independent local-object investigation and the identity race. It conflates unknown app handle use with uncertainty about the captured API contract.",
+      "candidate_locators": [
+        "final.md:17",
+        "final.md:29 U3"
+      ],
+      "evidence_ids": [
+        "E15",
+        "E16"
+      ],
+      "source_fact_vs_inference": "Both captured man pages explicitly answer the documentary question. They do not prove this app keeps a handle or prevents in-place writes.",
+      "bounded_correction": "Record descriptor continuity as a supported Linux API fact; retain only the app’s generation/handle-lifetime and writer-discipline questions as unresolved."
+    },
+    {
+      "defect_id": "D06",
+      "title": "Terminal abandonment lacks protocol capability and cleanup-confirmation conditions",
+      "severity": "high",
+      "materiality": "With intermittent connectivity, the transfer can stop locally while a remote upload remains. tus termination is optional, and S3 in-flight parts can require repeated abort/verification. The proposed two-sided terminal cleanup is not established merely by an attempt cap or an abort request.",
+      "candidate_locators": [
+        "final.md:7",
+        "final.md:25",
+        "final.md:29",
+        "final.md:33 V3"
+      ],
+      "evidence_ids": [
+        "E10",
+        "E12",
+        "E14",
+        "E21"
+      ],
+      "source_fact_vs_inference": "Extension negotiation and abort races are explicit facts. A cleanup-pending lifecycle is a bounded reviewer correction, not a prescribed sync architecture.",
+      "bounded_correction": "Require/verify cleanup capabilities or retain server expiration/lifecycle as an option; distinguish abandoned locally, cleanup pending and remote cleanup confirmed. Stop/quiesce in-flight work and bound cleanup retries, retaining a session identifier until confirmation/expiry."
+    },
+    {
+      "defect_id": "D07",
+      "title": "The proposed checks do not distinguish all mechanisms behind their predicted outcomes",
+      "severity": "medium",
+      "materiality": "V1 misses the after-gate race and allows descriptor-dependent outcomes. V2 can restart cleanly because Range was ignored, without the proposed validator mechanism. V3 needs unavailable/unsupported cleanup and completion/abort race cases. These checks could pass while the recommendation remains unsafe.",
+      "candidate_locators": [
+        "final.md:11",
+        "final.md:33 V1–V3"
+      ],
+      "evidence_ids": [
+        "E02",
+        "E06",
+        "E07",
+        "E08",
+        "E15",
+        "E16",
+        "E21"
+      ],
+      "source_fact_vs_inference": "Counterexamples are derived from allowed primary semantics; no fault injection was performed. The checks are correctly marked proposed.",
+      "bounded_correction": "Use known distinct generation fixtures, force replacements before and after the gate, record source handle/session identity and final digest; inspect 200/206/416, validator and Content-Range handling, including servers ignoring Range; observe remote cleanup separately from local terminal state."
+    },
+    {
+      "defect_id": "D08",
+      "title": "A page-limited missing ETag recipe becomes a false global publication negative",
+      "severity": "medium",
+      "materiality": "U4 states multipart ETag semantics are unpublished, prematurely closing a useful primary-document lead. AWS’s public guide documents them. This does not make an S3 ETag equal to a local whole-file SHA-256 or force adoption of S3.",
+      "candidate_locators": [
+        "final.md:29 U4"
+      ],
+      "evidence_ids": [
+        "E14",
+        "E22"
+      ],
+      "source_fact_vs_inference": "Original API-page absence is valid; global absence is refuted by a bounded additional primary check. Current documentation lacks an immutable release ID, so this is a captured-current-document correction.",
+      "bounded_correction": "Retain the original API-page capture limit and ETag-versus-full-file-hash distinction; label the algorithm outside those pages rather than unpublished."
+    }
+  ],
+  "minor_metadata_or_quote_defects": [
+    {
+      "defect_id": "M01",
+      "title": "The tus 409 quote is a paraphrase despite the claim that every quote was verified verbatim",
+      "severity": "minor",
+      "evidence_ids": [
+        "E09",
+        "E11"
+      ],
+      "materiality": "The missing word status does not change the protocol outcome; it weakens the executed-verification claim rather than independently defeating the design."
+    },
+    {
+      "defect_id": "M02",
+      "title": "Capture metadata contains incorrect counts, date and section locators",
+      "severity": "minor",
+      "evidence_ids": [
+        "E09",
+        "E11"
+      ],
+      "materiality": "tus raw/header date is 2016-03-25, not 2016-03-24; rendered HTML has 46 Upload-Offset occurrences, not 24/48. RFC 412 is §15.5.13 and byte ranges are §14, not the advertised §15.3. Hashes still match; capture acquisition timing is unverified."
+    }
+  ],
+  "retained_conditions_uncertainties_options": {
+    "source_conditions": [
+      "RFC method semantics, automatic-retry stopping recommendation and justified SHOULD exceptions",
+      "Opaque resource-scoped strong ETags; allowable strong dates and exact comparison",
+      "GET-only Range applicability here, encoded-byte offsets, server ignoring Range, 200/206/416 client handling",
+      "tus offset bytes, actual stored progress, no-store HEAD, protocol version, extension/algorithm negotiation and optional cleanup",
+      "S3 key/bucket/uploadId/partNumber and per-part ETag/checksum bindings; directory-bucket differences; lifecycle and abort-race conditions",
+      "Linux regular-file/write-mode truncation, descriptor continuity, same-mounted-filesystem rename, ambiguous NFS failure and file/directory flush assumptions",
+      "SQLite rollback-journal/exclusive-lock/flush/recovery assumptions; alternate commit modes",
+      "Git stored-object content identity precedent, distinct from hashing a mutable path"
+    ],
+    "uncertainties": [
+      {
+        "id": "U1",
+        "disposition": "retained: actual server whole-generation enforcement/capability unknown; local fallback needs binding correction"
+      },
+      {
+        "id": "U2",
+        "disposition": "retained: actual app replacement and handle discipline unknown"
+      },
+      {
+        "id": "U3",
+        "disposition": "corrected: descriptor contract is explicit; actual app usage remains unknown"
+      },
+      {
+        "id": "U4",
+        "disposition": "corrected: original page-limited absence retained; global unpublished claim false"
+      },
+      {
+        "id": "U5",
+        "disposition": "retained: device/size/time behavior untested; no numeric performance bound inferred"
+      },
+      {
+        "id": "U6",
+        "disposition": "retained: mutable render/master captures not a release-tag pin; body headers and mapped relevant view agreement verified"
+      }
+    ],
+    "optional_leads": [
+      "tus checksum for PATCH integrity, distinct from version identity",
+      "tus advertised termination and expiration; optional concatenation has URL order/metadata conditions",
+      "S3 configured lifecycle abort for supported buckets; active-part abort verification",
+      "Stable descriptor/immutable object or synchronized source-generation selection as local mechanisms",
+      "Strong Last-Modified under RFC conditions is a validator alternative; choosing stronger ETag-only policy may be conservative without denying this option"
+    ],
+    "negative_leads": [
+      "No fixed tus-core chunk-size prescription; 1GB example is total upload size",
+      "No core tus content-generation replacement/version binding",
+      "No numeric retry-count/backoff policy in the captured tus/S3 API pages; SDK policy outside their scope",
+      "rename page does not prescribe crash durability",
+      "Git Objects chapter does not prescribe orphan GC",
+      "RFC no-bound negative is rejected because §9.2.2 supplies a normative stopping recommendation"
+    ]
+  },
+  "review_completed_at": "2026-10-07T21:33:55.834593+00:00",
+  "deadline_utc": "2026-10-07T21:41:44.512741+00:00",
+  "expiry_encountered": false,
+  "handoff_validation": {
+    "validated_at": "2026-10-07T21:33:55.834593+00:00",
+    "candidate_and_all_mapped_inputs_unchanged": true,
+    "claim_evidence_defect_references_resolve": true,
+    "exact_line_ranges_valid": true,
+    "error_count": 0,
+    "pending_children": 0
+  }
+}

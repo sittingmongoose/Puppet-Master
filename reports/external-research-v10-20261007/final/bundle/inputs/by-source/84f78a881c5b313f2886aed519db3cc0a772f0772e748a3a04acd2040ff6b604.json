@@ -1,0 +1,81 @@
+{
+  "schema": "ER10_ROOT_M06A_QUIET_FINAL_FILE_DELIVERY_TRIAGE_V1",
+  "recorded_at": "2026-10-08T01:41:09.416823+00:00",
+  "science_assessed": false,
+  "full_required_carrier_frozen": false,
+  "arms": {
+    "control": {
+      "files": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/final.md",
+          "present": false,
+          "sha256": null,
+          "bytes": null,
+          "nonempty_utf8": null
+        },
+        "report.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/report.md",
+          "present": false,
+          "sha256": null,
+          "bytes": null,
+          "nonempty_utf8": null
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/sources.json",
+          "present": true,
+          "sha256": "23697c84fba014b5055751cb744b96f6eed919d6e51d589707ded580f67eef81",
+          "bytes": 6219,
+          "nonempty_utf8": true
+        },
+        "timings.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/timings.json",
+          "present": false,
+          "sha256": null,
+          "bytes": null,
+          "nonempty_utf8": null
+        }
+      },
+      "final_file_delivered": false,
+      "full_required_carrier_delivered": false,
+      "original_task_terminal_status": "interrupted",
+      "native_status": "paused"
+    },
+    "treatment": {
+      "files": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/final.md",
+          "present": true,
+          "sha256": "ed8ebdc5642953e094b70dd98f14759d3b8a1ce18a23aff445c696e11276061c",
+          "bytes": 5943,
+          "nonempty_utf8": true
+        },
+        "report.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/report.md",
+          "present": true,
+          "sha256": "3c875ffd745ec7be875f12e623bc02c34573ad474016355e0e4388afd9e60ea0",
+          "bytes": 10212,
+          "nonempty_utf8": true
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/sources.json",
+          "present": false,
+          "sha256": null,
+          "bytes": null,
+          "nonempty_utf8": null
+        },
+        "timings.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/timings.json",
+          "present": false,
+          "sha256": null,
+          "bytes": null,
+          "nonempty_utf8": null
+        }
+      },
+      "final_file_delivered": true,
+      "full_required_carrier_delivered": false,
+      "original_task_terminal_status": "interrupted",
+      "native_status": "paused"
+    }
+  },
+  "limits": "File existence/hash/UTF8 delivery only, independently of scientific correctness, required Source-map/timing carrier, native completion or qualification."
+}

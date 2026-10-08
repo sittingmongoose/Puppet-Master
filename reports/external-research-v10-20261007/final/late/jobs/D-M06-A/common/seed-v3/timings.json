@@ -1,0 +1,29 @@
+{
+  "case_id": "D-M06-A",
+  "seed": "seed-v3",
+  "clock_source": "host `date -u` at moment of observation, UTC",
+  "budgets": {
+    "assignment_max_minutes": 20,
+    "seed_expiry_utc": "2026-10-08T01:03:18.885619+00:00",
+    "common_absolute_deadline_utc": "2026-10-08T01:33:18.885619+00:00"
+  },
+  "observations": [
+    {"event": "first observed clock; INPUT_MAP.json and brief.md already read in same window; source sha256 computed and matched", "utc": "2026-10-08T00:44:32.943684492Z"},
+    {"event": "full RFC 8785 frozen source read (lines 1-700 and 700-end)", "utc": "2026-10-08T00:44:32.943684492Z+~00:03:00 (read completed between the first observation and draft authoring; no intermediate clock was taken)"},
+    {"event": "draft.md saved", "utc": "before 2026-10-08T00:52:05.987819937Z"},
+    {"event": "fixtures.json saved and json syntax-validated; wc -w draft.md = 947", "utc": "2026-10-08T00:52:05.987819937Z"},
+    {"event": "sources.json saved", "utc": "after 2026-10-08T00:52:05.987819937Z, before this timings.json write"},
+    {"event": "timings.json saved (self-recording of its own completion instant is not possible; see unknown_usage)", "utc": null}
+  ],
+  "totals": {
+    "first_observation_to_fixtures_validation_seconds_approx": 453,
+    "note": "Single long turn; only milestone clocks above were sampled. Elapsed time is wall-clock between sampled instants, not a measured sum."
+  },
+  "unknown_usage": [
+    "Queue/wait and harness startup time before this agent's first tool observation.",
+    "Native model inference time per turn (not observable from inside the turn).",
+    "T3 harness completion overhead after this file is saved.",
+    "Exact per-file write durations; only save-completion (or preceding) instants were sampled."
+  ],
+  "notes": "Components that could not be observed are listed as unknown rather than estimated. No scientific code was executed; timings cover reading, authoring, and validation only."
+}

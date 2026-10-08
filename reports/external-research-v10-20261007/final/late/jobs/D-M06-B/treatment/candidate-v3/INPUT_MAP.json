@@ -1,0 +1,84 @@
+{
+  "case_id": "D-M06-B",
+  "version": 3,
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md",
+  "sources": [
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "gdaltransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources.json",
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3",
+  "outputs": {
+    "final.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/final.md",
+    "report.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/report.md",
+    "sources.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/sources.json",
+    "timings.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/timings.json"
+  },
+  "allowed_inputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/fixtures.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/sources.json"
+  ],
+  "common_seed": {
+    "draft": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/draft.md",
+    "fixtures": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/fixtures.json",
+    "source_refs": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/sources.json",
+    "bytes_policy": "Fresh v3 commonseed only; exactsame bytes botharms, supervisor hashes/freezes after seed; no priorv2/old seed inputs",
+    "admission": "Actual scientific seed readability/native complete/quiet within frozen allowance required",
+    "frozen_exact_bytes": {
+      "draft.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/draft.md",
+        "sha256": "6dc0086bc4dc3893ff9f919f8a42180f319d7a87b941cb4465f59d1730a62959",
+        "bytes": 5401
+      },
+      "fixtures.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/fixtures.json",
+        "sha256": "0856a17ade2bddaf99d8f62e6b61cb8e72ae0329aa43a06573a561358bfb59f8",
+        "bytes": 3020
+      },
+      "sources.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/sources.json",
+        "sha256": "40ec9e218a2f4278f82e5f9633d30eb7c572c86c6bb3fbee9212049592f5f04c",
+        "bytes": 3254
+      }
+    }
+  },
+  "material_obligations": [
+    "Bind coefficient order, coordinate units, and pixel-origin convention.",
+    "Separate pixel corners from centers.",
+    "Address rotation/shear rather than assuming north-up.",
+    "State invertibility and numerical tolerance conditions.",
+    "Use independent derivation or trusted-operation controls, not only mutually paired forward/inverse functions.",
+    "Preserve witnessed versus proposed checks and applicability."
+  ],
+  "tool_policy": {
+    "primary_public_browsing": "Same allowed primary-source access; record exact captured bytes/version/locator",
+    "execution": "Existing bounded sandbox.py offline isolated single-process Python only; all case science candidate authored",
+    "sandbox": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/mechanical/sandbox.py",
+    "writes": "Only owned output dir",
+    "excluded": "Othercases/siblinganswers/evaluation/campaignstate/old failed science/credentials/repo/canon/main/WorkNodes; no installs/account or profile changes/children"
+  },
+  "confinement": "Advisory map; no filesystem firewall claim",
+  "arm_preparation_T0": "2026-10-08T01:51:28.689459+00:00",
+  "arm_absolute_deadline": "2026-10-08T02:21:28.689459+00:00",
+  "common_case_deadline": "2026-10-08T02:25:00.781858+00:00"
+}

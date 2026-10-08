@@ -1,0 +1,1136 @@
+{
+  "record_at": "2026-10-07T22:14:31.647111+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-03-control-independent-review-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:56:33.103Z",
+    "startedAt": "2026-10-07T21:56:33.817Z",
+    "completedAt": "2026-10-07T22:10:26.793Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "schema_version": 1,
+    "case_id": "I-FAST-03",
+    "source_judgment": "PASS_WITH_LIMITATIONS",
+    "source_judgment_is_not_full_contract_or_runtime_certification": true,
+    "material_error_count": 0,
+    "nonmaterial_limitation_ids": [
+      "L1_comparison_condition_narrowed",
+      "L2_network_ban_overreading",
+      "L3_broken_tag_citation"
+    ],
+    "counts": {
+      "scientific_scope_units": {
+        "complete": 49,
+        "assessed": 49,
+        "unassessed": 0,
+        "definition": "6 original obligations + 39 atomic frozen-plan decisions + 4 brief-level product constraints; section and axis groups are not added again"
+      },
+      "original_obligations": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "plan_sections": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "plan_decisions": {
+        "complete": 39,
+        "assessed": 39,
+        "unassessed": 0
+      },
+      "brief_product_constraints": {
+        "complete": 4,
+        "assessed": 4,
+        "unassessed": 0
+      },
+      "separately_named_owner_decisions": {
+        "complete": 0,
+        "assessed": 0,
+        "unassessed": 0
+      },
+      "axes": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "consequential_checks": {
+        "complete": 22,
+        "assessed": 22,
+        "unassessed": 0
+      },
+      "critic_findings": {
+        "complete": 4,
+        "assessed": 4,
+        "unassessed": 0
+      },
+      "final_validation_proposals": {
+        "complete": 11,
+        "assessed": 11,
+        "unassessed": 0
+      },
+      "external_process_facets": {
+        "complete": 2,
+        "assessed": 0,
+        "unassessed": 2
+      },
+      "nonmaterial_limitation_groups": 3,
+      "broken_direct_citation_instances": 2
+    },
+    "axes": [
+      {
+        "axis": 1,
+        "status": "ASSESSED_WITH_LIMITATIONS",
+        "scope": "O1-O6, P1-P6, 39 decisions and four brief-level product constraints; externally unverified procedure facets separated",
+        "checks": [
+          "SC17",
+          "SC18",
+          "SC19",
+          "SC21",
+          "SC22"
+        ]
+      },
+      {
+        "axis": 2,
+        "status": "ASSESSED_WITH_LIMITATIONS",
+        "scope": "All 22 consequential checks; immutable code, governing callers, historical and release conditions; broken direct citation recorded",
+        "checks": [
+          "SC01",
+          "SC02",
+          "SC03",
+          "SC04",
+          "SC05",
+          "SC06",
+          "SC07",
+          "SC08",
+          "SC09",
+          "SC10",
+          "SC11",
+          "SC12",
+          "SC13",
+          "SC14",
+          "SC15",
+          "SC16",
+          "SC17",
+          "SC20"
+        ]
+      },
+      {
+        "axis": 3,
+        "status": "ASSESSED_SUPPORTED_BOUNDED",
+        "scope": "Products, parser/mechanisms, alternatives, negative and optional opportunities; no exhaustive opportunity-recall claim",
+        "checks": [
+          "SC01",
+          "SC02",
+          "SC03",
+          "SC04",
+          "SC05",
+          "SC06",
+          "SC07",
+          "SC15",
+          "SC16"
+        ]
+      },
+      {
+        "axis": 4,
+        "status": "ASSESSED_WITH_LIMITATIONS",
+        "scope": "All four critic corrections and retain/reject/open dispositions; network overreading is nonmaterial",
+        "checks": [
+          "SC11",
+          "SC12",
+          "SC17",
+          "SC18",
+          "SC21"
+        ]
+      },
+      {
+        "axis": 5,
+        "status": "ASSESSED_WITH_LIMITATIONS",
+        "scope": "Complete draft/critique/final preservation; four critic findings, eight draft fixture proposals, retained options and uncertainties; one narrowed comparison condition",
+        "checks": [
+          "SC18",
+          "SC19",
+          "SC21"
+        ]
+      },
+      {
+        "axis": 6,
+        "status": "ASSESSED_SUPPORTED_PROPOSALS_ONLY",
+        "scope": "All eleven final fixture proposals and actual narrower static reviewer witnesses; no runtime credit",
+        "checks": [
+          "SC10",
+          "SC14",
+          "SC22"
+        ]
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O1",
+        "status": "ASSESSED_SUPPORTED_BOUNDED",
+        "rationale": "Useful primary discovery beyond plan entries is present; chronological first-read/search order is not independently certified.",
+        "checks": [
+          "SC01",
+          "SC02",
+          "SC03",
+          "SC04",
+          "SC05",
+          "SC06",
+          "SC07"
+        ],
+        "full_contract_satisfaction": "NOT_ESTABLISHED: substantive assessment supported, externally unverified procedural facet retained separately"
+      },
+      {
+        "id": "O2",
+        "status": "ASSESSED_SUPPORTED",
+        "rationale": "Pinned release source, governing definitions/callers and released package correspondence checked.",
+        "checks": [
+          "SC08",
+          "SC09",
+          "SC10",
+          "SC11",
+          "SC12",
+          "SC14",
+          "SC16"
+        ]
+      },
+      {
+        "id": "O3",
+        "status": "ASSESSED_SUPPORTED_CONDITIONAL",
+        "rationale": "Pertinent optional comment history through implementation/tests/published release; open EOF fix remains unshipped in inspected source.",
+        "checks": [
+          "SC13",
+          "SC14",
+          "SC15"
+        ]
+      },
+      {
+        "id": "O4",
+        "status": "ASSESSED_SUPPORTED",
+        "rationale": "All 39 frozen-plan decisions and all six sections compared; locality characterization limitation separately recorded.",
+        "checks": [
+          "SC17",
+          "SC18"
+        ]
+      },
+      {
+        "id": "O5",
+        "status": "ASSESSED_SUPPORTED_SUBSTANCE",
+        "rationale": "Substantive independent source challenge is evidenced in admitted critique, and all four dispositions survive. Actual flash-family identity is not observable in admitted scientific records and is not credited from a role assertion.",
+        "checks": [
+          "SC11",
+          "SC12",
+          "SC18",
+          "SC21"
+        ],
+        "full_contract_satisfaction": "NOT_ESTABLISHED: substantive assessment supported, externally unverified procedural facet retained separately"
+      },
+      {
+        "id": "O6",
+        "status": "ASSESSED_WITH_LIMITATIONS",
+        "rationale": "One coherent P1-P6 replacement, alternatives, negative/retain dispositions, owner questions, validation and uncertainty; explicit comparison caveat is narrowed and one direct citation is broken.",
+        "checks": [
+          "SC17",
+          "SC19",
+          "SC20",
+          "SC21",
+          "SC22"
+        ]
+      }
+    ],
+    "plan_sections": [
+      {
+        "id": "P1",
+        "status": "ASSESSED_SUPPORTED",
+        "decision_count": 8
+      },
+      {
+        "id": "P2",
+        "status": "ASSESSED_SUPPORTED",
+        "decision_count": 6
+      },
+      {
+        "id": "P3",
+        "status": "ASSESSED_WITH_LIMITATIONS",
+        "decision_count": 6
+      },
+      {
+        "id": "P4",
+        "status": "ASSESSED_SUPPORTED",
+        "decision_count": 4
+      },
+      {
+        "id": "P5",
+        "status": "ASSESSED_SUPPORTED",
+        "decision_count": 5
+      },
+      {
+        "id": "P6",
+        "status": "ASSESSED_SUPPORTED",
+        "decision_count": 10
+      }
+    ],
+    "plan_decisions": [
+      {
+        "id": "P1.1",
+        "section": "P1",
+        "obligation": "Import CSV interval exports",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L49, L60, L64-68"
+      },
+      {
+        "id": "P1.2",
+        "section": "P1",
+        "obligation": "Three meters and one year",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L60"
+      },
+      {
+        "id": "P1.3",
+        "section": "P1",
+        "obligation": "Preview meter identity",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L64"
+      },
+      {
+        "id": "P1.4",
+        "section": "P1",
+        "obligation": "Preview interval labelling",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L64"
+      },
+      {
+        "id": "P1.5",
+        "section": "P1",
+        "obligation": "Preview timestamp convention",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L64, L80"
+      },
+      {
+        "id": "P1.6",
+        "section": "P1",
+        "obligation": "Preview units",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L64, L78"
+      },
+      {
+        "id": "P1.7",
+        "section": "P1",
+        "obligation": "Distinguish interval from cumulative readings",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L64, L78"
+      },
+      {
+        "id": "P1.8",
+        "section": "P1",
+        "obligation": "Immutable originals",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L64, L72"
+      },
+      {
+        "id": "P2.1",
+        "section": "P2",
+        "obligation": "Local store of original records",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L70-74, L92"
+      },
+      {
+        "id": "P2.2",
+        "section": "P2",
+        "obligation": "Store interpretation choices",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L72, L74"
+      },
+      {
+        "id": "P2.3",
+        "section": "P2",
+        "obligation": "Store review flags",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L72"
+      },
+      {
+        "id": "P2.4",
+        "section": "P2",
+        "obligation": "Review repeated/overlapping exports",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L74"
+      },
+      {
+        "id": "P2.5",
+        "section": "P2",
+        "obligation": "Preserve provenance",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L72-74"
+      },
+      {
+        "id": "P2.6",
+        "section": "P2",
+        "obligation": "No automatic overwrite",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L74"
+      },
+      {
+        "id": "P3.1",
+        "section": "P3",
+        "obligation": "Daily and monthly totals",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L78, L82"
+      },
+      {
+        "id": "P3.2",
+        "section": "P3",
+        "obligation": "Time-of-day profiles",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L78"
+      },
+      {
+        "id": "P3.3",
+        "section": "P3",
+        "obligation": "User-selected period comparisons",
+        "status": "ASSESSED_WITH_LIMITATIONS",
+        "final_locations": "L78-82, L86"
+      },
+      {
+        "id": "P3.4",
+        "section": "P3",
+        "obligation": "Missing intervals visible",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L78, L80, L108"
+      },
+      {
+        "id": "P3.5",
+        "section": "P3",
+        "obligation": "Excluded suspect readings visible",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L78, L80, L108"
+      },
+      {
+        "id": "P3.6",
+        "section": "P3",
+        "obligation": "No estimated value silently measured",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L78, L82, L108"
+      },
+      {
+        "id": "P4.1",
+        "section": "P4",
+        "obligation": "Competing unfamiliar-export interpretations",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L64, L86"
+      },
+      {
+        "id": "P4.2",
+        "section": "P4",
+        "obligation": "Operator events such as closures",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L86"
+      },
+      {
+        "id": "P4.3",
+        "section": "P4",
+        "obligation": "Descriptive comparisons; no causal savings",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L60, L86"
+      },
+      {
+        "id": "P4.4",
+        "section": "P4",
+        "obligation": "No tariff/billing conclusions",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L60, L86"
+      },
+      {
+        "id": "P5.1",
+        "section": "P5",
+        "obligation": "Delimited-ingestion choice initially undecided",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L53, L90"
+      },
+      {
+        "id": "P5.2",
+        "section": "P5",
+        "obligation": "Aggregation choice initially undecided",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L90-92"
+      },
+      {
+        "id": "P5.3",
+        "section": "P5",
+        "obligation": "Chart choice initially undecided",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L90-92"
+      },
+      {
+        "id": "P5.4",
+        "section": "P5",
+        "obligation": "Local normal-laptop workflow",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L23, L60, L70-74, L92"
+      },
+      {
+        "id": "P5.5",
+        "section": "P5",
+        "obligation": "Account IDs omitted unless explicit review package",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L92, L96"
+      },
+      {
+        "id": "P6.1",
+        "section": "P6",
+        "obligation": "Export period comparison",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L94-96"
+      },
+      {
+        "id": "P6.2",
+        "section": "P6",
+        "obligation": "Export input identities",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L96"
+      },
+      {
+        "id": "P6.3",
+        "section": "P6",
+        "obligation": "Export coverage",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L96"
+      },
+      {
+        "id": "P6.4",
+        "section": "P6",
+        "obligation": "Export interpretations",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L96"
+      },
+      {
+        "id": "P6.5",
+        "section": "P6",
+        "obligation": "Export uncertainty",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L96"
+      },
+      {
+        "id": "P6.6",
+        "section": "P6",
+        "obligation": "Propose reset checks",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L106"
+      },
+      {
+        "id": "P6.7",
+        "section": "P6",
+        "obligation": "Propose overlap checks",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L104"
+      },
+      {
+        "id": "P6.8",
+        "section": "P6",
+        "obligation": "Propose clock-transition checks",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L107"
+      },
+      {
+        "id": "P6.9",
+        "section": "P6",
+        "obligation": "Propose unit checks",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L105"
+      },
+      {
+        "id": "P6.10",
+        "section": "P6",
+        "obligation": "Propose aggregation reproducibility checks",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L105, L109"
+      }
+    ],
+    "brief_product_constraints": [
+      {
+        "id": "B1",
+        "obligation": "One-building community-centre dashboard",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L60"
+      },
+      {
+        "id": "B2",
+        "obligation": "Understand use patterns, trustworthy descriptive comparisons and inconsistent-export review",
+        "status": "ASSESSED_WITH_LIMITATIONS",
+        "final_locations": "L60, L64-86; SC19"
+      },
+      {
+        "id": "B3",
+        "obligation": "No equipment-purchase advice or verified savings",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L60, L86"
+      },
+      {
+        "id": "B4",
+        "obligation": "No billing certification or automated control",
+        "status": "ASSESSED_SUPPORTED",
+        "final_locations": "L60, L86"
+      }
+    ],
+    "separately_named_owner_decisions": [],
+    "owner_scope_note": "No additional owner document or named owner decision is supplied by the bounded brief/plan. The 39 frozen product decisions include the undecided component/privacy choices. No repo cross-reference was inferred. Final open product choices are assessed in judgment.md, not treated as automatically satisfied requirements.",
+    "unassessed_scientific_units": [],
+    "external_process_facets": [
+      {
+        "id": "O1.discovery_before_plan_read",
+        "status": "UNASSESSED",
+        "reason": "Authored input-order assertion does not independently establish execution chronology; host process evidence is outside the admitted review inputs."
+      },
+      {
+        "id": "O5.flash_family_identity",
+        "status": "UNASSESSED",
+        "reason": "Actual critic provider/model family is not independently established in admitted scientific records; no identity inference from path or self-description."
+      }
+    ],
+    "full_declared_contract_counts_including_external_facets": {
+      "complete": 51,
+      "assessed": 49,
+      "unassessed": 2,
+      "definition": "49 scientific units plus the two explicitly unverified procedural facets; these facets are not source-error counts or science scoring inputs"
+    },
+    "blinding_limits": [
+      "Arm appears in admitted paths.",
+      "Visible artifact/stage/procedure structure may reveal method differences.",
+      "Source maps contain author timing/counters and native-goal/provenance material; those fields were ignored for source judgment.",
+      "No other-arm artifact/grade, parent analysis, winner/cost/speed target or evaluator answer was consulted."
+    ],
+    "usage": {
+      "input_tokens": null,
+      "cached_input_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "cache_hits": null,
+      "billing_amount": null
+    },
+    "artifacts": {
+      "judgment": "judgment.md",
+      "source_checks": "source-checks.json",
+      "admitted_bytes_manifest": "sources/admitted-manifest.json",
+      "independent_bytes_manifest": "sources/independent-manifest.json"
+    },
+    "source_content_coverage_complete": true,
+    "full_declared_contract_coverage_complete": false
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/coverage.json",
+      "bytes": 16943,
+      "sha256": "928d5d105404d1354ca40e798bb49dffc64ff7152da2d24d5d1219408e9b9f0f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/judgment.md",
+      "bytes": 23630,
+      "sha256": "46dc76809a9e0dd129ea6a53ed0085725aa4c0a33d322ec547c97a75b25bbe96"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/source-checks.json",
+      "bytes": 42878,
+      "sha256": "9cdb5ce64c0d0ff2e2b3603ea791ceda2cf971f12aa053332caf16b3ffb5fce5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/critic-v1--C01--rust-csv-issue-422.html",
+      "bytes": 230680,
+      "sha256": "9f31bdd23ebbdc4726a349eb4b5e796537001d44a8a725601da67aa6992786a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/critic-v1--C02--rust-csv-issue-395.html",
+      "bytes": 304745,
+      "sha256": "9ca215b7122b8c8f9c4d2f0e1919ea949c3f1f1d9f5ebb555b1b157495eca089"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/critic-v1--C03--rust-csv-1.4.0-reader.txt",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/critic-v1--C04--rust-csv-1.4.0-csv-core-reader.txt",
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S01--oem-feeds.extracted.txt",
+      "bytes": 3851,
+      "sha256": "64a59bc066c9c13ee83d263397a6afbcd7c2da44a33a0f75fc27d13d88d5aea3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S01--oem-feeds.html",
+      "bytes": 19403,
+      "sha256": "4cc228714690f7a5dd5ebce08e0d5a7226a25d2c8615c57290b5d4022666dd65"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S02--oem-daily-kwh.extracted.txt",
+      "bytes": 3324,
+      "sha256": "25a49a84978385ce5315a92e1a0d815741d0f0e87c19d1e5ee74969cd4993ab9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S02--oem-daily-kwh.html",
+      "bytes": 17954,
+      "sha256": "5577e66d438f3510ae0aab9897c8edd33490c92e9ae08bdb2f9839bb2c6bd713"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S03--oem-home-energy.extracted.txt",
+      "bytes": 2210,
+      "sha256": "544db01631b6640206f0b2532d3dbc2dcd68006f69df2dc29b5fd3a7d38095c9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S03--oem-home-energy.html",
+      "bytes": 13816,
+      "sha256": "15950b8be31c74d52b8bed2a01cbd7e791c3c7ea2f094291812cc9ef1cc82667"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S04--ha-energy.extracted.txt",
+      "bytes": 5439,
+      "sha256": "ce48a7a1682ea048a71881c909a4fc34400d0048914b1501aea01a039a70e647"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S04--ha-energy.html",
+      "bytes": 47521,
+      "sha256": "6649a5be3d07e9ce051bbd65672539e44e35eb8d4bbf3a379dff6afefa342767"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S05--ha-long-term-statistics.extracted.txt",
+      "bytes": 10015,
+      "sha256": "c987fb5f0bd464fd269f73b0f12b24c2bf2e554ad80009e937026c3845ec3595"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S05--ha-long-term-statistics.html",
+      "bytes": 62930,
+      "sha256": "21b62044c3d65e8367567bd44d9702cafa8632f49dc366996a052a488ed0b66f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S06--ha-energy-faq.extracted.txt",
+      "bytes": 8753,
+      "sha256": "2b82b707ec1c36ef7ffdfe6d5a55cef03b23ef356497d716f66c3c5ed2399388"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S06--ha-energy-faq.html",
+      "bytes": 60036,
+      "sha256": "d96c532bb4c89e65579520f7d685c9f888cc0b0e1bd05e060b95facc4fe1f355"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S07--polars-csv-guide.extracted.txt",
+      "bytes": 3197,
+      "sha256": "852ac74f468ec02ab3239f6596858546a151098f141ec43ff0b418ca2096272d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S07--polars-csv-guide.html",
+      "bytes": 129380,
+      "sha256": "53fe95a1dbbef084c34ed30243c1b3212f39619dbd947687df29ed589dd6eb81"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S08--polars-time-series-parsing.extracted.txt",
+      "bytes": 8154,
+      "sha256": "0d9d847b468404d660a936d42be4a55e444451d1fcd166119fab000c91c7ff45"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S08--polars-time-series-parsing.html",
+      "bytes": 150719,
+      "sha256": "4d33422283165a05d36b3b9f3543e88ee48c693000dc530fa628d528c851e5ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S09--crates-io-csv-registry.json",
+      "bytes": 104518,
+      "sha256": "b88b8f91b579e49c7395cc0fb891abb7501f9bcde2ed780545b99c2cda20c8e6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S10-1--rust-csv-tag-1.4.0-ref.json",
+      "bytes": 335,
+      "sha256": "7506ebe3da27ee04731611d4b38387400d41f979adc64e65f31f0c27c23abcb2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S10-2--rust-csv-tag-1.4.0-object.json",
+      "bytes": 1856,
+      "sha256": "d28d9ed5bdf796c93e32abf22b1c7b8eb1dbd7c85f1f12719fbeb4c181a288f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S11--rust-csv-commit-4a3997e91d668ea1d8595bdef15625a77cf2308a.json",
+      "bytes": 4853,
+      "sha256": "8641863f5b2da3ff6cf49f5362261c22face01e9b760cd140d22b3bb98d6b453"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S12--rust-csv-1.4.0-reader.txt",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S13--rust-csv-1.4.0-error.txt",
+      "bytes": 10420,
+      "sha256": "b26d087bb4c1c1c4f5bce43db850f3dc840d754d43229252a1dc68dcec0097a0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S14--rust-csv-1.4.0-cargo-toml.txt",
+      "bytes": 952,
+      "sha256": "9edf0f197e736f3eeb49798b2c3fd777cef6e0c63df678967beb94c982808d9e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S15--rust-csv-1.4.0-csv-core-reader.txt",
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S16--rust-csv-1.4.0-csv-core-cargo.txt",
+      "bytes": 846,
+      "sha256": "3c3ea65fd98cd5faff6e4c34c537e3869a51adc5b97f676b2388622e336d86df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S17--rust-csv-issue-46.json",
+      "bytes": 3800,
+      "sha256": "482797f16bd1d4f737e54c051e88c9f308b4401dbc2e1570ada3fd7959ceaf25"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S18--rust-csv-issue-46-timeline.json",
+      "bytes": 43544,
+      "sha256": "595d695ffa0415f26ba1fe6bf188902c6db0469570d08ed373fd0c6f8f30389f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S19--rust-csv-issue-46-fix-candidate-commit.json",
+      "bytes": 640706,
+      "sha256": "7df9004aaec8d0a052c26ff475f3edfd1b1fe5971270805959fde10d096bd97e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S20--rust-csv-issue-46-close-rewrite-commit.json",
+      "bytes": 636172,
+      "sha256": "a959c87f4a73f8ce1816e4f1436be488d9de4cf5045f71cdb87702c0cad988be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S21--rust-csv-issue-46-csv-core-reader.txt",
+      "bytes": 65889,
+      "sha256": "5daa0ac1a9d050efb01c2cf3fda17ea20b80f4141caf00ee9d3a7618bb66ca74"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S22--rust-csv-issue-46-reader.txt",
+      "bytes": 81744,
+      "sha256": "790f02e7277f5dd30d967cbb1e0ec660c175c40728a4dd35ee038a25ec0328eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S23--rust-csv-issue-363.json",
+      "bytes": 4166,
+      "sha256": "98ea751c1335f3c1237c54f715380a89c0736485519bc13bcdb2f926b76e2226"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S24--rust-csv-pull-396.json",
+      "bytes": 16249,
+      "sha256": "fff8778dc90c36fec9cc89562eeb706f6af7e0b15ce55a1d53f4050ae7e82f31"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S25--chrono-tz-timezone-impl.extracted.txt",
+      "bytes": 16619,
+      "sha256": "45eb11a28fe62f967d8fde86a92c98950598438da7ebb5f4b3cedd06838323d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S25--chrono-tz-timezone-impl.html",
+      "bytes": 69915,
+      "sha256": "e698fc0b76bb72c21770453e2887020c42dd4577e1345beb503b951854b755a0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S26--rust-csv-issue-46-comments.json",
+      "bytes": 10798,
+      "sha256": "62a9077eebb2959fa742437d00dd038ca7b76fd981990525ed823a2475d0e39f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted-manifest.json",
+      "bytes": 32191,
+      "sha256": "479b054bae821b435a0ae49171a2172eef6840f8eb67e05db11e3a5d971e25a4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/final-linked-bytes-check.json",
+      "bytes": 1813,
+      "sha256": "eddce1bddf98791e6e0eb8ac68af0330aa57d1167fdc9b92bf05787a5a52812a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R01-oem-feeds.extracted.txt",
+      "bytes": 3851,
+      "sha256": "64a59bc066c9c13ee83d263397a6afbcd7c2da44a33a0f75fc27d13d88d5aea3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R01-oem-feeds.html",
+      "bytes": 19036,
+      "sha256": "389edcb2f685a0f09b6d83c68d878fa3f205db38391ad73e75ef29695a7f1d12"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R02-oem-daily-kwh.extracted.txt",
+      "bytes": 3324,
+      "sha256": "25a49a84978385ce5315a92e1a0d815741d0f0e87c19d1e5ee74969cd4993ab9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R02-oem-daily-kwh.html",
+      "bytes": 17587,
+      "sha256": "b69491deb54f64d0b9a8d7e4878728541a9a6a5dde539aa6008eef2131af9d02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R03-oem-home-energy.extracted.txt",
+      "bytes": 2210,
+      "sha256": "544db01631b6640206f0b2532d3dbc2dcd68006f69df2dc29b5fd3a7d38095c9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R03-oem-home-energy.html",
+      "bytes": 13449,
+      "sha256": "97a2679674bd1a5fdc462708d964b4033e6dee7d7e3ed26f3fdda1274d71a77d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R04-ha-energy.extracted.txt",
+      "bytes": 5439,
+      "sha256": "ce48a7a1682ea048a71881c909a4fc34400d0048914b1501aea01a039a70e647"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R04-ha-energy.html",
+      "bytes": 47521,
+      "sha256": "893e3b8498e29a5974ab7cdcb753f61c9a6794b798c2a00f089c1b84acdf9b3c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R05-ha-lts.extracted.txt",
+      "bytes": 10015,
+      "sha256": "c987fb5f0bd464fd269f73b0f12b24c2bf2e554ad80009e937026c3845ec3595"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R05-ha-lts.html",
+      "bytes": 62930,
+      "sha256": "f0018a81829f7a6e0c6373b2182b47924b6377ec68eb6b569cf1d7b16cc877bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R06-ha-faq.extracted.txt",
+      "bytes": 8753,
+      "sha256": "2b82b707ec1c36ef7ffdfe6d5a55cef03b23ef356497d716f66c3c5ed2399388"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R06-ha-faq.html",
+      "bytes": 60036,
+      "sha256": "92cc8d380dfaa8debc35fb8fa7dfe78184d3a79f0dd000b325d2c1de8eb9da6d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R07-polars-csv.extracted.txt",
+      "bytes": 3197,
+      "sha256": "852ac74f468ec02ab3239f6596858546a151098f141ec43ff0b418ca2096272d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R07-polars-csv.html",
+      "bytes": 129019,
+      "sha256": "a964e12c6f1bd1b266cbd9acc09171d8b7c248c1be1788d1f77eee5f18ebe557"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R08-polars-times.extracted.txt",
+      "bytes": 8154,
+      "sha256": "0d9d847b468404d660a936d42be4a55e444451d1fcd166119fab000c91c7ff45"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R08-polars-times.html",
+      "bytes": 150358,
+      "sha256": "2ec804abd5e2082a6eaf6822468ee4f0c6ec5696c5243d1e651d37272d9ad6a1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R09-csv-version.json",
+      "bytes": 1586,
+      "sha256": "8128b3ec7bf056d9da8004371d508072fa504fb94d8ff55c4abd46e99fd6a151"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R10-csv-tag-ref.json",
+      "bytes": 335,
+      "sha256": "7506ebe3da27ee04731611d4b38387400d41f979adc64e65f31f0c27c23abcb2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R11-csv-tag-object.json",
+      "bytes": 1856,
+      "sha256": "d28d9ed5bdf796c93e32abf22b1c7b8eb1dbd7c85f1f12719fbeb4c181a288f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R12-reader.rs",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R13-error.rs",
+      "bytes": 10420,
+      "sha256": "b26d087bb4c1c1c4f5bce43db850f3dc840d754d43229252a1dc68dcec0097a0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R14-string-record.rs",
+      "bytes": 25631,
+      "sha256": "3c30b700d01dd876083a72406a6093642528304bfa69600b4bec54aa8086211a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R15-core-reader.rs",
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R16-issue46.json",
+      "bytes": 3800,
+      "sha256": "482797f16bd1d4f737e54c051e88c9f308b4401dbc2e1570ada3fd7959ceaf25"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R17-issue363.json",
+      "bytes": 4166,
+      "sha256": "98ea751c1335f3c1237c54f715380a89c0736485519bc13bcdb2f926b76e2226"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R18-pr396.json",
+      "bytes": 16249,
+      "sha256": "fff8778dc90c36fec9cc89562eeb706f6af7e0b15ce55a1d53f4050ae7e82f31"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R19-pr396-files.json",
+      "bytes": 2952,
+      "sha256": "e442e6d428781b749f37417b6bf015829c023d9c4937db890316d2498d997cb6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R20-issue422.json",
+      "bytes": 2723,
+      "sha256": "b3f5df746f8a6a0220d2c6e06fd6fe646e86af9336c6176dc5173e299bd37759"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R21-issue395.json",
+      "bytes": 5235,
+      "sha256": "2c8a109e16b71d0ed50a897135a683c488ab1f3f62d7a6bfd15e98bdde0120cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R22-chrono-tz.extracted.txt",
+      "bytes": 16609,
+      "sha256": "914889851ee208efc2eb45882f59a8e65d40c637459e5c65c1a818c8f43f8bb5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R22-chrono-tz.html",
+      "bytes": 69579,
+      "sha256": "278bc7ffa68e9269ba0d214cd1864d796352a799d2c1448e84a519027b1b8289"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate",
+      "bytes": 888642,
+      "sha256": "52cd9d68cf7efc6ddfaaee42e7288d3a99d613d4b50f76ce9827ae0c6e14f938"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate-contents/.cargo_vcs_info.json",
+      "bytes": 94,
+      "sha256": "d4013401bb6bf2fa9f102eb2af2892b7034b8b6096d5200c47a6c4cb3cc28fb1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate-contents/Cargo.lock",
+      "bytes": 2881,
+      "sha256": "51d5f880cdb67f8fe3fde3077f4a51c854af354b146393c7ff61018427e17c4b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate-contents/Cargo.toml",
+      "bytes": 4889,
+      "sha256": "8a767a182c4c14e4db88f592b6f508913425eb7ca1bd8a92f0f8db054884577a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate-contents/src/error.rs",
+      "bytes": 10420,
+      "sha256": "b26d087bb4c1c1c4f5bce43db850f3dc840d754d43229252a1dc68dcec0097a0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate-contents/src/reader.rs",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate-contents/src/string_record.rs",
+      "bytes": 25631,
+      "sha256": "3c30b700d01dd876083a72406a6093642528304bfa69600b4bec54aa8086211a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate-contents-manifest.json",
+      "bytes": 2076,
+      "sha256": "b639ba215edce63fcf01196eed73ef0a0257c4cf11b71d0bc7da2c5540807785"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R24-core.crate",
+      "bytes": 26119,
+      "sha256": "704a3c26996a80471189265814dbc2c257598b96b8a7feae2d31ace646bb9782"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R24-core.crate-contents/.cargo_vcs_info.json",
+      "bytes": 102,
+      "sha256": "2a0f2750a010fc7b24b51c8231a4ab2543f0bfcb234a31d00465e01757914e03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R24-core.crate-contents/Cargo.toml",
+      "bytes": 1518,
+      "sha256": "7f4dc01a1cec3ae4ae89f466f9ebfc18232338662f763d7e9d561c900e9430d8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R24-core.crate-contents/src/reader.rs",
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R24-core.crate-contents-manifest.json",
+      "bytes": 1061,
+      "sha256": "cd90b6a0ba2d41f19eda6d6fc76a63dcd7c781bebf0bbde54c4fb9b52715443b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R25-final-tag-link.json",
+      "bytes": 108,
+      "sha256": "23804f39a3dbb7478a1c003f80f04dfec732a2b560e258442db8a905ad6cdb25"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R26-fix-commit.json",
+      "bytes": 279,
+      "sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R27-close-commit.json",
+      "bytes": 636172,
+      "sha256": "a959c87f4a73f8ce1816e4f1436be488d9de4cf5045f71cdb87702c0cad988be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R28-issue46-timeline.json",
+      "bytes": 279,
+      "sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R29-fix-reader.rs",
+      "bytes": 81744,
+      "sha256": "790f02e7277f5dd30d967cbb1e0ec660c175c40728a4dd35ee038a25ec0328eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R30-fix-core-reader.rs",
+      "bytes": 65889,
+      "sha256": "5daa0ac1a9d050efb01c2cf3fda17ea20b80f4141caf00ee9d3a7618bb66ca74"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R31-compare-release.json",
+      "bytes": 279,
+      "sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R32-final-timeline.html",
+      "bytes": 269198,
+      "sha256": "a132f509b5a0a3f9b1f0e72caf1d8f8d050353e0da29b60d3db92acc05cb8d9a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R33-final-fix-link.html",
+      "bytes": 517995,
+      "sha256": "5b1ee4a9486a20ec38cfacc0d257e679a019cc0fd316416bbb118e1e577bdcf1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R34-final-close-link.html",
+      "bytes": 517991,
+      "sha256": "9cdffa9410c686694fe02688c878b98ec6da178462b472e871208d30017d6bfc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent-manifest.json",
+      "bytes": 65320,
+      "sha256": "142eb2508cedd54fee0b9c6f0e241d05c865d7b3f0621a5e19f61b6aea373fcc"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json"
+}

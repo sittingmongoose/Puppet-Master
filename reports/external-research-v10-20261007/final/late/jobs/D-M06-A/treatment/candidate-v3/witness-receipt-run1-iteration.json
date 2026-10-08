@@ -1,0 +1,26 @@
+{
+  "applicability": "not_assessed",
+  "code_sha256": "b25d6c981ac05b821b70c25cc9bd5682516e7e6cbce91866e9568268e95f270c",
+  "elapsed_seconds": 0.14515830899472348,
+  "ended_at": "2026-10-08T01:20:31.009190+00:00",
+  "exit_scope": "bubblewrap wrapper; child signal exits use 128+signal",
+  "input_sha256": "f438b3c396f02fe95721a88ed476b96869e508d51fc0a1f085413dc169fa3865",
+  "isolation": "namespace_and_seccomp_enforced",
+  "limits": {
+    "address_space_bytes": 268435456,
+    "cpu_seconds": 2,
+    "filesystem": "read-only",
+    "network": "none",
+    "output_bytes": 131072,
+    "processes": "single",
+    "wall_seconds": 5.0
+  },
+  "output_truncated": false,
+  "process_exit": 3,
+  "resource_released": true,
+  "started_at": "2026-10-08T01:20:30.864064+00:00",
+  "stderr": "ER10_ISOLATION_READY {\"mnt\": \"mnt:[4026533292]\", \"net\": \"net:[4026533298]\", \"pid\": \"pid:[4026533296]\", \"ipc\": \"ipc:[4026533295]\", \"uts\": \"uts:[4026533294]\", \"user\": \"user:[4026533383]\"}\n",
+  "stdout": "{\"summary\":{\"checks_passed\":11,\"checks_total\":15,\"controls_discriminated\":6,\"controls_total\":6,\"all_checks_passed\":false,\"all_controls_discriminated\":true},\"checks\":{\"C01_sort_f04\":[true,\"got=[\\\"\\\\r\\\", \\\"1\\\", \\\"\\\\u0080\\\", \\\"\\\\u00f6\\\", \\\"\\\\u20ac\\\", \\\"\\\\ud83d\\\\ude00\\\", \\\"\\\\ufb33\\\"]\"],\"C02_nonbmp_f05\":[true,\"out=\\\"{\\\\\\\"\\\\ud83d\\\\ude00\\\\\\\":2,\\\\\\\"\\\\ufb33\\\\\\\":1}\\\"\"],\"C03_hex_f03\":[true,\"got=\\\"{\\\\\\\"literals\\\\\\\":[null,true,false],\\\\\\\"numbers\\\\\\\":[333333333.3333333,1e+30,4.5,0.002,1e-27],\\\\\\\"string\\\\\\\":\\\\\\\"\\\\u20ac$\\\\\\\\u000f\\\\\\\\nA'B\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"/\\\\\\\"}\\\"\"],\"C04_preserve_f09_f10\":[false,\"o9=\\\"{\\\\\\\"caf\\\\u00e9\\\\\\\":\\\\\\\"na\\\\u00efve\\\\\\\"}\\\" o10=\\\"{\\\\\\\"cafe\\\\u0301\\\\\\\":\\\\\\\"nai\\\\u0308ve\\\\\\\"}\\\"\"],\"C05_num_identity_f12\":[true,\"out={\\\"w\\\":4.5,\\\"x\\\":4.5,\\\"y\\\":4.5,\\\"z\\\":4.5}\"],\"C06_zero_f13\":[true,\"out=[0,0,0,0]\"],\"C07_window_f14\":[true,\"out=[1e+21,999999999999999900000,0.000001,1e-27,0.000001,0.002]\"],\"C08_appendixB\":[false,\"exception:OverflowError(34, 'Numerical result out of range')\"],\"C09_duplicates_f07_f08\":[true,\"both rejected\"],\"C10_surrogate_f11\":[true,\"rejected\"],\"C11_prohibited_f16_f17\":[false,\"exception:OverflowError(34, 'Numerical result out of range')\"],\"C12_domain_f18\":[true,\"ecma_parse=[9007199254740991,9007199254740992,9007199254740992] int_exact_binding=accepted\"],\"C13_metamorphic_order\":[false,\"f01==f01r:False f02==f02c:True a={\\\"meta\\\":{\\\"id\\\":7,\\\"ok\\\":true},\\\"name\\\":\\\"JCS\\\",\\\"tags\\\":[\\\"json\\\",\\\"canonical\\\"],\\\"version\\\":1} c={\\\"a\\\":2,\\\"b\\\":1}\"],\"C14_roundtoeven_f15\":[true,\"out=1424953923781206.2\"],\"C15_basics_f02\":[true,\"out={\\\"a\\\":2,\\\"b\\\":1}\"]},\"controls\":{\"W1_codepoint_sort\":{\"ran\":[\"C01_sort_f04\",\"C02_nonbmp_f05\"],\"failed\":[\"C01_sort_f04\",\"C02_nonbmp_f05\"],\"discriminated\":true},\"W2_escapedtext_sort\":{\"ran\":[\"C01_sort_f04\"],\"failed\":[\"C01_sort_f04\"],\"discriminated\":true},\"W3_nfc_normalize\":{\"ran\":[\"C04_preserve_f09_f10\"],\"failed\":[\"C04_preserve_f09_f10\"],\"discriminated\":true},\"W4_repr_numbers\":{\"ran\":[\"C08_appendixB\"],\"failed\":[\"C08_appendixB\"],\"discriminated\":true},\"W5_lastwins_duplicates\":{\"ran\":[\"C09_duplicates_f07_f08\"],\"failed\":[\"C09_duplicates_f07_f08\"],\"discriminated\":true},\"W6_ascii_escape\":{\"ran\":[\"C03_hex_f03\"],\"failed\":[\"C03_hex_f03\"],\"discriminated\":true}},\"binding\":{\"witness_input_sha256\":\"f438b3c396f02fe95721a88ed476b96869e508d51fc0a1f085413dc169fa3865\",\"fixtures_sha256_expected\":\"bc2ed432bc18ec4ac2eda91518111ade950b44d7f66b6c3dc6ca604a60c268ac\",\"rfc8785_sha256_expected\":\"63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240\",\"harness\":\"sandbox.py bwrap+seccomp single process\",\"witness_scope\":\"this code on these inputs only\"},\"elapsed_seconds\":0.005}\n",
+  "termination": null,
+  "witness_validity": "not_assessed"
+}

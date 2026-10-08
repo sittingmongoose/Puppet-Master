@@ -1,0 +1,110 @@
+{
+  "schema": "pm.er10.d-m06-b.candidate-v3.sources.v1",
+  "case_id": "D-M06-B",
+  "arm": "treatment/candidate-v3",
+  "mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "generated_utc": "2026-10-08T01:54:30Z",
+  "verification_note": "SHA-256 recomputed from the mapped local frozen bytes by sha256sum at 2026-10-08T01:53:48Z; all five values matched INPUT_MAP.json / frozen_exact_bytes. Locators re-read against the actual file text this arm; quoted snippets below were read verbatim from the frozen bytes. Hashes establish byte identity with the frozen corpus, not source correctness.",
+  "geotransform": {
+    "source_id": "geotransform",
+    "title": "Geotransform Tutorial",
+    "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+    "version_or_capture": "GDAL 3.9.0",
+    "capture_date_utc": "2026-10-07",
+    "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+    "sha256_matches_input_map": true,
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+    "kind": "public primary raw bytes",
+    "locators": {
+      "coefficient_order_and_units": {
+        "lines": "15-20",
+        "verified_verbatim": true,
+        "text": "GT(0) x-coordinate of the upper-left corner of the upper-left pixel; GT(1) w-e pixel resolution / pixel width; GT(2) row rotation (typically zero); GT(3) y-coordinate of the upper-left corner of the upper-left pixel; GT(4) column rotation (typically zero); GT(5) n-s pixel resolution / pixel height (negative value for a north-up image)."
+      },
+      "forward_equations": {
+        "lines": "27-28",
+        "verified_verbatim": true,
+        "text": "X_geo = GT(0) + X_pixel * GT(1) + Y_line * GT(2); Y_geo = GT(3) + X_pixel * GT(4) + Y_line * GT(5)"
+      },
+      "pixel_corner_vs_center": {
+        "lines": "30-32",
+        "verified_verbatim": true,
+        "text": "pixel/line coordinates run from (0.0,0.0) at the top left corner of the top left pixel to (width_in_pixels,height_in_pixels) at the bottom right corner of the bottom right pixel; the center of the top left pixel is (0.5,0.5)."
+      },
+      "north_up_special_case": {
+        "lines": "34-38",
+        "verified_verbatim": true,
+        "text": "north-up: GT(2) and GT(4) zero; GT(1), GT(5) the pixel size; GT(0), GT(3) at the top left corner of the top left pixel."
+      }
+    }
+  },
+  "gdaltransform": {
+    "source_id": "gdaltransform",
+    "title": "OSGeo/gdal gcore/gdal_misc.cpp (released implementation file)",
+    "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+    "version_or_capture": "GDAL 3.9.0",
+    "capture_date_utc": "2026-10-07",
+    "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+    "sha256_matches_input_map": true,
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+    "kind": "public primary raw bytes",
+    "locators": {
+      "gcps_to_geotransform_control": {
+        "lines": "1811, 2006",
+        "verified_verbatim": true,
+        "text": "GDALGCPsToGeoTransform call sites inside GDALLoadOziMapFile (1811) and GDALLoadTabFile (2006): an independent fit-from-ground-control-points path that produces a geotransform without using any pixel-to-world formula being tested."
+      },
+      "worldfile_loader": {
+        "lines": "2121-2202",
+        "verified_verbatim": true,
+        "text": "GDALLoadWorldFile: reads the first six non-empty world-file lines into world[0..5]."
+      },
+      "worldfile_to_geotransform_mapping": {
+        "lines": "2182-2187",
+        "verified_verbatim": true,
+        "text": "GT(0)=world[4]; GT(1)=world[0]; GT(2)=world[2]; GT(3)=world[5]; GT(4)=world[1]; GT(5)=world[3] — world-file 1-based line order A,D,B,E,C,F remapped into the 0-based GT array, so world-file line numbers are not GT indexes."
+      },
+      "pixel_center_to_corner_shift": {
+        "lines": "2190-2193",
+        "verified_verbatim": true,
+        "text": "comment 'correct for center of pixel vs. top left of pixel'; GT(0) -= 0.5*GT(1); GT(0) -= 0.5*GT(2); GT(3) -= 0.5*GT(4); GT(3) -= 0.5*GT(5) — the released code itself shifts half a pixel to convert a pixel-center convention to the corner origin."
+      }
+    }
+  },
+  "brief": {
+    "role": "mapped assignment brief",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md",
+    "read_utc": "2026-10-08T01:53:48Z"
+  },
+  "seed_inputs": {
+    "bytes_policy": "Fresh v3 common seed only, same bytes both arms; treated as untrusted proposed content, not truth.",
+    "draft_md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/draft.md",
+      "sha256": "6dc0086bc4dc3893ff9f919f8a42180f319d7a87b941cb4465f59d1730a62959",
+      "matches_frozen_exact_bytes": true
+    },
+    "fixtures_json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/fixtures.json",
+      "sha256": "0856a17ade2bddaf99d8f62e6b61cb8e72ae0329aa43a06573a561358bfb59f8",
+      "matches_frozen_exact_bytes": true
+    },
+    "seed_sources_json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/sources.json",
+      "sha256": "40ec9e218a2f4278f82e5f9633d30eb7c572c86c6bb3fbee9212049592f5f04c",
+      "matches_frozen_exact_bytes": true
+    }
+  },
+  "bound_conventions": {
+    "coefficient_order": "0-based GT array; forward X_geo = GT(0) + p*GT(1) + l*GT(2), Y_geo = GT(3) + p*GT(4) + l*GT(5) (geotransform.rst lines 27-28). A 1-based reading (world-file line numbering) maps to GT(1),GT(4),GT(2),GT(5),GT(0),GT(3) per gdal_misc.cpp lines 2182-2187 and would silently transpose the matrix.",
+    "units": "GT(1),GT(5) are pixel resolutions and GT(2),GT(4) rotation terms in georeferenced CRS units (metres or degrees); p,l are unitless pixel/line offsets (geotransform.rst lines 9-20).",
+    "pixel_origin": "Continuous (p,l) origin is the top-left CORNER of the top-left pixel; integer (col,row) indices mean pixel centers and need (+0.5,+0.5) before this transform (geotransform.rst lines 30-32; gdal_misc.cpp lines 2190-2193 do the same shift in released code).",
+    "rotation_shear": "GT(2),GT(4) are first-class rotation/shear terms, only 'typically zero'; north-up (both zero) is the named special case (geotransform.rst lines 17,19,34-38).",
+    "invertibility": "Forward affine is invertible iff det = GT(1)*GT(5) - GT(2)*GT(4) != 0 (derived from the witnessed 2x2 block); the sources witness no tolerance value, so any numeric tol is proposed, not witnessed."
+  },
+  "limitations": [
+    "Hashes and capture metadata establish byte identity with the frozen corpus, not source correctness.",
+    "No network re-fetch performed; identity is against the mapped local frozen bytes only.",
+    "Line locators refer to the frozen captured files at the paths above, not to upstream blame or history.",
+    "No science has been executed this arm yet; conventions above are text bindings, pending the root-qualified witness."
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "observed_at": "2026-10-08T01:31:38.300629+00:00",
+  "original_arm_deadline": "2026-10-08T01:31:03.369784+00:00",
+  "actual_T3": "running observed via owned task_status",
+  "native_state": "UNKNOWN no nomination/no inferredrunning",
+  "no_repeatstartup_lookup": true,
+  "files": {
+    "dispatch-receipt.json": {
+      "bytes": 28075,
+      "sha256": "6403005173d333f9f3fdfe3b387d075b34029ca0e93cbff1eef9a2e3492eee4f"
+    },
+    "witness-receipt-run1-iteration.json": {
+      "bytes": 4146,
+      "sha256": "88089044fd68aba83132de8a3c7d7a7d771f7fda3280381c2a93625f9867b3eb"
+    },
+    "report.md": {
+      "bytes": 10212,
+      "sha256": "3c875ffd745ec7be875f12e623bc02c34573ad474016355e0e4388afd9e60ea0"
+    },
+    "dispatch-config.json": {
+      "bytes": 564,
+      "sha256": "8851c2fcb6f404cfe7ad260249f091613952518675d2032e8a15dc93ffd911c1"
+    },
+    "assignment.md": {
+      "bytes": 4016,
+      "sha256": "d359f153e2f730b009fceb132f842257305553fdd8d3bf98d425d7f1cfe9c46c"
+    },
+    "dispatch.json": {
+      "bytes": 1826,
+      "sha256": "3a056b9ecfbe95a4025398a539dd48eb18d19e85d45f1a34d14452971d63fca8"
+    },
+    "INPUT_MAP.json": {
+      "bytes": 4635,
+      "sha256": "31a186485bfc783162a537d0b2e88f079b55d43a8f4c22e19878ed3bace07ff0"
+    },
+    "witness-receipt-run3-iteration.json": {
+      "bytes": 4068,
+      "sha256": "5183f0c3dc74fec182119c6500065de1aaa9c24ba855bc8ed3d25d66490010bd"
+    },
+    "witness-receipt-run2-iteration.json": {
+      "bytes": 4164,
+      "sha256": "ff1093450b2b3ce93822b1f5088d78c62828f7abbd20170661a3396961c47180"
+    },
+    "task.txt": {
+      "bytes": 141,
+      "sha256": "b4e6e0d0e3695f996942b47ca4359f7eac74a612ac6af99223da7f9d41b27696"
+    },
+    "witness-input.json": {
+      "bytes": 5600,
+      "sha256": "d0081e96b98ea02357af5c8f248d384bc23c3153b9423489a427633b3dd869ce"
+    },
+    "final.md": {
+      "bytes": 5943,
+      "sha256": "ed8ebdc5642953e094b70dd98f14759d3b8a1ce18a23aff445c696e11276061c"
+    },
+    "startup-event-observation-v1.json": {
+      "bytes": 3700,
+      "sha256": "d5c7fa139f8ad5d7ac8df10dd0de0f21d45285c249876757a9fcc4845fa34df7"
+    },
+    "witness.py": {
+      "bytes": 14452,
+      "sha256": "37abc543435b605d7a537da2a40ac44a9d5d3d095499a7c70858ee2d5017d5b1"
+    },
+    "witness-receipt.json": {
+      "bytes": 4045,
+      "sha256": "656b216824820a4ecadeb8c0bc48f130393be69dfff7d6bd2b27159562572ebb"
+    },
+    "working-checklist.md": {
+      "bytes": 4481,
+      "sha256": "aca4dbd6398c760de22f4187a85f338e5ecfedd87e0a302f00e15ab04230fc0d"
+    }
+  },
+  "decision": "Capture then intentionally cancel own expired live task under root passive_cancel policy"
+}

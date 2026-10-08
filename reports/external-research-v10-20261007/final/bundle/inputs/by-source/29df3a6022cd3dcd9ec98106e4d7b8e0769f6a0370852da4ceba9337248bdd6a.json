@@ -1,0 +1,1761 @@
+{
+  "schema": "pm.er10.source6-review-freeze.v1",
+  "frozen_at_utc": "2026-10-07T20:46:01.640355+00:00",
+  "review_type": "one fresh ordinary independent FULL declared Source6 primary-source review",
+  "declared_reviewer_binding": {
+    "provider_instance_id": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "service_tier": "priority",
+    "named_account": "sittingmongoose@gmail.com",
+    "basis": "user-specified binding; no credential/account/host verification performed"
+  },
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/INPUT_MAP.json",
+  "reviewed_final_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/artifact.md",
+  "original_scientific_grade": {
+    "status": "FAIL",
+    "immutable": true,
+    "reason": "Confirmed material loss of the accepted derivative processing-provenance record (D01); other principal source claims supported with bounded caveats.",
+    "can_be_upgraded_by_lifecycle_provenance_economics": false
+  },
+  "full_declared_scope_assessed": true,
+  "unassessed_scientific_remainder": [],
+  "axes": [
+    {
+      "axis_id": "S1",
+      "declared_axis": "full brief obligations",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "D01",
+        "O1–O7 assessment",
+        "final artifact 12–95"
+      ],
+      "defect_refs": [
+        "D01"
+      ],
+      "caveat_refs": []
+    },
+    {
+      "axis_id": "S2",
+      "declared_axis": "consequential source claims and governing conditions",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "claim table",
+        "C01",
+        "C02",
+        "independent primary-source index"
+      ],
+      "defect_refs": [],
+      "caveat_refs": [
+        "C01",
+        "C02"
+      ]
+    },
+    {
+      "axis_id": "S3",
+      "declared_axis": "useful open discovery coverage/options/analogies/components/history",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "final artifact 12–22,65–89",
+        "public discovery queries",
+        "C03"
+      ],
+      "defect_refs": [],
+      "caveat_refs": [
+        "C03"
+      ]
+    },
+    {
+      "axis_id": "S4",
+      "declared_axis": "incorrect rejection/correction",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "final artifact 40–49,67–69",
+        "R-AST01/02/05/06",
+        "R-PDB-ISSUE-API/COMMENTS"
+      ],
+      "defect_refs": [],
+      "caveat_refs": []
+    },
+    {
+      "axis_id": "S5",
+      "declared_axis": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "D01",
+        "C02",
+        "C03",
+        "researcher artifact 39",
+        "critic artifact 41,58",
+        "final artifact 12,28–49,63,76,80,93"
+      ],
+      "defect_refs": [
+        "D01"
+      ],
+      "caveat_refs": [
+        "C02",
+        "C03"
+      ]
+    },
+    {
+      "axis_id": "S6",
+      "declared_axis": "proposed versus actually performed validation",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "final artifact 91–95",
+        "mapped capture integrity",
+        "npm tarball identity check",
+        "no product tests executed"
+      ],
+      "defect_refs": [],
+      "caveat_refs": []
+    }
+  ],
+  "obligations": [
+    {
+      "obligation_id": "O1",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "researcher artifact 9",
+        "final artifact 95",
+        "problem-first options and public discovery coverage"
+      ],
+      "defect_refs": []
+    },
+    {
+      "obligation_id": "O2",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "final artifact 12–22,85–89"
+      ],
+      "defect_refs": []
+    },
+    {
+      "obligation_id": "O3",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "REPORT claim table",
+        "R-FITS01",
+        "R-AST01/02/05/06",
+        "R-MF01",
+        "R-IIIF01",
+        "R-HTTP01",
+        "C01",
+        "C02"
+      ],
+      "defect_refs": []
+    },
+    {
+      "obligation_id": "O4",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "R-PDB23/26",
+        "R-PDB01/02",
+        "R-PDB-RELEASE-API/TAG",
+        "R-PDB-COMMIT",
+        "R-PDB-ISSUE-API/COMMENTS",
+        "R-AST-TAG",
+        "R-AST01/02/06",
+        "final artifact 65–69"
+      ],
+      "defect_refs": []
+    },
+    {
+      "obligation_id": "O5",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "frozen PLAN A-P1–A-P7",
+        "final artifact 75–81",
+        "REPORT exact frozen-plan table"
+      ],
+      "defect_refs": []
+    },
+    {
+      "obligation_id": "O6",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "D01",
+        "final artifact 24–95",
+        "researcher artifact 39",
+        "critic artifact 41,58"
+      ],
+      "defect_refs": [
+        "D01"
+      ]
+    },
+    {
+      "obligation_id": "O7",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "D01",
+        "REPORT lifecycle/source/plan coverage",
+        "final artifact 26–63"
+      ],
+      "defect_refs": [
+        "D01"
+      ]
+    }
+  ],
+  "material_defects": [
+    {
+      "defect_id": "D01",
+      "kind": "material preservation and integrated-provenance coverage loss",
+      "claim": "Final completeness/preservation assertion omits the accepted derivative production-method record.",
+      "final_locators": [
+        "reviser-v1/artifact.md:12",
+        "reviser-v1/artifact.md:28",
+        "reviser-v1/artifact.md:30",
+        "reviser-v1/artifact.md:34",
+        "reviser-v1/artifact.md:44",
+        "reviser-v1/artifact.md:46",
+        "reviser-v1/artifact.md:63",
+        "reviser-v1/artifact.md:76",
+        "reviser-v1/artifact.md:80",
+        "reviser-v1/artifact.md:93",
+        "reviser-v1/preservation_check.md:O6/O7"
+      ],
+      "predecessor_locators": [
+        "researcher-v1/artifact.md:39",
+        "critic-v1/artifact.md:41",
+        "critic-v1/artifact.md:58"
+      ],
+      "governing_scope": [
+        "BRIEF.md paragraphs 1–2",
+        "PLAN A-P2",
+        "PLAN A-P6",
+        "O6",
+        "O7",
+        "S5"
+      ],
+      "primary_evidence_refs": [
+        "R-PROV §3.1"
+      ],
+      "reasoning": "Parent links, import attribution, parser identity and display transforms do not retain the predecessor commitment to record the derivative producing tool/version/settings. A processing-method unknown/defer disposition is also absent. This weakens explanation and export of how an external processed image arose; no scientific reduction or RDF implementation is required.",
+      "finding_basis": "Observed text preservation loss plus requirement-grounded review inference; not a component malfunction claim."
+    }
+  ],
+  "nonmaterial_caveats": [
+    {
+      "caveat_id": "C01",
+      "kind": "locator precision",
+      "locators": [
+        "final source-map MF01",
+        "final source-map STORE01"
+      ],
+      "reason": "Spatial xywh is Media Fragments §4.2.2; persistence permission/request are Storage §5/§8.2. Substantive claims and capture identities remain."
+    },
+    {
+      "caveat_id": "C02",
+      "kind": "compressed time-condition preservation",
+      "locators": [
+        "final artifact:36",
+        "critic artifact:22",
+        "R-FITS01 §4.4.2.2"
+      ],
+      "reason": "Legacy two-digit-year DATE-OBS has no default start/middle/end interpretation. Final general date-representation qualifier/raw-ambiguity policy and proposed legacy fixtures avoid an unconditional normalization guarantee, but the exact admitted condition is less explicit."
+    },
+    {
+      "caveat_id": "C03",
+      "kind": "optional discovery loss",
+      "locators": [
+        "researcher artifact:29",
+        "researcher artifact:39",
+        "final artifact:87"
+      ],
+      "reason": "Explicitly deferred CRDT co-editing lead and PROV-O analogy disappear without disposition. Three meaningful mechanisms and other analogies remain; their omission alone is nonmaterial."
+    }
+  ],
+  "limitations": [
+    "Paths/labels expose researcher–critic–reviser structure and control label; method blinding is limited; no expected winner inferred.",
+    "Candidate chronological search/read order and negative access assertions are self-reported; forbidden runtime/root/history files were not used to reconstruct them. O1 content, evidence-selection breadth and options were assessed.",
+    "No product, component suite, browser, astronomical fixture or workflow validation was executed; all such candidate checks remain proposed.",
+    "Linked source tests are not independently established as the exact npm-release test suite. Candidate explicitly discloses that boundary; shipped code and package identity were independently inspected.",
+    "No stack/auth/decoder/host is selected; operator, retention, roles/recovery, actual member formats/sizes and signature needs remain product choices.",
+    "Bounded consequential-claim and preservation review, not exhaustive software audit or current dependency-security certification; RO-Crate index was discovery-only and no claim relied on it.",
+    "Lifecycle/time/provenance/economics eligibility is separately supervisor-owned and cannot upgrade the original scientific grade."
+  ],
+  "reviewed_input_sha256s": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/artifact.md",
+      "sha256": "e8371af170b2daeb92e1e39e2ff4361829599f93ba3d08b7a13ec79ebec273b6",
+      "mapped_sha256": "e8371af170b2daeb92e1e39e2ff4361829599f93ba3d08b7a13ec79ebec273b6",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/source-map.json",
+      "sha256": "6b2ddfe702f2d74017a508234a82e8b59f054184bf5262d0d2cc5bad0e422ecd",
+      "mapped_sha256": "6b2ddfe702f2d74017a508234a82e8b59f054184bf5262d0d2cc5bad0e422ecd",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/preservation_check.md",
+      "sha256": "91fe4911dcfa4553dc42fc457f932ce26cf73f3658fe80aee611bdfc114a6a82",
+      "mapped_sha256": "91fe4911dcfa4553dc42fc457f932ce26cf73f3658fe80aee611bdfc114a6a82",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/artifact.md",
+      "sha256": "078140b2a5eab52b53b0ff7f701461433d5ca8b0684bbf4241f30dc22ecd3bd6",
+      "mapped_sha256": "078140b2a5eab52b53b0ff7f701461433d5ca8b0684bbf4241f30dc22ecd3bd6",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/source-map.json",
+      "sha256": "c48c157b7c8f0bdff1f7b17daff5797e0dfd7379fcbd7308e0fdb7e87c85a58e",
+      "mapped_sha256": "c48c157b7c8f0bdff1f7b17daff5797e0dfd7379fcbd7308e0fdb7e87c85a58e",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/preservation_check.md",
+      "sha256": "622822f17b38bd2cf819ced1601164f840ececec82c91eebf24a2368f879c9fd",
+      "mapped_sha256": "622822f17b38bd2cf819ced1601164f840ececec82c91eebf24a2368f879c9fd",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/artifact.md",
+      "sha256": "116a292edc62f3e01e4b998c464c1ac1aca5f333d54ab9f3c9d47abfc7e8f6d5",
+      "mapped_sha256": "116a292edc62f3e01e4b998c464c1ac1aca5f333d54ab9f3c9d47abfc7e8f6d5",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/source-map.json",
+      "sha256": "6fb000ac67df637b82389ed07e1f6d917a1c8b9ac60e502794d96f86e1247dcb",
+      "mapped_sha256": "6fb000ac67df637b82389ed07e1f6d917a1c8b9ac60e502794d96f86e1247dcb",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/preservation_check.md",
+      "sha256": "dfa45cf719cd35b085f0f2631d4aaa95615524b23f9bbbd91c539abbc133edcc",
+      "mapped_sha256": "dfa45cf719cd35b085f0f2631d4aaa95615524b23f9bbbd91c539abbc133edcc",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/BRIEF.md",
+      "sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f",
+      "mapped_sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/PLAN.md",
+      "sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f",
+      "mapped_sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f",
+      "match": true
+    }
+  ],
+  "candidate_capture_integrity_checks": [
+    {
+      "stage": "researcher-v1",
+      "id": "S01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/fits-standard-v4.pdf",
+      "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "mapped_sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/fits-primer.html",
+      "sha256": "76690b4f58ea7054c94fca5d00848047fdee0cd9abc00a5263cdb5651771dc24",
+      "mapped_sha256": "76690b4f58ea7054c94fca5d00848047fdee0cd9abc00a5263cdb5651771dc24",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S03",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/astropy-wcs-8.0.1.html",
+      "sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+      "mapped_sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S04",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/web-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "mapped_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S05",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/iiif-image-api-3.html",
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "mapped_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S06",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/prov-o.html",
+      "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555",
+      "mapped_sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S07",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-replication-guide.html",
+      "sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "mapped_sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S08",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-conflicts-guide.html",
+      "sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "mapped_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S09",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-9.0.0-release.html",
+      "sha256": "d1974d13ac16c404b04250fcb4918e56d9470fc045bfecb7cbd971dfff6f8447",
+      "mapped_sha256": "d1974d13ac16c404b04250fcb4918e56d9470fc045bfecb7cbd971dfff6f8447",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S10",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-issue-8298.html",
+      "sha256": "834164e91b68642f49f824756f934c58d5623ec6e07b8ef2727e4f97d13f398e",
+      "mapped_sha256": "834164e91b68642f49f824756f934c58d5623ec6e07b8ef2727e4f97d13f398e",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S11",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-replicate.js",
+      "sha256": "8108cbf53346bc812b1e3fd8a80afdcf83ff230c2ce198e0f295d43cba2c4684",
+      "mapped_sha256": "8108cbf53346bc812b1e3fd8a80afdcf83ff230c2ce198e0f295d43cba2c4684",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S12",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-replication.js",
+      "sha256": "393bda73a22f7f852ea94344622cb36ca927c9e01fd1287852d172766ac9e06b",
+      "mapped_sha256": "393bda73a22f7f852ea94344622cb36ca927c9e01fd1287852d172766ac9e06b",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S13",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-conflicts-test.js",
+      "sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+      "mapped_sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S14",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/couchdb-security-3.5.html",
+      "sha256": "196640ddf0c9b921cbb9673933be51a12ca95d19f40b986d29ef9fb88799e74f",
+      "mapped_sha256": "196640ddf0c9b921cbb9673933be51a12ca95d19f40b986d29ef9fb88799e74f",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S15",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/rfc9110.html",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "mapped_sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S16",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "mapped_sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S17",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/web-annotation-selectors.html",
+      "sha256": "c6e316205f4e2d54cbab5fb809bdf070cab631f094c000611adc50f06bc27b96",
+      "mapped_sha256": "c6e316205f4e2d54cbab5fb809bdf070cab631f094c000611adc50f06bc27b96",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S18",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-indexeddb-adapter.js",
+      "sha256": "cfb2fcc7b683ac02dc11c6fd3bf134c8b006c43d4d9fd0a7cbde202d505c333d",
+      "mapped_sha256": "cfb2fcc7b683ac02dc11c6fd3bf134c8b006c43d4d9fd0a7cbde202d505c333d",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S19",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-indexeddb-bulkdocs.js",
+      "sha256": "6a6b8e1122197079bc789a98a2214d10c261ce6b37efb8f4878cbff405085b00",
+      "mapped_sha256": "6a6b8e1122197079bc789a98a2214d10c261ce6b37efb8f4878cbff405085b00",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S20",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-replication-package-metadata.json",
+      "sha256": "6d268e904661f038c3a1c0578bed722484c57f5cb4f2244dbfebf6b3f4417838",
+      "mapped_sha256": "6d268e904661f038c3a1c0578bed722484c57f5cb4f2244dbfebf6b3f4417838",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S21",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-adapter-indexeddb-package-metadata.json",
+      "sha256": "43148e12739ef25f489bfe369fe1b113f05ad3747cffcc0934c9f967844bcbbc",
+      "mapped_sha256": "43148e12739ef25f489bfe369fe1b113f05ad3747cffcc0934c9f967844bcbbc",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S22",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/astropy-wcs-high-level-api.py",
+      "sha256": "70b943fb2ab2b15941211ee77a85c7c325e28457e37ac200babd3a731c6563f1",
+      "mapped_sha256": "70b943fb2ab2b15941211ee77a85c7c325e28457e37ac200babd3a731c6563f1",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S23",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/astropy-wcs-tests.py",
+      "sha256": "1f08556386472f6ce9172f1842898dde48de3f405550938aec33eff24fb14359",
+      "mapped_sha256": "1f08556386472f6ce9172f1842898dde48de3f405550938aec33eff24fb14359",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S24",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/astropy-v8.0.1-tag.json",
+      "sha256": "874d494993cd15662b08b3dbd0a2b1c7b7cee3e35dff819167d04fb9559089d8",
+      "mapped_sha256": "874d494993cd15662b08b3dbd0a2b1c7b7cee3e35dff819167d04fb9559089d8",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S25",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/whatwg-storage.html",
+      "sha256": "badb2b604b270b9afc212d986fcbe08c636e7b86bed2c1507230edf7d4fdd846",
+      "mapped_sha256": "badb2b604b270b9afc212d986fcbe08c636e7b86bed2c1507230edf7d4fdd846",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S26",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-replication-guide-v9.md",
+      "sha256": "9e7978e49945cd99553e7620f3f6e178d694e9d8ea10dedb2573c7c8c1c27aa1",
+      "mapped_sha256": "9e7978e49945cd99553e7620f3f6e178d694e9d8ea10dedb2573c7c8c1c27aa1",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S27",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-conflicts-guide-v9.md",
+      "sha256": "95cd243c91c3a7ee3f13747da26383a1e03ae3f7e1dd9a1ad125dbabcc5e1401",
+      "mapped_sha256": "95cd243c91c3a7ee3f13747da26383a1e03ae3f7e1dd9a1ad125dbabcc5e1401",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "researcher-v1",
+      "id": "S28",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1/sources/pouchdb-latest-release-api.json",
+      "sha256": "6450658af61340461e22ddb300d034757c6b654c7e4acb0cdc54b461bfc52a19",
+      "mapped_sha256": "6450658af61340461e22ddb300d034757c6b654c7e4acb0cdc54b461bfc52a19",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/w3c-annotation.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "mapped_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/iiif-image-api-3.html",
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "mapped_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C03",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "mapped_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C04",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/whatwg-storage.html",
+      "sha256": "badb2b604b270b9afc212d986fcbe08c636e7b86bed2c1507230edf7d4fdd846",
+      "mapped_sha256": "badb2b604b270b9afc212d986fcbe08c636e7b86bed2c1507230edf7d4fdd846",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C05",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "mapped_sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C06",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/fits-standard-4.pdf",
+      "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "mapped_sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C07",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/sqlite-wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "mapped_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C08",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/syncthing-versioning.html",
+      "sha256": "26ca030f449fe869cbdf9f1f8ed9de151c515dd82ab9834ab817f81bd481e983",
+      "mapped_sha256": "26ca030f449fe869cbdf9f1f8ed9de151c515dd82ab9834ab817f81bd481e983",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C09",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/pouchdb-replicate.js",
+      "sha256": "8108cbf53346bc812b1e3fd8a80afdcf83ff230c2ce198e0f295d43cba2c4684",
+      "mapped_sha256": "8108cbf53346bc812b1e3fd8a80afdcf83ff230c2ce198e0f295d43cba2c4684",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C10",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/pouchdb-conflicts-test.js",
+      "sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+      "mapped_sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C11",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/pouchdb-issue-8298.json",
+      "sha256": "262ec17a4d871fb04ad107d30fefed81e13443c72324dd56190d0e263428e5ed",
+      "mapped_sha256": "262ec17a4d871fb04ad107d30fefed81e13443c72324dd56190d0e263428e5ed",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C12",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/pouchdb-release-9.0.0.json",
+      "sha256": "6450658af61340461e22ddb300d034757c6b654c7e4acb0cdc54b461bfc52a19",
+      "mapped_sha256": "6450658af61340461e22ddb300d034757c6b654c7e4acb0cdc54b461bfc52a19",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C13",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/astropy-wcs-high-level.py",
+      "sha256": "70b943fb2ab2b15941211ee77a85c7c325e28457e37ac200babd3a731c6563f1",
+      "mapped_sha256": "70b943fb2ab2b15941211ee77a85c7c325e28457e37ac200babd3a731c6563f1",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "critic-v1",
+      "id": "C14",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1/sources/astropy-wcs-tests.py",
+      "sha256": "1f08556386472f6ce9172f1842898dde48de3f405550938aec33eff24fb14359",
+      "mapped_sha256": "1f08556386472f6ce9172f1842898dde48de3f405550938aec33eff24fb14359",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "WA01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/w3c-annotation.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "mapped_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "MF01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/w3c-media-fragments.html",
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "mapped_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "IIIF01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/iiif-image-api-3.html",
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "mapped_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "FITS01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/fits-standard-v4.pdf",
+      "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "mapped_sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "FITS02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/fits-primer.html",
+      "sha256": "76690b4f58ea7054c94fca5d00848047fdee0cd9abc00a5263cdb5651771dc24",
+      "mapped_sha256": "76690b4f58ea7054c94fca5d00848047fdee0cd9abc00a5263cdb5651771dc24",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "HTTP01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "mapped_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "STORE01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/storage-standard.html",
+      "sha256": "badb2b604b270b9afc212d986fcbe08c636e7b86bed2c1507230edf7d4fdd846",
+      "mapped_sha256": "badb2b604b270b9afc212d986fcbe08c636e7b86bed2c1507230edf7d4fdd846",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "BAG01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "mapped_sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "SQL01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/sqlite-wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "mapped_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "SYNC01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/syncthing-versioning.html",
+      "sha256": "26ca030f449fe869cbdf9f1f8ed9de151c515dd82ab9834ab817f81bd481e983",
+      "mapped_sha256": "26ca030f449fe869cbdf9f1f8ed9de151c515dd82ab9834ab817f81bd481e983",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-replicate.js",
+      "sha256": "8108cbf53346bc812b1e3fd8a80afdcf83ff230c2ce198e0f295d43cba2c4684",
+      "mapped_sha256": "8108cbf53346bc812b1e3fd8a80afdcf83ff230c2ce198e0f295d43cba2c4684",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-conflicts-test.js",
+      "sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+      "mapped_sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB03",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-replication-guide.md",
+      "sha256": "9e7978e49945cd99553e7620f3f6e178d694e9d8ea10dedb2573c7c8c1c27aa1",
+      "mapped_sha256": "9e7978e49945cd99553e7620f3f6e178d694e9d8ea10dedb2573c7c8c1c27aa1",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB04",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-conflicts-guide.md",
+      "sha256": "95cd243c91c3a7ee3f13747da26383a1e03ae3f7e1dd9a1ad125dbabcc5e1401",
+      "mapped_sha256": "95cd243c91c3a7ee3f13747da26383a1e03ae3f7e1dd9a1ad125dbabcc5e1401",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "AST01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/astropy-wcs-high-level.py",
+      "sha256": "70b943fb2ab2b15941211ee77a85c7c325e28457e37ac200babd3a731c6563f1",
+      "mapped_sha256": "70b943fb2ab2b15941211ee77a85c7c325e28457e37ac200babd3a731c6563f1",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "AST02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/astropy-wcs-tests.py",
+      "sha256": "1f08556386472f6ce9172f1842898dde48de3f405550938aec33eff24fb14359",
+      "mapped_sha256": "1f08556386472f6ce9172f1842898dde48de3f405550938aec33eff24fb14359",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB08",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-package.json",
+      "sha256": "5da17b41221f83ffd9f082829be21b33cf90df41925204981551750d53b37dbe",
+      "mapped_sha256": "5da17b41221f83ffd9f082829be21b33cf90df41925204981551750d53b37dbe",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB09",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-release-9.0.0.html",
+      "sha256": "898bffd1415a1ee224135932a990961f54b11942c2ac4faadd54bf283b06b7a6",
+      "mapped_sha256": "898bffd1415a1ee224135932a990961f54b11942c2ac4faadd54bf283b06b7a6",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB10",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-issue-8298.html",
+      "sha256": "7219c9cd5978b7f2e78c7b6fd3a78016111301889c3a848b2fafcd9c99d17e10",
+      "mapped_sha256": "7219c9cd5978b7f2e78c7b6fd3a78016111301889c3a848b2fafcd9c99d17e10",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "AST04",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/astropy-release-v8.0.1.html",
+      "sha256": "188f70d149966497cf5be6891f44e2fc41636aa9d69a534c49d2f604f042ce96",
+      "mapped_sha256": "188f70d149966497cf5be6891f44e2fc41636aa9d69a534c49d2f604f042ce96",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB15",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-v9.0.0-source.tar.gz",
+      "sha256": "b0bb7efa61f60366afe7ca2fc874f638448ae744592246ce2bfe8b3cb0a7dbfc",
+      "mapped_sha256": "b0bb7efa61f60366afe7ca2fc874f638448ae744592246ce2bfe8b3cb0a7dbfc",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB16",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-v9.0.0-package.json",
+      "sha256": "2b34d08c928eda0f315f3cd57f0909d4b2e642e03f6c2c27da3473c86960339b",
+      "mapped_sha256": "2b34d08c928eda0f315f3cd57f0909d4b2e642e03f6c2c27da3473c86960339b",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB20",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-194c075-root-package.json",
+      "sha256": "015af542a6a4cd3e78512c36879cb8bbf07faf18fc1250ecf78b6fe57ca23243",
+      "mapped_sha256": "015af542a6a4cd3e78512c36879cb8bbf07faf18fc1250ecf78b6fe57ca23243",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB21",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-v9.0.0.js",
+      "sha256": "054b60b7582f76b94802a1c0a0895ecd894cfc25a3f3b18de91d188fd9c42eb7",
+      "mapped_sha256": "054b60b7582f76b94802a1c0a0895ecd894cfc25a3f3b18de91d188fd9c42eb7",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB22",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-v9.0.0-README.md",
+      "sha256": "e2f5fcadab7a23adda47c7f0c6ca34b9601914adbc047fe921e9ca4861ddd98a",
+      "mapped_sha256": "e2f5fcadab7a23adda47c7f0c6ca34b9601914adbc047fe921e9ca4861ddd98a",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB23",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-replication-9.0.0-metadata.json",
+      "sha256": "6d268e904661f038c3a1c0578bed722484c57f5cb4f2244dbfebf6b3f4417838",
+      "mapped_sha256": "6d268e904661f038c3a1c0578bed722484c57f5cb4f2244dbfebf6b3f4417838",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB24",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-replication-package-at-githead.json",
+      "sha256": "19ffb07a532c2922c34aeefadb2b54dce1965a8372adfb22f645df4549494b32",
+      "mapped_sha256": "19ffb07a532c2922c34aeefadb2b54dce1965a8372adfb22f645df4549494b32",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB25",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-9.0.0-metadata.json",
+      "sha256": "8b881958db1862b06e3884fd3b2ed9d9f9a87f9a3dc4e8ae0aa45798b323e2ff",
+      "mapped_sha256": "8b881958db1862b06e3884fd3b2ed9d9f9a87f9a3dc4e8ae0aa45798b323e2ff",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB26",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-replication-9.0.0.tgz",
+      "sha256": "a2fc837e141aaac6e0c7ebbba15bf7eeda396c9705875c78ccf0cb115abebf4f",
+      "mapped_sha256": "a2fc837e141aaac6e0c7ebbba15bf7eeda396c9705875c78ccf0cb115abebf4f",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB27",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-replication-9.0.0-package.json",
+      "sha256": "9ba739e5ad355c50454720d79dac44802d917b26be07c345a4687b3543f60ae3",
+      "mapped_sha256": "9ba739e5ad355c50454720d79dac44802d917b26be07c345a4687b3543f60ae3",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "PDB29",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-replication-9.0.0-lib-index.js",
+      "sha256": "ef8e0fb37b4832407a4700f86021bd07c57850cfe450567af9f938aab142636f",
+      "mapped_sha256": "ef8e0fb37b4832407a4700f86021bd07c57850cfe450567af9f938aab142636f",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "AST05",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/astropy-wcs-v8.0.1.html",
+      "sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+      "mapped_sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "AST06",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/astropy-wcs-low-level.py",
+      "sha256": "c123491f3900794bc621bd506a3c8c7fd4e5ee97cd790a1fcbee2fc300e6bd9f",
+      "mapped_sha256": "c123491f3900794bc621bd506a3c8c7fd4e5ee97cd790a1fcbee2fc300e6bd9f",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "CDB01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/couchdb-conflicts.html",
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "mapped_sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "match": true,
+      "within_own_admitted_sources": true
+    },
+    {
+      "stage": "reviser-v1",
+      "id": "CDB02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/couchdb-security.html",
+      "sha256": "196640ddf0c9b921cbb9673933be51a12ca95d19f40b986d29ef9fb88799e74f",
+      "mapped_sha256": "196640ddf0c9b921cbb9673933be51a12ca95d19f40b986d29ef9fb88799e74f",
+      "match": true,
+      "within_own_admitted_sources": true
+    }
+  ],
+  "primary_sources_checked": [
+    {
+      "id": "R-WA01",
+      "url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "version_or_commit": "W3C Recommendation 2017-02-23",
+      "locator": "§1 transport boundary; §§2–3 annotation body/target; §4.2 selectors; §4.3 states",
+      "accessed_utc": "2026-10-07T20:37:44.501441+00:00",
+      "final_url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 284185,
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-WA01.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-WA01.extracted.txt",
+      "extracted_sha256": "5f9bc29d63fb212b4255130a04ef675ebd022f2b177609b7cfdba14dfd55e3d1",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-MF01",
+      "url": "https://www.w3.org/TR/media-frags/",
+      "version_or_commit": "W3C Recommendation 2012-09-25",
+      "locator": "§4.2.2 Spatial Dimension (not §4.2.1): xywh pixel/percent, top-left origin; extracted lines 389–410",
+      "accessed_utc": "2026-10-07T20:37:44.503280+00:00",
+      "final_url": "https://www.w3.org/TR/media-frags/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 89887,
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-MF01.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-MF01.extracted.txt",
+      "extracted_sha256": "c0641be9019c9bab15b8c3572c6e55cf67917453061ae8db6f4aaed05b360f5a",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-IIIF01",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_commit": "IIIF Image API 3.0.0",
+      "locator": "§4.1 region; §§4.2–4.6 size/rotation/quality/format and operation order; extracted lines 85, 106–120, 196, 267–271",
+      "accessed_utc": "2026-10-07T20:37:44.504642+00:00",
+      "final_url": "https://iiif.io/api/image/3.0/",
+      "http_status": 200,
+      "content_type": "text/html",
+      "bytes": 145643,
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-IIIF01.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-IIIF01.extracted.txt",
+      "extracted_sha256": "3987fcfd5f06b6ee0d04ba80aade2dc432f95d3e9a6fe0d2d33f807f740c930b",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-FITS01",
+      "url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+      "version_or_commit": "FITS Standard 4.0 updated 2016-07-22; language edited 2018-08-13",
+      "locator": "§3.3.2 (printed p5) array structure/index order; §4.4.2.2 (printed p13) DATE-OBS including legacy exception; §8.2 CRPIX; §9.2.1 (printed pp37–38) TIMESYS and overriding contexts",
+      "accessed_utc": "2026-10-07T20:37:44.505762+00:00",
+      "final_url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "bytes": 1140821,
+      "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-FITS01.pdf",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-FITS01.extracted.txt",
+      "extracted_sha256": "3638059d69374d3c0fc33f70db0244cb24875575c0118e9c66fbcb0c792a73c7",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-FITS02",
+      "url": "https://fits.gsfc.nasa.gov/fits_primer.html",
+      "version_or_commit": "NASA FITS Support Office primer, accessed 2026-10-07",
+      "locator": "HDUs; primary images/extensions/tables and multidimensional data; extracted lines 17–49",
+      "accessed_utc": "2026-10-07T20:37:44.507171+00:00",
+      "final_url": "https://fits.gsfc.nasa.gov/fits_primer.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 13458,
+      "sha256": "76690b4f58ea7054c94fca5d00848047fdee0cd9abc00a5263cdb5651771dc24",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-FITS02.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-FITS02.extracted.txt",
+      "extracted_sha256": "93db925a6d15a98aa301c6abacad4eccea807dc197ffcba190d0ef0422d251e4",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-HTTP01",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version_or_commit": "RFC 9110, June 2022",
+      "locator": "§13.1.1 If-Match (lines 5785–5854); §13.2.1 precondition ordering; §15.5.13 status 412",
+      "accessed_utc": "2026-10-07T20:37:44.512317+00:00",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "http_status": 200,
+      "content_type": "text/plain;charset=utf-8",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-HTTP01.txt",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-STORE01",
+      "url": "https://storage.spec.whatwg.org/",
+      "version_or_commit": "WHATWG Storage Living Standard, accessed 2026-10-07",
+      "locator": "§4 bucket modes; §5 persistence permission; §7.1 storage pressure; §8.2 StorageManager persist()",
+      "accessed_utc": "2026-10-07T20:37:44.629985+00:00",
+      "final_url": "https://storage.spec.whatwg.org/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 203633,
+      "sha256": "badb2b604b270b9afc212d986fcbe08c636e7b86bed2c1507230edf7d4fdd846",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-STORE01.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-STORE01.extracted.txt",
+      "extracted_sha256": "6ddcc7729c178770e6306d19c10edf2af8778882564e39dbfafc6fb22d52bbfb",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-BAG01",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version_or_commit": "RFC 8493 BagIt 1.0, October 2018",
+      "locator": "§2.1.1 bagit.txt; §2.1.3 complete payload manifest; §2.4 hash algorithms; §3 complete/valid bag; §5 security considerations",
+      "accessed_utc": "2026-10-07T20:37:44.638078+00:00",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "http_status": 200,
+      "content_type": "text/plain;charset=utf-8",
+      "bytes": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-BAG01.txt",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-SQL01",
+      "url": "https://sqlite.org/wal.html",
+      "version_or_commit": "SQLite WAL official documentation, accessed 2026-10-07",
+      "locator": "§2.2 concurrency, one writer and same-host wal-index; §8 EXCLUSIVE single-process exception",
+      "accessed_utc": "2026-10-07T20:37:44.707125+00:00",
+      "final_url": "https://sqlite.org/wal.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 42143,
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-SQL01.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-SQL01.extracted.txt",
+      "extracted_sha256": "0cc489faa115b09c1e03e10adf4b333a3a2b81f4af67713a87524ef09ade5544",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-SYNC01",
+      "url": "https://docs.syncthing.net/v1.25.0/users/versioning",
+      "version_or_commit": "Syncthing v1.25.0 documentation",
+      "locator": "File Versioning opening paragraphs: opt-in, per-folder/device, received remote changes only; recovery rather than semantic merge",
+      "accessed_utc": "2026-10-07T20:37:44.718233+00:00",
+      "final_url": "https://docs.syncthing.net/v1.25.0/users/versioning",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 36600,
+      "sha256": "26ca030f449fe869cbdf9f1f8ed9de151c515dd82ab9834ab817f81bd481e983",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-SYNC01.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-SYNC01.extracted.txt",
+      "extracted_sha256": "339c8c18c0750d271e53e2bd819a6f05aea01a0e0bce3720b3fac627dafa3c65",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB01",
+      "url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/packages/node_modules/pouchdb-replication/src/replicate.js",
+      "version_or_commit": "repository commit 194c0754bb482824c3cb07d6432c7b95707d0a72; npm 9.0.0 declared gitHead",
+      "locator": "replicate.js writeDocs(), finishBatch(), getDiffs(), completeReplication(); linked source evidence, not published artifact identity",
+      "accessed_utc": "2026-10-07T20:37:44.747590+00:00",
+      "final_url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/packages/node_modules/pouchdb-replication/src/replicate.js",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 16028,
+      "sha256": "8108cbf53346bc812b1e3fd8a80afdcf83ff230c2ce198e0f295d43cba2c4684",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB01.js",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB02",
+      "url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/tests/integration/test.conflicts.js",
+      "version_or_commit": "repository commit 194c0754bb482824c3cb07d6432c7b95707d0a72",
+      "locator": "test.conflicts.js: immediate stale put; force put ok on 1st/2nd level; _conflicts and losing-revision retrieval; inspected, not run",
+      "accessed_utc": "2026-10-07T20:37:44.761058+00:00",
+      "final_url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/tests/integration/test.conflicts.js",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 16345,
+      "sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB02.js",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB03",
+      "url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/docs/_guides/replication.md",
+      "version_or_commit": "repository commit 194c0754bb482824c3cb07d6432c7b95707d0a72",
+      "locator": "Replication guide: multi-master vs one-way/bidirectional; deterministic winner; live/retry",
+      "accessed_utc": "2026-10-07T20:37:44.808408+00:00",
+      "final_url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/docs/_guides/replication.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 9026,
+      "sha256": "9e7978e49945cd99553e7620f3f6e178d694e9d8ea10dedb2573c7c8c1c27aa1",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB03.md",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB04",
+      "url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/docs/_guides/conflicts.md",
+      "version_or_commit": "repository commit 194c0754bb482824c3cb07d6432c7b95707d0a72",
+      "locator": "Conflicts guide: immediate vs eventual; conflicts:true, retrieving/removing losing revisions",
+      "accessed_utc": "2026-10-07T20:37:44.811061+00:00",
+      "final_url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/docs/_guides/conflicts.md",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 7775,
+      "sha256": "95cd243c91c3a7ee3f13747da26383a1e03ae3f7e1dd9a1ad125dbabcc5e1401",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB04.md",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-AST01",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/wcsapi/high_level_api.py",
+      "version_or_commit": "Astropy v8.0.1 / commit 7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "high_level_api.py _toindex() lines 58–85; array_index_to_world() lines 116–128; world_to_array_index() lines 143–160",
+      "accessed_utc": "2026-10-07T20:37:44.836581+00:00",
+      "final_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/wcsapi/high_level_api.py",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 15690,
+      "sha256": "70b943fb2ab2b15941211ee77a85c7c325e28457e37ac200babd3a731c6563f1",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AST01.py",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-AST02",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/wcsapi/tests/test_high_level_api.py",
+      "version_or_commit": "Astropy v8.0.1 / commit 7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "test_high_level_api.py test_minimal_mixin_subclass() lines 319–333; test_world_to_array_index_nan() starting 336; inspected, not run",
+      "accessed_utc": "2026-10-07T20:37:44.843753+00:00",
+      "final_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/wcsapi/tests/test_high_level_api.py",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 9945,
+      "sha256": "1f08556386472f6ce9172f1842898dde48de3f405550938aec33eff24fb14359",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AST02.py",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB08",
+      "url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/packages/node_modules/pouchdb/package.json",
+      "version_or_commit": "PouchDB repository commit 194c0754bb482824c3cb07d6432c7b95707d0a72; not release 9.0.0",
+      "locator": "Package version at exact source commit",
+      "accessed_utc": "2026-10-07T20:37:44.847706+00:00",
+      "final_url": "https://raw.githubusercontent.com/pouchdb/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/packages/node_modules/pouchdb/package.json",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 585,
+      "sha256": "5da17b41221f83ffd9f082829be21b33cf90df41925204981551750d53b37dbe",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB08.html",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB09",
+      "url": "https://github.com/apache/pouchdb/releases/tag/9.0.0",
+      "version_or_commit": "PouchDB release 9.0.0, published 2024-06-21",
+      "locator": "Release commit prefix and changelog context",
+      "accessed_utc": "2026-10-07T20:37:44.894499+00:00",
+      "final_url": "https://github.com/apache/pouchdb/releases/tag/9.0.0",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 299635,
+      "sha256": "5dcbfef22624183a670fa331c4e3b76125d9e2fca745f16d23c02c0ab74a13ba",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB09.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB09.extracted.txt",
+      "extracted_sha256": "fc6d8fc2cc124a5a16ae25194ed5d6835094c04ccd48a17f6a23bf41e7156e72",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB10",
+      "url": "https://github.com/apache/pouchdb/issues/8298",
+      "version_or_commit": "Issue #8298, opened 2021-05-18",
+      "locator": "Status, reproduced environment and comments/disposition",
+      "accessed_utc": "2026-10-07T20:37:44.920981+00:00",
+      "final_url": "https://github.com/apache/pouchdb/issues/8298",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 290547,
+      "sha256": "6e53b977751737bf69c31ba4efe4bf6a436554d0b17e3a1b4585c70426cdb542",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB10.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB10.extracted.txt",
+      "extracted_sha256": "ea3e96ef81f1ec5b4575d83e39a8b1c0e4be869b9a75ccc6783146f36fcea163",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-AST04",
+      "url": "https://github.com/astropy/astropy/releases/tag/v8.0.1",
+      "version_or_commit": "Astropy v8.0.1 release page, July 2026 per GitHub",
+      "locator": "Signed tag and pinned commit prefix",
+      "accessed_utc": "2026-10-07T20:37:44.929881+00:00",
+      "final_url": "https://github.com/astropy/astropy/releases/tag/v8.0.1",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 203830,
+      "sha256": "42dce5d69fdc476ae60f61c56a14b23dc3372c6844ace9107318129f64b15620",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AST04.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AST04.extracted.txt",
+      "extracted_sha256": "39ab6a4f5244b64e011cf8a77517b3cb96565f85751f6f6f848303d701447d34",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB15",
+      "url": "https://codeload.github.com/apache/pouchdb/legacy.tar.gz/refs/tags/9.0.0",
+      "version_or_commit": "PouchDB 9.0.0 release tag; git ls-remote resolved tag ref to b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "locator": "Pinned source archive used to locate the release-tag implementation and tests",
+      "accessed_utc": "2026-10-07T20:37:44.952616+00:00",
+      "final_url": "https://codeload.github.com/apache/pouchdb/legacy.tar.gz/refs/tags/9.0.0",
+      "http_status": 200,
+      "content_type": "application/x-gzip",
+      "bytes": 1667747,
+      "sha256": "b0bb7efa61f60366afe7ca2fc874f638448ae744592246ce2bfe8b3cb0a7dbfc",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB15.tgz",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB20",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/package.json",
+      "version_or_commit": "PouchDB repository commit 194c0754bb482824c3cb07d6432c7b95707d0a72",
+      "locator": "Root package version field; checks whether this commit is PouchDB 9.0.0",
+      "accessed_utc": "2026-10-07T20:37:44.953607+00:00",
+      "final_url": "https://raw.githubusercontent.com/apache/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/package.json",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 3856,
+      "sha256": "015af542a6a4cd3e78512c36879cb8bbf07faf18fc1250ecf78b6fe57ca23243",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB20.html",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB23",
+      "url": "https://registry.npmjs.org/pouchdb-replication/9.0.0",
+      "version_or_commit": "pouchdb-replication 9.0.0 registry record",
+      "locator": "version, gitHead, source repository and distribution integrity",
+      "accessed_utc": "2026-10-07T20:37:45.062806+00:00",
+      "final_url": "https://registry.npmjs.org/pouchdb-replication/9.0.0",
+      "http_status": 200,
+      "content_type": "application/json",
+      "bytes": 1525,
+      "sha256": "6d268e904661f038c3a1c0578bed722484c57f5cb4f2244dbfebf6b3f4417838",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB23.json",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB24",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/packages/node_modules/pouchdb-replication/package.json",
+      "version_or_commit": "pouchdb-replication package version at gitHead 194c0754bb482824c3cb07d6432c7b95707d0a72",
+      "locator": "Exact package version at source commit owning inspected code/test files",
+      "accessed_utc": "2026-10-07T20:37:45.160543+00:00",
+      "final_url": "https://raw.githubusercontent.com/apache/pouchdb/194c0754bb482824c3cb07d6432c7b95707d0a72/packages/node_modules/pouchdb-replication/package.json",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 452,
+      "sha256": "19ffb07a532c2922c34aeefadb2b54dce1965a8372adfb22f645df4549494b32",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB24.html",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB25",
+      "url": "https://registry.npmjs.org/pouchdb/9.0.0",
+      "version_or_commit": "PouchDB package 9.0.0 registry record",
+      "locator": "Release version, dependency links and distribution integrity",
+      "accessed_utc": "2026-10-07T20:37:45.247888+00:00",
+      "final_url": "https://registry.npmjs.org/pouchdb/9.0.0",
+      "http_status": 200,
+      "content_type": "application/json",
+      "bytes": 1760,
+      "sha256": "8b881958db1862b06e3884fd3b2ed9d9f9a87f9a3dc4e8ae0aa45798b323e2ff",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB25.json",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB26",
+      "url": "https://registry.npmjs.org/pouchdb-replication/-/pouchdb-replication-9.0.0.tgz",
+      "version_or_commit": "pouchdb-replication 9.0.0; gitHead 194c0754bb482824c3cb07d6432c7b95707d0a72 per PDB23",
+      "locator": "Release package bytes used to confirm package-level version and inspect shipped implementation",
+      "accessed_utc": "2026-10-07T20:37:45.300402+00:00",
+      "final_url": "https://registry.npmjs.org/pouchdb-replication/-/pouchdb-replication-9.0.0.tgz",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "bytes": 12175,
+      "sha256": "a2fc837e141aaac6e0c7ebbba15bf7eeda396c9705875c78ccf0cb115abebf4f",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB26.tgz",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-AST05",
+      "url": "https://docs.astropy.org/en/v8.0.1/wcs/index.html",
+      "version_or_commit": "Astropy documentation v8.0.1",
+      "locator": "Pixel Conventions and Definitions; first center 0, spans -0.5 to +0.5, origin and axis ordering",
+      "accessed_utc": "2026-10-07T20:37:45.353062+00:00",
+      "final_url": "https://docs.astropy.org/en/v8.0.1/wcs/index.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 56441,
+      "sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AST05.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AST05.extracted.txt",
+      "extracted_sha256": "a0fdfb0bf28d68da8e1685a4a6752947116d94f4ecbbf53c89be0dc514abc372",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-AST06",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/wcsapi/low_level_api.py",
+      "version_or_commit": "Astropy v8.0.1 / commit 7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "low_level_api.py pixel_to_world_values() lines 56–75; array_index_to_world_values() 77–91; world_to_array_index_values() 111–134",
+      "accessed_utc": "2026-10-07T20:37:45.355735+00:00",
+      "final_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/wcsapi/low_level_api.py",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 15924,
+      "sha256": "c123491f3900794bc621bd506a3c8c7fd4e5ee97cd790a1fcbee2fc300e6bd9f",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AST06.py",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-CDB01",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_commit": "Apache CouchDB 3.5 documentation as accessed 2026-10-07",
+      "locator": "§2.3.1 deterministic displayed winner; §2.3.4 conflicts:true/open_revs and losing leaf retrieval",
+      "accessed_utc": "2026-10-07T20:37:45.384260+00:00",
+      "final_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 79028,
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-CDB01.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-CDB01.extracted.txt",
+      "extracted_sha256": "8212c4a6f7f7df4a2381d117fc3f04568aa5e9b0e354308c59fff9fe8a5c7bc3",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-CDB02",
+      "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "version_or_commit": "Apache CouchDB 3.5 documentation as accessed 2026-10-07",
+      "locator": "§1.3.19 GET _security: member database-wide read/write rights, defaults and authenticated membership",
+      "accessed_utc": "2026-10-07T20:37:45.446978+00:00",
+      "final_url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 33012,
+      "sha256": "196640ddf0c9b921cbb9673933be51a12ca95d19f40b986d29ef9fb88799e74f",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-CDB02.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-CDB02.extracted.txt",
+      "extracted_sha256": "5405fcd16723571eaa478c5d2506bd12a3e245b71b37de2ff8892d092fe02abb",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PROV",
+      "url": "https://www.w3.org/TR/2013/REC-prov-o-20130430/",
+      "version_or_commit": "W3C PROV-O Recommendation 2013-04-30",
+      "locator": "§3.1 Starting Point Terms: entities, activities, agents, used/generated/derived relations; extracted lines 219–247",
+      "accessed_utc": "2026-10-07T20:37:45.479825+00:00",
+      "final_url": "https://www.w3.org/TR/2013/REC-prov-o-20130430/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 464179,
+      "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PROV.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PROV.extracted.txt",
+      "extracted_sha256": "764b15251bab67d71276f659adb56530d22486845336c441b11b479ffb9e8e41",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-SYNC-CONFLICT",
+      "url": "https://docs.syncthing.net/v1.25.0/users/syncing.html",
+      "version_or_commit": "Syncthing v1.25.0 documentation",
+      "locator": "Conflicting Changes: sync-conflict copies; modification/deletion resurrection; Temporary Files: staged writes",
+      "accessed_utc": "2026-10-07T20:37:45.547386+00:00",
+      "final_url": "https://docs.syncthing.net/v1.25.0/users/syncing.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 17282,
+      "sha256": "4cf83cd33cc5fdfb53b01192091a28d2894354f85456ef432b93d50dabacfafc",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-SYNC-CONFLICT.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-SYNC-CONFLICT.extracted.txt",
+      "extracted_sha256": "32a246cd0de67cd0c8b77e1c952d03b0fb6f523e294c1239eae8800dc5d1a5b8",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB-ISSUE-API",
+      "url": "https://api.github.com/repos/apache/pouchdb/issues/8298",
+      "version_or_commit": "issue 8298 live response",
+      "locator": "body, state, labels, dates",
+      "accessed_utc": "2026-10-07T20:37:45.571382+00:00",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/issues/8298",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 4891,
+      "sha256": "262ec17a4d871fb04ad107d30fefed81e13443c72324dd56190d0e263428e5ed",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB-ISSUE-API.json",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB-RELEASE-API",
+      "url": "https://api.github.com/repos/apache/pouchdb/releases/tags/9.0.0",
+      "version_or_commit": "release 9.0.0",
+      "locator": "release body, publication, target_commitish",
+      "accessed_utc": "2026-10-07T20:37:45.624857+00:00",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/releases/tags/9.0.0",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 56421,
+      "sha256": "6450658af61340461e22ddb300d034757c6b654c7e4acb0cdc54b461bfc52a19",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB-RELEASE-API.json",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-AST-TAG",
+      "url": "https://api.github.com/repos/astropy/astropy/git/tags/980b6e36bbe9d7d2d847fcd9c94c4651c06869c0",
+      "version_or_commit": "annotated v8.0.1 tag object",
+      "locator": "object commit, tagger, signature verification",
+      "accessed_utc": "2026-10-07T20:37:45.661827+00:00",
+      "final_url": "https://api.github.com/repos/astropy/astropy/git/tags/980b6e36bbe9d7d2d847fcd9c94c4651c06869c0",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 2630,
+      "sha256": "874d494993cd15662b08b3dbd0a2b1c7b7cee3e35dff819167d04fb9559089d8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AST-TAG.json",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB-ISSUE-COMMENTS",
+      "url": "https://api.github.com/repos/apache/pouchdb/issues/8298/comments?per_page=100",
+      "version_or_commit": "issue 8298 all 23 comments",
+      "locator": "comments, closure; applicability and fixes",
+      "accessed_utc": "2026-10-07T20:39:39.206427+00:00",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/issues/8298/comments?per_page=100",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 45737,
+      "sha256": "c5a79fb281113bbcb0d33bdb4a5483a3631590e666ed312285678c45b354c04a",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB-ISSUE-COMMENTS.json",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB-COMMIT",
+      "url": "https://api.github.com/repos/apache/pouchdb/commits/194c0754bb482824c3cb07d6432c7b95707d0a72",
+      "version_or_commit": "194c0754bb482824c3cb07d6432c7b95707d0a72",
+      "locator": "date, commit message, changed files",
+      "accessed_utc": "2026-10-07T20:39:39.208341+00:00",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/commits/194c0754bb482824c3cb07d6432c7b95707d0a72",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 4184,
+      "sha256": "05869acac684b0f881a7c26eb1b721a7edd45c766a4c0556f3c385a9bbf2f70e",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB-COMMIT.json",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-AUTOMERGE",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "version_or_commit": "Official Automerge documentation as accessed 2026-10-07; no implementation version selected",
+      "locator": "What is a Conflict: text/list operations vs same-property multivalue conflicts; discovery/preservation comparison only",
+      "accessed_utc": "2026-10-07T20:39:39.209288+00:00",
+      "final_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 17063,
+      "sha256": "28612ef6b87e734290784f212926a360f1946c4114494b75179fdce2f8557746",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AUTOMERGE.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-AUTOMERGE.extracted.txt",
+      "extracted_sha256": "9fce0047e54804ae091b17605c3cb9be9306eeeb263ff1940d0a12e284a2ef3e",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    },
+    {
+      "id": "R-PDB-RELEASE-TAG",
+      "url": "https://api.github.com/repos/apache/pouchdb/git/ref/tags/9.0.0",
+      "version_or_commit": "tag 9.0.0",
+      "locator": "release tag to commit relationship",
+      "accessed_utc": "2026-10-07T20:39:39.211593+00:00",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/git/ref/tags/9.0.0",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 331,
+      "sha256": "301128a24ad587274ef64072dc20aab8e24c84f90f6822f72d46962417da8143",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB-RELEASE-TAG.json",
+      "assessment_use": "independently_checked_claim_or_identity_evidence"
+    }
+  ],
+  "discovery_only_captures": [
+    {
+      "id": "R-ROCRATE",
+      "url": "https://www.researchobject.org/ro-crate/specification/1.2/contextual-entities.html",
+      "version_or_commit": "RO-Crate 1.2 contextual-entities index page as accessed 2026-10-07",
+      "locator": "Discovery only; page links to provenance sections; no substantive RO-Crate claim relied upon",
+      "accessed_utc": "2026-10-07T20:39:39.210450+00:00",
+      "final_url": "https://www.researchobject.org/ro-crate/specification/1.2/contextual-entities.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 91682,
+      "sha256": "6afbb347c126972ec458d8529b175f776228fa2cfca618c3062f24849d982fa3",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-ROCRATE.html",
+      "extracted_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-ROCRATE.extracted.txt",
+      "extracted_sha256": "3f05a3a9fc7429e8eb3b9f3cdb0a027ecbff86f84be8a168d7986e557df54824",
+      "assessment_use": "discovery_only_not_relied_for_claim"
+    }
+  ],
+  "derived_archive_members_checked": [
+    {
+      "parent_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB26.tgz",
+      "archive_member": "package/lib/index.js",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB26-index.js",
+      "sha256": "ef8e0fb37b4832407a4700f86021bd07c57850cfe450567af9f938aab142636f",
+      "locator": "package/lib/index.js: backOff() 139–166; bulkDocs 232–243; checkpoint/getDiffs 314–351; fatal errors 456–476; retry default false 780"
+    },
+    {
+      "parent_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB26.tgz",
+      "archive_member": "package/package.json",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB26-package.json",
+      "sha256": "9ba739e5ad355c50454720d79dac44802d917b26be07c345a4687b3543f60ae3"
+    },
+    {
+      "parent_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB15.tgz",
+      "archive_member": "apache-pouchdb-b2882c1/README.md",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB15-README.md",
+      "sha256": "e2f5fcadab7a23adda47c7f0c6ca34b9601914adbc047fe921e9ca4861ddd98a"
+    },
+    {
+      "parent_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB15.tgz",
+      "archive_member": "apache-pouchdb-b2882c1/package.json",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB15-package.json",
+      "sha256": "2b34d08c928eda0f315f3cd57f0909d4b2e642e03f6c2c27da3473c86960339b"
+    }
+  ],
+  "primary_source_index_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/PRIMARY_SOURCE_INDEX.json",
+  "primary_source_index_sha256": "3d7ca2ad7bc10a8b765ccd92e02ca45488ed218fa53daf00f6f581c20746ea29",
+  "preservation": {
+    "result": "FAIL",
+    "material_defect_refs": [
+      "D01"
+    ],
+    "nonmaterial_caveat_refs": [
+      "C02",
+      "C03"
+    ],
+    "retained": [
+      "small-club scope and exclusions",
+      "original bytes/media until verification",
+      "raw versus parsed fields",
+      "byte identity versus observation/import identity",
+      "immutable image anchors and manual re-review",
+      "edge versus center/array coordinate distinction",
+      "private draft versus explicit publication",
+      "atomic stale-write rejection and retained human conflict resolution",
+      "route-level access requirement",
+      "withdrawal/downloaded-copy and policy-based backup/purge limits",
+      "operator condition and unresolved component/product choices",
+      "proposed checks versus source inspection"
+    ],
+    "lost_or_compressed": [
+      "D01 derivative producing tool/version/settings record",
+      "C02 exact legacy DATE-OBS temporal-reference exception compressed",
+      "C03 CRDT lead/PROV-O analogy omitted"
+    ],
+    "source_identity_result": "Retained consequential source claims resolve to exact own-stage public URLs/versions/capture bytes; two nonmaterial locator defects identified.",
+    "incorrect_rejection_result": "No material incorrect rejection found; geometry ambiguity correction and non-application of issue #8298 are justified."
+  },
+  "proposed_vs_executed": {
+    "result": "PASS",
+    "candidate_proposed_not_executed": [
+      "mixed FITS/JPEG/PNG/malformed metadata fixtures",
+      "DATE-OBS/TIMESYS/legacy time cases",
+      "interrupted/repeated/renamed ingest and idempotency",
+      "synthetic grid/display/WCS/array geometry and re-anchor",
+      "concurrent conditional edits and retained stale drafts",
+      "private/revoked binary/metadata/export access",
+      "browser loss, service restart, backup restore, withdrawal/purge",
+      "offline selected packet verification and reimport/lineage"
+    ],
+    "candidate_reported_executed": [
+      "read mapped scientific inputs",
+      "fresh public-source capture/inspection",
+      "pinned implementation/test-definition and release/package/issue inspection",
+      "capture path/digest QA"
+    ],
+    "independently_executed_by_reviewer": [
+      "mapped scientific file SHA-256 comparison (11 records, all match)",
+      "candidate capture digest/confinement checks (77 records, all match)",
+      "public primary captures and applicable standard/code/test-definition inspection",
+      "full 23 issue comments and pinned release/tag/commit/package identity inspection",
+      "npm replication tarball registry SHA-1/SHA-512 match",
+      "text/archive extraction and predecessor/final/PLAN disposition comparison"
+    ],
+    "not_independently_audited": [
+      "historical candidate tool-use chronology/access assertions"
+    ],
+    "product_or_library_tests_executed_by_reviewer": false,
+    "source_or_hash_success_is_scientific_acceptance": false
+  },
+  "source_operations": {
+    "public_capture_requests_observed": 40,
+    "successful_public_captures": 40,
+    "failed_public_capture_requests": 0,
+    "web_search_calls_observed": 2,
+    "web_search_queries_observed": 6,
+    "underlying_http_round_trips_including_redirects": null,
+    "component_test_suites_executed": 0,
+    "product_tests_executed": 0
+  },
+  "usage": {
+    "input": null,
+    "cached": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "report_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/REPORT.md",
+  "report_sha256": "982047606f827334d38bbe1974a303a8cf63427628f872b9620f39baaeebebd7",
+  "pre_delivery_locator_corrections": [
+    {
+      "corrected_at_utc": "2026-10-07T20:47:00.580283+00:00",
+      "finding_ref": "C03",
+      "old_locator": "researcher-v1/artifact.md:31",
+      "correct_locator": "researcher-v1/artifact.md:29",
+      "reason": "Numbered source inspection during output verification",
+      "scientific_grade_or_coverage_changed": false
+    }
+  ]
+}

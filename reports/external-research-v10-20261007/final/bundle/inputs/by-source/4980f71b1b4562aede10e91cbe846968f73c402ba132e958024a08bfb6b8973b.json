@@ -1,0 +1,1604 @@
+{
+  "schema": "dm06.independent.full-primary-source-review.v1",
+  "case_id": "D-M06-B",
+  "review_round": "FIRST",
+  "review_type": "fresh ordinary T3 independent review",
+  "written_utc": "2026-10-08T02:33:16.892098+00:00",
+  "reviewer": {
+    "provider_instance": "codex_gmail",
+    "requested_account": "sittingmongoose@gmail.com",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "service_tier": "priority",
+    "configuration_verified": "T3 current-thread configuration read; instance/model/effort/tier all match. Account email not independently queried or changed.",
+    "goal_created": false
+  },
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/INPUT_MAP.json",
+    "sha256": "d227156ab560375cd38f8e8fce7e867c08ff579f9b4c599efc80dc0fad049661"
+  },
+  "brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md",
+    "sha256": "52f9fcd765916d2c9295334823e7fd387c5ab1b0b94d903a966ac66c79aa2bc8"
+  },
+  "common_untrusted_inputs": {
+    "draft.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/draft.md",
+      "sha256": "6dc0086bc4dc3893ff9f919f8a42180f319d7a87b941cb4465f59d1730a62959"
+    },
+    "fixtures.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/fixtures.json",
+      "sha256": "0856a17ade2bddaf99d8f62e6b61cb8e72ae0329aa43a06573a561358bfb59f8"
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/sources.json",
+      "sha256": "40ec9e218a2f4278f82e5f9633d30eb7c572c86c6bb3fbee9212049592f5f04c"
+    }
+  },
+  "frozen_outputs": {
+    "Output1": {
+      "final.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+        "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f"
+      },
+      "report.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/report.md",
+        "sha256": "b3614f41c82281e21c1fcb3e4bb9be9f613220d7a44a892063f7f63b0d68f317"
+      },
+      "sources.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/sources.json",
+        "sha256": "5d2453b7b47d23f1add948d655a796edf6482b42c236f42693cb821e413eab23"
+      },
+      "witness.py": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness.py",
+        "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37"
+      },
+      "witness-input.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness-input.json",
+        "sha256": "1fe06ef6e73bbbf6b5ad0f95ec539e50e69074a661df66b4942124d2159d6c12"
+      },
+      "witness-receipt.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness-receipt.json",
+        "sha256": "bc8cbabcf80a774b1d37f42784044a6afff8de3fa82181cafa1e64535b778ed9"
+      }
+    },
+    "Output2": {
+      "final.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+        "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af"
+      },
+      "report.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+        "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67"
+      },
+      "sources.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/sources.json",
+        "sha256": "0a64e2fb99445f952f52073b230947948af4f0977a801166cf685f91d05cc558"
+      },
+      "witness.py": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness.py",
+        "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856"
+      },
+      "witness-input.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness-input.json",
+        "sha256": "dde69e394982b670801220f6921ea0f94bba5e2ec007cfc33ab9d46fe49eb25f"
+      },
+      "witness-receipt.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness-receipt.json",
+        "sha256": "98f18c3248ab454986814ab3782547230769cd8230012e3e5814ea94e2314e61"
+      }
+    }
+  },
+  "primary_sources": {
+    "geotransform": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version": "GDAL 3.9.0"
+    },
+    "gdaltransform": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+      "version": "GDAL 3.9.0"
+    },
+    "review_gdaltransformer": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+      "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+      "version": "GDAL 3.9.0"
+    }
+  },
+  "additional_primary_capture": {
+    "source_id": "review_gdaltransformer",
+    "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+    "version": "GDAL 3.9.0",
+    "capture_started_utc": "2026-10-08T02:28:07.274377+00:00",
+    "capture_finished_utc": "2026-10-08T02:28:07.390288+00:00",
+    "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+    "bytes": 195216,
+    "executed": false,
+    "purpose": "Read exact release inverse rejection and forward numerical conditions; downloaded source is never executed."
+  },
+  "instructions_read": [
+    "/home/sittingmongoose/.codex/AGENTS.md",
+    "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+    "User-supplied T3 global/project instructions; ancestor AGENTS probes found no additional review-directory AGENTS."
+  ],
+  "declared_scope": [
+    "Bind coefficient order, coordinate units, and pixel-origin convention.",
+    "Separate pixel corners from centers.",
+    "Address rotation/shear rather than assuming north-up.",
+    "State invertibility and numerical tolerance conditions.",
+    "Use independent derivation or trusted-operation controls, not only mutually paired forward/inverse functions.",
+    "Preserve witnessed versus proposed checks and applicability."
+  ],
+  "complete_scope_assessed": true,
+  "outputs": {
+    "Output1": {
+      "complete_scope_assessed": true,
+      "scope_coverage": "6/6",
+      "all_six_obligation_dispositions": [
+        {
+          "id": "O1",
+          "obligation": "Bind coefficient order, coordinate units, and pixel-origin convention.",
+          "disposition": "PASS",
+          "assessment": "Correct formula, zero-based GT mapping, CRS coordinate units and corner origin. Scale/rotation terms are CRS units per pixel if pixel units are retained. The deterministic one-based-to-transpose assertion is an ancillary overstatement, not a failure of the displayed coefficient binding.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "9-20,27-38",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2130-2141,2182-2193",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": []
+        },
+        {
+          "id": "O2",
+          "obligation": "Separate pixel corners from centers.",
+          "disposition": "PARTIAL",
+          "assessment": "Source corner/center distinction and half-pixel shift are correct, and all tested displacements match. The universal nonconstant-map distinctness condition is false on singular maps.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "27-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2138-2141,2190-2193",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": [
+            "DM06-D03"
+          ]
+        },
+        {
+          "id": "O3",
+          "obligation": "Address rotation/shear rather than assuming north-up.",
+          "disposition": "PASS",
+          "assessment": "General off-diagonal terms retained. Rotated block has dot 0, equal squared norms 5, positive determinant 5; sheared block has column dot 1. General inverse-control condition is separately defective under O5.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "17-19,27-28,34-38",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": []
+        },
+        {
+          "id": "O4",
+          "obligation": "State invertibility and numerical tolerance conditions.",
+          "disposition": "FAIL",
+          "assessment": "Real-arithmetic det != 0 criterion and supplied singular refusals are correct. Proposed thresholds stay unresolved, but r is not a general conditioning test and finite/range/offset-error conditions are missing.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "27-28",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "review_gdaltransformer",
+              "lines": "4375-4406",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+              "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": [
+            "DM06-D01",
+            "DM06-D02"
+          ]
+        },
+        {
+          "id": "O5",
+          "obligation": "Use independent derivation or trusted-operation controls, not only mutually paired forward/inverse functions.",
+          "disposition": "PARTIAL",
+          "assessment": "Ten forward and three inverse hand expectations independently verified by exact rationals and Gaussian elimination; the tested structured control is valid for this rotated fixture. Literal/matrix transcription and paired roundtrips remain narrow corroboration. Proposed orthogonal-block control is too broad. External GCP execution is accurately proposed, not performed.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "27-28",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "1811-1813,2006-2008,2714-2741,2745-3022",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": [
+            "DM06-D04"
+          ]
+        },
+        {
+          "id": "O6",
+          "obligation": "Preserve witnessed versus proposed checks and applicability.",
+          "disposition": "PARTIAL",
+          "assessment": "Preserves source/proposed/executed labels, unresolved production tolerances and no executed GDAL claim. Receipt counts and numeric diagnostics agree. Final carries forward erroneous generic distinctness/control/numerical domains.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "9-11,27-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2130-2141,2714-2741",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "review_gdaltransformer",
+              "lines": "4375-4406",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+              "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": [
+            "DM06-D03",
+            "DM06-D04",
+            "DM06-D01",
+            "DM06-D02"
+          ]
+        }
+      ],
+      "source_quality": "FAIL",
+      "source_identity": "PASS",
+      "source_quality_basis": "Credible, byte-matched primary releases support many core claims, but the final source-conditioned recommendation has material numerical or applicability defects; FAIL does not reject the underlying sources.",
+      "material_defect_ids": [
+        "DM06-D01",
+        "DM06-D02",
+        "DM06-D03",
+        "DM06-D04"
+      ],
+      "material_defects": [
+        {
+          "id": "DM06-D01",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "severity": "material",
+          "claim": "The determinant-product margin is treated as the discriminating numerical stability test over general affine geotransforms.",
+          "consequence": "It measures cancellation in two determinant products, not general matrix conditioning. For A=diag(1,1e-12), r=1 but kappa_2=1e12; a Y perturbation of 1e-12 changes the inverse line by 1. Both proposed thresholds accept it. The tested degrees fixture is well-conditioned, but that does not validate r as a general conditioning measure. Unresolved threshold values do not fix the test form.",
+          "evidence": [
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "15,25"
+            },
+            {
+              "output": "Output1",
+              "artifact": "witness-input.json",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness-input.json",
+              "sha256": "1fe06ef6e73bbbf6b5ad0f95ec539e50e69074a661df66b4942124d2159d6c12",
+              "lines": "51-56"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "41-49,77-82"
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "27-28",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C01_ratio_not_condition_number"
+            }
+          ]
+        },
+        {
+          "id": "DM06-D02",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "severity": "material",
+          "claim": "A raw determinant/adjugate with only an exact-zero guard is presented under a broad six-coefficient/any-CRS domain without finite/range/precision conditions.",
+          "consequence": "Binary64 diagonal scales of 1e-200 underflow the product to zero and incorrectly refuse a well-conditioned map; scales of 1e200 yield infinite determinant and NaN inverse for an exactly representable mathematical answer (0.5,0.5). Origin 1e16 with unit scale loses a 0.5-pixel X increment despite r=1. These are reviewer counterexamples, not failures observed in the supplied eight fixtures. Mathematical totality over real numbers does not supply floating-point representability.",
+          "evidence": [
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "13-21,25"
+            },
+            {
+              "output": "Output1",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness.py",
+              "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37",
+              "lines": "53-62,159-168"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "41-49,71-82"
+            },
+            {
+              "output": "Output2",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness.py",
+              "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856",
+              "lines": "22-28,151-160"
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "27-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "review_gdaltransformer",
+              "lines": "4375-4392",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+              "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C02_origin_rounding"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C03_underflow"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C04_overflow"
+            }
+          ]
+        },
+        {
+          "id": "DM06-D03",
+          "outputs": [
+            "Output1"
+          ],
+          "severity": "material",
+          "claim": "Corner and center differ for every nonconstant map; only the zero block must be excluded from the distinctness check.",
+          "consequence": "For gt=[10,1,-1,20,1,-1], the nonconstant rank-1 map sends both (0,0) and (0.5,0.5) to (10,20), while (1,0) maps to (11,21). The check would reject a correct forward implementation on a valid singular input. Distinctness requires A*(0.5,0.5) != 0, not merely A != 0. Convention separation remains necessary even when coordinates coincide.",
+          "evidence": [
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "9"
+            },
+            {
+              "output": "Output1",
+              "artifact": "report.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/report.md",
+              "sha256": "b3614f41c82281e21c1fcb3e4bb9be9f613220d7a44a892063f7f63b0d68f317",
+              "lines": "11,40"
+            },
+            {
+              "output": "Output1",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness.py",
+              "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37",
+              "lines": "145-149"
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "27-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C05_nonconstant_corner_center_collision"
+            }
+          ]
+        },
+        {
+          "id": "DM06-D04",
+          "outputs": [
+            "Output1"
+          ],
+          "severity": "material",
+          "claim": "Transpose/determinant is proposed as an independent inverse control whenever columns are orthogonal.",
+          "consequence": "Orthogonality alone is insufficient. For diag(2,3), the inverse at world (1,1) is (1/2,1/3), while transpose/det gives (1/3,1/2). The implemented common-norm shortcut gives (1/2,3/4). Its check tests a row dot product and does not enforce equal norms; the current rotated fixture happens to be an equal-scale, positive-determinant rotation, so its three reported checks are correct. The generalized control can falsely reject a correct inverse.",
+          "evidence": [
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "11,17"
+            },
+            {
+              "output": "Output1",
+              "artifact": "report.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/report.md",
+              "sha256": "b3614f41c82281e21c1fcb3e4bb9be9f613220d7a44a892063f7f63b0d68f317",
+              "lines": "13,17,39"
+            },
+            {
+              "output": "Output1",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness.py",
+              "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37",
+              "lines": "107-119"
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "27-28",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C06_orthogonal_not_transpose_over_det"
+            }
+          ]
+        }
+      ],
+      "supported_optional_findings": [
+        {
+          "id": "DM06-N01",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "kind": "supported_useful_finding",
+          "finding": "All displayed forward and adjugate formulas have the correct coefficient order. All 35 supplied point constants verify in decimal rational arithmetic and within the stated tolerances for exact binary-input arithmetic. These are useful independent point checks, not merely successful roundtrips.",
+          "evidence": [
+            {
+              "source_id": "geotransform",
+              "lines": "27-28",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/outputs/Output1/independent_point_checks"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/outputs/Output2/independent_point_checks"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N03",
+          "outputs": [
+            "Output1"
+          ],
+          "kind": "supported_useful_finding",
+          "finding": "Out-of-extent points are legal affine-math inputs; raster containment belongs to caller policy. Real-number totality does not guarantee finite or distinguishable binary64 outputs.",
+          "evidence": [
+            {
+              "source_id": "geotransform",
+              "lines": "27-31",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "21"
+            },
+            {
+              "output": "Output1",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness.py",
+              "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37",
+              "lines": "190-196"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N05",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "kind": "source_scope_clarification",
+          "finding": "One-based labels alone do not transpose an array. World-file coefficient order is a distinct mapping plus a half-pixel origin conversion. Output2 final states the mapping accurately; Output1 repeats the seed deterministic transposition claim and Output2 metadata still does.",
+          "evidence": [
+            {
+              "source_id": "gdaltransform",
+              "lines": "2130-2141,2182-2193",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "7"
+            },
+            {
+              "output": "Output2",
+              "artifact": "sources.json",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/sources.json",
+              "sha256": "0a64e2fb99445f952f52073b230947948af4f0977a801166cf685f91d05cc558",
+              "lines": "98"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "17-18"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N06",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "kind": "supplemental_primary_release_condition",
+          "finding": "GDAL 3.9.0 GDALInvGeoTransform has a nonzero-diagonal/no-rotation shortcut and otherwise rejects |det| <= 1e-10*max(|linear coefficients|)^2. This is distinct from mathematical invertibility and both proposed margin thresholds. The original frozen corpus does not contain that inverse body; the supplemental release file was read, never executed. This additional source is not used to claim candidates executed GDAL or to require an external oracle when independent derivation already suffices. GCP fit tolerance in the original corpus is a different, conditional 0.25-pixel residual policy.",
+          "evidence": [
+            {
+              "source_id": "review_gdaltransformer",
+              "lines": "4372-4419",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+              "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2725-2758,2980-3017",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C07_release_vs_policy"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N07",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "kind": "uncertainty_preserved",
+          "finding": "Both retain unvalidated production tolerance values and unevaluated external GCP execution. The specific near-singular block has kappa_2=1,999,999 and inverse operator norm 1,000,000; Output1 reported Frobenius condition about 2e6, not an absolute universal inverse-amplification factor.",
+          "evidence": [
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "15-19"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "48-49,61-65,77-83"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/fixture_geometry/near_singular"
+            }
+          ]
+        }
+      ],
+      "incorrect_rejections": {
+        "observed_in_supplied_checks": [],
+        "draft_outright_rejections": [],
+        "reviewer_demonstrated_false_rejection_risks": [
+          "DM06-D03",
+          "DM06-D04",
+          "DM06-D02"
+        ],
+        "note": "All supplied correct point controls are correct. These false-rejection risks are bounded counterexamples under the declared domain, not alleged observed rejections of the original eight fixtures."
+      },
+      "final_preservation": {
+        "status": "PARTIAL",
+        "accepted_claims_preserved": true,
+        "unresolved_tolerance_and_external_execution_preserved": true,
+        "details": "Report dispositions survive the final, including correct core bindings and explicit nonexecution of GDAL. Material errors/overstatements listed above also survive; disclosure of uncertainty does not turn them into established findings."
+      },
+      "proposed_performed": {
+        "performed_receipt_evidence": "Frozen candidate Python checks only, matched to code/input hashes; neither GDAL binary nor GCP fit executed.",
+        "proposed": [
+          "Production per-dataset tolerance choice",
+          "External GDALGCPsToGeoTransform invocation with independent GCPs and bound fit/approximation conditions",
+          "Caller index convention/API contract",
+          "Production guarded inverse, including justified numerical-domain conditions"
+        ],
+        "reviewer_performed": "One bounded rational/Gaussian/LU check set plus binary64 counterexamples; no candidate main function rerun."
+      },
+      "process_validity": {
+        "status": "PASS",
+        "scope": "Frozen final receipt structural/content consistency, not an independent attestation of sandbox implementation.",
+        "checks": [
+          "Mapped artifacts match all declared SHA-256 values",
+          "Receipt code/input hashes identify the frozen witness/input",
+          "Process exit 0, no truncation, resource released, isolation-ready marker and enforced-isolation label recorded",
+          "Start/end and elapsed agree within 0.001 second; final control summaries agree with receipt stdout"
+        ],
+        "limits": [
+          "Receipt outer witness_validity and applicability both say not_assessed",
+          "Isolation is asserted by the receipt; sandbox mechanics were not independently audited",
+          "Actual native COMPLETE terminals are user-attested frozen; no terminal artifact is mapped, so timelines were not independently reread"
+        ]
+      },
+      "witness_validity": {
+        "status": "PARTIAL",
+        "basis": "Independent expectations and receipt diagnostics support the particular tested values; valid process execution alone does not establish the general conditioning, applicability, or every advertised oracle.",
+        "witness_to_report_agreement": {
+          "status": "PARTIAL",
+          "verified": [
+            "22/22 final receipt checks; 10 forward and 3 inverse constants; 36 weak pixel roundtrips max 3.330669e-10; half-pixel displacement error 2.387413e-15; tested rotated identity; sheared ratio 15/17; exact singular refusals."
+          ],
+          "mismatches": [
+            "General nonconstant distinctness and orthogonal-block inverse-control claims exceed the seven distinct-map and single equal-norm-rotation fixtures actually checked.",
+            "Production F4/F5 guard is proposed. inverse_adjugate enforces det==0 only, while a separate classification loop applies the margin; the witness does not execute a production inverse with both guards."
+          ],
+          "prior_runs": "Two runs disclosed in report; earlier receipt is not mapped and was not read. No reviewer best-of retest."
+        }
+      },
+      "oracle_independence": {
+        "status": "PARTIAL",
+        "valid_controls": [
+          "10 independently verified forward constants",
+          "3 inverse constants independently checked by Gauss-Jordan elimination",
+          "Transpose/common-norm identity valid for the specific equal-scale positive-determinant rotated fixture"
+        ],
+        "weak_or_invalid_controls": [
+          "Literal-vs-matrix transcription is paired formula corroboration",
+          "36 mutual roundtrips remain weak",
+          "Corner distinctness excludes only the zero block, an invalid general condition",
+          "Transpose/det does not apply to all orthogonal blocks"
+        ],
+        "trusted_operation_execution": false,
+        "main_independent_derivation_requirement_met_on_tested_points": true
+      },
+      "correct_incorrect_control_discrimination": {
+        "status": "PARTIAL",
+        "correct_controls": "All supplied point constants verified; no observed false rejection.",
+        "incorrect_controls": "No separately executed intentional-wrong models are present. This does not invalidate the correct independent point controls; paired roundtrip is explicitly weak.",
+        "limits": "Tested discrimination does not cover arbitrary six-coefficient numeric domains."
+      },
+      "unassessed_remainder": [],
+      "useful_deliverable": true,
+      "useful_deliverable_limits": "Useful as a bounded fixture-level coordinate/convention review; not a complete valid production inverse/numerical-policy recommendation.",
+      "blinding_limits": {
+        "neutral_labels_used": true,
+        "perfect_blinding": false,
+        "limits": [
+          "Output1 final/report explicitly name control arm; Output2 report/sources/input explicitly name treatment. Witness layouts and code expose different methods. These were encountered in the allowed neutral frozen bytes.",
+          "Embedded arm paths were visible as data; none was followed. The input map is an advisory access boundary, not a technical filesystem firewall.",
+          "No campaign state, gates, dispatch prompts, economics, other cases or grades, original arm directories, native candidate timelines, or prior review artifacts were read. No economic ranking or target grade was inferred.",
+          "This reviewer is ordinary fresh T3 review without a Goal, receipt engineering, candidate edits, rescue, feedback, workers, installation, account changes, repo/canon writes or external writes."
+        ],
+        "only_additional_science_input": "Version-tagged OSGeo primary source for GDALInvGeoTransform, allowed by the brief/user; captured in this review directory."
+      },
+      "false_corrections": []
+    },
+    "Output2": {
+      "complete_scope_assessed": true,
+      "scope_coverage": "6/6",
+      "all_six_obligation_dispositions": [
+        {
+          "id": "O1",
+          "obligation": "Bind coefficient order, coordinate units, and pixel-origin convention.",
+          "disposition": "PASS",
+          "assessment": "Final formula, CRS units, origin, and released world-file line mapping are correct. A broader one-based-index-to-transpose claim remains only in metadata; ordinary relabeling alone is not matrix transposition.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "9-20,27-38",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2130-2141,2182-2193",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": []
+        },
+        {
+          "id": "O2",
+          "obligation": "Separate pixel corners from centers.",
+          "disposition": "PASS",
+          "assessment": "Correctly conditions +0.5 mapping on integer indices meaning centers, includes rotation/shear shifts, and final retains API duty as proposed. Tested W1 correctly detects the two selected fixtures; it does not establish distinctness for every possible singular map.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "30-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2138-2141,2190-2193",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": []
+        },
+        {
+          "id": "O3",
+          "obligation": "Address rotation/shear rather than assuming north-up.",
+          "disposition": "PASS",
+          "assessment": "Off-diagonal coefficients retained; exact fixture classifications and north-up counterexamples are correct. C7 execution is not bound to actual fixture columns, recorded separately under independence.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "17-19,27-28,34-38",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": []
+        },
+        {
+          "id": "O4",
+          "obligation": "State invertibility and numerical tolerance conditions.",
+          "disposition": "FAIL",
+          "assessment": "Real-arithmetic invertibility and singular collision controls are correct. Near-singular margin is accurate and rejection threshold is explicitly proposed. General conditioning and representability domains fail; neither source nor receipt establishes the proposed margin policy.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "27-28",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "review_gdaltransformer",
+              "lines": "4375-4406",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+              "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": [
+            "DM06-D01",
+            "DM06-D02"
+          ]
+        },
+        {
+          "id": "O5",
+          "obligation": "Use independent derivation or trusted-operation controls, not only mutually paired forward/inverse functions.",
+          "disposition": "PARTIAL",
+          "assessment": "Sixteen forward and six inverse constants all verify independently. Wrong transpose inverse and W4 fixed-point oracle violations genuinely discriminate. Some advertised controls are self-comparisons or unbound constants; inverse count is overstated. GCP fitting body is incorrectly declared absent, though keeping GDAL execution proposed is legitimate.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "27-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2714-2789,2851-2858,2916-2924,2980-3017",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": [
+            "DM06-D05",
+            "DM06-D06",
+            "DM06-D07"
+          ]
+        },
+        {
+          "id": "O6",
+          "obligation": "Preserve witnessed versus proposed checks and applicability.",
+          "disposition": "PARTIAL",
+          "assessment": "Final preserves proposed tolerance/API contract, unevaluated GDAL binaries and GCP execution. Its explicit witnessed definition includes run observations; that label choice alone is not penalized. Scientific validity and independent inverse coverage are overstated, and the false corpus-absence rationale survives the final.",
+          "primary_locators": [
+            {
+              "source_id": "geotransform",
+              "lines": "9-11,27-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2714-2741,2745-3022",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "review_gdaltransformer",
+              "lines": "4375-4406",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+              "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ],
+          "material_defect_ids": [
+            "DM06-D05",
+            "DM06-D06",
+            "DM06-D07",
+            "DM06-D01",
+            "DM06-D02"
+          ]
+        }
+      ],
+      "source_quality": "FAIL",
+      "source_identity": "PASS",
+      "source_quality_basis": "Credible, byte-matched primary releases support many core claims, but the final source-conditioned recommendation has material numerical or applicability defects; FAIL does not reject the underlying sources.",
+      "material_defect_ids": [
+        "DM06-D01",
+        "DM06-D02",
+        "DM06-D05",
+        "DM06-D06",
+        "DM06-D07"
+      ],
+      "material_defects": [
+        {
+          "id": "DM06-D01",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "severity": "material",
+          "claim": "The determinant-product margin is treated as the discriminating numerical stability test over general affine geotransforms.",
+          "consequence": "It measures cancellation in two determinant products, not general matrix conditioning. For A=diag(1,1e-12), r=1 but kappa_2=1e12; a Y perturbation of 1e-12 changes the inverse line by 1. Both proposed thresholds accept it. The tested degrees fixture is well-conditioned, but that does not validate r as a general conditioning measure. Unresolved threshold values do not fix the test form.",
+          "evidence": [
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "15,25"
+            },
+            {
+              "output": "Output1",
+              "artifact": "witness-input.json",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness-input.json",
+              "sha256": "1fe06ef6e73bbbf6b5ad0f95ec539e50e69074a661df66b4942124d2159d6c12",
+              "lines": "51-56"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "41-49,77-82"
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "27-28",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C01_ratio_not_condition_number"
+            }
+          ]
+        },
+        {
+          "id": "DM06-D02",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "severity": "material",
+          "claim": "A raw determinant/adjugate with only an exact-zero guard is presented under a broad six-coefficient/any-CRS domain without finite/range/precision conditions.",
+          "consequence": "Binary64 diagonal scales of 1e-200 underflow the product to zero and incorrectly refuse a well-conditioned map; scales of 1e200 yield infinite determinant and NaN inverse for an exactly representable mathematical answer (0.5,0.5). Origin 1e16 with unit scale loses a 0.5-pixel X increment despite r=1. These are reviewer counterexamples, not failures observed in the supplied eight fixtures. Mathematical totality over real numbers does not supply floating-point representability.",
+          "evidence": [
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "13-21,25"
+            },
+            {
+              "output": "Output1",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness.py",
+              "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37",
+              "lines": "53-62,159-168"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "41-49,71-82"
+            },
+            {
+              "output": "Output2",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness.py",
+              "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856",
+              "lines": "22-28,151-160"
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "27-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "review_gdaltransformer",
+              "lines": "4375-4392",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+              "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C02_origin_rounding"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C03_underflow"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C04_overflow"
+            }
+          ]
+        },
+        {
+          "id": "DM06-D05",
+          "outputs": [
+            "Output2"
+          ],
+          "severity": "material",
+          "claim": "GDALGCPsToGeoTransform body lies outside the mapped frozen corpus, so fitting behavior is not witnessed there.",
+          "consequence": "The exact mapped gdal_misc.cpp contains the entire body at 2745-3022 and its contract at 2714-2741. Its exact-fit default is 0.25 pixel, with approximation configuration overrides, two-GCP no-rotation special case, range and rank guards. The negative source conclusion and omission of these applicability conditions are incorrect. No executed GDAL/GCP control is being demanded; the sandbox restriction and the decision to keep execution unevaluated are legitimate.",
+          "evidence": [
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "61-65"
+            },
+            {
+              "output": "Output2",
+              "artifact": "report.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+              "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67",
+              "lines": "56-57"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2714-2789,2851-2858,2916-2924,2980-3017",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            }
+          ]
+        },
+        {
+          "id": "DM06-D06",
+          "outputs": [
+            "Output2"
+          ],
+          "severity": "material",
+          "claim": "No expected value is computed at runtime, and every control discriminates against a separate oracle independence class.",
+          "consequence": "C2 computes the same expression as fwd at (0.5,0.5). W1 uses fwd again instead of the advertised frozen hp2/hp13 constants. W2 forward and W3 compare variants to fwd. C7 uses candidate-supplied col1/col2 for rotated/sheared without checking them against the fixture block. These are useful narrow checks, not independent witnesses of the full forward implementation. The frozen columns actually match, and 22 verified point constants plus W2 inverse and W4 hand-point checks supply real independent evidence; this is an overstatement of independence, not a blanket rejection of those controls.",
+          "evidence": [
+            {
+              "output": "Output2",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness.py",
+              "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856",
+              "lines": "1-8,57-64,115-137,162-203"
+            },
+            {
+              "output": "Output2",
+              "artifact": "witness-input.json",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness-input.json",
+              "sha256": "dde69e394982b670801220f6921ea0f94bba5e2ec007cfc33ab9d46fe49eb25f",
+              "lines": "7-9,83-86"
+            },
+            {
+              "output": "Output2",
+              "artifact": "report.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+              "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67",
+              "lines": "20-32,64-66"
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "27-32",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/outputs/Output2/independent_point_checks"
+            }
+          ]
+        },
+        {
+          "id": "DM06-D07",
+          "outputs": [
+            "Output2"
+          ],
+          "severity": "material",
+          "claim": "The adjugate inverse matched all 22 hand oracle points where invertible.",
+          "consequence": "C3 executes 16 forward checks and only 6 inverse checks. Four of the 22 entries are forward checks on singular maps. The receipt truthfully reports 22 mixed point checks; final/report turn that into stronger inverse evidence. All 22 constants are correct, but the inverse coverage claim is inflated.",
+          "evidence": [
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "55-59"
+            },
+            {
+              "output": "Output2",
+              "artifact": "report.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+              "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67",
+              "lines": "26,34,51"
+            },
+            {
+              "output": "Output2",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness.py",
+              "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856",
+              "lines": "66-76"
+            },
+            {
+              "output": "Output2",
+              "artifact": "witness-input.json",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness-input.json",
+              "sha256": "dde69e394982b670801220f6921ea0f94bba5e2ec007cfc33ab9d46fe49eb25f",
+              "lines": "46-68"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/outputs/Output2/point_counts"
+            }
+          ]
+        }
+      ],
+      "supported_optional_findings": [
+        {
+          "id": "DM06-N01",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "kind": "supported_useful_finding",
+          "finding": "All displayed forward and adjugate formulas have the correct coefficient order. All 35 supplied point constants verify in decimal rational arithmetic and within the stated tolerances for exact binary-input arithmetic. These are useful independent point checks, not merely successful roundtrips.",
+          "evidence": [
+            {
+              "source_id": "geotransform",
+              "lines": "27-28",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/outputs/Output1/independent_point_checks"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/outputs/Output2/independent_point_checks"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N02",
+          "outputs": [
+            "Output2"
+          ],
+          "kind": "supported_useful_finding",
+          "finding": "GT2/GT4 transposition is invisible on the three north-up inputs; detected on rotated/sheared. Independent row reduction yields (11/5,2/5) for the wrong rotated inverse at (4,3), versus correct (1,2). W4 proves wrong-pair roundtrip success cannot validate correctness. Its logged maximum is a world-coordinate closure error, not pixel-recovery error.",
+          "evidence": [
+            {
+              "output": "Output2",
+              "artifact": "witness.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness.py",
+              "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856",
+              "lines": "174-226"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/wrong_control_independent_checks"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/float_receipt_diagnostics"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N04",
+          "outputs": [
+            "Output2"
+          ],
+          "kind": "nonmaterial_report_arithmetic_error",
+          "finding": "Report M5 says the sheared margin denominator is 2.25 and ratio about 0.833. Exact values are 2.125 and 15/17=0.88235294. The final broad healthy range still contains the correct ratio; C9 executed only the near-singular margin, not this mistaken intermediate calculation.",
+          "evidence": [
+            {
+              "output": "Output2",
+              "artifact": "report.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+              "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67",
+              "lines": "51"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "47-48"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/fixture_geometry/sheared"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N05",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "kind": "source_scope_clarification",
+          "finding": "One-based labels alone do not transpose an array. World-file coefficient order is a distinct mapping plus a half-pixel origin conversion. Output2 final states the mapping accurately; Output1 repeats the seed deterministic transposition claim and Output2 metadata still does.",
+          "evidence": [
+            {
+              "source_id": "gdaltransform",
+              "lines": "2130-2141,2182-2193",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "7"
+            },
+            {
+              "output": "Output2",
+              "artifact": "sources.json",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/sources.json",
+              "sha256": "0a64e2fb99445f952f52073b230947948af4f0977a801166cf685f91d05cc558",
+              "lines": "98"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "17-18"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N06",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "kind": "supplemental_primary_release_condition",
+          "finding": "GDAL 3.9.0 GDALInvGeoTransform has a nonzero-diagonal/no-rotation shortcut and otherwise rejects |det| <= 1e-10*max(|linear coefficients|)^2. This is distinct from mathematical invertibility and both proposed margin thresholds. The original frozen corpus does not contain that inverse body; the supplemental release file was read, never executed. This additional source is not used to claim candidates executed GDAL or to require an external oracle when independent derivation already suffices. GCP fit tolerance in the original corpus is a different, conditional 0.25-pixel residual policy.",
+          "evidence": [
+            {
+              "source_id": "review_gdaltransformer",
+              "lines": "4372-4419",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+              "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/alg/gdaltransformer.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "source_id": "gdaltransform",
+              "lines": "2725-2758,2980-3017",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+              "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+              "version": "GDAL 3.9.0"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/counterexamples/C07_release_vs_policy"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N07",
+          "outputs": [
+            "Output1",
+            "Output2"
+          ],
+          "kind": "uncertainty_preserved",
+          "finding": "Both retain unvalidated production tolerance values and unevaluated external GCP execution. The specific near-singular block has kappa_2=1,999,999 and inverse operator norm 1,000,000; Output1 reported Frobenius condition about 2e6, not an absolute universal inverse-amplification factor.",
+          "evidence": [
+            {
+              "output": "Output1",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+              "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+              "lines": "15-19"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "48-49,61-65,77-83"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+              "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+              "json_pointer": "/fixture_geometry/near_singular"
+            }
+          ]
+        },
+        {
+          "id": "DM06-N08",
+          "outputs": [
+            "Output2"
+          ],
+          "kind": "false_correction_in_report",
+          "finding": "Report M5 calls scale-relative testing an amendment to the seed, but the common draft C4 already required a scale-relative test alongside the absolute tolerance at lines 69-71. The criticism of an absolute-only test is mathematically sound; its portrayal as correcting the seed is unsupported. The final states the correct limitation without requiring that strawman.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/draft.md",
+              "sha256": "6dc0086bc4dc3893ff9f919f8a42180f319d7a87b941cb4465f59d1730a62959",
+              "lines": "66-72"
+            },
+            {
+              "output": "Output2",
+              "artifact": "report.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+              "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67",
+              "lines": "50-51"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "44-49"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0",
+              "source_id": "geotransform",
+              "lines": "27-28"
+            }
+          ]
+        }
+      ],
+      "incorrect_rejections": {
+        "observed_in_supplied_checks": [],
+        "draft_outright_rejections": [],
+        "reviewer_demonstrated_false_rejection_risks": [
+          "DM06-D02"
+        ],
+        "incorrect_source_restriction": [
+          "DM06-D05"
+        ],
+        "note": "W1-W4 selected wrong models are truly wrong and their intended discrepancies are independently confirmed. A proposed quality threshold may reject a mathematically invertible map; that policy choice alone is not graded an incorrect rejection."
+      },
+      "final_preservation": {
+        "status": "PARTIAL",
+        "accepted_claims_preserved": true,
+        "unresolved_tolerance_and_external_execution_preserved": true,
+        "details": "Report dispositions survive the final, including correct core bindings and explicit nonexecution of GDAL. Material errors/overstatements listed above also survive; disclosure of uncertainty does not turn them into established findings."
+      },
+      "proposed_performed": {
+        "performed_receipt_evidence": "Frozen candidate Python checks only, matched to code/input hashes; neither GDAL binary nor GCP fit executed.",
+        "proposed": [
+          "Production per-dataset tolerance choice",
+          "External GDALGCPsToGeoTransform invocation with independent GCPs and bound fit/approximation conditions",
+          "Caller index convention/API contract",
+          "Production guarded inverse, including justified numerical-domain conditions"
+        ],
+        "reviewer_performed": "One bounded rational/Gaussian/LU check set plus binary64 counterexamples; no candidate main function rerun."
+      },
+      "process_validity": {
+        "status": "PASS",
+        "scope": "Frozen final receipt structural/content consistency, not an independent attestation of sandbox implementation.",
+        "checks": [
+          "Mapped artifacts match all declared SHA-256 values",
+          "Receipt code/input hashes identify the frozen witness/input",
+          "Process exit 0, no truncation, resource released, isolation-ready marker and enforced-isolation label recorded",
+          "Start/end and elapsed agree within 0.001 second; final control summaries agree with receipt stdout"
+        ],
+        "limits": [
+          "Receipt outer witness_validity and applicability both say not_assessed",
+          "Isolation is asserted by the receipt; sandbox mechanics were not independently audited",
+          "Actual native COMPLETE terminals are user-attested frozen; no terminal artifact is mapped, so timelines were not independently reread"
+        ]
+      },
+      "witness_validity": {
+        "status": "PARTIAL",
+        "basis": "Independent expectations and receipt diagnostics support the particular tested values; valid process execution alone does not establish the general conditioning, applicability, or every advertised oracle.",
+        "witness_to_report_agreement": {
+          "status": "PARTIAL",
+          "verified": [
+            "9 correct-control groups and 4 wrong-control groups in final receipt; 16 forward plus 6 inverse constants; 8 determinants; 48 translation checks with zero measured error; W2 wrong inverse (2.2,0.4); W4 world closure max 1.110221e-10; near-singular margin."
+          ],
+          "mismatches": [
+            "22 mixed point checks are described as 22 inverse checks",
+            "Sheared report denominator/ratio wrong: 2.125 and 15/17, not 2.25 and 0.833",
+            "W1 advertised frozen center oracles are not consumed; C2 duplicates the forward expression; C7 rotated/sheared uses frozen columns without linking to actual fixture values",
+            "C9 measures a margin but does not enforce the proposed production rejection threshold"
+          ],
+          "prior_runs": "Three runs and two repairs disclosed in report; only final receipt mapped. Prior code/receipts were not read and no reviewer best-of retest was performed."
+        }
+      },
+      "oracle_independence": {
+        "status": "PARTIAL",
+        "valid_controls": [
+          "16 independently verified forward constants",
+          "6 inverse constants independently checked by Gauss-Jordan elimination",
+          "8 fixed determinant constants agree with independent LU determinants",
+          "W2 inverse and W4 wrong-pair fixed forward-point oracle violations"
+        ],
+        "weak_or_invalid_controls": [
+          "C2 expected expression equals the implementation expression at runtime",
+          "W1 expects fwd(center), not the declared frozen center constants",
+          "W2 forward and W3 use the same forward baseline",
+          "C7 rotated/sheared classifies separate candidate-supplied columns with no fixture binding",
+          "Translation and half-pixel metamorphics constrain properties but do not alone prove coefficient correctness"
+        ],
+        "trusted_operation_execution": false,
+        "main_independent_derivation_requirement_met_on_tested_points": true
+      },
+      "correct_incorrect_control_discrimination": {
+        "status": "PASS_ON_DECLARED_TESTED_MODELS",
+        "correct_controls": "All supplied point constants verified; no observed false rejection.",
+        "incorrect_controls": "Four named wrong models correctly discriminated and independently verified.",
+        "limits": "Tested discrimination does not cover arbitrary six-coefficient numeric domains."
+      },
+      "unassessed_remainder": [],
+      "useful_deliverable": true,
+      "useful_deliverable_limits": "Useful as a bounded fixture-level coordinate/convention review; not a complete valid production inverse/numerical-policy recommendation.",
+      "blinding_limits": {
+        "neutral_labels_used": true,
+        "perfect_blinding": false,
+        "limits": [
+          "Output1 final/report explicitly name control arm; Output2 report/sources/input explicitly name treatment. Witness layouts and code expose different methods. These were encountered in the allowed neutral frozen bytes.",
+          "Embedded arm paths were visible as data; none was followed. The input map is an advisory access boundary, not a technical filesystem firewall.",
+          "No campaign state, gates, dispatch prompts, economics, other cases or grades, original arm directories, native candidate timelines, or prior review artifacts were read. No economic ranking or target grade was inferred.",
+          "This reviewer is ordinary fresh T3 review without a Goal, receipt engineering, candidate edits, rescue, feedback, workers, installation, account changes, repo/canon writes or external writes."
+        ],
+        "only_additional_science_input": "Version-tagged OSGeo primary source for GDALInvGeoTransform, allowed by the brief/user; captured in this review directory."
+      },
+      "false_corrections": [
+        {
+          "id": "DM06-N08",
+          "outputs": [
+            "Output2"
+          ],
+          "kind": "false_correction_in_report",
+          "finding": "Report M5 calls scale-relative testing an amendment to the seed, but the common draft C4 already required a scale-relative test alongside the absolute tolerance at lines 69-71. The criticism of an absolute-only test is mathematically sound; its portrayal as correcting the seed is unsupported. The final states the correct limitation without requiring that strawman.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/draft.md",
+              "sha256": "6dc0086bc4dc3893ff9f919f8a42180f319d7a87b941cb4465f59d1730a62959",
+              "lines": "66-72"
+            },
+            {
+              "output": "Output2",
+              "artifact": "report.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+              "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67",
+              "lines": "50-51"
+            },
+            {
+              "output": "Output2",
+              "artifact": "final.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+              "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+              "lines": "44-49"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+              "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+              "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+              "version": "GDAL 3.9.0",
+              "source_id": "geotransform",
+              "lines": "27-28"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "review_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.py",
+      "sha256": "e3b7470e1ee6856a20297444ce8e3290844edb20eaab6f9f9eba8e22302b89cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-checks.json",
+      "sha256": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary.json",
+      "sha256": "d2b2946f12c015e16a256fda142008e3f48f41f7f3a34c762523b57bd742cc77"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/review-primary-gdaltransformer-v3.9.0.cpp",
+      "sha256": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2"
+    }
+  ],
+  "unassessed_remainder": [],
+  "outside_claimed_execution_scope": [
+    "No executed GDAL binaries or external GCP fitting",
+    "No independent audit of namespace/seccomp launcher mechanics or cryptographic receipt authenticity",
+    "No remapped original arm files, earlier candidate receipts, native timelines, campaign records or grades"
+  ],
+  "blinding_limits": {
+    "neutral_labels_used": true,
+    "perfect_blinding": false,
+    "limits": [
+      "Output1 final/report explicitly name control arm; Output2 report/sources/input explicitly name treatment. Witness layouts and code expose different methods. These were encountered in the allowed neutral frozen bytes.",
+      "Embedded arm paths were visible as data; none was followed. The input map is an advisory access boundary, not a technical filesystem firewall.",
+      "No campaign state, gates, dispatch prompts, economics, other cases or grades, original arm directories, native candidate timelines, or prior review artifacts were read. No economic ranking or target grade was inferred.",
+      "This reviewer is ordinary fresh T3 review without a Goal, receipt engineering, candidate edits, rescue, feedback, workers, installation, account changes, repo/canon writes or external writes."
+    ],
+    "only_additional_science_input": "Version-tagged OSGeo primary source for GDALInvGeoTransform, allowed by the brief/user; captured in this review directory."
+  },
+  "economic_ranking": null,
+  "target_grades": null,
+  "completion_basis": "All six declared obligations assessed for each exact frozen output; useful evidence credited and decisive local defects identified. No candidate repair or retest."
+}

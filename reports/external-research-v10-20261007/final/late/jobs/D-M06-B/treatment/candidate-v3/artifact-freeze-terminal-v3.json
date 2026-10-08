@@ -1,0 +1,90 @@
+{
+  "at": "2026-10-08T02:12:12.021832+00:00",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/INPUT_MAP.json",
+      "sha256": "a70f6809c07cc17d8301535ecc4ba278426a23b1058436dd9b13181bd4aa260b",
+      "bytes": 5300
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/assignment.md",
+      "sha256": "519a9bb085940c955668e22884944280e58fe39ed9cb070e3d472d642705e08c",
+      "bytes": 4036
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/dispatch-config.json",
+      "sha256": "708073b469910c09567855b678e93ce0966aa3f0d67cec62b783e1880a8b10e8",
+      "bytes": 564
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/dispatch-receipt.json",
+      "sha256": "c0e6808eeb0e157a827880e8dfecb681608c74a3e29056297e5c52adad42f7b0",
+      "bytes": 26833
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/dispatch.json",
+      "sha256": "41188977eda35d88c7c7cb9a24c040d98eea8dd7bf58db1a9aa74b80d0683c3b",
+      "bytes": 1826
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/final.md",
+      "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+      "bytes": 6984
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/report.md",
+      "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67",
+      "bytes": 10148
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/sources.json",
+      "sha256": "0a64e2fb99445f952f52073b230947948af4f0977a801166cf685f91d05cc558",
+      "bytes": 7198
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/startup-event-observation-v1.json",
+      "sha256": "89c1e0f72950a8853b1f07ca41adb1400c1a4046a219e3b4b76cfabf3440fd46",
+      "bytes": 3700
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/t3-terminal-observation-v3.json",
+      "sha256": "c096f601ef4edfa987c4276f262195f15f77b3ef7c1cb85ec994be6637161044",
+      "bytes": 176935
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/task.txt",
+      "sha256": "a7fde871976034ead47199b1fe0fd56ac486d8d786c9d913f38a2b0359b114b9",
+      "bytes": 141
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/timings.json",
+      "sha256": "6ae05a4989a2f5be292d8b74f6c68c811be067a83a660aecfe487a58f2c07d4e",
+      "bytes": 2563
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/witness-input.json",
+      "sha256": "dde69e394982b670801220f6921ea0f94bba5e2ec007cfc33ab9d46fe49eb25f",
+      "bytes": 9050
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/witness-receipt.json",
+      "sha256": "98f18c3248ab454986814ab3782547230769cd8230012e3e5814ea94e2314e61",
+      "bytes": 3173
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/witness.py",
+      "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856",
+      "bytes": 10941
+    }
+  ],
+  "required_absent": [],
+  "json_parse": {
+    "sources.json": "VALID_JSON",
+    "timings.json": "VALID_JSON",
+    "witness-input.json": "VALID_JSON",
+    "witness-receipt.json": "VALID_JSON"
+  },
+  "science": "UNASSESSED",
+  "native": "PENDING_ROOT_DISTINCT_TERMINAL_NOMINATION",
+  "active_absence_preserved": true
+}

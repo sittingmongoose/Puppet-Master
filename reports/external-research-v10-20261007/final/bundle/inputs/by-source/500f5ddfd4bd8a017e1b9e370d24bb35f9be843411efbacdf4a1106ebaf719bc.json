@@ -1,0 +1,182 @@
+{
+  "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "observed_cutoff": "2026-10-07T22:47:31.641198+00:00",
+  "files": [
+    {
+      "relative_path": "helpers/final-report/count-and-claim-contract-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/count-and-claim-contract-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/final-report/count-and-claim-contract-v1.json",
+      "sha256": "30f8d9774cdd1213e713536b4ea3daa30772af5428d4b4daa0a77a0ae19dc26b",
+      "bytes": 2970,
+      "capture_at": "2026-10-07T22:47:31.643919+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/COMPARISONS.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/COMPARISONS.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/COMPARISONS.json",
+      "sha256": "c8a34aec7d8fc1cda77be5e5269b45cecba53ea7b18e2f2e231db404ef52d63b",
+      "bytes": 141743,
+      "capture_at": "2026-10-07T22:47:31.648927+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "sha256": "0e9973d6e4369585a84c3dd004bad94a70bc83d9fc8037a393792d3bb41a408c",
+      "bytes": 3590,
+      "capture_at": "2026-10-07T22:47:31.649321+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/fast01-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/fast01-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/fast01-pair-disposition-v1.json",
+      "sha256": "879b07e9704dc70f6c9aa81295730d531416cb1a7e39595a5cbb1feb3560df48",
+      "bytes": 2039,
+      "capture_at": "2026-10-07T22:47:31.651103+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/fast02-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/fast02-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/fast02-pair-disposition-v1.json",
+      "sha256": "b883c8228ab086f1fafc0e2bbf54070a33374ddb75036362dfd6dc2620e98e3e",
+      "bytes": 5971,
+      "capture_at": "2026-10-07T22:47:31.652137+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/fast03-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/fast03-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/fast03-pair-disposition-v1.json",
+      "sha256": "f195550a5642ef8e1bbd019d96844b1beb0ee83e422dc8f2d09b4f67c231316e",
+      "bytes": 6611,
+      "capture_at": "2026-10-07T22:47:31.652987+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "sha256": "8a14d9eecd9e588eba5263ed2dc011a1520c9bf093a02866edf5d68c6f319e87",
+      "bytes": 19719,
+      "capture_at": "2026-10-07T22:47:31.653991+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method02-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method02-pair-disposition-v1.json",
+      "sha256": "eed33f60e3ae8425bd95f91d62aadedbfeba4139cac1f7d15d4868ea6efe6e34",
+      "bytes": 3024,
+      "capture_at": "2026-10-07T22:47:31.654901+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method02-pair-disposition-v2.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-pair-disposition-v2.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method02-pair-disposition-v2.json",
+      "sha256": "f4a3e3cdeb3a1a49ebbba361cf5f50caabe0eb4366b735e4a9db3941221002e4",
+      "bytes": 2027,
+      "capture_at": "2026-10-07T22:47:31.656018+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method03-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method03-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method03-pair-disposition-v1.json",
+      "sha256": "a75f221f0c8558bf844c9750f5804fbb77b7cbe6bca088c97f3f3a92321cb016",
+      "bytes": 5298,
+      "capture_at": "2026-10-07T22:47:31.657014+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method04-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method04-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method04-pair-disposition-v1.json",
+      "sha256": "e1584ec08b35d185c455d9a8539c9ddd59d7a129e7185725dac1fd92a60de95e",
+      "bytes": 2227,
+      "capture_at": "2026-10-07T22:47:31.658013+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method04-pair-disposition-v2.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method04-pair-disposition-v2.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method04-pair-disposition-v2.json",
+      "sha256": "b61c85e40e0457b616ec0139ec2ddfc73b0a93758c32747ae85f16fe0db9242c",
+      "bytes": 7474,
+      "capture_at": "2026-10-07T22:47:31.658863+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method05-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method05-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method05-pair-disposition-v1.json",
+      "sha256": "d22eb3bf93218f38023747d614a6fed7e1abe55039655d69794b809948938b37",
+      "bytes": 6254,
+      "capture_at": "2026-10-07T22:47:31.659699+00:00"
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "sha256": "48eac1feeb0335178083b05a22d53e71ecbc205fc2872d7b678b88027d7c4ed2",
+      "bytes": 7290,
+      "capture_at": "2026-10-07T22:47:31.660637+00:00"
+    },
+    {
+      "relative_path": "helpers/targeted-cohort2/COMPARISONS.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/COMPARISONS.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/targeted-cohort2/COMPARISONS.json",
+      "sha256": "8e4341a5a492b70561bace7a2f6b3b95c9901f74473e0cc579b2507163714ff7",
+      "bytes": 86980,
+      "capture_at": "2026-10-07T22:47:31.662340+00:00"
+    },
+    {
+      "relative_path": "helpers/targeted-cohort4/COMPARISONS.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/COMPARISONS.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/targeted-cohort4/COMPARISONS.json",
+      "sha256": "387c096e199aa7b40e8d19cd346d22d9f33458eb5118741d01648ae78d325766",
+      "bytes": 49609,
+      "capture_at": "2026-10-07T22:47:31.662885+00:00"
+    },
+    {
+      "relative_path": "helpers/targeted-supervisor/COMPARISONS.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/COMPARISONS.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/targeted-supervisor/COMPARISONS.json",
+      "sha256": "8a6c438a03064073b3af875b636a2462bdde9dae5e0bd7a19ce8bb095f2ed6f9",
+      "bytes": 33467,
+      "capture_at": "2026-10-07T22:47:31.663367+00:00"
+    },
+    {
+      "relative_path": "reviews/anchors/COMPARISONS.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/COMPARISONS.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/reviews/anchors/COMPARISONS.json",
+      "sha256": "8694786338d3a5b310cbb86d26fe3c38bcd0d9f78c792ba631717ba91d5a4256",
+      "bytes": 6309,
+      "capture_at": "2026-10-07T22:47:31.664783+00:00"
+    },
+    {
+      "relative_path": "reviews/confirmation/COMPARISONS.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/COMPARISONS.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/reviews/confirmation/COMPARISONS.json",
+      "sha256": "5e224b233eb55b3348245a788469636dbb177995cf640e32c13d331f425d79d1",
+      "bytes": 92677,
+      "capture_at": "2026-10-07T22:47:31.667013+00:00"
+    },
+    {
+      "relative_path": "reviews/targeted-cohort3/COMPARISONS.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/COMPARISONS.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/reviews/targeted-cohort3/COMPARISONS.json",
+      "sha256": "b5633d8a5faf58b48a0554b631ccf5f030f4726c23c584f0dd3131e01c7b352f",
+      "bytes": 26316,
+      "capture_at": "2026-10-07T22:47:31.667630+00:00"
+    },
+    {
+      "relative_path": "state/logical-slot-index-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/logical-slot-index-v1.json",
+      "snapshot_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/inputs/state/logical-slot-index-v1.json",
+      "sha256": "45670c83f4bbc54a8d030ae488acc87de22a946f3113ec6d6a14148745c156a9",
+      "bytes": 14947,
+      "capture_at": "2026-10-07T22:47:31.668012+00:00"
+    }
+  ],
+  "exclude_live_scientific_cases": [
+    "D-M06-A",
+    "D-M06-B",
+    "D-M07-A",
+    "D-M07-B",
+    "D-M09-A"
+  ],
+  "immutable_snapshot_nonatomic": true
+}

@@ -1,0 +1,5115 @@
+{
+  "schema_version": 1,
+  "review_identity": "I-FAST-01 standalone independent scientific review",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "overall_full_requirement_closure": "NOT_FULLY_VERIFIABLE",
+  "count_definitions": {
+    "total": "Declared finite inventory, not an exhaustive opportunity universe.",
+    "complete": "Reviewer completed an assessment and disposition of the item; can include supported uncertainty or a reported gap. Does not mean the candidate satisfied it.",
+    "assessed": "Examined against admitted artifact and available relevant primary evidence.",
+    "unassessed": "Not examined before completion/deadline. Unknown source/process support is instead explicitly assessed-unknown.",
+    "artifact_content_complete": "Required delivered content adequately present; for optional discovery records, candidate presence is counted separately from a completed review disposition. Optional omissions are not unmet original feature requirements.",
+    "axes": "Shared item IDs are counted within each applicable axis; axes overlap and must not be added as disjoint populations."
+  },
+  "original_inventory": {
+    "obligations": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "artifact_content_complete": 3,
+      "artifact_content_qualified_or_unknown": 3
+    },
+    "plan_decisions": {
+      "total": 43,
+      "complete": 43,
+      "assessed": 43,
+      "unassessed": 0,
+      "artifact_content_complete": 42,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "conditions": {
+      "total": 57,
+      "complete": 57,
+      "assessed": 57,
+      "unassessed": 0,
+      "artifact_content_complete": 49,
+      "artifact_content_qualified_or_unknown": 8
+    },
+    "brief_conditions": {
+      "total": 31,
+      "complete": 31,
+      "assessed": 31,
+      "unassessed": 0,
+      "artifact_content_complete": 24,
+      "artifact_content_qualified_or_unknown": 7
+    },
+    "plan_scope_conditions": {
+      "total": 26,
+      "complete": 26,
+      "assessed": 26,
+      "unassessed": 0,
+      "artifact_content_complete": 25,
+      "artifact_content_qualified_or_unknown": 1
+    }
+  },
+  "category_counts": {
+    "alternative_planning_disposition": {
+      "total": 8,
+      "complete": 8,
+      "assessed": 8,
+      "unassessed": 0,
+      "artifact_content_complete": 8,
+      "artifact_content_qualified_or_unknown": 0
+    },
+    "bounded_discovery": {
+      "total": 15,
+      "complete": 15,
+      "assessed": 15,
+      "unassessed": 0,
+      "artifact_content_complete": 8,
+      "artifact_content_qualified_or_unknown": 7
+    },
+    "consequential_claim": {
+      "total": 35,
+      "complete": 35,
+      "assessed": 35,
+      "unassessed": 0,
+      "artifact_content_complete": 34,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "criticism_correction_disposition": {
+      "total": 10,
+      "complete": 10,
+      "assessed": 10,
+      "unassessed": 0,
+      "artifact_content_complete": 9,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "execution_evidence_boundary": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "artifact_content_complete": 6,
+      "artifact_content_qualified_or_unknown": 0
+    },
+    "original_brief_condition": {
+      "total": 31,
+      "complete": 31,
+      "assessed": 31,
+      "unassessed": 0,
+      "artifact_content_complete": 24,
+      "artifact_content_qualified_or_unknown": 7
+    },
+    "original_obligation": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "artifact_content_complete": 3,
+      "artifact_content_qualified_or_unknown": 3
+    },
+    "original_plan_decision": {
+      "total": 43,
+      "complete": 43,
+      "assessed": 43,
+      "unassessed": 0,
+      "artifact_content_complete": 42,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "original_plan_scope_condition": {
+      "total": 26,
+      "complete": 26,
+      "assessed": 26,
+      "unassessed": 0,
+      "artifact_content_complete": 25,
+      "artifact_content_qualified_or_unknown": 1
+    },
+    "proposed_validation": {
+      "total": 10,
+      "complete": 10,
+      "assessed": 10,
+      "unassessed": 0,
+      "artifact_content_complete": 10,
+      "artifact_content_qualified_or_unknown": 0
+    },
+    "scope_choice_uncertainty_preservation": {
+      "total": 18,
+      "complete": 18,
+      "assessed": 18,
+      "unassessed": 0,
+      "artifact_content_complete": 17,
+      "artifact_content_qualified_or_unknown": 1
+    }
+  },
+  "six_axes": [
+    {
+      "axis": 1,
+      "title": "Required brief obligations and all original plan clauses/conditions",
+      "counts": {
+        "total": 106,
+        "complete": 106,
+        "assessed": 106,
+        "unassessed": 0,
+        "artifact_content_complete": 94,
+        "artifact_content_qualified_or_unknown": 12
+      },
+      "item_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "D10",
+        "D11",
+        "D12",
+        "D13",
+        "D14",
+        "D15",
+        "D16",
+        "D17",
+        "D18",
+        "D19",
+        "D20",
+        "D21",
+        "D22",
+        "D23",
+        "D24",
+        "D25",
+        "D26",
+        "D27",
+        "D28",
+        "D29",
+        "D30",
+        "D31",
+        "D32",
+        "D33",
+        "D34",
+        "D35",
+        "D36",
+        "D37",
+        "D38",
+        "D39",
+        "D40",
+        "D41",
+        "D42",
+        "D43",
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "O5",
+        "O6",
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "B14",
+        "B15",
+        "B16",
+        "B17",
+        "B18",
+        "B19",
+        "B20",
+        "B21",
+        "B22",
+        "B23",
+        "B24",
+        "B25",
+        "B26",
+        "B27",
+        "B28",
+        "B29",
+        "B30",
+        "B31",
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05",
+        "K06",
+        "K07",
+        "K08",
+        "K09",
+        "K10",
+        "K11",
+        "K12",
+        "K13",
+        "K14",
+        "K15",
+        "K16",
+        "K17",
+        "K18",
+        "K19",
+        "K20",
+        "K21",
+        "K22",
+        "K23",
+        "K24",
+        "K25",
+        "K26"
+      ]
+    },
+    {
+      "axis": 2,
+      "title": "Consequential claims and applicability conditions",
+      "counts": {
+        "total": 35,
+        "complete": 35,
+        "assessed": 35,
+        "unassessed": 0,
+        "artifact_content_complete": 34,
+        "artifact_content_qualified_or_unknown": 1
+      },
+      "item_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21",
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26",
+        "C27",
+        "C28",
+        "C29",
+        "C30",
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35"
+      ]
+    },
+    {
+      "axis": 3,
+      "title": "Bounded useful discovery/mechanisms/alternatives/opportunities",
+      "counts": {
+        "total": 15,
+        "complete": 15,
+        "assessed": 15,
+        "unassessed": 0,
+        "artifact_content_complete": 8,
+        "artifact_content_qualified_or_unknown": 7
+      },
+      "item_ids": [
+        "U01",
+        "U02",
+        "U03",
+        "U04",
+        "U05",
+        "U06",
+        "U07",
+        "U08",
+        "U09",
+        "U10",
+        "U11",
+        "U12",
+        "U13",
+        "U14",
+        "U15"
+      ]
+    },
+    {
+      "axis": 4,
+      "title": "Criticism/corrections and planning dispositions including rejected/retained choices",
+      "counts": {
+        "total": 61,
+        "complete": 61,
+        "assessed": 61,
+        "unassessed": 0,
+        "artifact_content_complete": 59,
+        "artifact_content_qualified_or_unknown": 2
+      },
+      "item_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "D10",
+        "D11",
+        "D12",
+        "D13",
+        "D14",
+        "D15",
+        "D16",
+        "D17",
+        "D18",
+        "D19",
+        "D20",
+        "D21",
+        "D22",
+        "D23",
+        "D24",
+        "D25",
+        "D26",
+        "D27",
+        "D28",
+        "D29",
+        "D30",
+        "D31",
+        "D32",
+        "D33",
+        "D34",
+        "D35",
+        "D36",
+        "D37",
+        "D38",
+        "D39",
+        "D40",
+        "D41",
+        "D42",
+        "D43",
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08"
+      ]
+    },
+    {
+      "axis": 5,
+      "title": "Original scope/choices/constraints/uncertainty preservation",
+      "counts": {
+        "total": 118,
+        "complete": 118,
+        "assessed": 118,
+        "unassessed": 0,
+        "artifact_content_complete": 108,
+        "artifact_content_qualified_or_unknown": 10
+      },
+      "item_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "D10",
+        "D11",
+        "D12",
+        "D13",
+        "D14",
+        "D15",
+        "D16",
+        "D17",
+        "D18",
+        "D19",
+        "D20",
+        "D21",
+        "D22",
+        "D23",
+        "D24",
+        "D25",
+        "D26",
+        "D27",
+        "D28",
+        "D29",
+        "D30",
+        "D31",
+        "D32",
+        "D33",
+        "D34",
+        "D35",
+        "D36",
+        "D37",
+        "D38",
+        "D39",
+        "D40",
+        "D41",
+        "D42",
+        "D43",
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "B14",
+        "B15",
+        "B16",
+        "B17",
+        "B18",
+        "B19",
+        "B20",
+        "B21",
+        "B22",
+        "B23",
+        "B24",
+        "B25",
+        "B26",
+        "B27",
+        "B28",
+        "B29",
+        "B30",
+        "B31",
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05",
+        "K06",
+        "K07",
+        "K08",
+        "K09",
+        "K10",
+        "K11",
+        "K12",
+        "K13",
+        "K14",
+        "K15",
+        "K16",
+        "K17",
+        "K18",
+        "K19",
+        "K20",
+        "K21",
+        "K22",
+        "K23",
+        "K24",
+        "K25",
+        "K26",
+        "Q01",
+        "Q02",
+        "Q03",
+        "Q04",
+        "Q05",
+        "Q06",
+        "Q07",
+        "Q08",
+        "Q09",
+        "Q10",
+        "Q11",
+        "Q12",
+        "Q13",
+        "Q14",
+        "Q15",
+        "Q16",
+        "Q17",
+        "Q18"
+      ]
+    },
+    {
+      "axis": 6,
+      "title": "Proposed versus actually executed validation",
+      "counts": {
+        "total": 16,
+        "complete": 16,
+        "assessed": 16,
+        "unassessed": 0,
+        "artifact_content_complete": 16,
+        "artifact_content_qualified_or_unknown": 0
+      },
+      "item_ids": [
+        "V01",
+        "V02",
+        "V03",
+        "V04",
+        "V05",
+        "V06",
+        "V07",
+        "V08",
+        "V09",
+        "V10",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "D01",
+      "category": "original_plan_decision",
+      "text": "Desktop workspace",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow; P1",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D02",
+      "category": "original_plan_decision",
+      "text": "Import up to twenty scans",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow; P1",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D03",
+      "category": "original_plan_decision",
+      "text": "Scanned TIFF and JPEG input formats",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D04",
+      "category": "original_plan_decision",
+      "text": "One reference input",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow; P1",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D05",
+      "category": "original_plan_decision",
+      "text": "Public reference raster or map-service alternative",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D06",
+      "category": "original_plan_decision",
+      "text": "User selects the reference",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow; P1",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D07",
+      "category": "original_plan_decision",
+      "text": "Source provenance stays visible",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D08",
+      "category": "original_plan_decision",
+      "text": "Image dimensions stay visible",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D09",
+      "category": "original_plan_decision",
+      "text": "Stated coordinate-reference information stays visible",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1; P3",
+      "evidence_refs": [
+        "plan.md:7"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:7 (P1)"
+    },
+    {
+      "id": "D10",
+      "category": "original_plan_decision",
+      "text": "Volunteers place control points",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2",
+      "evidence_refs": [
+        "plan.md:11",
+        "R01:2315-2490",
+        "R03:203-235,608-779",
+        "R06:transformation algorithms"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:11 (P2)"
+    },
+    {
+      "id": "D11",
+      "category": "original_plan_decision",
+      "text": "User chooses a transformation",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2",
+      "evidence_refs": [
+        "plan.md:11",
+        "R01:2315-2490",
+        "R03:203-235,608-779",
+        "R06:transformation algorithms"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/clarify",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:11 (P2)"
+    },
+    {
+      "id": "D12",
+      "category": "original_plan_decision",
+      "text": "Small explained transformation set",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2",
+      "evidence_refs": [
+        "plan.md:11",
+        "R01:2315-2490",
+        "R03:203-235,608-779",
+        "R06:transformation algorithms"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "product choice",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:11 (P2)"
+    },
+    {
+      "id": "D13",
+      "category": "original_plan_decision",
+      "text": "Inspect residuals",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2; P3",
+      "evidence_refs": [
+        "plan.md:11",
+        "R01:2315-2490",
+        "R03:203-235,608-779",
+        "R06:transformation algorithms"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/clarify",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:11 (P2)"
+    },
+    {
+      "id": "D14",
+      "category": "original_plan_decision",
+      "text": "Inspect the aligned overlay",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow; P3",
+      "evidence_refs": [
+        "plan.md:11",
+        "R01:2315-2490",
+        "R03:203-235,608-779",
+        "R06:transformation algorithms"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:11 (P2)"
+    },
+    {
+      "id": "D15",
+      "category": "original_plan_decision",
+      "text": "Store multiple candidate alignments instead of replacing the source scan",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2; P4",
+      "evidence_refs": [
+        "plan.md:11",
+        "R01:2315-2490",
+        "R03:203-235,608-779",
+        "R06:transformation algorithms"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:11 (P2)"
+    },
+    {
+      "id": "D16",
+      "category": "original_plan_decision",
+      "text": "Reviewer inspects point placement",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P3",
+      "evidence_refs": [
+        "plan.md:15",
+        "R06:residual units/model warnings"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:15 (P3)"
+    },
+    {
+      "id": "D17",
+      "category": "original_plan_decision",
+      "text": "Reviewer includes or excludes a point",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2; P3",
+      "evidence_refs": [
+        "plan.md:15",
+        "R06:residual units/model warnings"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:15 (P3)"
+    },
+    {
+      "id": "D18",
+      "category": "original_plan_decision",
+      "text": "Compare candidate alignments",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P3",
+      "evidence_refs": [
+        "plan.md:15",
+        "R06:residual units/model warnings"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:15 (P3)"
+    },
+    {
+      "id": "D19",
+      "category": "original_plan_decision",
+      "text": "Visible uncertainty describes alignment evidence",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P3; P6",
+      "evidence_refs": [
+        "plan.md:15",
+        "R06:residual units/model warnings"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/clarify",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:15 (P3)"
+    },
+    {
+      "id": "D20",
+      "category": "original_plan_decision",
+      "text": "No boundary-ownership determination",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow; P3",
+      "evidence_refs": [
+        "plan.md:15",
+        "R06:residual units/model warnings"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:15 (P3)"
+    },
+    {
+      "id": "D21",
+      "category": "original_plan_decision",
+      "text": "No engineering-accuracy determination",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow; P3",
+      "evidence_refs": [
+        "plan.md:15",
+        "R06:residual units/model warnings"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:15 (P3)"
+    },
+    {
+      "id": "D22",
+      "category": "original_plan_decision",
+      "text": "Original scans are immutable",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4; P6 checks 4/6",
+      "evidence_refs": [
+        "plan.md:19"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:19 (P4)"
+    },
+    {
+      "id": "D23",
+      "category": "original_plan_decision",
+      "text": "Project saves control points",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4",
+      "evidence_refs": [
+        "plan.md:19"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:19 (P4)"
+    },
+    {
+      "id": "D24",
+      "category": "original_plan_decision",
+      "text": "Project saves coordinate assumptions",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4",
+      "evidence_refs": [
+        "plan.md:19"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:19 (P4)"
+    },
+    {
+      "id": "D25",
+      "category": "original_plan_decision",
+      "text": "Project saves transformation settings",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4",
+      "evidence_refs": [
+        "plan.md:19"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:19 (P4)"
+    },
+    {
+      "id": "D26",
+      "category": "original_plan_decision",
+      "text": "Project saves selected alignment",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4",
+      "evidence_refs": [
+        "plan.md:19"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:19 (P4)"
+    },
+    {
+      "id": "D27",
+      "category": "original_plan_decision",
+      "text": "Project saves provenance",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4",
+      "evidence_refs": [
+        "plan.md:19"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:19 (P4)"
+    },
+    {
+      "id": "D28",
+      "category": "original_plan_decision",
+      "text": "Reopen recreates the chosen review state without downloading private data",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4; P6 check 4",
+      "evidence_refs": [
+        "plan.md:19"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/qualify remote reference",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:19 (P4)"
+    },
+    {
+      "id": "D29",
+      "category": "original_plan_decision",
+      "text": "Raster-reading component initially undecided",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P5",
+      "evidence_refs": [
+        "plan.md:23",
+        "R01:2315-2490",
+        "R05:229-286",
+        "R29:394-412"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "provisional GDAL spike",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:23 (P5)"
+    },
+    {
+      "id": "D30",
+      "category": "original_plan_decision",
+      "text": "Reprojection/transformation component initially undecided",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2; P5",
+      "evidence_refs": [
+        "plan.md:23",
+        "R01:2315-2490",
+        "R05:229-286",
+        "R29:394-412"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "provisional GDAL plus separate similarity solver",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:23 (P5)"
+    },
+    {
+      "id": "D31",
+      "category": "original_plan_decision",
+      "text": "Tiled-image-viewing component initially undecided",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P5; Alternatives",
+      "evidence_refs": [
+        "plan.md:23",
+        "R01:2315-2490",
+        "R05:229-286",
+        "R29:394-412"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "remain undecided; mechanism proposed",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:23 (P5)"
+    },
+    {
+      "id": "D32",
+      "category": "original_plan_decision",
+      "text": "Bound processing on a laptop",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P5; P6 check 7",
+      "evidence_refs": [
+        "plan.md:23",
+        "R01:2315-2490",
+        "R05:229-286",
+        "R29:394-412"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain as unmeasured gate",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:23 (P5)"
+    },
+    {
+      "id": "D33",
+      "category": "original_plan_decision",
+      "text": "Explain unavailable projection information",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "P1; P3; P6 check 1; Remaining uncertainty",
+      "evidence_refs": [
+        "plan.md:23",
+        "R01:2315-2490",
+        "R05:229-286",
+        "R29:394-412"
+      ],
+      "finding": "qualified",
+      "planning_disposition": "partial clarification",
+      "conditions": "Missing CRS on an unreferenced scan must be distinguished from unknown target/reference CRS; the artifact proposes rejection tests but gives little explanation/recovery flow.",
+      "unassessed_reason": null,
+      "original_ref": "plan.md:23 (P5)"
+    },
+    {
+      "id": "D34",
+      "category": "original_plan_decision",
+      "text": "Preserve user choices without silently inferring them",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1; P2; P4; P6 checks 1/3",
+      "evidence_refs": [
+        "plan.md:23",
+        "R01:2315-2490",
+        "R05:229-286",
+        "R29:394-412"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:23 (P5)"
+    },
+    {
+      "id": "D35",
+      "category": "original_plan_decision",
+      "text": "Export an alignment package",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "D36",
+      "category": "original_plan_decision",
+      "text": "Derived raster is optional",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain; optional GeoTIFF",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "D37",
+      "category": "original_plan_decision",
+      "text": "Output carries provenance and uncertainty",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/add",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "D38",
+      "category": "original_plan_decision",
+      "text": "Propose coordinate-interpretation checks",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6 check 1",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/expand",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "D39",
+      "category": "original_plan_decision",
+      "text": "Propose reopen checks",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6 check 4",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/expand",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "D40",
+      "category": "original_plan_decision",
+      "text": "Propose numerical-reproducibility checks",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6 checks 2/5",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/expand",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "D41",
+      "category": "original_plan_decision",
+      "text": "Propose image-orientation checks",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6 checks 1/6",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/expand",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "D42",
+      "category": "original_plan_decision",
+      "text": "Propose large-scan checks",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6 check 7",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain/expand",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "D43",
+      "category": "original_plan_decision",
+      "text": "No alignment has been calculated or validated",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Record; P6; Executed evidence",
+      "evidence_refs": [
+        "plan.md:27"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "preserve unexecuted status",
+      "conditions": null,
+      "unassessed_reason": null,
+      "original_ref": "plan.md:27 (P6)"
+    },
+    {
+      "id": "O1",
+      "category": "original_obligation",
+      "text": "Brief-led discovery beyond plan entries",
+      "axes": [
+        1
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Evidence/discovery; Alternatives",
+      "evidence_refs": [
+        "brief.md:compact O1-O6 map"
+      ],
+      "finding": "substantive discovery supported; discovery-before-comparison chronology unknown",
+      "planning_disposition": "assess delivered content",
+      "conditions": null,
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "U01",
+        "U02",
+        "U03",
+        "U04",
+        "U05",
+        "U06",
+        "U07",
+        "U08"
+      ]
+    },
+    {
+      "id": "O2",
+      "category": "original_obligation",
+      "text": "Pinned public component code with governing definition/caller",
+      "axes": [
+        1
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism 1/2; Evidence GDAL",
+      "evidence_refs": [
+        "brief.md:compact O1-O6 map"
+      ],
+      "finding": "supported",
+      "planning_disposition": "assess delivered content",
+      "conditions": null,
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ]
+    },
+    {
+      "id": "O3",
+      "category": "original_obligation",
+      "text": "Real issue/fix/regression/release or justified equivalent evolution",
+      "axes": [
+        1
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism 7; Shipped history",
+      "evidence_refs": [
+        "brief.md:compact O1-O6 map"
+      ],
+      "finding": "supported",
+      "planning_disposition": "assess delivered content",
+      "conditions": null,
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18"
+      ]
+    },
+    {
+      "id": "O4",
+      "category": "original_obligation",
+      "text": "Every in-scope decision compared; retain/change/option/reject/uncertain",
+      "axes": [
+        1
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "Replacement P1-P6; Complete comparison",
+      "evidence_refs": [
+        "brief.md:compact O1-O6 map"
+      ],
+      "finding": "qualified: unavailable-projection explanation is thin, not absent from all checks",
+      "planning_disposition": "assess delivered content",
+      "conditions": null,
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D05",
+        "D06",
+        "D07",
+        "D08",
+        "D09",
+        "D10",
+        "D11",
+        "D12",
+        "D13",
+        "D14",
+        "D15",
+        "D16",
+        "D17",
+        "D18",
+        "D19",
+        "D20",
+        "D21",
+        "D22",
+        "D23",
+        "D24",
+        "D25",
+        "D26",
+        "D27",
+        "D28",
+        "D29",
+        "D30",
+        "D31",
+        "D32",
+        "D33",
+        "D34",
+        "D35",
+        "D36",
+        "D37",
+        "D38",
+        "D39",
+        "D40",
+        "D41",
+        "D42",
+        "D43"
+      ]
+    },
+    {
+      "id": "O5",
+      "category": "original_obligation",
+      "text": "Flash-family substantive independent criticism with retained dispositions",
+      "axes": [
+        1
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "Critic disposition 1-10; O5 closure",
+      "evidence_refs": [
+        "brief.md:compact O1-O6 map"
+      ],
+      "finding": "scientific criticism visible; mandated flash-family identity and process independence unknown",
+      "planning_disposition": "assess delivered content",
+      "conditions": null,
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10"
+      ]
+    },
+    {
+      "id": "O6",
+      "category": "original_obligation",
+      "text": "One complete proposed revision, alternatives, rationale, checks and uncertainty",
+      "axes": [
+        1
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "Replacement plan; Alternatives; Remaining uncertainty; Execution distinction",
+      "evidence_refs": [
+        "brief.md:compact O1-O6 map"
+      ],
+      "finding": "substantive replacement provided; localized projection-flow limitation remains",
+      "planning_disposition": "assess delivered content",
+      "conditions": null,
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "V01",
+        "V02",
+        "V03",
+        "V04",
+        "V05",
+        "V06",
+        "V07",
+        "V08",
+        "V09",
+        "V10"
+      ]
+    },
+    {
+      "id": "B01",
+      "category": "original_brief_condition",
+      "text": "Open discovery from the user need before narrowing to plan comparison",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "O1",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "process chronology unknown",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B02",
+      "category": "original_brief_condition",
+      "text": "Investigate relevant existing products",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O1",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B03",
+      "category": "original_brief_condition",
+      "text": "Investigate analogous approaches",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O1",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B04",
+      "category": "original_brief_condition",
+      "text": "Investigate components and implementation mechanisms",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O1",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B05",
+      "category": "original_brief_condition",
+      "text": "Preserve useful negative findings and optional opportunities",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O1",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported bounded set, not exhaustive",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B06",
+      "category": "original_brief_condition",
+      "text": "Researcher chooses consequential component and source versions",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "O1/O2",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "pins visible; original selection process unknown",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B07",
+      "category": "original_brief_condition",
+      "text": "Inspect actual public component code at immutable commit/release",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O2",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B08",
+      "category": "original_brief_condition",
+      "text": "Inspect governing definition or caller",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O2",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B09",
+      "category": "original_brief_condition",
+      "text": "Tie consequential behavior to exact paths/symbols/versions",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O2",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported via source-map and named caller; shortened dispatch qualification",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B10",
+      "category": "original_brief_condition",
+      "text": "Investigate a pertinent real issue",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O3",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B11",
+      "category": "original_brief_condition",
+      "text": "Follow the issue through a concrete fix",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O3",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B12",
+      "category": "original_brief_condition",
+      "text": "Inspect regression evidence",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O3",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported as source inspection only",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B13",
+      "category": "original_brief_condition",
+      "text": "Establish applicable shipped release; merged alone is insufficient",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O3",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B14",
+      "category": "original_brief_condition",
+      "text": "If no issue exists, justify equivalent concrete evolution without inventing an issue",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O3",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "not triggered: pertinent issue exists",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B15",
+      "category": "original_brief_condition",
+      "text": "Compare every in-scope plan decision",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "O4",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "all 43 inventoried; one localized thin projection disposition",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B16",
+      "category": "original_brief_condition",
+      "text": "Distinguish necessary corrections from supported additions",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O4/O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "visible",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B17",
+      "category": "original_brief_condition",
+      "text": "Distinguish options/product choices/retains/rejects/uncertainty",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O4/O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "visible",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B18",
+      "category": "original_brief_condition",
+      "text": "Already-covered disposition has precise plan reference and source applicability",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O4",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "section references resolve exactly in this six-section frozen plan",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B19",
+      "category": "original_brief_condition",
+      "text": "Do not rewrite product constraints to fit a component",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O4/O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "preserved; similarity fallback explicitly needs owner acceptance",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B20",
+      "category": "original_brief_condition",
+      "text": "Absent bounded cross-reference becomes dependency/limit, not inferred whole-project coverage",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O4",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "no absent external plan cross-reference relied upon; missing inputs remain gates",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B21",
+      "category": "original_brief_condition",
+      "text": "Substantive critic belongs to flash family",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "O5",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "unknown: same-family label does not identify family",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B22",
+      "category": "original_brief_condition",
+      "text": "Critic independently checks consequential sources/code/versions/comparison/full scope",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "O5",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "claims of prior independent process are not independently verifiable from admitted files; dispositions scientifically rechecked here",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B23",
+      "category": "original_brief_condition",
+      "text": "Criticism, disagreement and unresolved objections survive finalization",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "O5",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "ten dispositions visible; prior-draft completeness cannot be checked without prohibited drafts",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B24",
+      "category": "original_brief_condition",
+      "text": "Deliver coherent revised plan/replacement sections for all in-scope decisions",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "P1-P6 provided; projection recovery flow thin",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B25",
+      "category": "original_brief_condition",
+      "text": "Concise rationale with linked primary evidence",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "supported by S references resolved in full source map",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B26",
+      "category": "original_brief_condition",
+      "text": "Alternatives/options and remaining product decisions",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "eight explicit alternatives plus gates",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B27",
+      "category": "original_brief_condition",
+      "text": "Concrete validation proposals and remaining uncertainty",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "ten proposals; all five frozen categories present",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B28",
+      "category": "original_brief_condition",
+      "text": "Separate proposed checks from executed witnesses; limit what witnesses establish",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "clear source inspections versus unexecuted app tests",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B29",
+      "category": "original_brief_condition",
+      "text": "One authoritative authored artifact; evidence may be linked",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "one artifact plus source map/captures",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B30",
+      "category": "original_brief_condition",
+      "text": "Do not claim app built or validated",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "O6",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "B31",
+      "category": "original_brief_condition",
+      "text": "Public research only; no real infra/private upload/canon/WorkNodes/external contact",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "brief safety",
+      "evidence_refs": [
+        "brief.md"
+      ],
+      "finding": "artifact declares compliance; no violation visible; absence of all historical actions not independently provable",
+      "planning_disposition": "preserve original obligation",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K01",
+      "category": "original_plan_scope_condition",
+      "text": "One town",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "brief frozen scope",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K02",
+      "category": "original_plan_scope_condition",
+      "text": "Twenty-scan maximum",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K03",
+      "category": "original_plan_scope_condition",
+      "text": "TIFF/JPEG scans",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K04",
+      "category": "original_plan_scope_condition",
+      "text": "One public reference chosen by user, raster OR service",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K05",
+      "category": "original_plan_scope_condition",
+      "text": "Local desktop review workspace",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1/Product flow",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K06",
+      "category": "original_plan_scope_condition",
+      "text": "Volunteers retain control-point choice",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K07",
+      "category": "original_plan_scope_condition",
+      "text": "Small set is explained and chosen explicitly",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K08",
+      "category": "original_plan_scope_condition",
+      "text": "Candidates saved without replacing originals",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2/P4",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K09",
+      "category": "original_plan_scope_condition",
+      "text": "Visible provenance/dimensions/stated CRS",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1/P3",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K10",
+      "category": "original_plan_scope_condition",
+      "text": "Inclusion/exclusion remains a reviewer action",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2/P3",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K11",
+      "category": "original_plan_scope_condition",
+      "text": "Uncertainty describes evidence",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P3/P6",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K12",
+      "category": "original_plan_scope_condition",
+      "text": "No boundary-ownership/cadastral conclusions",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow/P3",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K13",
+      "category": "original_plan_scope_condition",
+      "text": "No engineering/survey accuracy conclusion",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow/P3",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K14",
+      "category": "original_plan_scope_condition",
+      "text": "Original bytes immutable",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4/P6",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K15",
+      "category": "original_plan_scope_condition",
+      "text": "Coordinate assumptions and settings saved",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K16",
+      "category": "original_plan_scope_condition",
+      "text": "Chosen review state recoverable",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved with mutable remote-reference caveat",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K17",
+      "category": "original_plan_scope_condition",
+      "text": "Reopen without private-data download",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P4/P6 check4",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K18",
+      "category": "original_plan_scope_condition",
+      "text": "Components were undecided initial proposals, not researched truth",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P5/Alternatives",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved provisional choices",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K19",
+      "category": "original_plan_scope_condition",
+      "text": "Laptop processing bounded but not yet measured",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P5/P6 check7",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved as validation gate",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K20",
+      "category": "original_plan_scope_condition",
+      "text": "Unavailable projection is explained",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "P1/P3/P6 check1",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "qualified: missing versus target CRS and recovery flow underdescribed",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K21",
+      "category": "original_plan_scope_condition",
+      "text": "No silent inference of user choices",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1/P2/P4",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K22",
+      "category": "original_plan_scope_condition",
+      "text": "Derived raster optional",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K23",
+      "category": "original_plan_scope_condition",
+      "text": "Exports include provenance and uncertainty",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K24",
+      "category": "original_plan_scope_condition",
+      "text": "All five original check categories proposed",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6 checks1/4/5/6/7",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K25",
+      "category": "original_plan_scope_condition",
+      "text": "No alignment calculation or validation credited",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Record/P6/Execution",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "K26",
+      "category": "original_plan_scope_condition",
+      "text": "No automated cadastral conclusion or unauthorized operation",
+      "axes": [
+        1,
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Product flow/Execution",
+      "evidence_refs": [
+        "plan.md",
+        "brief.md"
+      ],
+      "finding": "preserved in proposal",
+      "planning_disposition": "retain",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "C01",
+      "category": "consequential_claim",
+      "text": "GDAL evidence pin is v3.13.3 at c8b4c45fca87d3e6fbf80e7a7898b8a661ad0edc; current release at capture",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism1/5; P5",
+      "evidence_refs": [
+        "R16",
+        "R17",
+        "R18",
+        "R25"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Evidence pin is not shipped app dependency.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C02",
+      "category": "consequential_claim",
+      "text": "No-method GCP homography branch uses four/five points",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "Criticism1",
+      "evidence_refs": [
+        "R01:2315-2490"
+      ],
+      "finding": "qualified",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Reached only after earlier branches: nonnull dataset, no selected geolocation-array method or usable geotransform, GCPS_OK enabled. With another order option, precedence still matters.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C03",
+      "category": "consequential_claim",
+      "text": "Polynomial order zero chooses order automatically",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism1",
+      "evidence_refs": [
+        "R01:2440-2470",
+        "R03:203-211"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Actual solver chooses order1 below6, order2 at6+; auto order3 is deliberately avoided.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C04",
+      "category": "consequential_claim",
+      "text": "Explicit method prevents count from silently choosing UI model",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2; Criticism1",
+      "evidence_refs": [
+        "R01:2352-2490"
+      ],
+      "finding": "supported conditional",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Pass SRC_METHOD=GCP_POLYNOMIAL and MAX_GCP_ORDER=1 for affine, valid GCP dataset and GCPS_OK; do not enable refinement against saved point choices.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C05",
+      "category": "consequential_claim",
+      "text": "First-order polynomial is six-parameter affine",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism2; P2",
+      "evidence_refs": [
+        "R03:608-636",
+        "R06:algorithms"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Rank and nondegeneracy required; two independently fitted directions need a separate inverse contract.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C06",
+      "category": "consequential_claim",
+      "text": "Examined GDAL caller has no named similarity/Helmert GCP method; four-parameter app solver is separate",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism2; P2",
+      "evidence_refs": [
+        "R01:option list",
+        "R42:67-132",
+        "R48:195-302"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "No claim that no other library implements similarity. Pixel-axis basis and fit-build dependencies remain relevant.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C07",
+      "category": "consequential_claim",
+      "text": "Minimum of three active points for both proposed models",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2",
+      "evidence_refs": [
+        "R03:727-773",
+        "R48:207-210"
+      ],
+      "finding": "product choice supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Similarity mathematically needs two noncoincident points, affine three noncollinear points. Three for similarity is a conservative product threshold, not a mathematical minimum.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C08",
+      "category": "consequential_claim",
+      "text": "Extra points produce least-squares fitting",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2",
+      "evidence_refs": [
+        "R03:727-779,832 onward",
+        "R42:67-132"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Distinct points alone do not guarantee affine rank; artifact separately requires rank checks.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C09",
+      "category": "consequential_claim",
+      "text": "Fit residuals are not independent ground-truth accuracy; close controls can coexist with wrong elsewhere",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism3; P3",
+      "evidence_refs": [
+        "R06:model extrapolation discussion"
+      ],
+      "finding": "supported inference",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Mathematical interpretation of in-sample fitting; no measured town accuracy or confidence interval.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C10",
+      "category": "consequential_claim",
+      "text": "Held-out checks provide additional evidence only if independently chosen; not survey accuracy",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P3",
+      "evidence_refs": [
+        "R06:model warnings",
+        "brief.md:user need"
+      ],
+      "finding": "supported inference",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Independence of actual check data unknown; no actual check points supplied.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C11",
+      "category": "consequential_claim",
+      "text": "TPS locally deforms surface and matches supplied controls",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Evidence GCP; Criticism4",
+      "evidence_refs": [
+        "R06:TPS algorithm"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "QGIS documented behavior; no current app TPS implementation examined or measured.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C12",
+      "category": "consequential_claim",
+      "text": "TPS can be useful on poorly orthorectified aerials; current scans may or may not need it",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism4; P2",
+      "evidence_refs": [
+        "R06:430"
+      ],
+      "finding": "supported conditional",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Condition and representative-scan pilot preserved; not a universal recommendation.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C13",
+      "category": "consequential_claim",
+      "text": "Issue12435 is a GDAL3.11 homography silent-failure report",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism7",
+      "evidence_refs": [
+        "R07"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Reporter swaps lower corners on sidescan imagery; analogous pathological GCP geometry, not a historical aerial benchmark.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C14",
+      "category": "consequential_claim",
+      "text": "PR12438 adds diagnostics on homography failure paths",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism7",
+      "evidence_refs": [
+        "R08",
+        "R09",
+        "R02:113,185,216,242,275,315,477"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Adds errors; does not make incorrect points geometrically valid or supply application error handling.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C15",
+      "category": "consequential_claim",
+      "text": "Broken-hourglass regression originally references issue11618; narrower than issue12435 CLI reproduction",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism7",
+      "evidence_refs": [
+        "R04:224-260",
+        "R09",
+        "R40:224 onward"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Test assertions inspected, never executed. Other inversion diagnostic assertions exist as well.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C16",
+      "category": "consequential_claim",
+      "text": "PR12451 merged backport into release/3.11",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Shipped history",
+      "evidence_refs": [
+        "R10",
+        "R11"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Merge at931669d5382aa6e9a43e6d41f745db6180300fbb on2025-05-23; merge alone not shipping proof.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C17",
+      "category": "consequential_claim",
+      "text": "Diagnostic shipped in v3.11.1",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Shipped history",
+      "evidence_refs": [
+        "R12",
+        "R13:37",
+        "R14",
+        "R15",
+        "R19",
+        "R26"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Release2025-07-01 at226b7732b4672deaf35d6a16a39216047358f7d8; observedv3.11.0 lacks additions. No blanket claim for every earlier/intermediate release.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C18",
+      "category": "consequential_claim",
+      "text": "Current pinned v3.13.3 retains diagnostic and regression source",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism7",
+      "evidence_refs": [
+        "R02",
+        "R04",
+        "R16",
+        "R25"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Byte/source evidence, not execution or binary package verification.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C19",
+      "category": "consequential_claim",
+      "text": "Diagnostic fix does not detect all bad/inaccurate alignments or establish homography suitability",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Shipped history; P2",
+      "evidence_refs": [
+        "R09",
+        "R02"
+      ],
+      "finding": "supported limit",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Only identified mathematical failures/diagnostics, not independent geometric accuracy.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C20",
+      "category": "consequential_claim",
+      "text": "RasterIO supports source windows and smaller buffers",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism6; P5",
+      "evidence_refs": [
+        "R05:229-286",
+        "R29:232 onward"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Per-driver behavior, conversion and IO footprint can vary.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C21",
+      "category": "consequential_claim",
+      "text": "Suitable overviews can accelerate reduced-resolution reads but are conditional",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism6",
+      "evidence_refs": [
+        "R05:284",
+        "R29:394-412"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "GF_Read, reduced dimensions, existing overview and selection required in examined default caller; driver overrides possible.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C22",
+      "category": "consequential_claim",
+      "text": "Laptop memory/latency and twenty-source performance not proven",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P5; P6check7",
+      "evidence_refs": [
+        "artifact.md:85-103"
+      ],
+      "finding": "supported declared limitation",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "No measurements or named target budget available.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C23",
+      "category": "consequential_claim",
+      "text": "MapLibre Compare is synchronized swipe/slider GLJS plugin, not chosen native georeferencer",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Evidence analogues; Alternatives",
+      "evidence_refs": [
+        "R20:1-7,177-232"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Does not rule out later webview integration or other MapLibre components.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C24",
+      "category": "consequential_claim",
+      "text": "MapWarper hosted workflow uploads/rectifies/downloads; reject hosted use for private scans",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism8; Alternatives",
+      "evidence_refs": [
+        "R21",
+        "R37"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Live terms say maps/contributions public; rejection applies hosted endpoint, not every possible self-hosted deployment.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C25",
+      "category": "consequential_claim",
+      "text": "Homepage alone does not establish privacy/retention/license/offline suitability",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism8",
+      "evidence_refs": [
+        "R21",
+        "R36",
+        "R37"
+      ],
+      "finding": "supported scope limit",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Homepage links detailed terms; those independently checked here give stronger public-data negative evidence.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C26",
+      "category": "consequential_claim",
+      "text": "OSM standard tile endpoint prohibits offline/bulk prefetch",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism9",
+      "evidence_refs": [
+        "R22:169-195"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Only tile.openstreetmap.org standard raster service; no general ban on OSM-derived data or other providers.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C27",
+      "category": "consequential_claim",
+      "text": "Normal visible-viewport tile requests allowed subject to policy",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism9",
+      "evidence_refs": [
+        "R22:identification/caching/attribution/section4"
+      ],
+      "finding": "supported conditional",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Must include attribution and suitable native app identity and honor required HTTP caching; modest browser look-ahead exception exists.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C28",
+      "category": "consequential_claim",
+      "text": "Service permission differs from data license; provider policies can change",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1; Evidence service",
+      "evidence_refs": [
+        "R22:quick summary,sections7-9"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Implementation and release recheck required; actual reference provider/rights remain unknown.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C29",
+      "category": "consequential_claim",
+      "text": "Source fingerprint used for relink/change detection is not date/authenticity/license proof",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1/P4",
+      "evidence_refs": [
+        "artifact.md:53,78-80"
+      ],
+      "finding": "sound product limitation",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Fingerprint algorithm/collision threat model not specified or implemented; no cryptographic assurance claimed.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C30",
+      "category": "consequential_claim",
+      "text": "Local licensed raster is proposed reproducible/offline route",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1/P4/P5",
+      "evidence_refs": [
+        "R05",
+        "R43:Windows offline installers"
+      ],
+      "finding": "supported conditional proposal",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Requires all runtime CRS/PROJ data locally available and reference/source version retained. No actual offline witness exists.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C31",
+      "category": "consequential_claim",
+      "text": "GDAL packaging/Rust/platform/license comparison remains unknown; leading candidate is provisional",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism5; P5",
+      "evidence_refs": [
+        "R01",
+        "R05",
+        "artifact.md:84-86"
+      ],
+      "finding": "supported bounded recommendation",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Do not treat existence of API as packaged integration/performance winner.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C32",
+      "category": "consequential_claim",
+      "text": "Remote reference can change or need network; no silent substitution or byte-identity promise",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1/P4",
+      "evidence_refs": [
+        "R22:best effort and changes",
+        "artifact.md:55,80"
+      ],
+      "finding": "supported conditional",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Actual chosen provider not supplied. Local path relink is not a guarantee of unchanged remote imagery.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C33",
+      "category": "consequential_claim",
+      "text": "QGIS is a credible workflow alternative, not proven integrated component winner",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R06",
+        "R43",
+        "R41",
+        "R48"
+      ],
+      "finding": "supported",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Current4.2.3 andLTR3.44.15 observed; code independently examined at3.44.0, not a claim all current binaries behave identically.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C34",
+      "category": "consequential_claim",
+      "text": "Manifest/CSV/uncertainty package and optional GeoTIFF are proposed output choices",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P6",
+      "evidence_refs": [
+        "R06:export options",
+        "artifact.md:90"
+      ],
+      "finding": "product choice",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Portable records are not automatically a self-contained image bundle; originals are excluded by default and need lawful relink/distribution.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "C35",
+      "category": "consequential_claim",
+      "text": "Input-specific conditions, CRS/provider/licenses/check geometry/prototype remain unknown",
+      "axes": [
+        2
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Criticism10; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md:127-129"
+      ],
+      "finding": "supported input limitation",
+      "planning_disposition": "claim verified/qualified",
+      "conditions": "Only admitted text/source evidence supplied; no private scans, prototype or build were assessed.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "U01",
+      "category": "bounded_discovery",
+      "text": "Manual GCP save/edit/exclude and explained residual workflow",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2/P3/P4",
+      "evidence_refs": [
+        "R06",
+        "D10-D19"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "retained/already covered",
+      "conditions": "Core required workflow supported; additions remain saved state and labels.",
+      "unassessed_reason": null,
+      "candidate_presence": "present",
+      "additional_optional_opportunity": false,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U02",
+      "category": "bounded_discovery",
+      "text": "Explicit GDAL model dispatch and app-owned similarity",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2/P5",
+      "evidence_refs": [
+        "R01",
+        "R03",
+        "R48"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "retained correction",
+      "conditions": "Do not silently change model with point count.",
+      "unassessed_reason": null,
+      "candidate_presence": "present",
+      "additional_optional_opportunity": false,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U03",
+      "category": "bounded_discovery",
+      "text": "Conditional window/overview preview",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P5",
+      "evidence_refs": [
+        "R05",
+        "R29"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "retained mechanism",
+      "conditions": "Performance remains unmeasured.",
+      "unassessed_reason": null,
+      "candidate_presence": "present",
+      "additional_optional_opportunity": false,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U04",
+      "category": "bounded_discovery",
+      "text": "TPS for local deformation/poorly orthorectified scans",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P2/Alternatives",
+      "evidence_refs": [
+        "R06:TPS"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "live optional opportunity, deferred",
+      "conditions": "Representative scans needed; no scientific rejection.",
+      "unassessed_reason": null,
+      "candidate_presence": "present",
+      "additional_optional_opportunity": false,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U05",
+      "category": "bounded_discovery",
+      "text": "Swipe/synchronized panes",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P3",
+      "evidence_refs": [
+        "R20"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "retained optional interaction",
+      "conditions": "Not a registration quality measure or selected native dependency.",
+      "unassessed_reason": null,
+      "candidate_presence": "present",
+      "additional_optional_opportunity": false,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U06",
+      "category": "bounded_discovery",
+      "text": "Hosted MapWarper",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R21",
+        "R37"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "supported negative; analogy retained",
+      "conditions": "Public contributions and private-source scope conflict.",
+      "unassessed_reason": null,
+      "candidate_presence": "present",
+      "additional_optional_opportunity": false,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U07",
+      "category": "bounded_discovery",
+      "text": "OSM standard endpoint offline-prefetch",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P1/Alternatives",
+      "evidence_refs": [
+        "R22"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "supported negative, provider-specific",
+      "conditions": "Offline-capable other sources remain possible; normal compliant cache is required for this endpoint.",
+      "unassessed_reason": null,
+      "candidate_presence": "present",
+      "additional_optional_opportunity": false,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U08",
+      "category": "bounded_discovery",
+      "text": "QGIS workflow as narrower delivery alternative",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "P5/Alternatives",
+      "evidence_refs": [
+        "R06",
+        "R43"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "retained/uncertain costs",
+      "conditions": "Integration/package/review-state/export match not compared; do not declare winner.",
+      "unassessed_reason": null,
+      "candidate_presence": "present",
+      "additional_optional_opportunity": false,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U09",
+      "category": "bounded_discovery",
+      "text": "Projective/homography for oblique aerial views",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "P2 homography deferral",
+      "evidence_refs": [
+        "R06:projective algorithm"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "omitted useful counter-opportunity; bounded optional",
+      "conditions": "Doc supports perspective case. Diagnostic bug alone is not suitability evidence; town geometry unknown.",
+      "unassessed_reason": null,
+      "candidate_presence": "absent_optional",
+      "additional_optional_opportunity": true,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U10",
+      "category": "bounded_discovery",
+      "text": "External overviews while keeping TIFF original immutable",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "P4/P5",
+      "evidence_refs": [
+        "R30:117-143"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "omitted optional implementation mechanism",
+      "conditions": "Read-only TIFF can create external.ovr; writing locations/space/orientation/driver applicability require own pilot.",
+      "unassessed_reason": null,
+      "candidate_presence": "absent_optional",
+      "additional_optional_opportunity": true,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U11",
+      "category": "bounded_discovery",
+      "text": "VRT metadata/warped views without rewriting original pixels",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "P4/P5/P6",
+      "evidence_refs": [
+        "R31:14-20,1015-1038,2158-2190"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "omitted optional mechanism",
+      "conditions": "Source files still required; relative paths do not make package self-contained. No VRT performance witness.",
+      "unassessed_reason": null,
+      "candidate_presence": "absent_optional",
+      "additional_optional_opportunity": true,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U12",
+      "category": "bounded_discovery",
+      "text": "Forward versus backward affine fit contract",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "P2/P6checks2/5",
+      "evidence_refs": [
+        "R03:428-460,674-773"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "omitted useful numerical question",
+      "conditions": "GDAL fits directions separately. No promise they are exact inverses under noisy controls; choose and validate residual/export/view consistency before build.",
+      "unassessed_reason": null,
+      "candidate_presence": "absent_optional",
+      "additional_optional_opportunity": true,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U13",
+      "category": "bounded_discovery",
+      "text": "Similarity coordinate-basis orientation and build dependency",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "P2/P6checks1/2/6",
+      "evidence_refs": [
+        "R24",
+        "R41:137-153",
+        "R42:67-132",
+        "R48:242-302"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "already covered by broad orientation tests; mechanism omitted",
+      "conditions": "QGIS explicitly handles Y inversion and requiresGSL in examined fit implementation. No obligation to copy that GPL code or choose QGIS.",
+      "unassessed_reason": null,
+      "candidate_presence": "partly_present",
+      "additional_optional_opportunity": true,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U14",
+      "category": "bounded_discovery",
+      "text": "Orthorectification versus simple registration and missing camera/terrain data",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "P3/P2TPSgate",
+      "evidence_refs": [
+        "R45",
+        "R44"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "partially covered uncertainty; optional future branch",
+      "conditions": "USGS describes terrain/sensor corrections. Not added as requiredMVP; scans/calibration/DEM unknown and approximate review remains valid.",
+      "unassessed_reason": null,
+      "candidate_presence": "partly_present",
+      "additional_optional_opportunity": true,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "U15",
+      "category": "bounded_discovery",
+      "text": "Feature-assisted group registration of historical aerials",
+      "axes": [
+        3
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "No delivered automated feature plan",
+      "evidence_refs": [
+        "R46:arXiv1811.09081v1"
+      ],
+      "finding": "assessed bounded opportunity",
+      "planning_disposition": "omitted optional lead; uncertain applicability",
+      "conditions": "Only primary abstract/identity checked; no full-paper method or reproducibility review. Could propose points only after separate study; no benchmark or accuracy credited.",
+      "unassessed_reason": null,
+      "candidate_presence": "absent_optional",
+      "additional_optional_opportunity": true,
+      "optional_omission_is_original_requirement_failure": false
+    },
+    {
+      "id": "R01",
+      "category": "criticism_correction_disposition",
+      "text": "Default dispatch precision",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "artifact.md:18",
+      "evidence_refs": [
+        "R01:2315-2490"
+      ],
+      "finding": "qualified accepted correction",
+      "planning_disposition": "accept with qualification",
+      "conditions": "Incomplete prerequisite summary; explicit model recommendation survives.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C02",
+        "C03",
+        "C04"
+      ]
+    },
+    {
+      "id": "R02",
+      "category": "criticism_correction_disposition",
+      "text": "Similarity is not GDAL affine",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:19",
+      "evidence_refs": [
+        "R01; R03; R48"
+      ],
+      "finding": "accepted supported correction",
+      "planning_disposition": "accept",
+      "conditions": "No wrongful removal of similarity; fallback requires owner acceptance.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C05",
+        "C06",
+        "C07"
+      ]
+    },
+    {
+      "id": "R03",
+      "category": "criticism_correction_disposition",
+      "text": "Fit residual versus independent accuracy",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:20",
+      "evidence_refs": [
+        "R06"
+      ],
+      "finding": "accepted supported strengthening",
+      "planning_disposition": "accept",
+      "conditions": "No measured accuracy claim.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C09",
+        "C10"
+      ]
+    },
+    {
+      "id": "R04",
+      "category": "criticism_correction_disposition",
+      "text": "TPS deferral is product choice with aerial counter-evidence",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:21",
+      "evidence_refs": [
+        "R06"
+      ],
+      "finding": "accepted supported correction",
+      "planning_disposition": "accept",
+      "conditions": "No incorrect scientific rejection.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C11",
+        "C12",
+        "U04"
+      ]
+    },
+    {
+      "id": "R05",
+      "category": "criticism_correction_disposition",
+      "text": "Backend provisional, packaging not proven",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:22",
+      "evidence_refs": [
+        "R01; R05"
+      ],
+      "finding": "accepted supported limit",
+      "planning_disposition": "accept",
+      "conditions": "No claim of benchmark winner.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C31"
+      ]
+    },
+    {
+      "id": "R06",
+      "category": "criticism_correction_disposition",
+      "text": "Overview path conditional",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:23",
+      "evidence_refs": [
+        "R05; R29"
+      ],
+      "finding": "accepted supported qualification",
+      "planning_disposition": "accept",
+      "conditions": "No guaranteed overviews/performance.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C20",
+        "C21"
+      ]
+    },
+    {
+      "id": "R07",
+      "category": "criticism_correction_disposition",
+      "text": "Issue versus older regression linkage",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:24",
+      "evidence_refs": [
+        "R07-R19; R39; R40; R53"
+      ],
+      "finding": "accepted supported correction",
+      "planning_disposition": "accept",
+      "conditions": "Historical release proven independently; no tests credited.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18"
+      ]
+    },
+    {
+      "id": "R08",
+      "category": "criticism_correction_disposition",
+      "text": "MapWarper analogy only",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:25",
+      "evidence_refs": [
+        "R21; R37"
+      ],
+      "finding": "accepted supported limit",
+      "planning_disposition": "accept",
+      "conditions": "Hosted private-use rejection valid; self-hosted variant not foreclosed.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C24",
+        "C25",
+        "U06"
+      ]
+    },
+    {
+      "id": "R09",
+      "category": "criticism_correction_disposition",
+      "text": "OSM provider-specific/time-sensitive",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:26",
+      "evidence_refs": [
+        "R22"
+      ],
+      "finding": "accepted supported correction",
+      "planning_disposition": "accept",
+      "conditions": "Required ordinary cache is compatible with no-prefetch policy.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C26",
+        "C27",
+        "C28"
+      ]
+    },
+    {
+      "id": "R10",
+      "category": "criticism_correction_disposition",
+      "text": "Missing inputs not promoted to facts",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:27",
+      "evidence_refs": [
+        "brief.md; plan.md"
+      ],
+      "finding": "accepted visible uncertainty preservation",
+      "planning_disposition": "accept",
+      "conditions": "Prior-draft comparison not available/allowed; visible final dispositions assessed only.",
+      "unassessed_reason": null,
+      "related_item_ids": [
+        "C35"
+      ]
+    },
+    {
+      "id": "P01",
+      "category": "alternative_planning_disposition",
+      "text": "Custom local review plus provisional GDAL",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R01/R05"
+      ],
+      "finding": "supported disposition or explicit uncertainty",
+      "planning_disposition": "selected proposal, gated",
+      "conditions": "Packaging, model wrapper and dataset pilot unresolved; no comparative winner.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "P02",
+      "category": "alternative_planning_disposition",
+      "text": "QGIS workflow",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R06/R43"
+      ],
+      "finding": "supported disposition or explicit uncertainty",
+      "planning_disposition": "retained alternative, not selected",
+      "conditions": "Supported workflow; missing comparison explains nonselection, not scientific inferiority.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "P03",
+      "category": "alternative_planning_disposition",
+      "text": "MapLibre Compare",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R20"
+      ],
+      "finding": "supported disposition or explicit uncertainty",
+      "planning_disposition": "retain interaction/reject as fitter or selected native widget",
+      "conditions": "Rejecting this plugin as fitter supported; webview reuse not disproven.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "P04",
+      "category": "alternative_planning_disposition",
+      "text": "Hosted MapWarper",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R21/R37"
+      ],
+      "finding": "supported disposition or explicit uncertainty",
+      "planning_disposition": "reject hosted private uploads; retain analogy",
+      "conditions": "Public-data terms support negative. Source self-host possibility optional and not automatically private.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "P05",
+      "category": "alternative_planning_disposition",
+      "text": "OSM standard raster endpoint",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R22"
+      ],
+      "finding": "supported disposition or explicit uncertainty",
+      "planning_disposition": "do not default/offline-prefetch; other providers open",
+      "conditions": "Provider-specific policy; compliant caching/identity must still be implemented if ever chosen.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "P06",
+      "category": "alternative_planning_disposition",
+      "text": "TPS",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R06"
+      ],
+      "finding": "supported disposition or explicit uncertainty",
+      "planning_disposition": "defer but keep live",
+      "conditions": "Deformation/poor orthorectification pilot may reverse choice.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "P07",
+      "category": "alternative_planning_disposition",
+      "text": "Homography",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "R06/R02/R09"
+      ],
+      "finding": "supported disposition or explicit uncertainty",
+      "planning_disposition": "defer, not unsuitable",
+      "conditions": "Oblique/perspective opportunity exists; future selection/diagnostics/gates needed.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "P08",
+      "category": "alternative_planning_disposition",
+      "text": "Other readers, GUI frameworks, providers",
+      "axes": [
+        4
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Alternatives",
+      "evidence_refs": [
+        "artifact.md:125"
+      ],
+      "finding": "supported disposition or explicit uncertainty",
+      "planning_disposition": "uncertain/not sufficiently compared",
+      "conditions": "No source-supported blanket rejection or winner asserted.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q01",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Local history comparison and understandable volunteer review",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved; no survey accuracy promise",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q02",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "One-town twenty-scan scope",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q03",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "No automatic cadastral/ownership conclusions",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q04",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Public modern reference with user selection",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved; no provider chosen",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q05",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Original scans immutable",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q06",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Candidate alignment alternatives",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved, with revisions",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q07",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "User point inclusion/exclusion",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved; no automatic deletion",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q08",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Chosen model never silently inferred",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved explicitdispatch/appsolver",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q09",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Coordinate assumptions and stated metadata",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": false,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved; unavailable projection flow thin",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q10",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Saved selected review state",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved manifest/viewstate",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q11",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Reopen without private source download",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved, with remote-reference availability caveat",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q12",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Optional derived output",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q13",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Provenance and uncertainty exports",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q14",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Original five checks remain proposals",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved, expanded into ten",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q15",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "No executed build/transform/accuracy credited",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q16",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Similarity fallback needs owner decision",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved narrowedmodel only conditional",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q17",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "TPS plausible; homography deferred conditionally",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved as choices, not universal rejection",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "Q18",
+      "category": "scope_choice_uncertainty_preservation",
+      "text": "Missing scans/platform/CRS/provider/licenses/budgets",
+      "axes": [
+        5
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Replacement P1-P6; Remaining uncertainty",
+      "evidence_refs": [
+        "brief.md",
+        "plan.md",
+        "artifact.md"
+      ],
+      "finding": "preserved uncertainty and gates",
+      "planning_disposition": "preserve",
+      "conditions": null,
+      "unassessed_reason": null
+    },
+    {
+      "id": "V01",
+      "category": "proposed_validation",
+      "text": "Coordinate interpretation",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:94",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "pixel centers/edges/axis/units/explicitCRS/missingCRS/orientation",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D38"
+    },
+    {
+      "id": "V02",
+      "category": "proposed_validation",
+      "text": "Model math",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:95",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "knowntransforms/exactandnoisyoverdetermined/exclusions/checks/rank/tolerance/separate similarity",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D11-D13"
+    },
+    {
+      "id": "V03",
+      "category": "proposed_validation",
+      "text": "Dispatch/errors",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:96",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "explicitmodelandorder/staleandblank/conditionalhomographyfailure",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D11-D14"
+    },
+    {
+      "id": "V04",
+      "category": "proposed_validation",
+      "text": "Persistence/privacy",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:97",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "save-reopen/pointroles/selection/metadata/relink/immutability/no upload",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D22-D28/D39"
+    },
+    {
+      "id": "V05",
+      "category": "proposed_validation",
+      "text": "Reproducibility",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:98",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "samepin tolerance/acrossupgrades/nobyteidentitypromise",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D40"
+    },
+    {
+      "id": "V06",
+      "category": "proposed_validation",
+      "text": "Orientation/export",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:99",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "TIFFJPEG/displaypixels/GeoTIFFmetadataandsamples/originalbytes",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D41"
+    },
+    {
+      "id": "V07",
+      "category": "proposed_validation",
+      "text": "Large inputs",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:100",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "20sources/representativescans/namedlaptops/RAMresponsivenessexport",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D32/D42"
+    },
+    {
+      "id": "V08",
+      "category": "proposed_validation",
+      "text": "Reference service",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:101",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "providertermsattributioncache/networkfailure/localraster",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D04-D06"
+    },
+    {
+      "id": "V09",
+      "category": "proposed_validation",
+      "text": "Review communication",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:102",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "residualformulaunits/fitvscheck/errorstate/noaccuracyboundaryclaims",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D19-D21"
+    },
+    {
+      "id": "V10",
+      "category": "proposed_validation",
+      "text": "Packaging",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "artifact.md:103",
+      "evidence_refs": [],
+      "finding": "proposed, not executed",
+      "planning_disposition": "retain proposal",
+      "conditions": "GDALPROJplatformbuilds/licenses/datafiles/errorcrossing",
+      "unassessed_reason": null,
+      "executed": false,
+      "validation_credit": 0,
+      "original_decision_links": "D29-D31"
+    },
+    {
+      "id": "E01",
+      "category": "execution_evidence_boundary",
+      "text": "Frozen input and predecessor reads claimed",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Executed evidence versus proposed validation",
+      "evidence_refs": [
+        "admitted-evidence-identities.json",
+        "capture-log.json"
+      ],
+      "finding": "assessed evidence limit",
+      "planning_disposition": "no application validation credit",
+      "conditions": "Inputread chronology/predecessor completeness cannot be reconstructed from admitted final alone; reviewer read all four admitted authored files plus input map.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "E02",
+      "category": "execution_evidence_boundary",
+      "text": "Primary pages reopened/captured claimed",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Executed evidence versus proposed validation",
+      "evidence_refs": [
+        "admitted-evidence-identities.json",
+        "capture-log.json"
+      ],
+      "finding": "assessed evidence limit",
+      "planning_disposition": "no application validation credit",
+      "conditions": "Existence/content of mapped necessary captures rehashed18/18; independent reviewer HTTP captures confirm primary content. Does not prove prior independence.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "E03",
+      "category": "execution_evidence_boundary",
+      "text": "Source hashes computed claimed",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Executed evidence versus proposed validation",
+      "evidence_refs": [
+        "admitted-evidence-identities.json",
+        "capture-log.json"
+      ],
+      "finding": "assessed evidence limit",
+      "planning_disposition": "no application validation credit",
+      "conditions": "Admittedprimary hashes match; this establishes bytes, not truth of every interpretation.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "E04",
+      "category": "execution_evidence_boundary",
+      "text": "Caller/implementation/fix/test source inspection claimed",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Executed evidence versus proposed validation",
+      "evidence_refs": [
+        "admitted-evidence-identities.json",
+        "capture-log.json"
+      ],
+      "finding": "assessed evidence limit",
+      "planning_disposition": "no application validation credit",
+      "conditions": "Mechanisms independently inspected here; test source existence is not passing execution.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "E05",
+      "category": "execution_evidence_boundary",
+      "text": "No app/test/benchmark/raster/build/install/upload performed declared",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Executed evidence versus proposed validation",
+      "evidence_refs": [
+        "admitted-evidence-identities.json",
+        "capture-log.json"
+      ],
+      "finding": "assessed evidence limit",
+      "planning_disposition": "no application validation credit",
+      "conditions": "Zero executed application validations credited; no negative forensic proof of all prior actions.",
+      "unassessed_reason": null
+    },
+    {
+      "id": "E06",
+      "category": "execution_evidence_boundary",
+      "text": "Ten validation groups proposed",
+      "axes": [
+        6
+      ],
+      "assessment_status": "assessed",
+      "assessment_complete": true,
+      "artifact_content_complete": true,
+      "artifact_ref": "Executed evidence versus proposed validation",
+      "evidence_refs": [
+        "admitted-evidence-identities.json",
+        "capture-log.json"
+      ],
+      "finding": "assessed evidence limit",
+      "planning_disposition": "no application validation credit",
+      "conditions": "Ten groups exist; all five frozen categories represented; no executed checks credited.",
+      "unassessed_reason": null
+    }
+  ],
+  "all_remaining_scope_unassessed": [],
+  "material_scientific_errors": [],
+  "unresolved_required_process_evidence": [
+    "B01",
+    "B06",
+    "B21",
+    "B22",
+    "B23"
+  ],
+  "qualified_content": [
+    "D33",
+    "K20",
+    "Q09",
+    "C02",
+    "R01"
+  ],
+  "incorrect_scientific_rejections_found": 0,
+  "exhaustive_opportunity_recall_claim": false,
+  "application_validation_executed_by_reviewer": 0,
+  "application_validation_credited_to_artifact": 0,
+  "blinding_limit": "Visible paths, headings, source-map labels, procedure statements and identifiers reveal format/context. No assignment, performance, comparative outcome, target/history/cost or parent facts inferred. No other artifacts/reviews/drafts read.",
+  "bounded_discovery_presence_counts": {
+    "present": 8,
+    "partly_present": 2,
+    "absent_optional": 5,
+    "all_assessed": 15,
+    "exhaustive_recall_claim": false
+  }
+}

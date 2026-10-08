@@ -1,0 +1,66 @@
+{
+  "schema": "pm.er10.d-m06-b.candidate-v3.sources.v1",
+  "case_id": "D-M06-B",
+  "mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "brief": {
+    "role": "mapped assignment brief",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md"
+  },
+  "sources": [
+    {
+      "source_id": "geotransform",
+      "title": "Geotransform Tutorial",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes",
+      "sha256_verified_utc": "2026-10-08T01:54:20Z",
+      "sha256_matches_input_map": true,
+      "locators": {
+        "coefficient_order_and_units": "lines 15-20 (GT(0) x of upper-left corner; GT(1) w-e pixel resolution; GT(2) row rotation, typically zero; GT(3) y of upper-left corner; GT(4) column rotation, typically zero; GT(5) n-s pixel resolution, negative for north-up)",
+        "forward_equations": "lines 27-28 (X_geo = GT(0) + X_pixel*GT(1) + Y_line*GT(2); Y_geo = GT(3) + X_pixel*GT(4) + Y_line*GT(5))",
+        "pixel_corner_vs_center": "lines 30-32 ((0.0,0.0) top-left corner to (width,height) bottom-right corner; top-left pixel center at (0.5,0.5))",
+        "north_up_special_case": "lines 34-38 (GT(2)=GT(4)=0; GT(1),GT(5) pixel size; GT(0),GT(3) top-left corner)"
+      }
+    },
+    {
+      "source_id": "gdaltransform",
+      "title": "OSGeo/gdal gcore/gdal_misc.cpp (released implementation file)",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "kind": "public primary raw bytes",
+      "sha256_verified_utc": "2026-10-08T01:54:20Z",
+      "sha256_matches_input_map": true,
+      "locators": {
+        "worldfile_to_geotransform_mapping": "lines 2182-2187 (world-file order remapped: GT(0)=world[4], GT(1)=world[0], GT(2)=world[2], GT(3)=world[5], GT(4)=world[1], GT(5)=world[3])",
+        "pixel_center_to_corner_shift": "lines 2189-2193 (comment 'correct for center of pixel vs. top left of pixel'; GT(0)/GT(3) minus half of GT(1)/GT(2)/GT(4)/GT(5) converts world-file pixel-center convention to corner-origin geotransform)",
+        "gcps_to_geotransform_control": "lines 1811 and 2006 (GDALGCPsToGeoTransform call sites inside OZI and TAB loaders; independent fit-from-GCPs path)",
+        "tab_and_ozi_loaders": "lines 1812-1878, 2007-2110 (GDALLoadOziMapFile / GDALLoadTabFile / GDALReadTabFile2 alternate geotransform sources)"
+      }
+    }
+  ],
+  "verification": [
+    {
+      "check": "sha256 of both frozen files recomputed locally",
+      "command": "sha256sum cases/D-M06-B/inputs/sources/geotransform.rst cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "result_utc": "2026-10-08T01:54:20Z",
+      "outcome": "both match the hashes declared in jobs/D-M06-B/control/candidate-v3/INPUT_MAP.json"
+    },
+    {
+      "check": "all cited line locators re-read against the frozen bytes this session",
+      "result_utc": "2026-10-08T01:54:20Z",
+      "outcome": "geotransform.rst 15-20/27-28/30-32/34-38 and gdal_misc.cpp 1811/2006/2182-2193 confirmed to contain the cited content"
+    }
+  ],
+  "limitations": [
+    "Hashes and capture metadata establish byte identity with the frozen corpus, not source correctness.",
+    "No network re-fetch performed; identity is against the mapped local frozen bytes only.",
+    "Line locators refer to the frozen captured files at the paths above, not to upstream blame or history.",
+    "The gdal_misc.cpp locator range for the center-to-corner shift includes the explanatory comment at line 2189; the arithmetic shift itself spans 2190-2193."
+  ]
+}

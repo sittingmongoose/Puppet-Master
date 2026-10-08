@@ -1,0 +1,1321 @@
+{
+  "check_started_utc": "2026-10-08T02:29:31.493365+00:00",
+  "method": "Exact rational homogeneous forward; independent Gauss-Jordan inverse; LU determinant; separate binary64 diagnostics. No candidate or downloaded source execution.",
+  "input_integrity": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "matches_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "matches_map": true
+    },
+    {
+      "label": "Output1",
+      "artifact": "final.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+      "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+      "matches_map": true
+    },
+    {
+      "label": "Output1",
+      "artifact": "report.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/report.md",
+      "sha256": "b3614f41c82281e21c1fcb3e4bb9be9f613220d7a44a892063f7f63b0d68f317",
+      "matches_map": true
+    },
+    {
+      "label": "Output1",
+      "artifact": "sources.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/sources.json",
+      "sha256": "5d2453b7b47d23f1add948d655a796edf6482b42c236f42693cb821e413eab23",
+      "matches_map": true
+    },
+    {
+      "label": "Output1",
+      "artifact": "witness.py",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness.py",
+      "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37",
+      "matches_map": true
+    },
+    {
+      "label": "Output1",
+      "artifact": "witness-input.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness-input.json",
+      "sha256": "1fe06ef6e73bbbf6b5ad0f95ec539e50e69074a661df66b4942124d2159d6c12",
+      "matches_map": true
+    },
+    {
+      "label": "Output1",
+      "artifact": "witness-receipt.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness-receipt.json",
+      "sha256": "bc8cbabcf80a774b1d37f42784044a6afff8de3fa82181cafa1e64535b778ed9",
+      "matches_map": true
+    },
+    {
+      "label": "Output2",
+      "artifact": "final.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+      "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af",
+      "matches_map": true
+    },
+    {
+      "label": "Output2",
+      "artifact": "report.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+      "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67",
+      "matches_map": true
+    },
+    {
+      "label": "Output2",
+      "artifact": "sources.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/sources.json",
+      "sha256": "0a64e2fb99445f952f52073b230947948af4f0977a801166cf685f91d05cc558",
+      "matches_map": true
+    },
+    {
+      "label": "Output2",
+      "artifact": "witness.py",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness.py",
+      "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856",
+      "matches_map": true
+    },
+    {
+      "label": "Output2",
+      "artifact": "witness-input.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness-input.json",
+      "sha256": "dde69e394982b670801220f6921ea0f94bba5e2ec007cfc33ab9d46fe49eb25f",
+      "matches_map": true
+    },
+    {
+      "label": "Output2",
+      "artifact": "witness-receipt.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness-receipt.json",
+      "sha256": "98f18c3248ab454986814ab3782547230769cd8230012e3e5814ea94e2314e61",
+      "matches_map": true
+    }
+  ],
+  "outputs": {
+    "Output1": {
+      "fixture_values_match_common_input": true,
+      "queries_match_common_input": true,
+      "receipt_code_hash_matches": true,
+      "receipt_input_hash_matches": true,
+      "receipt_elapsed_matches_timestamps_within_0_001s": true,
+      "point_counts": {
+        "forward": 10,
+        "inverse": 3
+      },
+      "independent_point_checks": [
+        {
+          "id": "forward_0",
+          "op": "fwd",
+          "fixture": "identity_north_up",
+          "exact_decimal_result": [
+            "0",
+            "0"
+          ],
+          "expected": [
+            0.0,
+            0.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_1",
+          "op": "fwd",
+          "fixture": "identity_north_up",
+          "exact_decimal_result": [
+            "1/2",
+            "-1/2"
+          ],
+          "expected": [
+            0.5,
+            -0.5
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_2",
+          "op": "fwd",
+          "fixture": "identity_north_up",
+          "exact_decimal_result": [
+            "10",
+            "-5"
+          ],
+          "expected": [
+            10.0,
+            -5.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-11,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_3",
+          "op": "fwd",
+          "fixture": "north_up_meters",
+          "exact_decimal_result": [
+            "1000085/2",
+            "7999945/2"
+          ],
+          "expected": [
+            500042.5,
+            3999972.5
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 3.9999725e-06,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_4",
+          "op": "fwd",
+          "fixture": "north_up_meters",
+          "exact_decimal_result": [
+            "500005",
+            "3999995"
+          ],
+          "expected": [
+            500005.0,
+            3999995.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 3.999995e-06,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_5",
+          "op": "fwd",
+          "fixture": "geographic_degrees",
+          "exact_decimal_result": [
+            "-245999/2000",
+            "97999/2000"
+          ],
+          "expected": [
+            -122.9995,
+            48.9995
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 1.0408340855860843e-20,
+          "comparison_tolerance": 1.2299949999999998e-10,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_6",
+          "op": "fwd",
+          "fixture": "geographic_degrees",
+          "exact_decimal_result": [
+            "-491983/4000",
+            "195989/4000"
+          ],
+          "expected": [
+            -122.99575,
+            48.99725
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 8.847089727481716e-20,
+          "comparison_tolerance": 1.2299575e-10,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_7",
+          "op": "fwd",
+          "fixture": "rotated",
+          "exact_decimal_result": [
+            "3/2",
+            "1/2"
+          ],
+          "expected": [
+            1.5,
+            0.5
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1.5e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_8",
+          "op": "fwd",
+          "fixture": "rotated",
+          "exact_decimal_result": [
+            "5",
+            "5"
+          ],
+          "expected": [
+            5.0,
+            5.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 5e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "forward_9",
+          "op": "fwd",
+          "fixture": "sheared",
+          "exact_decimal_result": [
+            "205/2",
+            "405/2"
+          ],
+          "expected": [
+            102.5,
+            202.5
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 2.025e-10,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "inverse_0",
+          "op": "inv",
+          "fixture": "rotated",
+          "exact_decimal_result": [
+            "1",
+            "3"
+          ],
+          "expected": [
+            1.0,
+            3.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 3e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "inverse_1",
+          "op": "inv",
+          "fixture": "sheared",
+          "exact_decimal_result": [
+            "2",
+            "1"
+          ],
+          "expected": [
+            2.0,
+            1.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 2e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "inverse_2",
+          "op": "inv",
+          "fixture": "north_up_meters",
+          "exact_decimal_result": [
+            "17/4",
+            "11/4"
+          ],
+          "expected": [
+            4.25,
+            2.75
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 4.25e-12,
+          "binary_error_within_tolerance": true
+        }
+      ],
+      "receipt_stdout": {
+        "schema": "pm.er10.d-m06-b.candidate-v3.witness-output.v1",
+        "case_id": "D-M06-B",
+        "python": "3.14.4",
+        "environment": "er10 mechanical sandbox: offline, single process, seccomp+namespaces, stdlib only",
+        "checks_total": 22,
+        "checks_passed": 22,
+        "all_passed": true,
+        "checks": [
+          {
+            "id": "ctrl_transcription_literal_vs_matrix",
+            "evidence_class": "algebraic",
+            "passed": true,
+            "detail": "max |literal - matrix| = 0 over 8 geotransforms x 6 queries"
+          },
+          {
+            "id": "hand_forward_00_identity_north_up",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (0, 0) vs hand (0.0, 0.0)"
+          },
+          {
+            "id": "hand_forward_01_identity_north_up",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (0.5, -0.5) vs hand (0.5, -0.5)"
+          },
+          {
+            "id": "hand_forward_02_identity_north_up",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (10, -5) vs hand (10.0, -5.0)"
+          },
+          {
+            "id": "hand_forward_03_north_up_meters",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (500042.5, 3999972.5) vs hand (500042.5, 3999972.5)"
+          },
+          {
+            "id": "hand_forward_04_north_up_meters",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (500005, 3999995) vs hand (500005.0, 3999995.0)"
+          },
+          {
+            "id": "hand_forward_05_geographic_degrees",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (-122.9995, 48.999499999999998) vs hand (-122.9995, 48.9995)"
+          },
+          {
+            "id": "hand_forward_06_geographic_degrees",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (-122.99575, 48.997250000000001) vs hand (-122.99575, 48.99725)"
+          },
+          {
+            "id": "hand_forward_07_rotated",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (1.5, 0.5) vs hand (1.5, 0.5)"
+          },
+          {
+            "id": "hand_forward_08_rotated",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (5, 5) vs hand (5.0, 5.0)"
+          },
+          {
+            "id": "hand_forward_09_sheared",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (102.5, 202.5) vs hand (102.5, 202.5)"
+          },
+          {
+            "id": "hand_inverse_00_rotated",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (1, 3) vs hand (1.0, 3.0)"
+          },
+          {
+            "id": "hand_inverse_01_sheared",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (2, 1) vs hand (2.0, 1.0)"
+          },
+          {
+            "id": "hand_inverse_02_north_up_meters",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "computed (4.25, 2.75) vs hand (4.25, 2.75)"
+          },
+          {
+            "id": "ctrl_transpose_identity_rotated",
+            "evidence_class": "algebraic",
+            "passed": true,
+            "detail": "block columns orthogonal=True; adjugate inverse equals transpose/det at 3 sampled points=True"
+          },
+          {
+            "id": "weak_mutual_roundtrip",
+            "evidence_class": "weak_mutual",
+            "passed": true,
+            "detail": "max |recovered - original| = 3.33e-10 over 36 round-trips; mutual round-tripping alone is weak evidence (a shared transposed matrix round-trips consistently) and is corroborated here only by the hand/algebraic controls above"
+          },
+          {
+            "id": "corner_center_halfpixel_identity",
+            "evidence_class": "algebraic",
+            "passed": true,
+            "detail": "max |world(0.5,0.5)-world(0,0) - 0.5*(gt1+gt2, gt4+gt5)| = 2.39e-15 (matches the witnessed world-file center-to-corner shift)"
+          },
+          {
+            "id": "corner_vs_center_distinct",
+            "evidence_class": "hand_expected",
+            "passed": true,
+            "detail": "world(0,0) != world(0.5,0.5) for the 7 geotransforms with a nonzero 2x2 block; degenerate_zero_scale is excluded because its constant map sends every pixel/line to (gt0,gt3), which is exactly why integer-index callers without the +0.5 mapping test the corner grid wherever the map is nonconstant"
+          },
+          {
+            "id": "invertibility_scale_relative_classification",
+            "evidence_class": "guard",
+            "passed": true,
+            "detail": "identity_north_up: det=-1 r=1 -> invertible; north_up_meters: det=-100 r=1 -> invertible; geographic_degrees: det=-9.9999999999999995e-07 r=1 -> invertible; rotated: det=5 r=1 -> invertible; sheared: det=1.875 r=0.882353 -> invertible; near_singular: det=1.999999000079633e-06 r=1e-06 -> invertible_ill_conditioned; degenerate_rank1: det=0 r=0 -> singular_refused; degenerate_zero_scale: det=0 r=0 -> singular_refused"
+          },
+          {
+            "id": "near_singular_amplification_reported",
+            "evidence_class": "guard",
+            "passed": true,
+            "detail": "frobenius amp |A|*|A^-1| ~ 2e+06 (r=1e-06); formally invertible but numerically untrustworthy - any tolerance must be scale-relative"
+          },
+          {
+            "id": "degenerate_guards_refuse",
+            "evidence_class": "guard",
+            "passed": true,
+            "detail": "2/2 zero-determinant fixtures refused by exact det==0 guard before any division"
+          },
+          {
+            "id": "out_of_extent_totality_note",
+            "evidence_class": "algebraic",
+            "passed": true,
+            "detail": "affine forward defined and finite at (-1,-1) and (10.5,5.5); extent containment is caller policy, not part of the affine math"
+          }
+        ],
+        "witness_validity": "valid_scientific_witness_of_proposed_tests",
+        "claim_scope": "Process success (sandbox receipt) plus these executed checks support the proposed algorithms on the tested fixtures only; GDAL itself was not executed, tolerance values remain proposed-not-witnessed, and full forward/inverse claims need the hand/algebraic controls, not the weak mutual round-trip alone."
+      },
+      "original_witness_reexecuted": false
+    },
+    "Output2": {
+      "fixture_values_match_common_input": true,
+      "queries_match_common_input": true,
+      "receipt_code_hash_matches": true,
+      "receipt_input_hash_matches": true,
+      "receipt_elapsed_matches_timestamps_within_0_001s": true,
+      "point_counts": {
+        "forward": 16,
+        "inverse": 6
+      },
+      "independent_point_checks": [
+        {
+          "id": "hp1",
+          "op": "fwd",
+          "fixture": "identity_north_up",
+          "exact_decimal_result": [
+            "0",
+            "0"
+          ],
+          "expected": [
+            0.0,
+            0.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp2",
+          "op": "fwd",
+          "fixture": "identity_north_up",
+          "exact_decimal_result": [
+            "1/2",
+            "-1/2"
+          ],
+          "expected": [
+            0.5,
+            -0.5
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp3",
+          "op": "fwd",
+          "fixture": "identity_north_up",
+          "exact_decimal_result": [
+            "17/4",
+            "-11/4"
+          ],
+          "expected": [
+            4.25,
+            -2.75
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp4",
+          "op": "fwd",
+          "fixture": "identity_north_up",
+          "exact_decimal_result": [
+            "10",
+            "-5"
+          ],
+          "expected": [
+            10.0,
+            -5.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp5",
+          "op": "inv",
+          "fixture": "identity_north_up",
+          "exact_decimal_result": [
+            "17/4",
+            "11/4"
+          ],
+          "expected": [
+            4.25,
+            2.75
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-09,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp6",
+          "op": "fwd",
+          "fixture": "north_up_meters",
+          "exact_decimal_result": [
+            "500050",
+            "3999985"
+          ],
+          "expected": [
+            500050.0,
+            3999985.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-09,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp7",
+          "op": "fwd",
+          "fixture": "north_up_meters",
+          "exact_decimal_result": [
+            "500005",
+            "3999995"
+          ],
+          "expected": [
+            500005.0,
+            3999995.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-09,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp8",
+          "op": "inv",
+          "fixture": "north_up_meters",
+          "exact_decimal_result": [
+            "5",
+            "3/2"
+          ],
+          "expected": [
+            5.0,
+            1.5
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-09,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp9",
+          "op": "fwd",
+          "fixture": "geographic_degrees",
+          "exact_decimal_result": [
+            "-491983/4000",
+            "195989/4000"
+          ],
+          "expected": [
+            -122.99575,
+            48.99725
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 8.847089727481716e-20,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp10",
+          "op": "fwd",
+          "fixture": "geographic_degrees",
+          "exact_decimal_result": [
+            "-245999/2000",
+            "97999/2000"
+          ],
+          "expected": [
+            -122.9995,
+            48.9995
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 1.0408340855860843e-20,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp11",
+          "op": "inv",
+          "fixture": "geographic_degrees",
+          "exact_decimal_result": [
+            "17/4",
+            "11/4"
+          ],
+          "expected": [
+            4.25,
+            2.75
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 1.0800822042300595e-12,
+          "comparison_tolerance": 1e-06,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp12",
+          "op": "fwd",
+          "fixture": "rotated",
+          "exact_decimal_result": [
+            "4",
+            "3"
+          ],
+          "expected": [
+            4.0,
+            3.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp13",
+          "op": "fwd",
+          "fixture": "rotated",
+          "exact_decimal_result": [
+            "3/2",
+            "1/2"
+          ],
+          "expected": [
+            1.5,
+            0.5
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp14",
+          "op": "inv",
+          "fixture": "rotated",
+          "exact_decimal_result": [
+            "1",
+            "2"
+          ],
+          "expected": [
+            1.0,
+            2.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-09,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp15",
+          "op": "fwd",
+          "fixture": "sheared",
+          "exact_decimal_result": [
+            "211/2",
+            "207"
+          ],
+          "expected": [
+            105.5,
+            207.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp16",
+          "op": "inv",
+          "fixture": "sheared",
+          "exact_decimal_result": [
+            "4",
+            "3"
+          ],
+          "expected": [
+            4.0,
+            3.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp17",
+          "op": "fwd",
+          "fixture": "near_singular",
+          "exact_decimal_result": [
+            "1999999/1000000",
+            "1999999/1000000"
+          ],
+          "expected": [
+            1.999999,
+            1.999999
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 2.8755664516211256e-17,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp18",
+          "op": "inv",
+          "fixture": "near_singular",
+          "exact_decimal_result": [
+            "1",
+            "1"
+          ],
+          "expected": [
+            1.0,
+            1.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 5.551117898684733e-17,
+          "comparison_tolerance": 1e-06,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp19",
+          "op": "fwd",
+          "fixture": "degenerate_rank1",
+          "exact_decimal_result": [
+            "15",
+            "25"
+          ],
+          "expected": [
+            15.0,
+            25.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp20",
+          "op": "fwd",
+          "fixture": "degenerate_rank1",
+          "exact_decimal_result": [
+            "15",
+            "25"
+          ],
+          "expected": [
+            15.0,
+            25.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp21",
+          "op": "fwd",
+          "fixture": "degenerate_zero_scale",
+          "exact_decimal_result": [
+            "10",
+            "20"
+          ],
+          "expected": [
+            10.0,
+            20.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        },
+        {
+          "id": "hp22",
+          "op": "fwd",
+          "fixture": "degenerate_zero_scale",
+          "exact_decimal_result": [
+            "10",
+            "20"
+          ],
+          "expected": [
+            10.0,
+            20.0
+          ],
+          "decimal_expected_exact": true,
+          "exact_binary_input_error": 0.0,
+          "comparison_tolerance": 1e-12,
+          "binary_error_within_tolerance": true
+        }
+      ],
+      "receipt_stdout": {
+        "correct": [
+          {
+            "id": "C1_fixed_point_origin",
+            "status": "pass",
+            "detail": "fwd(0,0)==(GT0,GT3) on 8/8 fixtures"
+          },
+          {
+            "id": "C2_pixel_center_identity",
+            "status": "pass",
+            "detail": "center identity holds on 8/8 fixtures"
+          },
+          {
+            "id": "C3_hand_derived_points",
+            "status": "pass",
+            "detail": "22/22 hand oracle points matched"
+          },
+          {
+            "id": "C4_hand_determinants",
+            "status": "pass",
+            "detail": "8/8 determinants matched"
+          },
+          {
+            "id": "C5_translation_metamorphic",
+            "status": "pass",
+            "detail": "48/48 fixture-query shifts exact"
+          },
+          {
+            "id": "C6_half_pixel_shift_corroboration",
+            "status": "pass",
+            "detail": "shifted-corner(0,0)==orig-center(0.5,0.5) on 8/8 fixtures"
+          },
+          {
+            "id": "C7_block_geometry_classification",
+            "status": "pass",
+            "detail": "rotated orthogonal (dot=0) equal-norm; sheared dot=1; near-sing cos=1.000000000; rank1 cos=1.000000"
+          },
+          {
+            "id": "C8_singular_rejection",
+            "status": "pass",
+            "detail": "both degenerate fixtures rejected (no finite inverse); both collisions confirmed"
+          },
+          {
+            "id": "C9_near_singular_margin",
+            "status": "pass",
+            "detail": "det=2e-06 invertible but scale-relative margin=1e-06 < 1e-05 (unstable)"
+          }
+        ],
+        "wrong": [
+          {
+            "id": "W1_corner_center_conflation_detected",
+            "status": "pass",
+            "detail": "fwd(0,0)!=fwd(0.5,0.5) detected on ['identity_north_up', 'rotated']"
+          },
+          {
+            "id": "W2_rowcol_swap_detected",
+            "status": "pass",
+            "detail": "transpose detected on ['rotated', 'sheared']; transposed inverse gave (2.2000,0.4000) vs oracle [1.0, 2.0]; invisible on north-up ['identity_north_up', 'north_up_meters', 'geographic_degrees'] (expected)"
+          },
+          {
+            "id": "W3_north_up_assumption_detected",
+            "status": "pass",
+            "detail": "forcing GT2=GT4=0 detected on ['rotated', 'sheared']"
+          },
+          {
+            "id": "W4_roundtrip_insufficient_documented",
+            "status": "pass",
+            "detail": "wrong transposed pair roundtrips to max err 1.11e-10 (roundtrip-only check PASSES) yet violates hand oracles on ['rotated', 'sheared']"
+          }
+        ],
+        "summary": {
+          "all_correct_controls_pass": true,
+          "all_wrong_controls_detected": true,
+          "witness_scientifically_valid": true,
+          "n_correct": 9,
+          "n_wrong": 4
+        }
+      },
+      "original_witness_reexecuted": false
+    }
+  },
+  "fixture_geometry": {
+    "identity_north_up": {
+      "lu_determinant_exact": "-1",
+      "ratio_denominator_exact": "1",
+      "ratio_exact": "1",
+      "ratio_float": 1.0,
+      "column_dot_exact": "0",
+      "column_squared_norms": [
+        "1",
+        "1"
+      ],
+      "frobenius_condition": 2.0,
+      "unique_inverse_at_origin": true
+    },
+    "north_up_meters": {
+      "lu_determinant_exact": "-100",
+      "ratio_denominator_exact": "100",
+      "ratio_exact": "1",
+      "ratio_float": 1.0,
+      "column_dot_exact": "0",
+      "column_squared_norms": [
+        "100",
+        "100"
+      ],
+      "frobenius_condition": 2.0,
+      "unique_inverse_at_origin": true
+    },
+    "geographic_degrees": {
+      "lu_determinant_exact": "-1/1000000",
+      "ratio_denominator_exact": "1/1000000",
+      "ratio_exact": "1",
+      "ratio_float": 1.0,
+      "column_dot_exact": "0",
+      "column_squared_norms": [
+        "1/1000000",
+        "1/1000000"
+      ],
+      "frobenius_condition": 2.0,
+      "unique_inverse_at_origin": true
+    },
+    "rotated": {
+      "lu_determinant_exact": "5",
+      "ratio_denominator_exact": "5",
+      "ratio_exact": "1",
+      "ratio_float": 1.0,
+      "column_dot_exact": "0",
+      "column_squared_norms": [
+        "5",
+        "5"
+      ],
+      "frobenius_condition": 2.0,
+      "unique_inverse_at_origin": true
+    },
+    "sheared": {
+      "lu_determinant_exact": "15/8",
+      "ratio_denominator_exact": "17/8",
+      "ratio_exact": "15/17",
+      "ratio_float": 0.8823529411764706,
+      "column_dot_exact": "1",
+      "column_squared_norms": [
+        "17/16",
+        "17/4"
+      ],
+      "frobenius_condition": 2.8333333333333335,
+      "unique_inverse_at_origin": true
+    },
+    "near_singular": {
+      "lu_determinant_exact": "1999999/1000000000000",
+      "ratio_denominator_exact": "1999998000001/1000000000000",
+      "ratio_exact": "1999999/1999998000001",
+      "ratio_float": 1.0000005e-06,
+      "column_dot_exact": "999999/500000",
+      "column_squared_norms": [
+        "1999998000001/1000000000000",
+        "1999998000001/1000000000000"
+      ],
+      "frobenius_condition": 1999999.0000005,
+      "unique_inverse_at_origin": true
+    },
+    "degenerate_rank1": {
+      "lu_determinant_exact": "0",
+      "ratio_denominator_exact": "2",
+      "ratio_exact": "0",
+      "ratio_float": 0.0,
+      "column_dot_exact": "2",
+      "column_squared_norms": [
+        "2",
+        "2"
+      ],
+      "frobenius_condition": null,
+      "unique_inverse_at_origin": false
+    },
+    "degenerate_zero_scale": {
+      "lu_determinant_exact": "0",
+      "ratio_denominator_exact": "0",
+      "ratio_exact": "0",
+      "ratio_float": 0.0,
+      "column_dot_exact": "0",
+      "column_squared_norms": [
+        "0",
+        "0"
+      ],
+      "frobenius_condition": null,
+      "unique_inverse_at_origin": false
+    }
+  },
+  "counterexamples": {
+    "C01_ratio_not_condition_number": {
+      "gt": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1e-12
+      ],
+      "ratio": 1.0,
+      "condition_2_exact": 1000000000000.0,
+      "inverse_world_0_1e_minus_12": [
+        "0",
+        "1"
+      ],
+      "inverse_world_0_2e_minus_12": [
+        "0",
+        "2"
+      ],
+      "consequence": "r=1 accepts an anisotropic block while an absolute Y perturbation of 1e-12 changes line by 1 pixel."
+    },
+    "C02_origin_rounding": {
+      "gt": [
+        1e+16,
+        1,
+        0,
+        0,
+        0,
+        -1
+      ],
+      "ratio": 1.0,
+      "float_corner": [
+        1e+16,
+        0
+      ],
+      "float_point": [
+        1e+16,
+        0.0
+      ],
+      "exact_point": [
+        "20000000000000001/2",
+        "0"
+      ],
+      "float_recovered_pixel": [
+        0.0,
+        -0.0
+      ]
+    },
+    "C03_underflow": {
+      "gt": [
+        0,
+        1e-200,
+        0,
+        0,
+        0,
+        -1e-200
+      ],
+      "float_det": -0.0,
+      "exact_nonzero_lu_det": "-1/10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "float_inverse": null,
+      "independent_inverse": [
+        "1/2",
+        "1/2"
+      ],
+      "GDAL_diagonal_branch_inverts_without_determinant": true
+    },
+    "C04_overflow": {
+      "gt": [
+        0,
+        1e+200,
+        0,
+        0,
+        0,
+        -1e+200
+      ],
+      "float_det": "-inf",
+      "float_ratio": "nan",
+      "float_inverse": [
+        "nan",
+        "nan"
+      ],
+      "independent_inverse": [
+        "1/2",
+        "1/2"
+      ]
+    },
+    "C05_nonconstant_corner_center_collision": {
+      "gt": [
+        10,
+        1,
+        -1,
+        20,
+        1,
+        -1
+      ],
+      "nonconstant": true,
+      "corner": [
+        "10",
+        "20"
+      ],
+      "center": [
+        "10",
+        "20"
+      ],
+      "another_point": [
+        "11",
+        "21"
+      ]
+    },
+    "C06_orthogonal_not_transpose_over_det": {
+      "gt": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        3
+      ],
+      "column_dot": 0,
+      "det": 6,
+      "true_inverse_world_1_1": [
+        "1/2",
+        "1/3"
+      ],
+      "transpose_over_det_result": [
+        "1/3",
+        "1/2"
+      ],
+      "Output1_code_common_norm_denominator_result": [
+        "1/2",
+        "3/4"
+      ]
+    },
+    "C07_release_vs_policy": {
+      "gt": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1.000000000002
+      ],
+      "float_det": 1.999955756559757e-12,
+      "ratio": 9.999778782788784e-13,
+      "candidate_exact_zero_inverse_available": true,
+      "GDAL_general_branch_rejects": true,
+      "note": "Selected release rejects this nonzero determinant. It is also below both proposed margin thresholds; candidate inv function itself lacks that policy."
+    }
+  },
+  "wrong_control_independent_checks": {
+    "W1_identity_north_up": {
+      "corner": [
+        "0",
+        "0"
+      ],
+      "center": [
+        "1/2",
+        "-1/2"
+      ]
+    },
+    "W1_rotated": {
+      "corner": [
+        "0",
+        "0"
+      ],
+      "center": [
+        "3/2",
+        "1/2"
+      ]
+    },
+    "W2_rotated": {
+      "correct": [
+        "45/4",
+        "5/4"
+      ],
+      "transposed": [
+        "23/4",
+        "39/4"
+      ],
+      "different": true
+    },
+    "W2_sheared": {
+      "correct": [
+        "845/8",
+        "3305/16"
+      ],
+      "transposed": [
+        "1679/16",
+        "1661/8"
+      ],
+      "different": true
+    },
+    "W2_identity_north_up": {
+      "correct": [
+        "17/4",
+        "-11/4"
+      ],
+      "transposed": [
+        "17/4",
+        "-11/4"
+      ],
+      "different": false
+    },
+    "W2_north_up_meters": {
+      "correct": [
+        "1000085/2",
+        "7999945/2"
+      ],
+      "transposed": [
+        "1000085/2",
+        "7999945/2"
+      ],
+      "different": false
+    },
+    "W2_geographic_degrees": {
+      "correct": [
+        "-491983/4000",
+        "195989/4000"
+      ],
+      "transposed": [
+        "-491983/4000",
+        "195989/4000"
+      ],
+      "different": false
+    },
+    "W2_inverse": {
+      "correct_gaussian": [
+        "1",
+        "2"
+      ],
+      "transposed_gaussian": [
+        "11/5",
+        "2/5"
+      ]
+    },
+    "W3_rotated": {
+      "correct": [
+        "4",
+        "3"
+      ],
+      "north_up": [
+        "2",
+        "4"
+      ]
+    },
+    "W3_sheared": {
+      "correct": [
+        "211/2",
+        "207"
+      ],
+      "north_up": [
+        "104",
+        "206"
+      ]
+    }
+  },
+  "float_receipt_diagnostics": {
+    "Output1_pixel_roundtrip_max": 3.3306690738754696e-10,
+    "Output2_wrong_pair_world_roundtrip_max": 1.1102208041791073e-10,
+    "translation_max_error": 0.0,
+    "half_pixel_identity_max_error": 2.3874131838130808e-15,
+    "oracle_status": "diagnostics only; independent rational checks above govern truth"
+  },
+  "check_finished_utc": "2026-10-08T02:29:31.505448+00:00",
+  "all_frozen_hashes_match": true,
+  "all_independent_point_constants_correct": true
+}

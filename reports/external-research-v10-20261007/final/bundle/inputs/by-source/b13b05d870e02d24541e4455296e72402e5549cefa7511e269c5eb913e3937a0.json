@@ -1,0 +1,30 @@
+{
+  "schema": "ER10_CLOSED_M07B_PREPARED_METADATA_BINDINGS_V1",
+  "campaign_terminal": false,
+  "status": "CLOSED_METADATA_PREPARED_NOT_FINAL",
+  "files": [
+    {
+      "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+      "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+      "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+      "bytes": 4623
+    },
+    {
+      "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+      "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+      "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+      "bytes": 13013
+    },
+    {
+      "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+      "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+      "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+      "bytes": 28932
+    }
+  ],
+  "no_live_inputs": true,
+  "no_original_grade_edits": true
+}

@@ -1,0 +1,231 @@
+{
+  "schema": "ER10_M06A_V3_CONDITIONAL_DIAGNOSTIC_SEED_PREREQUISITE_GATE_V1",
+  "case": "D-M06-A",
+  "authority": {
+    "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-M06-v3-conditional-missing-seed-active-diagnostic-authorization-v1.json",
+    "authority_sha256": "d3ecc6a1ab1301f1b616266ee1302f4215541e601360d6b22389ce7a1ebad389",
+    "admitted": false,
+    "status": "CONDITIONAL_PREREQUISITES_UNVERIFIED",
+    "prerequisites": [
+      "Full required scientificseed carriers/hash/parse triage",
+      "Actual seed T3delivery <=1200seconds fromoriginal scientificT0",
+      "One distinctterminal Rootnomination: unique exact assigned installednativeCOMPLETE joined originaltask/config/identity",
+      "Entire originalseed tasktreequiet/frozen/settled",
+      "Case-specific full prerequisite gate frozen BEFORE originalarmdispatch"
+    ],
+    "qualification_limits": "Original activeabsence/rawAPI/vendor/ACP/native/provenance/comparative HOLD and failedcosts preserved; diagnosticsourceassessment does not establish qualification or methodcredit",
+    "forbidden": "No missingfile/paused/missingterminal/overrunforgiveness, repeatedactivationlookup, freshseed/retry/version/scope/familyMax changes or clockreset",
+    "at": "2026-10-08T00:49:49.002395+00:00"
+  },
+  "seed_carriers": {
+    "files": {
+      "draft.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/draft.md",
+        "sha256": "2c1289885dcd8b0c99cf18bd63771fe3acece6b61c8b4b533045f76a568a0910",
+        "bytes": 6344
+      },
+      "fixtures.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/fixtures.json",
+        "sha256": "bc2ed432bc18ec4ac2eda91518111ade950b44d7f66b6c3dc6ca604a60c268ac",
+        "bytes": 4815
+      },
+      "sources.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/sources.json",
+        "sha256": "87510c175a18a91851d4aea895901bc8ce7155a8cf0d405646e8adcf6c18674c",
+        "bytes": 2929
+      },
+      "timings.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/timings.json",
+        "sha256": "757555c6881f7f7eb111dfb46eef6919126efbbae137cf24ff5e3f4d46e8972c",
+        "bytes": 1955
+      },
+      "t3-terminal-observed.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/t3-terminal-observed.json",
+        "sha256": "3dca07032b443df4dcb91255d2b2804807780c199f2da117ea0f9332fd5c76a4",
+        "bytes": 4204
+      },
+      "startup-event-observation-v1.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/startup-event-observation-v1.json",
+        "sha256": "86ac3220f1b0592490ef3618e048208f6b1bf6b4d62d374634dd3229064e8bfb",
+        "bytes": 4959
+      }
+    },
+    "scientific_T0": "2026-10-08T00:43:18.885619+00:00",
+    "T3_terminal_at": "2026-10-08T00:57:14.171Z",
+    "seed_T0_to_terminal_seconds": 835.285381,
+    "budget_seconds": 1200,
+    "within_budget": true,
+    "native_terminal": "PENDING_ONE_ROOT_TERMINAL_NOMINATION",
+    "native_active_observed": false,
+    "seed_science": "Untrusted fresh candidate input, not source/evaluator truth",
+    "parse_complete": true,
+    "task_tree_quiet": true,
+    "usage_billing": null,
+    "host_freeze_at": "2026-10-08T00:57:47.391288+00:00"
+  },
+  "input_only_fixture_key_triage": true,
+  "original_native_terminal": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/integration-state-terminal-v3.json",
+    "sha256": "bc786292c0cb09dae4e81338fa0e2cec3968626a0de69f223fede8484e0d4cb9",
+    "status": "complete",
+    "createdAt": 1791420208867
+  },
+  "quiet_settled_observation": {
+    "source": "actual terminal decision t3_thread_read after settle",
+    "status": "completed",
+    "activeRunId": null,
+    "pendingRequestCount": 0,
+    "settled": true,
+    "settledAt": "2026-10-08T00:57:47.656Z",
+    "hasPendingChildRuns": false
+  },
+  "both_arm_allstage_freezes": [
+    {
+      "arm": "common",
+      "stage": "seed-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort2-v1",
+      "candidate_notification_policy": "mode auto exactliteralparentID only if supported activation notification; no routine workersteer; no candidate receiptengineering",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        }
+      },
+      "input_science_hashes": {
+        "brief": "e24e73f5c3c7c4e8ad65ea2894e8786d73b98bce407c967ee70da5a73bf8d229",
+        "sources": {
+          "jcs": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240"
+        },
+        "card": "2c8b81389650986a5b578de3d60db7f1df270447593e1417a66617f715067667"
+      },
+      "future_seed_binding": "Fresh candidate authored v3 only; exact hashes bound mechanically before arm admission, no expected-output injection",
+      "files": {
+        "INPUT_MAP.json": "b09a8bbdc2f422731f2fa876302c21b1b91c1bc4084965943336ba773cb65ab6",
+        "assignment.md": "eeb9dfa32f8a576dd619612cb41fcb0954aa872bd3496200aed34fa1f4cc3e12",
+        "task.txt": "9a1578f98466c80aadc65538a57e610023f197c07a656edd041a581f1211b106",
+        "dispatch-config.json": "4a7b9c4fd110d3856bf980b5d45d1977abe95d1c80a68dafde18f90534233656"
+      },
+      "stage_cap_seconds": 1200,
+      "T0": "2026-10-08T00:43:18.885619+00:00",
+      "absolute_seed_deadline": "2026-10-08T01:03:18.885619+00:00",
+      "absolute_pair_deadline": "2026-10-08T01:33:18.885619+00:00",
+      "attempt_limit": 1,
+      "no_new_start_until_root_glm2_transfer": true
+    },
+    {
+      "arm": "control",
+      "stage": "candidate-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort2-v1",
+      "candidate_notification_policy": "mode auto exactliteralparentID only if supported activation notification; no routine workersteer; no candidate receiptengineering",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        }
+      },
+      "input_science_hashes": {
+        "brief": "e24e73f5c3c7c4e8ad65ea2894e8786d73b98bce407c967ee70da5a73bf8d229",
+        "sources": {
+          "jcs": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240"
+        },
+        "card": "2c8b81389650986a5b578de3d60db7f1df270447593e1417a66617f715067667"
+      },
+      "future_seed_binding": "Fresh candidate authored v3 only; exact hashes bound mechanically before arm admission, no expected-output injection",
+      "files": {
+        "INPUT_MAP.json": "d4e5b929d5d43682388ec07a1a594b28955667616b7d040a4c4a9b495fdcc540",
+        "assignment.md": "2c433340f92d6d86e794d6290d8d5972247d3178ef1462956cec16120728dc17",
+        "task.txt": "ac8074a0abc561a4d78c4c240580157e33a8dfce5a16e7f4535aa0067d61fafe",
+        "dispatch-config.json": "c3f793a7f60f7f648450aaa3e7e8d52095f50e98d5e8931377e9b7d8144e0ef4"
+      },
+      "stage_cap_seconds": 1800,
+      "T0": "2026-10-08T00:43:18.885619+00:00",
+      "absolute_seed_deadline": "2026-10-08T01:03:18.885619+00:00",
+      "absolute_pair_deadline": "2026-10-08T01:33:18.885619+00:00",
+      "attempt_limit": 1,
+      "no_new_start_until_root_glm2_transfer": true,
+      "arm_preparation_T0": "2026-10-08T01:01:03.369784+00:00",
+      "arm_absolute_deadline": "2026-10-08T01:31:03.369784+00:00"
+    },
+    {
+      "arm": "treatment",
+      "stage": "candidate-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort2-v1",
+      "candidate_notification_policy": "mode auto exactliteralparentID only if supported activation notification; no routine workersteer; no candidate receiptengineering",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        }
+      },
+      "input_science_hashes": {
+        "brief": "e24e73f5c3c7c4e8ad65ea2894e8786d73b98bce407c967ee70da5a73bf8d229",
+        "sources": {
+          "jcs": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240"
+        },
+        "card": "2c8b81389650986a5b578de3d60db7f1df270447593e1417a66617f715067667"
+      },
+      "future_seed_binding": "Fresh candidate authored v3 only; exact hashes bound mechanically before arm admission, no expected-output injection",
+      "files": {
+        "INPUT_MAP.json": "31a186485bfc783162a537d0b2e88f079b55d43a8f4c22e19878ed3bace07ff0",
+        "assignment.md": "d359f153e2f730b009fceb132f842257305553fdd8d3bf98d425d7f1cfe9c46c",
+        "task.txt": "b4e6e0d0e3695f996942b47ca4359f7eac74a612ac6af99223da7f9d41b27696",
+        "dispatch-config.json": "8851c2fcb6f404cfe7ad260249f091613952518675d2032e8a15dc93ffd911c1"
+      },
+      "stage_cap_seconds": 1800,
+      "T0": "2026-10-08T00:43:18.885619+00:00",
+      "absolute_seed_deadline": "2026-10-08T01:03:18.885619+00:00",
+      "absolute_pair_deadline": "2026-10-08T01:33:18.885619+00:00",
+      "attempt_limit": 1,
+      "no_new_start_until_root_glm2_transfer": true,
+      "arm_preparation_T0": "2026-10-08T01:01:03.369784+00:00",
+      "arm_absolute_deadline": "2026-10-08T01:31:03.369784+00:00"
+    }
+  ],
+  "original_T0": "2026-10-08T00:43:18.885619+00:00",
+  "common_deadline": "2026-10-08T01:33:18.885619+00:00",
+  "arm_preparation_T0": "2026-10-08T01:01:03.369784+00:00",
+  "arm_deadline": "2026-10-08T01:31:03.369784+00:00",
+  "all_prerequisites_verified": true,
+  "diagnostic_original_arms_admitted": true,
+  "qualified_native_provenance_comparative_gate": "HOLD missing originalACTIVE; no requalification/rawAPI/vendor/ACP/firewall claim",
+  "original_active_absence": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M06-A-seed-native-root-active-nomination-v1.json",
+    "sha256": "827264792ec8fa098690670c1a87bb32ba4a7c8252ea1e76f91f75e98cb52e0f",
+    "actual_nomination": {
+      "schema": "ER10_EXACT_OWNED_GLM_INSTALLED_STATE_NOMINATION_V1",
+      "recorded_at": "2026-10-08T00:43:55.681990+00:00",
+      "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/assignment.md",
+      "assignment_sha256": "eeb9dfa32f8a576dd619612cb41fcb0954aa872bd3496200aed34fa1f4cc3e12",
+      "event": "original_seed_actual_registered_thread_Goal_loop_startup_event_00:43:28.910Z",
+      "matching_objectives": 0,
+      "rows": [],
+      "native_active_observed": false,
+      "lookup_elapsed_seconds": 0.001968028998817317,
+      "unreadable_state_count": 0,
+      "scope": "One bounded exact-assignment activation nomination in the attached worktree installed GoalLoopDriver store after actual startup event",
+      "vendor_backend_or_ACP_mapping_claim": false,
+      "scientific_T0": "2026-10-08T00:43:18.885619+00:00",
+      "seed_deadline": "2026-10-08T01:03:18.885619+00:00",
+      "common_deadline": "2026-10-08T01:33:18.885619+00:00",
+      "old_attempts_failures_costs_immutable": true
+    },
+    "status": "PENDING_NO_UNIQUE_RUNNING_NATIVE_STATE",
+    "native_active_observed": false,
+    "activation_export_consumed": false,
+    "no_repeated_lookup_or_startup_read": true,
+    "observed_at": "2026-10-08T00:44:10.426253+00:00"
+  },
+  "activation_export_performed": false,
+  "one_final_version_no_retry": true,
+  "science_content_repair": false,
+  "frozen_at": "2026-10-08T01:01:03.369784+00:00"
+}

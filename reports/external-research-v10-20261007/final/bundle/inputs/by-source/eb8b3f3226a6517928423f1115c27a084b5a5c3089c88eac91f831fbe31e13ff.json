@@ -1,0 +1,291 @@
+{
+  "schema": "ER10-M06A-final-v3-terminal-failure-disposition-v1",
+  "case": "D-M06-A",
+  "version": 3,
+  "seed_cost": {
+    "files": {
+      "draft.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/draft.md",
+        "sha256": "2c1289885dcd8b0c99cf18bd63771fe3acece6b61c8b4b533045f76a568a0910",
+        "bytes": 6344
+      },
+      "fixtures.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/fixtures.json",
+        "sha256": "bc2ed432bc18ec4ac2eda91518111ade950b44d7f66b6c3dc6ca604a60c268ac",
+        "bytes": 4815
+      },
+      "sources.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/sources.json",
+        "sha256": "87510c175a18a91851d4aea895901bc8ce7155a8cf0d405646e8adcf6c18674c",
+        "bytes": 2929
+      },
+      "timings.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/timings.json",
+        "sha256": "757555c6881f7f7eb111dfb46eef6919126efbbae137cf24ff5e3f4d46e8972c",
+        "bytes": 1955
+      },
+      "t3-terminal-observed.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/t3-terminal-observed.json",
+        "sha256": "3dca07032b443df4dcb91255d2b2804807780c199f2da117ea0f9332fd5c76a4",
+        "bytes": 4204
+      },
+      "startup-event-observation-v1.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/startup-event-observation-v1.json",
+        "sha256": "86ac3220f1b0592490ef3618e048208f6b1bf6b4d62d374634dd3229064e8bfb",
+        "bytes": 4959
+      }
+    },
+    "scientific_T0": "2026-10-08T00:43:18.885619+00:00",
+    "T3_terminal_at": "2026-10-08T00:57:14.171Z",
+    "seed_T0_to_terminal_seconds": 835.285381,
+    "budget_seconds": 1200,
+    "within_budget": true,
+    "native_terminal": "PENDING_ONE_ROOT_TERMINAL_NOMINATION",
+    "native_active_observed": false,
+    "seed_science": "Untrusted fresh candidate input, not source/evaluator truth",
+    "parse_complete": true,
+    "task_tree_quiet": true,
+    "usage_billing": null,
+    "host_freeze_at": "2026-10-08T00:57:47.391288+00:00"
+  },
+  "original_prebound_gate": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/V3_DIAGNOSTIC_SEED_CONTINUATION_GATE.json",
+    "sha256": "017e587ac0931d95f77473951bd1c25124a820c014bc2bad7a04415a143d049a"
+  },
+  "arms": {
+    "control": {
+      "files": {
+        "dispatch-receipt.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/dispatch-receipt.json",
+          "sha256": "0bfb4872d4da0655ad38bfe6cf874f83dd6df22a03769a697f5ebfec029e7842",
+          "bytes": 26632
+        },
+        "dispatch-config.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/dispatch-config.json",
+          "sha256": "c3f793a7f60f7f648450aaa3e7e8d52095f50e98d5e8931377e9b7d8144e0ef4",
+          "bytes": 558
+        },
+        "assignment.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/assignment.md",
+          "sha256": "2c433340f92d6d86e794d6290d8d5972247d3178ef1462956cec16120728dc17",
+          "bytes": 3703
+        },
+        "dispatch.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/dispatch.json",
+          "sha256": "a2c9e2bb6c154821bf98af2caf111421ea6f743899b4527450a41d0fccc965c2",
+          "bytes": 1810
+        },
+        "INPUT_MAP.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/INPUT_MAP.json",
+          "sha256": "d4e5b929d5d43682388ec07a1a594b28955667616b7d040a4c4a9b495fdcc540",
+          "bytes": 4625
+        },
+        "cancel-receipt-v1.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/cancel-receipt-v1.json",
+          "sha256": "8af4f33eb6e52aa3801afb39b741d459b54e27c854e92cda2877a0beb78cf269",
+          "bytes": 487
+        },
+        "task.txt": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/task.txt",
+          "sha256": "ac8074a0abc561a4d78c4c240580157e33a8dfce5a16e7f4535aa0067d61fafe",
+          "bytes": 139
+        },
+        "expiry-pre-cancel-observation-v1.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/expiry-pre-cancel-observation-v1.json",
+          "sha256": "5de0e09e45a0288ce6dcd5b37544ace0a8d52d69f2d39b79f86d4e6799edd28f",
+          "bytes": 1768
+        },
+        "witness-input.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/witness-input.json",
+          "sha256": "7ffb830b45df998fb2f8b419f9f0e42c1fb1cc998de8d5281503032cbf27cc61",
+          "bytes": 14685
+        },
+        "t3-terminal-observed.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/t3-terminal-observed.json",
+          "sha256": "d90bfbed955deeaec75966b196aaed14122673e1c757d7f5fca40f23e601454e",
+          "bytes": 6224
+        },
+        "startup-event-observation-v1.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/startup-event-observation-v1.json",
+          "sha256": "db8cee34e698fb1fb6c9c3c89b191f9eabc5105ab73e2a938517aec83c56c80c",
+          "bytes": 3676
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/sources.json",
+          "sha256": "23697c84fba014b5055751cb744b96f6eed919d6e51d589707ded580f67eef81",
+          "bytes": 6219
+        },
+        "witness.py": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/witness.py",
+          "sha256": "91907b1c4bf0ad801aa357fe410e8881d09a362dacd6eeb8eb89c968ce06c3a9",
+          "bytes": 12641
+        }
+      },
+      "required_absences": {
+        "final.md": "Absent at quiet original interruption",
+        "report.md": "Absent at quiet original interruption",
+        "timings.json": "Absent at quiet original interruption"
+      },
+      "T3_status": "interrupted",
+      "T3_terminal": "2026-10-08T01:31:41.980Z",
+      "case_T0_to_terminal_seconds": 2903.094381,
+      "arm_ceiling": "2026-10-08T01:31:03.369784+00:00",
+      "ceiling_to_T3terminal_seconds": 38.610216,
+      "native_status": "paused",
+      "whole_tree_quiet": true,
+      "billing": null
+    },
+    "treatment": {
+      "files": {
+        "dispatch-receipt.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/dispatch-receipt.json",
+          "sha256": "6403005173d333f9f3fdfe3b387d075b34029ca0e93cbff1eef9a2e3492eee4f",
+          "bytes": 28075
+        },
+        "witness-receipt-run1-iteration.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/witness-receipt-run1-iteration.json",
+          "sha256": "88089044fd68aba83132de8a3c7d7a7d771f7fda3280381c2a93625f9867b3eb",
+          "bytes": 4146
+        },
+        "report.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/report.md",
+          "sha256": "3c875ffd745ec7be875f12e623bc02c34573ad474016355e0e4388afd9e60ea0",
+          "bytes": 10212
+        },
+        "dispatch-config.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/dispatch-config.json",
+          "sha256": "8851c2fcb6f404cfe7ad260249f091613952518675d2032e8a15dc93ffd911c1",
+          "bytes": 564
+        },
+        "assignment.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/assignment.md",
+          "sha256": "d359f153e2f730b009fceb132f842257305553fdd8d3bf98d425d7f1cfe9c46c",
+          "bytes": 4016
+        },
+        "dispatch.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/dispatch.json",
+          "sha256": "3a056b9ecfbe95a4025398a539dd48eb18d19e85d45f1a34d14452971d63fca8",
+          "bytes": 1826
+        },
+        "INPUT_MAP.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/INPUT_MAP.json",
+          "sha256": "31a186485bfc783162a537d0b2e88f079b55d43a8f4c22e19878ed3bace07ff0",
+          "bytes": 4635
+        },
+        "cancel-receipt-v1.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/cancel-receipt-v1.json",
+          "sha256": "30bc8fc1984306594f755ca4b4e07d05708341bb0dc304aa19737a7281396ee8",
+          "bytes": 491
+        },
+        "witness-receipt-run3-iteration.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/witness-receipt-run3-iteration.json",
+          "sha256": "5183f0c3dc74fec182119c6500065de1aaa9c24ba855bc8ed3d25d66490010bd",
+          "bytes": 4068
+        },
+        "witness-receipt-run2-iteration.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/witness-receipt-run2-iteration.json",
+          "sha256": "ff1093450b2b3ce93822b1f5088d78c62828f7abbd20170661a3396961c47180",
+          "bytes": 4164
+        },
+        "task.txt": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/task.txt",
+          "sha256": "b4e6e0d0e3695f996942b47ca4359f7eac74a612ac6af99223da7f9d41b27696",
+          "bytes": 141
+        },
+        "expiry-pre-cancel-observation-v1.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/expiry-pre-cancel-observation-v1.json",
+          "sha256": "95d0af93a8f4b5f035436d6fd6d149a6d76321fcb3c70b787ea6d0e7627ef1cd",
+          "bytes": 2644
+        },
+        "witness-input.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/witness-input.json",
+          "sha256": "d0081e96b98ea02357af5c8f248d384bc23c3153b9423489a427633b3dd869ce",
+          "bytes": 5600
+        },
+        "t3-terminal-observed.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/t3-terminal-observed.json",
+          "sha256": "a971138e0e2b6dc59b0d8697d57aa22d07a61391d401411a05e49c156de76f45",
+          "bytes": 6265
+        },
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/final.md",
+          "sha256": "ed8ebdc5642953e094b70dd98f14759d3b8a1ce18a23aff445c696e11276061c",
+          "bytes": 5943
+        },
+        "startup-event-observation-v1.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/startup-event-observation-v1.json",
+          "sha256": "d5c7fa139f8ad5d7ac8df10dd0de0f21d45285c249876757a9fcc4845fa34df7",
+          "bytes": 3700
+        },
+        "witness.py": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/witness.py",
+          "sha256": "37abc543435b605d7a537da2a40ac44a9d5d3d095499a7c70858ee2d5017d5b1",
+          "bytes": 14452
+        },
+        "witness-receipt.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/witness-receipt.json",
+          "sha256": "656b216824820a4ecadeb8c0bc48f130393be69dfff7d6bd2b27159562572ebb",
+          "bytes": 4045
+        },
+        "working-checklist.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/working-checklist.md",
+          "sha256": "aca4dbd6398c760de22f4187a85f338e5ecfedd87e0a302f00e15ab04230fc0d",
+          "bytes": 4481
+        }
+      },
+      "required_absences": {
+        "sources.json": "Absent at quiet original interruption",
+        "timings.json": "Absent at quiet original interruption"
+      },
+      "T3_status": "interrupted",
+      "T3_terminal": "2026-10-08T01:31:43.398Z",
+      "case_T0_to_terminal_seconds": 2904.512381,
+      "arm_ceiling": "2026-10-08T01:31:03.369784+00:00",
+      "ceiling_to_T3terminal_seconds": 40.028216,
+      "native_status": "paused",
+      "whole_tree_quiet": true,
+      "billing": null
+    }
+  },
+  "all_original_artifact_freezes": {
+    "control": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/ALL_ORIGINAL_ARTIFACTS_FREEZE.json",
+      "sha256": "a0600b24e01438e10be27ba0d313eac513aeee3653ea24fa739c9437a24095eb"
+    },
+    "treatment": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/ALL_ORIGINAL_ARTIFACTS_FREEZE.json",
+      "sha256": "134bc2ca7e99f914a47fd195ccaa16faa3094f74d4c975da84ffa5a6e1a134b5"
+    }
+  },
+  "native_terminals": {
+    "control": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/integration-state-terminal-v3.json",
+      "sha256": "ac22d41f7f12b7d75983cb7f016375f34583795865c3d99617ce4f0721897815",
+      "native_status": "paused",
+      "createdAt": 1791421301022
+    },
+    "treatment": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/integration-state-terminal-v3.json",
+      "sha256": "ebf23724c8d0728cab011d38347cd1c3763f9662697e533c6b24365672725d0e",
+      "native_status": "paused",
+      "createdAt": 1791421302939
+    }
+  },
+  "task_tree": "Both originalT3interrupted/quiet/no pendingdescendants/settled afterexpiryintentionalcancel",
+  "science": "UNASSESSED requiredfullpairedfinal/nativeCOMPLETE gate failed",
+  "source_review_dispatched": false,
+  "qualified_native_provenance_comparative": "HOLD missingACTIVE, bothPAUSED/incompletecarriers; nooutputabsencewin",
+  "no_retry_rescue_reset": true,
+  "all_old_attempts_immutable": true,
+  "remaining_action": "Proceed only untouched B originalpreboundfinalv3 underalreadygrantedGLM2",
+  "frozen_at": "2026-10-08T01:35:00.632761+00:00",
+  "mechanical_failure_retained": {
+    "original_partial_gate": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/V3_TERMINAL_DISPOSITION_GATE.json",
+      "sha256": "48e9aa52cae5bdefad37340427d0542f3af33f0ad744aa8086b2ef6a394aa122",
+      "science": "UNASSESSED",
+      "source_review_dispatched": false
+    },
+    "error": "Loop indentation finalized firstarm before second; read-onlygate rewrite PermissionError, originalpartial retained. Final gate mechanically includes both actualpaused receipts, no science repair/rerun."
+  }
+}

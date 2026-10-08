@@ -1,0 +1,65 @@
+{
+  "schema": "pm.er10.d-m06-b.candidate-v3.timings.v1",
+  "case_id": "D-M06-B",
+  "arm": "treatment/candidate-v3",
+  "clock": "UTC, host clock at each milestone; earlier milestones are tool-call timestamps (sub-second precision only for sandbox-reported fields)",
+  "frozen": {
+    "arm_preparation_T0": "2026-10-08T01:51:28.689459+00:00",
+    "arm_absolute_deadline": "2026-10-08T02:21:28.689459+00:00",
+    "common_case_deadline": "2026-10-08T02:25:00.781858+00:00"
+  },
+  "first_useful_finding": {
+    "utc": "2026-10-08T01:54:30Z",
+    "what": "six-coefficient binding, units, corner-origin convention, rotation/shear generality and the det!=0 invertibility condition bound and locator-verified against both frozen primary sources; recorded in sources.json"
+  },
+  "milestones": [
+    {
+      "utc": "2026-10-08T01:53:48Z",
+      "step": "all five mapped input sha256 values recomputed and matched INPUT_MAP/frozen_exact_bytes"
+    },
+    {
+      "utc": "2026-10-08T01:53:48Z",
+      "step": "brief + seed draft/fixtures/seed-sources read"
+    },
+    {
+      "utc": "2026-10-08T01:54:30Z",
+      "step": "sources.json written (first_useful_finding recorded)"
+    },
+    {
+      "utc": "2026-10-08T01:59:30Z",
+      "step": "witness.py + witness-input.json authored (independent oracles selected, hand constants frozen)"
+    },
+    {
+      "utc": "2026-10-08T02:03:03Z",
+      "step": "sandbox run 1: child KeyError (own code bug), receipt discarded"
+    },
+    {
+      "utc": "2026-10-08T02:03:39Z",
+      "step": "sandbox run 2: control C9 correctly failed on own mis-frozen constant, receipt discarded, constant corrected"
+    },
+    {
+      "utc": "2026-10-08T02:04:18Z",
+      "step": "sandbox run 3 FINAL: exit 0, process_exit 0, isolation enforced, 9/9 correct controls pass, 4/4 wrong detected (witness-receipt.json)"
+    },
+    {
+      "utc": "2026-10-08T02:07:00Z",
+      "step": "report.md reconciliation written"
+    },
+    {
+      "utc": "2026-10-08T02:10:25.842746+00:00",
+      "step": "final.md written; timings.json composed (final actual)"
+    }
+  ],
+  "final_actual_utc": "2026-10-08T02:10:25.842797+00:00",
+  "deadline_headroom_seconds_before_arm_deadline": 662.8,
+  "witness_sandbox": {
+    "wall_seconds_limit": 5,
+    "elapsed_seconds": 0.134,
+    "runs": 3,
+    "final_run": "witness-receipt.json"
+  },
+  "unknown_usage": {
+    "observed": "none",
+    "note": "no external, queued, or billed usage is observable from inside the arm; sandbox reports its own 0.134s elapsed; all other times above are this arm's own clock readings"
+  }
+}

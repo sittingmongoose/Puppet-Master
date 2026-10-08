@@ -1,0 +1,2561 @@
+{
+  "status": "FULL_DECLARED_SOURCE_REVIEW_COMPLETE",
+  "overall_judgment": "NOT_FULL_POSITIVE",
+  "grade_scope": {
+    "kind": "full_declared_source_review",
+    "artifact": "own-arm frozen final.md plus supplied critique/maps and required prior partial",
+    "every_original_integrated_obligation_assessed": true,
+    "all_candidate_groups_assessed": true,
+    "stopped_at_failed_screen": false,
+    "unassessed_remainder": [],
+    "exclusions": [
+      "No comparative winner/cost/timing/native-counter grade",
+      "No orchestration-provenance HOLD adjudication",
+      "No product implementation/security/conformance certification",
+      "No claim of historical source-read/provider/critic execution authentication"
+    ]
+  },
+  "source_correctness": {
+    "assessment": "NOT_PASSED_AS_SUBMITTED",
+    "reason": "Core source findings mostly correct; MD1 is a material causal/repair error in the final and critic. MD6 is an additional error in the supplied critique. Compatibility/application conditions are separately flagged, not all called factual falsehoods.",
+    "material_factual_defect_ids": [
+      "MD1",
+      "MD6"
+    ]
+  },
+  "completeness": {
+    "review_coverage": "full_declared_scope_assessed",
+    "candidate_satisfaction": "PARTIAL",
+    "reason": "Substantive coverage across the original brief, but governing component/conformance, rejection/regression history, coherent backup, durable recovery, and pertinent WAL release conditions remain incomplete.",
+    "condition_defect_ids": [
+      "MD2",
+      "MD3",
+      "MD4",
+      "MD5"
+    ]
+  },
+  "planning_usefulness": {
+    "assessment": "USEFUL_REQUIRES_CORRECTION_AND_CONDITIONS",
+    "reason": "Portable packaging, hash identity, role/provenance split, SQLite snapshots/local topology, rights modeling and restore drills offer practical improvements. The proposal is not yet a source-grounded complete recovery contract or supported minimum-cost design."
+  },
+  "breadth": {
+    "assessment": "BROAD_COMPLEMENTARY_MECHANISMS_LIMITED_ALTERNATIVE_DEPTH",
+    "supported_discovery_families": [
+      "self-verifying ingest/transfer packages",
+      "digest identity distinct from file names",
+      "recurring fixity diagnostics distinct from copying",
+      "preservation/access roles and derivation provenance",
+      "database snapshots distinct from external raw copying",
+      "local SQLite/network-locking/sidecar conditions",
+      "notice/file/embargo rights distinction",
+      "copy geography/restore and native-fidelity format choices"
+    ],
+    "bounded_alternative_checks": [
+      "OCFL 1.1 object-at-rest version/digest inventory versus per-batch BagIt",
+      "restic 0.19.1 documented snapshot/retention/full-data checks versus verified current-tree copying",
+      "sqlite3_rsync versioned remote-DB snapshot alternative versus local Backup API/VACUUM INTO"
+    ],
+    "reason": "The candidate covers multiple substantive families. Their complementary roles and a few internal choices are meaningful; they are not an exhaustive competing-stack/affordability evaluation. No particular omitted product is required; reviewer-only discoveries are not credited as candidate research."
+  },
+  "per_obligation_evidence_assessment": [
+    {
+      "id": "OB01",
+      "obligation": "Genuine primary public-source selection from the domain brief",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "satisfied_with_limits",
+      "evidence_assessment": "RFC/LOC component and format sources, NDSA, official SQLite docs, and system-authored Archivematica/Omeka material directly fit preservation, integrity, metadata and access. Selection is substantively primary; original search chronology and historical reads cannot be authenticated from frozen prose alone. No pass is inferred from citation count.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R08",
+        "R14",
+        "R17",
+        "R19",
+        "R20"
+      ],
+      "candidate_items": [
+        "M1",
+        "M3",
+        "M4",
+        "M6",
+        "M7",
+        "M8"
+      ]
+    },
+    {
+      "id": "OB02",
+      "obligation": "Materially different mechanisms and useful alternatives",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "substantive_but_limited",
+      "evidence_assessment": "Eight materially different complementary mechanisms, plus hash/mode/snapshot/offsite choices, create meaningful breadth. Alternatives are lightly compared; no quantitative station/storage/operational budget or complete substitute-stack comparison is supplied. Bounded reviewer checks show available versioned storage/backup options, without requiring those specific products.",
+      "source_ids": [
+        "R08",
+        "R10",
+        "R17",
+        "R19",
+        "R22",
+        "R23",
+        "R24"
+      ],
+      "candidate_items": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "O3"
+      ]
+    },
+    {
+      "id": "OB03",
+      "obligation": "Actual component/code behavior at a pinned version",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "satisfied_core_incomplete_conditions",
+      "evidence_assessment": "Real pinned v1.8.1/v1.9.0 behavior is supplied and verified. Generator format and full-validation success conditions are consequential omissions; accepting 1.x is not enough for the stated format pin.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04"
+      ],
+      "candidate_items": [
+        "P1",
+        "P4",
+        "T1",
+        "T2",
+        "T3",
+        "T4"
+      ]
+    },
+    {
+      "id": "OB04",
+      "obligation": "Pertinent issue/fix/regression test and release applicability or justified equivalent history",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "partially_satisfied",
+      "evidence_assessment": "Reported issue, rejected patch state and actual release behavior are traced accurately in part. Rejection reason is omitted, the causal account is inaccurate, and candidate tests are proposed rather than inspected upstream tests. No equivalent-history justification bridges that gap. Reviewer inspection does not add test research to scored candidate yield.",
+      "source_ids": [
+        "R02",
+        "R04",
+        "R05",
+        "R06",
+        "R07"
+      ],
+      "candidate_items": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "U1"
+      ]
+    },
+    {
+      "id": "OB05",
+      "obligation": "Every relevant declared discovery compared with frozen-plan choices",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "substantive_but_incomplete_conditions",
+      "evidence_assessment": "Every F/M/P/R/O/U/T/V item, analogies and source conditions has an independent disposition here. F1–F10 track each thin-plan clause and uncertainty. Several cited governing conditions are missing or insufficiently compared; source/plan mapping is not proof of safety.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R08",
+        "R09",
+        "R11",
+        "R14",
+        "R17",
+        "R19",
+        "R20",
+        "R21"
+      ],
+      "candidate_items": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8",
+        "F9",
+        "F10"
+      ]
+    },
+    {
+      "id": "OB06",
+      "obligation": "Supported corrections, product choices, covered dispositions, optionals, uncertainties and useful validation proposals",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "substantive_requires_correction",
+      "evidence_assessment": "Corrections, keep-SQLite/keep-catalog dispositions and all optional/uncertainty/validation groups survive. Main choices are useful, but validity semantics, backup generations, durable state ordering and normalization/resource policy need conditions. T/V goals are valuable proposals, not proof.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R08",
+        "R09",
+        "R12",
+        "R13",
+        "R17",
+        "R19",
+        "R20",
+        "R23"
+      ],
+      "candidate_items": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10",
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "U1",
+        "U2",
+        "U3",
+        "U4"
+      ]
+    },
+    {
+      "id": "OB07",
+      "obligation": "Required criticism and final proposal, including critique preservation",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "artifact_present_preservation_assessed_quality_partial",
+      "evidence_assessment": "Full supplied critique read; K1–K13 mapped to final, not accepted on presence. Most deltas are faithfully carried. MD1 persists through the critic and MD6 affects its tradeoff explanation. Same-family/freshness execution cannot be corroborated without excluded receipts.",
+      "source_ids": [
+        "R02",
+        "R06",
+        "R10"
+      ],
+      "candidate_items": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10"
+      ]
+    },
+    {
+      "id": "OB08",
+      "obligation": "Distinguish executed checks from proposals",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "satisfied_as_claimed_artifact_status",
+      "evidence_assessment": "Final consistently labels P/O/T/V as proposed and source reads as observed; no runtime pass is claimed. This review also performs source/static inspection only. Historical complete command execution/provider receipts are outside authorized scope, not inferred from snippets.",
+      "source_ids": [],
+      "candidate_items": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7"
+      ]
+    },
+    {
+      "id": "D01",
+      "obligation": "Affordable small digitization stations and volunteer operation",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "partially_satisfied",
+      "evidence_assessment": "Local storage/library/SQLite architecture and one-button reports fit a small shop. No measured volume, labor, support, storage expansion or converter cost analysis substantiates minimal-affordable.",
+      "source_ids": [
+        "R08",
+        "R17",
+        "R20",
+        "R21",
+        "R23"
+      ],
+      "candidate_items": [
+        "P6",
+        "P8",
+        "P9",
+        "P10",
+        "U3",
+        "U4"
+      ]
+    },
+    {
+      "id": "D02",
+      "obligation": "Photograph handling",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "supported_policy_conditions_open",
+      "evidence_assessment": "Originals, TIFF/access candidates and provenance supported; native format, color/bit-depth/resolution and no-op branches need policy.",
+      "source_ids": [
+        "R17",
+        "R20",
+        "R21"
+      ],
+      "candidate_items": [
+        "M8",
+        "P5",
+        "P8",
+        "V6"
+      ]
+    },
+    {
+      "id": "D03",
+      "obligation": "Oral-history audio handling",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "supported_policy_conditions_open",
+      "evidence_assessment": "BWF/native PCM preferences and service derivatives appropriate. Universal conversion does not improve an already-lossy source; bandwidth/storage/fidelity and converter selection remain open.",
+      "source_ids": [
+        "R20",
+        "R21"
+      ],
+      "candidate_items": [
+        "M8",
+        "P8",
+        "O1",
+        "U3",
+        "U4",
+        "V6"
+      ]
+    },
+    {
+      "id": "D04",
+      "obligation": "Scanned-document handling",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "supported_policy_conditions_open",
+      "evidence_assessment": "TIFF/PDF-A directions and original retention plausible. Page-image/text/accessibility/significant-property policy and chosen validator/converter are deferred. S14 PDF-A context is narrower than general textual works.",
+      "source_ids": [
+        "R20",
+        "R21"
+      ],
+      "candidate_items": [
+        "M8",
+        "P8",
+        "U3",
+        "V6"
+      ]
+    },
+    {
+      "id": "D05",
+      "obligation": "Original bytes and derivative provenance",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "substantively_satisfied",
+      "evidence_assessment": "Immutable originals, separate derivatives and source/tool/settings/output records address the brief. Metadata/package recovery and preservation of original capture properties still need validation.",
+      "source_ids": [
+        "R17",
+        "R18",
+        "R20"
+      ],
+      "candidate_items": [
+        "M4",
+        "M8",
+        "P5",
+        "P8",
+        "V6"
+      ]
+    },
+    {
+      "id": "D06",
+      "obligation": "Safe dedup",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "supported_direction_conditions_open",
+      "evidence_assessment": "Hash identity fixes the actual filename/size defect. Reference deletion, BagIt physical payload representation, logical accession rights and retained-backup ownership must be integrated.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R22",
+        "R23"
+      ],
+      "candidate_items": [
+        "F1",
+        "M2",
+        "P2",
+        "V3"
+      ]
+    },
+    {
+      "id": "D07",
+      "obligation": "Rights and restricted access",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "substantively_satisfied_as_proposal",
+      "evidence_assessment": "Independent notice/file/embargo model and all-surface probes are appropriate. Actual serving routes/defaults/cascade and role policy are conditional; no deployment security pass issued.",
+      "source_ids": [
+        "R14",
+        "R15",
+        "R16"
+      ],
+      "candidate_items": [
+        "F6",
+        "M7",
+        "P7",
+        "R6",
+        "V5"
+      ]
+    },
+    {
+      "id": "D08",
+      "obligation": "Silent-corruption detection and repair",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "partially_satisfied",
+      "evidence_assessment": "Manifests/full audits/trusted replicas are useful. Full validation semantics, all-replica audit coverage, repair authority/no-good-copy path and WAL version risk remain material conditions.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R09",
+        "R19",
+        "R26"
+      ],
+      "candidate_items": [
+        "F2",
+        "M3",
+        "P4",
+        "P6",
+        "R1",
+        "V2"
+      ]
+    },
+    {
+      "id": "D09",
+      "obligation": "Interrupted-ingest recovery",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "partially_satisfied",
+      "evidence_assessment": "Staging/replay and crash drills address the requirement, but durable file/row state ordering is underspecified.",
+      "source_ids": [
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "candidate_items": [
+        "F5",
+        "M5",
+        "P3",
+        "V1",
+        "V4"
+      ]
+    },
+    {
+      "id": "D10",
+      "obligation": "Failed-storage recovery",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "partially_satisfied",
+      "evidence_assessment": "Three/offsite copies and restore drills are relevant. Consistent backup generations, deletion retention, metadata/object-set linkage and encryption-key/config recovery are unestablished.",
+      "source_ids": [
+        "R08",
+        "R12",
+        "R19",
+        "R23"
+      ],
+      "candidate_items": [
+        "F8",
+        "M6",
+        "P9",
+        "V4",
+        "V7"
+      ]
+    },
+    {
+      "id": "D11",
+      "obligation": "Internal preservation versus public browse separation",
+      "review_coverage": "assessed",
+      "candidate_satisfaction": "substantively_satisfied_as_proposal",
+      "evidence_assessment": "Master/access roles, private original locations and metadata/file visibility split explicitly handle the sensitive-original/public-catalog distinction. Public notice policy is separate from content rights.",
+      "source_ids": [
+        "R14",
+        "R15",
+        "R17",
+        "R18"
+      ],
+      "candidate_items": [
+        "F4",
+        "F10",
+        "M4",
+        "M7",
+        "P5",
+        "P7",
+        "V5"
+      ]
+    }
+  ],
+  "covered_obligations": [
+    "OB01",
+    "OB02",
+    "OB03",
+    "OB04",
+    "OB05",
+    "OB06",
+    "OB07",
+    "OB08",
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D05",
+    "D06",
+    "D07",
+    "D08",
+    "D09",
+    "D10",
+    "D11"
+  ],
+  "covered_obligations_meaning": "All listed obligations were assessed, not all passed. Satisfaction is separately recorded for each.",
+  "material_defects": [
+    {
+      "id": "MD1",
+      "kind": "Incorrect causal account and unsupported full-validation repair",
+      "severity": "high",
+      "claims": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L108–109",
+          "exact_claim": "root cause identified — oxum check sits outside the `if fast` gate, so validation \"always defaults to fast.\""
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L118–121",
+          "exact_claim": "on oxum failure, record the screening signal and still run completeness + per-file hashes (S05 semantics — dropping oxum from full mode entirely — are the acceptable alternative)"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/critique.md",
+          "location": "K2 L29–37",
+          "exact_claim": "The final therefore recommends \"S05 semantics OR warn-and-continue wrapper\" rather than naming the patch as the single fix."
+        }
+      ],
+      "primary_counterevidence": [
+        {
+          "source_id": "R02",
+          "condition": "Full mode proceeds to completeness and file/tag hashes when oxum passes; oxum failure is an early rejection, not unconditional fast mode."
+        },
+        {
+          "source_id": "R04",
+          "condition": "test_validate_flipped_bit and test_validation_error_details define full-mode hash detection for a same-size change."
+        },
+        {
+          "source_id": "R06",
+          "condition": "Maintainer explains both checks remain necessary; author closes #174 because removing full-mode oxum checking was the wrong repair."
+        },
+        {
+          "source_id": "R01",
+          "condition": "If oxum is present, its counts must describe actual payload; completeness requires conforming elements, and validity additionally requires every recorded checksum."
+        }
+      ],
+      "impact": "The final promotes a reporter interpretation into root cause and accepts a rejected patch as full validation. A stale-but-tag-checksummed oxum with otherwise matching payload hashes can lose the required metadata rejection under that alternative. Continuing for diagnostics is useful but must preserve failure/invalid status; T2 does not test this otherwise-hash-valid negative case.",
+      "affects": [
+        "source_correctness",
+        "completeness",
+        "planning_usefulness"
+      ],
+      "qualification": "Not a claim that the unmodified v1.9.0 validator falsely accepts corrupt bytes. The default diagnostic limitation is real. A separately named payload-fixity-only diagnostic could deliberately omit oxum without claiming full BagIt validity; that separation is absent here."
+    },
+    {
+      "id": "MD2",
+      "kind": "Missing compatibility conditions for the declared format/component pair",
+      "severity": "high",
+      "claims": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L246–247",
+          "exact_claim": "BagIt layout pinned (v1.0 per S01); algorithms explicit per manifest; `bag-info.txt` keys documented, no format extensions."
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L116–117",
+          "exact_claim": "pin bagit-python v1.9.0 WITH the known behavior documented; do not wait for upstream (two releases, no fix)."
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L131–133",
+          "exact_claim": "P1. Per-batch BagIt ingest: every batch a bag (sha256+sha512 manifests, tagmanifest, bag-info with Payload-Oxum + contact/rights fields). Validate on ingest, on transfer, on schedule."
+        }
+      ],
+      "primary_counterevidence": [
+        {
+          "source_id": "R02",
+          "condition": "make_bag has no format-version argument and writes BagIt-Version: 0.97 at L243; the reader accepts 1.x. Its completeness calculation uses merged manifest entries, and percent escaping only handles CR/LF."
+        },
+        {
+          "source_id": "R01",
+          "condition": "BagIt 1.0 identifies its version as 1.0, requires every payload file in every payload manifest, and requires literal percent characters to be encoded."
+        }
+      ],
+      "impact": "No separate 1.0 writer or conversion/conformance path is declared. The selected library default does not satisfy the stated format pin; accepting 1.x is not evidence of complete 1.0 conformance. Pin applicability remains incomplete.",
+      "affects": [
+        "completeness",
+        "planning_usefulness",
+        "source_condition_application"
+      ],
+      "qualification": "The final specifies a desired format, not a demonstrated generated bag. This is an unresolved component/format compatibility defect, not a claim that all 0.97 bags are invalid or that implementing a separate writer is impossible. Static code inspection is not an executed standards-conformance test."
+    },
+    {
+      "id": "MD3",
+      "kind": "Unspecified coherent database/payload recovery set",
+      "severity": "high",
+      "claims": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L60–64",
+          "exact_claim": "M6 — Online DB snapshot + verified payload sync (S10). Nightly: Backup-API snapshot of the catalog DB (incremental, lock-only-while-reading — the preferred nightly path), `VACUUM INTO` reserved for periodic compacting snapshots; manifest-verified payload sync. Never raw `cp` of the live `.db`, never piecemeal `-wal`/`-shm` copies."
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L134–138",
+          "exact_claim": "deletion removes references, bytes last; periodic orphan/refcount-consistency sweep"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L233–234",
+          "exact_claim": "DB snapshot restores with clean `integrity_check`; payload replica re-verifies."
+        }
+      ],
+      "primary_counterevidence": [
+        {
+          "source_id": "R08",
+          "condition": "Backup API gives a coherent SQLite snapshot, not a transaction spanning external files; it may restart after writers."
+        },
+        {
+          "source_id": "R12",
+          "condition": "integrity_check is a database structural check, excludes foreign-key checking, and does not verify external object references."
+        },
+        {
+          "source_id": "R23",
+          "condition": "Retained snapshot generations and prune policy are distinct mechanisms; only data still referenced by retained snapshots is reclaimable."
+        }
+      ],
+      "impact": "A DB snapshot can retain a reference whose payload is deleted before payload copying. Hash verification of the files actually copied and an internally clean DB do not detect/avoid that missing backup object. No retention generation, deletion barrier, snapshot object-set receipt, or reference-to-byte restore invariant is specified. Failed-storage recovery is therefore incomplete.",
+      "affects": [
+        "completeness",
+        "planning_usefulness"
+      ],
+      "qualification": "The SQLite snapshot recommendation itself is correct. This is a logical interleaving permitted by the stated deletion and backup proposals, not an executed failure. No particular backup product is mandatory."
+    },
+    {
+      "id": "MD4",
+      "kind": "Durable ingest ordering and recovery state contract remain unspecified",
+      "severity": "medium",
+      "claims": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L54–58",
+          "exact_claim": "M5 — Staged atomic ingest (S08/S09). Write to `incoming/<uuid>/`, hash as bytes land, build manifest, fsync, THEN transactionally register in SQLite and atomically rename into place. Boot recovery completes or discards staged units by journal state. DB atomicity covers rows; the staging protocol covers files+rows together."
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L139–141",
+          "exact_claim": "DB transaction + atomic rename → verify. Boot recovery replays/discards by journal state"
+        }
+      ],
+      "primary_counterevidence": [
+        {
+          "source_id": "R11",
+          "condition": "SQLite atomic commit covers its database transactions; super-journals concern attached databases, not arbitrary payload files."
+        },
+        {
+          "source_id": "R13",
+          "condition": "Rename is a namespace operation on the same filesystem; fsync of a file does not make its containing directory entry durable."
+        },
+        {
+          "source_id": "R12",
+          "condition": "WAL synchronous=NORMAL may lose committed transactions on power loss; durability depends on explicit settings."
+        }
+      ],
+      "impact": "The chosen strategy can work, but no durable journal states, DB commit/rename order, directory sync point, same-filesystem requirement, or idempotent replay/deletion rule is supplied. Process-kill V1 and the DB-focused V4 do not establish the stronger file/row power-loss invariant.",
+      "affects": [
+        "completeness",
+        "planning_usefulness"
+      ],
+      "qualification": "All candidate checks are proposed. This finding does not demand executed product code, and does not treat the V1 desired outcome as a claimed successful run. It identifies the source conditions needed to make the proposed contract assessable."
+    },
+    {
+      "id": "MD5",
+      "kind": "Omitted pertinent WAL release condition",
+      "severity": "medium",
+      "claims": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L151–155",
+          "exact_claim": "WAL on local disks with periodic checkpoint, rollback-journal on shares only where locking is verified; nightly Backup-API snapshot (VACUUM INTO for periodic compaction); sidecars excluded from cleanup; `integrity_check` in the scheduled job."
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+          "location": "L251–252",
+          "exact_claim": "SQLite mode chosen per storage location and documented; Backup API / VACUUM INTO mandatory for DB replicas; sidecars protected."
+        }
+      ],
+      "primary_counterevidence": [
+        {
+          "source_id": "R09",
+          "condition": "Official WAL page §11 names corruption race through 3.51.2, fixed in 3.51.3 and later, with 3.44.6/3.50.7 backports. It requires multiple connections and coincident checkpoint/write activity."
+        },
+        {
+          "source_id": "R26",
+          "condition": "Official 3.51.3 release log explicitly includes the WAL-reset corruption fix."
+        }
+      ],
+      "impact": "The plan adopts WAL/checkpointing without a SQLite runtime version/fix requirement or a documented exclusion of the triggering topology. This is directly pertinent to silent corruption and is not resolved by scheduled integrity checks.",
+      "affects": [
+        "completeness",
+        "planning_usefulness",
+        "source_condition_application"
+      ],
+      "qualification": "Conditional and rare; not proof the archive uses an affected binary or will corrupt data. This is a missing release-applicability condition, not a blanket rejection of SQLite/WAL."
+    },
+    {
+      "id": "MD6",
+      "kind": "VACUUM INTO tradeoff rationale conflates distinct operations",
+      "severity": "medium",
+      "claims": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/critique.md",
+          "location": "K4 R-a L71–75",
+          "exact_claim": "reserve `VACUUM INTO` for periodic compacting snapshots — VACUUM takes a write lock and is the heavier nightly choice on a busy catalog."
+        }
+      ],
+      "primary_counterevidence": [
+        {
+          "source_id": "R10",
+          "condition": "Official documentation excludes VACUUM INTO from its ordinary VACUUM write-operation statement; INTO leaves the original unchanged. The documented advantage of Backup API is fewer CPU cycles and incremental operation."
+        }
+      ],
+      "impact": "The required criticism gives an incorrect blanket locking rationale for ranking the two backup methods. This weakens the source tradeoff audit even though the final Backup-API preference has other support.",
+      "affects": [
+        "source_correctness_of_supplied_critique",
+        "criticism_quality"
+      ],
+      "qualification": "The final L60–64 keeps the preference but does not repeat the false write-lock sentence. Do not attribute that sentence to the final or claim the preference itself is wrong."
+    }
+  ],
+  "additional_nonblocking_findings": [
+    {
+      "id": "SF1",
+      "location": "M8/P8/R8, critique K4 F7",
+      "finding": "Normalization is a product policy underjustified by source format preferences. Originals are kept, U3 is honest, and V6 is useful, so do not recast this as demonstrated data loss or a nonexistent PDF-A citation."
+    },
+    {
+      "id": "SF2",
+      "location": "§6 NDSA/U2",
+      "finding": "Selected targets correspond to some Level 2/3 cells, but virus checking, separate integrity/inventory backups and complete control/format monitoring mapping are missing. U2 honestly hedges; no whole-program level demonstrated."
+    },
+    {
+      "id": "SF3",
+      "location": "M2, critique K4 R-d",
+      "finding": "Exact CPU doubling is unbenchmarked. Pinned code reads a file once and updates both hash algorithms; extra work is not a universal 2x runtime claim."
+    },
+    {
+      "id": "SF4",
+      "location": "O1",
+      "finding": "Fetch holes defer transfer/staging, not retention of already-preserved originals. Pending state and safe bounded retrieval are unselected."
+    },
+    {
+      "id": "SF5",
+      "location": "U4/O2/P4/P9/P10",
+      "finding": "Sampling/crossover thresholds and cheap/minimal-affordable/volunteer-proof wording are proposed heuristics; no measured capacity, labor or cost yield established."
+    }
+  ],
+  "candidate_claim_assessments": [
+    {
+      "id": "F1",
+      "location": "final §1",
+      "verdict": "supported",
+      "assessment": "Name and size cannot safely identify bytes; hash identity is a defensible product choice. BagIt itself is not a cross-accession dedup system.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R22"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "F2",
+      "location": "final §1",
+      "verdict": "supported_with_conditions",
+      "assessment": "Ingest manifests and recurring audits address unspecified fixity. Repair requires trusted expected hashes and a verified good replica.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R19"
+      ],
+      "defect_ids": [
+        "MD1"
+      ]
+    },
+    {
+      "id": "F3",
+      "location": "final §1",
+      "verdict": "supported_with_conditions",
+      "assessment": "Live-copy risk and DB snapshot remedy are sound. The thin plan does not explicitly say its SQLite file is inside the copied tree; that part is a risk inference. Coupled backup remains open.",
+      "source_ids": [
+        "R08",
+        "R09"
+      ],
+      "defect_ids": [
+        "MD3"
+      ]
+    },
+    {
+      "id": "F4",
+      "location": "final §1",
+      "verdict": "supported",
+      "assessment": "A preservation/access split and derivation records address unspecified provenance. Co-location alone is not inherently invalid.",
+      "source_ids": [
+        "R17",
+        "R18"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "F5",
+      "location": "final §1",
+      "verdict": "incomplete_conditions",
+      "assessment": "Staging and replay are useful; SQLite does not supply file-plus-row atomicity.",
+      "source_ids": [
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "defect_ids": [
+        "MD4"
+      ]
+    },
+    {
+      "id": "F6",
+      "location": "final §1",
+      "verdict": "supported",
+      "assessment": "Notice visibility, file rights and embargo address an actual missing rights model.",
+      "source_ids": [
+        "R14",
+        "R15"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "F7",
+      "location": "final §1",
+      "verdict": "underjustified_product_choice",
+      "assessment": "Keeping originals and named master formats is sensible; universally normalizing every input is not prescribed by the cited preferences.",
+      "source_ids": [
+        "R17",
+        "R20",
+        "R21"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "F8",
+      "location": "final §1",
+      "verdict": "supported_with_conditions",
+      "assessment": "Geographic/threat diversity and restores improve a second-disk plan. Same site is correctly labeled implied, not observed. F8 alone has two copies; P9 supplies three.",
+      "source_ids": [
+        "R19"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "F9",
+      "location": "final §1",
+      "verdict": "supported_with_conditions",
+      "assessment": "Keep SQLite with local topology and real DB snapshots; additional durability/release and backup-set conditions are needed.",
+      "source_ids": [
+        "R08",
+        "R09",
+        "R11",
+        "R12"
+      ],
+      "defect_ids": [
+        "MD3",
+        "MD4",
+        "MD5"
+      ]
+    },
+    {
+      "id": "F10",
+      "location": "final §1",
+      "verdict": "supported",
+      "assessment": "Retaining the catalog is an explicit already-covered disposition; rights-aware metadata/derivative serving is a useful constraint.",
+      "source_ids": [
+        "R14",
+        "R15",
+        "R17"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "M1",
+      "location": "final §2",
+      "verdict": "supported_with_conditions",
+      "assessment": "Self-verifying transfer/ingest units materially differ from a plain tree; contact/rights tag metadata is allowed. Mandatory tagmanifest/oxum is archive policy, not universal BagIt requirement.",
+      "source_ids": [
+        "R01",
+        "R02"
+      ],
+      "defect_ids": [
+        "MD1",
+        "MD2"
+      ]
+    },
+    {
+      "id": "M2",
+      "location": "final §2",
+      "verdict": "supported_with_conditions",
+      "assessment": "Digest identity materially differs from filename identity; linking/refcounts is additional design, not supplied by BagIt. Exact doubling of CPU is unmeasured; one byte stream updates both hashers. Physical dedup must still yield complete bags.",
+      "source_ids": [
+        "R02",
+        "R22"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "M3",
+      "location": "final §2",
+      "verdict": "supported_with_conditions",
+      "assessment": "Audit detects failures copying alone cannot reveal. Weekly/full plus random/daily is a proposed workload policy; no sampling guarantee or capacity measurement exists.",
+      "source_ids": [
+        "R02",
+        "R19",
+        "R23"
+      ],
+      "defect_ids": [
+        "MD1"
+      ]
+    },
+    {
+      "id": "M4",
+      "location": "final §2",
+      "verdict": "supported",
+      "assessment": "Original/master/access roles and derivation records are supported by the analogy. Never serving masters is a stricter product policy.",
+      "source_ids": [
+        "R17",
+        "R18"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "M5",
+      "location": "final §2",
+      "verdict": "incomplete_conditions",
+      "assessment": "A filesystem/DB recovery protocol is necessary; atomic rename plus an unspecified journal is not yet a durable state contract.",
+      "source_ids": [
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "defect_ids": [
+        "MD4"
+      ]
+    },
+    {
+      "id": "M6",
+      "location": "final §2",
+      "verdict": "supported_with_conditions",
+      "assessment": "Online snapshots are materially different from raw copying. Backup API preference is supported by incremental/CPU tradeoffs, not the critique write-lock claim. External payload matching remains open.",
+      "source_ids": [
+        "R08",
+        "R10"
+      ],
+      "defect_ids": [
+        "MD3",
+        "MD6"
+      ]
+    },
+    {
+      "id": "M7",
+      "location": "final §2",
+      "verdict": "supported_with_conditions",
+      "assessment": "File/notice/embargo independence is accurately analogous. Module enforcement depends on configured routes and visibility checks; this is not proof of a deployed rights system.",
+      "source_ids": [
+        "R14",
+        "R15",
+        "R16"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "M8",
+      "location": "final §2",
+      "verdict": "underjustified_product_choice",
+      "assessment": "Original retention and recorded conversion are useful. TIFF/BWF/PDF-A candidates have primary support, but same-format/native-fidelity and no-op branches plus a resource/fidelity policy are omitted.",
+      "source_ids": [
+        "R17",
+        "R18",
+        "R20",
+        "R21"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "P1",
+      "location": "final §5",
+      "verdict": "incomplete_conditions",
+      "assessment": "Manifest/tag/metadata packaging is concrete at the format-policy level. The chosen generator/format pair and validator success semantics are unresolved.",
+      "source_ids": [
+        "R01",
+        "R02"
+      ],
+      "defect_ids": [
+        "MD1",
+        "MD2"
+      ]
+    },
+    {
+      "id": "P2",
+      "location": "final §5",
+      "verdict": "supported_with_conditions",
+      "assessment": "Reference-first deletion and orphan checks are useful. Storage linking must reconcile cross-batch BagIt completeness, logical accession identity/rights, and backup retention before byte reclamation.",
+      "source_ids": [
+        "R01",
+        "R22",
+        "R23"
+      ],
+      "defect_ids": [
+        "MD3"
+      ]
+    },
+    {
+      "id": "P3",
+      "location": "final §5",
+      "verdict": "incomplete_conditions",
+      "assessment": "Stages and commit/abort log are named, but durable states and replay ordering are absent.",
+      "source_ids": [
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "defect_ids": [
+        "MD4"
+      ]
+    },
+    {
+      "id": "P4",
+      "location": "final §5",
+      "verdict": "supported_with_conditions",
+      "assessment": "Honest mode labeling and quarantine/replica verification are useful. Continuing diagnostics must not clear an oxum validity failure; trusted manifests and all-replica checks remain necessary.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R19"
+      ],
+      "defect_ids": [
+        "MD1"
+      ]
+    },
+    {
+      "id": "P5",
+      "location": "final §5",
+      "verdict": "supported",
+      "assessment": "Role separation plus derivative provenance is useful; METS-lite is a local proposal, not a verified interoperability profile.",
+      "source_ids": [
+        "R17",
+        "R18"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "P6",
+      "location": "final §5",
+      "verdict": "incomplete_conditions",
+      "assessment": "Local DB/push, sidecar protection, snapshots and known-good locking are sound. Runtime fixes, synchronous policy, combined restore set and station conflict/central aggregation details remain open.",
+      "source_ids": [
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "defect_ids": [
+        "MD3",
+        "MD4",
+        "MD5"
+      ]
+    },
+    {
+      "id": "P7",
+      "location": "final §5",
+      "verdict": "supported_with_conditions",
+      "assessment": "Notice/file/embargo and derivative inheritance are meaningful. Anonymous direct routes, search/snippets/thumbnails/API must enforce the proposed policy; Omeka analogy does not prove all surfaces.",
+      "source_ids": [
+        "R14",
+        "R15",
+        "R16"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "P8",
+      "location": "final §5",
+      "verdict": "underjustified_product_choice",
+      "assessment": "Originals are retained, reducing irreversible loss. Converter/version selection is openly unresolved, but blanket reformatting still needs a fidelity/no-op/capacity decision.",
+      "source_ids": [
+        "R17",
+        "R20",
+        "R21"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "P9",
+      "location": "final §5",
+      "verdict": "supported_with_conditions",
+      "assessment": "Three copies, local/offsite, inventory and restore rehearsal are useful. Current-copy replication lacks declared retained generations, deletion barriers and encryption-key recovery.",
+      "source_ids": [
+        "R19",
+        "R23"
+      ],
+      "defect_ids": [
+        "MD3"
+      ]
+    },
+    {
+      "id": "P10",
+      "location": "final §5",
+      "verdict": "useful_proposal",
+      "assessment": "Plain reports and confirmation/logged destruction are sensible volunteer goals, not implemented usability evidence or a measured affordability result.",
+      "source_ids": [
+        "R19"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "R1",
+      "location": "final §7",
+      "verdict": "supported_with_conditions",
+      "assessment": "Fast/API confusion is a real presentation risk; CLI help explicitly warns. Full mode is not always hash-free.",
+      "source_ids": [
+        "R02",
+        "R04"
+      ],
+      "defect_ids": [
+        "MD1"
+      ]
+    },
+    {
+      "id": "R2",
+      "location": "final §7",
+      "verdict": "supported_with_conditions",
+      "assessment": "Live DB copying is a real conditional risk; snapshotting is a supported correction.",
+      "source_ids": [
+        "R08",
+        "R24"
+      ],
+      "defect_ids": [
+        "MD3"
+      ]
+    },
+    {
+      "id": "R3",
+      "location": "final §7",
+      "verdict": "supported_with_conditions",
+      "assessment": "Network locking and WAL shared-host constraints are relevant; local-first is conservative and supported.",
+      "source_ids": [
+        "R09",
+        "R11"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "R4",
+      "location": "final §7",
+      "verdict": "supported_with_conditions",
+      "assessment": "Hot-journal/sidecar deletion can defeat recovery; protection is accurate. A leftover journal is a recovery signal, not conclusive corruption.",
+      "source_ids": [
+        "R09",
+        "R11"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "R5",
+      "location": "final §7",
+      "verdict": "supported_with_conditions",
+      "assessment": "Derivative overwrite risk is reduced by immutable master paths; this is a product protection choice.",
+      "source_ids": [
+        "R17",
+        "R18"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "R6",
+      "location": "final §7",
+      "verdict": "supported_with_conditions",
+      "assessment": "Rights drift through alternate serving surfaces is real; P7/V5 directly address it.",
+      "source_ids": [
+        "R14",
+        "R15"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "R7",
+      "location": "final §7",
+      "verdict": "supported_with_conditions",
+      "assessment": "A second disk does not establish another disaster envelope; P9/V7 address that.",
+      "source_ids": [
+        "R19"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "R8",
+      "location": "final §7",
+      "verdict": "supported_with_conditions",
+      "assessment": "Obsolescence is pertinent, but normalization alone is not content/format dependency monitoring and does not establish lower lifetime cost.",
+      "source_ids": [
+        "R19",
+        "R20",
+        "R21"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O1",
+      "location": "final §8",
+      "verdict": "incomplete_optional_lead",
+      "assessment": "fetch.txt is a transfer/pending-ingest mechanism, not completed preservation with absent payload. validate_fetch checks URL form and does not fetch bytes; availability, retrieval limits and complete-before-accept state must be explicit.",
+      "source_ids": [
+        "R01",
+        "R02"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O2",
+      "location": "final §8",
+      "verdict": "useful_optional_lead",
+      "assessment": "Multiprocessing exists; the ~1k threshold is a measure-first hypothesis, not a tested crossover.",
+      "source_ids": [
+        "R02",
+        "R03"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O3",
+      "location": "final §8",
+      "verdict": "useful_optional_lead",
+      "assessment": "Rotation versus object storage is an actual offsite alternative. Native checksums, cost, credentials, encryption/key recovery and provider semantics are unselected/unmeasured.",
+      "source_ids": [
+        "R19",
+        "R23"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O4",
+      "location": "final §8",
+      "verdict": "useful_optional_lead",
+      "assessment": "Preservation events have primary precedent. A stable vocabulary helps, but objects/agents/rights/relationships are needed for PREMIS-style expansion; no-rework is an aspiration, not a guarantee.",
+      "source_ids": [
+        "R18",
+        "R25"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "U1",
+      "location": "final §9",
+      "verdict": "resolved_with_correction",
+      "assessment": "The v1.9.0 oxum gate is directly verified; the original uncertainty is legitimately resolved. The chosen repair still has MD1.",
+      "source_ids": [
+        "R02",
+        "R07"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "U2",
+      "location": "final §9",
+      "verdict": "preserved_but_readily_resolvable",
+      "assessment": "Honest noninspection disclosure, but a primary v2.1 matrix image is available on the cited page. Selected target cells do not prove whole-program Level 2–3.",
+      "source_ids": [
+        "R19"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "U3",
+      "location": "final §9",
+      "verdict": "justified_uncertainty",
+      "assessment": "Converters/licenses/versions and fidelity need selection; this is not fabricated execution. Current format recommendations alone do not supply the toolchain.",
+      "source_ids": [
+        "R20",
+        "R21"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "U4",
+      "location": "final §9",
+      "verdict": "underjustified_uncertainty",
+      "assessment": "Workload/sample math is rightly open; ~1 TB does not itself determine a schedule or detection probability. Need byte volume, file mix, replica bandwidth and coverage/latency targets.",
+      "source_ids": [
+        "R19",
+        "R23"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "T1",
+      "location": "final §4",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Useful same-size mutation case; stock upstream definitions already show full-mode hashing works when oxum agrees. Per-algorithm details may name the same file more than once.",
+      "source_ids": [
+        "R02",
+        "R04"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "T2",
+      "location": "final §4",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Useful wrapper diagnostic gate, not a stock-v1.9.0 passing test. Missing case: otherwise-valid payload/manifests with inaccurate present oxum must not report full bag validity. Tagmanifest fixture consistency matters.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R04",
+        "R06"
+      ],
+      "defect_ids": [
+        "MD1"
+      ]
+    },
+    {
+      "id": "T3",
+      "location": "final §4",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Appropriate proposed no-hash assertion for fast mode; reflects CLI help and code.",
+      "source_ids": [
+        "R02",
+        "R04"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "T4",
+      "location": "final §4",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Appropriate missing/extra-file diagnostics; oxum and completeness exceptions need separate diagnostic handling. Existing upstream definitions cover related cases.",
+      "source_ids": [
+        "R02",
+        "R04"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "V1",
+      "location": "final §10",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Useful process-crash convergence goal; random kill -9 does not simulate filesystem power-loss/reordering. Durable boundaries and idempotent replay remain unspecified.",
+      "source_ids": [
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "defect_ids": [
+        "MD4"
+      ]
+    },
+    {
+      "id": "V2",
+      "location": "final §10",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Good separate bit-flip/add/delete drills and verified repair goal. Missing/extra diagnostics may use missing/not-applicable hash values; trusted baseline and no-good-replica branch matter.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R19"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "V3",
+      "location": "final §10",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Meaningful dedup traps; multiple accessions/rights, last reference, interruption and physical bag-completeness cases are additional necessary boundaries.",
+      "source_ids": [
+        "R01",
+        "R22"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "V4",
+      "location": "final §10",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Meaningful backup interruption proposal, but integrity_check plus independent payload fixity does not validate the DB-referenced object set, foreign keys or whole archive recovery.",
+      "source_ids": [
+        "R08",
+        "R10",
+        "R12"
+      ],
+      "defect_ids": [
+        "MD3",
+        "MD4"
+      ]
+    },
+    {
+      "id": "V5",
+      "location": "final §10",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Strong cross-surface restricted-access proposal; covers direct URLs and public notices. Real static routing/defaults and rights-revocation/cache behavior need application-specific verification.",
+      "source_ids": [
+        "R14",
+        "R15",
+        "R16"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "V6",
+      "location": "final §10",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Independent decoding/significant-property comparison is useful; decoding alone is not evidence that normalization improves preservation or preserves all content properties.",
+      "source_ids": [
+        "R17",
+        "R20",
+        "R21"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "V7",
+      "location": "final §10",
+      "verdict": "useful_proposed_not_executed",
+      "assessment": "Budget-conscious partial restore rehearsal is useful. A random 5% cannot prove all masters restore; coverage rotation, DB/object consistency and key/config recovery remain open.",
+      "source_ids": [
+        "R19",
+        "R23"
+      ],
+      "defect_ids": [
+        "MD3"
+      ]
+    },
+    {
+      "id": "PINNED-ACCOUNT",
+      "location": "final §3",
+      "verdict": "largely_supported",
+      "assessment": "Gate ordering, absent-oxum behavior, defaults, CLI guards, file-URL syntax and 512 KiB value verified. Core _validate_contents/_validate_oxum match v1.8.1; whole implementations differ. Core diagnosis correctly identifies oxum-failing cases, not all full-mode validation.",
+      "source_ids": [
+        "R02",
+        "R03",
+        "R04"
+      ]
+    },
+    {
+      "id": "HISTORY-ACCOUNT",
+      "location": "final §4",
+      "verdict": "partially_correct_material_defect",
+      "assessment": "States, patch, release date and shipped gate supported. Rejected-patch rationale and upstream regression definitions are not preserved; reporter root-cause wording is overpromoted. Proposed tests are not an observed upstream regression chain.",
+      "source_ids": [
+        "R02",
+        "R04",
+        "R05",
+        "R06",
+        "R07"
+      ],
+      "defect_ids": [
+        "MD1"
+      ]
+    },
+    {
+      "id": "ANALOGIES",
+      "location": "final §6",
+      "verdict": "supported_with_conditions",
+      "assessment": "Archivematica role separation and Omeka rights pattern are appropriate analogies; no deployment recommendation is inferred. NDSA selected targets cross levels but do not substantiate an overall Level 2–3 program.",
+      "source_ids": [
+        "R14",
+        "R15",
+        "R17",
+        "R18",
+        "R19"
+      ]
+    },
+    {
+      "id": "SOURCE-CONDITIONS",
+      "location": "final §11",
+      "verdict": "incomplete",
+      "assessment": "Manifest algorithms/custom metadata, explicit modes, snapshots, sidecars, roles and all-surface rights conditions are carried. Component/format conformance, failure status, durable ordering, coherent backup generations and SQLite fix applicability are missing.",
+      "source_ids": [
+        "R01",
+        "R02",
+        "R08",
+        "R09",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R17"
+      ],
+      "defect_ids": [
+        "MD1",
+        "MD2",
+        "MD3",
+        "MD4",
+        "MD5"
+      ]
+    },
+    {
+      "id": "STATUS-LEDGER",
+      "location": "final L6–7 and §12",
+      "verdict": "supported_as_artifact_status",
+      "assessment": "Reads/observations versus T/V/P/O proposals are clearly distinguished. No runtime test success is asserted. S01–S14 historical reads, critic freshness/provider identity and native receipt execution are not independently established from the allowed documents.",
+      "source_ids": []
+    }
+  ],
+  "critique_preservation_assessment": [
+    {
+      "id": "K1",
+      "final_locations": "final §3/§4/U1/T2",
+      "preservation": "yes",
+      "independent_assessment": "Pin upgrade and U1 resolution carried; direct source confirms the narrow gate structure, not whole-file identity."
+    },
+    {
+      "id": "K2",
+      "final_locations": "final §4/P4",
+      "preservation": "yes_with_source_error",
+      "independent_assessment": "Warn-and-continue preference and S05 alternative carried, including the unsupported repair. Rejected-PR rationale absent; MD1."
+    },
+    {
+      "id": "K3",
+      "final_locations": "final §3 L93–96/§11",
+      "preservation": "yes",
+      "independent_assessment": "Absent-oxum nuance and reporting rule carried and correct; non-fast without oxum still hashes."
+    },
+    {
+      "id": "K4",
+      "final_locations": "F1–F10/M2/M6/P2/P6",
+      "preservation": "mostly",
+      "independent_assessment": "Backup preference, local-first topology, orphan sweep and hashing-choice note carried. False VACUUM locking rationale not repeated in final; unmeasured CPU-doubling claim carried. MD6 distinguishes the source error from the preference."
+    },
+    {
+      "id": "K5",
+      "final_locations": "M1–M8",
+      "preservation": "yes",
+      "independent_assessment": "Eight complementary mechanisms carried; multiple kinds are real. This does not establish comprehensive substitute alternatives or affordability."
+    },
+    {
+      "id": "K6",
+      "final_locations": "final §6",
+      "preservation": "yes",
+      "independent_assessment": "Roles/pattern/yardstick carried. Claim no cheaper analogy missed is not an independently substantiated exhaustive search result."
+    },
+    {
+      "id": "K7",
+      "final_locations": "R1–R8",
+      "preservation": "yes",
+      "independent_assessment": "Risk list and CLI-help nuance carried; known risks useful, additional cited conditions omitted."
+    },
+    {
+      "id": "K8",
+      "final_locations": "P1–P10",
+      "preservation": "yes",
+      "independent_assessment": "All ten proposals retained; no supplied proposal silently dropped. Traceability does not establish their complete safety contracts."
+    },
+    {
+      "id": "K9",
+      "final_locations": "O1–O4",
+      "preservation": "yes",
+      "independent_assessment": "All optionals retained, with file-URL syntax observation; pending-ingest versus preserved bytes condition still missing."
+    },
+    {
+      "id": "K10",
+      "final_locations": "U1–U4",
+      "preservation": "yes",
+      "independent_assessment": "One resolution and three uncertainty labels preserved. U2 is readily addressable; U3 legitimate; U4 threshold lacks a workload basis."
+    },
+    {
+      "id": "K11",
+      "final_locations": "T1–T4/V1–V7",
+      "preservation": "yes",
+      "independent_assessment": "All proposed validations preserved as proposals. Neither critic nor final supplies executed or inspected upstream regression-test evidence."
+    },
+    {
+      "id": "K12",
+      "final_locations": "final §3/§6/§12",
+      "preservation": "selective_explicit_disposition",
+      "independent_assessment": "512 KiB non-reverification disclosure and level hedge carried; artifact-timestamp issue explicitly not propagated. No histories or receipt files opened. The no-material-unsupported-assertion conclusion is contradicted by MD1 and MD6."
+    },
+    {
+      "id": "K13",
+      "final_locations": "final complete proposal",
+      "preservation": "yes_as_claim_not_verified_conclusion",
+      "independent_assessment": "Completeness assertion carried in substance; new full review finds conditional incompleteness. Same-family/freshness labels are supplied claims, not receipt-verified facts."
+    }
+  ],
+  "prior_observation_verification": [
+    {
+      "prior_observation_id": "OBS-BAGIT-VALIDATOR",
+      "verification": "Independently confirmed gate behavior and defaults; resolved wrapper success/failure condition as MD1, format compatibility as MD2."
+    },
+    {
+      "prior_observation_id": "OBS-BAGIT-ISSUE-PR-RELEASE",
+      "verification": "Independently confirmed live states, patch/release, all rejection discussion; final causal/repair adjudication MD1."
+    },
+    {
+      "prior_observation_id": "OBS-BAGIT-TESTS",
+      "verification": "Independently read named upstream definitions; candidate proposed quartet is useful but not an observed regression history. No tests run."
+    },
+    {
+      "prior_observation_id": "OBS-BAGIT-FORMAT-VERSION",
+      "verification": "Independently confirmed default 0.97 output versus declared 1.0, reader acceptance and selected conformance conditions; no separate writer path found in final/critique/maps. MD2."
+    },
+    {
+      "prior_observation_id": "OBS-FETCH-CONDITIONS",
+      "verification": "Independently confirmed holes must be filled before full validity; component only checks URL form. O1 is an incomplete optional transfer/pending-ingest lead."
+    },
+    {
+      "prior_observation_id": "OBS-SQLITE",
+      "verification": "Independently verified snapshot, atomic scope, durability/sidecars/locks and release conditions; completed backup/ingest consequence judgments MD3–MD6."
+    },
+    {
+      "prior_observation_id": "OBS-OMEKA",
+      "verification": "Independently read pinned documentation, selected serving code and full matrix test definition; pattern supported, routing/default/privileged/cascade conditions distinguished from all-surface proof."
+    },
+    {
+      "prior_observation_id": "OBS-ARCHIVEMATICA",
+      "verification": "Independently read AIP-layout page and normalization/provenance sections; BagIt role attribution supported; no-op/source-format condition important."
+    },
+    {
+      "prior_observation_id": "OBS-NDSA",
+      "verification": "Independently viewed every matrix row/level and mapped candidate targets/omissions. No whole-program Level 2–3 claim established."
+    },
+    {
+      "prior_observation_id": "OBS-LOC-FORMATS",
+      "verification": "Independently checked categories and original table-column structure. Refined prior partial: S14 does contain PDF/A in a vector page-layout context; no categorical absent-citation defect. Universal normalization remains underjustified."
+    },
+    {
+      "prior_observation_id": "OBS-ALTERNATIVE-SNIPPETS",
+      "verification": "Completed bounded OCFL/restic/sqlite3_rsync comparison and PREMIS lead assessment, including tradeoffs and source conditions. No candidate recommendation rewritten or upgraded with reviewer discoveries."
+    }
+  ],
+  "prior_remaining_scope_resolution": [
+    {
+      "original_item": "Finish an independent per-obligation assessment of every domain requirement: affordable digitization stations/volunteer operation, photos/audio/scanned documents, immutable original bytes and derivatives, safe dedup, rights/restricted access, silent-corruption detection, interrupted-ingest recovery, failed-storage recovery, and internal/public separation.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish genuine primary-source selection/appropriateness and bounded discovery-yield assessment; independently fetched/located sources do not by themselves complete this obligation.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish materially different mechanism/useful alternative comparisons, including actual adoption tradeoffs and affordability. The partial includes source snippets, not a breadth grade.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish all consequential pinned-component conditions, especially BagIt 1.0 versus make_bag's 0.97 output, any wrapper validity/reporting semantics, actual intended generator path, and full file/tag conformance.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish issue/fix/regression-test/release applicability assessment using observed PR rejection discussion and pinned test definitions; no final judgment or executed regression evidence exists.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish source-specific comparison of every relevant finding against all frozen plan clauses and final F1–F10, M1–M8, P1–P10, R1–R8, O1–O4, U1–U4, T1–T4, V1–V7, §6 analogies, and §11 source conditions. These groups were read as candidate text but not all independently adjudicated.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish supported-correction/product-choice/already-covered/optional/uncertainty/validation-proposal dispositions; partial observations do not establish final planning usefulness.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish file-plus-row crash/durability/journal ordering, combined DB/payload backup consistency, replica repair and restore assertions, and proposed versus guaranteed recovery claims. rename/fsync/pragma evidence was fetched but not read.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish normalization/formats/provenance applicability, NDSA matrix-to-plan mapping, complete rights/serve-time conditions, and workload/sampling/retention/resource implications.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish supplied-critique preservation check across K1–K13, including nuances and limits; the critique and final were read, but no complete delta/disposition map or preservation verdict was authored.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "Finish executed-versus-proposed/status assessment: the text distinguishes observations/proposals, but no complete claimed-execution audit or historical verification was performed. Native terminal receipts must not be inferred from page/code reads.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    },
+    {
+      "original_item": "After both arms and native terminal receipts are frozen, the separately authorized fresh full-review task must supply REVIEW.md/judgment.json and any scientific result; this partial has no grade.",
+      "new_status": "assessed in this review; see obligations/claim assessments/defects"
+    }
+  ],
+  "unassessed_remainder": [],
+  "primary_sources_checked": [
+    {
+      "id": "R01",
+      "title": "RFC 8493 / BagIt",
+      "version": "BagIt 1.0, October 2018",
+      "evidence": [
+        {
+          "file": "rfc8493.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/rfc8493.txt",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "resolved_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "retrieved_at_utc": "2026-10-07T18:50:41.166848+00:00",
+          "inspected_range": "L238–565, 634–678, 698–778, 887–949"
+        }
+      ],
+      "assessment_scope": "Required layout; per-manifest coverage; optional tag metadata; oxum, completeness, validity, fetch and safety conditions.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R02",
+      "title": "bagit-python selected code and tag identity",
+      "version": "v1.9.0 / 861ddacb339d5b92659f0187a402f501d841abbe",
+      "evidence": [
+        {
+          "file": "bagit-v190-immutable.py.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v190-immutable.py.txt",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "retrieved_at_utc": "2026-10-07T18:50:40.490424+00:00",
+          "inspected_range": "L128–183, 230–277, 328–370, 375–465, 511–574, 583–740, 739–930, 1111–1148, 1203–1257, 1374–1414, 1448–1490, 1540–1580"
+        },
+        {
+          "file": "bagit-v190-ref.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v190-ref.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+          "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a",
+          "retrieved_at_utc": "2026-10-07T18:50:40.478194+00:00",
+          "inspected_range": "object.type/object.sha"
+        },
+        {
+          "file": "bagit-v190.py.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v190.py.txt",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "retrieved_at_utc": "2026-10-07T18:50:40.497396+00:00",
+          "inspected_range": "Byte equality with immutable commit file, not an additional independent code assessment"
+        }
+      ],
+      "assessment_scope": "Default hashes; validator gates/reporting; generator version; shared manifest-entry representation; tag fixity; fetch syntax; CLI; read-once hashing; selected conformance gaps. Static inspection, not formal certification.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R03",
+      "title": "bagit-python predecessor pin",
+      "version": "v1.8.1 / 22675e58c893a32107f62549974fdf6844591747",
+      "evidence": [
+        {
+          "file": "bagit-v181-immutable.py.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v181-immutable.py.txt",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/22675e58c893a32107f62549974fdf6844591747/bagit.py",
+          "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/22675e58c893a32107f62549974fdf6844591747/bagit.py",
+          "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57",
+          "retrieved_at_utc": "2026-10-07T18:50:40.477368+00:00",
+          "inspected_range": "L126–134, 593–611, 778–802, 839–922; static method-text comparison to v1.9.0"
+        },
+        {
+          "file": "bagit-v181-ref.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v181-ref.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.8.1",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.8.1",
+          "sha256": "c8700ce1f613672ed13ee0ced9b979865b813a177d98fc4e67ee7adb79e0c7e5",
+          "retrieved_at_utc": "2026-10-07T18:50:40.477564+00:00",
+          "inspected_range": "object.type/object.sha"
+        },
+        {
+          "file": "bagit-v181.py.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v181.py.txt",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.8.1/bagit.py",
+          "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.8.1/bagit.py",
+          "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57",
+          "retrieved_at_utc": "2026-10-07T18:50:40.480979+00:00",
+          "inspected_range": "Byte equality with immutable commit file"
+        }
+      ],
+      "assessment_scope": "Oxum gate structure and defaults match; surrounding completeness messages and multiprocessing implementation differ. No assertion of whole-file identity.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R04",
+      "title": "Pinned upstream BagIt tests",
+      "version": "test.py at 861ddacb339d5b92659f0187a402f501d841abbe",
+      "evidence": [
+        {
+          "file": "bagit-tests-v190.py.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-tests-v190.py.txt",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "retrieved_at_utc": "2026-10-07T18:50:40.437119+00:00",
+          "inspected_range": "L95–151, 161–250"
+        }
+      ],
+      "assessment_scope": "test_validate_flipped_bit; fast/completeness definitions; detailed checksum and missing/extra-file coverage. Definitions only, no run or complete suite audit.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R05",
+      "title": "BagIt reported issues",
+      "version": "Live GitHub API snapshot",
+      "evidence": [
+        {
+          "file": "bagit-issue137.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-issue137.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/137",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/137",
+          "sha256": "80f70410151b3e71e6be6c5762f590f5306b855d238191ffcfef91d9dcd8a1ee",
+          "retrieved_at_utc": "2026-10-07T18:50:40.367822+00:00",
+          "inspected_range": "title,state,created_at,body"
+        },
+        {
+          "file": "bagit-issue177.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-issue177.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177",
+          "sha256": "ceb4962d11162e4a99c7b612a2c511d456fe28ad76dfde093987dd69ab08deee",
+          "retrieved_at_utc": "2026-10-07T18:50:40.184378+00:00",
+          "inspected_range": "title,state,created_at,body"
+        },
+        {
+          "file": "bagit-issue137-comments.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-issue137-comments.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/137/comments",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/137/comments",
+          "sha256": "74702d88639299825d721c634a8d0c4ed3fbbb7f5610e787e2604014d5a645a3",
+          "retrieved_at_utc": "2026-10-07T18:50:40.286689+00:00",
+          "inspected_range": "All comment bodies and html_url"
+        },
+        {
+          "file": "bagit-issue177-comments.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-issue177-comments.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177/comments",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177/comments",
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "retrieved_at_utc": "2026-10-07T18:50:40.300500+00:00",
+          "inspected_range": "Empty comment array"
+        }
+      ],
+      "assessment_scope": "Both issues open; issue #177 wording is a reporter interpretation contradicted by the successful-oxum full path.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R06",
+      "title": "BagIt proposed patch and rejection history",
+      "version": "PR #174; patch commit 18f4b582c7f354418edb6f96068f91cea8d55045; API snapshot",
+      "evidence": [
+        {
+          "file": "bagit-pr174.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-pr174.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/174",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/174",
+          "sha256": "126d0bc5c0a1f61ff8711e7545e247cb7139537cc0e819a1d13aea8b78683c95",
+          "retrieved_at_utc": "2026-10-07T18:50:40.243485+00:00",
+          "inspected_range": "title,state,created_at,closed_at,merged_at,body"
+        },
+        {
+          "file": "bagit-pr174.patch",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-pr174.patch",
+          "url": "https://patch-diff.githubusercontent.com/raw/LibraryOfCongress/bagit-python/pull/174.patch",
+          "resolved_url": "https://patch-diff.githubusercontent.com/raw/LibraryOfCongress/bagit-python/pull/174.patch",
+          "sha256": "c6e220031fb6e308a1b18cc8c446fa92a8abf17251941ae17b1df5f4d353953e",
+          "retrieved_at_utc": "2026-10-07T18:50:40.423451+00:00",
+          "inspected_range": "Complete 990-byte patch"
+        },
+        {
+          "file": "bagit-pr174-comments.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-pr174-comments.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/174/comments",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/174/comments",
+          "sha256": "8a5432cc15c5324c7614d16d6a103ad80389ddbca9ca96c072b04f87f6db3f31",
+          "retrieved_at_utc": "2026-10-07T18:50:40.189256+00:00",
+          "inspected_range": "All six comments, especially issuecomment-2272257346, -2359230342, -2359532360, -2359595126"
+        }
+      ],
+      "assessment_scope": "Closed unmerged; reason for rejection; diagnostic improvement distinguished from removing full-mode oxum checks. No merged fix established.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R07",
+      "title": "BagIt release applicability",
+      "version": "v1.9.0 release, 2025-06-13",
+      "evidence": [
+        {
+          "file": "bagit-release-v190.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-release-v190.json",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+          "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+          "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e",
+          "retrieved_at_utc": "2026-10-07T18:50:40.290946+00:00",
+          "inspected_range": "tag_name,published_at,body"
+        }
+      ],
+      "assessment_scope": "#174 absent; immutable release code independently establishes actual behavior. Notes alone are not proof.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R08",
+      "title": "SQLite Online Backup API",
+      "version": "Live official docs; page last-updated 2025-11-13",
+      "evidence": [
+        {
+          "file": "sqlite-backup.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-backup.html",
+          "url": "https://www.sqlite.org/backup.html",
+          "resolved_url": "https://www.sqlite.org/backup.html",
+          "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+          "retrieved_at_utc": "2026-10-07T18:50:41.003379+00:00",
+          "inspected_range": "Derived sqlite-backup.txt L30–70, 141–172, 246–305",
+          "text_derivative": {
+            "file": "sqlite-backup.txt",
+            "sha256": "5a5b6fd842c72b4e1d56d0d0aff7baa39b0d0882b93d683dbcfd51dffeb0c7df",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Database snapshots and locking; restart/starvation; alternatives. API does not snapshot external payload files.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R09",
+      "title": "SQLite WAL restrictions and corruption history",
+      "version": "Live official docs; page last-updated 2026-08-25",
+      "evidence": [
+        {
+          "file": "sqlite-wal.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-wal.html",
+          "url": "https://www.sqlite.org/wal.html",
+          "resolved_url": "https://www.sqlite.org/wal.html",
+          "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+          "retrieved_at_utc": "2026-10-07T18:50:41.172984+00:00",
+          "inspected_range": "Derived sqlite-wal.txt L41–96, 155–207, 292–326, 428–460, 461–574",
+          "text_derivative": {
+            "file": "sqlite-wal.txt",
+            "sha256": "5509b222e2f322272d2a22f57bbce0154a0dcf1bb53a9b8cb3d5608837f00f68",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Same-host/network restrictions; durability settings; sidecars; exclusive-mode qualifications; WAL-reset race and fixed releases.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R10",
+      "title": "SQLite VACUUM / VACUUM INTO",
+      "version": "Live official docs",
+      "evidence": [
+        {
+          "file": "sqlite-vacuum.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-vacuum.html",
+          "url": "https://www.sqlite.org/lang_vacuum.html",
+          "resolved_url": "https://www.sqlite.org/lang_vacuum.html",
+          "sha256": "740f02ade00626f50c7a71ded2615995362fedfc30e09aa22dbe4535b7615c54",
+          "retrieved_at_utc": "2026-10-07T18:50:41.159252+00:00",
+          "inspected_range": "Derived sqlite-vacuum.txt L45–130",
+          "text_derivative": {
+            "file": "sqlite-vacuum.txt",
+            "sha256": "1b40c263cbc7507e22a19722547c68d08873c3c63341a25e9757984fdddcd675",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "INTO leaves source unchanged and is excluded from ordinary VACUUM write-operation wording; CPU/incremental tradeoff and output interruption conditions.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R11",
+      "title": "SQLite atomic commit and crash tests",
+      "version": "Live official docs; rollback-mode mechanism",
+      "evidence": [
+        {
+          "file": "sqlite-atomiccommit.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-atomiccommit.html",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "resolved_url": "https://www.sqlite.org/atomiccommit.html",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "retrieved_at_utc": "2026-10-07T18:50:41.033493+00:00",
+          "inspected_range": "Derived sqlite-atomiccommit.txt L70–96, 406–432, 541–557, 591–600, 967–1050, 1065–1090",
+          "text_derivative": {
+            "file": "sqlite-atomiccommit.txt",
+            "sha256": "61bf481ac63b1a0e4542e7c17034a016c9be4c399a76389d4c57b7f26f7c2978",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Database scope, attached-database super-journal, directory sync, simulated storage failures, broken locks/flushes, hot-journal protection. Not a payload-files transaction protocol.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R12",
+      "title": "SQLite durability and integrity pragmas",
+      "version": "Live official docs; page last-updated 2026-06-04",
+      "evidence": [
+        {
+          "file": "sqlite-pragma.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-pragma.html",
+          "url": "https://www.sqlite.org/pragma.html",
+          "resolved_url": "https://www.sqlite.org/pragma.html",
+          "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+          "retrieved_at_utc": "2026-10-07T18:50:41.121842+00:00",
+          "inspected_range": "Derived sqlite-pragma.txt L799–837, 1345–1436",
+          "text_derivative": {
+            "file": "sqlite-pragma.txt",
+            "sha256": "de760976bae639686e5dbfb583c12f97f27af51aeea1ffd7df47fdf25cb1ab7f",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "integrity_check limits, foreign_key_check distinction, synchronous durability by journal mode.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R13",
+      "title": "Filesystem rename and fsync conditions",
+      "version": "Linux man-pages 6.19, manpage edition 2026-02-08",
+      "evidence": [
+        {
+          "file": "rename-manpage.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/rename-manpage.html",
+          "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+          "resolved_url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+          "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+          "retrieved_at_utc": "2026-10-07T18:50:41.352902+00:00",
+          "inspected_range": "Derived rename-manpage.txt L30–64, 190–193, 233–239",
+          "text_derivative": {
+            "file": "rename-manpage.txt",
+            "sha256": "1bcfe1b37be314a3bb1ddc4c8eb0376d9f34dd66627bf593c7d3767cb5e61678",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "fsync-manpage.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/fsync-manpage.html",
+          "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+          "resolved_url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+          "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+          "retrieved_at_utc": "2026-10-07T18:50:40.981851+00:00",
+          "inspected_range": "Derived fsync-manpage.txt L26–75",
+          "text_derivative": {
+            "file": "fsync-manpage.txt",
+            "sha256": "e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Namespace atomicity differs from directory durability; same-filesystem rename requirement; flush/error conditions and NFS caveat.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R14",
+      "title": "Omeka Access documentation / identity",
+      "version": "Access 3.4.47 / 96810900986ce5278cef79c2b9bfcda31d4e59ed",
+      "evidence": [
+        {
+          "file": "omeka-access-page.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-page.html",
+          "url": "https://omeka.org/s/modules/Access/",
+          "resolved_url": "https://omeka.org/s/modules/Access/",
+          "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41",
+          "retrieved_at_utc": "2026-10-07T18:50:40.819040+00:00",
+          "inspected_range": "Derived omeka-access-page.txt author/version L17–21 and rights/server-configuration matches L69–237",
+          "text_derivative": {
+            "file": "omeka-access-page.txt",
+            "sha256": "213558144e865ad98659d75201778d0d295d4d0ef6e08f61d2b5b50b82aa0667",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "omeka-access-readme34747.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-readme34747.txt",
+          "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/3.4.47/README.md",
+          "resolved_url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/3.4.47/README.md",
+          "sha256": "84eae2c62a7641faf78b7a6c6ec178851498c738c742864a0cb8d93f5efc3fff",
+          "retrieved_at_utc": "2026-10-07T18:50:40.850629+00:00",
+          "inspected_range": "L78–137, 277–311, 383–405, 533–581"
+        },
+        {
+          "file": "omeka-access-tag34747.json",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-tag34747.json",
+          "url": "https://api.github.com/repos/Daniel-KM/Omeka-S-module-Access/git/ref/tags/3.4.47",
+          "resolved_url": "https://api.github.com/repos/Daniel-KM/Omeka-S-module-Access/git/ref/tags/3.4.47",
+          "sha256": "e8be17ed4b180dbacf372ee0f4c6e6a05917d050f961f86fbf5724e38909aad3",
+          "retrieved_at_utc": "2026-10-07T18:50:40.953551+00:00",
+          "inspected_range": "object.type/object.sha"
+        }
+      ],
+      "assessment_scope": "Public/private notice, access level and embargo independence; strictest access inheritance; embargo cascade configuration; static file routing conditions. Analogy, not deployment approval.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R15",
+      "title": "Omeka access-serving code",
+      "version": "96810900986ce5278cef79c2b9bfcda31d4e59ed",
+      "evidence": [
+        {
+          "file": "omeka-access-media-check.php.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-media-check.php.txt",
+          "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/src/Mvc/Controller/Plugin/IsAllowedMediaContent.php",
+          "resolved_url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/src/Mvc/Controller/Plugin/IsAllowedMediaContent.php",
+          "sha256": "e06e9316a906c726ec0d26a3ec29798f92628ca41c6094f6b2a161a1d14fcf46",
+          "retrieved_at_utc": "2026-10-07T18:50:40.661507+00:00",
+          "inspected_range": "L100–207"
+        },
+        {
+          "file": "omeka-access-file-controller.php.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-file-controller.php.txt",
+          "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/src/Controller/AccessFileController.php",
+          "resolved_url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/src/Controller/AccessFileController.php",
+          "sha256": "6c7cf708fc9aec7f268166ce0c273e1516f67223380151e4205f9db8dc31a2d0",
+          "retrieved_at_utc": "2026-10-07T18:50:40.716996+00:00",
+          "inspected_range": "L1–185, 193–285"
+        }
+      ],
+      "assessment_scope": "Core API visibility check then file gate; privileged/default exceptions; restricted/protected distinction; configured serving path. Selected authorization paths, not an exhaustive security audit.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R16",
+      "title": "Omeka access matrix test",
+      "version": "96810900986ce5278cef79c2b9bfcda31d4e59ed",
+      "evidence": [
+        {
+          "file": "omeka-access-matrix-test.php.txt",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-matrix-test.php.txt",
+          "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/tests/AccessTest/Service/AccessMatrixTest.php",
+          "resolved_url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/tests/AccessTest/Service/AccessMatrixTest.php",
+          "sha256": "bac02d39dc3060e5103915d168218f32354c4759d13c7166db900c50a519e8b8",
+          "retrieved_at_utc": "2026-10-07T18:50:40.654394+00:00",
+          "inspected_range": "Entire 125-line file"
+        }
+      ],
+      "assessment_scope": "Anonymous/guest hierarchy matrix definitions exclude some protected/embargo conditions; no test execution or all-surface proof.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R17",
+      "title": "Archivematica roles and AIP layout",
+      "version": "Documentation path 1.13, title 1.13.2; explicitly legacy",
+      "evidence": [
+        {
+          "file": "archivematica-113-quickstart.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-quickstart.html",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.13/getting-started/quick-start/quick-start/",
+          "resolved_url": "https://www.archivematica.org/en/docs/archivematica-1.13/getting-started/quick-start/quick-start/",
+          "sha256": "e5d4470a4a0900fd9766f2745ada0d4b02cf2c3e91560083ab3c634f4c025069",
+          "retrieved_at_utc": "2026-10-07T18:50:40.393687+00:00",
+          "inspected_range": "Derived archivematica-113-quickstart.txt L194–231, 254–269, 314–352; normalization/storage locators",
+          "text_derivative": {
+            "file": "archivematica-113-quickstart.txt",
+            "sha256": "326e4b7fd464c09891ff63d5a961655140dc1f4ee7c4c00143d7d7b2cdd07244",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "archivematica-113-aip.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-aip.html",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.13/user-manual/archival-storage/aip-structure/",
+          "resolved_url": "https://www.archivematica.org/en/docs/archivematica-1.13/user-manual/archival-storage/aip-structure/",
+          "sha256": "4524dc5f7d14c9ba275f6b20f08f7f50b3901138acaef6bc0f7a52467f5535d1",
+          "retrieved_at_utc": "2026-10-07T18:50:40.305916+00:00",
+          "inspected_range": "Derived archivematica-113-aip.txt L28–130",
+          "text_derivative": {
+            "file": "archivematica-113-aip.txt",
+            "sha256": "9e9c2fc03020d0f123d0695b48d226cc7cd0021101e7f6e051c66dada8881f38",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Normalization roles, already-preservation-format no-op, AIP-before-DIP, BagIt packaging and metadata relationships. Roles adopted, not a current deployment recommendation.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R18",
+      "title": "Archivematica METS / PREMIS relationships",
+      "version": "Legacy 1.13.2 docs; PREMIS example 3.0",
+      "evidence": [
+        {
+          "file": "archivematica-113-metadata.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-metadata.html",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.13/user-manual/metadata/METS/",
+          "resolved_url": "https://www.archivematica.org/en/docs/archivematica-1.13/user-manual/metadata/METS/",
+          "sha256": "82f9c2a548557e4b180293cfd5f7d97f4ea5405e86ebaaae6a28dd99794151ae",
+          "retrieved_at_utc": "2026-10-07T18:50:40.338426+00:00",
+          "inspected_range": "Derived archivematica-113-metadata.txt L140–151, 183–239, 288–305",
+          "text_derivative": {
+            "file": "archivematica-113-metadata.txt",
+            "sha256": "ae036c424cb0688703418caa7f552c3a2a2ae137d989e73b86b867c7cb8659a1",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Objects/events/agents/rights and derivation relationship examples; METS-lite is candidate shorthand, not a claimed standards profile.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R19",
+      "title": "NDSA Levels matrix",
+      "version": "v2.1, March 2026",
+      "evidence": [
+        {
+          "file": "ndsa-levels.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/ndsa-levels.html",
+          "url": "https://www.ndsa.org/publications/levels-of-digital-preservation/",
+          "resolved_url": "https://www.ndsa.org/publications/levels-of-digital-preservation/",
+          "sha256": "d82e909d217e9a08979ec18e844855894aeaffd76c0ebf76df128a98320fc08a",
+          "retrieved_at_utc": "2026-10-07T18:50:40.540501+00:00",
+          "inspected_range": "Derived ndsa-levels.txt L41–62",
+          "text_derivative": {
+            "file": "ndsa-levels.txt",
+            "sha256": "e0e233881f30ac29ca8744bc8eeef6af8dd2cdfd512b6888a528c386e1a6135b",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "ndsa-matrix-v21.png",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/ndsa-matrix-v21.png",
+          "url": "https://www.ndsa.org/images/Levels_v2-1.png",
+          "resolved_url": "https://www.ndsa.org/images/Levels_v2-1.png",
+          "sha256": "af3bc9e998ba4d3ab7424687d388c9f3e1bc6f6cb76b48987cc49fe977ccb37d",
+          "retrieved_at_utc": "2026-10-07T18:50:40.556696+00:00",
+          "inspected_range": "Entire five-row/four-level matrix visually inspected; cells mapped in review"
+        }
+      ],
+      "assessment_scope": "Storage, Integrity, Control, Metadata, Content; actual levels versus selected candidate targets. OSF supporting guide not needed for the bounded matrix claim and not inspected.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R20",
+      "title": "LOC format preferences",
+      "version": "Live category pages; context from published 2025–2026 introduction",
+      "evidence": [
+        {
+          "file": "loc-rfs-audio.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-audio.html",
+          "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+          "resolved_url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+          "sha256": "1cb0276d5b78a3058de5d86057b053e39bd224b098c6151508e49cca4452c72b",
+          "retrieved_at_utc": "2026-10-07T18:50:40.710868+00:00",
+          "inspected_range": "Derived loc-rfs-audio.txt L46–81",
+          "text_derivative": {
+            "file": "loc-rfs-audio.txt",
+            "sha256": "9cf6203a1502f118091f732841206e10395110d003562c6928275c5e9bfeca57",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "loc-rfs-stillimg.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-stillimg.html",
+          "url": "https://www.loc.gov/preservation/resources/rfs/stillimg.html",
+          "resolved_url": "https://www.loc.gov/preservation/resources/rfs/stillimg.html",
+          "sha256": "46f0763e8d893d8684bdd2b77179a1fec6726f636c191b4ee3f486e67c12c3ce",
+          "retrieved_at_utc": "2026-10-07T18:50:40.692387+00:00",
+          "inspected_range": "Derived loc-rfs-stillimg.txt L60–103, 135–165; original HTML preferred/acceptable table cells independently parsed",
+          "text_derivative": {
+            "file": "loc-rfs-stillimg.txt",
+            "sha256": "5d848c8956f72b0a068f4380a6ac6c8bc41e1640eac80b11a86cd8c5f260efe6",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "loc-rfs-text.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-text.html",
+          "url": "https://www.loc.gov/preservation/resources/rfs/text.html",
+          "resolved_url": "https://www.loc.gov/preservation/resources/rfs/text.html",
+          "sha256": "b9e2c4f35be2deddd851c6c46255a162967e913a356493674109082e90d7ba36",
+          "retrieved_at_utc": "2026-10-07T18:50:40.711190+00:00",
+          "inspected_range": "Derived loc-rfs-text.txt L92–151",
+          "text_derivative": {
+            "file": "loc-rfs-text.txt",
+            "sha256": "71e9e4b360c5c1a2e02ef6cfef3d6de2b22db0aefe57447d8d8abddf87693d66",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Native fidelity and several acceptable/preferred formats. S14 contains PDF/A in the vector page-layout context; separate text page is clearer support. No categorical PDF/A citation-absence finding.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R21",
+      "title": "LOC RFS applicability / institution assumptions",
+      "version": "Introduction names 2025–2026; live FAQ",
+      "evidence": [
+        {
+          "file": "loc-rfs-faq.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-faq.html",
+          "url": "https://www.loc.gov/preservation/resources/rfs/faq.html",
+          "resolved_url": "https://www.loc.gov/preservation/resources/rfs/faq.html",
+          "sha256": "ad1f8f0dec4ba8c37a28552b9f1b45f70a70c95a56ac6e0ea65169c9a3623ca6",
+          "retrieved_at_utc": "2026-10-07T18:53:20.837722+00:00",
+          "inspected_range": "Derived loc-rfs-faq.txt L31–47",
+          "text_derivative": {
+            "file": "loc-rfs-faq.txt",
+            "sha256": "f5bda896a0ea63ca336bac251033dcaefc649b33e10d9180f7fcf7d5bc069618",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "loc-rfs-introduction.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-introduction.html",
+          "url": "https://www.loc.gov/preservation/resources/rfs/introduction.html",
+          "resolved_url": "https://www.loc.gov/preservation/resources/rfs/introduction.html",
+          "sha256": "f6cf956cf4a03d3de473e0667d8452934229d1a6b95965b7b88eb9e4f8f253c9",
+          "retrieved_at_utc": "2026-10-07T18:53:21.050279+00:00",
+          "inspected_range": "Derived loc-rfs-introduction.txt L30–59",
+          "text_derivative": {
+            "file": "loc-rfs-introduction.txt",
+            "sha256": "30ecb72c65d935209cd64e6e9f9458edeea8cbe7a53a4b2e9d059d1d2b8c6e6f",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Published-content selection focus and local resources; not a universal archival-ingest conversion policy. Accessibility and significant properties remain choices.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R22",
+      "title": "Comparison-only storage alternative: OCFL",
+      "version": "Specification 1.1",
+      "evidence": [
+        {
+          "file": "ocfl-spec-v11.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/ocfl-spec-v11.html",
+          "url": "https://ocfl.io/1.1/spec/",
+          "resolved_url": "https://ocfl.io/1.1/spec/",
+          "sha256": "6cd3434f46df0d2b73c776f40453715e1bf7b780e5b46945c5b1aa275cd6c112",
+          "retrieved_at_utc": "2026-10-07T18:50:40.754538+00:00",
+          "inspected_range": "Derived ocfl-spec-v11.txt L34–76, 182–247, 302–325, 330–353, 404–437",
+          "text_derivative": {
+            "file": "ocfl-spec-v11.txt",
+            "sha256": "bbb6521fa1c343b79d5b8390bec0f197ea9a8abd0e60b2c998b0ae6995b3ed41",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Versioned object-at-rest inventory/digests, within-object dedup, immutable versions. Not a demanded replacement for BagIt or a scored candidate addition.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R23",
+      "title": "Comparison-only backup alternative: restic",
+      "version": "Stable docs identify restic 0.19.1; no binary/code pin inspected",
+      "evidence": [
+        {
+          "file": "restic-repository-checks.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-repository-checks.html",
+          "url": "https://restic.readthedocs.io/en/stable/045_working_with_repos.html",
+          "resolved_url": "https://restic.readthedocs.io/en/stable/045_working_with_repos.html",
+          "sha256": "d76d004ededbb3f7d5fdaa4510dd88e809d503ed8f4fd27dd5db5534c9c69880",
+          "retrieved_at_utc": "2026-10-07T18:50:40.887707+00:00",
+          "inspected_range": "Derived restic-repository-checks.txt L298–393",
+          "text_derivative": {
+            "file": "restic-repository-checks.txt",
+            "sha256": "ded4b13e8f3f1df23a9e4b1eec5f2931d6f69de7d0cfcc32c772925e204a6421",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "restic-introduction.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-introduction.html",
+          "url": "https://restic.readthedocs.io/en/stable/010_introduction.html",
+          "resolved_url": "https://restic.readthedocs.io/en/stable/010_introduction.html",
+          "sha256": "c7be9c3cbdbbbd0afd4d386e9cdd46392dea8ef7c6f97464b64c070677a5cc3b",
+          "retrieved_at_utc": "2026-10-07T18:53:21.344819+00:00",
+          "inspected_range": "Derived restic-introduction.txt L26–46",
+          "text_derivative": {
+            "file": "restic-introduction.txt",
+            "sha256": "0b18b0739c10372a7972a46731c1d8c9e0ba69f4155a97d74c6be6d243b8f20e",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        },
+        {
+          "file": "restic-retention.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-retention.html",
+          "url": "https://restic.readthedocs.io/en/stable/060_forget.html",
+          "resolved_url": "https://restic.readthedocs.io/en/stable/060_forget.html",
+          "sha256": "2ac9aafb598368864bf42da3f74198d45fc1ea91bf155a9c3021b90348fdad64",
+          "retrieved_at_utc": "2026-10-07T18:53:21.415518+00:00",
+          "inspected_range": "Derived restic-retention.txt L31–46, 137–150, 202–210",
+          "text_derivative": {
+            "file": "restic-retention.txt",
+            "sha256": "acfcfe276040724941dd65e99fc0b927fc1f5b0cdd5d12f016ce01cce23f054c",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Snapshots/restore, metadata versus full-data checks, random-sample noncoverage, retained generations/prune policy. Documentation comparison only; not an implementation or affordability benchmark.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R24",
+      "title": "Comparison-only SQLite remote snapshot alternative",
+      "version": "Official sqlite3_rsync docs; 3.50.0 applicability",
+      "evidence": [
+        {
+          "file": "sqlite-rsync.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-rsync.html",
+          "url": "https://www.sqlite.org/rsync.html",
+          "resolved_url": "https://www.sqlite.org/rsync.html",
+          "sha256": "30b70362b95ddb9293b98757f87a3d3d9552f0e2ee45a96578af1578e17fc73d",
+          "retrieved_at_utc": "2026-10-07T18:50:41.068353+00:00",
+          "inspected_range": "Derived sqlite-rsync.txt L29–92, 120–162",
+          "text_derivative": {
+            "file": "sqlite-rsync.txt",
+            "sha256": "27349080f2aaa914385b8d0ed742cb84ce45f386d39469afe8e5ffd3644fe55e",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Live SSH snapshots; former WAL/page-size restrictions removed at 3.50.0; mixed-version negotiation hang workaround. Not ordinary rsync or external-payload snapshotting.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R25",
+      "title": "PREMIS optional opportunity context",
+      "version": "LOC maintenance activity, current dictionary 3.0",
+      "evidence": [
+        {
+          "file": "loc-premis.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-premis.html",
+          "url": "https://www.loc.gov/standards/premis/",
+          "resolved_url": "https://www.loc.gov/standards/premis/",
+          "sha256": "6bf3f606c1058e946810fc1756d851bbe8e9ece2e1a8ce8f10da0fbee60ab4b6",
+          "retrieved_at_utc": "2026-10-07T18:50:40.569627+00:00",
+          "inspected_range": "Derived loc-premis.txt L6, 22–26, 33–58",
+          "text_derivative": {
+            "file": "loc-premis.txt",
+            "sha256": "a3b77633af5da5dac3fe2a710c9870deef98c8cb2165624094799746b59534db",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Preservation metadata/event vocabulary lead; combined with R18 object/event/agent/rights evidence. No complete data-dictionary or conformance audit.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    },
+    {
+      "id": "R26",
+      "title": "SQLite WAL-reset fix release",
+      "version": "SQLite 3.51.3, 2026-03-13",
+      "evidence": [
+        {
+          "file": "sqlite-release-3513.html",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-release-3513.html",
+          "url": "https://www.sqlite.org/releaselog/3_51_3.html",
+          "resolved_url": "https://www.sqlite.org/releaselog/3_51_3.html",
+          "sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8",
+          "retrieved_at_utc": "2026-10-07T18:53:21.188114+00:00",
+          "inspected_range": "Derived sqlite-release-3513.txt L89–93; source ID 737ae4a34738ffa0c3ff7f9bb18df914dd1cad163f28fd6b6e114a344fe6d618",
+          "text_derivative": {
+            "file": "sqlite-release-3513.txt",
+            "sha256": "100d66daeba4c6bf11ca912cec79f15765f09ce68bf41a965900fdf1028a20b7",
+            "method": "HTMLParser; script/style omitted; nonempty stripped text lines"
+          }
+        }
+      ],
+      "assessment_scope": "Corroborates R09 release boundary; no downloaded SQLite build or reproducer run.",
+      "execution": "text/code/test definitions inspected; component not executed"
+    }
+  ],
+  "source_evidence_manifest": "sources/retrievals.json",
+  "input_identities": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/INPUTS.md",
+      "sha256": "0edb7af6d8a2c1145176588e4174175b2d78c151c4a3259fea24592066ea099d",
+      "lines": 14
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-MUSE/brief.md",
+      "sha256": "04cca2f7a001187ad0118b0b38e74318cd187da8ac72e058ffcb7e255ce361ba",
+      "lines": 5
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-MUSE/plan.md",
+      "sha256": "6206478dbbc3a250b13e49c209895a548022271f3e6d37ff747c990833da7485",
+      "lines": 3
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+      "sha256": "14c83b7ab228a151a03393144c967a14a472d5f4cc561c663f868a9789e18202",
+      "lines": 267
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/critique.md",
+      "sha256": "34fd29a5d156604b5bd94aec60d63138bb5e6185be0c3425808129a8a56bc2fc",
+      "lines": 174
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/research-v1/sources/SOURCES.md",
+      "sha256": "d15740b3f8238190a3a3092c18c13fd24d58774f4085ece0070b81151f89ff62",
+      "lines": 109
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/sources/SOURCES.md",
+      "sha256": "37325125ae94297d07a480659906fd7e18195f4c861d08174017ab4a70198d0b",
+      "lines": 74
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/PARTIAL.md",
+      "sha256": "9a5bfa58e01f2f272b2c7f682b073602b92b09c422db408cf0a51744f4778b0c",
+      "lines": 176
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/partial-status.json",
+      "sha256": "3c877cb352ae5e4c02e5cc5c07296c02886974682f0c30105e4905d13fd030cd",
+      "lines": 1159
+    }
+  ],
+  "blinding_limits": [
+    "This is a new post-freeze review attempt after a protocol-timing stop. Required prior PARTIAL.md and partial-status.json were read as disclosed observations. It is not wholly fresh independent first review; their exposure and the premature review existence limit blinding.",
+    "User declares both arms/final artifacts/native terminal receipts frozen before dispatch. No receipts were opened to authenticate that declaration. No scored candidate work, messages or edits were performed.",
+    "Treatment/stage/S-C source labels and stage timestamp/receipt-filename clues are visible in authorized final/critique/maps/partial. Those cannot be unobserved. No underlying candidate costs/timings/native counters or provider/dispatch receipt contents were read.",
+    "No counterpart answer, expected winner, other graders, root/parent/historical analyses or protocol-cost files were read. No nested delegation, best-of selection or scientific rescue.",
+    "Prior scored-counterpart provenance exposure is UNKNOWN as stated in dispatch. Pair comparative/provenance HOLD remains an orchestration axis. It neither grants nor determines this source-quality judgment.",
+    "Runtime injection identifies gpt-6.1-sol with xhigh effort. Requested codex_gmail/priority service settings are recorded as requested, not independently verified through prohibited provider receipts; no settings/provider/account/global changes were made."
+  ],
+  "pair_comparative_provenance_hold": "UNRESOLVED_ORCHESTRATION_AXIS_NOT_A_SOURCE_QUALITY_ANSWER",
+  "prior_attempt_preserved": {
+    "status": "PARTIAL_STOPPED_FOR_PROTOCOL_REPAIR",
+    "grade_issued": false,
+    "original_grades": {
+      "source_correctness": null,
+      "completeness": null,
+      "planning_usefulness": null,
+      "breadth": null
+    },
+    "original_partial_and_status_unchanged": true,
+    "no_best_of_selection": true
+  },
+  "requested_target": {
+    "provider": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "execution_status": {
+    "reviewer_executed": "Read-only authorized input/instruction and public-source inspections; local HTML text/table parsing; hashing/static comparisons; matrix image viewing; evidence and review writes/cleanup only in this review directory.",
+    "not_executed": [
+      "Downloaded code or installers",
+      "Candidate/upstream runtime tests",
+      "Product implementation",
+      "Candidate edits or messages",
+      "Provider/account/global changes",
+      "Canon/main/WorkNode edits",
+      "Nested delegation"
+    ],
+    "candidate_status": "P/O/T/V remain proposed; observed source claims were independently checked, not presumed executed from manifests."
+  },
+  "billing": {
+    "evaluation_allowance_seconds": 1800,
+    "reviewer_cost": "unknown",
+    "candidate_cost": "unknown_not_inspected",
+    "reviewer_evaluation_independent_of_candidate_allowance": true
+  },
+  "timing_reference": "timings.json",
+  "verification": {
+    "all_declared_candidate_ids_accounted": true,
+    "all_K1_to_K13_accounted": true,
+    "every_material_claim_matches_frozen_text": true,
+    "evidence_and_text_derivative_sha256_checks_passed": true,
+    "all_permitted_frozen_input_sha256_checks_passed": true,
+    "only_new_review_output_directory_written": true,
+    "temporary_unused_captures_removed": true
+  }
+}

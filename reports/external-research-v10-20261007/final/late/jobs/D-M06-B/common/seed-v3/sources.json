@@ -1,0 +1,55 @@
+{
+  "schema": "pm.er10.seed-v3.source-identities.v1",
+  "case_id": "D-M06-B",
+  "mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/INPUT_MAP.json",
+  "brief": {
+    "role": "mapped assignment brief",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md",
+    "read_utc": "2026-10-08T01:40:00Z"
+  },
+  "sources": [
+    {
+      "source_id": "geotransform",
+      "title": "Geotransform Tutorial",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes",
+      "sha256_verified_utc": "2026-10-08T01:40:00Z",
+      "sha256_matches_input_map": true,
+      "locators": {
+        "coefficient_order_and_units": "lines 15-20 (GT(0)..GT(5); pixel resolution w-e / n-s; rotations GT(2), GT(4))",
+        "forward_equations": "lines 27-28 (X_geo = GT(0) + X_pixel*GT(1) + Y_line*GT(2); Y_geo = GT(3) + X_pixel*GT(4) + Y_line*GT(5))",
+        "pixel_corner_vs_center": "lines 30-32 ((0.0,0.0) top-left corner to (width,height) bottom-right corner; top-left pixel center at (0.5,0.5))",
+        "north_up_special_case": "lines 34-38 (GT(2)=GT(4)=0; GT(1),GT(5) pixel size)"
+      }
+    },
+    {
+      "source_id": "gdaltransform",
+      "title": "OSGeo/gdal gcore/gdal_misc.cpp (released implementation file)",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "kind": "public primary raw bytes",
+      "sha256_verified_utc": "2026-10-08T01:40:00Z",
+      "sha256_matches_input_map": true,
+      "locators": {
+        "worldfile_to_geotransform_mapping": "lines 2182-2187 (world-file order remapped into GT(0)..GT(5))",
+        "pixel_center_to_corner_shift": "lines 2190-2193 (GT(0)/GT(3) minus half of GT(1)/GT(2)/GT(4)/GT(5): world-file pixel-center convention converted to corner-origin geotransform)",
+        "worldfile_loader": "lines 2121-2202 (GDALLoadWorldFile)",
+        "gcps_to_geotransform_control": "lines 1811, 2006 (GDALGCPsToGeoTransform call sites; independent fit-from-GCPs path)",
+        "tab_and_ozi_loaders": "lines 1812-1878, 2007-2110 (GDALLoadOziMapFile / GDALLoadTabFile / GDALReadTabFile2 alternate geotransform sources)"
+      }
+    }
+  ],
+  "limitations": [
+    "Hashes and capture metadata establish byte identity with the frozen corpus, not source correctness.",
+    "No network re-fetch performed; identity is against the mapped local frozen bytes only.",
+    "Line locators refer to the frozen captured files at the paths above, not to upstream blame or history."
+  ]
+}

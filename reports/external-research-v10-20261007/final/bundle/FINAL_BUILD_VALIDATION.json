@@ -1,0 +1,29 @@
+{
+  "schema": "ER10_ROOT_FINAL_METADATA_BUILD_VALIDATION_V1",
+  "passed": true,
+  "frozen_input_files": 226,
+  "frozen_input_bytes": 24379074,
+  "mapping_entries": 4663,
+  "original_36_closed_grade_terms_and_records_unchanged": true,
+  "every_mapping_replayed": true,
+  "every_record_reference_resolved": true,
+  "no_coverage_from_counts_or_terminals": true,
+  "logical_denominator": {
+    "slots": 40,
+    "arms": 80,
+    "closed": 40,
+    "live_held": 0,
+    "targeted_slots": 24,
+    "integrated_slots": 12,
+    "confirmation_slots": 4
+  },
+  "mapping_coverage": {
+    "critical_arm_cells": 1120,
+    "resolved_critical_arm_cells": 673,
+    "unknown_critical_arm_cells": 447,
+    "mapping_entries": 4663
+  },
+  "manifest_sha256": "3eb072d88c472c85b50ba81e08081825a0ba74d929e066f99c63043f97ea0c88",
+  "field_map_sha256": "11045277d657ca8a2896350eae46e13213e3fd9114f25adee6c5b9c451b2bfa3",
+  "original_grade_or_scientific_conclusion_written": false
+}

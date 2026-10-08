@@ -1,0 +1,26 @@
+{
+  "applicability": "not_assessed",
+  "code_sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856",
+  "elapsed_seconds": 0.1342414850005298,
+  "ended_at": "2026-10-08T02:04:18.800295+00:00",
+  "exit_scope": "bubblewrap wrapper; child signal exits use 128+signal",
+  "input_sha256": "dde69e394982b670801220f6921ea0f94bba5e2ec007cfc33ab9d46fe49eb25f",
+  "isolation": "namespace_and_seccomp_enforced",
+  "limits": {
+    "address_space_bytes": 268435456,
+    "cpu_seconds": 2,
+    "filesystem": "read-only",
+    "network": "none",
+    "output_bytes": 131072,
+    "processes": "single",
+    "wall_seconds": 5.0
+  },
+  "output_truncated": false,
+  "process_exit": 0,
+  "resource_released": true,
+  "started_at": "2026-10-08T02:04:18.666083+00:00",
+  "stderr": "ER10_ISOLATION_READY {\"mnt\": \"mnt:[4026533292]\", \"net\": \"net:[4026533298]\", \"pid\": \"pid:[4026533296]\", \"ipc\": \"ipc:[4026533295]\", \"uts\": \"uts:[4026533294]\", \"user\": \"user:[4026533383]\"}\n",
+  "stdout": "{\"correct\":[{\"id\":\"C1_fixed_point_origin\",\"status\":\"pass\",\"detail\":\"fwd(0,0)==(GT0,GT3) on 8/8 fixtures\"},{\"id\":\"C2_pixel_center_identity\",\"status\":\"pass\",\"detail\":\"center identity holds on 8/8 fixtures\"},{\"id\":\"C3_hand_derived_points\",\"status\":\"pass\",\"detail\":\"22/22 hand oracle points matched\"},{\"id\":\"C4_hand_determinants\",\"status\":\"pass\",\"detail\":\"8/8 determinants matched\"},{\"id\":\"C5_translation_metamorphic\",\"status\":\"pass\",\"detail\":\"48/48 fixture-query shifts exact\"},{\"id\":\"C6_half_pixel_shift_corroboration\",\"status\":\"pass\",\"detail\":\"shifted-corner(0,0)==orig-center(0.5,0.5) on 8/8 fixtures\"},{\"id\":\"C7_block_geometry_classification\",\"status\":\"pass\",\"detail\":\"rotated orthogonal (dot=0) equal-norm; sheared dot=1; near-sing cos=1.000000000; rank1 cos=1.000000\"},{\"id\":\"C8_singular_rejection\",\"status\":\"pass\",\"detail\":\"both degenerate fixtures rejected (no finite inverse); both collisions confirmed\"},{\"id\":\"C9_near_singular_margin\",\"status\":\"pass\",\"detail\":\"det=2e-06 invertible but scale-relative margin=1e-06 < 1e-05 (unstable)\"}],\"wrong\":[{\"id\":\"W1_corner_center_conflation_detected\",\"status\":\"pass\",\"detail\":\"fwd(0,0)!=fwd(0.5,0.5) detected on ['identity_north_up', 'rotated']\"},{\"id\":\"W2_rowcol_swap_detected\",\"status\":\"pass\",\"detail\":\"transpose detected on ['rotated', 'sheared']; transposed inverse gave (2.2000,0.4000) vs oracle [1.0, 2.0]; invisible on north-up ['identity_north_up', 'north_up_meters', 'geographic_degrees'] (expected)\"},{\"id\":\"W3_north_up_assumption_detected\",\"status\":\"pass\",\"detail\":\"forcing GT2=GT4=0 detected on ['rotated', 'sheared']\"},{\"id\":\"W4_roundtrip_insufficient_documented\",\"status\":\"pass\",\"detail\":\"wrong transposed pair roundtrips to max err 1.11e-10 (roundtrip-only check PASSES) yet violates hand oracles on ['rotated', 'sheared']\"}],\"summary\":{\"all_correct_controls_pass\":true,\"all_wrong_controls_detected\":true,\"witness_scientifically_valid\":true,\"n_correct\":9,\"n_wrong\":4}}\n",
+  "termination": null,
+  "witness_validity": "not_assessed"
+}

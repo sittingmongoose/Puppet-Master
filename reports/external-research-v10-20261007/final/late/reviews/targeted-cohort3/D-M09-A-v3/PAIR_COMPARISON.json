@@ -1,0 +1,30 @@
+{
+  "case": "D-M09-A",
+  "version": "v3",
+  "is_method_comparison": false,
+  "disposition": "FINAL_V3_INFRASTRUCTURE_STAGE_FAILURE_NO_METHOD_COMPARISON",
+  "control": "UNASSESSED",
+  "treatment": "NO_FINAL_UNASSESSED",
+  "conclusion": "Required evidence critic exceeded original stage ceiling and was interrupted with native paused. Reconciliation remains unentered. Full paired source-review gate is unmet; no source grade, winner, rescue, or method credit. Original startup/ACTIVE absences and qualified-native/provenance/comparative HOLD retained.",
+  "terminal_disposition_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/V3_TERMINAL_DISPOSITION_GATE.json",
+  "economics": {
+    "new_upper_bound_cold_work_minutes_each": 80,
+    "new_common_wall_upper_bound_minutes": 120,
+    "common_T0": "2026-10-07T23:45:13.455858+00:00",
+    "fixed_deadline": "2026-10-08T01:45:13.455858+00:00",
+    "seed_seconds_full_charged_each_cold_once_aggregate": 521.658,
+    "control_occupied_with_seed_seconds": 1586.585,
+    "treatment_occupied_with_seed_failed_critic_and_operations_seconds": 2929.8959999999997,
+    "candidate_dispatch_to_terminal_sum_shared_once_seconds": 3994.8230000000003,
+    "parents_or_overlap_wall_not_double_counted": true,
+    "host_capture_seconds": null,
+    "queue_and_host_operations": "retained exact boundaries/receipts; total incompletely measured",
+    "source_operations": "candidate originals retained; evaluator not run",
+    "billing": null,
+    "generated_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null
+  },
+  "frozen_at": "2026-10-08T00:41:49.163695+00:00"
+}

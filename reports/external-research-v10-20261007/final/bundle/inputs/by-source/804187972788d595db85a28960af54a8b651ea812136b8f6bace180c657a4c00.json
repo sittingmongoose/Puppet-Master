@@ -1,0 +1,740 @@
+{
+  "record_at": "2026-10-07T19:52:39.979612+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-01-treatment-independent-review-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T19:38:06.253Z",
+    "startedAt": "2026-10-07T19:38:06.663Z",
+    "completedAt": "2026-10-07T19:50:45.317Z"
+  },
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "case_id": "I-METHOD-01",
+    "source_judgment": "PASS_WITH_LIMITATIONS",
+    "scope": "Complete original brief O1\u2013O6 and every frozen P1\u2013P6 content decision; all six review axes; full final plus admitted same-arm draft/critique/source evidence.",
+    "assessment_complete": true,
+    "count_semantics": "complete is the total explicitly enumerated scientific assessment scope, not a claim that every source assertion is flawless or every future implementation decision resolved.",
+    "counts": {
+      "axes": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "obligations": {
+        "complete": 12,
+        "assessed": 12,
+        "unassessed": 0,
+        "met": 10,
+        "met_with_limitations": 2
+      },
+      "consequential_checks": {
+        "complete": 30,
+        "assessed": 30,
+        "unassessed": 0
+      },
+      "critic_dispositions": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0,
+        "main_named_criticisms": 5,
+        "additional_metadata_correction": 1
+      },
+      "preservation_groups": {
+        "complete": 20,
+        "assessed": 20,
+        "unassessed": 0,
+        "retained_or_corrected": 19,
+        "compressed_with_small_omission": 1
+      },
+      "bounded_opportunity_checks": {
+        "complete": 3,
+        "assessed": 3,
+        "unassessed": 0
+      },
+      "material_error_count": 0,
+      "nonmaterial_factual_or_locator_error_count": 2,
+      "nonmaterial_findings_count": 4
+    },
+    "six_axes": [
+      {
+        "id": 1,
+        "name": "Original brief and all P1\u2013P6 obligations",
+        "assessment_status": "ASSESSED",
+        "judgment": "PASS_WITH_LIMITATIONS"
+      },
+      {
+        "id": 2,
+        "name": "Consequential source claims, conditions and versions",
+        "assessment_status": "ASSESSED",
+        "judgment": "PASS_WITH_LIMITATIONS"
+      },
+      {
+        "id": 3,
+        "name": "Bounded useful discovery/mechanisms/alternatives/negative/opportunity coverage",
+        "assessment_status": "ASSESSED",
+        "judgment": "PASS_WITH_LIMITATIONS"
+      },
+      {
+        "id": 4,
+        "name": "Incorrect rejections/corrections and already-covered dispositions",
+        "assessment_status": "ASSESSED",
+        "judgment": "PASS"
+      },
+      {
+        "id": 5,
+        "name": "Draft\u2013critique\u2013final preservation",
+        "assessment_status": "ASSESSED",
+        "judgment": "PASS_WITH_LIMITATIONS"
+      },
+      {
+        "id": 6,
+        "name": "Proposed/executed validation and witness applicability",
+        "assessment_status": "ASSESSED",
+        "judgment": "PASS"
+      }
+    ],
+    "O1_O6_P1_P6": [
+      {
+        "id": "O1",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET_WITH_LIMITATIONS"
+      },
+      {
+        "id": "O2",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      },
+      {
+        "id": "O3",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET_WITH_LIMITATIONS"
+      },
+      {
+        "id": "O4",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      },
+      {
+        "id": "O5",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET_SUBSTANTIVELY"
+      },
+      {
+        "id": "O6",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      },
+      {
+        "id": "P1",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      },
+      {
+        "id": "P2",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      },
+      {
+        "id": "P3",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      },
+      {
+        "id": "P4",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      },
+      {
+        "id": "P5",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      },
+      {
+        "id": "P6",
+        "assessment_status": "ASSESSED",
+        "assessment_complete": true,
+        "fulfillment": "MET"
+      }
+    ],
+    "assessed_consequential_ids": [
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12",
+      "Q13",
+      "Q14",
+      "Q15",
+      "Q16",
+      "Q17",
+      "Q18",
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q22",
+      "Q23",
+      "Q24",
+      "Q25",
+      "Q26",
+      "Q27",
+      "Q28",
+      "Q29",
+      "Q30"
+    ],
+    "unassessed_obligation_ids": [],
+    "unassessed_consequential_ids": [],
+    "material_error_count": 0,
+    "nonmaterial_finding_ids": [
+      "L01",
+      "L02",
+      "L03",
+      "L04"
+    ],
+    "exhaustive_opportunity_recall_claimed": false,
+    "excluded_host_fields": [
+      "lifecycle",
+      "native terminal dispositions",
+      "research ordering/timing proof",
+      "provider/family identity",
+      "billing",
+      "quota",
+      "comparative selection"
+    ],
+    "usage": {
+      "input_tokens": null,
+      "cached_input_tokens": null,
+      "output_tokens": null,
+      "reasoning_tokens": null,
+      "billing_usd": null
+    },
+    "unknown_quota": null,
+    "artifacts": {
+      "judgment": "judgment.md",
+      "source_checks": "source-checks.json",
+      "sources": "sources/"
+    }
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/coverage.json",
+      "bytes": 5280,
+      "sha256": "02aa6a0b5dec176bc7ddc9fd51fe2260aefe7cbc13b938d27bed25cdea6da03d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/judgment.md",
+      "bytes": 48261,
+      "sha256": "daefb9e780ccb200f9e636e41a7fc5f28df7d3a8d05f65017da1a6ade2cf23f7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/source-checks.json",
+      "bytes": 198408,
+      "sha256": "1c32c328cc59a362fa88fd90ea2a210d8fc45858ff301e071b15ce1ddcd61c13"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/cocorahs-qa-qc-2019.pdf",
+      "bytes": 155775,
+      "sha256": "4a19f5e6ea93a6aec9b4806b8ff65d74007478f2efd6d85d80bc018a2f0569e9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/core-line-counter.txt",
+      "bytes": 1111,
+      "sha256": "b3a8c53b2ff26fb532069e37fe780e2daceb44150a91217a09b1fbfc5926cd02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/csv-core-manifest.txt",
+      "bytes": 677,
+      "sha256": "569f0930c8c0dd5772f07601faa19d7aaa440e3670365dc339c70837cb23b738"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/deserializer-buf.txt",
+      "bytes": 221,
+      "sha256": "ebc4ddae4e884db886dd2373ea796a73a55cb3130141c53dde5567743d0cc254"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/deserializer-test.txt",
+      "bytes": 683,
+      "sha256": "813371dff17017e478d17c465eb0f889a39f03aac40cbca3646a29d42458c5bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/fix-commit.json",
+      "bytes": 8264,
+      "sha256": "f3f36887de8291a55da0596deeb9a91371076270931f50248b100e01dfb3b3fb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/hydroshare-time-series-metadata.html",
+      "bytes": 54019,
+      "sha256": "b09d3f0c17def021834a133999032d06726f835805579f8a7fc17c3c9ab07d57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/hydroshare-time-series.html",
+      "bytes": 54250,
+      "sha256": "2ee1633d501fdbda2222cae689f2759b1fadd8090863473bcc5caf8e2e6ad4ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/issue-395.json",
+      "bytes": 3532,
+      "sha256": "1f4aeb9d001847961544741e4c09d5bca25a88b1014d5a772a9a8db66b65513a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/issue-422.json",
+      "bytes": 1010,
+      "sha256": "5dd6024beb5b2bc1cf0c05816d254141f36d15c151c0f92ee8d994d1af353ba4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/manifest.json",
+      "bytes": 37389,
+      "sha256": "752b0ac5683aa9afb136b2e1ffe427bad7e89efa73acc65f2ff7c677031ccfae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/odm2-tables.html",
+      "bytes": 25182,
+      "sha256": "af3186959c1f0c8f17b2463dd6c54d3047ca681a399885a759649b03d3e319b5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/prov-o.html",
+      "bytes": 464179,
+      "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/reader-call.txt",
+      "bytes": 834,
+      "sha256": "2fcc710d9d01f1a82499fba8304bff8e6b9e738f1743e6e5ec9892c534e06cdb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/reader-flex.txt",
+      "bytes": 2897,
+      "sha256": "7439ffd29dcd073f1e435e260cc10d3bee2381877b6ebf8968483484026a250b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/reader-state.txt",
+      "bytes": 795,
+      "sha256": "35d69f5c4885414d279cef82aa2227146b3222532b16448a457fc17879bc6a74"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/reader-tests.txt",
+      "bytes": 2608,
+      "sha256": "46c115cf3697e3d80a377af5ed1d9b77e3c05e9af12a601af7f01c828915bab4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/root-manifest.txt",
+      "bytes": 730,
+      "sha256": "3d5b1b1bfd196823a17bef67d04a5808a0300df2e2b82b5868c4b2476e9c9a20"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-deserializer-1.4.0.rs",
+      "bytes": 34340,
+      "sha256": "fcc3700130d22824ec3f5d2da24cb4bef48ac95402fe5d8112b9d71435fa8037"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-deserializer-fix-9e644e6.rs",
+      "bytes": 32869,
+      "sha256": "19f96d252fc99df1311a9a92a43ae981adcb672e86bbc67fcc8dba4fc04da406"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-docs-1.4.0.html",
+      "bytes": 76417,
+      "sha256": "88aba29517f2b882f554e5e3fc5464a251c4b9daf02b88eb5c751245a9d0eec9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-fix-1.4.0-compare.json",
+      "bytes": 794337,
+      "sha256": "ffa2b42b45167a8f907bf5e122570326ca882186af37fadd1c55970e2a75f5bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-fix-commit.json",
+      "bytes": 8263,
+      "sha256": "ed9115380d32ddfbf86b887be913c27a4843a14d1e9fb7c524a358a41c479050"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-reader-1.4.0.rs",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-release-1.4.0-commit.json",
+      "bytes": 4853,
+      "sha256": "8641863f5b2da3ff6cf49f5362261c22face01e9b760cd140d22b3bb98d6b453"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-atomiccommit.html",
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-foreignkeys.html",
+      "bytes": 47276,
+      "sha256": "f9cc6cefbdf18e07893b036365a2f3ca2a9a81fa41ed0849c7e4df214ccca8c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-whentouse.html",
+      "bytes": 21223,
+      "sha256": "d0850096c26e9c888acaf2d6e2ac029e86f66f51a87461b77b94f1639d309b79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-precip-approval.pdf",
+      "bytes": 99338,
+      "sha256": "9e626de759a254e54478ddcc95f0b38bdce33415e8795cdb47b7a794e1e33cf1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-precip-process.pdf",
+      "bytes": 36314,
+      "sha256": "3606e976aaaa33e2594793baba7650563ec84b77d656bbaa54d732937bf586af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-stage-approval.pdf",
+      "bytes": 22025,
+      "sha256": "fbcc829232a44fcbf841b94b8a509d2a340f759b5073e4b0907e8b80833a6758"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-stage-process.pdf",
+      "bytes": 43458,
+      "sha256": "0ec40181e4af08cb54c76f0e920d3a7421b5c511e18029ee0c863d1737df044e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-time-series-guidance.html",
+      "bytes": 16978,
+      "sha256": "9e82f7405edb5716b79fa579070303b726c8670c1f53393343ed47400bd3283a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/w3c-tabular-data-model.html",
+      "bytes": 353203,
+      "sha256": "e55d28c7805c1573129336a8ae11c189e6ad48886993693799ce0d49b92feb93"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/wrapper-position-update.txt",
+      "bytes": 2060,
+      "sha256": "9096b0243bb887a71ca2588b9cf083618635ad8aff6092fdcb6e056e86045517"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/wrapper-unequal-tests.txt",
+      "bytes": 2741,
+      "sha256": "4ce6e7d64b48deab01e6d3bbe70033057b9021e6d1319584d8520e76eeb16403"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/delivery-manifest.json",
+      "bytes": 827,
+      "sha256": "f0df1bd00369326b3fdc5682e9266568f5dbf86506a0c24983af4f97526ba2d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/cocorahs-qa-qc-2019.txt",
+      "bytes": 14611,
+      "sha256": "9c99cbb4fc784dd8df1bddfac9a3d9dc430e1bbd595120a300d30c9448d8e9ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/cz-qaqc.txt",
+      "bytes": 2324,
+      "sha256": "b4a2354eb966017d76c2dae570a4e7797ceb35123b13666929c4d5b02ea8dcd8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/hydroshare-time-series-metadata.txt",
+      "bytes": 7873,
+      "sha256": "e99b9643f7e4cb8a3be7917e0cd940636bda1574b4b6c1b57de18e7b2186f09c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/hydroshare-time-series.txt",
+      "bytes": 6059,
+      "sha256": "81d9c2716b7dbcc1fe329d20d0bc7b45baeffb42d5bbc7081c9f28e1f732efbb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/odm2-tables.txt",
+      "bytes": 11146,
+      "sha256": "72714853880dbd1fb6629f52f5d620f0ff630552b4daf6d8e3d682712a8db374"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/pdf-metadata.json",
+      "bytes": 3611,
+      "sha256": "b0927ba5ca98f2a77e9c065754403b6eb0ef26bd9669d5a221763dfdd6e7aa86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/prov-o.txt",
+      "bytes": 185681,
+      "sha256": "da9393af74b1e8c4a63cdccb71671f33ed63e09567d65d55af4bb822b910ce62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/rust-csv-docs-1.4.0.txt",
+      "bytes": 4758,
+      "sha256": "6e68d61ba748319f5cab656cf1befe0afc93c9408230ea90fc4afce69c024521"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/snippet-locations.json",
+      "bytes": 1853,
+      "sha256": "ffe9f068c46bf79272734f5b9efa15ad110e8b5acd98326d54e634793f5c66eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/sqlite-atomiccommit.txt",
+      "bytes": 61644,
+      "sha256": "08e859c0d598b1e60279292432d572ba8ce63eee7ef137ee12f54cf14186be42"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/sqlite-foreignkeys.txt",
+      "bytes": 34523,
+      "sha256": "0d752e43ae579c08f187b64fcddd8db837dbf63a90ec99e85981961ffa0d9826"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/sqlite-whentouse.txt",
+      "bytes": 15273,
+      "sha256": "7e1535e90d39ac2f632f7d25b3e30a1a7084df9ee6d28365434801aa54afde40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-precip-approval.txt",
+      "bytes": 3911,
+      "sha256": "e4cd833309e7076864955bd3fb37384c4597cc6f7a27baf8fbcc41d9c2d01926"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-precip-process.txt",
+      "bytes": 12186,
+      "sha256": "b81ab08dd016ba0e71e162e11abbb89b339b69138ddb538a0ca0ea01ab3b0f9a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-stage-approval.txt",
+      "bytes": 7343,
+      "sha256": "678bd0d3159c163f935988e875497c9955a6bd3c4dc5ec9c58aa2c1c1b7653dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-stage-process.txt",
+      "bytes": 13365,
+      "sha256": "a94af2ef49c86a9485eaabd464abf984e3992f0653ad3e0fa4f908914f7b10f4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-time-series-guidance.txt",
+      "bytes": 2545,
+      "sha256": "bbfb7276eb850ba33cc2029bb7644f7b8034a8da6a8e6c1378660b4353a6bb17"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/w3c-tabular-data-model.txt",
+      "bytes": 119274,
+      "sha256": "3daeca172826589e724930f205f1484c5346c9b7118033209f7e9feb0f099499"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/Cargo.toml",
+      "bytes": 952,
+      "sha256": "9edf0f197e736f3eeb49798b2c3fd777cef6e0c63df678967beb94c982808d9e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/byte_record.rs",
+      "bytes": 34023,
+      "sha256": "26622b1c4f19b9fc45721ea989a4e8ad00a8a779210c3ac0ab2ade2f18ef2640"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/cocorahs-qa-qc-2019.pdf",
+      "bytes": 155775,
+      "sha256": "4a19f5e6ea93a6aec9b4806b8ff65d74007478f2efd6d85d80bc018a2f0569e9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/compare.json",
+      "bytes": 794469,
+      "sha256": "78731be49f20f83a48388bf44c3f9389a24a4235a8f56ae3aff68ccf9229896a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/core-Cargo.toml",
+      "bytes": 846,
+      "sha256": "3c3ea65fd98cd5faff6e4c34c537e3869a51adc5b97f676b2388622e336d86df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/core-reader.rs",
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/csv-1.4.0.crate",
+      "bytes": 888642,
+      "sha256": "52cd9d68cf7efc6ddfaaee42e7288d3a99d613d4b50f76ce9827ae0c6e14f938"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/cz-qaqc.html",
+      "bytes": 7749,
+      "sha256": "3407815656e8d7f8943cb4c4777054fefa983e7fee8a8cba4f60629c58759a41"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/deserializer.rs",
+      "bytes": 34340,
+      "sha256": "fcc3700130d22824ec3f5d2da24cb4bef48ac95402fe5d8112b9d71435fa8037"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/fix-report.json",
+      "bytes": 30748,
+      "sha256": "a904f05a400546d4b228b7dfd2394417abf31edb2558976f727ddeda68573e0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/fix.json",
+      "bytes": 8263,
+      "sha256": "ed9115380d32ddfbf86b887be913c27a4843a14d1e9fb7c524a358a41c479050"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/hydroshare-time-series-metadata.html",
+      "bytes": 54019,
+      "sha256": "b09d3f0c17def021834a133999032d06726f835805579f8a7fc17c3c9ab07d57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/hydroshare-time-series.html",
+      "bytes": 54250,
+      "sha256": "2ee1633d501fdbda2222cae689f2759b1fadd8090863473bcc5caf8e2e6ad4ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/issue-395-comments.json",
+      "bytes": 7121,
+      "sha256": "e223e436a57cd7d448ec66848b7df5e0915ce51fe755d5cab0a96688dca553e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/issue-395.json",
+      "bytes": 5235,
+      "sha256": "2c8a109e16b71d0ed50a897135a683c488ab1f3f62d7a6bfd15e98bdde0120cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/issue-422-comments.json",
+      "bytes": 2464,
+      "sha256": "a4f731a57d4da5fe10dfc1c7a600d08c6dee6470a57cfd4f41237c79d1016adf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/issue-422.json",
+      "bytes": 2723,
+      "sha256": "b3f5df746f8a6a0220d2c6e06fd6fe646e86af9336c6176dc5173e299bd37759"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/manifest.json",
+      "bytes": 54563,
+      "sha256": "e810f2be94aadfad807f01c39e8fa32c4856aa3a4c5eaeb8fef725633a96d068"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/odm2-tables.html",
+      "bytes": 25182,
+      "sha256": "af3186959c1f0c8f17b2463dd6c54d3047ca681a399885a759649b03d3e319b5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/odmtools-README.md",
+      "bytes": 4497,
+      "sha256": "61ac0450ccb6df31661bb2a5d3c439082ad80450d2af8b668e850511f794127c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/odmtools-commit.json",
+      "bytes": 5566,
+      "sha256": "27b1c2c266d50db59176fcdc34bdc44d9de813a80e960b0618351889b4a5f6a7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/prov-o.html",
+      "bytes": 464179,
+      "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-.cargo_vcs_info.json",
+      "bytes": 94,
+      "sha256": "d4013401bb6bf2fa9f102eb2af2892b7034b8b6096d5200c47a6c4cb3cc28fb1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-Cargo.lock",
+      "bytes": 2881,
+      "sha256": "51d5f880cdb67f8fe3fde3077f4a51c854af354b146393c7ff61018427e17c4b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-Cargo.toml",
+      "bytes": 4889,
+      "sha256": "8a767a182c4c14e4db88f592b6f508913425eb7ca1bd8a92f0f8db054884577a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-src-deserializer.rs",
+      "bytes": 34340,
+      "sha256": "fcc3700130d22824ec3f5d2da24cb4bef48ac95402fe5d8112b9d71435fa8037"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-src-reader.rs",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/reader.rs",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/release.json",
+      "bytes": 4853,
+      "sha256": "8641863f5b2da3ff6cf49f5362261c22face01e9b760cd140d22b3bb98d6b453"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/rust-csv-docs-1.4.0.html",
+      "bytes": 76417,
+      "sha256": "88aba29517f2b882f554e5e3fc5464a251c4b9daf02b88eb5c751245a9d0eec9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/sqlite-atomiccommit.html",
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/sqlite-foreignkeys.html",
+      "bytes": 47276,
+      "sha256": "f9cc6cefbdf18e07893b036365a2f3ca2a9a81fa41ed0849c7e4df214ccca8c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/sqlite-whentouse.html",
+      "bytes": 21223,
+      "sha256": "d0850096c26e9c888acaf2d6e2ac029e86f66f51a87461b77b94f1639d309b79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/string_record.rs",
+      "bytes": 25631,
+      "sha256": "3c30b700d01dd876083a72406a6093642528304bfa69600b4bec54aa8086211a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-precip-approval.pdf",
+      "bytes": 99338,
+      "sha256": "9e626de759a254e54478ddcc95f0b38bdce33415e8795cdb47b7a794e1e33cf1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-precip-process.pdf",
+      "bytes": 36314,
+      "sha256": "3606e976aaaa33e2594793baba7650563ec84b77d656bbaa54d732937bf586af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-stage-approval.pdf",
+      "bytes": 22025,
+      "sha256": "fbcc829232a44fcbf841b94b8a509d2a340f759b5073e4b0907e8b80833a6758"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-stage-process.pdf",
+      "bytes": 43458,
+      "sha256": "0ec40181e4af08cb54c76f0e920d3a7421b5c511e18029ee0c863d1737df044e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-time-series-guidance.html",
+      "bytes": 16978,
+      "sha256": "9e82f7405edb5716b79fa579070303b726c8670c1f53393343ed47400bd3283a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/w3c-tabular-data-model.html",
+      "bytes": 353203,
+      "sha256": "e55d28c7805c1573129336a8ae11c189e6ad48886993693799ce0d49b92feb93"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method01-pair-freeze.json"
+}

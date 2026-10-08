@@ -1,0 +1,62 @@
+{
+  "schema": "ER10_M09_FINAL_V3_TERMINAL_DISPOSITION_GATE_V1",
+  "frozen_at": "2026-10-08T00:41:49.163695+00:00",
+  "case": "D-M09-A",
+  "version": "v3",
+  "full_paired_finals_gate_passed": false,
+  "control_final_frozen": true,
+  "treatment_final_present": false,
+  "all_owned_M09_candidate_trees_quiet_frozen_settled": true,
+  "stage_freezes": {
+    "D-M09-A/common/fresh-untrusted-proposal-v3": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/freeze_disposition.json",
+      "sha256": "e8d4149ca56c2377c72986984ebbd84929fdeddd6495f98ba5ea874361ab9e39",
+      "native_status": "complete",
+      "t3_status": "completed"
+    },
+    "D-M09-A/control/single-full-critic-final-v3": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/freeze_disposition.json",
+      "sha256": "28f977a6dd60edde75f7436ed27102ad58392188bb86cbbfa0ef4862c99b310f",
+      "native_status": "complete",
+      "t3_status": "completed"
+    },
+    "D-M09-A/treatment/independent-operations-critic-v3": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/freeze_disposition.json",
+      "sha256": "0cdf16fba7a126db3ee4949e202bb4c50cfb2e83a4a65778485db729318ce436",
+      "native_status": "complete",
+      "t3_status": "completed"
+    },
+    "D-M09-A/treatment/independent-evidence-critic-v3": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3/freeze_disposition.json",
+      "sha256": "6b1201be0ed51d5377f7ba5a5522b0d3d80cb8e0c2934ea54896406b4e6b812b",
+      "native_status": "paused",
+      "t3_status": "interrupted"
+    }
+  },
+  "reconcile_disposition": "UNENTERED_REQUIRED_CRITIC_STAGE_FAILURE",
+  "disposition": "FINAL_V3_INFRASTRUCTURE_STAGE_FAILURE_NO_METHOD_COMPARISON",
+  "source_review_gate": "BLOCKED_NO_FULL_TREATMENT_FINAL",
+  "source_quality_control": "UNASSESSED",
+  "source_quality_treatment": "UNASSESSED",
+  "comparative_native_provenance": "HOLD",
+  "original_absences_failures_costs_preserved": true,
+  "economics": {
+    "new_upper_bound_cold_work_minutes_each": 80,
+    "new_common_wall_upper_bound_minutes": 120,
+    "common_T0": "2026-10-07T23:45:13.455858+00:00",
+    "fixed_deadline": "2026-10-08T01:45:13.455858+00:00",
+    "seed_seconds_full_charged_each_cold_once_aggregate": 521.658,
+    "control_occupied_with_seed_seconds": 1586.585,
+    "treatment_occupied_with_seed_failed_critic_and_operations_seconds": 2929.8959999999997,
+    "candidate_dispatch_to_terminal_sum_shared_once_seconds": 3994.8230000000003,
+    "parents_or_overlap_wall_not_double_counted": true,
+    "host_capture_seconds": null,
+    "queue_and_host_operations": "retained exact boundaries/receipts; total incompletely measured",
+    "source_operations": "candidate originals retained; evaluator not run",
+    "billing": null,
+    "generated_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null
+  }
+}

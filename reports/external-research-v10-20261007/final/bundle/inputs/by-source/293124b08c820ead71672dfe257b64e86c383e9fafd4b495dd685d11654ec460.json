@@ -1,0 +1,40 @@
+{
+  "case_id": "D-M14-A",
+  "version": "v2",
+  "at": "2026-10-07T19:51:20.773394+00:00",
+  "status": "FINITE_INCOMPLETE_NO_METHOD_COMPARISON",
+  "control_final": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/final.md",
+    "sha256": "f4bb6bd78bc84933a089a06b40bd9e06244ff9744cfaf64df8e9edbd2246cda4",
+    "native_status": "complete",
+    "source_grade": "UNASSESSED"
+  },
+  "treatment": {
+    "semantic_set": "jobs/D-M14-A/treatment/semantic_findings-v2/semantic_findings.md",
+    "author_native": "complete",
+    "host_render": "exactset structural only",
+    "preservation_native_projection": "paused",
+    "preservation_check": "ABSENT",
+    "final": "ABSENT",
+    "stage_expired": true,
+    "T3_status": "interrupted",
+    "source_grade": "UNASSESSED"
+  },
+  "review_gate": "NOT_SATISFIED_BOTH_FULL_FINALS_AND_COMPLETE_NATIVE_TERMINALS",
+  "retry": "NONE_FURTHER",
+  "original_v1": "Immutable original-v1-final-disposition.json",
+  "economics": {
+    "generic_helper_cold_prep_seconds": 454.056,
+    "qualification_reported_test_seconds": 0.316,
+    "qualification_invocation_wall_seconds": null,
+    "full_setup_lower_bound_seconds": 454.372,
+    "routine_v2_render_seconds": 0.111228384,
+    "failed_v1_and_v2_costs": "Inclusive; actual full stage accounting retained in native/T3 receipts; no favorable omission",
+    "amortized": "Separate from cold; no assumed zero prep or free ceiling extension",
+    "input": null,
+    "cached_input": null,
+    "generated": null,
+    "billing": null
+  },
+  "all_v2_candidates_quiet": true
+}

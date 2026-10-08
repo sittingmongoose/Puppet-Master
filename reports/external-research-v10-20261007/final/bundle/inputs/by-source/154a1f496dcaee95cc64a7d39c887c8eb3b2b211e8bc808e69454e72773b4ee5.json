@@ -1,0 +1,36 @@
+{
+  "schema": "ER10_PREFINAL_CLOSED_BINDINGS_MECHANICAL_TASK_V1",
+  "prepared_at": "2026-10-08T01:01:32Z",
+  "deadline": "2026-10-08T01:21:32Z",
+  "writing_reserve_seconds": 300,
+  "status": "WORKING_NOT_TERMINAL",
+  "campaign_terminal": false,
+  "write_scope": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/pre-final-closed-bindings-v3",
+  "allowed_inputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/FINAL_INTERFACE.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/SUPPLEMENTAL_FIELD_MAP.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/SUPPLEMENTAL_LEDGER.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/final-schema-map-v2/apply_supplement.py",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/future-closure-bindings-v1/M07B/INPUT_IDENTITIES.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/future-closure-bindings-v1/M07B/PREPARED_FIELD_BINDINGS.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M07-B-root-closed-thread-read-v1.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3-root-final-ack-v1.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/TRACK_COMPLETION.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/PAIR_COMPARISON.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/PAIR_COMPARISON.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/CONTROL_SOURCE_DIAGNOSTIC.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/J1/freeze_disposition.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/V3_TERMINAL_DISPOSITION_GATE.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/GLM2_FINAL_RELEASE.json"
+  ],
+  "limits": {
+    "input_file_bytes": 16777216,
+    "total_input_bytes": 41943040,
+    "output_bytes": 16777216
+  },
+  "no_goals_workers_reviews_source_research_network_git_cleanup_or_live_reads": true
+}

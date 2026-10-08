@@ -1,0 +1,52 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "sqlbackup",
+      "url": "https://www.sqlite.org/backup.html",
+      "version_or_capture": "SQLite documentation captured 2026-10-07; reconcile behavior to SQLite 3.51.3 code",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlbackupapi",
+      "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "version_or_capture": "SQLite C API documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlbackupcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+      "version_or_capture": "SQLite version-3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/final.md",
+  "predecessor_science": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/draft.md"
+  ],
+  "authored_intermediates": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/claim-review.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/scope-pin.md"
+  ],
+  "scientific_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md": "ba41c3231b2443c64c22947308c4098c652bf8a8aa7f8c6fab4a332ae92159c5",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources.json": "9292d8d0d2d4b8e14b6e7e3a9c5ec6292c0d995b64f590961a6097c5b05fb36f",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/final.md": "ea667881f0b8efda9a1d132f690dbdecff38722dada71c74e1c3f3e834ecee98",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/draft.md": "6ad4385c758b4c08c7225cf91c2f0c474bc6f5daa118d40363e1d313a05d36e4",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/claim-review.md": "af50ca392edf376733e681e79bfa69f9ac1400110ccac43278930e791ac4759b",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/scope-pin.md": "bbf6fa3566c8d8a11ac6d23fb3e600a0a112b86fa198e08aa7b79da32afee012",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7"
+  }
+}

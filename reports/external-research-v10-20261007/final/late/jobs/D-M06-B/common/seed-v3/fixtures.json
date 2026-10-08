@@ -1,0 +1,65 @@
+{
+  "schema": "pm.er10.seed-v3.fixtures.v1",
+  "case_id": "D-M06-B",
+  "input_only": true,
+  "note": "Geotransform coefficients and pixel/line query points only. No computed world coordinates, no outcome labels, and no scoring key of any kind are included; nothing was run to produce this file. Query points are inputs for a later root-qualified witness, not results.",
+  "raster": { "width_px": 10, "height_px": 5 },
+  "pixel_queries": [
+    { "id": "q_top_left_corner", "pixel": 0.0, "line": 0.0 },
+    { "id": "q_top_left_center", "pixel": 0.5, "line": 0.5 },
+    { "id": "q_bottom_right_corner", "pixel": 10.0, "line": 5.0 },
+    { "id": "q_interior_fractional", "pixel": 4.25, "line": 2.75 },
+    { "id": "q_out_of_extent_negative", "pixel": -1.0, "line": -1.0 },
+    { "id": "q_out_of_extent_positive", "pixel": 10.5, "line": 5.5 }
+  ],
+  "geotransforms": [
+    {
+      "id": "identity_north_up",
+      "category": "ordinary",
+      "gt": [0.0, 1.0, 0.0, 0.0, 0.0, -1.0],
+      "description": "Unit pixel size, no rotation terms, north-up (gt[5] negative). The 2x2 block is diagonal by construction."
+    },
+    {
+      "id": "north_up_meters",
+      "category": "ordinary",
+      "gt": [500000.0, 10.0, 0.0, 4000000.0, 0.0, -10.0],
+      "description": "Projected-CRS-style origin in metres with 10 m pixels, north-up; ordinary large-offset case."
+    },
+    {
+      "id": "geographic_degrees",
+      "category": "ordinary",
+      "gt": [-123.0, 0.001, 0.0, 49.0, 0.0, -0.001],
+      "description": "Geographic coordinates in degrees; small pixel sizes relative to the origin offsets."
+    },
+    {
+      "id": "rotated",
+      "category": "rotated",
+      "gt": [0.0, 2.0, 1.0, 0.0, -1.0, 2.0],
+      "description": "Equal axis scales with gt[2] and gt[4] chosen as a nonzero antisymmetric pair: a rotated raster, not north-up."
+    },
+    {
+      "id": "sheared",
+      "category": "sheared",
+      "gt": [100.0, 1.0, 0.5, 200.0, 0.25, 2.0],
+      "description": "Unequal axis scales with a non-antisymmetric off-diagonal pair, so the 2x2 block columns are non-orthogonal by construction (shear)."
+    },
+    {
+      "id": "near_singular",
+      "category": "near_singular",
+      "gt": [0.0, 1.0, 0.999999, 0.0, 0.999999, 1.0],
+      "description": "2x2 block columns constructed nearly parallel (off-diagonals 0.999999 against unit diagonals); sensitivity of the inverse is the property under review."
+    },
+    {
+      "id": "degenerate_rank1",
+      "category": "degenerate_zero_determinant",
+      "gt": [10.0, 1.0, 1.0, 20.0, 1.0, 1.0],
+      "description": "Both 2x2 block columns identical by construction, so the coefficient matrix is rank-deficient (zero determinant by construction)."
+    },
+    {
+      "id": "degenerate_zero_scale",
+      "category": "degenerate_zero_determinant",
+      "gt": [10.0, 0.0, 0.0, 20.0, 0.0, 0.0],
+      "description": "All scale and rotation coefficients zero; every query maps onto the single point (gt[0], gt[3]) and the 2x2 block is the zero matrix."
+    }
+  ]
+}

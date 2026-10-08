@@ -1,0 +1,46 @@
+{
+  "files": {
+    "draft.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/draft.md",
+      "sha256": "2c1289885dcd8b0c99cf18bd63771fe3acece6b61c8b4b533045f76a568a0910",
+      "bytes": 6344
+    },
+    "fixtures.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/fixtures.json",
+      "sha256": "bc2ed432bc18ec4ac2eda91518111ade950b44d7f66b6c3dc6ca604a60c268ac",
+      "bytes": 4815
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/sources.json",
+      "sha256": "87510c175a18a91851d4aea895901bc8ce7155a8cf0d405646e8adcf6c18674c",
+      "bytes": 2929
+    },
+    "timings.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/timings.json",
+      "sha256": "757555c6881f7f7eb111dfb46eef6919126efbbae137cf24ff5e3f4d46e8972c",
+      "bytes": 1955
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/t3-terminal-observed.json",
+      "sha256": "3dca07032b443df4dcb91255d2b2804807780c199f2da117ea0f9332fd5c76a4",
+      "bytes": 4204
+    },
+    "startup-event-observation-v1.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/startup-event-observation-v1.json",
+      "sha256": "86ac3220f1b0592490ef3618e048208f6b1bf6b4d62d374634dd3229064e8bfb",
+      "bytes": 4959
+    }
+  },
+  "scientific_T0": "2026-10-08T00:43:18.885619+00:00",
+  "T3_terminal_at": "2026-10-08T00:57:14.171Z",
+  "seed_T0_to_terminal_seconds": 835.285381,
+  "budget_seconds": 1200,
+  "within_budget": true,
+  "native_terminal": "PENDING_ONE_ROOT_TERMINAL_NOMINATION",
+  "native_active_observed": false,
+  "seed_science": "Untrusted fresh candidate input, not source/evaluator truth",
+  "parse_complete": true,
+  "task_tree_quiet": true,
+  "usage_billing": null,
+  "host_freeze_at": "2026-10-08T00:57:47.391288+00:00"
+}

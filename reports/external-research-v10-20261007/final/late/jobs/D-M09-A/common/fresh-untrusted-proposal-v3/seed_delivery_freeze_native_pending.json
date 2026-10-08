@@ -1,0 +1,30 @@
+{
+  "schema": "ER10_M09_SEED_T3_DELIVERY_FREEZE_NATIVE_PENDING_V1",
+  "recorded_at": "2026-10-07T23:54:19.416734+00:00",
+  "stage": "D-M09-A/common/fresh-untrusted-proposal-v3",
+  "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3",
+  "T3_status": "completed",
+  "T3_quiet": true,
+  "settled_receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/settle_receipt.json",
+  "requestedAt": "2026-10-07T23:45:13.904Z",
+  "startedAt": "2026-10-07T23:45:18.953Z",
+  "completedAt": "2026-10-07T23:53:55.562Z",
+  "dispatch_to_delivery_seconds": 521.658,
+  "stage_ceiling_seconds": 1200,
+  "within_original_stage_ceiling": true,
+  "required_output_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/draft.md",
+  "required_output_sha256": "6ad4385c758b4c08c7225cf91c2f0c474bc6f5daa118d40363e1d313a05d36e4",
+  "required_output_bytes": 4854,
+  "scientific_files": {
+    "draft.md": {
+      "sha256": "6ad4385c758b4c08c7225cf91c2f0c474bc6f5daa118d40363e1d313a05d36e4",
+      "bytes": 4854
+    }
+  },
+  "native_terminal": "PENDING_EXACT_ROOT_NOMINATION_AND_INDEPENDENT_OBSERVATION",
+  "native_active_observed": false,
+  "qualified_native_provenance_comparative": "HOLD",
+  "arms_unentered": true,
+  "billing": null,
+  "generated_tokens": null
+}

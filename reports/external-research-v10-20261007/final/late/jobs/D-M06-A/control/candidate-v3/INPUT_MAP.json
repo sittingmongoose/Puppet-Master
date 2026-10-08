@@ -1,0 +1,74 @@
+{
+  "case_id": "D-M06-A",
+  "version": 3,
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/brief.md",
+  "sources": [
+    {
+      "source_id": "jcs",
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.txt",
+      "version_or_capture": "RFC 8785 June 2020; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources.json",
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3",
+  "outputs": {
+    "final.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/final.md",
+    "report.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/report.md",
+    "sources.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/sources.json",
+    "timings.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/timings.json"
+  },
+  "allowed_inputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/brief.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/fixtures.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/sources.json"
+  ],
+  "common_seed": {
+    "draft": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/draft.md",
+    "fixtures": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/fixtures.json",
+    "source_refs": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/sources.json",
+    "bytes_policy": "Fresh v3 commonseed only; exactsame bytes botharms, supervisor hashes/freezes after seed; no priorv2/old seed inputs",
+    "admission": "Actual scientific seed readability/native complete/quiet within frozen allowance required",
+    "frozen_exact_bytes": {
+      "draft.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/draft.md",
+        "sha256": "2c1289885dcd8b0c99cf18bd63771fe3acece6b61c8b4b533045f76a568a0910",
+        "bytes": 6344
+      },
+      "fixtures.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/fixtures.json",
+        "sha256": "bc2ed432bc18ec4ac2eda91518111ade950b44d7f66b6c3dc6ca604a60c268ac",
+        "bytes": 4815
+      },
+      "sources.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/sources.json",
+        "sha256": "87510c175a18a91851d4aea895901bc8ce7155a8cf0d405646e8adcf6c18674c",
+        "bytes": 2929
+      }
+    }
+  },
+  "material_obligations": [
+    "Bind the accepted input domain and duplicate-name policy.",
+    "Check property ordering including non-BMP keys.",
+    "Check number serialization and prohibited numeric values.",
+    "Distinguish Unicode preservation from normalization.",
+    "Use controls that can discriminate a plausible wrong implementation.",
+    "Bind any later executed witness to the report and limit its applicability."
+  ],
+  "tool_policy": {
+    "primary_public_browsing": "Same allowed primary-source access; record exact captured bytes/version/locator",
+    "execution": "Existing bounded sandbox.py offline isolated single-process Python only; all case science candidate authored",
+    "sandbox": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/mechanical/sandbox.py",
+    "writes": "Only owned output dir",
+    "excluded": "Othercases/siblinganswers/evaluation/campaignstate/old failed science/credentials/repo/canon/main/WorkNodes; no installs/account or profile changes/children"
+  },
+  "confinement": "Advisory map; no filesystem firewall claim",
+  "arm_preparation_T0": "2026-10-08T01:01:03.369784+00:00",
+  "arm_absolute_deadline": "2026-10-08T01:31:03.369784+00:00",
+  "common_case_deadline": "2026-10-08T01:33:18.885619+00:00"
+}

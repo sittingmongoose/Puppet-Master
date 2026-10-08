@@ -1,0 +1,98 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md",
+  "primary_sources": [
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "gdaltransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "common_untrusted_seed": {
+    "draft.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/draft.md",
+    "fixtures.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/fixtures.json",
+    "sources.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/sources.json"
+  },
+  "outputs": [
+    {
+      "label": "Output1",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/final.md",
+          "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f"
+        },
+        "report.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/report.md",
+          "sha256": "b3614f41c82281e21c1fcb3e4bb9be9f613220d7a44a892063f7f63b0d68f317"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/sources.json",
+          "sha256": "5d2453b7b47d23f1add948d655a796edf6482b42c236f42693cb821e413eab23"
+        },
+        "witness.py": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness.py",
+          "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37"
+        },
+        "witness-input.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness-input.json",
+          "sha256": "1fe06ef6e73bbbf6b5ad0f95ec539e50e69074a661df66b4942124d2159d6c12"
+        },
+        "witness-receipt.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output1/witness-receipt.json",
+          "sha256": "bc8cbabcf80a774b1d37f42784044a6afff8de3fa82181cafa1e64535b778ed9"
+        }
+      }
+    },
+    {
+      "label": "Output2",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/final.md",
+          "sha256": "9c399152a0d6a4167ba2eec6a6ab3cbe245341ad7f38c69bbca5cf6a9d7d85af"
+        },
+        "report.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/report.md",
+          "sha256": "1c21cd9e614d6e8ee2728b921a7c1b8f9e77c42ad061489e144e37c96ba81f67"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/sources.json",
+          "sha256": "0a64e2fb99445f952f52073b230947948af4f0977a801166cf685f91d05cc558"
+        },
+        "witness.py": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness.py",
+          "sha256": "37db1bae9eda1ad5c35d4403ced6bdb7045ff16468e11437814de5b02c099856"
+        },
+        "witness-input.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness-input.json",
+          "sha256": "dde69e394982b670801220f6921ea0f94bba5e2ec007cfc33ab9d46fe49eb25f"
+        },
+        "witness-receipt.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/frozen-inputs/Output2/witness-receipt.json",
+          "sha256": "98f18c3248ab454986814ab3782547230769cd8230012e3e5814ea94e2314e61"
+        }
+      }
+    }
+  ],
+  "scope": [
+    "Bind coefficient order, coordinate units, and pixel-origin convention.",
+    "Separate pixel corners from centers.",
+    "Address rotation/shear rather than assuming north-up.",
+    "State invertibility and numerical tolerance conditions.",
+    "Use independent derivation or trusted-operation controls, not only mutually paired forward/inverse functions.",
+    "Preserve witnessed versus proposed checks and applicability."
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3",
+  "blinding": "Neutral exact byte copies; embedded method/paths may expose method. Do not follow embedded original arm paths. No costs, target grades, winner, parent analysis or other evaluations."
+}

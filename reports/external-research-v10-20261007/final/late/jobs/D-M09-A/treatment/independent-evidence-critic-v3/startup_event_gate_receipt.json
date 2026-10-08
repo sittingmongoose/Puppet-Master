@@ -1,0 +1,18 @@
+{
+  "schema": "ER10_GLM_STARTUP_EVENT_GATE_RECEIPT_V1",
+  "stage": "D-M09-A/treatment/independent-evidence-critic-v3",
+  "observed_at": "2026-10-08T00:19:44.849522+00:00",
+  "registered_taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-evidence-critic-v3",
+  "registered_childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-evidence-critic-v3",
+  "registered_childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-treatment-independent-evidence-critic-v3:ordinal:1",
+  "startup_event_observed": true,
+  "event_item_id": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3A7b494671-25e7-48ce-8a49-f115b2020858%3Aturn%3A1%3Aassistant%3Amessage%3Agoal-1791418761305-7ca9oj",
+  "activity_read_once": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3/startup_activity_once_receipt.json",
+  "activity_receipt_sha256": "04dfc613ef966870b99675f29d2cfa9364efd2543ec41c2fdaf7cce6b23c8629",
+  "native_state_activation_observed": false,
+  "state_nomination": "PENDING_ROOT_EXACT_NOMINATION",
+  "actual_requestedAt": "2026-10-08T00:19:13.721Z",
+  "actual_startedAt": "2026-10-08T00:19:18.439Z",
+  "stage_deadline": "2026-10-08T00:39:13.721000+00:00",
+  "absolute_case_deadline": "2026-10-08T01:45:13.455858+00:00"
+}

@@ -1,0 +1,2434 @@
+{
+  "schema": "independent-source-science-review.v1",
+  "case_id": "D-M16-A",
+  "review_version": "control-v3-first-review",
+  "review_role": "Ordinary fresh advisory reviewer under rootreviewcarrier-v2; not a scored candidate",
+  "overall_grade": "FAIL",
+  "grade_basis": "Full declared material scientific/recommendation source scope was independently assessed, not stopped after a localized defect. Six material defects prevent PASS. This grade does not attest behavior or historical candidate process.",
+  "reviewed_at": "2026-10-07T22:44:30.038338+00:00",
+  "frozen_artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+    "expected_sha256": "979e950faf96c22654f19974be20336aebc1c8a2018b0a131a4491c4ab5359e4",
+    "actual_sha256": "979e950faf96c22654f19974be20336aebc1c8a2018b0a131a4491c4ab5359e4",
+    "match": true,
+    "verified_before_assessment_at": "2026-10-07T22:32:26.661045580Z",
+    "final_reverification_at": "2026-10-07T22:44:30.038338+00:00",
+    "immutable_candidate_bytes_preserved": true
+  },
+  "brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/brief.md",
+    "sha256": "7d15cde85d0b0fbf171f16f4d26aa6f88607ed6c1675eadd3bccd0c2dd42fa28"
+  },
+  "original_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/sources.json",
+    "sha256": "1f021fdcc5f65f2d4e4c91454e2e109952804860a41bb9706d237a02923661a5",
+    "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+    "selected_sources": []
+  },
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+    "sha256": "eebf54e198898a4cdb2c6464e8c222ab0e5b9b7667d32d23c35f8ae0146ed7b3",
+    "authority": "Advisory scope/candidate source bindings; not source truth or filesystem firewall"
+  },
+  "assessment_extent": {
+    "extent": "FULL_DECLARED_MATERIAL_SOURCE_SCIENCE_SCOPE",
+    "unique_mapped_documents": 10,
+    "mapped_source_copies": 23,
+    "mapped_indices": 3,
+    "material_claim_checks": 62,
+    "material_defects": 6,
+    "six_axes_assessed": 6,
+    "all_obligations_assessed": 6,
+    "method": "Entire frozen final inventoried; each consequential fact, condition, recommendation, uncertainty, optional lead and check disposition linked to semantically inspected primary sections, or explicitly identified as unsupported/local inference/historical-unverifiable. All mapped identities/hashes were independently checked. Negative statements were restricted to captured content and lexical results were never treated as semantic proof.",
+    "scientific_unassessed_remainder": [],
+    "not_attested_or_executed": [
+      "Historical candidate discovery, prior-report permissions and actual candidate source operations (excluded process history).",
+      "Original live-response timestamps/headers/status when only body bytes and a selected index claim were supplied.",
+      "Live tile endpoint Range/validator/Retry-After capabilities, browser/renderer behavior, actual quotas, crash safety and network behavior (candidate itself proposes them).",
+      "All unseen external implementations/deployment versions and broader research universe beyond this bounded declared bundle."
+    ],
+    "source_text_extent": [
+      "RFC9111 governing storage/key/age/freshness/stale/validation/directive/application sections and complete-file negative searches.",
+      "RFC5861 complete substantive extension, scope, error/window and security text; primary date/status.",
+      "RFC9110 governing validator/date/conditional/range/206/304/404/410/416/Retry-After sections and relevant whole-byte searches.",
+      "All substantive OSMF policy, rendering-wiki authored text plus raw parser metadata, AWS retry page, Mapbox API page, mod_tile README and leaflet README.",
+      "Slippy naming/provider/coordinate/variant/revision sections and whole-byte searches; unrelated coordinate implementation examples were not executed or audited as algorithms because the candidate makes no algorithm-correctness claim."
+    ]
+  },
+  "topic_dispositions": {
+    "acquisition": {
+      "disposition": "NEEDS_AMENDMENT",
+      "summary": "Whole-tile GET plus completed-tile checkpointing remains useful; optional byte resume needs representation safety and a provider-permission gate. Unknown endpoint capability is correctly retained.",
+      "defect_ids": [
+        "F03",
+        "F04"
+      ]
+    },
+    "refresh": {
+      "disposition": "NEEDS_AMENDMENT",
+      "summary": "Conditional GET is supported; reconcile successful 304 metadata/pruning with shared event consumers and distinguish unconditional request fallback from full conditional 200 payload.",
+      "defect_ids": [
+        "F01"
+      ]
+    },
+    "stale_display": {
+      "disposition": "NEEDS_AMENDMENT",
+      "summary": "A bounded authorized history/display policy is a legitimate option, but blanket offline cache permission and non-404/410 SIE/removal rules are unsupported.",
+      "defect_ids": [
+        "F02",
+        "F05"
+      ]
+    },
+    "retention": {
+      "disposition": "PROVISIONAL_LOCAL_OPTION_WITH_DEFECTS",
+      "summary": "Keep-one/LRU can be a local choice; quota values/admission remain unresolved. Reconcile successful-validation pruning, storage eligibility/provider constraints and remove the false one-day tile precedent.",
+      "defect_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F06"
+      ]
+    }
+  },
+  "six_axis_dispositions": [
+    {
+      "axis": 1,
+      "name": "All required obligations",
+      "disposition": "PARTIAL",
+      "summary": "All six obligations have explicit formal coverage, four separate dispositions and eight clustered findings. Material conditions and the cross-topic 304 invariant prevent substantive full satisfaction.",
+      "claim_check_ids": [
+        "C03",
+        "C10",
+        "C12",
+        "C16",
+        "C20",
+        "C27",
+        "C28",
+        "C43",
+        "C44",
+        "C61"
+      ],
+      "defect_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims and complete release/default/type/unit/path/authority conditions",
+      "disposition": "FAIL",
+      "summary": "All declared material claims were checked against primary scope. Errors include the wiki parser TTL, SIE status scope and omitted stale/provider/resume conditions. Verified distinctions include AWS opt-in/retry-only versus adaptive admission, HTTP seconds/date versus AWS milliseconds, private/shared TTL precedence, strong/weak validators, source namespace and captured revisions.",
+      "claim_check_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21",
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26",
+        "C27",
+        "C28",
+        "C29",
+        "C30",
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35",
+        "C36",
+        "C37",
+        "C38",
+        "C39",
+        "C40",
+        "C41",
+        "C42",
+        "C43",
+        "C44",
+        "C45",
+        "C46",
+        "C47",
+        "C48",
+        "C49",
+        "C50",
+        "C51",
+        "C52",
+        "C53",
+        "C54",
+        "C55",
+        "C56",
+        "C57",
+        "C58",
+        "C59",
+        "C60",
+        "C61",
+        "C62"
+      ],
+      "defect_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Bounded useful discovery, negatives and optional yield",
+      "disposition": "PARTIAL",
+      "summary": "Useful conditional GET, identity namespace, optional Range, retry analogy, heterogeneous TTL, library limits and joined fixtures were discovered. Correct bounded negatives and optional leads are retained. Numeric tile precedent fails; already-mapped 304 freshening was improperly left as an optional lead.",
+      "claim_check_ids": [
+        "C03",
+        "C08",
+        "C23",
+        "C25",
+        "C36",
+        "C37",
+        "C40",
+        "C43",
+        "C58",
+        "C59",
+        "C60"
+      ],
+      "defect_ids": [
+        "F01",
+        "F06"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong rejection, correction and unjustified abstention",
+      "disposition": "FAIL",
+      "summary": "Conservative whole-tile default and rejection of unbounded loops are reasonable; no forced Range adoption or quota value is required. Blanket 404 removal, header-only resume promotion and known SIE-scope abstention are unsupported. The AWS count amendment changes counting method, not source meaning.",
+      "claim_check_ids": [
+        "C05",
+        "C06",
+        "C19",
+        "C44",
+        "C52",
+        "C54",
+        "C55"
+      ],
+      "defect_ids": [
+        "F04",
+        "F05"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Preservation, traceability, uncertainty, options and leads",
+      "disposition": "PARTIAL",
+      "summary": "Topic-specific endpoint and local-policy uncertainties, source identities, findings, provisional options and leads are present. Primary checking corrects RFC5861 date and semantic attribution; display/history, provider fallback and 304 bindings are incomplete. Accepted keep-1/marker versus unresolved depth/UX are treated as provisional proposals, not falsely resolved product choices.",
+      "claim_check_ids": [
+        "C20",
+        "C24",
+        "C26",
+        "C44",
+        "C50",
+        "C51",
+        "C52",
+        "C53",
+        "C58",
+        "C60",
+        "C62"
+      ],
+      "defect_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F05",
+        "F06"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed checks",
+      "disposition": "PARTIAL",
+      "summary": "The candidate clearly labels endpoint probes and behavioral tests unexecuted. Reviewer independently reproduced mapped hashes and lexical results and verified pinned README bindings. Historical candidate operations are not attested by static bytes. Proposed 304/status/Range oracles omit governing conditions; semantic mistakes remain despite matching hashes.",
+      "claim_check_ids": [
+        "C01",
+        "C02",
+        "C06",
+        "C32",
+        "C34",
+        "C35",
+        "C42",
+        "C46",
+        "C48",
+        "C55",
+        "C56",
+        "C57"
+      ],
+      "defect_ids": [
+        "F01",
+        "F02",
+        "F04",
+        "F05",
+        "F06"
+      ]
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "obligation_id": 1,
+      "text": "Give a separate disposition for acquisition and refresh.",
+      "formal_coverage": "PASS",
+      "substantive_disposition": "PARTIAL",
+      "candidate_lines": [
+        7,
+        9
+      ],
+      "claim_check_ids": [
+        "C03",
+        "C11",
+        "C12",
+        "C15"
+      ],
+      "defect_ids": [
+        "F01",
+        "F03",
+        "F04"
+      ]
+    },
+    {
+      "obligation_id": 2,
+      "text": "Give a separate disposition for stale display and retention.",
+      "formal_coverage": "PASS",
+      "substantive_disposition": "PARTIAL",
+      "candidate_lines": [
+        11,
+        13
+      ],
+      "claim_check_ids": [
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21"
+      ],
+      "defect_ids": [
+        "F01",
+        "F02",
+        "F05",
+        "F06"
+      ]
+    },
+    {
+      "obligation_id": 3,
+      "text": "Identify shared identity/freshness dependencies and reuse invalidation.",
+      "formal_coverage": "PASS",
+      "substantive_disposition": "PARTIAL",
+      "candidate_lines": [
+        17,
+        22,
+        28
+      ],
+      "claim_check_ids": [
+        "C25",
+        "C26",
+        "C27",
+        "C28",
+        "C29",
+        "C30",
+        "C31"
+      ],
+      "defect_ids": [
+        "F01",
+        "F04"
+      ]
+    },
+    {
+      "obligation_id": 4,
+      "text": "Preserve topic-specific uncertainties instead of assuming shared evidence settles both.",
+      "formal_coverage": "PASS",
+      "substantive_disposition": "PARTIAL",
+      "candidate_lines": [
+        32,
+        44,
+        48
+      ],
+      "claim_check_ids": [
+        "C44",
+        "C50",
+        "C51",
+        "C52",
+        "C53"
+      ],
+      "defect_ids": [
+        "F05"
+      ]
+    },
+    {
+      "obligation_id": 5,
+      "text": "Return at most eight distinct material findings across the bundle.",
+      "formal_coverage": "PASS",
+      "substantive_disposition": "PASS",
+      "candidate_lines": [
+        19,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "claim_check_ids": [
+        "C61"
+      ],
+      "defect_ids": []
+    },
+    {
+      "obligation_id": 6,
+      "text": "Deliver a bounded topic comparison and discriminating checks, counting shared discovery and synthesis.",
+      "formal_coverage": "PASS",
+      "substantive_disposition": "PARTIAL",
+      "candidate_lines": [
+        30,
+        32,
+        34,
+        36,
+        37,
+        38,
+        39,
+        40,
+        52,
+        56
+      ],
+      "claim_check_ids": [
+        "C32",
+        "C34",
+        "C35",
+        "C39",
+        "C42",
+        "C43",
+        "C45",
+        "C46",
+        "C47",
+        "C48",
+        "C49",
+        "C57",
+        "C61"
+      ],
+      "defect_ids": [
+        "F01",
+        "F02",
+        "F04",
+        "F05"
+      ]
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "id": "C01",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          3,
+          56
+        ]
+      },
+      "claim": "10 unique documents, 14 predecessor source files, all matching",
+      "claim_type": "provenance/fact",
+      "disposition": "PARTLY_SUPPORTED",
+      "source_evidence_ids": [],
+      "assessment": "All mapped hashes match in two independent review passes: 23 mapped source copies plus 3 indices. But the original indices contain 6 and 7 documents, hence 13 predecessor files, not 14. Ten unique documents is correct. No unnamed fourteenth file is evidenced; historical candidate hash execution is not proven by reproduction.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C02",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          3,
+          52
+        ]
+      },
+      "claim": "Every load-bearing claim was re-spot-checked; captures independently discovered and not merged beyond allowed dependency set",
+      "claim_type": "historical execution/provenance",
+      "disposition": "NOT_VERIFIABLE_WITHIN_AUTHORIZED_STATIC_INPUTS",
+      "source_evidence_ids": [],
+      "assessment": "Indices and unchanged bytes cannot prove search independence, actual spot-check execution, predecessor permissions or discovery process. Predecessor reports and histories were deliberately not read. Scientific statements are independently checked below; these process assertions are not accepted as SourcePASS.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C03",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          7,
+          48
+        ]
+      },
+      "claim": "Bounded concurrent whole-tile GET with bundle/region-level resume",
+      "claim_type": "proposal/inference",
+      "disposition": "REASONABLE_CONDITIONAL_PROPOSAL",
+      "source_evidence_ids": [
+        "E10",
+        "E11",
+        "E16"
+      ],
+      "assessment": "Whole GET and checkpointing completed tiles can be a practical default. Bundle-level checkpointing is an inferred design choice, not a promised HTTP bundle endpoint. Actual concurrency, admission limits and persistence are unresolved; provider permission must gate acquisition.",
+      "defect_ids": [
+        "F03",
+        "F04"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C04",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          7
+        ]
+      },
+      "claim": "Raster tiles are approximately 10–40 KB",
+      "claim_type": "empirical fact",
+      "disposition": "UNSUPPORTED",
+      "source_evidence_ids": [
+        "E19",
+        "E20"
+      ],
+      "assessment": "No mapped primary documents or measurements establish this size distribution or universal range. Pixel dimensions and compression formats do not establish transferred bytes. The fallback can be justified by unverified Range support without presenting this number as observed.",
+      "defect_ids": [
+        "F04"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C05",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          7,
+          23,
+          60
+        ]
+      },
+      "claim": "Range resumability is optional and disabled until support is probed",
+      "claim_type": "fact/proposal",
+      "disposition": "SUPPORTED_WITH_MISSING_SAFETY_CONDITIONS",
+      "source_evidence_ids": [
+        "E10",
+        "E11"
+      ],
+      "assessment": "Optionality is correct. A header or successful 206 probe is insufficient for future safe resume; representation identity, validator strength, Content-Range, coding and allowed 200 fallback must be retained.",
+      "defect_ids": [
+        "F04"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C06",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          23
+        ]
+      },
+      "claim": "Accept-Ranges probe gates resume, with 206/416 assertions on a bundle URL",
+      "claim_type": "proposed check",
+      "disposition": "INCOMPLETE_DISCRIMINATOR",
+      "source_evidence_ids": [
+        "E10",
+        "E11"
+      ],
+      "assessment": "Accept-Ranges is advisory, not necessary or sufficient. 416 is not resume success and 200 may be legitimate. No captured provider bundle URL exists. A declared test fixture can test these branches, but this probe cannot certify byte-safe resume.",
+      "defect_ids": [
+        "F04"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C07",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          7,
+          9,
+          24
+        ]
+      },
+      "claim": "Honor Retry-After and back off on 429/503",
+      "claim_type": "fact/proposal",
+      "disposition": "SUPPORTED_CONDITIONAL",
+      "source_evidence_ids": [
+        "E12",
+        "E24"
+      ],
+      "assessment": "Parse date or nonnegative seconds when present; neither status guarantees the header. Local backoff applies when absent/invalid. RFC 9110 supports 503 timing and RFC 6585 supplies the 429 condition. No endpoint values were observed.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C08",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          7,
+          24
+        ]
+      },
+      "claim": "AWS supplies token quota, exponential backoff and jitter precedent",
+      "claim_type": "engineering analogy",
+      "disposition": "SUPPORTED_SCOPED_ANALOGY",
+      "source_evidence_ids": [
+        "E18"
+      ],
+      "assessment": "The mechanisms occur in the primary page. This is an analogy, not direct AWS integration or an HTTP requirement. Its opt-in/default applicability, retry-only quota and client scope must not silently become general initial-request admission guarantees.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C09",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          24
+        ]
+      },
+      "claim": "The quota halts the acquisition queue",
+      "claim_type": "proposal/inference",
+      "disposition": "CONDITIONAL_NOT_ESTABLISHED_BY_AWS",
+      "source_evidence_ids": [
+        "E18"
+      ],
+      "assessment": "A custom queue admission bucket may be chosen, but standard AWS retry quota only prevents retries and never blocks initial requests. The proposed staged check must distinguish initial work from retry work. No executed queue-halting evidence exists.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C10",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          7,
+          24,
+          60
+        ]
+      },
+      "claim": "OSMF identification, no bulk downloading and cache compliance bound acquisition",
+      "claim_type": "provider condition",
+      "disposition": "INCOMPLETE",
+      "source_evidence_ids": [
+        "E14",
+        "E15",
+        "E16"
+      ],
+      "assessment": "True conditions are retained in part. The task is offline bundle/region acquisition; policy requires excluding this provider for that feature, not merely bounded rates and app identity. No numeric OSMF rate rule makes prohibited prefetch permissible.",
+      "defect_ids": [
+        "F03"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C11",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          9,
+          21
+        ]
+      },
+      "claim": "ETag/If-None-Match preferred, If-Modified-Since fallback with one-second resolution",
+      "claim_type": "fact/proposal",
+      "disposition": "SUPPORTED",
+      "source_evidence_ids": [
+        "E06",
+        "E09"
+      ],
+      "assessment": "Valid general conditional-refresh mechanism. If both validators are present, sending both is normally appropriate; ETag takes evaluation precedence. Last-Modified weakness and nonmonotonic restoration must not become a byte/revision-order guarantee.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C12",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          9,
+          21,
+          37
+        ]
+      },
+      "claim": "304 freshens without content payload",
+      "claim_type": "fact",
+      "disposition": "SUPPORTED",
+      "source_evidence_ids": [
+        "E03",
+        "E09"
+      ],
+      "assessment": "Correct for a suitably matched complete stored response; 304 has no content. Metadata, age and freshness may change even when pixels do not. Counting content bytes is distinct from zero total network traffic.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C13",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          9,
+          17,
+          28,
+          38
+        ]
+      },
+      "claim": "200 replaces entry/validators and demotes old version",
+      "claim_type": "fact/proposal",
+      "disposition": "SUPPORTED_CONDITIONAL_LOCAL_SYNTHESIS",
+      "source_evidence_ids": [
+        "E02",
+        "E06",
+        "E07"
+      ],
+      "assessment": "Full 200 response can replace the nominated cached representation, subject to storage eligibility. Demotion, atomic transaction and next-render switching are local proposals, not RFC mandates or executed behavior. Replacement need not imply newly changed bytes.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C14",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          9
+        ]
+      },
+      "claim": "Full re-download only if no validator was captured",
+      "claim_type": "fact/proposal",
+      "disposition": "AMBIGUOUS",
+      "source_evidence_ids": [
+        "E06",
+        "E09"
+      ],
+      "assessment": "Sound if it means an unconditional GET fallback when validators are absent. False if it forbids a full payload after a conditional request: changed representations can return 200 despite stored validators. Adjacent 200 replacement suggests the charitable unconditional-request interpretation; not a separate finding.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C15",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          9,
+          17
+        ]
+      },
+      "claim": "Refresh outcome feeds display/retention rather than fetch scheduling",
+      "claim_type": "proposal/inference",
+      "disposition": "REASONABLE_PROPOSAL",
+      "source_evidence_ids": [
+        "E03",
+        "E07"
+      ],
+      "assessment": "An event boundary can coordinate the two topics. It does not remove refresh scheduling or freshness metadata duties and requires correct 304 handling.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C16",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          11,
+          25
+        ]
+      },
+      "claim": "Bounded SWR is standards-based but windows are client policy because extensions are informational/absent from RFC 9111",
+      "claim_type": "fact/inference",
+      "disposition": "OVERGENERALIZED",
+      "source_evidence_ids": [
+        "E05",
+        "E07",
+        "E08",
+        "E23"
+      ],
+      "assessment": "Informational status and absence of literal definitions do not make server-chosen directive windows arbitrary client overrides. SWR requires appropriate permission/scope, or an explicitly separate application policy. Client-selected UX limits can coexist with those conditions.",
+      "defect_ids": [
+        "F02"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C17",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          11,
+          25,
+          36,
+          48
+        ]
+      },
+      "claim": "Show stored tiles whenever offline with an as-of marker; stale use is bounded",
+      "claim_type": "proposal/inference",
+      "disposition": "UNBOUNDED_OR_UNSPECIFIED_EXCEPTION",
+      "source_evidence_ids": [
+        "E05",
+        "E07",
+        "E08"
+      ],
+      "assessment": "The offline branch states no age cap and overrides the stated bounded branch. A visible history view may be legitimate under §6, but the candidate cites §4.2.4 for a blanket guarantee and does not define that separate contract. Marker alone does not establish content generation time or remove HTTP cache restrictions.",
+      "defect_ids": [
+        "F02"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C18",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          11
+        ]
+      },
+      "claim": "Any revalidation failure except 404/410 continues SIE display",
+      "claim_type": "fact/proposal",
+      "disposition": "INCORRECT_RFC_SCOPE",
+      "source_evidence_ids": [
+        "E05",
+        "E08"
+      ],
+      "assessment": "RFC 5861 defines error situations producing 500/502/503/504, not every other 4xx/5xx. Retained upper staleness bound and permission matter. A broader local history fallback is a separate policy requiring explicit classification, not RFC SIE.",
+      "defect_ids": [
+        "F05"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C19",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          11,
+          39
+        ]
+      },
+      "claim": "Definitive 404/410 means removed tile; refresh terminates entry and display stops",
+      "claim_type": "fact/proposal",
+      "disposition": "OVERGENERALIZED_WRONG_REJECTION",
+      "source_evidence_ids": [
+        "E13",
+        "E20"
+      ],
+      "assessment": "Stopping display can be an explicit conservative local option; generic 404 is not evidence of definitive removal, and Mapbox documents processing/unpublished 404s. 410 is stronger but still does not require deleting archives. Line 39 applies unconditional status-only termination.",
+      "defect_ids": [
+        "F05"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C20",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          13,
+          48
+        ]
+      },
+      "claim": "Keep exactly one superseded rollback version until next successful revalidation",
+      "claim_type": "proposal/inference",
+      "disposition": "REASONABLE_OPTION_WITH_INTERNAL_CONTRADICTION",
+      "source_evidence_ids": [
+        "E03",
+        "E07"
+      ],
+      "assessment": "Local rollback depth needs policy justification but is not prohibited by HTTP simply because it is unsourced. A successful 304 is revalidation, yet the declared 304 no-op prevents the stated pruning event. Keep-1 and depth-unresolved labels must be understood as provisional.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C21",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          13,
+          27,
+          40
+        ]
+      },
+      "claim": "Quota with LRU eviction, superseded entries first and in-flight entries protected",
+      "claim_type": "proposal/inference",
+      "disposition": "USEFUL_CONDITIONAL_OPTION",
+      "source_evidence_ids": [
+        "E02",
+        "E07",
+        "E11"
+      ],
+      "assessment": "A quota/LRU proposal is local, not proven library behavior. Protecting partial work is useful, but a hard cap also needs admission/reservation or cancellation rules when protected entries fill it. Values and hard-cap completion remain unresolved, as the candidate says.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C22",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          13,
+          27,
+          44,
+          60
+        ]
+      },
+      "claim": "No normative HTTP storage bound; no captured source bounds retention",
+      "claim_type": "negative result",
+      "disposition": "SUPPORTED_ONLY_AS_NUMERIC_POLICY_NEGATIVE",
+      "source_evidence_ids": [
+        "E02",
+        "E07",
+        "E21",
+        "E22"
+      ],
+      "assessment": "No required keep-N/age/quota number was found in the cited documents. Broadly saying nothing in HTTP governs retention loses storage eligibility/no-store restrictions and application-versus-cache boundaries.",
+      "defect_ids": [
+        "F02"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C23",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          13,
+          56
+        ]
+      },
+      "claim": "mod_tile expiry:86400 is a one-day numeric precedent, verified twice",
+      "claim_type": "fact/provenance",
+      "disposition": "MISATTRIBUTED_SUBJECT",
+      "source_evidence_ids": [
+        "E17",
+        "E21"
+      ],
+      "assessment": "86400 seconds equals one day, and two raw byte matches exist. Both belong to MediaWiki page/parser caching, not tile expiry or mod_tile. The semantic precedent is absent.",
+      "defect_ids": [
+        "F06"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C24",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          13,
+          27
+        ]
+      },
+      "claim": "OSMF at-least-seven-days floor binds OSMF endpoints",
+      "claim_type": "provider condition",
+      "disposition": "MISSING_FALLBACK_CONDITION",
+      "source_evidence_ids": [
+        "E15",
+        "E16"
+      ],
+      "assessment": "It is a fallback when cache headers cannot be read, not a universal seven-day minimum alongside readable server headers. It concerns allowed local cache revisits, not permission to acquire offline bundles.",
+      "defect_ids": [
+        "F03"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C25",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          17,
+          22,
+          44
+        ]
+      },
+      "claim": "Slippy z/x/y identifies placement without content version",
+      "claim_type": "fact/inference",
+      "disposition": "SUPPORTED_SUFFIX_SCOPE",
+      "source_evidence_ids": [
+        "E01",
+        "E19",
+        "E20"
+      ],
+      "assessment": "True of bare coordinate suffix, not of a complete provider URL that may include tileset/revision information. Do not generalize the negative to every URI or provider revision scheme.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C26",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          17,
+          22
+        ]
+      },
+      "claim": "Identity must carry layer/style/revision and validators",
+      "claim_type": "proposal/inference",
+      "disposition": "USEFUL_BUT_NOT_COMPLETE_PROTOCOL_KEY",
+      "source_evidence_ids": [
+        "E01",
+        "E09",
+        "E19",
+        "E20"
+      ],
+      "assessment": "Useful namespace separation. Provider/target URI, representation format/@2x and Vary are also relevant conditions. Opaque validators must remain associated with their resource/representation; a separately known ordered revision is not guaranteed. This is a proposal, not an authored universal key schema.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C27",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          17
+        ]
+      },
+      "claim": "Refresh writes freshness state read by display/retention",
+      "claim_type": "proposal/inference",
+      "disposition": "SUPPORTED_ARCHITECTURAL_DEPENDENCY",
+      "source_evidence_ids": [
+        "E03",
+        "E04",
+        "E07"
+      ],
+      "assessment": "Shared metadata is a real cross-topic dependency. Display may read updated freshness without moving bytes; this is the distinction lost by unconditional 304 untouched assertions.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C28",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          17,
+          28,
+          37
+        ]
+      },
+      "claim": "304 leaves display and retention untouched; no-op for both",
+      "claim_type": "fact/proposal",
+      "disposition": "MATERIALLY_INCONSISTENT",
+      "source_evidence_ids": [
+        "E03",
+        "E04",
+        "E07"
+      ],
+      "assessment": "Pixels may remain identical; freshness/permission metadata cannot generally be untouched. The local retention rule also expires the rollback slot at the next successful revalidation. A fixture asserting an unrestricted no-op can certify the wrong cross-topic invariant.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C29",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          17,
+          28,
+          38
+        ]
+      },
+      "claim": "200 atomically swaps at next render and demotes old version",
+      "claim_type": "proposal/inference",
+      "disposition": "USEFUL_UNEXECUTED_SYNTHESIS",
+      "source_evidence_ids": [
+        "E06",
+        "E07"
+      ],
+      "assessment": "An application transaction is a reasonable local choice. Standards support response replacement, not a demonstrated renderer transaction, rollback slot or crash-safety result. These remain fixture proposals.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C30",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          17,
+          36
+        ]
+      },
+      "claim": "Display/retention are read-only consumers and display path makes no network attempt",
+      "claim_type": "proposal/inference",
+      "disposition": "REASONABLE_SEPARATION",
+      "source_evidence_ids": [
+        "E07",
+        "E08"
+      ],
+      "assessment": "Network scheduling can belong to refresh while display consumes state. SWR background refresh must still be coordinated outside the renderer; this does not contradict SWR if interpreted as ownership separation.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C31",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          17,
+          36
+        ]
+      },
+      "claim": "Mid-refresh link loss is both a resume/backoff and stale-display event",
+      "claim_type": "proposal/inference",
+      "disposition": "USEFUL_CONDITIONAL_SHARED_CHECK",
+      "source_evidence_ids": [
+        "E05",
+        "E10",
+        "E11"
+      ],
+      "assessment": "The joined scenario is useful. Whole-tile checkpoint retry and partial byte resume differ, and display eligibility remains conditional. No actual link-loss run was performed.",
+      "defect_ids": [
+        "F02",
+        "F04"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C32",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          21
+        ]
+      },
+      "claim": "Conditional re-request should assert 304 and unchanged body hash",
+      "claim_type": "proposed check",
+      "disposition": "USEFUL_NARROW_FIXTURE_NOT_GENERAL_PROOF",
+      "source_evidence_ids": [
+        "E03",
+        "E09"
+      ],
+      "assessment": "For a controlled unchanged representation this tests payload reuse. Live requests can legitimately return 200; weak ETag matching does not prove current server byte identity. This test alone misses changed metadata and retention decisions.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C33",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          22
+        ]
+      },
+      "claim": "Style switch at identical coordinates should not cross-hit",
+      "claim_type": "proposed check",
+      "disposition": "USEFUL_UNEXECUTED",
+      "source_evidence_ids": [
+        "E01",
+        "E19",
+        "E20"
+      ],
+      "assessment": "Good cross-topic identity discriminator. Source/tileset/format/resolution/Vary variants are additional relevant conditions; the proposed single style test is not complete cache-key validation.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C34",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          24
+        ]
+      },
+      "claim": "Staged 429/503 should honor waiting and quota halting",
+      "claim_type": "proposed check",
+      "disposition": "USEFUL_WITH_SCOPE_QUALIFICATIONS",
+      "source_evidence_ids": [
+        "E12",
+        "E18",
+        "E24"
+      ],
+      "assessment": "Specify absent/invalid Retry-After, date-versus-seconds, retry budget versus admission limit and resource scope. AWS custom millisecond header semantics must not be substituted for standard Retry-After. No such test was executed.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C35",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          25
+        ]
+      },
+      "claim": "Offline render marker and reconnect refetch test bounds stale behavior",
+      "claim_type": "proposed check",
+      "disposition": "INSUFFICIENT_FOR_DECLARED_BOUND",
+      "source_evidence_ids": [
+        "E05",
+        "E07",
+        "E08"
+      ],
+      "assessment": "It tests a positive fallback path, not window expiry, prohibiting directives, persistent offline age or authorized application history behavior.",
+      "defect_ids": [
+        "F02"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C36",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          26
+        ]
+      },
+      "claim": "Mapbox 12h browser/device versus 5min CDN TTL",
+      "claim_type": "fact",
+      "disposition": "SUPPORTED_VALUES_SCOPED",
+      "source_evidence_ids": [
+        "E04",
+        "E20"
+      ],
+      "assessment": "Actual defaults are max-age=43200 seconds and s-maxage=300 seconds. Captured wording says device rather than browser. The browser-exact-phrase claim is false but the tier values are correct. Backend and composite conditions must not be treated as direct freshness guarantees.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C37",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          26
+        ]
+      },
+      "claim": "mod_tile computes expiry per tile using a deployment-specific heuristic",
+      "claim_type": "fact/inference",
+      "disposition": "SUPPORTED",
+      "source_evidence_ids": [
+        "E21"
+      ],
+      "assessment": "README says it estimates next rendering and emits configurable HTTP expiry headers. Detailed source algorithm and deployments were not captured; no one-day number follows.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C38",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          26,
+          48
+        ]
+      },
+      "claim": "Reject fixed global TTL; adopt stricter client-facing TTL",
+      "claim_type": "proposal/inference",
+      "disposition": "CONDITIONAL_AND_AMBIGUOUS",
+      "source_evidence_ids": [
+        "E04",
+        "E20",
+        "E21"
+      ],
+      "assessment": "Use the applicable per-response private/shared directive and corrected Age, not automatically the smaller of device/CDN numbers. No explicit instruction to use 300 seconds in a private viewer appears, so do not invent that stronger wrong claim. A global local upper bound may still be a design option if scoped and permitted.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C39",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          26
+        ]
+      },
+      "claim": "Compare Cache-Control/Expires across tiles/regions",
+      "claim_type": "proposed check",
+      "disposition": "USEFUL_UNEXECUTED",
+      "source_evidence_ids": [
+        "E04",
+        "E20",
+        "E21"
+      ],
+      "assessment": "Useful endpoint-specific discovery, with cache class, Age, request variants, backend/CDN and composite conditions. It establishes observations for a capture, not a permanent provider-wide law.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C40",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          27
+        ]
+      },
+      "claim": "leaflet.offline supplies storage mechanics, not stale/retention policy",
+      "claim_type": "negative result",
+      "disposition": "SUPPORTED_README_SCOPE",
+      "source_evidence_ids": [
+        "E22"
+      ],
+      "assessment": "Offline availability and idb storage intent are supported. The README does not demonstrate implementation eviction mechanics or rule out undocumented implementation behavior. Candidate correctly leaves internals as uncaptured.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C41",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          27
+        ]
+      },
+      "claim": "Store-aging test should evict superseded versions without deleting in-flight work",
+      "claim_type": "proposed check",
+      "disposition": "USEFUL_UNEXECUTED",
+      "source_evidence_ids": [
+        "E02",
+        "E07",
+        "E11"
+      ],
+      "assessment": "Useful for a future chosen quota/rollback contract. The test cannot establish real storage bounds without filled protected capacity and admission rules; no implementation was run.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C42",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          28
+        ]
+      },
+      "claim": "304/200 fixtures establish one-transaction display plus retention invariants",
+      "claim_type": "proposed check",
+      "disposition": "INCORRECT_304_EXPECTATION",
+      "source_evidence_ids": [
+        "E03",
+        "E04"
+      ],
+      "assessment": "200 fixture is useful; the published 304 no-op oracle must separate unchanged payload from updated metadata and successful-validation pruning.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C43",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          32
+        ]
+      },
+      "claim": "Topic 1 is byte movement and topic 2 is display/storage; shared discoveries include 1,2,8 and negative",
+      "claim_type": "comparison/synthesis",
+      "disposition": "SUPPORTED_BOUNDED_STRUCTURE",
+      "source_evidence_ids": [
+        "E01",
+        "E03",
+        "E07",
+        "E23"
+      ],
+      "assessment": "Both topics are compared, shared discovery is acknowledged, and finding 8 is labeled synthesis rather than an executed mechanism. These are eight explicit clustered findings, within the material-finding limit.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C44",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          32,
+          44
+        ]
+      },
+      "claim": "Topic-1 open items need probes; topic-2 open items are only constants settled by decision",
+      "claim_type": "inference/uncertainty classification",
+      "disposition": "TOO_ABSOLUTE",
+      "source_evidence_ids": [
+        "E05",
+        "E08",
+        "E13",
+        "E18",
+        "E20"
+      ],
+      "assessment": "Both topics have empirical/protocol and policy elements. Acquisition bounds are policy choices; stale eligibility/error scope and actual headers depend on primary contracts and endpoint evidence. SIE standard scope is knowable from the captured RFC, even if a broader application option is undecided.",
+      "defect_ids": [
+        "F05"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C45",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          36
+        ]
+      },
+      "claim": "Cross-topic link-kill avoids duplicate work and sends no display-path request",
+      "claim_type": "proposed check",
+      "disposition": "USEFUL_UNEXECUTED",
+      "source_evidence_ids": [
+        "E07",
+        "E10",
+        "E11"
+      ],
+      "assessment": "A meaningful future test of ownership and resume granularity. None of the bytes establish actual deduplication or no-network renderer behavior.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C46",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          37
+        ]
+      },
+      "claim": "304 has zero payload bytes and unchanged display/retention",
+      "claim_type": "proposed check",
+      "disposition": "MIXED_TRUE_PAYLOAD_AND_WRONG_STATE_ORACLE",
+      "source_evidence_ids": [
+        "E03",
+        "E09"
+      ],
+      "assessment": "Zero content is correct. Unchanged pixels need not mean unchanged freshness/display state or retained rollback count.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C47",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          38
+        ]
+      },
+      "claim": "200 new content completion swaps and demotes atomically",
+      "claim_type": "proposed check",
+      "disposition": "USEFUL_UNEXECUTED",
+      "source_evidence_ids": [
+        "E06",
+        "E07"
+      ],
+      "assessment": "Good explicit new-content fixture; completion and application transaction are to be measured, not inferred from a hash or source citation.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C48",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          39
+        ]
+      },
+      "claim": "404/410 ends refresh entry and stale display, unlike SIE",
+      "claim_type": "proposed check",
+      "disposition": "WRONG_UNCONDITIONAL_STATUS_ORACLE",
+      "source_evidence_ids": [
+        "E08",
+        "E13",
+        "E20"
+      ],
+      "assessment": "Separating SIE statuses is useful; permanent-removal behavior requires provider/local-contract evidence, particularly for 404.",
+      "defect_ids": [
+        "F05"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C49",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          40
+        ]
+      },
+      "claim": "Quota eviction must skip partial/in-flight acquisitions",
+      "claim_type": "proposed check",
+      "disposition": "USEFUL_UNEXECUTED",
+      "source_evidence_ids": [
+        "E02",
+        "E11"
+      ],
+      "assessment": "Protecting resumable work is a local invariant. A hard bound additionally needs reservation/admission/full-store handling. No observed behavior claimed.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C50",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          44,
+          48
+        ]
+      },
+      "claim": "ETag availability, Range support and Retry-After values remain unknown",
+      "claim_type": "uncertainty",
+      "disposition": "APPROPRIATELY_PRESERVED",
+      "source_evidence_ids": [
+        "E09",
+        "E10",
+        "E12",
+        "E24"
+      ],
+      "assessment": "No live tile endpoint capability calls were made. Standards describe possibilities, not availability of these fields on the chosen provider.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C51",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          44,
+          48
+        ]
+      },
+      "claim": "Window/quota constants, rollback value/depth and UX marker remain unknown",
+      "claim_type": "uncertainty/options",
+      "disposition": "APPROPRIATELY_PRESERVED_WITH_PROVISIONAL_LABELS",
+      "source_evidence_ids": [
+        "E07",
+        "E08",
+        "E22"
+      ],
+      "assessment": "These are local choices. Keep-1 and marker can be provisional recommendations, but Accepted must not be confused with settled constants or proven need. The offline branch still needs an explicit upper age policy.",
+      "defect_ids": [
+        "F02"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C52",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          44
+        ]
+      },
+      "claim": "Whether SIE governs non-404/410 failures remains unknown",
+      "claim_type": "uncertainty",
+      "disposition": "KNOWN_STANDARD_CONDITION_MISCLASSIFIED",
+      "source_evidence_ids": [
+        "E08"
+      ],
+      "assessment": "The captured RFC settles its own status scope. What remains open is whether the application intentionally offers a differently scoped fallback, under a separate permission/UX contract.",
+      "defect_ids": [
+        "F05"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C53",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          44
+        ]
+      },
+      "claim": "Newer-version existence is unverifiable offline",
+      "claim_type": "uncertainty/inference",
+      "disposition": "REASONABLE_IN_THIS_INPUT_NOT_UNIVERSAL",
+      "source_evidence_ids": [
+        "E09",
+        "E19"
+      ],
+      "assessment": "Absent a previously captured authoritative revision/update manifest, a disconnected viewer cannot learn unseen origin state. A stored external newer-version notice could alter this; no such input is present. ETag is not a sortable newer-version number.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C54",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          48
+        ]
+      },
+      "claim": "Reject unbounded loops, default per-tile Range, unbounded stale/retention and fixed global TTL",
+      "claim_type": "disposition/proposal",
+      "disposition": "LARGELY_JUSTIFIED_CONDITIONAL_DEFAULTS",
+      "source_evidence_ids": [
+        "E04",
+        "E08",
+        "E10",
+        "E18"
+      ],
+      "assessment": "Avoiding unbounded behavior and choosing conservative defaults is useful. Optional Range was preserved, not universally rejected. A universal ban on global local TTL caps is not source-mandated; candidate can choose this option. Claimed rejection of unbounded stale use conflicts with its whenever-offline branch.",
+      "defect_ids": [
+        "F02"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C55",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          48
+        ]
+      },
+      "claim": "AWS retry-quota count corrected from 17 to 15 case-insensitive",
+      "claim_type": "lexical/provenance",
+      "disposition": "COUNT_METHOD_DIFFERENCE_NOT_SEMANTIC_CORRECTION",
+      "source_evidence_ids": [
+        "E18"
+      ],
+      "assessment": "Raw bytes contain 17 case-insensitive occurrences on 15 matching lines. Both counts are reproducible with different methods. Treating this as repaired primary meaning is unjustified, but it is not a distinct material science defect.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C56",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          56
+        ]
+      },
+      "claim": "Executed hash and keyword spot-checks certify primary checking",
+      "claim_type": "execution/provenance",
+      "disposition": "REPRODUCIBLE_COUNTS_NOT_SEMANTIC_VALIDATION",
+      "source_evidence_ids": [
+        "E17",
+        "E20",
+        "E21",
+        "E23"
+      ],
+      "assessment": "RFC negatives and most grep-c matching-line counts reproduce. Mapbox browser exact phrase does not occur (device does); 86400 is parser metadata; ETag/Expires/Last-Modified capture contexts are absent from cited vendor/README bytes. Actual candidate execution remains unproven and cannot rescue semantic errors.",
+      "defect_ids": [
+        "F06"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C57",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          56
+        ]
+      },
+      "claim": "Live probes and behavioral tests were proposed, not executed",
+      "claim_type": "execution distinction",
+      "disposition": "CLEAR_AND_APPROPRIATELY_LIMITED",
+      "source_evidence_ids": [],
+      "assessment": "Frozen final explicitly labels all endpoint probes and behavior checks unexecuted. Reviewer ran only document retrieval/hash/text/metadata checks. No empirical implementation pass is inferred from these proposals.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C58",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          60
+        ]
+      },
+      "claim": "No literal SWR/SIE in RFC 9111; no source embeds revision in bare coordinate identity",
+      "claim_type": "bounded negative",
+      "disposition": "SUPPORTED_WITH_SUFFIX_SCOPE",
+      "source_evidence_ids": [
+        "E19",
+        "E20",
+        "E23"
+      ],
+      "assessment": "Good bounded negatives. RFC references extension authority; complete provider URLs and validators can distinguish representations, so the identity negative is restricted to bare coordinate naming.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C59",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          60
+        ]
+      },
+      "claim": "Tile disk usage is redirect rev3082592; leaflet README has no stale/retention policy",
+      "claim_type": "bounded negative",
+      "disposition": "SUPPORTED",
+      "source_evidence_ids": [
+        "E17",
+        "E22"
+      ],
+      "assessment": "Both bounded document facts hold. The redirect does not preserve the asserted tile-expiry precedent.",
+      "defect_ids": [
+        "F06"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C60",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          60
+        ]
+      },
+      "claim": "Optional leads: implementation expiry, CDN behavior, freshening details, measured TTLs, fixture viewer",
+      "claim_type": "optional discovery",
+      "disposition": "USEFUL_WITH_ONE_REQUIRED_NOT_OPTIONAL",
+      "source_evidence_ids": [
+        "E03",
+        "E04",
+        "E20",
+        "E21"
+      ],
+      "assessment": "The bounded unpursued leads are sensible. RFC 9111 §4.3.4 is already mapped and governing for an accepted 304 policy; leaving it optional loses a required condition, not an unknown source.",
+      "defect_ids": [
+        "F01"
+      ],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C61",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          3,
+          19,
+          32,
+          52
+        ]
+      },
+      "claim": "At most eight findings and counting shared discovery/synthesis",
+      "claim_type": "obligation",
+      "disposition": "FORMALLY_SATISFIED",
+      "source_evidence_ids": [],
+      "assessment": "Eight numbered findings plus bounded synthesis are present. Frozen final is approximately 1434 whitespace-delimited words; 1100 is a soft ceiling, so length alone is not a defect. Independence and process-cost assertions are not independently verifiable from allowed inputs; no cost/winner judgment was made.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    },
+    {
+      "id": "C62",
+      "candidate_locator": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "physical_lines": [
+          3,
+          56
+        ]
+      },
+      "claim": "Source versions and capture conditions are accurate",
+      "claim_type": "version/provenance",
+      "disposition": "PARTLY_SUPPORTED",
+      "source_evidence_ids": [
+        "E08",
+        "E17",
+        "E18",
+        "E19",
+        "E20",
+        "E21",
+        "E22"
+      ],
+      "assessment": "RFC 9110/9111 dates and README commit bindings verified. RFC 5861 April 2011 is wrong; May 2010 primary header wins. AWS opt-in condition omitted from index description; it matters if concrete defaults are borrowed. Slippy revision 3043027 is recoverable from bytes. Historical HTTP status/time/Last-Modified claims are not validated by body hashes. RFC9111 §5.5 is Warning, not revalidation. These limits are preserved without assuming other reports supplied missing evidence.",
+      "defect_ids": [],
+      "executed_by_reviewer": "Static primary-byte/condition assessment; no behavior test unless explicitly listed."
+    }
+  ],
+  "source_registry": [
+    {
+      "id": "S01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "verified_version": "RFC 9111, Standards Track, June 2022",
+      "authority": "IETF HTTP caching standard",
+      "limits": "Generic HTTP cache, not a tile provider contract. Section 6 permits distinct application history behavior; this qualification was included in review.",
+      "candidate_metadata": {
+        "file": "rfc9111.txt",
+        "title": "HTTP Caching (RFC 9111)",
+        "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+        "version": "RFC 9111, Standards Track, June 2022",
+        "capture": "2026-10-07T21:27:34Z (topic1 arm)",
+        "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)",
+        "limits": "Generic HTTP cache semantics, not tile-specific; stale-while-revalidate/stale-if-error ABSENT (verified x0); no eviction/quota guidance.",
+        "reused_from": "topic1_independent-v3 + topic2_independent-v3 (byte-identical, sha match)",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9111.txt.review-text.txt"
+    },
+    {
+      "id": "S02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "verified_version": "RFC 5861, Informational, May 2010",
+      "authority": "Independent informational RFC",
+      "limits": "Captured primary header contradicts April 2011 in topic-1/join indices. SWR response scope, SIE request/response scope and staleness seconds matter.",
+      "candidate_metadata": {
+        "file": "rfc5861.txt",
+        "title": "HTTP Cache-Control Extensions for Stale Content (RFC 5861)",
+        "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+        "version": "RFC 5861, Informational, April 2011",
+        "capture": "2026-10-07T21:27:34Z (topic1 arm)",
+        "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+        "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified",
+        "limits": "Informational; server-chosen window sizes with no recommended bounds; cache-side stale serving, not an offline viewer retention/identity scheme; no acquisition/resume semantics.",
+        "reused_from": "topic1_independent-v3 + topic2_independent-v3 (byte-identical, sha match)",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc5861.txt.review-text.txt"
+    },
+    {
+      "id": "S03",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "verified_version": "RFC 9110, Standards Track, June 2022",
+      "authority": "IETF HTTP semantics standard",
+      "limits": "No tile size, provider permission, acquisition queue or retention policy is specified.",
+      "candidate_metadata": {
+        "file": "rfc9110.txt",
+        "title": "HTTP Semantics (RFC 9110)",
+        "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+        "version": "RFC 9110, Standards Track, June 2022",
+        "capture": "2026-10-07T21:27:34Z (topic1 arm)",
+        "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416",
+        "limits": "Semantics only: validators, conditional GET, byte ranges, Retry-After (single value); no backoff algorithm, no cache policy, no retention bounds.",
+        "reused_from": "topic1_independent-v3",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9110.txt.review-text.txt"
+    },
+    {
+      "id": "S04",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "verified_version": "Undated OSMF page in frozen capture",
+      "authority": "First-party provider usage policy",
+      "limits": "Applies to Standard raster tiles at tile.openstreetmap.org, not every OSM-derived provider. Historical Last-Modified and acquisition timestamp are index claims; original HTTP headers are not supplied.",
+      "candidate_metadata": {
+        "file": "osmf-tile-policy.html",
+        "title": "OSMF Tile Usage Policy",
+        "url": "https://operations.osmfoundation.org/policies/tiles/",
+        "version": "Live OSMF operations page, undated HTML; topic2 arm recorded Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+        "capture": "2026-10-07T21:27:35Z (topic1 arm)",
+        "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+        "locator": "Sections: Quick summary; 3.2 Caching; 4 Prohibited: bulk downloading/'scraping' and offline use (grep 'bulk download' x4 verified); single 'If-Modified-Since' mention (x1 verified)",
+        "limits": "Service usage policy for the osm.org endpoint, not a client design spec; constrains bulk download and requires valid HTTP caching; sets no client display-staleness or retention rules; no revision metadata in page.",
+        "reused_from": "topic1_independent-v3 + topic2_independent-v3 (byte-identical, sha match)",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osmf-tile-policy.html.review-text.txt"
+    },
+    {
+      "id": "S05",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html",
+      "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "bytes": 24578,
+      "verified_version": "Servers/Tile Rendering, revision 3082592; body edited 2026-09-22",
+      "authority": "Community-maintained server documentation",
+      "limits": "Redirect from Tile_disk_usage is verified. Parser-cache metadata must not be interpreted as tile expiry configuration. Additional revision fetch returned 403.",
+      "candidate_metadata": {
+        "file": "osm-wiki-tile-disk-usage.html",
+        "title": "OSM Wiki: Servers/Tile Rendering incl. Tile disk usage",
+        "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+        "version": "MediaWiki page, wgCurRevisionId 3082592 at capture",
+        "capture": "2026-10-07T21:27:35Z (topic1 arm)",
+        "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+        "locator": "'Tile disk usage' section; mod_tile expiry config examples 'expiry: false' and 'expiry: 86400' (86400 x2 verified)",
+        "limits": "Community wiki, non-normative; disk/expiry discussion is illustrative server config, not client policy; no client acquisition or display-staleness guidance.",
+        "reused_from": "topic1_independent-v3",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osm-wiki-tile-disk-usage.html.review-text.txt"
+    },
+    {
+      "id": "S06",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html",
+      "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "bytes": 63037,
+      "verified_version": "Frozen latest SDK reference; explicitly describes opt-in 2026 behavior",
+      "authority": "First-party AWS SDK reference, engineering analogy",
+      "limits": "AWS_NEW_RETRIES_2026=true is required for the described behavior until default adoption. Concrete SDK applicability and defaults vary; retry quota and adaptive admission limiter differ.",
+      "candidate_metadata": {
+        "file": "aws-sdk-retry-behavior.html",
+        "title": "AWS SDKs and Tools Reference: Retry behavior",
+        "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+        "version": "Live 'latest' SDK reference page, undated HTML",
+        "capture": "2026-10-07T21:27:34Z (topic1 arm)",
+        "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+        "locator": "Standard mode (exponential backoff + jitter) and Adaptive mode; retry-quota token bucket guards repeated failures (grep: 'retry quota' x15, 'token bucket' x5 verified case-insensitive)",
+        "limits": "Vendor SDK engineering precedent, not an HTTP standard; no map/tile specifics; page undated. Amended count vs topic1 index (17): my case-insensitive grep finds 15.",
+        "reused_from": "topic1_independent-v3",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/aws-sdk-retry-behavior.html.review-text.txt"
+    },
+    {
+      "id": "S07",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-slippy-tilenames.html",
+      "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "bytes": 333283,
+      "verified_version": "Slippy_map_tilenames, revision 3043027; body edited 2026-05-26",
+      "authority": "Community documentation of naming convention",
+      "limits": "Not an HTTP freshness or retention standard. HTTP Last-Modified claimed in index is not a content revision identifier.",
+      "candidate_metadata": {
+        "file": "osm-wiki-slippy-tilenames.html",
+        "title": "OSM Wiki: Slippy map tilenames",
+        "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+        "version": "OSM community wiki; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+        "capture": "2026-10-07T21:44Z (topic2 arm)",
+        "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+        "locator": "z/x/y tile coordinate scheme and zoom resolution table (grep 'z/x/y' x1 verified); Tile Servers section — the shared tile-identity scheme for both topics",
+        "limits": "Community wiki, can change without notice; identity/numbering only — no freshness, staleness display, or retention semantics; 333 KB HTML with MediaWiki chrome.",
+        "reused_from": "topic2_independent-v3",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-slippy-tilenames.html"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osm-wiki-slippy-tilenames.html.review-text.txt"
+    },
+    {
+      "id": "S08",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html",
+      "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "bytes": 57884,
+      "verified_version": "Undated vendor Raster Tiles API page; current public re-fetch byte-identical",
+      "authority": "First-party Mapbox API documentation",
+      "limits": "Provider/API-specific default headers; device versus shared/CDN cache scope and backend delay are retained. Account/token requirements exist; no live API calls were made.",
+      "candidate_metadata": {
+        "file": "mapbox-raster-tiles-api.html",
+        "title": "Mapbox Raster Tiles API docs",
+        "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+        "version": "Mapbox vendor docs, undated page",
+        "capture": "2026-10-07T21:44Z (topic2 arm)",
+        "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+        "locator": "Caching section: 'browser cache TTL of 12 hours and a CDN cache TTL of 5 minutes' (exact phrase verified by grep); ETag/conditional revalidation context",
+        "limits": "Vendor docs for a commercial provider; documents server-set cache headers, not client offline retention or stale-display policy; static fetch may miss JS-rendered parts; site chrome included.",
+        "reused_from": "topic2_independent-v3",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mapbox-raster-tiles-api.html.review-text.txt"
+    },
+    {
+      "id": "S09",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+      "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "bytes": 9248,
+      "verified_version": "mod_tile commit 962775a7d4234fc31d31b54239385ecc72ab19df; committer 2026-08-21T17:23:55Z",
+      "authority": "First-party server README",
+      "limits": "Pinned README bytes and commit metadata verified independently; no implementation code executed or inspected. No Expires/Last-Modified field names or 86400 constant occur in this README.",
+      "candidate_metadata": {
+        "file": "mod_tile-README.rst",
+        "title": "openstreetmap/mod_tile README",
+        "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+        "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+        "capture": "2026-10-07T21:44Z (topic2 arm)",
+        "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+        "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior",
+        "limits": "Server-side renderer README; server behavior only, not client storage/retention; per-zoom expiry config lives in other mod_tile docs not captured.",
+        "reused_from": "topic2_independent-v3",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod_tile-README.rst.review-text.txt"
+    },
+    {
+      "id": "S10",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "bytes": 1970,
+      "verified_version": "leaflet.offline commit 842d8935f9640e5e7889301324857e756437dd90; committer 2026-08-09T17:33:51Z",
+      "authority": "First-party library README",
+      "limits": "Pinned README and commit metadata verified independently. idb dependency demonstrates storage intent, not eviction, staleness or version policy.",
+      "candidate_metadata": {
+        "file": "leaflet-offline-README.md",
+        "title": "allartk/leaflet.offline README",
+        "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+        "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+        "capture": "2026-10-07T21:44Z (topic2 arm)",
+        "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+        "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)",
+        "limits": "Small README; proves an offline layer stores tiles in browser storage but specifies no stale-display, version, or retention/eviction policy; API internals not captured.",
+        "reused_from": "topic2_independent-v3",
+        "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md"
+      },
+      "candidate_metadata_is_authoritative": false,
+      "review_projection": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-README.md.review-text.txt"
+    }
+  ],
+  "source_evidence": [
+    {
+      "id": "E01",
+      "source_id": "S01",
+      "primary_locator": "§2, physical lines 251–262; §4.1 lines 526–579",
+      "stated_source_facts": "Cache selection uses method and target URI at minimum, plus request fields selected by Vary. Vary:* cannot match. Validators alone are not a global source namespace.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E02",
+      "source_id": "S01",
+      "primary_locator": "§3 lines 282–336; §5.2.2.5 lines 1295–1313",
+      "stated_source_facts": "HTTP cache storage eligibility includes no-store, private/shared and Authorization restrictions. There is no general numeric keep-N, quota or eviction-age prescription. The must-understand exception is qualified, not a general no-store bypass.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E03",
+      "source_id": "S01",
+      "primary_locator": "§3.2 lines 369–414; §4.3.4 lines 951–988",
+      "stated_source_facts": "A suitable 304 selects stored responses by request and validator matching and requires updating their header fields, subject to §3.2 exceptions. Unchanged payload is not unchanged freshness metadata.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E04",
+      "source_id": "S01",
+      "primary_locator": "§4.2 lines 581–650; §4.2.1 lines 652–684; §4.2.3 lines 719–782",
+      "stated_source_facts": "Freshness compares lifetime to corrected current age. Shared s-maxage takes precedence only for shared caches; otherwise max-age precedes Expires. Age includes prior cache residency and transit. Freshness does not itself force display reload.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E05",
+      "source_id": "S01",
+      "primary_locator": "§4.2.4 lines 784–799; §5.2.2.2 lines 1222–1244; §5.2.2.4 lines 1258–1293",
+      "stated_source_facts": "Disconnect does not override explicit stale-use prohibitions. Unqualified no-cache requires successful validation; must-revalidate forbids disconnected stale reuse. Applicable shared-cache directives also matter. Explicitly defined cache extensions can modify base behavior, but arbitrary local windows are not automatically such authorization.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E06",
+      "source_id": "S01",
+      "primary_locator": "§4.3.1 lines 812–864; §4.3.3 lines 930–949",
+      "stated_source_facts": "Validation sends relevant supplied entity tags and normally Last-Modified when applicable. A full content response must satisfy the request and is storable only subject to §3. 5xx fallback remains subject to stale-use restrictions.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E07",
+      "source_id": "S01",
+      "primary_locator": "§6 lines 1536–1568; §4.2 lines 647–650",
+      "stated_source_facts": "Application history and redisplay of already retrieved data need not follow all HTTP cache rules. The distinction must be explicit; hidden application caches are encouraged to respect directives. The RFC supplies no application rollback-slot or UX-marker mandate.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E08",
+      "source_id": "S02",
+      "primary_locator": "Header lines 7–30; §3 lines 104–157; §4 lines 159–190; example lines 192–237",
+      "stated_source_facts": "RFC 5861 is Informational, May 2010. SWR is a response directive with a seconds window after staleness; it recommends asynchronous validation and ending stale use when its window expires absent other information. SIE can be a request or response directive, has an upper staleness bound in seconds, and defines error situations yielding 500, 502, 503 or 504.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E09",
+      "source_id": "S03",
+      "primary_locator": "§8.8.1 lines 3393–3478; §8.8.2.2 lines 3528–3568; §8.8.3 lines 3570–3653; §13.1.2–3 lines 5872–6021",
+      "stated_source_facts": "ETags are opaque, resource-specific validators, possibly weak; they do not encode a universally ordered revision. If-None-Match uses weak comparison and takes precedence over If-Modified-Since. HTTP dates have second resolution and Last-Modified can be weak. GET/HEAD validators can lead to 304, without establishing byte identity for a weak validator.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E10",
+      "source_id": "S03",
+      "primary_locator": "§13.1.5 lines 6109–6180; §14.2 lines 6467–6542; §14.3 lines 6544–6584",
+      "stated_source_facts": "Range is optional and may be ignored. Accept-Ranges is advisory: absence does not forbid a request and presence does not guarantee future partial responses. If-Range needs a strong entity tag or qualified strong date; mismatch results in a full representation rather than combining an old prefix with new bytes.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E11",
+      "source_id": "S03",
+      "primary_locator": "§14.1.2 lines 6384–6465; §14.4 lines 6586–6652; §15.3.7 lines 7066–7228; §15.5.17 lines 7755–7784",
+      "stated_source_facts": "Ranges address the encoded byte sequence. Clients must inspect Content-Type/Content-Range; invalid or unknown ranges must not be recombined. Partial pieces require the same strong validator. 200 is an allowed fallback; 416 can provide current length and does not prove successful resume.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E12",
+      "source_id": "S03",
+      "primary_locator": "§10.2.3 lines 4799–4824",
+      "stated_source_facts": "Retry-After is an HTTP-date or nonnegative delay in seconds; with 503 it expresses expected unavailability. It defines no jitter algorithm or token budget.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E13",
+      "source_id": "S03",
+      "primary_locator": "§15.5.5 lines 7587–7599; §15.5.11 lines 7667–7688",
+      "stated_source_facts": "404 does not establish whether absence is temporary or permanent, and can conceal a representation. 410 indicates likely permanent unavailability. Neither status mandates an application erase its archival copy.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E14",
+      "source_id": "S04",
+      "primary_locator": "§3.1/3.4; primary physical lines around 114–166; review projection lines 43–71",
+      "stated_source_facts": "Native applications must identify themselves with a stable distinct User-Agent rather than a library default. Web traffic must preserve Referer; attribution and correct HTTPS endpoint requirements also apply.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E15",
+      "source_id": "S04",
+      "primary_locator": "§3.2, primary physical lines 129–136; review projection lines 52–57",
+      "stated_source_facts": "Cache according to server headers; the at-least-seven-days fallback applies if the client cannot read them. Maintain sufficient local caching, use conditional requests on expiry, and do not send cache-bypassing headers by default.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E16",
+      "source_id": "S04",
+      "primary_locator": "§4 primary physical lines 168–194, especially line 180 / byte 12974; §9; review projection lines 72–86 and 108–111",
+      "stated_source_facts": "Pre-emptive acquisition beyond actively viewed tiles and offline-download features are prohibited for tile.openstreetmap.org. Offline maps should use self-hosting or a provider explicitly permitting offline/prefetch. Ordinary cached revisits are listed as permitted. Scope is Standard raster tiles, not every OSM layer.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E17",
+      "source_id": "S05",
+      "primary_locator": "Raw HTML lines 81–98 (NewPP limit report), especially 84–85; line 362 parser-cache report; wgCurRevisionId at line 6; review projection lines 1–38",
+      "stated_source_facts": "The 86400 and false values belong to MediaWiki parser caching. There is no mod_tile name or tile-expiry config in the captured document. The authored page describes tile rendering infrastructure and redirects from Tile_disk_usage to Servers/Tile_Rendering revision 3082592. Seconds-to-day arithmetic is correct but applied to the wrong subject.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E18",
+      "source_id": "S06",
+      "primary_locator": "Primary opt-in notice line 47; review projection lines 5–8, 43–70, 83–128, 282–338",
+      "stated_source_facts": "Described 2026 behavior is opt-in. Standard mode uses exponential backoff with jitter and retry-token quota; that quota never blocks initial requests. Adaptive mode adds a client-scoped limiter that may block initial requests and can affect other resources. Defaults and quota scope vary; generic default attempts are 3, DynamoDB 4. AWS x-amz-retry-after uses milliseconds and a clamp, unlike standard HTTP Retry-After seconds/date.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E19",
+      "source_id": "S07",
+      "primary_locator": "Naming introduction/Tile servers; review projection lines 93–139, 287–300; raw wgCurRevisionId line 6",
+      "stated_source_facts": "Slippy coordinates describe zoom and geographic placement; server/style prefix matters, and 256/512-pixel variants exist. The coordinate suffix does not encode content revision. Captured content revision is 3043027.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E20",
+      "source_id": "S08",
+      "primary_locator": "Retrieve raster tiles, Response, Restrictions and limits; review projection lines 39–85; raw HTML Cache-Control at physical line 21 / byte 41454",
+      "stated_source_facts": "The path includes tileset ID, zoom/x/y, optional @2x and output format. Default headers are max-age=43200,s-maxage=300: 12 hours device cache, 5 minutes shared/CDN cache. There can be another 5 minutes backend caching; composite requests take the highest s-maxage. The captured page has neither ETag nor conditional-revalidation wording. Provider 404 examples include unpublished or processing tilesets.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E21",
+      "source_id": "S09",
+      "primary_locator": "README physical lines 182–232, especially 210–214",
+      "stated_source_facts": "mod_tile requests rendering for expired tiles and adds HTTP cache expiry headers based on a configurable heuristic. It uses tileset/style paths and server storage mechanics. The README specifies no one-day value, client stale-display or rollback retention rule.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E22",
+      "source_id": "S10",
+      "primary_locator": "README physical lines 7–14 and 55–61",
+      "stated_source_facts": "leaflet.offline offers offline availability in browser/HTML mobile/PWA use and depends on idb to store tiles. The complete small README specifies no expiry, rollback, version or eviction contract and defers API docs to generation.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E23",
+      "source_id": "S01",
+      "primary_locator": "Complete byte search; sources/lexical-checks.json",
+      "stated_source_facts": "Neither stale-while-revalidate nor stale-if-error occurs literally in RFC 9111, although §4.2.4 references RFC 5861. The negative establishes no definition in this text, not an absence of HTTP extension authority.",
+      "basis": "Reviewer semantic inspection of hash-bound primary bytes; projections are aids, not independent authorities."
+    },
+    {
+      "id": "E24",
+      "source_id": "SUPPLEMENT-RFC6585",
+      "primary_locator": "RFC 6585 §4, physical lines 132–165 in review sources/rfc6585.txt",
+      "stated_source_facts": "429 MAY include Retry-After; it is not guaranteed. 429 responses must not be stored by a cache. The RFC does not fix provider rate-limit scope.",
+      "url": "https://www.rfc-editor.org/rfc/rfc6585.txt",
+      "sha256": "f6d55d1b491cd515c35827cf9181753b23b2a68c4df14e56d83dc445b3876e58",
+      "version": "Standards Track, April 2012"
+    }
+  ],
+  "defects": [
+    {
+      "id": "F01",
+      "title": "304 payload reuse is turned into an incorrect shared-state no-op",
+      "severity": "high",
+      "candidate_lines": [
+        9,
+        13,
+        17,
+        28,
+        37,
+        60
+      ],
+      "claim_check_ids": [
+        "C12",
+        "C15",
+        "C20",
+        "C27",
+        "C28",
+        "C32",
+        "C42",
+        "C46",
+        "C60"
+      ],
+      "source_evidence_ids": [
+        "E03",
+        "E04",
+        "E07",
+        "E09"
+      ],
+      "defect_identity": "The cross-topic revalidation event and its published test oracle conflate unchanged content with unchanged freshness/retention state.",
+      "source_facts": "A suitable 304 freshens a stored response and updates provided headers. Freshness age is measured from generation/validation. The RFC does not mandate an application rollback slot.",
+      "materiality": "Both topics read the shared freshness state; stale eligibility or validators can change with no payload. The local keep-one-until-next-successful-revalidation rule also contradicts retention untouched on a successful 304. The proposed fixture would approve this inconsistency.",
+      "inference": "Leaving pixels/body unchanged is valid; metadata and any dependent state are not generally a no-op. Pruning follows the candidate’s chosen rule, not an invented HTTP retention mandate.",
+      "limiting_counterargument": "The earlier refresh disposition correctly says 304 freshens, and “display” could narrowly mean pixels. The finding concerns the unqualified no-op for both consumers, the explicit retention contradiction, and the missing metadata fixture; it does not claim every 304 must repaint.",
+      "discriminating_check": "A matched 304 with changed Date/Cache-Control/Expires and an existing rollback slot must reuse content, update eligible metadata/age, recompute display eligibility, and apply whichever successful-validation pruning rule is actually selected."
+    },
+    {
+      "id": "F02",
+      "title": "Blanket offline fallback loses HTTP-cache versus application-history conditions and an age bound",
+      "severity": "high",
+      "candidate_lines": [
+        11,
+        13,
+        25,
+        36,
+        44,
+        48,
+        60
+      ],
+      "claim_check_ids": [
+        "C16",
+        "C17",
+        "C22",
+        "C31",
+        "C35",
+        "C51",
+        "C54"
+      ],
+      "source_evidence_ids": [
+        "E02",
+        "E05",
+        "E07",
+        "E08",
+        "E23"
+      ],
+      "defect_identity": "The accepted bounded stale policy cites disconnected cache permission as an unconditional offline display permission and treats extension absence/status as client control over directive semantics.",
+      "source_facts": "RFC 9111 forbids disconnected stale cache reuse under applicable explicit prohibitions. RFC 5861 carries seconds windows and directive scope. RFC 9111 §6 separately allows applications/history to redisplay already retrieved data beyond HTTP freshness. HTTP cache storage eligibility still exists despite absence of numeric retention quotas.",
+      "materiality": "“Whenever offline” supplies no expiry branch and conflicts with rejecting unbounded stale use. A marker and named policy constants do not define which store is a conforming cache, what permissions apply, or when old pixels stop being displayed.",
+      "inference": "A permitted local archival/history view is a legitimate option. The defect is failing to name that contract and retaining a false blanket standards justification, not a universal ban on offline display.",
+      "limiting_counterargument": "Because §6 permits distinct application redisplay, cache MUST rules cannot automatically be imposed on every rendered image. The reviewer explicitly preserves this option and does not force one UI policy or window value.",
+      "discriminating_check": "Separate ordinary HTTP-cache reuse from an authorized user-visible history view. Test no-cache/must-revalidate/no-store, presence/absence and expiry of SWR/SIE permission, corrected Age, offline age-cap expiry, and the chosen history exception."
+    },
+    {
+      "id": "F03",
+      "title": "Provider policy is reduced to rates/identity while offline exclusion and seven-day fallback are omitted",
+      "severity": "high",
+      "candidate_lines": [
+        7,
+        13,
+        24,
+        27,
+        60
+      ],
+      "claim_check_ids": [
+        "C03",
+        "C10",
+        "C24"
+      ],
+      "source_evidence_ids": [
+        "E14",
+        "E15",
+        "E16"
+      ],
+      "defect_identity": "The source-specific acquisition disposition omits the provider eligibility gate for this offline bundle/region use case and generalizes a conditional caching floor.",
+      "source_facts": "OSMF Standard raster service prohibits offline/prefetch/bulk acquisition beyond actively viewed tiles; it points offline users to self-hosting or explicitly permissive providers. Seven days is a fallback only when cache headers cannot be read. Permitted normal cached revisits are distinct.",
+      "materiality": "A small, slow or quota-bounded offline download remains prohibited at that endpoint. Applying seven days unconditionally also loses server-header freshness conditions. These are governing conditions of the chosen primary policy.",
+      "inference": "For this acquisition feature the OSMF endpoint must be excluded or the feature restricted to the policy’s permitted interactive/cache-revisit use. Other providers may permit offline bundles under their own terms.",
+      "limiting_counterargument": "The final declares no selected live provider. This is a missing conditional source/provider disposition, not proof that an actual forbidden download occurred and not rejection of the generic offline viewer.",
+      "discriminating_check": "An offline-area request using tile.openstreetmap.org must fail the provider-permission gate. An explicitly permissive/self-hosted provider remains an option. Readable Cache-Control/Expires follow their rules; only header-unreadable OSM caching takes the seven-day fallback."
+    },
+    {
+      "id": "F04",
+      "title": "Resume support probes omit the representation binding needed for safe cross-version byte resume",
+      "severity": "high",
+      "candidate_lines": [
+        7,
+        23,
+        36,
+        60
+      ],
+      "claim_check_ids": [
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C31"
+      ],
+      "source_evidence_ids": [
+        "E09",
+        "E10",
+        "E11"
+      ],
+      "defect_identity": "Range capability is used as the enablement gate for resumability without the governing strong-validator, encoded-range and response-branch conditions.",
+      "source_facts": "Accept-Ranges is advisory; servers may return 200 despite it. Partial pieces may only be combined with the same strong validator. If-Range must not use a weak ETag; Content-Range and content coding/length matter. 416 is an error/length signal, not successful resume.",
+      "materiality": "The topic explicitly shares changing tile versions. Resuming an old prefix against a newer suffix can corrupt the tile even if 206 support was demonstrated. The suggested 206/416-only oracle misses valid 200 fallback and representation changes. The 10–40 KB rationale has no captured measurement.",
+      "inference": "Whole-tile retry with completed-tile/region checkpointing remains a sound conservative option. An optional byte-resume route must retain representation binding; no full application plan or numerical optimization threshold is required.",
+      "limiting_counterargument": "The candidate correctly disables default per-tile Range and leaves live support unresolved. This finding targets the conditions under which its proposed optional branch would be promoted, not a demand to implement Range now.",
+      "discriminating_check": "Drop a transfer, change origin version, then request the remainder. Strong If-Range/representation binding must select safe full replacement or compatible partial data; validate Content-Range/coding/length and include 200, 206 and 416 cases. Keep checkpointed whole-tile acquisition distinct from an unsupported bundle API."
+    },
+    {
+      "id": "F05",
+      "title": "Status-only rules broaden SIE and overstate 404 removal",
+      "severity": "high",
+      "candidate_lines": [
+        11,
+        25,
+        32,
+        39,
+        44,
+        48
+      ],
+      "claim_check_ids": [
+        "C18",
+        "C19",
+        "C44",
+        "C48",
+        "C52"
+      ],
+      "source_evidence_ids": [
+        "E05",
+        "E08",
+        "E13",
+        "E20"
+      ],
+      "defect_identity": "The bundle maps all non-404/410 failures to SIE while mapping any 404 to definitive removal and leaving already-defined RFC error scope as an unknown.",
+      "source_facts": "RFC 5861’s defined error situations yield 500/502/503/504 and have a staleness bound. RFC 9110 says 404 may be temporary or undisclosed, while 410 indicates likely permanence. Mapbox documents 404 while a tileset is unpublished/processing.",
+      "materiality": "The default can continue display for unrelated authorization/request failures and terminate an otherwise useful cached tile on temporary 404. Its status fixture locks in these wrong classifications; “SIE scope unresolved” obscures a condition already in the captured source.",
+      "inference": "A conservative local stop-on-404 policy is permitted as a choice, and a broader local archival fallback may be chosen separately. Neither should be presented as RFC-defined removal or SIE behavior. Permanent deletion/retention requires a declared local/provider contract.",
+      "limiting_counterargument": "The disposition uses the word definitive, which can be a provider-specific qualification. The cross-topic test and broader non-404/410 rule omit that qualifier; no provider evidence making every 404 definitive was supplied.",
+      "discriminating_check": "Distinguish 500/502/503/504, network failure, 401/403, 429, temporary/processing 404 and a provider-confirmed removal/410. Assert the chosen independent display, retry and retention responses plus SIE age/permission bounds."
+    },
+    {
+      "id": "F06",
+      "title": "A MediaWiki parser-cache TTL is attributed to mod_tile expiry",
+      "severity": "medium",
+      "candidate_lines": [
+        13,
+        56,
+        60
+      ],
+      "claim_check_ids": [
+        "C23",
+        "C56",
+        "C59"
+      ],
+      "source_evidence_ids": [
+        "E17",
+        "E21"
+      ],
+      "defect_identity": "Keyword presence is promoted into a tile-specific numeric precedent despite a different subject and authority layer.",
+      "source_facts": "The captured rendering-wiki HTML places Cache expiry:86400 and Reduced expiry:false inside the NewPP parser-cache report; its other 86400 occurrence is parser-cache metadata. The page contains no mod_tile name. The mod_tile README supplies configurable expiry heuristics but no one-day value.",
+      "materiality": "The sole asserted numeric tile precedent for retention is absent. This is a consequential source-attribution error even though the final also says quotas are unresolved and the precedent is nonnormative. Hashes and grep counts cannot establish this semantic claim.",
+      "inference": "86400 seconds equals one day, but the fact concerns caching the wiki page. The correct bounded negative is that these captured documents supply no tile one-day retention precedent.",
+      "limiting_counterargument": "No chosen quota directly derives from the number. Severity is therefore medium rather than claiming a demonstrated shipped quota failure.",
+      "discriminating_check": "Bind each numeric value to its surrounding authored/configuration subject and authority. The parser comment and metadata must be rejected as tile-policy evidence; any later actual mod_tile config capture needs its own version and locator."
+    }
+  ],
+  "nonmaterial_provenance_observations": [
+    {
+      "id": "P01",
+      "type": "file-count provenance",
+      "material": false,
+      "finding": "13 mapped predecessor documents (6+7), not 14. Ten unique is correct. Unnamed fourteenth file and historical execution cannot be verified."
+    },
+    {
+      "id": "P02",
+      "type": "counting method",
+      "material": false,
+      "finding": "Most quoted counts are matching-line counts, not occurrence counts. AWS retry quota has 17 occurrences on 15 lines; RFC9111 max-stale 10 occurrences on 9 lines; RFC5861 each directive 10 on 9; mod_tile expir 3 on 2; leaflet offline 11 on 8 and idb 3 on 2. Exact audit is retained separately."
+    },
+    {
+      "id": "P03",
+      "type": "date/locator precision",
+      "material": false,
+      "finding": "RFC5861 primary says May 2010, not April 2011. RFC9111 §5.5 is Warning, not validation. Captured slippy revision is 3043027; quoted HTTP Last-Modified is not a proven content revision date."
+    },
+    {
+      "id": "P04",
+      "type": "untrusted source-index context",
+      "material": false,
+      "finding": "Mapbox says device, not the asserted exact browser phrase; its captured body has no ETag or conditional wording. mod_tile README has no literal Expires or Last-Modified field names. General validator recommendations remain supported by RFC sources."
+    },
+    {
+      "id": "P05",
+      "type": "historical capture limits",
+      "material": false,
+      "finding": "Body hashes prove mapped bytes, not original request status/time, response headers, independence of searches, earlier reports’ permissions, or that the candidate executed its claimed checks. Those statements remain provenance limits; excluded histories were not opened."
+    }
+  ],
+  "blinding_scope_provenance_limits": [
+    "Method/arm labels control, independent-topic capture paths, fresh_bundle_join_final-v3 and the final reuse narrative were visible. Full method blinding was impossible. Qualitative reuse-cost prose was visible in the required frozen final but no cost/winner/speed comparison was assessed.",
+    "Only the original brief/empty manifest, INPUT_MAP, mapped source bytes/indices and this hash-exact frozen final were read as experiment inputs. No predecessor report, draft, other arm/case, helper, campaign history, timing, grade, parent analysis, previous review or feedback was consulted.",
+    "Current-thread lifecycle metadata only was read to recover requestedAt, with zero timeline items returned. No conversation history was read. No Goal, delegation, candidate receipt or callback engineering was used.",
+    "Static primary bytes and bounded public primary GETs were assessed. No tile endpoint capability test, viewer behavioral test, downloaded project execution, installation, purchase, account, global configuration, repository/canon or third-party write occurred.",
+    "Two initial GitHub commit-detail metadata requests incidentally returned embedded file-diff fields. They were not inspected, used or executed; the raw bodies were removed and replaced by metadata-only git/commits responses. This incidental acquisition is disclosed rather than claiming perfectly byte-limited retrieval.",
+    "Pinned README public captures and Mapbox current bytes match the frozen copies. Wiki oldid supplementary fetch failed with HTTP403 and supplies no independent authored-content corroboration; the frozen primary HTML still establishes its own parser-metadata context.",
+    "Captured live-document metadata has no durable publication version; historical transport/capture claims cannot be proven from body bytes. Current reads do not retrospectively attest original requests. Community wiki and vendor docs do not acquire RFC or cross-provider authority.",
+    "M14 authored-set semantic/projection/preservation audit is not applicable: this original brief is D-M16-A and declares no M14 authored set or mapped preservation views. Review-generated HTML text projections are inspection aids bound to source hashes, not additional candidate preservation artifacts.",
+    "Direct supplementary RFC9111, RFC5861, OSMF and AWS document GETs at 2026-10-07T22:43:47Z were byte-identical to the frozen captures; their URLs, versions, locators, hashes and limits are retained in the public capture index. No new scientific finding or source scope was added during artifact validation."
+  ],
+  "deadline": {
+    "t3_requested_at": "2026-10-07T22:32:16.883Z",
+    "supplied_deadline": "2026-10-07T22:51:56.080801+00:00",
+    "requested_at_plus_20_minutes": "2026-10-07T22:52:16.883000+00:00",
+    "effective_deadline": "2026-10-07T22:51:56.080801+00:00",
+    "expired_during_substantive_review": false,
+    "post_expiry_substance": false
+  },
+  "pending_children": [],
+  "no_cost_or_winner_judgment": true,
+  "supporting_artifacts": {
+    "mapped_integrity": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/integrity.json",
+    "lexical_checks": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/lexical-checks.json",
+    "exact_primary_byte_locators": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/exact-locators.json",
+    "public_capture_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+    "source_operation_log": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+    "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/timings.json",
+    "native_counters": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/native_counters.json",
+    "web_open_result": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/web-primary-open-result.json"
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "schema": "ER10_M09_FIRST_CONTROL_ONLY_FULL_SOURCE_REVIEW_FREEZE_V1",
+  "case": "D-M09-A",
+  "review_code": "J1",
+  "verdict": "FullSourceFAIL",
+  "declared_scope": "COMPLETE_ALL_SIX_OBLIGATIONS_AND_SIX_AXES",
+  "judgment_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/J1/judgment.md",
+  "judgment_sha256": "3f2ca32f7b6d7d0cc0f4583dc8f9c425a2bed246dbd5e1fb578f5ca897010225",
+  "judgment_bytes": 23084,
+  "checks_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/J1/checks.json",
+  "checks_sha256": "8e0896310eb18760b4dbd9feefc44f2957d7bba6850eda371c6141913a09d184",
+  "checks_bytes": 10805,
+  "input_map_sha256": "bd52172968461b97a85b83e373651911ce821a805bf75648c7e634319f7a4334",
+  "assignment_sha256": "2fcf39717989a3f44ada136865555397f242e704f50fc86cca2845663c3b2aa0",
+  "actual_taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-v3-review-J1",
+  "actual_config_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/J1/exact_dispatch_request.json",
+  "requestedAt": "2026-10-08T00:42:48.679Z",
+  "startedAt": "2026-10-08T00:42:49.567Z",
+  "completedAt": "2026-10-08T00:49:45.435Z",
+  "dispatch_to_delivery_seconds": 416.756,
+  "ceiling_seconds": 1200,
+  "within_original_ceiling": true,
+  "quiet": true,
+  "settled": true,
+  "native_reviewer_Goal_required": false,
+  "source_operations": [
+    {
+      "id": "C1",
+      "operation": "Read exact INPUT_MAP; enumerate allowed files.",
+      "observed_utc": "2026-10-08T00:42:57Z"
+    },
+    {
+      "id": "C2",
+      "operation": "Hash all 9 scientific inputs; fully read brief, manifest, predecessor, frozen final and both authored intermediates.",
+      "time_range_utc": [
+        "2026-10-08T00:42:57Z",
+        "2026-10-08T00:43:20Z"
+      ],
+      "result": "9/9 hashes match; method-specific paths and embedded operational metadata limit blinding."
+    },
+    {
+      "id": "C3",
+      "operation": "Read frozen primary corpus; recover truncated output with numbered rereads: S1 substantive 143-505, S2 substantive 120-335, S3 complete 1-767.",
+      "time_range_utc": [
+        "2026-10-08T00:42:57Z",
+        "2026-10-08T00:44:07Z"
+      ],
+      "result": "Full declared source-claim coverage; navigation/markup excluded from scientific evidence."
+    },
+    {
+      "id": "C4",
+      "operation": "web.run open release pager.c, release btree.c and official corruption docs; raw HTTP retrieval/hash and focused excerpts; pager rereads recovered truncation.",
+      "time_range_utc": [
+        "2026-10-08T00:43:20Z",
+        "2026-10-08T00:44:07Z"
+      ],
+      "result": "Source-transaction, in-memory restart, page setter, extended-result and rename conditions checked."
+    },
+    {
+      "id": "C5",
+      "operation": "Raw current-master backup.c retrieval/hash; focused source-write, step-latching and finish comparison.",
+      "observed_utc": "2026-10-08T00:44:24Z",
+      "result": "Selected mechanism agrees; historical candidate capture and immutable master commit unknown."
+    },
+    {
+      "id": "C6",
+      "operation": "web.run open official WAL docs; raw capture/hash; persistent-state excerpts and fixed-reader end-mark locators.",
+      "time_range_utc": [
+        "2026-10-08T00:44:54Z",
+        "2026-10-08T00:48:15Z"
+      ],
+      "result": "WAL snapshot and movement conditions checked; repeated hash unchanged."
+    },
+    {
+      "id": "C7",
+      "operation": "Assess 6 brief obligations, P1-P8/optional lead, F1-F8/governing conditions/unresolved content, intermediate preservation and T1-T6.",
+      "time_range_utc": [
+        "2026-10-08T00:42:57Z",
+        "2026-10-08T00:47:37Z"
+      ],
+      "result": "D1 completion/abandonment, D2 existing-source transaction, D3 progress refresh/zero denominator, D4 rename conditions, D5 supported-content preservation; valid amendments retained."
+    },
+    {
+      "id": "C8",
+      "operation": "Count final whitespace words and material findings.",
+      "observed_utc": "2026-10-08T00:45:21Z",
+      "result": {
+        "words": 1098,
+        "findings": 8
+      }
+    },
+    {
+      "id": "C9",
+      "operation": "Write judgment; rehash all 9 frozen inputs; verify exactly six assessment axes.",
+      "observed_utc": "2026-10-08T00:48:31.727797+00:00",
+      "result": "Inputs unchanged; six axes present."
+    },
+    {
+      "id": "C10",
+      "operation": "Parse saved checks.json; verify judgment hash, six axes, nine matching declared hashes and output byte sizes.",
+      "observed_utc": "2026-10-08T00:49:41.260301+00:00",
+      "result": "PASS for artifact integrity; scientific verdict remains FullSourceFAIL."
+    }
+  ],
+  "additional_primary_sources": [
+    {
+      "id": "A1",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/pager.c",
+      "version": "version-3.51.3",
+      "retrieved_at_utc": "2026-10-08T00:43:42.152792Z",
+      "sha256": "5ef7135d2d67ba7f2be6da0197854788ece57bccd2a743f6f1a5f33c94e8ce7b",
+      "bytes": 302918,
+      "raw_lines": 7830,
+      "locators": [
+        [
+          1767,
+          1774
+        ],
+        [
+          1979,
+          1983
+        ],
+        [
+          3129,
+          3137
+        ],
+        [
+          3743,
+          3810
+        ],
+        [
+          4467,
+          4492
+        ],
+        [
+          6484,
+          6508
+        ],
+        [
+          6901,
+          6903
+        ]
+      ],
+      "scope": "Focused text inspection, not entire file; repeated raw fetches matched this hash."
+    },
+    {
+      "id": "A2",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/btree.c",
+      "version": "version-3.51.3",
+      "retrieved_at_utc": "2026-10-08T00:43:42.402229Z",
+      "sha256": "ab4135be6b5e19f1766b1f4022fa6843fe8dd447504d39c49f22598366de8d61",
+      "bytes": 403255,
+      "raw_lines": 11544,
+      "locators": [
+        [
+          3054,
+          3105
+        ],
+        [
+          3595,
+          3665
+        ],
+        [
+          3710,
+          3777
+        ]
+      ],
+      "scope": "Focused text inspection, not entire file; repeated raw fetch matched this hash."
+    },
+    {
+      "id": "A3",
+      "url": "https://www.sqlite.org/howtocorrupt.html",
+      "version": "mutable documentation, raw capture 2026-10-08",
+      "retrieved_at_utc": "2026-10-08T00:43:42.656776Z",
+      "sha256": "e00709e3f37e95332d8e6df243510665e9cab1d7938d4fd85cbf5f47648a50bf",
+      "bytes": 46737,
+      "raw_lines": 852,
+      "locators": [
+        [
+          245,
+          282
+        ],
+        [
+          410,
+          436
+        ]
+      ],
+      "scope": "Focused section 2.5 and recovery-sidecar text; repeated raw fetch matched this hash."
+    },
+    {
+      "id": "A4",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/master/src/backup.c",
+      "version": "mutable master branch, raw capture 2026-10-08; immutable commit unknown",
+      "retrieved_at_utc": "2026-10-08T00:44:24.165185Z",
+      "sha256": "5655ee1d14c07b4ffb00d3f3eaed1db34cf4493bf57278858c29c95eccb022a7",
+      "bytes": 28061,
+      "raw_lines": 796,
+      "locators": [
+        [
+          349,
+          355
+        ],
+        [
+          582,
+          588
+        ],
+        [
+          629,
+          635
+        ],
+        [
+          707,
+          713
+        ]
+      ],
+      "scope": "Three seam comparisons plus update latching; not historical candidate fetch reconstruction or full-version equivalence."
+    },
+    {
+      "id": "A5",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "mutable documentation, raw capture 2026-10-08",
+      "retrieved_at_utc": "2026-10-08T00:44:54.122082Z",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "raw_lines": 837,
+      "locators": [
+        [
+          269,
+          280
+        ],
+        [
+          478,
+          492
+        ]
+      ],
+      "scope": "Fixed reader end mark and WAL persistent-state conditions; repeated raw fetch matched this hash."
+    }
+  ],
+  "runtime_tests_executed": false,
+  "proposed_tests": {
+    "T1": "not executed; fresh init completion requires ending source write transaction",
+    "T2": "not executed; routing/restart/rate conditions assessed statically",
+    "T3": "not executed; conventional in-memory commit restart supported",
+    "T4": "not executed; actual retained mismatch/read-only setup required",
+    "T5": "not executed; returned-OK-only refresh rule contradicted",
+    "T6": "not executed; fatal latching supported, IOERR_NOMEM normalization qualifies exact code"
+  },
+  "limits": [
+    "Static scientific assessment; no empirical tests claimed.",
+    "Candidate historical source-fetch execution not independently witnessed.",
+    "Added mutable docs/branch pinned by current retrieval time/hash; not original frozen bytes.",
+    "Truncated tool output recovered by focused rereads.",
+    "Method-specific authorized paths and scope-pin embedded metadata limited blinding.",
+    "Native lifecycle, billing and budget unassessed; actual requestedAt unavailable.",
+    "Full declared scope checked; no exhaustive unknown-recall claim."
+  ],
+  "blinding_exposure": "Authorized scope-pin.md embeds operational/cross-arm boundary metadata; reviewer reported incidental exposure and excluded it from scientific judgment. Advisory maps not firewall. Method paths also disclose procedure.",
+  "treatment_final_obligations": "UNASSESSED",
+  "treatment_material_error_count": null,
+  "matched_method_comparison": false,
+  "billing": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "frozen_at": "2026-10-08T00:52:35.028082+00:00"
+}

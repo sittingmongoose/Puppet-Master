@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-08T02:26:34.843008+00:00",
+  "authority": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-M06-v3-conditional-missing-seed-active-diagnostic-authorization-v1.json",
+  "authority_sha": "d3ecc6a1ab1301f1b616266ee1302f4215541e601360d6b22389ce7a1ebad389",
+  "arms": {
+    "control": {
+      "freeze_sha": "13134d85530d61102d49312dcd6e9f01e23160d3b3db1cc9ebe6be6509811ada",
+      "native_sha": "614d0d3ee8b677419fb66ed71bf16c11775350b6d1de5c3932ca3292ec02db67",
+      "settle_sha": "ceeb4c1541c0d770be4eea1f397e98b989b7bba947ae19c6adf0b43c693f00be"
+    },
+    "treatment": {
+      "freeze_sha": "316c834ead3821ffc36813b5bf0aa6dfb118b99b198f4df5ed1c019a523e67a2",
+      "native_sha": "e762bafa30b8ffb9f72553e48aca9446bc9c3a8d9d45d22102c2f2934bcf90f6",
+      "settle_sha": "bb5f82cb811d0f564a1b6a5424361c2c3b9b8135884a2c23437b43edd5d112e4"
+    }
+  },
+  "gate": "PASS_FIRST_FULL_SOURCE_DIAGNOSTIC_ONLY",
+  "root_current_explicit_authority": "Both COMPLETE joined terminals and complete original carriers/quiet/frozen/settled, first ordinary source review only",
+  "active_absence_preserved": true,
+  "comparative_qualification": "HOLD",
+  "provenance": "HOLD; paths advisory not firewall; rawAPI/vendor/ACPmapping unknown",
+  "GLM0_release": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/GLM2_FINAL_RELEASE.json",
+  "GLM0_release_sha": "b3b4ab960dadad9da962057bfcfbc34c539fd8113c792751b66e87feb23df825",
+  "no_source_review_yet": true
+}

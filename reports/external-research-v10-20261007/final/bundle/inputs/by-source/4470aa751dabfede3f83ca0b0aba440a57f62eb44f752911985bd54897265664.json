@@ -1,0 +1,384 @@
+{
+  "case_id": "D-M14-A",
+  "versions": {
+    "v1": {
+      "control": {
+        "actual_T3_requestedAt": "2026-10-07T19:06:21.148Z",
+        "actual_T3_terminalAt": "2026-10-07T19:24:09.891Z",
+        "request_to_terminal_seconds": 1068.743,
+        "aggregate_occupied_seconds": 1028.3799999999999,
+        "queue_seconds": 1.388,
+        "parent_interstage_gaps_seconds": 38.97500000000006,
+        "stages": 2,
+        "native_start_firstfinding_output_terminal_release": "Exact lifecycle receipts/artifact timestamps preserved; first finding time unknown where not exposed",
+        "source_operations": "Candidate authored timings/source manifests retained; no unexposed calls inferred",
+        "native_input_cache_generated_billing": {
+          "input": null,
+          "cached_input": null,
+          "generated": null,
+          "billing": null
+        },
+        "native_goal_counters": "Exact observed counters retained, distinct from generated/billing; repeated snapshots not summed"
+      },
+      "treatment": {
+        "actual_T3_requestedAt": "2026-10-07T18:55:24.338Z",
+        "actual_T3_terminalAt": "2026-10-07T19:05:50.522Z",
+        "request_to_terminal_seconds": 626.184,
+        "aggregate_occupied_seconds": 574.665,
+        "queue_seconds": 1.2730000000000001,
+        "parent_interstage_gaps_seconds": 50.246,
+        "stages": 2,
+        "native_start_firstfinding_output_terminal_release": "Exact lifecycle receipts/artifact timestamps preserved; first finding time unknown where not exposed",
+        "source_operations": "Candidate authored timings/source manifests retained; no unexposed calls inferred",
+        "native_input_cache_generated_billing": {
+          "input": null,
+          "cached_input": null,
+          "generated": null,
+          "billing": null
+        },
+        "native_goal_counters": "Exact observed counters retained, distinct from generated/billing; repeated snapshots not summed"
+      }
+    },
+    "v2": {
+      "control": {
+        "actual_T3_requestedAt": "2026-10-07T19:38:11.878Z",
+        "actual_T3_terminalAt": "2026-10-07T19:50:53.773Z",
+        "request_to_terminal_seconds": 761.895,
+        "aggregate_occupied_seconds": 727.013,
+        "queue_seconds": 1.091,
+        "parent_interstage_gaps_seconds": 33.79099999999995,
+        "stages": 2,
+        "native_start_firstfinding_output_terminal_release": "Exact lifecycle receipts/artifact timestamps preserved; first finding time unknown where not exposed",
+        "source_operations": "Candidate authored timings/source manifests retained; no unexposed calls inferred",
+        "native_input_cache_generated_billing": {
+          "input": null,
+          "cached_input": null,
+          "generated": null,
+          "billing": null
+        },
+        "native_goal_counters": "Exact observed counters retained, distinct from generated/billing; repeated snapshots not summed"
+      },
+      "treatment": {
+        "actual_T3_requestedAt": "2026-10-07T19:25:27.863Z",
+        "actual_T3_terminalAt": "2026-10-07T19:37:40.443Z",
+        "request_to_terminal_seconds": 732.58,
+        "aggregate_occupied_seconds": 696.601,
+        "queue_seconds": 1.0,
+        "parent_interstage_gaps_seconds": 34.97900000000004,
+        "stages": 2,
+        "native_start_firstfinding_output_terminal_release": "Exact lifecycle receipts/artifact timestamps preserved; first finding time unknown where not exposed",
+        "source_operations": "Candidate authored timings/source manifests retained; no unexposed calls inferred",
+        "native_input_cache_generated_billing": {
+          "input": null,
+          "cached_input": null,
+          "generated": null,
+          "billing": null
+        },
+        "native_goal_counters": "Exact observed counters retained, distinct from generated/billing; repeated snapshots not summed"
+      }
+    }
+  },
+  "generic_helper_development_experimental_prep_seconds": 454.056,
+  "root_qualification_reported_test_seconds": 0.316,
+  "root_qualification_wall_seconds": null,
+  "cold_full_lower_bound_charge_seconds": 454.372,
+  "routine_render_seconds": {
+    "v1": 0.11695404800047982,
+    "v2": 0.111228384
+  },
+  "amortized_accounting": "For declared N qualified reuses, prep allocation454.372/N seconds plus unknownqualificationwall/N; report separately. No N selected, no zero charge assumed. Routineauthor/render/preservation/capture cost perrun retained. Failedversions aggregate separately retained; no bestof.",
+  "all_model_stage_occupied_including_failures_seconds": 3026.6589999999997,
+  "cold_v2_treatment_observed_latency_plus_full_prep_lower_bound_seconds": 1186.952,
+  "cold_v2_treatment_eligibility": "FAIL: observed stopped lifecycle+fullprep lowerbound exceeds900sec, and no final/preservation/completeGoal. No semanticPASS claimed.",
+  "nativeGoal_projection_vs_raw": "Codex actualstatecarrier v2; rawAPIbodies/createdAt not exposed; no inferredreceipt",
+  "host_capture_costs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v2/passive-terminal-capture-cost.json",
+      "receipt": {
+        "event": "terminal",
+        "stage": "D-M14-A/treatment/semantic_findings-v2",
+        "command": [
+          "python3",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+          "--stage",
+          "D-M14-A/treatment/semantic_findings-v2"
+        ],
+        "start": "2026-10-07T19:30:59.162617+00:00",
+        "end": "2026-10-07T19:30:59.375323+00:00",
+        "elapsed_seconds": 0.2127126169998519,
+        "exit_code": 0,
+        "stderr": "",
+        "index": {
+          "schema": "pm.er10.passive-receipts-index.v1",
+          "observed_at_utc": "2026-10-07T19:30:59.266476+00:00",
+          "entries": [
+            {
+              "stage": "D-M14-A/treatment/semantic_findings-v2",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--treatment--semantic_findings-v2--73431f7e9bcd20ad.json",
+              "sha256": "73431f7e9bcd20adc0ce35bfb2294971a823931dd70d8ad1dcee7ef4ff4fbbb8",
+              "bytes": 10948,
+              "capture": {
+                "create_goal": "missing_actual_response",
+                "get_goal": "missing_actual_response",
+                "update_goal": "missing_actual_response"
+              }
+            }
+          ],
+          "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+        }
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v2/passive-active-capture-cost.json",
+      "receipt": {
+        "event": "activation",
+        "stage": "D-M14-A/treatment/semantic_findings-v2",
+        "command": [
+          "python3",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+          "--stage",
+          "D-M14-A/treatment/semantic_findings-v2"
+        ],
+        "start": "2026-10-07T19:26:03.255202+00:00",
+        "end": "2026-10-07T19:26:03.463754+00:00",
+        "elapsed_seconds": 0.20854922299986356,
+        "exit_code": 0,
+        "stderr": "",
+        "index": {
+          "schema": "pm.er10.passive-receipts-index.v1",
+          "observed_at_utc": "2026-10-07T19:26:03.359379+00:00",
+          "entries": [
+            {
+              "stage": "D-M14-A/treatment/semantic_findings-v2",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--treatment--semantic_findings-v2--cd6473d400b16d65.json",
+              "sha256": "cd6473d400b16d655d1c3d3e5ff3bb97ba315ce492e2751a51d4b4c45bfda3f0",
+              "bytes": 10940,
+              "capture": {
+                "create_goal": "missing_actual_response",
+                "get_goal": "missing_actual_response",
+                "update_goal": "missing_actual_response"
+              }
+            }
+          ],
+          "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+        }
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v2/passive-terminal-capture-cost.json",
+      "receipt": {
+        "event": "terminal",
+        "stage": "D-M14-A/treatment/preservation_check-v2",
+        "command": [
+          "python3",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+          "--stage",
+          "D-M14-A/treatment/preservation_check-v2"
+        ],
+        "start": "2026-10-07T19:37:40.780051+00:00",
+        "end": "2026-10-07T19:37:40.957921+00:00",
+        "elapsed_seconds": 0.17787019000024884,
+        "exit_code": 0,
+        "stderr": "",
+        "index": {
+          "schema": "pm.er10.passive-receipts-index.v1",
+          "observed_at_utc": "2026-10-07T19:37:40.885386+00:00",
+          "entries": [
+            {
+              "stage": "D-M14-A/treatment/preservation_check-v2",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--treatment--preservation_check-v2--488cb335d78c2349.json",
+              "sha256": "488cb335d78c2349d8a2cac2077851c62885cc44dd1f2311478a09e376a2beee",
+              "bytes": 10951,
+              "capture": {
+                "create_goal": "missing_actual_response",
+                "get_goal": "missing_actual_response",
+                "update_goal": "missing_actual_response"
+              }
+            }
+          ],
+          "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+        }
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v2/passive-active-capture-cost.json",
+      "receipt": {
+        "event": "active",
+        "stage": "D-M14-A/treatment/preservation_check-v2",
+        "command": [
+          "python3",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+          "--stage",
+          "D-M14-A/treatment/preservation_check-v2"
+        ],
+        "start": "2026-10-07T19:32:47.621572+00:00",
+        "end": "2026-10-07T19:32:47.803283+00:00",
+        "elapsed_seconds": 0.18171242000062193,
+        "exit_code": 0,
+        "stderr": "",
+        "index": {
+          "schema": "pm.er10.passive-receipts-index.v1",
+          "observed_at_utc": "2026-10-07T19:32:47.728263+00:00",
+          "entries": [
+            {
+              "stage": "D-M14-A/treatment/preservation_check-v2",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--treatment--preservation_check-v2--56988cc1d6cd694c.json",
+              "sha256": "56988cc1d6cd694cb6f400dd4240746e75139db4fef5d8d0e942eb346fa3e7af",
+              "bytes": 10952,
+              "capture": {
+                "create_goal": "missing_actual_response",
+                "get_goal": "missing_actual_response",
+                "update_goal": "missing_actual_response"
+              }
+            }
+          ],
+          "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+        }
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/passive-terminal-capture-cost.json",
+      "receipt": {
+        "event": "terminal",
+        "stage": "D-M14-A/control/author-v2",
+        "command": [
+          "python3",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+          "--stage",
+          "D-M14-A/control/author-v2"
+        ],
+        "start": "2026-10-07T19:46:44.806515+00:00",
+        "end": "2026-10-07T19:46:44.979865+00:00",
+        "elapsed_seconds": 0.17334212800051318,
+        "exit_code": 0,
+        "stderr": "",
+        "index": {
+          "schema": "pm.er10.passive-receipts-index.v1",
+          "observed_at_utc": "2026-10-07T19:46:44.906443+00:00",
+          "entries": [
+            {
+              "stage": "D-M14-A/control/author-v2",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--control--author-v2--22aa421e5a98bdf5.json",
+              "sha256": "22aa421e5a98bdf5233c87e60541a2a894650923eb71536f1c9f8f80c5e93dc5",
+              "bytes": 10858,
+              "capture": {
+                "create_goal": "missing_actual_response",
+                "get_goal": "missing_actual_response",
+                "update_goal": "missing_actual_response"
+              }
+            }
+          ],
+          "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+        }
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/passive-active-capture-cost.json",
+      "receipt": {
+        "event": "active",
+        "stage": "D-M14-A/control/author-v2",
+        "command": [
+          "python3",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+          "--stage",
+          "D-M14-A/control/author-v2"
+        ],
+        "start": "2026-10-07T19:38:44.794758+00:00",
+        "end": "2026-10-07T19:38:44.956491+00:00",
+        "elapsed_seconds": 0.16173300500122423,
+        "exit_code": 0,
+        "stderr": "",
+        "index": {
+          "schema": "pm.er10.passive-receipts-index.v1",
+          "observed_at_utc": "2026-10-07T19:38:44.891502+00:00",
+          "entries": [
+            {
+              "stage": "D-M14-A/control/author-v2",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--control--author-v2--b15e5bf6d78cd830.json",
+              "sha256": "b15e5bf6d78cd830ddeb3720c4e90b0eefb7be1f6c468519d48d9c5ffc36aaa4",
+              "bytes": 10852,
+              "capture": {
+                "create_goal": "missing_actual_response",
+                "get_goal": "missing_actual_response",
+                "update_goal": "missing_actual_response"
+              }
+            }
+          ],
+          "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+        }
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/passive-terminal-capture-cost.json",
+      "receipt": {
+        "event": "terminal",
+        "stage": "D-M14-A/control/finalize-v2",
+        "command": [
+          "python3",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+          "--stage",
+          "D-M14-A/control/finalize-v2"
+        ],
+        "start": "2026-10-07T19:51:19.964840+00:00",
+        "end": "2026-10-07T19:51:20.142031+00:00",
+        "elapsed_seconds": 0.17719238700010465,
+        "exit_code": 0,
+        "stderr": "",
+        "index": {
+          "schema": "pm.er10.passive-receipts-index.v1",
+          "observed_at_utc": "2026-10-07T19:51:20.067645+00:00",
+          "entries": [
+            {
+              "stage": "D-M14-A/control/finalize-v2",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--control--finalize-v2--5545dc2ee8bca27d.json",
+              "sha256": "5545dc2ee8bca27d46b2945039507f15839bcb1d8f2c9a4f8d566aab3c3a268f",
+              "bytes": 10871,
+              "capture": {
+                "create_goal": "missing_actual_response",
+                "get_goal": "missing_actual_response",
+                "update_goal": "missing_actual_response"
+              }
+            }
+          ],
+          "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+        }
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/passive-active-capture-cost.json",
+      "receipt": {
+        "event": "active",
+        "stage": "D-M14-A/control/finalize-v2",
+        "command": [
+          "python3",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+          "--stage",
+          "D-M14-A/control/finalize-v2"
+        ],
+        "start": "2026-10-07T19:47:29.863850+00:00",
+        "end": "2026-10-07T19:47:30.055385+00:00",
+        "elapsed_seconds": 0.19153961300071387,
+        "exit_code": 0,
+        "stderr": "",
+        "index": {
+          "schema": "pm.er10.passive-receipts-index.v1",
+          "observed_at_utc": "2026-10-07T19:47:29.953136+00:00",
+          "entries": [
+            {
+              "stage": "D-M14-A/control/finalize-v2",
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--control--finalize-v2--999c40f9391484a1.json",
+              "sha256": "999c40f9391484a1516b3d08285613069af1ac528ca05f34cc827668ae55e4fe",
+              "bytes": 10867,
+              "capture": {
+                "create_goal": "missing_actual_response",
+                "get_goal": "missing_actual_response",
+                "update_goal": "missing_actual_response"
+              }
+            }
+          ],
+          "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+        }
+      }
+    }
+  ]
+}

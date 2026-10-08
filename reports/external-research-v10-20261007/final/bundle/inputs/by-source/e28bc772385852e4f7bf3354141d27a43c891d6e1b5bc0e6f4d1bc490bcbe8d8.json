@@ -1,0 +1,1647 @@
+{
+  "record_at": "2026-10-07T21:04:31.945501+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-06-treatment-independent-review-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T20:51:36.365Z",
+    "startedAt": "2026-10-07T20:51:36.946Z",
+    "completedAt": "2026-10-07T21:04:20.081Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "schema_version": 1,
+    "case": "I-METHOD-06",
+    "review": "review-v1",
+    "source_judgment": "FAIL",
+    "scope": "Full authored final plus original brief/frozen plan, nine BRS units and scope/non-goals; admitted own-arm draft/critique and captured primary bytes only.",
+    "counting_rule": "Counts describe finite reviewer inventories, not atomic propositions or exhaustive opportunity recall. Top-level requirements = O1-O6 plus nine units and two contexts. Owner decision groups, claim groups and criticism groups are nested diagnostic inventories and are not added to the top-level count. ASSESSED does not mean the candidate satisfies an obligation.",
+    "counts": {
+      "axes": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "original_obligations": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "plan_units": {
+        "complete": 9,
+        "assessed": 9,
+        "unassessed": 0
+      },
+      "copied_contexts": {
+        "complete": 2,
+        "assessed": 2,
+        "unassessed": 0
+      },
+      "top_level_scope": {
+        "complete": 17,
+        "assessed": 17,
+        "unassessed": 0
+      },
+      "owner_decision_groups": {
+        "complete": 73,
+        "assessed": 73,
+        "unassessed": 0
+      },
+      "consequential_claim_groups": {
+        "complete": 24,
+        "assessed": 24,
+        "unassessed": 0
+      },
+      "criticism_disposition_groups": {
+        "complete": 17,
+        "assessed": 17,
+        "unassessed": 0
+      }
+    },
+    "material_error_count": 3,
+    "material_error_ids": [
+      "E01",
+      "E02",
+      "E03"
+    ],
+    "unassessed_obligation_ids": [],
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Original obligations and full plan/owner decisions",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "rationale": "All O1-O6, nine units and two contexts compared; E02 fixed-choice deferral and E03 recovery entry/order prevent full satisfaction."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential claims, conditions and versions",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "rationale": "Primary immutable code supports most claims, but E01 conflates the ordinary files-from glob path with direct/verbatim/raw target filtering."
+      },
+      {
+        "axis": 3,
+        "name": "Bounded discovery, mechanisms, alternatives, negative and opportunity coverage",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "rationale": "Useful Restic/AWS/Borg knowledge and alternatives survive. No exhaustive opportunity recall, comparative experiment, or independently established discovery-before-plan chronology."
+      },
+      {
+        "axis": 4,
+        "name": "Incorrect corrections/rejections or false already-covered dispositions",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "rationale": "Critic corrections are valid; E02/E03 remain false deferred/already-covered comparisons. No unsupported rejection of Borg or AWS adoption found."
+      },
+      {
+        "axis": 5,
+        "name": "Draft-critique-final preservation",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "rationale": "Seventeen criticism/disposition groups preserved, including limits and options; inherited errors are not made true by preservation. Family provenance is not scientifically inferred."
+      },
+      {
+        "axis": 6,
+        "name": "Proposed versus executed validation and witness applicability",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "rationale": "Eight future acceptance groups and all proof boundaries inspected. No executed PM/Restic witness supplied or claimed; code tests are assertions, not results."
+      }
+    ],
+    "O1_O6": [
+      {
+        "id": "O1",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "final_lines": "20-28,126-136,142,159",
+        "rationale": "Beyond reference engine: AWS restore testing/content-time validation and Borg depth/repair alternative. Discovery chronology is reported, not independently established."
+      },
+      {
+        "id": "O2",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "final_lines": "24,30-34",
+        "rationale": "Pinned code and context exist, but governing files-from glob preprocessing invalidates the unqualified issue/fix applicability (E01)."
+      },
+      {
+        "id": "O3",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "final_lines": "12,24-26,36-43,144",
+        "rationale": "Real issue, merged fix, tests and release are present; reported ordinary files-from condition is not covered by the traced tagged tests/filter path (E01)."
+      },
+      {
+        "id": "O4",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "final_lines": "107-124,145",
+        "rationale": "Every named unit row exists, but E02/E03 and several reference-only limitations defeat claimed complete decision-level comparison."
+      },
+      {
+        "id": "O5",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "final_lines": "138-163",
+        "rationale": "Substantive supplied critique and seventeen visible dispositions survive. Candidate-family identity/dispatch is unverified host provenance, not source truth."
+      },
+      {
+        "id": "O6",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "final_lines": "45-136,147",
+        "rationale": "Coherent replacement sections, alternatives and proposed checks are delivered, but fixed-choice drift and incomplete/reordered recovery entry prevent a complete authority-preserving replacement."
+      }
+    ],
+    "plan_and_contexts": [
+      {
+        "id": "scope_and_owners",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "decision_groups": 10
+      },
+      {
+        "id": "non_goals",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "decision_groups": 7
+      },
+      {
+        "id": "BRS-001",
+        "assessment": "ASSESSED",
+        "result": "PASS",
+        "decision_groups": 4
+      },
+      {
+        "id": "BRS-004",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "decision_groups": 6
+      },
+      {
+        "id": "BRS-005",
+        "assessment": "ASSESSED",
+        "result": "PASS",
+        "decision_groups": 5
+      },
+      {
+        "id": "BRS-006",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "decision_groups": 7
+      },
+      {
+        "id": "BRS-010",
+        "assessment": "ASSESSED",
+        "result": "PASS",
+        "decision_groups": 4
+      },
+      {
+        "id": "BRS-017",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "decision_groups": 8
+      },
+      {
+        "id": "BRS-019",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "decision_groups": 10
+      },
+      {
+        "id": "BRS-023",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "decision_groups": 5
+      },
+      {
+        "id": "BRS-030",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "decision_groups": 7
+      }
+    ],
+    "owner_decisions": [
+      {
+        "id": "scope_and_owners.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "scope_and_owners.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "scope_and_owners.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "scope_and_owners.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "scope_and_owners.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "scope_and_owners.06",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "scope_and_owners.07",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "scope_and_owners.08",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "scope_and_owners.09",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "scope_and_owners.10",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "non_goals.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "DEFECT"
+      },
+      {
+        "id": "non_goals.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "non_goals.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "non_goals.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "non_goals.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "non_goals.06",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "non_goals.07",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-001.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-001.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-001.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-001.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-004.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "BRS-004.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-004.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-004.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-004.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-004.06",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-005.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-005.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-005.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-005.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-005.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-006.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-006.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-006.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-006.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-006.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-006.06",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-006.07",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "BRS-010.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-010.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-010.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-010.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-017.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-017.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-017.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-017.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-017.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "BRS-017.06",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-017.07",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-017.08",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-019.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "DEFECT"
+      },
+      {
+        "id": "BRS-019.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "BRS-019.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-019.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-019.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-019.06",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-019.07",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-019.08",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "BRS-019.09",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-019.10",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-023.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "BRS-023.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-023.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-023.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-023.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-030.01",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "BRS-030.02",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-030.03",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-030.04",
+        "assessment": "ASSESSED",
+        "candidate_result": "LIMITED"
+      },
+      {
+        "id": "BRS-030.05",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED"
+      },
+      {
+        "id": "BRS-030.06",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      },
+      {
+        "id": "BRS-030.07",
+        "assessment": "ASSESSED",
+        "candidate_result": "RETAINED_BY_REFERENCE"
+      }
+    ],
+    "consequential_findings": [
+      {
+        "id": "F01",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F02",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F03",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F04",
+        "assessment": "ASSESSED",
+        "result": "MATERIAL_DEFECT"
+      },
+      {
+        "id": "F05",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED_WITH_CONDITION"
+      },
+      {
+        "id": "F06",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F07",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F08",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F09",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F10",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F11",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F12",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F13",
+        "assessment": "ASSESSED",
+        "result": "PROPOSED_SUPPORTED"
+      },
+      {
+        "id": "F14",
+        "assessment": "ASSESSED",
+        "result": "PROPOSED_SUPPORTED"
+      },
+      {
+        "id": "F15",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F16",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F17",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F18",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED_WITH_LIMIT"
+      },
+      {
+        "id": "F19",
+        "assessment": "ASSESSED",
+        "result": "PROPOSED_SUPPORTED"
+      },
+      {
+        "id": "F20",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F21",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED"
+      },
+      {
+        "id": "F22",
+        "assessment": "ASSESSED",
+        "result": "MATERIAL_DEFECT"
+      },
+      {
+        "id": "F23",
+        "assessment": "ASSESSED",
+        "result": "MATERIAL_DEFECT"
+      },
+      {
+        "id": "F24",
+        "assessment": "ASSESSED",
+        "result": "SUPPORTED_WITH_LIMIT"
+      }
+    ],
+    "preservation": [
+      {
+        "id": "C01",
+        "assessment": "ASSESSED",
+        "result": "CORRECTED_AND_PRESERVED"
+      },
+      {
+        "id": "C02",
+        "assessment": "ASSESSED",
+        "result": "CORRECTED_AND_PRESERVED"
+      },
+      {
+        "id": "C03",
+        "assessment": "ASSESSED",
+        "result": "CORRECTED_AND_PRESERVED"
+      },
+      {
+        "id": "C04",
+        "assessment": "ASSESSED",
+        "result": "CORRECTED_AND_PRESERVED"
+      },
+      {
+        "id": "C05",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C06",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C07",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C08",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C09",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C10",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C11",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED_BUT_INCORRECT"
+      },
+      {
+        "id": "C12",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C13",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C14",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C15",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C16",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED"
+      },
+      {
+        "id": "C17",
+        "assessment": "ASSESSED",
+        "result": "PRESERVED_WITH_LIMIT"
+      }
+    ],
+    "limitations": [
+      "No exhaustive public opportunity recall or performance/platform/implementation validation.",
+      "Discovery chronology and flash-family dispatch provenance are not independently established from scientific inputs; no SourcePASS inferred from identity/delivery.",
+      "Visible arm/path and artifact/procedure structure can reveal method; no other-arm result/score/cost/speed/target/parent analysis/evaluator answer consulted.",
+      "Absent adjacent owner documents are dependencies, not assumed defects."
+    ],
+    "usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "reasoning_tokens": null,
+      "cached_tokens": null,
+      "billing_cost": null
+    },
+    "lifecycle_status": null,
+    "full_scope_assessment_complete": true,
+    "candidate_full_scope_satisfied": false,
+    "candidate_result_counts": {
+      "owner_decision_groups": {
+        "RETAINED": 28,
+        "RETAINED_BY_REFERENCE": 32,
+        "LIMITED": 11,
+        "DEFECT": 2
+      },
+      "consequential_claim_groups": {
+        "SUPPORTED": 15,
+        "MATERIAL_DEFECT": 3,
+        "SUPPORTED_WITH_CONDITION": 1,
+        "PROPOSED_SUPPORTED": 3,
+        "SUPPORTED_WITH_LIMIT": 2
+      }
+    }
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/coverage.json",
+      "bytes": 20578,
+      "sha256": "72411915fc490654498f0842702b4c18b46e958189b95121e95840b8a04cf743"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/judgment.md",
+      "bytes": 56018,
+      "sha256": "b8e75522f54892e56c4e280d5bb2c7ae8f38ca62c04c5a2fbe6796c863ac155a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/source-checks.json",
+      "bytes": 165340,
+      "sha256": "441d47541a73cb7632e11e1024de4ff49352b71b7a2f2effc0672fc7bd97bf46"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/artifact.md",
+      "bytes": 10861,
+      "sha256": "075315eeda18021ebdc0c0d23638aa4aff1490f792645035798fb564a420e28e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/source-map.json",
+      "bytes": 4072,
+      "sha256": "2a729687d49c0a6cd61f55243ede2dd9411504bc8e13ff6bf1a1893d823af4d8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/aws_backup_restore_resource.capture",
+      "bytes": 29106,
+      "sha256": "5474bab0601b2c5311c8514949909467c78d70ace3fb99641ac4df958fa4a164"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/aws_backup_restore_testing.capture",
+      "bytes": 64921,
+      "sha256": "e0ba4b8d0eb56da2e56045e59e891a5e02b4df5d9c5b103950e50fcdbd4a9b21"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/aws_rel09_bp04.capture",
+      "bytes": 29259,
+      "sha256": "079a90dea69545a78b14703dbbb75b7b20d76fb4a4e055bc4e028e08d11f228d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/borg_check_v145.capture",
+      "bytes": 25422,
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_docs_v0191_check.capture",
+      "bytes": 22138,
+      "sha256": "7f0014e635f9dc0bb0c712eb769e7099cf64f5f12a78f468c5b766e807d25a75"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_docs_v0191_copy.capture",
+      "bytes": 61216,
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_docs_v0191_restore.capture",
+      "bytes": 35336,
+      "sha256": "667c478b576b4e28e7e813ae96b4402562a5db26bef098115004afdd6043639a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_issue_4467.capture",
+      "bytes": 287551,
+      "sha256": "9f46c7f9d55548c5cd9821d989a639d3a2c2cc7e9b5f39201edf8c84ef9a18f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_pr_5347_patch.capture",
+      "bytes": 13294,
+      "sha256": "ec41516004eda1fa8739000682d64180d2072ed4dc0608c9c28d7cb9cb26687d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_release_v0190.capture",
+      "bytes": 259756,
+      "sha256": "f33772110422856d515b72e6db0a0fbea0658be57b0ca95238c54f1203519b51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_backup_go.capture",
+      "bytes": 21529,
+      "sha256": "726855a56bc03a182406e7fcb575c6e67e1d22b79576109391d555cd47373627"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_backup_integration_test.capture",
+      "bytes": 23033,
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_backup_test_go.capture",
+      "bytes": 3385,
+      "sha256": "391e3c291b65414cd5ea0b9ffb0ceaaa71e7f9b8b396747932e169b5b6cb48d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_check_test_go.capture",
+      "bytes": 7966,
+      "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_checker_go.capture",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_cmd_check_go.capture",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_cmd_copy_go.capture",
+      "bytes": 10700,
+      "sha256": "b80ad974a067ae2e443fb4d36de22b2aa6cf3da3c9949d8b60a615e08af6b7eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_repo_working_doc.capture",
+      "bytes": 28606,
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_restore_doc.capture",
+      "bytes": 13558,
+      "sha256": "72e437a7a40a9aa17e818f6f6c0f3682f6baff3195452a8d9a0460a03796e19e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_scripting_doc.capture",
+      "bytes": 58070,
+      "sha256": "922289a229d7026fb23f0d9f857a84a952a217548af05b0d8d3406a759834917"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_tag_ref.txt",
+      "bytes": 121,
+      "sha256": "b528aa634a9ca131753f67a0f3fd28fcf57535a713a494398877cef68198e7d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0190_troubleshooting_doc.capture",
+      "bytes": 8415,
+      "sha256": "a0445df4f769ab0610defd1bf867e4d1a4e11e81cb47c848095e4ea5ea903373"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0191_backup_go.capture",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0191_backup_integration_test.capture",
+      "bytes": 23033,
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0191_backup_test_go.capture",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/critic-v1/sources/restic_v0191_tag_ref.txt",
+      "bytes": 121,
+      "sha256": "ebfdc9ec870f643861d2a16adeb9f1cf9f5fb890cc1e07a706990fa4c6b461fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/artifact.md",
+      "bytes": 30681,
+      "sha256": "7bfb5ceeab2718caf972fd22cbfa044d6489fe46f154828ce53a78790c498d86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/source-map.json",
+      "bytes": 14205,
+      "sha256": "265a50983275681ad94bea255efd1ee879af79e1ca2f8d874aa88b9d537fa829"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/aws_backup_restore_resource.capture",
+      "bytes": 29106,
+      "sha256": "5474bab0601b2c5311c8514949909467c78d70ace3fb99641ac4df958fa4a164"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/aws_backup_restore_testing.capture",
+      "bytes": 64921,
+      "sha256": "e0ba4b8d0eb56da2e56045e59e891a5e02b4df5d9c5b103950e50fcdbd4a9b21"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/aws_rel09_bp04.capture",
+      "bytes": 29259,
+      "sha256": "079a90dea69545a78b14703dbbb75b7b20d76fb4a4e055bc4e028e08d11f228d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/borg_check_v145.capture",
+      "bytes": 25422,
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_docs_v0191_check.capture",
+      "bytes": 22138,
+      "sha256": "7f0014e635f9dc0bb0c712eb769e7099cf64f5f12a78f468c5b766e807d25a75"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_docs_v0191_copy.capture",
+      "bytes": 61216,
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_docs_v0191_restore.capture",
+      "bytes": 35336,
+      "sha256": "667c478b576b4e28e7e813ae96b4402562a5db26bef098115004afdd6043639a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_issue_4467.capture",
+      "bytes": 287551,
+      "sha256": "9f46c7f9d55548c5cd9821d989a639d3a2c2cc7e9b5f39201edf8c84ef9a18f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_pr_5347_patch.capture",
+      "bytes": 13294,
+      "sha256": "ec41516004eda1fa8739000682d64180d2072ed4dc0608c9c28d7cb9cb26687d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_release_v0190.capture",
+      "bytes": 259756,
+      "sha256": "f33772110422856d515b72e6db0a0fbea0658be57b0ca95238c54f1203519b51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_backup_go.capture",
+      "bytes": 21529,
+      "sha256": "726855a56bc03a182406e7fcb575c6e67e1d22b79576109391d555cd47373627"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_backup_integration_test.capture",
+      "bytes": 23033,
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_backup_test_go.capture",
+      "bytes": 3385,
+      "sha256": "391e3c291b65414cd5ea0b9ffb0ceaaa71e7f9b8b396747932e169b5b6cb48d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_check_test_go.capture",
+      "bytes": 7966,
+      "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_checker_go.capture",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_cmd_check_go.capture",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_cmd_copy_go.capture",
+      "bytes": 10700,
+      "sha256": "b80ad974a067ae2e443fb4d36de22b2aa6cf3da3c9949d8b60a615e08af6b7eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_repo_working_doc.capture",
+      "bytes": 28606,
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_restore_doc.capture",
+      "bytes": 13558,
+      "sha256": "72e437a7a40a9aa17e818f6f6c0f3682f6baff3195452a8d9a0460a03796e19e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_scripting_doc.capture",
+      "bytes": 58070,
+      "sha256": "922289a229d7026fb23f0d9f857a84a952a217548af05b0d8d3406a759834917"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_tag_ref.txt",
+      "bytes": 121,
+      "sha256": "b528aa634a9ca131753f67a0f3fd28fcf57535a713a494398877cef68198e7d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0190_troubleshooting_doc.capture",
+      "bytes": 8415,
+      "sha256": "a0445df4f769ab0610defd1bf867e4d1a4e11e81cb47c848095e4ea5ea903373"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0191_backup_go.capture",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0191_backup_integration_test.capture",
+      "bytes": 23033,
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0191_backup_test_go.capture",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/research-v1/sources/restic_v0191_tag_ref.txt",
+      "bytes": 121,
+      "sha256": "ebfdc9ec870f643861d2a16adeb9f1cf9f5fb890cc1e07a706990fa4c6b461fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/artifact.md",
+      "bytes": 28653,
+      "sha256": "d1665b64727f68c82a0368e009f2b5f36f3690b5ab7666168aac72c7e55e7650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/source-map.json",
+      "bytes": 20276,
+      "sha256": "cd07a1f79d71a7b2c42dcb87dabb8c7eadb41be3aa830ccd96cdbe3a53323bf9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/aws_backup_restore_resource.capture",
+      "bytes": 29106,
+      "sha256": "5474bab0601b2c5311c8514949909467c78d70ace3fb99641ac4df958fa4a164"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/aws_backup_restore_resource.capture.txt",
+      "bytes": 9882,
+      "sha256": "dd5598e0289c93b331f410d4211add5838759cc59f5a57eb03cb51533c265f29"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/aws_backup_restore_testing.capture",
+      "bytes": 64921,
+      "sha256": "e0ba4b8d0eb56da2e56045e59e891a5e02b4df5d9c5b103950e50fcdbd4a9b21"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/aws_backup_restore_testing.capture.txt",
+      "bytes": 26362,
+      "sha256": "f77bdf770ac39037f73c34c6e4e0edf1b775e4c46daea8f98e34e312d0f5d222"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/aws_rel09_bp04.capture",
+      "bytes": 29259,
+      "sha256": "079a90dea69545a78b14703dbbb75b7b20d76fb4a4e055bc4e028e08d11f228d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/aws_rel09_bp04.capture.txt",
+      "bytes": 9052,
+      "sha256": "182484519c7c4c7969c175ba57a5c97e03c2874d47be6b7c00b463bd719af585"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/borg_check_v145.capture",
+      "bytes": 25422,
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/borg_check_v145.capture.txt",
+      "bytes": 8624,
+      "sha256": "32b5c5b4afc3bc711051db8c798f9ad2cf6c9483f74237037323c7586bc1e6f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_docs_v0191_check.capture",
+      "bytes": 22138,
+      "sha256": "7f0014e635f9dc0bb0c712eb769e7099cf64f5f12a78f468c5b766e807d25a75"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_docs_v0191_check.capture.txt",
+      "bytes": 7818,
+      "sha256": "e82f3cce92626e682aabe0a4d529f19ead6b71e74e71d6d3515c6833247e8e61"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_docs_v0191_copy.capture",
+      "bytes": 61216,
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_docs_v0191_copy.capture.txt",
+      "bytes": 26347,
+      "sha256": "ded4b13e8f3f1df23a9e4b1eec5f2931d6f69de7d0cfcc32c772925e204a6421"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_docs_v0191_restore.capture",
+      "bytes": 35336,
+      "sha256": "667c478b576b4e28e7e813ae96b4402562a5db26bef098115004afdd6043639a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_docs_v0191_restore.capture.txt",
+      "bytes": 12805,
+      "sha256": "32da6c25851cc1f622e5f196aa8c76cfdee11db4b2a55c281918692074c95572"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_issue_4467.capture",
+      "bytes": 287551,
+      "sha256": "9f46c7f9d55548c5cd9821d989a639d3a2c2cc7e9b5f39201edf8c84ef9a18f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_issue_4467.capture.txt",
+      "bytes": 5655,
+      "sha256": "080ba7547a97d6b232ab0197ce46467814a796455a48f642f89b6bef14bf19f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_pr_5347_patch.capture",
+      "bytes": 13294,
+      "sha256": "ec41516004eda1fa8739000682d64180d2072ed4dc0608c9c28d7cb9cb26687d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_release_v0190.capture",
+      "bytes": 259756,
+      "sha256": "f33772110422856d515b72e6db0a0fbea0658be57b0ca95238c54f1203519b51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_release_v0190.capture.txt",
+      "bytes": 21087,
+      "sha256": "27fa44131f9d2fb2c89f831f589c9f70c44b0b78569f64c1a1c393c42211f36d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_backup_go.capture",
+      "bytes": 21529,
+      "sha256": "726855a56bc03a182406e7fcb575c6e67e1d22b79576109391d555cd47373627"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_backup_integration_test.capture",
+      "bytes": 23033,
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_backup_test_go.capture",
+      "bytes": 3385,
+      "sha256": "391e3c291b65414cd5ea0b9ffb0ceaaa71e7f9b8b396747932e169b5b6cb48d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_check_test_go.capture",
+      "bytes": 7966,
+      "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_checker_go.capture",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_cmd_check_go.capture",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_cmd_copy_go.capture",
+      "bytes": 10700,
+      "sha256": "b80ad974a067ae2e443fb4d36de22b2aa6cf3da3c9949d8b60a615e08af6b7eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_repo_working_doc.capture",
+      "bytes": 28606,
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_restore_doc.capture",
+      "bytes": 13558,
+      "sha256": "72e437a7a40a9aa17e818f6f6c0f3682f6baff3195452a8d9a0460a03796e19e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_scripting_doc.capture",
+      "bytes": 58070,
+      "sha256": "922289a229d7026fb23f0d9f857a84a952a217548af05b0d8d3406a759834917"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_tag_ref.txt",
+      "bytes": 121,
+      "sha256": "b528aa634a9ca131753f67a0f3fd28fcf57535a713a494398877cef68198e7d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0190_troubleshooting_doc.capture",
+      "bytes": 8415,
+      "sha256": "a0445df4f769ab0610defd1bf867e4d1a4e11e81cb47c848095e4ea5ea903373"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0191_backup_go.capture",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0191_backup_integration_test.capture",
+      "bytes": 23033,
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0191_backup_test_go.capture",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/admitted/reviser-v1/sources/restic_v0191_tag_ref.txt",
+      "bytes": 121,
+      "sha256": "ebfdc9ec870f643861d2a16adeb9f1cf9f5fb890cc1e07a706990fa4c6b461fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/brief.md",
+      "bytes": 5708,
+      "sha256": "2c9cded4ef7b6ca1d11bcfbde218bf49e7c493964022d7ed7f7f3e5b5634ffe9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-001.md",
+      "bytes": 2553,
+      "sha256": "54475617a61b30a619746ca7f92c0b10501dce5f68007e74be0521419ec0d146"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-004.md",
+      "bytes": 3805,
+      "sha256": "c457a59a843d906e6f1c113800859cc08102788163fc063e45b5ed0e5a57192a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-005.md",
+      "bytes": 3692,
+      "sha256": "109291ef836880790bd083bf271e2b33ec0f6e5c1641a32af4fb11004a58fff1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-006.md",
+      "bytes": 3667,
+      "sha256": "234cf930ce4e1b582de298be39587713f164943b259c4c60135366dc43a3735e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-010.md",
+      "bytes": 2930,
+      "sha256": "721c82c7946398bbd0f7766f67ec7e25eef2d27b94daec120195922886abe8c9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-017.md",
+      "bytes": 5453,
+      "sha256": "ff9bd102297b484394e57a4e0a203677905fe883ef6d8ebb48c016330dea967e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-019.md",
+      "bytes": 7651,
+      "sha256": "f47075ec350a87c6f65eafae3061c7c66964d9e6f535f7333f327b793ccf0008"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-023.md",
+      "bytes": 3092,
+      "sha256": "075c17c7ff747ca2e23a401128b10467863db4e0df4d5fe36a09d6fbc7caf1f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/BRS-030.md",
+      "bytes": 7424,
+      "sha256": "e1d7d0613914a2efa4de7a60f4938e40558c4c89e308085545b1b4e8b00dfa63"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/non_goals.md",
+      "bytes": 2012,
+      "sha256": "6b429d189287b99a69adde2d5bf68d9f5f8ec67c31e21e0db1dffb2341ab2dc0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/frozen/scope_and_owners.md",
+      "bytes": 7104,
+      "sha256": "a5ccbd08488f10c1d966f5e9f29b07d1274535704b9907942f197637e007906a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/inputs/plan.md",
+      "bytes": 3228,
+      "sha256": "304ba8e4ba46efc399176e4c68c40af0dc6be0873ab5d59b063889cb154770a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S28_checker.go",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S29_cmd_backup.go",
+      "bytes": 21529,
+      "sha256": "726855a56bc03a182406e7fcb575c6e67e1d22b79576109391d555cd47373627"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S30_main.go",
+      "bytes": 6524,
+      "sha256": "5ec6244896cfad78a2a93d9c4ac0db9168d3c446bc70f2a40d657bae6068ac75"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S31_packer_manager.go",
+      "bytes": 7318,
+      "sha256": "63bce8e9d69b83f35bea5d29cf8c6845f8879da508f0202a7fc501dfa9863ff1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S33_pr5347.html",
+      "bytes": 681727,
+      "sha256": "d087359b88c50ce1a9bf7be1e79af541b6388dac2145915089f10dd2560146cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S33_pr5347.html.txt",
+      "bytes": 50065,
+      "sha256": "480fce3c091b501c4672645139613f934845643963117578c9d8bf093f9c6208"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S34_v0.19.0_ref.txt",
+      "bytes": 121,
+      "sha256": "b528aa634a9ca131753f67a0f3fd28fcf57535a713a494398877cef68198e7d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S35_v0.19.1_ref.txt",
+      "bytes": 121,
+      "sha256": "ebfdc9ec870f643861d2a16adeb9f1cf9f5fb890cc1e07a706990fa4c6b461fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S36_check.go",
+      "bytes": 6212,
+      "sha256": "a34e49a702f73047ff0e34b2fb09d85e828d294e20a691d7117bf59817552533"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S37_archiver.go",
+      "bytes": 28789,
+      "sha256": "9e531494e5c8233f9a71fb6cbb0c58d96b1decc957f30b4358c6a133433506ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S38_snapshot_find.go",
+      "bytes": 5169,
+      "sha256": "33dfcb2d0f62f00938500a17fc48bd4f2cb84af2ee929c00f586ae46d27cf0e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S40_go125_match.go",
+      "bytes": 8891,
+      "sha256": "2e934cd2ac6bf57f0ebf010f5ef6d9a79fd989eebcad83358d03f58021d5b3ac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S41_go.mod",
+      "bytes": 4894,
+      "sha256": "a0c67833f2ca1485f1272e1214d22cac65c56641c24a7fad1491cde8d7c21d9a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S42_go_tag.txt",
+      "bytes": 61,
+      "sha256": "a5c68dd793c0018953703e23f16f371c8cd787c30d77a50fb28f18853a4c36ef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S43_go12510_match.go",
+      "bytes": 8891,
+      "sha256": "2e934cd2ac6bf57f0ebf010f5ef6d9a79fd989eebcad83358d03f58021d5b3ac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S44_checker.go",
+      "bytes": 7733,
+      "sha256": "38000d61cacf6a415e6f6445f0032f16dd64ff40abd08784f2b75c13a9f43f99"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S47_v0191_go.mod",
+      "bytes": 4894,
+      "sha256": "d166913ed4897cf69069ef5be090b2d79a857fc28328bb950e12655b5a54f176"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/S48_merge5347.patch",
+      "bytes": 5822,
+      "sha256": "2853289644eb92598e18dc848c930c219bc1e8345531e013366838461e757bc4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/aws_backup_restore_resource.capture",
+      "bytes": 29106,
+      "sha256": "5474bab0601b2c5311c8514949909467c78d70ace3fb99641ac4df958fa4a164"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/aws_backup_restore_resource.capture.txt",
+      "bytes": 9882,
+      "sha256": "dd5598e0289c93b331f410d4211add5838759cc59f5a57eb03cb51533c265f29"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/aws_backup_restore_testing.capture",
+      "bytes": 64921,
+      "sha256": "e0ba4b8d0eb56da2e56045e59e891a5e02b4df5d9c5b103950e50fcdbd4a9b21"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/aws_backup_restore_testing.capture.txt",
+      "bytes": 26362,
+      "sha256": "f77bdf770ac39037f73c34c6e4e0edf1b775e4c46daea8f98e34e312d0f5d222"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/aws_rel09_bp04.capture",
+      "bytes": 29259,
+      "sha256": "079a90dea69545a78b14703dbbb75b7b20d76fb4a4e055bc4e028e08d11f228d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/aws_rel09_bp04.capture.txt",
+      "bytes": 9052,
+      "sha256": "182484519c7c4c7969c175ba57a5c97e03c2874d47be6b7c00b463bd719af585"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/borg_check_v145.capture",
+      "bytes": 25422,
+      "sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/borg_check_v145.capture.txt",
+      "bytes": 8624,
+      "sha256": "32b5c5b4afc3bc711051db8c798f9ad2cf6c9483f74237037323c7586bc1e6f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_docs_v0191_check.capture",
+      "bytes": 22138,
+      "sha256": "7f0014e635f9dc0bb0c712eb769e7099cf64f5f12a78f468c5b766e807d25a75"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_docs_v0191_check.capture.txt",
+      "bytes": 7818,
+      "sha256": "e82f3cce92626e682aabe0a4d529f19ead6b71e74e71d6d3515c6833247e8e61"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_docs_v0191_copy.capture",
+      "bytes": 61216,
+      "sha256": "1065fc15868a91aaff4f6cff3cc624d8ab9d35a689fc2473a96a1609460e07b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_docs_v0191_copy.capture.txt",
+      "bytes": 26347,
+      "sha256": "ded4b13e8f3f1df23a9e4b1eec5f2931d6f69de7d0cfcc32c772925e204a6421"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_docs_v0191_restore.capture",
+      "bytes": 35336,
+      "sha256": "667c478b576b4e28e7e813ae96b4402562a5db26bef098115004afdd6043639a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_docs_v0191_restore.capture.txt",
+      "bytes": 12805,
+      "sha256": "32da6c25851cc1f622e5f196aa8c76cfdee11db4b2a55c281918692074c95572"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_issue_4467.capture",
+      "bytes": 287658,
+      "sha256": "38f679a29c9fcad95979b034ad9548418ce58d3f69b271ee5e439f5cf41c693b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_issue_4467.capture.txt",
+      "bytes": 5655,
+      "sha256": "080ba7547a97d6b232ab0197ce46467814a796455a48f642f89b6bef14bf19f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_pr_5347_patch.capture",
+      "bytes": 13294,
+      "sha256": "ec41516004eda1fa8739000682d64180d2072ed4dc0608c9c28d7cb9cb26687d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_release_v0190.capture",
+      "bytes": 259779,
+      "sha256": "5abb363f34df3762d1758d9d2df0aafe7f8b57843f6991c1b41bc4b30b160519"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_release_v0190.capture.txt",
+      "bytes": 21087,
+      "sha256": "27fa44131f9d2fb2c89f831f589c9f70c44b0b78569f64c1a1c393c42211f36d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_backup_go.capture",
+      "bytes": 21529,
+      "sha256": "726855a56bc03a182406e7fcb575c6e67e1d22b79576109391d555cd47373627"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_backup_integration_test.capture",
+      "bytes": 23033,
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_backup_test_go.capture",
+      "bytes": 3385,
+      "sha256": "391e3c291b65414cd5ea0b9ffb0ceaaa71e7f9b8b396747932e169b5b6cb48d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_check_test_go.capture",
+      "bytes": 7966,
+      "sha256": "dbe00da5ff53b9e033ba010c4514068144067ab19420e9a9d5ea2b7eb5977d01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_checker_go.capture",
+      "bytes": 9003,
+      "sha256": "89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_cmd_check_go.capture",
+      "bytes": 17364,
+      "sha256": "e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_cmd_copy_go.capture",
+      "bytes": 10700,
+      "sha256": "b80ad974a067ae2e443fb4d36de22b2aa6cf3da3c9949d8b60a615e08af6b7eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_repo_working_doc.capture",
+      "bytes": 28606,
+      "sha256": "56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_restore_doc.capture",
+      "bytes": 13558,
+      "sha256": "72e437a7a40a9aa17e818f6f6c0f3682f6baff3195452a8d9a0460a03796e19e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_scripting_doc.capture",
+      "bytes": 58070,
+      "sha256": "922289a229d7026fb23f0d9f857a84a952a217548af05b0d8d3406a759834917"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0190_troubleshooting_doc.capture",
+      "bytes": 8415,
+      "sha256": "a0445df4f769ab0610defd1bf867e4d1a4e11e81cb47c848095e4ea5ea903373"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0191_backup_go.capture",
+      "bytes": 21681,
+      "sha256": "4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0191_backup_integration_test.capture",
+      "bytes": 23033,
+      "sha256": "f6e5989c9208727d4c27ca9ad90519af378e6bf56ee009ff55c9f6fead1f326d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/sources/primary/restic_v0191_backup_test_go.capture",
+      "bytes": 4442,
+      "sha256": "4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-06-pair-freeze-v1.json"
+}

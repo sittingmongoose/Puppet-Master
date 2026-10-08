@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-07T19:16:19.797384+00:00",
+  "pair": "I-ANCHOR-LUNA",
+  "gate": "BOTH_FINALS_AND_ACTUAL_NATIVE_TERMINALS_FROZEN",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md": "419a2d6e04d55280d2e48fa82b79638be966a976214d2584d1542724e5957a32",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/native_terminal_receipt.json": "a43fda9c11ea7d7c125e53f9742d5ce6e5d55ce2e7faf621dc5249f36526b0bb",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/freeze.json": "5b6fbdff8f008719239f08c00020dd2af0996aaaa5e8e058d71b59047e4c07ee",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/task-terminal-tool-receipt.json": "55d37f4a072dfb95433db0f28b0df443d372e610c1a257eb2b8b1aa132d5c153",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md": "1d8420a0752e0b2bda7d8b3eeca666ecf23e801b829c03e2dc7f8d1b0880f3a8",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_terminal_receipt.json": "e06bbeae9f54a1a8ac9bcb688bbcf597e2e6bfc3c8b4a50e1529bec0433012a8",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/freeze.json": "f713b5b4b8ef187768a025cc55f17c2b05ef3960c412b75b13a46a5cae748223",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/task-terminal-tool-receipt.json": "7b2958dce10eb2f7357dca39ff23b903dee25da3ea3ede9c5ce0f132a552186c"
+  },
+  "timing_eligibility": "HOLD_CONTROL_OVERRUN",
+  "native_vs_task": "control native complete separately observed; T3 interrupted after expiry; no pending descendants; settled"
+}

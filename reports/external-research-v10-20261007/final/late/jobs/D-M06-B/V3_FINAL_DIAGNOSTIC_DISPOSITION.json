@@ -1,0 +1,211 @@
+{
+  "at": "2026-10-08T02:36:53.074226+00:00",
+  "state": "TERMINAL_DIAGNOSTIC_FULL_SOURCE_ASSESSED",
+  "review": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/FINAL_FREEZE.json",
+    "sha256": "1e8b6d12aaa6471e85f074b85e08fdfea5c512aae216cc386a11ddb67742ba59"
+  },
+  "arms": {
+    "control": {
+      "scientific_arm_T0": "2026-10-08T01:51:28.689459+00:00",
+      "actual_run": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-B-control-candidate-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "requestedAt": "2026-10-08T01:52:00.718Z",
+        "startedAt": "2026-10-08T01:52:16.398Z",
+        "completedAt": "2026-10-08T02:13:34.043Z"
+      },
+      "host_dispatch_at": "2026-10-08T01:51:59.155Z",
+      "host_dispatch_to_delivery_seconds": 1294.888,
+      "T3_requested_to_delivery_seconds": 1293.325,
+      "T3_queue_startup_seconds": 15.68,
+      "arm_preparation_to_delivery_seconds": 1325.353541,
+      "shared_seed_full_cold_charge_seconds": 827.055142,
+      "cold_equivalent_seconds_seed_plus_arm_preparation": 2152.408683,
+      "half_seed_amortized_seconds": 1738.881112,
+      "case_T0_to_delivery_seconds": 2313.261142,
+      "original_arm_ceiling": "2026-10-08T02:21:28.689459+00:00",
+      "common_deadline": "2026-10-08T02:25:00.781858+00:00",
+      "within_arm_ceiling": true,
+      "within_common_deadline": true,
+      "cold_within_new_50min": true,
+      "native_terminal": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/integration-state-terminal-v3.json",
+        "sha256": "614d0d3ee8b677419fb66ed71bf16c11775350b6d1de5c3932ca3292ec02db67"
+      },
+      "native_status": "COMPLETE",
+      "active_observed": false,
+      "quality": {
+        "source_quality": "FAIL",
+        "complete_scope_assessed": true,
+        "scope_coverage": "6/6",
+        "material_defect_ids": [
+          "DM06-D01",
+          "DM06-D02",
+          "DM06-D03",
+          "DM06-D04"
+        ],
+        "useful_deliverable": true,
+        "useful_deliverable_limits": "Useful as a bounded fixture-level coordinate/convention review; not a complete valid production inverse/numerical-policy recommendation.",
+        "process_validity": {
+          "status": "PASS",
+          "scope": "Frozen final receipt structural/content consistency, not an independent attestation of sandbox implementation.",
+          "checks": [
+            "Mapped artifacts match all declared SHA-256 values",
+            "Receipt code/input hashes identify the frozen witness/input",
+            "Process exit 0, no truncation, resource released, isolation-ready marker and enforced-isolation label recorded",
+            "Start/end and elapsed agree within 0.001 second; final control summaries agree with receipt stdout"
+          ],
+          "limits": [
+            "Receipt outer witness_validity and applicability both say not_assessed",
+            "Isolation is asserted by the receipt; sandbox mechanics were not independently audited",
+            "Actual native COMPLETE terminals are user-attested frozen; no terminal artifact is mapped, so timelines were not independently reread"
+          ]
+        },
+        "witness_validity": {
+          "status": "PARTIAL",
+          "basis": "Independent expectations and receipt diagnostics support the particular tested values; valid process execution alone does not establish the general conditioning, applicability, or every advertised oracle.",
+          "witness_to_report_agreement": {
+            "status": "PARTIAL",
+            "verified": [
+              "22/22 final receipt checks; 10 forward and 3 inverse constants; 36 weak pixel roundtrips max 3.330669e-10; half-pixel displacement error 2.387413e-15; tested rotated identity; sheared ratio 15/17; exact singular refusals."
+            ],
+            "mismatches": [
+              "General nonconstant distinctness and orthogonal-block inverse-control claims exceed the seven distinct-map and single equal-norm-rotation fixtures actually checked.",
+              "Production F4/F5 guard is proposed. inverse_adjugate enforces det==0 only, while a separate classification loop applies the margin; the witness does not execute a production inverse with both guards."
+            ],
+            "prior_runs": "Two runs disclosed in report; earlier receipt is not mapped and was not read. No reviewer best-of retest."
+          }
+        },
+        "oracle_independence": {
+          "status": "PARTIAL",
+          "valid_controls": [
+            "10 independently verified forward constants",
+            "3 inverse constants independently checked by Gauss-Jordan elimination",
+            "Transpose/common-norm identity valid for the specific equal-scale positive-determinant rotated fixture"
+          ],
+          "weak_or_invalid_controls": [
+            "Literal-vs-matrix transcription is paired formula corroboration",
+            "36 mutual roundtrips remain weak",
+            "Corner distinctness excludes only the zero block, an invalid general condition",
+            "Transpose/det does not apply to all orthogonal blocks"
+          ],
+          "trusted_operation_execution": false,
+          "main_independent_derivation_requirement_met_on_tested_points": true
+        },
+        "unassessed_remainder": []
+      }
+    },
+    "treatment": {
+      "scientific_arm_T0": "2026-10-08T01:51:28.689459+00:00",
+      "actual_run": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-B-treatment-candidate-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "requestedAt": "2026-10-08T01:51:56.439Z",
+        "startedAt": "2026-10-08T01:52:01.515Z",
+        "completedAt": "2026-10-08T02:11:11.837Z"
+      },
+      "host_dispatch_at": "2026-10-08T01:51:54.568Z",
+      "host_dispatch_to_delivery_seconds": 1157.269,
+      "T3_requested_to_delivery_seconds": 1155.398,
+      "T3_queue_startup_seconds": 5.076,
+      "arm_preparation_to_delivery_seconds": 1183.147541,
+      "shared_seed_full_cold_charge_seconds": 827.055142,
+      "cold_equivalent_seconds_seed_plus_arm_preparation": 2010.202683,
+      "half_seed_amortized_seconds": 1596.6751120000001,
+      "case_T0_to_delivery_seconds": 2171.055142,
+      "original_arm_ceiling": "2026-10-08T02:21:28.689459+00:00",
+      "common_deadline": "2026-10-08T02:25:00.781858+00:00",
+      "within_arm_ceiling": true,
+      "within_common_deadline": true,
+      "cold_within_new_50min": true,
+      "native_terminal": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/integration-state-terminal-v3.json",
+        "sha256": "e762bafa30b8ffb9f72553e48aca9446bc9c3a8d9d45d22102c2f2934bcf90f6"
+      },
+      "native_status": "COMPLETE",
+      "active_observed": false,
+      "quality": {
+        "source_quality": "FAIL",
+        "complete_scope_assessed": true,
+        "scope_coverage": "6/6",
+        "material_defect_ids": [
+          "DM06-D01",
+          "DM06-D02",
+          "DM06-D05",
+          "DM06-D06",
+          "DM06-D07"
+        ],
+        "useful_deliverable": true,
+        "useful_deliverable_limits": "Useful as a bounded fixture-level coordinate/convention review; not a complete valid production inverse/numerical-policy recommendation.",
+        "process_validity": {
+          "status": "PASS",
+          "scope": "Frozen final receipt structural/content consistency, not an independent attestation of sandbox implementation.",
+          "checks": [
+            "Mapped artifacts match all declared SHA-256 values",
+            "Receipt code/input hashes identify the frozen witness/input",
+            "Process exit 0, no truncation, resource released, isolation-ready marker and enforced-isolation label recorded",
+            "Start/end and elapsed agree within 0.001 second; final control summaries agree with receipt stdout"
+          ],
+          "limits": [
+            "Receipt outer witness_validity and applicability both say not_assessed",
+            "Isolation is asserted by the receipt; sandbox mechanics were not independently audited",
+            "Actual native COMPLETE terminals are user-attested frozen; no terminal artifact is mapped, so timelines were not independently reread"
+          ]
+        },
+        "witness_validity": {
+          "status": "PARTIAL",
+          "basis": "Independent expectations and receipt diagnostics support the particular tested values; valid process execution alone does not establish the general conditioning, applicability, or every advertised oracle.",
+          "witness_to_report_agreement": {
+            "status": "PARTIAL",
+            "verified": [
+              "9 correct-control groups and 4 wrong-control groups in final receipt; 16 forward plus 6 inverse constants; 8 determinants; 48 translation checks with zero measured error; W2 wrong inverse (2.2,0.4); W4 world closure max 1.110221e-10; near-singular margin."
+            ],
+            "mismatches": [
+              "22 mixed point checks are described as 22 inverse checks",
+              "Sheared report denominator/ratio wrong: 2.125 and 15/17, not 2.25 and 0.833",
+              "W1 advertised frozen center oracles are not consumed; C2 duplicates the forward expression; C7 rotated/sheared uses frozen columns without linking to actual fixture values",
+              "C9 measures a margin but does not enforce the proposed production rejection threshold"
+            ],
+            "prior_runs": "Three runs and two repairs disclosed in report; only final receipt mapped. Prior code/receipts were not read and no reviewer best-of retest was performed."
+          }
+        },
+        "oracle_independence": {
+          "status": "PARTIAL",
+          "valid_controls": [
+            "16 independently verified forward constants",
+            "6 inverse constants independently checked by Gauss-Jordan elimination",
+            "8 fixed determinant constants agree with independent LU determinants",
+            "W2 inverse and W4 wrong-pair fixed forward-point oracle violations"
+          ],
+          "weak_or_invalid_controls": [
+            "C2 expected expression equals the implementation expression at runtime",
+            "W1 expects fwd(center), not the declared frozen center constants",
+            "W2 forward and W3 use the same forward baseline",
+            "C7 rotated/sheared classifies separate candidate-supplied columns with no fixture binding",
+            "Translation and half-pixel metamorphics constrain properties but do not alone prove coefficient correctness"
+          ],
+          "trusted_operation_execution": false,
+          "main_independent_derivation_requirement_met_on_tested_points": true
+        },
+        "unassessed_remainder": []
+      }
+    }
+  },
+  "source_quality": "BOTH_FAIL; no equivalence or winner inference",
+  "scientific_scope": "6/6 each",
+  "native_activation_qualification": "HOLD; original startup and ACTIVE absence retained",
+  "provenance_comparative_qualification": "HOLD; paths advisory, no firewall/rawAPI/vendor/ACP mapping claim",
+  "GLM0_release": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/GLM2_FINAL_RELEASE.json",
+    "sha256": "b3b4ab960dadad9da962057bfcfbc34c539fd8113c792751b66e87feb23df825"
+  },
+  "no_candidates_or_further_reviews_admitted": true,
+  "billing": null
+}

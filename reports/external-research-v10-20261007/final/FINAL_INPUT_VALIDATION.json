@@ -1,0 +1,64 @@
+{
+  "schema": "ER10_FINAL_EXPLICIT_FROZEN_INPUT_VALIDATION_V1",
+  "passed": true,
+  "quiet_evidence_bindings": [
+    {
+      "slot_id": "D-M06-A",
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "exact_value": true,
+      "original": {
+        "source": "final_actual_quiet/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+        "sha256": "9990707a8872b25e6e3d2b03799d2f11e0a598d79463c576a8c3d8cda7ff443e",
+        "bytes": 5551,
+        "bundle_path": "inputs/by-source/8b0c98e1fd0f30b61a63d8bc3edccc4b1c66008cd1e98b4e2e2216117c862152.json",
+        "pointer": "/cases/D-M06-A/all_task_trees_and_descendants_actual_quiet"
+      }
+    },
+    {
+      "slot_id": "D-M06-B",
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "exact_value": true,
+      "original": {
+        "source": "final_actual_quiet/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+        "sha256": "9990707a8872b25e6e3d2b03799d2f11e0a598d79463c576a8c3d8cda7ff443e",
+        "bytes": 5551,
+        "bundle_path": "inputs/by-source/8b0c98e1fd0f30b61a63d8bc3edccc4b1c66008cd1e98b4e2e2216117c862152.json",
+        "pointer": "/cases/D-M06-B/all_task_trees_and_descendants_actual_quiet"
+      }
+    },
+    {
+      "slot_id": "D-M07-B",
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "exact_value": true,
+      "original": {
+        "source": "final_actual_quiet/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+        "sha256": "9990707a8872b25e6e3d2b03799d2f11e0a598d79463c576a8c3d8cda7ff443e",
+        "bytes": 5551,
+        "bundle_path": "inputs/by-source/8b0c98e1fd0f30b61a63d8bc3edccc4b1c66008cd1e98b4e2e2216117c862152.json",
+        "pointer": "/cases/D-M07-B/all_task_trees_and_descendants_actual_quiet"
+      }
+    },
+    {
+      "slot_id": "D-M09-A",
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "exact_value": true,
+      "original": {
+        "source": "final_actual_quiet/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_ACTUAL_OWNED_TREE_QUIET_VALIDATION_V1.json",
+        "sha256": "9990707a8872b25e6e3d2b03799d2f11e0a598d79463c576a8c3d8cda7ff443e",
+        "bytes": 5551,
+        "bundle_path": "inputs/by-source/8b0c98e1fd0f30b61a63d8bc3edccc4b1c66008cd1e98b4e2e2216117c862152.json",
+        "pointer": "/cases/D-M09-A/all_task_trees_and_descendants_actual_quiet"
+      }
+    }
+  ],
+  "exact_original_slots": 40,
+  "exact_original_arms": 80,
+  "input_manifest_sha256": "3eb072d88c472c85b50ba81e08081825a0ba74d929e066f99c63043f97ea0c88",
+  "field_map_sha256": "11045277d657ca8a2896350eae46e13213e3fd9114f25adee6c5b9c451b2bfa3",
+  "all_mapping_entries_replayed": 4663,
+  "scope": "Frozen metadata replay and exact quiet declarations only; no science regrade or live capture."
+}

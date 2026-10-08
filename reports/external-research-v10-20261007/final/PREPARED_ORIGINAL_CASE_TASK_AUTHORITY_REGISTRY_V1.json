@@ -1,0 +1,185 @@
+{
+  "schema": "ER10_EXACT_ORIGINAL_CASE_TASK_AUTHORITY_REGISTRY_V1",
+  "cases": {
+    "D-M06-A": [
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/dispatch-receipt.json",
+        "authority_sha256": "31f0442ef460c9f4bae3338d6229d77cdc35a535d3bb912fa3a91288766f060c",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-common-seed-v2",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-common-seed-v2",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-A-common-seed-v2:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/dispatch-receipt.json",
+        "authority_sha256": "a190e9ad71b22c1aed42bde32be858b1f54f6e54c743451bdb07b822eb58779a",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-common-seed-v3",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-common-seed-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-A-common-seed-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/dispatch-receipt.json",
+        "authority_sha256": "0bfb4872d4da0655ad38bfe6cf874f83dd6df22a03769a697f5ebfec029e7842",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-control-candidate-v3",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-control-candidate-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-A-control-candidate-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v3/dispatch-receipt.json",
+        "authority_sha256": "6403005173d333f9f3fdfe3b387d075b34029ca0e93cbff1eef9a2e3492eee4f",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-treatment-candidate-v3",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-treatment-candidate-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-A-treatment-candidate-v3:ordinal:1"
+      }
+    ],
+    "D-M06-B": [
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/dispatch-receipt.json",
+        "authority_sha256": "9cabe9431872f27ebcfbc628d9ec1e2012c675144b5203e26ebdadfc46ed6b47",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-common-seed-v2",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-common-seed-v2",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-B-common-seed-v2:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/dispatch-receipt.json",
+        "authority_sha256": "af9045b8db2436a4a7c041b68cd090ee861d8d8f4c7a000fd6e53c8ad44b5fb6",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-common-seed-v3",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-common-seed-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-B-common-seed-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/dispatch-receipt.json",
+        "authority_sha256": "83a4de9b214f081be884c453a656c293bc4fc4d2c5df12a5342d8ae90884c027",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-control-candidate-v3",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-control-candidate-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-B-control-candidate-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/dispatch-receipt.json",
+        "authority_sha256": "c0e6808eeb0e157a827880e8dfecb681608c74a3e29056297e5c52adad42f7b0",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-treatment-candidate-v3",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-treatment-candidate-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-B-treatment-candidate-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M06-B-v3/dispatch-receipt.json",
+        "authority_sha256": "51993cb6f3f594f43090e7c8688321ebcdbc8c6e7e548a35d817cd60a50e125d",
+        "child_thread_pointer": "/response/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-independent-source-review-v3",
+        "task_id_pointer": "/response/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-independent-source-review-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M06-B-independent-source-review-v3:ordinal:1"
+      }
+    ],
+    "D-M07-B": [
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/common/fresh-untrusted-seed-v3/dispatch_original_tool_response.json",
+        "authority_sha256": "14166125a57dd57ecbf3c929eadf9161ccab5d05ad0103948dc5eb46a5c78f3e",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/control/document-order-review-final-v3/dispatch_original_tool_response.json",
+        "authority_sha256": "bea3a2a591d3bfc033cd553299333e1bb2b8ff20311de88463d8a49531a9e31f",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-control-document-order-review-final-v3",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-control-document-order-review-final-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-B-control-document-order-review-final-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/dispatch_original_tool_response.json",
+        "authority_sha256": "76752605f3b2e9f804ac55e872b06f9fa1e08ff76586d8f77c8b20891229b831",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-treatment-critical-first-protected-breadth-final-v3",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-treatment-critical-first-protected-breadth-final-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-B-treatment-critical-first-protected-breadth-final-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/dispatch_original_tool_response.json",
+        "authority_sha256": "fbbde7d836ca4abab56598ed81ae032b5c0c8d0919ee76a66763c382adeccbcf",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-v3-review-J1",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-v3-review-J1",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-B-v3-review-J1:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/dispatch_original_tool_response.json",
+        "authority_sha256": "fa7f85c288afb0319fc7ec09106a5bd34c2fd7729553336cfa07619ac978f62c",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-v3-review-J2",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-v3-review-J2",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-B-v3-review-J2:ordinal:1"
+      }
+    ],
+    "D-M09-A": [
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/dispatch_original_tool_response.json",
+        "authority_sha256": "949177fa15805d4aba2dee5ffb60f2433c0a88fbe43885138a0018cc60f3ff48",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/dispatch_original_tool_response.json",
+        "authority_sha256": "767d9b73c0efe5bdf68c1481d61e630d21570225b5bff0b85f03815d3c01eb19",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-evidence-critic-v3/dispatch_original_tool_response.json",
+        "authority_sha256": "646f1489f14a9d11a5c75ce8d27879751371e988ae83f7f351e5fa23de75a107",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-evidence-critic-v3",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-evidence-critic-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-treatment-independent-evidence-critic-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/dispatch_original_tool_response.json",
+        "authority_sha256": "c47de5cb296d3d81ba033fe4a0a78f59c28256ced2db1465fe7d6c320642d7eb",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-operations-critic-v3",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-operations-critic-v3",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-treatment-independent-operations-critic-v3:ordinal:1"
+      },
+      {
+        "authority_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/J1/dispatch_original_tool_response.json",
+        "authority_sha256": "b5e4d5f908f8b7fb220d1aad4d7e4091c7932b6ae62630e47b052c0dfda25c93",
+        "child_thread_pointer": "/structuredContent/childThreadId",
+        "child_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-v3-review-J1",
+        "task_id_pointer": "/structuredContent/taskId",
+        "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-v3-review-J1",
+        "original_child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-v3-review-J1:ordinal:1"
+      }
+    ]
+  },
+  "liveness_or_native_or_scientific_quality_inferred": false
+}

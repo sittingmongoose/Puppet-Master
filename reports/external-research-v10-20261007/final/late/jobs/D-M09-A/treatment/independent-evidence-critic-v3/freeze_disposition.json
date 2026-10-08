@@ -1,0 +1,33 @@
+{
+  "stage": "D-M09-A/treatment/independent-evidence-critic-v3",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_bb0c78de-d219-4d1e-9422-729c877fe70a/state.json",
+  "native_status": "paused",
+  "native_active_observed": true,
+  "t3_status": "interrupted",
+  "quiet": true,
+  "settled": true,
+  "requestedAt": "2026-10-08T00:19:13.721Z",
+  "startedAt": "2026-10-08T00:19:18.439Z",
+  "completedAt": "2026-10-08T00:40:45.869Z",
+  "dispatch_to_delivery_seconds": 1292.148,
+  "stage_ceiling_seconds": 1200,
+  "budget_delivery_eligible": false,
+  "disposition": "EXPIRED_ORIGINAL_STAGE_INTERRUPTED_NOT_COMPLETE",
+  "original_scientific_files_retained": {
+    "critique.md": {
+      "sha256": "3737925f2387246a59824ab934d022251c322bc9baa983b94807898ce48002b6",
+      "bytes": 8646
+    }
+  },
+  "comparative_eligibility": "HOLD_STAGE_FAILURE_AND_ORIGINAL_SEED_CONTROL_ACTIVE_ABSENCES",
+  "source_quality": "UNASSESSED",
+  "raw_native_goal_counters": {
+    "rounds": 3,
+    "createdAt": 1791418761304,
+    "updatedAt": 1791420043009,
+    "tokens": null
+  },
+  "billing": null,
+  "generated_tokens": null,
+  "frozen_at": "2026-10-08T00:41:49.163695+00:00"
+}

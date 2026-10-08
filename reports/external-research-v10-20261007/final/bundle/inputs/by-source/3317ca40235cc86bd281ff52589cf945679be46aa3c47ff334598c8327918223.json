@@ -1,0 +1,1010 @@
+{
+  "schema": "pm.er10.confirmation-comparison.v1",
+  "case": "C-04",
+  "domain": "B",
+  "repetition": 2,
+  "frozen_at": "2026-10-07T21:43:21.608547+00:00",
+  "qualification": "DIAGNOSTIC_UNQUALIFIED",
+  "original_grades_preserved": true,
+  "assessed_pair": true,
+  "both_arm_full_declared_source_coverage": true,
+  "assessment_disposition": "DELIVERED",
+  "arms": {
+    "control": {
+      "original_scientific_grade": {
+        "status": "FAIL",
+        "immutable": true,
+        "reason": "D01: missing explicit competing-component comparison under O2. Other qualified consequential claims and integrated plan/preservation/validation distinctions are substantially supported.",
+        "material_defect_ids": [
+          "D01"
+        ],
+        "eligibility_cannot_upgrade": true
+      },
+      "full_declared_scope_assessed": true,
+      "source6_axes_original": [
+        {
+          "axis_id": "S1",
+          "name": "full brief obligations",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "BRIEF.md:15\u201321",
+            "artifact.md:5\u2013108",
+            "REPORT.md:Exact frozen-plan disposition completeness",
+            "O1",
+            "O2",
+            "O3",
+            "O4",
+            "O5",
+            "O6",
+            "O7"
+          ],
+          "defect_refs": [
+            "D01"
+          ],
+          "reason": "All obligations assessed; the explicit competing-components portion of O2 is missing."
+        },
+        {
+          "axis_id": "S2",
+          "name": "consequential source claims and governing conditions",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10"
+          ],
+          "defect_refs": [],
+          "caveat_refs": [
+            "C01",
+            "C02"
+          ],
+          "reason": "Core claims agree with independently retrieved primary docs/code; issue reporting and viewport normalization have nonmaterial qualifications."
+        },
+        {
+          "axis_id": "S3",
+          "name": "useful open discovery coverage/options/analogies/components/history",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "artifact.md:11\u201354",
+            "DISC-OSMD-README",
+            "DISC-OSMD-PACKAGE",
+            "CHECK-VRV-01",
+            "CHECK-WA-01",
+            "E05",
+            "E06",
+            "E07"
+          ],
+          "defect_refs": [
+            "D01"
+          ],
+          "reason": "Substantially different mechanisms, optional leads, W3C analogy and bounded history are present; no competing implementation comparison is supplied."
+        },
+        {
+          "axis_id": "S4",
+          "name": "incorrect rejection/correction",
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "PLAN.md:B-P1..B-P7",
+            "researcher-v1/artifact.md:25\u201353",
+            "critic-v1/artifact.md:25\u201345",
+            "reviser-v1/artifact.md:60\u201387",
+            "E03",
+            "E04",
+            "E06"
+          ],
+          "defect_refs": [],
+          "reason": "No materially incorrect rejection/correction found. B-P4 was already an open durability assumption; the final develops it and retains its note intent."
+        },
+        {
+          "axis_id": "S5",
+          "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "researcher-v1/artifact.md:5\u20139,25\u201341,47\u201387",
+            "critic-v1/artifact.md:5\u20137,27\u201333,39\u201371",
+            "reviser-v1/artifact.md:5\u20137,30\u201354,60\u2013106",
+            "all three preservation_check.md files",
+            "all three source-map.json files",
+            "E01"
+          ],
+          "defect_refs": [],
+          "reason": "No material preservation loss found. Advanced schemas/services are deferred with their safety properties and meaningful optional directions retained. D01 was not an option lost from the admitted predecessors."
+        },
+        {
+          "axis_id": "S6",
+          "name": "proposed versus actually performed validation",
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "artifact.md:97\u2013108",
+            "preservation_check.md:Proposed versus actually executed checks",
+            "E01",
+            "CHECK-PDF-API-TESTS",
+            "CHECK-VRV-4396"
+          ],
+          "defect_refs": [],
+          "reason": "Pilot checks remain proposed; source reading/capture/hash inspection is distinguished from musical and workflow execution. Upstream tests are source evidence, not candidate or reviewer test runs."
+        }
+      ],
+      "obligations_original": {
+        "O1": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence_refs": [
+            "artifact.md:13",
+            "BRIEF.md:15",
+            "CHECK-WA-01",
+            "CHECK-MEI-CHAPTER",
+            "REPORT.md:Consequential claims independently checked"
+          ],
+          "reason": "Output-level user-first discovery and useful mechanism coverage assessed. Candidate chronology is self-reported in admitted scientific files; runtime/history was not reconstructed."
+        },
+        "O2": {
+          "status": "FAIL",
+          "evidence_refs": [
+            "artifact.md:15\u201324",
+            "DISC-OSMD-README",
+            "DISC-OSMD-PACKAGE",
+            "CHECK-VRV-01"
+          ],
+          "defect_refs": [
+            "D01"
+          ],
+          "reason": "Distinct mechanisms and their trade-offs plus analogy are covered; competing-component implementation comparison is absent."
+        },
+        "O3": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence_refs": [
+            "E02",
+            "E03",
+            "E04",
+            "E07",
+            "E08",
+            "E09"
+          ],
+          "caveat_refs": [
+            "C02"
+          ],
+          "reason": "Version pins, data identities, divisions and source/viewport/surface coordinate boundaries were independently checked. Rotation values normalize modulo 360 before validation."
+        },
+        "O4": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence_refs": [
+            "E02",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E09"
+          ],
+          "caveat_refs": [
+            "C01"
+          ],
+          "reason": "Pinned core implementation and bounded issue/fix/release history checked. Dedicated regression paths are absent in the inspected patches, not proved absent elsewhere. Candidate PouchDB source gap is explicit and that component is unselected. Reviewer source checks do not retroactively repair it."
+        },
+        "O5": {
+          "status": "PASS",
+          "evidence_refs": [
+            "PLAN.md:B-P1",
+            "PLAN.md:B-P2",
+            "PLAN.md:B-P3",
+            "PLAN.md:B-P4",
+            "PLAN.md:B-P5",
+            "PLAN.md:B-P6",
+            "PLAN.md:B-P7",
+            "artifact.md:58\u201366",
+            "REPORT.md:Exact frozen-plan disposition completeness"
+          ],
+          "reason": "Every exact frozen section is dispositioned, including already-covered choices and governing uncertainties."
+        },
+        "O6": {
+          "status": "PASS",
+          "evidence_refs": [
+            "artifact.md:68\u2013108",
+            "E01",
+            "REPORT.md:Preservation, validation and review boundary"
+          ],
+          "reason": "Complete bounded proposed workflow, optional opportunities, open product choices and observable pilot checks; no product validation result invented."
+        },
+        "O7": {
+          "status": "PASS",
+          "evidence_refs": [
+            "artifact.md:5\u20137,60\u201377,89\u2013106",
+            "PLAN.md:B-P2..B-P6"
+          ],
+          "reason": "Ingest/provenance, work/edition/part/source identity, notes/collaboration, access, retention/deletion, recovery and portable offline handoff are integrated without product/canon work."
+        }
+      },
+      "material_defect_count": 1,
+      "limitations_original_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/REVIEW_FREEZE.json",
+      "review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/REVIEW_FREEZE.json",
+        "sha256": "24796faa915a8ae8813715dcfe80c4bf9476956c109640b60499445f2a48e214"
+      },
+      "review_delivered": true,
+      "assessment_disposition": "DELIVERED",
+      "host_review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+        "sha256": "31bb4a7de8d1f178a06e609dd1380c877b450cadf04191d6be9039f464218b25"
+      },
+      "cold_predispatch_at": "2026-10-07T20:58:17.741429+00:00",
+      "candidate_service_terminal_at": "2026-10-07T21:31:18.622000+00:00",
+      "resource_release_observed_upper_bound": "2026-10-07T21:31:27.684425+00:00",
+      "failure_inclusive_service_latency_seconds": 1980.880571,
+      "failure_inclusive_host_closeout_latency_seconds": 1989.942996,
+      "aggregate_stage_occupied_seconds": 1934.3029999999999,
+      "host_and_between_stage_elapsed_seconds": 55.63999600000011,
+      "whole_arm_deadline": "2026-10-07T21:43:17.741429+00:00",
+      "service_terminal_within45min": true,
+      "closeout_within45min": true,
+      "stages": [
+        {
+          "stage": "researcher-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-researcher-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-researcher-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-researcher-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11828-ee1d-7ec3-985b-56f0b0e360b0",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T20:58:17.903Z",
+          "startedAt": "2026-10-07T20:58:19.811Z",
+          "completedAt": "2026-10-07T21:11:46.597Z",
+          "stage_occupied_seconds": 808.694,
+          "queue_startup_seconds": 1.908,
+          "deadline": "2026-10-07T21:18:17.741429+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "4ebafb8a1e2523d93e16ed763d3fb82db52ed89f331be2c50a53f7ebece13434",
+              "status": "complete",
+              "tokensUsed": 278631,
+              "tokenBudget": null,
+              "timeUsedSeconds": 780
+            }
+          ],
+          "output_bytes": 45064225,
+          "scientific_artifact_bytes": 50932,
+          "source_capture_bytes": 45013293,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "critic-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-critic-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-critic-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11835-a68e-7340-94df-4165af7ff189",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T21:12:10.875Z",
+          "startedAt": "2026-10-07T21:12:12.132Z",
+          "completedAt": "2026-10-07T21:18:09.621Z",
+          "stage_occupied_seconds": 358.746,
+          "queue_startup_seconds": 1.257,
+          "deadline": "2026-10-07T21:22:10.526392+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "fd457e667af0786dd7284ee21d2a4495a7c85bee5ed37c78aadcd62008a5c565",
+              "status": "complete",
+              "tokensUsed": 129037,
+              "tokenBudget": null,
+              "timeUsedSeconds": 319
+            }
+          ],
+          "output_bytes": 2631309,
+          "scientific_artifact_bytes": 38788,
+          "source_capture_bytes": 2592521,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "reviser-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-reviser-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-reviser-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-reviser-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a1183b-79a5-7ad1-992e-73978920655b",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T21:18:31.759Z",
+          "startedAt": "2026-10-07T21:18:33.810Z",
+          "completedAt": "2026-10-07T21:31:18.622Z",
+          "stage_occupied_seconds": 766.863,
+          "queue_startup_seconds": 2.051,
+          "deadline": "2026-10-07T21:33:31.572294+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "688ab2e025ae6f44e17f89f0b01866104eace94bd99dedf8d54b1c3dcf83037c",
+              "status": "complete",
+              "tokensUsed": 192651,
+              "tokenBudget": null,
+              "timeUsedSeconds": 737
+            }
+          ],
+          "output_bytes": 4069370,
+          "scientific_artifact_bytes": 65677,
+          "source_capture_bytes": 4003693,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/host/scientific-files-terminal-freeze.json"
+        }
+      ],
+      "review_time_separate": {
+        "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-source-review-v1:ordinal:1",
+        "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-source-review-v1",
+        "status": "completed",
+        "requestedAt": "2026-10-07T21:31:36.559Z",
+        "startedAt": "2026-10-07T21:31:37.081Z",
+        "completedAt": "2026-10-07T21:42:51.512Z"
+      },
+      "usage": {
+        "input": null,
+        "cached_input": null,
+        "generated_output": null,
+        "reasoning_subset": null,
+        "billing": null
+      },
+      "source_operations": null,
+      "scope_audit": "incomplete_unknown; advisory maps not filesystem firewall",
+      "native_raw_API_bodies": "missing; actual active and terminal projection evidence distinct",
+      "affordability_claim": false
+    },
+    "treatment": {
+      "original_scientific_grade": {
+        "status": "PASS_WITH_LIMITATIONS",
+        "rationale": "All declared scientific axes/obligations and exact frozen plan sections assessed. Consequential source claims are supported at their stated conditions; no material defect, incorrect correction or material preservation loss found. Nonmaterial caveats, empirical abstentions and blinding/process limits retained.",
+        "immutable": true
+      },
+      "full_declared_scope_assessed": true,
+      "source6_axes_original": [
+        {
+          "id": "S6-01",
+          "name": "Full brief obligations",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "BRIEF.md",
+            "PLAN.md:B-P1..B-P7",
+            "final:7-105",
+            "O1",
+            "O2",
+            "O3",
+            "O4",
+            "O5",
+            "O6",
+            "O7"
+          ],
+          "defect_refs": [],
+          "limitation_refs": [
+            "BL-01",
+            "BL-02"
+          ],
+          "finding_refs": [
+            "E-01",
+            "E-02",
+            "E-03",
+            "E-04",
+            "E-05",
+            "E-06",
+            "E-07",
+            "PRES-01"
+          ]
+        },
+        {
+          "id": "S6-02",
+          "name": "Consequential source claims and governing conditions",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "R-A01",
+            "R-A02",
+            "R-A03",
+            "R-A04",
+            "R-A05",
+            "H01",
+            "H04",
+            "H05",
+            "H06",
+            "H07",
+            "H08",
+            "H17",
+            "H21",
+            "H22",
+            "H23",
+            "H24",
+            "H25",
+            "H26",
+            "R-MX01",
+            "R-MX02",
+            "R-MX03",
+            "R-MX04",
+            "R-MX05",
+            "R-MX06",
+            "H19",
+            "R-O01",
+            "R-O02",
+            "R-O03",
+            "R-O04",
+            "R-O05",
+            "R-O07",
+            "H02",
+            "H09",
+            "H10",
+            "H11",
+            "H13",
+            "H15",
+            "R-V01",
+            "R-V02",
+            "R-V03",
+            "R-V04",
+            "H03",
+            "H12",
+            "H14",
+            "H16",
+            "R-WA01",
+            "R-IIIF01",
+            "R-MEI01"
+          ],
+          "defect_refs": [],
+          "limitation_refs": [
+            "CAV-01"
+          ],
+          "finding_refs": [
+            "E-01",
+            "E-02",
+            "E-03",
+            "E-04",
+            "E-05",
+            "E-06",
+            "E-07"
+          ]
+        },
+        {
+          "id": "S6-03",
+          "name": "Useful open discovery coverage, options, analogies, components and history",
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "final:18-29",
+            "final:33-59",
+            "final:99-105",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "D05",
+            "R-WA01",
+            "R-IIIF01",
+            "R-MEI01",
+            "R-O07",
+            "H09",
+            "H10",
+            "H11",
+            "H17",
+            "H24",
+            "H26"
+          ],
+          "defect_refs": [],
+          "limitation_refs": [],
+          "finding_refs": [
+            "E-03",
+            "E-05",
+            "E-07"
+          ]
+        },
+        {
+          "id": "S6-04",
+          "name": "Incorrect rejection or correction",
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "predecessor:22",
+            "predecessor:50-56",
+            "final:57",
+            "final:78-84",
+            "final:111-117",
+            "R-V01",
+            "R-V03",
+            "R-V04",
+            "R-A04",
+            "H12"
+          ],
+          "defect_refs": [],
+          "correction_refs": [
+            "PRE-COR-01"
+          ],
+          "finding_refs": [
+            "E-06",
+            "PRES-01"
+          ],
+          "limitation_refs": []
+        },
+        {
+          "id": "S6-05",
+          "name": "Preservation of constraints, options, source identity, admitted corrections and uncertainty into final",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "predecessor:7-44",
+            "predecessor:50-66",
+            "predecessor:70-94",
+            "predecessor preservation_check scientific sections",
+            "final:7-29",
+            "final:35-105",
+            "final:109-119",
+            "final source-map inputs/sources/predecessor scientific fields",
+            "final preservation_check scientific sections",
+            "sources/INPUT_INTEGRITY.json"
+          ],
+          "defect_refs": [],
+          "finding_refs": [
+            "PRES-01",
+            "E-06"
+          ],
+          "limitation_refs": [
+            "CAV-02"
+          ]
+        },
+        {
+          "id": "S6-06",
+          "name": "Proposed versus actually performed validation",
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "predecessor:68-78",
+            "predecessor:86-94",
+            "final:88-97",
+            "final:119",
+            "both preservation_check scientific performed/proposed sections",
+            "reviewer fresh source captures and integrity/ancestry/patch comparisons"
+          ],
+          "defect_refs": [],
+          "finding_refs": [
+            "E-02",
+            "E-03",
+            "E-05"
+          ],
+          "limitation_refs": [
+            "EMP-01"
+          ]
+        }
+      ],
+      "obligations_original": [
+        {
+          "id": "O1",
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence": [
+            "final:18-29",
+            "predecessor:11-20",
+            "source-map open_discovery scientific fields",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "D05"
+          ],
+          "notes": "Scientific open-discovery coverage and relevance assessed independently. Original candidate ordering is documentary, not an authenticated host/history observation. Process provenance remains supervisor-owned.",
+          "limitation_refs": [
+            "BL-01",
+            "BL-02"
+          ]
+        },
+        {
+          "id": "O2",
+          "status": "PASS",
+          "evidence": [
+            "final:22-29",
+            "final:51-59",
+            "final:99-105",
+            "D01",
+            "D02",
+            "D03",
+            "D05",
+            "R-WA01",
+            "R-IIIF01",
+            "R-MEI01"
+          ],
+          "notes": "Substantially different page-first/structured-first and snapshot/live mechanisms; OMR/supplied/manual alternatives; competing OSMD/Verovio components, outside-score analogies and conditional optional opportunities."
+        },
+        {
+          "id": "O3",
+          "status": "PASS",
+          "evidence": [
+            "E-01",
+            "E-02",
+            "E-03",
+            "E-04",
+            "E-05",
+            "E-06",
+            "E-07"
+          ],
+          "notes": "Pinned versions/release boundaries, file-local IDs, measure conditions, divisions/tenths, renderer layout/page numbering and documented/code/inference/proposal distinctions assessed."
+        },
+        {
+          "id": "O4",
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence": [
+            "R-A04",
+            "R-A05",
+            "R-O02",
+            "R-O07",
+            "H09",
+            "H10",
+            "H11",
+            "H12",
+            "H17",
+            "H21",
+            "H22",
+            "H24",
+            "H25",
+            "H26",
+            "final:35-59",
+            "final:114-116"
+          ],
+          "notes": "Relevant pinned implementation and justified OSMD fix/regression-source/release history assessed. Audiveris issue/release attribution independently traced to equivalent development/release fix patches. No runtime reproduction/regression result asserted.",
+          "limitation_refs": [
+            "CAV-01",
+            "EMP-01"
+          ]
+        },
+        {
+          "id": "O5",
+          "status": "PASS",
+          "evidence": [
+            "PLAN.md:B-P1",
+            "PLAN.md:B-P2",
+            "PLAN.md:B-P3",
+            "PLAN.md:B-P4",
+            "PLAN.md:B-P5",
+            "PLAN.md:B-P6",
+            "PLAN.md:B-P7",
+            "final:74-84",
+            "REPORT.md exact frozen-plan table"
+          ],
+          "notes": "Every exact section assessed for completeness and what the plan already adequately covers; no missing disposition."
+        },
+        {
+          "id": "O6",
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence": [
+            "final:7-16",
+            "final:61-105",
+            "final:109-119",
+            "PRES-01"
+          ],
+          "notes": "Complete integrated planning decisions/changes, optional opportunities, constraints and uncertainty; observable checks proposed honestly. Minor selector/page-index condensation remains nonmaterial.",
+          "limitation_refs": [
+            "CAV-02",
+            "EMP-01"
+          ]
+        },
+        {
+          "id": "O7",
+          "status": "PASS",
+          "evidence": [
+            "final:61-72",
+            "final:78-84",
+            "final:90-97",
+            "final:101-105"
+          ],
+          "notes": "Manageable small-group workflow covers ingest/provenance, identity, annotation/collaboration, access, deletion/backups/stale copies, failures/recovery, and labeled portable export. No product build or canonical writes."
+        }
+      ],
+      "material_defect_count": 0,
+      "limitations_original_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/treatment/source-review-v1/REVIEW_FREEZE.json",
+        "sha256": "5b49f159b5b265ca44c9a19ced1eb9709440f18ab7ba3c8014b1246dd9932361"
+      },
+      "review_delivered": true,
+      "assessment_disposition": "DELIVERED",
+      "host_review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+        "sha256": "c48b57554ae5f54167f5255b997d2f7b039aaeba2c50368f4df0a647645112c6"
+      },
+      "cold_predispatch_at": "2026-10-07T20:58:09.132917+00:00",
+      "candidate_service_terminal_at": "2026-10-07T21:30:40.955000+00:00",
+      "resource_release_observed_upper_bound": "2026-10-07T21:30:59.219417+00:00",
+      "failure_inclusive_service_latency_seconds": 1951.822083,
+      "failure_inclusive_host_closeout_latency_seconds": 1970.0865,
+      "aggregate_stage_occupied_seconds": 1930.386,
+      "host_and_between_stage_elapsed_seconds": 39.70049999999992,
+      "whole_arm_deadline": "2026-10-07T21:43:09.132917+00:00",
+      "service_terminal_within45min": true,
+      "closeout_within45min": true,
+      "stages": [
+        {
+          "stage": "researcher-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-researcher-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-researcher-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-treatment-researcher-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11828-cc6c-7023-a196-f0340d74cc99",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T20:58:09.284Z",
+          "startedAt": "2026-10-07T20:58:09.711Z",
+          "completedAt": "2026-10-07T21:17:06.321Z",
+          "stage_occupied_seconds": 1137.037,
+          "queue_startup_seconds": 0.427,
+          "deadline": "2026-10-07T21:23:09.132917+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "d9970b622bb1cf4183ab9c704f48bce7e238b9b3b21c412df4b6bcbf25749c32",
+              "status": "complete",
+              "tokensUsed": 236096,
+              "tokenBudget": null,
+              "timeUsedSeconds": 1046
+            }
+          ],
+          "output_bytes": 2789997,
+          "scientific_artifact_bytes": 44947,
+          "source_capture_bytes": 2745050,
+          "observable_dynamic_tool_counts": {
+            "t3-code.orchestrator_capabilities": 2,
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/treatment/researcher-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "critic-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-critic-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-treatment-critic-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a1183a-7951-7503-8201-01e2ea253030",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T21:17:27.606Z",
+          "startedAt": "2026-10-07T21:17:28.187Z",
+          "completedAt": "2026-10-07T21:30:40.955Z",
+          "stage_occupied_seconds": 793.349,
+          "queue_startup_seconds": 0.581,
+          "deadline": "2026-10-07T21:37:27.441963+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "08559d405462aa7135609a299a75901f8da0a5c763b11d69f327446f97389b31",
+              "status": "complete",
+              "tokensUsed": 274339,
+              "tokenBudget": null,
+              "timeUsedSeconds": 763
+            }
+          ],
+          "output_bytes": 2964687,
+          "scientific_artifact_bytes": 59269,
+          "source_capture_bytes": 2905418,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/treatment/critic-v1/host/scientific-files-terminal-freeze.json"
+        }
+      ],
+      "review_time_separate": {
+        "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-treatment-source-review-v1:ordinal:1",
+        "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-source-review-v1",
+        "status": "completed",
+        "requestedAt": "2026-10-07T21:31:37.188Z",
+        "startedAt": "2026-10-07T21:31:38.072Z",
+        "completedAt": "2026-10-07T21:41:20.996Z"
+      },
+      "usage": {
+        "input": null,
+        "cached_input": null,
+        "generated_output": null,
+        "reasoning_subset": null,
+        "billing": null
+      },
+      "source_operations": null,
+      "scope_audit": "incomplete_unknown; advisory maps not filesystem firewall",
+      "native_raw_API_bodies": "missing; actual active and terminal projection evidence distinct",
+      "affordability_claim": false
+    }
+  },
+  "service_latency_ratio_control_over_treatment": 1.0148878774623433,
+  "host_closeout_latency_ratio_control_over_treatment": 1.0100789970389625,
+  "repeat_median_range": "Deferred until all four original comparisons frozen; no best-of",
+  "quota_economics": "Unknown usage/billing; no affordability claim",
+  "source_operations_limitation": "Tool projection incomplete; file/capture counts are not source operations",
+  "native_counters_policy": "Original cumulative counters retained per stage; no nested/enclosing/cumulative sum",
+  "single_account_context": "First two matched pairs overlapped four candidates; account/sibling contention not fully attributable; not serialized single-project estimate",
+  "candidate_feedback_sent": false,
+  "outcome_tuning": false
+}

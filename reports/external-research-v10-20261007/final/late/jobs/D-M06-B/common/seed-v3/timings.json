@@ -1,0 +1,83 @@
+{
+  "schema": "pm.er10.seed-v3.timings.v1",
+  "case_id": "D-M06-B",
+  "clock": "UTC, from filesystem mtimes (stat) and date -u; durations are exact mtime differences",
+  "session_reference": {
+    "assignment_available_utc": "2026-10-08T01:35:00.793340Z",
+    "seed_expiry_utc": "2026-10-08T01:55:00.781858+00:00",
+    "common_deadline_utc": "2026-10-08T02:25:00.781858+00:00"
+  },
+  "stages": [
+    {
+      "stage": "read_and_sources",
+      "ticket": 1,
+      "window_utc": [
+        "2026-10-08T01:35:00.793340Z",
+        "2026-10-08T01:37:38.028556Z"
+      ],
+      "duration_s": 157.235216,
+      "covered": "read INPUT_MAP.json, brief.md, both frozen sources, case source manifest; sha256 verification; author and write sources.json",
+      "note": "individual read timestamps inside the window were not separately timed"
+    },
+    {
+      "stage": "draft_authoring",
+      "ticket": 2,
+      "window_utc": [
+        "2026-10-08T01:37:38.028556Z",
+        "2026-10-08T01:40:37.241488Z"
+      ],
+      "duration_s": 179.212932,
+      "covered": "author and write draft.md (pseudocode + six claims)"
+    },
+    {
+      "stage": "fixtures_authoring",
+      "ticket": 3,
+      "window_utc": [
+        "2026-10-08T01:40:37.241488Z",
+        "2026-10-08T01:43:35.390415Z"
+      ],
+      "duration_s": 178.148927,
+      "covered": "author and write fixtures.json (input-only cases and query points)"
+    },
+    {
+      "stage": "timings_recording",
+      "ticket": 4,
+      "window_utc": [
+        "2026-10-08T01:43:35.390415Z",
+        "2026-10-08T01:47:48.939Z"
+      ],
+      "duration_s": 253.548708,
+      "covered": "stat mtimes, compute durations, author and write timings.json"
+    }
+  ],
+  "output_file_creation": {
+    "sources.json": {
+      "created_utc": "2026-10-08T01:37:38.028556Z",
+      "stage": "read_and_sources"
+    },
+    "draft.md": {
+      "created_utc": "2026-10-08T01:40:37.241488Z",
+      "stage": "draft_authoring"
+    },
+    "fixtures.json": {
+      "created_utc": "2026-10-08T01:43:35.390415Z",
+      "stage": "fixtures_authoring"
+    },
+    "timings.json": {
+      "created_utc": "2026-10-08T01:47:48.939Z",
+      "stage": "timings_recording"
+    }
+  },
+  "elapsed_and_headroom": {
+    "elapsed_assignment_to_now_s": 768.145783,
+    "headroom_to_seed_expiry_s": 431.842735,
+    "headroom_to_common_deadline_s": 2231.842735,
+    "measured_at_utc": "2026-10-08T01:47:48.939Z"
+  },
+  "unknown_usage": {
+    "model_token_usage": "unknown: per-stage prompt/completion token counts are not exposed to this thread",
+    "queue_and_startup_latency": "unknown: latency before assignment.md became readable at 2026-10-08T01:35:00.793340Z was not observable",
+    "tool_internal_latencies": "unknown: per-tool-call overhead is not separately witnessed; stage windows bound all activity inside them",
+    "verification_costs": "acceptance checks (sha256sum, grep, json.load) ran inside each ticket's stage window; their individual shares are not separated"
+  }
+}

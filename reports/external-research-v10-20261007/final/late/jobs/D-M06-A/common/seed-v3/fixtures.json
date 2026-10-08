@@ -1,0 +1,133 @@
+{
+  "schema_note": "Input-only fixtures for D-M06-A. Each 'input' is the exact raw JSON document text to hand to a candidate canonicalizer. By design this file contains NO expected outputs, NO pass/fail labels, and NO evaluator key. 'class' and 'note' describe properties of the input only.",
+  "case_id": "D-M06-A",
+  "seed": "seed-v3",
+  "fixtures": [
+    {
+      "id": "f01",
+      "class": "ordinary",
+      "input_kind": "json-text",
+      "note": "flat and nested objects with mixed member order",
+      "input": "{\"name\":\"JCS\",\"version\":1,\"tags\":[\"json\",\"canonical\"],\"meta\":{\"ok\":true,\"id\":7}}"
+    },
+    {
+      "id": "f02",
+      "class": "ordinary",
+      "input_kind": "json-text",
+      "note": "pretty-printed with whitespace between tokens",
+      "input": "{\n  \"b\" : 1 ,\n  \"a\" : 2\n}"
+    },
+    {
+      "id": "f03",
+      "class": "ordinary",
+      "input_kind": "json-text",
+      "note": "RFC 8785 section 3.2.2 combined sample, input form",
+      "input": "{\"numbers\":[333333333.33333329,1E30,4.50,2e-3,0.000000000000000000000000001],\"string\":\"\\u20ac$\\u000F\\u000aA'\\u0042\\u0022\\u005c\\\\\\\"\\/\",\"literals\":[null,true,false]}"
+    },
+    {
+      "id": "f04",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "RFC 8785 section 3.2.3 sorting test data, input form: seven names incl. U+000D, U+0080, U+20AC, U+FB33, U+00F6, and U+1F600 as a surrogate pair",
+      "input": "{\"\\u20ac\":\"Euro Sign\",\"\\r\":\"Carriage Return\",\"\\ufb33\":\"Hebrew Letter Dalet With Dagesh\",\"1\":\"One\",\"\\ud83d\\ude00\":\"Emoji: Grinning Face\",\"\\u0080\":\"Control\",\"\\u00f6\":\"Latin Small Letter O With Diaeresis\"}"
+    },
+    {
+      "id": "f05",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "minimal pair: U+FB33 vs U+1F600 (non-BMP name via surrogate pair)",
+      "input": "{\"\\ufb33\":1,\"\\ud83d\\ude00\":2}"
+    },
+    {
+      "id": "f06",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "control-character, empty, digit, and prefix names in raw form",
+      "input": "{\"\\r\":1,\"1\":2,\"\\u0080\":3,\"\":4,\"a\":5,\"aa\":6,\"ab\":7}"
+    },
+    {
+      "id": "f07",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "two names equal only after \\u escape resolution",
+      "input": "{\"A\":1,\"\\u0041\":2}"
+    },
+    {
+      "id": "f08",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "literal repeated name in raw text",
+      "input": "{\"a\":1,\"a\":2}"
+    },
+    {
+      "id": "f09",
+      "class": "ordinary",
+      "input_kind": "json-text",
+      "note": "NFC-composed text: é and ï as single code points",
+      "input": "{\"café\":\"naïve\"}"
+    },
+    {
+      "id": "f10",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "NFD-decomposed text: e + U+0301, i + U+0308 via escapes",
+      "input": "{\"cafe\\u0301\":\"nai\\u0308ve\"}"
+    },
+    {
+      "id": "f11",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "string value contains a lone-surrogate escape",
+      "input": "{\"k\":\"\\udead\"}"
+    },
+    {
+      "id": "f12",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "one double spelled four ways",
+      "input": "{\"w\":4.500,\"x\":4.50,\"y\":4.5,\"z\":450e-2}"
+    },
+    {
+      "id": "f13",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "zero variants including negative zero",
+      "input": "[-0, 0, 0e0, 0.0]"
+    },
+    {
+      "id": "f14",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "exponent-window edges and long fixed-point spellings",
+      "input": "[1e+21, 999999999999999900000, 1e-6, 1e-27, 0.000001, 2e-3]"
+    },
+    {
+      "id": "f15",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "Appendix B note-4 value: exactly 1424953923781206.25",
+      "input": "1424953923781206.25"
+    },
+    {
+      "id": "f16",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "magnitudes at and above the binary64 range; NaN and Infinity are not representable in JSON text and are probed here via overflow literals only",
+      "input": "[1e308, 1.7976931348623157e308, 1e309, -1e309]"
+    },
+    {
+      "id": "f17",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "Appendix D sample: overflow giant, int64-max integer, decimal money value",
+      "input": "{\"giantNumber\":1.4e9999,\"payMeThis\":26000.33,\"int64Max\":9223372036854775807}"
+    },
+    {
+      "id": "f18",
+      "class": "boundary",
+      "input_kind": "json-text",
+      "note": "integers at 2^53-1, 2^53, and 2^53+1",
+      "input": "[9007199254740991, 9007199254740992, 9007199254740993]"
+    }
+  ]
+}

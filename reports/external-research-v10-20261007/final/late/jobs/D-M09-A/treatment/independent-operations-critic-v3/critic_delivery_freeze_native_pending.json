@@ -1,0 +1,30 @@
+{
+  "schema": "ER10_M09_CRITIC_T3_DELIVERY_FREEZE_NATIVE_PENDING_V1",
+  "recorded_at": "2026-10-08T00:38:36.979297+00:00",
+  "stage": "D-M09-A/treatment/independent-operations-critic-v3",
+  "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-operations-critic-v3",
+  "T3_status": "completed",
+  "T3_quiet": true,
+  "settled_receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/settle_receipt.json",
+  "requestedAt": "2026-10-08T00:19:30.880Z",
+  "startedAt": "2026-10-08T00:19:36.352Z",
+  "completedAt": "2026-10-08T00:38:06.970Z",
+  "dispatch_to_delivery_seconds": 1116.09,
+  "stage_ceiling_seconds": 1200,
+  "within_original_stage_ceiling": true,
+  "absolute_common_deadline": "2026-10-08T01:45:13.455858+00:00",
+  "scientific_files": {
+    "critique.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/treatment/independent-operations-critic-v3/critique.md",
+      "sha256": "2a9c92bf91f5d52f863d2c9aa0a3083e3c479ab0b9eae0c9a6306ff35d853421",
+      "bytes": 9298
+    }
+  },
+  "native_terminal": "PENDING_EXACT_ROOT_NOMINATION_AND_INDEPENDENT_OBSERVATION",
+  "native_active_observed": false,
+  "qualified_native_provenance_comparative": "HOLD",
+  "reconcile_unentered": true,
+  "source_quality": "UNASSESSED",
+  "billing": null,
+  "generated_tokens": null
+}

@@ -1,0 +1,1487 @@
+{
+  "schema": "pm.er10.source6-review-freeze.v1",
+  "review_kind": "one fresh ordinary independent FULL declared Source6 primary-source review",
+  "frozen_at": "2026-10-07T21:42:25.422316+00:00",
+  "reviewer": {
+    "provider": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "service_tier": "priority",
+    "named_account": "sittingmongoose@gmail.com",
+    "account_binding_source": "user task instruction; credentials not inspected"
+  },
+  "original_scientific_grade": {
+    "status": "FAIL",
+    "immutable": true,
+    "basis": "Full declared scientific-content scope assessed; material unsupported HOMR source attribution/correction and loss of admitted useful predecessor options/constraints.",
+    "material_defect_refs": [
+      "D01",
+      "D02"
+    ],
+    "eligibility_can_upgrade": false
+  },
+  "full_declared_scope_assessed": true,
+  "coverage_disposition": "FULL_ASSESSED_MATERIAL_DEFECTS",
+  "axes": [
+    {
+      "id": "A1",
+      "name": "full brief obligations",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "BRIEF.md",
+        "PLAN.md",
+        "final_artifact",
+        "predecessor_artifact",
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "O5",
+        "O6",
+        "O7"
+      ],
+      "defect_refs": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "id": "A2",
+      "name": "consequential source claims and governing conditions",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F06",
+        "F07",
+        "F15",
+        "F16",
+        "F17",
+        "F19",
+        "F20",
+        "F21",
+        "F23",
+        "F24",
+        "Q01",
+        "Q02",
+        "Q04",
+        "Q06",
+        "Q10",
+        "Q11",
+        "Q12",
+        "Q14",
+        "G01",
+        "G02",
+        "G03",
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05"
+      ],
+      "defect_refs": [
+        "D02"
+      ]
+    },
+    {
+      "id": "A3",
+      "name": "useful open discovery coverage/options/analogies/components/history",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "final_artifact:18\u201347,65\u201371",
+        "predecessor_artifact:15\u201358",
+        "F01",
+        "F04",
+        "F08",
+        "F09",
+        "F10",
+        "F14",
+        "F17",
+        "F18",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P26",
+        "P28",
+        "Q01",
+        "Q02",
+        "Q03",
+        "Q07",
+        "Q10",
+        "Q11",
+        "Q12",
+        "Q13",
+        "Q14",
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "defect_refs": [
+        "D01"
+      ]
+    },
+    {
+      "id": "A4",
+      "name": "incorrect rejection/correction",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "final_artifact:81\u201387,95\u2013101",
+        "final_preservation_check:34\u201340",
+        "F19",
+        "F20",
+        "F21",
+        "P24",
+        "P25",
+        "Q01",
+        "Q02",
+        "Q04",
+        "F15",
+        "F16"
+      ],
+      "defect_refs": [
+        "D02"
+      ]
+    },
+    {
+      "id": "A5",
+      "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "all eight mapped scientific files",
+        "INPUT_INTEGRITY.json",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P23",
+        "P26",
+        "P27",
+        "P28",
+        "P34"
+      ],
+      "defect_refs": [
+        "D01"
+      ]
+    },
+    {
+      "id": "A6",
+      "name": "proposed versus actually performed validation",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "final_artifact:103\u2013112",
+        "final_preservation_check:42\u201350",
+        "predecessor_artifact:119\u2013134",
+        "predecessor_preservation_check:40\u201354",
+        "INPUT_INTEGRITY.json"
+      ],
+      "defect_refs": []
+    }
+  ],
+  "obligations": {
+    "O1": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": [
+        "final_artifact:18\u201329",
+        "predecessor_artifact:15\u201358",
+        "predecessor_preservation_check:11",
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "limitations": [
+        "Candidate search-call chronology is self-reported; source breadth and problem-first research framing are assessed without runtime access."
+      ]
+    },
+    "O2": {
+      "status": "PASS",
+      "evidence": [
+        "final_artifact:22\u201329,33\u201341,67\u201371",
+        "F01",
+        "F05",
+        "F19",
+        "F20",
+        "F15",
+        "F16"
+      ],
+      "defect_refs": []
+    },
+    "O3": {
+      "status": "FAIL",
+      "evidence": [
+        "final_artifact:33\u201347,60",
+        "F01",
+        "F02",
+        "F03",
+        "F15",
+        "F19",
+        "F20",
+        "F21",
+        "F23",
+        "F24",
+        "G01",
+        "G02",
+        "G03",
+        "K01"
+      ],
+      "defect_refs": [
+        "D02"
+      ]
+    },
+    "O4": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": [
+        "F06",
+        "F07",
+        "P24",
+        "P25",
+        "F15",
+        "F20",
+        "Q01",
+        "Q02",
+        "Q03",
+        "Q04",
+        "Q06",
+        "Q07",
+        "Q10",
+        "Q11",
+        "Q12",
+        "Q13",
+        "Q14",
+        "K01",
+        "K02",
+        "K03",
+        "K04",
+        "K05"
+      ],
+      "limitations": [
+        "Audiveris manual regression report and OSMD visual-regression claims were inspected, not executed. HOMR and unselected sync leads receive no stability/readiness credit from unassessed further history."
+      ]
+    },
+    "O5": {
+      "status": "PASS",
+      "evidence": [
+        "PLAN.md:B-P1\u2013B-P7",
+        "final_artifact:91\u2013101",
+        "plan_section_assessment"
+      ],
+      "defect_refs": []
+    },
+    "O6": {
+      "status": "FAIL",
+      "evidence": [
+        "final_artifact:49\u2013112",
+        "predecessor_artifact:29\u201358,91,105\u2013128",
+        "final_preservation_check"
+      ],
+      "defect_refs": [
+        "D01",
+        "D02"
+      ]
+    },
+    "O7": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": [
+        "final_artifact:49\u201379,95\u2013110",
+        "BRIEF.md:5\u201311,19\u201321"
+      ],
+      "limitations": [
+        "Rights, retention duration, coordinate/viewer selection and hosted sync remain explicitly prospective group choices."
+      ]
+    }
+  },
+  "material_defects": [
+    {
+      "id": "D01",
+      "severity": "material",
+      "title": "Useful predecessor options and constraints disappear without disposition",
+      "claims": [
+        "Oemer/MIT/pinned model lead omitted without retirement rationale",
+        "PouchDB/CouchDB and Yjs named options and their conditions collapsed to generic categories",
+        "Tropy and RFC 8493 source identity lost",
+        "Explicit export path constraints and malformed-path/unknown-schema validation omitted"
+      ],
+      "locators": {
+        "predecessor_artifact": [
+          "35\u201337",
+          "50\u201358",
+          "91",
+          "101",
+          "111",
+          "127"
+        ],
+        "final_artifact": [
+          "26",
+          "39",
+          "69",
+          "71",
+          "75",
+          "79",
+          "103\u2013110"
+        ],
+        "final_source_map": "complete sources array"
+      },
+      "evidence_refs": [
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P26",
+        "P27",
+        "P28",
+        "P31",
+        "P32",
+        "P34"
+      ],
+      "plan_sections": [
+        "B-P3",
+        "B-P5",
+        "B-P6",
+        "B-P7"
+      ],
+      "obligations": [
+        "O6"
+      ],
+      "axes": [
+        "A1",
+        "A3",
+        "A5"
+      ]
+    },
+    {
+      "id": "D02",
+      "severity": "material",
+      "title": "HOMR correction relies on statements absent from the pinned README",
+      "claims": [
+        "Pinned README advertises PDF input",
+        "Pinned README describes rough imgpos coordinates"
+      ],
+      "locators": {
+        "final_artifact": [
+          "39",
+          "85"
+        ],
+        "final_preservation_check": [
+          "38"
+        ],
+        "final_source_map": "S19 / path_or_locator and role",
+        "primary": "F19 README.md entire lines 1\u2013118; F20 main.py lines 106\u2013129 and 353\u2013458"
+      },
+      "reasoning": "README contains neither PDF nor imgpos. Fresh pinned bytes exactly match candidate capture. Image-only code supports an input boundary, not the asserted documentation/code contradiction.",
+      "evidence_refs": [
+        "F19",
+        "F20",
+        "G03"
+      ],
+      "plan_sections": [
+        "B-P3"
+      ],
+      "obligations": [
+        "O3",
+        "O6"
+      ],
+      "axes": [
+        "A1",
+        "A2",
+        "A4"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "blinding",
+      "text": "Mapped paths expose treatment/researcher/critic case-stage structure. No counterpart or earlier independent review was read; no expected winner inferred."
+    },
+    {
+      "id": "L02",
+      "kind": "observability",
+      "text": "Candidate source-call ordering and original native execution/integrity-script invocation are not independently certified from allowed scientific files. Counts and usage not exposed remain null. Scientific outputs, source semantics and preservation were assessed."
+    },
+    {
+      "id": "L03",
+      "kind": "unvalidated_product_choices",
+      "text": "No real score, rights policy, target OS, volunteer trial, OMR/renderer/overlay/offline/conflict/package/deletion execution was available or claimed. Proposed validation was assessed as proposed."
+    },
+    {
+      "id": "L04",
+      "kind": "justified_abstention",
+      "text": "HOMR further issue/regression history and PouchDB/Yjs version-specific deployment/code history were not used to establish readiness. These are unselected/deferred leads; candidate admits the gaps."
+    },
+    {
+      "id": "L05",
+      "kind": "nonmaterial_caveat",
+      "text": "HOMR tag v0.7.0 exists but exact GitHub Release lookup is 404. pyproject literal 0.1.0 has enabled dynamic Git/semver versioning; built-package mismatch is not established.",
+      "evidence_refs": [
+        "F18",
+        "F21",
+        "G03",
+        "Q15"
+      ]
+    },
+    {
+      "id": "L06",
+      "kind": "nonmaterial_caveat",
+      "text": "OSMD 1.9.6 PDF/SVG change is a demo/index.js export feature; no core PDF-export promise is credited. PR visual-regression artifacts were not run.",
+      "evidence_refs": [
+        "Q13",
+        "Q14"
+      ]
+    }
+  ],
+  "plan_section_assessment": [
+    {
+      "section_id": "B-P1",
+      "candidate_disposition": "keep",
+      "assessment": "supported, bounded; source-first offline workflow and atomic publication are proposals",
+      "evidence": [
+        "BRIEF.md:5\u201311",
+        "PLAN.md:5\u20137",
+        "final_artifact:95"
+      ],
+      "defect_refs": []
+    },
+    {
+      "section_id": "B-P2",
+      "candidate_disposition": "amend",
+      "assessment": "existing hierarchy/provenance/replacement policy retained; local ID/hash semantics appropriately separated",
+      "evidence": [
+        "PLAN.md:9\u201311",
+        "final_artifact:51\u201356,96",
+        "P01",
+        "F02"
+      ],
+      "defect_refs": []
+    },
+    {
+      "section_id": "B-P3",
+      "candidate_disposition": "amend",
+      "assessment": "optional digitization/review/format gates sound; source attribution and optional preservation defective",
+      "evidence": [
+        "PLAN.md:13\u201315",
+        "final_artifact:33\u201347,97",
+        "F06",
+        "F07",
+        "F15",
+        "F19",
+        "F20"
+      ],
+      "defect_refs": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "section_id": "B-P4",
+      "candidate_disposition": "replace locator rule; keep scopes",
+      "assessment": "human per-part cue mapping and old-version/manual re-anchor behavior meet plan and brief without equivalence claims",
+      "evidence": [
+        "PLAN.md:17\u201319",
+        "final_artifact:58\u201363,98",
+        "F01",
+        "F02",
+        "F24"
+      ],
+      "defect_refs": []
+    },
+    {
+      "section_id": "B-P5",
+      "candidate_disposition": "choose release/return bundles; defer live sync",
+      "assessment": "keeps plan offline/review/privacy goals; plan had no selected sync mechanism; useful predecessor options lost",
+      "evidence": [
+        "PLAN.md:21\u201323",
+        "final_artifact:65\u201369,99",
+        "P06",
+        "P07",
+        "P08"
+      ],
+      "defect_refs": [
+        "D01"
+      ]
+    },
+    {
+      "section_id": "B-P6",
+      "candidate_disposition": "amend",
+      "assessment": "roles/manifest/rights/withdrawal limits covered; group retention remains unresolved; export constraints lost",
+      "evidence": [
+        "PLAN.md:25\u201327",
+        "final_artifact:71\u201379,100",
+        "P09",
+        "P10",
+        "P11"
+      ],
+      "defect_refs": [
+        "D01"
+      ]
+    },
+    {
+      "section_id": "B-P7",
+      "candidate_disposition": "keep and expand",
+      "assessment": "observable proposals and honest unexecuted status; predecessor validation content partly lost",
+      "evidence": [
+        "PLAN.md:29\u201331",
+        "final_artifact:101\u2013112",
+        "predecessor_artifact:121\u2013128"
+      ],
+      "defect_refs": [
+        "D01"
+      ]
+    }
+  ],
+  "reviewed_input_sha256s": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1/artifact.md": "6e2d3b4168c8066aae2f68a896a07b3540fae6d4bd663d202e28d6d172386010",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1/source-map.json": "fe42bcfa01e38931197e131645c0f98e33ecb0732f6c63362cbb1bd37d5958e7",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1/preservation_check.md": "2d0c6601fef48bb79d3b6d3f21f7a4f0b638b9df2c70b597d61669058495b7a0",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/artifact.md": "8f39e0a1a1db92d2ef085b114ed2093b9b0eb2ed0c1010d5d5b493dbb959bd2b",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/source-map.json": "7bfc121f55fbca3d62bb5063b00386236819cc1c1f850e19120d6d23b37186e7",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/preservation_check.md": "b21f3fd66452e282f60b92babf7cf3dbdfbb1e40444cc0bd2962a23c6cbfae7a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/BRIEF.md": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/PLAN.md": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/INPUT_MAP.json": "8f5b8e88005d5ec6a5a927431e67950f731562d7098dec9ccd813ffdfd5703d8"
+  },
+  "primary_sources_checked": [
+    {
+      "id": "F01",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "final_url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation, 2017-02-23",
+      "locator": "Web Annotation Data Model \u00a7\u00a73.1\u20133.2; \u00a74.2.5 text-position brittleness; \u00a74.2.7 SVG source-relative dimensions; \u00a74.3 states",
+      "accessed_at": "2026-10-07T21:32:14.157801+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F01-w3c-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "bytes": 284185,
+      "status": 200
+    },
+    {
+      "id": "F02",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/measure-partwise/",
+      "final_url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/measure-partwise/",
+      "version_or_commit": "MusicXML 4.0; Final Community Group Report 2021-06-01",
+      "locator": "MusicXML 4.0 measure (partwise), attributes number, id, implicit, non-controlling, text and width",
+      "accessed_at": "2026-10-07T21:32:14.159765+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F02-musicxml-measure-partwise.html",
+      "sha256": "e5a94556143bf6755dd74627c11409c078abb4fe49a972d79eec3a962f79a725",
+      "bytes": 15604,
+      "status": 200
+    },
+    {
+      "id": "F03",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/divisions/",
+      "final_url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/divisions/",
+      "version_or_commit": "MusicXML 4.0; Final Community Group Report 2021-06-01",
+      "locator": "MusicXML 4.0 divisions element description: divisions per quarter note and tuplet-sensitive duration units",
+      "accessed_at": "2026-10-07T21:32:14.160717+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F03-musicxml-divisions.html",
+      "sha256": "03f23ea16519fc5fe4d5dfc813479421b48dab8fbe3d84b1840038eb443879f3",
+      "bytes": 7784,
+      "status": 200
+    },
+    {
+      "id": "F04",
+      "url": "https://github.com/Audiveris/audiveris/releases/tag/5.11.0",
+      "final_url": "https://github.com/Audiveris/audiveris/releases/tag/5.11.0",
+      "version_or_commit": "5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd (S22)",
+      "locator": "5.11.0 release notes: PR #954; release date corroborated by Q06",
+      "accessed_at": "2026-10-07T21:32:14.161834+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F04-audiveris-release-5.11.0.html",
+      "sha256": "4c21c0317bb1aa7f0979750e13bf5274e48addb5b7a9a76d91028649c9b149b2",
+      "bytes": 212784,
+      "status": 200
+    },
+    {
+      "id": "F05",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/README.md",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/README.md",
+      "version_or_commit": "Audiveris tag 5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "README.md lines 24\u201340: engine/editor and imperfect recognition; 50\u201354: subset MusicXML 4.0 export; 64\u201375: installers",
+      "accessed_at": "2026-10-07T21:32:14.163611+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F05-audiveris-readme-5.11.0.md",
+      "sha256": "72d1ca2301410c398958ae5bd3657b2606b40a0b6e29bce0c989f2459be3e55b",
+      "bytes": 5066,
+      "status": 200
+    },
+    {
+      "id": "F06",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/PartwiseBuilder.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/PartwiseBuilder.java",
+      "version_or_commit": "Audiveris tag 5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "PartwiseBuilder.java lines 1018\u20131023, 1963\u20132020 and 3528\u20133545: measure labels, implicit flag and build",
+      "accessed_at": "2026-10-07T21:32:14.164946+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F06-audiveris-partwise-builder-5.11.0.java",
+      "sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "bytes": 157209,
+      "status": 200
+    },
+    {
+      "id": "F07",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/ScoreExporter.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/ScoreExporter.java",
+      "version_or_commit": "Audiveris tag 5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "ScoreExporter.java lines 94\u201399 and 113\u2013140: ScorePartwise construction and XML/MXL serialization",
+      "accessed_at": "2026-10-07T21:32:14.239314+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F07-audiveris-score-exporter-5.11.0.java",
+      "sha256": "99ccbb388b91897536fdb2d12c00b574723f19abcd6e8fe2bb34c3239a01a1ba",
+      "bytes": 6233,
+      "status": 200
+    },
+    {
+      "id": "F08",
+      "url": "https://github.com/Audiveris/audiveris/pull/954",
+      "final_url": "https://github.com/Audiveris/audiveris/pull/954",
+      "version_or_commit": "Merged to development 2026-06-21; commits a2cfa6b and 20203e7; included in 5.11.0 per S04",
+      "locator": "PR #954 description, author-reported manual Testing, review discussion and merge; independently corroborated by Q01\u2013Q03 and pinned P24/P25",
+      "accessed_at": "2026-10-07T21:32:14.248015+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F08-audiveris-pull-954.html",
+      "sha256": "6f19f3f179d88be9ed7fb0d23fc4de77d6a7db4e30b7546a8f26b68ae8d064a6",
+      "bytes": 394296,
+      "status": 200
+    },
+    {
+      "id": "F09",
+      "url": "https://github.com/Audiveris/audiveris/pull/954/files",
+      "final_url": "https://github.com/Audiveris/audiveris/pull/954/files",
+      "version_or_commit": "Commits a2cfa6b and 20203e7; included in Audiveris 5.11.0",
+      "locator": "PR #954 Files changed page: Checks 0, two Java files, null-guard diff; complete changed-file list corroborated by Q02",
+      "accessed_at": "2026-10-07T21:32:14.255740+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F09-audiveris-pull-954-files.html",
+      "sha256": "1e726385f63e8bbebbde50a3ffa3c72d6e6d7cb461e5066b759575250f0bb7e0",
+      "bytes": 325216,
+      "status": 200
+    },
+    {
+      "id": "F10",
+      "url": "https://github.com/Audiveris/audiveris/issues/971",
+      "final_url": "https://github.com/Audiveris/audiveris/issues/971",
+      "version_or_commit": "Reported against 5.11.0 build 9e1e55cd2746037d059345881c53e6a6754bffbd; opened 2026-07-27",
+      "locator": "Issue #971 description, Windows 11 / 5.11.0 build, pages 3\u20139 versus page 9 alone; Open and Development: No branches or pull requests",
+      "accessed_at": "2026-10-07T21:32:14.294612+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F10-audiveris-issue-971.html",
+      "sha256": "e7eace7edd829b826cd4c83b773d71e0098e54b2d63de88686b58302bce1f8a2",
+      "bytes": 271788,
+      "status": 200
+    },
+    {
+      "id": "F11",
+      "url": "https://audiveris.github.io/audiveris/_pages/guides/advanced/cli/",
+      "final_url": "https://audiveris.github.io/audiveris/_pages/guides/advanced/cli/",
+      "version_or_commit": "Live project documentation accessed 2026-10-07; page identifies CLI option semantics",
+      "locator": "Command-line guide, Syntax and arguments -batch, -export, -output, -save, -sheets; live documentation, not release-pinned",
+      "accessed_at": "2026-10-07T21:32:14.338071+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F11-audiveris-cli-5.11.0.html",
+      "sha256": "4dcb223213e25888a6cf42287aed2ad230ee0f030666db21c14cabe653293215",
+      "bytes": 49158,
+      "status": 200
+    },
+    {
+      "id": "F12",
+      "url": "https://audiveris.github.io/audiveris/_pages/reference/limitations/",
+      "final_url": "https://audiveris.github.io/audiveris/_pages/reference/limitations/",
+      "version_or_commit": "Live project documentation accessed 2026-10-07; no version asserted beyond site release context",
+      "locator": "Known limitations: opposed stems, chord names, unsupported tuplets, Roman numerals not exported; live documentation",
+      "accessed_at": "2026-10-07T21:32:14.423126+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F12-audiveris-limitations.html",
+      "sha256": "dd3874aa2431295e0335591f1966acdc426eb0f63e72f08635e7e6ee3a68c219",
+      "bytes": 34520,
+      "status": 200
+    },
+    {
+      "id": "F13",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/LICENSE",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/LICENSE",
+      "version_or_commit": "Audiveris tag 5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "LICENSE heading: GNU Affero General Public License v3; no project-specific legal conclusion drawn",
+      "accessed_at": "2026-10-07T21:32:14.499556+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F13-audiveris-license-5.11.0.txt",
+      "sha256": "76a97c878c9c7a8321bb395c2b44d3fe2f8d81314d219b20138ed0e2dddd5182",
+      "bytes": 34520,
+      "status": 200
+    },
+    {
+      "id": "F14",
+      "url": "https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/releases/tag/1.9.6",
+      "final_url": "https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/releases/tag/1.9.6",
+      "version_or_commit": "1.9.6; tag object fb85c631613890ac7a0e69a0fc16165b0722ee5d peeled to commit a9b8355e21296f5ced7b0c3e53cd7d5abac5031e (S22)",
+      "locator": "OSMD 1.9.6 release notes and date, independently corroborated by Q08 and G02",
+      "accessed_at": "2026-10-07T21:32:14.534265+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F14-osmd-release-1.9.6.html",
+      "sha256": "d6926fa226802c3396d312447c0b589d06c021d99594a2a85a4f01b6cc69af63",
+      "bytes": 199163,
+      "status": 200
+    },
+    {
+      "id": "F15",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/a9b8355e21296f5ced7b0c3e53cd7d5abac5031e/src/OpenSheetMusicDisplay/OpenSheetMusicDisplay.ts",
+      "final_url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/a9b8355e21296f5ced7b0c3e53cd7d5abac5031e/src/OpenSheetMusicDisplay/OpenSheetMusicDisplay.ts",
+      "version_or_commit": "OSMD 1.9.6; peeled commit a9b8355e21296f5ced7b0c3e53cd7d5abac5031e",
+      "locator": "OpenSheetMusicDisplay.ts lines 108\u2013175: Document/Blob/string handling and XML-header heuristic; 181\u2013209: score-partwise requirement; 228\u2013257: rendering/layout",
+      "accessed_at": "2026-10-07T21:32:14.538856+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F15-osmd-open-sheet-music-display-1.9.6.ts",
+      "sha256": "411eb83c6130135520c29587c53b16269937c5abac9e0eafac9231eea9cc2bd8",
+      "bytes": 51751,
+      "status": 200
+    },
+    {
+      "id": "F16",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/a9b8355e21296f5ced7b0c3e53cd7d5abac5031e/README.md",
+      "final_url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/a9b8355e21296f5ced7b0c3e53cd7d5abac5031e/README.md",
+      "version_or_commit": "OSMD 1.9.6; commit a9b8355e21296f5ced7b0c3e53cd7d5abac5031e",
+      "locator": "README.md lines 17, 35\u201360 and 72\u201381: renderer purpose, SVG/PNG, unsupported tags and non-editor boundary",
+      "accessed_at": "2026-10-07T21:32:14.640070+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F16-osmd-readme-1.9.6.md",
+      "sha256": "16da7e15f1223fffa646dc8eb28a996f9977bca95f200c58a1df3d66c3d0fcfb",
+      "bytes": 13076,
+      "status": 200
+    },
+    {
+      "id": "F17",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/a9b8355e21296f5ced7b0c3e53cd7d5abac5031e/CHANGELOG.md",
+      "final_url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/a9b8355e21296f5ced7b0c3e53cd7d5abac5031e/CHANGELOG.md",
+      "version_or_commit": "OSMD 1.9.6; commit a9b8355e21296f5ced7b0c3e53cd7d5abac5031e",
+      "locator": "CHANGELOG.md lines 1\u201314: 1.9.6 fixes/features; lines 44\u201346: MXL Blob support in 1.9.4; issue/fix chain corroborated by Q10\u2013Q14",
+      "accessed_at": "2026-10-07T21:32:14.729434+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F17-osmd-changelog-1.9.6.md",
+      "sha256": "d310de8ea398c9bcc902397d352d5de285946daea61f33b6cff81c75bbdb44bb",
+      "bytes": 116943,
+      "status": 200
+    },
+    {
+      "id": "F18",
+      "url": "https://github.com/liebharc/homr/releases",
+      "final_url": "https://github.com/liebharc/homr/releases",
+      "version_or_commit": "Live GitHub Release listing captured 2026-10-07; checkpoint releases. Separate source G03 pins version tag v0.7.0.",
+      "locator": "GitHub Releases listing contains checkpoint/model/data releases; no v0.7.0 entry in captured bytes. Version tag verified separately by G03; exact Release lookup captured as Q15",
+      "accessed_at": "2026-10-07T21:32:14.733543+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F18-homr-releases.html",
+      "sha256": "d6141cab29236263058c7a9801607d2e3b3796d76976b22e9666c0c491c48a40",
+      "bytes": 257971,
+      "status": 200
+    },
+    {
+      "id": "F19",
+      "url": "https://raw.githubusercontent.com/liebharc/homr/8b5dcf7d7bdd1a47911dc0c661c573b957271eab/README.md",
+      "final_url": "https://raw.githubusercontent.com/liebharc/homr/8b5dcf7d7bdd1a47911dc0c661c573b957271eab/README.md",
+      "version_or_commit": "homr tag v0.7.0; commit 8b5dcf7d7bdd1a47911dc0c661c573b957271eab",
+      "locator": "README.md entire lines 1\u2013118; lines 3\u20135 and 17\u201333: camera images and image CLI; 47\u201350 versus 84\u201395: inconsistent symbol-coverage descriptions; no PDF or imgpos statement anywhere",
+      "accessed_at": "2026-10-07T21:32:14.801313+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F19-homr-readme-v0.7.0.md",
+      "sha256": "65f9fc892a8dc83f856c9b704a3dc0d49b8966c020bb0fa53f20c8758c780513",
+      "bytes": 6697,
+      "status": 200
+    },
+    {
+      "id": "F20",
+      "url": "https://raw.githubusercontent.com/liebharc/homr/8b5dcf7d7bdd1a47911dc0c661c573b957271eab/homr/main.py",
+      "final_url": "https://raw.githubusercontent.com/liebharc/homr/8b5dcf7d7bdd1a47911dc0c661c573b957271eab/homr/main.py",
+      "version_or_commit": "homr tag v0.7.0; commit 8b5dcf7d7bdd1a47911dc0c661c573b957271eab",
+      "locator": "main.py lines 106\u2013129: cv2.imread and JPG/PNG failure message; 171\u2013226: recognition/output path; 314\u2013350 and 353\u2013458: missing model downloads before image processing; no PDF rasterization",
+      "accessed_at": "2026-10-07T21:32:14.862026+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F20-homr-main-v0.7.0.py",
+      "sha256": "b1605b5f22d7fc7f79f7e4d5c932e52bd5e34e655f0a3a1c13d96f2cf99b80fa",
+      "bytes": 18413,
+      "status": 200
+    },
+    {
+      "id": "F21",
+      "url": "https://raw.githubusercontent.com/liebharc/homr/8b5dcf7d7bdd1a47911dc0c661c573b957271eab/pyproject.toml",
+      "final_url": "https://raw.githubusercontent.com/liebharc/homr/8b5dcf7d7bdd1a47911dc0c661c573b957271eab/pyproject.toml",
+      "version_or_commit": "homr tag v0.7.0; commit 8b5dcf7d7bdd1a47911dc0c661c573b957271eab",
+      "locator": "pyproject.toml lines 1\u201320: literal version/license/dependencies; 62\u201370: enabled Git-based dynamic versioning and build backend",
+      "accessed_at": "2026-10-07T21:32:14.885067+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F21-homr-pyproject-v0.7.0.toml",
+      "sha256": "61dcf29c9297cd0c5f5c691e730f1099950b6454155e43bc1cd62675a28fb303",
+      "bytes": 4491,
+      "status": 200
+    },
+    {
+      "id": "F23",
+      "url": "https://www.w3.org/2021/06/musicxml40/",
+      "final_url": "https://www.w3.org/2021/06/musicxml40/",
+      "version_or_commit": "MusicXML 4.0; Final Community Group Report 2021-06-01",
+      "locator": "MusicXML 4.0 publication heading and Status of this document: Final Community Group Report, 2021-06-01; not W3C Standards Track",
+      "accessed_at": "2026-10-07T21:32:14.960906+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F23-musicxml-4.0.html",
+      "sha256": "15d15d9255570e77212db46e47a15bb8c00a0488db9781750dc4a71b13fd35a7",
+      "bytes": 10565,
+      "status": 200
+    },
+    {
+      "id": "F24",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/measure-numbering/",
+      "final_url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/measure-numbering/",
+      "version_or_commit": "MusicXML 4.0; Final Community Group Report 2021-06-01",
+      "locator": "measure-numbering element description: measure text/number display and implicit-measure exclusion",
+      "accessed_at": "2026-10-07T21:32:14.988244+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/F24-musicxml-measure-numbering.html",
+      "sha256": "0b6189b2382d091eea36cce1ff3a2720d1a1e17d43dccb2cec27abb89ea834cd",
+      "bytes": 12419,
+      "status": 200
+    },
+    {
+      "id": "P01",
+      "url": "https://www.w3.org/2021/06/musicxml40/tutorial/structure-of-musicxml-files/",
+      "final_url": "https://www.w3.org/2021/06/musicxml40/tutorial/structure-of-musicxml-files/",
+      "version_or_commit": "MusicXML 4.0; W3C publication 2021-06",
+      "locator": "MusicXML 4.0 tutorial: Adapting Musical Scores to a Hierarchy, Top-Level Elements, The Part List; part/time nesting and document-local part IDs",
+      "accessed_at": "2026-10-07T21:32:14.991405+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P01-S01.html",
+      "sha256": "73ba0730fd4d1edbc2a03c9dd8d82628041dfa93e5704fb86ae585f11471540e",
+      "bytes": 20410,
+      "status": 200
+    },
+    {
+      "id": "P02",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/score-partwise/",
+      "final_url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/score-partwise/",
+      "version_or_commit": "MusicXML 4.0; W3C publication 2021-06",
+      "locator": "score-partwise element description and Content: parts contain measures; required part-list",
+      "accessed_at": "2026-10-07T21:32:15.035684+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P02-S02.html",
+      "sha256": "b5fdad310dd111a1893611c44c1e4c76d699699d1c1cd819ac568d376fe55b02",
+      "bytes": 8603,
+      "status": 200
+    },
+    {
+      "id": "P03",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/score-timewise/",
+      "final_url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/score-timewise/",
+      "version_or_commit": "MusicXML 4.0; W3C publication 2021-06",
+      "locator": "score-timewise element description and Content: measures contain parts; required part-list",
+      "accessed_at": "2026-10-07T21:32:15.038698+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P03-S03.html",
+      "sha256": "8da01bf8dd423258b2b2ad22e8d2df09ad24e601c836df3c69dc591dfc593241",
+      "bytes": 7703,
+      "status": 200
+    },
+    {
+      "id": "P05",
+      "url": "https://mozilla.github.io/pdf.js/examples/",
+      "final_url": "https://mozilla.github.io/pdf.js/examples/",
+      "version_or_commit": "Live documentation; no release pin claimed",
+      "locator": "PDF.js Examples, Rendering the Page: 72-DPI viewport; scale/rotation and bottom-left PDF to top-left canvas transform; live documentation",
+      "accessed_at": "2026-10-07T21:32:15.054131+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P05-S05.html",
+      "sha256": "275dafc89899fb5e9d59cdd65f1c30ce0054322e306d50fd01637b45dff795bd",
+      "bytes": 9361,
+      "status": 200
+    },
+    {
+      "id": "P06",
+      "url": "https://pouchdb.apache.org/guides/conflicts.html",
+      "final_url": "https://pouchdb.apache.org/guides/conflicts.html",
+      "version_or_commit": "Docs accessed 2026-10-07; package pin PouchDB 9.0.0 in S31",
+      "locator": "PouchDB Conflicts guide: Immediate conflicts (409), Eventual conflicts, deterministic winner and get({conflicts:true}) / _conflicts; deferred option, code not selected",
+      "accessed_at": "2026-10-07T21:32:15.106155+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P06-S06.html",
+      "sha256": "29173dd5d5271388b3475d4d1537fd5494867c621fdc8ef300ea2c33d1665a78",
+      "bytes": 34431,
+      "status": 200
+    },
+    {
+      "id": "P07",
+      "url": "https://pouchdb.apache.org/guides/replication.html",
+      "final_url": "https://pouchdb.apache.org/guides/replication.html",
+      "version_or_commit": "Docs accessed 2026-10-07; package pin PouchDB 9.0.0 in S31",
+      "locator": "PouchDB Replication guide: multi-master; sync; live/retry; Deleting replicated databases distinguishes destroy from remove/bulkDocs",
+      "accessed_at": "2026-10-07T21:32:15.117991+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P07-S07.html",
+      "sha256": "13fb5ca6c6c438cdd1a416f1226f12467a356b4f5ab8a447220f66dd7e3ff9ae",
+      "bytes": 36516,
+      "status": 200
+    },
+    {
+      "id": "P08",
+      "url": "https://docs.yjs.dev/getting-started/working-with-shared-types",
+      "final_url": "https://docs.yjs.dev/getting-started/working-with-shared-types",
+      "version_or_commit": "Live documentation; package pin Yjs 13.6.33 in S32; source code not inspected",
+      "locator": "Yjs Working with Shared Types: Y.Doc, Y.Text/Y.Array/Y.Map, providers for sync/persistence and document-attached shared types; deferred option",
+      "accessed_at": "2026-10-07T21:32:15.119611+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P08-S08.txt",
+      "sha256": "7da62b12a6d72d0e637368650a575eb1c0b1f740eb1ebc118a6a0f9f4e17b95d",
+      "bytes": 585568,
+      "status": 200
+    },
+    {
+      "id": "P09",
+      "url": "https://docs.tropy.org/before-you-begin/metadata",
+      "final_url": "https://docs.tropy.org/before-you-begin/metadata",
+      "version_or_commit": "Live documentation accessed 2026-10-07; analogy only",
+      "locator": "Tropy Using Metadata: structured source metadata, photo/selection templates, Rights field and source-rights URL; analogy only",
+      "accessed_at": "2026-10-07T21:32:15.153484+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P09-S09.html",
+      "sha256": "5bffb2442c577087c576dcb5a6c0b8bec216fd245b602acae7845e4204bf9d50",
+      "bytes": 621712,
+      "status": 200
+    },
+    {
+      "id": "P10",
+      "url": "https://docs.tropy.org/other-features/export-with-archive-plugin",
+      "final_url": "https://docs.tropy.org/other-features/export-with-archive-plugin",
+      "version_or_commit": "Live documentation accessed 2026-10-07; analogy only",
+      "locator": "Tropy Export with Archive plugin: complete photos/metadata/notes ZIP transfer; analogy only",
+      "accessed_at": "2026-10-07T21:32:15.166672+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P10-S10.html",
+      "sha256": "269c7bb9d0c2d96833a6a292d280d7bf4536ae6967eb531aa581b3e981f1e1bc",
+      "bytes": 453393,
+      "status": 200
+    },
+    {
+      "id": "P11",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "version_or_commit": "RFC 8493, October 2018; BagIt 1.0",
+      "locator": "RFC 8493 BagIt 1.0 \u00a7\u00a72.1.1\u20132.1.3, 2.4 and 3: declaration, data payload, checksum manifests and complete/valid bags",
+      "accessed_at": "2026-10-07T21:32:15.167678+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P11-S11.html",
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "bytes": 63600,
+      "status": 200
+    },
+    {
+      "id": "P23",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/docs/_pages/handbook.md",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/docs/_pages/handbook.md",
+      "version_or_commit": "Audiveris 5.11.0, commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Pinned Audiveris handbook.md lines 61\u201369: printed Common Western Music Notation, common symbols, no handwritten input and manual correction",
+      "accessed_at": "2026-10-07T21:32:15.218708+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P23-S23.md",
+      "sha256": "25984a189259472c021571bbdab56dbee22934a0df5bb0ef7f30c37ae2a909fd",
+      "bytes": 5233,
+      "status": 200
+    },
+    {
+      "id": "P24",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/MeasureStack.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/MeasureStack.java",
+      "version_or_commit": "Audiveris 5.11.0, commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Pinned MeasureStack.java getXOffset(Point2D,Staff), lines 1488\u20131514: null-geometry guards, debug logs, zero fallback",
+      "accessed_at": "2026-10-07T21:32:15.268730+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P24-S24.java",
+      "sha256": "9d0f711b03636cbc3b307e3a593ed9674e3e6536aebf5a9d0745529e5e1a5ad3",
+      "bytes": 69765,
+      "status": 200
+    },
+    {
+      "id": "P25",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/StaffBarlineInter.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/StaffBarlineInter.java",
+      "version_or_commit": "Audiveris 5.11.0, commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Pinned StaffBarlineInter.java getBounds(), lines 294\u2013304: nullable bounds guard",
+      "accessed_at": "2026-10-07T21:32:15.317062+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P25-S25.java",
+      "sha256": "632c21b282dfa366ad7a3c13e5d10f0c337b54acb4c648f68416a9a2c59152f5",
+      "bytes": 38115,
+      "status": 200
+    },
+    {
+      "id": "P26",
+      "url": "https://raw.githubusercontent.com/BreezeWhite/oemer/dbe2a933d630d0f74805d717960eb259473f5978/README.md",
+      "final_url": "https://raw.githubusercontent.com/BreezeWhite/oemer/dbe2a933d630d0f74805d717960eb259473f5978/README.md",
+      "version_or_commit": "main commit dbe2a933d630d0f74805d717960eb259473f5978 (no semver claim)",
+      "locator": "Pinned Oemer README.md lines 11\u201312, 19, 33\u201341: Western notation, image CLI, missing checkpoints and ONNX/TF choice; HOMR successor mentioned",
+      "accessed_at": "2026-10-07T21:32:15.327974+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P26-S26.md",
+      "sha256": "5f872cc99c5e0b48280b25b310e46a54b2824de98df4a2d860442b7c20cd63ba",
+      "bytes": 23707,
+      "status": 200
+    },
+    {
+      "id": "P27",
+      "url": "https://raw.githubusercontent.com/BreezeWhite/oemer/dbe2a933d630d0f74805d717960eb259473f5978/setup.py",
+      "final_url": "https://raw.githubusercontent.com/BreezeWhite/oemer/dbe2a933d630d0f74805d717960eb259473f5978/setup.py",
+      "version_or_commit": "main commit dbe2a933d630d0f74805d717960eb259473f5978",
+      "locator": "Pinned Oemer setup.py lines 9\u201312, 15\u201324 and 36\u201350: platform-dependent ONNX package, MIT metadata and optional TensorFlow dependencies",
+      "accessed_at": "2026-10-07T21:32:15.355510+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P27-S27.py",
+      "sha256": "c9fc3687d8d779be9f1f9580cd7d86d661782db13b1144a58a2f29fcf6715232",
+      "bytes": 2183,
+      "status": 200
+    },
+    {
+      "id": "P28",
+      "url": "https://raw.githubusercontent.com/BreezeWhite/oemer/dbe2a933d630d0f74805d717960eb259473f5978/oemer/ete.py",
+      "final_url": "https://raw.githubusercontent.com/BreezeWhite/oemer/dbe2a933d630d0f74805d717960eb259473f5978/oemer/ete.py",
+      "version_or_commit": "main commit dbe2a933d630d0f74805d717960eb259473f5978",
+      "locator": "Pinned Oemer ete.py lines 34\u201338, 49\u201369, 114\u2013153, 211\u2013225 and 268\u2013289: image/model pipeline, MusicXML export and checkpoint downloads",
+      "accessed_at": "2026-10-07T21:32:15.357436+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P28-S28.py",
+      "sha256": "a76284fd54e02c06a855227176f55c94848db937f8809eb9f8f0fec1e222d6dc",
+      "bytes": 10480,
+      "status": 200
+    },
+    {
+      "id": "P31",
+      "url": "https://registry.npmjs.org/pouchdb/latest",
+      "final_url": "https://registry.npmjs.org/pouchdb/latest",
+      "version_or_commit": "PouchDB 9.0.0; Apache-2.0; registry dist integrity as captured",
+      "locator": "PouchDB npm metadata name/version/license/repository/dist: 9.0.0, Apache-2.0; metadata snapshot only",
+      "accessed_at": "2026-10-07T21:32:15.359619+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P31-S31.json",
+      "sha256": "8b881958db1862b06e3884fd3b2ed9d9f9a87f9a3dc4e8ae0aa45798b323e2ff",
+      "bytes": 1760,
+      "status": 200
+    },
+    {
+      "id": "P32",
+      "url": "https://registry.npmjs.org/yjs/latest",
+      "final_url": "https://registry.npmjs.org/yjs/latest",
+      "version_or_commit": "Yjs 13.6.33; MIT; registry dist integrity as captured",
+      "locator": "Yjs npm metadata name/version/license/repository/dist: 13.6.33, MIT; metadata snapshot only",
+      "accessed_at": "2026-10-07T21:32:15.361387+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P32-S32.json",
+      "sha256": "bfe4d218c4902fd43377942fed27f408e53a0dbded41a213b998739160a529ea",
+      "bytes": 3381,
+      "status": 200
+    },
+    {
+      "id": "P34",
+      "url": "https://raw.githubusercontent.com/BreezeWhite/oemer/dbe2a933d630d0f74805d717960eb259473f5978/LICENSE",
+      "final_url": "https://raw.githubusercontent.com/BreezeWhite/oemer/dbe2a933d630d0f74805d717960eb259473f5978/LICENSE",
+      "version_or_commit": "main commit dbe2a933d630d0f74805d717960eb259473f5978",
+      "locator": "Pinned Oemer LICENSE: MIT notice and redistribution conditions; no model-weight license conclusion",
+      "accessed_at": "2026-10-07T21:32:15.407318+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/P34-S34.txt",
+      "sha256": "c31ee00a011716a584424d03963b5622620c211c4eb31e17b8da4d03de3d4b5b",
+      "bytes": 1065,
+      "status": 200
+    },
+    {
+      "id": "D01",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "final_url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_commit": "IIIF Presentation API 3.0",
+      "locator": "IIIF Presentation API 3.0 \u00a7\u00a72 (Canvas), 3.5 (motivation), 5.3 (Canvas) and 5.5 (Annotation Page): image/annotation presentation analogy",
+      "accessed_at": "2026-10-07T21:32:15.438579+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/D01.html",
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "bytes": 385826,
+      "status": 200
+    },
+    {
+      "id": "D02",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "final_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "version_or_commit": "live documentation",
+      "locator": "Automerge Conflicts documentation: concurrent property winner and getConflicts; convergence does not choose musical targets or publication permissions",
+      "accessed_at": "2026-10-07T21:32:15.439353+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/D02.html",
+      "sha256": "29f685d69d6506f758b2fcdd8c2915491e353af5ed2af90cc9fe309c5e35cef8",
+      "bytes": 16696,
+      "status": 200
+    },
+    {
+      "id": "D03",
+      "url": "https://audiveris.github.io/audiveris/_pages/guides/advanced/scanning/",
+      "final_url": "https://audiveris.github.io/audiveris/_pages/guides/advanced/scanning/",
+      "version_or_commit": "live documentation",
+      "locator": "Audiveris Scanning guide: resolution/staff-line spacing and rotation/warping considerations; live documentation, no accuracy measurement",
+      "accessed_at": "2026-10-07T21:32:15.474140+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/D03.html",
+      "sha256": "64d650f1702a330cb32058c3893ca73460144e7aa4bfbe6a36bc5880f2735d3f",
+      "bytes": 33720,
+      "status": 200
+    },
+    {
+      "id": "D04",
+      "url": "https://book.verovio.org/interactive-notation/content-selection.html",
+      "final_url": "https://book.verovio.org/interactive-notation/content-selection.html",
+      "version_or_commit": "live reference book",
+      "locator": "Verovio Score content selection: select({measureRange:...}), single range, SVG/page count changes; discovery lead only",
+      "accessed_at": "2026-10-07T21:32:15.514447+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/D04.html",
+      "sha256": "937902455022f852ef9bab1301a3f34c0828739a4a1d0f6793ee97e848624c11",
+      "bytes": 28882,
+      "status": 200
+    },
+    {
+      "id": "Q01",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/pulls/954",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/pulls/954",
+      "version_or_commit": "PR #954",
+      "locator": "JSON fields body/Testing, merged_at, merge_commit_sha and changed_files: PR #954 author-tested on 5.10.2, merged 2026-06-21",
+      "accessed_at": "2026-10-07T21:33:07.071967+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q01.json",
+      "sha256": "904d9a53396dd7e95d179e8b7499d35c2183e4f1a1b8c7153f5e61e85d0d9195",
+      "bytes": 19345,
+      "status": 200
+    },
+    {
+      "id": "Q02",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/pulls/954/files",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/pulls/954/files",
+      "version_or_commit": "PR #954",
+      "locator": "Complete JSON array of two PR #954 changed files and guard patches; no added regression fixture in this patch",
+      "accessed_at": "2026-10-07T21:33:07.074163+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q02.json",
+      "sha256": "77f01857e912da2454621b2065f61aed4ebcf8b55be0c7119c4638aba6453736",
+      "bytes": 3421,
+      "status": 200
+    },
+    {
+      "id": "Q03",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/pulls/954/commits",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/pulls/954/commits",
+      "version_or_commit": "PR #954",
+      "locator": "Complete PR #954 commit array: a2cfa6b761331dd2882df23167e33dc3ec5ae7a8 and 20203e70af4f1bbc57401b558bf54a26859d7aad",
+      "accessed_at": "2026-10-07T21:33:07.075593+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q03.json",
+      "sha256": "60e1d28ab5b455d8c64740154bb4eab2b23bd583e0288c7a8e021d9e55f96c39",
+      "bytes": 4066,
+      "status": 200
+    },
+    {
+      "id": "Q04",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/issues/971",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/issues/971",
+      "version_or_commit": "Issue #971",
+      "locator": "Issue #971 JSON body, build, minimal-reproducer table, created_at and state; reported result, not independently reproduced",
+      "accessed_at": "2026-10-07T21:33:07.076123+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q04.json",
+      "sha256": "b71334d81710561073faaa0464eabb717d461706e612ec9f325e83ad7f1aaeff",
+      "bytes": 7537,
+      "status": 200
+    },
+    {
+      "id": "Q05",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/issues/971/comments",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/issues/971/comments",
+      "version_or_commit": "Issue #971",
+      "locator": "Issue #971 comments: second reported percussion-ensemble reproduction on same 5.11.0 Windows build; no fix asserted",
+      "accessed_at": "2026-10-07T21:33:07.076959+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q05.json",
+      "sha256": "41b529f7375af9473c402b2ed218951995cb0e3c0151cbea156cfcce5aff2e0f",
+      "bytes": 4474,
+      "status": 200
+    },
+    {
+      "id": "Q06",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/releases?per_page=20",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/releases?per_page=20",
+      "version_or_commit": "release list accessed 2026-10-07",
+      "locator": "Audiveris release JSON listing: newest listed 5.11.0, 2026-07-11; body includes PR #954",
+      "accessed_at": "2026-10-07T21:33:07.259375+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q06.json",
+      "sha256": "434d8304bc8a8bd573035393c2742ef5c13cb937f512dfffbc5977f934335855",
+      "bytes": 236336,
+      "status": 200
+    },
+    {
+      "id": "Q07",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/issues/953",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/issues/953",
+      "version_or_commit": "Issue #953",
+      "locator": "Issue #953 body: exact StaffBarlineInter and MeasureStack null paths on 5.10.2, batch mode and proposed guards",
+      "accessed_at": "2026-10-07T21:33:07.267368+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q07.json",
+      "sha256": "d96885c0cca3792c616e23ebf1d0f70a7eebc4a83436098fc55df5815986f343",
+      "bytes": 6209,
+      "status": 200
+    },
+    {
+      "id": "Q08",
+      "url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/releases/tags/1.9.6",
+      "final_url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/releases/tags/1.9.6",
+      "version_or_commit": "OSMD 1.9.6",
+      "locator": "OSMD 1.9.6 release JSON tag/date/body: 2026-02-13 and fix/feature commit links",
+      "accessed_at": "2026-10-07T21:33:07.331026+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q08.json",
+      "sha256": "9733e90e064326f9bd66f3c3353068ceea622ed4ac7deef0c1eeb66f881b9d04",
+      "bytes": 7125,
+      "status": 200
+    },
+    {
+      "id": "G01",
+      "url": "https://github.com/Audiveris/audiveris.git",
+      "final_url": null,
+      "version_or_commit": "5.11.0",
+      "locator": "git ls-remote public Audiveris repository: refs/tags/5.11.0 = 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "accessed_at": "2026-10-07T21:33:07.579368+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/G01.txt",
+      "sha256": "19ab827aa98aaa8494cba341133b39a9f76e3446a60721e57f5ceccd6f2ec16d",
+      "bytes": 58,
+      "status": 0
+    },
+    {
+      "id": "G02",
+      "url": "https://github.com/opensheetmusicdisplay/opensheetmusicdisplay.git",
+      "final_url": null,
+      "version_or_commit": "1.9.6",
+      "locator": "git ls-remote public OSMD repository: annotated 1.9.6 tag fb85c631613890ac7a0e69a0fc16165b0722ee5d peeled to a9b8355e21296f5ced7b0c3e53cd7d5abac5031e",
+      "accessed_at": "2026-10-07T21:33:07.579742+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/G02.txt",
+      "sha256": "8421ca8eaa73c833f2b8f5ee8837d7b8cce87ed5f52fa7422d09128fa9ecacc9",
+      "bytes": 117,
+      "status": 0
+    },
+    {
+      "id": "G03",
+      "url": "https://github.com/liebharc/homr.git",
+      "final_url": null,
+      "version_or_commit": "v0.7.0",
+      "locator": "git ls-remote public HOMR repository: refs/tags/v0.7.0 = 8b5dcf7d7bdd1a47911dc0c661c573b957271eab",
+      "accessed_at": "2026-10-07T21:33:07.580603+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/G03.txt",
+      "sha256": "b5eab72c64d3343440e8d2d2a2d1e5e7bf24e9c3c0db811d5d625ad38845f9f7",
+      "bytes": 58,
+      "status": 0
+    },
+    {
+      "id": "Q10",
+      "url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/issues/1629",
+      "final_url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/issues/1629",
+      "version_or_commit": "OSMD issue #1629",
+      "locator": "Issue #1629 body: OSMD 1.9.3 Blob URL/MXL loading failure; closed state",
+      "accessed_at": "2026-10-07T21:36:17.446799+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q10.json",
+      "sha256": "294e40533b5b90d04cdaee070cd8fc686a682cff21e250f49ec3a41d7b77dcb7",
+      "bytes": 8859,
+      "status": 200
+    },
+    {
+      "id": "Q11",
+      "url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/issues/1629/comments",
+      "final_url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/issues/1629/comments",
+      "version_or_commit": "OSMD issue #1629",
+      "locator": "Issue #1629 comments: initial text workaround rejected, JSZip workaround and direct Blob fix reported not yet released on 2025-11-27",
+      "accessed_at": "2026-10-07T21:36:17.448837+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q11.json",
+      "sha256": "b14c21433388013b73882f556b466262c2b9b7f66d86a4bf4897a23aeb1651c5",
+      "bytes": 16497,
+      "status": 200
+    },
+    {
+      "id": "Q12",
+      "url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/commits/a595712d2dc345f0e6020170a18098a2b4438269",
+      "final_url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/commits/a595712d2dc345f0e6020170a18098a2b4438269",
+      "version_or_commit": "OSMD fix a595712d2dc345f0e6020170a18098a2b4438269",
+      "locator": "Commit a595712d2dc345f0e6020170a18098a2b4438269: two TypeScript files add direct Blob/MXL support; no regression test file in changed-file list",
+      "accessed_at": "2026-10-07T21:36:17.449769+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q12.json",
+      "sha256": "920d2c709ff54319e884812fbd61facccbdde13e95ac811017361d181da00a22",
+      "bytes": 12065,
+      "status": 200
+    },
+    {
+      "id": "Q13",
+      "url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/pulls/1644",
+      "final_url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/pulls/1644",
+      "version_or_commit": "OSMD PR #1644",
+      "locator": "PR #1644 body: repetition/cursor behavior, visual-regression claims and visual-diff artifact link; artifact not downloaded or executed",
+      "accessed_at": "2026-10-07T21:36:17.457339+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q13.json",
+      "sha256": "697c495ce03c5afecfa096d9be4ca9ef2f99f5c5efe3a139c10ef5ce53a34330",
+      "bytes": 24174,
+      "status": 200
+    },
+    {
+      "id": "Q14",
+      "url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/commits/f0971167ab3d01073acfbe968c6f9c27989287c2",
+      "final_url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/commits/f0971167ab3d01073acfbe968c6f9c27989287c2",
+      "version_or_commit": "OSMD PDF/SVG fix f0971167ab3d01073acfbe968c6f9c27989287c2",
+      "locator": "Commit f0971167ab3d01073acfbe968c6f9c27989287c2 message and sole changed file demo/index.js: PDF/SVG export feature is in demo",
+      "accessed_at": "2026-10-07T21:36:17.675542+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q14.json",
+      "sha256": "707657ce72a037800ad082e86f1d90bc960c125cbc8b8829a2368d7de61c2bcd",
+      "bytes": 12279,
+      "status": 200
+    },
+    {
+      "id": "Q15",
+      "url": "https://api.github.com/repos/liebharc/homr/releases/tags/v0.7.0",
+      "final_url": "https://api.github.com/repos/liebharc/homr/releases/tags/v0.7.0",
+      "version_or_commit": "HOMR v0.7.0",
+      "locator": "Exact v0.7.0 GitHub Release endpoint: HTTP 404 response body; Git tag still exists per G03",
+      "accessed_at": "2026-10-07T21:36:17.681058+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/Q15.json",
+      "sha256": "010563d2cfb8f1e87f700936ce59ee3a33364da46e3db41b0049227918ece74d",
+      "bytes": 133,
+      "status": 404
+    },
+    {
+      "id": "K01",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/a9b8355e21296f5ced7b0c3e53cd7d5abac5031e/src/Common/FileIO/Mxl.ts",
+      "final_url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/a9b8355e21296f5ced7b0c3e53cd7d5abac5031e/src/Common/FileIO/Mxl.ts",
+      "version_or_commit": "OSMD 1.9.6 commit a9b8355e21296f5ced7b0c3e53cd7d5abac5031e",
+      "locator": "Pinned OSMD Mxl.ts lines 5\u201332 and 55\u201388: direct Blob zip load and container rootfile extraction",
+      "accessed_at": "2026-10-07T21:37:15.918089+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/K01.ts",
+      "sha256": "a26ec6eb03b20fcaf2f8b31c7a26775a3ef2aa458c3e1b504f53719e57fbd6df",
+      "bytes": 3358,
+      "status": 200
+    },
+    {
+      "id": "K02",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/run/RunTable.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/run/RunTable.java",
+      "version_or_commit": "Audiveris 5.11.0 commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Pinned Audiveris RunTable.java lines 337\u2013359: afterUnmarshal calls afterMarshal, which dereferences sequences.length",
+      "accessed_at": "2026-10-07T21:37:15.919618+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/K02.java",
+      "sha256": "0a1d100fa7540e537983a1eb89d204098d3fb51f3f34c6264442147388840982",
+      "bytes": 61643,
+      "status": 200
+    },
+    {
+      "id": "K03",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/SheetStub.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/SheetStub.java",
+      "version_or_commit": "Audiveris 5.11.0 commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Pinned Audiveris SheetStub.java lines 970\u20131007: load, filesystem close on successful path, catch and binary restart",
+      "accessed_at": "2026-10-07T21:37:15.920891+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/K03.java",
+      "sha256": "bddb2007eab849877e82d4a000127e5b5cefe8fb9d82d80de4b8341c271bbe3b",
+      "bytes": 51506,
+      "status": 200
+    },
+    {
+      "id": "K04",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/util/ZipFileSystem.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/util/ZipFileSystem.java",
+      "version_or_commit": "Audiveris 5.11.0 commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Pinned Audiveris ZipFileSystem.java lines 104\u2013113: newFileSystem for jar URI",
+      "accessed_at": "2026-10-07T21:37:15.926200+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/K04.java",
+      "sha256": "9db426ec313d705ce67d1bc33ca3a1605ddc49dd16187fe732cd4b20d8a24eac",
+      "bytes": 4716,
+      "status": 200
+    },
+    {
+      "id": "K05",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/Book.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/Book.java",
+      "version_or_commit": "Audiveris 5.11.0 commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Pinned Audiveris Book.java lines 588\u2013597, 1837\u20131858 and 2622\u20132636: export/transcribe/reduce and opening sheet/book filesystem",
+      "accessed_at": "2026-10-07T21:37:15.927571+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/K05.java",
+      "sha256": "2cac9a011635a65aa3f336cd82889cc4271bf8a3b3dbcebedf7ab8228cfd6b71",
+      "bytes": 95171,
+      "status": 200
+    }
+  ],
+  "preservation": {
+    "result": "FAIL",
+    "defect_refs": [
+      "D01"
+    ],
+    "preserved": [
+      "hypothetical and authorized-use boundary",
+      "source originals and immutable replacements",
+      "distinct edition/part/asset/annotation/cue identities",
+      "human-reviewed interpretation status",
+      "no perfect OMR or pagination/edition equivalence",
+      "private personal notes and explicit sharing",
+      "manual conflict/re-anchor review",
+      "portable offline release and opt-in return",
+      "rights/retention uncertainty and copy/revocation limits",
+      "planning only; no product/canon/WorkNodes"
+    ],
+    "lost": [
+      "Oemer pin/license/deployment option and conditions",
+      "PouchDB/CouchDB and Yjs option identity and semantic conditions",
+      "Tropy analogy and BagIt RFC/version/source identity",
+      "explicit export path constraints and malformed-path/unknown-schema validation observations"
+    ],
+    "valid_additions": [
+      "Audiveris #971 counterevidence",
+      "MusicXML divisions/display semantics",
+      "OSMD pinned renderer boundary"
+    ],
+    "incorrect_correction_refs": [
+      "D02"
+    ]
+  },
+  "proposed_vs_executed": {
+    "result": "PASS",
+    "candidate_proposed": [
+      "intake/rights gate",
+      "optional OMR value/failure study",
+      "renderer/format acceptance and reopen",
+      "coordinate/replacement placement",
+      "cross-part cue/offline/private/contribution/conflict handling",
+      "portable handoff/recovery/access/deletion"
+    ],
+    "candidate_reported_executed": [
+      "public source discovery and byte capture",
+      "public git tag resolution",
+      "pinned code/specification/issue/release reading",
+      "source/output byte-integrity checks"
+    ],
+    "reviewer_executed": [
+      "problem-level public-primary discovery before candidate evaluation",
+      "fresh unauthenticated public byte retrieval",
+      "three public git ls-remote tag queries",
+      "targeted pinned source/specification and issue/fix/release inspections",
+      "hash recheck of eight mapped scientific files and 49 mapped candidate source captures",
+      "same-byte verification of consequential HOMR evidence"
+    ],
+    "not_executed": [
+      "OMR/model installation or run",
+      "score download/transcription",
+      "PDF/MusicXML renderer run",
+      "annotation overlay or replacement/reopen product check",
+      "offline application/conflict/import/export product check",
+      "retention/deletion/backup product check",
+      "product build"
+    ],
+    "original_candidate_invocation_independently_certified": false,
+    "integrity_observation": {
+      "mapped_scientific_files": 8,
+      "all_scientific_input_hashes_match": true,
+      "mapped_candidate_captures": 49,
+      "all_capture_bytes_and_hashes_match": true,
+      "scientific_grade_implication": "integrity alone does not validate claims"
+    },
+    "validation_preservation_defect_refs": [
+      "D01"
+    ]
+  },
+  "source_operations": {
+    "scope": "Observable reviewer operations; candidate action counts remain unknown.",
+    "reviewer_web_search_calls": 3,
+    "reviewer_web_search_queries": 9,
+    "reviewer_https_requests": 66,
+    "reviewer_public_git_ls_remote_calls": 3,
+    "reviewer_http_successes": 64,
+    "reviewer_http_404_responses_with_captured_body": 1,
+    "reviewer_failed_requests_without_body": 1,
+    "candidate_search_calls": null,
+    "candidate_fetch_calls": null,
+    "candidate_code_inspection_operations": null
+  },
+  "usage": {
+    "input": null,
+    "cached": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "unassessed_material_scientific_content_remainder": [],
+  "supervisor_owned": [
+    "lifecycle/time/provenance/economics eligibility"
+  ],
+  "rules_read": [
+    "/home/sittingmongoose/.codex/AGENTS.md",
+    "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md"
+  ],
+  "report_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/REPORT.md",
+  "evidence_manifests": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/CAPTURES.json",
+      "sha256": "eae9a6f7713ff577b8efd4c099be4551b643bf9373c9499dda2efa50388efdea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/sources/INPUT_INTEGRITY.json",
+      "sha256": "2bf6dd17e0fd9054fadd6b23b6b91c82cdcdbd8ef2b2d30ccbf71e4697d475fa"
+    }
+  ],
+  "report_sha256": "70b6586fb42e02d8942633176e4463f344be0d372847e672a74c54aea93c74a7"
+}

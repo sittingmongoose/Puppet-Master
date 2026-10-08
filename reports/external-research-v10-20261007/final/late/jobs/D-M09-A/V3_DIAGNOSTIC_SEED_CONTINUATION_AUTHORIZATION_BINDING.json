@@ -1,0 +1,18 @@
+{
+  "schema": "ER10_M09_PROSPECTIVE_CONDITIONAL_SEED_EXCEPTION_BINDING_V1",
+  "recorded_at": "2026-10-07T23:48:45.566259+00:00",
+  "root_exception_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M09-A-diagnostic-seed-continuation-exception-v1.json",
+  "root_exception_sha256": "0ae753a09af990d9d9923dd6f7baaef27794a379bc9f18651ce752272c92e1fe",
+  "original_startup_gate_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/startup_event_gate_receipt.json",
+  "original_startup_gate_sha256": "9787167180300112a2aed42b68c4070e1fb5618aec8772d2c434e5a7ffe239e7",
+  "prelaunch_overlay_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+  "prelaunch_overlay_sha256": "106443af1fdcc77908e1226cef783af084fe7a30b6f7a4ff065c8ff2c16fe36c",
+  "original_startup_absence_immutable": true,
+  "qualification_provenance_comparative": "HOLD",
+  "prerequisites_status": "PENDING_ACTUAL_SEED_TERMINAL_DELIVERY_AND_NATIVE_COMPLETE_AND_TREE_QUIET_SETTLED",
+  "arm_admission_authorized_now": false,
+  "unchanged_seed_ceiling_seconds": 1200,
+  "unchanged_common_deadline": "2026-10-08T01:45:13.455858+00:00",
+  "candidate_inputs_changed": false,
+  "GLM_release_before_reviews_unchanged": true
+}

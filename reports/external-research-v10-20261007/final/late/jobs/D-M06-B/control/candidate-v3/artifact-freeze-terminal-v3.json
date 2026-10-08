@@ -1,0 +1,93 @@
+{
+  "at": "2026-10-08T02:14:01.383306+00:00",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/INPUT_MAP.json",
+      "sha256": "4d601ee91d071c2bf6e3b58adbc823018f356fe20447fff11cb2db1e7b913008",
+      "bytes": 5290
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/assignment.md",
+      "sha256": "777f5dd1f34f90899a2f5c88bcaca81d17aa9f1b1fa9c7f5f035b7ede22ae99b",
+      "bytes": 3723
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/dispatch-config.json",
+      "sha256": "e3ec2e21f2d536c1b5c6ed944afff56f9080dad75786e7ee0834b936f6c4258e",
+      "bytes": 558
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/dispatch-receipt.json",
+      "sha256": "83a4de9b214f081be884c453a656c293bc4fc4d2c5df12a5342d8ae90884c027",
+      "bytes": 28235
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/dispatch.json",
+      "sha256": "3757891dbaa255c4174f38931100d611ad595bde8c328779f7fd9b85218411cb",
+      "bytes": 1810
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/final.md",
+      "sha256": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+      "bytes": 6593
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/report.md",
+      "sha256": "b3614f41c82281e21c1fcb3e4bb9be9f613220d7a44a892063f7f63b0d68f317",
+      "bytes": 11254
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/sources.json",
+      "sha256": "5d2453b7b47d23f1add948d655a796edf6482b42c236f42693cb821e413eab23",
+      "bytes": 4188
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/startup-event-observation-v1.json",
+      "sha256": "8596c7e5e1eeac4e9814f603f54c78904165439031b8bafbc24f6221334b919f",
+      "bytes": 3676
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/t3-terminal-observation-v3.json",
+      "sha256": "4b04da372db5604e12f40e5cda6cbde916ae3c94ce74b5a70eef09f74794471d",
+      "bytes": 179476
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/task.txt",
+      "sha256": "c3a03c8a19af02d29544bf3167079acda8965981f1d92ed631196058935e2637",
+      "bytes": 139
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/timings.json",
+      "sha256": "f28f14ca11c021a05956e149e84370bb5fe28a3936492fa4ad38b8069c13b67a",
+      "bytes": 3700
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/witness-input.json",
+      "sha256": "1fe06ef6e73bbbf6b5ad0f95ec539e50e69074a661df66b4942124d2159d6c12",
+      "bytes": 6994
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/witness-receipt-run1-checkbug.json",
+      "sha256": "576469613b91559987633b91bcf8a596ff7c69f86b152aa05a81dafd9ab3cc4d",
+      "bytes": 6320
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/witness-receipt.json",
+      "sha256": "bc8cbabcf80a774b1d37f42784044a6afff8de3fa82181cafa1e64535b778ed9",
+      "bytes": 6521
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/witness.py",
+      "sha256": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37",
+      "bytes": 10788
+    }
+  ],
+  "required_absent": [],
+  "json_parse": {
+    "sources.json": "VALID_JSON",
+    "timings.json": "VALID_JSON"
+  },
+  "science": "UNASSESSED",
+  "native": "PENDING_ROOT_DISTINCT_TERMINAL_NOMINATION",
+  "active_absence_preserved": true
+}

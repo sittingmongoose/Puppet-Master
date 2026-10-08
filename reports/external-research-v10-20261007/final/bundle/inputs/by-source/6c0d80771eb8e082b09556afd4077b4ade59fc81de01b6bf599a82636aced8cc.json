@@ -1,0 +1,200 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-METHOD-04",
+  "version": "v2",
+  "record_at": "2026-10-07T21:55:47.545251+00:00",
+  "status": "pair_assessed_terminal_both_PASS_WITH_LIMITATIONS",
+  "all_candidate_tasks_quiet": true,
+  "all_review_tasks_quiet": true,
+  "both_exact_full_finals_nativecomplete_frozen": true,
+  "paired_candidate_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-04-pair-freeze-v2.json",
+  "arms": {
+    "control": {
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "material_error_count": 0,
+      "counts": {
+        "six_axes": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "O1_O6": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "plan_groups": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "plan_atoms": {
+          "complete": 34,
+          "assessed": 34,
+          "unassessed": 0
+        },
+        "owner_decisions": {
+          "complete": 22,
+          "assessed": 22,
+          "unassessed": 0
+        },
+        "brief_boundaries": {
+          "complete": 8,
+          "assessed": 8,
+          "unassessed": 0
+        },
+        "coverage_inventory": {
+          "complete": 70,
+          "assessed": 70,
+          "unassessed": 0
+        },
+        "consequential_claims": {
+          "complete": 26,
+          "assessed": 26,
+          "unassessed": 0
+        },
+        "criticism_units": {
+          "complete": 18,
+          "assessed": 18,
+          "unassessed": 0
+        },
+        "validation_groups": {
+          "complete": 7,
+          "assessed": 7,
+          "unassessed": 0
+        }
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/frozen-review.json",
+      "review_requestedAt": "2026-10-07T21:42:21.355Z",
+      "review_completedAt": "2026-10-07T21:54:25.028Z",
+      "review_seconds": 723.673,
+      "review_queue_seconds": 4.753,
+      "review_delivery_in_deadline": true,
+      "source_correct_usable_final_at_retrospectively": "2026-10-07T21:21:04.256Z",
+      "source_correct_host_release_at_retrospectively": "2026-10-07T21:21:20.635192+00:00",
+      "source_correct_usable_latency_seconds_from_cold_T0": 1992.006526,
+      "source_correct_host_release_latency_seconds_from_cold_T0": 2008.385718,
+      "source_assessment_established_at": "2026-10-07T21:54:25.028Z",
+      "distinct_usage": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      }
+    },
+    "treatment": {
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "material_error_count": 0,
+      "counts": {
+        "six_axes": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "O1_O6": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "plan_sections": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "atomic_plan_decisions": {
+          "complete": 35,
+          "assessed": 35,
+          "unassessed": 0
+        },
+        "owner_decisions": {
+          "complete": 12,
+          "assessed": 12,
+          "unassessed": 0
+        },
+        "obligations_total_excluding_rollups": {
+          "complete": 53,
+          "assessed": 53,
+          "unassessed": 0
+        },
+        "consequential_checks": {
+          "complete": 29,
+          "assessed": 29,
+          "unassessed": 0
+        },
+        "final_records": {
+          "complete": 9,
+          "assessed": 9,
+          "unassessed": 0
+        },
+        "final_record_fields": {
+          "complete": 90,
+          "assessed": 90,
+          "unassessed": 0
+        },
+        "final_document_fields": {
+          "complete": 11,
+          "assessed": 11,
+          "unassessed": 0
+        },
+        "final_recursive_semantic_leaves": {
+          "complete": 830,
+          "assessed": 830,
+          "unassessed": 0
+        },
+        "rendered_views": {
+          "complete": 9,
+          "assessed": 9,
+          "unassessed": 0
+        },
+        "criticism_dispositions": {
+          "complete": 9,
+          "assessed": 9,
+          "unassessed": 0
+        },
+        "original_cited_sources": {
+          "complete": 16,
+          "assessed": 16,
+          "unassessed": 0
+        }
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/frozen-review.json",
+      "review_requestedAt": "2026-10-07T21:42:40.024Z",
+      "review_completedAt": "2026-10-07T21:54:33.492Z",
+      "review_seconds": 713.468,
+      "review_queue_seconds": 2.58,
+      "review_delivery_in_deadline": true,
+      "source_correct_usable_final_at_retrospectively": "2026-10-07T21:41:19.166Z",
+      "source_correct_host_release_at_retrospectively": "2026-10-07T21:41:49.154310+00:00",
+      "source_correct_usable_latency_seconds_from_cold_T0": 3206.916526,
+      "source_correct_host_release_latency_seconds_from_cold_T0": 3236.904836,
+      "source_assessment_established_at": "2026-10-07T21:54:33.492Z",
+      "distinct_usage": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      }
+    }
+  },
+  "cold_T0": "2026-10-07T20:47:52.249474+00:00",
+  "hard_cold_budget_seconds_both_arms": 3600,
+  "economics": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-04-terminal-economics-v2.json",
+  "original_failed_v1_disposition": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method04-pair-disposition-v1.json",
+  "original_failed_v1_economics": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-04-terminal-economics-v1.json",
+  "generic_renderer_preparation_lower_bound_seconds": 454.372,
+  "generic_renderer_wall_and_billing": null,
+  "cold_vs_amortized": "Known454.372 helper lowerbound retained separately; case scientific T0/source usable latency include admitted case prep and queue. Amortization requires declared usage denominator, not zero/free helper cost.",
+  "source_quality_preserving_speed_win": null,
+  "comparison_limits": [
+    "Both grades qualified, no FULL_PASS.",
+    "Treatment critic ACTIVE capture absent/thread_not_found HOLD retained; actual terminal complete does not requalify active provenance.",
+    "Control70/treatment53 required inventories grouped differently; do not normalize counts or claim exhaustive opportunity recall.",
+    "Treatment occupied2977.952 versus control1694.210 seconds; no faster treatment established.",
+    "Original45min v1 failures/grades/costs immutable; last60min v2 is separate no best-of or old45 labeling.",
+    "Native aggregate counters unsummed; token categories/billing unknown null; source grade separate timing/provenance/method."
+  ]
+}

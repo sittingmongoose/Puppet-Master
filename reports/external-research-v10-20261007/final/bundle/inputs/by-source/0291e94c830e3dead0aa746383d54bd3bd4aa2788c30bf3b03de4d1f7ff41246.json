@@ -1,0 +1,338 @@
+{
+  "schema": "ER10-cohort3-ordinary-review-freeze-v3",
+  "case": "D-M10-A",
+  "version": "v3",
+  "reviewer": "J1",
+  "arm": "control",
+  "verdict": "FullSourceFAIL",
+  "coverage": "FULL_DECLARED_SCOPE",
+  "unassessed": [],
+  "dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M10-A-v3-review-J1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M10-A-v3-review-J1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-v3-review-J1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M10-A-v3-review-J1",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "actual_t3_thread_binding": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M10-A-v3-review-J1",
+    "link": "[ER10 COHORT3 M10A v3 independent J1](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-v3-review-J1)",
+    "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "title": "ER10 COHORT3 M10A v3 independent J1",
+    "createdBy": "agent",
+    "creationSource": "mcp",
+    "status": "completed",
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-v3-review-J1:ordinal:1",
+    "activeRunId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "linkedPullRequest": null,
+    "titleRegeneration": null,
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+    "relationshipToParent": "subagent",
+    "runCount": 1,
+    "itemCount": 33,
+    "pendingRequestCount": 0,
+    "archived": false,
+    "settled": false,
+    "settledAt": null,
+    "snoozed": false,
+    "snoozedUntil": null,
+    "createdAt": "2026-10-07T21:45:18.991Z",
+    "updatedAt": "2026-10-07T21:51:24.714Z"
+  },
+  "actual_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-v3-review-J1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:45:19.392Z",
+    "startedAt": "2026-10-07T21:45:20.549Z",
+    "completedAt": "2026-10-07T21:51:24.714Z"
+  },
+  "quiet": true,
+  "settled": true,
+  "settle_sequence": 535327,
+  "native_goal_required": false,
+  "dispatch_to_delivery_seconds": 365.322,
+  "queue_startup_seconds": 1.157,
+  "artifacts": {
+    "judgment.md": {
+      "sha256": "1d164b3db0d866940e8939de9397133e64b4a37d50ae128f4d348685fb69a817",
+      "bytes": 20045
+    },
+    "checks.json": {
+      "sha256": "5f01d933cd5861396973b4b6fdc7baa3d983135a9b953f6913c6c0aa951447af",
+      "bytes": 8325
+    },
+    "INPUT_MAP.json": {
+      "sha256": "6c35222e83aa5c44732b20b8155660425ea8dfa1b1cbf383729545d624d12470",
+      "bytes": 2939
+    },
+    "assignment.md": {
+      "sha256": "87b24472acb0419561df7829565e1d5bf7e557f934b39b97ba91fe75e30005c6",
+      "bytes": 3076
+    },
+    "dispatch.json": {
+      "sha256": "41bd3b54658d9303400e342a4fcae6805f825b600d1d922acbfc5525ca111571",
+      "bytes": 986
+    },
+    "quiet_task_receipt.json": {
+      "sha256": "ddadae10f31345431e07d3d971a2c5a022b8d51355aca918c96cd62749d82d8a",
+      "bytes": 5968
+    },
+    "t3_terminal_receipt.json": {
+      "sha256": "6f009a3ea1699fdd692971c6e5b02a3a1f4cb5a05e289ad6ec15524907cb999a",
+      "bytes": 6351
+    }
+  },
+  "billing": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "source_operations": [
+    {
+      "op": "read_input_map",
+      "timestamp_observed_after_utc": "2026-10-07T21:45:28Z"
+    },
+    {
+      "op": "read_brief_manifest_proposal_critique_final",
+      "timestamp_observed_after_utc": "2026-10-07T21:45:36Z"
+    },
+    {
+      "op": "verify_all_seven_scientific_hashes_and_sizes",
+      "timestamp_utc": "2026-10-07T21:45:52.241473+00:00",
+      "all_match": true
+    },
+    {
+      "op": "locate_primary_sections",
+      "timestamp_bounds_utc": [
+        "2026-10-07T21:45:36Z",
+        "2026-10-07T21:46:00Z"
+      ]
+    },
+    {
+      "op": "read_frozen_primary_sections_initial_batch",
+      "timestamp_observed_after_utc": "2026-10-07T21:46:00Z",
+      "ranges": {
+        "httpcache": [
+          [
+            1,
+            525
+          ],
+          [
+            526,
+            1016
+          ],
+          [
+            1051,
+            1513
+          ]
+        ],
+        "httpsem": [
+          [
+            5062,
+            5105
+          ],
+          [
+            5668,
+            5734
+          ],
+          [
+            5872,
+            6022
+          ],
+          [
+            7444,
+            7486
+          ]
+        ]
+      },
+      "display_truncated": true
+    },
+    {
+      "op": "recover_governing_sections_from_truncated_display",
+      "timestamp_bounds_utc": [
+        "2026-10-07T21:46:00Z",
+        "2026-10-07T21:46:13Z"
+      ],
+      "ranges": {
+        "httpcache": [
+          [
+            369,
+            800
+          ],
+          [
+            801,
+            1016
+          ],
+          [
+            1081,
+            1202
+          ],
+          [
+            1203,
+            1453
+          ],
+          [
+            1530,
+            1630
+          ]
+        ]
+      },
+      "recovered_required_content": true
+    },
+    {
+      "op": "supplementary_official_html_open",
+      "timestamp_observed_after_utc": "2026-10-07T21:46:55Z",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.3",
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.5"
+      ],
+      "version": "June 2022 RFC publications",
+      "web_response_raw_capture_hash": null,
+      "limitation": "Web tool exposes extracted text, not raw response bytes; independent byte captures recorded separately."
+    },
+    {
+      "op": "supplementary_official_html_find",
+      "timestamp_bounds_utc": [
+        "2026-10-07T21:46:55Z",
+        "2026-10-07T21:47:54Z"
+      ],
+      "patterns": [
+        "When a cache that implements",
+        "There is no need to send the Authorization"
+      ],
+      "display_truncated": true,
+      "governing_facts_already_read_in_complete_frozen_displays": true
+    },
+    {
+      "op": "supplementary_official_html_byte_fetch",
+      "captures": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+          "resolved_url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+          "timestamp_start_utc": "2026-10-07T21:47:13.263943+00:00",
+          "timestamp_end_utc": "2026-10-07T21:47:13.414520+00:00",
+          "http_status": 200,
+          "bytes": 232630,
+          "sha256": "ce91ee9848d2b9ac46386b0f0cbd4bfd9c0cd1948ebc363834cadc7e0997f3d7",
+          "use": "supplementary primary publication identity / missing-condition corroboration; frozen text governs"
+        },
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+          "resolved_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+          "timestamp_start_utc": "2026-10-07T21:47:13.416168+00:00",
+          "timestamp_end_utc": "2026-10-07T21:47:13.594231+00:00",
+          "http_status": 200,
+          "bytes": 1187554,
+          "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+          "use": "supplementary primary publication identity / missing-condition corroboration; frozen text governs"
+        }
+      ],
+      "version": "June 2022 RFC publications",
+      "limitation": "In-memory urllib captures were separate HTTP fetches from the web-tool extracts; hashes identify those fetched bytes, not the web tool's unseen raw response. No downloaded code executed; no capture file persisted."
+    },
+    {
+      "op": "fixture_context_and_age_invalidation_expiry_cross_checks",
+      "timestamp_bounds_utc": [
+        "2026-10-07T21:47:54Z",
+        "2026-10-07T21:48:12Z"
+      ],
+      "ranges": {
+        "httpcache": [
+          [
+            1017,
+            1080
+          ],
+          [
+            1454,
+            1513
+          ]
+        ],
+        "httpsem": [
+          [
+            3920,
+            3977
+          ],
+          [
+            5615,
+            5667
+          ],
+          [
+            6839,
+            6883
+          ],
+          [
+            6915,
+            6960
+          ]
+        ]
+      }
+    },
+    {
+      "op": "complete_claim_and_preservation_comparison",
+      "timestamp_observed_after_utc": "2026-10-07 21:48:42 UTC",
+      "coverage": "B obligations 1-6, C items 1-8, F findings 1-8, and material P-to-C-to-F meaning"
+    },
+    {
+      "op": "write_requested_judgment_and_checks",
+      "timestamp_utc": "2026-10-07T21:51:16.742949+00:00"
+    }
+  ],
+  "scientific_findings": [
+    {
+      "id": "D1",
+      "kind": "consequential_condition_omission_in_added_correction",
+      "locations": [
+        "critique.md:5",
+        "final.md:5",
+        "final.md:15 (imports finding 1)"
+      ],
+      "governing_source": "RFC 9111 June 2022 \u00a75.2.2.3, frozen lines 1252-1256; \u00a75.2.2.5 lines 1297-1313",
+      "identity": "Ignoring no-store requires this response to contain must-understand, as well as cache support and understood/implemented status caching requirements.",
+      "logical_witness_executed": false
+    },
+    {
+      "id": "P1",
+      "kind": "secondary_supported_content_preservation_loss",
+      "locations": [
+        "draft.md:17",
+        "final.md:15"
+      ],
+      "governing_source": "RFC 9111 June 2022 \u00a75.2.2.2, frozen lines 1231-1235",
+      "identity": "Final preserves disconnected must-revalidate stale prohibition but drops mandatory error outcome and usual 504 recommendation.",
+      "sole_verdict_basis": false
+    }
+  ],
+  "output_volume": {
+    "declared_scientific_file_bytes": 606235,
+    "frozen_primary_file_bytes": 587418,
+    "supplementary_html_bytes": 1420184,
+    "exec_command_original_output_tokens_approx": 49777,
+    "exec_command_output_measurement_scope": "Tool-reported original token counts for read/search/hash/source-fetch commands; includes repeated sections and text that was truncated at aggregation. Not model input, billing, or delivered-token count.",
+    "web_tool_output_tokens": null,
+    "total_model_visible_input_tokens": null,
+    "authored_judgment_bytes": 20045,
+    "authored_checks_bytes": 8325
+  },
+  "blinding_limit": "declared control/proposal-first-full-check-final-v3 paths and authored process descriptions",
+  "frozen_at": "2026-10-07T21:52:05.304473+00:00"
+}

@@ -1,0 +1,173 @@
+{
+  "schema": "er10.terminal.economics.annotation.v1",
+  "case": "I-METHOD-04",
+  "record_at": "2026-10-07T20:20:48.821311+00:00",
+  "scope": "mechanical actual timing/cost support, no source-quality or speed inference",
+  "arms": {
+    "control": {
+      "stages": [
+        {
+          "role": "research",
+          "actual_requestedAt": "2026-10-07T19:40:07.966Z",
+          "actual_startedAt": "2026-10-07T19:40:08.853Z",
+          "T3_terminalAt": "2026-10-07T19:57:56.852Z",
+          "T3_status": "completed",
+          "host_releaseAt": "2026-10-07T19:58:09.152548+00:00",
+          "dispatch_to_T3_terminal_seconds": 1068.886,
+          "queue_service_start_seconds": 0.887,
+          "native_identity": "01a117e1-5ea2-7d33-a6d8-45c16817306a",
+          "native_terminal": "complete",
+          "native_aggregate_tokens": 256200,
+          "native_elapsed_counter_seconds": 1038,
+          "distinct_input_cache_generated_reasoning_billing": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning": null,
+            "billing": null
+          },
+          "exact_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/frozen-delivery.json",
+          "source_operations_support": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v1/source-map.json",
+          "output_and_evidence_bytes": 4669593,
+          "host_capture_seconds": 0.03587482,
+          "first_finding_latency": null,
+          "native_terminal_exact_epoch": null
+        },
+        {
+          "role": "critic",
+          "actual_requestedAt": "2026-10-07T19:58:20.794Z",
+          "actual_startedAt": "2026-10-07T19:58:21.491Z",
+          "T3_terminalAt": "2026-10-07T20:08:51.984Z",
+          "T3_status": "interrupted",
+          "host_releaseAt": "2026-10-07T20:09:06.607679+00:00",
+          "dispatch_to_T3_terminal_seconds": 631.19,
+          "queue_service_start_seconds": 0.697,
+          "native_identity": "01a117f2-0b99-7a82-b11f-8c5f5aeff928",
+          "native_terminal": "complete",
+          "native_aggregate_tokens": 189806,
+          "native_elapsed_counter_seconds": 600,
+          "distinct_input_cache_generated_reasoning_billing": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning": null,
+            "billing": null
+          },
+          "exact_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/frozen-delivery.json",
+          "source_operations_support": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v1/source-map.json",
+          "output_and_evidence_bytes": 4221779,
+          "host_capture_seconds": 0.07774615,
+          "first_finding_latency": null,
+          "native_terminal_exact_epoch": null
+        },
+        {
+          "role": "reviser",
+          "actual_requestedAt": "2026-10-07T20:09:26.360Z",
+          "actual_startedAt": "2026-10-07T20:09:26.836Z",
+          "T3_terminalAt": "2026-10-07T20:17:38.847Z",
+          "T3_status": "completed",
+          "host_releaseAt": "2026-10-07T20:17:50.707286+00:00",
+          "dispatch_to_T3_terminal_seconds": 492.487,
+          "queue_service_start_seconds": 0.476,
+          "native_identity": "01a117fc-32b2-7aa0-9880-ca670352f3ef",
+          "native_terminal": "complete",
+          "native_aggregate_tokens": 117662,
+          "native_elapsed_counter_seconds": 453,
+          "distinct_input_cache_generated_reasoning_billing": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning": null,
+            "billing": null
+          },
+          "exact_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/frozen-delivery.json",
+          "source_operations_support": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/source-map.json",
+          "output_and_evidence_bytes": 4242502,
+          "host_capture_seconds": 0.083909635,
+          "first_finding_latency": null,
+          "native_terminal_exact_epoch": null
+        }
+      ],
+      "aggregate_nonoverlapping_stage_occupied_seconds": 2192.563,
+      "dispatch_to_last_T3_terminal_seconds": 2250.881,
+      "dispatch_to_last_host_release_seconds": 2262.741286,
+      "source_correct_usable_latency": null,
+      "source_quality": null,
+      "native_counter_sum": null,
+      "billing": null,
+      "host_setup_cost": null,
+      "cold_and_amortized_helper_cost": null,
+      "cost_limits": "Unsupported values unknown, never zero. All original failed stages included. Exact source maps and passive capture records retained."
+    },
+    "treatment": {
+      "stages": [
+        {
+          "role": "research",
+          "actual_requestedAt": "2026-10-07T19:40:06.602Z",
+          "actual_startedAt": "2026-10-07T19:40:07.286Z",
+          "T3_terminalAt": "2026-10-07T19:58:21.611Z",
+          "T3_status": "completed",
+          "host_releaseAt": "2026-10-07T19:59:39.200990+00:00",
+          "dispatch_to_T3_terminal_seconds": 1095.009,
+          "queue_service_start_seconds": 0.684,
+          "native_identity": "01a117e1-5906-7a21-9456-b6a11a79a512",
+          "native_terminal": "complete",
+          "native_aggregate_tokens": 256749,
+          "native_elapsed_counter_seconds": 1067,
+          "distinct_input_cache_generated_reasoning_billing": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning": null,
+            "billing": null
+          },
+          "exact_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v1/frozen-delivery.json",
+          "source_operations_support": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v1/source-map.json",
+          "output_and_evidence_bytes": 2336185,
+          "host_capture_seconds": 0.004143873,
+          "first_finding_latency": null,
+          "native_terminal_exact_epoch": null
+        },
+        {
+          "role": "critic",
+          "actual_requestedAt": "2026-10-07T19:59:45.366Z",
+          "actual_startedAt": "2026-10-07T19:59:46.182Z",
+          "T3_terminalAt": "2026-10-07T20:11:01.995Z",
+          "T3_status": "interrupted",
+          "host_releaseAt": "2026-10-07T20:11:23.653338+00:00",
+          "dispatch_to_T3_terminal_seconds": 676.629,
+          "queue_service_start_seconds": 0.816,
+          "native_identity": "01a117f3-568c-7ad1-9570-c3cf5c815860",
+          "native_terminal": "paused",
+          "native_aggregate_tokens": null,
+          "native_elapsed_counter_seconds": null,
+          "distinct_input_cache_generated_reasoning_billing": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning": null,
+            "billing": null
+          },
+          "exact_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v1/frozen-delivery.json",
+          "source_operations_support": null,
+          "output_and_evidence_bytes": 11786,
+          "host_capture_seconds": null,
+          "first_finding_latency": null,
+          "native_terminal_exact_epoch": null
+        }
+      ],
+      "aggregate_nonoverlapping_stage_occupied_seconds": 1771.638,
+      "dispatch_to_last_T3_terminal_seconds": 1855.393,
+      "dispatch_to_last_host_release_seconds": 1877.051338,
+      "source_correct_usable_latency": null,
+      "source_quality": null,
+      "native_counter_sum": null,
+      "billing": null,
+      "host_setup_cost": null,
+      "cold_and_amortized_helper_cost": null,
+      "cost_limits": "Unsupported values unknown, never zero. All original failed stages included. Exact source maps and passive capture records retained."
+    }
+  },
+  "all_failed_costs_retained": true,
+  "no_cumulative_counter_sum": true
+}

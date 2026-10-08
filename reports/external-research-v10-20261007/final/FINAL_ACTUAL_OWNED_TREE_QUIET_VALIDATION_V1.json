@@ -1,0 +1,77 @@
+{
+  "schema": "ER10_ROOT_FINAL_OWNED_T3_TREE_QUIET_VALIDATION_V1",
+  "recorded_at": "2026-10-08T02:47:42.995529+00:00",
+  "capture": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/FINAL_ACTUAL_OWNED_TREE_CAPTURE_V1.json",
+    "sha256": "dfc153d182dc2c9783ebd8d6e6dbd5d909bbdcaf5dea09df71baf97f7fe4e644"
+  },
+  "case_registry": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/PREPARED_ORIGINAL_CASE_TASK_AUTHORITY_REGISTRY_V1.json",
+    "sha256": "cbd7f4ae3047b1387697e73c8662dd598ce47c594d0c08d64861c284e042425a"
+  },
+  "owned_descendant_threads": 329,
+  "root_direct_tasks": 46,
+  "complete_project_paginated_census": true,
+  "all_owned_candidate_review_helper_coordinator_task_trees_actual_quiet": true,
+  "all_owned_backing_threads_settled": true,
+  "cases": {
+    "D-M06-A": {
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "actual_registered_case_thread_ids": [
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-common-seed-v2",
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-common-seed-v3",
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-control-candidate-v3",
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-A-treatment-candidate-v3"
+      ],
+      "actual_descendant_thread_ids": [],
+      "all_task_trees_and_descendants_actual_quiet": true,
+      "actual_settlement_verified": true,
+      "native_complete_or_scientific_quality_inferred": false
+    },
+    "D-M06-B": {
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "actual_registered_case_thread_ids": [
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-common-seed-v2",
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-common-seed-v3",
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-control-candidate-v3",
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-independent-source-review-v3",
+        "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-treatment-candidate-v3"
+      ],
+      "actual_descendant_thread_ids": [],
+      "all_task_trees_and_descendants_actual_quiet": true,
+      "actual_settlement_verified": true,
+      "native_complete_or_scientific_quality_inferred": false
+    },
+    "D-M07-B": {
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "actual_registered_case_thread_ids": [
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-common-fresh-untrusted-seed-v3",
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-control-document-order-review-final-v3",
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-treatment-critical-first-protected-breadth-final-v3",
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-v3-review-J1",
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-B-v3-review-J2"
+      ],
+      "actual_descendant_thread_ids": [],
+      "all_task_trees_and_descendants_actual_quiet": true,
+      "actual_settlement_verified": true,
+      "native_complete_or_scientific_quality_inferred": false
+    },
+    "D-M09-A": {
+      "scope": "ALL_ORIGINAL_CANDIDATE_REVIEW_TASK_TREES_AND_DESCENDANTS_QUIET",
+      "actual_registered_case_thread_ids": [
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3",
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-evidence-critic-v3",
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-treatment-independent-operations-critic-v3",
+        "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-v3-review-J1"
+      ],
+      "actual_descendant_thread_ids": [],
+      "all_task_trees_and_descendants_actual_quiet": true,
+      "actual_settlement_verified": true,
+      "native_complete_or_scientific_quality_inferred": false
+    }
+  },
+  "root_closeout_thread_intentionally_active": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad",
+  "historical_native_disposition_holds_unchanged": true,
+  "limits": "Actual T3 task/thread queue and descendant quiet only. Historical missing native receipts stay missing; paused/blocked Goals are not relabeled complete. Root closeout and its partial usage remain separate."
+}

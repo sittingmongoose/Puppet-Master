@@ -1,0 +1,50 @@
+{
+  "observed_at": "2026-10-08T01:31:38.295022+00:00",
+  "original_arm_deadline": "2026-10-08T01:31:03.369784+00:00",
+  "actual_T3": "running observed via owned task_status",
+  "native_state": "UNKNOWN no nomination/no inferredrunning",
+  "no_repeatstartup_lookup": true,
+  "files": {
+    "dispatch-receipt.json": {
+      "bytes": 26632,
+      "sha256": "0bfb4872d4da0655ad38bfe6cf874f83dd6df22a03769a697f5ebfec029e7842"
+    },
+    "dispatch-config.json": {
+      "bytes": 558,
+      "sha256": "c3f793a7f60f7f648450aaa3e7e8d52095f50e98d5e8931377e9b7d8144e0ef4"
+    },
+    "assignment.md": {
+      "bytes": 3703,
+      "sha256": "2c433340f92d6d86e794d6290d8d5972247d3178ef1462956cec16120728dc17"
+    },
+    "dispatch.json": {
+      "bytes": 1810,
+      "sha256": "a2c9e2bb6c154821bf98af2caf111421ea6f743899b4527450a41d0fccc965c2"
+    },
+    "INPUT_MAP.json": {
+      "bytes": 4625,
+      "sha256": "d4e5b929d5d43682388ec07a1a594b28955667616b7d040a4c4a9b495fdcc540"
+    },
+    "task.txt": {
+      "bytes": 139,
+      "sha256": "ac8074a0abc561a4d78c4c240580157e33a8dfce5a16e7f4535aa0067d61fafe"
+    },
+    "witness-input.json": {
+      "bytes": 14685,
+      "sha256": "7ffb830b45df998fb2f8b419f9f0e42c1fb1cc998de8d5281503032cbf27cc61"
+    },
+    "startup-event-observation-v1.json": {
+      "bytes": 3676,
+      "sha256": "db8cee34e698fb1fb6c9c3c89b191f9eabc5105ab73e2a938517aec83c56c80c"
+    },
+    "sources.json": {
+      "bytes": 6219,
+      "sha256": "23697c84fba014b5055751cb744b96f6eed919d6e51d589707ded580f67eef81"
+    },
+    "witness.py": {
+      "bytes": 12641,
+      "sha256": "91907b1c4bf0ad801aa357fe410e8881d09a362dacd6eeb8eb89c968ce06c3a9"
+    }
+  },
+  "decision": "Capture then intentionally cancel own expired live task under root passive_cancel policy"
+}

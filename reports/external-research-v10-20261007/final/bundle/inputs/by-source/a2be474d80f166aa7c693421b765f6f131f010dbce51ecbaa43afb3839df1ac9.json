@@ -1,0 +1,48 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-METHOD-04",
+  "record_at": "2026-10-07T20:18:20.514243+00:00",
+  "status": "original_pair_terminal_delivery_lifecycle_HOLD",
+  "all_tasks_quiet": true,
+  "both_exact_full_finals_frozen": false,
+  "both_native_complete_terminal_states": false,
+  "source_judgment": null,
+  "science_assessment": "UNASSESSED; paired full-final/nativecomplete gate unmet; no evaluator key written",
+  "coverage": {
+    "declared_axes_per_arm": 6,
+    "assessed_axes_per_arm": 0,
+    "unassessed_axes_per_arm": 6,
+    "declared_brief_obligations_per_arm": 6,
+    "assessed_brief_obligations_per_arm": 0,
+    "unassessed_brief_obligations_per_arm": 6,
+    "consequential_scope_count": null,
+    "material_errors": null
+  },
+  "control": {
+    "final_T3": "completed",
+    "final_native_terminal": "complete",
+    "native_identity": "01a117fc-32b2-7aa0-9880-ca670352f3ef",
+    "full_final_carrier_frozen": true,
+    "critic_T3": "interrupted",
+    "critic_native_terminal": "complete",
+    "timing_limit": "prior lifecycle notice premature by 10.859615sec; original annotation unchanged"
+  },
+  "treatment": {
+    "critic_T3": "interrupted",
+    "critic_native_terminal": "paused",
+    "critic_native_identity": "01a117f3-568c-7ad1-9570-c3cf5c815860",
+    "critic_source_map_present": false,
+    "final_dispatched": false,
+    "timing_limit": "prior cancel after notice exceeded60sec; original annotation unchanged",
+    "lifecycle_limit": "missing active state observation"
+  },
+  "all_task_statuses": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method04-terminal-quiet-tasks-v1.json",
+  "control_final_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v1/frozen-delivery.json",
+  "treatment_critic_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v1/frozen-delivery.json",
+  "all_failures_costs_retained": true,
+  "successor": null,
+  "selection_basis": "DIAGNOSTIC_UNQUALIFIED",
+  "no_bestof_no_regrade_no_Sol_rescue": true,
+  "distinct_input_cache_generated_reasoning_billing": null,
+  "source_correct_usable_latency": null
+}

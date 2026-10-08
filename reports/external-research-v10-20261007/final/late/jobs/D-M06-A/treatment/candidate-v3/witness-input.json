@@ -1,0 +1,70 @@
+{
+  "binding": {
+    "role": "Candidate-authored control inputs and expected results; Sol supplied none. Expected values derive only from the frozen RFC 8785 bytes (jcs.txt).",
+    "fixtures_source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/fixtures.json",
+    "fixtures_sha256": "bc2ed432bc18ec4ac2eda91518111ade950b44d7f66b6c3dc6ca604a60c268ac",
+    "rfc8785_source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+    "rfc8785_sha256": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240"
+  },
+  "fixtures": [
+    {"id": "f01", "class": "ordinary", "input": "{\"name\":\"JCS\",\"version\":1,\"tags\":[\"json\",\"canonical\"],\"meta\":{\"ok\":true,\"id\":7}}"},
+    {"id": "f02", "class": "ordinary", "input": "{\n  \"b\" : 1 ,\n  \"a\" : 2\n}"},
+    {"id": "f03", "class": "ordinary", "input": "{\"numbers\":[333333333.33333329,1E30,4.50,2e-3,0.000000000000000000000000001],\"string\":\"\\u20ac$\\u000F\\u000aA'\\u0042\\u0022\\u005c\\\\\\\"\\/\",\"literals\":[null,true,false]}"},
+    {"id": "f04", "class": "boundary", "input": "{\"\\u20ac\":\"Euro Sign\",\"\\r\":\"Carriage Return\",\"\\ufb33\":\"Hebrew Letter Dalet With Dagesh\",\"1\":\"One\",\"\\ud83d\\ude00\":\"Emoji: Grinning Face\",\"\\u0080\":\"Control\",\"\\u00f6\":\"Latin Small Letter O With Diaeresis\"}"},
+    {"id": "f05", "class": "boundary", "input": "{\"\\ufb33\":1,\"\\ud83d\\ude00\":2}"},
+    {"id": "f06", "class": "boundary", "input": "{\"\\r\":1,\"1\":2,\"\\u0080\":3,\"\":4,\"a\":5,\"aa\":6,\"ab\":7}"},
+    {"id": "f07", "class": "boundary", "input": "{\"A\":1,\"\\u0041\":2}"},
+    {"id": "f08", "class": "boundary", "input": "{\"a\":1,\"a\":2}"},
+    {"id": "f09", "class": "ordinary", "input": "{\"café\":\"naïve\"}"},
+    {"id": "f10", "class": "boundary", "input": "{\"cafe\\u0301\":\"nai\\u0308ve\"}"},
+    {"id": "f11", "class": "boundary", "input": "{\"k\":\"\\udead\"}"},
+    {"id": "f12", "class": "boundary", "input": "{\"w\":4.500,\"x\":4.50,\"y\":4.5,\"z\":450e-2}"},
+    {"id": "f13", "class": "boundary", "input": "[-0, 0, 0e0, 0.0]"},
+    {"id": "f14", "class": "boundary", "input": "[1e+21, 999999999999999900000, 1e-6, 1e-27, 0.000001, 2e-3]"},
+    {"id": "f15", "class": "boundary", "input": "1424953923781206.25"},
+    {"id": "f16", "class": "boundary", "input": "[1e308, 1.7976931348623157e308, 1e309, -1e309]"},
+    {"id": "f17", "class": "boundary", "input": "{\"giantNumber\":1.4e9999,\"payMeThis\":26000.33,\"int64Max\":9223372036854775807}"},
+    {"id": "f18", "class": "boundary", "input": "[9007199254740991, 9007199254740992, 9007199254740993]"}
+  ],
+  "extra_inputs": {
+    "f01_reversed": "{\"meta\":{\"id\":7,\"ok\":true},\"tags\":[\"json\",\"canonical\"],\"version\":1,\"name\":\"JCS\"}",
+    "f02_compact": "{\"a\":2,\"b\":1}"
+  },
+  "appendix_b_table1": [
+    {"bits": "0000000000000000", "expect": "0", "comment": "Zero"},
+    {"bits": "8000000000000000", "expect": "0", "comment": "Minus zero"},
+    {"bits": "0000000000000001", "expect": "5e-324", "comment": "Min pos number"},
+    {"bits": "8000000000000001", "expect": "-5e-324", "comment": "Min neg number"},
+    {"bits": "7fefffffffffffff", "expect": "1.7976931348623157e+308", "comment": "Max pos number"},
+    {"bits": "ffefffffffffffff", "expect": "-1.7976931348623157e+308", "comment": "Max neg number"},
+    {"bits": "4340000000000000", "expect": "9007199254740992", "comment": "Max pos int (1)"},
+    {"bits": "c340000000000000", "expect": "-9007199254740992", "comment": "Max neg int (1)"},
+    {"bits": "4430000000000000", "expect": "295147905179352830000", "comment": "~2**68 (2)"},
+    {"bits": "7fffffffffffffff", "expect": null, "comment": "NaN (3): must error"},
+    {"bits": "7ff0000000000000", "expect": null, "comment": "Infinity (3): must error"},
+    {"bits": "44b52d02c7e14af5", "expect": "9.999999999999997e+22", "comment": ""},
+    {"bits": "44b52d02c7e14af6", "expect": "1e+23", "comment": ""},
+    {"bits": "44b52d02c7e14af7", "expect": "1.0000000000000001e+23", "comment": ""},
+    {"bits": "444b1ae4d6e2ef4e", "expect": "999999999999999700000", "comment": ""},
+    {"bits": "444b1ae4d6e2ef4f", "expect": "999999999999999900000", "comment": ""},
+    {"bits": "444b1ae4d6e2ef50", "expect": "1e+21", "comment": ""},
+    {"bits": "3eb0c6f7a0b5ed8c", "expect": "9.999999999999997e-7", "comment": ""},
+    {"bits": "3eb0c6f7a0b5ed8d", "expect": "0.000001", "comment": ""},
+    {"bits": "41b3de4355555553", "expect": "333333333.3333332", "comment": ""},
+    {"bits": "41b3de4355555554", "expect": "333333333.33333325", "comment": ""},
+    {"bits": "41b3de4355555555", "expect": "333333333.3333333", "comment": ""},
+    {"bits": "41b3de4355555556", "expect": "333333333.3333334", "comment": ""},
+    {"bits": "41b3de4355555557", "expect": "333333333.33333343", "comment": ""},
+    {"bits": "becbf647612f3696", "expect": "-0.0000033333333333333333", "comment": ""},
+    {"bits": "43143ff3c1cb0959", "expect": "1424953923781206.2", "comment": "Round to even (4), Note 2"}
+  ],
+  "sort_oracle_f04_expected_order": ["\r", "1", "", "ö", "€", "\ud83d\ude00", "דּ"],
+  "hex_oracle_f03_lines": [
+    "7b 22 6c 69 74 65 72 61 6c 73 22 3a 5b 6e 75 6c 6c 2c 74 72",
+    "75 65 2c 66 61 6c 73 65 5d 2c 22 6e 75 6d 62 65 72 73 22 3a",
+    "5b 33 33 33 33 33 33 33 33 33 2e 33 33 33 33 33 33 33 2c 31",
+    "65 2b 33 30 2c 34 2e 35 2c 30 2e 30 30 32 2c 31 65 2d 32 37",
+    "5d 2c 22 73 74 72 69 6e 67 22 3a 22 e2 82 ac 24 5c 75 30 30",
+    "30 66 5c 6e 41 27 42 5c 22 5c 5c 5c 5c 5c 22 2f 22 7d"
+  ]
+}

@@ -1,0 +1,574 @@
+{
+  "schema": "independent-semantic-review-coverage-v1",
+  "case": "I-FAST-02",
+  "arm_label": "control",
+  "review": "review-v1",
+  "source_judgment": "FAIL",
+  "assessment_complete": true,
+  "count_definition": "complete is the number of declared items in a category; assessed means a judgment was made, not that the candidate satisfied the item. Categories overlap semantically and are not pooled as independent evidence.",
+  "counts": {
+    "obligations": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "frozen_scope": {
+      "complete": 7,
+      "assessed": 7,
+      "unassessed": 0
+    },
+    "plan_decisions": {
+      "complete": 36,
+      "assessed": 36,
+      "unassessed": 0
+    },
+    "owner_decisions": {
+      "complete": 22,
+      "assessed": 22,
+      "unassessed": 0
+    },
+    "declared_obligation_items": {
+      "complete": 71,
+      "assessed": 71,
+      "unassessed": 0
+    },
+    "axes": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "consequential_claim_clusters": {
+      "complete": 24,
+      "assessed": 24,
+      "unassessed": 0
+    },
+    "criticism_dispositions": {
+      "complete": 16,
+      "assessed": 16,
+      "unassessed": 0
+    },
+    "validation_proposal_groups": {
+      "complete": 8,
+      "assessed": 8,
+      "unassessed": 0
+    }
+  },
+  "material_error_count": 2,
+  "material_defects": [
+    "D1",
+    "D2"
+  ],
+  "nonmaterial_limits": [
+    "L1",
+    "L2",
+    "L3"
+  ],
+  "axes": [
+    {
+      "id": "A1",
+      "name": "Original O1-O6 and all frozen plan/owner decisions",
+      "status": "ASSESSED_FAIL",
+      "defects": [
+        "D1",
+        "D2"
+      ],
+      "note": "All obligation content, seven scope constraints, 36 plan atoms and 22 owner choices assessed; issue-history requirement not correctly satisfied."
+    },
+    {
+      "id": "A2",
+      "name": "Consequential claims with governing conditions and versions",
+      "status": "ASSESSED_FAIL",
+      "defects": [
+        "D1",
+        "D2"
+      ],
+      "note": "24 claim clusters assessed against bytes and primary-source recaptures."
+    },
+    {
+      "id": "A3",
+      "name": "Bounded useful discovery, mechanisms, alternatives, negatives, opportunities",
+      "status": "ASSESSED_PASS_WITH_LIMITATIONS",
+      "defects": [],
+      "note": "NOAA product/UI/metadata and pandas/custom-match alternatives assessed; no exhaustive opportunity recall, no proved geography or provider superiority."
+    },
+    {
+      "id": "A4",
+      "name": "Incorrect rejections/corrections and already-covered claims",
+      "status": "ASSESSED_FAIL",
+      "defects": [
+        "D2"
+      ],
+      "note": "Released regression detector incorrectly discounted; L1 is ambiguous overbroad retrieval rejection. Other already-covered and policy dispositions checked."
+    },
+    {
+      "id": "A5",
+      "name": "Draft-to-critique-to-final preservation",
+      "status": "ASSESSED_PASS_WITH_LIMITATIONS",
+      "defects": [],
+      "note": "All 16 critique disposition clusters retained; preserving D1/D2 is scientifically wrong rather than an omission. Minor tie-policy and exact metadata-field precision limits."
+    },
+    {
+      "id": "A6",
+      "name": "Proposed versus executed validation and witness applicability",
+      "status": "ASSESSED_FAIL",
+      "defects": [
+        "D2"
+      ],
+      "note": "Eight P6 proposal groups and executed-status statements assessed. No application witness; corrected upstream test applicability misjudged."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "requirement": "Brief-led discovery; existing product/analogue/component, mechanisms, useful negative and optional leads",
+      "status": "ASSESSED_MET_WITH_LIMITS",
+      "basis": "Final 17-27, 35, 81-86, 150-155; research 5-11, 89-96. One-provider discovery is bounded but substantive; no exhaustive recall or verified ordering claim."
+    },
+    {
+      "id": "O2",
+      "requirement": "Immutable component code, behavior, governing definition/caller and applicability",
+      "status": "ASSESSED_MET_WITH_LIMITS",
+      "basis": "Final 25, 82-83, 106; source-map S14-S16. Historical nearest mechanism verified, including actual ungrouped dispatch omitted from named kernel ranges. D1 affects issue interpretation, not nearest-kernel truth."
+    },
+    {
+      "id": "O3",
+      "requirement": "Pertinent issue through fix, regression evidence and shipped release applicability",
+      "status": "ASSESSED_NOT_MET",
+      "basis": "Final 27, 84, 107, 130; D1 and D2. Tagged fix/release are real, but valid-tolerance failure and corrected regression-test applicability are misinterpreted."
+    },
+    {
+      "id": "O4",
+      "requirement": "Every in-scope plan decision compared with precise retain/change/option/reject/uncertain dispositions",
+      "status": "ASSESSED_MET_WITH_LIMITS",
+      "basis": "Final 37-99, 112-155; all 36 frozen decision atoms assessed. Minor inherited/addition label and request-limit wording precision limits."
+    },
+    {
+      "id": "O5",
+      "requirement": "Substantive independent candidate criticism visibly disposed, including disagreement/open objections",
+      "status": "ASSESSED_CONTENT_MET",
+      "basis": "Critique 13-83 to final 123-148: all 16 consolidated dispositions assessed. Family/identity/dispatch independence are host lifecycle facts, not verified or inferred here."
+    },
+    {
+      "id": "O6",
+      "requirement": "One coherent complete proposed-change artifact, options, rationale, evidence, already-covered/rejected, validation, uncertainty",
+      "status": "ASSESSED_MET_WITH_LIMITS",
+      "basis": "Final full P1-P6 replacement exists; source-history defects prevent complete scientific correctness. No application validation is claimed."
+    }
+  ],
+  "frozen_scope": [
+    {
+      "id": "S1",
+      "requirement": "Two volunteer locations",
+      "status": "ASSESSED_MET"
+    },
+    {
+      "id": "S2",
+      "requirement": "One public reference station",
+      "status": "ASSESSED_MET"
+    },
+    {
+      "id": "S3",
+      "requirement": "One month",
+      "status": "ASSESSED_MET"
+    },
+    {
+      "id": "S4",
+      "requirement": "Local after authorized download",
+      "status": "ASSESSED_MET"
+    },
+    {
+      "id": "S5",
+      "requirement": "Read-only source/infrastructure behavior",
+      "status": "ASSESSED_MET"
+    },
+    {
+      "id": "S6",
+      "requirement": "No navigation advice",
+      "status": "ASSESSED_MET"
+    },
+    {
+      "id": "S7",
+      "requirement": "No surge prediction",
+      "status": "ASSESSED_MET"
+    }
+  ],
+  "plan_decisions": [
+    {
+      "id": "P1.1",
+      "requirement": "Import volunteer CSV observations for two locations",
+      "status": "ASSESSED_MET",
+      "final_lines": "39, 43"
+    },
+    {
+      "id": "P1.2",
+      "requirement": "Authorized public prediction/observation download for one station",
+      "status": "ASSESSED_MET",
+      "final_lines": "35, 39-41, 58"
+    },
+    {
+      "id": "P1.3",
+      "requirement": "Retain source files",
+      "status": "ASSESSED_MET",
+      "final_lines": "39, 73"
+    },
+    {
+      "id": "P1.4",
+      "requirement": "Retain retrieval time",
+      "status": "ASSESSED_MET",
+      "final_lines": "39-40, 75"
+    },
+    {
+      "id": "P1.5",
+      "requirement": "Retain station metadata",
+      "status": "ASSESSED_MET",
+      "final_lines": "40, 73, 93"
+    },
+    {
+      "id": "P1.6",
+      "requirement": "Retain stated reference datum",
+      "status": "ASSESSED_MET",
+      "final_lines": "39, 42, 49-51"
+    },
+    {
+      "id": "P2.1",
+      "requirement": "User chooses time convention",
+      "status": "ASSESSED_MET",
+      "final_lines": "42, 49, 52"
+    },
+    {
+      "id": "P2.2",
+      "requirement": "User chooses unit interpretation",
+      "status": "ASSESSED_MET",
+      "final_lines": "42, 49-50"
+    },
+    {
+      "id": "P2.3",
+      "requirement": "User chooses justified reference mapping",
+      "status": "ASSESSED_MET",
+      "final_lines": "50-54"
+    },
+    {
+      "id": "P2.4",
+      "requirement": "Separate raw and interpreted values",
+      "status": "ASSESSED_MET",
+      "final_lines": "42, 50-51"
+    },
+    {
+      "id": "P2.5",
+      "requirement": "Comparisons may remain unresolved",
+      "status": "ASSESSED_MET",
+      "final_lines": "51, 54, 74"
+    },
+    {
+      "id": "P3.1",
+      "requirement": "Aligned month series",
+      "status": "ASSESSED_MET",
+      "final_lines": "58-64"
+    },
+    {
+      "id": "P3.2",
+      "requirement": "Marked observation gaps",
+      "status": "ASSESSED_MET",
+      "final_lines": "61-62, 67"
+    },
+    {
+      "id": "P3.3",
+      "requirement": "Residual view for declared comparison",
+      "status": "ASSESSED_MET",
+      "final_lines": "50-54, 58, 75-76"
+    },
+    {
+      "id": "P3.4",
+      "requirement": "Simple descriptive summaries",
+      "status": "ASSESSED_MET",
+      "final_lines": "67-68"
+    },
+    {
+      "id": "P3.5",
+      "requirement": "Candidate event annotations",
+      "status": "ASSESSED_MET",
+      "final_lines": "69, 148"
+    },
+    {
+      "id": "P3.6",
+      "requirement": "No autonomous recalibration",
+      "status": "ASSESSED_MET",
+      "final_lines": "33, 50, 76"
+    },
+    {
+      "id": "P3.7",
+      "requirement": "No operational forecast",
+      "status": "ASSESSED_MET",
+      "final_lines": "33, 76, 99"
+    },
+    {
+      "id": "P4.1",
+      "requirement": "Record station changes",
+      "status": "ASSESSED_MET",
+      "final_lines": "40, 43, 73, 93"
+    },
+    {
+      "id": "P4.2",
+      "requirement": "Record interpretation choices",
+      "status": "ASSESSED_MET",
+      "final_lines": "54, 73-75"
+    },
+    {
+      "id": "P4.3",
+      "requirement": "Record source ranges",
+      "status": "ASSESSED_MET",
+      "final_lines": "39, 73, 75"
+    },
+    {
+      "id": "P4.4",
+      "requirement": "Reviewer comments",
+      "status": "ASSESSED_MET",
+      "final_lines": "69, 73, 75"
+    },
+    {
+      "id": "P4.5",
+      "requirement": "Retain competing interpretations pending decision",
+      "status": "ASSESSED_MET",
+      "final_lines": "51, 54, 74"
+    },
+    {
+      "id": "P4.6",
+      "requirement": "Export chosen context",
+      "status": "ASSESSED_MET",
+      "final_lines": "75-77"
+    },
+    {
+      "id": "P5.1",
+      "requirement": "Public-data client undecided",
+      "status": "ASSESSED_MET",
+      "final_lines": "35, 81"
+    },
+    {
+      "id": "P5.2",
+      "requirement": "Alignment component undecided",
+      "status": "ASSESSED_MET_WITH_LIMITS",
+      "final_lines": "59-64, 82-85"
+    },
+    {
+      "id": "P5.3",
+      "requirement": "Plotting component undecided",
+      "status": "ASSESSED_MET",
+      "final_lines": "85, 148"
+    },
+    {
+      "id": "P5.4",
+      "requirement": "Local after download",
+      "status": "ASSESSED_MET",
+      "final_lines": "33, 81, 86"
+    },
+    {
+      "id": "P5.5",
+      "requirement": "Expose input coverage",
+      "status": "ASSESSED_MET",
+      "final_lines": "67-68, 86, 97"
+    },
+    {
+      "id": "P5.6",
+      "requirement": "No required publication of volunteer location",
+      "status": "ASSESSED_MET",
+      "final_lines": "44, 75, 86, 98"
+    },
+    {
+      "id": "P6.1",
+      "requirement": "Validation for timestamp changes",
+      "status": "ASSESSED_MET",
+      "final_lines": "90, 92"
+    },
+    {
+      "id": "P6.2",
+      "requirement": "Validation for metadata changes",
+      "status": "ASSESSED_MET",
+      "final_lines": "90, 93, 98"
+    },
+    {
+      "id": "P6.3",
+      "requirement": "Validation for absent reference level",
+      "status": "ASSESSED_MET",
+      "final_lines": "90, 94"
+    },
+    {
+      "id": "P6.4",
+      "requirement": "Validation for missing intervals",
+      "status": "ASSESSED_MET",
+      "final_lines": "90, 95, 97"
+    },
+    {
+      "id": "P6.5",
+      "requirement": "Reproducible exported summaries",
+      "status": "ASSESSED_MET",
+      "final_lines": "77, 90, 98"
+    },
+    {
+      "id": "P6.6",
+      "requirement": "No supplied numerical summary/calibration answer",
+      "status": "ASSESSED_MET",
+      "final_lines": "15, 33, 90, 148, 167"
+    }
+  ],
+  "owner_decisions": [
+    {
+      "id": "OD01",
+      "choice": "Geography",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "35, 148"
+    },
+    {
+      "id": "OD02",
+      "choice": "Month",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "15, 148"
+    },
+    {
+      "id": "OD03",
+      "choice": "Authorized public provider",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "35, 81"
+    },
+    {
+      "id": "OD04",
+      "choice": "Exact station/type/product availability",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "35, 40-41, 93"
+    },
+    {
+      "id": "OD05",
+      "choice": "Optional same-station observed series",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "58, 153, 155"
+    },
+    {
+      "id": "OD06",
+      "choice": "Volunteer units",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "42, 49-50"
+    },
+    {
+      "id": "OD07",
+      "choice": "Volunteer measurement reference",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "42-43, 49-51, 148"
+    },
+    {
+      "id": "OD08",
+      "choice": "Time convention, zone, DST interpretation",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "42, 49, 52, 92"
+    },
+    {
+      "id": "OD09",
+      "choice": "Epoch boundaries and changes",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "43, 53, 68"
+    },
+    {
+      "id": "OD10",
+      "choice": "Expected cadence",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "43, 61, 67"
+    },
+    {
+      "id": "OD11",
+      "choice": "Evidence-backed mapping",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "50-54, 94, 148"
+    },
+    {
+      "id": "OD12",
+      "choice": "Exact/nearest/interpolation method",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "59-62, 155"
+    },
+    {
+      "id": "OD13",
+      "choice": "Prediction interval",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "54, 61, 64, 96"
+    },
+    {
+      "id": "OD14",
+      "choice": "Finite matching tolerance and rationale",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "54, 61, 83, 135"
+    },
+    {
+      "id": "OD15",
+      "choice": "Tie policy",
+      "status": "ASSESSED_OPEN_WITH_PRECISION_LIMIT",
+      "final_lines": "82-83, 95"
+    },
+    {
+      "id": "OD16",
+      "choice": "Duplicate policy",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "54, 65-66, 95, 137-138"
+    },
+    {
+      "id": "OD17",
+      "choice": "Quality/flag inclusion",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "54, 67, 75, 97"
+    },
+    {
+      "id": "OD18",
+      "choice": "Summary metrics and combining epochs",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "68, 148, 155"
+    },
+    {
+      "id": "OD19",
+      "choice": "Event workflow/notes",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "69, 148"
+    },
+    {
+      "id": "OD20",
+      "choice": "Plotting/figure format/runtime/packaging",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "85, 148, 155"
+    },
+    {
+      "id": "OD21",
+      "choice": "Privacy labels and additional disclosure",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "44, 75, 98, 148"
+    },
+    {
+      "id": "OD22",
+      "choice": "Local retention",
+      "status": "ASSESSED_OPEN_APPROPRIATELY",
+      "final_lines": "142, 148"
+    }
+  ],
+  "unassessed_obligations": [],
+  "unassessed_claim_clusters": [],
+  "host_only_not_judged": {
+    "candidate_family_identity": null,
+    "candidate_dispatch_independence": null,
+    "candidate_lifecycle": null,
+    "candidate_timing": null,
+    "candidate_usage": null,
+    "candidate_billing": null,
+    "unknown_quota": null
+  },
+  "blinding_limits": [
+    "Exact authorized paths visibly name the arm.",
+    "Artifact structure and method/native-Goal prose can reveal procedure.",
+    "Source maps expose timing/counters; these were ignored for scientific judgment.",
+    "No other-arm material, comparative score/cost/speed target, parent analysis or evaluator answer was consulted."
+  ],
+  "reviewer_usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "reasoning_tokens": null,
+    "cache_read_tokens": null,
+    "cache_write_tokens": null,
+    "billing": null
+  },
+  "evidence_index": "source-checks.json",
+  "assessment": "judgment.md"
+}

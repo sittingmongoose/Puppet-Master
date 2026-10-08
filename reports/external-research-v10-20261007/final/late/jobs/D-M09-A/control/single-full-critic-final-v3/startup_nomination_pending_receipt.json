@@ -1,0 +1,22 @@
+{
+  "schema": "ER10_GLM_STARTUP_NOMINATION_PENDING_RECEIPT_V1",
+  "recorded_at": "2026-10-08T00:00:39.625511+00:00",
+  "stage": "D-M09-A/control/single-full-critic-final-v3",
+  "actual_taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+  "actual_childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+  "exact_config_sha256": "5ed62bcb505f46e0b0cb8079ebb56e15077a024a8b62962108c3e03ee6c3fcaa",
+  "assignment_sha256": "0046b9492c570a5f0df51cdca64ba350cdb09c612463c2b65a8f2294c5f24e3d",
+  "startup_event_observed": true,
+  "startup_event_gate_receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/startup_event_gate_receipt.json",
+  "startup_event_gate_receipt_sha256": "95f212cd06019f0e6988bcb677f0f4b65ffddc24f6d2c1aabd3880a8ed5519f9",
+  "root_nomination_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M09-A-control-native-root-active-nomination-v1.json",
+  "root_nomination_sha256": "8d3b0ea174f554f4e107f4a9a7b8cdbf528a4778dd550fb2001afe9a3f9403fc",
+  "matching_objectives": 0,
+  "native_active_observed": false,
+  "state": "PENDING_NO_UNIQUE_RUNNING_NATIVE_STATE",
+  "activation_export_performed": false,
+  "original_stage_deadline": "2026-10-08T00:59:33.862000+00:00",
+  "original_common_deadline": "2026-10-08T01:45:13.455858+00:00",
+  "seed_and_comparative_HOLD_unchanged": true,
+  "no_restart_or_repeat_startup_read_or_worker_steer": true
+}

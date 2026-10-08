@@ -1,0 +1,2578 @@
+{
+  "schema": "pm.er10.confirmation-comparisons.v1",
+  "frozen_at": "2026-10-07T21:45:08.487861+00:00",
+  "exact_scope": [
+    "C-01",
+    "C-02",
+    "C-03",
+    "C-04"
+  ],
+  "qualification": "DIAGNOSTIC_UNQUALIFIED",
+  "counts": {
+    "mechanical_comparisons_frozen": 4,
+    "delivered_pair_assessments": 3,
+    "both_arm_full_declared_source_coverage": 1,
+    "unassessed_hold_pairs": 1,
+    "failed_native_pair_holds": 1,
+    "pending_pairs": 0,
+    "candidate_stage_tasks_terminal": 20,
+    "review_tasks_terminal": 8,
+    "review_tasks_completed": 7,
+    "review_tasks_interrupted": 1,
+    "qualified_confirmation_wins": 0
+  },
+  "original_comparisons": [
+    {
+      "case": "C-01",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/COMPARISON.json",
+      "sha256": "8695081d2f48cd66debe0d314a492834ab74f13931849f58acdde724c4f8a16d"
+    },
+    {
+      "case": "C-02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/COMPARISON.json",
+      "sha256": "3491ff06146f1549089390bf20fd6da91d765f857614fd70211e238dd9f7ee22"
+    },
+    {
+      "case": "C-03",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/COMPARISON.json",
+      "sha256": "2afdd5d000e169e45650ef3bf2451caaccb092e8813e31713cd034c155ee066b"
+    },
+    {
+      "case": "C-04",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/COMPARISON.json",
+      "sha256": "04529a0e7b1620f735e27763f5fdb092cc632a0fbcee5f64091c7e278beed545"
+    }
+  ],
+  "pairs": [
+    {
+      "case": "C-01",
+      "domain": "A",
+      "repetition": 1,
+      "delivered_pair_assessment": false,
+      "both_full_declared_source_coverage": false,
+      "native_and_comparative_eligibility": "HOLD",
+      "arms": {
+        "control": {
+          "original_scientific_grade": null,
+          "full_declared_scope_assessed": false,
+          "source6_axes_original": null,
+          "obligations_original": null,
+          "original_remainder_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/control/source-review-v1/REVIEW_FREEZE.json",
+          "review_freeze": null,
+          "host_review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/control/source-review-v1/HOST_INCOMPLETE_REVIEW_FREEZE.json",
+            "sha256": "ceb9bc1a23fdc7de784d9a80d10ed96ff4ec5326593188d444feeea75f0f2e76"
+          },
+          "failure_inclusive_service_latency_seconds": 2342.813448,
+          "failure_inclusive_host_closeout_latency_seconds": 2382.3552,
+          "aggregate_stage_occupied_seconds": 2236.053,
+          "host_and_between_stage_elapsed_seconds": 146.30220000000008,
+          "queue_startup_seconds": 2.299,
+          "output_bytes": 12190161,
+          "scientific_artifact_bytes": 146355,
+          "source_capture_bytes": 12043806,
+          "review_time_separate": {
+            "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-source-review-v1:ordinal:1",
+            "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-source-review-v1",
+            "status": "interrupted",
+            "requestedAt": "2026-10-07T20:37:22.771Z",
+            "startedAt": "2026-10-07T20:37:23.408Z",
+            "completedAt": "2026-10-07T21:21:40.929Z"
+          },
+          "raw_cumulative_native_counters_per_stage_unsummed": [
+            {
+              "stage": "researcher-v1",
+              "counters": [
+                {
+                  "objective_sha256": "d7fd4f549a203cfad45a1d3dbc8667493e1b240bf4d90683e291c4725c936860",
+                  "status": "complete",
+                  "tokensUsed": 263657,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 1133
+                }
+              ]
+            },
+            {
+              "stage": "critic-v1",
+              "counters": [
+                {
+                  "objective_sha256": "f197606ae77ce7eb3657dec7f9db51ae79c24405f485a757be3a73abc686ab45",
+                  "status": "complete",
+                  "tokensUsed": 114762,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 340
+                }
+              ]
+            },
+            {
+              "stage": "reviser-v1",
+              "counters": [
+                {
+                  "objective_sha256": "eae6d95ba1ee817cdcb0cfceef089adbb3375881901c53c4585b76d856a90e16",
+                  "status": "complete",
+                  "tokensUsed": 177055,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 654
+                }
+              ]
+            }
+          ],
+          "usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "source_operations": null
+        },
+        "treatment": {
+          "original_scientific_grade": "FAIL",
+          "full_declared_scope_assessed": true,
+          "source6_axes_original": [
+            {
+              "id": "S6-1",
+              "name": "full brief obligations",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "E01",
+                "E02",
+                "E03",
+                "E04",
+                "E05",
+                "E07",
+                "E08",
+                "E09",
+                "E10"
+              ],
+              "defect_refs": [
+                "D-SRC-01"
+              ],
+              "assessment": "All O1-O7 scientific content assessed. Consequential current-state API semantics and resulting condition fail; core integrated proposal otherwise covered.",
+              "limitation_refs": []
+            },
+            {
+              "id": "S6-2",
+              "name": "consequential source claims and governing conditions",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "E02",
+                "E03",
+                "E04",
+                "E05",
+                "E06",
+                "E07",
+                "E08"
+              ],
+              "defect_refs": [
+                "D-SRC-01",
+                "N-SRC-02"
+              ],
+              "assessment": "Primary standards, version identity, code, fix/release and documented transport boundaries checked. D-SRC-01 is material; BagIt condition is a nonmaterial under-specification.",
+              "limitation_refs": []
+            },
+            {
+              "id": "S6-3",
+              "name": "useful open discovery coverage/options/analogies/components/history",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "E05",
+                "E06",
+                "E09",
+                "E10",
+                "E11"
+              ],
+              "defect_refs": [
+                "N-PRES-01"
+              ],
+              "assessment": "Substantially different service, coordinator packet and file-sync mechanisms; ordinary preview/OSD/JS9 options; Tropy analogy and OAL lead assessed. Independent user-level primary discovery also probed distributed conflicts, atomicity and provenance packaging. No mandatory source count or exhaustive component set.",
+              "limitation_refs": [
+                "L-ORIGINAL-OPERATIONS",
+                "L-HISTORY",
+                "L-PRODUCT-CHOICES"
+              ]
+            },
+            {
+              "id": "S6-4",
+              "name": "incorrect rejection/correction",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "E03",
+                "E04",
+                "E05",
+                "E06",
+                "E09"
+              ],
+              "defect_refs": [
+                "D-SRC-01"
+              ],
+              "assessment": "FITS correction, limits on issue applicability and JS9/OAL deferrals are justified. Added blanket current-state conversion correction conflicts with pinned implementation.",
+              "limitation_refs": []
+            },
+            {
+              "id": "S6-5",
+              "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "E01",
+                "E03",
+                "E05",
+                "E06",
+                "E07",
+                "E09",
+                "E10"
+              ],
+              "defect_refs": [
+                "N-PRES-01",
+                "N-PRES-02"
+              ],
+              "assessment": "Core negative constraints, unchanged originals, distinct byte/event identity, raw metadata/context, operator gate, human reconciliation/re-anchoring, policy-dependent retention and proposed-test status survive. Optional leads/conditional browser safeguard are narrowed; original 30-day approval condition retained as optional.",
+              "limitation_refs": [
+                "L-PRESERVATION"
+              ]
+            },
+            {
+              "id": "S6-6",
+              "name": "proposed versus actually performed validation",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "E01",
+                "E04",
+                "E10"
+              ],
+              "defect_refs": [],
+              "assessment": "Candidate keeps all application checks proposed and source inspection separate. Reviewer independently repeated accessible input/source-fact checks and performed one clearly separate isolated method check. Original hidden operations not attested.",
+              "limitation_refs": [
+                "L-ORIGINAL-OPERATIONS",
+                "L-SYNTHETIC"
+              ]
+            }
+          ],
+          "obligations_original": {
+            "O1": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "E02",
+                "E07",
+                "E09",
+                "E10"
+              ],
+              "defect_refs": [
+                "N-PRES-01"
+              ],
+              "assessment": "Problem-level discovery content is broad/useful, independently checked through open primary discovery. Candidate states before-PLAN order; excluded execution chronology not independently attested.",
+              "limitation_refs": [
+                "L-ORIGINAL-OPERATIONS"
+              ]
+            },
+            "O2": {
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "E06",
+                "E07",
+                "E09",
+                "E10"
+              ],
+              "defect_refs": [],
+              "assessment": "At least two substantially different useful mechanisms, competing component/display options, outside-domain analogy and consequential operational trade-offs are present.",
+              "limitation_refs": []
+            },
+            "O3": {
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "E02",
+                "E03",
+                "E04",
+                "E07",
+                "E08"
+              ],
+              "defect_refs": [
+                "D-SRC-01",
+                "N-SRC-02"
+              ],
+              "assessment": "Semantics/units/versions/applicability checked; material mismatch between documented intent and actual pinned inverse-scale code.",
+              "limitation_refs": []
+            },
+            "O4": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "E04",
+                "E05",
+                "E06",
+                "E11"
+              ],
+              "defect_refs": [],
+              "assessment": "Justified component implementation is pinned; narrow issue/fix/patch/release chain verified. Missing patch test addition and unexecuted reproduction are disclosed; no general issue-title applicability inference.",
+              "limitation_refs": [
+                "L-HISTORY",
+                "L-PRODUCT-CHOICES"
+              ]
+            },
+            "O5": {
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "E01",
+                "E10"
+              ],
+              "defect_refs": [],
+              "assessment": "All exact A-P1..A-P7 dispositions and what is already covered are assessed; A-P4 technical defect separately recorded.",
+              "limitation_refs": []
+            },
+            "O6": {
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "E03",
+                "E04",
+                "E07",
+                "E08",
+                "E09",
+                "E10"
+              ],
+              "defect_refs": [
+                "D-SRC-01",
+                "N-PRES-01",
+                "N-PRES-02"
+              ],
+              "assessment": "Complete integrated recommendations, optional opportunities, uncertainties and observable proposed validation exist, but a consequential viewer governing condition is false and optional preservation is narrowed.",
+              "limitation_refs": []
+            },
+            "O7": {
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "E01",
+                "E10"
+              ],
+              "defect_refs": [],
+              "assessment": "Ingest/provenance, identity, annotations/collaboration, access, retention/deletion, errors/recovery, and offline handoff/export are assessed within bounded planning; no product implementation/canonical write.",
+              "limitation_refs": []
+            }
+          },
+          "original_remainder_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+          "review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+            "sha256": "743141f191d8b140490184fbf20ec771a347a469e2f54cd93022336e0473351e"
+          },
+          "host_review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+            "sha256": "d4b4a52b299c87ff5776b51b16a1489e5271f647fb909d76753aaa3b99a526a4"
+          },
+          "failure_inclusive_service_latency_seconds": 1744.16911,
+          "failure_inclusive_host_closeout_latency_seconds": 1778.99184,
+          "aggregate_stage_occupied_seconds": 1600.737,
+          "host_and_between_stage_elapsed_seconds": 178.25483999999983,
+          "queue_startup_seconds": 1.499,
+          "output_bytes": 11027427,
+          "scientific_artifact_bytes": 131875,
+          "source_capture_bytes": 10895552,
+          "review_time_separate": {
+            "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-source-review-v1:ordinal:1",
+            "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-source-review-v1",
+            "status": "completed",
+            "requestedAt": "2026-10-07T20:37:37.559Z",
+            "startedAt": "2026-10-07T20:37:38.050Z",
+            "completedAt": "2026-10-07T20:50:10.478Z"
+          },
+          "raw_cumulative_native_counters_per_stage_unsummed": [
+            {
+              "stage": "researcher-v1",
+              "counters": [
+                {
+                  "objective_sha256": "3471cd9337f6f2e6dd5bcca84ef086b1af73d4c02f8ceefa3264e5e7f2bceafd",
+                  "status": "complete",
+                  "tokensUsed": 252552,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 854
+                }
+              ]
+            },
+            {
+              "stage": "critic-v1",
+              "counters": [
+                {
+                  "objective_sha256": "b59c1b5cd1a7ba5a90c8622cf11580f94362bf2db1d9adbffa71e829e6214cbd",
+                  "status": "complete",
+                  "tokensUsed": 213041,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 639
+                }
+              ]
+            }
+          ],
+          "usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "source_operations": null
+        }
+      }
+    },
+    {
+      "case": "C-02",
+      "domain": "A",
+      "repetition": 2,
+      "delivered_pair_assessment": true,
+      "both_full_declared_source_coverage": false,
+      "native_and_comparative_eligibility": "DIAGNOSTIC_UNQUALIFIED",
+      "arms": {
+        "control": {
+          "original_scientific_grade": {
+            "status": "FAIL",
+            "immutable": true,
+            "reason": "Confirmed material loss of the accepted derivative processing-provenance record (D01); other principal source claims supported with bounded caveats.",
+            "can_be_upgraded_by_lifecycle_provenance_economics": false
+          },
+          "full_declared_scope_assessed": true,
+          "source6_axes_original": [
+            {
+              "axis_id": "S1",
+              "declared_axis": "full brief obligations",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "D01",
+                "O1\u2013O7 assessment",
+                "final artifact 12\u201395"
+              ],
+              "defect_refs": [
+                "D01"
+              ],
+              "caveat_refs": []
+            },
+            {
+              "axis_id": "S2",
+              "declared_axis": "consequential source claims and governing conditions",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "claim table",
+                "C01",
+                "C02",
+                "independent primary-source index"
+              ],
+              "defect_refs": [],
+              "caveat_refs": [
+                "C01",
+                "C02"
+              ]
+            },
+            {
+              "axis_id": "S3",
+              "declared_axis": "useful open discovery coverage/options/analogies/components/history",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "final artifact 12\u201322,65\u201389",
+                "public discovery queries",
+                "C03"
+              ],
+              "defect_refs": [],
+              "caveat_refs": [
+                "C03"
+              ]
+            },
+            {
+              "axis_id": "S4",
+              "declared_axis": "incorrect rejection/correction",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "final artifact 40\u201349,67\u201369",
+                "R-AST01/02/05/06",
+                "R-PDB-ISSUE-API/COMMENTS"
+              ],
+              "defect_refs": [],
+              "caveat_refs": []
+            },
+            {
+              "axis_id": "S5",
+              "declared_axis": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "D01",
+                "C02",
+                "C03",
+                "researcher artifact 39",
+                "critic artifact 41,58",
+                "final artifact 12,28\u201349,63,76,80,93"
+              ],
+              "defect_refs": [
+                "D01"
+              ],
+              "caveat_refs": [
+                "C02",
+                "C03"
+              ]
+            },
+            {
+              "axis_id": "S6",
+              "declared_axis": "proposed versus actually performed validation",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "final artifact 91\u201395",
+                "mapped capture integrity",
+                "npm tarball identity check",
+                "no product tests executed"
+              ],
+              "defect_refs": [],
+              "caveat_refs": []
+            }
+          ],
+          "obligations_original": [
+            {
+              "obligation_id": "O1",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "researcher artifact 9",
+                "final artifact 95",
+                "problem-first options and public discovery coverage"
+              ],
+              "defect_refs": []
+            },
+            {
+              "obligation_id": "O2",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "final artifact 12\u201322,85\u201389"
+              ],
+              "defect_refs": []
+            },
+            {
+              "obligation_id": "O3",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "REPORT claim table",
+                "R-FITS01",
+                "R-AST01/02/05/06",
+                "R-MF01",
+                "R-IIIF01",
+                "R-HTTP01",
+                "C01",
+                "C02"
+              ],
+              "defect_refs": []
+            },
+            {
+              "obligation_id": "O4",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "R-PDB23/26",
+                "R-PDB01/02",
+                "R-PDB-RELEASE-API/TAG",
+                "R-PDB-COMMIT",
+                "R-PDB-ISSUE-API/COMMENTS",
+                "R-AST-TAG",
+                "R-AST01/02/06",
+                "final artifact 65\u201369"
+              ],
+              "defect_refs": []
+            },
+            {
+              "obligation_id": "O5",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "frozen PLAN A-P1\u2013A-P7",
+                "final artifact 75\u201381",
+                "REPORT exact frozen-plan table"
+              ],
+              "defect_refs": []
+            },
+            {
+              "obligation_id": "O6",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "D01",
+                "final artifact 24\u201395",
+                "researcher artifact 39",
+                "critic artifact 41,58"
+              ],
+              "defect_refs": [
+                "D01"
+              ]
+            },
+            {
+              "obligation_id": "O7",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "D01",
+                "REPORT lifecycle/source/plan coverage",
+                "final artifact 26\u201363"
+              ],
+              "defect_refs": [
+                "D01"
+              ]
+            }
+          ],
+          "original_remainder_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/REVIEW_FREEZE.json",
+          "review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/REVIEW_FREEZE.json",
+            "sha256": "4bdead5d7ddd3f6ec8ffaaab2e08fca7c7299752f5a0e002801ed0bade866159"
+          },
+          "host_review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+            "sha256": "d5356a9f064360906732dc3f2db292e1483df2164040a0606ad40f0f5607f8bf"
+          },
+          "failure_inclusive_service_latency_seconds": 2217.179802,
+          "failure_inclusive_host_closeout_latency_seconds": 2227.937884,
+          "aggregate_stage_occupied_seconds": 2058.658,
+          "host_and_between_stage_elapsed_seconds": 169.27988400000004,
+          "queue_startup_seconds": 2.141,
+          "output_bytes": 12911019,
+          "scientific_artifact_bytes": 163915,
+          "source_capture_bytes": 12747104,
+          "review_time_separate": {
+            "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-control-source-review-v1:ordinal:1",
+            "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-control-source-review-v1",
+            "status": "completed",
+            "requestedAt": "2026-10-07T20:36:28.774Z",
+            "startedAt": "2026-10-07T20:36:29.324Z",
+            "completedAt": "2026-10-07T20:47:10.653Z"
+          },
+          "raw_cumulative_native_counters_per_stage_unsummed": [
+            {
+              "stage": "researcher-v1",
+              "counters": [
+                {
+                  "objective_sha256": "8608d08f1b54bf77db81b0320a30d5ffb4861601b43fc2b73ae67e4d33235229",
+                  "status": "complete",
+                  "tokensUsed": 249958,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 902
+                }
+              ]
+            },
+            {
+              "stage": "critic-v1",
+              "counters": [
+                {
+                  "objective_sha256": "9fced3d9b249b9981d50736b1a7e0b854af59f8d27764951249e684cb19d0518",
+                  "status": "complete",
+                  "tokensUsed": 158372,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 427
+                }
+              ]
+            },
+            {
+              "stage": "reviser-v1",
+              "counters": [
+                {
+                  "objective_sha256": "577928b0b179ed38dfb86eed949a7cfb9facb16b523a015bee0ecb9d833eb284",
+                  "status": "complete",
+                  "tokensUsed": 209784,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 601
+                }
+              ]
+            }
+          ],
+          "usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "source_operations": null
+        },
+        "treatment": {
+          "original_scientific_grade": {
+            "status": "HOLD",
+            "reason": "Required O1 discovery ordering remains independently unassessed in admitted evidence. D-01 and D-02 are confirmed material findings ruling out PASS independently of that uncertainty.",
+            "immutable_original": true
+          },
+          "full_declared_scope_assessed": false,
+          "source6_axes_original": [
+            {
+              "id": "S1",
+              "name": "full brief obligations",
+              "status": "HOLD",
+              "assessed_evidence_refs": [
+                "E01",
+                "E02",
+                "E03",
+                "E04",
+                "E05",
+                "E06",
+                "E07",
+                "E08",
+                "E09",
+                "E10",
+                "E11",
+                "E12",
+                "E13",
+                "E14",
+                "E15",
+                "E16"
+              ],
+              "defect_refs": [
+                "D-01",
+                "D-02"
+              ],
+              "unassessed_refs": [
+                "E16"
+              ]
+            },
+            {
+              "id": "S2",
+              "name": "consequential source claims and governing conditions",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "E03",
+                "E04",
+                "E05",
+                "E06",
+                "E07",
+                "E08",
+                "E09",
+                "E10",
+                "E11",
+                "E13"
+              ],
+              "defect_refs": [
+                "D-01"
+              ]
+            },
+            {
+              "id": "S3",
+              "name": "useful open discovery coverage/options/analogies/components/history",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "E02",
+                "E07",
+                "E08",
+                "E09",
+                "E10",
+                "E11",
+                "E12"
+              ],
+              "defect_refs": [],
+              "limitation_refs": [
+                "L04",
+                "L05"
+              ]
+            },
+            {
+              "id": "S4",
+              "name": "incorrect rejection/correction",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "E05",
+                "E06",
+                "E09",
+                "E13"
+              ],
+              "defect_refs": [],
+              "caveat_refs": [
+                "N01",
+                "N02",
+                "N03"
+              ]
+            },
+            {
+              "id": "S5",
+              "name": "preservation of constraints, options, source identity, corrections and uncertainty into final",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "E01",
+                "E02",
+                "E09",
+                "E11",
+                "E12",
+                "E13",
+                "E15"
+              ],
+              "defect_refs": [
+                "D-02"
+              ]
+            },
+            {
+              "id": "S6",
+              "name": "proposed versus actually performed validation",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "E14"
+              ],
+              "defect_refs": [],
+              "limitation_refs": [
+                "L03"
+              ]
+            }
+          ],
+          "obligations_original": {
+            "O1": {
+              "status": "HOLD",
+              "evidence_refs": [
+                "E02",
+                "E16"
+              ],
+              "reason": "Discovery content assessed; required historical ordering remains independently unverified from admitted evidence."
+            },
+            "O2": {
+              "status": "PASS",
+              "evidence_refs": [
+                "E02",
+                "E05",
+                "E06",
+                "E07",
+                "E08",
+                "E10",
+                "E11"
+              ],
+              "reason": "Substantially different mechanisms, competing components, analogies, trade-offs and conditions provided."
+            },
+            "O3": {
+              "status": "FAIL",
+              "evidence_refs": [
+                "E03",
+                "E04",
+                "E05",
+                "E06",
+                "E07",
+                "E08",
+                "E10",
+                "E11"
+              ],
+              "defect_refs": [
+                "D-01"
+              ]
+            },
+            "O4": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence_refs": [
+                "E08",
+                "E09",
+                "E12"
+              ],
+              "reason": "Pinned code/test/release inspection supports stated current contracts; issue fix applicability explicitly withheld. Optional WCS evidence loss is assessed under preservation.",
+              "limitation_refs": [
+                "L04",
+                "L05"
+              ]
+            },
+            "O5": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence_refs": [
+                "E15"
+              ],
+              "defect_refs": [
+                "D-01",
+                "D-02"
+              ],
+              "reason": "All exact frozen section dispositions complete; governing-condition and optional evidence defects remain."
+            },
+            "O6": {
+              "status": "FAIL",
+              "evidence_refs": [
+                "E02",
+                "E12",
+                "E13",
+                "E14",
+                "E15"
+              ],
+              "defect_refs": [
+                "D-02"
+              ],
+              "reason": "Integrated decisions, checks and uncertainty present, but scientific preservation into final incomplete."
+            },
+            "O7": {
+              "status": "PASS",
+              "evidence_refs": [
+                "E01",
+                "E13",
+                "E14",
+                "E15"
+              ],
+              "reason": "Required integrated workflow categories and research-only exclusions retained."
+            }
+          },
+          "original_remainder_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/REVIEW_FREEZE.json",
+          "review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/REVIEW_FREEZE.json",
+            "sha256": "8a7534e6e17c9fc7d2f7ca224b417cf8259115311e664766b7f6c8670d5e228e"
+          },
+          "host_review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+            "sha256": "28e46537e72056346be337a08e8e02db84336b722668421d4e2bf77d65bb5648"
+          },
+          "failure_inclusive_service_latency_seconds": 1802.004597,
+          "failure_inclusive_host_closeout_latency_seconds": 1836.076535,
+          "aggregate_stage_occupied_seconds": 1665.897,
+          "host_and_between_stage_elapsed_seconds": 170.179535,
+          "queue_startup_seconds": 1.229,
+          "output_bytes": 8171869,
+          "scientific_artifact_bytes": 101939,
+          "source_capture_bytes": 8069930,
+          "review_time_separate": {
+            "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-02-treatment-source-review-v1:ordinal:1",
+            "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-02-treatment-source-review-v1",
+            "status": "completed",
+            "requestedAt": "2026-10-07T20:36:37.801Z",
+            "startedAt": "2026-10-07T20:36:39.391Z",
+            "completedAt": "2026-10-07T20:49:20.958Z"
+          },
+          "raw_cumulative_native_counters_per_stage_unsummed": [
+            {
+              "stage": "researcher-v1",
+              "counters": [
+                {
+                  "objective_sha256": "f027c9bd5beacda3aab0ce6c942a14a4c47743c87866e80e6b588677b987c1be",
+                  "status": "complete",
+                  "tokensUsed": 307258,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 795
+                }
+              ]
+            },
+            {
+              "stage": "critic-v1",
+              "counters": [
+                {
+                  "objective_sha256": "a85a1c513d23b2218a7500d439e6e47c3e7d82ed915c88826acd8d8532482035",
+                  "status": "complete",
+                  "tokensUsed": 245326,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 813
+                }
+              ]
+            }
+          ],
+          "usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "source_operations": null
+        }
+      }
+    },
+    {
+      "case": "C-03",
+      "domain": "B",
+      "repetition": 1,
+      "delivered_pair_assessment": true,
+      "both_full_declared_source_coverage": false,
+      "native_and_comparative_eligibility": "HOLD",
+      "arms": {
+        "control": {
+          "original_scientific_grade": {
+            "status": "HOLD",
+            "reason": "O1 mandatory discovery-before-narrowing chronology remains independently unverifiable in the permitted record. Confirmed D01/D02 material coverage/preservation defects also preclude PASS. Unknown scope is HOLD, never a quality win.",
+            "known_material_defects_present": true,
+            "immutable": true
+          },
+          "full_declared_scope_assessed": false,
+          "source6_axes_original": [
+            {
+              "axis_id": "S1",
+              "name": "full brief obligations",
+              "status": "HOLD",
+              "assessed_evidence_refs": [
+                "BRIEF:13-21",
+                "F:18-29",
+                "F:55-109",
+                "PLAN:B-P1..B-P7"
+              ],
+              "defect_refs": [
+                "D01",
+                "D02"
+              ],
+              "assessed_scope": "All obligations examined; O1 temporal condition unknown, with confirmed O2/O6 failures."
+            },
+            {
+              "axis_id": "S2",
+              "name": "consequential source claims and governing conditions",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "V01",
+                "V02",
+                "V03",
+                "V04",
+                "V05",
+                "V06",
+                "V07",
+                "V08",
+                "V09",
+                "V10",
+                "V11",
+                "V12",
+                "V13",
+                "V14",
+                "V15",
+                "V16",
+                "H01",
+                "H02",
+                "H03",
+                "H04",
+                "H05",
+                "H06",
+                "H07",
+                "H08",
+                "H09",
+                "H10"
+              ],
+              "defect_refs": [
+                "N01",
+                "N02"
+              ],
+              "assessed_scope": "Main claims corroborated against fresh primary bytes, pinned code and exact history; metadata/origin caveats disclosed."
+            },
+            {
+              "axis_id": "S3",
+              "name": "useful open discovery coverage, options, analogies, components and history",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "F:18-39",
+                "F:100",
+                "Q:53",
+                "C:29",
+                "P01",
+                "P02",
+                "D02",
+                "D03",
+                "D04",
+                "D05",
+                "H01",
+                "H02",
+                "H03",
+                "H04",
+                "H05",
+                "H06",
+                "H07",
+                "H08",
+                "H09",
+                "H10"
+              ],
+              "defect_refs": [
+                "D01"
+              ],
+              "assessed_scope": "Distinct mechanisms and external analogies useful; no actual final competing-component comparison."
+            },
+            {
+              "axis_id": "S4",
+              "name": "incorrect rejection or correction",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "Q:22-55",
+                "C:11-18",
+                "F:43-49",
+                "F:94-103",
+                "FP:29-39",
+                "V12",
+                "V14",
+                "V15",
+                "H04",
+                "H07",
+                "H08"
+              ],
+              "defect_refs": [
+                "N03"
+              ],
+              "assessed_scope": "Supported technical clarification and incident narrowing; no material incorrect technical rejection found; antecedent geometry characterization inaccurate."
+            },
+            {
+              "axis_id": "S5",
+              "name": "preservation of constraints, options, source identity, admitted corrections and uncertainty into final",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "Q:47",
+                "Q:53",
+                "Q:95-101",
+                "C:13-18",
+                "C:75-82",
+                "F:16",
+                "F:43-65",
+                "F:94-103",
+                "FP:29-39",
+                "P01",
+                "P02",
+                "D04"
+              ],
+              "defect_refs": [
+                "D01",
+                "D02",
+                "N01"
+              ],
+              "assessed_scope": "Core workflow/conditions survive, but useful comparative information, explicit negative constraint and named optional branch are lost; PR-head metadata also incorrect."
+            },
+            {
+              "axis_id": "S6",
+              "name": "proposed versus actually performed validation",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "PLAN:B-P7",
+                "F:79-92",
+                "F:105-109",
+                "FP:41-47",
+                "sources/input-integrity.json",
+                "sources/candidate-capture-integrity.json",
+                "sources/manifest.json"
+              ],
+              "defect_refs": [],
+              "assessed_scope": "Future checks distinguished from captured/source-inspected evidence; no product execution or independent reproduction credited."
+            }
+          ],
+          "obligations_original": {
+            "O1": {
+              "status": "HOLD",
+              "evidence_refs": [
+                "BRIEF:15",
+                "F:18-29",
+                "F:107",
+                "Q:16",
+                "C:22",
+                "P01",
+                "P02",
+                "D02",
+                "D03",
+                "D04",
+                "D05"
+              ],
+              "defect_refs": [],
+              "limitation_refs": [
+                "L02"
+              ]
+            },
+            "O2": {
+              "status": "FAIL",
+              "evidence_refs": [
+                "F:22-29",
+                "F:100",
+                "Q:53",
+                "C:29",
+                "P01",
+                "P02"
+              ],
+              "defect_refs": [
+                "D01"
+              ],
+              "limitation_refs": []
+            },
+            "O3": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence_refs": [
+                "F:35-53",
+                "V01",
+                "V02",
+                "V03",
+                "V04",
+                "V05",
+                "V06",
+                "V12",
+                "V13",
+                "V14",
+                "V15",
+                "V16",
+                "H01",
+                "H02",
+                "H03",
+                "H04",
+                "H07"
+              ],
+              "defect_refs": [
+                "N01",
+                "N02"
+              ],
+              "limitation_refs": []
+            },
+            "O4": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence_refs": [
+                "F:35-39",
+                "V03",
+                "V04",
+                "V05",
+                "V06",
+                "V09",
+                "H01",
+                "H02",
+                "H03",
+                "H04",
+                "H05",
+                "H06",
+                "H07",
+                "H08",
+                "H09",
+                "H10"
+              ],
+              "defect_refs": [
+                "N01"
+              ],
+              "limitation_refs": [
+                "L03"
+              ]
+            },
+            "O5": {
+              "status": "PASS",
+              "evidence_refs": [
+                "PLAN:B-P1",
+                "PLAN:B-P2",
+                "PLAN:B-P3",
+                "PLAN:B-P4",
+                "PLAN:B-P5",
+                "PLAN:B-P6",
+                "PLAN:B-P7",
+                "F:67-77"
+              ],
+              "defect_refs": [],
+              "limitation_refs": []
+            },
+            "O6": {
+              "status": "FAIL",
+              "evidence_refs": [
+                "Q:47",
+                "Q:53",
+                "Q:98",
+                "F:55-109",
+                "P01",
+                "P02",
+                "D04"
+              ],
+              "defect_refs": [
+                "D01",
+                "D02"
+              ],
+              "limitation_refs": []
+            },
+            "O7": {
+              "status": "PASS",
+              "evidence_refs": [
+                "BRIEF:5-11",
+                "BRIEF:19-21",
+                "F:16",
+                "F:55-65",
+                "F:79-103"
+              ],
+              "defect_refs": [],
+              "limitation_refs": []
+            }
+          },
+          "original_remainder_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/control/source-review-v1/REVIEW_FREEZE.json",
+          "review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/control/source-review-v1/REVIEW_FREEZE.json",
+            "sha256": "ce70bed7e340db8d175f4c2a13419b50537d12d4bdbe0fd221a962375f6dcc70"
+          },
+          "host_review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+            "sha256": "26f2ef8b128c5d78e4e415c400130cdc435868cb37ccd02d7c7149be461d026e"
+          },
+          "failure_inclusive_service_latency_seconds": 1712.101295,
+          "failure_inclusive_host_closeout_latency_seconds": 1726.34356,
+          "aggregate_stage_occupied_seconds": 1665.693,
+          "host_and_between_stage_elapsed_seconds": 60.65056000000004,
+          "queue_startup_seconds": 2.9509999999999996,
+          "output_bytes": 7755235,
+          "scientific_artifact_bytes": 151495,
+          "source_capture_bytes": 7603740,
+          "review_time_separate": {
+            "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-source-review-v1:ordinal:1",
+            "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-source-review-v1",
+            "status": "completed",
+            "requestedAt": "2026-10-07T21:30:47.134Z",
+            "startedAt": "2026-10-07T21:30:47.791Z",
+            "completedAt": "2026-10-07T21:42:38.283Z"
+          },
+          "raw_cumulative_native_counters_per_stage_unsummed": [
+            {
+              "stage": "researcher-v1",
+              "counters": [
+                {
+                  "objective_sha256": "9914d8f315682c04a1c12041a437fb11b9736e441e63c73be37d12ef0aa7a625",
+                  "status": "complete",
+                  "tokensUsed": 204934,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 724
+                }
+              ]
+            },
+            {
+              "stage": "critic-v1",
+              "counters": [
+                {
+                  "objective_sha256": "21b3a8da91333714ceaaa6bceb85025d9ec7d3015a89154e41645b00c5c86105",
+                  "status": "complete",
+                  "tokensUsed": 137034,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 270
+                }
+              ]
+            },
+            {
+              "stage": "reviser-v1",
+              "counters": [
+                {
+                  "objective_sha256": "b7c7fa95a6cb1da9ee9ae9fdf67beac9e63dbacb52c9c5fa935adb91f82269cf",
+                  "status": "complete",
+                  "tokensUsed": 254782,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 575
+                }
+              ]
+            }
+          ],
+          "usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "source_operations": null
+        },
+        "treatment": {
+          "original_scientific_grade": {
+            "status": "FAIL",
+            "immutable": true,
+            "basis": "Full declared scientific-content scope assessed; material unsupported HOMR source attribution/correction and loss of admitted useful predecessor options/constraints.",
+            "material_defect_refs": [
+              "D01",
+              "D02"
+            ],
+            "eligibility_can_upgrade": false
+          },
+          "full_declared_scope_assessed": true,
+          "source6_axes_original": [
+            {
+              "id": "A1",
+              "name": "full brief obligations",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "BRIEF.md",
+                "PLAN.md",
+                "final_artifact",
+                "predecessor_artifact",
+                "O1",
+                "O2",
+                "O3",
+                "O4",
+                "O5",
+                "O6",
+                "O7"
+              ],
+              "defect_refs": [
+                "D01",
+                "D02"
+              ]
+            },
+            {
+              "id": "A2",
+              "name": "consequential source claims and governing conditions",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "F01",
+                "F02",
+                "F03",
+                "F04",
+                "F06",
+                "F07",
+                "F15",
+                "F16",
+                "F17",
+                "F19",
+                "F20",
+                "F21",
+                "F23",
+                "F24",
+                "Q01",
+                "Q02",
+                "Q04",
+                "Q06",
+                "Q10",
+                "Q11",
+                "Q12",
+                "Q14",
+                "G01",
+                "G02",
+                "G03",
+                "K01",
+                "K02",
+                "K03",
+                "K04",
+                "K05"
+              ],
+              "defect_refs": [
+                "D02"
+              ]
+            },
+            {
+              "id": "A3",
+              "name": "useful open discovery coverage/options/analogies/components/history",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "final_artifact:18\u201347,65\u201371",
+                "predecessor_artifact:15\u201358",
+                "F01",
+                "F04",
+                "F08",
+                "F09",
+                "F10",
+                "F14",
+                "F17",
+                "F18",
+                "P06",
+                "P07",
+                "P08",
+                "P09",
+                "P10",
+                "P11",
+                "P26",
+                "P28",
+                "Q01",
+                "Q02",
+                "Q03",
+                "Q07",
+                "Q10",
+                "Q11",
+                "Q12",
+                "Q13",
+                "Q14",
+                "D01",
+                "D02",
+                "D03",
+                "D04"
+              ],
+              "defect_refs": [
+                "D01"
+              ]
+            },
+            {
+              "id": "A4",
+              "name": "incorrect rejection/correction",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "final_artifact:81\u201387,95\u2013101",
+                "final_preservation_check:34\u201340",
+                "F19",
+                "F20",
+                "F21",
+                "P24",
+                "P25",
+                "Q01",
+                "Q02",
+                "Q04",
+                "F15",
+                "F16"
+              ],
+              "defect_refs": [
+                "D02"
+              ]
+            },
+            {
+              "id": "A5",
+              "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "all eight mapped scientific files",
+                "INPUT_INTEGRITY.json",
+                "P06",
+                "P07",
+                "P08",
+                "P09",
+                "P10",
+                "P11",
+                "P23",
+                "P26",
+                "P27",
+                "P28",
+                "P34"
+              ],
+              "defect_refs": [
+                "D01"
+              ]
+            },
+            {
+              "id": "A6",
+              "name": "proposed versus actually performed validation",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "final_artifact:103\u2013112",
+                "final_preservation_check:42\u201350",
+                "predecessor_artifact:119\u2013134",
+                "predecessor_preservation_check:40\u201354",
+                "INPUT_INTEGRITY.json"
+              ],
+              "defect_refs": []
+            }
+          ],
+          "obligations_original": {
+            "O1": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence": [
+                "final_artifact:18\u201329",
+                "predecessor_artifact:15\u201358",
+                "predecessor_preservation_check:11",
+                "D01",
+                "D02",
+                "D03",
+                "D04"
+              ],
+              "limitations": [
+                "Candidate search-call chronology is self-reported; source breadth and problem-first research framing are assessed without runtime access."
+              ]
+            },
+            "O2": {
+              "status": "PASS",
+              "evidence": [
+                "final_artifact:22\u201329,33\u201341,67\u201371",
+                "F01",
+                "F05",
+                "F19",
+                "F20",
+                "F15",
+                "F16"
+              ],
+              "defect_refs": []
+            },
+            "O3": {
+              "status": "FAIL",
+              "evidence": [
+                "final_artifact:33\u201347,60",
+                "F01",
+                "F02",
+                "F03",
+                "F15",
+                "F19",
+                "F20",
+                "F21",
+                "F23",
+                "F24",
+                "G01",
+                "G02",
+                "G03",
+                "K01"
+              ],
+              "defect_refs": [
+                "D02"
+              ]
+            },
+            "O4": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence": [
+                "F06",
+                "F07",
+                "P24",
+                "P25",
+                "F15",
+                "F20",
+                "Q01",
+                "Q02",
+                "Q03",
+                "Q04",
+                "Q06",
+                "Q07",
+                "Q10",
+                "Q11",
+                "Q12",
+                "Q13",
+                "Q14",
+                "K01",
+                "K02",
+                "K03",
+                "K04",
+                "K05"
+              ],
+              "limitations": [
+                "Audiveris manual regression report and OSMD visual-regression claims were inspected, not executed. HOMR and unselected sync leads receive no stability/readiness credit from unassessed further history."
+              ]
+            },
+            "O5": {
+              "status": "PASS",
+              "evidence": [
+                "PLAN.md:B-P1\u2013B-P7",
+                "final_artifact:91\u2013101",
+                "plan_section_assessment"
+              ],
+              "defect_refs": []
+            },
+            "O6": {
+              "status": "FAIL",
+              "evidence": [
+                "final_artifact:49\u2013112",
+                "predecessor_artifact:29\u201358,91,105\u2013128",
+                "final_preservation_check"
+              ],
+              "defect_refs": [
+                "D01",
+                "D02"
+              ]
+            },
+            "O7": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence": [
+                "final_artifact:49\u201379,95\u2013110",
+                "BRIEF.md:5\u201311,19\u201321"
+              ],
+              "limitations": [
+                "Rights, retention duration, coordinate/viewer selection and hosted sync remain explicitly prospective group choices."
+              ]
+            }
+          },
+          "original_remainder_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/REVIEW_FREEZE.json",
+          "review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/REVIEW_FREEZE.json",
+            "sha256": "eeba40176438b7034e4955f834f393f03dd1c606732e04e899ae9c5562d065c7"
+          },
+          "host_review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+            "sha256": "5583d40d106c0ad1575e500b05416dc4482aa18e178f5e3d9de6b6a4a1324479"
+          },
+          "failure_inclusive_service_latency_seconds": 1824.255299,
+          "failure_inclusive_host_closeout_latency_seconds": 1835.56438,
+          "aggregate_stage_occupied_seconds": 1806.753,
+          "host_and_between_stage_elapsed_seconds": 28.8113800000001,
+          "queue_startup_seconds": 1.397,
+          "output_bytes": 5855437,
+          "scientific_artifact_bytes": 112369,
+          "source_capture_bytes": 5743068,
+          "review_time_separate": {
+            "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-treatment-source-review-v1:ordinal:1",
+            "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-source-review-v1",
+            "status": "completed",
+            "requestedAt": "2026-10-07T21:30:48.308Z",
+            "startedAt": "2026-10-07T21:30:49.435Z",
+            "completedAt": "2026-10-07T21:42:58.333Z"
+          },
+          "raw_cumulative_native_counters_per_stage_unsummed": [
+            {
+              "stage": "researcher-v1",
+              "counters": [
+                {
+                  "objective_sha256": "f32c096239ddf2df54f9727cb8eccbc5b3cb5d5a05b9b0de80c173b739b6d864",
+                  "status": "complete",
+                  "tokensUsed": 233771,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 741
+                }
+              ]
+            },
+            {
+              "stage": "critic-v1",
+              "counters": [
+                {
+                  "objective_sha256": "50ea7c9f76a7588307d51090c76002c069cb7ae0eea83f2e2427ba6b4be34d09",
+                  "status": "blocked",
+                  "tokensUsed": 293051,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 976
+                }
+              ]
+            }
+          ],
+          "usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "source_operations": null
+        }
+      }
+    },
+    {
+      "case": "C-04",
+      "domain": "B",
+      "repetition": 2,
+      "delivered_pair_assessment": true,
+      "both_full_declared_source_coverage": true,
+      "native_and_comparative_eligibility": "DIAGNOSTIC_UNQUALIFIED",
+      "arms": {
+        "control": {
+          "original_scientific_grade": {
+            "status": "FAIL",
+            "immutable": true,
+            "reason": "D01: missing explicit competing-component comparison under O2. Other qualified consequential claims and integrated plan/preservation/validation distinctions are substantially supported.",
+            "material_defect_ids": [
+              "D01"
+            ],
+            "eligibility_cannot_upgrade": true
+          },
+          "full_declared_scope_assessed": true,
+          "source6_axes_original": [
+            {
+              "axis_id": "S1",
+              "name": "full brief obligations",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "BRIEF.md:15\u201321",
+                "artifact.md:5\u2013108",
+                "REPORT.md:Exact frozen-plan disposition completeness",
+                "O1",
+                "O2",
+                "O3",
+                "O4",
+                "O5",
+                "O6",
+                "O7"
+              ],
+              "defect_refs": [
+                "D01"
+              ],
+              "reason": "All obligations assessed; the explicit competing-components portion of O2 is missing."
+            },
+            {
+              "axis_id": "S2",
+              "name": "consequential source claims and governing conditions",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "E02",
+                "E03",
+                "E04",
+                "E05",
+                "E06",
+                "E07",
+                "E08",
+                "E09",
+                "E10"
+              ],
+              "defect_refs": [],
+              "caveat_refs": [
+                "C01",
+                "C02"
+              ],
+              "reason": "Core claims agree with independently retrieved primary docs/code; issue reporting and viewport normalization have nonmaterial qualifications."
+            },
+            {
+              "axis_id": "S3",
+              "name": "useful open discovery coverage/options/analogies/components/history",
+              "status": "FAIL",
+              "assessed_evidence_refs": [
+                "artifact.md:11\u201354",
+                "DISC-OSMD-README",
+                "DISC-OSMD-PACKAGE",
+                "CHECK-VRV-01",
+                "CHECK-WA-01",
+                "E05",
+                "E06",
+                "E07"
+              ],
+              "defect_refs": [
+                "D01"
+              ],
+              "reason": "Substantially different mechanisms, optional leads, W3C analogy and bounded history are present; no competing implementation comparison is supplied."
+            },
+            {
+              "axis_id": "S4",
+              "name": "incorrect rejection/correction",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "PLAN.md:B-P1..B-P7",
+                "researcher-v1/artifact.md:25\u201353",
+                "critic-v1/artifact.md:25\u201345",
+                "reviser-v1/artifact.md:60\u201387",
+                "E03",
+                "E04",
+                "E06"
+              ],
+              "defect_refs": [],
+              "reason": "No materially incorrect rejection/correction found. B-P4 was already an open durability assumption; the final develops it and retains its note intent."
+            },
+            {
+              "axis_id": "S5",
+              "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "researcher-v1/artifact.md:5\u20139,25\u201341,47\u201387",
+                "critic-v1/artifact.md:5\u20137,27\u201333,39\u201371",
+                "reviser-v1/artifact.md:5\u20137,30\u201354,60\u2013106",
+                "all three preservation_check.md files",
+                "all three source-map.json files",
+                "E01"
+              ],
+              "defect_refs": [],
+              "reason": "No material preservation loss found. Advanced schemas/services are deferred with their safety properties and meaningful optional directions retained. D01 was not an option lost from the admitted predecessors."
+            },
+            {
+              "axis_id": "S6",
+              "name": "proposed versus actually performed validation",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "artifact.md:97\u2013108",
+                "preservation_check.md:Proposed versus actually executed checks",
+                "E01",
+                "CHECK-PDF-API-TESTS",
+                "CHECK-VRV-4396"
+              ],
+              "defect_refs": [],
+              "reason": "Pilot checks remain proposed; source reading/capture/hash inspection is distinguished from musical and workflow execution. Upstream tests are source evidence, not candidate or reviewer test runs."
+            }
+          ],
+          "obligations_original": {
+            "O1": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence_refs": [
+                "artifact.md:13",
+                "BRIEF.md:15",
+                "CHECK-WA-01",
+                "CHECK-MEI-CHAPTER",
+                "REPORT.md:Consequential claims independently checked"
+              ],
+              "reason": "Output-level user-first discovery and useful mechanism coverage assessed. Candidate chronology is self-reported in admitted scientific files; runtime/history was not reconstructed."
+            },
+            "O2": {
+              "status": "FAIL",
+              "evidence_refs": [
+                "artifact.md:15\u201324",
+                "DISC-OSMD-README",
+                "DISC-OSMD-PACKAGE",
+                "CHECK-VRV-01"
+              ],
+              "defect_refs": [
+                "D01"
+              ],
+              "reason": "Distinct mechanisms and their trade-offs plus analogy are covered; competing-component implementation comparison is absent."
+            },
+            "O3": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence_refs": [
+                "E02",
+                "E03",
+                "E04",
+                "E07",
+                "E08",
+                "E09"
+              ],
+              "caveat_refs": [
+                "C02"
+              ],
+              "reason": "Version pins, data identities, divisions and source/viewport/surface coordinate boundaries were independently checked. Rotation values normalize modulo 360 before validation."
+            },
+            "O4": {
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence_refs": [
+                "E02",
+                "E04",
+                "E05",
+                "E06",
+                "E07",
+                "E09"
+              ],
+              "caveat_refs": [
+                "C01"
+              ],
+              "reason": "Pinned core implementation and bounded issue/fix/release history checked. Dedicated regression paths are absent in the inspected patches, not proved absent elsewhere. Candidate PouchDB source gap is explicit and that component is unselected. Reviewer source checks do not retroactively repair it."
+            },
+            "O5": {
+              "status": "PASS",
+              "evidence_refs": [
+                "PLAN.md:B-P1",
+                "PLAN.md:B-P2",
+                "PLAN.md:B-P3",
+                "PLAN.md:B-P4",
+                "PLAN.md:B-P5",
+                "PLAN.md:B-P6",
+                "PLAN.md:B-P7",
+                "artifact.md:58\u201366",
+                "REPORT.md:Exact frozen-plan disposition completeness"
+              ],
+              "reason": "Every exact frozen section is dispositioned, including already-covered choices and governing uncertainties."
+            },
+            "O6": {
+              "status": "PASS",
+              "evidence_refs": [
+                "artifact.md:68\u2013108",
+                "E01",
+                "REPORT.md:Preservation, validation and review boundary"
+              ],
+              "reason": "Complete bounded proposed workflow, optional opportunities, open product choices and observable pilot checks; no product validation result invented."
+            },
+            "O7": {
+              "status": "PASS",
+              "evidence_refs": [
+                "artifact.md:5\u20137,60\u201377,89\u2013106",
+                "PLAN.md:B-P2..B-P6"
+              ],
+              "reason": "Ingest/provenance, work/edition/part/source identity, notes/collaboration, access, retention/deletion, recovery and portable offline handoff are integrated without product/canon work."
+            }
+          },
+          "original_remainder_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/REVIEW_FREEZE.json",
+          "review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/REVIEW_FREEZE.json",
+            "sha256": "24796faa915a8ae8813715dcfe80c4bf9476956c109640b60499445f2a48e214"
+          },
+          "host_review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+            "sha256": "31bb4a7de8d1f178a06e609dd1380c877b450cadf04191d6be9039f464218b25"
+          },
+          "failure_inclusive_service_latency_seconds": 1980.880571,
+          "failure_inclusive_host_closeout_latency_seconds": 1989.942996,
+          "aggregate_stage_occupied_seconds": 1934.3029999999999,
+          "host_and_between_stage_elapsed_seconds": 55.63999600000011,
+          "queue_startup_seconds": 5.216,
+          "output_bytes": 51764904,
+          "scientific_artifact_bytes": 155397,
+          "source_capture_bytes": 51609507,
+          "review_time_separate": {
+            "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-source-review-v1:ordinal:1",
+            "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-source-review-v1",
+            "status": "completed",
+            "requestedAt": "2026-10-07T21:31:36.559Z",
+            "startedAt": "2026-10-07T21:31:37.081Z",
+            "completedAt": "2026-10-07T21:42:51.512Z"
+          },
+          "raw_cumulative_native_counters_per_stage_unsummed": [
+            {
+              "stage": "researcher-v1",
+              "counters": [
+                {
+                  "objective_sha256": "4ebafb8a1e2523d93e16ed763d3fb82db52ed89f331be2c50a53f7ebece13434",
+                  "status": "complete",
+                  "tokensUsed": 278631,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 780
+                }
+              ]
+            },
+            {
+              "stage": "critic-v1",
+              "counters": [
+                {
+                  "objective_sha256": "fd457e667af0786dd7284ee21d2a4495a7c85bee5ed37c78aadcd62008a5c565",
+                  "status": "complete",
+                  "tokensUsed": 129037,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 319
+                }
+              ]
+            },
+            {
+              "stage": "reviser-v1",
+              "counters": [
+                {
+                  "objective_sha256": "688ab2e025ae6f44e17f89f0b01866104eace94bd99dedf8d54b1c3dcf83037c",
+                  "status": "complete",
+                  "tokensUsed": 192651,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 737
+                }
+              ]
+            }
+          ],
+          "usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "source_operations": null
+        },
+        "treatment": {
+          "original_scientific_grade": {
+            "status": "PASS_WITH_LIMITATIONS",
+            "rationale": "All declared scientific axes/obligations and exact frozen plan sections assessed. Consequential source claims are supported at their stated conditions; no material defect, incorrect correction or material preservation loss found. Nonmaterial caveats, empirical abstentions and blinding/process limits retained.",
+            "immutable": true
+          },
+          "full_declared_scope_assessed": true,
+          "source6_axes_original": [
+            {
+              "id": "S6-01",
+              "name": "Full brief obligations",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "BRIEF.md",
+                "PLAN.md:B-P1..B-P7",
+                "final:7-105",
+                "O1",
+                "O2",
+                "O3",
+                "O4",
+                "O5",
+                "O6",
+                "O7"
+              ],
+              "defect_refs": [],
+              "limitation_refs": [
+                "BL-01",
+                "BL-02"
+              ],
+              "finding_refs": [
+                "E-01",
+                "E-02",
+                "E-03",
+                "E-04",
+                "E-05",
+                "E-06",
+                "E-07",
+                "PRES-01"
+              ]
+            },
+            {
+              "id": "S6-02",
+              "name": "Consequential source claims and governing conditions",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "R-A01",
+                "R-A02",
+                "R-A03",
+                "R-A04",
+                "R-A05",
+                "H01",
+                "H04",
+                "H05",
+                "H06",
+                "H07",
+                "H08",
+                "H17",
+                "H21",
+                "H22",
+                "H23",
+                "H24",
+                "H25",
+                "H26",
+                "R-MX01",
+                "R-MX02",
+                "R-MX03",
+                "R-MX04",
+                "R-MX05",
+                "R-MX06",
+                "H19",
+                "R-O01",
+                "R-O02",
+                "R-O03",
+                "R-O04",
+                "R-O05",
+                "R-O07",
+                "H02",
+                "H09",
+                "H10",
+                "H11",
+                "H13",
+                "H15",
+                "R-V01",
+                "R-V02",
+                "R-V03",
+                "R-V04",
+                "H03",
+                "H12",
+                "H14",
+                "H16",
+                "R-WA01",
+                "R-IIIF01",
+                "R-MEI01"
+              ],
+              "defect_refs": [],
+              "limitation_refs": [
+                "CAV-01"
+              ],
+              "finding_refs": [
+                "E-01",
+                "E-02",
+                "E-03",
+                "E-04",
+                "E-05",
+                "E-06",
+                "E-07"
+              ]
+            },
+            {
+              "id": "S6-03",
+              "name": "Useful open discovery coverage, options, analogies, components and history",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "final:18-29",
+                "final:33-59",
+                "final:99-105",
+                "D01",
+                "D02",
+                "D03",
+                "D04",
+                "D05",
+                "R-WA01",
+                "R-IIIF01",
+                "R-MEI01",
+                "R-O07",
+                "H09",
+                "H10",
+                "H11",
+                "H17",
+                "H24",
+                "H26"
+              ],
+              "defect_refs": [],
+              "limitation_refs": [],
+              "finding_refs": [
+                "E-03",
+                "E-05",
+                "E-07"
+              ]
+            },
+            {
+              "id": "S6-04",
+              "name": "Incorrect rejection or correction",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "predecessor:22",
+                "predecessor:50-56",
+                "final:57",
+                "final:78-84",
+                "final:111-117",
+                "R-V01",
+                "R-V03",
+                "R-V04",
+                "R-A04",
+                "H12"
+              ],
+              "defect_refs": [],
+              "correction_refs": [
+                "PRE-COR-01"
+              ],
+              "finding_refs": [
+                "E-06",
+                "PRES-01"
+              ],
+              "limitation_refs": []
+            },
+            {
+              "id": "S6-05",
+              "name": "Preservation of constraints, options, source identity, admitted corrections and uncertainty into final",
+              "status": "PASS_WITH_LIMITATIONS",
+              "assessed_evidence_refs": [
+                "predecessor:7-44",
+                "predecessor:50-66",
+                "predecessor:70-94",
+                "predecessor preservation_check scientific sections",
+                "final:7-29",
+                "final:35-105",
+                "final:109-119",
+                "final source-map inputs/sources/predecessor scientific fields",
+                "final preservation_check scientific sections",
+                "sources/INPUT_INTEGRITY.json"
+              ],
+              "defect_refs": [],
+              "finding_refs": [
+                "PRES-01",
+                "E-06"
+              ],
+              "limitation_refs": [
+                "CAV-02"
+              ]
+            },
+            {
+              "id": "S6-06",
+              "name": "Proposed versus actually performed validation",
+              "status": "PASS",
+              "assessed_evidence_refs": [
+                "predecessor:68-78",
+                "predecessor:86-94",
+                "final:88-97",
+                "final:119",
+                "both preservation_check scientific performed/proposed sections",
+                "reviewer fresh source captures and integrity/ancestry/patch comparisons"
+              ],
+              "defect_refs": [],
+              "finding_refs": [
+                "E-02",
+                "E-03",
+                "E-05"
+              ],
+              "limitation_refs": [
+                "EMP-01"
+              ]
+            }
+          ],
+          "obligations_original": [
+            {
+              "id": "O1",
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence": [
+                "final:18-29",
+                "predecessor:11-20",
+                "source-map open_discovery scientific fields",
+                "D01",
+                "D02",
+                "D03",
+                "D04",
+                "D05"
+              ],
+              "notes": "Scientific open-discovery coverage and relevance assessed independently. Original candidate ordering is documentary, not an authenticated host/history observation. Process provenance remains supervisor-owned.",
+              "limitation_refs": [
+                "BL-01",
+                "BL-02"
+              ]
+            },
+            {
+              "id": "O2",
+              "status": "PASS",
+              "evidence": [
+                "final:22-29",
+                "final:51-59",
+                "final:99-105",
+                "D01",
+                "D02",
+                "D03",
+                "D05",
+                "R-WA01",
+                "R-IIIF01",
+                "R-MEI01"
+              ],
+              "notes": "Substantially different page-first/structured-first and snapshot/live mechanisms; OMR/supplied/manual alternatives; competing OSMD/Verovio components, outside-score analogies and conditional optional opportunities."
+            },
+            {
+              "id": "O3",
+              "status": "PASS",
+              "evidence": [
+                "E-01",
+                "E-02",
+                "E-03",
+                "E-04",
+                "E-05",
+                "E-06",
+                "E-07"
+              ],
+              "notes": "Pinned versions/release boundaries, file-local IDs, measure conditions, divisions/tenths, renderer layout/page numbering and documented/code/inference/proposal distinctions assessed."
+            },
+            {
+              "id": "O4",
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence": [
+                "R-A04",
+                "R-A05",
+                "R-O02",
+                "R-O07",
+                "H09",
+                "H10",
+                "H11",
+                "H12",
+                "H17",
+                "H21",
+                "H22",
+                "H24",
+                "H25",
+                "H26",
+                "final:35-59",
+                "final:114-116"
+              ],
+              "notes": "Relevant pinned implementation and justified OSMD fix/regression-source/release history assessed. Audiveris issue/release attribution independently traced to equivalent development/release fix patches. No runtime reproduction/regression result asserted.",
+              "limitation_refs": [
+                "CAV-01",
+                "EMP-01"
+              ]
+            },
+            {
+              "id": "O5",
+              "status": "PASS",
+              "evidence": [
+                "PLAN.md:B-P1",
+                "PLAN.md:B-P2",
+                "PLAN.md:B-P3",
+                "PLAN.md:B-P4",
+                "PLAN.md:B-P5",
+                "PLAN.md:B-P6",
+                "PLAN.md:B-P7",
+                "final:74-84",
+                "REPORT.md exact frozen-plan table"
+              ],
+              "notes": "Every exact section assessed for completeness and what the plan already adequately covers; no missing disposition."
+            },
+            {
+              "id": "O6",
+              "status": "PASS_WITH_LIMITATIONS",
+              "evidence": [
+                "final:7-16",
+                "final:61-105",
+                "final:109-119",
+                "PRES-01"
+              ],
+              "notes": "Complete integrated planning decisions/changes, optional opportunities, constraints and uncertainty; observable checks proposed honestly. Minor selector/page-index condensation remains nonmaterial.",
+              "limitation_refs": [
+                "CAV-02",
+                "EMP-01"
+              ]
+            },
+            {
+              "id": "O7",
+              "status": "PASS",
+              "evidence": [
+                "final:61-72",
+                "final:78-84",
+                "final:90-97",
+                "final:101-105"
+              ],
+              "notes": "Manageable small-group workflow covers ingest/provenance, identity, annotation/collaboration, access, deletion/backups/stale copies, failures/recovery, and labeled portable export. No product build or canonical writes."
+            }
+          ],
+          "original_remainder_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/treatment/source-review-v1/REVIEW_FREEZE.json",
+          "review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/treatment/source-review-v1/REVIEW_FREEZE.json",
+            "sha256": "5b49f159b5b265ca44c9a19ced1eb9709440f18ab7ba3c8014b1246dd9932361"
+          },
+          "host_review_freeze": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+            "sha256": "c48b57554ae5f54167f5255b997d2f7b039aaeba2c50368f4df0a647645112c6"
+          },
+          "failure_inclusive_service_latency_seconds": 1951.822083,
+          "failure_inclusive_host_closeout_latency_seconds": 1970.0865,
+          "aggregate_stage_occupied_seconds": 1930.386,
+          "host_and_between_stage_elapsed_seconds": 39.70049999999992,
+          "queue_startup_seconds": 1.008,
+          "output_bytes": 5754684,
+          "scientific_artifact_bytes": 104216,
+          "source_capture_bytes": 5650468,
+          "review_time_separate": {
+            "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-treatment-source-review-v1:ordinal:1",
+            "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-treatment-source-review-v1",
+            "status": "completed",
+            "requestedAt": "2026-10-07T21:31:37.188Z",
+            "startedAt": "2026-10-07T21:31:38.072Z",
+            "completedAt": "2026-10-07T21:41:20.996Z"
+          },
+          "raw_cumulative_native_counters_per_stage_unsummed": [
+            {
+              "stage": "researcher-v1",
+              "counters": [
+                {
+                  "objective_sha256": "d9970b622bb1cf4183ab9c704f48bce7e238b9b3b21c412df4b6bcbf25749c32",
+                  "status": "complete",
+                  "tokensUsed": 236096,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 1046
+                }
+              ]
+            },
+            {
+              "stage": "critic-v1",
+              "counters": [
+                {
+                  "objective_sha256": "08559d405462aa7135609a299a75901f8da0a5c763b11d69f327446f97389b31",
+                  "status": "complete",
+                  "tokensUsed": 274339,
+                  "tokenBudget": null,
+                  "timeUsedSeconds": 763
+                }
+              ]
+            }
+          ],
+          "usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "source_operations": null
+        }
+      }
+    }
+  ],
+  "repeat_median_range_all_original_repetitions": {
+    "A": {
+      "control": {
+        "failure_inclusive_service_latency_seconds": {
+          "n": 2,
+          "median": 2279.9966249999998,
+          "min": 2217.179802,
+          "max": 2342.813448
+        },
+        "failure_inclusive_host_closeout_latency_seconds": {
+          "n": 2,
+          "median": 2305.146542,
+          "min": 2227.937884,
+          "max": 2382.3552
+        },
+        "aggregate_stage_occupied_seconds": {
+          "n": 2,
+          "median": 2147.3554999999997,
+          "min": 2058.658,
+          "max": 2236.053
+        },
+        "host_and_between_stage_elapsed_seconds": {
+          "n": 2,
+          "median": 157.79104200000006,
+          "min": 146.30220000000008,
+          "max": 169.27988400000004
+        },
+        "queue_startup_seconds": {
+          "n": 2,
+          "median": 2.2199999999999998,
+          "min": 2.141,
+          "max": 2.299
+        },
+        "output_bytes": {
+          "n": 2,
+          "median": 12550590.0,
+          "min": 12190161,
+          "max": 12911019
+        },
+        "scientific_artifact_bytes": {
+          "n": 2,
+          "median": 155135.0,
+          "min": 146355,
+          "max": 163915
+        },
+        "source_capture_bytes": {
+          "n": 2,
+          "median": 12395455.0,
+          "min": 12043806,
+          "max": 12747104
+        }
+      },
+      "treatment": {
+        "failure_inclusive_service_latency_seconds": {
+          "n": 2,
+          "median": 1773.0868535,
+          "min": 1744.16911,
+          "max": 1802.004597
+        },
+        "failure_inclusive_host_closeout_latency_seconds": {
+          "n": 2,
+          "median": 1807.5341875,
+          "min": 1778.99184,
+          "max": 1836.076535
+        },
+        "aggregate_stage_occupied_seconds": {
+          "n": 2,
+          "median": 1633.317,
+          "min": 1600.737,
+          "max": 1665.897
+        },
+        "host_and_between_stage_elapsed_seconds": {
+          "n": 2,
+          "median": 174.2171874999999,
+          "min": 170.179535,
+          "max": 178.25483999999983
+        },
+        "queue_startup_seconds": {
+          "n": 2,
+          "median": 1.364,
+          "min": 1.229,
+          "max": 1.499
+        },
+        "output_bytes": {
+          "n": 2,
+          "median": 9599648.0,
+          "min": 8171869,
+          "max": 11027427
+        },
+        "scientific_artifact_bytes": {
+          "n": 2,
+          "median": 116907.0,
+          "min": 101939,
+          "max": 131875
+        },
+        "source_capture_bytes": {
+          "n": 2,
+          "median": 9482741.0,
+          "min": 8069930,
+          "max": 10895552
+        }
+      }
+    },
+    "B": {
+      "control": {
+        "failure_inclusive_service_latency_seconds": {
+          "n": 2,
+          "median": 1846.490933,
+          "min": 1712.101295,
+          "max": 1980.880571
+        },
+        "failure_inclusive_host_closeout_latency_seconds": {
+          "n": 2,
+          "median": 1858.143278,
+          "min": 1726.34356,
+          "max": 1989.942996
+        },
+        "aggregate_stage_occupied_seconds": {
+          "n": 2,
+          "median": 1799.998,
+          "min": 1665.693,
+          "max": 1934.3029999999999
+        },
+        "host_and_between_stage_elapsed_seconds": {
+          "n": 2,
+          "median": 58.145278000000076,
+          "min": 55.63999600000011,
+          "max": 60.65056000000004
+        },
+        "queue_startup_seconds": {
+          "n": 2,
+          "median": 4.0835,
+          "min": 2.9509999999999996,
+          "max": 5.216
+        },
+        "output_bytes": {
+          "n": 2,
+          "median": 29760069.5,
+          "min": 7755235,
+          "max": 51764904
+        },
+        "scientific_artifact_bytes": {
+          "n": 2,
+          "median": 153446.0,
+          "min": 151495,
+          "max": 155397
+        },
+        "source_capture_bytes": {
+          "n": 2,
+          "median": 29606623.5,
+          "min": 7603740,
+          "max": 51609507
+        }
+      },
+      "treatment": {
+        "failure_inclusive_service_latency_seconds": {
+          "n": 2,
+          "median": 1888.038691,
+          "min": 1824.255299,
+          "max": 1951.822083
+        },
+        "failure_inclusive_host_closeout_latency_seconds": {
+          "n": 2,
+          "median": 1902.82544,
+          "min": 1835.56438,
+          "max": 1970.0865
+        },
+        "aggregate_stage_occupied_seconds": {
+          "n": 2,
+          "median": 1868.5695,
+          "min": 1806.753,
+          "max": 1930.386
+        },
+        "host_and_between_stage_elapsed_seconds": {
+          "n": 2,
+          "median": 34.25594000000001,
+          "min": 28.8113800000001,
+          "max": 39.70049999999992
+        },
+        "queue_startup_seconds": {
+          "n": 2,
+          "median": 1.2025000000000001,
+          "min": 1.008,
+          "max": 1.397
+        },
+        "output_bytes": {
+          "n": 2,
+          "median": 5805060.5,
+          "min": 5754684,
+          "max": 5855437
+        },
+        "scientific_artifact_bytes": {
+          "n": 2,
+          "median": 108292.5,
+          "min": 104216,
+          "max": 112369
+        },
+        "source_capture_bytes": {
+          "n": 2,
+          "median": 5696768.0,
+          "min": 5650468,
+          "max": 5743068
+        }
+      }
+    }
+  },
+  "final_quiet": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/FINAL_QUIET.json",
+    "sha256": "5ce0c502d786727f4d5b69bf289c745436b154d340b3be195d6262b0810f358f"
+  },
+  "interpretation_limits": [
+    "No qualified comparative or confirmation win. C01 original required review absent/interrupted; unassessed HOLD. C03 treatment native BLOCKED remains original failed gate and comparative HOLD despite diagnostic science review.",
+    "C02 treatment original full-declared-scope assessment false; original grades and remainder unchanged.",
+    "Descriptive latency/work statistics include all original attempts and failed native disposition; no failed-native or output-absence speed win.",
+    "Usage input/cache/generated/reasoning/billing and source operations unknown; no affordability claim. Cumulative native counters retained unsummed, separate from generated tokens/billing.",
+    "Concurrent named-account/sibling contention not fully attributable. Input maps advisory, scope audit incomplete_unknown. Raw Goal API bodies and createdAt missing; actual active and terminal projections distinct."
+  ],
+  "candidate_feedback_sent": false,
+  "outcome_tuning": false,
+  "publication_and_retention_cleanup_owner": "root"
+}

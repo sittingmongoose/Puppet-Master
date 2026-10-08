@@ -1,0 +1,14 @@
+{
+  "schema": "ER10-readonly-clock-guard-v1",
+  "observed_at": "2026-10-08T00:40:26.827904+00:00",
+  "original_deadline": "2026-10-08T00:39:13.721000+00:00",
+  "seconds_remaining": -73.106904,
+  "deadline_elapsed": true,
+  "prior_notice_at": null,
+  "prior_notice_was_early": null,
+  "actual_notice_grace_end": null,
+  "grace_elapsed": null,
+  "policy": "passive_cancel",
+  "decision": "CAPTURE_THEN_OWNED_CANCEL_IF_LIVE",
+  "limitation": "Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline."
+}

@@ -1,0 +1,114 @@
+{
+  "case_id": "D-M06-A",
+  "seed": "seed-v3",
+  "arm": "control/candidate-v3",
+  "sources_policy": "FROZEN_PUBLIC_PRIMARY_CORPUS. Only the mapped allowed inputs were read; no additional network fetches were performed by this arm. Fresh same-byte common seed v3 only.",
+  "sources": [
+    {
+      "source_id": "jcs",
+      "title": "JSON Canonicalization Scheme (JCS)",
+      "identifier": "RFC 8785, Independent Submission, Informational, June 2020",
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.txt",
+      "version_or_capture": "RFC 8785 June 2020; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240",
+      "sha256_recheck_utc": "2026-10-08T01:04:45Z",
+      "sha256_recheck_result": "match with INPUT_MAP.json frozen bytes",
+      "locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+      "kind": "public primary raw bytes",
+      "bytes": 41879,
+      "read_completely": true,
+      "sections_consulted": [
+        "1. Introduction",
+        "2. Terminology",
+        "3.1 Creation of Input Data",
+        "3.2 Generation of Canonical JSON Data (incl. 3.2.2 combined sample)",
+        "3.2.1 Whitespace",
+        "3.2.2.1 Serialization of Literals",
+        "3.2.2.2 Serialization of Strings",
+        "3.2.2.3 Serialization of Numbers",
+        "3.2.3 Sorting of Object Properties (incl. built-in sorting test data and expected order)",
+        "3.2.4 UTF-8 Generation (incl. expected hex bytes)",
+        "4. IANA Considerations",
+        "5. Security Considerations",
+        "6.1/6.2 References",
+        "Appendix A ECMAScript Sample Canonicalizer",
+        "Appendix B Number Serialization Samples (Table 1 incl. notes 1-4)",
+        "Appendix C Canonicalized JSON as Wire Format",
+        "Appendix D Dealing with Big Numbers",
+        "Appendix E String Subtype Handling (incl. E.1)",
+        "Appendix F Implementation Guidelines",
+        "Appendix G Open-Source Implementations",
+        "Appendix H Other JSON Canonicalization Efforts",
+        "Appendix I Development Portal"
+      ]
+    }
+  ],
+  "other_allowed_inputs_read": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/brief.md",
+      "role": "task brief (untrusted; not a public primary source); read completely",
+      "sha256_recheck_utc": "2026-10-08T01:04:45Z",
+      "frozen_sha256_expected": null,
+      "note": "no frozen hash declared for brief.md in INPUT_MAP.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/draft.md",
+      "role": "seed draft: untrusted candidate-authored review stimulus; read completely",
+      "sha256_recheck_utc": "2026-10-08T01:04:45Z",
+      "frozen_sha256_expected": "2c1289885dcd8b0c99cf18bd63771fe3acece6b61c8b4b533045f76a568a0910",
+      "bytes_expected": 6344,
+      "sha256_recheck_result": "match with INPUT_MAP.json frozen_exact_bytes"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/fixtures.json",
+      "role": "seed input-only fixtures (no expected outputs); read completely",
+      "sha256_recheck_utc": "2026-10-08T01:04:45Z",
+      "frozen_sha256_expected": "bc2ed432bc18ec4ac2eda91518111ade950b44d7f66b6c3dc6ca604a60c268ac",
+      "bytes_expected": 4815,
+      "sha256_recheck_result": "match with INPUT_MAP.json frozen_exact_bytes"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v3/sources.json",
+      "role": "seed source identity metadata; read completely",
+      "sha256_recheck_utc": "2026-10-08T01:04:45Z",
+      "frozen_sha256_expected": "87510c175a18a91851d4aea895901bc8ce7155a8cf0d405646e8adcf6c18674c",
+      "bytes_expected": 2929,
+      "sha256_recheck_result": "match with INPUT_MAP.json frozen_exact_bytes"
+    }
+  ],
+  "input_domain_binding": {
+    "accepted_domain": "I-JSON (RFC 7493) as invoked by RFC 8785 section 3.1: no duplicate object property names; string data expressible as Unicode (lone surrogates terminate with error per section 3.2.2.2 Note); number data expressible as IEEE 754 binary64 (NaN and Infinity terminate with error per section 3.2.2.3 Note).",
+    "duplicate_name_policy": "Out of domain; RFC 8785 section 3.1 mandates I-JSON formatting which forbids duplicate property names; no first-wins/last-wins merge is defined by the source. Duplicate detection must operate on names equal after escape resolution (e.g. \"A\" vs \"\\u0041\" denote the same name)."
+  },
+  "references_cited_within_frozen_bytes_but_not_independently_fetched": [
+    {
+      "id": "RFC 7493 (I-JSON)",
+      "role": "input-domain constraint invoked by RFC 8785 section 3.1",
+      "status": "accessed only as quoted/cited within the frozen RFC 8785 bytes"
+    },
+    {
+      "id": "ECMA-262 section 7.1.12.1 (Number::toString) including Note 2",
+      "role": "number serialization",
+      "status": "accessed only as cited within the frozen bytes; RFC 8785 Appendix B Table 1 is the number-sample evidence available to this arm"
+    },
+    {
+      "id": "ECMA-262 section 24.3.2.2 (JSON.stringify quote)",
+      "role": "string serialization",
+      "status": "accessed only as cited within the frozen bytes"
+    },
+    {
+      "id": "RFC 8259 (JSON), RFC 2119/8174 (BCP 14), IEEE 754-2019, UCNORM (TR15)",
+      "role": "supporting normative references",
+      "status": "accessed only as cited within the frozen bytes"
+    }
+  ],
+  "seed_discrepancies_observed": [
+    "seed-v3 sources.json lists INPUT_MAP.json under jobs/D-M06-A/common/seed-v3/INPUT_MAP.json; the map actually used by this arm sits at jobs/D-M06-A/control/candidate-v3/INPUT_MAP.json. Recorded as an observation; no seed file was modified."
+  ],
+  "limitations": [
+    "Single frozen source read completely; no live re-capture of the RFC URL was performed by this arm.",
+    "The RFC development-portal test corpus (Appendix I) was not fetched or executed.",
+    "All seed draft claims remain untested at this stage; witness execution is deferred to the later sandboxed ticket."
+  ]
+}

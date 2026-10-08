@@ -1,0 +1,48 @@
+{
+  "schema": "ER10_ROOT_FINAL_M06_V3_CONDITIONAL_SEED_DIAGNOSTIC_AUTHORIZATION_V1",
+  "recorded_at": "2026-10-08T00:49:30.404521+00:00",
+  "cases": [
+    "D-M06-A",
+    "D-M06-B"
+  ],
+  "status": "CONDITIONAL_PENDING_NOT_ADMITTED",
+  "authority": "Root authorized finite final campaign; counterpart arms wholly unentered, no scored answer or scientific review facts changed",
+  "case_observations": {
+    "D-M06-A": {
+      "actual_registered_startup_event_observed": true,
+      "one_root_active_nomination": "state/D-M06-A-seed-native-root-active-nomination-v1.json",
+      "active_nomination_sha256": "827264792ec8fa098690670c1a87bb32ba4a7c8252ea1e76f91f75e98cb52e0f",
+      "matching_objectives": 0,
+      "activation_export_performed": false,
+      "scientific_T0": "2026-10-08T00:43:18.885619+00:00",
+      "seed_deadline": "2026-10-08T01:03:18.885619+00:00",
+      "common_deadline": "2026-10-08T01:33:18.885619+00:00"
+    },
+    "D-M06-B": {
+      "seed_and_arms_unstarted_at_authorization": true,
+      "scientific_T0": null,
+      "native_active_observation": null,
+      "exception_applies_only_if_original_once_startup_or_active_observation_remains_missing": true
+    }
+  },
+  "only_exception": "Original startup/ACTIVE observation absent while every other original seed carrier, within-budget, exact native COMPLETE and whole-tree quiet prerequisite independently passes",
+  "required_before_either_original_arm": [
+    "All original required scientific seed carriers exist, are nonempty/readable/hash-frozen; parse any required fixture/source/timing JSON; no weaker subset or renamed replacement",
+    "Actual preparation/request-to-required T3 terminal delivery within original20min seed boundary; no overrun forgiveness or expired whole-case clock",
+    "ONE distinct actual-terminal nomination yields unique exact original assigned installed native COMPLETE independently joined to registered task/model/Max/yolo/config/assignment hash; summary is not proof",
+    "Entire original seed T3 task tree actual terminal/no pending descendants, thread quiet/frozen/settled; freeze active-absence and native terminal separately",
+    "Verify all both-arm prebound original science/source hashes/input maps/task configs and clipped unchanged common50min deadline",
+    "Write case-specific diagnostic seed continuation gate with this authorization SHA and all verified prerequisites BEFORE either arm dispatch; do not admit from this file alone"
+  ],
+  "permitted_continuation": "Only the already-prebound original final-v3 arms, control-first and existing permitted overlap under soleGLM2, unchanged full science/upper bounds; no fresh seed/version/retry/extra allowance",
+  "qualified_native_provenance_comparative_gate": "HOLD; neither complete receipt nor diagnostic assessment requalifies missing ACTIVE",
+  "source_reviews": "Only after exact paired finals/native dispositions/all candidate trees quiet/frozen/settled under original first independent full-source gates; diagnostic eligibility disclosed separately outside scientifically blinded input",
+  "source_verdict_inferred": false,
+  "raw_GoalAPI_vendor_backend_or_ACP_proof_inferred": false,
+  "original_missing_observations_and_failed_costs_immutable": true,
+  "ordinary_worker_steer_repeat_startup_read_or_active_export_retry": false,
+  "automatic_use_for_paused_missing_terminal_or_missing_carrier_or_overrun": false,
+  "old_answers_or_source_grader_feedback_to_candidates": false,
+  "no_output_absence_method_speed_credit": true,
+  "release_policy_unchanged": "A exact disposition/source assessment before B; release soleGLM2 after final B candidate quiet gate before ordinary source review"
+}

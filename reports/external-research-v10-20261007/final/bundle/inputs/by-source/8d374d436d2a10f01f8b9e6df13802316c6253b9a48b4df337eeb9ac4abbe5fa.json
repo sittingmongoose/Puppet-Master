@@ -1,0 +1,123 @@
+{
+  "case": "D-M10-A",
+  "version": 3,
+  "gate": "BOTH_FULL_FINALS_NATIVE_COMPLETE_QUIET_FROZEN",
+  "stage_freezes": {
+    "D-M10-A/control/proposal-first-full-check-final-v3": {
+      "stage": "D-M10-A/control/proposal-first-full-check-final-v3",
+      "native_identity": "01a11843-c718-7bf3-88af-d60a38f22ccf",
+      "native_status": "complete",
+      "t3_status": "completed",
+      "quiet": true,
+      "requestedAt": "2026-10-07T21:27:37.219Z",
+      "startedAt": "2026-10-07T21:27:37.910Z",
+      "completedAt": "2026-10-07T21:34:36.908Z",
+      "dispatch_to_delivery_seconds": 419.689,
+      "stage_ceiling_seconds": 1920,
+      "absolute_case_deadline": "2026-10-07T22:00:48.636Z",
+      "budget_delivery_eligible": true,
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/final.md",
+      "output_sha256": "b981141c46e6104a029c08c319afb1edbcddb68ac8ba815ced5f7dbdde1e765d",
+      "output_bytes": 6943,
+      "scientific_files": {
+        "final.md": {
+          "sha256": "b981141c46e6104a029c08c319afb1edbcddb68ac8ba815ced5f7dbdde1e765d",
+          "bytes": 6943
+        },
+        "critique.md": {
+          "sha256": "79da321e07f369298af76ebaec4883a19878621d047e6155b8fb3a3c13097bee",
+          "bytes": 3990
+        }
+      },
+      "raw_native_goal_counters": {
+        "objective_sha256": "2d6eab476f69c9c32dcddf648b11a327cdd4755a28c30d21b20b465d60eb697e",
+        "status": "complete",
+        "tokensUsed": 75892,
+        "tokenBudget": null,
+        "timeUsedSeconds": 385
+      },
+      "generated_tokens": null,
+      "billing": null,
+      "source_quality": "UNASSESSED",
+      "scope_audit": "incomplete_unknown; advisorymap notfirewall",
+      "frozen_at": "2026-10-07T21:34:57.569656+00:00"
+    },
+    "D-M10-A/treatment/fresh-evidence-first-answer-v3": {
+      "stage": "D-M10-A/treatment/fresh-evidence-first-answer-v3",
+      "native_identity": "01a11843-9fcd-7f01-b2d5-f60d1f7a1259",
+      "native_status": "complete",
+      "t3_status": "completed",
+      "quiet": true,
+      "requestedAt": "2026-10-07T21:27:27.218Z",
+      "startedAt": "2026-10-07T21:27:27.998Z",
+      "completedAt": "2026-10-07T21:36:50.159Z",
+      "dispatch_to_delivery_seconds": 562.941,
+      "stage_ceiling_seconds": 720,
+      "absolute_case_deadline": "2026-10-07T22:00:48.636Z",
+      "budget_delivery_eligible": true,
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/evidence.md",
+      "output_sha256": "b9d74f90db1c592153b4e9d81840021691b32b108cd30903db91bcfc4ce115dc",
+      "output_bytes": 5777,
+      "scientific_files": {
+        "question.md": {
+          "sha256": "2b56ac9ba080d7fb74160ce361f5bcbc57fe89af3219a6caa4839ee6d6e1f46d",
+          "bytes": 193
+        },
+        "evidence.md": {
+          "sha256": "b9d74f90db1c592153b4e9d81840021691b32b108cd30903db91bcfc4ce115dc",
+          "bytes": 5777
+        }
+      },
+      "raw_native_goal_counters": {
+        "objective_sha256": "5bb9ee96f5d1dfd67d72bd26bcc6c60ee2933a572eea38e6184616b0dd7e175d",
+        "status": "complete",
+        "tokensUsed": 69179,
+        "tokenBudget": null,
+        "timeUsedSeconds": 402
+      },
+      "generated_tokens": null,
+      "billing": null,
+      "source_quality": "UNASSESSED",
+      "scope_audit": "incomplete_unknown; advisorymap notfirewall",
+      "frozen_at": "2026-10-07T21:37:08.521171+00:00"
+    },
+    "D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3": {
+      "stage": "D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3",
+      "native_identity": "01a1184c-be0a-7440-abb7-eb3221cded06",
+      "native_status": "complete",
+      "t3_status": "completed",
+      "quiet": true,
+      "requestedAt": "2026-10-07T21:37:22.775Z",
+      "startedAt": "2026-10-07T21:37:25.740Z",
+      "completedAt": "2026-10-07T21:44:42.268Z",
+      "dispatch_to_delivery_seconds": 439.493,
+      "stage_ceiling_seconds": 1200,
+      "absolute_case_deadline": "2026-10-07T22:00:48.636Z",
+      "budget_delivery_eligible": true,
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3/final.md",
+      "output_sha256": "01d2eca7d064340409500974d7f4c7c63bccdd47818eb572ebb78c333c5f3343",
+      "output_bytes": 8308,
+      "scientific_files": {
+        "final.md": {
+          "sha256": "01d2eca7d064340409500974d7f4c7c63bccdd47818eb572ebb78c333c5f3343",
+          "bytes": 8308
+        }
+      },
+      "raw_native_goal_counters": {
+        "objective_sha256": "287c1e1902d4f3f98962086d92f70a6bfaa089b29ef1731c4877f42514a56f2c",
+        "status": "complete",
+        "tokensUsed": 95998,
+        "tokenBudget": null,
+        "timeUsedSeconds": 408
+      },
+      "generated_tokens": null,
+      "billing": null,
+      "source_quality": "UNASSESSED",
+      "scope_audit": "incomplete_unknown; advisorymap notfirewall",
+      "frozen_at": "2026-10-07T21:45:07.220582+00:00"
+    }
+  },
+  "source_quality": "UNASSESSED_PENDING_INDEPENDENT_FULL_REVIEWS",
+  "prior_versions_immutable": true,
+  "frozen_at": "2026-10-07T21:45:11.781629+00:00"
+}

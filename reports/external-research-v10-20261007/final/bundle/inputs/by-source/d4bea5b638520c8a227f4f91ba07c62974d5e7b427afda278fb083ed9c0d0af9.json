@@ -1,0 +1,405 @@
+{
+  "schema": "ER10-cohort3-ordinary-review-freeze-v3",
+  "case": "D-M08-B",
+  "version": "v3",
+  "reviewer": "J1",
+  "arm": "control",
+  "verdict": "FullSourceFAIL",
+  "coverage": "FULL_DECLARED_SCOPE",
+  "unassessed": [],
+  "dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-v3-review-J1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-v3-review-J1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-v3-review-J1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-v3-review-J1",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "actual_t3_thread_binding": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-v3-review-J1",
+    "link": "[ER10 COHORT3 M08B v3 independent J1](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-v3-review-J1)",
+    "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "title": "ER10 COHORT3 M08B v3 independent J1",
+    "createdBy": "agent",
+    "creationSource": "mcp",
+    "status": "completed",
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-v3-review-J1:ordinal:1",
+    "activeRunId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "linkedPullRequest": null,
+    "titleRegeneration": null,
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+    "relationshipToParent": "subagent",
+    "runCount": 1,
+    "itemCount": 22,
+    "pendingRequestCount": 0,
+    "archived": false,
+    "settled": false,
+    "settledAt": null,
+    "snoozed": false,
+    "snoozedUntil": null,
+    "createdAt": "2026-10-07T21:13:57.142Z",
+    "updatedAt": "2026-10-07T21:19:53.634Z"
+  },
+  "actual_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-v3-review-J1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:13:57.144Z",
+    "startedAt": "2026-10-07T21:13:57.747Z",
+    "completedAt": "2026-10-07T21:19:53.634Z"
+  },
+  "quiet": true,
+  "settled": true,
+  "settle_sequence": 490469,
+  "native_goal_required": false,
+  "dispatch_to_delivery_seconds": 356.49,
+  "queue_startup_seconds": 0.603,
+  "artifacts": {
+    "judgment.md": {
+      "sha256": "328bae40e03248dca6712cff0c1acc0a5dea7ac3f2964398db10a4deac549789",
+      "bytes": 16439
+    },
+    "checks.json": {
+      "sha256": "800a143cdd05e3a4e269f951d005e6ae7292a22bf59f00a347a8fe50b9830ca2",
+      "bytes": 12604
+    },
+    "INPUT_MAP.json": {
+      "sha256": "edc8838eec1abfa6c91b5270ad8dd482ef05a31a08d99bb0073174d7c524e852",
+      "bytes": 3976
+    },
+    "assignment.md": {
+      "sha256": "7c0e08dc71c12f158013415015455a50d12e9d2f1088dcefe767af80ffa69e5a",
+      "bytes": 3076
+    },
+    "dispatch.json": {
+      "sha256": "e230cb21e3442d8c566dda0ce5ab8bdc6126b08bd7f1797a74c20af9c4f318f1",
+      "bytes": 986
+    },
+    "quiet_task_receipt.json": {
+      "sha256": "980a575c886768598e48f7a2725fe18fe322d3b2d142df2b051f4b6726b1821f",
+      "bytes": 6048
+    },
+    "t3_terminal_receipt.json": {
+      "sha256": "a16d1b7de8d4a24a0fdf35b3010ad652d876df29451a6a2f8890b285993ff11a",
+      "bytes": 6351
+    }
+  },
+  "billing": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "source_operations": {
+    "raw_http_gets": [
+      {
+        "id": "S1",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+        "started_at_utc": "2026-10-07T21:14:53.580389+00:00",
+        "finished_at_utc": "2026-10-07T21:14:53.705681+00:00",
+        "http_status": 200,
+        "bytes": 2267,
+        "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+        "resolved_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+        "version_or_capture": "Rasterio 1.3.10"
+      },
+      {
+        "id": "S2",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+        "started_at_utc": "2026-10-07T21:14:53.581867+00:00",
+        "finished_at_utc": "2026-10-07T21:14:53.701723+00:00",
+        "http_status": 200,
+        "bytes": 9114,
+        "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+        "resolved_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+        "version_or_capture": "Rasterio 1.3.10"
+      },
+      {
+        "id": "S3",
+        "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+        "started_at_utc": "2026-10-07T21:14:53.583421+00:00",
+        "finished_at_utc": "2026-10-07T21:14:53.695896+00:00",
+        "http_status": 200,
+        "bytes": 1713,
+        "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+        "version_or_capture": "GDAL v3.9.0"
+      },
+      {
+        "id": "P4",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+        "started_at_utc": "2026-10-07T21:14:53.584457+00:00",
+        "finished_at_utc": "2026-10-07T21:14:53.678025+00:00",
+        "http_status": 200,
+        "bytes": 86415,
+        "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+        "resolved_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+        "version_or_capture": "Rasterio 1.3.10"
+      },
+      {
+        "id": "P5",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+        "started_at_utc": "2026-10-07T21:14:53.586471+00:00",
+        "finished_at_utc": "2026-10-07T21:14:53.645999+00:00",
+        "http_status": 200,
+        "bytes": 5550,
+        "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+        "resolved_url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+        "version_or_capture": "Rasterio 1.3.10"
+      },
+      {
+        "id": "P6",
+        "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdalrasterband.cpp",
+        "started_at_utc": "2026-10-07T21:14:53.587320+00:00",
+        "finished_at_utc": "2026-10-07T21:14:53.743166+00:00",
+        "http_status": 200,
+        "bytes": 329681,
+        "sha256": "984a2fb02108d2c45b05225b8afe601486dc3d559af7cbea36488a848e348797",
+        "resolved_url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdalrasterband.cpp",
+        "version_or_capture": "GDAL v3.9.0"
+      },
+      {
+        "id": "P6-retry",
+        "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdalrasterband.cpp",
+        "started_at_utc": "2026-10-07T21:15:06.488401+00:00",
+        "finished_at_utc": "2026-10-07T21:15:06.569334+00:00",
+        "http_status": 200,
+        "bytes": 329681,
+        "sha256": "984a2fb02108d2c45b05225b8afe601486dc3d559af7cbea36488a848e348797",
+        "version_or_capture": "GDAL v3.9.0"
+      },
+      {
+        "check": "P7_test_source_inspection_not_execution",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/tests/test_dataset_mask.py",
+        "started_at_utc": "2026-10-07T21:15:41.033125+00:00",
+        "finished_at_utc": "2026-10-07T21:15:41.158676+00:00",
+        "http_status": 200,
+        "bytes": 6320,
+        "sha256": "be08cd3b7bdf8878f8549f62df1eb762c0f4d544bfb125262401ee5b3edc58ee",
+        "version_or_capture": "Rasterio 1.3.10"
+      },
+      {
+        "id": "P7-locator-correction",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/tests/test_dataset_mask.py",
+        "started_at_utc": "2026-10-07T21:16:02.390868+00:00",
+        "finished_at_utc": "2026-10-07T21:16:02.439612+00:00",
+        "http_status": 200,
+        "bytes": 6320,
+        "sha256": "be08cd3b7bdf8878f8549f62df1eb762c0f4d544bfb125262401ee5b3edc58ee",
+        "lines": 204,
+        "version_or_capture": "Rasterio 1.3.10"
+      },
+      {
+        "id": "P8",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/tests/test_band_masks.py",
+        "started_at_utc": "2026-10-07T21:17:12.542885+00:00",
+        "finished_at_utc": "2026-10-07T21:17:12.674474+00:00",
+        "http_status": 200,
+        "bytes": 5539,
+        "sha256": "fd4d4417c618c8c0cc50a05b1a3bbe1629ef5459d9ddc0a1c6d6bcd489601da4",
+        "lines": 170,
+        "search_terms": [
+          "shadow",
+          "rgba",
+          "alpha"
+        ],
+        "version_or_capture": "Rasterio 1.3.10"
+      }
+    ],
+    "raw_http_total_received_bytes": 782600,
+    "web_opens": [
+      {
+        "urls": [
+          "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+          "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+          "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdalrasterband.cpp"
+        ],
+        "performed_between_utc": [
+          "2026-10-07T21:14:16.733811Z",
+          "2026-10-07T21:14:36Z"
+        ],
+        "exact_timestamps": null
+      },
+      {
+        "urls": [
+          "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/tests/test_dataset_mask.py"
+        ],
+        "performed_between_utc": [
+          "2026-10-07T21:15:06.569334Z",
+          "2026-10-07T21:15:41.032359Z"
+        ],
+        "exact_timestamps": null
+      }
+    ],
+    "captured_bodies_saved_to_disk": false,
+    "raw_source_line_numbers_used": true
+  },
+  "actual_checks": [
+    {
+      "check": "nine mapped scientific file hashes versus INPUT_MAP.json",
+      "timestamp_utc": "2026-10-07T21:15:41.033059+00:00",
+      "all_match": true,
+      "file_count": 9
+    },
+    {
+      "check": "three frozen docs versus exact release URL raw bytes",
+      "finished_by_utc": "2026-10-07T21:14:53.743166+00:00",
+      "all_match": true,
+      "source_ids": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "check": "full six-obligation and seven-finding source assessment",
+      "finished_observed_utc": "2026-10-07 21:18:29 UTC",
+      "mask_defect": "dataset_mask ordered precedence improperly generalized to mask reads; unqualified RGBA fallback"
+    },
+    {
+      "check": "intermediate_final_diff",
+      "timestamp_utc": "2026-10-07T21:15:41.159586+00:00",
+      "final_word_count_whitespace": 850,
+      "material_issue": "Inherited per-band/dataset mask scope error; final RGBA wording loses fallback condition."
+    },
+    {
+      "check": "reviewer_affine_algebra_example",
+      "timestamp_utc": "2026-10-07T21:16:02.440279+00:00",
+      "source_shape": [
+        9,
+        15
+      ],
+      "destination_shape": [
+        3,
+        5
+      ],
+      "source_coefficients": [
+        "2",
+        "1/2",
+        "100",
+        "1/3",
+        "-3",
+        "200"
+      ],
+      "scaled_coefficients": [
+        "6",
+        "3/2",
+        "100",
+        "1",
+        "-9",
+        "200"
+      ],
+      "corner_checks": [
+        {
+          "output_pixel_corner": [
+            0,
+            0
+          ],
+          "output_geo": [
+            "100",
+            "200"
+          ],
+          "corresponding_source_geo": [
+            "100",
+            "200"
+          ],
+          "equal": true
+        },
+        {
+          "output_pixel_corner": [
+            5,
+            0
+          ],
+          "output_geo": [
+            "130",
+            "205"
+          ],
+          "corresponding_source_geo": [
+            "130",
+            "205"
+          ],
+          "equal": true
+        },
+        {
+          "output_pixel_corner": [
+            0,
+            3
+          ],
+          "output_geo": [
+            "209/2",
+            "173"
+          ],
+          "corresponding_source_geo": [
+            "209/2",
+            "173"
+          ],
+          "equal": true
+        },
+        {
+          "output_pixel_corner": [
+            5,
+            3
+          ],
+          "output_geo": [
+            "269/2",
+            "178"
+          ],
+          "corresponding_source_geo": [
+            "269/2",
+            "178"
+          ],
+          "equal": true
+        }
+      ],
+      "all_equal": true,
+      "raster_runtime_executed": false
+    },
+    {
+      "check": "release test-source expectations inspected",
+      "sources": [
+        "P7",
+        "P8"
+      ],
+      "tests_executed": false,
+      "combined_shadow_plus_external_mask_case": "inferred from P4 ordered branches; not a P7 executed result"
+    },
+    {
+      "check": "authored artifact verification",
+      "timestamp_utc": "2026-10-07T21:19:50.096673+00:00",
+      "judgment_sha256": "328bae40e03248dca6712cff0c1acc0a5dea7ac3f2964398db10a4deac549789",
+      "six_axes_present": true,
+      "checks_json_parses": true,
+      "declared_coverage_consistent": true,
+      "byte_counts_verified": true
+    }
+  ],
+  "output_volume": {
+    "initial_unique_declared_local_source_bytes": 45096,
+    "command_output_tokens_reported_subset": 27393,
+    "command_output_tokens_total": null,
+    "judgment_md_utf8_bytes": 16439,
+    "checks_json_utf8_bytes": 12604
+  },
+  "blinding_limit": [
+    "Permitted map exposes control/coherent-rewrite-check-final-v3 method path.",
+    "Incidental timing/lifecycle run-record text in permitted documents encountered but excluded from scientific judgment."
+  ],
+  "frozen_at": "2026-10-07T21:20:29.273973+00:00"
+}

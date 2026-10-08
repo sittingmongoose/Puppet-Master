@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+    }
+  ],
+  "structuredContent": {
+    "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "isError": false
+}

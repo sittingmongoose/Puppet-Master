@@ -1,0 +1,60 @@
+{
+  "schema": "dm06.review.timings.v1",
+  "actual_start_utc": "2026-10-08T02:27:09Z",
+  "start_basis": "First reviewer clock receipt; unobservable pre-receipt queue/startup remains unknown and has not been subtracted or reset.",
+  "allowance_seconds": 900,
+  "observed_deadline_utc": "2026-10-08T02:42:09Z",
+  "checks": [
+    {
+      "name": "supplemental_primary_capture",
+      "start_utc": "2026-10-08T02:28:07.274377+00:00",
+      "end_utc": "2026-10-08T02:28:07.390288+00:00"
+    },
+    {
+      "name": "independent_rational_and_counterexample_checks",
+      "start_utc": "2026-10-08T02:29:31.493365+00:00",
+      "end_utc": "2026-10-08T02:29:31.505448+00:00"
+    },
+    {
+      "name": "final_report_scope_integrity_validation",
+      "start_utc": "2026-10-08T02:35:16.139026+00:00",
+      "end_utc": "2026-10-08T02:35:16.143682+00:00",
+      "results": {
+        "full_declared_scope": true,
+        "separate_process_witness_oracle_fields": true,
+        "original_frozen_bytes_still_match": true,
+        "all_cited_review_evidence_hashes_match": true,
+        "json_parses": true,
+        "no_economic_ranking_or_target_grade": true,
+        "markdown_all_material_ids_present": true,
+        "markdown_has_both_coverage_and_unassessed": true
+      }
+    }
+  ],
+  "reports_written_utc": "2026-10-08T02:33:16.894496+00:00",
+  "actual_final_utc": "2026-10-08T02:35:16.143682+00:00",
+  "delivery_utc": null,
+  "queue_seconds": null,
+  "startup_seconds": null,
+  "billing": null,
+  "billed_tokens": null,
+  "generated_tokens": null,
+  "cache_usage": null,
+  "usage": {
+    "billing": null,
+    "generated": null,
+    "cache": null
+  },
+  "final_basis": "Artifacts complete and final integrity/scope checks passed; exact subsequent UI delivery time is unknown.",
+  "observed_review_elapsed_seconds": 487.143682,
+  "within_observed_original_allowance": true,
+  "budget_limitations": "Pre-first-clock dispatch/queue/startup duration and billing are unobservable; no reset or exclusion is claimed.",
+  "artifact_hashes": {
+    "review.md": "a7b5ce8e2f2ee801a5ca82347e88eecc7990ffffe2da184df9a150e3ca770286",
+    "REVIEW.json": "ffe03c2cf687141a4ea1ce3f3c0f05e84bb5a10425189d750fd63a3e7489ff93",
+    "review-checks.py": "e3b7470e1ee6856a20297444ce8e3290844edb20eaab6f9f9eba8e22302b89cc",
+    "review-checks.json": "cda7648e47dfaa95bdb1f8200e75d9ad0aa6aab4f0d0824ca558493f823b488e",
+    "review-primary.json": "d2b2946f12c015e16a256fda142008e3f48f41f7f3a34c762523b57bd742cc77",
+    "review-primary-gdaltransformer-v3.9.0.cpp": "eb38ea83db17e3d825c102f73a650f58b0ab215ff3159b45a49ab8e444fbf6d2"
+  }
+}

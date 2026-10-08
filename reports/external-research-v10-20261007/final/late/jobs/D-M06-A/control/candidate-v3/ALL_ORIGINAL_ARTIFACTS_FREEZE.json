@@ -1,0 +1,79 @@
+{
+  "arm": "control",
+  "original_artifact_files": {
+    "dispatch-receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/dispatch-receipt.json",
+      "sha256": "0bfb4872d4da0655ad38bfe6cf874f83dd6df22a03769a697f5ebfec029e7842",
+      "bytes": 26632
+    },
+    "dispatch-config.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/dispatch-config.json",
+      "sha256": "c3f793a7f60f7f648450aaa3e7e8d52095f50e98d5e8931377e9b7d8144e0ef4",
+      "bytes": 558
+    },
+    "assignment.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/assignment.md",
+      "sha256": "2c433340f92d6d86e794d6290d8d5972247d3178ef1462956cec16120728dc17",
+      "bytes": 3703
+    },
+    "dispatch.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/dispatch.json",
+      "sha256": "a2c9e2bb6c154821bf98af2caf111421ea6f743899b4527450a41d0fccc965c2",
+      "bytes": 1810
+    },
+    "TERMINAL_CARRIER_TRIAGE.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/TERMINAL_CARRIER_TRIAGE.json",
+      "sha256": "5368c12930033941c3c9b8184ae4e1e61920eb01cec3900e8dfd358eeeb5ff68",
+      "bytes": 4087
+    },
+    "INPUT_MAP.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/INPUT_MAP.json",
+      "sha256": "d4e5b929d5d43682388ec07a1a594b28955667616b7d040a4c4a9b495fdcc540",
+      "bytes": 4625
+    },
+    "cancel-receipt-v1.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/cancel-receipt-v1.json",
+      "sha256": "8af4f33eb6e52aa3801afb39b741d459b54e27c854e92cda2877a0beb78cf269",
+      "bytes": 487
+    },
+    "task.txt": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/task.txt",
+      "sha256": "ac8074a0abc561a4d78c4c240580157e33a8dfce5a16e7f4535aa0067d61fafe",
+      "bytes": 139
+    },
+    "expiry-pre-cancel-observation-v1.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/expiry-pre-cancel-observation-v1.json",
+      "sha256": "5de0e09e45a0288ce6dcd5b37544ace0a8d52d69f2d39b79f86d4e6799edd28f",
+      "bytes": 1768
+    },
+    "witness-input.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/witness-input.json",
+      "sha256": "7ffb830b45df998fb2f8b419f9f0e42c1fb1cc998de8d5281503032cbf27cc61",
+      "bytes": 14685
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/t3-terminal-observed.json",
+      "sha256": "d90bfbed955deeaec75966b196aaed14122673e1c757d7f5fca40f23e601454e",
+      "bytes": 6224
+    },
+    "startup-event-observation-v1.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/startup-event-observation-v1.json",
+      "sha256": "db8cee34e698fb1fb6c9c3c89b191f9eabc5105ab73e2a938517aec83c56c80c",
+      "bytes": 3676
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/sources.json",
+      "sha256": "23697c84fba014b5055751cb744b96f6eed919d6e51d589707ded580f67eef81",
+      "bytes": 6219
+    },
+    "witness.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v3/witness.py",
+      "sha256": "91907b1c4bf0ad801aa357fe410e8881d09a362dacd6eeb8eb89c968ce06c3a9",
+      "bytes": 12641
+    }
+  },
+  "T3quiet_interrupted_settled": true,
+  "native_status": "UNKNOWN awaiting one rootterminalnomination",
+  "source_assessment_gate": "NOT_ELIGIBLE missing required fullpair carriers/nativecomplete; no SourcePASS/methodcredit",
+  "at": "2026-10-08T01:32:21.378716+00:00"
+}

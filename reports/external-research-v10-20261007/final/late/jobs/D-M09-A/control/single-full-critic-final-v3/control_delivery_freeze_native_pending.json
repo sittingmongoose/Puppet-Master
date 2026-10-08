@@ -1,0 +1,41 @@
+{
+  "schema": "ER10_M09_CONTROL_T3_DELIVERY_FREEZE_NATIVE_PENDING_V1",
+  "recorded_at": "2026-10-08T00:17:50.601848+00:00",
+  "stage": "D-M09-A/control/single-full-critic-final-v3",
+  "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-control-single-full-critic-final-v3",
+  "T3_status": "completed",
+  "T3_quiet": true,
+  "settled_receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/settle_receipt.json",
+  "requestedAt": "2026-10-07T23:59:33.862Z",
+  "startedAt": "2026-10-07T23:59:38.571Z",
+  "completedAt": "2026-10-08T00:17:18.789Z",
+  "dispatch_to_delivery_seconds": 1064.927,
+  "stage_ceiling_seconds": 3600,
+  "within_original_stage_ceiling": true,
+  "absolute_common_deadline": "2026-10-08T01:45:13.455858+00:00",
+  "scientific_files": {
+    "scope-pin.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/scope-pin.md",
+      "sha256": "bbf6fa3566c8d8a11ac6d23fb3e600a0a112b86fa198e08aa7b79da32afee012",
+      "bytes": 3871
+    },
+    "final.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/final.md",
+      "sha256": "ea667881f0b8efda9a1d132f690dbdecff38722dada71c74e1c3f3e834ecee98",
+      "bytes": 8064
+    },
+    "claim-review.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/control/single-full-critic-final-v3/claim-review.md",
+      "sha256": "af50ca392edf376733e681e79bfa69f9ac1400110ccac43278930e791ac4759b",
+      "bytes": 12271
+    }
+  },
+  "required_final_nonempty": true,
+  "native_terminal": "PENDING_EXACT_ROOT_NOMINATION_AND_INDEPENDENT_OBSERVATION",
+  "native_active_observed": false,
+  "qualified_native_provenance_comparative": "HOLD",
+  "treatment_unentered": true,
+  "source_quality": "UNASSESSED",
+  "billing": null,
+  "generated_tokens": null
+}

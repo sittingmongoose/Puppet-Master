@@ -1,0 +1,22 @@
+{
+  "schema": "ER10_M09_CONTROL_ONLY_DIAGNOSTIC_REVIEW_EXCEPTION_GATE_V1",
+  "recorded_at": "2026-10-08T00:42:31.093429+00:00",
+  "root_authorization_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M09-A-failed-critic-control-diagnostic-authorization-v1.json",
+  "root_authorization_sha256": "547bb825dda94e0ddfc96b036838fece45bd556c0316f16442402bce6d6c2e22",
+  "original_pair_gate": "NOT_PASSED_HOLD",
+  "treatment_final_absent": true,
+  "all_four_admitted_candidates_quiet_frozen_settled": true,
+  "candidate_terminal_gate_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/V3_TERMINAL_DISPOSITION_GATE.json",
+  "candidate_terminal_gate_sha256": "377ee7529eb5660c9eeefa0368d1f13c2e7967fec9740c89a322ae8c6c790fb0",
+  "GLM2_released_before_review": true,
+  "GLM2_release_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/GLM2_FINAL_RELEASE.json",
+  "GLM2_release_sha256": "99bd32bc6450a07d85b04b6af38e7a003c8337e6bca2f2d6ea647ad5ed68c7f0",
+  "control_full_carrier_valid": true,
+  "one_first_ordinary_control_review_authorized": true,
+  "treatment_final_obligations": "UNASSESSED",
+  "treatment_material_error_count": null,
+  "saved_critics_ungraded": true,
+  "no_method_quality_speed_output_absence_credit": true,
+  "review_task_sha256": "2fcf39717989a3f44ada136865555397f242e704f50fc86cca2845663c3b2aa0",
+  "review_input_map_sha256": "bd52172968461b97a85b83e373651911ce821a805bf75648c7e634319f7a4334"
+}

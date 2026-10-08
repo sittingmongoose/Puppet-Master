@@ -1,0 +1,18 @@
+{
+  "schema": "ER10_COHORT3_GLM2_EXPLICIT_RELEASE_V1",
+  "recorded_at": "2026-10-08T00:41:49.163695+00:00",
+  "released_GLM_capacity": 2,
+  "retained_GLM_capacity": 0,
+  "Luna": 0,
+  "Muse": 0,
+  "all_three_owned_GLM_candidate_queues_terminal_quiet_frozen_settled": true,
+  "M07A_and_M07B_completed_dispositions_retained": true,
+  "M09_terminal_disposition_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/V3_TERMINAL_DISPOSITION_GATE.json",
+  "M09_terminal_disposition_gate_sha256": "377ee7529eb5660c9eeefa0368d1f13c2e7967fec9740c89a322ae8c6c790fb0",
+  "allnested_census": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/M09_FINAL_RELEASE_ALLNESTED_CENSUS.json",
+  "allnested_census_sha256": "20194320aad85200a18eda3b3baaf187665051d504cc9004d4d0648ee59a6aae",
+  "global_live_GLM_count": 0,
+  "release_before_any_M09_Sol_review": true,
+  "M09_review_not_dispatched_missing_pair_final": true,
+  "transfer_to_Cohort2_root_owned": true
+}

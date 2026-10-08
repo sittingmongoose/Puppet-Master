@@ -1,0 +1,105 @@
+{
+  "schema": "pm.er10.d-m06-b.candidate-v3.witness-input.v1",
+  "case_id": "D-M06-B",
+  "arm": "treatment/candidate-v3",
+  "authored_utc": "2026-10-08T01:59:30Z",
+  "provenance": {
+    "fixtures_source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v3/fixtures.json (sha256 0856a17ade2bddaf99d8f62e6b61cb8e72ae0329aa43a06573a561358bfb59f8, copied verbatim; input-only, no expected world coordinates included there)",
+    "oracle_provenance": "All 'expect' constants below were hand-derived this arm by algebraic substitution into the witnessed forward equations (geotransform.rst lines 27-28) and the hand-derived adjugate inverse; they are frozen inputs, not computed by witness.py at runtime. Witness code never derives its own expected values: it only compares implementation output against these constants and these stated metamorphic properties.",
+    "independence": "Fixed-point, half-pixel-center, translation-metamorphic, half-pixel-shift, geometric-classification and determinant oracles are independent of the adjugate inverse; no control relies on a forward/inverse pair roundtripping each other."
+  },
+  "witnessed_basis": {
+    "forward": "X_geo = GT(0) + p*GT(1) + l*GT(2); Y_geo = GT(3) + p*GT(4) + l*GT(5) [geotransform.rst 27-28]",
+    "corner_origin": "(0,0) is the top-left CORNER of the top-left pixel; top-left pixel center is (0.5,0.5) [geotransform.rst 30-32; gdal_misc.cpp 2190-2193 shifts half a pixel to convert center->corner]",
+    "invertibility": "det = GT(1)*GT(5) - GT(2)*GT(4); sources witness no tolerance figure, so all tolerances here are proposed"
+  },
+  "fixtures": [
+    { "id": "identity_north_up", "category": "ordinary", "gt": [0.0, 1.0, 0.0, 0.0, 0.0, -1.0] },
+    { "id": "north_up_meters", "category": "ordinary", "gt": [500000.0, 10.0, 0.0, 4000000.0, 0.0, -10.0] },
+    { "id": "geographic_degrees", "category": "ordinary", "gt": [-123.0, 0.001, 0.0, 49.0, 0.0, -0.001] },
+    { "id": "rotated", "category": "rotated", "gt": [0.0, 2.0, 1.0, 0.0, -1.0, 2.0] },
+    { "id": "sheared", "category": "sheared", "gt": [100.0, 1.0, 0.5, 200.0, 0.25, 2.0] },
+    { "id": "near_singular", "category": "near_singular", "gt": [0.0, 1.0, 0.999999, 0.0, 0.999999, 1.0] },
+    { "id": "degenerate_rank1", "category": "degenerate_zero_determinant", "gt": [10.0, 1.0, 1.0, 20.0, 1.0, 1.0] },
+    { "id": "degenerate_zero_scale", "category": "degenerate_zero_determinant", "gt": [10.0, 0.0, 0.0, 20.0, 0.0, 0.0] }
+  ],
+  "query_points": [
+    { "id": "q_top_left_corner", "pixel": 0.0, "line": 0.0 },
+    { "id": "q_top_left_center", "pixel": 0.5, "line": 0.5 },
+    { "id": "q_bottom_right_corner", "pixel": 10.0, "line": 5.0 },
+    { "id": "q_interior_fractional", "pixel": 4.25, "line": 2.75 },
+    { "id": "q_out_of_extent_negative", "pixel": -1.0, "line": -1.0 },
+    { "id": "q_out_of_extent_positive", "pixel": 10.5, "line": 5.5 }
+  ],
+  "correct_controls": {
+    "hand_det": {
+      "note": "hand-expanded determinants det = GT1*GT5 - GT2*GT4",
+      "identity_north_up": { "expect": -1.0, "tol": 1e-12 },
+      "north_up_meters": { "expect": -100.0, "tol": 1e-9 },
+      "geographic_degrees": { "expect": -1e-06, "tol": 1e-18 },
+      "rotated": { "expect": 5.0, "tol": 1e-12 },
+      "sheared": { "expect": 1.875, "tol": 1e-12 },
+      "near_singular": { "expect": 1.999999e-06, "tol": 1e-14 },
+      "degenerate_rank1": { "expect": 0.0, "tol": 0.0 },
+      "degenerate_zero_scale": { "expect": 0.0, "tol": 0.0 }
+    },
+    "hand_points": [
+      { "id": "hp1", "fixture": "identity_north_up", "op": "fwd", "arg": [0.0, 0.0], "expect": [0.0, 0.0], "tol": 1e-12 },
+      { "id": "hp2", "fixture": "identity_north_up", "op": "fwd", "arg": [0.5, 0.5], "expect": [0.5, -0.5], "tol": 1e-12 },
+      { "id": "hp3", "fixture": "identity_north_up", "op": "fwd", "arg": [4.25, 2.75], "expect": [4.25, -2.75], "tol": 1e-12 },
+      { "id": "hp4", "fixture": "identity_north_up", "op": "fwd", "arg": [10.0, 5.0], "expect": [10.0, -5.0], "tol": 1e-12 },
+      { "id": "hp5", "fixture": "identity_north_up", "op": "inv", "arg": [4.25, -2.75], "expect": [4.25, 2.75], "tol": 1e-9 },
+      { "id": "hp6", "fixture": "north_up_meters", "op": "fwd", "arg": [5.0, 1.5], "expect": [500050.0, 3999985.0], "tol": 1e-9 },
+      { "id": "hp7", "fixture": "north_up_meters", "op": "fwd", "arg": [0.5, 0.5], "expect": [500005.0, 3999995.0], "tol": 1e-9 },
+      { "id": "hp8", "fixture": "north_up_meters", "op": "inv", "arg": [500050.0, 3999985.0], "expect": [5.0, 1.5], "tol": 1e-9 },
+      { "id": "hp9", "fixture": "geographic_degrees", "op": "fwd", "arg": [4.25, 2.75], "expect": [-122.99575, 48.99725], "tol": 1e-12 },
+      { "id": "hp10", "fixture": "geographic_degrees", "op": "fwd", "arg": [0.5, 0.5], "expect": [-122.9995, 48.9995], "tol": 1e-12 },
+      { "id": "hp11", "fixture": "geographic_degrees", "op": "inv", "arg": [-122.99575, 48.99725], "expect": [4.25, 2.75], "tol": 1e-6 },
+      { "id": "hp12", "fixture": "rotated", "op": "fwd", "arg": [1.0, 2.0], "expect": [4.0, 3.0], "tol": 1e-12 },
+      { "id": "hp13", "fixture": "rotated", "op": "fwd", "arg": [0.5, 0.5], "expect": [1.5, 0.5], "tol": 1e-12 },
+      { "id": "hp14", "fixture": "rotated", "op": "inv", "arg": [4.0, 3.0], "expect": [1.0, 2.0], "tol": 1e-9 },
+      { "id": "hp15", "fixture": "sheared", "op": "fwd", "arg": [4.0, 3.0], "expect": [105.5, 207.0], "tol": 1e-12 },
+      { "id": "hp16", "fixture": "sheared", "op": "inv", "arg": [105.5, 207.0], "expect": [4.0, 3.0], "tol": 1e-12 },
+      { "id": "hp17", "fixture": "near_singular", "op": "fwd", "arg": [1.0, 1.0], "expect": [1.999999, 1.999999], "tol": 1e-12 },
+      { "id": "hp18", "fixture": "near_singular", "op": "inv", "arg": [1.999999, 1.999999], "expect": [1.0, 1.0], "tol": 1e-6 },
+      { "id": "hp19", "fixture": "degenerate_rank1", "op": "fwd", "arg": [2.0, 3.0], "expect": [15.0, 25.0], "tol": 1e-12 },
+      { "id": "hp20", "fixture": "degenerate_rank1", "op": "fwd", "arg": [5.0, 0.0], "expect": [15.0, 25.0], "tol": 1e-12 },
+      { "id": "hp21", "fixture": "degenerate_zero_scale", "op": "fwd", "arg": [4.25, 2.75], "expect": [10.0, 20.0], "tol": 1e-12 },
+      { "id": "hp22", "fixture": "degenerate_zero_scale", "op": "fwd", "arg": [-1.0, -1.0], "expect": [10.0, 20.0], "tol": 1e-12 }
+    ],
+    "metamorphic_translation": { "dx": 17.0, "dy": -6.0, "tol": 1e-9, "note": "shifting GT(0)/GT(3) by (dx,dy) must shift every forward output by exactly (dx,dy), all fixtures x all query points" },
+    "half_pixel_shift_corroboration": { "tol": 1e-12, "note": "corner-origin GT shifted by +0.5 pixel per axis (inverse of gdal_misc.cpp 2190-2193) must satisfy fwd_shifted(0,0) == fwd_orig(0.5,0.5), all fixtures" },
+    "geometry": {
+      "rotated": { "col1": [2.0, -1.0], "col2": [1.0, 2.0], "dot_expect": 0.0, "tol": 1e-12, "norm2_expect": [5.0, 5.0], "class": "pure_rotation_plus_scale" },
+      "sheared": { "col1": [1.0, 0.25], "col2": [0.5, 2.0], "dot_expect": 1.0, "tol": 1e-12, "class": "shear_nonorthogonal" },
+      "near_singular": { "cosine_min_parallel": 0.999999, "tol": 1e-9, "class": "near_parallel_columns" },
+      "degenerate_rank1": { "cosine_expect": 1.0, "tol": 1e-12, "class": "parallel_columns" }
+    },
+    "singular_rejection": { "fixtures": ["degenerate_rank1", "degenerate_zero_scale"], "rank1_collision": { "a": [2.0, 3.0], "b": [5.0, 0.0] }, "zero_collision": { "a": [4.25, 2.75], "b": [-1.0, -1.0] } },
+    "near_singular_stability": { "fixture": "near_singular", "scale_relative_margin": 1.0000005e-06, "margin_divisor": "|GT1*GT5|+|GT2*GT4| = 1.999998000001 (margin = 1.999999e-06 / 1.999998000001, hand-divided)", "margin_expect_below": 1e-05, "margin_tol": 1e-12 }
+  },
+  "wrong_controls": {
+    "note": "Each plausible-wrong model must be DETECTED (disagree with oracle constants beyond tol) on at least the named fixtures.",
+    "corner_center_conflation": {
+      "claim": "fwd(0,0) is the top-left pixel CENTER",
+      "fixtures": ["identity_north_up", "rotated"],
+      "center_oracle": "fwd(0.5,0.5) constants hp2/hp13"
+    },
+    "rowcol_swap_transpose": {
+      "claim": "swap GT(2)<->GT(4) (the 1-based/world-file transposition hazard) changes nothing or is equivalent",
+      "fixtures_must_detect": ["rotated", "sheared"],
+      "fixtures_expected_invisible": ["identity_north_up", "north_up_meters", "geographic_degrees"],
+      "inverse_probe": { "fixture": "rotated", "arg": [4.0, 3.0], "oracle_expect": [1.0, 2.0], "tol": 1e-9 }
+    },
+    "north_up_assumption": {
+      "claim": "force GT(2)=GT(4)=0 and treat raster as north-up",
+      "fixtures": ["rotated", "sheared"],
+      "probe_points": { "rotated": [1.0, 2.0], "sheared": [4.0, 3.0] }
+    },
+    "selfconsistent_wrong_roundtrip": {
+      "claim_under_test": "a mutually paired wrong forward (transposed block) and wrong inverse (adjugate of the transposed block) roundtrip cleanly, so roundtrip success alone cannot discriminate",
+      "roundtrip_tol": 1e-9,
+      "must_violate_oracle_on": ["rotated", "sheared"]
+    }
+  }
+}

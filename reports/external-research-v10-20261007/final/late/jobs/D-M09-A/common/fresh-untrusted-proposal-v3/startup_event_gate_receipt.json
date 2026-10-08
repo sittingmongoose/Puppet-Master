@@ -1,0 +1,18 @@
+{
+  "schema": "ER10_GLM_STARTUP_EVENT_GATE_RECEIPT_V1",
+  "stage": "D-M09-A/common/fresh-untrusted-proposal-v3",
+  "observed_at": "2026-10-07T23:45:27.018460+00:00",
+  "registered_taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3",
+  "registered_childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3",
+  "registered_childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M09-A-common-fresh-untrusted-proposal-v3:ordinal:1",
+  "startup_event_observed": false,
+  "event_item_id": null,
+  "activity_read_once": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/startup_activity_once_receipt.json",
+  "activity_receipt_sha256": "fc148d74726cc9908074e6ada0c4d679429094aae96bd7e40ae55ead264dcea8",
+  "native_state_activation_observed": false,
+  "state_nomination": "PENDING_STARTUP_EVENT_NO_NOMINATION_REQUEST",
+  "actual_requestedAt": "2026-10-07T23:45:13.904Z",
+  "actual_startedAt": "2026-10-07T23:45:18.953Z",
+  "stage_deadline": "2026-10-08T00:05:13.904000+00:00",
+  "absolute_case_deadline": "2026-10-08T01:45:13.455858+00:00"
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "pm.er10.d-m06-b.candidate-v3.witness-input.v1",
+  "case_id": "D-M06-B",
+  "authored_by": "candidate (control arm v3)",
+  "purpose": "Candidate-authored fixture/control inputs and hand-computed expected results for the affine geotransform witness. No designer-computed values; every expected number below was derived by hand from the frozen sources and is stated with its derivation. This file is INPUT ONLY for the sandboxed witness code.",
+  "units_and_conventions": {
+    "pixel_line": "p (pixel/column offset) and l (line/row offset) are unitless continuous coordinates; origin (0,0) is the top-left CORNER of the top-left pixel per geotransform.rst lines 30-32; integer pixel centers are (col+0.5, row+0.5).",
+    "georeferenced": "X, Y are in the geotransform's CRS units: metres for projected-style fixtures, degrees for the geographic fixture.",
+    "coefficients": "0-based gt[0..5] per geotransform.rst lines 15-20: gt[0],gt[3] CRS units (corner origin); gt[1],gt[5] CRS units per pixel; gt[2],gt[4] CRS units per pixel (rotation terms, typically zero).",
+    "determinant_units": "det = gt[1]*gt[5] - gt[2]*gt[4] carries (CRS units per pixel)^2."
+  },
+  "source_binding": {
+    "forward_equations": "geotransform.rst lines 27-28, transcribed literally: X_geo = gt[0] + p*gt[1] + l*gt[2]; Y_geo = gt[3] + p*gt[4] + l*gt[5]",
+    "corner_center_shift_witness": "gdal_misc.cpp lines 2189-2193 subtract half of each of gt[1],gt[2] from gt[0] and half of gt[4],gt[5] from gt[3] to convert a pixel-center convention to the corner origin; the witness checks world(center)-world(corner) equals that half-pixel displacement."
+  },
+  "geotransforms": [
+    { "id": "identity_north_up", "category": "ordinary", "gt": [0.0, 1.0, 0.0, 0.0, 0.0, -1.0] },
+    { "id": "north_up_meters", "category": "ordinary", "gt": [500000.0, 10.0, 0.0, 4000000.0, 0.0, -10.0] },
+    { "id": "geographic_degrees", "category": "ordinary", "gt": [-123.0, 0.001, 0.0, 49.0, 0.0, -0.001] },
+    { "id": "rotated", "category": "rotated", "gt": [0.0, 2.0, 1.0, 0.0, -1.0, 2.0] },
+    { "id": "sheared", "category": "sheared", "gt": [100.0, 1.0, 0.5, 200.0, 0.25, 2.0] },
+    { "id": "near_singular", "category": "near_singular", "gt": [0.0, 1.0, 0.999999, 0.0, 0.999999, 1.0] },
+    { "id": "degenerate_rank1", "category": "degenerate_zero_determinant", "gt": [10.0, 1.0, 1.0, 20.0, 1.0, 1.0] },
+    { "id": "degenerate_zero_scale", "category": "degenerate_zero_determinant", "gt": [10.0, 0.0, 0.0, 20.0, 0.0, 0.0] }
+  ],
+  "pixel_queries": [
+    { "id": "q_top_left_corner", "pixel": 0.0, "line": 0.0 },
+    { "id": "q_top_left_center", "pixel": 0.5, "line": 0.5 },
+    { "id": "q_bottom_right_corner", "pixel": 10.0, "line": 5.0 },
+    { "id": "q_interior_fractional", "pixel": 4.25, "line": 2.75 },
+    { "id": "q_out_of_extent_negative", "pixel": -1.0, "line": -1.0 },
+    { "id": "q_out_of_extent_positive", "pixel": 10.5, "line": 5.5 }
+  ],
+  "hand_computed_forward_expectations": [
+    { "gt_id": "identity_north_up", "pixel": 0.0, "line": 0.0, "expected_xy": [0.0, 0.0], "derivation": "X=0+0*1+0*0=0; Y=0+0*0+0*(-1)=0" },
+    { "gt_id": "identity_north_up", "pixel": 0.5, "line": 0.5, "expected_xy": [0.5, -0.5], "derivation": "X=0+0.5*1+0.5*0=0.5; Y=0+0.5*0+0.5*(-1)=-0.5; differs from the corner point, confirming corner-vs-center separation" },
+    { "gt_id": "identity_north_up", "pixel": 10.0, "line": 5.0, "expected_xy": [10.0, -5.0], "derivation": "X=0+10*1=10; Y=0+5*(-1)=-5 (bottom-right corner of the 10x5 raster)" },
+    { "gt_id": "north_up_meters", "pixel": 4.25, "line": 2.75, "expected_xy": [500042.5, 3999972.5], "derivation": "X=500000+4.25*10=500042.5; Y=4000000+2.75*(-10)=3999972.5" },
+    { "gt_id": "north_up_meters", "pixel": 0.5, "line": 0.5, "expected_xy": [500005.0, 3999995.0], "derivation": "X=500000+0.5*10=500005; Y=4000000+0.5*(-10)=3999995 (center of top-left pixel)" },
+    { "gt_id": "geographic_degrees", "pixel": 0.5, "line": 0.5, "expected_xy": [-122.9995, 48.9995], "derivation": "X=-123+0.5*0.001=-122.9995; Y=49+0.5*(-0.001)=48.9995 (degrees)" },
+    { "gt_id": "geographic_degrees", "pixel": 4.25, "line": 2.75, "expected_xy": [-122.99575, 48.99725], "derivation": "X=-123+4.25*0.001=-122.99575; Y=49+2.75*(-0.001)=48.99725" },
+    { "gt_id": "rotated", "pixel": 0.5, "line": 0.5, "expected_xy": [1.5, 0.5], "derivation": "X=0+0.5*2+0.5*1=1.5; Y=0+0.5*(-1)+0.5*2=0.5" },
+    { "gt_id": "rotated", "pixel": 1.0, "line": 3.0, "expected_xy": [5.0, 5.0], "derivation": "X=0+1*2+3*1=5; Y=0+1*(-1)+3*2=5" },
+    { "gt_id": "sheared", "pixel": 2.0, "line": 1.0, "expected_xy": [102.5, 202.5], "derivation": "X=100+2*1+1*0.5=102.5; Y=200+2*0.25+1*2=202.5" }
+  ],
+  "hand_computed_inverse_expectations": [
+    { "gt_id": "rotated", "world_xy": [5.0, 5.0], "expected_pixel_line": [1.0, 3.0], "derivation": "det=2*2-1*(-1)=5; dp=(gt5*(X-gt0)-gt2*(Y-gt3))/det=(2*5-1*5)/5=1; dl=(-gt4*(X-gt0)+gt1*(Y-gt3))/det=(1*5+2*5)/5=3" },
+    { "gt_id": "sheared", "world_xy": [102.5, 202.5], "expected_pixel_line": [2.0, 1.0], "derivation": "det=1*2-0.5*0.25=1.875; dp=(2*2.5-0.5*2.5)/1.875=3.75/1.875=2; dl=(-0.25*2.5+1*2.5)/1.875=1.875/1.875=1" },
+    { "gt_id": "north_up_meters", "world_xy": [500042.5, 3999972.5], "expected_pixel_line": [4.25, 2.75], "derivation": "independent hand solution of the two forward equations: p=(X-500000)/10=(42.5)/10=4.25, l=(Y-4000000)/(-10)=(-27.5)/(-10)=2.75; adjugate agreement: det=10*(-10)-0*0=-100, dp=(gt5*(X-gt0)-gt2*(Y-gt3))/det=(-10*42.5-0*(-27.5))/(-100)=(-425)/(-100)=4.25, dl=(-gt4*(X-gt0)+gt1*(Y-gt3))/det=(0*42.5+10*(-27.5))/(-100)=(-275)/(-100)=2.75" }
+  ],
+  "invertibility_policy": {
+    "proposed_not_witnessed": true,
+    "scale_relative_test": "invertible iff r = |det| / (|gt[1]*gt[5]| + |gt[2]*gt[4]|) > tol_rel, with tol_rel = 1e-9; r in (0,1], r=1 for a diagonal north-up block, r=0 for every zero-determinant fixture",
+    "tol_rel": 1e-9,
+    "instability_warning": "if r <= 1e-4 the inverse amplifies input error by ~1/r, so the inverse is flagged numerically untrustworthy (ill-conditioned) even though formally invertible; near_singular has r about 1e-6",
+    "absolute_det_floor": "also require |det| > 0 exactly; both degenerate fixtures give det == 0.0 in binary floating point by construction"
+  },
+  "applicability": {
+    "domain": "six-coefficient GDAL-style affine geotransforms in any CRS; continuous pixel/line space with corner origin",
+    "not_applicable": "polynomial or RPC georeferencing; integer-index pixel-center callers that skip the +0.5 mapping; extent containment policy (the affine map is total on R^2, out-of-extent queries are legal inputs to the math and only caller policy flags them)",
+    "environment": "executed in the er10 mechanical sandbox only: offline, single process, stdlib-only /usr/bin/python3 -I -B; GDAL itself is NOT executed, so GDALGCPsToGeoTransform is used here only as a witnessed-source concept (gdal_misc.cpp lines 1811, 2006), not as an executed oracle"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema": "pm.er10.d-m06-b.candidate-v3.timings.v1",
+  "case_id": "D-M06-B",
+  "arm": "control/candidate-v3",
+  "clock": "UTC; 'actual' = observed by this agent or read from tool receipts; 'frozen' = declared by the case; 'unknown' = not directly observable, never estimated",
+  "frozen": {
+    "arm_preparation_T0": "2026-10-08T01:51:28.689459+00:00",
+    "arm_absolute_deadline": "2026-10-08T02:21:28.689459+00:00",
+    "common_case_deadline": "2026-10-08T02:25:00.781858+00:00",
+    "budget_rule": "maximum 30 minutes from earliest arm preparation request, capped by the common case deadline; no resets"
+  },
+  "actual": {
+    "first_useful_finding": "2026-10-08T01:54:20Z",
+    "first_useful_finding_what": "both frozen source sha256 recomputed and matched INPUT_MAP.json; all cited line locators re-read and confirmed in the frozen bytes (recorded in sources.json verification entries)",
+    "sources_json_written": "2026-10-08T01:54Z",
+    "witness_run1": {
+      "started_at": "2026-10-08T02:01:37.263107+00:00",
+      "ended_at": "2026-10-08T02:01:37.393185+00:00",
+      "process_exit": 3,
+      "note": "witness checks 21/22; the failing check was a defect in the candidate's own distinctness check (corner==center legitimately holds for the constant zero-scale map), corrected before run 2; receipt retained as witness-receipt-run1-checkbug.json"
+    },
+    "witness_run2_final": {
+      "started_at": "2026-10-08T02:02:26.902229+00:00",
+      "ended_at": "2026-10-08T02:02:27.002295+00:00",
+      "elapsed_seconds": 0.10009734999766806,
+      "process_exit": 0,
+      "checks": "22/22",
+      "note": "receipt saved as witness-receipt.json"
+    },
+    "report_adjudication_written": "2026-10-08T02:06Z",
+    "final_md_written": "2026-10-08T02:09Z",
+    "final_files_committed_to_output_dir": "2026-10-08T02:10Z"
+  },
+  "unknown_usage": [
+    {
+      "item": "harness queueing and startup time before first agent action",
+      "status": "unknown",
+      "reason": "not directly observable by this agent; no estimate made"
+    },
+    {
+      "item": "model/native inference and inter-turn billing inside each agent turn",
+      "status": "unknown",
+      "reason": "wall-clock spans of turns are not exposed; only tool-level timestamps above are actual"
+    },
+    {
+      "item": "T3 completion accounting",
+      "status": "unknown",
+      "reason": "driver evaluates completion itself; not measured here"
+    }
+  ],
+  "deliverable_sha256": {
+    "final.md": "f556c71134d073dd332535a374c4da9cb4db6b25affd65df4887408f1007e09f",
+    "report.md": "b3614f41c82281e21c1fcb3e4bb9be9f613220d7a44a892063f7f63b0d68f317",
+    "sources.json": "5d2453b7b47d23f1add948d655a796edf6482b42c236f42693cb821e413eab23",
+    "witness.py": "fd82a82f21dc92d21722616cf2d89138c2e6134b11d5890caa271794e99c1c37",
+    "witness-input.json": "1fe06ef6e73bbbf6b5ad0f95ec539e50e69074a661df66b4942124d2159d6c12",
+    "witness-receipt.json": "bc8cbabcf80a774b1d37f42784044a6afff8de3fa82181cafa1e64535b778ed9",
+    "witness-receipt-run1-checkbug.json": "576469613b91559987633b91bcf8a596ff7c69f86b152aa05a81dafd9ab3cc4d"
+  },
+  "note_on_report_md_hash": "report.md sha256 above is the final post-edit file (commands and timings sections included), hashed 2026-10-08T02:11Z before this timings.json was itself finalized; timings.json self-hashes are not recorded (self-reference).",
+  "verification_entry": {
+    "timings_json_parse_check": "python3 -m json.tool jobs/D-M06-B/control/candidate-v3/timings.json — executed 2026-10-08T02:11Z, parse OK",
+    "four_mapped_outputs_present": [
+      "final.md",
+      "report.md",
+      "sources.json",
+      "timings.json"
+    ],
+    "check_utc": "2026-10-08T02:13Z"
+  }
+}

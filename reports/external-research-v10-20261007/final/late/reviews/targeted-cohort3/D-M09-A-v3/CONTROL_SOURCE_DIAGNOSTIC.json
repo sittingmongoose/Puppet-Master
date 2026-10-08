@@ -1,0 +1,72 @@
+{
+  "schema": "ER10_M09_SEPARATE_FIRST_CONTROL_SOURCE_DIAGNOSTIC_V1",
+  "case": "D-M09-A",
+  "version": "v3",
+  "record_type": "SEPARATE_CONTROL_ONLY_SOURCE_DIAGNOSTIC_AFTER_ORIGINAL_TERMINAL_DISPOSITION",
+  "is_method_comparison": false,
+  "disposition": "FINAL_V3_STAGE_FAILURE_PLUS_CONTROL_FULL_SOURCE_FAIL_COMPARATIVE_HOLD",
+  "control": "FullSourceFAIL",
+  "treatment": "NO_FINAL_UNASSESSED",
+  "treatment_material_error_count": null,
+  "treatment_six_obligations": [
+    "UNASSESSED",
+    "UNASSESSED",
+    "UNASSESSED",
+    "UNASSESSED",
+    "UNASSESSED",
+    "UNASSESSED"
+  ],
+  "saved_treatment_critics_ungraded": true,
+  "control_full_scope_checked": true,
+  "consequential_defects": [
+    "Completion versus abandonment: finish OK is not DONE proof; fatal qualifier lost",
+    "Existing source read transaction qualifies lock-release and snapshot-age claims",
+    "Progress counts refresh on DONE and possibly before later commit error, not only returned OK; zero denominator needs condition",
+    "Scratch rename lacks closed-handle/WAL-state/platform conditions",
+    "Supported completion/schema-cookie/logical-image facts and optional lead conditions lost during finalization"
+  ],
+  "supported_material_retained": [
+    "BUSY/finish doc-code correction",
+    "in-memory source restart exception",
+    "destination/shared-cache restrictions",
+    "source priority and justified uncertainty"
+  ],
+  "proposed_checks_not_executed": true,
+  "blinding_and_provenance_limits": [
+    "Static scientific assessment; no empirical tests claimed.",
+    "Candidate historical source-fetch execution not independently witnessed.",
+    "Added mutable docs/branch pinned by current retrieval time/hash; not original frozen bytes.",
+    "Truncated tool output recovered by focused rereads.",
+    "Method-specific authorized paths and scope-pin embedded metadata limited blinding.",
+    "Native lifecycle, billing and budget unassessed; actual requestedAt unavailable.",
+    "Full declared scope checked; no exhaustive unknown-recall claim."
+  ],
+  "original_terminal_disposition_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M09-A/V3_TERMINAL_DISPOSITION_GATE.json",
+  "review_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M09-A-v3/J1/freeze_disposition.json",
+  "review_freeze_sha256": "38bda3c6b92dc9736f83ddde52e9c525e3ea1f7d4b6992c3bab7fa2c19c4c768",
+  "comparative_native_provenance": "HOLD_UNCHANGED",
+  "no_winner_speed_output_absence_method_credit": true,
+  "economics": {
+    "new_upper_bound_cold_work_minutes_each": 80,
+    "new_common_wall_upper_bound_minutes": 120,
+    "common_T0": "2026-10-07T23:45:13.455858+00:00",
+    "fixed_deadline": "2026-10-08T01:45:13.455858+00:00",
+    "seed_seconds_full_charged_each_cold_once_aggregate": 521.658,
+    "control_occupied_with_seed_seconds": 1586.585,
+    "treatment_occupied_with_seed_failed_critic_and_operations_seconds": 2929.8959999999997,
+    "candidate_dispatch_to_terminal_sum_shared_once_seconds": 3994.8230000000003,
+    "parents_or_overlap_wall_not_double_counted": true,
+    "host_capture_seconds": null,
+    "queue_and_host_operations": "retained exact boundaries/receipts; total incompletely measured",
+    "source_operations": "candidate originals retained; evaluator not run",
+    "billing": null,
+    "generated_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null,
+    "first_control_source_review_seconds": 416.756,
+    "candidate_plus_review_sum_seconds": 4411.579000000001
+  },
+  "original_failures_costs_grades_immutable": true,
+  "frozen_at": "2026-10-08T00:52:35.028082+00:00"
+}

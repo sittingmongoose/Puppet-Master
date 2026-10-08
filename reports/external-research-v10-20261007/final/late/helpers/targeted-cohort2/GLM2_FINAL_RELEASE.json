@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-08T02:14:20.582609+00:00",
+  "scope": "owned final M06-B v3 original candidate trees",
+  "arms": {
+    "control": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-control-candidate-v3",
+      "completedAt": "2026-10-08T02:13:34.043Z",
+      "quiet": true,
+      "settle_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/settle-receipt-v3.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v3/artifact-freeze-terminal-v3.json",
+      "native": "PENDING_ROOT_TERMINAL_NOMINATION"
+    },
+    "treatment": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-treatment-candidate-v3",
+      "completedAt": "2026-10-08T02:11:11.837Z",
+      "quiet": true,
+      "settle_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/settle-receipt-v3.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v3/artifact-freeze-terminal-v3.json",
+      "native": "PENDING_ROOT_TERMINAL_NOMINATION"
+    }
+  },
+  "global_live_glm": 0,
+  "allnested_nextCursor": null,
+  "sole_glm2_released": 2,
+  "owned_capacity_after": 0,
+  "before_any_source_review": true,
+  "native_vs_T3": "Native terminal nominations pending; T3 completion/quiet supports capacity release only, never native COMPLETE/source PASS",
+  "scientific_eligibility": "PENDING; ACTIVE absence/provenance/comparative HOLD retained"
+}

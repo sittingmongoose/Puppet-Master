@@ -1,0 +1,30 @@
+{
+  "schema": "ER10_ROOT_RELOCATED_FINAL_OFFLINE_REPLAY_VALIDATION_V1",
+  "status": "PASS",
+  "recorded_at": "2026-10-08T02:55:00.491970+00:00",
+  "unmodified_code": true,
+  "physical_inputs": 226,
+  "all_three_outputs_byte_identical": true,
+  "results": [
+    {
+      "file": "FINAL_LEDGER.json",
+      "sha256": "7e5a9844f8136c97c743e7220a964f9bca008b08e56d8a2b51bc47905f2ef402",
+      "bytes": 6372326,
+      "byte_identical": true
+    },
+    {
+      "file": "FINAL_UNRESOLVED_CRITICAL_MAPPINGS.json",
+      "sha256": "43c0c0141a929384ba0bca04cedb72d937c8884b731546818117eb9d415c10fc",
+      "bytes": 478450,
+      "byte_identical": true
+    },
+    {
+      "file": "FINAL_INPUT_VALIDATION.json",
+      "sha256": "ab95cb8ae8d5926869b7600f72a200034c8e2ab61cebb2d2e0ecae8f79e6a9d4",
+      "bytes": 3414,
+      "byte_identical": true
+    }
+  ],
+  "temporary_replay_outputs_removed": true,
+  "scientific_regrade": false
+}

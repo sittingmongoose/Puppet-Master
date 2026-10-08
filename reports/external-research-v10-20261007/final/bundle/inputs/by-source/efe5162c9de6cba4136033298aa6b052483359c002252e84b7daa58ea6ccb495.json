@@ -1,0 +1,49 @@
+{
+  "schema": "ER10_ROOT_COHORT3_FINAL_TERMINAL_ACKNOWLEDGEMENT_V1",
+  "completion_record": "reviews/targeted-cohort3/TRACK_COMPLETION.json",
+  "completion_record_sha256": "c40b7133db35f44398ac2e5e1663747121cc5ca0a17d0d67cc2619cf15b59fbb",
+  "actual_task_status": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1\",\"status\":\"completed\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:ordinal:79\",\"latestTerminalStatus\":\"completed\",\"latestTerminalSummary\":\"COHORT3 complete: all six dispositions frozen, all children quiet and settled, capacity released. Root notified.\\n\\nM09 control diagnostic: **FullSourceFAIL**. Treatment remains **UNASSESSED** after critic expiry; comparative HOLD preserved. All prior failures, grades, and costs retained.\\n\\n[Completion record](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/TRACK_COMPLETION.json)\",\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6.1-sol\",\"summary\":\"M08-B v2’s control final is frozen and was delivered within the absolute deadline. The treatment remained active with no final after expiry, so cancellation was requested. The matched comparison is incomplete; no source pass or winner is claimed.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:60c09e0b-9b81-40a4-879e-1cb45d475b86\",\"waitTimedOut\":false}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+      "status": "completed",
+      "workState": "result_available",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:ordinal:79",
+      "latestTerminalStatus": "completed",
+      "latestTerminalSummary": "COHORT3 complete: all six dispositions frozen, all children quiet and settled, capacity released. Root notified.\n\nM09 control diagnostic: **FullSourceFAIL**. Treatment remains **UNASSESSED** after critic expiry; comparative HOLD preserved. All prior failures, grades, and costs retained.\n\n[Completion record](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/TRACK_COMPLETION.json)",
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "summary": "M08-B v2’s control final is frozen and was delivered within the absolute deadline. The treatment remained active with no final after expiry, so cancellation was requested. The matched comparison is incomplete; no source pass or winner is claimed.",
+      "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort3-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:60c09e0b-9b81-40a4-879e-1cb45d475b86",
+      "waitTimedOut": false
+    },
+    "isError": false
+  },
+  "observed_settlement": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"sequence\":697961}"
+      }
+    ],
+    "structuredContent": {
+      "sequence": 697961
+    },
+    "isError": false
+  },
+  "all_scientific_scope_or_native_qualification_inferred": false,
+  "remaining_campaign_cases": [
+    "D-M06-A",
+    "D-M06-B"
+  ]
+}

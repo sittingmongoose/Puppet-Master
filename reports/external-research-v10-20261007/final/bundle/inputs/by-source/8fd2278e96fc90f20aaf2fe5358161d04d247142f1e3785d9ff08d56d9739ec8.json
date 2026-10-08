@@ -1,0 +1,659 @@
+{
+  "schema": "ER10_CLOSED_M07B_PREPARED_FINAL_FIELD_BINDINGS_V1",
+  "campaign_terminal": false,
+  "slot_id": "D-M07-B",
+  "status": "CLOSED_METADATA_BINDINGS_PREPARED_NOT_FINAL",
+  "entries": [
+    {
+      "output_pointer": "/slots/13/arms/control/candidate_final_delivery",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/gate"
+      },
+      "scope": "Original frozen required-full-final gate establishes delivery only, not scientific grade/native qualification.",
+      "enum_map": {
+        "BOTH_FULL_FINALS_NATIVE_COMPLETE_QUIET_FROZEN": true
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+            "bytes": 4623,
+            "pointer": "/gate"
+          },
+          "exact_value": "BOTH_FULL_FINALS_NATIVE_COMPLETE_QUIET_FROZEN"
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/original_grade_string",
+      "transformation": "string_only",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/source_verdict"
+      }
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/original_grade_record",
+      "transformation": "identity",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/source_verdict"
+      }
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/scientific_judgment_available",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/source_verdict"
+      },
+      "scope": "Original authored source verdict AVAILABLE; FAIL does not establish full scope or method eligibility.",
+      "enum_map": {
+        "FullSourceFAIL": true
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+            "bytes": 13013,
+            "pointer": "/source_verdict"
+          },
+          "exact_value": "FullSourceFAIL"
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/full_scientific_coverage",
+      "transformation": "explicit_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/full_declared_scope_assessed"
+      },
+      "scope": "Original full declared source judgment extent; no SourcePASS inferred.",
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+            "bytes": 13013,
+            "pointer": "/full_declared_scope_assessed"
+          },
+          "exact_value": true
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/full_declared_primary_source_coverage",
+      "transformation": "explicit_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/full_declared_scope_assessed"
+      },
+      "scope": "Original full declared source judgment extent; no SourcePASS inferred.",
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+            "bytes": 13013,
+            "pointer": "/full_declared_scope_assessed"
+          },
+          "exact_value": true
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/original_material_count",
+      "transformation": "unknown",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/material_defect_count"
+      },
+      "reason": "Original frozen JSON verdict metadata does not supply a material-defect count; forbidden prose was not opened.",
+      "gap_category": "ABSENT_EXACT_FLAG"
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/normalized_material_count",
+      "transformation": "unknown",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/material_defect_count"
+      },
+      "reason": "Original frozen JSON verdict metadata does not supply a material-defect count; forbidden prose was not opened.",
+      "gap_category": "ABSENT_EXACT_FLAG"
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/native_pipeline_qualified",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/native_activation_gate"
+      },
+      "scope": "Original seed activation absence remains a diagnostic pipeline qualification HOLD despite observed complete arm terminals.",
+      "enum_map": {
+        "HOLD_UNOBSERVED_SEED_ACTIVE_AT_TERMINAL_ORIGINAL_OBSERVATIONS_UNCHANGED": false
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+            "bytes": 4623,
+            "pointer": "/native_activation_gate"
+          },
+          "exact_value": "HOLD_UNOBSERVED_SEED_ACTIVE_AT_TERMINAL_ORIGINAL_OBSERVATIONS_UNCHANGED"
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/time_eligible",
+      "transformation": "explicit_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/stage_freezes/D-M07-B~1control~1document-order-review-final-v3/budget_delivery_eligible"
+      },
+      "scope": "Original new-budget candidate delivery eligibility, not original-15-minute retroqualification."
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/method_eligible",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/comparative_eligibility"
+      },
+      "scope": "Original comparative method HOLD, diagnostic source assessment only.",
+      "enum_map": {
+        "HOLD_DIAGNOSTIC_FULL_SOURCE_REVIEWS_ONLY": false
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+            "bytes": 4623,
+            "pointer": "/comparative_eligibility"
+          },
+          "exact_value": "HOLD_DIAGNOSTIC_FULL_SOURCE_REVIEWS_ONLY"
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/provenance_eligible",
+      "transformation": "unknown",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/stage_freezes/D-M07-B~1control~1document-order-review-final-v3/scope_audit"
+      },
+      "reason": "Source exposure remains incomplete_unknown; no provenance qualification boolean.",
+      "gap_category": "UNVERIFIED_OBLIGATION"
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/review_formal_output_delivery",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/actual_t3_clock/status"
+      },
+      "scope": "Exact original CLOSED review carrier completed with declared formal scientific files; this is delivery only.",
+      "enum_map": {
+        "completed": true
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+            "bytes": 13013,
+            "pointer": "/actual_t3_clock/status"
+          },
+          "exact_value": "completed"
+        },
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+            "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+            "bytes": 13013,
+            "pointer": "/scientific_files"
+          },
+          "exact_value": {
+            "judgment.md": {
+              "sha256": "23417afd80c54f8b2092a7354d4c60845875b3120c6885b36960e63d8225b065",
+              "bytes": 20240
+            },
+            "checks.json": {
+              "sha256": "89ed0cf800ea353b18e000c99bbe68cc82c51ad3aac46cd62667386d43e33b01",
+              "bytes": 15416
+            }
+          }
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/control/review_actual_timely_delivery",
+      "transformation": "unknown",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J1/freeze_disposition.json",
+        "sha256": "ff01fc8fec83964de5c042a3a9b98f33ea9fd7005d4fefc42906c7363c40d19a",
+        "bytes": 13013,
+        "pointer": "/review_delivery_within_original_deadline"
+      },
+      "reason": "No exact original review-timeliness flag in this freeze; measured delivery seconds are preserved, no new time calculation.",
+      "gap_category": "ABSENT_EXACT_FLAG"
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/candidate_final_delivery",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/gate"
+      },
+      "scope": "Original frozen required-full-final gate establishes delivery only, not scientific grade/native qualification.",
+      "enum_map": {
+        "BOTH_FULL_FINALS_NATIVE_COMPLETE_QUIET_FROZEN": true
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+            "bytes": 4623,
+            "pointer": "/gate"
+          },
+          "exact_value": "BOTH_FULL_FINALS_NATIVE_COMPLETE_QUIET_FROZEN"
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/original_grade_string",
+      "transformation": "string_only",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/source_verdict"
+      }
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/original_grade_record",
+      "transformation": "identity",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/source_verdict"
+      }
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/scientific_judgment_available",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/source_verdict"
+      },
+      "scope": "Original authored source verdict AVAILABLE; FAIL does not establish full scope or method eligibility.",
+      "enum_map": {
+        "FullSourceFAIL": true
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+            "bytes": 28932,
+            "pointer": "/source_verdict"
+          },
+          "exact_value": "FullSourceFAIL"
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/full_scientific_coverage",
+      "transformation": "explicit_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/full_declared_scope_assessed"
+      },
+      "scope": "Original full declared source judgment extent; no SourcePASS inferred.",
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+            "bytes": 28932,
+            "pointer": "/full_declared_scope_assessed"
+          },
+          "exact_value": true
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/full_declared_primary_source_coverage",
+      "transformation": "explicit_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/full_declared_scope_assessed"
+      },
+      "scope": "Original full declared source judgment extent; no SourcePASS inferred.",
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+            "bytes": 28932,
+            "pointer": "/full_declared_scope_assessed"
+          },
+          "exact_value": true
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/original_material_count",
+      "transformation": "unknown",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/material_defect_count"
+      },
+      "reason": "Original frozen JSON verdict metadata does not supply a material-defect count; forbidden prose was not opened.",
+      "gap_category": "ABSENT_EXACT_FLAG"
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/normalized_material_count",
+      "transformation": "unknown",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/material_defect_count"
+      },
+      "reason": "Original frozen JSON verdict metadata does not supply a material-defect count; forbidden prose was not opened.",
+      "gap_category": "ABSENT_EXACT_FLAG"
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/native_pipeline_qualified",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/native_activation_gate"
+      },
+      "scope": "Original seed activation absence remains a diagnostic pipeline qualification HOLD despite observed complete arm terminals.",
+      "enum_map": {
+        "HOLD_UNOBSERVED_SEED_ACTIVE_AT_TERMINAL_ORIGINAL_OBSERVATIONS_UNCHANGED": false
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+            "bytes": 4623,
+            "pointer": "/native_activation_gate"
+          },
+          "exact_value": "HOLD_UNOBSERVED_SEED_ACTIVE_AT_TERMINAL_ORIGINAL_OBSERVATIONS_UNCHANGED"
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/time_eligible",
+      "transformation": "explicit_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/stage_freezes/D-M07-B~1treatment~1critical-first-protected-breadth-final-v3/budget_delivery_eligible"
+      },
+      "scope": "Original new-budget candidate delivery eligibility, not original-15-minute retroqualification."
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/method_eligible",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/comparative_eligibility"
+      },
+      "scope": "Original comparative method HOLD, diagnostic source assessment only.",
+      "enum_map": {
+        "HOLD_DIAGNOSTIC_FULL_SOURCE_REVIEWS_ONLY": false
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+            "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+            "bytes": 4623,
+            "pointer": "/comparative_eligibility"
+          },
+          "exact_value": "HOLD_DIAGNOSTIC_FULL_SOURCE_REVIEWS_ONLY"
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/provenance_eligible",
+      "transformation": "unknown",
+      "critical": true,
+      "original": {
+        "source": "final_closure/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "bundle_path": "inputs/jobs/D-M07-B/V3_PAIR_FREEZE.json",
+        "sha256": "eaaf19ca0ae0bca0778f6f1f24823656f3a5713f7e149cc6327f2584320048f9",
+        "bytes": 4623,
+        "pointer": "/stage_freezes/D-M07-B~1treatment~1critical-first-protected-breadth-final-v3/scope_audit"
+      },
+      "reason": "Source exposure remains incomplete_unknown; no provenance qualification boolean.",
+      "gap_category": "UNVERIFIED_OBLIGATION"
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/review_formal_output_delivery",
+      "transformation": "enum_bool",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/actual_t3_clock/status"
+      },
+      "scope": "Exact original CLOSED review carrier completed with declared formal scientific files; this is delivery only.",
+      "enum_map": {
+        "completed": true
+      },
+      "semantic_bindings": [
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+            "bytes": 28932,
+            "pointer": "/actual_t3_clock/status"
+          },
+          "exact_value": "completed"
+        },
+        {
+          "original": {
+            "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+            "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+            "bytes": 28932,
+            "pointer": "/scientific_files"
+          },
+          "exact_value": {
+            "judgment.md": {
+              "sha256": "fe08e5ad4f2bbc1d5fde930efd3f224979601f84f5300b6a0cdb42e0c88fee00",
+              "bytes": 24346
+            },
+            "checks.json": {
+              "sha256": "ab61acb47a6a4bd54eacbfe7e1e18ba734b2ab48bcc17fda487af010f511ad15",
+              "bytes": 20851
+            }
+          }
+        }
+      ]
+    },
+    {
+      "output_pointer": "/slots/13/arms/treatment/review_actual_timely_delivery",
+      "transformation": "unknown",
+      "critical": true,
+      "original": {
+        "source": "final_closure/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "bundle_path": "inputs/reviews/targeted-cohort3/D-M07-B-v3/J2/freeze_disposition.json",
+        "sha256": "cc35ef7fb48273929dac1619b20bc879c5aae32c8d615f9b5acc3e04412b2389",
+        "bytes": 28932,
+        "pointer": "/review_delivery_within_original_deadline"
+      },
+      "reason": "No exact original review-timeliness flag in this freeze; measured delivery seconds are preserved, no new time calculation.",
+      "gap_category": "ABSENT_EXACT_FLAG"
+    }
+  ],
+  "all_exact_bindings_checked": true,
+  "old_36_closed_grade_objects_untouched": true,
+  "future_final_manifest_and_all_case_quiet_audit_still_required": true
+}
