@@ -136,12 +136,12 @@
     R.spoken.add(id);
     say(words);
   }
-  /* the words of an error surface, when they are one short sentence; otherwise Pod's own alert line */
+  /* the words of an error surface, when they are one short sentence (Pod reads them behind its Alert lead); otherwise
+     Pod's own alert line */
   function alertWords(el, fallbackKey) {
     const span = el.querySelector(':scope > span:not(.o55-sg)') || el;
-    let t = (span.textContent || '').replace(/\s+/g, ' ').trim();
-    if (t && t.length <= 110 && !/^(alert|report|query|proposal)\s*:/i.test(t)) return 'Alert: ' + t;
-    return line(fallbackKey || 'pod.alert');
+    const t = (span.textContent || '').replace(/\s+/g, ' ').trim();
+    return t && t.length <= 110 ? t : line(fallbackKey || 'pod.alert');
   }
 
   /* ------------------------------------------------------------------ choices: brackets and the menu cursor */
@@ -233,7 +233,7 @@
     const el = fresh[0], box = el.closest('.o55-ph, .o55-field, .o55-banner, .o55-row, .o55-provider') || el;
     alertOn(box);
     const words = el.classList.contains('o55-ph-failed') ? line('pod.alert') : alertWords(el);
-    later(280, () => say(words, { now: true }));
+    later(280, () => say(words, { now: true, lead: 'alert' }));
   }
   function created() {
     const s = O55.S, R = runState(), cm = s.sess.commit || {}, was = R.commit;
@@ -313,7 +313,7 @@
       point(null);
       cancelAll();
       /* the last screen's words go with it (the new screen's line comes after its entrance) */
-      if (O55.nierFx.pod) O55.nierFx.pod.hush();
+      if (O55.nierFx && O55.nierFx.pod) O55.nierFx.pod.hush();
       podUntil = 0;
       const R = runState(), prevIdx = R.idx, prevChapter = R.chapter, h = layer.querySelector('#o55-h');
       /* error surfaces already on the new screen are part of it, not news */
@@ -384,7 +384,7 @@
       const drawn = alertOn(field);
       const hint = field.querySelector('.o55-hint.o55-err');
       if (hint) runState().errs.add(errKey(hint));
-      later(240, () => say(hint ? alertWords(hint, 'pod.alertField') : line('pod.alertField'), { now: true }));
+      later(240, () => say(hint ? alertWords(hint, 'pod.alertField') : line('pod.alertField'), { now: true, lead: 'alert' }));
       return drawn;
     },
 
