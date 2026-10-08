@@ -391,6 +391,11 @@
   const sparkle = (c, o, t, dur, n, fn) => { for (let i = 0; i < n; i++) { const at = t + Math.pow(i / n, 0.8) * dur + R() * 0.03; fn(at, i); } };
   /* the look's motif to the sting's depth: note i at t + i * gap; fn(at, i, last) plays one (the last is held) */
   function motifRun(k, t, gap, fn) { for (let i = 0; i < k.depth; i++) fn(t + i * gap, i, i === k.depth - 1); }
+  /* a sting's level by its depth (dB): one trim serves every depth, so a sting whose shorter forms measure hotter than
+     its full one (Retro's arpeggio and NieR's choir thin the full form's average) is brought level here. Only for
+     recipes without a room send (a send is keyed by the play's own output) */
+  const STING_DB = { retro: [-1.6, -1.4, -1.1, -0.9, 0], nier: [0.6, 0.7, 1.1, 0.9, 0] };
+  function stingOut(c, o, k) { const d = STING_DB[k.kit]; if (!d || !d[k.depth]) return o; const g = c.createGain(); g.gain.value = Math.pow(10, d[k.depth] / 20); g.connect(o); return g; }
 
   /* ---- music: the journey has a key. Each chapter plays on its own chord, so choices vary but always fit; moving
      forward climbs the chord with progress inside the chapter (k.n) and Back descends; choices rotate through the
@@ -524,7 +529,7 @@
       type: [
         (c, o, t) => noise(c, o, t, { dur: 0.018 + R() * 0.02, f: 3600 + R() * 1800, q: 2.4, gain: 0.02 }),
         (c, o, t) => noise(c, o, t, { dur: 0.012 + R() * 0.012, f: 2600 + R() * 900, q: 3, gain: 0.022 }),
-        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 4400 + R() * 900, q: 3, gain: 0.016 }); tone(c, o, t, { f: note(k.m(Math.floor(R() * 3), 2)), dur: 0.018, gain: 0.008 }); }
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 4400 + R() * 900, q: 3, gain: 0.0127 }); tone(c, o, t, { f: note(k.m(Math.floor(R() * 3), 2)), dur: 0.018, gain: 0.0063 }); }
       ],
       /* the chapter's chord, then the motif to the sting's depth in sine and click (the last note held); at the
          resolution the chord's soft pad holds underneath */
@@ -532,17 +537,17 @@
         const d = k.depth;
         noise(c, o, t, { dur: 0.07, f: 4600, q: 1.6, gain: 0.03 });
         tone(c, o, t, { f: note(k.m(0, -2)), dur: d ? 0.9 : 0.7, gain: 0.03, a: 0.02 });
-        [0, 1, 2].forEach((i) => tone(c, o, t + 0.01 + i * 0.045, { f: note(k.m(i, -1)), dur: d ? 0.16 : 0.5, gain: 0.05 }));
-        if (!d) tone(c, o, t + 0.15, { f: note(k.m(3, -1)), dur: 0.45, gain: 0.04 });
+        [0, 1, 2].forEach((i) => tone(c, o, t + 0.01 + i * 0.045, { f: note(k.m(i, -1)), dur: d ? 0.16 : 0.5, gain: d ? 0.05 : 0.036 }));
+        if (!d) tone(c, o, t + 0.15, { f: note(k.m(3, -1)), dur: 0.45, gain: 0.03 });
         motifRun(k, t + 0.17, 0.12, (at, i, last) => { const f = note(k.motif(i, 0)); noise(c, o, at, { dur: 0.005, f: 5200, q: 3, gain: 0.024 }); tone(c, o, at, { f, dur: last ? 0.6 : 0.16, gain: 0.052 }); if (last) tone(c, o, at, { f: f * 2, dur: 0.22, gain: 0.006 }); });
         if (d >= 4) [0, 1, 2].forEach((i) => { const f = note(k.m(i, -1)); tone(c, o, t + 0.12, { f, dur: 1.3, gain: 0.012, a: 0.14 }); tone(c, o, t + 0.12, { f: f * 1.003, dur: 1.3, gain: 0.009, a: 0.16 }); });
       },
       /* stage foley. string: a taut steel wire, the chord tone of its helper (or the name sign's next tone up) bent
          down 2% with its 2.76x partial */
       string: [
-        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); noise(c, o, t, { dur: 0.004, f: 5200, q: 3, gain: 0.02 }); tone(c, o, t, { f, f2: f * 0.98, glide: 0.14, dur: 0.14, gain: 0.05 }); tone(c, o, t, { f: f * 2.76, f2: f * 2.72, glide: 0.06, dur: 0.06, gain: 0.012 }); },
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); noise(c, o, t, { dur: 0.004, f: 5200, q: 3, gain: 0.018 }); tone(c, o, t, { f, f2: f * 0.98, glide: 0.14, dur: 0.14, gain: 0.045 }); tone(c, o, t, { f: f * 2.76, f2: f * 2.72, glide: 0.06, dur: 0.06, gain: 0.011 }); },
         (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); tone(c, o, t, { f, f2: f * 0.985, glide: 0.16, dur: 0.17, gain: 0.046 }); tone(c, o, t, { f: f * 2, dur: 0.05, gain: 0.009 }); tone(c, o, t, { f: f * 2.76, dur: 0.035, gain: 0.011 }); },
-        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); noise(c, o, t, { dur: 0.006, f: 4200, q: 3, gain: 0.024 }); tone(c, o, t, { f: f * 1.004, f2: f * 0.975, glide: 0.12, dur: 0.13, gain: 0.05, type: 'triangle' }); tone(c, o, t, { f: f * 2.76, dur: 0.045, gain: 0.008 }); }
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); noise(c, o, t, { dur: 0.006, f: 4200, q: 3, gain: 0.027 }); tone(c, o, t, { f: f * 1.004, f2: f * 0.975, glide: 0.12, dur: 0.13, gain: 0.056, type: 'triangle' }); tone(c, o, t, { f: f * 2.76, dur: 0.045, gain: 0.009 }); }
       ],
       /* land: a felt tap, a low-passed knock with a soft thump on the helper's chord tone */
       land: [
@@ -552,7 +557,7 @@
       /* bow: a falling sine pair that comes to rest on the helper's chord tone (three bows spell the chord) */
       bow: [
         (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(k.voice + 1, -1)), dur: 0.1, gain: 0.05 }); tone(c, o, t + 0.075, { f: note(k.m(k.voice, -1)), dur: 0.26, gain: 0.05 }); },
-        (c, o, t, v, k) => { const f1 = note(k.m(k.voice + 1, -1)), f0 = note(k.m(k.voice, -1)); tone(c, o, t, { f: f1, f2: f0, glide: 0.09, dur: 0.13, gain: 0.046 }); tone(c, o, t + 0.1, { f: f0, dur: 0.22, gain: 0.04, type: 'triangle' }); }
+        (c, o, t, v, k) => { const f1 = note(k.m(k.voice + 1, -1)), f0 = note(k.m(k.voice, -1)); tone(c, o, t, { f: f1, f2: f0, glide: 0.09, dur: 0.13, gain: 0.058 }); tone(c, o, t + 0.1, { f: f0, dur: 0.22, gain: 0.05, type: 'triangle' }); }
       ],
       /* save: the stamp (a click on a low thump), then root, fifth and a ringing octave */
       save: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.005, f: 3200, q: 3, gain: 0.05 }); tone(c, o, t, { f: 170, f2: 120, glide: 0.06, dur: 0.08, gain: 0.07 }); tone(c, o, t + 0.05, { f: note(k.m(0, 0)), dur: 0.14, gain: 0.05 }); tone(c, o, t + 0.12, { f: note(k.m(2, 0)), dur: 0.2, gain: 0.05 }); const f = note(k.m(3, 0)); tone(c, o, t + 0.19, { f, dur: 0.6, gain: 0.05 }); tone(c, o, t + 0.19, { f: f * 2.76 < PARTIAL_MAX ? f * 2.76 : f * 2, dur: 0.12, gain: 0.008 }); },
@@ -582,12 +587,12 @@
       pointer: [
         (c, o, t, v, k) => { const r = k.rot % 3; tone(c, o, t, { f: note(k.m(r, 0)), f2: note(k.m(r + 2, 0)), glide: 0.22, dur: 0.28, gain: 0.026, a: 0.05 }); noise(c, o, t, { dur: 0.22, f: 1800, f2: 3600, q: 1.4, gain: 0.008, a: 0.06 }); },
         (c, o, t, v, k) => { const r = k.rot % 3; tone(c, o, t, { f: note(k.m(r, 0)), f2: note(k.m(r + 1, 0)), glide: 0.16, dur: 0.22, gain: 0.028, a: 0.04 }); noise(c, o, t, { dur: 0.18, f: 2200, f2: 4200, q: 1.6, gain: 0.007, a: 0.05 }); },
-        (c, o, t, v, k) => { const r = k.rot % 3; tone(c, o, t, { f: note(k.m(r + 1, 0)), f2: note(k.m(r + 3, 0)), glide: 0.24, dur: 0.3, gain: 0.024, a: 0.06, type: 'triangle' }); noise(c, o, t, { dur: 0.24, f: 1600, f2: 3000, q: 1.2, gain: 0.009, a: 0.07 }); }
+        (c, o, t, v, k) => { const r = k.rot % 3; tone(c, o, t, { f: note(k.m(r + 1, 0)), f2: note(k.m(r + 3, 0)), glide: 0.24, dur: 0.3, gain: 0.03, a: 0.06, type: 'triangle' }); noise(c, o, t, { dur: 0.24, f: 1600, f2: 3000, q: 1.2, gain: 0.011, a: 0.07 }); }
       ],
       arrive: [
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 3200, q: 3, gain: 0.05 }); tone(c, o, t, { f: note(k.m(k.rot % 3, 1)) * v, dur: 0.08, gain: 0.05 }); },
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.01, f: 3800, q: 3, gain: 0.045 }); tone(c, o, t, { f: note(k.m(k.rot % 3, 1)) * v, dur: 0.04, gain: 0.042 }); tone(c, o, t + 0.035, { f: note(k.m(k.rot % 3 + 1, 1)) * v, dur: 0.07, gain: 0.042 }); },
-        (c, o, t, v, k) => { const f = note(k.m(k.rot % 3 + 2, 1)) * v; noise(c, o, t, { dur: 0.014, f: 2800, q: 2.6, gain: 0.05 }); tone(c, o, t, { f, dur: 0.1, gain: 0.046 }); tone(c, o, t, { f: f * 2.76 < PARTIAL_MAX ? f * 2.76 : f * 1.5, dur: 0.03, gain: 0.008 }); }
+        (c, o, t, v, k) => { const f = note(k.m(k.rot % 3 + 2, 1)) * v; noise(c, o, t, { dur: 0.014, f: 2800, q: 2.6, gain: 0.037 }); tone(c, o, t, { f, dur: 0.1, gain: 0.034 }); tone(c, o, t, { f: f * 2.76 < PARTIAL_MAX ? f * 2.76 : f * 1.5, dur: 0.03, gain: 0.006 }); }
       ],
       missing: (c, o, t) => { tone(c, o, t, { f: 330, type: 'triangle', dur: 0.12, gain: 0.06 }); tone(c, o, t + 0.13, { f: 440, f2: 523, glide: 0.12, dur: 0.16, gain: 0.04 }); },
       interrupt: (c, o, t) => { tone(c, o, t, { f: 660, f2: 440, glide: 0.07, dur: 0.1, gain: 0.04 }); noise(c, o, t + 0.07, { dur: 0.01, f: 2400, q: 3, gain: 0.03 }); }
@@ -664,7 +669,7 @@
       string: [
         (c, o, t, v, k) => pluck(c, o, t, note(k.m(k.voice + k.climb, -1)), { ring: 0.3, bright: 0.45, gain: 0.11 }),
         (c, o, t, v, k) => { pluck(c, o, t, note(k.m(k.voice + k.climb, -1)), { ring: 0.24, bright: 0.6, gain: 0.1 }); noise(c, o, t, { dur: 0.012, filter: 'highpass', f: 2500, gain: 0.012 }); },
-        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); pluck(c, o, t, f, { ring: 0.34, bright: 0.4, gain: 0.09 }); pluck(c, o, t + 0.006, f / 2, { ring: 0.28, bright: 0.3, gain: 0.05 }); }
+        (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, -1)); pluck(c, o, t, f, { ring: 0.34, bright: 0.4, gain: 0.113 }); pluck(c, o, t + 0.006, f / 2, { ring: 0.28, bright: 0.3, gain: 0.063 }); }
       ],
       /* land: a wooden clack (two band-passed clicks) on a low marimba note */
       land: [
@@ -688,7 +693,7 @@
       move: [
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.03, f: 1200, q: 1.5, gain: 0.02 }); kalimba(c, o, t, k.m(k.idx % 3, 2), 0.015, 0.15); },
         (c, o, t, v, k) => marimba(c, o, t, k.m(k.idx % 3, 2), 0.013),
-        (c, o, t) => noise(c, o, t, { dur: 0.03, filter: 'lowpass', f: 1800, gain: 0.055 })
+        (c, o, t) => noise(c, o, t, { dur: 0.03, filter: 'lowpass', f: 1800, gain: 0.063 })
       ],
       callout: [
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.08, filter: 'lowpass', f: 900, f2: 2000, gain: 0.025 }); kalimba(c, o, t + 0.03, k.m(1, 2), 0.05, 0.45); },
@@ -703,11 +708,11 @@
       pointer: [
         (c, o, t, v, k) => { const f = note(k.m(k.rot % 3, 0)); tone(c, o, t, { f, f2: f * 1.5, glide: 0.24, dur: 0.3, gain: 0.025, a: 0.05 }); noise(c, o, t, { dur: 0.22, filter: 'lowpass', f: 700, f2: 1500, gain: 0.012, a: 0.06 }); },
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.24, filter: 'lowpass', f: 600, f2: 1800, gain: 0.014, a: 0.06 }); kalimba(c, o, t + 0.16, k.m(k.rot % 3, 1), 0.026, 0.3); },
-        (c, o, t, v, k) => { const f = note(k.m(k.rot % 3 + 1, 0)); tone(c, o, t, { f, f2: f * 1.335, glide: 0.2, dur: 0.26, gain: 0.024, a: 0.05, type: 'triangle' }); noise(c, o, t, { dur: 0.2, filter: 'lowpass', f: 800, f2: 1400, gain: 0.011, a: 0.05 }); }
+        (c, o, t, v, k) => { const f = note(k.m(k.rot % 3 + 1, 0)); tone(c, o, t, { f, f2: f * 1.335, glide: 0.2, dur: 0.26, gain: 0.028, a: 0.05, type: 'triangle' }); noise(c, o, t, { dur: 0.2, filter: 'lowpass', f: 800, f2: 1400, gain: 0.013, a: 0.05 }); }
       ],
       arrive: [
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 1000, gain: 0.05 }); marimba(c, o, t, k.m(k.rot % 3, 1), 0.08); },
-        (c, o, t, v, k) => { kalimba(c, o, t, k.m(k.rot % 3, 1), 0.06, 0.3); noise(c, o, t, { dur: 0.015, filter: 'lowpass', f: 1300, gain: 0.04 }); },
+        (c, o, t, v, k) => { kalimba(c, o, t, k.m(k.rot % 3, 1), 0.08, 0.3); noise(c, o, t, { dur: 0.015, filter: 'lowpass', f: 1300, gain: 0.053 }); },
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 1100, q: 5, gain: 0.08 }); marimba(c, o, t + 0.004, k.m(k.rot % 3 + 1, 1), 0.07); }
       ],
       missing: (c, o, t) => { marimba(c, o, t, 60, 0.1); tone(c, o, t + 0.12, { f: 520, f2: 660, glide: 0.12, dur: 0.16, gain: 0.035 }); },
@@ -776,7 +781,7 @@
         const d = k.depth, rv = reverb(c, o);
         noise(c, o, t, { dur: 0.4, f: 900, f2: 5000, q: 1.3, gain: 0.028, send: rv });
         [0, 1, 2].forEach((i) => fm(c, o, t + 0.1 + i * 0.06, { f: note(k.m(i, -1)), ratio: 1.4, index: 2.2, dur: d ? 0.9 : 1.2, gain: 0.027, send: rv }));
-        if (!d) fm(c, o, t + 0.3, { f: note(k.m(3, -1)), ratio: 1.4, index: 2.4, dur: 1.1, gain: 0.024, send: rv });
+        if (!d) fm(c, o, t + 0.3, { f: note(k.m(3, -1)), ratio: 1.4, index: 2.4, dur: 1.1, gain: 0.03, send: rv });
         motifRun(k, t + 0.24, 0.14, (at, i, last) => fm(c, o, at, { f: note(k.motif(i, 0)), ratio: 1.4, index: 2.6, dur: last ? 1.3 : 0.7, gain: 0.03, send: rv }));
         if (d >= 4) { const at = t + 0.74; bell(c, o, at, note(k.motif(3, 0)), 2.4, 0.016, rv); fm(c, o, at + 0.05, { f: note(k.motif(1, 1)), ratio: 3.5, index: 0.8, dur: 1.4, gain: 0.008, send: rv }); }
       },
@@ -806,8 +811,8 @@
       warn: (c, o, t) => fm(c, o, t, { f: 247, ratio: 1.01, index: 1, dur: 0.25, gain: 0.05 }),
       copy: (c, o, t, v, k) => { fm(c, o, t, { f: note(k.m(1, 2)), ratio: 3.5, index: 1, dur: 0.06, gain: 0.025 }); fm(c, o, t + 0.05, { f: note(k.m(2, 2)), ratio: 3.5, index: 1, dur: 0.08, gain: 0.025 }); },
       move: [
-        (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.idx % 3, 2)), ratio: 3.1, index: 0.7, dur: 0.08, gain: 0.015 }),
-        (c, o, t) => noise(c, o, t, { dur: 0.08, f: 3000, f2: 4500, q: 2, gain: 0.05, send: reverb(c, o) }),
+        (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.idx % 3, 2)), ratio: 3.1, index: 0.7, dur: 0.08, gain: 0.0126 }),
+        (c, o, t) => noise(c, o, t, { dur: 0.08, f: 3000, f2: 4500, q: 2, gain: 0.057, send: reverb(c, o) }),
         (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.idx % 3 + 1, 2)), ratio: 2.76, index: 0.6, dur: 0.06, gain: 0.014 })
       ],
       callout: [
@@ -886,18 +891,18 @@
         sparkle(c, o, t + (k.layer ? 0.1 : 0.35), 1, 10, (at, i) => { const p = panned(c, o); if (i % 2) chip(c, p, at, k.m(4 + (i % 3), 1), 0.03, 0.03); else noise(c, p, at, { dur: 0.04, filter: 'highpass', f: 5000, gain: 0.03 }); });
       },
       type: [
-        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, filter: 'highpass', f: 4000, gain: 0.03 }); chip(c, o, t, k.m(Math.floor(R() * 3), 2), 0.018, 0.02); },
+        (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, filter: 'highpass', f: 4000, gain: 0.0225 }); chip(c, o, t, k.m(Math.floor(R() * 3), 2), 0.018, 0.015); },
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.01, filter: 'highpass', f: 5000, gain: 0.026 }); chip(c, o, t, k.m(Math.floor(R() * 3), 1), 0.014, 0.018, null, pulse12); },
         (c, o, t, v, k) => chip(c, o, t, k.m(Math.floor(R() * 3), 2), 0.012, 0.05)
       ],
       /* a triangle bass and the chord in chips, then the motif; at the resolution a level-clear arpeggio runs up */
       chapter: (c, o, t, v, k) => {
-        const d = k.depth;
+        const d = k.depth; o = stingOut(c, o, k);
         tone(c, o, t, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.4, gain: 0.08 });
         [0, 1, 2].forEach((i) => chip(c, o, t + i * 0.045, k.m(i, -1), 0.04, 0.045));
-        if (!d) chip(c, o, t + 0.16, k.m(3, -1), 0.2, 0.042);
+        if (!d) chip(c, o, t + 0.16, k.m(3, -1), 0.2, 0.03);
         motifRun(k, t + 0.16, 0.09, (at, i, last) => chip(c, o, at, k.motif(i, 0), last ? 0.22 : 0.07, 0.05));
-        if (d >= 4) { const at = t + 0.67; for (let i = 0; i < 8; i++) chip(c, o, at + i * 0.028, k.m(i, -1), 0.026, 0.03, null, pulse12); chip(c, o, at + 0.224, k.m(0, 1), 0.18, 0.036); tone(c, o, at, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.3, gain: 0.06 }); }
+        if (d >= 4) { const at = t + 0.67; for (let i = 0; i < 8; i++) chip(c, o, at + i * 0.028, k.m(i, -1), 0.026, 0.042, null, pulse12); chip(c, o, at + 0.224, k.m(0, 1), 0.18, 0.046); tone(c, o, at, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.3, gain: 0.06 }); }
       },
       /* string: a 12.5% pulse boing that drops an octave in held steps */
       string: [
@@ -908,11 +913,11 @@
       /* land: a noise-channel thud, two held noise frames on a square note */
       land: [
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 1400, gain: 0.08 }); noise(c, o, t + 0.02, { dur: 0.02, filter: 'lowpass', f: 600, gain: 0.07 }); chip(c, o, t, k.m(k.voice, -2), 0.04, 0.06, null, square); },
-        (c, o, t, v, k) => { const f = note(k.m(k.voice, -2)); tone(c, o, t, { f: f * 1.3, f2: f, glide: 0.03, dur: 0.06, type: 'triangle', gain: 0.1 }); noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 1100, gain: 0.07 }); }
+        (c, o, t, v, k) => { const f = note(k.m(k.voice, -2)); tone(c, o, t, { f: f * 1.3, f2: f, glide: 0.03, dur: 0.06, type: 'triangle', gain: 0.034 }); noise(c, o, t, { dur: 0.02, filter: 'lowpass', f: 1100, gain: 0.024 }); }
       ],
       /* bow: a falling chip pair onto the helper's chord tone */
       bow: [
-        (c, o, t, v, k) => { chip(c, o, t, k.m(k.voice + 1, 0), 0.05, 0.045); chip(c, o, t + 0.06, k.m(k.voice, 0), 0.12, 0.045); },
+        (c, o, t, v, k) => { chip(c, o, t, k.m(k.voice + 1, 0), 0.05, 0.07); chip(c, o, t + 0.06, k.m(k.voice, 0), 0.12, 0.07); },
         (c, o, t, v, k) => { chip(c, o, t, k.m(k.voice + 1, 0), 0.04, 0.042, null, pulse12); chip(c, o, t + 0.05, k.m(k.voice, 0), 0.12, 0.042, null, pulse12); tone(c, o, t + 0.05, { f: note(k.m(k.voice, -2)), type: 'triangle', dur: 0.1, gain: 0.05 }); }
       ],
       /* save: the save-point jingle: a stamp (thump and a noise frame), a quick run up the chord and a held octave */
@@ -941,12 +946,12 @@
       ],
       pointer: [
         (c, o, t, v, k) => chip(c, o, t, k.m(k.rot % 3, 0), 0.2, 0.025, k.m(k.rot % 3 + 2, 0)),
-        (c, o, t, v, k) => chipSteps(c, o, t, [0, 1, 2].map((i) => note(k.m(k.rot % 3 + i, 0))), 0.05, 0.024, pulse25),
-        (c, o, t, v, k) => chip(c, o, t, k.m(k.rot % 3 + 1, 0), 0.18, 0.024, k.m(k.rot % 3 + 3, 0), pulse12)
+        (c, o, t, v, k) => chipSteps(c, o, t, [0, 1, 2].map((i) => note(k.m(k.rot % 3 + i, 0))), 0.05, 0.0113, pulse25),
+        (c, o, t, v, k) => chip(c, o, t, k.m(k.rot % 3 + 1, 0), 0.18, 0.0215, k.m(k.rot % 3 + 3, 0), pulse12)
       ],
       arrive: [
         (c, o, t, v, k) => { chip(c, o, t, k.m(k.rot % 3, 1), 0.04, 0.045); tone(c, o, t, { f: note(48), type: 'triangle', dur: 0.06, gain: 0.07 }); },
-        (c, o, t, v, k) => { chip(c, o, t, k.m(k.rot % 3, 1), 0.025, 0.04, null, pulse12); chip(c, o, t + 0.03, k.m(k.rot % 3 + 1, 1), 0.04, 0.04, null, pulse12); },
+        (c, o, t, v, k) => { chip(c, o, t, k.m(k.rot % 3, 1), 0.025, 0.1, null, pulse12); chip(c, o, t + 0.03, k.m(k.rot % 3 + 1, 1), 0.04, 0.1, null, pulse12); },
         (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, filter: 'highpass', f: 5000, gain: 0.025 }); chip(c, o, t, k.m(k.rot % 3 + 2, 1), 0.05, 0.045); tone(c, o, t, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.05, gain: 0.06 }); }
       ],
       missing: (c, o, t, v, k) => { chip(c, o, t, 57, 0.08, 0.05); chip(c, o, t + 0.1, k.m(1, 0), 0.1, 0.04, k.m(2, 0)); },
@@ -988,9 +993,9 @@
   }
   KITS.nier = {
     hover: [
-      (c, o, t) => nb(c, o, t, 2640, 0.026, 0.03),
+      (c, o, t) => nb(c, o, t, 2640, 0.026, 0.025),
       (c, o, t) => nb(c, o, t, 2960, 0.02, 0.026),
-      (c, o, t) => nb(c, o, t, 2349, 0.024, 0.028, 'triangle')
+      (c, o, t) => nb(c, o, t, 2349, 0.024, 0.031, 'triangle')
     ],
     tap: [
       (c, o, t) => nb(c, o, t, 2640, 0.026, 0.045),
@@ -1075,13 +1080,13 @@
        climbs with the name sign) */
     string: [
       (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, k.climb ? 0 : 1)); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.05, dur: 0.055, gain: 0.05, a: 0.002 }); nchk(c, o, t, 0.03); },
-      (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, k.climb ? 0 : 1)); nchk(c, o, t, 0.022); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.04, dur: 0.045, gain: 0.042, type: 'triangle', a: 0.002 }); nchk(c, o, t + 0.018, 0.014); },
-      (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, k.climb ? 0 : 1)); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.05, dur: 0.06, gain: 0.04, a: 0.002 }); tone(c, o, t, { f: f * 1.5, f2: f * 2, glide: 0.05, dur: 0.04, gain: 0.01, a: 0.002 }); nchk(c, o, t + 0.004, 0.024); }
+      (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, k.climb ? 0 : 1)); nchk(c, o, t, 0.03); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.04, dur: 0.045, gain: 0.056, type: 'triangle', a: 0.002 }); nchk(c, o, t + 0.018, 0.019); },
+      (c, o, t, v, k) => { const f = note(k.m(k.voice + k.climb, k.climb ? 0 : 1)); tone(c, o, t, { f, f2: f * 4 / 3, glide: 0.05, dur: 0.06, gain: 0.046, a: 0.002 }); tone(c, o, t, { f: f * 1.5, f2: f * 2, glide: 0.05, dur: 0.04, gain: 0.012, a: 0.002 }); nchk(c, o, t + 0.004, 0.028); }
     ],
     /* land: a servo thunk on the helper's chord tone (A3, C4, E4 at Welcome), the second take settling in two steps */
     land: [
       (c, o, t, v, k) => { const f = note(k.m(k.voice, -1)); nb(c, o, t, f * 1.12, 0.075, 0.07, 'triangle', f); nchk(c, o, t, 0.03); noise(c, o, t, { dur: 0.03, filter: 'lowpass', f: 700, gain: 0.05 }); },
-      (c, o, t, v, k) => { const f = note(k.m(k.voice, -1)); nb(c, o, t, f * 1.12, 0.06, 0.065, 'triangle', f); nchk(c, o, t, 0.026); nb(c, o, t + 0.07, f, 0.05, 0.03, 'triangle'); nb(c, o, t + 0.016, 2640, 0.01, 0.012); }
+      (c, o, t, v, k) => { const f = note(k.m(k.voice, -1)); nb(c, o, t, f * 1.12, 0.06, 0.073, 'triangle', f); nchk(c, o, t, 0.029); nb(c, o, t + 0.07, f, 0.05, 0.034, 'triangle'); nb(c, o, t + 0.016, 2640, 0.01, 0.013); }
     ],
     /* bow: a low triangle pair through 1.6 kHz falling onto the helper's chord tone, with a servo's sigh */
     bow: [
@@ -1101,9 +1106,9 @@
     drop: (c, o, t, v, k) => { nb(c, o, t, note(k.m(1, 1)) * v, 0.07, 0.05, 'triangle', note(k.m(0, 1)) * v); nb(c, o, t + 0.06, 330, 0.07, 0.06, 'triangle'); nchk(c, o, t + 0.06, 0.025); },
     spot: (c, o, t) => { noise(c, o, t, { dur: 0.14, f: 1200, f2: 4800, q: 3, gain: 0.018 }); nb(c, o, t + 0.1, 1975, 0.06, 0.025); },
     move: [
-      (c, o, t) => { nb(c, o, t, 2640, 0.018, 0.022); noise(c, o, t, { dur: 0.04, f: 3000, f2: 4600, q: 2.5, gain: 0.006 }); },
+      (c, o, t) => { nb(c, o, t, 2640, 0.018, 0.0196); noise(c, o, t, { dur: 0.04, f: 3000, f2: 4600, q: 2.5, gain: 0.0053 }); },
       (c, o, t) => { nb(c, o, t, 2349, 0.018, 0.02); noise(c, o, t, { dur: 0.04, f: 2600, f2: 4000, q: 2.5, gain: 0.006 }); },
-      (c, o, t) => { nb(c, o, t, 2960, 0.012, 0.016); nb(c, o, t + 0.022, 2640, 0.012, 0.013); }
+      (c, o, t) => { nb(c, o, t, 2960, 0.012, 0.02); nb(c, o, t + 0.022, 2640, 0.012, 0.0164); }
     ],
     callout: [
       (c, o, t, v, k) => { [0, 1, 2].forEach((i) => nb(c, o, t + i * 0.024, note(k.m(i, 2)), 0.014, 0.018)); const lo = lpOut(c, o, 2400); nb(c, lo, t + 0.075, note(k.m(0, 1)), 0.07, 0.045, 'square'); },
@@ -1148,7 +1153,7 @@
       (c, o, t) => { chatter(c, o, t, 8, 0.022, 0.02); nb(c, o, t + 0.2, 1760, 0.02, 0.018); },
       (c, o, t) => { chatter(c, o, t, 6, 0.028, 0.02); nb(c, o, t + 0.18, 2640, 0.016, 0.018); },
       (c, o, t) => chatter(c, o, t, 10, 0.018, 0.025),
-      (c, o, t) => { chatter(c, o, t, 5, 0.034, 0.022); nb(c, o, t + 0.19, 2093, 0.02, 0.018); }
+      (c, o, t) => { chatter(c, o, t, 5, 0.034, 0.0175); nb(c, o, t + 0.19, 2093, 0.02, 0.0143); }
     ],
     phase: (c, o, t, v, k) => nb(c, o, t, note(k.m(k.idx % 4, 2)), 0.02, 0.028),
     copy: (c, o, t) => { nb(c, o, t, 2640, 0.016, 0.026); nb(c, o, t + 0.035, 2960, 0.02, 0.024); const lo = lpOut(c, o, 2600); nb(c, lo, t + 0.06, 1318, 0.04, 0.035, 'square'); },
@@ -1160,8 +1165,8 @@
     ],
     arrive: [
       (c, o, t, v, k) => { const tk = TICK[k.rot % 4]; nb(c, o, t, tk, 0.012, 0.03); nb(c, o, t + 0.03, tk, 0.014, 0.024); nb(c, o, t + 0.03, note(k.m(k.rot % 4, -1)), 0.06, 0.055, 'triangle'); },
-      (c, o, t, v, k) => { nchk(c, o, t, 0.03); nb(c, o, t, TICK[(k.rot + 1) % 4], 0.016, 0.026); nb(c, o, t + 0.02, note(k.m(k.rot % 4, 0)), 0.05, 0.045, 'triangle'); },
-      (c, o, t, v, k) => { [0, 1, 2].forEach((i) => nb(c, o, t + i * 0.022, TICK[(k.rot + i) % 4], 0.01, 0.024 - i * 0.004)); nb(c, o, t + 0.05, note(k.m(k.rot % 4, -1)), 0.07, 0.05, 'triangle'); }
+      (c, o, t, v, k) => { nchk(c, o, t, 0.039); nb(c, o, t, TICK[(k.rot + 1) % 4], 0.016, 0.034); nb(c, o, t + 0.02, note(k.m(k.rot % 4, 0)), 0.05, 0.058, 'triangle'); },
+      (c, o, t, v, k) => { [0, 1, 2].forEach((i) => nb(c, o, t + i * 0.022, TICK[(k.rot + i) % 4], 0.01, (0.024 - i * 0.004) * 1.41)); nb(c, o, t + 0.05, note(k.m(k.rot % 4, -1)), 0.07, 0.07, 'triangle'); }
     ],
     /* "objective updated": a soft pad leans into the chapter's chord (its own chord, from NIER_CHORDS), and the motif to
        the sting's depth rings out above it */
@@ -1173,7 +1178,7 @@
     /* a tick, the chord's two-tone and a pad, then the motif (the last note a bell); at the resolution a soft "oo"
        choir holds the chord */
     chapter: (c, o, t, v, k) => {
-      const d = k.depth, f = note(k.m(0, 0));
+      const d = k.depth, f = note(k.m(0, 0)); o = stingOut(c, o, k);
       nb(c, o, t, 2640, 0.014, 0.022); nb(c, o, t + 0.02, f, 0.08, 0.06, 'triangle'); nb(c, o, t + 0.09, f * 1.5, 0.2, 0.06, 'triangle');
       pad(c, o, t + 0.02, [k.m(0, -1), k.m(1, -1), k.m(2, -1)], d ? 0.9 : 0.7, 0.016);
       motifRun(k, t + 0.2, 0.12, (at, i, last) => { const m = note(k.motif(i, 0)); nb(c, o, at, 2640, 0.008, 0.01); if (last) bell(c, o, at, m, 0.8, 0.026); else nb(c, o, at, m, 0.1, 0.05, 'triangle'); });
@@ -1292,8 +1297,8 @@
   /* ---- generated by tools/sound_catalog.py from a tools/sound_render.mjs run (do not edit by hand):
      TRIM, dB per kit and event, brings every event to its loudness tier across the kits; DUR, seconds of audible sound
      per kit, event and variant (for the library). ---- */
-  const TRIM = /* TRIM:begin */{"basic":{"tap":-2.0,"select":-3.0,"next":-1.0,"toggleOff":1.5,"success":-3.0,"error":3.5,"commit":-2.0,"open":3.0,"close":3.5,"pickup":1.5,"drop":2.0,"spot":10.0,"step":-2.5,"finish":1.0,"cheer":-1.0,"celebrate":2.5,"type":6.0,"reveal":-0.5,"sheet":4.0,"unsheet":3.5,"found":3.0,"copy":-2.0,"move":-2.0,"callout":1.5,"pointer":-0.5,"arrive":-2.5,"checkpoint":-2.0,"missing":5.0,"interrupt":4.0},"friendly":{"tap":-3.5,"select":-8.5,"next":-9.5,"back":-7.0,"toggleOn":-3.5,"toggleOff":-2.5,"success":-7.0,"error":-6.0,"commit":-4.5,"open":-4.5,"close":-0.5,"pickup":-2.5,"drop":-4.0,"spot":-5.0,"step":-7.5,"finish":-4.5,"cheer":-8.0,"celebrate":-2.0,"type":-3.5,"chapter":-8.0,"reveal":-5.0,"sheet":-3.5,"unsheet":0.5,"phase":-0.5,"found":-3.5,"warn":-7.0,"copy":-7.0,"move":-0.5,"callout":-3.0,"arrive":-7.5,"checkpoint":-7.5,"missing":-3.0,"interrupt":1.0},"glass":{"tap":-2.0,"select":-1.0,"back":2.5,"toggleOn":1.0,"toggleOff":4.5,"success":-1.0,"error":2.0,"open":3.5,"close":7.0,"pickup":2.5,"drop":1.5,"spot":13.5,"step":1.0,"finish":1.5,"cheer":0.5,"celebrate":5.5,"type":0.5,"chapter":1.0,"reveal":1.0,"sheet":5.0,"unsheet":8.0,"phase":1.5,"found":3.5,"warn":1.0,"move":-1.0,"callout":3.0,"pointer":5.0,"arrive":-0.5,"checkpoint":1.0,"missing":5.5,"interrupt":5.0},"retro":{"tap":4.5,"select":7.0,"next":7.5,"back":8.5,"toggleOn":2.0,"toggleOff":3.0,"success":8.5,"error":8.5,"commit":4.5,"open":10.0,"close":10.5,"pickup":9.0,"drop":2.0,"spot":8.0,"step":6.0,"finish":13.5,"cheer":5.5,"celebrate":4.0,"type":-3.5,"chapter":2.5,"reveal":10.5,"sheet":9.5,"unsheet":10.0,"phase":6.5,"found":9.5,"warn":8.0,"copy":6.0,"move":2.5,"callout":6.0,"pointer":7.0,"arrive":-2.5,"checkpoint":6.0,"missing":11.5,"interrupt":9.0},"nier":{"tap":-1.5,"select":-1.0,"back":-1.0,"toggleOn":-0.5,"toggleOff":2.0,"success":3.5,"error":5.0,"commit":7.0,"open":1.0,"close":2.5,"pickup":2.5,"drop":2.5,"step":3.0,"finish":7.0,"cheer":1.0,"celebrate":7.0,"type":-1.0,"chapter":4.0,"reveal":6.5,"sheet":2.0,"unsheet":2.0,"phase":3.5,"found":7.0,"warn":4.0,"move":-1.0,"callout":3.5,"pointer":0.5,"arrive":-1.0,"checkpoint":4.0,"missing":6.0,"interrupt":1.0,"pod":-1.0,"reboot":5.5,"decode":1.5,"glitch":4.0,"save":6.5,"quest":2.5,"nierOn":7.5,"nierOff":4.0,"hover":-5.0}}/* TRIM:end */;
-  const DUR = /* DUR:begin */{"basic":{"tap":[0.04,0.03,0.07,0.04],"select":[0.15,0.18,0.17,0.16],"next":[0.25,0.24,0.27],"back":[0.16,0.12,0.16],"toggleOn":[0.05,0.08,0.06],"toggleOff":[0.05,0.08,0.06],"success":0.39,"error":0.26,"commit":1.2,"open":0.16,"close":0.15,"pickup":0.08,"drop":0.09,"spot":0.1,"step":[0.23,0.26,0.24],"finish":0.94,"cheer":0.23,"celebrate":1.32,"type":[0.03,0.02,0.02],"chapter":0.58,"reveal":0.42,"sheet":0.1,"unsheet":0.09,"phase":0.03,"found":0.3,"warn":0.1,"copy":0.07,"move":[0.03,0.06,0.03],"callout":[0.1,0.18,0.21],"pointer":0.22,"arrive":0.06,"checkpoint":[0.3,0.31,0.29],"missing":0.27,"interrupt":0.09},"friendly":{"tap":[0.03,0.15,0.37,0.06],"select":[0.36,0.41,0.38,0.43],"next":[0.51,0.54,0.42],"back":[0.46,0.52,0.36],"toggleOn":[0.07,0.46,0.21],"toggleOff":[0.07,0.47,0.09],"success":0.87,"error":0.49,"commit":1.3,"open":0.46,"close":0.48,"pickup":0.08,"drop":0.45,"spot":0.57,"step":[0.46,0.4,0.45],"finish":0.73,"cheer":0.7,"celebrate":2.08,"type":[0.35,0.02,0.02],"chapter":0.76,"reveal":0.6,"sheet":0.45,"unsheet":0.44,"phase":0.4,"found":0.43,"warn":0.37,"copy":0.18,"move":[0.11,0.37,0.02],"callout":[0.35,0.45,0.36],"pointer":0.24,"arrive":0.35,"checkpoint":[0.55,0.49,0.47],"missing":0.4,"interrupt":0.07},"glass":{"tap":[0.12,0.09,0.71,0.1],"select":[1.23,1.22,1.17,1.11],"next":[1.43,1.34,1.47],"back":[1.3,1.2,1.25],"toggleOn":[1.07,0.97,0.19],"toggleOff":[0.25,0.21,0.18],"success":1.52,"error":0.28,"commit":2.25,"open":1.44,"close":1.2,"pickup":0.24,"drop":1.08,"spot":0.61,"step":[1.11,1.09,1.16],"finish":1.78,"cheer":1.24,"celebrate":3.02,"type":[0.04,0.03,0.02],"chapter":1.67,"reveal":1.48,"sheet":0.45,"unsheet":0.68,"phase":0.07,"found":1.37,"warn":0.2,"copy":0.12,"move":[0.06,0.1,0.05],"callout":[1.05,1.08,1.01],"pointer":0.46,"arrive":0.96,"checkpoint":[1.23,1.32,1.29],"missing":1.06,"interrupt":0.15},"retro":{"tap":[0.03,0.03,0.03,0.02],"select":[0.11,0.12,0.1,0.06],"next":[0.12,0.15,0.14],"back":[0.13,0.08,0.11],"toggleOn":[0.05,0.07,0.04],"toggleOff":[0.05,0.07,0.04],"success":0.28,"error":0.16,"commit":0.61,"open":0.11,"close":0.1,"pickup":0.05,"drop":0.12,"spot":0.03,"step":[0.13,0.16,0.09],"finish":0.33,"cheer":0.14,"celebrate":1.32,"type":[0.02,0.02,0.02],"chapter":0.4,"reveal":0.31,"sheet":0.08,"unsheet":0.08,"phase":0.02,"found":0.13,"warn":0.11,"copy":0.07,"move":[0.02,0.02,0.02],"callout":[0.05,0.08,0.07],"pointer":0.17,"arrive":0.05,"checkpoint":[0.17,0.18,0.14],"missing":0.2,"interrupt":0.06},"nier":{"tap":[0.03,0.02,0.03,0.03],"select":[0.1,0.1,0.09,0.11],"next":[0.2,0.22,0.26],"back":[0.18,0.18,0.14],"toggleOn":[0.08,0.08,0.1],"toggleOff":[0.08,0.08,0.1],"success":0.78,"error":0.33,"commit":1.48,"open":0.28,"close":0.13,"pickup":0.06,"drop":0.12,"spot":0.15,"step":[0.14,0.14,0.17],"finish":2.33,"cheer":0.11,"celebrate":1.96,"type":[0.02,0.02,0.02],"chapter":0.71,"reveal":0.77,"sheet":0.11,"unsheet":0.09,"phase":0.02,"found":0.47,"warn":0.1,"copy":0.1,"move":[0.02,0.02,0.04],"callout":[0.14,0.15,0.16],"pointer":0.16,"arrive":0.08,"checkpoint":[0.47,0.53,0.37],"missing":0.26,"interrupt":0.12,"pod":[0.19,0.12,0.1,0.16,0.06],"reboot":0.66,"decode":[0.22,0.2,0.18,0.21],"glitch":0.24,"save":0.83,"quest":[1.37,1.34,1.37],"nierOn":1.43,"nierOff":0.62,"hover":[0.02,0.02,0.02]}}/* DUR:end */;
+  const TRIM = /* TRIM:begin */{"basic":{"tap":-2.0,"select":-3.0,"next":-1.0,"toggleOff":1.5,"success":-3.0,"error":3.5,"commit":-2.0,"open":3.0,"close":3.5,"pickup":1.5,"drop":2.0,"spot":10.0,"step":-2.5,"finish":1.0,"cheer":-1.0,"celebrate":2.5,"type":7.0,"chapter":1.5,"reveal":-0.5,"sheet":4.0,"unsheet":3.5,"found":3.0,"copy":-2.0,"move":-2.0,"callout":1.5,"pointer":-1.0,"arrive":-2.5,"checkpoint":-2.0,"missing":5.0,"interrupt":4.0,"save":2.5,"string":-4.5,"land":-10.5,"bow":-2.5},"friendly":{"tap":-3.5,"select":-8.5,"next":-9.5,"back":-7.0,"toggleOn":-3.5,"toggleOff":-2.5,"success":-7.0,"error":-6.0,"commit":-4.5,"open":-4.5,"close":-0.5,"pickup":-2.5,"drop":-4.0,"spot":-5.0,"step":-7.5,"finish":-4.5,"cheer":-6.0,"celebrate":-2.0,"type":-3.0,"chapter":-5.5,"reveal":-5.0,"sheet":-3.5,"unsheet":0.5,"phase":-0.5,"found":-3.5,"warn":-7.0,"copy":-7.0,"move":-0.5,"callout":-3.0,"arrive":-7.5,"checkpoint":-7.5,"missing":-3.0,"interrupt":1.0,"save":-6.0,"string":-10.0,"land":-11.5,"bow":-6.5},"glass":{"tap":-2.0,"select":-1.0,"back":2.5,"toggleOn":1.0,"toggleOff":4.5,"success":-1.0,"error":2.0,"open":3.5,"close":7.0,"pickup":2.5,"drop":1.5,"spot":13.5,"step":1.0,"finish":1.5,"cheer":0.5,"celebrate":5.5,"type":0.5,"chapter":2.5,"reveal":1.0,"sheet":5.0,"unsheet":8.0,"phase":1.5,"found":3.5,"warn":1.0,"move":-0.5,"callout":3.0,"pointer":5.0,"arrive":-0.5,"checkpoint":1.0,"missing":5.5,"interrupt":5.0,"save":3.5,"string":-1.0,"land":-6.5,"bow":0.5},"retro":{"tap":4.5,"select":7.0,"next":7.5,"back":8.5,"toggleOn":2.0,"toggleOff":3.0,"success":8.5,"error":8.5,"commit":4.5,"open":10.0,"close":10.5,"pickup":9.0,"drop":2.0,"spot":8.0,"step":6.0,"finish":13.5,"cheer":5.5,"celebrate":4.0,"type":-2.5,"chapter":4.0,"reveal":10.5,"sheet":9.5,"unsheet":10.0,"phase":6.5,"found":9.5,"warn":8.0,"copy":6.0,"move":2.5,"callout":6.0,"pointer":7.0,"arrive":-2.5,"checkpoint":6.0,"missing":11.5,"interrupt":9.0,"save":6.5,"string":-5.0,"land":-2.5,"bow":0.5},"nier":{"tap":-1.5,"select":-1.0,"back":-1.0,"toggleOn":-0.5,"toggleOff":2.0,"success":3.5,"error":5.0,"commit":7.0,"open":1.0,"close":2.5,"pickup":2.5,"drop":2.5,"step":3.0,"finish":7.0,"cheer":-0.5,"celebrate":7.0,"type":-1.0,"chapter":4.0,"reveal":6.5,"sheet":2.0,"unsheet":2.0,"phase":3.5,"found":7.0,"warn":4.0,"move":-1.0,"callout":3.5,"pointer":1.0,"arrive":-1.0,"checkpoint":4.0,"missing":6.0,"interrupt":1.0,"pod":-1.0,"reboot":5.5,"decode":2.0,"glitch":4.0,"save":6.5,"quest":4.0,"nierOn":2.5,"nierOff":2.0,"hover":-4.5,"wake":8.0,"string":-4.5,"land":-9.5,"bow":-1.5,"showPointer":-2.0,"showInterrupt":3.5}}/* TRIM:end */;
+  const DUR = /* DUR:begin */{"basic":{"tap":[0.04,0.03,0.07,0.04],"select":[0.15,0.18,0.17,0.16],"next":[0.25,0.24,0.27],"back":[0.16,0.12,0.16],"toggleOn":[0.05,0.08,0.06],"toggleOff":[0.05,0.08,0.06],"success":0.39,"error":0.26,"commit":1.2,"open":0.16,"close":0.15,"pickup":0.08,"drop":0.09,"spot":0.1,"step":[0.23,0.26,0.24],"finish":0.94,"cheer":0.23,"celebrate":1.32,"type":[0.03,0.02,0.02],"chapter":1.38,"reveal":0.42,"sheet":0.1,"unsheet":0.09,"phase":0.03,"found":0.3,"warn":0.1,"copy":0.07,"move":[0.03,0.06,0.03],"callout":[0.1,0.18,0.21],"pointer":[0.22,0.17,0.23],"arrive":[0.06,0.09,0.08],"checkpoint":[0.3,0.31,0.29],"missing":0.27,"interrupt":0.09,"save":0.67,"string":[0.1,0.12,0.09],"land":[0.06,0.05],"bow":[0.26,0.26]},"friendly":{"tap":[0.03,0.15,0.37,0.06],"select":[0.36,0.41,0.38,0.43],"next":[0.51,0.54,0.42],"back":[0.46,0.52,0.36],"toggleOn":[0.07,0.46,0.21],"toggleOff":[0.07,0.47,0.09],"success":0.87,"error":0.49,"commit":1.3,"open":0.46,"close":0.48,"pickup":0.08,"drop":0.45,"spot":0.57,"step":[0.46,0.4,0.45],"finish":0.73,"cheer":0.73,"celebrate":2.08,"type":[0.35,0.02,0.02],"chapter":1.39,"reveal":0.6,"sheet":0.45,"unsheet":0.44,"phase":0.4,"found":0.43,"warn":0.37,"copy":0.18,"move":[0.11,0.37,0.02],"callout":[0.35,0.45,0.36],"pointer":[0.24,0.38,0.21],"arrive":[0.35,0.2,0.35],"checkpoint":[0.55,0.49,0.47],"missing":0.4,"interrupt":0.07,"save":0.96,"string":[0.08,0.06,0.1],"land":[0.3,0.31],"bow":[0.44,0.45]},"glass":{"tap":[0.12,0.09,0.71,0.1],"select":[1.23,1.22,1.17,1.11],"next":[1.43,1.34,1.47],"back":[1.3,1.2,1.25],"toggleOn":[1.07,0.97,0.19],"toggleOff":[0.25,0.21,0.18],"success":1.52,"error":0.28,"commit":2.25,"open":1.44,"close":1.2,"pickup":0.24,"drop":1.19,"spot":0.61,"step":[1.11,1.09,1.16],"finish":1.78,"cheer":1.24,"celebrate":3.02,"type":[0.04,0.03,0.02],"chapter":2.76,"reveal":1.48,"sheet":0.45,"unsheet":0.68,"phase":0.07,"found":1.37,"warn":0.2,"copy":0.12,"move":[0.06,0.17,0.05],"callout":[1.05,1.08,1.01],"pointer":[0.46,0.84,0.76],"arrive":[0.96,0.68,0.61],"checkpoint":[1.23,1.32,1.29],"missing":1.06,"interrupt":0.15,"save":1.55,"string":[0.56,0.56,0.54],"land":[0.27,0.27],"bow":[1.16,1.1]},"retro":{"tap":[0.03,0.03,0.03,0.02],"select":[0.11,0.12,0.1,0.06],"next":[0.12,0.15,0.14],"back":[0.13,0.08,0.11],"toggleOn":[0.05,0.07,0.04],"toggleOff":[0.05,0.07,0.04],"success":0.28,"error":0.16,"commit":0.61,"open":0.11,"close":0.1,"pickup":0.05,"drop":0.12,"spot":0.03,"step":[0.13,0.16,0.09],"finish":0.33,"cheer":0.14,"celebrate":1.32,"type":[0.02,0.02,0.02],"chapter":1.04,"reveal":0.31,"sheet":0.08,"unsheet":0.08,"phase":0.02,"found":0.13,"warn":0.11,"copy":0.07,"move":[0.02,0.02,0.02],"callout":[0.05,0.08,0.07],"pointer":[0.17,0.16,0.15],"arrive":[0.05,0.06,0.04],"checkpoint":[0.17,0.18,0.14],"missing":0.2,"interrupt":0.06,"save":0.36,"string":[0.09,0.08,0.09],"land":[0.04,0.05],"bow":[0.16,0.15]},"nier":{"tap":[0.03,0.02,0.03,0.03],"select":[0.1,0.1,0.09,0.11],"next":[0.2,0.22,0.26],"back":[0.18,0.18,0.14],"toggleOn":[0.08,0.08,0.1],"toggleOff":[0.08,0.08,0.1],"success":0.78,"error":0.33,"commit":1.48,"open":0.28,"close":0.13,"pickup":0.06,"drop":0.12,"spot":0.15,"step":[0.14,0.14,0.17],"finish":2.33,"cheer":0.1,"celebrate":1.96,"type":[0.02,0.02,0.02],"chapter":1.53,"reveal":0.77,"sheet":0.11,"unsheet":0.09,"phase":0.02,"found":0.47,"warn":0.1,"copy":0.1,"move":[0.02,0.02,0.04],"callout":[0.14,0.15,0.16],"pointer":[0.16,0.12,0.14],"arrive":[0.08,0.06,0.11],"checkpoint":[0.47,0.53,0.37],"missing":0.26,"interrupt":0.12,"pod":[0.19,0.12,0.1,0.16,0.06],"reboot":0.66,"decode":[0.22,0.2,0.18,0.21],"glitch":0.24,"save":0.83,"quest":[1.46,1.46,1.46],"nierOn":1.21,"nierOff":0.89,"hover":[0.02,0.02,0.02],"wake":1.47,"string":[0.04,0.04,0.05],"land":[0.05,0.1],"bow":[0.23,0.24],"showPointer":0.19,"showInterrupt":0.17}}/* DUR:end */;
   const dB = (x) => Math.pow(10, (x || 0) / 20);
   const trimOf = (kit, ev) => (TRIM[kit] && TRIM[kit][ev]) || 0;
   const durOf = (kit, ev, v) => { const d = DUR[kit] && DUR[kit][ev]; return d ? (Array.isArray(d) ? d[Math.min(v || 0, d.length - 1)] : d) : 0.5; };
@@ -1347,6 +1352,9 @@
   const later = (ms, fn) => (O55.motion && typeof O55.motion.after === 'function' ? O55.motion.after(ms, fn) : window.setTimeout(fn, ms));
   const reducedMotion = () => { try { return !!(O55.motion && O55.motion.reduced && O55.motion.reduced()); } catch (_) { return false; } };
   let restUntil = -1e9, restAt = -1e9, stingAt = -1e9;
+  /* the last sound played at PRIO 75 or more (story time): a deferred sound that comes back after one at least as
+     important has played gives way to it (that moment already has its signature) */
+  let big = { m: -1e9, prio: 0, event: null };
   function logEntry(o) { S.log.push(o); if (S.log.length > 400) S.log.shift(); return o; }
   function drop(item, why, by) { item.entry.dropped = why; if (by) item.entry.by = by; }
   /* one playing sound fades out over s seconds (it gives way, or a rest begins) */
@@ -1373,6 +1381,7 @@
       shelf: inten > 0.8 ? (inten - 0.8) * 20 : 0,
       pan: Math.max(-1, Math.min(1, pan))
     };
+    if (STAGE.has(item.event)) entry.pan = +spec.pan.toFixed(2); /* where on the stage it sounded */
     const g = ctx.createGain(); g.gain.value = spec.level; chainOf.set(g, spec);
     const sh = shape(ctx, spec, g); sh.head.connect(S.master);
     const nodes = [g].concat(sh.nodes);
@@ -1410,7 +1419,7 @@
     /* a burst (six sounds in half a second) keeps only what matters; texture, foley and ticks have their own limits */
     if (win.prio < 60 && !BURST_FREE.has(win.event) && starts.length >= 6 && now - starts[starts.length - 6] < 500) { batch.forEach((it) => drop(it, 'busy')); return; }
     const h = voice(win);
-    if (h) playedAt[win.event] = m;
+    if (h) { playedAt[win.event] = m; if (win.prio >= 75 && !win.layer) big = { m, prio: win.prio, event: win.event }; }
     if (h && !win.layer) recent = { t: now, prio: win.prio, event: win.event, handle: h, entry: win.entry };
     for (let i = 1; i < batch.length; i++) {
       const it = batch[i];
@@ -1462,6 +1471,7 @@
     if (!hasGesture()) { entry.dropped = 'gesture'; return false; }
     const prio = o.priority != null ? +o.priority : (PRIO[event] || 30);
     if (m < restUntil && prio < 75) { entry.dropped = 'rest'; return false; }
+    if (late && late.since != null && big.m >= late.since && big.prio >= prio && big.event !== event) { entry.dropped = 'merged'; entry.by = big.event; return false; }
     const rate = RATE[event];
     if (rate && now - (lastAt[event] || -1e9) < rate * (lowres ? 1.8 : 1)) { entry.dropped = 'rate'; return false; }
     if (event === 'land') {
@@ -1484,7 +1494,8 @@
   }
   function defer(ms, entry, event, opts) {
     entry.deferred = Math.max(0, Math.round(ms));
-    later(ms, () => request(event, opts, { event, entry }));
+    const since = mNow();
+    later(ms, () => request(event, opts, { event, entry, since }));
     return true;
   }
   /* 150 ms (by default) of silence before a resolution: events under PRIO 75 are dropped meanwhile, and everything
