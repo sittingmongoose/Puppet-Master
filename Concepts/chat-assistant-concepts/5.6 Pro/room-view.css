@@ -79,7 +79,7 @@ body.pm56-reduced .pmx-view.room-discussion :is(.pmx-rv-msg[data-arrive], .pmx-r
 
 .pmx-view.room-discussion .pmx-rv-empty{margin:0;font:var(--pmx-fs-sentence);color:var(--muted);}
 
-/* the aside: who is at the table, how they talk, the promise, the transcript, Technical details */
+/* the aside: who is at the table, how they talk, the promise, the transcript (no Technical details: 2026-10-07) */
 .pmx-view.room-discussion .pmx-rv-asidehead{margin:0;}
 .pmx-view.room-discussion .pmx-rv-table{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
 .pmx-view.room-discussion .pmx-rv-table li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start;font:var(--pmx-fs-sentence);color:var(--muted);}

@@ -70,7 +70,7 @@
 .pmx-rview-set p b{color:var(--text);}
 .pmx-rview-set p.pmx-fine{margin-top:6px;font:var(--pmx-fs-fine);color:var(--subtle);}
 
-/* the aside: snapshot, cost, the read-only promise, provenance, Technical details */
+/* the aside: snapshot, cost, the read-only promise, provenance (no Technical details: 2026-10-07) */
 .pmx-rview-aside{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;font:12px/18px var(--font-ui);color:var(--muted);}
 .pmx-rview-aside b{color:var(--text);}
 .pmx-rview-aside .pmx-fine{display:block;margin-top:6px;overflow-wrap:anywhere;}

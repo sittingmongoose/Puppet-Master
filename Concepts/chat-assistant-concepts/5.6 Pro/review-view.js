@@ -79,7 +79,7 @@
       reviewers:[{id, name, persona, model, requested, seat, state, notes, done, outcome}],
       findings:[{id, n, claim, severity, sevWord, disposition, dispWord, votes[], agree, toFix, idea,
                  why, proof:{code, first, refs[]}, fix, expected, dissent[], todoId, selected, canTick, reason, cls}],
-      excluded:[{key, text, code, cls}], agreement:{reviewers[], rows[]}|null, counts, headline,
+      excluded:[{key, text, code, hash, cls}], agreement:{reviewers[], rows[]}|null, counts, headline,
       readOnly:{text, cls}, followOns:{selected, created, createdNs[], canCreate, canSend},
       worked, cost, duplicates, notes, markdown() }
     ===================================================================== */
@@ -119,7 +119,7 @@
    const old=x.targetHash||(x.payload&&x.payload.targetHash)||'';
    const code=old&&primary&&old!==primary?'different_target_hash':x.reason;
    const w=EXCLUDED[code]||['this note didn’t match the snapshot every reviewer read.',String(x.reason||'excluded')];
-   return {key:'rx-'+i,text:w[0],code:String(code||'excluded'),cls:'collab-finding collab-excluded'};});
+   return {key:'rx-'+i,text:w[0],code:String(code||'excluded'),hash:old,cls:'collab-finding collab-excluded'};});
   const reviewers=parts.map((p,i)=>{const pass=(v.passes||[]).find(x=>x.participantId===p.id)||{};
    return {id:p.id,name:p.role,persona:p.effectivePersona,model:p.effectiveModelName,requested:p.requestedModelName,seat:i+1,state:p.status,
     notes:(pass.findings||[]).length,done:pass.status==='completed',outcome:p.outcome};});
@@ -236,7 +236,7 @@
  /* notes set aside (a different frozen pack, a restarted or stopped run): shown while the run is going as well as in
     the report, so a set-aside note is never invisible until the end */
  function setAsideHtml(vm){
-  return vm.excluded.length?S.pmxViewSection({key:'rv-set',title:'Set aside',meta:'never mixed in',body:vm.excluded.map(x=>'<div class="'+esc(x.cls)+' pmx-rview-set" data-k="'+esc(x.key)+'" data-reason="'+esc(x.code)+'"><p><b>Set aside:</b> '+esc(x.text)+'</p></div>').join('')}):'';
+  return vm.excluded.length?S.pmxViewSection({key:'rv-set',title:'Set aside',meta:'never mixed in',body:vm.excluded.map(x=>'<div class="'+esc(x.cls)+' pmx-rview-set" data-k="'+esc(x.key)+'" data-reason="'+esc(x.code)+'"'+(x.hash?' data-target-hash="'+esc(x.hash)+'"':'')+'><p><b>Set aside:</b> '+esc(x.text)+'</p></div>').join('')}):'';
  }
  /* before the report: who is reading, sealed notes, never dispositions (REV-05) */
  function progressHtml(vm){

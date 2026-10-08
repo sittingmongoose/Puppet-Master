@@ -403,6 +403,17 @@ svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gsm1 { animation: nx-grill-smoke1 v
 svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gsm2 { animation: nx-grill-smoke2 var(--nx-1); }
 /* the smoke is a finer tube than the kettle */
 svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 1.8) * var(--nx-tone-k, 1) * .75); }
+/* Where the grill is drawn (item 11, 2026-10-07): the Deep Plan sidecar's Grill Me row and the plan dialogs' Grill Me
+   buttons (buttons: the concept hover rule above plays it), the run views' Grill Me checks (module-shell pmxCheck's
+   glyph) and the setup sheets' Add specialists shelf (collaboration.js: the Grill Me item, in its seat hue). A check
+   row is a label and a shelf item a plain row, not the hover rule's hosts, so they are named here: hovering the row or
+   focusing its box or its Add swells the halo and plays the act once, exactly like a concept glyph in a button. At
+   rest the grill stands still (a sheet's marks hold still, the pmx loop budget is the sheen's). */
+.pmx-check:where(:hover, :focus-within) > .pmx-check-glyph > svg:where(.nx),
+.pmx-spec:where(:hover, :focus-within) > .pmx-spec-glyph > svg:where(.nx) {
+  --nx-hi-a: var(--nx-h-swell-i);
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
 @keyframes nx-grill-lid {
   0% { transform: translate(0px, 0px) rotate(0deg); } 24%, 50% { transform: translate(0px, -1.2px) rotate(-20deg); }
   58% { transform: translate(0px, -.96px) rotate(-16deg); } 63% { transform: translate(0px, -.54px) rotate(-9deg); }

@@ -466,7 +466,7 @@
     var questions = '<p class="collab-qmax collab-view-line" data-k="collab-qmax">' + esc(qLine) + '</p>' +
       '<p class="pmx-fine collab-view-help">' + asked + ' of ' + eff + ' asked so far. The team asks you only what research can’t answer.</p>' +
       S().pmxCheck({ key: 'cv-grill:' + run.id, cls: 'collab-view-check', attrs: ('data-action="collab-brainstorm-toggle-grill"' + runAttr(run)), checked: !!qb.grillMeEnabled, disabled: finished(st),
-        label: 'Grill Me', helper: 'Allow up to ' + (qb.grillExtension || 25) + ' more questions. The ' + asked + ' already asked still count.' });
+        label: 'Grill Me', glyph: 'grill', helper: 'Allow up to ' + (qb.grillExtension || 25) + ' more questions. The ' + asked + ' already asked still count.' });
     var props = list(b.proposals), votes = list(b.votes), parts = list(run.participants);
     function pOf(role) { var out = null; parts.forEach(function (p) { if (p.role === role) out = p; }); return out; }
     var CONF = { high: 3, medium: 2, low: 1 };

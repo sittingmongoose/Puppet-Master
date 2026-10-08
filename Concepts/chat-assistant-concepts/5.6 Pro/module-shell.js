@@ -183,6 +183,9 @@
   PMX_GLYPHS['role-hexagon'] = '<path d="M12 3.5 19.5 7.8v8.4L12 20.5l-7.5-4.3V7.8z"/>';
   PMX_GLYPHS['role-orbit'] = '<circle cx="11" cy="13" r="5.5"/><ellipse cx="12" cy="11" rx="9.5" ry="4.2" transform="rotate(-24 12 11)"/>';
   PMX_GLYPHS['role-bowl'] = '<path d="M4 9.5Q12 23 20 9.5z"/>';
+  /* Grill Me's kettle grill, static (item 11): the drawing pmxGlyph('grill') falls back to without the neon registry,
+     whose own animated grill (neon-icons.js) wins wherever it is loaded */
+  PMX_GLYPHS.grill = '<path d="M4.5 10.5a7.5 7.5 0 0 1 15 0z"/><path d="M10.6 1.8h2.8M12 1.8V3M3 12.5h18M4.5 12.5a7.5 7.5 0 0 0 15 0M8 18.8 6.5 22.5M16 18.8l1.5 3.7"/>';
   PMX_GLYPHS['role-you'] = '<circle cx="12" cy="7.5" r="3.8"/><path d="M4.5 20.5Q12 10.5 19.5 20.5z"/>';
 
   /* IMPACT A2-09: one glyph lookup. A name is looked up in PMX_GLYPHS, then in the app's own icon() table (app.js
@@ -312,12 +315,12 @@
       held: pp('pl full', 'M4.2 22.6V6.6') + pp('pf full', 'M4.2 6.6 .8 8.3 4.2 10Z'), halo: 'M4.2 22.6V6.6M4.2 6.6 .8 8.3 4.2 10Z' }
   };
   /* Grill Me stands behind a little kettle grill (the neon 'grill' glyph's anatomy: a dome lid riding just above
-     the rim, the bowl, three legs and grill marks), its hands on the lid: the mark reads as a grill first. */
+     the rim, the bowl, two splayed legs and three grill marks), its hands on the lid: the mark reads as a grill first. */
   var GRILL = {
     head: [14, 8.5, 3.6], strC: 'M14 2.2V4.9', strL: 'M10 2.2 8.8 15.4', strR: 'M18 2.2 19.2 15.4',
     body: 'M11.2 12.6H16.8L17.4 15.6H10.6Z', arms: 'M11 13.4 8.8 15.4M17 13.4 19.2 15.4',
     lid: 'M7.6 19A6.4 5.4 0 0 1 20.4 19Z', knob: 'M12.6 12.9H15.4M14 12.9V13.6', rim: 'M6.6 19.8H21.4',
-    bowl: 'M7.6 19.8A6.4 4.6 0 0 0 20.4 19.8', legs: 'M9.9 23.1 8.3 27.4M18.1 23.1 19.7 27.4M14 24.4V27.4', marks: 'M10.6 21.1l.9.9M13.5 21.1l.9.9M16.4 21.1l.9.9'
+    bowl: 'M7.6 19.8A6.4 4.6 0 0 0 20.4 19.8', legs: 'M9.9 23.1 8.3 27.4M18.1 23.1 19.7 27.4', marks: 'M10.6 21.1l.9.9M13.5 21.1l.9.9M16.4 21.1l.9.9'
   };
   /* You hold the control: an unstrung head-and-shoulders figure (the user mark) raising the cross-shaped control,
      its two strings hanging free. */
@@ -335,7 +338,7 @@
     raiseR: { 3: '.........._k', 4: '..........c', 5: '..........c', 6: '.........c_', 7: '.........c_', 8: '.........__' },
     cutL: { 4: '.._', 5: '.._', 6: '.._', 7: '.._', 8: '.._c', 9: '...k' },
     cutR: { 4: '.........._', 5: '.........._', 6: '.........._', 7: '.........._', 8: '.........c_', 9: '.........k' },
-    crown: { 1: '....p.p.p....', 2: '....ppppp....' },
+    crown: { 1: '....q.q.q....', 2: '....qqqqq....' },
     gavel: { 9: 'ppp', 10: '.p', 11: '.p', 12: 'qqq' },
     hardhat: { 1: '.....ppp.....', 2: '...ppppppp...' },
     lens: { 3: '......ppp....', 4: '......p.p....', 5: '......ppp....', 6: '.........p...', 7: '..........p..' },
@@ -346,7 +349,7 @@
     pennant: { 3: 'qqp', 4: '.qp', 5: '..p', 6: '..p', 7: '..p', 9: '..p', 10: '..p', 11: '..p', 12: '..p' }
   };
   var PX_GRILL = ['..bbbbbbbbb..', '..s...s...s..', '..s.hhhhh.s..', '..s.kekek.s..', '..s.kkkkk.s..', '..s...p...s..', '..s.ppppp.s..',
-    '..kppwppppk..', '.qqqqqqqqqqq.', '..ppppppppp..', '...pwpwpwp...', '....ppppp....', '...l..l..l...'];
+    '..kppwppppk..', '.qqqqqqqqqqq.', '..ppppppppp..', '...pwpwpwp...', '....ppppp....', '...l.....l...'];
   var PX_YOU = ['.............', '.......bbbbb.', '.......s.k.s.', '.......s.c.s.', '.hhhhh..c..s.', '.hkkkh..c....', '.kekek.c.....', '.kkkkk.c.....',
     '..kkk.c......', '.ccccc.......', 'kccccc.......', '.ccccc.......', '..l.l........'];
   function pxSprite(rows) {
@@ -525,7 +528,7 @@
     square: { d: 'M19.4 19.6V13.6L24.4 19.6Z', fill: 'p' },
     pennant: { line: 'M20.2 19.4V10.6', d: 'M20.2 10.8 24.6 12.4 20.2 14Z', fill: 'i' },
     gavel: { line: 'M20.2 18.4 22.4 12.8', d: 'M24.7 12.5 24 14.2 20.3 12.7 21 11Z', fill: 'i' },
-    grill: { d: 'M8.6 19.6A5.4 3.8 0 0 1 19.4 19.6ZM8.6 20.4A5.4 3.6 0 0 0 19.4 20.4Z', fill: 'p', line: 'M7.4 20H20.6M10.4 23.2 9.2 26.6M17.6 23.2 18.8 26.6M14 24V26.6M12.6 15.2H15.4M14 15.2V15.8' }
+    grill: { d: 'M8.6 19.6A5.4 3.8 0 0 1 19.4 19.6ZM8.6 20.4A5.4 3.6 0 0 0 19.4 20.4Z', fill: 'p', line: 'M7.4 20H20.6M10.4 23.2 9.2 26.6M17.6 23.2 18.8 26.6M12.6 15.2H15.4M14 15.2V15.8' }
   };
   var PN_TINY_ROLE = {
     crown: [[5, 2], [7, 2], [9, 2]], hardhat: [[5, 2], [6, 2], [7, 2], [8, 2], [9, 2], [4, 3], [10, 3]], lens: [[11, 9], [12, 9], [11, 10], [12, 10]],
@@ -680,9 +683,12 @@
         : floor === 'bar' && state !== 'working' ? '<rect class="pmx-p-floorbar" x="-7" y="15.4" width="14" height="2" rx="1" style="' + seatStyle(sil, o.seat) + '"/>' : '';
       var lab = o.label ? svgText('pmx-p-lab', lx, ly, o.label, anchor) : '';
       var sub = o.sub ? svgText('pmx-p-sub', lx, ly + sdy, o.sub, anchor) : '';
+      /* the placing transform rides on a plain wrapper, never on .pmx-p-mark itself: a sheet gives .pmx-p-mark
+         transform-box:fill-box and transform-origin:center for its pop (pmx-system.css), which would scale a transform
+         attribute about the figure's middle and shift a 1.5x seat 7 px up and left off its string */
       return '<g class="pmx-p-seat"' + k(o.key) + pos(o.x, o.y) + ' data-state="' + esc(state) + '"' + (floor ? ' data-floor="' + floor + '"' : '') + part(o.part) + '>' + fb +
-        '<g class="pmx-p-mark" data-sil="' + sil + '" data-state="' + esc(state) + '" style="' + seatStyle(sil, o.seat) + '" transform="translate(' + (-half) + ' ' + (-half) + ')' + (sc !== 1 ? ' scale(' + sc + ')' : '') + '">' +
-        markInner(sil, o.seat, state, o.standin, o.role) + '</g>' + lab + sub + '</g>';
+        '<g transform="translate(' + (-half) + ' ' + (-half) + ')' + (sc !== 1 ? ' scale(' + sc + ')' : '') + '"><g class="pmx-p-mark" data-sil="' + sil + '" data-state="' + esc(state) + '" style="' + seatStyle(sil, o.seat) + '">' +
+        markInner(sil, o.seat, state, o.standin, o.role) + '</g></g>' + lab + sub + '</g>';
     },
     /* bus({key,from:{x,y},y,to:[{x,y,style,part,key}],style,part}) - the cast's strings, orthogonal only (2026-10-07):
        a stem from `from` straight down to the bus at y, the bus across every drop (drawn outward from the stem), and a
@@ -757,7 +763,7 @@
       var dx = o.s != null ? Math.round(half + 4) : 18, end = o.anchor === 'end', below = o.at === 'below';
       var lx = below ? 0 : end ? -dx : dx, ly = o.ly != null ? num(o.ly, 0) : below ? Math.round(half + 14) : o.at === 'inline' || (o.s != null && !o.sub) ? 4 : -1, an = below ? 'middle' : o.anchor;
       return '<g class="pmx-p-you"' + pos(o.x, o.y) + part(o.part || 'you') + '>' +
-        '<g class="pmx-p-mark" data-sil="you" data-state="idle" style="--pmx-seat:var(--pmx-seat-you);--pmx-seat-fill:var(--pmx-seat-fill-you)" transform="translate(' + (-half) + ' ' + (-half) + ') scale(' + sc + ')">' + SIL.you + '</g>' +
+        '<g transform="translate(' + (-half) + ' ' + (-half) + ') scale(' + sc + ')"><g class="pmx-p-mark" data-sil="you" data-state="idle" style="--pmx-seat:var(--pmx-seat-you);--pmx-seat-fill:var(--pmx-seat-fill-you)">' + SIL.you + '</g></g>' +
         (o.label ? svgText('pmx-p-lab', lx, ly, o.label, an) : '') + (o.sub ? svgText('pmx-p-sub', lx, below ? ly + 16 : o.s != null ? 15 : 17, o.sub, an) : '') + '</g>';
     },
     chapter: function (o) {
@@ -785,7 +791,7 @@
     glyph: glyphIn
   };
   var LEGEND = { hands: 'pmx-lg pmx-lg-hands', fixed: 'pmx-lg pmx-lg-fixed', toyou: 'pmx-lg pmx-lg-toyou', sees: 'pmx-lg pmx-lg-sees', hatch: 'pmx-lg pmx-lg-hatch', hollow: 'pmx-lg pmx-lg-hollow', filled: 'pmx-lg pmx-lg-filled', dot: 'pmx-lg pmx-lg-dot', bar: 'pmx-lg pmx-lg-bar', screen: 'pmx-lg pmx-lg-screen' };
-  var PLATE_H = { full: 200, compact: 160, strip: 96, caption: 40 };
+  var PLATE_H = { full: 200, compact: 160, lean: 99, strip: 96, caption: 40 };
   /* pmxPlate({key,kind,mode,w,h,svg,legend,caption,cls,fluid,part,fitH,align,attrs})
      fitH: the drawing's natural height when it sits in a .pmx-plate-fit slot (J-2 plate yield);
      align: the viewBox alignment (xMidYMid by default; xMidYMin keeps a drawing at the top). */
@@ -842,16 +848,20 @@
      - STATE lives on the seats only (the puppet's own state). "waits its turn" is written once, under the queued
        group (full); a note line (Chat Room's turn policy, the screens' meaning) sits in the same place.
      Modes, richest first: full (seats 1.5x, about 155 tall, 182 with a note; 576 wide), compact (seats 1.25x, names
-     only; 110 tall, 512 wide so it fits the 1024 column), strip (one row, names under the marks: 60 tall, 500 wide;
+     only; 110 tall, 512 wide so it fits the 1024 column), lean (BrainStorm only: the compact at .86, about 99 tall),
+     strip (one row, names under the marks: 60 tall, 500 wide, centred, as wide a pitch as the longest name needs;
      line: names beside the marks, 40 tall, for the Chat Room) and pmxPlateFit's caption. A mode whose seats would
      sit closer than its minimum pitch is left out, so the slot yields to the next one (J-2: never scaled). */
   var CAST = {
-    full: { W: 576, M: 12, s: 1.5, sy: 1.25, bar: 29, paperW: 150, paperH: 50, bus: 64, drop: 10, name: 13, sub: 16, pmin: 84, pmax: 128, wing: 24 },
-    compact: { W: 512, M: 12, s: 1.25, sy: 1, bar: 20, paperW: 96, paperH: 30, bus: 46, drop: 8, name: 13, sub: 0, pmin: 70, pmax: 108, wing: 22 },
-    strip: { W: 500, M: 12, s: 1, sy: 1, row: 24, H: 60, name: 13, pmin: 58, pmax: 84, wing: 24 },
+    full: { W: 576, M: 12, s: 1.5, sy: 1.25, bar: 29, paperW: 150, paperH: 50, bus: 64, drop: 10, name: 14, sub: 16, pmin: 84, pmax: 128, wing: 24 },
+    /* the compact paper is 32 tall: its one centred line keeps 8 px of ink clear of the paper's top and bottom edges (J-2) */
+    compact: { W: 512, M: 12, s: 1.25, sy: 1, bar: 20, paperW: 96, paperH: 32, bus: 46, drop: 8, name: 14, sub: 0, pmin: 70, pmax: 108, wing: 22 },
+    strip: { W: 500, M: 12, s: 1, sy: 1, row: 24, H: 60, name: 13, pmin: 58, pref: 76, pmax: 128, wing: 24 },
     line: { W: 576, M: 12, s: .86, sy: .86, row: 20, H: 40 },
-    /* a lean compact (BrainStorm's recorded draft: the guide strip leaves its slot about 94 tall): seats at .86, no bus */
-    lean: { W: 576, M: 12, s: .86, sy: .86, bar: 20, paperW: 96, paperH: 26, bus: 46, drop: 0, name: 13, sub: 0, pmin: 64, pmax: 104, wing: 24, nobus: 1 }
+    /* lean: a mode of its own between compact and strip (BrainStorm: 95 tall, so a slot of 95-117, the recorded draft's
+       beside its guide strip or a 1280 x 800 window's, keeps the chapters and the strings): seats at .86 hanging right
+       off the bus, names 11 under the figures */
+    lean: { W: 576, M: 12, s: .86, sy: .86, bar: 20, paperW: 96, paperH: 32, bus: 46, drop: 0, name: 11, sub: 0, pmin: 64, pmax: 104, wing: 24 }
   };
   /* text widths are measured in the theme's own plate font (a canvas, the body's --font-ui: Inter, Poppins, IBM Plex
      Mono, the NieR face) with 4 % to spare; without a canvas, .62 em a character (Plex Mono is .6 em) */
@@ -872,11 +882,34 @@
   function castFit(t, px, fs) {
     t = str(t);
     if (castW(t, fs) <= px) return t;
+    /* whole words first ("Export the collection…", "Adversarial…") when that keeps at least half the room; else the
+       last word is cut ("Implement…") */
+    var words = t.split(/\s+/);
+    for (var k = words.length - 1; k >= 1; k--) {
+      var cand = words.slice(0, k).join(' ').replace(/[,;:.\s]+$/, '') + '…', cw = castW(cand, fs);
+      if (cw <= px) { if (cw >= px * .5) return cand; break; }
+    }
     var cut = t.length;
     while (cut > 2 && castW(t.slice(0, cut).replace(/\s+$/, '') + '…', fs) > px) cut--;
     return t.slice(0, cut).replace(/\s+$/, '') + '…';
   }
   function castLabel(t, px, fs) { return esc(castFit(t, px, fs)); }
+  /* the helpers' cells (2026-10-08 polish): the row keeps one pitch while every name fits it; when a long name would be
+     cut ("Adversarial Review" beside the specialists, "Docs writer" in a five-helper strip) and the short names leave
+     room, the long name's cell borrows that room from the others (each keeps at least floor, so a figure never crowds
+     its neighbour), in proportion to what each can spare. The row's width does not change. needs: each name's width
+     plus 6 between neighbours. */
+  function castCells(needs, p, floor) {
+    var def = 0, sur = 0;
+    needs.forEach(function (nd) { if (nd > p) def += nd - p; else sur += p - Math.max(nd, floor); });
+    if (!def || sur <= 0) return needs.map(function () { return p; });
+    var take = Math.min(def, sur), kd = take / def, ks = take / sur;
+    return needs.map(function (nd) { return nd > p ? p + (nd - p) * kd : p - (p - Math.max(nd, floor)) * ks; });
+  }
+  /* every name fits whole in a row of n cells at pitch p once the cells are shared out */
+  function castFitsAll(needs, p, floor) { return needs.reduce(function (a, nd) { return a + Math.max(nd, Math.min(floor, p)); }, 0) <= needs.length * p + .5; }
+  /* the seat centres of a row of cells starting at x0 */
+  function castXs(cells, x0) { var x = x0; return cells.map(function (c) { var m = Math.round(x + c / 2); x += c; return m; }); }
   /* one seat of the cast (core or wing) */
   function castSeat(c, x, y, G, o) {
     return pmxPlateParts.seat({ key: c.key, x: x, y: y, s: G.s, role: c.role, seat: c.seat, state: c.state, standin: c.standin, part: c.part,
@@ -887,7 +920,7 @@
   }
   /* full / compact: the bar, the cast hanging under it, the wing, the note */
   function castStage(sp, mode, Wo) {
-    var P = pmxPlateParts, G = mode === 'compact' && sp.lean ? CAST.lean : CAST[mode], core = sp.seats || [], wing = sp.wing || [], n = core.length, m = wing.length, full = mode === 'full';
+    var P = pmxPlateParts, G = CAST[mode], core = sp.seats || [], wing = sp.wing || [], n = core.length, m = wing.length, full = mode === 'full';
     var W = num(Wo, num(sp.w && sp.w[mode], G.W)), M = G.M, s = G.s, half = 14 * s, kp = (sp.key || 'pmx-plate-cast') + ':' + mode + ':';
     if (!n) return '';
     /* the seat row: the helpers at one even pitch; the specialists' wing after a gap, each in a cell as wide as its
@@ -897,13 +930,16 @@
     var cells = function (subs) { return wing.map(function (c) { return Math.max(56, castW(c.label, 11) + 12, subs && c.sub ? castW(c.sub, 10.5) + 12 : 0); }); };
     var sum = function (a) { return a.reduce(function (x, y) { return x + y; }, 0); };
     var wcs = cells(wingSub), wingW = sum(wcs);
-    var pitch = Math.min(G.pmax, Math.floor((W - 2 * M - gap - wingW) / n));
+    /* the pitch is G.pmax at most, or as wide as the longest helper name needs (6 between names) when the row has room:
+       "Adversarial Review" stays whole in a 576 compact */
+    var longest = Math.max.apply(null, core.map(function (c) { return castW(c.label, 11); })), cap = Math.max(G.pmax, longest + 6);
+    var needs = core.map(function (c) { return castW(c.label, 11) + 6; });
+    var pitch = Math.min(cap, Math.floor((W - 2 * M - gap - wingW) / n));
     /* the helpers' names come first: when one would be cut, the specialists' second lines give way */
-    var longest = Math.max.apply(null, core.map(function (c) { return castW(c.label, 11); }));
-    if (m && wingSub && longest > pitch - 8) { var w2 = cells(false), p2 = Math.min(G.pmax, Math.floor((W - 2 * M - gap - sum(w2)) / n)); if (p2 > pitch) { wcs = w2; wingW = sum(w2); pitch = p2; wingSub = false; } }
+    if (m && wingSub && !castFitsAll(needs, pitch, G.pmin)) { var w2 = cells(false), p2 = Math.min(cap, Math.floor((W - 2 * M - gap - sum(w2)) / n)); if (p2 > pitch) { wcs = w2; wingW = sum(w2); pitch = p2; wingSub = false; } }
     if (pitch < G.pmin) return '';
     var x0 = Math.round((W - (n * pitch + gap + wingW)) / 2);
-    var xs = core.map(function (c, i) { return Math.round(x0 + pitch * (i + .5)); });
+    var scw = castCells(needs, pitch, G.pmin), xs = castXs(scw, x0);
     var wx = x0 + n * pitch + gap, wxs = wcs.map(function (w) { var c = Math.round(wx + w / 2); wx += w; return c; });
     var lab = pitch - 6, out = '', stem = null, busY = G.bus, BY = G.bar;
     var you = sp.you || { label: 'You' }, ys = G.sy, yh = 14 * ys;
@@ -918,27 +954,35 @@
       var lastMax = Math.min(youX - Math.round(yh) - 22, youX - Math.ceil(ylw / 2) - 6 - Math.ceil(cw[cw.length - 1] / 2)), first = M + Math.ceil(cw[0] / 2);
       var q = ch.length > 1 ? Math.min(92, (lastMax - first) / (ch.length - 1)) : 0;
       var cx = ch.map(function (c, i) { return Math.round(first + q * i); });
-      /* neighbouring names keep 4 apart: where a pair would not, the longer one is fitted */
+      /* neighbouring names keep 4 apart: where a pair would not, the longer one is fitted. The pair is judged on its
+         measured ink (castW less its 4 % and 1 px of spare: two spares side by side cut retro's "Draft alone" by a
+         pixel it never needed) */
       for (var ci = 0; ci < cw.length - 1; ci++) {
         var room = 2 * (q - 4);
-        if (cw[ci] + cw[ci + 1] > room) { if (cw[ci] >= cw[ci + 1]) cw[ci] = Math.max(24, room - cw[ci + 1]); else cw[ci + 1] = Math.max(24, room - cw[ci]); }
+        if ((cw[ci] + cw[ci + 1] - 2) / 1.04 > room) { if (cw[ci] >= cw[ci + 1]) cw[ci] = Math.max(24, room - cw[ci + 1]); else cw[ci + 1] = Math.max(24, room - cw[ci]); }
       }
       cw[cw.length - 1] = Math.min(cw[cw.length - 1], 2 * (youX - Math.ceil(ylw / 2) - 6 - cx[cx.length - 1]));
       out += P.line({ key: kp + 'chapters', from: { x: cx[0], y: L }, to: { x: cx[cx.length - 1], y: L }, style: 'fixed', part: sp.chapterPart || 'rounds' });
       ch.forEach(function (c, i) { out += P.chapter({ key: kp + 'ch:' + i, x: cx[i], y: L, label: castLabel(c.label, cw[i], 10.5), state: c.state, part: c.part }); });
       out += P.line({ key: kp + 'toyou', from: { x: cx[cx.length - 1] + 8, y: L }, to: { x: youX - Math.round(yh) - 2, y: L }, style: 'toyou', part: you.part || 'you' });
-      out += P.you({ x: youX, y: L, s: ys, at: 'below', ly: 23, label: esc(you.label), part: you.part || 'you' });
+      /* You stands 2 above the line so its name keeps the chapters' baseline (+23) and still clears the figure */
+      out += P.you({ x: youX, y: L - 2, s: ys, at: 'below', ly: 25, label: esc(you.label), part: you.part || 'you' });
       busY = L + 35;
       if (G.nobus) { busY = L + 30; stem = null; }
     } else {
       /* the input paper, the hub (a lead puppet, or Review's junction), You */
-      var inp = sp.input, pw = inp ? (full ? G.paperW : Math.max(72, Math.min(G.paperW + 54, castW(castPlain(inp.short || inp.label), 10.5) + 28))) : 0, ph = G.paperH, px = M;
+      /* a full plate drawn wider than 576 (a run view's 640) gives half the extra width to the paper, so more of the job shows */
+      var inp = sp.input, pw = inp ? (full ? G.paperW + Math.max(0, Math.round((W - G.W) / 2)) : Math.max(72, Math.min(G.paperW + 54, castW(castPlain(inp.short || inp.label), 10.5) + 28))) : 0, ph = G.paperH, px = M;
       var ylw2 = Math.max(castW(you.label, 11), you.sub ? castW(you.sub, 10.5) : 0);
       var yx = W - M - ylw2 - Math.round(yh + 4);
-      if (inp) out += P.paper({ key: kp + 'paper', x: px, y: BY - ph / 2, w: pw, h: ph, label: full ? inp.label : esc(inp.short || inp.label), sub: full ? inp.sub : '', part: inp.part });
+      /* input.text (plain words, the job or the topic) is fitted to the paper's inner width here, so the paper never
+         leans on its CSS ellipsis once drawn (a mirror span, input.mirror, keeps it live while you type) */
+      var inSub = inp && inp.text != null ? '<span' + (inp.mirror ? ' data-collab-mirror="' + esc(inp.mirror) + '"' : '') + '>' + castLabel(inp.text, pw - 24, 11) + '</span>' : inp && inp.sub;
+      if (inp) out += P.paper({ key: kp + 'paper', x: px, y: BY - ph / 2, w: pw, h: ph, label: full ? inp.label : esc(inp.short || inp.label), sub: full ? inSub : '', part: inp.part });
       var after = px + pw, edgeFrom;
       if (sp.hub) {
-        var hb = sp.hub, hx = after + (inp ? 30 : 0) + Math.round(half);
+        /* 26 from the paper to the hub's figure: retro's wide "This chat's assistant" still leaves the edge to You */
+        var hb = sp.hub, hx = after + (inp ? 26 : 0) + Math.round(half);
         var hlw = Math.max(castW(hb.label, 11), hb.sub ? castW(hb.sub, 10.5) : 0);
         if (inp) out += P.line({ key: kp + 'in', from: { x: after, y: BY }, to: { x: hx - Math.round(half) + 2, y: BY }, style: 'fixed', part: inp.part });
         out += '<g class="pmx-p-hub"' + part(hb.part) + '>' + P.seat({ key: hb.key, x: hx, y: BY, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, at: 'right', ly: hb.sub ? -2 : 4,
@@ -978,14 +1022,15 @@
       out += P.line({ key: kp + 'after-head:' + j, d: 'M' + (ax1 - 5) + ' ' + (ay - 4) + 'L' + ax1 + ' ' + ay + 'L' + (ax1 - 5) + ' ' + (ay + 4), style: 'fixed', part: 'assign', draw: 'right' });
       if (c.after.label && ax1 - ax0 >= castW(c.after.label, 10.5) + 4) out += P.label({ x: Math.round((ax0 + ax1) / 2), y: ay - 10, text: esc(c.after.label), cls: 'sub', anchor: 'middle', part: 'assign' });
     });
-    var lo = { lab: lab, sub: full };
-    core.forEach(function (c, i) { out += castSeat(c, xs[i], SY, G, lo); });
+    /* every name sits G.name under the figure's box (the seat's own default is the same 14 in full and compact) */
+    var lo = { lab: lab, sub: full, ly: Math.round(half) + G.name };
+    core.forEach(function (c, i) { out += castSeat(c, xs[i], SY, G, { lab: Math.floor(scw[i]) - 6, sub: lo.sub, ly: lo.ly }); });
     var nameY = SY + Math.round(half) + G.name, inkBottom = nameY + (full && core.concat(wing).some(function (c) { return c.sub; }) ? G.sub : 0) + 3;
     if (m) {
       var rx = x0 + n * pitch + Math.round(gap / 2);
       /* the rule spans the seat row only: it starts below the bus (and below BrainStorm's chapter names) */
       out += P.line({ key: kp + 'wing', from: { x: rx, y: sp.chapters ? Math.max(busY + 2, L + 35) : busY + 2 }, to: { x: rx, y: inkBottom }, style: 'rule', part: 'specialists' });
-      wing.forEach(function (c, i) { out += castSeat(c, wxs[i], SY, G, { lab: wcs[i] - 8, sub: wingSub }); });
+      wing.forEach(function (c, i) { out += castSeat(c, wxs[i], SY, G, { lab: wcs[i] - 8, sub: wingSub, ly: lo.ly }); });
     }
     var H = inkBottom + 7;
     if (full) {
@@ -993,7 +1038,7 @@
       var qi = []; core.forEach(function (c, i) { if (c.waits) qi.push(i); });
       var ly = inkBottom + 9;
       if (qi.length && sp.waits) {
-        var bx0 = xs[qi[0]] - Math.round(lab / 2), bx1 = xs[qi[qi.length - 1]] + Math.round(lab / 2);
+        var bx0 = xs[qi[0]] - Math.round((scw[qi[0]] - 6) / 2), bx1 = xs[qi[qi.length - 1]] + Math.round((scw[qi[qi.length - 1]] - 6) / 2);
         out += P.line({ key: kp + 'waits', from: { x: bx0, y: ly }, to: { x: bx1, y: ly }, style: 'fixed', part: sp.waits.part || 'parallel' });
         out += P.label({ x: Math.round((bx0 + bx1) / 2), y: ly + 17, text: esc(qi.length > 1 ? (sp.waits.many || sp.waits.label) : sp.waits.label), anchor: 'middle', part: sp.waits.part || 'parallel' });
         H = ly + 24;
@@ -1022,7 +1067,8 @@
       /* a wing that does not fit by name stands as one group: its marks side by side and the word "specialists" */
       if (need > W - 2 * M && m) { grouped = true; lw = 96; while ((need = widthOf(lw)) > W - 2 * M && lw > 44) lw -= 4; }
       if (need > W - 2 * M) return '';
-      x = M + half;
+      /* the row is centred in the plate (a short room does not hug the left side) */
+      x = M + Math.max(0, Math.floor((W - 2 * M - need) / 2)) + half;
       var prevEnd = null;
       items.forEach(function (c, j) {
         var isHub = hb && j === 0, w2 = Math.min(lw, castW(c.label, 11));
@@ -1045,23 +1091,34 @@
       }
       return castPlate(sp, 'line', W, G.H, out);
     }
-    /* stacked: the helpers at one pitch; the hub, You and each specialist in a cell as wide as its name. A wing that
-       does not fit that way stands as one group (two marks side by side over one word, "specialists"). */
+    /* stacked: the helpers at one pitch; the hub, You and each specialist in a cell as wide as its name. The pitch is
+       the one the longest helper name needs (6 between neighbours' names; at least G.pref, so a short-named team still
+       breathes) when the row has room for it, and the row is centred. A wing that does not fit by name, or whose names
+       would cut a helper's that grouping keeps whole, stands as one group (two marks side by side over one word,
+       "specialists"). */
     var hubCell = hb ? Math.max(G.pmin, castW(hb.label, 11) + 12) : 0, youCell = Math.max(44, castW(you.label, 11) + 12);
     var wcs = wing.map(function (c) { return Math.max(48, castW(c.label, 11) + 10); }), grouped = false;
     var wingW = m ? G.wing + wcs.reduce(function (a, b) { return a + b; }, 0) : 0;
     var fixed = hubCell + (hb ? 16 : 0) + 26 + youCell;
-    var pitch = Math.min(G.pmax, Math.floor((W - 2 * M - fixed - wingW) / n));
-    if (pitch < G.pmin && m) { grouped = true; wingW = G.wing + Math.max(m * 2 * half + (m - 1) * 6, castW('specialists', 11) + 10); pitch = Math.min(G.pmax, Math.floor((W - 2 * M - fixed - wingW) / n)); }
+    var needs = core.map(function (c) { return castW(c.label, 11) + 6; }), want = Math.max(G.pmin, Math.max.apply(null, needs));
+    var fits = function (p) { return castFitsAll(needs, p, G.pmin); };
+    var room = function () { return Math.floor((W - 2 * M - fixed - wingW) / n); };
+    var pitch = Math.min(G.pmax, Math.max(want, G.pref), room());
+    if (m && !fits(pitch)) {
+      var wingNamed = wingW;
+      wingW = G.wing + Math.max(m * 2 * half + (m - 1) * 6, castW('specialists', 11) + 10);
+      var p2 = Math.min(G.pmax, Math.max(want, G.pref), room());
+      if (fits(p2) || (pitch < G.pmin && p2 >= G.pmin)) { pitch = p2; grouped = true; } else wingW = wingNamed;
+    }
     if (pitch < G.pmin) return '';
-    var lab = pitch - 8, ly = half + G.name;
-    x = M;
+    var lab = pitch - 6, ly = half + G.name;
+    x = M + Math.max(0, Math.floor((W - 2 * M - (fixed + n * pitch + wingW)) / 2));
     var hx = null;
     if (hb) { hx = x + hubCell / 2; out += P.seat({ key: hb.key, x: Math.round(hx), y: Y, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, ly: ly, label: esc(hb.label) }); x += hubCell + 16; }
-    var xs = core.map(function (c, j) { return Math.round(x + pitch * (j + .5)); });
+    var cw = castCells(needs, pitch, G.pmin), xs = castXs(cw, x);
     if (hb) out += P.line({ key: kp + 'in', from: { x: Math.round(hx) + half + 2, y: Y }, to: { x: xs[0] - half - 2, y: Y }, style: 'fixed', part: sp.busPart || 'assign' });
     if (sp.screens) for (i = 0; i < n - 1; i++) out += P.screen({ key: kp + 'scr:' + i, x: Math.round((xs[i] + xs[i + 1]) / 2), y: Y + 1, h: 22, part: 'blind' });
-    core.forEach(function (c, j) { out += P.seat({ key: c.key, x: xs[j], y: Y, s: s, role: c.role, seat: c.seat, state: c.state, standin: c.standin, part: c.part, ly: ly, label: castLabel(c.label, lab, 11) }); });
+    core.forEach(function (c, j) { out += P.seat({ key: c.key, x: xs[j], y: Y, s: s, role: c.role, seat: c.seat, state: c.state, standin: c.standin, part: c.part, ly: ly, label: castLabel(c.label, Math.floor(cw[j]) - 6, 11) }); });
     x += n * pitch + 26;
     var yX = Math.round(x + youCell / 2);
     out += P.line({ key: kp + 'toyou', from: { x: xs[n - 1] + half + 4, y: Y }, to: { x: yX - half - 2, y: Y }, style: 'toyou', part: you.part || 'you' });
@@ -1080,7 +1137,7 @@
     return castPlate(sp, 'strip', W, G.H, out);
   }
   /* pmxCastPlate(spec, mode) - one mode of a cast plate ('' when it does not fit). spec: {key, kind, cls,
-     input:{label,sub,part} | chapters:[{label,state,part}], hub:{key,role,label,sub,state,part}, junctionPart,
+     input:{label,sub,text,mirror,short,part} | chapters:[{label,state,part}], hub:{key,role,label,sub,state,part}, junctionPart,
      out:{label,part}, seats:[{key,role,seat,state,standin,label,sub,part,waits}], screens, busPart,
      wing:[{key,role,seat,state,label,sub,part}], you:{label,sub,part}, waits:{label,many,part}, note:{text,part},
      strip:'line' (the strip names sit beside the marks), w:{full,compact,strip,line}}. Labels are plain text. */
@@ -1092,6 +1149,12 @@
        does not fit that, the same mode at 576 (it then shows from 1280 up, and the caption below that) */
     var w0 = num(sp.w && sp.w[kind === 'line' ? 'line' : mode], CAST[kind].W), h = row ? castRow(sp, kind, w0) : castStage(sp, mode, w0);
     if (!h && w0 < 576 && !(sp.w && sp.w[mode])) h = row ? castRow(sp, kind, 576) : castStage(sp, mode, 576);
+    /* a one-line strip (the Chat Room) that is too wide for its names beside the marks (a big room, or the specialists
+       on) stacks them under the marks instead, so the slot still has a named row before the caption */
+    if (!h && kind === 'line' && mode === 'strip') {
+      var w1 = num(sp.w && sp.w.strip, CAST.strip.W);
+      h = castRow(sp, 'strip', w1) || (w1 < 576 ? castRow(sp, 'strip', 576) : '');
+    }
     return h;
   }
   /* pmxCastFit(spec + {fitKey, affects, caption, modes}) - the plate slot of a sheet: every mode that fits its width,
@@ -1240,10 +1303,14 @@
           '<span class="pmx-switch-word">' + str(op.label) + '</span>' + (op.helper ? '<span class="pmx-switch-help">' + op.helper + '</span>' : '') + '</button>';
       }).join('') + '<i class="pmx-switch-rule" aria-hidden="true"></i></div>';
   }
+  /* pmxCheck({key,cls,affects,attrs,checked,disabled,label,helper,glyph}) - glyph (item 11, 2026-10-07): a neon glyph
+     between the box and the words, at the label's first line (Grill Me's kettle grill); the row is its host, so
+     hovering it or focusing the box plays the glyph's act once (neon-icons.css 8d) */
   function pmxCheck(o) {
     o = o || {};
-    return '<label class="' + cls('pmx-check', o.cls) + '"' + k(o.key) + at('data-pmx-affects', o.affects) + '><input type="checkbox"' + raw(o.attrs) + (o.checked ? ' checked' : '') + (o.disabled ? ' disabled' : '') + ' data-pmx-harness>' +
-      '<span class="pmx-box" aria-hidden="true"></span><span class="pmx-check-copy"><b>' + str(o.label) + '</b>' + (o.helper ? '<small>' + o.helper + '</small>' : '') + '</span></label>';
+    return '<label class="' + cls('pmx-check', o.cls) + '"' + k(o.key) + at('data-pmx-affects', o.affects) + (o.glyph ? ' data-glyph="' + esc(o.glyph) + '"' : '') + '><input type="checkbox"' + raw(o.attrs) + (o.checked ? ' checked' : '') + (o.disabled ? ' disabled' : '') + ' data-pmx-harness>' +
+      '<span class="pmx-box" aria-hidden="true"></span>' + (o.glyph ? '<span class="pmx-check-glyph" aria-hidden="true">' + pmxGlyph(o.glyph, 16) + '</span>' : '') +
+      '<span class="pmx-check-copy"><b>' + str(o.label) + '</b>' + (o.helper ? '<small>' + o.helper + '</small>' : '') + '</span></label>';
   }
   function pmxWords(o) {
     o = o || {};

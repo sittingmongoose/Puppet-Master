@@ -2106,13 +2106,15 @@
   function cardTitleOf(d) { return (d.name && String(d.name).trim()) || deriveCardTitle(d.purpose) || ('New ' + KIND_LABEL[d.kind]); }
   /* the plate's "The job" paper mirrors the first four words, cut to what its 126 px of text fit (about 16
      characters in the widest theme font) at a word boundary, so the words never run under the paper's edge */
+  /* the job (or the topic) on a plate's paper: its first words, up to 40 characters; the paper fits them to its own
+     width with an ellipsis (module-shell.js paper), so a wide paper shows more of the job than "Export two…" */
   function jobWords(d) {
     var w = String(d.purpose || '').trim().split(/\s+/).filter(Boolean);
     if (!w.length) return 'Not written yet';
-    var take = w.slice(0, 4), cut = w.length > 4;
-    while (take.length > 1 && take.join(' ').length > 16) { take.pop(); cut = true; }
+    var take = w.slice(0, 8), cut = w.length > 8;
+    while (take.length > 1 && take.join(' ').length > 40) { take.pop(); cut = true; }
     var t = take.join(' ');
-    if (t.length > 16) { t = t.slice(0, 15); cut = true; }
+    if (t.length > 40) { t = t.slice(0, 39); cut = true; }
     return t + (cut ? '…' : '');
   }
 
@@ -2755,7 +2757,7 @@
     var seats = castAfter(castSeats(d, 'crew', live, { noun: 'New helper', part: 'team', waits: function (r, i) { return i >= eff; } }), live);
     var caption = (eff >= n ? (n === 1 ? 'The Coordinator and 1 helper.' : 'All ' + n + ' work at once.') : eff + ' work at once; the other ' + waiting + (waiting === 1 ? ' waits its turn.' : ' wait their turn.')) + ' You get one checked result.';
     return { key: 'pmx-plate-crew', kind: 'crew', fitKey: 'pmx-plate-fit:crew', affects: 'team', busPart: 'assign',
-      input: { label: 'The job', sub: '<span data-collab-mirror="job">' + esc(jobWords(d)) + '</span>', part: 'job' },
+      input: { label: 'The job', text: jobWords(d), mirror: 'job', part: 'job' },
       hub: { key: 'pmx-p-seat:crew:lead', role: 'coordinator', label: 'Coordinator', sub: (live && live.coordinator) || coord.sub || coord.label, state: (live && live.lead) || 'idle', part: 'lead' },
       seats: seats, wing: castWing(d, 'crew', live),
       you: { label: 'You', sub: live && live.done ? 'got one checked result' : 'one checked result', part: 'you' },
@@ -2782,15 +2784,16 @@
 
   /* BrainStorm (8.4): the bar is the seven chapters, ending in the accent edge to You (one plan); the team hangs from
      a bar of its own under the chapter names, behind screens (each drafts alone). A must-have rule lights the Vote
-     chapter ('rules': a rule beats the votes). lean: a recorded draft's sheet carries the guide strip, so its compact
-     plate is drawn at 1x to keep the chapters where first-time users meet it. */
+     chapter ('rules': a rule beats the votes). Its slot also carries the lean mode (the compact at .86, about 99 tall)
+     between compact and strip, so a slot of 99-117 (the recorded draft's beside its guide strip, where first-time users
+     meet it, or a short window) keeps the chapters and the strings instead of dropping to the strip. */
   var BS_CHAPTERS = [['Understand', 'questions'], ['Draft alone', 'blind'], ['Line up', 'team'], ['Debate', 'rounds'], ['Check facts', 'research'], ['Vote', 'team'], ['Write the plan', 'you']];
   function brainstormCast(d, live) {
     var n = d.rows.length, rules = String(d.mustHaves || '').trim() ? ' rules' : '', stop = live && live.stop != null ? live.stop : -1;
     var caption = n + ' helpers draft alone, debate, check the facts and vote. You get one plan.';
     /* compact and strip at 576: the seven chapter names and four long helper names need the width, and BrainStorm's slot
        at 1024 x 768 holds the caption only */
-    return { key: 'pmx-plate-bs', kind: 'brainstorm', fitKey: 'pmx-plate-fit:bs', affects: 'team', busPart: 'team', lean: isRecordedDraft(d) && !live, w: { compact: 576, strip: 576 },
+    return { key: 'pmx-plate-bs', kind: 'brainstorm', fitKey: 'pmx-plate-fit:bs', affects: 'team', busPart: 'team', modes: ['full', 'compact', 'lean', 'strip'], w: { compact: 576, lean: 576, strip: 576 },
       chapters: BS_CHAPTERS.map(function (c, i) { return { label: c[0], state: stop < 0 ? 'next' : i < stop ? 'done' : i === stop ? 'now' : 'next', part: c[1] + (i === 0 ? ' job' : '') + (i === 5 ? rules : '') }; }),
       seats: castSeats(d, 'brainstorm', live, { noun: 'Helper', part: 'team blind', dash: false }), screens: n > 1,
       wing: castWing(d, 'brainstorm', live),
@@ -2803,20 +2806,15 @@
   /* Chat Room (8.3): the topic goes to the Moderator, who calls on the helpers hanging under it; You pick what to keep.
      The turn policy is one note line, never arcs; the strip names sit beside the marks (40 tall: the Chat Room's
      slot is the shortest, because the roster pins the Moderator's row). */
-  function roomTopic(d) {
-    var w = String(d.purpose || '').trim().split(/\s+/).filter(Boolean);
-    if (!w.length) return 'Not written yet';
-    var take = w.slice(0, 5), cut = w.length > 5;
-    while (take.length > 1 && take.join(' ').length > 18) { take.pop(); cut = true; }
-    return take.join(' ') + (cut ? '…' : '');
-  }
+  /* the topic's words are the job's (liveWords mirrors both papers with jobWords while you type) */
+  function roomTopic(d) { return jobWords(d); }
   function roomCast(d, live) {
     var n = d.rows.length, cfg = d.config || {}, pol = optionOf(CONFIG_CHOICES.turnPolicy.options, cfg.turnPolicy || 'moderated');
     var R = pol.value === 'ask_everyone_once' ? 1 : clamp(cfg.maxRounds || 5, 1, 20);
     var note = pol.label + ' · ' + (live && live.rounds ? live.rounds : (R === 1 ? 'one round' : 'up to ' + R + ' rounds'));
     var caption = n + ' helpers and the Moderator talk it through. You pick what, if anything, to keep.';
     return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line',
-      input: { label: 'The topic', sub: '<span data-collab-mirror="job">' + esc(roomTopic(d)) + '</span>', part: 'job' },
+      input: { label: 'The topic', text: roomTopic(d), mirror: 'job', part: 'job' },
       hub: { key: 'pmx-p-seat:room:mod', role: 'moderator', label: 'Moderator', sub: cfg.moderatorPersona || 'Product Manager', state: (live && live.lead) || 'idle', part: 'moderator' },
       seats: castSeats(d, 'chat_room', live, { noun: 'Helper', part: 'team', dash: false }), wing: castWing(d, 'chat_room', live),
       you: { label: 'You', sub: 'pick what to keep', part: 'you' },
@@ -2947,7 +2945,12 @@
       var state = reason ? 'disabled' : (rec && !on) ? 'disabled' : on ? 'on' : 'off';
       return { key: 'pmx-spec-' + key, name: name, helper: helper, state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
         affects: (key === 'wonderer' ? 'wonderer' : 'grill') + ' specialists',
-        mark: S.pmxMark({ role: role, seat: SPECIALIST_SEAT[key], size: 24, state: on ? 'idle' : 'optional' }),
+        /* item 11 (Jared, 2026-10-07: "The Grill me icon should be a grill ... in neon design like the rest"): the
+           shelf's Grill Me item is the neon kettle grill in Grill Me's seat hue, and hovering the row or focusing its
+           Add plays the grill's act (neon-icons.css 8d). Once added, Grill Me's puppet stands behind the same kettle in
+           the plate and the roster. Wonderer keeps its puppet mark. */
+        mark: key === 'grillMe' ? '<span class="pmx-spec-glyph" style="--nx-ink:var(--pmx-seat-' + SPECIALIST_SEAT[key] + ')">' + S.pmxGlyph('grill', 24) + '</span>'
+          : S.pmxMark({ role: role, seat: SPECIALIST_SEAT[key], size: 24, state: on ? 'idle' : 'optional' }),
         input: { attrs: 'data-collab-input="' + key + '"' },
         control: PK.modelButton('collab-pick-model', 'collab-model-spec-' + key, (routes[key] || SPECIALIST_DEFAULTS[key]).modelId, 'data-specialist="' + key + '"') };
     }

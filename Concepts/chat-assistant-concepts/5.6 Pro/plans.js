@@ -1799,7 +1799,7 @@
         '<button type="button" class="soft-button" data-action="pd-q-again" data-id="'+esc(r.plan_id)+'">Re-present the same question</button>'+
         '<button type="button" class="soft-button" data-action="pd-q-reuse" data-id="'+esc(r.plan_id)+'">Resolve from a prior answer</button>'+
         '<button type="button" class="soft-button" data-action="pd-q-research" data-id="'+esc(r.plan_id)+'">Resolve by research</button>'+
-        '<button type="button" class="soft-button" data-action="pd-q-grill" data-id="'+esc(r.plan_id)+'">'+(qb.grill_me_enabled?'Turn Grill Me off':'Turn Grill Me on')+'</button>'+
+        '<button type="button" class="soft-button" data-action="pd-q-grill" data-id="'+esc(r.plan_id)+'">'+(ctx&&ctx.icon?ctx.icon('grill',13):'')+(qb.grill_me_enabled?'Turn Grill Me off':'Turn Grill Me on')+'</button>'+
       '</div>'+
       '<p class="pd-note">One counter for the whole run, shared by every participant — the limit is never multiplied by participant count. A question is charged once, when its identity is first durably presented; re-presenting it charges nothing. The six bases are 3 / 6 / 8 for Quick, Standard and Thorough and 10 / 15 / 20 for Deep Thorough, Exhaustive and BrainStorm, and Grill Me adds 25, giving 28 / 31 / 33 / 35 / 40 / 45.</p></section>');
 
