@@ -250,7 +250,11 @@ body[data-theme="glass-light"] .pmx-sheet{--pmx-q-n-ink:#5c4098;}
 body[data-theme$="-light"] .pmx-sheet .pmx-q-n{color:var(--pmx-q-n-ink,var(--accent));}
 body[data-theme^="friendly"] .pmx-sheet{--pmx-q-n-r:6px;}
 body[data-theme^="retro"] .pmx-sheet{--pmx-q-n-r:2px;}
-.pmx-sheet :is(.pmx-q, .pmx-shelf):focus-within > .pmx-q-head > .pmx-q-n, .pmx-sheet .pmx-hero:focus-within > .pmx-hero-main > .pmx-q-head > .pmx-q-n{color:var(--on-accent);}
+.pmx-sheet :is(.pmx-q, .pmx-shelf):focus-within > .pmx-q-head > .pmx-q-n, .pmx-sheet .pmx-hero:focus-within > .pmx-hero-main > .pmx-q-head > .pmx-q-n{color:var(--pmx-q-n-on, var(--on-accent));}
+/* white on these two accents is under 4.5:1 (basic-dark 3.53, friendly-light 3.73). The tile stays the accent;
+   the numeral takes a dark ink. Other themes keep --on-accent, which already clears 4.5. */
+body[data-theme="basic-dark"]{--pmx-q-n-on:#16161a;}
+body[data-theme="friendly-light"]{--pmx-q-n-on:#2a0b16;}
 .pmx-sheet :is(.pmx-q, .pmx-shelf):focus-within > .pmx-q-head > .pmx-q-n::before, .pmx-sheet .pmx-hero:focus-within > .pmx-hero-main > .pmx-q-head > .pmx-q-n::before{background:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);}
 html[data-motion="reduced"] .pmx-sheet .pmx-q-n, html[data-motion="reduced"] .pmx-sheet .pmx-q-n::before{transition:none;}
 .pmx-sheet .pmx-q-title{margin:0;min-width:0;font:var(--pmx-fs-q);letter-spacing:var(--pmx-ls-q);color:var(--text);}
@@ -332,7 +336,8 @@ body[data-theme^="retro"] .pmx-sheet :is(.pmx-ctl-copy, .pmx-spec-copy) .pmx-hel
    plate is at its floor */
 .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 140px 66px;margin-top:12px;flex:0 1 auto;display:flex;flex-direction:column;min-height:0;}
 body[data-theme^="friendly"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 144px 66px;}
-body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 188px 150px 66px;}
+/* retro mono "Claude Sonnet 4.6" needs 216 in the model column (188 ellipsized it to "4…"). The flexible job column gives the 28 px. */
+body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 216px 150px 66px;}
 /* retro: the mono roster takes a little more of the body so job names ellipsize less (two-column windows only:
    below 948 px the one-column rule must win, review cycle 1) */
 @media (min-width: 948px){
@@ -791,6 +796,11 @@ body[data-theme^="retro"] .pmx-plate{background-image:linear-gradient(var(--pmx-
 .pmx-p-seat, .pmx-p-slot, .pmx-p-screen-g, .pmx-p-paper-g, .pmx-p-you, .pmx-p-chapter, .pmx-p-cue-g{transform:translate(var(--x,0),var(--y,0));transition:transform var(--pmx-t-move) var(--pmx-ease-move),opacity var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-p-lab{font:var(--pmx-fs-plate);fill:var(--text);}
 .pmx-p-sub{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--subtle);}
+/* Retro Light lead seat: hover-to-light fades every other plate part to 35% (pmx-system.css). On this paper the
+   lead is near-black ink, so 35% composites to about rgb(168,165,160) on #F5F0E8 (~2.2:1) and the puppet, the name
+   and the sub line wash out together. The seat stays at full ink (the labels' own text colour). The crown stays
+   the retro gold prop, never the accent. Other themes are unchanged. */
+body[data-theme="retro-light"] #pmOverlayRoot[data-pmx-focus] .pmx-plate :is(.pmx-p-seat, .pmx-p-hub):has(.pmx-p-mark[data-sil="lead"]){opacity:1;}
 .pmx-p-note{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--muted);}
 .pmx-p-voice{font:var(--pmx-w-reg) 12px/17.5px var(--pmx-voice);fill:var(--muted);}
 .pmx-p-paper{fill:var(--surface-2);stroke:var(--pmx-line);stroke-width:1;}
@@ -1383,7 +1393,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
      rule narrowed them, which cut "Implementer" and the model names at 900 and 700) */
   .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(96px,1fr) 176px 140px 66px;}
   body[data-theme^="friendly"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(90px,1fr) 188px 144px 66px;}
-  body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 188px 150px 66px;}
+  body[data-theme^="retro"] .pmx-sheet .pmx-roster{--pmx-cols:28px minmax(84px,1fr) 216px 150px 66px;}
   /* the Advanced page scrolls with the body, never inside a clipped grid */
   .pmx-sheet .pmx-advpage{min-height:auto;}
   .pmx-sheet .pmx-advgrid{min-height:auto;overflow:visible;}
