@@ -423,6 +423,46 @@ PATCHES = [
     ("clearFiles: () => { stop('project-changed'); localFiles.clear(); },",
      "clearFiles: () => { stop('project-changed'); if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP(); localFiles.clear(); },",
      'setup sound preview: project change'),
+    # Reduced Motion used to give every element a 0.01 ms transition. A theme repaint then started a transition for
+    # every themed property on every element (films M4: ticking NieR in the window froze the page for 15-19 s). None
+    # means a property change is just a paint. Animations stay at one instant frame so animationend still runs.
+    # transitionend listeners in the base page were checked: the ones that must finish already do, via motionReduced()
+    # (which includes this media query) or a timeout. The home FLIP returns before it listens when motion is reduced.
+    ("    @media (prefers-reduced-motion: reduce) {\n"
+     "      *, *::before, *::after {\n"
+     "        animation-duration: .01ms !important;\n"
+     "        animation-iteration-count: 1 !important;\n"
+     "        transition-duration: .01ms !important;\n"
+     "        scroll-behavior: auto !important;\n"
+     "      }\n"
+     "      #glass-bg * { animation: none !important; }\n"
+     "    }\n"
+     "    [data-motion=\"reduced\"] *,\n"
+     "    [data-motion=\"reduced\"] *::before,\n"
+     "    [data-motion=\"reduced\"] *::after {\n"
+     "      animation-duration: .01ms !important;\n"
+     "      animation-iteration-count: 1 !important;\n"
+     "      transition-duration: .01ms !important;\n"
+     "      scroll-behavior: auto !important;\n"
+     "    }",
+     "    @media (prefers-reduced-motion: reduce) {\n"
+     "      *, *::before, *::after {\n"
+     "        animation-duration: .01ms !important;\n"
+     "        animation-iteration-count: 1 !important;\n"
+     "        transition: none !important;\n"
+     "        scroll-behavior: auto !important;\n"
+     "      }\n"
+     "      #glass-bg * { animation: none !important; }\n"
+     "    }\n"
+     "    [data-motion=\"reduced\"] *,\n"
+     "    [data-motion=\"reduced\"] *::before,\n"
+     "    [data-motion=\"reduced\"] *::after {\n"
+     "      animation-duration: .01ms !important;\n"
+     "      animation-iteration-count: 1 !important;\n"
+     "      transition: none !important;\n"
+     "      scroll-behavior: auto !important;\n"
+     "    }",
+     'reduced motion: no transitions'),
 ]
 
 

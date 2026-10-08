@@ -107,13 +107,19 @@ html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-promise li { a
 html[data-motion="reduced"] #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-opening .o55-win, html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeonly 160ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation-name: o55-fadeout !important; }
-/* (no transition at all: a 0.01 ms one made every style change in the window, transitioned or not, a transition that
-   showed its value a frame late; nothing waits for a transition's end) */
-html[data-motion="reduced"] #pm-o55-onboarding * { transition-duration: 0s !important; transition-delay: 0s !important; }
+/* (no transition at all: a 0.01 ms one made every style change, transitioned or not, a transition that showed its
+   value a frame late and, on the whole page, a multi-second style pass. Nothing in this window waits for a
+   transition's end.) */
+html[data-motion="reduced"] #pm-o55-onboarding * { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
   #pm-o55-onboarding .o55-entering .o55-st, #pm-o55-onboarding .o55-entering .o55-main *, #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
   #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
   #pm-o55-onboarding.o55-opening .o55-win { animation: o55-fadeonly 160ms ease both !important; }
   #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeout 160ms ease both !important; }
-  #pm-o55-onboarding * { transition-duration: 0s !important; transition-delay: 0s !important; }
+  #pm-o55-onboarding * { transition: none !important; }
+}
+/* The stage's colours in one custom property, so a look change is one read (60-ui-core.js readStageTokens) rather than
+   a getPropertyValue walk per token. Specified on each themed element, so a tile or a NieR preview resolves its own. */
+html, [data-theme], [data-o55-nier-preview] {
+  --o55-tokpack: var(--background, #121212) | var(--surface, #1e1e1e) | var(--text-primary, #e8e8e8) | var(--text-secondary, #aaa) | var(--text-muted, #888) | var(--border, #333) | var(--accent-blue, #64b5f6) | var(--accent-magenta, #ff69b4) | var(--accent-lime, #3dd68c) | var(--accent-orange, #ffa347) | var(--accent-warning, #f5c542) | var(--accent-error, #ef5350) | var(--accent-primary, var(--accent-blue, #64b5f6)) | var(--surface-elevated, var(--surface, #1e1e1e)) | var(--o55-nier-on-ink, var(--background, #121212));
 }

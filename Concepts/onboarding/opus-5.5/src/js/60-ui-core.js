@@ -86,6 +86,66 @@
 
   /* ---------------------------------------------------------------- theme */
   let lastLook = null;
+  /* Stage colours, once per look. The art asks on every mount (O55.art.tokens). Walking each custom property with
+     getPropertyValue forced a style pass per token (films M4: about 0.9 s under Reduced Motion, inside this
+     function's remount). --o55-tokpack (20-motion.css) holds every colour. One getComputedStyle reads it, and the
+     snapshot is kept until the theme, NieR Mode, its parts or the root's own variables change. A mount copies it.
+     The art's own reader stays the fallback when the pack is missing. */
+  const TOK_FIELDS = ['bg', 'surface', 'text', 'text2', 'muted', 'border', 'blue', 'magenta', 'lime', 'orange', 'warn', 'error', 'primary', 'raised', 'onInk'];
+  const tokSnaps = new Map();
+  const PREVIEW_OK = /^(dark|light)$/;
+  function tokenOwner(el) {
+    const root = document.documentElement;
+    return (el && el.closest && el.closest('[data-theme], [data-o55-nier-preview]')) || root;
+  }
+  function tokenKey(owner) {
+    const root = document.documentElement;
+    const pv = owner !== root ? owner.getAttribute('data-o55-nier-preview') : null;
+    const preview = PREVIEW_OK.test(pv || '') ? pv : null;
+    const nier = root.hasAttribute('data-o55-nier') ? 'nier:' + (root.getAttribute('data-o55-nier-parts') || '') + '|' : '';
+    return (owner === root ? 'r|' : 'o|') + nier + (preview ? 'pv:' + preview + ':' + (owner.getAttribute('data-o55-nier-parts') || '') + '|' : '')
+      + (owner.getAttribute('data-theme') || '') + '|' + (root.getAttribute('style') || '');
+  }
+  function tokenFlags(owner) {
+    const root = document.documentElement;
+    const pv = owner !== root ? owner.getAttribute('data-o55-nier-preview') : null;
+    const preview = PREVIEW_OK.test(pv || '') ? pv : null;
+    const partsAttr = (owner !== root && owner.getAttribute('data-o55-nier-parts')) || (root.hasAttribute('data-o55-nier') ? (root.getAttribute('data-o55-nier-parts') || '') : null);
+    const nier = (root.hasAttribute('data-o55-nier') && owner === root) || !!preview;
+    return {
+      nier, nierPreview: preview, root: owner === root,
+      nierParts: nier && partsAttr != null ? partsAttr.split(/\s+/).filter(Boolean) : null
+    };
+  }
+  function readStageTokens(el) {
+    const root = document.documentElement;
+    el = el || (S.root && S.root.querySelector('.o55-stage')) || root;
+    const owner = tokenOwner(el), key = tokenKey(owner), hit = tokSnaps.get(key);
+    if (hit) return Object.assign({}, hit);
+    if (tokSnaps.size > 40) tokSnaps.clear();
+    const raw = (getComputedStyle(el).getPropertyValue('--o55-tokpack') || '').trim();
+    const parts = raw.split('|').map((s) => s.trim().replace(/^["']|["']$/g, ''));
+    if (parts.length !== TOK_FIELDS.length || parts.some((s) => !s)) return null;
+    const t = tokenFlags(owner);
+    TOK_FIELDS.forEach((name, i) => { t[name] = parts[i]; });
+    tokSnaps.set(key, t);
+    return Object.assign({}, t);
+  }
+  /* every look already on the window, in one turn, before a remount replaces the nodes */
+  function warmStageTokens() {
+    if (!S.root) return;
+    const nodes = [S.root.querySelector('.o55-stage') || document.documentElement];
+    S.root.querySelectorAll('[data-theme], [data-o55-nier-preview]').forEach((n) => nodes.push(n));
+    nodes.forEach((n) => { if (n) readStageTokens(n); });
+  }
+  (function hookStageTokens() {
+    const art = O55.art;
+    if (!art || !art.tokens || art.tokens._o55Packed) return;
+    const orig = art.tokens.bind(art);
+    function tokens(el) { return readStageTokens(el) || orig(el); }
+    tokens._o55Packed = true;
+    art.tokens = tokens;
+  })();
   function syncTheme(fromObserver) {
     let th = O55.theme();
     /* While the window is open its look is the one chosen here. Settings reapplies a Project's saved theme when a
@@ -99,6 +159,8 @@
     const look = th.family + '-' + th.mode + (document.documentElement.hasAttribute('data-o55-nier') ? '-nier' : '');
     S.root.setAttribute('data-family', th.family); S.root.setAttribute('data-mode', th.mode);
     S.root.querySelector('.o55-stage').setAttribute('data-family', th.family);
+    /* after the attributes, before any mount: one read of the colours the new look already computed */
+    warmStageTokens();
     if (lastLook && lastLook !== look && fromObserver) {
       /* NieR Mode turned on or off on the look screen (O55.nierLook.busy(): its moment is playing under the reboot's
          cover): the new cast is mounted waiting in the wings (ensembleHold) and lowered in at the reveal. When only NieR
@@ -263,6 +325,7 @@
 
   /* Quiet in-screen update: morph the current layer; never replays the entrance. */
   function refresh() {
+    flushOpen();
     if (!S.open) return;
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
@@ -374,6 +437,7 @@
 
   /* ---------------------------------------------------------------- navigation */
   function go(id, opts) {
+    flushOpen();
     opts = opts || {};
     if (!SCREENS.defs[id]) { console.warn('O55: unknown screen', id); return; }
     const from = SCREENS.defs[S.sess.screen];
@@ -393,6 +457,7 @@
     transition(opts.dir || 'fwd');
   }
   function back() {
+    flushOpen();
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.onBack && def.onBack(S) === false) return;
     let prev = S.sess.history.pop();
@@ -549,11 +614,38 @@
   const warm = () => { try { O55.motion.softwareRendered(); } catch (_) {} };
   if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(warm, { timeout: 6000 }); else window.setTimeout(warm, 3000);
 
+  let openGen = 0, pendingMount = null;
+  function clearOpenScrim() { const n = document.getElementById('o55-open-scrim'); if (n) n.remove(); }
+  /* A caller that opens the window and drives it in the same turn (go, back, refresh: the demo bar, the film and
+     scenario tools) gets the window built first; close before the build cancels the open. */
+  function flushOpen() { const m = pendingMount; if (m) { pendingMount = null; m(); } }
   function open(opts) {
     opts = opts || {};
     if (opts.fresh && O55.tour && O55.tour.hasUnresolved && O55.tour.hasUnresolved()) { O55.tour.start({}); return false; }
-    O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
-    const wasShown = !!(S.open && S.root && !S.root.hidden); /* Start over reopens a window already on screen */
+    /* The scrim dims on the click, and the window is mounted on the next frame. Building it in the click's own
+       turn held the first paint for most of a second, so the app sat undimmed (minor 14). The click adds one
+       empty scrim and returns; the build, the inert app and the theme land on the next frame, under that dim.
+       A window already on screen (Start over) mounts where it is. */
+    if (!opts._mount) {
+      O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
+      const wasShown = !!(S.open && S.root && !S.root.hidden);
+      const focus = opts.returnFocus || document.activeElement;
+      const gen = ++openGen;
+      let mounted = false;
+      const mount = () => { if (mounted || gen !== openGen) return; mounted = true; pendingMount = null; open(Object.assign({}, opts, { _mount: true, _wasShown: wasShown, returnFocus: focus })); };
+      if (wasShown) { mount(); return true; }
+      pendingMount = mount;
+      if (!document.getElementById('o55-open-scrim')) {
+        const flash = document.createElement('div');
+        flash.id = 'o55-open-scrim'; flash.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(flash);
+      }
+      /* A single rAF runs before the next paint, so the scrim would be added and removed with the build and never
+         drawn. The empty frame lets that paint happen; the build is the frame after. */
+      O55.motion.real.raf(() => { if (gen === openGen) O55.motion.real.raf(mount); });
+      return true;
+    }
+    const wasShown = !!opts._wasShown;
     build();
     /* a Project that is being created is never abandoned half-made: starting over waits for it, on its own screen */
     let waitNote = false;
@@ -585,14 +677,16 @@
     if (S.env.lowResource) O55.motion.setLowResource(true, 'scenario');
     setInert(true); reapplyLook(); syncTheme(false); layoutClass();
     r.setAttribute('data-o55-ambient', 'on');
-    r.classList.remove('o55-closing'); r.classList.add('o55-opening');
+    r.classList.remove('o55-closing'); r.classList.add('o55-opening', 'o55-scrim-lit');
     /* the whole window waits, unseen, through the frame that styles it and restyles the now inert app beneath; the
-       first screen's release (transition below) lets the opening play from its first frame */
+       first screen's release (transition below) lets the opening play from its first frame. The click's scrim
+       stays until this root is on screen, so the dim never drops out between the two. */
     if (!wasShown && !O55.motion.reduced()) r.classList.add('o55-hold');
+    clearOpenScrim();
     /* known in advance on a computer that renders in software: the backdrop is solid from the first frame */
     if (SOLID === null && O55.motion.softwareRendered()) SOLID = true;
     if (SOLID && !wasShown) setSolid(true);
-    O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening'); if (SOLID) setSolid(true); } });
+    O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
     const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
     /* a resumed run starts on its own chapter's chord */
@@ -625,6 +719,7 @@
   /* close(reason, {handoff}) — with handoff the window gives way at once, because the Guided Tour's first callout
      grows out of the same rectangle in the same frame (see O55.tour.start({from})) */
   function close(reason, o) {
+    if (pendingMount) { pendingMount = null; openGen++; clearOpenScrim(); }
     if (!S.open) return;
     const handoff = !!(o && o.handoff);
     const def = SCREENS.defs[S.sess.screen];
@@ -634,6 +729,7 @@
     S.save();
     S.open = false;
     const r = S.root;
+    r.classList.remove('o55-scrim-lit'); clearOpenScrim(); /* the close plays its own scrim */
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
