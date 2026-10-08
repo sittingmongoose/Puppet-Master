@@ -103,28 +103,82 @@ body[data-theme^="retro"] [data-step-kind="bash"] { --pm-step: var(--rt-step-too
 /* ---------------------------------------------------------------- 2 square corners */
 /* NieR Mode's precedent (nier-parts.css [square]): the literal radii are too many to restate one by one */
 body[data-theme^="retro"] *, body[data-theme^="retro"] *::before, body[data-theme^="retro"] *::after { border-radius: 0 !important; }
-/* PMConcept7 keeps 2 px on inputs, chips and pills */
-body[data-theme^="retro"] :is(input:not([type="checkbox"]):not([type="radio"]):not(.pmx-step-input), select, .input-wrap, .pmx-sheet .pmx-hero-box, .meta-pill, .meta-chip, .goal-chip, .todo-chip, .af-chip, .qs-file-chip, .att-chip, .att-pill, .orbit-chip, .pmap-chip, .receipt-chip, .wa-tag, .qs-pill) { border-radius: 2px !important; }
+/* PMConcept7 keeps 2 px on inputs, chips and pills.
+   One selector per target: a rightmost :is() is tried on every element. */
+body[data-theme^="retro"] input:not([type="checkbox"]):not([type="radio"]):not(.pmx-step-input),
+body[data-theme^="retro"] select,
+body[data-theme^="retro"] .input-wrap,
+body[data-theme^="retro"] .pmx-sheet .pmx-hero-box,
+body[data-theme^="retro"] .meta-pill,
+body[data-theme^="retro"] .meta-chip,
+body[data-theme^="retro"] .goal-chip,
+body[data-theme^="retro"] .todo-chip,
+body[data-theme^="retro"] .af-chip,
+body[data-theme^="retro"] .qs-file-chip,
+body[data-theme^="retro"] .att-chip,
+body[data-theme^="retro"] .att-pill,
+body[data-theme^="retro"] .orbit-chip,
+body[data-theme^="retro"] .pmap-chip,
+body[data-theme^="retro"] .receipt-chip,
+body[data-theme^="retro"] .wa-tag,
+body[data-theme^="retro"] .qs-pill { border-radius: 2px !important; }
 /* round on purpose: dials, rings and status dots (PMConcept7 keeps its dots and its run ring round), the ledger
    bead that rides the Turn Stage spine, and the pieces a motion draws as discs (the neon halos and backlights,
-   Send / Stop's flood and backlights). Elements sit in :is(); pseudo-elements cannot (an :is() argument with a
-   pseudo-element is dropped), so they are listed one by one below it. Step markers (the Ask Card's spine, the plan
-   steps' checkboxes) stay square on purpose: they are counters, not status lights. */
-body[data-theme^="retro"] :is(
-  .status-dot, .status-ring, .status-orbit, .status-clock,
-  .context-ring, .ring-mini, .ctx-spin, .ctx-cap .ctx-capdot,
-  .orbit-track, .orbit-core, .orbit-sat, .orbit-node-flag, .orbit-narration-mark,
-  .qs-orbit i, .qs-orrery-ring, .qs-orrery-bead, .qs-ask-mark-radio,
-  .calm-glyph, .calm-dots i, .calm-marker,
-  .working-variant-22 .c22-scope, .working-variant-22 .c22-ring, .working-variant-22 .c22-sweep,
-  .working-variant-22 .c22-core, .working-variant-22 .c22-blip, .working-variant-20 .c20-pivot,
-  .effort-dot, .goal-dot, .goal-chip-dot, .pmap-dot, .worktree-button .wt-dot, .message-meta .meta-live-dot,
-  .pmx-lg-dot, .pmx-lg-hollow, .pmx-lg-filled, .pmx-stop-dot, .pmx-eli5-dot, .af-phase-dot, .plan-doc-compact .pd-compact-dot,
-  .att-msg-drift-dot, .activity-item .state-mark, .activity-live-feed i, .activity-live-feed > button > i,
-  .activity-live-feed > .pmap-feed-head > i, .pmx-sched-sw[data-kind="dot"], .pmx-sched-life li > i, .debug-phases li > span,
-  :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] > .event-icon,
-  .ss-bl, .ss-flood
-) { border-radius: 50% !important; }
+   Send / Stop's flood and backlights). Each target is its own selector: a rightmost :is() is tried on every
+   element. Pseudo-elements cannot sit in that list (an :is() argument with a pseudo-element is dropped), so they
+   are listed one by one below. Step markers (the Ask Card's spine, the plan steps' checkboxes) stay square on
+   purpose: they are counters, not status lights. */
+body[data-theme^="retro"] .status-dot,
+body[data-theme^="retro"] .status-ring,
+body[data-theme^="retro"] .status-orbit,
+body[data-theme^="retro"] .status-clock,
+body[data-theme^="retro"] .context-ring,
+body[data-theme^="retro"] .ring-mini,
+body[data-theme^="retro"] .ctx-spin,
+body[data-theme^="retro"] .ctx-cap .ctx-capdot,
+body[data-theme^="retro"] .orbit-track,
+body[data-theme^="retro"] .orbit-core,
+body[data-theme^="retro"] .orbit-sat,
+body[data-theme^="retro"] .orbit-node-flag,
+body[data-theme^="retro"] .orbit-narration-mark,
+body[data-theme^="retro"] .qs-orbit i,
+body[data-theme^="retro"] .qs-orrery-ring,
+body[data-theme^="retro"] .qs-orrery-bead,
+body[data-theme^="retro"] .qs-ask-mark-radio,
+body[data-theme^="retro"] .calm-glyph,
+body[data-theme^="retro"] .calm-dots i,
+body[data-theme^="retro"] .calm-marker,
+body[data-theme^="retro"] .working-variant-22 .c22-scope,
+body[data-theme^="retro"] .working-variant-22 .c22-ring,
+body[data-theme^="retro"] .working-variant-22 .c22-sweep,
+body[data-theme^="retro"] .working-variant-22 .c22-core,
+body[data-theme^="retro"] .working-variant-22 .c22-blip,
+body[data-theme^="retro"] .working-variant-20 .c20-pivot,
+body[data-theme^="retro"] .effort-dot,
+body[data-theme^="retro"] .goal-dot,
+body[data-theme^="retro"] .goal-chip-dot,
+body[data-theme^="retro"] .pmap-dot,
+body[data-theme^="retro"] .worktree-button .wt-dot,
+body[data-theme^="retro"] .message-meta .meta-live-dot,
+body[data-theme^="retro"] .pmx-lg-dot,
+body[data-theme^="retro"] .pmx-lg-hollow,
+body[data-theme^="retro"] .pmx-lg-filled,
+body[data-theme^="retro"] .pmx-stop-dot,
+body[data-theme^="retro"] .pmx-eli5-dot,
+body[data-theme^="retro"] .af-phase-dot,
+body[data-theme^="retro"] .plan-doc-compact .pd-compact-dot,
+body[data-theme^="retro"] .att-msg-drift-dot,
+body[data-theme^="retro"] .activity-item .state-mark,
+body[data-theme^="retro"] .activity-live-feed i,
+body[data-theme^="retro"] .activity-live-feed > button > i,
+body[data-theme^="retro"] .activity-live-feed > .pmap-feed-head > i,
+body[data-theme^="retro"] .pmx-sched-sw[data-kind="dot"],
+body[data-theme^="retro"] .pmx-sched-life li > i,
+body[data-theme^="retro"] .debug-phases li > span,
+body[data-theme^="retro"] .transcript-inner > [data-family="ledger"] > .event-icon,
+body[data-theme^="retro"] .tx-feed-inner > [data-family="ledger"] > .event-icon,
+body[data-theme^="retro"] .ss-bl,
+body[data-theme^="retro"] .ss-flood { border-radius: 50% !important; }
 body[data-theme^="retro"] .status-ring::after, body[data-theme^="retro"] .status-orbit::after,
 body[data-theme^="retro"] .context-ring::after, body[data-theme^="retro"] .qs-ask-mark-radio::after,
 body[data-theme^="retro"] .pmx-bsd-ring::before, body[data-theme^="retro"] .pm-rail-item.orbit-strip-item.current::before,
@@ -182,11 +236,13 @@ body[data-theme^="retro"] .pmx-sheet :is(.pmx-hero-box, input.pmx-hero-field, .p
 body[data-theme^="retro"] .pmx-sheet :is(.pmx-hero-box:focus-within, input.pmx-hero-field:focus, .pmx-hero-aside input[type=text]:focus) { border-color: var(--pmx-focus-edge); box-shadow: 0 0 0 1px var(--pmx-focus-edge), 0 0 0 3px var(--pmx-focus-ring); }
 
 /* ---------------------------------------------------------------- 5 menus, hover cards, drawers and dialogs: opaque */
-body[data-theme^="retro"] :is(.overlay-menu, .hover-card) {
+body[data-theme^="retro"] .overlay-menu,
+body[data-theme^="retro"] .hover-card {
   background: var(--surface-2); border-color: var(--rt-line); box-shadow: var(--rt-frame-lg);
   -webkit-backdrop-filter: none; backdrop-filter: none;
 }
-body[data-theme^="retro"] :is(.drawer, .dialog) {
+body[data-theme^="retro"] .drawer,
+body[data-theme^="retro"] .dialog {
   background: var(--surface-2); border-color: var(--rt-line); box-shadow: var(--rt-frame-lg);
   -webkit-backdrop-filter: none; backdrop-filter: none;
 }
@@ -198,7 +254,8 @@ body[data-theme^="retro"] .menu-head { border-bottom-color: var(--rt-hair); }
 /* ---------------------------------------------------------------- 6 thread list: boxed rows on a darker rail */
 /* the drawer keeps history.css's own shadow rule (the float shadow while open, none while pinned), which the shape
    tokens above already make PMConcept7's hard frame */
-body[data-theme^="retro"] :is(.history-flyout, .history-panel) { background: var(--rt-rail); border-right-color: var(--rt-line); }
+body[data-theme^="retro"] .history-flyout,
+body[data-theme^="retro"] .history-panel { background: var(--rt-rail); border-right-color: var(--rt-line); }
 body[data-theme^="retro"] :is(.history-flyout, .history-panel) .thread-row {
   background: var(--surface); border: 2px solid var(--rt-line); box-shadow: var(--rt-sh);
   margin: 0 3px 6px 0; color: var(--muted);
@@ -207,7 +264,10 @@ body[data-theme^="retro"] :is(.history-flyout, .history-panel) .thread-row:hover
 /* the selected row: PMConcept7's lime row (lime 14 % over the surface, a 2 px lime line, a lime hard shadow) */
 body[data-theme^="retro"] :is(.history-flyout, .history-panel) .thread-row.active { background: var(--rt-lime-soft); border-color: var(--rt-lime); box-shadow: 3px 3px 0 var(--rt-lime-55); color: var(--text); }
 body[data-theme^="retro"] :is(.history-flyout, .history-panel) .thread-row.active:hover { background: var(--rt-lime-soft); }
-body[data-theme^="retro"] :is(.history-flyout, .history-panel) :is(.history-head, .history-search) { border-bottom-color: var(--rt-hair); }
+body[data-theme^="retro"] .history-flyout .history-head,
+body[data-theme^="retro"] .history-flyout .history-search,
+body[data-theme^="retro"] .history-panel .history-head,
+body[data-theme^="retro"] .history-panel .history-search { border-bottom-color: var(--rt-hair); }
 
 /* ---------------------------------------------------------------- 7 transcript (Turn Stage and the lab takes) */
 /* the user turn: PMConcept7's solid lime block, its 2 px structural line and its soft directional glow */
@@ -231,7 +291,8 @@ body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family=
   background: var(--surface-2); border-color: var(--rt-hair); box-shadow: var(--rt-hair-sh);
 }
 body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="deliverable"] .artifact-preview { border-color: var(--rt-hair); background: var(--code); box-shadow: none; }
-body[data-theme^="retro"] :is(.system-card, .event-card) { background: var(--surface-2); border-color: var(--rt-hair); box-shadow: var(--rt-frame-hair); }
+body[data-theme^="retro"] .system-card,
+body[data-theme^="retro"] .event-card { background: var(--surface-2); border-color: var(--rt-hair); box-shadow: var(--rt-frame-hair); }
 body[data-theme^="retro"] .plan-card { background: var(--surface-2); border-color: var(--rt-hair); }
 body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"].event-card { background: transparent; border-color: transparent; box-shadow: none; }
 body[data-theme^="retro"] :is(.transcript-inner, .tx-feed-inner) > [data-family="needs"].event-card { background: var(--surface-2); border-color: var(--needs); box-shadow: 0 0 0 1px var(--needs), 4px 4px 0 var(--rt-line); }
@@ -258,7 +319,8 @@ body[data-theme^="retro"] .composer-tools,
 body[data-theme^="retro"] .chat-stage[data-shell="7"] .composer-tools,
 body[data-theme^="retro"] .composer-box:focus-within .composer-tools,
 body[data-theme^="retro"] .chat-stage[data-shell="7"] .composer-box:focus-within .composer-tools { background: transparent; border-top-color: var(--rt-hair); }
-body[data-theme^="retro"] :is(.composer-infield .icon-button, .composer-tools > .icon-button) { background: var(--surface); border-color: var(--rt-hair); }
+body[data-theme^="retro"] .composer-infield .icon-button,
+body[data-theme^="retro"] .composer-tools > .icon-button { background: var(--surface); border-color: var(--rt-hair); }
 body[data-theme^="retro"] .composer-tools > .icon-button.active { border-color: var(--rt-line); }
 body[data-theme^="retro"] .composer-infield .capability-dot { background: var(--rt-soft); border-color: var(--rt-line); }
 /* PMConcept7's footer selects: square boxes on the surface in the structural line */
@@ -270,7 +332,8 @@ body[data-theme^="retro"] .send-queue-row .icon-button { background: var(--surfa
 
 /* ---------------------------------------------------------------- 10 Activity bar and Activity Detail */
 body[data-theme^="retro"] .activity-bar { background: var(--surface-2); border-color: var(--rt-line); box-shadow: var(--rt-sh-sm); }
-body[data-theme^="retro"] :is(.activity-item:hover, .activity-item.active) { background: var(--rt-soft); }
+body[data-theme^="retro"] .activity-item:hover,
+body[data-theme^="retro"] .activity-item.active { background: var(--rt-soft); }
 body[data-theme^="retro"] .activity-panel { background: var(--surface); border-right-color: var(--rt-line); }
 body[data-theme^="retro"] .activity-panel.transient { border-color: var(--rt-line); box-shadow: var(--rt-frame-lg); }
 body[data-theme^="retro"] .activity-panel-head, body[data-theme^="retro"] .activity-filter { border-bottom-color: var(--rt-hair); }
