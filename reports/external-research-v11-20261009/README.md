@@ -1,4 +1,4 @@
-# ER11 — scientific execution closed
+# ER11 — execution and owned cleanup closed
 
 ER11 established **no repeatable quality-preserving 20–30% gain,2× result or subscription-affordability improvement**. The finite program finished 33 paired blocks/66 original attempted arms across diverse fresh external-discovery briefs:58 complete finals,16 source PASS_WITH_LIMITATIONS,42FAIL, eight missing finals with null unseen-final quality, and 14 unstarted cells closed. All 33 declared independent paired assessments are terminal. No held-out confirmation was forced.
 
@@ -38,4 +38,4 @@ Five earlier commits exposed a private email in author/committer metadata; [priv
 
 ## Publication and cleanup
 
-The [previous substantive GitHub freeze](https://github.com/sittingmongoose/Puppet-Master/blob/34704eccafc094e5635ada4a7ce458977ee83390/reports/external-research-v11-20261009/README.md) and [actual readback receipt](control/PUBLICATION_08.json) are immutable. Root is the sole Git writer on the research branch, hooks enabled; main/product canon are untouched. Final scientific files are now frozen. [Cleanup](final/CLEANUP.md) and [closeout](final/FINAL_CLOSEOUT.md) track actual verification and explicit retention exceptions. Raw source corpora/private transcripts/machine state are excluded from GitHub; URLs/version/locator/hash maps and bounded scientific evidence permit scoped reconstruction, not byte-identical full-cache replay.
+The [final scientific GitHub freeze](https://github.com/sittingmongoose/Puppet-Master/blob/625f6917c9cc6726a92c9a90d2090fa58894d991/reports/external-research-v11-20261009/final/FINAL_RESULTS.md) and [actual complete readback receipt](control/PUBLICATION_FINAL.json) are immutable. Root is the sole Git writer on the research branch, hooks enabled; main/product canon are untouched. All scientific files are frozen. Owned cleanup is complete with archive hashes and explicit retention exceptions. [Cleanup](final/CLEANUP.md) and [closeout](final/FINAL_CLOSEOUT.md) track actual verification and explicit retention exceptions. Raw source corpora/private transcripts/machine state are excluded from GitHub; URLs/version/locator/hash maps and bounded scientific evidence permit scoped reconstruction, not byte-identical full-cache replay.

@@ -1,0 +1,68 @@
+{
+  "verified_at": "2026-10-09T22:57:52.718441+00:00",
+  "commit": "625f6917c9cc6726a92c9a90d2090fa58894d991",
+  "github_ref_actual": "625f6917c9cc6726a92c9a90d2090fa58894d991",
+  "verification": "Actual GitHub API ref and complete immutable critical contents independently fetched after push; byte equality with published files verified. NAS mirror is not used as proof.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 6998,
+      "sha256": "c14959fb5b61e7111ea534969f787592c5b0df653f27c55dd2bae2d616c130d7",
+      "actual_github_content_matches": true
+    },
+    {
+      "path": "final/FINAL_RESULTS.md",
+      "bytes": 16732,
+      "sha256": "edd70e6621b38f93b8dd14bd86c18f7b7298ff83d1ef0b72bb66c154b1527fe7",
+      "actual_github_content_matches": true
+    },
+    {
+      "path": "final/tables/ALL_80_ARMS.csv",
+      "bytes": 16794,
+      "sha256": "1bf243802b04e6249c783dc18d61b9d9e58ed76826130feca275c8492c97189d",
+      "actual_github_content_matches": true
+    },
+    {
+      "path": "jobs/B-07/treatment/LATE_PROTOCOL_DISPOSITION.json",
+      "bytes": 1479,
+      "sha256": "6934d292d1da10f12f3e3ed79b6248974e73de08f12f829e28bab5c8707453b2",
+      "actual_github_content_matches": true
+    },
+    {
+      "path": "helpers/undeclared-B07-1/assignment.md",
+      "bytes": 109553,
+      "sha256": "3fbabe9f15b4faeb7eb5c970c1ce6566ba7fafae46ee95d89a747c04d687670a",
+      "actual_github_content_matches": true
+    }
+  ],
+  "author_and_committer_verified_public_noreply": true,
+  "scientific_execution": "CLOSED",
+  "owned_cleanup": "PENDING",
+  "snapshot": {
+    "frozen_at": "2026-10-09T22:48:51.307832+00:00",
+    "original_arms": 80,
+    "started": 66,
+    "delivered": 58,
+    "dispositions": {
+      "SOURCE_PASS_WITH_LIMITATIONS": 16,
+      "NO_COMPLETE_FINAL": 8,
+      "SOURCE_FAIL": 42,
+      "NOT_PROMOTED_UNSTARTED": 14
+    },
+    "full_final_quality_counts": {
+      "PASS_WITH_LIMITATIONS": 16,
+      "FAIL": 42
+    },
+    "terminal_paired_assessments": 33,
+    "source_pass_and_all_time_limits": 10,
+    "experiment_occupied_agent_hours_partial": 49.078358611111106,
+    "experiment_observed_distinct_runs": 229,
+    "root_and_shared_setup_occupation_included": false,
+    "billing": null,
+    "confirmation_executed": false
+  },
+  "independent_web_readback": {
+    "url": "https://github.com/sittingmongoose/Puppet-Master/blob/625f6917c9cc6726a92c9a90d2090fa58894d991/reports/external-research-v11-20261009/final/FINAL_RESULTS.md",
+    "status": "Complete rendered scientific report retrieved; exact immutable commit/path and outcome visible."
+  }
+}
