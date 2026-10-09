@@ -23,6 +23,9 @@ function fitTabs(st) {
     const l = labelOf(it);
     if (l && !it.hasAttribute('data-pm-hover-label')) { PMR.hover(it, l.textContent.trim()); it.setAttribute('data-d-hov', ''); }
   });
+  /* the ink rests on the chosen tab's new box (31-tabs.js; a no-op while the box is unchanged, so a move in flight
+     is never cut short by a refit) */
+  placeInk(st);
 }
 
 function stackHeads(root, force) {

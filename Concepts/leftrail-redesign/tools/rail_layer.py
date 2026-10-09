@@ -54,6 +54,23 @@ NIER_SELECTOR_PATCHES = [
     ("const STRIP_SEL = '.page-tab, ",
      "const STRIP_SEL = '.page-tab, .pmr-strip, ",
      'nier strip list (rail)'),
+    # Target brackets on a chosen item whose box changes when it is chosen (a rail tab shows its label): the brackets
+    # are placed on the next frame, after the click has landed, and lock on afresh there, so they frame the box the
+    # ink fills instead of the tab as it was before the click (concept D's tabs carry .pmr-lock, 31-tabs.js). In the
+    # same frame the menu cursor square, if it points at that item, follows it: re-placed under the new box while the
+    # item is still a cursor target; once the chosen item has left the cursor list (a chosen rail tab) it jumps to the
+    # centre of the new box and fades out there, so a tab that widens and one that does not behave the same.
+    ("    if (retLock) window.clearTimeout(retLock);\n    retT = t; retPlace(t);\n    retLock = later(",
+     "    if (retLock) window.clearTimeout(retLock);\n    retT = t;\n"
+     "    if (t.closest('.pmr-lock')) window.requestAnimationFrame(() => {\n"
+     "      if (retT === t && ret) { ret.removeAttribute('data-on'); retPlace(t); }\n"
+     "      if (curT === t && cur) {\n"
+     "        if (t.matches(CURSOR_SEL)) curPlace(t);\n"
+     "        else { cur.setAttribute('data-jump', ''); curPlace(t); curOff(); frames(2).then(() => { if (cur) cur.removeAttribute('data-jump'); }); }\n"
+     "      }\n"
+     "    });\n"
+     "    else retPlace(t);\n    retLock = later(",
+     'nier brackets lock after the click (rail)'),
 ]
 
 CONCEPT_IDS = ('a', 'b', 'c', 'd')

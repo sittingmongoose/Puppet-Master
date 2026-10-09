@@ -194,48 +194,7 @@
 }
 [data-rail-skin="d"][data-theme$="-light"] #panel-source .pm7-scm-engine-switch > .d-thumb { box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px var(--d-ctl-line); }
 
-/* ---- tabs: one strip, the ink is exactly the active tab's box ----
-   The strip itself is a full-bleed chrome plate; the visible box is drawn by ::before, inset by the gutter, so the
-   frosted scroll-under never shows through a side gutter. Items sit inside with the same inset the rows use. */
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab {
-  position: relative !important; display: flex !important; gap: 0; box-sizing: border-box !important;
-  width: auto !important; max-width: none !important; min-width: 0 !important;
-  margin: 0 !important; padding: calc(var(--d-in) + 1px) calc(var(--d-gx) + var(--d-in) + 1px) calc(var(--d-g) + var(--d-in) + 1px) !important;
-  border: 0 !important; border-radius: 0 !important; overflow: visible !important; box-shadow: none !important;
-}
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab::before {
-  content: ''; position: absolute; z-index: 0; inset: 0 var(--d-gx) var(--d-g); pointer-events: none;
-  border-radius: var(--d-R); background: var(--d-ctl-bg); box-shadow: inset 0 0 0 1px var(--d-ctl-line);
-}
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-ink {
-  z-index: 0 !important; border-radius: var(--d-r) !important;
-  background: color-mix(in srgb, var(--accent-primary) 16%, var(--surface-elevated)) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .16), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 24%, transparent) !important;
-}
-[data-rail-skin="d"][data-theme$="-light"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-ink { background: var(--surface-elevated) !important; box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent) !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item {
-  position: relative; z-index: 1; flex: 1 1 0 !important; min-width: 0 !important; height: 28px;
-  display: flex !important; flex-direction: row !important; align-items: center; justify-content: center; gap: 0;
-  margin: 0 !important; padding: 0 6px !important; border: 0 !important; border-radius: var(--d-r) !important;
-  background: none !important; box-shadow: none !important;
-  font: 600 var(--d-fs-label)/1 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important;
-  color: var(--d-text-3) !important;
-  transition: color var(--d-t2) var(--d-ease);
-}
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item:hover { color: var(--d-text-2) !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active { color: var(--d-text) !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item svg, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--accent-primary); }
-/* labels: shown for every tab when they all fit, for the active tab only when only that fits, never abbreviated */
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > span, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-full {
-  display: inline-block !important; overflow: hidden; white-space: nowrap; text-overflow: clip;
-  max-width: 120px; padding: 0 !important; margin-left: 5px; opacity: 1;
-  transition: max-width var(--d-t2) var(--d-ease), margin-left var(--d-t2) var(--d-ease), opacity var(--d-t1) var(--d-ease);
-}
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-abbr { display: none !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="icons"] .pm-segtab-item > :is(span, .eq-full) { max-width: 0; margin-left: 0; opacity: 0; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item.active { flex: 0 0 auto !important; padding: 0 8px !important; }
+/* tab strips: 22-tabs.src.css */
 
 /* Files toolbar: icon buttons on the chrome plate, no box around them */
 [data-rail-skin="d"] #panel-files .fm-toolbar-wrap { margin: 0 !important; padding: 0 var(--d-gx) var(--d-g) !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
@@ -278,6 +237,107 @@
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-foot .fm-footstat { gap: 6px; align-items: flex-start !important; font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; white-space: normal !important; overflow: visible; min-width: 0; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-foot .fm-footmeta { font: 400 var(--d-fs-small)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; }
+
+/* ---- 2b. Tab strips: one strip, one ink, one move -----------------------------------------------------------------
+   The shell's generic .pm-segtab, so every strip of the nine panels (Files, Search, Source Control, Actions &
+   pipelines, Docker, Runtime artifacts) looks and moves the same way. The strip itself is a full-bleed chrome plate;
+   its visible box is drawn by ::before, inset by the gutter, so the frosted scroll-under never shows through a side
+   gutter. Items sit inside with the same inset the rows use.
+   The ink is the skin's own (.d-ink, injected and moved by 31-tabs.js; it also carries .pm-segtab-ink so every family
+   look below and in 90-themes applies to it) and is always exactly the chosen tab's box. The shell's spring ink is
+   hidden under the skin: it re-measured the chosen tab every frame, chased the label while it grew, and was not
+   scaled by Animation speed.
+   A tab change relayouts the strip once: the chosen tab shows its label and the others their icons in one step, with
+   no width morph, so a label can never overflow its tab mid-change. The motion is the ink's and the icons' (Web
+   Animations in 31-tabs.js). Transitions here are written as longhands on purpose: the Look settings scaler (Animation
+   speed) reads transition-duration per rule and cannot see a duration inside a var() shorthand. */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab {
+  position: relative !important; display: flex !important; gap: 0; box-sizing: border-box !important;
+  width: auto !important; max-width: none !important; min-width: 0 !important;
+  margin: 0 !important; padding: calc(var(--d-in) + 1px) calc(var(--d-gx) + var(--d-in) + 1px) calc(var(--d-g) + var(--d-in) + 1px) !important;
+  border: 0 !important; border-radius: 0 !important; overflow: visible !important; box-shadow: none !important;
+}
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab::before {
+  content: ''; position: absolute; z-index: 0; inset: 0 var(--d-gx) var(--d-g); pointer-events: none;
+  border-radius: var(--d-R); background: var(--d-ctl-bg); box-shadow: inset 0 0 0 1px var(--d-ctl-line);
+}
+/* the ink: the shell's is hidden, the skin's sits at the chosen tab's box (inline size and transform, 31-tabs.js) */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-ink:not(.d-ink) { display: none !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-ink {
+  z-index: 0 !important; border-radius: var(--d-r) !important;
+  background: color-mix(in srgb, var(--accent-primary) 16%, var(--surface-elevated)) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .16), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 24%, transparent) !important;
+}
+[data-rail-skin="d"][data-theme$="-light"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-ink { background: var(--surface-elevated) !important; box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent) !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .d-ink {
+  position: absolute; left: 0; top: 0; pointer-events: none; transform-origin: 50% 50%;
+  transition-property: none !important; will-change: transform;
+}
+/* Retro's inverse video: for one tick when the ink lands, the ink is solid accent and the chosen tab's label and icon
+   are in the accent's ink colour (31-tabs.js animates --d-tab-inv and --d-tab-fg on the strip for that tick) */
+[data-rail-skin="d"][data-theme^="retro"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .d-ink::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: var(--accent-primary); opacity: var(--d-tab-inv, 0);
+}
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item {
+  position: relative; z-index: 1; flex: 1 1 0 !important; min-width: 0 !important; height: 28px;
+  display: flex !important; flex-direction: row !important; align-items: center; justify-content: center; gap: 0;
+  margin: 0 !important; padding: 0 6px !important; border: 0 !important; border-radius: var(--d-r) !important;
+  background: none !important; box-shadow: none !important;
+  font: 600 var(--d-fs-label)/1 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important;
+  color: var(--d-text-3) !important;
+  transition-property: color; transition-duration: var(--d-t1); transition-timing-function: var(--d-ease);
+}
+/* Retro and NieR change a tab's colours in the same step as its ink: no fade */
+[data-rail-skin="d"][data-theme^="retro"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item, [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item { transition-duration: 0s; }
+/* the ink is the only fill: Glass's shell rule for any active "*item*" in the side panel (a tint, a 3 px inset side bar
+   and a drop shadow, specificity 1-3-1) painted a second box on the chosen tab the moment it was clicked, ahead of
+   the ink */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.active { background: none !important; box-shadow: none !important; border-radius: var(--d-r) !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item:hover { color: var(--d-text-2) !important; }
+/* NieR's menu cursor: the hovered tab is an ink bar with paper text, the same box the chosen ink fills (the item's own
+   box), so hover, click and the brackets read as one ink. The cursor part puts o55np-cur-over on the hovered item only
+   while that part is on, so the class is its guard; the item rule above (id level, !important) hid NieR's own :hover
+   bar under the skin. */
+[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-radius: var(--d-r) !important;
+}
+[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) :is(svg, .pm-ico, span, .eq-full) { color: inherit !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active { color: var(--d-tab-fg, var(--d-text)) !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item svg, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--accent-primary)); }
+/* labels: shown for every tab when they all fit, for the chosen tab only when only that fits, never abbreviated; a
+   change shows or hides them in one step */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > span, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-full {
+  display: inline-block !important; overflow: hidden; white-space: nowrap; text-overflow: clip;
+  max-width: 120px; padding: 0 !important; margin-left: 5px; opacity: 1; transition-property: none !important;
+}
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-abbr { display: none !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="icons"] .pm-segtab-item > :is(span, .eq-full) { max-width: 0; margin-left: 0; opacity: 0; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item.active { flex: 0 0 auto !important; padding: 0 8px !important; }
+
+/* a view that comes in after a tab change deals or prints in by script (30-motion.js); the shell's own pane rise
+   (shPaneIn on every child of a shown pane) ran under it and moved every row twice. This rule exists only to cancel
+   shPaneIn: it is not !important, so a lane that gives a direct pane child its own keyframes overrides it with a rule
+   of its own (the [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) id selector already outranks the shell's '[data-pane]:not(.pm-hidden) > *'). */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-pane]:not(.pm-hidden) > * { animation: none; }
+
+/* the shell's fit pass after a tab click fits only the clicked panel, but its measure class showed all nine panels and
+   every hidden pane while it ran: on the VM a restyle of about 7,600 elements and a full layout, 0.4 s (Source, Retro,
+   1920) to 1.4 s (Docker, Glass, 2560) before the click's first frame. For the frame of a tab click (data-d-fitview,
+   31-tabs.js) the eight inactive panels and the clicked panel's hidden panes stay out of it. The pane the click shows
+   is visible, so it is fitted exactly as before; a hidden pane is fitted when a click shows it (the shell switches
+   panes only on a tab click, and that click runs this pass), and the passes on a resize or a panel's first show still
+   measure everything. The shell's measure class is matched as an attribute: it is a measuring state, not a pill, and
+   the rail lint reserves ".…pill…" class selectors for pill looks (none exist in the skin). */
+[data-rail-skin="d"] .side-panel-slot[data-d-fitview][class~="pill-fit-measure"] :is(.side-panel-view:not(.active), [data-pane].pm-hidden) { display: none !important; }
+
+/* reduced motion: the strip changes in one step and nothing in it moves (the script makes no animation either) */
+[data-rail-skin="d"][data-motion="reduced"] #sidePanelSlot .pm-segtab *, [data-rail-skin="d"][data-reduced-motion="1"] #sidePanelSlot .pm-segtab * { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  [data-rail-skin="d"] #sidePanelSlot .pm-segtab * { transition: none !important; }
+}
 
 /* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
    The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
