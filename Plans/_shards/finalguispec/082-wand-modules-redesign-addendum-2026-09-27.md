@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38723-L39931
+Source lines: L38723-L39933
 
-Source SHA256: `ee04a3d3c136b6c4efc983a089af9ad6951fe6c85598ed21a34aaab77a8d9205`
+Source SHA256: `1536659d49e699f039da7d0ffacb16b8891890b13c891f82081aba828994f9a5`
 
 ---
 
@@ -58,11 +58,13 @@ canonical_text: >-
   (Revert, ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most
   its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open.
   The common case never scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster
-  grows, showing its richest mode that fits and never scaled to fit (F3-595, DL-149), and grows
-  into spare height when the column is short; the roster scrolls in its own region only at 7 or 8
-  helpers with Add a helper kept visible; the side column scrolls only below 1280 x 800; the hero
-  field scrolls inside itself past three lines; below a 900 px sheet width the body becomes one
-  column that scrolls inside the sheet with head and foot fixed; nothing overflows sideways.
+  grows, showing its richest mode that fits and never scaled to fit (F3-595, DL-149), but never past
+  its floor, the leanest drawing that fits its width (F3-601, DL-154), and grows into spare height
+  when the column is short; the roster scrolls in its own region only once its rows no longer fit
+  beside the plate's floor, with Add a helper kept visible; the side column scrolls only below
+  1280 x 800; the hero field scrolls inside itself past three lines; below a 900 px sheet width the
+  body becomes one column that scrolls inside the sheet with head and foot fixed, the plate staying at
+  the top of that column while its question is on screen (F3-601); nothing overflows sideways.
   Hovering or focusing a control lights the plate parts and read-back phrases it affects and dims
   the others, with no re-render. Kinds are told apart by a kind mark drawn by shape, and each
   participant by its puppet, which replaced the cast mark (F3-594, DL-149): a role prop, the theme

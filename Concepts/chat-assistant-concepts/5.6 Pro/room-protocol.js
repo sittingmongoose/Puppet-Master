@@ -249,7 +249,7 @@
   const replies=n*R,lo=Math.max(1,Math.round(replies*0.27)),hi=Math.max(lo+2,Math.round(replies*0.67));
   out.estimate=recorded?{recorded:true}:{text:'About '+(replies===1?'1 reply':replies+' replies')+' · usually '+lo+'–'+hi+' min · roughly $'+(replies*0.027).toFixed(2)+'–$'+(replies*0.08).toFixed(2)+' · an estimate, not a promise'};
   /* the preview's first frame (A16): the card's top frame as it will be born */
-  const stops=[];for(let i=1;i<=Math.min(R,12);i++)stops.push('Round '+i);
+  const stops=[];for(let i=1;i<=R;i++)stops.push('Round '+i);
   out.firstFrame=recorded
    ?{density:'starting',status:'yourmove',word:'Your move',reason:'start the first round.',stops,nowText:'<b>Round 1 of '+R+'</b> · not started'}
    :{density:'waiting',status:'waiting',word:'Waiting to start',reason:escH(C.waitingReason?C.waitingReason({kind:'chat_room'}):'Nothing runs by itself in this preview, so the Moderator hasn’t opened the first round yet.'),stops,nowText:'<b>Round 1 of '+R+'</b> · not started'};
@@ -291,7 +291,7 @@
  function trackOf(r,f){
   const stops=[],done=r.status==='completed',stopped=!!STOPPED[r.status];
   const cur=r.status==='failed'?'failed':r.status==='running'||r.status==='paused'?'now':'next';
-  for(let i=1;i<=Math.min(f.max,12);i++)stops.push({key:'pmx-stop:'+r.id+':'+(i-1),label:'Round '+i,state:i<=f.s.roundsSoFar?'done':f.inRound&&i===f.round.number?cur:done?'skipped':'next'});
+  for(let i=1;i<=f.max;i++)stops.push({key:'pmx-stop:'+r.id+':'+(i-1),label:'Round '+i,state:i<=f.s.roundsSoFar?'done':f.inRound&&i===f.round.number?cur:done?'skipped':'next'});
   const nowText=done?'<b>Finished</b> · '+plural(f.s.roundsSoFar,'round')+' · '+repliesWord(f.replies)
    :!f.started?'<b>Round 1 of '+f.max+'</b> · not started'
    :stopped?'<b>Round '+f.n+' of '+f.max+'</b> · '+(r.status==='paused'?'paused':'stopped')+' after '+repliesWord(f.replies)

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L3408
+Source lines: L13-L3439
 
-Source SHA256: `d40ff4bafd9964d3a2e1c2fe4a77520a7e481a9b3b705f0ef941b192263b8416`
+Source SHA256: `3f702503f405988cacc1d2cda9deb0306107695daa419d57ef331d4c034d0186`
 
 ---
 
@@ -3372,6 +3372,37 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-597, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md`, SHA-256 `416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652`.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/Settings_System.md#SSYS-043
+
+### DL-154: A collaboration setup sheet's graph stays in view as helpers and rounds are added
+
+**Question:** What should a collaboration setup sheet do with its graph when the team grows, and with a Chat Room's preview when it is set to many rounds?
+
+**Why it came up:** In the Crew, BrainStorm, Review and Chat Room setup sheets the cast plate gave up its height to the growing roster first and fell back to one caption sentence. From about six helpers (fewer with the specialists on) no drawing fitted the width at all, so with a full team the graph was gone. A Chat Room set to many rounds drew one dot per round on its In your chat preview, up to twelve, and from ten rounds the dots ran past the card and pushed its words out. Jared reported both on 2026-10-09. He accepted that a graph cannot scale to any number of helpers, but asked that it hold a higher number, and that the rounds wrap down.
+
+**What you get:**
+- The graph stays a drawing at every team size each kind allows, up to eight helpers with both specialists, in every theme and window size from 700 px wide up. When the team is too wide for one row, the helpers wrap onto two rows, or three. The Coordinator or Moderator still hands its string to every row, and every row still leads to You.
+- The plate keeps the height of its leanest drawing that fits. The roster's rows scroll inside their own region with Add a helper kept visible, rather than the graph giving way. The caption sentence remains only for a slot no drawing fits.
+- In a narrow window, where the sheet is one scrolling column, the graph stays at the top of the column while its question is on screen.
+- A Chat Room's track shows one dot per round, up to its 20-round limit. A long track wraps its dots down onto more rows, and its words ("Round 1 of 20 · not started") get a row of their own. The same applies to the run card in the chat.
+
+**What it costs:**
+- The roster starts scrolling a little sooner when the team is large (from about six helpers at 1280 x 800), because the graph keeps its room.
+- Run cards and previews of very long Chat Rooms are one or two rows taller.
+- The wrapped graph cuts very long helper names at a whole word in the widest themes' type (Retro's), as the one-row strip already did.
+
+**Options considered:** scaling the drawing down to fit (refused: a plate is never scaled, DL-149, and small text becomes unreadable); a scroll inside the graph (kept only as an idea for teams beyond the limits, which no sheet allows today); raising the helper limits (not asked: the limits are Collaborative_Workflows' and stay at eight). The lead ruled on the shape of the wrap and the narrow-window behaviour under existing canon; neither needed an owner answer.
+
+**What Jared asked (2026-10-09, relayed by the round's orchestrator thread):** adding several helpers to a Crew pushed the graph out of view in the Set up a Crew sheet, and the other setup sheets do the same; he understood that the graph cannot scale to any number of workers, but it should hold a higher number. Choosing many rounds in the Chat Room sheet pushed the graphic off the screen, and it should wrap down. The record states his request in plain words rather than quoting it (his choice of 2026-10-07 for decision log entries, decision card 2 recorded in DL-145).
+
+**What the spec now says:**
+1. **The plate's floor and the wrap** (`Plans/FinalGUISpec.md#F3-601`, amending `#F3-566` and `#F3-595`): a sheet's cast plate never yields past the leanest drawing that fits its width, and a team too wide for one strip row is drawn as the wrap (two or three rows, a fork from the lead and a join to You). The same wrap heads a run view whose team is too wide for one row. In the one-column narrow sheet the plate stays at the top while its question is on screen.
+2. **The track** (`Plans/FinalGUISpec.md#F3-602`): a run card's track never runs past the card; a Chat Room's track has a stop per round up to 20, and a track of eight or more stops wraps its dots down and gives its words their own row.
+3. **One mechanism** (`Plans/DRY_Rules.md#DR-045`): one plate-slot fit rule serves every plate slot (the four collaboration sheets, Scheduling's plates, Back Seat Driver's cue plate), one cast grammar with the wrap serves every sheet and run view, and one track primitive serves every run card and preview.
+4. **Unchanged:** the helper limits (Crew and Review 1 to 8, BrainStorm and Chat Room 2 to 8), the round limits (Chat Room 1 to 20, BrainStorm's debate 1 to 4), every command, action, setting and wiring row. No `data-action`, command, settings key or wiring entry is added, changed or removed, so `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, `Plans/UI_Wiring_Rules.md` and both Wiring Matrix files are untouched.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/JARED_REQUEST.md`, SHA-256 `46723a8829ea87fc5e01a261d81e92e32f3f1bc2e8a428af6704b1e3a91229e2`; survey before the change `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/SURVEY-BEFORE.md`, SHA-256 `b4036f1bffdf0bfb65f40fa5062540f60960b072bb46c667a7bcb00f26e0ac5f`.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-601, ContractName:Plans/FinalGUISpec.md#F3-602, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-595, ContractName:Plans/DRY_Rules.md#DR-045
 
 ### DL-156: The Plan card's buttons line up and fit the card in every theme
 

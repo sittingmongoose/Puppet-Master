@@ -990,7 +990,7 @@
 
   /* ---- the stage track (C4): named stops, counted progress, never a percent ---- */
   function runStops(run) {
-    if (run.kind === 'chat_room') { var rr = roomRounds(run), out = []; for (var i = 1; i <= Math.min(rr.max, 12); i++) out.push('Round ' + i); return out; }
+    if (run.kind === 'chat_room') { var rr = roomRounds(run), out = []; for (var i = 1; i <= clamp(rr.max, 1, 20); i++) out.push('Round ' + i); return out; }
     if (run.kind === 'review' && (run.config || {}).strategy === 'single_agent') return ['Snapshot', 'Reading on its own', 'Writing the report'];
     return KIND_STOPS[run.kind] || [];
   }
@@ -2650,7 +2650,7 @@
     return 'Nothing runs by itself in this preview, so ' + (noun || 'nothing has started') + ' yet.';
   }
   function draftStops(d) {
-    if (d.kind === 'chat_room') { var n = clamp(d.config.maxRounds || 5, 1, 20); var out = []; for (var i = 1; i <= Math.min(n, 12); i++) out.push('Round ' + i); return out; }
+    if (d.kind === 'chat_room') { var n = clamp(d.config.maxRounds || 5, 1, 20); var out = []; for (var i = 1; i <= n; i++) out.push('Round ' + i); return out; }
     if (d.kind === 'review' && d.config.strategy === 'single_agent') return ['Snapshot', 'Reading on their own', 'Writing the report'];
     return KIND_STOPS[d.kind] || [];
   }
@@ -2793,7 +2793,7 @@
     var caption = n + ' helpers draft alone, debate, check the facts and vote. You get one plan.';
     /* compact and strip at 576: the seven chapter names and four long helper names need the width, and BrainStorm's slot
        at 1024 x 768 holds the caption only */
-    return { key: 'pmx-plate-bs', kind: 'brainstorm', fitKey: 'pmx-plate-fit:bs', affects: 'team', busPart: 'team', modes: ['full', 'compact', 'lean', 'strip'], w: { compact: 576, lean: 576, strip: 576 },
+    return { key: 'pmx-plate-bs', kind: 'brainstorm', fitKey: 'pmx-plate-fit:bs', affects: 'team', busPart: 'team', modes: ['full', 'compact', 'lean', 'strip', 'wrap'], w: { compact: 576, lean: 576, strip: 576 },
       chapters: BS_CHAPTERS.map(function (c, i) { return { label: c[0], state: stop < 0 ? 'next' : i < stop ? 'done' : i === stop ? 'now' : 'next', part: c[1] + (i === 0 ? ' job' : '') + (i === 5 ? rules : '') }; }),
       seats: castSeats(d, 'brainstorm', live, { noun: 'Helper', part: 'team blind', dash: false }), screens: n > 1,
       wing: castWing(d, 'brainstorm', live),
@@ -2814,7 +2814,7 @@
     var R = pol.value === 'ask_everyone_once' ? 1 : clamp(cfg.maxRounds || 5, 1, 20);
     var note = pol.label + ' · ' + (live && live.rounds ? live.rounds : (R === 1 ? 'one round' : 'up to ' + R + ' rounds'));
     var caption = n + ' helpers and the Moderator talk it through. You pick what, if anything, to keep.';
-    return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line', modes: ['full', 'compact', 'strip', 'lean'],
+    return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line', modes: ['full', 'compact', 'strip', 'lean', 'wrap'],
       input: { label: 'The topic', text: roomTopic(d), mirror: 'job', part: 'job' },
       hub: { key: 'pmx-p-seat:room:mod', role: 'moderator', label: 'Moderator', sub: cfg.moderatorPersona || 'Product Manager', state: (live && live.lead) || 'idle', part: 'moderator' },
       seats: castSeats(d, 'chat_room', live, { noun: 'Helper', part: 'team', dash: false }), wing: castWing(d, 'chat_room', live),
@@ -2832,9 +2832,10 @@
     var sp = fn(d, live || {});
     o = o || {};
     sp.key = o.key || ('cv-plate-' + kind);
-    sp.w = { full: o.w || 640, compact: o.w || 640, strip: o.w || 640, line: o.w || 640 };
+    sp.w = { full: o.w || 640, compact: o.w || 640, strip: o.w || 640, line: o.w || 640, wrap: o.w || 640 };
     sp.cls = o.cls || '';
-    var modes = o.modes || ['full', 'compact', 'strip'];
+    /* wrap (2026-10-09): a team too wide for one row at 640 still gets its cast, on 2 or 3 rows */
+    var modes = o.modes || ['full', 'compact', 'strip', 'wrap'];
     /* every key in a view's plate is its own (cv:), so a sheet open over the view never shares one */
     for (var i = 0; i < modes.length; i++) { var h = S.pmxCastPlate(sp, modes[i]); if (h) return h.replace(/ data-k="(?!cv:)/g, ' data-k="cv:'); }
     return '';

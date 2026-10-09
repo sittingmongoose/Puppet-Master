@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40509-L41102
+Source lines: L40511-L41105
 
-Source SHA256: `ee04a3d3c136b6c4efc983a089af9ad6951fe6c85598ed21a34aaab77a8d9205`
+Source SHA256: `1536659d49e699f039da7d0ffacb16b8891890b13c891f82081aba828994f9a5`
 
 ---
 
@@ -404,10 +404,11 @@ canonical_text: >-
   Me) stand in a wing on the right after a dotted rule in every kind that has them, and nothing routes under or
   through the wing. Chat Room's turn policy and rounds are one note line built from its settings, never arcs or a
   table. State shows on the seats only. The plate shows its richest mode that fits: full, then compact (names only),
-  then a one-row strip, then one caption sentence, with BrainStorm adding a lean mode between compact and strip that
-  keeps its chapters and Chat Room, whose slot is the shortest, adding a lean line between its strip and the caption
-  that keeps every name whole. It skips any mode whose seats would sit closer than its minimum pitch, is never scaled
-  to fit a sheet, and grows into spare height. Hovering or focusing a sheet control lights the plate parts it affects
+  then a one-row strip, then the wrap (the strip's seats on two or three rows, F3-601), then one caption sentence, with
+  BrainStorm adding a lean mode between compact and strip that keeps its chapters and Chat Room, whose slot is the
+  shortest, adding a lean line between its strip and the caption that keeps every name whole. It skips any mode whose
+  seats would sit closer than its minimum pitch, is never scaled to fit a sheet, never yields past the leanest drawing
+  that fits its width (the caption is only for a slot no drawing fits; F3-601, DL-154), and grows into spare height. Hovering or focusing a sheet control lights the plate parts it affects
   (F3-566). Every run view heads with the run's plate, its seats in their live states (working, waits, needs you, done
   or failed); a run that has not started shows everyone idle, never "waits its turn", and the Coordinator is done when
   the run is. The Crew view hangs a short after arrow from the helper a seat waits for, the BrainStorm view lights the
@@ -418,7 +419,7 @@ gui_related: true
 gui_classification_reason: Defines the collaboration graphs in sheets and run views and the removal of Technical details from run surfaces.
 split_recommended: false
 depends_on: [DL-149, F3-594, F3-566, F3-569, CWR-020]
-unblocks: []
+unblocks: [F3-601]
 acceptance_criteria:
   - "Every collaboration sheet and run view draws its graph in the cast plate grammar with straight strings only and every seat named in every mode."
   - "In a sheet the plate is never scaled to fit; it changes mode instead."
