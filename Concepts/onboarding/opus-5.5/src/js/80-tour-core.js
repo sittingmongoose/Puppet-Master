@@ -45,8 +45,8 @@
      the callout, before its buttons) · render {focus} · bar {chapter, ci, si, total, pip} (d.pip[chapter]: markup
      after that chapter's ticks) · target {el, prev} · complete {step} · showMe {step} · showMeEnd (hold: the
      pointer comes home first) · showMeDone · cue {el} · press {el, x, y} · pointerFrom {at} · missing {on} ·
-     interrupt · pause {paused} · ending {status, keep, silent, hush} (hold, alongside the restore; hush: true keeps
-     the app's own notices quiet while the restore runs) · end {status, keep} (status 'restore-pending' when the
+     interrupt · pause {paused} · ending {status, keep, silent, hush} (hold, alongside the restore; hush, true unless a
+     listener sets it false, keeps the app's own notices quiet while the restore runs) · end {status, keep} (status 'restore-pending' when the
      layout could not go back and the tour stays) · closed (the root has gone) · landing {lead} (hold, then the note)
      · landed {note} · unland {note} (the note's exit: a listener that returns a promise plays it; else a fade) ·
      barMove {top} (the bar moved between the bottom and the top) · missing {on, sound} (sound: the event that marks
@@ -901,10 +901,11 @@
     ++st.seq; st.entering = false;
     if (st.poll) { st.poll.cancel(); st.poll = null; } interruptShow();
     if (st.step && st.step.leave) { try { st.step.leave(st); } catch (_) {} }
-    /* a skin's closing moment plays while the layout goes back beneath it; it may ask for the app's own notices
-       ("Widget removed", "Applied from the next turn") to stay quiet meanwhile, since its band already says what
-       is happening */
-    const closing = { status, keep: !!keep, silent: !!(o && o.silent), hush: false, sound: status === 'done' ? 'finish' : 'close' };
+    /* a skin's closing moment plays while the layout goes back beneath it. The app's own notices that the restore
+       raises ("Widget removed", "Applied from the next turn") stay quiet meanwhile in every look (2026-10-09; NieR's
+       skin had asked for it alone): they report the tour's own undoing, which the landing note, a skin's band or the
+       onboarding window starting over already says. A listener may set hush to false. */
+    const closing = { status, keep: !!keep, silent: !!(o && o.silent), hush: true, sound: status === 'done' ? 'finish' : 'close' };
     const ceremony = settle(emit('ending', closing), 2400);
     const res = await hushed(closing.hush, () => restore(st.snap, keep));
     await ceremony;
