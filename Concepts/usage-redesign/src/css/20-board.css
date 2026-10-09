@@ -22,7 +22,7 @@
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 40px -12px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.05);
   --pmu-plate-lift: inset 0 1px 0 rgba(255,255,255,.12), 0 28px 60px -18px rgba(0,0,0,.6), 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 40%, transparent);
   --pmu-sheen: rgba(255,255,255,.06);
-  --pmu-lift-y: -4px; --pmu-lift-s: 1.01;
+  --pmu-lift-y: -4px;
 }
 html[data-theme$="-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.7), 0 10px 26px -14px rgba(21,32,43,.14);
@@ -40,9 +40,9 @@ html[data-theme="glass-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.85), 0 12px 28px -14px rgba(23,34,42,.16);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.9), 0 16px 34px -12px rgba(23,34,42,.2), 0 0 0 1px rgba(255,255,255,.5); }
 html[data-theme^="retro"] #panel-usage .pmu-shell {
-  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); --pmu-lift-y: 0px; --pmu-lift-s: 1; }
+  --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); --pmu-lift-y: 0px; }
 html[data-theme="retro-light"] #panel-usage .pmu-shell { --pmu-plate-hover: 4px 4px 0 rgba(23,26,20,.22); --pmu-plate-lift: 7px 7px 0 rgba(23,26,20,.2); }
-html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); --pmu-lift-y: 0px; --pmu-lift-s: 1; --pmu-sheen: transparent; }
+html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu-plate-hover: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .18); --pmu-lift-y: 0px; --pmu-sheen: transparent; }
 
 #panel-usage .pmu-card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; border: var(--pmu-bw) solid var(--pmu-rule);
   border-radius: var(--pmu-r-card); background: var(--pmu-card); box-shadow: var(--pmu-plate-rest); outline: none;
@@ -51,15 +51,21 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu
 #panel-usage .pmu-card::before { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
   box-shadow: var(--pmu-plate-hover); opacity: 0; transition: opacity calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-settle); }
 #panel-usage .pmu-card[data-head="band"]::before { display: none; }
-/* hover depth (WOW-SPEC 3.17): lift 4 px and scale 1.01 on the spring (tiles 5 px), shadow layer in 220; unhover 260 SETTLE.
-   The hovered plate gets its own layer for the moment (will-change) and sits above its neighbours. */
-#panel-usage .pmu-card:not([data-head="band"]):hover { z-index: 3; will-change: transform; transform: translateY(var(--pmu-lift-y)) scale(var(--pmu-lift-s));
+/* hover depth (WOW-SPEC 3.17): lift 4 px on the spring (tiles 5 px), shadow layer in 220; unhover 260 SETTLE. The hovered
+   plate sits above its neighbours.
+   Sharp text (Jared's note 5, 2026-10-09): the lift is a whole-pixel translate with no scale, and the plate carries no
+   will-change. The transition gives it a compositor layer only while it moves; at rest (lifted or not) it paints at a
+   whole-pixel offset at its own raster scale. The old scale(1.01) under will-change: transform drew the hovered plate's
+   text from a layer resampled at 1.01 for the whole hover (GPU probe: title Laplacian sharpness 0.45-0.70 of rest in
+   Basic, Friendly and Glass, back to 1.0 only after the 260 ms settle). The depth comes from the pre-painted shadow. */
+#panel-usage .pmu-card:not([data-head="band"]):hover { z-index: 3; transform: translateY(var(--pmu-lift-y));
   transition: transform calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
 /* a tile lifts 5 px: written as the transform itself, never as a custom property set on hover (an inherited custom
    property changed on the card restyles its whole subtree on every hover, PERF-3) */
-#panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transform: translateY(-5px) scale(var(--pmu-lift-s)); }
+#panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transform: translateY(-5px); }
 #panel-usage .pmu-card:not([data-head="band"]):hover::before { opacity: 1; transition: opacity calc(220ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-html[data-theme^="retro"] #panel-usage .pmu-card[data-head="tile"]:hover, html[data-o55-nier="on"] #panel-usage .pmu-card[data-head="tile"]:hover { transform: translateY(0px) scale(var(--pmu-lift-s)); }
+/* Retro and NieR do not lift: no transform at all (an identity translateY(0) would still run a transition and take a layer) */
+html[data-theme^="retro"] #panel-usage .pmu-card:not([data-head="band"]):hover, html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"]):hover { transform: none; }
 /* Retro: the hard 4 px offset shadow appears in two steps, no lift */
 html[data-theme^="retro"] #panel-usage .pmu-card:hover::before { transition-timing-function: steps(2, jump-start); transition-duration: calc(120ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-plate-rest); }
