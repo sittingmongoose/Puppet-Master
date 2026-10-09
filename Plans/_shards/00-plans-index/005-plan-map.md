@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L313-L671
+Source lines: L315-L673
 
-Source SHA256: `23a5357c84d69cc47ddc2e9346b6e87a3b857e02864dec8c6953feb19ea64d97`
+Source SHA256: `aba8800e7489699144a824f4b8682511f4a18d8157d27cf20cb65ae08908ca2b`
 
 ---
 
@@ -256,7 +256,7 @@ The five retained implementation packets extend canon through distinct owners ra
 - `Plans/Source_Control_System.md` owns common Git/source-control repository, workspace, status, diff, history, fetch/sync/publish semantics. `Plans/Jujutsu_Integration.md` owns JJ-specific changes, bookmarks, operations, Git interchange, and workspaces. `Plans/Forge_Integrations.md` owns provider-neutral hosted-forge reviews, pipelines, webhooks, repositories, mirrors, and connections.
 - `Plans/Cursor_Origin_Integration.md`, `Plans/GitLab_Integration.md`, `Plans/Azure_DevOps_Integration.md`, and `Plans/Bitbucket_Integration.md` are provider-specific consumers of the common forge/auth/install/connection contracts. They do not create `cmd.origin.*`, `cmd.gitlab.*`, `cmd.azure_devops.*`, or generic `cmd.bitbucket.*` primary namespaces. Cursor Origin remains a brief Preview insertion, not an SCM backend or dedicated Onboarding subsystem.
 - `Plans/Section15_MVP_Promoted_Features_Spec.md` remains the PM-native Browser/Browser Program owner. Protected `AuthBrowserSession` is human-only, ephemeral, non-recordable, non-inspectable, non-exportable, and unavailable to agents and adapters.
-- `Plans/Planning_Wizard.md` owns Product Onboarding's v2 bounded modal graphs and thirteen local actions (PWIZ-021): uncreated Project draft, Settings-owned explicit copy preview, narrowly admitted read-only preflight/necessary source sign-in, exact Project-owner commit, then paid-provider and Free Models phases. Connect-existing and explicit Project Later consume their own owner-defined graphs without a fabricated Project. PJCT-007, SSYS-036, MACS-005, FGI-011, MS-122 and SP-252 retain the domain/physical-storage boundaries. PWIZ-023 separately owns the v3 `chat_teacher -> workspace -> planning_wizard` Tour, shared Try it/Show Me predicates, safe checkpoint and default restoration or explicit Keep. Final GUI and wiring consume these definitions rather than a second stage/field roster; `Plans/newtools.md` N2-151 owns Doctor registry/routing. Static schema, fixture and source coverage do not prove native handlers, protected authentication, durable adapters, runtime, motion or visual acceptance.
+- `Plans/Planning_Wizard.md` owns Product Onboarding's v2 bounded modal graphs and fourteen local actions (PWIZ-021; `ui.onboarding.choose_look` added by DL-153): uncreated Project draft, Settings-owned explicit copy preview, narrowly admitted read-only preflight/necessary source sign-in, exact Project-owner commit, then paid-provider and Free Models phases. Connect-existing and explicit Project Later consume their own owner-defined graphs without a fabricated Project. PJCT-007, SSYS-036, MACS-005, FGI-011, MS-122 and SP-252 retain the domain/physical-storage boundaries. PWIZ-023 separately owns the v3 `chat_teacher -> workspace -> planning_wizard` Tour, shared Try it/Show Me predicates, safe checkpoint and default restoration or explicit Keep. Final GUI and wiring consume these definitions rather than a second stage/field roster; `Plans/newtools.md` N2-151 owns Doctor registry/routing. Static schema, fixture and source coverage do not prove native handlers, protected authentication, durable adapters, runtime, motion or visual acceptance.
 
 ContractRef: ContractName:Plans/Project_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Remote_Access_System.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Test_Capture_and_Motion_Evidence.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Cursor_Origin_Integration.md, ContractName:Plans/GitLab_Integration.md, ContractName:Plans/Azure_DevOps_Integration.md, ContractName:Plans/Bitbucket_Integration.md, ContractName:Plans/Named_Plan_System.md
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41125-L41374
+Source lines: L41155-L41420
 
-Source SHA256: `4fda7c380979f66f7d2b4aea2bcd243da6ef37306b055648aa27ae58d4d3e771`
+Source SHA256: `6c5c21f4243da1e3e553ad7a12acfafc3b059a1725e54f0bfd9ebc23790bc07b`
 
 ---
 
@@ -36,7 +36,8 @@ canonical_text: >-
   look preview (in the concept both stay painted until the next Settings write or Project load), and resuming setup
   paints it again from the onboarding session, never from the closed setup draft. A settings copy into the new
   Project never proposes the three NieR rows (SSYS-036). The title-bar and Tour-bar controls change the setting itself
-  through the Settings owner under the verified current Project binding. Choosing a family while NieR Mode is on keeps
+  through the Settings owner under the verified current Project binding, composing cmd.settings.transaction.preview
+  then cmd.settings.transaction.apply (DL-153). Choosing a family while NieR Mode is on keeps
   NieR Mode on, records the family that shows when it is turned off, and says so in plain words: in the title bar a
   short note says the theme is saved and shows when NieR Mode is off, with a button to turn it off; inside the
   onboarding window the NieR row's own line says NieR Mode is painting over the chosen look and that look shows again
@@ -85,18 +86,24 @@ canonical_text: >-
   or a tick may flicker. Input never waits: a key or a press snaps a running performance to its end state. Every
   beat is gated by an existing part. Reduced Motion, the Still and Colors only presets and low resource show each
   moment's end state, and Quiet drops the Pod beats. A background change made from the editor cross-fades as F3-589
-  sets out. The application beneath the onboarding window stays still while the window is open. No settings key,
-  NieR part, theme family, theme variant, `ui.onboarding.*` action or `ui.guided_tour.*` action is added.
+  sets out. The application beneath the onboarding window stays still while the window is open. The four theme
+  families have hero moments of their own (F3-600); NieR's play whenever NieR Mode is painted, whatever family
+  is chosen beneath it, and have no per-family variants (DL-153). No settings key,
+  NieR part, theme family, theme variant, command id, route or `ui.guided_tour.*` action is added: inside the
+  onboarding window the look choice, the NieR Mode checkbox and the editor panel use the one typed local action
+  `ui.onboarding.choose_look`, the editor's open, close and Play reboot moment are `ui.settings.nier_editor.open`,
+  `ui.settings.nier_editor.close` and `ui.settings.nier_editor.replay`, and every live control composes the Settings
+  transaction pair (SSYS-043, DL-153).
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
-depends_on: [DL-152, SSYS-043, F3-082, F3-426, F3-441, F3-520, F3-521, F3-589]
+depends_on: [DL-152, DL-153, SSYS-043, F3-082, F3-426, F3-441, F3-520, F3-521, F3-589]
 unblocks: []
 acceptance_criteria:
   - "The title-bar theme selector, the onboarding look choice and both Look menus show one NieR Mode checkbox with an Adjust NieR look button below their family and Light/Dark choices; NieR Mode never appears as a family choice or a ninth variant, and the selector still exposes exactly eight built-in variants."
   - "The checkbox and the button are keyboard reachable and the checkbox exposes its checked state; the editor opens as a popup dialog over the application or as a panel inside the onboarding window, closes on Escape and returns focus to the button."
   - "Before a verified current Project exists no NieR choice writes a setting; committing the look writes the three NieR rows with the theme pair to that Project, and closing setup first leaves the stored values in place."
-  - "With NieR Mode painted every onboarding stage draws the NieR unit marionettes and the window and every Tour step draw the NieR touches of the installed parts; with it off no NieR touch draws, moves or plays, and the four family directions are unchanged."
+  - "With NieR Mode painted every onboarding stage draws the NieR unit marionettes and the window and every Tour step draw the NieR touches of the installed parts; with it off no NieR touch draws, moves or plays, and the four families keep their own directions, with the hero moments of F3-600; with it on NieR's moments play whatever family is chosen beneath it (DL-153)."
   - "The unit marionette keeps its visor, collar, square pins and strings under every part selection and preset, and keeps the 1.21 head-to-torso ratio and the size-gated detail of its icon form."
   - "Every NieR beat is gated by an existing installed part, and Animation speed still scales the motion."
   - "Words longer than 8 characters type on with their final layout reserved from the first frame, and a label of 8 characters or fewer may decode."
@@ -104,7 +111,7 @@ acceptance_criteria:
   - "Pod's narration never covers an actor, a hung card or the stage kicker."
   - "A key or a press during a NieR performance snaps that performance to its end state, and input never waits on it."
   - "Reduced Motion, the Still and Colors only presets and low resource show each of these moments in its end state, and Quiet drops the Pod beats."
-  - "No settings key, NieR part, theme variant, onboarding action or tour action is added."
+  - "No settings key, NieR part, theme variant, command id, route or tour action is added; onboarding's look controls use ui.onboarding.choose_look, the editor's open, close and replay ui.settings.nier_editor.*, and the live controls the Settings transaction pair (DL-153)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -135,15 +142,17 @@ negative_constraints:
   - "Do not open the NieR Mode editor as a dialog over the onboarding window."
   - "Do not write a NieR choice durably before the Project binding exists."
   - "Do not use a game asset, game audio or a character likeness."
-  - "Do not add a NieR part, a settings key, a theme or an onboarding or tour action."
+  - "Do not add a NieR part, a settings key, a theme, a command, a route or a tour action, or an onboarding action other than ui.onboarding.choose_look."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-153): 'the four family directions are unchanged' is retired; the four families gain their own act card, wake and curtain call (F3-600), and NieR's moments still play whenever NieR Mode is painted."
+  - "Amended 2026-10-09 (DL-153): 'no ui.onboarding.* action is added' is retired; onboarding's look choice, its NieR Mode checkbox and its editor panel use the one typed local action ui.onboarding.choose_look, the editor's open, close and replay are ui.settings.nier_editor.*, and the live controls compose cmd.settings.transaction.preview then cmd.settings.transaction.apply; no command id, route, settings key or ui.guided_tour.* action is added."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/Settings_System.md#SSYS-043
+ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/DRY_Rules.md#DR-056
 
 ### F3-599 — Onboarding And Guided Tour Sound Cues In Notifications And Sounds
 
@@ -201,10 +210,14 @@ canonical_text: >-
   nothing. The Settings sound library lists every take of every onboarding and Tour cue of every kit, the NieR kit
   included, as its own built-in entry in styles of their own beside the notification sounds (Setup & tour, one per
   look, and NieR), the main take of each moment first and the other takes behind a Show N more takes control; each
-  is previewed after an explicit gesture under F3-405's preview rules. In the concept that library holds 354
+  is previewed after an explicit gesture under F3-405's preview rules. Setup & tour shows one look's takes at a time,
+  chosen by a Which look switch; that switch (ui.settings.sound_library.look.select) and Show N more takes
+  (ui.settings.sound_library.takes.toggle) are typed local presentation actions that write nothing, and previewing an
+  entry dispatches the existing cmd.sound.preview (DL-153). In the concept that library holds 354
   entries (Basic 69 takes, Friendly, Glass and Retro 66 each, and the NieR kit 87), generated demonstration tones
   labelled as such and previewed through the onboarding's own player. This pass changes the four family kits'
-  sounds and leaves the four families' pixels unchanged. Production built-in cues carry source, licence, version,
+  sounds; the four families' pictures change only at their own hero moments (F3-600, DL-153), which play those kits'
+  existing cues and add no take. Production built-in cues carry source, licence, version,
   duration and hash metadata, and no game audio is used.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the sound settings model.
@@ -219,7 +232,8 @@ acceptance_criteria:
   - "wake falls back to a reveal, string to a tap, land to a drop, bow to back, save to a success, showPointer to the pointer and showInterrupt to an interruption when a kit has no take of its own."
   - "Each look's chapter sting builds that look's four-note motif one note per chapter and resolves at Ready, and a chapter already stung in the run does not sting again after Back."
   - "No two cues of priority 75 or higher play within 1000 ms except the designed layers, and Ready's chord and the tour's finish each wait through 150 ms of rest."
-  - "The sound library lists every take of each onboarding and Tour cue of each kit with its moment and style (Setup & tour per look, and NieR), 354 entries in the concept, main takes first and the rest behind Show N more takes, labelled as a generated demonstration tone in the concept, and previews it only after an explicit gesture. The four family kits' sounds change with this pass, and the four families' pixels do not."
+  - "The sound library lists every take of each onboarding and Tour cue of each kit with its moment and style (Setup & tour per look, and NieR), 354 entries in the concept, main takes first and the rest behind Show N more takes, labelled as a generated demonstration tone in the concept, and previews it only after an explicit gesture. The four family kits' sounds change with this pass; the four families' pictures change only at their own hero moments (F3-600), which add no take (DL-153)."
+  - "The sound library's Which look switch and Show N more takes are ui.settings.sound_library.look.select and ui.settings.sound_library.takes.toggle, which dispatch and write nothing, and each entry's Play dispatches cmd.sound.preview (DL-153)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -246,15 +260,17 @@ preserved_exact_tokens:
   - "Menu sounds"
   - "generated demonstration tones"
   - "Show N more takes"
+  - "Which look"
 negative_constraints:
   - "Do not add an onboarding-, tour- or NieR-only sound setting, sound registry, volume, player or kit choice."
   - "Do not let a cue be the only signal."
   - "Do not use game audio or present demonstration tones as licensed recordings."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-153): 'leaves the four families' pixels unchanged' is retired; the families' pictures change at their own hero moments (F3-600), with no new take."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-405, ContractName:Plans/FinalGUISpec.md#F3-564, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-039
+ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-405, ContractName:Plans/FinalGUISpec.md#F3-564, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-039, ContractName:Plans/Decision_Log.md#DL-153

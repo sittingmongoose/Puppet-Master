@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32093-L32732
+Source lines: L32097-L32744
 
-Source SHA256: `4fda7c380979f66f7d2b4aea2bcd243da6ef37306b055648aa27ae58d4d3e771`
+Source SHA256: `6c5c21f4243da1e3e553ad7a12acfafc3b059a1725e54f0bfd9ebc23790bc07b`
 
 ---
 
@@ -493,14 +493,21 @@ canonical_text: >-
   Theme boot stamps a pre-paint layer with the persisted theme's solid background color
   and color-scheme before heavy styles and assets settle, fonts load non-blocking via
   preload then swap, and page-enter transitions are gated until after first paint so boot
-  never runs an opacity-zero enter animation or a double flash.
+  never runs an opacity-zero enter animation or a double flash. The persisted theme is the look
+  stored in the Settings of the Project the application opens on, NieR Mode included (its
+  ground, and while NieR's boot log is coming the page waits under the log's own paper), so
+  the first frame is already that look and no default look shows before it. The pre-paint only
+  reads it: it stores no theme of its own, and the Project's Settings stay the one owner and the
+  one store of the theme (DL-153). A new install's onboarding paints Basic Dark instead (F3-520).
 gui_related: true
 gui_classification_reason: This unit defines visible boot paint, font loading, and first-paint transition gating behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-153]
 unblocks: []
 acceptance_criteria:
 - "Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets settle."
+- "The first frame of an ordinary open is the look stored for the Project the application opens on, in each of the eight family variants and in NieR Mode light and dark; no default look shows before it, and with NieR's boot log coming the page shows only the log's paper before the log (DL-153)."
+- "The pre-paint reads the Project's stored Settings and writes no theme anywhere: no global or cross-Project theme key exists (DL-153)."
 - "Fonts load non-blocking via preload then swap."
 - "Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -524,7 +531,8 @@ negative_constraints:
 - "Do not render-block first paint on font loading and do not run an enter animation on first paint."
 compatibility_only_notes:
 - "Slint portability: the pre-paint layer maps to painting the persisted theme's solid background at window creation before content loads; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-153): the persisted theme the pre-paint stamps is the look stored for the Project the application opens on, read from its Settings, NieR Mode included; the concept's fixed Basic Dark boot paint is retired, and no global theme key is added."
 owner_boundary_notes:
 - "F3-464 consumes this gate for page transitions; this unit owns the boot paint and the gate itself."
 owner_hints:

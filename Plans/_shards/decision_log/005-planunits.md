@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3510-L12158
+Source lines: L3550-L12289
 
-Source SHA256: `7def4e82703338f3baacffc544a4432bb37b0ca347d0fc9402ed0a56b3af97d5`
+Source SHA256: `38d55fb5a0b66f1a663a18966c668afbd01a4b5dfdc6ab57c396d24b2208f4bc`
 
 ---
 
@@ -8345,7 +8345,11 @@ canonical_text: >-
   coincident cues, and every cue is listed in the Settings sound library (F3-599), 354 entries in the concept. The
   showpiece pass is part of this decision: the hero moments in setup and the tour, and the rules that long words type
   on and that a large area does not flash. No settings key, NieR part,
-  theme variant or onboarding or tour action is added. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
+  theme variant or onboarding or tour action is added. Amended 2026-10-09 by DL-153: no command id, route, settings
+  key or ui.guided_tour.* action is added, but onboarding's look choice and its NieR Mode controls use one new typed
+  local action, ui.onboarding.choose_look, the NieR Mode editor's open, close and replay are
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay, and the live
+  controls compose cmd.settings.transaction.preview then cmd.settings.transaction.apply. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
   and F3-589 now cite. Jared asked for the three tasks in one request on PMConcept7: a more polished NieR Mode in
   setup and the tour with NieR puppets and sounds, NieR Mode as a checkbox with an adjust button wherever a theme is
   chosen, and livelier, more varied setup and tour sounds with NieR ones, all listed in the sound library; the record
@@ -8390,6 +8394,93 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-153 - The App Opens In Its Own Look Setup's Starting Look And The Four Families' Hero Moments
+
+```yaml
+plan_unit_id: DL-153
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-153 records the owner request of 2026-10-09 and its two rulings. The pre-paint layer shows the look stored for
+  the Project the application opens on, NieR Mode included, read from that Project's Settings, and stores no theme of
+  its own (F3-468). A new install's onboarding always starts in Basic Dark, preselected, whatever look was shown before;
+  Run Onboarding Again starts in the look on screen, NieR Mode included, preselected (F3-520). Onboarding's wake, act
+  card and curtain call take five styles, one per look family: NieR's whenever NieR Mode is painted, whatever family is
+  beneath, and otherwise the painted family's own, in its own materials and in both its variants (F3-600; F3-598 and
+  F3-599 amended). The application's own notices about the tour's restore stay quiet in every look (F3-521). No
+  settings key, theme variant, NieR part, sound setting, command id, route or tour action is added. Lead rulings under
+  existing canon, not owner answers, wire DL-152's look controls: the live ones compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply (the title bar's Light/Dark/Auto keeps
+  cmd.theme.set_mode); the NieR Mode editor opens, closes and replays through ui.settings.nier_editor.open,
+  ui.settings.nier_editor.close and ui.settings.nier_editor.replay; the onboarding look choice, its NieR Mode controls
+  and its Look menu use one new typed local action, ui.onboarding.choose_look, a preview written with the Project at
+  commit that never dispatches cmd.theme.* or a Settings transaction; the sound library's Which look switch and Show N
+  more takes are typed local actions and playing an entry is cmd.sound.preview; the Tour's Look menu and sound
+  control are not tour actions; and DR-056 keeps one NieR Mode editor, reboot plate, look store and set of hero
+  moments. Jared asked for the four
+  next steps of the NieR showpiece and ruled on the five styles and on setup's starting look; the record states them in
+  plain words, the rulings kept word for word in the cited source.
+gui_related: true
+gui_classification_reason: Records an owner decision on the first paint, onboarding's starting look, the families' hero moments and the tour's restore notices.
+split_recommended: false
+depends_on: [DL-152]
+unblocks: [F3-600, F3-468, F3-520, F3-521, F3-598, F3-599, F3-082, DR-056, SSYS-010, SSYS-043, UIW-015, UCC-106, UCC-108, UCC-120, WM-041, WM-046, PWIZ-021, PWIZ-022, PWIZ-023, ATS-020]
+acceptance_criteria:
+  - "The first frame of an ordinary open is the stored look of the Project the application opens on, and no theme is stored outside that Project's Settings (F3-468)."
+  - "A new install's onboarding starts in Basic Dark; Run Onboarding Again starts in the look on screen (F3-520)."
+  - "Five styles of the three hero moments exist, NieR's always while NieR Mode is painted (F3-600)."
+  - "Every look control named by DL-152 has one command or typed local action: the Settings transaction pair or cmd.theme.set_mode live, ui.settings.nier_editor.* for the editor, ui.onboarding.choose_look inside the onboarding window, and the sound library's two local actions with cmd.sound.preview (UIW-013)."
+  - "Product Onboarding's census is fourteen typed local actions everywhere it is stated, and SSYS-043, F3-598 and DL-152 no longer say no onboarding action is added."
+  - "The owner request is recorded in plain words, with the verbatim rulings cited by path and SHA-256, and the lead's wiring rulings are cited as agent rulings."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: nier_onboarding_tour_drift
+reasoning_tier: high
+context_scope: nier_onboarding_tour
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/UI_Wiring_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/DRY_Rules.md
+  - Plans/Automated_Testing_System.md
+  - Plans/product_onboarding_contracts.schema.json
+  - Plans/product_onboarding_contract_fixtures.json
+  - Plans/touch_closure.json
+  - Plans/Wiring_Matrix.production.json
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/LEAD-RULINGS-20261009.md, SHA-256 d838d83f930bda2967e9c289cffe1a98a59a2d07dd163374331c8c3803b98b38 (agent rulings, not owner answers)"
+  - "Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/nier-showpiece-next)"
+preserved_exact_tokens:
+  - "DL-153"
+  - "NieR Mode"
+  - "Basic Dark"
+  - "Run Onboarding Again"
+  - "ui.onboarding.choose_look"
+  - "ui.settings.nier_editor.open"
+  - "cmd.settings.transaction.preview"
+negative_constraints:
+  - "Do not add a global or cross-Project theme store."
+  - "Do not make a NieR variant per family."
+  - "Do not add a settings key, a NieR part or an onboarding- or tour-only setting."
+  - "Do not add a command id, a route or a Guided Tour action for a look control."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Planning_Wizard.md
 ```
 
 ### DL-161 - PMConcept7 Carries Its Own Fonts

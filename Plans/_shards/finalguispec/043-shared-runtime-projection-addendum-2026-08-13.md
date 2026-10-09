@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5339-L26470
+Source lines: L5339-L26474
 
-Source SHA256: `4fda7c380979f66f7d2b4aea2bcd243da6ef37306b055648aa27ae58d4d3e771`
+Source SHA256: `6c5c21f4243da1e3e553ad7a12acfafc3b059a1725e54f0bfd9ebc23790bc07b`
 
 ---
 
@@ -4364,7 +4364,10 @@ canonical_text: >-
   dropdown when >4 themes are available in it (built-in + custom). Below the family rows, after a divider, one NieR
   Mode row carries a checkbox (menuitemcheckbox), checked while NieR Mode is on, and beside it an Adjust NieR look
   button that opens the NieR Mode editor as a popup dialog (F3-598); toggling keeps the menu open, and NieR Mode
-  is never a family row or a theme variant. In Auto the selected family
+  is never a family row or a theme variant. The segmented control dispatches cmd.theme.set_mode. A family row and
+  the NieR Mode checkbox are ordinary Settings changes that compose cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply over the exact IDs, the family with the current mode as SSYS-009's atomic pair, and
+  Adjust NieR look is the typed local action ui.settings.nier_editor.open (SSYS-043, DL-153). In Auto the selected family
   resolves to its dark or light variant by following the OS appearance (prefers-color-scheme)
   live. Settings > General exposes the theme family + mode controls and theme folder, create,
   import, and export actions.
@@ -4376,6 +4379,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - "Below the four family rows the menu shows one NieR Mode menuitemcheckbox with an Adjust NieR look button that opens the NieR Mode editor as a popup dialog; NieR Mode never appears as a family row or a ninth variant, and the selector still exposes exactly eight built-in variants."
+- "The segmented control dispatches cmd.theme.set_mode; a family row and the NieR Mode checkbox dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply with those commands' availability and disabled reasons; Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7691-L7848
+Source lines: L7691-L7853
 
-Source SHA256: `1486a8fd3facd568dec67dfa3c5bfbd509288b9ccd6e9d456cc73fdf3e8f6136`
+Source SHA256: `7e7a12bc3665362a924617f7c64082425560954817ded9433258a97dec0db260`
 
 ---
 
@@ -21,13 +21,16 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source lineage only; none is
-  a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses exactly thirteen typed
+  a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses exactly fourteen typed
   owner-local actions ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close,
   ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
   ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow,
-  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish. These are local
+  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, and
+  ui.onboarding.choose_look. These are local
   UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
-  and pm.product_onboarding.action_result.v2 contracts. Every request consumes PWIZ-021's closed, normalized, secret-free
+  and pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look (DL-153) is a local look preview,
+  and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look on screen for settings_rerun):
+  neither dispatches cmd.theme.* or a Settings transaction, and the look is written with the Project at commit. Every request consumes PWIZ-021's closed, normalized, secret-free
   local_context, including phase-specific draft/preflight/commit bindings as defined by the owner schema;
   arbitrary/raw payload fields and secret-bearing values are rejected. An action that launches owner work carries a typed owner
   route or intent and maps to that owner's existing canonical command and sole handler. The command-era reference to
@@ -42,7 +45,8 @@ depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
 unblocks: []
 acceptance_criteria:
   - The eleven retained cmd.onboarding.* tokens are searchable source lineage only and receive no command registration, alias, primary handler, or production-wiring row.
-  - Every current Product Onboarding control emits exactly one of the thirteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023.
+  - Every current Product Onboarding control emits exactly one of the fourteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023.
+  - The onboarding look choice, its NieR Mode controls and its start look are local previews through ui.onboarding.choose_look and ui.onboarding.start; neither dispatches cmd.theme.* or a Settings transaction (DL-153).
   - The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and production-wiring rows; they do not normalize to the typed local action set.
   - Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and owner-command-free.
   - OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or production receipt and expose exact reasons.
@@ -113,6 +117,7 @@ preserved_exact_tokens:
   - "ui.onboarding.run_automatic_preparation"
   - "ui.onboarding.choose_first_project"
   - "ui.onboarding.finish"
+  - "ui.onboarding.choose_look"
   - "local_context"
   - "skip_product_onboarding"
   - "skip_optional_scope"
