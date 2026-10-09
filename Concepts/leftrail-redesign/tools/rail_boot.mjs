@@ -322,8 +322,21 @@ const PAGE_LIB = () => {
   };
 };
 
+/* the VM caps agent browsers for every agent on it; when the cap is full, wait for a slot (up to 20 minutes) rather
+   than abandon a long run */
+async function startBrowser() {
+  for (let i = 0; ; i++) {
+    try { return JSON.parse(execFileSync('agent-browser', ['start', '--url', 'about:blank'], { encoding: 'utf8', timeout: 120000, stdio: ['ignore', 'pipe', 'pipe'] })); }
+    catch (e) {
+      if (i >= 120 || !/limit reached/i.test(String(e.stderr || e.message))) throw e;
+      if (i === 0) console.error('agent-browser: the browser cap is full; waiting for a slot');
+      await new Promise((r) => setTimeout(r, 10000));
+    }
+  }
+}
+
 async function bootPage(tgt, { width = 1600, height = 1000 } = {}) {
-  const started = JSON.parse(execFileSync('agent-browser', ['start', '--url', 'about:blank'], { encoding: 'utf8', timeout: 120000 }));
+  const started = await startBrowser();
   openSessions.add(started.id);
   let browser = null;
   const b = {
