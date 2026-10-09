@@ -112,6 +112,11 @@
     /* measured (VM 1920, plan card): head padding 28, the key 18 + its 8 px gap, the count about 44 + its 8 px gap */
     var avail = (+card.dataset.w || 0) * cls.pitchX - 8 - 28 - (card.querySelector('.pmu-cardkey:not([hidden])') ? 26 : 0) - 4
       - (aside ? PMU.charts.textW(aside, 12.5, false, 500) * k + 10 : 0) - 52;
+    /* a plate's subtitle shares the title's column: the count stays in the body where it would cut the subtitle (item 9,
+       embedded fonts: Inter's narrower title let the count in and Muse Code's "alex@orbit.example" ended in an ellipsis at
+       Basic 1440); NieR's plate ticks keep 34 px at the subtitle's right */
+    var sub = form === 'plate' ? ((card.querySelector('.pmu-cardsub') || {}).textContent || '').trim() : '';
+    if (sub && PMU.charts.textW(sub, 12, false, 400) * k > avail - (nier ? 34 : 0)) return false;
     if (tw(title) <= avail) return true;
     if (form !== 'tile') return false;
     var words = title.split(/\s+/), lines = 1, cur = 0;
@@ -1567,8 +1572,12 @@
       /* two-line rows when they show every row; otherwise the one-line form whenever it shows more rows */
       var fit2 = C.fit(ctx.tier.bh, 48, 4), fit1 = C.fit(ctx.tier.bh, 34, 4);
       var inline = !C.w(ctx, 'm') || (fit2 < rows.length && fit1 > fit2), rowH = inline ? 34 : 48;
-      var footOk = m.foot && C.fit(ctx.tier.bh, rowH, 38) >= rows.length;
-      var fit = C.fit(ctx.tier.bh, rowH, (footOk ? 38 : 0) + 4);
+      /* the foot's real height: a plate's foot takes up to two lines (17.5 px each) plus 17 px of padding and rule and the
+         body's 12 px above it, and a row can run a px past rowH (item 9, embedded fonts: Provider value at Basic 1440 kept
+         a two-line foot that its one-line 38 px reserve did not hold, 2 px past the body until the room's moment ended) */
+      var footRes = !m.foot ? 0 : (ctx.card && ctx.card.getAttribute('data-head') === 'plate' ? 29 + 17.5 * Math.min(2, C.wrapLines(String(m.foot).replace(/<[^>]+>/g, ''), ctx.tier.bw - 4, 12.5)) : 38) + rows.length;
+      var footOk = m.foot && C.fit(ctx.tier.bh, rowH, footRes) >= rows.length;
+      var fit = C.fit(ctx.tier.bh, rowH, (footOk ? footRes : 0) + 4);
       var shown = rows.length > fit ? rows.slice(0, Math.max(1, fit * rowH + 22 + 4 <= ctx.tier.bh ? fit : fit - 1)) : rows;
       /* the rows past the card and a foot that gave way are listed in the "N more" line's hover tag, or the host's (CONTENT-3) */
       var rankFold = rows.slice(shown.length).map(function (r) { return r.name + ' ' + (r.valueText || '') + (r.role ? ' · ' + r.role : ''); });

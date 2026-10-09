@@ -121,9 +121,10 @@
     while (parts.length > 1 && PMU.charts.textW(out, 12, false, 400) * k > avail) { parts.pop(); out = parts.join(' · '); }
     return out;
   }
-  /* a title never breaks at a word's own hyphen (final fix M9b: "Headroom and auto- / switch" in the 4-track tile): the
-     shown text joins hyphenated words with U+2011; the hover tag, the menus and search keep the plain hyphen */
-  function nbHyphen(s) { return String(s == null ? '' : s).replace(/(\S)-(?=\S)/g, '$1\u2011'); }
+  /* a title never breaks at a word's own hyphen (final fix M9b: "Headroom and auto- / switch" in the 4-track tile): a
+     hyphenated word is set in one nowrap span with its plain hyphen. Item 9 (embedded fonts): U+2011 is in none of the
+     embedded faces (Inter, Poppins, IBM Plex Mono, M PLUS 1), so it was drawn from a system face inside the title. */
+  function nbHyphen(s) { return esc(String(s == null ? '' : s)).replace(/[^\s<>]*\S-\S[^\s<>]*/g, function (w) { return '<span style="white-space:nowrap">' + w + '</span>'; }); }
   function syncHead(card, ctx) {
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};
     var titleEl = card.querySelector('.pmu-cardtitle'), subEl = card.querySelector('.pmu-cardsub'), asideEl = card.querySelector('.pmu-cardmeta'), keyEl = card.querySelector('.pmu-cardkey');
@@ -134,9 +135,9 @@
     var full = text(def.title, ctx), sub = text(def.meta, ctx);
     /* the short title only where the whole title does not fit its line (final fix M8: provider tiles keep their Settings
        names wherever they fit) */
-    var want = nbHyphen((tier.w === 'xs' || tier.w === 's') && def.short && !titleFits(card, full, form) ? text(def.short, ctx) : full);
+    var want = (tier.w === 'xs' || tier.w === 's') && def.short && !titleFits(card, full, form) ? text(def.short, ctx) : full;
     if (titleEl) {
-      if (titleEl.textContent !== want) titleEl.textContent = want;
+      if (titleEl.textContent !== want) titleEl.innerHTML = nbHyphen(want);
       if (titleEl.getAttribute('data-pm-hover-label') !== full) titleEl.setAttribute('data-pm-hover-label', full);
       if ((titleEl.getAttribute('data-pm-hover-detail') || '') !== sub) titleEl.setAttribute('data-pm-hover-detail', sub);
     }
@@ -306,7 +307,7 @@
       var base = ctxBase(id, room), title = text(def.title, base), sub = text(def.meta, base);
       card.setAttribute('aria-label', title);
       card.innerHTML = '<header class="pmu-cardhead"><span class="pmu-cardkey" hidden></span>' +
-        '<div class="pmu-cardtitles"><h3 class="pmu-cardtitle" data-pm-hover-label="' + esc(title) + '" data-pm-hover-detail="' + esc(sub) + '">' + esc(nbHyphen(title)) + '</h3>' +
+        '<div class="pmu-cardtitles"><h3 class="pmu-cardtitle" data-pm-hover-label="' + esc(title) + '" data-pm-hover-detail="' + esc(sub) + '">' + nbHyphen(title) + '</h3>' +
         '<span class="pmu-cardsub">' + esc(sub) + '</span></div>' +
         '<span class="pmu-cardmeta"></span><span class="pmu-headtools"></span>' +
         '<span class="pmu-cardtools">' +
