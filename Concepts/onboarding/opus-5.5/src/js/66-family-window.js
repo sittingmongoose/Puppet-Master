@@ -394,7 +394,9 @@
         + `<g data-k="ready">${txt(f, cx, ty + 184, ready, 17, { fill: p.b })}</g>`
         + (L.ctx.fam.props.helper && V.h > 420 ? [-1, 0, 1].map((k, i) => `<g data-k="sprite" transform="translate(${cx + k * 62} ${ty + 286})">${L.ctx.fam.props.helper(L.ctx, { x: 0, y: 0, s: 1, opts: { variant: i, pose: i === 1 ? 'wave' : 'stand', px: 5 } })}</g>`).join('') : '');
     }
-    L.root.innerHTML = `<g data-k="panel" class="o55fm-wipe"><rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="${p.bg}"/><rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="${L.ctx.url('scan')}"/>`
+    /* the screen in the cabinet's own ground (Dark: its panel, a shade above the night stage, so the stage never reads
+       darker while it shows; Light: the cream) */
+    L.root.innerHTML = `<g data-k="panel" class="o55fm-wipe"><rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="${p.dark ? p.panel : p.bg}"/><rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="${L.ctx.url('scan')}"/>`
       + `<rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="none" stroke="${ink}" stroke-width="4"/>${frame}${body}</g>`;
     const P = hooks.p, c0 = hooks.c0, panel = part(L, 'panel');
     P.anim(panel, [{ clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }], { duration: 180, delay: c0, easing: 'steps(6, end)', fill: 'backwards' });
@@ -693,7 +695,9 @@
   /* Glass: the beam comes on as the dusk lifts, light runs down each filament into its helper's core, motes rise */
   WAKE.glass = function glassWake(p, L, svg, marks, bodies) {
     const pal = L.ctx.pal, V = vbFull(L.vb);
-    p.anim(part(L, 'veil'), OUT, { duration: 900, delay: 200, easing: 'cubic-bezier(0.3, 0, 0.3, 1)', fill: 'forwards' });
+    /* (from the veil's own opacity: a keyframe of 1 would darken it before it lifts) */
+    const veil = part(L, 'veil'), v0 = veil ? +veil.getAttribute('opacity') || 1 : 1;
+    p.anim(veil, [{ opacity: v0 }, { opacity: 0 }], { duration: 900, delay: 200, easing: 'cubic-bezier(0.3, 0, 0.3, 1)', fill: 'forwards' });
     p.at(200, () => play('reveal'));
     const beam = svg.querySelector('.o55-it[data-key="stage"] .o55-beam');
     if (beam) p.anim(beam, [{ opacity: 0 }, { opacity: 1 }], { duration: 320, delay: 200, easing: 'ease-out', fill: 'backwards' });
