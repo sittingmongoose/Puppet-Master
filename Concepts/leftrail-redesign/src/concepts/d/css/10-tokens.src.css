@@ -89,10 +89,9 @@
 §R[data-theme="retro-light"] { --d-on-accent: #fff; }
 §R[data-theme="glass-light"] { --d-on-accent: #fff; }
 /* Glass's surfaces are about half transparent (and a blur does not take inside the frosted rail), so its chrome plates
-   take the surface colour at nearly full strength: a row scrolled under the header or the tab strip no longer reads
-   through them word for word */
-§R[data-theme="glass-dark"] { --d-chrome: rgba(37, 28, 57, .9); }
-§R[data-theme="glass-light"] { --d-chrome: rgba(241, 242, 238, .94); }
+   take the surface colour at full strength: a row scrolled under the header or the tab strip does not show through */
+§R[data-theme="glass-dark"] { --d-chrome: rgb(37, 28, 57); }
+§R[data-theme="glass-light"] { --d-chrome: rgb(241, 242, 238); }
 /* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
    hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 §R[data-o55-nier="on"] {

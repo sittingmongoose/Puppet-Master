@@ -48,10 +48,11 @@
 
 /* Changed and Open rows read on two lines: the file, then its folder; nothing is cut to a single letter */
 §F .fm-changerow {
-  display: grid !important; grid-template-columns: 14px minmax(0, 1fr) 10px; grid-template-areas: "badge file chev" "badge dir chev";
+  display: grid !important; grid-template-columns: 9px minmax(0, 1fr) 10px; grid-template-areas: "badge file chev" "badge dir chev";
   column-gap: 4px !important; row-gap: 0; align-items: center;
 }
-§F .fm-changerow > .fm-gitbadge { grid-area: badge; align-self: start; margin-top: 3px !important; }
+/* the letter takes the 9 px chevron column of Source's rows, so names start 24 px from the rail edge in both */
+§F .fm-changerow > .fm-gitbadge { grid-area: badge; align-self: start; margin-top: 3px !important; min-width: 0; justify-content: flex-start !important; }
 §F .fm-changerow > .fm-cfile { grid-area: file; }
 §F .fm-changerow > .fm-cdir { grid-area: dir; }
 §F .fm-changerow > .fm-cchev { grid-area: chev; }
@@ -82,5 +83,6 @@
 §@#fileContextMenu .fm-ctx-item svg { width: 14px !important; height: 14px !important; color: var(--d-text-3); }
 §@#fileContextMenu .fm-ctx-item > .fm-ctx-label:first-child { margin-left: 22px; }
 §@#fileContextMenu .fm-ctx-item .fm-ctx-key { margin-left: auto; padding-left: 8px; font: 400 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-3); }
+§@#fileContextMenu .fm-ctx-item .fm-ctx-key.d-na { display: none !important; }
 §@#fileContextMenu .fm-ctx-item.destructive, §@#fileContextMenu .fm-ctx-item.destructive svg { color: var(--d-fail); }
 §@#fileContextMenu .fm-ctx-sep { margin: var(--d-in) 6px !important; background: var(--d-line) !important; }

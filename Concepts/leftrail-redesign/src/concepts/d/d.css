@@ -93,10 +93,9 @@
 [data-rail-skin="d"][data-theme="retro-light"] { --d-on-accent: #fff; }
 [data-rail-skin="d"][data-theme="glass-light"] { --d-on-accent: #fff; }
 /* Glass's surfaces are about half transparent (and a blur does not take inside the frosted rail), so its chrome plates
-   take the surface colour at nearly full strength: a row scrolled under the header or the tab strip no longer reads
-   through them word for word */
-[data-rail-skin="d"][data-theme="glass-dark"] { --d-chrome: rgba(37, 28, 57, .9); }
-[data-rail-skin="d"][data-theme="glass-light"] { --d-chrome: rgba(241, 242, 238, .94); }
+   take the surface colour at full strength: a row scrolled under the header or the tab strip does not show through */
+[data-rail-skin="d"][data-theme="glass-dark"] { --d-chrome: rgb(37, 28, 57); }
+[data-rail-skin="d"][data-theme="glass-light"] { --d-chrome: rgb(241, 242, 238); }
 /* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
    hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 [data-rail-skin="d"][data-o55-nier="on"] {
@@ -412,8 +411,20 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-name > .sh-nm-txt { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-name > :is(.pm-gs, .pm-chip, .sh-imgtag) { flex: none; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-name > .pm-gs { order: -1; min-width: 12px !important; justify-content: flex-start !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-meta > .d-dir { font-family: var(--mono-font); font-size: var(--d-fs-small); color: var(--d-text-2); }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-meta > .d-dir::after { content: ' \00B7  '; font-family: var(--body-font); color: var(--d-text-3); }
+/* a change row's second line: the folder, cut in its middle when long (20-fit), then the change kind, always whole.
+   The folder's box keeps the whole folder's width (--d-full-w, set by 20-fit) while its text is cut, so it grows back
+   when there is room. When the kind does not fit beside at least 7em of folder, it moves under the folder (stacking,
+   not a cut to "we…it"). */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-meta.d-hasdir { display: flex !important; flex-wrap: wrap; align-items: baseline; min-width: 0; white-space: normal; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-meta > .d-dir {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; flex: 1 1 7em; min-width: 0; max-width: max-content;
+  font-family: var(--mono-font); font-size: var(--d-fs-small); color: var(--d-text-2);
+}
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-meta > .d-dir > .d-dir-t {
+  grid-area: 1 / 1; width: var(--d-full-w, auto); min-width: 0; max-width: 100%;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-meta > .d-dir::after { content: '\00B7'; grid-area: 1 / 2; margin: 0 .3em; font-family: var(--body-font); color: var(--d-text-3); }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-meta, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.sh-run-h, .sh-ctr-h) .sh-meta {
   display: block !important; flex: none !important; max-width: none !important;
   font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important;
@@ -455,6 +466,8 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .v { min-width: 3.2em; text-align: right; font: 500 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
 [data-rail-skin="d"][data-theme^="retro"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar, [data-rail-skin="d"][data-theme^="retro"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar i, [data-rail-skin="d"][data-o55-nier-parts~="square"] #sidePanelSlot .pm-occ .bar, [data-rail-skin="d"][data-o55-nier-parts~="square"] #sidePanelSlot .pm-occ .bar i { border-radius: 0 !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-wrap { white-space: normal !important; overflow-wrap: anywhere; text-overflow: clip !important; }
+/* a date inside a fact value moves to the next line whole (10-skin applyPathBreaks) */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-nowrap { white-space: nowrap; }
 
 /* ---- 5. Status: shape + colour + word, never a capsule ------------------------------------------------------------------
    Every chip, pill and state badge of the shell keeps its element (other code reads them) and loses its capsule. The
@@ -587,6 +600,12 @@
 [data-rail-skin="d"] #panel-docker .sh-ctx .d-ctxpath { font: 400 var(--d-fs-small)/1.3 var(--mono-font); color: var(--d-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select { font-family: var(--body-font) !important; font-size: var(--d-fs-meta) !important; min-height: 28px; padding: 4px 10px !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select .d-select-k { color: var(--d-text-3); }
+/* PMR.menu (portalled to <body>): its items are buttons, which take the browser's form font (Arial) unless told, so
+   they take the rail's face like everything else in it. The plate is as wide as its longest item up to 360 px
+   (10-skin widenMenu); past that an item's words wrap instead of losing their end. */
+[data-rail-skin="d"] .pmr-menu :is(.pmr-mi, .pmr-menu-search input) { font-family: var(--body-font); }
+[data-rail-skin="d"] .pmr-menu .pmr-mi .pm6-chat-modelname { white-space: normal; overflow-wrap: break-word; text-overflow: clip; }
+[data-rail-skin="d"] .pmr-menu .pmr-mi .pm6-chat-modeleffort { flex: 0 1 auto; white-space: normal; text-overflow: clip; text-align: right; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select .d-select-v { color: var(--d-text); font-weight: 600; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select > .pmr-ico:last-child { margin-left: auto; width: 12px; height: 12px; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select.is-menu-open > .pmr-ico:last-child { transform: rotate(180deg); }
@@ -681,10 +700,11 @@
 
 /* Changed and Open rows read on two lines: the file, then its folder; nothing is cut to a single letter */
 [data-rail-skin="d"] #panel-files .fm-changerow {
-  display: grid !important; grid-template-columns: 14px minmax(0, 1fr) 10px; grid-template-areas: "badge file chev" "badge dir chev";
+  display: grid !important; grid-template-columns: 9px minmax(0, 1fr) 10px; grid-template-areas: "badge file chev" "badge dir chev";
   column-gap: 4px !important; row-gap: 0; align-items: center;
 }
-[data-rail-skin="d"] #panel-files .fm-changerow > .fm-gitbadge { grid-area: badge; align-self: start; margin-top: 3px !important; }
+/* the letter takes the 9 px chevron column of Source's rows, so names start 24 px from the rail edge in both */
+[data-rail-skin="d"] #panel-files .fm-changerow > .fm-gitbadge { grid-area: badge; align-self: start; margin-top: 3px !important; min-width: 0; justify-content: flex-start !important; }
 [data-rail-skin="d"] #panel-files .fm-changerow > .fm-cfile { grid-area: file; }
 [data-rail-skin="d"] #panel-files .fm-changerow > .fm-cdir { grid-area: dir; }
 [data-rail-skin="d"] #panel-files .fm-changerow > .fm-cchev { grid-area: chev; }
@@ -715,6 +735,7 @@
 [data-rail-skin="d"] #fileContextMenu .fm-ctx-item svg { width: 14px !important; height: 14px !important; color: var(--d-text-3); }
 [data-rail-skin="d"] #fileContextMenu .fm-ctx-item > .fm-ctx-label:first-child { margin-left: 22px; }
 [data-rail-skin="d"] #fileContextMenu .fm-ctx-item .fm-ctx-key { margin-left: auto; padding-left: 8px; font: 400 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-3); }
+[data-rail-skin="d"] #fileContextMenu .fm-ctx-item .fm-ctx-key.d-na { display: none !important; }
 [data-rail-skin="d"] #fileContextMenu .fm-ctx-item.destructive, [data-rail-skin="d"] #fileContextMenu .fm-ctx-item.destructive svg { color: var(--d-fail); }
 [data-rail-skin="d"] #fileContextMenu .fm-ctx-sep { margin: var(--d-in) 6px !important; background: var(--d-line) !important; }
 
@@ -848,7 +869,11 @@
 [data-rail-skin="d"] #panel-docker .pm-sumcard-h {
   display: flex; align-items: baseline; gap: 8px; margin: 0 0 4px !important; padding: 0 !important; border: 0 !important;
   font: var(--d-w-label) var(--d-fs-label)/1.3 var(--display-font, var(--body-font)) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+  white-space: nowrap;
 }
+/* a count that no longer fits beside its label (YoRHa capitals, a scrollbar) drops whole under it (20-fit stackHeads) */
+[data-rail-skin="d"] #panel-docker .pm-sumcard-h[data-d-stack] { flex-wrap: wrap; row-gap: 1px; }
+[data-rail-skin="d"] #panel-docker .pm-sumcard-h[data-d-stack] > .c { flex: 1 1 100%; margin-left: 0; }
 [data-rail-skin="d"] #panel-docker .pm-sumcard-h:not(:first-child) { margin-top: 10px !important; padding-top: 0 !important; border-top: 0 !important; }
 [data-rail-skin="d"] #panel-docker .pm-sumcard-h .c { margin-left: auto; font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
 [data-rail-skin="d"] #panel-docker .pm-2col { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; row-gap: 2px; }
@@ -868,7 +893,7 @@
 }
 /* images: repository on the first line, tag and size on the second */
 [data-rail-skin="d"] #panel-docker [data-pane="images"] .sh-ctr-h {
-  display: grid !important; grid-template-columns: 10px minmax(0, 1fr) auto; grid-template-areas: "chev name name" "chev tag size";
+  display: grid !important; grid-template-columns: 9px minmax(0, 1fr) auto; grid-template-areas: "chev name name" "chev tag size";
   column-gap: var(--d-gap); row-gap: 1px; align-items: center;
 }
 [data-rail-skin="d"] #panel-docker [data-pane="images"] .sh-ctr-h > .sh-accchev { grid-area: chev; }
@@ -880,7 +905,7 @@
 [data-rail-skin="d"] #panel-docker .sh-imgsum .sh-imgsum-t { white-space: normal !important; overflow: visible !important; }
 /* registries: name on the first line, state and account on the second */
 [data-rail-skin="d"] #panel-docker [data-pane="registries"] .sh-ctr-h {
-  display: grid !important; grid-template-columns: 10px auto minmax(0, 1fr); grid-template-areas: "chev name name" "chev state meta";
+  display: grid !important; grid-template-columns: 9px auto minmax(0, 1fr); grid-template-areas: "chev name name" "chev state meta";
   column-gap: var(--d-gap); row-gap: 1px; align-items: center;
 }
 [data-rail-skin="d"] #panel-docker [data-pane="registries"] .sh-ctr-h > .sh-accchev { grid-area: chev; }
@@ -1035,6 +1060,7 @@
    (.07em) and the rule with square end caps under the band, as the app's card heads do. Off: sentence case again. */
 [data-rail-skin="d"][data-o55-nier-parts~="headers"] #sidePanelSlot .sh-banner > .sh-title { text-transform: uppercase !important; letter-spacing: .16em !important; }
 [data-rail-skin="d"][data-o55-nier-parts~="headers"] #sidePanelSlot :is(.sh-hlabel, .pm-sumcard-h, .pm7-post-card-title) { text-transform: uppercase !important; letter-spacing: .07em !important; }
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #sidePanelSlot .pm-sumcard-h > .c { text-transform: none !important; letter-spacing: 0 !important; }
 [data-rail-skin="d"][data-o55-nier-parts~="headers"] #sidePanelSlot .sh-shelf > .sh-head {
   background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) !important;

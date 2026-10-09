@@ -35,12 +35,25 @@ function stackHeads(root, force) {
     if (!force && h._dStackKey === key) return;
     h._dStackKey = key;
     h.removeAttribute('data-d-stack');
-    const over = l.scrollWidth > l.clientWidth + 1 || h.scrollWidth > h.clientWidth + 1;
+    const over = overflows(l) || h.scrollWidth > h.clientWidth + 1;
     if (over) {
       h.setAttribute('data-d-stack', '');
       const pad = parseFloat(getComputedStyle(h).paddingLeft) || 0;
       h.style.setProperty('--d-stack-x', Math.max(0, l.offsetLeft - pad) + 'px');
     }
+  });
+  /* a summary head ("Fleet summary   9 containers") keeps its label on one line; a count that no longer fits beside it
+     (YoRHa capitals, a scrollbar) drops whole under the label */
+  const sums = Array.from(root.querySelectorAll('.pm-sumcard-h'));
+  const sumW = sums.map(h => h.offsetWidth);
+  sums.forEach((h, i) => {
+    const c = h.querySelector(':scope > .c');
+    if (!c || !sumW[i]) return;
+    const key = sumW[i] + '|' + c.textContent;
+    if (!force && h._dStackKey === key) return;
+    h._dStackKey = key;
+    h.removeAttribute('data-d-stack');
+    if (h.scrollWidth > h.clientWidth + 1) h.setAttribute('data-d-stack', '');
   });
 }
 
@@ -120,7 +133,7 @@ function recheckSoon() {
     if (!D.on) return;
     panelEls().forEach(p => {
       if (!p.offsetWidth) return;
-      const over = Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && el.scrollWidth > el.clientWidth + 0.5);
+      const over = Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && overflows(el));
       if (!over.length) return;
       over.forEach(el => { delete el._dFitKey; });
       midFitAll(p);
@@ -153,14 +166,35 @@ function watchFit() {
 
 /* Middle truncation for names that are paths or long ids: keep the head and the tail (the file name, the last part of
    a branch or container name) instead of cutting the end off. Measured with the element's own font on a canvas, the
-   text is written once; the full name stays in the row's hover tag. */
-const MID_SEL = '.sh-chg-h .sh-nm-txt, .sh-ctr-h .sh-nm-txt, .sh-wt-h > .sh-branch, .sh-cfl > .f, .fm-cfile, .fm-openrow > .fm-path, .fm-cdir, .sh-ctx .d-ctxpath';
+   text is written once; the full name stays in the row's hover tag. A folder that leads a meta line (.d-dir, set by
+   applyPaths) is cut in its own box, so the change kind after it stays whole. */
+const MID_SEL = '.sh-chg-h .sh-nm-txt, .sh-ctr-h .sh-nm-txt, .sh-wt-h > .sh-branch, .sh-cfl > .f, .fm-cfile, .fm-openrow > .fm-path, .fm-cdir, .sh-ctx .d-ctxpath, .sh-meta > .d-dir > .d-dir-t';
 let measureCtx = null;
+/* the element's own face, size and letter spacing (NieR and Glass space their letters; a canvas left at 0 measures
+   every name short by a fraction of a pixel per letter) */
 function textWidth(el, text) {
   if (!measureCtx) measureCtx = document.createElement('canvas').getContext('2d');
   const cs = getComputedStyle(el);
   measureCtx.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
-  return measureCtx.measureText(text).width;
+  const ls = parseFloat(cs.letterSpacing) || 0;
+  if ('letterSpacing' in measureCtx) { measureCtx.letterSpacing = ls + 'px'; return measureCtx.measureText(text).width; }
+  return measureCtx.measureText(text).width + ls * Array.from(text).length;
+}
+/* does an element's text run past its content box? To the sub-pixel: scrollWidth and clientWidth are whole pixels, and
+   a name 0.3 px too wide still gets the end ellipsis. The text's box is read through a Range (it reports the whole run,
+   ellipsis or not), the content box from the used width, both freed of any entrance scale that is running. */
+function overflows(el) {
+  if (el.scrollWidth > el.clientWidth) return true;
+  const cs = getComputedStyle(el), bw = parseFloat(cs.width);
+  const box = el.getBoundingClientRect();
+  if (!(bw > 0) || !box.width) return false;
+  const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+  const bord = (parseFloat(cs.borderLeftWidth) || 0) + (parseFloat(cs.borderRightWidth) || 0);
+  const content = cs.boxSizing === 'border-box' ? bw - pad - bord : bw;
+  const scale = box.width / (cs.boxSizing === 'border-box' ? bw : bw + pad + bord);
+  const rg = document.createRange();
+  rg.selectNodeContents(el);
+  return rg.getBoundingClientRect().width / (scale || 1) > content + 0.01;
 }
 function midText(full, n) {
   const slash = Math.max(full.lastIndexOf('/'), -1);
@@ -169,16 +203,17 @@ function midText(full, n) {
   if (name && name <= n - 3) tail = Math.max(tail, name);
   tail = Math.min(tail, n - 2);
   let head = Math.max(2, n - tail), start = full.length - tail;
-  /* snap both cuts to the nearest separator so the parts read as whole words: "tastebook-…-worker-batch" */
-  const sep = /[/\-_.]/;
+  /* snap both cuts to the nearest separator so the parts read as whole words: "tastebook-…-worker-batch"; the tail never
+     snaps to a dot (a cut that keeps ".rs" and nothing of the name says nothing) */
+  const sep = /[/\-_.]/, tsep = /[/\-_]/;
   for (let k = 0; k < 4 && head - k > 2; k++) if (sep.test(full[head - k - 1])) { head = head - k; break; }
-  for (let k = 0; k < 4 && start + k < full.length - 2; k++) if (sep.test(full[start + k])) { start = start + k; break; }
+  for (let k = 0; k < 4 && start + k < full.length - 2; k++) if (tsep.test(full[start + k])) { start = start + k; break; }
   return full.slice(0, head) + '…' + full.slice(start);
 }
-function midFit(el) {
+function midFit(el, strict) {
   if (el.children.length) return;
-  /* a name that is a phrase ("multi-arch publish dry-run …") wraps onto a second line instead */
-  if (/\s/.test((el._dFull != null ? el._dFull : el.textContent).trim())) { addClass(el, 'd-wrap'); return; }
+  /* a name that is a phrase ("multi-arch publish dry-run …") wraps onto a second line instead (a folder is cut) */
+  if (!el.classList.contains('d-dir-t') && /\s/.test((el._dFull != null ? el._dFull : el.textContent).trim())) { addClass(el, 'd-wrap'); return; }
   if (el._dFull == null) {
     el._dFull = el.textContent;
     const full = el._dFull;
@@ -186,10 +221,13 @@ function midFit(el) {
   }
   const full = el._dFull;
   if (el.textContent !== full) el.textContent = full;
+  /* a folder's box is measured at the whole folder's width (40-rows), so its room is all the line can give it */
+  const isDir = el.classList.contains('d-dir-t');
+  if (isDir) el.style.setProperty('--d-full-w', Math.ceil(textWidth(el, full) + 1) + 'px');
   const ecs = getComputedStyle(el);
   const pad = (parseFloat(ecs.paddingLeft) || 0) + (parseFloat(ecs.paddingRight) || 0);
   const room = el.clientWidth - pad;
-  if (room <= 0 || el.scrollWidth <= el.clientWidth) return;
+  if (room <= 0 || !overflows(el)) return;
   const fits = t => textWidth(el, t) <= room - 1;
   /* the plain best cut */
   let lo = 4, hi = full.length - 1, best = null, bestN = 0;
@@ -197,33 +235,71 @@ function midFit(el) {
     const mid = (lo + hi) >> 1, t = midText(full, mid);
     if (fits(t)) { best = t; bestN = mid; lo = mid + 1; } else hi = mid - 1;
   }
-  /* cuts on whole parts ("tastebook-…-worker-batch", "web/…/QuantityStepper.svelte") win when they keep nearly as much */
-  const seps = [];
-  for (let i = 1; i < full.length - 1; i++) if ('/-_.'.indexOf(full[i]) >= 0) seps.push(i);
-  const slash = full.lastIndexOf('/');
-  let score = bestN;
-  seps.forEach(h => seps.forEach(t => {
-    if (t <= h) return;
-    const cand = full.slice(0, h + 1) + '…' + full.slice(t);
-    const kept = h + 1 + full.length - t;
-    const s = kept + 6 + (slash > 0 && t === slash ? 4 : 0);
-    if (s > score && fits(cand)) { best = cand; score = s; }
-  }));
+  /* cuts on whole parts ("tastebook-…-worker-batch", "web/…/QuantityStepper.svelte") win when they keep nearly as much.
+     The end is what a middle cut is for, so a whole-part tail starts at a "/", "-" or "_", never at a dot, and while
+     the file name fits whole after a short head the tail keeps all of it ("src/…/tantivy_query.rs", never
+     "src/services/….rs"); when it does not, the tail still keeps the name's last part ("crate…_freshness.rs", not
+     "crates/…reshness.rs"). Each tail takes the longest head that fits, snapped back to a part's end when one is near.
+     strict (two names in one list read the same): the plain cut only, which keeps the most of each. */
+  if (!strict) {
+    const SEP = '/-_.', slash = full.lastIndexOf('/');
+    const nameFits = slash > 0 && fits(full.slice(0, 3) + '…' + full.slice(slash));
+    let score = bestN;
+    for (let t = 1; t < full.length - 1; t++) {
+      if ('/-_'.indexOf(full[t]) < 0 || (nameFits && t > slash)) continue;
+      const tail = full.slice(t);
+      let lo2 = 1, hi2 = t - 1, k = 0;
+      while (lo2 <= hi2) { const m = (lo2 + hi2) >> 1; if (fits(full.slice(0, m) + '…' + tail)) { k = m; lo2 = m + 1; } else hi2 = m - 1; }
+      if (!k) continue;
+      let whole = SEP.indexOf(full[k - 1]) >= 0;
+      for (let j = 1; !whole && j < 5 && k - j >= 1; j++) if (SEP.indexOf(full[k - j - 1]) >= 0) { k -= j; whole = true; }
+      if (!whole && k < 3) continue;
+      const kept = k + full.length - t;
+      if (kept >= full.length - 1) continue;
+      const s = kept + (whole ? 4 : 1) + (slash > 0 && t === slash ? 4 : 0);
+      if (s > score) { best = full.slice(0, k) + '…' + tail; score = s; }
+    }
+  }
   if (best && best !== el.textContent) el.textContent = best;
-  /* the canvas can differ from layout by a pixel or two: confirm in the DOM and step down if the browser disagrees */
-  let n = Math.max(4, bestN);
-  while (el.scrollWidth > el.clientWidth && n > 4) { n -= 1; el.textContent = midText(full, n); }
+  /* the canvas can differ from layout by a pixel or two: confirm in the DOM (to the sub-pixel) and step down if the
+     browser disagrees */
+  let n = Math.max(4, bestN) + 1;
+  while (n > 4 && overflows(el)) { n -= 1; el.textContent = midText(full, n); }
+  /* then it closes up on the cut text, so the dot and the change kind follow it with no gap */
+  if (isDir && el.textContent !== full) {
+    const rg = document.createRange();
+    rg.selectNodeContents(el);
+    el.style.setProperty('--d-full-w', Math.ceil(rg.getBoundingClientRect().width + 0.5) + 'px');
+  }
 }
-/* read every width first (one layout), then fit only the names whose room changed since their last fit */
+/* read every width first (one layout), then fit only the names whose room changed since their last fit (a folder's
+   room is its meta line, since its own box closes up on the cut text) */
+const roomOf = el => (el.classList.contains('d-dir-t') && el.closest('.sh-meta') ? el.closest('.sh-meta').clientWidth : el.clientWidth);
 function midFitAll(root) {
   const els = Array.from(root.querySelectorAll(MID_SEL));
-  const rooms = els.map(el => (el.offsetParent ? el.clientWidth : 0));
+  const rooms = els.map(el => (el.offsetParent ? roomOf(el) : 0));
+  let changed = false;
   els.forEach((el, i) => {
     if (!rooms[i]) return;
     const key = rooms[i] + '|' + (el._dFull != null ? el._dFull : el.textContent);
     if (el._dFitKey === key) return;
     midFit(el);
-    el._dFitKey = el.clientWidth + '|' + (el._dFull != null ? el._dFull : el.textContent);
+    el._dFitKey = roomOf(el) + '|' + (el._dFull != null ? el._dFull : el.textContent);
+    changed = true;
+  });
+  if (changed) midDistinct(els);
+}
+/* two different names in one list never read the same ("crates/puppet-….rs" twice): such a pair takes the plain cut */
+function midDistinct(els) {
+  const lists = new Map();
+  els.forEach(el => {
+    if (el._dFull == null || el.textContent === el._dFull || !el.offsetParent) return;
+    const list = el.closest('.sh-accb, .sh-shelf, [data-pane]') || el.parentElement;
+    let seen = lists.get(list);
+    if (!seen) lists.set(list, (seen = new Map()));
+    const other = seen.get(el.textContent);
+    if (other && other._dFull !== el._dFull) { midFit(other, true); midFit(el, true); }
+    else seen.set(el.textContent, el);
   });
 }
 

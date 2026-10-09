@@ -62,6 +62,7 @@
    (.07em) and the rule with square end caps under the band, as the app's card heads do. Off: sentence case again. */
 §R[data-o55-nier-parts~="headers"] #sidePanelSlot .sh-banner > .sh-title { text-transform: uppercase !important; letter-spacing: .16em !important; }
 §R[data-o55-nier-parts~="headers"] #sidePanelSlot :is(.sh-hlabel, .pm-sumcard-h, .pm7-post-card-title) { text-transform: uppercase !important; letter-spacing: .07em !important; }
+§R[data-o55-nier-parts~="headers"] #sidePanelSlot .pm-sumcard-h > .c { text-transform: none !important; letter-spacing: 0 !important; }
 §R[data-o55-nier-parts~="headers"] #sidePanelSlot .sh-shelf > .sh-head {
   background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) !important;
