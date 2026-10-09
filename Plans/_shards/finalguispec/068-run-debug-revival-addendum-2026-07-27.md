@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33463-L34524
+Source lines: L33465-L34527
 
-Source SHA256: `c7439e9cdb7b3d199ed3a97467d41932978ab520568a310d530c0ea9ee272035`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -256,11 +256,12 @@ canonical_text: >-
   action). Panel width, motion, and fitting follow F3-471, F3-473, and F3-480
   (referenced).
   Amended 2026-10-09 (DL-162): in the rail the launch row is a configuration field showing the configuration's name
-  and then its command, above Start Debugging and Run Without Debugging joined as one split control, then the gear.
-  The configuration menu opens as the chat picker (F3-621), grouped Recent, then Other configurations, then Add
-  Configuration… and Edit configurations file. Shelf labels are sentence case, the canon tokens Debug & Run, Start
-  Debugging and Run Without Debugging keep their case, and a shelf head whose summary does not fit moves it under
-  the label (F3-620).
+  on line 1 and its command on line 2, with the gear beside it, above Start Debugging and Run Without Debugging
+  joined as one split control across the full width. The configuration menu opens as the chat picker (F3-621) and
+  lists names first, grouped Recent, then Other configurations, then Add Configuration… and Edit configurations
+  file. Shelf labels are sentence case, the canon tokens Debug & Run, Start Debugging and Run Without Debugging keep
+  their case, every row name starts at the rail's name column (F3-618) with child sessions indented one step, and a
+  shelf head whose summary does not fit moves it under the label (F3-620).
 gui_related: true
 gui_classification_reason: This unit defines the visible section-by-section layout and empty-state vocabulary of the Run & Debug rail panel.
 split_recommended: false

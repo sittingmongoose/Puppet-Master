@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32767-L33461
+Source lines: L32768-L33463
 
-Source SHA256: `c7439e9cdb7b3d199ed3a97467d41932978ab520568a310d530c0ea9ee272035`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -409,10 +409,11 @@ canonical_text: >-
   map to bundled SVG icon_id entries; no emoji ever renders. The panel has no file-locks
   section: file-lock semantics are retired, and rows may show declared touch sets and
   file-activity claims only.
-  Amended 2026-10-09 (DL-162): in the rail the lifecycle states draw as F3-619's glyph and word, the blocked
-  question and the waiting time stay readable in the collapsed row, the economics and lane facts read as plain words
-  and numbers, and model names are plain words, not capsules; the vocabulary, mapping and ordering above are
-  unchanged.
+  Amended 2026-10-09 (DL-162): in the rail the lifecycle states draw as F3-619's glyph and word, the same in the row
+  head and in the opened row, with blocked awaiting input shown as needs input (the warning triangle); the blocked
+  question stays readable in the collapsed row and the waiting or elapsed time appears once, in the row head; the
+  economics and lane facts read as plain words and numbers, and model names are plain words, not capsules; the
+  vocabulary, mapping and ordering above are unchanged.
 gui_related: true
 gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
 split_recommended: false

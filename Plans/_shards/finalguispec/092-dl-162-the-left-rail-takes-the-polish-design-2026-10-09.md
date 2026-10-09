@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42058-L42484
+Source lines: L42061-L42497
 
-Source SHA256: `c7439e9cdb7b3d199ed3a97467d41932978ab520568a310d530c0ea9ee272035`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -105,13 +105,16 @@ canonical_text: >-
   eight steps over 4 s under Retro; stale a ring with clock hands; unknown a dashed ring with a question mark; changed a
   half-filled circle; orphaned an open arc with a dot; a stash a tray; paused (a debug session) a solid disc with two
   bars knocked out; immutable (a Jujutsu change) a solid disc with a padlock knocked out. Errored, a harness
-  failure, takes the failed shape in its own colour so it stays distinct from failed, and skipped, cancelled and
-  terminated take the stopped ring. Knock-outs show whatever is behind the glyph,
+  failure, takes the failed shape in its own colour so it stays distinct from failed; needs input and flaky take the
+  warning triangle; and skipped, cancelled, superseded and terminated take the stopped ring. A row's state is the
+  same in its head and in its opened details. Knock-outs show whatever is behind the glyph,
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
   idle, unknown and immutable the muted text colour, paused --accent-warning, conflict --accent-magenta, orphaned
   and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode done, live,
-  idle and paused draw in the NieR ink. Shape and word always carry the state, so it
+  idle and paused draw in the NieR ink. In the light looks and NieR Mode dark the word takes a deeper tone of its
+  colour, mixed toward the text colour, so it reads at about 4:1, while the glyph keeps more of the colour. Shape
+  and word always carry the state, so it
   never rests on colour alone. Counts are plain numbers in tabular figures, right-aligned in one column across a
   panel's shelf heads, never in a capsule, and a count that changes rolls to its new value. The File Manager's git
   letters (F-074) stay letters, without a capsule, in one fixed column. Wherever a rail panel's owner unit says chip,
@@ -177,7 +180,13 @@ canonical_text: >-
   next line, and a registry row's account takes a third line. Source Control change rows show the file name on line
   1 and its folder and diff counts on line 2. A long name that is a path or an identifier keeps its head and its end
   and loses its middle (ci-build-…-publish.yml, tastebook-…-worker-batch), measured in the element's own font, with
-  the full name in the row's hover tag (F3-523); a repository location breaks between its parts, never inside one.
+  the full name in the row's hover tag (F3-523); the kept end starts at a separator (/, - or _), keeps the whole
+  file name whenever it fits, never ends in a bare extension, and two different names in one list never get the
+  same label. A change row's folder is cut in its middle while the change kind is never cut and moves under the
+  folder when it does not fit beside it. A repository location breaks between its parts, never inside one. A fact
+  line breaks only between its parts, the separator dot ending its line; a count never leaves its word, a date and
+  a short id or ref never split, and code and paths break only at their joints (/, ::, _, before @ or a file
+  extension). No facts line is clamped; a long code value in an opened row sits under its label at full width.
   Segmented tab strips fit by measurement: every tab shows its icon and full label when all fit; otherwise the active
   tab keeps its full label and the others show their icon only; otherwise every tab shows its icon only. Every tab
   keeps its full label as its accessible name and hover tag, and no tab label is ever shortened. Fitting is measured
@@ -242,7 +251,8 @@ canonical_text: >-
   reference pickers and any former native select included, opens in the assistant chat's picker style (DL-162): the
   composer pickers' plate, items of 12 px semibold text with a 14 px check on the chosen item and muted trailing
   meta, group labels and dividers, a search field for long lists, and the chat's corner-origin sprout (ACD-439),
-  with the chat pickers' Retro, Glass and NieR Mode treatments. On top it is portaled and unclipped (F3-480 (1)),
+  with the chat pickers' Retro, Glass and NieR Mode treatments, items in the look's body face, and a plate as wide
+  as its longest item from the trigger's width up to 360 px, wrapping beyond that. On top it is portaled and unclipped (F3-480 (1)),
   flips above its trigger when it would leave the window, opens side submenus, and has roving keyboard focus,
   type-ahead and Escape with focus returned to the trigger; picking an item runs the same action as before. Rail
   motion has the same beats in every theme family and each family's own voice: the panel's chrome settles first and
@@ -306,7 +316,7 @@ negative_constraints:
   - "Do not blur a rail row or add a backdrop blur for rail motion."
 compatibility_only_notes:
   - "The concept times its motion with the theme tokens it has (about 240, 420, 480 and 200 ms); the product's motion tokens own exact durations and the beats and voices here bind."
-  - "The concept reaches NieR Mode's Menu cursor and Target brackets parts through two hook classes it adds to the NieR kit's selector lists, .pmr-cur (cursor) and .pmr-lock (brackets that lock after the click); the hooks are concept plumbing, the behaviour above is canon."
+  - "The concept reaches NieR Mode's Menu cursor and Target brackets parts through two hooks in the NieR kit (opus-5.5 settings kit, 19-nier-parts.js): .pmr-cur in its cursor selector list, and a .pmr-lock branch in its bracket placement that places the brackets after the click lands; the hooks are concept plumbing, the behaviour above is canon."
 stale_retired_dispositions: []
 owner_boundary_notes:
   - "ACD-439 owns the sprout motion and the chat pickers' look; this unit applies them to the rail and adds only placement and keyboard."

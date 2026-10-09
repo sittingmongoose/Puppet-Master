@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L3626
 
-Source SHA256: `46741e89fc639a217f0c7197cd987a8f6dfec7ba8c7ab577fefa4feda56451bb`
+Source SHA256: `07c9e45a17cbf53fc94e9d79d4f2326b200c9be7d0dbdf526c7dfede2eb9e584`
 
 ---
 
@@ -3608,7 +3608,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/Final
 
 **What the owner decided** (in plain words):
 - 2026-10-09, in his request (issue 2): "On the source control panel, in jujutsu, should there be tabs? There is a changes, worktrees, history, and branches tab but nothing happens when you click them? If they apply, then they need to be fleshed out, if not, then they should be removed. This is more of a thought experiment rather than a simple task." He left the answer to the build, which worked it through and had it reviewed twice; this record is that answer.
-- Two choices remain his. The plans called the fifth view both "Operation Log" (JJI §4.1, JJI-006's registered string, the command catalogue and the wiring rows) and "Operation History" (F3-529, F3-552, UCC-163 and JJI-008); the consumers now follow the Jujutsu owner's registered "Operation Log", and he may reverse that. And the plans disagree on whether a change's short ID shows on its row: JJI §4.1 puts raw IDs only in Technical details, while F3-529 lists the change ID among what Jujutsu renders. The concept shows the short change ID on the row's second line because Jujutsu users name changes by it; the spec leaves that open until he chooses.
+- Two choices remain his. The plans called the fifth view both "Operation Log" (JJI §4.1, JJI-006's registered string, the command catalogue and the wiring rows) and "Operation History" (F3-529, F3-552, UCC-163 and JJI-008); the consumers now follow the Jujutsu owner's registered "Operation Log", written as a proper name in title case, and he may reverse that (or ask for sentence case, "Operation log"). And the plans disagree on whether a change's short ID shows on its row: JJI §4.1 puts raw IDs only in Technical details, while F3-529 lists the change ID among what Jujutsu renders. The concept shows the short change ID on the row's second line because Jujutsu users name changes by it; the spec leaves that open until he chooses.
 
 **What the spec now says:**
 1. **The strip, the engine switch, the fit rule, the panel head and the footer card** (`Plans/FinalGUISpec.md#F3-623`).
@@ -3617,7 +3617,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/Final
 4. **The view label** (`Plans/FinalGUISpec.md#F3-529`, `#F3-552`, `Plans/UI_Command_Catalog.md#UCC-163` and `Plans/Jujutsu_Integration.md#JJI-008` amended to "Operation Log"; F3-529 also records that Edit works on a change chosen in History, that Discard edits restores the current change to its parent, and that the protected state is the adapter's immutable set).
 5. **The tab command and the older section lists** (`cmd.source_control.select_tab` in `Plans/UI_Command_Catalog.md` takes each engine's own tab set and stash is Git-only; the Source Control section lists in `Plans/GitHub_Integration.md` and `#GI-004` point at SCS-005; `Plans/Jujutsu_Integration.md` section 4.1 notes the strip).
 6. **No new command, action or wiring row.** The 31 `cmd.jujutsu.*` wiring rows already name "Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log".
-7. **Left open for the Jujutsu owner:** disabled-reason codes for the concept-local reasons above; a command to update an out-of-date workspace; what Undo reverts when the newest operation is an automatic working-copy save, checked against the certified Jujutsu version; and the short change ID on the row (for Jared).
+7. **Left open for the Jujutsu owner:** disabled-reason codes for the concept-local reasons above; a command to update an out-of-date workspace; what Undo reverts when the newest operation is an automatic working-copy save, checked against the certified Jujutsu version; whether JJI-012's "restoring an old operation view" should say, as the view now does, that restoring to an operation undoes every later operation and keeps that one; and the short change ID on the row (for Jared).
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, issue 2); the left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, folded with two reviews and summarised in this entry (not a repository file); the concept source `Concepts/leftrail-redesign/src/concepts/d/` from lane commits 8693996260 and 2f77b78710 (concept lineage only).
 

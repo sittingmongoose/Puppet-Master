@@ -7741,10 +7741,11 @@ canonical_text: >-
   user/content search UI, grep-style result rows, replace-in-files, and shared OpenFile path/range
   routing.
   Amended 2026-10-09 (DL-162): in the rail each result group shows the file name on line 1 and its folder on line 2,
-  each keeping its head and end (F3-620); a hit shows at most two lines and, when the match would fall past them,
-  starts at an ellipsis just before the match so the match always shows; the three match options join as one control
-  beside a full-width scope field; counts read with their words (16 in 6 files, 3 of 16); and notes are quiet text,
-  not boxes.
+  each keeping its head and end (F3-620); a hit shows at most two lines and, when it is cut, starts at an ellipsis
+  on a whole word just before the match, and the match is never split across the two lines; the three match options
+  join as one control beside a full-width scope field whose choices read in sentence case (All files, Open files,
+  src/ only); counts read with their words (16 in 6 files, 3 of 16); the footer and the notes say Previous and Next
+  in full; and notes are quiet text, not boxes.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -33165,10 +33166,11 @@ canonical_text: >-
   map to bundled SVG icon_id entries; no emoji ever renders. The panel has no file-locks
   section: file-lock semantics are retired, and rows may show declared touch sets and
   file-activity claims only.
-  Amended 2026-10-09 (DL-162): in the rail the lifecycle states draw as F3-619's glyph and word, the blocked
-  question and the waiting time stay readable in the collapsed row, the economics and lane facts read as plain words
-  and numbers, and model names are plain words, not capsules; the vocabulary, mapping and ordering above are
-  unchanged.
+  Amended 2026-10-09 (DL-162): in the rail the lifecycle states draw as F3-619's glyph and word, the same in the row
+  head and in the opened row, with blocked awaiting input shown as needs input (the warning triangle); the blocked
+  question stays readable in the collapsed row and the waiting or elapsed time appears once, in the row head; the
+  economics and lane facts read as plain words and numbers, and model names are plain words, not capsules; the
+  vocabulary, mapping and ordering above are unchanged.
 gui_related: true
 gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
 split_recommended: false
@@ -33708,11 +33710,12 @@ canonical_text: >-
   action). Panel width, motion, and fitting follow F3-471, F3-473, and F3-480
   (referenced).
   Amended 2026-10-09 (DL-162): in the rail the launch row is a configuration field showing the configuration's name
-  and then its command, above Start Debugging and Run Without Debugging joined as one split control, then the gear.
-  The configuration menu opens as the chat picker (F3-621), grouped Recent, then Other configurations, then Add
-  Configuration… and Edit configurations file. Shelf labels are sentence case, the canon tokens Debug & Run, Start
-  Debugging and Run Without Debugging keep their case, and a shelf head whose summary does not fit moves it under
-  the label (F3-620).
+  on line 1 and its command on line 2, with the gear beside it, above Start Debugging and Run Without Debugging
+  joined as one split control across the full width. The configuration menu opens as the chat picker (F3-621) and
+  lists names first, grouped Recent, then Other configurations, then Add Configuration… and Edit configurations
+  file. Shelf labels are sentence case, the canon tokens Debug & Run, Start Debugging and Run Without Debugging keep
+  their case, every row name starts at the rail's name column (F3-618) with child sessions indented one step, and a
+  shelf head whose summary does not fit moves it under the label (F3-620).
 gui_related: true
 gui_classification_reason: This unit defines the visible section-by-section layout and empty-state vocabulary of the Run & Debug rail panel.
 split_recommended: false
@@ -42152,13 +42155,16 @@ canonical_text: >-
   eight steps over 4 s under Retro; stale a ring with clock hands; unknown a dashed ring with a question mark; changed a
   half-filled circle; orphaned an open arc with a dot; a stash a tray; paused (a debug session) a solid disc with two
   bars knocked out; immutable (a Jujutsu change) a solid disc with a padlock knocked out. Errored, a harness
-  failure, takes the failed shape in its own colour so it stays distinct from failed, and skipped, cancelled and
-  terminated take the stopped ring. Knock-outs show whatever is behind the glyph,
+  failure, takes the failed shape in its own colour so it stays distinct from failed; needs input and flaky take the
+  warning triangle; and skipped, cancelled, superseded and terminated take the stopped ring. A row's state is the
+  same in its head and in its opened details. Knock-outs show whatever is behind the glyph,
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
   idle, unknown and immutable the muted text colour, paused --accent-warning, conflict --accent-magenta, orphaned
   and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode done, live,
-  idle and paused draw in the NieR ink. Shape and word always carry the state, so it
+  idle and paused draw in the NieR ink. In the light looks and NieR Mode dark the word takes a deeper tone of its
+  colour, mixed toward the text colour, so it reads at about 4:1, while the glyph keeps more of the colour. Shape
+  and word always carry the state, so it
   never rests on colour alone. Counts are plain numbers in tabular figures, right-aligned in one column across a
   panel's shelf heads, never in a capsule, and a count that changes rolls to its new value. The File Manager's git
   letters (F-074) stay letters, without a capsule, in one fixed column. Wherever a rail panel's owner unit says chip,
@@ -42224,7 +42230,13 @@ canonical_text: >-
   next line, and a registry row's account takes a third line. Source Control change rows show the file name on line
   1 and its folder and diff counts on line 2. A long name that is a path or an identifier keeps its head and its end
   and loses its middle (ci-build-…-publish.yml, tastebook-…-worker-batch), measured in the element's own font, with
-  the full name in the row's hover tag (F3-523); a repository location breaks between its parts, never inside one.
+  the full name in the row's hover tag (F3-523); the kept end starts at a separator (/, - or _), keeps the whole
+  file name whenever it fits, never ends in a bare extension, and two different names in one list never get the
+  same label. A change row's folder is cut in its middle while the change kind is never cut and moves under the
+  folder when it does not fit beside it. A repository location breaks between its parts, never inside one. A fact
+  line breaks only between its parts, the separator dot ending its line; a count never leaves its word, a date and
+  a short id or ref never split, and code and paths break only at their joints (/, ::, _, before @ or a file
+  extension). No facts line is clamped; a long code value in an opened row sits under its label at full width.
   Segmented tab strips fit by measurement: every tab shows its icon and full label when all fit; otherwise the active
   tab keeps its full label and the others show their icon only; otherwise every tab shows its icon only. Every tab
   keeps its full label as its accessible name and hover tag, and no tab label is ever shortened. Fitting is measured
@@ -42289,7 +42301,8 @@ canonical_text: >-
   reference pickers and any former native select included, opens in the assistant chat's picker style (DL-162): the
   composer pickers' plate, items of 12 px semibold text with a 14 px check on the chosen item and muted trailing
   meta, group labels and dividers, a search field for long lists, and the chat's corner-origin sprout (ACD-439),
-  with the chat pickers' Retro, Glass and NieR Mode treatments. On top it is portaled and unclipped (F3-480 (1)),
+  with the chat pickers' Retro, Glass and NieR Mode treatments, items in the look's body face, and a plate as wide
+  as its longest item from the trigger's width up to 360 px, wrapping beyond that. On top it is portaled and unclipped (F3-480 (1)),
   flips above its trigger when it would leave the window, opens side submenus, and has roving keyboard focus,
   type-ahead and Escape with focus returned to the trigger; picking an item runs the same action as before. Rail
   motion has the same beats in every theme family and each family's own voice: the panel's chrome settles first and
@@ -42353,7 +42366,7 @@ negative_constraints:
   - "Do not blur a rail row or add a backdrop blur for rail motion."
 compatibility_only_notes:
   - "The concept times its motion with the theme tokens it has (about 240, 420, 480 and 200 ms); the product's motion tokens own exact durations and the beats and voices here bind."
-  - "The concept reaches NieR Mode's Menu cursor and Target brackets parts through two hook classes it adds to the NieR kit's selector lists, .pmr-cur (cursor) and .pmr-lock (brackets that lock after the click); the hooks are concept plumbing, the behaviour above is canon."
+  - "The concept reaches NieR Mode's Menu cursor and Target brackets parts through two hooks in the NieR kit (opus-5.5 settings kit, 19-nier-parts.js): .pmr-cur in its cursor selector list, and a .pmr-lock branch in its bracket placement that places the brackets after the click lands; the hooks are concept plumbing, the behaviour above is canon."
 stale_retired_dispositions: []
 owner_boundary_notes:
   - "ACD-439 owns the sprout motion and the chat pickers' look; this unit applies them to the rail and adds only placement and keyboard."
@@ -42502,7 +42515,9 @@ canonical_text: >-
   relabelled, and Git's strip, list and footer are hidden in Jujutsu mode while the Jujutsu view is hidden in Git
   mode. Both strips are the rail's one tab component (F3-618 to F3-621), each with its own tablist name ("Jujutsu
   views" for Jujutsu), tabs that carry their selected state and controlled pane, and Left, Right, Home and End
-  moving between tabs. Selecting a tab of either strip is cmd.source_control.select_tab with that engine's tab set;
+  moving between tabs, focus following once the chosen tab has settled. Operation Log's tab icon is a list; the
+  undo arrow is kept for the Undo action alone, so no view tab looks like a button that rewrites, and Fetch's
+  download icon differs from Refresh's. Selecting a tab of either strip is cmd.source_control.select_tab with that engine's tab set;
   it changes no repository state. Slots 1 to 4 sit in the same positions in both strips (Changes; Worktrees or
   Workspaces; History; Branches or Bookmarks) as a rule about positions, not a claim that the views are
   equivalent: the presentation-only engine switch ui.source_control.profile.preview (F3-529) opens the view in the
@@ -42583,7 +42598,7 @@ canonical_text: >-
   operation and workspace IDs appear only in a Technical details disclosure in the expanded row (JJI section 4.1);
   whether a change's short change ID may also show on line 2 is an open owner question (DL-163). Every dropdown is
   the chat picker (F3-621). Changes shows the current change @ first: its description or "No description yet",
-  its state (conflicted, empty, main has moved, divergent), a note offering Rebase onto main when main has moved,
+  its state (conflicted, empty, on an older main, divergent), a note offering Rebase onto main when main has moved,
   a description box with Describe, then New change as the primary action, Squash, and More with Rebase onto…,
   Split, Discard edits and Abandon; then a Conflicts shelf when there are conflicts, read-only with Open diff as
   the way to inspect them (DL-056); then the changed files with their letter, folder and diff. It has no staging,
@@ -42603,11 +42618,14 @@ canonical_text: >-
   conflicted (JJI-019) or deleted here, still on a remote, and "on your current change" where it applies; every
   button names the one remote it touches, Fetch defaults to origin with all remotes as a named pick, Move here
   never moves a bookmark backwards, a conflicted bookmark lists its targets read-only with one Move per target and
-  no picker (JJI-019), Delete never shares a control with forgetting a remote, and a Git shelf shows colocation
+  no picker (JJI-019), Rename and Delete confirm from the bookmark's own remote set, naming every remote that keeps
+  a copy until its deletion is pushed there, or saying that it is on no remote and nothing on any remote changes,
+  Delete never shares a control with forgetting a remote, and a Git shelf shows colocation
   with Import and Export disabled for the upstream race with no fallback (JJI-006). Operation Log leads with Undo
   naming the newest operation, automatic working-copy saves included, then the operations described from receipts
-  (JJI-011) with who and where, each expanding to what changed, Inspect, and Restore to this point… with a preview,
-  labelled apart from Undo and from Backup (JJI-012, F3-553). Group undo, redo, reversing one operation, markers,
+  (JJI-011) with who and where, each expanding to what changed, Inspect, and Restore to this point…, which returns
+  the repository to its state right after that operation, so its preview names the later operations it undoes and
+  says the operation itself stays; it is labelled apart from Undo and from Backup (JJI-005, JJI-012, F3-553). Group undo, redo, reversing one operation, markers,
   filters and earlier-state browsing (F3-552 to F3-554) are not shown until they are admitted. A blocked
   repository shows one row naming the reason with Open Operation Log, Inspect last operation and Refresh (JJI-003's
   recovery floor), and every mutating control is disabled with that reason. Every control dispatches an existing

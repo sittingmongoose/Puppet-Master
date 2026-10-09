@@ -247,9 +247,11 @@ acceptance_criteria:
   - >-
     The five bookmark words name one axis, a bookmark's scope across its remotes (DL-163). A conflicted bookmark
     (JJI-019) and a bookmark deleted here while a remote still has it are separate states shown beside that word,
-    not additions to it, and a bookmark on the current change says so; no bookmark is called current. The rename
-    disclosure says plainly what happens: the old name stays on the remote until it is deleted there, and the new
-    name is not on the remote yet.
+    not additions to it, and a bookmark on the current change says so; no bookmark is called current. Rename and
+    delete confirmations are built from the bookmark's own remote set: rename says it renames here only, names every
+    remote where the old name stays until its deletion is pushed there and says the new name is on no remote until
+    pushed; delete names every remote whose copy stays until the deletion is pushed; a bookmark on no remote says
+    that nothing on any remote changes.
   - The source-control manager is the unique operational destination; browser-scm remains a non-owning dependency summary.
 validation_surfaces: [source_control_projection fixtures, future Slint panel fixtures, Settings search and route dedupe fixtures]
 risk_class: gui_backend_or_owner_misrepresentation

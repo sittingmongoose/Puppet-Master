@@ -6020,7 +6020,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "46741e89fc639a217f0c7197cd987a8f6dfec7ba8c7ab577fefa4feda56451bb",
+      "sha256": "07c9e45a17cbf53fc94e9d79d4f2326b200c9be7d0dbdf526c7dfede2eb9e584",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 148
@@ -7561,7 +7561,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 42663,
+      "line_count": 42681,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 615,
       "plan_unit_ids": [
@@ -8316,7 +8316,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "c7439e9cdb7b3d199ed3a97467d41932978ab520568a310d530c0ea9ee272035",
+      "sha256": "30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 614,
@@ -8813,7 +8813,7 @@
         "Plans/event_family_registry.json",
         "future remote Git cache adapter"
       ],
-      "line_count": 2634,
+      "line_count": 2635,
       "path": "Plans/GitHub_Integration.md",
       "plan_unit_count": 42,
       "plan_unit_ids": [
@@ -8873,7 +8873,7 @@
         "p1_security_release_supply_chain_hardening",
         "remote_cache_consumer_drift"
       ],
-      "sha256": "27e532c3a6ee0cb98efdd8e93a41ab28a12367f9bfb2899ea393c7ba589e5ad4",
+      "sha256": "924201ae5917470118eca679dbf546249dad0cd80de2f7b93d5e7b2fc9ac92ed",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 42
@@ -16106,7 +16106,7 @@
         "future runtime artifact rows",
         "future runtime artifacts panel"
       ],
-      "line_count": 3117,
+      "line_count": 3118,
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "plan_unit_count": 58,
       "plan_unit_ids": [
@@ -16232,7 +16232,7 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "316061539b6b9e751c84c7996f550e1d8e35ce9dafdbbd566751dddf2ad3aeac",
+      "sha256": "ac6998e31ec1f6b090614b8a7b0b6bd0af162c0b9135a600daae225c1e555122",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 57,
@@ -17764,7 +17764,7 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1844,
+      "line_count": 1846,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 24,
       "plan_unit_ids": [
@@ -17822,7 +17822,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "621d7ce4d84bdfcde36b6defd73152a8b0dadcd84537fa2c95bace4738155e77",
+      "sha256": "4721806e7c7ca94704a924f6c20c6229477fe9548929357355abf4276f67e3df",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 24
@@ -20673,7 +20673,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-10T00:19:35Z",
+  "generated_at_utc": "2026-10-10T00:20:18Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

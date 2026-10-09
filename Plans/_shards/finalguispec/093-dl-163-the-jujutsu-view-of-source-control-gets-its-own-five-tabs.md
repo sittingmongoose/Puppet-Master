@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42486-L42663
+Source lines: L42499-L42681
 
-Source SHA256: `c7439e9cdb7b3d199ed3a97467d41932978ab520568a310d530c0ea9ee272035`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -27,7 +27,9 @@ canonical_text: >-
   relabelled, and Git's strip, list and footer are hidden in Jujutsu mode while the Jujutsu view is hidden in Git
   mode. Both strips are the rail's one tab component (F3-618 to F3-621), each with its own tablist name ("Jujutsu
   views" for Jujutsu), tabs that carry their selected state and controlled pane, and Left, Right, Home and End
-  moving between tabs. Selecting a tab of either strip is cmd.source_control.select_tab with that engine's tab set;
+  moving between tabs, focus following once the chosen tab has settled. Operation Log's tab icon is a list; the
+  undo arrow is kept for the Undo action alone, so no view tab looks like a button that rewrites, and Fetch's
+  download icon differs from Refresh's. Selecting a tab of either strip is cmd.source_control.select_tab with that engine's tab set;
   it changes no repository state. Slots 1 to 4 sit in the same positions in both strips (Changes; Worktrees or
   Workspaces; History; Branches or Bookmarks) as a rule about positions, not a claim that the views are
   equivalent: the presentation-only engine switch ui.source_control.profile.preview (F3-529) opens the view in the
@@ -108,7 +110,7 @@ canonical_text: >-
   operation and workspace IDs appear only in a Technical details disclosure in the expanded row (JJI section 4.1);
   whether a change's short change ID may also show on line 2 is an open owner question (DL-163). Every dropdown is
   the chat picker (F3-621). Changes shows the current change @ first: its description or "No description yet",
-  its state (conflicted, empty, main has moved, divergent), a note offering Rebase onto main when main has moved,
+  its state (conflicted, empty, on an older main, divergent), a note offering Rebase onto main when main has moved,
   a description box with Describe, then New change as the primary action, Squash, and More with Rebase onto…,
   Split, Discard edits and Abandon; then a Conflicts shelf when there are conflicts, read-only with Open diff as
   the way to inspect them (DL-056); then the changed files with their letter, folder and diff. It has no staging,
@@ -128,11 +130,14 @@ canonical_text: >-
   conflicted (JJI-019) or deleted here, still on a remote, and "on your current change" where it applies; every
   button names the one remote it touches, Fetch defaults to origin with all remotes as a named pick, Move here
   never moves a bookmark backwards, a conflicted bookmark lists its targets read-only with one Move per target and
-  no picker (JJI-019), Delete never shares a control with forgetting a remote, and a Git shelf shows colocation
+  no picker (JJI-019), Rename and Delete confirm from the bookmark's own remote set, naming every remote that keeps
+  a copy until its deletion is pushed there, or saying that it is on no remote and nothing on any remote changes,
+  Delete never shares a control with forgetting a remote, and a Git shelf shows colocation
   with Import and Export disabled for the upstream race with no fallback (JJI-006). Operation Log leads with Undo
   naming the newest operation, automatic working-copy saves included, then the operations described from receipts
-  (JJI-011) with who and where, each expanding to what changed, Inspect, and Restore to this point… with a preview,
-  labelled apart from Undo and from Backup (JJI-012, F3-553). Group undo, redo, reversing one operation, markers,
+  (JJI-011) with who and where, each expanding to what changed, Inspect, and Restore to this point…, which returns
+  the repository to its state right after that operation, so its preview names the later operations it undoes and
+  says the operation itself stays; it is labelled apart from Undo and from Backup (JJI-005, JJI-012, F3-553). Group undo, redo, reversing one operation, markers,
   filters and earlier-state browsing (F3-552 to F3-554) are not shown until they are admitted. A blocked
   repository shows one row naming the reason with Open Operation Log, Inspect last operation and Refresh (JJI-003's
   recovery floor), and every mutating control is disabled with that reason. Every control dispatches an existing

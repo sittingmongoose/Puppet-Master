@@ -2140,10 +2140,11 @@ canonical_text: >-
   (non-interactive, expiry date disclosed) rather than failing downloads, and in-progress runs show an
   available-after-completion placeholder instead of an empty strip. This refines the Failure triage view and
   its auto-expand failing-step behavior; log excerpts remain evidence, never canonical product state.
-  Amended 2026-10-09 (DL-162): in the rail a run row shows its name on line 1 and number, ref, age and state word on
-  line 2; a failed run's failure line stays visible while the row is closed and wraps rather than being cut; job
-  states draw as FinalGUISpec F3-619's glyphs (passed as done, failed, running as live, queued as pending, skipped
-  as the stopped ring); and counts are spelled out with their words (4 passed · 2 failed · 1 running).
+  Amended 2026-10-09 (DL-162): in the rail a run row shows its name on line 1 and number, ref and age with the state
+  word on line 2, the state moving under them when they do not fit beside it; a failed run's failure line stays
+  visible while the row is closed and wraps rather than being cut; job states draw as FinalGUISpec F3-619's glyphs
+  (passed as done, failed, running as live, queued as pending, skipped as the stopped ring); and counts are spelled
+  out with their words (4 passed · 2 failed · 1 running, the same wording in the banner and the Readiness fact).
 gui_related: true
 gui_classification_reason: Defines the user-visible in-rail run detail depth, expansion, log excerpt, attempts, and artifacts presentation.
 depends_on: []

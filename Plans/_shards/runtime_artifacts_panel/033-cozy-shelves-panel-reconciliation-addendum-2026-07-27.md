@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2234-L2478
+Source lines: L2234-L2479
 
-Source SHA256: `316061539b6b9e751c84c7996f550e1d8e35ce9dafdbbd566751dddf2ad3aeac`
+Source SHA256: `ac6998e31ec1f6b090614b8a7b0b6bd0af162c0b9135a600daae225c1e555122`
 
 ---
 
@@ -207,10 +207,11 @@ canonical_text: >-
   line and pin action, a copyable canonical artifact id, and truncation_state for any excerpted content.
   Investigation-bundle groups collapse with same-kind grouping and per-kind count badges, remaining the
   RAP-013 index/navigation layer over canonical artifact records rather than a new family.
-  Amended 2026-10-09 (DL-162): in the rail the collapsed receipt row shows the label and age on line 1 and the
-  family word and state on line 2, the family word at every width (the width tiers gate chrome only, F3-498); when
-  the family and the state do not fit one line the state moves under the family instead of being cut; the per-kind
-  count badges are plain counts and the investigation steps read as a word and a line of detail (F3-619, F3-620).
+  Amended 2026-10-09 (DL-162): in the rail the collapsed receipt row shows the label across line 1 and the family
+  word, age and state on line 2, the family word at every width (the width tiers gate chrome only, F3-498); when the
+  state does not fit beside them it moves to a third line instead of being cut; the per-kind count badges are plain
+  counts, spelled with their words (15 records, 2 runs, 6 days), and the investigation steps read as a word and a
+  line of detail (F3-619, F3-620).
 gui_related: true
 gui_classification_reason: Row anatomy, expansion behavior, and grouped-bundle presentation are visible panel structure.
 depends_on: [RAP-008, RAP-013, RAP-041, RAP-042]

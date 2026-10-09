@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5341-L26489
+Source lines: L5341-L26490
 
-Source SHA256: `c7439e9cdb7b3d199ed3a97467d41932978ab520568a310d530c0ea9ee272035`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -2411,10 +2411,11 @@ canonical_text: >-
   user/content search UI, grep-style result rows, replace-in-files, and shared OpenFile path/range
   routing.
   Amended 2026-10-09 (DL-162): in the rail each result group shows the file name on line 1 and its folder on line 2,
-  each keeping its head and end (F3-620); a hit shows at most two lines and, when the match would fall past them,
-  starts at an ellipsis just before the match so the match always shows; the three match options join as one control
-  beside a full-width scope field; counts read with their words (16 in 6 files, 3 of 16); and notes are quiet text,
-  not boxes.
+  each keeping its head and end (F3-620); a hit shows at most two lines and, when it is cut, starts at an ellipsis
+  on a whole word just before the match, and the match is never split across the two lines; the three match options
+  join as one control beside a full-width scope field whose choices read in sentence case (All files, Open files,
+  src/ only); counts read with their words (16 in 6 files, 3 of 16); the footer and the notes say Previous and Next
+  in full; and notes are quiet text, not boxes.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
