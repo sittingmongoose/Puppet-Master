@@ -4,7 +4,7 @@ Source: `Plans/GitHub_Integration.md`
 
 Source lines: L80-L227
 
-Source SHA256: `5784359331c772b8e0d3e514d23155891ecec7e845ab4a6cdda0a54db596661b`
+Source SHA256: `3b122997225b66efa9e1d952e17ade0b97bf8e0118ada86bfe75a074fa514592`
 
 ---
 
@@ -14,7 +14,7 @@ This section reconciles GitHub integration consumer semantics with the canonical
 
 ### Source Control and GitHub Actions surface split
 
-GitHub Integration owns two distinct user-facing surfaces. **Source Control** is the Git-first repo/worktree surface for `Changes`, `History`, `Graph`, `Worktrees`, `Branches / Stash`, review/compare, conflicts, worktree-native recovery, and `/safe` local repo actions. **GitHub Actions** is the GitHub-hosted workflow/admin/runtime surface for workflow runs, logs, dispatch, workflow files, and repository Actions settings. The legacy `Git (GitHub)` wording is a migration alias only and must not collapse hosted Actions behavior back into Source Control.
+GitHub Integration owns two distinct user-facing surfaces. **Source Control** is the Git-first repo/worktree surface for `Changes`, `History`, `Graph`, `Worktrees`, `Branches / Stash`, review/compare, conflicts, worktree-native recovery, and `/safe` local repo actions. **GitHub Actions** is the GitHub-hosted workflow/admin/runtime surface for workflow runs, logs, dispatch, workflow files, and repository Actions settings. The legacy `Git (GitHub)` wording is a migration alias only and must not collapse hosted Actions behavior back into Source Control. (Amended 2026-10-09, DL-163: the Source Control section set per engine is owned by `Plans/Source_Control_System.md#SCS-005`; in the left rail Git shows `Changes`, `Worktrees`, `History` with its graph and `Branches` with its stashes, and Jujutsu its own five views, as `Plans/FinalGUISpec.md#F3-623` says.)
 
 Four GitHub-adjacent concepts stay separate. `GitHub Copilot` is a provider capability and is out of scope as a user-facing GitHub Integration GUI surface for this research pass. `GitHub API` is internal integration plumbing for GitHub-hosted features, not a visible GUI panel. `GitHub Actions` is the user-facing hosted workflow surface and may use the GitHub Actions VS Code extension as a functional parity baseline without copying its visual design. `Source Control` is the user-facing repo-control surface and may use VS Code Source Control as a functional parity baseline without copying its visual design.
 

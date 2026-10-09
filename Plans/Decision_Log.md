@@ -3582,6 +3582,48 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/J
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/DRY_Rules.md#DR-057
 
+### DL-163: The Jujutsu view of Source Control gets its own five tabs
+
+**Question:** Should the Jujutsu view of Source Control have tabs, and if so which?
+
+**Why it came up:** In the Polish rail (DL-162) Jared saw four tabs in the Jujutsu view, Changes, Worktrees, History and Branches, and nothing happened when he clicked them. They were Git's tabs showing through because of a styling mistake, and the Git lists they switch are hidden in Jujutsu mode. He asked whether tabs apply to Jujutsu at all: if they do, flesh them out; if not, remove them, and treat it as a thought experiment rather than a quick fix.
+
+**What you get:**
+- Jujutsu gets its own strip of five views, one at a time, in the order and words the Jujutsu owner already uses (JJI §4.1, JJI-006): Changes, Workspaces, History, Bookmarks and Operation Log. Git keeps its own four, Changes, Worktrees, History (with the graph) and Branches (with stashes), and its strip stays hidden in Jujutsu mode, as the shell intended.
+- Changes shows the change you are on (`@`), its files and any conflicts. There is no staging and no stash, because every edit is already part of the current change; Describe and New change do the job Commit does in Git.
+- Workspaces is Jujutsu's version of worktrees, where threads and agents work side by side, with the same Owner dropdown as Git's worktrees.
+- History shows your unfinished stacks of changes and main, grouped by stack, and lets you go back into any change. Only main and the other changes Jujutsu keeps as they are (its immutable set) cannot be rewritten; a change pushed to a tracked bookmark still can.
+- Bookmarks shows whether each name matches each remote, and every button says which remote it touches (DL-057).
+- Operation Log lists everything that happened, with Undo naming what it undoes. Undo and Refresh also sit at the top of the panel in Jujutsu mode.
+- The first four views sit where Git's tabs are, so the Git/Jujutsu presentation switch keeps you in the same place; from Operation Log it opens Git's History. To fit five tabs at 240 px, the tabs you are not on may shrink to their icons while the one you are on keeps its name, and the strip picks that mode from its longest label, so it never changes while you click through it.
+- Publishing and the pull request stay in the card at the foot of the panel, in both engines, with one fold state.
+- Every button is a command Puppet Master already has. Nothing new is admitted.
+
+**What it costs:**
+- Two strips to maintain in one panel instead of one relabelled strip. Relabelling Git's strip was rejected: the view sets differ (four against five), and the canon forbids aliasing Branches to Bookmarks or Worktrees to Workspaces (JJI-001, JJI-006).
+- Several controls the concept shows disabled have no code in the closed Jujutsu disabled-reason vocabulary (JJI-003), so the concept uses its own: rewriting an immutable change, squashing into an immutable parent, squashing an empty change, removing the workspace you are in, moving a bookmark backwards, tracking at a remote that has no such bookmark, pushing an undescribed change, and DL-056's read-only Jujutsu conflicts. Admitting codes for them is left to the Jujutsu owner.
+- There is still no command that brings an out-of-date workspace up to date; Open and Switch stay enabled on such a row and a note says what to run there.
+- The concept renders one ready repository; the empty, blocked, setup and no-remote states are specified but not drawn.
+
+**Options considered:** No tabs, one long scroll of cards (today's Jujutsu view: very long at 240 px and unlike Git's panel); reusing Git's strip relabelled (rejected above); folding Operation Log into History (rejected: source history, operation history and Backup history are separate domains, SCS-017, JJI-011, F3-552); and five Jujutsu tabs in their own strip, which was chosen.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, in his request (issue 2): "On the source control panel, in jujutsu, should there be tabs? There is a changes, worktrees, history, and branches tab but nothing happens when you click them? If they apply, then they need to be fleshed out, if not, then they should be removed. This is more of a thought experiment rather than a simple task." He left the answer to the build, which worked it through and had it reviewed twice; this record is that answer.
+- Two choices remain his. The plans called the fifth view both "Operation Log" (JJI §4.1, JJI-006's registered string, the command catalogue and the wiring rows) and "Operation History" (F3-529, F3-552, UCC-163 and JJI-008); the consumers now follow the Jujutsu owner's registered "Operation Log", and he may reverse that. And the plans disagree on whether a change's short ID shows on its row: JJI §4.1 puts raw IDs only in Technical details, while F3-529 lists the change ID among what Jujutsu renders. The concept shows the short change ID on the row's second line because Jujutsu users name changes by it; the spec leaves that open until he chooses.
+
+**What the spec now says:**
+1. **The strip, the engine switch, the fit rule, the panel head and the footer card** (`Plans/FinalGUISpec.md#F3-623`).
+2. **The five views, their rows, states and actions** (`Plans/FinalGUISpec.md#F3-624`).
+3. **Source Control's sections per engine** (`Plans/Source_Control_System.md#SCS-005` amended): each engine's sections show as its own tab strip, Git says Worktrees and Jujutsu says Workspaces, Reviews and publication are the footer card rather than a tab, and the bookmark words of DL-057 name the remote-scope axis while conflicted and deleted-here are separate states beside them; the rename confirmation says the old name stays on the remote and the new one is not there yet.
+4. **The view label** (`Plans/FinalGUISpec.md#F3-529`, `#F3-552`, `Plans/UI_Command_Catalog.md#UCC-163` and `Plans/Jujutsu_Integration.md#JJI-008` amended to "Operation Log"; F3-529 also records that Edit works on a change chosen in History, that Discard edits restores the current change to its parent, and that the protected state is the adapter's immutable set).
+5. **The tab command and the older section lists** (`cmd.source_control.select_tab` in `Plans/UI_Command_Catalog.md` takes each engine's own tab set and stash is Git-only; the Source Control section lists in `Plans/GitHub_Integration.md` and `#GI-004` point at SCS-005; `Plans/Jujutsu_Integration.md` section 4.1 notes the strip).
+6. **No new command, action or wiring row.** The 31 `cmd.jujutsu.*` wiring rows already name "Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log".
+7. **Left open for the Jujutsu owner:** disabled-reason codes for the concept-local reasons above; a command to update an out-of-date workspace; what Undo reverts when the newest operation is an automatic working-copy save, checked against the certified Jujutsu version; and the short change ID on the row (for Jared).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, issue 2); the left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, folded with two reviews and summarised in this entry (not a repository file); the concept source `Concepts/leftrail-redesign/src/concepts/d/` from lane commits 8693996260 and 2f77b78710 (concept lineage only).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/FinalGUISpec.md#F3-624, ContractName:Plans/Source_Control_System.md#SCS-005, ContractName:Plans/Jujutsu_Integration.md#JJI-006, ContractName:Plans/FinalGUISpec.md#F3-529
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -12392,6 +12434,70 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
+```
+
+### DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs
+
+```yaml
+plan_unit_id: DL-163
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-163 records the answer of 2026-10-09 to the owner's question whether the Jujutsu view of Source Control should
+  have tabs, which he left to the left-rail build (DL-162). It does: Jujutsu gets its own strip of five views, one at
+  a time, Changes, Workspaces, History, Bookmarks and Operation Log, in JJI section 4.1's order and JJI-006's
+  registered words, while Git keeps its own Changes, Worktrees, History and Branches strip, hidden in Jujutsu mode;
+  neither strip relabels the other (JJI-001, JJI-006). The first four views share slot positions with Git's, so the
+  presentation-only engine switch (ui.source_control.profile.preview) opens the same slot and Operation Log opens
+  Git's History. Both Source Control strips fit by their longest label, so a strip never changes mode while one
+  clicks through it. Publish and review stays the footer card in both engines, and Jujutsu mode adds Undo and
+  Refresh to the panel head (F3-623). The five views list the current change, workspaces, stacks of changes,
+  bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
+  strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
+  Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
+  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
+  ID shows on its row and whether to keep "Operation Log".
+gui_related: true
+gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
+split_recommended: false
+depends_on: [DL-162, JJI-006, SCS-005, F3-529]
+unblocks: [F3-623, F3-624]
+acceptance_criteria:
+  - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
+  - "No command, action, schema value or wiring row is added by this decision."
+  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06 (issue 2)"
+  - "The left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, summarised in the DL-163 entry (not a repository file)"
+  - "Concepts/leftrail-redesign/src/concepts/d/ from lane commits 8693996260 and 2f77b78710 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-163"
+  - "Operation Log"
+  - "ui.source_control.profile.preview"
+negative_constraints:
+  - "Do not add a command, an action, a disabled-reason code or a wiring row through this decision."
+  - "Do not alias Bookmarks to Branches or Workspaces to Worktrees by relabelling one strip for both engines."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
 ```
 
 ## Migration Coverage

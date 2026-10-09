@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3591-L12395
+Source lines: L3633-L12501
 
-Source SHA256: `17261ad3c7480d93d006484b9f6b0400f71905017e7864bc921baea0105fe3e6`
+Source SHA256: `5f05f408ffcdf7741745aa20d29680a4b7a3c9c40c54898749c1f8e55dfa5fd0`
 
 ---
 
@@ -8812,4 +8812,68 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
+```
+
+### DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs
+
+```yaml
+plan_unit_id: DL-163
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-163 records the answer of 2026-10-09 to the owner's question whether the Jujutsu view of Source Control should
+  have tabs, which he left to the left-rail build (DL-162). It does: Jujutsu gets its own strip of five views, one at
+  a time, Changes, Workspaces, History, Bookmarks and Operation Log, in JJI section 4.1's order and JJI-006's
+  registered words, while Git keeps its own Changes, Worktrees, History and Branches strip, hidden in Jujutsu mode;
+  neither strip relabels the other (JJI-001, JJI-006). The first four views share slot positions with Git's, so the
+  presentation-only engine switch (ui.source_control.profile.preview) opens the same slot and Operation Log opens
+  Git's History. Both Source Control strips fit by their longest label, so a strip never changes mode while one
+  clicks through it. Publish and review stays the footer card in both engines, and Jujutsu mode adds Undo and
+  Refresh to the panel head (F3-623). The five views list the current change, workspaces, stacks of changes,
+  bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
+  strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
+  Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
+  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
+  ID shows on its row and whether to keep "Operation Log".
+gui_related: true
+gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
+split_recommended: false
+depends_on: [DL-162, JJI-006, SCS-005, F3-529]
+unblocks: [F3-623, F3-624]
+acceptance_criteria:
+  - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
+  - "No command, action, schema value or wiring row is added by this decision."
+  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06 (issue 2)"
+  - "The left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, summarised in the DL-163 entry (not a repository file)"
+  - "Concepts/leftrail-redesign/src/concepts/d/ from lane commits 8693996260 and 2f77b78710 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-163"
+  - "Operation Log"
+  - "ui.source_control.profile.preview"
+negative_constraints:
+  - "Do not add a command, an action, a disabled-reason code or a wiring row through this decision."
+  - "Do not alias Bookmarks to Branches or Workspaces to Worktrees by relabelling one strip for both engines."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
 ```

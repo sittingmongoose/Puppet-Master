@@ -1,35 +1,35 @@
 # Shard Index: Plans/00-plans-index.md
 
-Generated: 2026-10-10T00:16:04Z
+Generated: 2026-10-10T00:16:50Z
 
-Source SHA256: `8f78087919393b07af57ff39fc6ec81f3c0fe956086742542c5600d468202af7`
+Source SHA256: `3bbfc7facdfa66248f4c451ab948fb06af73713d3747b98f79fd858d3321abe9`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L10 `b5063d9c753f1f0ba04c3e791d86521d4b17e4d993b8fce5e8a0112eac83e335`
-- [002 - Change Summary](002-change-summary.md) L13-L134 `63edc550f128ce1e3f7d6e506583c7ab253cce8b3b56f86eb3de9ee28c86d234`
-- [003 - Anti-drift layer (required reading order)](003-anti-drift-layer-required-reading-order.md) L136-L293 `f77daf3de5f925ec1cb245469d210f73759d14bb84888668ef689e8f1e190e8e`
-- [004 - Rewrite tie-in (2026-02-21)](004-rewrite-tie-in-2026-02-21.md) L295-L315 `94693c4d056bb22cb8de082260632b498be145055a4331c6e710f309432c7f40`
-- [005 - Plan map](005-plan-map.md) L317-L675 `ec443ee6dfb3134e8237cbfe203af7dc49b24255bfef1e7f6fe845396b50b8ff`
-- [006 - Known cross-cutting duplication hotspots](006-known-cross-cutting-duplication-hotspots.md) L677-L697 `a4befa0017efc256dafd1e57fdf180d5ebf5d778cb06967be801557f0d5634ab`
-- [007 - Shard indexes](007-shard-indexes.md) L698-L802 `5f523079aeead2c7f0dac27542190bdbcbd6687bcdb1867d59429e9cf37980cf`
-- [008 - 2026-03-07 addendum — containers, registry, and Unraid](008-2026-03-07-addendum-containers-registry-and-unraid.md) L803-L809 `17c0579a069c1608fb1ba51b02fc748853dc68a5eeb69b051422eca5f9a19235`
-- [009 - Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)](009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md) L811-L828 `a2bcc821ae28a95af3a7154b92431f1c321cbc8372017d146dc0248351ce86bf`
-- [010 - 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager](010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md) L830-L846 `1180548369e99c5f545bbd843af4bdc0a8107186faba190d235d4d40cd60aa32`
-- [011 - Web Tools + Firecrawl + Missing-Spec Owner Alignment Note (2026-03-30)](011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md) L849-L913 `0c99c862c1c6d970ec71be300a233bc315b616703e87c249841335f0266498ee`
-- [012 - A2A / OpenCode research packet map (2026-03-28)](012-a2a-opencode-research-packet-map-2026-03-28.md) L915-L937 `b2dcbc69b47d13915f49a0fd0bfecec5e21b7f4edc74cd7ff2b7f99a575e4bfa`
-- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L939-L943 `b3c436318ced4fb9b48a27aca1f1009aa2a67fb089cb3e40265dea6cba1ea9e2`
-- [014 - PlanUnits](014-planunits.md) L945-L4496 `60307dee1aa2b3edfad3af9451429ec99c2fbc98c61665a96a593377f4203307`
-- [015 - Migration Coverage](015-migration-coverage.md) L4499-L4509 `57f77bf7aaeec3434ce89a6d02034207ec30438548b615df20fcc4a5f4ecc057`
-- [016 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4512-L4704 `4400cee44bd663d136523f196ce85ebd42568790346696e026176daca93cc3df`
-- [017 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L4706-L4783 `4ce62179f3aa5e6b173a5c6b192142cb303e48eadcaced495221cd0e56d531b6`
-- [018 - Ledger Compile Addendum - pldg-20260626-001-feature-name](018-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L4786-L4993 `915b2b64bea8e09f9439c339683e87977a658690ee8b6843643894b846e29787`
-- [019 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](019-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L4995-L5077 `b4f8e36cf75f90533a3b84d24ca5950597713e182b0510ebdd9f61c76506f3fe`
-- [020 - Ledger Compile Addendum - pldg-20260629-001-feature-name](020-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L5079-L5140 `6831dd92ebad44376a2bfb70fda919ae741d223a3de9af0e6c063bbc8d313e66`
-- [021 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](021-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L5142-L5237 `8c859e592fa6678f0b8e54fc2738f4ada37b4bf5ffe7bdcebf06633ef291dc03`
-- [022 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L5239-L6035 `a924a069c1bdf6db9c54a62efac46a2459ed025dfb8856c0a3760397d998692a`
-- [023 - Certified native source ownership — 2026-09-20](023-certified-native-source-ownership-2026-09-20.md) L6038-L6042 `81cc0f7dbf909929600adf28f5aea5cfb40c7a5f31b9fbc9be42f432f30b00de`
-- [024 - Certified producer source ownership — 2026-09-21](024-certified-producer-source-ownership-2026-09-21.md) L6045-L6049 `dd062e15f3b62b91d0c01bc1d9aa50bbf6dcff69f002135e59e7812683930c60`
-- [025 - Complete certified-v3 source family — 2026-09-21](025-complete-certified-v3-source-family-2026-09-21.md) L6052-L6056 `968d5f6a53faa74003ca125dbd47dd5cf86bb3fc00417fe67b8ba988d57ffd37`
+- [001 - Preamble](001-preamble.md) L1-L10 `4a39de27f437968d406f2553f3d3e319afee86f4314e6432c49915bdd2b7ef08`
+- [002 - Change Summary](002-change-summary.md) L13-L136 `63b0737581e9e33b4921aeb3c48551d993f0fa17888e30d795e3a536736f377f`
+- [003 - Anti-drift layer (required reading order)](003-anti-drift-layer-required-reading-order.md) L138-L295 `8a84572f28d17f398a57651ccf5ad1eeec40c1e2a782a800f6e358974e4aefb0`
+- [004 - Rewrite tie-in (2026-02-21)](004-rewrite-tie-in-2026-02-21.md) L297-L317 `0d4e61d3477a73fafcc6e7905be8905b940e65327acf796e4d1d1a56bd24053f`
+- [005 - Plan map](005-plan-map.md) L319-L677 `f696fa88004e7910575c9a170e9f228b558001b1ed7ae55059bd61387272a874`
+- [006 - Known cross-cutting duplication hotspots](006-known-cross-cutting-duplication-hotspots.md) L679-L699 `aeff55c34521d80a54ff75187db17afe75b2982250e4f4930c42bb160aa5e6d2`
+- [007 - Shard indexes](007-shard-indexes.md) L700-L804 `8237aa2ea4f1371fd8933b9b80031d24627a419e1225cca0226e77233ed18fdb`
+- [008 - 2026-03-07 addendum — containers, registry, and Unraid](008-2026-03-07-addendum-containers-registry-and-unraid.md) L805-L811 `3d6f1c36bbba661c502593d5032c301d996d40a727fc0d1f304771626311df85`
+- [009 - Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)](009-runtime-packet-index-coverage-consolidation-addendum-2026-03-09.md) L813-L830 `bb1103184cfc2c53a8f3740c76b22c61ebd35e0e54083d8d47a877aeeadd25b1`
+- [010 - 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager](010-2026-03-12-addendum-source-control-github-actions-and-docker-man.md) L832-L848 `9f47942ce26507df930f184821971e7b53649e8ae151a45a7c452674c95c96c8`
+- [011 - Web Tools + Firecrawl + Missing-Spec Owner Alignment Note (2026-03-30)](011-web-tools-firecrawl-missing-spec-owner-alignment-note-2026-03-30.md) L851-L915 `f78389fa31599bc8729b17a3a1ae5a1b5b736b947536faaa22fba3ee4ae40094`
+- [012 - A2A / OpenCode research packet map (2026-03-28)](012-a2a-opencode-research-packet-map-2026-03-28.md) L917-L939 `95f49fbc2c9a2adf6a0d6d9f17fd448aed7f2f7f6b9a9de40581a8e8d83ddce0`
+- [013 - Owner / Consumer Map](013-owner-consumer-map.md) L941-L945 `22ef8ab53327387ededc3bf24e96d71f11ea200dedd7dc554efb8e436d6e316f`
+- [014 - PlanUnits](014-planunits.md) L947-L4498 `9e1c4dc4cc095d3ae38aeb03e95acb0ababf6b3a5d3a188817fc7294ec3d9e3a`
+- [015 - Migration Coverage](015-migration-coverage.md) L4501-L4511 `9f3b0bc8b08877acc41db358ff0cdae64c5f005c181ba71e4457d9063ae7988a`
+- [016 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4514-L4706 `bb6d5797dddacc030df49a4061f96a77a6ceba33999105fbbe270ebafbc1fcfd`
+- [017 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L4708-L4785 `a28f2b59e4e4a8c9d63fd633027464a1f77b34fadaf046bf4938fbe320f6d56b`
+- [018 - Ledger Compile Addendum - pldg-20260626-001-feature-name](018-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L4788-L4995 `b7669aae9c2ae0a859c5e3545c65d042a74072eab4a7610f601a7314953c3e18`
+- [019 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](019-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L4997-L5079 `1e9af864442d8d4c2192fcb369f758a4322766f08d2d953996c7ff9b0a1c1d65`
+- [020 - Ledger Compile Addendum - pldg-20260629-001-feature-name](020-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L5081-L5142 `c44af0658ec6f9ca23ea83ef40d72cc3a8b7bf489f1029acdfda4ee36833b859`
+- [021 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](021-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L5144-L5239 `caa4cf6bf3636fcdfe24eb9bc37d6adca01dba93949ef35a4edca67d3dc01109`
+- [022 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L5241-L6037 `a07450b1f2f2ec14abe718702cf9c5ee1513c58161d73622c13a883eda614278`
+- [023 - Certified native source ownership — 2026-09-20](023-certified-native-source-ownership-2026-09-20.md) L6040-L6044 `9730f91e737db8be7eac34605ea830e1360e79944769085eb563a345f40d04da`
+- [024 - Certified producer source ownership — 2026-09-21](024-certified-producer-source-ownership-2026-09-21.md) L6047-L6051 `73d5e4cec6845afbb6f0eec983997b0d22abcd27fdaed2fda639ccd2160f83f7`
+- [025 - Complete certified-v3 source family — 2026-09-21](025-complete-certified-v3-source-family-2026-09-21.md) L6054-L6058 `caec415a450772057ca1857cf3f42479c4c986419e554c8d4097bb3eaea8e854`

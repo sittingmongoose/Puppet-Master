@@ -413,7 +413,7 @@ Results distinguish `accepted`, `succeeded`, `blocked`, `failed`, `cancelled`, `
 
 ### 4.1 Adaptive Source Control
 
-JJ mode exposes **Changes**, **Workspaces**, **History**, **Bookmarks**, and **Operation Log**. Forge-derived Reviews, Review Versions/Threads, Pipelines/Checks, Source of Truth, and Mirror Health appear only when the effective provider and capability envelope support them. Git-only stage/unstage, index, stash, and Branches sections are absent. Human copy may say “change,” “bookmark,” “operation,” “workspace,” and “conflict”; raw IDs appear only in Technical Details.
+JJ mode exposes **Changes**, **Workspaces**, **History**, **Bookmarks**, and **Operation Log**. In the left rail the five show in this order as Jujutsu's own tab strip, one view at a time, separate from Git's strip (2026-10-09, `Plans/Decision_Log.md#DL-163`; `Plans/FinalGUISpec.md#F3-623` and `#F3-624`). Forge-derived Reviews, Review Versions/Threads, Pipelines/Checks, Source of Truth, and Mirror Health appear only when the effective provider and capability envelope support them. Git-only stage/unstage, index, stash, and Branches sections are absent. Human copy may say “change,” “bookmark,” “operation,” “workspace,” and “conflict”; raw IDs appear only in Technical Details.
 
 ### 4.2 Setup and health
 
@@ -644,7 +644,7 @@ acceptance_criteria:
     interrupted transfer never leaves a pointer to an object that is not there. Activation still waits for the isolated
     disposable verification.
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
-  - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
+  - Operation Log (the view F3-529 called Operation History until DL-163) pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.
 validation_surfaces:
   - Plans/jujutsu_integration_contracts.schema.json
@@ -673,6 +673,7 @@ context_scope: backup_jj_closure_and_isolated_restore
 implementation_surfaces: [Plans/Jujutsu_Integration.md, Plans/jujutsu_integration_contracts.schema.json, Plans/jujutsu_integration_contract_fixtures.json, future JJ SourceSnapshotAdapter]
 node_compile_hint: {mode: jujutsu_backup_static_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - Plans/Decision_Log.md#DL-163 (2026-10-09; the view is labelled Operation Log)
   - source_ref:packet:2026-09-01:SCM-004
   - source_ref:packet:2026-09-01:BKP-005-BKP-008
   - source_ref:packet:2026-09-01:BKP-011-BKP-012

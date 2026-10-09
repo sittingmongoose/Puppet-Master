@@ -83,7 +83,7 @@ This section reconciles GitHub integration consumer semantics with the canonical
 
 ### Source Control and GitHub Actions surface split
 
-GitHub Integration owns two distinct user-facing surfaces. **Source Control** is the Git-first repo/worktree surface for `Changes`, `History`, `Graph`, `Worktrees`, `Branches / Stash`, review/compare, conflicts, worktree-native recovery, and `/safe` local repo actions. **GitHub Actions** is the GitHub-hosted workflow/admin/runtime surface for workflow runs, logs, dispatch, workflow files, and repository Actions settings. The legacy `Git (GitHub)` wording is a migration alias only and must not collapse hosted Actions behavior back into Source Control.
+GitHub Integration owns two distinct user-facing surfaces. **Source Control** is the Git-first repo/worktree surface for `Changes`, `History`, `Graph`, `Worktrees`, `Branches / Stash`, review/compare, conflicts, worktree-native recovery, and `/safe` local repo actions. **GitHub Actions** is the GitHub-hosted workflow/admin/runtime surface for workflow runs, logs, dispatch, workflow files, and repository Actions settings. The legacy `Git (GitHub)` wording is a migration alias only and must not collapse hosted Actions behavior back into Source Control. (Amended 2026-10-09, DL-163: the Source Control section set per engine is owned by `Plans/Source_Control_System.md#SCS-005`; in the left rail Git shows `Changes`, `Worktrees`, `History` with its graph and `Branches` with its stashes, and Jujutsu its own five views, as `Plans/FinalGUISpec.md#F3-623` says.)
 
 Four GitHub-adjacent concepts stay separate. `GitHub Copilot` is a provider capability and is out of scope as a user-facing GitHub Integration GUI surface for this research pass. `GitHub API` is internal integration plumbing for GitHub-hosted features, not a visible GUI panel. `GitHub Actions` is the user-facing hosted workflow surface and may use the GitHub Actions VS Code extension as a functional parity baseline without copying its visual design. `Source Control` is the user-facing repo-control surface and may use VS Code Source Control as a functional parity baseline without copying its visual design.
 
@@ -348,7 +348,7 @@ plan_unit_id: GI-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_Integration.md
-canonical_text: Source Control exposes Changes, History, Graph, Worktrees, Branches/Stash, diff preview, staging, commit, sync, stash, branch, incoming/outgoing, conflict, and multi-SCM provider behavior; accordion headers are accessible buttons and compare defaults are deterministic by origin.
+canonical_text: Source Control exposes Changes, History, Graph, Worktrees, Branches/Stash, diff preview, staging, commit, sync, stash, branch, incoming/outgoing, conflict, and multi-SCM provider behavior; accordion headers are accessible buttons and compare defaults are deterministic by origin. Amended 2026-10-09 by DL-163, this is the Git view's section list; the section set per engine is owned by Plans/Source_Control_System.md SCS-005, and the left rail shows each engine's sections as its own tab strip (FinalGUISpec F3-623), Jujutsu with no staging or stash.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
 split_recommended: true
@@ -372,6 +372,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+- Plans/Decision_Log.md#DL-163 (2026-10-09; section set per engine owned by SCS-005, rail tabs per F3-623)
 preserved_exact_tokens:
 - Changes
 - History

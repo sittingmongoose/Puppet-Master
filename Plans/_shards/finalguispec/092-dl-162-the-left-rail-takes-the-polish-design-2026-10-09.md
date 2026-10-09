@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42001-L42349
+Source lines: L42010-L42358
 
-Source SHA256: `4d0cbee4c81a8f9772413cc2ad62c810efe938f8f4575e9a79f64a238de7c7b1`
+Source SHA256: `2d2c1daec00bac477bcf98a919885bf127bcc1151a3124fe3612a96bd997e00b`
 
 ---
 
@@ -311,11 +311,11 @@ canonical_text: >-
   labelled Owner, in the chat picker style of F3-621, that lists All and the owner classes (Threads, Orchestrator,
   Agents, Manual) with each chosen class checked, in place of a row of filter chips; picking applies the same
   owner-class filter with W-075's selection rules and persistence, and any other W-075 filter dimension the panel
-  shows uses the same dropdown.
-  Second, the publish and review card stays at the foot of the Git view and its facts (destinations, expected head,
-  review state) fold away and back from a fold button or from the card's head, the height moving in the family's
-  voice; a button inside the card never folds it, and folded or open is kept with the Source Control panel state
-  (source_control_panel_state.v1, F3-475). Neither adds a command or an action: the filter is W-075's filter state
+  shows uses the same dropdown; the Jujutsu Workspaces view uses the same Owner dropdown (F3-624).
+  Second, the publish and review card stays at the foot of the Git view and of the Jujutsu view (F3-623) and its
+  facts (destinations, expected head, review state) fold away and back from a fold button or from the card's head,
+  the height moving in the family's voice; a button inside the card never folds it, and folded or open is one
+  state for both engines, kept with the Source Control panel state (source_control_panel_state.v1, F3-475). Neither adds a command or an action: the filter is W-075's filter state
   and the fold is panel state.
 gui_related: true
 gui_classification_reason: Defines two visible Source Control behaviours the Polish design adds.
