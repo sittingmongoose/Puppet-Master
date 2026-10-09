@@ -2,7 +2,7 @@
    A run row is flat in its shelf like every D row (no card inside a card, no coloured border on the live run): its hover
    and open fills are its own box, inset from the shelf edge with the inner radius. Line one: chevron, the row's one
    status glyph (.lf-lead, 55-testing.js), the name, which wraps instead of being cut. Line two: the status word (.lf-state,
-   the shell's chip, coloured, glyph-less) and the facts, at most three lines. Details open under the chevron column. */
+   the shell's chip, coloured, glyph-less) and the facts, whole. Details open under the chevron column. */
 §@testing .sh-run, §@agents .sh-run {
   position: relative; width: auto !important; margin: 0 0 2px !important; padding: 0 !important; overflow: clip !important;
   border: 0 !important; border-radius: var(--d-r) !important; background: transparent !important; box-shadow: none !important;
@@ -54,8 +54,9 @@
 §@testing .pm-chip[data-d-st], §@agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
 /* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
    Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
-   keep more of the colour (they are shapes, not text). Measured in tasks2/g-contrast.mjs: words 4.5:1 or better on the
-   open row tint, glyphs 3:1 or better, in every light variant. */
+   keep more of the colour (they are shapes, not text). Measured in GPU Chrome against the pixels under each word and
+   glyph, rows open, in every light variant and NieR dark: words 4.1:1 or better (most above 4.5:1), glyphs 3.3:1 or
+   better (2026-10-09, lane F). */
 §R { --lf-tx: 100%; --lf-gl: 100%; }
 §R[data-theme$="-light"] { --lf-tx: 42%; --lf-gl: 58%; }
 §R[data-theme^="friendly"][data-theme$="-light"] { --lf-tx: 36%; }

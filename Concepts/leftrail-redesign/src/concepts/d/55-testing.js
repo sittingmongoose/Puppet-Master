@@ -88,13 +88,14 @@ const LF_RUN = (() => {
   /* code words break at their joints, never inside a word: a zero-width break after "::", "_" and "/" in runs of 11+
      characters that look like code, and before a file extension in runs too long for a line (24+). Ids keep their
      hyphens: a word joiner after each one (tr-2214, art-tr-2199, art-diff-n21, lane-b), and after every hyphen inside a
-     word of a command, a log line or a code-style run name. All of it is idempotent (the look-aheads skip a mark
-     already there). */
+     word of a command, a log line or a code-style run name. A shortened path keeps its ellipsis on the name it
+     shortens ("\u2026QuantityStepper.svelte"), so a line never ends on a bare "\u2026" that reads as cut text. All of it is
+     idempotent (the look-aheads skip a mark already there). */
   const TOKEN = /[^\s()'"`,;]{11,}/g;
   const CODE = /::|_|\/[A-Za-z]|[A-Za-z0-9]\.[A-Za-z]/;
   const ID = /\b(?:[a-z]+-)+[a-z]?\d+\b|\blane-[a-z]\b/g;
   function fitText(s) {
-    s = s.replace(ID, id => id.replace(/-(?!\u2060)/g, '-\u2060'));
+    s = s.replace(ID, id => id.replace(/-(?!\u2060)/g, '-\u2060')).replace(/\u2026(?=[A-Za-z0-9_./])/g, '\u2026\u2060');
     return s.replace(TOKEN, tok => (!CODE.test(tok) ? tok : tok
       .replace(/::(?=[^\s:\u200B])/g, '::\u200B')
       .replace(/_(?=[^\s_\u200B])/g, '_\u200B')
