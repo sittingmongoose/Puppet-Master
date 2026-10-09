@@ -18,6 +18,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import re
+import sys
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent
@@ -123,20 +124,49 @@ FONT_DIR = FORK / 'nier' / 'fonts'
 FONT_URL = re.compile(r'url\("o55font:([\w.-]+\.woff2)"\)')
 
 
-def inline_fonts(css: str) -> str:
-    """Embedded faces (NieR Mode's, in nier/fonts): url("o55font:<file>") in Settings CSS becomes a base64 data: URI, so
-    the page never asks the network for a font. A missing file stops the build.
+def inline_fonts(css: str, font_dir: Path = FONT_DIR) -> str:
+    """Embedded faces (NieR Mode's, in nier/fonts; the page's web fonts, in src/fonts): url("o55font:<file>") in the CSS
+    becomes a base64 data: URI read from font_dir, so the page never asks the network for a font. A missing file stops
+    the build.
     Every '/' of the base64 is written %2F (a data: URL is percent-decoded before its base64 is read, so the bytes are
     the same): scripts/pm-gui-asset-policy.py reads any '//' followed later by 'svg', 'icon' and the like as a remote
     icon or font URL, and a raw base64 run contains both by chance."""
     import base64
 
     def data_uri(m: re.Match) -> str:
-        path = FONT_DIR / m.group(1)
+        path = font_dir / m.group(1)
         if not path.is_file():
-            raise ValueError(f'O55 settings: embedded font {m.group(1)!r} is not in {FONT_DIR.relative_to(PKG)}')
+            raise ValueError(f'O55: embedded font {m.group(1)!r} is not in {font_dir.relative_to(PKG)}')
         return 'url("data:font/woff2;base64,' + base64.b64encode(path.read_bytes()).decode('ascii').replace('/', '%2F') + '")'
     return FONT_URL.sub(data_uri, css)
+
+
+# The page's web fonts share their bytes with 5.6 Pro (Plans/DRY_Rules.md DR-050): every face 5.6 Pro embeds must be in
+# src/fonts byte for byte, so both concepts render the same face. 5.6 Pro is read, never written.
+PRO56_FONT_CSS = [PKG.parents[1] / 'chat-assistant-concepts' / '5.6 Pro' / name for name in ('styles.css', 'pmx-system.css')]
+
+
+def shared_font_drift(font_dir: Path) -> list[str]:
+    import base64
+    import hashlib
+    import urllib.parse
+    if not all(p.is_file() for p in PRO56_FONT_CSS):
+        print('NOTE: 5.6 Pro is not checked out here; the shared-font check (DR-050) was skipped', file=sys.stderr)
+        return []
+    ours = {hashlib.sha256(p.read_bytes()).hexdigest() for p in font_dir.glob('*.woff2')}
+    problems = []
+    for css in PRO56_FONT_CSS:
+        for m in re.finditer(r'@font-face\s*\{([^}]*)\}', css.read_text(encoding='utf-8')):
+            data = re.search(r'base64,([A-Za-z0-9+/=%]+)', m.group(1))
+            if not data:
+                continue
+            raw = base64.b64decode(urllib.parse.unquote(data.group(1)))
+            if hashlib.sha256(raw).hexdigest() not in ours:
+                family = re.search(r'font-family:\s*([^;]+);', m.group(1))
+                weight = re.search(r'font-weight:\s*([^;]+);', m.group(1))
+                problems.append(f'5.6 Pro {css.name} embeds a face that src/fonts lacks byte for byte (DR-050): '
+                                f'{family.group(1) if family else "?"} {weight.group(1) if weight else ""}')
+    return problems
 
 
 def validate(merged: dict, engine: str, t50, need) -> dict:
