@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3384-L11766
+Source lines: L3415-L11857
 
-Source SHA256: `e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c`
+Source SHA256: `f4b06e66419782cb14a95efc76e788283e0062b00126c5feff4ec1c2b4c35e2c`
 
 ---
 
@@ -8390,4 +8390,64 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-154 - A Collaboration Setup Sheet's Graph Stays In View As Helpers And Rounds Are Added
+
+```yaml
+plan_unit_id: DL-154
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-154 records the owner request of 2026-10-09. A collaboration setup sheet's cast plate stays a drawing at every
+  team size its kind allows, up to eight helpers with both specialists: it never yields past the leanest drawing that
+  fits its slot's width, the roster scrolls in its own region instead, and a team too wide for one strip row is drawn
+  as the wrap, its seats on two or three rows with a fork from the lead and a join to You (F3-601). In the one-column
+  narrow sheet the plate stays at the top while its question is on screen, and a run view whose team is too wide for
+  one row draws the same wrap. A Chat Room's run card and preview track shows one stop per round up to the 20-round
+  limit, and a track of eight or more stops wraps its dots down with its words on their own row (F3-602). One
+  plate-slot fit rule, one cast grammar and one track primitive carry this everywhere (DR-045). Helper limits, round
+  limits, commands, settings and wiring are unchanged. Jared reported that adding helpers pushed the graph out of view
+  in every setup sheet and asked that it hold a higher number, and that many Chat Room rounds pushed the graphic off
+  the screen and should wrap down; the record states it in plain words, without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on how collaboration graphs and tracks behave as teams and rounds grow.
+split_recommended: false
+depends_on: [DL-149, F3-566, F3-569, F3-592, F3-595]
+unblocks: [F3-601, F3-602, DR-045]
+acceptance_criteria:
+  - "Each collaboration setup sheet shows a cast plate drawing at its 8-helper limit with both specialists (F3-601)."
+  - "A Chat Room of 20 rounds shows 20 stops inside its card (F3-602)."
+  - "No helper limit, round limit, command, settings key or wiring row changes."
+  - "The owner request is recorded in plain words, with the verbatim source cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_sheet_presentation_drift
+reasoning_tier: high
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/JARED_REQUEST.md, SHA-256 46723a8829ea87fc5e01a261d81e92e32f3f1bc2e8a428af6704b1e3a91229e2"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/SURVEY-BEFORE.md, SHA-256 b4036f1bffdf0bfb65f40fa5062540f60960b072bb46c667a7bcb00f26e0ac5f"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; branch fix/c56-popup-graphs-20261009)"
+preserved_exact_tokens:
+  - "DL-154"
+  - "cast plate"
+  - "the wrap"
+negative_constraints:
+  - "Do not scale a cast plate to fit, and do not let it fall to its caption while a drawing fits its width."
+  - "Do not change a helper limit, a round limit, a command or a wiring row under this decision."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
