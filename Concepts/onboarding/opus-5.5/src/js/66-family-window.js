@@ -483,49 +483,104 @@
      celebration under it); h2 points at the tour button (the composition), and the rail walks to READY and re-stamps
      every check. The finale's emblem is part of Ready's composition (57-scenes-journey.js, A.famCall.emblems), so
      Reduced Motion and a reopened window show it; the call holds it back until the rise. Basic's beats start 300 ms
-     later than the others': its cover sheet lifts and its drawing inks itself until about 1.5 s, and the bows wait for
-     a finished stage. */
+     later than the others': its cover sheet lifts and its drawing inks itself, and the bows wait for a finished stage
+     (under the call the troupe inks faster, its heads closed about 1.1 s after the arrival: A.famCall.inkFast). */
   const CC0 = { bows: [1000, 1150, 1300], rest: 1480, rise: 1640, end: 2500 };
   const ccOf = (f) => { const d = f === 'basic' ? 300 : 0; return { bows: CC0.bows.map((t) => t + d), rest: CC0.rest + d, rise: CC0.rise + d, end: CC0.end + d + (f === 'friendly' ? 300 : 0) }; };
   /* the curtain call's bow: the upper body (the art's .o55-up groups) pitches toward the audience about the hips while
      the legs stand, as NieR's units bow. Seen from the front, a pitch foreshortens the torso about the hip line and
-     brings the head down over the chest: a scale about that line (k), a little wider as it comes toward us (sx). Basic
-     bows measured, with no overshoot; Friendly deep and springy, rising past upright before it settles; Glass slow,
-     its head lowering into its spotlight. Retro's sprites never scale: they bow in two frames (retroBow). */
+     brings the head down over the chest: a scale about that line (k), a little wider as it comes toward us (sx). The
+     head is not foreshortened: it is a ball. Its .o55-hd groups (the head, its shadow, the knot or loop on it) carry the
+     inverse scale about the head's centre (head), so it stays round and rides down with the torso, and drop units more
+     (in the scene's units at the full bow), as NieR's head drops below its knot; the face on it (.o55-fc) slides toward
+     the floor, so the top of the head turns toward the audience (TIP). Basic bows measured, with no overshoot; Friendly
+     deep and springy, rising past upright before it settles (the squash stays in the torso, where a paper bow squashes);
+     Glass slow and deep, its head lowering into its spotlight. Retro's sprites never scale: they bow in two frames
+     (retroFrames). */
   const PITCH = {
-    basic: { hip: -18, k: 0.76, sx: 1.04, down: 240, up: 260, ease: EASE.basic },
-    friendly: { hip: -6, k: 0.62, sx: 1.1, down: 260, up: 480, ease: 'cubic-bezier(0.3, 0, 0.25, 1)', over: [1.1, 0.95] },
-    glass: { hip: -12, k: 0.82, sx: 1.03, down: 420, up: 520, ease: EASE.glass }
+    basic: { hip: -18, k: 0.76, sx: 1.04, down: 240, up: 260, ease: [0.2, 0, 0, 1], head: -54, drop: 3 },
+    friendly: { hip: -6, k: 0.62, sx: 1.1, down: 260, up: 480, ease: [0.3, 0, 0.25, 1], over: [1.1, 0.95], upEase: [0.3, 0.5, 0.3, 1], head: -56, drop: 5 },
+    glass: { hip: -12, k: 0.72, sx: 1.03, down: 420, up: 520, ease: [0.05, 0.7, 0.1, 1], head: -57, drop: 3 }
+  };
+  /* the face's tip at a bow of a (1 = the full bow, below 0 past upright): Basic's equator runs about 4 lower (a
+     drafted sphere tipping forward; shortened to its chord), Friendly's eyes, cheeks and smile about 4 toward the chin
+     (pressed toward it, so they stay on the face and more hair shows), Glass's eyes about 3 */
+  const TIP = {
+    basic: (a) => `translate(0px, ${(4 * a).toFixed(2)}px) scale(${(1 - 0.12 * a).toFixed(4)}, 1)`,
+    friendly: (a) => `translate(0px, -43px) scale(${(1 - 0.08 * a).toFixed(4)}, ${(1 - 0.3 * a).toFixed(4)}) translate(0px, 43px)`,
+    glass: (a) => `translate(0px, ${(3 * a).toFixed(2)}px)`
   };
   const pitchT = (b, k, sx) => `translate(0px, ${(b.hip * (1 - k)).toFixed(2)}px) scale(${sx}, ${k})`;
   const upsOf = (el) => [...el.querySelectorAll(':scope > .o55-up')];
-  /* the head's string point goes with the head while the troupe bows (an invisible point, put back where it was) */
+  const hdsOf = (el) => [...el.querySelectorAll(':scope > .o55-up > .o55-hd')];
+  /* a pitch along a path of poses [offset, k, sx] as keyframes sampled from its easing, linear between samples, for the
+     upper body, the head and the face alike: at every sample the head's scale is the exact inverse of the body's (a
+     scale and its inverse, each interpolated in a straight line, part mid-way, and the head would stretch) */
+  function pitchFrames(f, path, ease, ms) {
+    const b = PITCH[f], E = M.bezier(ease[0], ease[1], ease[2], ease[3]), n = Math.max(8, Math.round(ms / 30)), kf = { up: [], hd: [], fc: [], nk: [] };
+    for (let i = 0; i <= n; i++) {
+      const e = E(i / n); let j = 1;
+      while (j < path.length - 1 && e > path[j][0]) j++;
+      const [o0, k0, s0] = path[j - 1], [o1, k1, s1] = path[j], u = (e - o0) / (o1 - o0 || 1), k = k0 + (k1 - k0) * u, sx = s0 + (s1 - s0) * u, a = (1 - k) / (1 - b.k), offset = i / n;
+      kf.up.push({ offset, transform: pitchT(b, k, sx) });
+      kf.hd.push({ offset, transform: `translate(0px, ${(b.head + (b.drop * a) / k).toFixed(3)}px) scale(${(1 / sx).toFixed(4)}, ${(1 / k).toFixed(4)}) translate(0px, ${-b.head}px)` });
+      kf.fc.push({ offset, transform: TIP[f](a) });
+      /* (Basic's neck folds away behind the head as it comes forward, to nothing at the shoulder line) */
+      kf.nk.push({ offset, transform: `translate(0px, -41px) scale(1, ${Math.max(0, 1 - a).toFixed(4)}) translate(0px, 41px)` });
+    }
+    return kf;
+  }
+  const pitchParts = (el) => upsOf(el).map((g) => [g, 'up']).concat(hdsOf(el).map((g) => [g, 'hd']), [...el.querySelectorAll(':scope > .o55-up .o55-fc')].map((g) => [g, 'fc']),
+    [...el.querySelectorAll(':scope > .o55-up > .o55-nk')].map((g) => [g, 'nk']));
+  /* the head's string point goes with the head while the troupe bows (an invisible point, put back where it was): into
+     the knot's .o55-hd group, so the string stays on the knot */
   function hookWithHead(p, el) {
-    const ups = upsOf(el), hk = el.querySelector(':scope > .o55-hook[data-hook="head"]'), last = ups[ups.length - 1];
+    const ups = upsOf(el), hds = hdsOf(el), hk = el.querySelector(':scope > .o55-hook[data-hook="head"]'), last = hds[hds.length - 1] || ups[ups.length - 1];
     if (!hk || !last) return;
     const next = hk.nextSibling;
     last.appendChild(hk);
     p.end(() => { if (el.isConnected || hk.parentNode === last) el.insertBefore(hk, next && next.parentNode === el ? next : null); });
   }
+  /* Basic's head is a drafted sphere, its centre-line cross one stroke in the drawing: for the call a copy is drawn as
+     two strokes over it (the drawing's own hidden meanwhile), so its level stroke, the equator, can run lower as the
+     head tips; put back when the call ends */
+  function sphereTip(p, el) {
+    const hd = hdsOf(el)[0], x = hd && hd.querySelector(':scope > path'), d = x && (x.getAttribute('d') || '').split(/(?=M)/);
+    if (!x || !d || d.length < 2 || hd.querySelector(':scope > .o55fm-tip')) return;
+    const at = (dd, cls) => { const n = x.cloneNode(false); n.removeAttribute('pathLength'); n.removeAttribute('class'); n.setAttribute('d', dd); if (cls) n.setAttribute('class', cls); return n; };
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'o55fm-tip');
+    g.append(at(d[1]), at(d[0], 'o55-fc'));
+    x.after(g); x.style.visibility = 'hidden';
+    p.end(() => { g.remove(); x.style.visibility = ''; });
+  }
   function pitchDown(p, f, el) {
-    const b = PITCH[f];
-    return upsOf(el).map((u) => p.anim(u, [{ transform: 'none' }, { transform: pitchT(b, b.k, b.sx) }], { duration: b.down, easing: b.ease, fill: 'forwards' }));
+    const b = PITCH[f], kf = pitchFrames(f, [[0, 1, 1], [1, b.k, b.sx]], b.ease, b.down);
+    if (f === 'basic') sphereTip(p, el);
+    return pitchParts(el).map(([g, kind]) => p.anim(g, kf[kind], { duration: b.down, easing: 'linear', fill: 'forwards' }));
   }
   function pitchUp(p, f, el) {
-    const b = PITCH[f], from = { transform: pitchT(b, b.k, b.sx) };
-    upsOf(el).forEach((u) => p.anim(u, b.over ? [from, { transform: pitchT(b, b.over[0], b.over[1]), offset: 0.42 }, { transform: 'none' }] : [from, { transform: 'none' }],
-      { duration: b.up, easing: b.over ? 'cubic-bezier(0.3, 0.5, 0.3, 1)' : b.ease }));
+    const b = PITCH[f], kf = pitchFrames(f, b.over ? [[0, b.k, b.sx], [0.42, b.over[0], b.over[1]], [1, 1, 1]] : [[0, b.k, b.sx], [1, 1, 1]], b.upEase || b.ease, b.up);
+    pitchParts(el).forEach(([g, kind]) => p.anim(g, kf[kind], { duration: b.up, easing: 'linear' }));
   }
   /* Retro: each sprite bows in two frames (54-art-retro.js bowA, bowB: the head a block down with the hands coming in,
-     then the crown toward the audience with the hands together), 90 ms apart, and rises the same way back */
-  function retroFrames(p, g, el, ctx) {
+     then the crown toward the audience with the hands together), 90 ms apart, and rises the same way back. The head's
+     string point and its pixel knot go down with the crown, a block a frame, and the rig follows them, so the string
+     never stops above a bowed head */
+  function retroFrames(p, g, el, ctx, svg) {
     const art = el.querySelector(':scope > g[transform]'), F = A.families.retro; if (!art || !F) return null;
     const v = Number((keyOf(g).match(/\d+/) || [0])[0]) || 0, px = A.metrics('retro').helperPx || 7, box = document.createElementNS(NS, 'svg');
     const frame = (pose) => { box.innerHTML = F.props.helper(ctx, { x: 0, y: 0, s: 1, opts: { variant: v, pose, px } }); const fr = box.firstElementChild && box.firstElementChild.querySelector(':scope > g[transform]'); if (fr) { fr.style.display = 'none'; fr.classList.add('o55fm-bowf'); } return fr; };
     const a = frame('bowA'), b = frame('bowB'); if (!a || !b) return null;
     art.after(a, b);
-    const show = (n) => { art.style.display = n === 0 ? '' : 'none'; a.style.display = n === 1 ? '' : 'none'; b.style.display = n === 2 ? '' : 'none'; };
-    p.end(() => { a.remove(); b.remove(); art.style.display = ''; });
+    const hk = el.querySelector(':scope > .o55-hook[data-hook="head"]'), knot = el.querySelector(':scope > rect'), y0 = hk ? hk.getAttribute('cy') : null;
+    const show = (n) => {
+      art.style.display = n === 0 ? '' : 'none'; a.style.display = n === 1 ? '' : 'none'; b.style.display = n === 2 ? '' : 'none';
+      if (hk) hk.setAttribute('cy', n ? String(+y0 + n * px) : y0);
+      if (knot) { if (n) knot.setAttribute('transform', `translate(0 ${n * px})`); else knot.removeAttribute('transform'); }
+      watch(svg, 400);
+    };
+    p.end(() => { a.remove(); b.remove(); art.style.display = ''; if (hk) hk.setAttribute('cy', y0); if (knot) knot.removeAttribute('transform'); });
     return { show };
   }
   function curtainCall(f, sting) {
@@ -543,7 +598,7 @@
     p.at(170, () => railWalk(f, () => restamp(f)));
     /* the bodies: Retro's bow frames, the others' heads carry their string points while they bow */
     const ctx = f === 'retro' ? famCtx(f, st) : null;
-    const frames = els.map((el, i) => (f === 'retro' ? retroFrames(p, hs[i], el, ctx) : (hookWithHead(p, el), null)));
+    const frames = els.map((el, i) => (f === 'retro' ? retroFrames(p, hs[i], el, ctx, svg) : (hookWithHead(p, el), null)));
     /* the finale's emblem waits for the rise (Glass's spotlights come on one by one with the bows) */
     const finale = FINALE[f](p, svg, em, els, cc, { st, band, hs });
     const bows = new Map();
@@ -561,11 +616,13 @@
     p.at(cc.rise, () => {
       els.forEach((el, i) => {
         if (f === 'retro') {
-          /* back up in two frames, then a two-step hop: up a step, up again, and down the same way */
+          /* back up in two frames, then a two-step hop: up a step, up again, and down the same way (on the narrow
+             band, one step, so the heads stay clear of ALL CLEAR above them) */
           const fr = frames[i]; if (fr) { fr.show(1); p.at(60, () => fr.show(0)); }
           markBody(el, true);
-          p.anim(el, [{ transform: 'none', easing: 'step-end' }, { transform: 'translateY(-4px)', offset: 0.2, easing: 'step-end' }, { transform: 'translateY(-9px)', offset: 0.4, easing: 'step-end' },
-            { transform: 'translateY(-9px)', offset: 0.6, easing: 'step-end' }, { transform: 'translateY(-4px)', offset: 0.8, easing: 'step-end' }, { transform: 'none' }], { duration: 360, delay: 60 + i * 70 });
+          p.anim(el, band ? [{ transform: 'none', easing: 'step-end' }, { transform: 'translateY(-4px)', offset: 0.2, easing: 'step-end' }, { transform: 'translateY(-4px)', offset: 0.8, easing: 'step-end' }, { transform: 'none' }]
+            : [{ transform: 'none', easing: 'step-end' }, { transform: 'translateY(-4px)', offset: 0.2, easing: 'step-end' }, { transform: 'translateY(-9px)', offset: 0.4, easing: 'step-end' },
+              { transform: 'translateY(-9px)', offset: 0.6, easing: 'step-end' }, { transform: 'translateY(-4px)', offset: 0.8, easing: 'step-end' }, { transform: 'none' }], { duration: 360, delay: 60 + i * 70 });
         } else { (bows.get(el) || []).forEach((a) => a && a.cancel()); pitchUp(p, f, el); }
       });
       watch(svg, 900);
@@ -602,8 +659,9 @@
         { duration: 640, delay: cc.rise + 40 + i * 120, easing: 'cubic-bezier(0.3, 0.1, 0.5, 1)', fill: 'backwards' });
       });
       p.end(() => rs.forEach((el) => el.classList.remove('o55fm-spin')));
+      /* (each thump where its rose comes down: the flight's easing has it 95 % of the way down 500 ms in) */
       return { rise() {
-        rs.forEach((el, i) => p.at(680 + i * 120, () => play('land', { voice: i, pan: [-0.35, 0, 0.35][i % 3] })));
+        rs.forEach((el, i) => p.at(540 + i * 120, () => play('land', { voice: i, pan: [-0.35, 0, 0.35][i % 3] })));
         p.at(700, () => els.forEach((el, i) => { markBody(el, true); p.anim(el, [{ transform: 'none' }, { transform: 'translateY(-5px) scale(0.95)', offset: 0.35 }, { transform: 'none' }], { duration: 520, delay: i * 50, easing: 'cubic-bezier(0.34, 1.4, 0.64, 1)' }); }));
       } };
     },
@@ -665,14 +723,17 @@
   /* the emblems in Ready's composition (asked for by 57-scenes-journey.js for the four families). On the narrow
      window's band (ctx.band: about y 318..434 of the scene at 760 px, the troupe's heads and shoulders) each emblem is
      placed where the band shows it: Basic's stamp above h2's head, Retro's ALL CLEAR across the band's top with the
-     arrow by h2's head, Friendly's roses along the band's foot between the troupe. */
+     arrow by h2's head, Friendly's roses along the band's foot between the troupe (the third below h2's pointing hand). */
   A.famCall = {
+    /* Basic's Ready drawing inks its troupe faster when its curtain call is about to play (14-family-moments.css
+       .o55fm-inkfast), so the first bow comes after every head is drawn; asked by the composition, after claimSting */
+    inkFast(ctx) { const R = runState(); return ctx.family === 'basic' && !!R.claim && R.claim.kind === 'call' && R.claim.f === 'basic' && !calm(); },
     emblems(ctx) {
       const f = ctx.family, m = A.metrics(f), floor = m.floor, sign = m.signY || 64, nar = !!ctx.band;
       if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 404 : 318, y: nar ? 343 : sign + 34, r: -7, layer: 'front' }];
-      if (f === 'friendly') return (nar ? [[184, 420], [296, 424], [414, 418]] : [[148, floor + 44], [262, floor + 50], [374, floor + 44]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.5, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
+      if (f === 'friendly') return (nar ? [[184, 420], [296, 424], [372, 428]] : [[148, floor + 44], [262, floor + 50], [374, floor + 44]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.5, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
       if (f === 'glass') return [-1, 0, 1].map((s, i) => ({ key: 'fm-spot' + i, prop: 'fmSpot', x: 240 + s * 112, y: floor + 4, layer: 'back', opts: { v: i, top: 30 - floor, tint: ['lav', 'pink', 'mint'][i] } }));
-      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: nar ? 336 : 262, layer: 'front', opts: { size: nar ? 22 : 26 } }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: nar ? 422 : 426, y: nar ? 398 : floor - 26, layer: 'front' }];
+      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: nar ? 328 : 262, layer: 'front', opts: { size: nar ? 18 : 26 } }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: nar ? 422 : 426, y: nar ? 398 : floor - 26, layer: 'front' }];
       return [];
     }
   };
@@ -825,7 +886,8 @@
     bodies.forEach((el, i) => {
       const t = 1000 + i * 130;
       p.anim(el, [{ transform: 'scale(1, 0.06)' }, { transform: 'scale(1.06, 1.12)', offset: 0.55 }, { transform: 'scale(0.98, 0.95)', offset: 0.8 }, { transform: 'none' }], { duration: 480, delay: t, easing: 'ease-out', fill: 'both' });
-      p.at(t + 260, () => play('land', voice(el.closest('.o55-it'))));
+      /* (the thump as it pops up: ease-out has it at its overshoot about 180 ms in) */
+      p.at(t + 150, () => play('land', voice(el.closest('.o55-it'))));
     });
     watch(svg, 1900);
     return { strings: 0 };
