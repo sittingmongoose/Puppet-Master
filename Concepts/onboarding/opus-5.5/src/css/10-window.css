@@ -22,8 +22,9 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
 /* The click paints this dim before the window is built (the open used to stay undimmed through that work).
    The flash is one empty element, so the click frame can paint it; the real scrim replaces it on the next
    frame, already at full dim. A held open keeps that dim and hides only the window. */
+/* one cheap full-screen layer: the same dim as .o55-scrim, and no second copy of the NieR ground's
+   scanline hatch over the whole screen */
 #o55-open-scrim { position: fixed; inset: 0; z-index: 2147482000; pointer-events: none; background: color-mix(in srgb, var(--background) 74%, transparent); }
-html[data-o55-nier-parts~="ground"] #o55-open-scrim { background-image: repeating-linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), .05) 0 1px, transparent 1px 3px); }
 #pm-o55-onboarding.o55-hold .o55-scrim { visibility: visible; }
 #pm-o55-onboarding.o55-scrim-lit .o55-scrim { opacity: 1 !important; animation: none !important; }
 .o55-win { position: relative; z-index: 1; width: min(1080px, calc(100vw - 48px)); height: min(720px, calc(100vh - 48px)); display: grid; grid-template-rows: auto minmax(0, 1fr);

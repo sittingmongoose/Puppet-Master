@@ -171,7 +171,16 @@
        (Reduced Motion, a low-resource computer) the repaint is the same task as the click, so it follows the toggle's
        own sound just after, rather than merging into it */
     const wake = () => { if (flight === F && inWindow()) O55.sound.play('wake'); };
-    if (instant()) { O55.motion.after(120, wake); enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
+    /* the instant repaint (Reduced Motion, a low-resource computer) is one task: syncTheme has taken the old cast down
+       and mounted the new one at its end state in the click's task, so the next rendering update presents the new look
+       and the one after it is the first frame with the new look up. A single rAF, and any timer, fire inside the
+       click's own long task or its first late frame, so wake was heard before anything changed (review N4: about half
+       a second early). A double rAF puts the choir on that second frame — at or after the picture on any clock, and
+       never closer than 120 ms to the hum. */
+    if (instant()) {
+      O55.motion.real.raf(() => O55.motion.real.raf(wake));
+      enter(F); if (F.on) at(F, 400, () => speak(F)); return;
+    }
     /* a reveal within 120 ms of that sound (no cover played: Still, Colors only, the Reboot moment part removed) waits
        for the rest of the 120 ms, so wake still sounds as the state sound it is (hero spec rule 10; films minor 4, where
        Still and Colors only dropped it); the stage keeps its own beats */
