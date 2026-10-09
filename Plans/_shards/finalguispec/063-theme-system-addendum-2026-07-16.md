@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29644-L30700
+Source lines: L29657-L30715
 
-Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
+Source SHA256: `c1dd6c3a52fc67deeb3e38f489c41c1340c5414dc7b1ac85e64914d0701730b1`
 
 ---
 
@@ -153,7 +153,9 @@ owner_hints:
 Amended 2026-09-28 (user-approved inventory wave, see F3-441): NieR Mode adds no table to the eight. Its light and dark
 tables are literal precomputed constants, transcribed from the NieR: Automata theme file named in
 `Plans/Settings_System.md` section 4.4, and are painted over the Basic variant while the switch is on; the eight
-built-in variants of F3-425 and their tables are unchanged, and no NieR value is derived at runtime.
+built-in variants of F3-425 and their tables are unchanged, and no NieR value is derived at runtime. A NieR preview
+drawn while the switch is off, such as the onboarding look choice's NieR thumbnail, paints the same constants inside
+its own bounds and changes nothing else (DL-152, F3-598).
 
 Amended 2026-10-08 (DL-151, the 5.6 Pro chat tweaks): the retro-dark and retro-light tables take PMConcept7's final
 retro values from `Concepts/PMConcept7.html`, as measured in

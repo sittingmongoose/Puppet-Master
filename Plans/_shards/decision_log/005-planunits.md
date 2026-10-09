@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3346-L11663
+Source lines: L3384-L11766
 
-Source SHA256: `1634acd787dbaa36f7591eda1906409153c969dfc64bdf291ff98a509193aeb3`
+Source SHA256: `e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c`
 
 ---
 
@@ -7892,7 +7892,7 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-144 records the owner decisions of 2026-10-02. NieR Mode (SSYS-042) covers every assistant chat surface, with
+  DL-144 records the owner decisions of 2026-10-02. NieR Mode (SSYS-043) covers every assistant chat surface, with
   each installed part placed in the chat and the transcript stage counted as the app's ground so the scene shows
   behind the conversation (F3-589). A change from one scene to another cross-fades by opacity over 520 ms, never above
   either scene's resting strength, everywhere a scene changes, PMConcept7 included; the chat adds no moving touches
@@ -7905,7 +7905,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Records an owner decision on the assistant chat's visual design.
 split_recommended: false
-depends_on: [DL-140, SSYS-042, F3-441, ACD-474]
+depends_on: [DL-140, SSYS-043, F3-441, ACD-474]
 unblocks: [F3-589]
 acceptance_criteria:
   - "Every assistant chat surface renders under NieR Mode with its parts placed as F3-589 lists."
@@ -8325,4 +8325,69 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
+```
+
+### DL-152 - NieR Mode Where A Look Is Chosen NieR Onboarding And Tour And Their Sounds
+
+```yaml
+plan_unit_id: DL-152
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-152 records the owner request of 2026-10-07. NieR Mode is reached wherever a look is chosen: the title-bar
+  theme selector, the onboarding look choice and the onboarding and Tour Look menus carry a NieR Mode checkbox with an
+  Adjust NieR look button that opens the NieR Mode editor, as a popup over the application or a panel inside the
+  onboarding window (F3-082, F3-598); during setup NieR is a preview written with the look. Onboarding and the
+  Guided Tour gain a NieR presentation, NieR ink marionettes included, gated by NieR Mode and the existing parts
+  (F3-598). Their sounds become one Notifications & Sounds cue category with variants per cue, sounds for new
+  moments with fixed fallbacks, a NieR kit while NieR Mode is painted with Menu sounds installed, one player and merged
+  coincident cues, and every cue is listed in the Settings sound library (F3-599), 354 entries in the concept. The
+  showpiece pass is part of this decision: the hero moments in setup and the tour, and the rules that long words type
+  on and that a large area does not flash. No settings key, NieR part,
+  theme variant or onboarding or tour action is added. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
+  and F3-589 now cite. Jared asked for the three tasks in one request on PMConcept7: a more polished NieR Mode in
+  setup and the tour with NieR puppets and sounds, NieR Mode as a checkbox with an adjust button wherever a theme is
+  chosen, and livelier, more varied setup and tour sounds with NieR ones, all listed in the sound library; the record
+  states it in plain words, without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on NieR Mode's entry points and on onboarding and Guided Tour presentation and sound.
+split_recommended: false
+depends_on: [DL-107, DL-144, SSYS-043, F3-082, F3-405, F3-520, F3-521]
+unblocks: [F3-598, F3-599]
+acceptance_criteria:
+  - "The title-bar theme selector, the onboarding look choice and both Look menus carry the NieR Mode checkbox and the Adjust NieR look button, and NieR Mode never appears as a theme or family (F3-598)."
+  - "Onboarding and Tour cues form one Notifications & Sounds category with a NieR kit, and all of them are listed in the sound library (F3-599)."
+  - "No settings key, NieR part or theme variant is added."
+  - "The owner request is recorded in plain words, with the verbatim source cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: nier_onboarding_tour_drift
+reasoning_tier: high
+context_scope: nier_onboarding_tour
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/DRY_Rules.md
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md, SHA-256 416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652"
+  - "Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/polish-nier-onboarding-sounds)"
+preserved_exact_tokens:
+  - "DL-152"
+  - "NieR Mode"
+  - "Adjust NieR look"
+negative_constraints:
+  - "Do not make NieR Mode a ninth theme or a family choice."
+  - "Do not add a settings key, a NieR part or an onboarding-, tour- or NieR-only sound setting."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
 ```

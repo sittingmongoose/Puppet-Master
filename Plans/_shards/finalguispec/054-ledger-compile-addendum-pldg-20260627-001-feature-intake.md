@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27757-L28233
+Source lines: L27765-L28246
 
-Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
+Source SHA256: `c1dd6c3a52fc67deeb3e38f489c41c1340c5414dc7b1ac85e64914d0701730b1`
 
 ---
 
@@ -111,18 +111,23 @@ canonical_text: >-
   concept sound library renders generated demonstration tones labelled as such; production built-in sounds still carry
   source, license, version, duration, and hash metadata, and demonstration tones never stand in for a bundled licensed
   recording, pack validation, or delivery (USER-SETTINGS-MANAGER-REFRESH-20260908).
+  The routing matrix's categories include the chat cues (F3-564) and the onboarding and Guided Tour cues
+  (F3-599), and the library lists every onboarding and Guided Tour cue of each theme-family kit and of the
+  NieR kit, grouped in styles of their own, as built-in entries (generated demonstration tones in the concept) that
+  preview under the same rules (DL-152).
   The in-app toast/banner destination renders through the
   title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
   notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
 gui_related: true
 gui_classification_reason: Defines Settings GUI, notification destination controls, sound library controls, upload UI, preview, and test-send presentation.
 depends_on: [ACD-428, CV-298, SP-222, PS-124, UCC-103]
-unblocks: [ATS-016]
+unblocks: [ATS-016, F3-599]
 acceptance_criteria:
   - The settings path is exactly Settings > General > Notifications & Sounds, not a new top-level Settings tab.
   - Users can configure destination routing, global/project overrides, quiet/focus behavior, sound mappings, and uploaded sounds from the GUI.
   - Provider-specific forms expose the canonical fields without revealing raw secrets, webhook URLs, tokens, or private paths.
   - Built-in normal notification sounds show source, license, version, duration, hash, and default mapping metadata.
+  - "The sound library lists the onboarding and Guided Tour cues of every kit, the NieR kit included, each with its moment and style, labelled as a generated demonstration tone in the concept and previewed only after an explicit gesture."
   - Preview is local only; test-send is explicit, labeled, rate-limited, masked, receipt-recorded, and never mutates alert state.
   - Audio absence or disabled sound remains accessible through visible labels and non-audio state.
   - Playback tests cover actual audio start, zero volume, Stop, replacement, natural completion, navigation/Project cleanup, unavailable assets, decode/device failure, and rejected startup without false playing or delivery-success state.

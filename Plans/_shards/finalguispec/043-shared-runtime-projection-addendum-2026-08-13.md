@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5338-L26462
+Source lines: L5339-L26470
 
-Source SHA256: `75a1ed4ced5b56c269d86924f0222fd553cce9e9a3623e4c9d37fad7253ea8db`
+Source SHA256: `c1dd6c3a52fc67deeb3e38f489c41c1340c5414dc7b1ac85e64914d0701730b1`
 
 ---
 
@@ -4361,7 +4361,10 @@ canonical_text: >-
   manual Dark, continuous sun-to-moon morph = Auto) opening a menu with a Light/Dark/Auto
   segmented control above four theme-family rows (Friendly, Glass, Retro, Basic); each family
   row shows built-in and custom theme metadata with swatch previews, and a family row becomes a
-  dropdown when >4 themes are available in it (built-in + custom). In Auto the selected family
+  dropdown when >4 themes are available in it (built-in + custom). Below the family rows, after a divider, one NieR
+  Mode row carries a checkbox (menuitemcheckbox), checked while NieR Mode is on, and beside it an Adjust NieR look
+  button that opens the NieR Mode editor as a popup dialog (F3-598); toggling keeps the menu open, and NieR Mode
+  is never a family row or a theme variant. In Auto the selected family
   resolves to its dark or light variant by following the OS appearance (prefers-color-scheme)
   live. Settings > General exposes the theme family + mode controls and theme folder, create,
   import, and export actions.
@@ -4372,6 +4375,7 @@ split_recommended: true
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- "Below the four family rows the menu shows one NieR Mode menuitemcheckbox with an Adjust NieR look button that opens the NieR Mode editor as a popup dialog; NieR Mode never appears as a family row or a ninth variant, and the selector still exposes exactly eight built-in variants."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
@@ -4402,7 +4406,10 @@ preserved_exact_tokens:
 - "Light/Dark/Auto"
 - "prefers-color-scheme"
 - "morphing sun/moon icon trigger"
-negative_constraints: []
+- "NieR Mode"
+- "Adjust NieR look"
+negative_constraints:
+- "Do not list NieR Mode as a family row, a family dropdown entry or a ninth theme variant."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
