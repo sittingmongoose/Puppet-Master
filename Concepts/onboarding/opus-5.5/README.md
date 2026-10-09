@@ -23,11 +23,26 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches,
 ```
 
 `build.py --out <path>` is a private build: it lints, then writes only that path, never either published output.
+`build.py --out <path> --no-usage` is the same private build without the Usage layer (the base's old Prism Usage page):
+a reference page for `Concepts/usage-redesign/tools/usage_boot.mjs`, never published.
 
-`build.py` reads the pinned base page (SHA-256 `b3888fad…`), swaps the base's Settings managers for the fork in
-`src/settings` (see Settings below), strips the old onboarding and tour, splices `src/`
-between `<!-- O55:… -->` markers and applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher
-persona, and two owner exposures: Settings Transfer preview/apply and the layout restore).
+`build.py` reads the pinned base page (SHA-256 `b3888fad…`) and builds it in this order:
+- 0: swaps the base's Settings managers for the fork in `src/settings` (see Settings below);
+- 1: strips the old onboarding and tour;
+- 2: applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher persona, NieR Mode, and two owner
+  exposures: Settings Transfer preview/apply and the layout restore);
+- 2b: replaces the base's Prism Usage page with the redesigned Usage page: `usage_layer.apply()` from
+  `Concepts/usage-redesign/tools` (sources and guide in `Concepts/usage-redesign/README.md`). It runs after the patches
+  because the patch "usage card cta :has restyle" needs the old rule present, and before the splice so it never sees
+  the O55 modules; it writes the band between `<!-- USAGE:BODY:START/END -->`;
+- 3: splices `src/` between `<!-- O55:… -->` markers;
+- 4: retitles. A later page layer that anchors on `<!-- O55:CSS:END -->` (the left rail's) runs after step 3.
+
+Every build also lints the Usage sources (`usage_layer.lint()`, in `lint_sources()`) and runs `node --check` on
+`pm-usage-js`; `--check` also fails on an old Usage reference left in the page (`id="pm7UsageApp"`,
+`pm7-t31-usage-final`, `pm7-t24-usage-readability-and-fit`, …), a missing outside contract of the old page (the chat
+context module, the usage bridge, the status bar, Retro Light's green; `usage_layer.KEPT`) or a USAGE marker that is
+not there exactly once.
 
 `Concepts/PMConcept7.html` is published only from this generator (2026-09-26 user direction): `--publish-pm7`
 writes the same built bytes to both outputs, and `--check` fails while `PMConcept7.html` is missing or differs by
@@ -57,6 +72,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/coverage.map.json` → `src/coverage.json` | Every setup-plan field (63) and conditional (26) mapped to the screen or control that sets it, plus screens → scenes and scenarios → drivers. |
 | `src/settings/` | The Settings layer, forked from the base's T50 Settings refresh and composed by `tools/settings_layer.py`: `kit.js` + `kit.d/*.js` (rows, controls, placement, plain pages, look settings, wizard, flows), `managers/*.js` (one per manager page), `styles.css` + `styles.d/*.css`, `data.json` + `data.d/`, `placement.json` + `o55/placement.d/*.json` (where every canonical setting id is drawn), `o55/rows.d/*.json` (per-row wording and behaviour). |
 | `src/settings/kit.d/23-nier-theme-menu.js` + `src/settings/styles.d/18-nier-theme-menu.css` | The title-bar theme menu's NieR Mode row and its Adjust button (see Settings below). |
+| `Concepts/usage-redesign/` (outside this package) | The Usage page: `src/` and `tools/usage_layer.py`, which `tools/build.py` applies at step 2b and lints in `lint_sources()`. Change the Usage page there, never inside the built page. |
 
 ## Tools (all file:// with the local Chrome; outputs go to /tmp or the Evidence share, never the repository)
 

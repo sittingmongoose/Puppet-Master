@@ -1,9 +1,13 @@
 # Usage redesign
 
-The redesigned Usage page of the Puppet Master concept, built as a layer over the published concept. The review copy is
-`Concepts/UsageTestPMConcept7.html`: `TestOpus5.5PmConcept.html` (the same bytes as `PMConcept7.html`) with the old
-Prism Usage page replaced by the page in `src/`. It is generated. Never hand-edit it, and never hand-edit the Usage page
-inside `PMConcept7.html` either: change `src/` or `tools/usage_layer.py` and rebuild.
+The redesigned Usage page of the Puppet Master concept. It is published in `Concepts/PMConcept7.html` (and the same bytes
+in `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html`) by `Concepts/onboarding/opus-5.5/tools/build.py`, whose step
+2b calls `tools/usage_layer.py` here to replace the base's old Prism Usage page with the page in `src/`. Never hand-edit
+the Usage page inside either built page: change `src/` or `tools/usage_layer.py` and rebuild.
+
+Jared approved the redesign on 2026-10-09 and asked for it in PMConcept7 ("So the UsageTestPMConcept7.html will go away
+after you finish"). The review copy `Concepts/UsageTestPMConcept7.html` and its generator `tools/build_usage.py` were
+retired at that publish: a private build is now `build.py --out <path>`, the one build path.
 
 Status: WOW round, polish round 2 integrated (2026-10-02). The design is
 `~/PM-Experiments/usage-redesign-20261001/design/final/DESIGN-SPEC.md` with `DESIGN-SPEC-ATLAS.md` (wins over it),
@@ -18,9 +22,10 @@ the film core (`PMU.film`). What each round changed and what is open: `INTEGRATI
 ```
 Concepts/usage-redesign/
   README.md
-  tools/usage_layer.py    apply(text, need) -> (text, notes), lint(), syntax_check(text): the one module both publish paths call
-  tools/build_usage.py    build / --check for Concepts/UsageTestPMConcept7.html
-  tools/usage_boot.mjs    headless boot check of the review copy against TestOpus5.5PmConcept.html
+  tools/usage_layer.py    apply(text, need) -> (text, notes), lint(), syntax_check(text), REMOVED, KEPT: opus-5.5
+                          build.py calls it at step 2b (apply), in lint_sources() (lint) and syntax_check()/check()
+  tools/usage_boot.mjs    headless boot check of the published page (or a private build) against a reference build
+                          without the Usage layer (build.py --out <path> --no-usage)
   tools/boards.py         default boards of all 13 rooms -> src/js/62-boards-data.js (and --md BOARDS.md); --check validates
   src/markup.html         the #panel-usage markup (root: <div class="pmu-shell" id="pmuApp">), ARCHITECTURE section 5
   src/copy.json           shell strings; src/copy.d/*.json one file per owner (merged; a key in two files fails the build)
@@ -59,18 +64,24 @@ them. New class names use the `pmu-` namespace: the old `pm7u-` rules that stay 
 Run from the worktree root.
 
 ```
-python3 Concepts/usage-redesign/tools/build_usage.py            # build and write Concepts/UsageTestPMConcept7.html
-python3 Concepts/usage-redesign/tools/build_usage.py --check    # rebuild in memory; byte-compare, markers, removed and kept references
-python3 Concepts/onboarding/opus-5.5/tools/build.py --check     # the published concept must stay untouched: "check ok"
-node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>     # headless boot check; writes <out-dir>/usage-boot.json
-                                                               # optional: [page-under-test] [reference-page]
+python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/u/page.html   # private build: lint, node --check, write only that path
+python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7            # publish: TestOpus5.5PmConcept.html and PMConcept7.html
+python3 Concepts/onboarding/opus-5.5/tools/build.py --check                  # lint, syntax, markers, old references gone, outside
+                                                                            # contracts kept, both published pages byte-current
+python3 Concepts/usage-redesign/tools/boards.py --check                      # the generated default boards are current
+node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>                  # boot check of Concepts/PMConcept7.html
+node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir> --page /tmp/u/page.html   # boot check of a private build
 ```
 
-`build_usage.py` starts from `build.build_text()` of `Concepts/onboarding/opus-5.5/tools/build.py`, so the base pin
-(`BASE_SHA256`) is enforced there. When `TestOpus5.5PmConcept.html` differs from that fresh build it warns in build
-mode and fails in `--check`. Each build lints `src/` and runs `node --check` on `pm-usage-js`, `pm4-settings-js` and
-`pm-o55-js`. Keep `<out-dir>` outside the repository (for example under `~/PM-Experiments/`). The boot check takes no
-screenshots and deletes its Chrome profiles.
+The dev loop: change `src/` (or `tools/usage_layer.py`), make a private build with `--out`, boot-check it with
+`usage_boot.mjs --page`, look at it on the GPU (the P1000 VM), then publish with `--publish-pm7` and run `--check`.
+`build.py` enforces the base pin (`BASE_SHA256`). Each build lints `src/` (`usage_layer.lint()`, which also runs the
+build's page-wide universal-selector lint over the Usage CSS) and runs `node --check` on `pm-usage-js`,
+`pm4-settings-js` and `pm-o55-js`. `usage_boot.mjs` makes its reference page itself (`build.py --out
+<out-dir>/reference-no-usage.html --no-usage`: the same sources with the old Prism Usage page) and writes
+`<out-dir>/usage-boot.json`; it also takes `[page-under-test] [reference-page]` as plain arguments. Keep `<out-dir>`
+outside the repository (for example under `~/PM-Experiments/`). The boot check takes no screenshots and deletes its
+Chrome profiles.
 
 ## What the layer does
 
@@ -129,7 +140,7 @@ The detail is in `understand/cur-xref.md` section 10 and `DESIGN-INPUTS.md` sect
 - `body.pmu-page-active` is set while Usage shows, and Home's `#pm-home-workspace` takes no pointer events then (the old
   page's rule, kept).
 
-`usage_boot.mjs` checks all of this against `TestOpus5.5PmConcept.html`:
+`usage_boot.mjs` checks all of this against the reference build with the old page:
 - no new console errors;
 - `#pmuApp` is present and `#pm7UsageApp` is absent;
 - every `.context-usage` is enhanced, its popup opens, the details drawer opens, and Compact writes
@@ -140,32 +151,21 @@ The detail is in `understand/cur-xref.md` section 10 and `DESIGN-INPUTS.md` sect
 - the rail has its 13 rooms, and a room switch works;
 - the 8 themes and NieR Mode load without errors.
 
-## Publish plan (Proposal B, after Jared approves the review copy)
+## How it is published
 
-This is the smallest change to `Concepts/onboarding/opus-5.5/tools/build.py`. The sources stay here.
-
-```python
-sys.path.insert(0, str(CONCEPTS / 'usage-redesign' / 'tools'))
-import usage_layer
-# build_text(), after step 2 (PATCHES) and before step 3 (O55 splice):
-    text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
-# lint_sources():  problems.extend(usage_layer.lint())
-# syntax_check():  problems.extend(usage_layer.syntax_check(built))
-# check():         add 'id="pm7UsageApp"' and 'pm7-t31-usage-final' to the removed list,
-#                  and <!-- USAGE:BODY:START/END --> to the marker loop
-```
+`Concepts/onboarding/opus-5.5/tools/build.py` imports `usage_layer` from `tools/` here and, in `build_text()`, calls
+`text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)` as step 2b: after the PATCHES loop and the owner
+exposures, before the O55 splice. It adds `usage_layer.lint()` to `lint_sources()` and `usage_layer.syntax_check()` to
+`syntax_check()`, and `check()` fails on any of `usage_layer.REMOVED`, a missing `usage_layer.KEPT` entry, or a
+`<!-- USAGE:BODY:START/END -->` marker that is not there exactly once.
 
 - Order matters. The layer runs after the PATCHES loop, because the patch "usage card cta :has restyle" needs the old
-  `.pm7u-card:has(.pm7u-setup-cta)` rule. Deleting that PATCHES entry in the same change is the alternative.
-- The NieR selector patches become plain edits of `src/settings/kit.d/19-nier-parts.js`. The page's NieR CSS can move to
-  a new `src/settings/styles.d/18-nier-usage.css` or stay in the layer, and the old `pm7u` NieR rules can then be
-  pruned.
-- `build_usage.py` then reduces to `build.build_text()` plus the retitle, or it is retired.
-- Then run these in order:
-  1. `build.py --check`;
-  2. `build.py --publish-pm7`;
-  3. `usage_boot.mjs <out-dir> Concepts/PMConcept7.html <pre-publish copy>`, where the pre-publish copy is
-     `TestOpus5.5PmConcept.html` saved before step 2 (the reference page).
-
-  Update the "Where things are" section of `opus-5.5/README.md` and the PM7 publication chain in
-  `pm7-tools/README.md`.
+  `.pm7u-card:has(.pm7u-setup-cta)` rule. It runs before the O55 splice, so it never sees the O55 modules; a later
+  layer that anchors on `<!-- O55:CSS:END -->` (the left rail's `rail_layer`) runs after the splice. The order in
+  `build_text()` is: settings layer, strip, PATCHES (+ NieR, first paint), owner exposures, usage (2b), O55 splice,
+  then such a layer.
+- `build_text(usage=False)` (`build.py --out <path> --no-usage`) leaves the old page in place. It is a private reference
+  build for the boot check only, never published.
+- Possible later clean-ups: the NieR selector patches (`NIER_NAMES`) can become plain edits of opus-5.5
+  `src/settings/kit.d/19-nier-parts.js`, the page's NieR CSS can move to a `src/settings/styles.d/` file, and the old
+  `pm7u` NieR rules can then be pruned.
