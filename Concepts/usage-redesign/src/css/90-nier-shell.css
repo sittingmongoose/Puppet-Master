@@ -85,9 +85,14 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pm
 /* empty: the machine drawing above every empty state */
 html[data-o55-nier-parts~="empty"] #panel-usage .pmu-empty::before { content: ""; display: block; width: 44px; height: 44px; margin: 0 auto 8px;
   background: var(--o55nw-art-machine) center / contain no-repeat; opacity: .82; }
-/* diamonds: a turning hollow diamond during refresh */
-html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { animation: pmu-nier-diamond calc(650ms * var(--pmu-speed, 1)) steps(6, end) 1; }
-@keyframes pmu-nier-diamond { from { transform: rotate(0deg) scale(1); } 50% { transform: rotate(90deg) scale(.82); } to { transform: rotate(180deg) scale(1); } }
+/* diamonds: the refresh is the app's diamond loader (styles.d/14-nier-parts.css, the 5.6 Pro port): the icon's strokes go
+   and a hollow diamond with an inner square turns on its vertical axis, one half turn in the refresh's 650 ms (the app's
+   loop turns once in 2.8 s; a refresh is one shot, so nothing keeps turning). Reduce Motion: the still diamond. */
+html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { box-sizing: border-box; border: 1px solid currentColor; outline: 1px solid currentColor; outline-offset: -5px;
+  transform: rotate(45deg) scale(.72); animation: pmu-nier-diamond calc(650ms * var(--pmu-speed, 1)) linear 1; }
+html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg > * { visibility: hidden; }
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { animation: none; }
+@keyframes pmu-nier-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(180deg) rotate(45deg) scale(.72); } }
 
 /* group heading bands are not plates: no corner ticks, no ink frame */
 html[data-o55-nier="on"] #panel-usage .pmu-card[data-head="band"] { background-image: none !important; border-color: transparent; box-shadow: none; }
@@ -111,3 +116,100 @@ html[data-o55-nier="on"] #panel-usage .pmu-card:not([data-head="band"]):hover::b
    shown through the clear Usage board) made every software draw ~33 ms (glassbisect.py: one plate moving 33 ms, the
    scene hidden 5-6 ms). Without a GPU it rests while Usage shows; the board then sits on the NieR paper. */
 html[data-pmu-soft][data-o55-nier-scene] body.pmu-page-active #o55-nier-scene { display: none !important; }
+
+/* ======================================================================================================================
+   PMConcept7's game UI on Usage (lane f-nier, 2026-10-09, Jared's item 6a; lanes/f-nier/NIER-ADOPT.md). The app's NieR
+   parts (styles.d/14-nier-parts.css, 15-nier-world.css, src/css/11-window-nier.css) name the retired .pm7u- page; these
+   are the same rules, timings and helper tokens on the pmu- names. Colours are styles.d/13-nier.css helpers only.
+   ====================================================================================================================== */
+
+/* ---- Menu cursor [cursor]: a hovered or chosen rail room, a hovered range and a hovered or chosen menu row are the ink
+   bar with paper text (14-nier-parts.css). The bar's ink is on :hover (that element alone restyles); the paper text
+   follows .o55np-cur-over, which kit.d/19-nier-parts.js puts on the hovered item (usage_layer NIER_NAMES 'cursor'), so
+   no ':hover :where(*)' rule restyles a subtree. The chosen room's bar replaces the rail's liquid ink. ---- */
+html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-navbtn, .pmu-range button, .pmu-poprow:not(.is-disabled)):hover,
+html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-navbtn.active, .pmu-poprow.active) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; box-shadow: none !important; text-shadow: none !important; }
+html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-navbtn, .pmu-range button, .pmu-poprow:not(.is-disabled)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-navbtn.active, .pmu-poprow.active) :where(*) { color: inherit !important; -webkit-text-fill-color: currentColor; }
+html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-navink { opacity: 0; }
+/* a row that cannot be chosen is never a bar (the app's [role="menuitem"]:hover would ink it) */
+html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.is-disabled:hover { background: transparent !important; color: var(--pmu-ink-2) !important; }
+/* inside the bar the row's own marks turn over: the icon box and the unchecked box in paper hairlines; the Attention
+   count is a square paper cell with ink numerals (the app's badge rule, 14-nier-parts.css:53; square, never a pill) */
+html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-poprow.o55np-cur-over, .pmu-poprow.active) .pmu-micon { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
+html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mcheck-off { border-color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-navbtn.o55np-cur-over, .pmu-navbtn.active) .pmu-navcount:not([hidden]) {
+  padding: 1px 5px; background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; -webkit-text-fill-color: currentColor; }
+
+/* ---- YoRHa headers [headers]: the rail's brand and the stage head as the onboarding window's header draws them
+   (11-window-nier.css .o55-head, .o55-eyebrow): the brand title in main's tracking for the Usage brand (14-nier-parts.css
+   :83), an ink rule with square caps under the brand with the machine glyphs riding it [glyphs], a mono section label
+   with the room's place among the 13 above the rooms (Settings' CHAPTERS, the window's SETUP 01/05), and the stage head
+   ruled like the window's header. The head's buttons are the window's square hairline boxes that fill with ink. ---- */
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-brand h1 { letter-spacing: .12em; font-weight: 600; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-brand { flex-wrap: wrap; row-gap: 2px; padding: 0 2px 10px;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left 2px bottom 0 / 5px 5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 2px bottom 0 / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) center bottom 2px / calc(100% - 16px) 1px no-repeat; }
+html[data-o55-nier-parts~="headers"][data-o55-nier-parts~="glyphs"] #panel-usage .pmu-brand {
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left 2px bottom 0 / 5px 5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 2px bottom 0 / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) center bottom 2px / calc(100% - 16px) 1px no-repeat,
+    var(--o55nw-art-glyphs) right 12px bottom 5px / 126px 5px no-repeat; }
+/* the rooms' kicker is the window's eyebrow, [ ■ ROOM 02/13 ] running on as a rule to a square cap (11-window-nier.css
+   .o55-eyebrow); the mono face has one advance, so the closing bracket sits at the words' end by ch */
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-nav::before { content: "ROOM 01/13"; display: block; height: 14px; margin: 0 0 6px; padding: 0 0 0 26px;
+  --pmu-nk: calc(28px + 10ch + 2em); font: 500 10px/14px var(--pmu-mono); letter-spacing: .2em; white-space: nowrap; overflow: hidden; color: var(--o55-nier-ink); pointer-events: none;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 8px 0 / 1px 100% no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 8px 0 / 4px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 8px 100% / 4px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 15px center / 6px 6px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) calc(var(--pmu-nk) + 4px) 0 / 1px 100% no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) var(--pmu-nk) 0 / 5px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) var(--pmu-nk) 100% / 5px 1px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) calc(var(--pmu-nk) + 14px) center / calc(100% - var(--pmu-nk) - 24px) 1px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 4px center / 5px 5px no-repeat; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="plans"] .pmu-nav::before { content: "ROOM 02/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="costs"] .pmu-nav::before { content: "ROOM 03/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="accounts"] .pmu-nav::before { content: "ROOM 04/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="free"] .pmu-nav::before { content: "ROOM 05/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="context"] .pmu-nav::before { content: "ROOM 06/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="analytics"] .pmu-nav::before { content: "ROOM 07/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="ledger"] .pmu-nav::before { content: "ROOM 08/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="attention"] .pmu-nav::before { content: "ROOM 09/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="cache"] .pmu-nav::before { content: "ROOM 10/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="tools"] .pmu-nav::before { content: "ROOM 11/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="signals"] .pmu-nav::before { content: "ROOM 12/13"; }
+html[data-o55-nier-parts~="headers"] #pmuApp[data-room="authority"] .pmu-nav::before { content: "ROOM 13/13"; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-stagehead { border-bottom-color: rgba(var(--o55-nier-ink-rgb), .55);
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left 8px bottom 3px / 5px 5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 8px bottom 3px / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .55), rgba(var(--o55-nier-ink-rgb), .55)) center bottom 5px / calc(100% - 26px) 1px no-repeat; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-stagehead :is(.pmu-ctlbtn, .pmu-iconbtn) { border: 1px solid rgba(var(--o55-nier-ink-rgb), .4); color: var(--o55-nier-ink);
+  background: transparent; transition: none; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-stagehead :is(.pmu-ctlbtn, .pmu-iconbtn):is(:hover, [aria-expanded="true"]) {
+  background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-stagehead :is(.pmu-ctlbtn, .pmu-iconbtn):is(:hover, [aria-expanded="true"]) :is(.pmu-ctllead, .pmu-ctlicon, .pmu-ctlchev, .pmu-ico) { color: inherit; }
+/* the group heading bands carry the machine glyphs at the right of their rule */
+html[data-o55-nier-parts~="glyphs"] #panel-usage .pmu-card[data-head="band"] > .pmu-cardhead {
+  background: var(--o55nw-art-glyphs) right 6px bottom 4px / 126px 5px no-repeat !important; }
+
+/* ---- Slice [slice]: the inspector opens from a line across its middle and closes back to it, the app's o55np-slice
+   (menus and dialogs: scale from a line, one flicker step) instead of the Basic spring that overshot. Compositor only
+   (scale and opacity); Reduce Motion keeps the instant drawer. ---- */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-inspector { transform: none; scale: 1 .006; transform-origin: 50% 50%;
+  transition: scale calc(150ms * var(--pmu-speed, 1)) steps(3, jump-end), opacity calc(60ms * var(--pmu-speed, 1)) linear calc(150ms * var(--pmu-speed, 1)),
+    visibility 0s linear calc(210ms * var(--pmu-speed, 1)); }
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-inspector.open { scale: none; transition: none;
+  animation: o55np-slice calc(300ms * var(--pmu-speed, 1)) linear backwards; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier-parts~="slice"] #panel-usage .pmu-inspector, html[data-o55-nier-parts~="slice"] #panel-usage .pmu-inspector.open { scale: none; transition: none; animation: none; }
+}
+
+/* ---- Pod voice [voice] and the intel frame [headers]: Usage's stage note reads as a Report (14-nier-parts.css:336 names
+   the retired #pm7uToast) in a square ink frame with the hard shadow, its mark in an ink square ---- */
+html[data-o55-nier-parts~="voice"] #panel-usage #pmuToast .pmu-toast-text::before { content: "Report: "; font-weight: 600; }
+html[data-o55-nier="on"] #panel-usage .pmu-toast { border-radius: 0; border-color: var(--o55-nier-ink); background: var(--surface, var(--pmu-card));
+  box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }
+html[data-o55-nier="on"] #panel-usage .pmu-toast-ico { color: var(--o55-nier-on-ink); background: var(--o55-nier-ink); }
+
+/* ---- Usage's idle rule under the app's NieR world: nothing animates at idle on this page except Live beats (DECISIONS,
+   PERF-3). The layer already parks the NieR sweep while Usage shows (usage_layer A6); the drifting motes, the scene's
+   ambient parts and the corner Pod's bob pause in place the same way (still drawn), and run on every other page. ---- */
+body.pmu-page-active :is(#o55np-ground > .o55np-mote, #o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-shadow, .o55-nier-part) { animation-play-state: paused !important; }

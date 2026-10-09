@@ -107,6 +107,13 @@ html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout .pmu-ro-row, html[d
 html[data-o55-nier-parts~="intel"] #panel-usage .pmu-ro-sep { margin-left: 10px; margin-right: 10px; background: rgba(var(--o55-nier-ink-rgb), .3); }
 html[data-o55-nier-parts~="intel"] #panel-usage .pmu-xh { background: var(--o55-nier-ink); }
 html[data-o55-nier-parts~="intel"] #panel-usage .pmu-xdot { border-radius: 0; border-color: var(--o55-nier-ink); }
+/* the app's intel card details (15-nier-world.css [intel], the hover tags on every page; lane f-nier 2026-10-09): a square
+   bullet leads the ink band, one ink notch sits in the bottom right corner, and the hard shadow is the tags' 3 px one */
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout { box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16);
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 2px bottom 2px / 5px 5px no-repeat, var(--surface, var(--pmu-card)); }
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout strong { position: relative; padding-left: 21px; letter-spacing: .12em; }
+html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout strong::before { content: ""; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; margin-top: -3px;
+  background: var(--o55-nier-on-ink); }
 
 /* ---------- square: every chart corner is 0 (rings and dots are SVG, so they stay round) ---------- */
 html[data-o55-nier-parts~="square"] #panel-usage :is(.pmu-colstack, .pmu-sbbar, .pmu-sbfill, .pmu-mixbar, .pmu-tb, .pmu-tb i, .pmu-rkbar, .pmu-rkfill, .pmu-splitbar, .pmu-hc, .pmu-hs i,

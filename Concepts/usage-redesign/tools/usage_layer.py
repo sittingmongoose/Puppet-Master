@@ -78,12 +78,17 @@ CTX_JS_EDITS = [
 ]
 
 # NieR Mode selector lists in the Settings script (built from opus-5.5 src/settings/kit.d/19-nier-parts.js). The new
-# page's class names go here (ARCHITECTURE.md section 7.1). An empty list skips that patch.
+# page's class names go here (ARCHITECTURE.md section 7.1). An empty list skips that patch. The CSS half of the cursor
+# (the ink bar and its paper text) is Usage's own src/css/90-nier-shell.css: the app's CSS lists name the retired .pm7u-
+# rows and Usage's rows need their own exceptions (disabled rows, icon boxes, the Attention count). Lane f-nier
+# (2026-10-09) added the range strip to the cursor and chosen lists and the confirm / cancel menu sounds.
 NIER_NAMES = {
-    'cursor': ['.pmu-navbtn', '.pmu-poprow'],                # items that become the NieR ink-bar menu cursor
-    'chosen': ['.pmu-navbtn'],                               # places a click chooses (the brackets lock on)
-    'strip': ['.pmu-range button', '.pmu-seg button'],       # items in a horizontal strip (the cursor sits under them)
-    'titles': ['#pmuRoomTitle', '.pmu-brand h1'],            # the Usage page's titles for the NieR decode
+    'cursor': ['.pmu-navbtn', '.pmu-poprow', '.pmu-range button'],   # items that become the NieR ink-bar menu cursor
+    'chosen': ['.pmu-navbtn', '.pmu-range button'],             # places a click chooses (the brackets lock on)
+    'strip': ['.pmu-range button', '.pmu-seg button'],          # items in a horizontal strip (the cursor sits under them)
+    'titles': ['#pmuRoomTitle', '.pmu-brand h1'],               # the Usage page's titles for the NieR decode
+    'confirm': ['.pmu-usebtn', '.pmu-inspact.primary'],         # a click that commits (Menu sounds: confirm)
+    'cancel': ['#pmuInspClose'],                                # a click that closes without choosing (Menu sounds: cancel)
 }
 
 
@@ -102,6 +107,12 @@ def nier_selector_patches(names: dict | None = None) -> list[tuple[str, str, str
     if names.get('titles'):
         old = "usage: '#pm7uRoomTitle, .pm7u-brand h1',"
         out.append((old, "usage: '" + ', '.join(names['titles']) + "',", 'nier page titles'))
+    if names.get('confirm'):
+        old = """.o55-btn-primary, [data-o55-preview="keep"]';"""
+        out.append((old, """.o55-btn-primary, [data-o55-preview="keep"], """ + ', '.join(names['confirm']) + "';", 'nier confirm sound list'))
+    if names.get('cancel'):
+        old = """[data-o55-preview="back"], [data-o55-nier-note="close"]';"""
+        out.append((old, """[data-o55-preview="back"], [data-o55-nier-note="close"], """ + ', '.join(names['cancel']) + "';", 'nier cancel sound list'))
     return out
 
 
