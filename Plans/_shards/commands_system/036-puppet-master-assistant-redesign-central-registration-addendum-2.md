@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5900-L6111
+Source lines: L5900-L6112
 
-Source SHA256: `92a0b6989461936a42d30f23aee6d3dbcd01acd86cffd0d06f7e3345d147b301`
+Source SHA256: `3d495203def2da1154d34f51f34f3b60183738e948b44ccd0e6202e194078c7c`
 
 ---
 
@@ -36,6 +36,7 @@ This addendum records the central command-contract registration for the approved
 | `cmd.chat.plan.export` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_export` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanExportRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/ArtifactExportResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat.plan.send_to_planning_wizard` | `Plans/Planning_Wizard.md` | `handlers::planning_wizard::assistant_plan_intake` | `Plans/planning_wizard_contracts.schema.json#/$defs/AssistantPlanHandoffRequest` -> `Plans/planning_wizard_contracts.schema.json#/$defs/PlanningWizardIntakeResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat.plan.open_details` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_open_details` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRoute` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.plan.open_version` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_open_version` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanVersionRoute` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.open` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_open` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoRoute` -> `Plans/todo_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.toggle_parent` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_toggle_parent` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoViewRequest` -> `Plans/todo_runtime_contracts.schema.json#/$defs/TodoViewResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.open_work` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_open_work` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoWorkRoute` -> `Plans/todo_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |

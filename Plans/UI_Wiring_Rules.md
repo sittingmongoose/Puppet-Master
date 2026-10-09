@@ -888,7 +888,7 @@ canonical_text: Every touched actionable or focusable control has exactly one ca
 gui_related: true
 gui_classification_reason: Defines visible control activation, disabled behavior, hover tags, keyboard access, and exact return.
 split_recommended: false
-depends_on: [UIW-012, DR-040, F3-523, F3-590, DL-157]
+depends_on: [UIW-012, DR-040, F3-523]
 unblocks: [WM-046]
 acceptance_criteria:
   - Every touched control has exactly one command or typed local action and one owner route or explicit view-only presentation disposition.

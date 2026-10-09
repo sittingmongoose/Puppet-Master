@@ -12557,7 +12557,7 @@ gui_related: true
 gui_classification_reason: Records owner decisions on the schedule line's wording, the bound Goal's Plan opener and the preview hover exception.
 split_recommended: false
 depends_on: [DL-145, DL-147]
-unblocks: [SQR-015, UCC-176, CS-088, WM-065, UIW-026, F3-593, F3-590, UIW-013]
+unblocks: [SQR-015, UCC-176, CS-088, WM-065, UIW-026, F3-593, F3-590]
 acceptance_criteria:
   - "SQR-015 and DL-156 state the Schedule ended wording as the owner's approved decision of 2026-10-09."
   - "Open exact Plan · Vn is cmd.chat.plan.open_version in the catalog, Commands_System and the production wiring, and F3-593 binds it; it never opens Plan Details."

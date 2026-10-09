@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6058,
+      "line_count": 6060,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "9309014b29d44cd02b24a9c624a488e678d6e33e09fa112d7251544c4b9c1604",
+      "sha256": "838ecbcaf71ed165f1ff84ce0e22d88b350736d0d3b68a7a8f9407a3821f53d6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -1736,7 +1736,7 @@
         "Plans/Scheduling_and_Quota_Resume.md",
         "Plans/ToDo_Runtime.md"
       ],
-      "line_count": 1789,
+      "line_count": 1790,
       "path": "Plans/Assistant_Plan_Runtime.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -1782,7 +1782,7 @@
         "wrong_version_or_duplicate_scheduled_build",
         "wrong_version_or_hidden_build_state"
       ],
-      "sha256": "5f75aaf0b90fd3a88f27f9f1350cc5b8f0dd253f51a35f31a7b6eac1f604005e",
+      "sha256": "d8f18843137bec6c89d9b137991809540957ca8f97cf8b199bbc67cb956889b0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -3705,9 +3705,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 34,
-        "True": 56
+        "True": 57
       },
-      "heading_count": 224,
+      "heading_count": 226,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3759,9 +3759,9 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 7524,
+      "line_count": 7585,
       "path": "Plans/Commands_System.md",
-      "plan_unit_count": 90,
+      "plan_unit_count": 91,
       "plan_unit_ids": [
         "CS-002",
         "CS-003",
@@ -3852,7 +3852,8 @@
         "CDRY-022",
         "CS-087",
         "CDRY-023",
-        "CS-093"
+        "CS-093",
+        "CS-088"
       ],
       "reasoning_tiers": [
         "high",
@@ -3948,16 +3949,16 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "92a0b6989461936a42d30f23aee6d3dbcd01acd86cffd0d06f7e3345d147b301",
+      "sha256": "3d495203def2da1154d34f51f34f3b60183738e948b44ccd0e6202e194078c7c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 90
+        "accepted": 91
       },
       "title": "Commands System (Canonical SSOT)",
       "unit_type_counts": {
         "acceptance": 3,
         "command_catalog": 1,
-        "command_contract": 5,
+        "command_contract": 6,
         "command_disposition": 1,
         "command_registration": 1,
         "command_registry": 4,
@@ -5618,14 +5619,16 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 55,
-        "True": 93
+        "True": 94
       },
-      "heading_count": 302,
+      "heading_count": 304,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md",
+        "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
+        "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
         "Concepts/chat-assistant-concepts/5.6 Pro/todos.js",
         "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
         "Plans/00-plans-index.md",
@@ -5720,9 +5723,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 12532,
+      "line_count": 12632,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 148,
+      "plan_unit_count": 149,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5871,7 +5874,8 @@
         "DL-156",
         "DL-160",
         "DL-162",
-        "DL-163"
+        "DL-163",
+        "DL-157"
       ],
       "reasoning_tiers": [
         "high",
@@ -5966,6 +5970,7 @@
         "orchestration_model_drift",
         "orchestrator_diagnostic_retention_drift",
         "owner_answer_loss_or_unapproved_event_admission",
+        "owner_decision_drift",
         "permanent_repository_format_chosen_without_evidence",
         "persona_registry_gap",
         "plan_card_layout_drift",
@@ -6020,15 +6025,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "07c9e45a17cbf53fc94e9d79d4f2326b200c9be7d0dbdf526c7dfede2eb9e584",
+      "sha256": "496ed28aa4a9508af034dcdb2c8cf1fd6dcf9abf6fa20047cb8d573cccee715e",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 148
+        "accepted": 149
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 59,
+        "decision": 60,
         "requirement": 88
       },
       "validation_surfaces": [
@@ -7561,7 +7566,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 42681,
+      "line_count": 42703,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 615,
       "plan_unit_ids": [
@@ -8316,7 +8321,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6",
+      "sha256": "f704bcfc06613cd6e76ce59c08ed4f859319da89c76a7ecb81dd12d5f30fb40f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 614,
@@ -16330,7 +16335,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 1739,
+      "line_count": 1743,
       "path": "Plans/Scheduling_and_Quota_Resume.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -16376,7 +16381,7 @@
         "unsafe_pause_or_dst_double_fire",
         "wrong_plan_version_built_or_duplicate_nightly_build"
       ],
-      "sha256": "928bf00502a0d71384195b70cc02904d5db20b273ca9dbc22d0335dd8ff3962e",
+      "sha256": "60cd1584b2d9c4bd39c647b66174008e8e28658c1feb4e662bc3c63f50add3ee",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -19259,13 +19264,14 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 20,
-        "True": 156
+        "True": 157
       },
-      "heading_count": 347,
+      "heading_count": 349,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
         "Concepts/pm7-tools/systems_integration_source.py",
+        "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
         "Plans/Containers_Registry_and_Unraid.md",
@@ -19314,9 +19320,9 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 14730,
+      "line_count": 14807,
       "path": "Plans/UI_Command_Catalog.md",
-      "plan_unit_count": 176,
+      "plan_unit_count": 177,
       "plan_unit_ids": [
         "UCC-002",
         "UCC-003",
@@ -19493,7 +19499,8 @@
         "UCC-173",
         "UCC-174",
         "UCC-175",
-        "UCC-188"
+        "UCC-188",
+        "UCC-176"
       ],
       "reasoning_tiers": [
         "high",
@@ -19568,17 +19575,17 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d",
+      "sha256": "5705578cb997d259f3f92c0269cc237d9b9444008a8134b52a77a08a61654ad0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 175,
+        "accepted": 176,
         "retired": 1
       },
       "title": "UI Command Catalog (Canonical)",
       "unit_type_counts": {
         "command_binding": 1,
         "command_catalog": 2,
-        "command_contract": 39,
+        "command_contract": 40,
         "command_disposition": 1,
         "compatibility_disposition": 1,
         "constraint": 1,
@@ -19663,9 +19670,9 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "True": 27
+        "True": 28
       },
-      "heading_count": 74,
+      "heading_count": 75,
       "implementation_surfaces": [
         "Concepts/pm7-tools/",
         "Concepts/pm7-tools/global_hover_tags_source.py",
@@ -19692,9 +19699,9 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 1997,
+      "line_count": 2052,
       "path": "Plans/UI_Wiring_Rules.md",
-      "plan_unit_count": 27,
+      "plan_unit_count": 28,
       "plan_unit_ids": [
         "UIW-001",
         "UIW-002",
@@ -19722,10 +19729,12 @@
         "UIW-024",
         "UIW-025",
         "UIW-030",
-        "UIW-031"
+        "UIW-031",
+        "UIW-026"
       ],
       "reasoning_tiers": [
         "high",
+        "medium",
         "standard"
       ],
       "risk_classes": [
@@ -19755,12 +19764,13 @@
         "ui_alias_bypass_or_phantom_runtime_claim",
         "ui_backend_bypass",
         "unwired_gui",
+        "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "d0c067843836b388581c8d4bd645a3c74ad1b47039b6f57c6d25840f51b1d7fc",
+      "sha256": "d2ec258bbb2a25788f82a6b8919d370b64470fcb03482d3774d92377ef92a8f5",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 27
+        "accepted": 28
       },
       "title": "UI Wiring Rules (Canonical)",
       "unit_type_counts": {
@@ -19769,7 +19779,7 @@
         "requirement": 19,
         "ui_wiring_rule": 1,
         "wiring_contract": 2,
-        "wiring_rule": 3
+        "wiring_rule": 4
       },
       "validation_surfaces": [
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
@@ -20202,9 +20212,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 13,
-        "True": 53
+        "True": 54
       },
-      "heading_count": 144,
+      "heading_count": 146,
       "implementation_surfaces": [
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
         "Concepts/pm7-tools/systems_integration_source.py",
@@ -20237,9 +20247,9 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 5416,
+      "line_count": 5476,
       "path": "Plans/Wiring_Matrix.md",
-      "plan_unit_count": 66,
+      "plan_unit_count": 67,
       "plan_unit_ids": [
         "WM-002",
         "WM-003",
@@ -20306,7 +20316,8 @@
         "WM-064",
         "WM-073",
         "WM-074",
-        "WM-075"
+        "WM-075",
+        "WM-065"
       ],
       "reasoning_tiers": [
         "high",
@@ -20344,17 +20355,17 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "dbdf7e35e022eeec8877a0bb64fbf7fd541113817b17dead9eb010fe0ae1d531",
+      "sha256": "d01cf010925aae49a11423d348fc706afb483c5b300aeb80f995ade5912ad1cf",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 66
+        "accepted": 67
       },
       "title": "Wiring Matrix (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 11,
         "generated_artifact_residual": 1,
-        "integration_contract": 8,
+        "integration_contract": 9,
         "production_wiring": 3,
         "requirement": 34,
         "validation_rule": 1,
@@ -20673,7 +20684,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-10T00:20:18Z",
+  "generated_at_utc": "2026-10-10T01:36:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20682,12 +20693,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3560,
-      "True": 3441
+      "True": 3446
     },
-    "plan_unit_count": 7001,
+    "plan_unit_count": 7006,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6809,
+      "accepted": 6814,
       "retired": 182,
       "superseded": 10
     },
@@ -20706,7 +20717,7 @@
       "capability_matrix": 1,
       "command_binding": 20,
       "command_catalog": 3,
-      "command_contract": 49,
+      "command_contract": 51,
       "command_disposition": 2,
       "command_registration": 1,
       "command_registry": 4,
@@ -20720,7 +20731,7 @@
       "contract": 5,
       "contract_requirement": 2,
       "data_contract": 8,
-      "decision": 82,
+      "decision": 83,
       "deferred_enhancement": 8,
       "delta_contract": 1,
       "derived_control_policy": 1,
@@ -20734,7 +20745,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 93,
+      "integration_contract": 94,
       "interaction_contract": 6,
       "invariant": 14,
       "migration_contract": 2,
@@ -20786,7 +20797,7 @@
       "variant_contract": 2,
       "wiring_contract": 8,
       "wiring_disposition": 1,
-      "wiring_rule": 3
+      "wiring_rule": 4
     }
   }
 }
