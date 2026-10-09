@@ -238,14 +238,63 @@
     lastLine = text; lastAt = now;
     const ms = readMs(text);
     podUntil = now + ms;
-    /* placed at the start of the next frame, when the screen's style and layout are already computed */
+    /* placed at the start of the next frame, when the screen's style and layout are already computed; in the narrow
+       window the lane is chosen in the read phase first (paneLane) and the line is placed a frame later */
     const t = token, f = ++podFrame;
+    const live = () => t === token && f === podFrame && shown() && painted();
     M.real.raf(() => {
       const st = stageEl();
-      if (t !== token || f !== podFrame || !shown() || !painted() || !st) return;
-      F.pod.say(text, { stage: st, lane: o.lane || null, lead: o.lead, ms, announce: !!o.announce });
+      if (!live() || !st) return;
+      const speak = (box) => F.pod.say(text, { stage: box || st, lane: box ? 'lip' : o.lane || null, lead: o.lead, ms, announce: !!o.announce });
+      const r = rootEl();
+      if (!r || r.getAttribute('data-o55-layout') !== 'narrow' || !F.measure || !F.pod.lanes) { speak(null); return; }
+      F.measure(() => { const gap = paneLane(F, st, text, o); return () => { if (live() && st.isConnected) speak(gap && laneBox(gap)); }; });
     });
     return true;
+  }
+  /* The narrow window's pane-top lane (final re-film N3). On the 170 px band a line that wraps to two lines crosses
+     the standing heads and strings in both of the stage's lanes, and the strip stood back at 22 %, where nobody could
+     read it (the first line after the cold open). Such a line is spoken instead in the top of the pane, in the empty
+     gap between the band's foot and the screen's title rule, where it covers no actor, card or kicker: O55.nierFx
+     places it there as in a stage's lip lane, in an unseen box over that gap (.o55nw-podlane, 11-window-nier.css).
+     A line the stage has a clear place for keeps it, so every other line is where it was. paneLane only reads (the
+     read phase): the stage's lanes for this line's strip, the band's foot and the rule's top; laneBox writes. */
+  const zoom = () => { const z = document.body && Number.parseFloat(document.body.style.zoom); return Number.isFinite(z) && z > 0 ? z : 1; };
+  const LEAD = /^(report|proposal|alert|query|analysis)\s*:\s*/i;
+  let podLane = null, podPen = null, podFont = '', podFontKey = '';
+  /* the compact strip's size for these words, as 05-nier-fx.css lays it out (12 px body font, line height 1.4, a
+     bold lead, 10 px sides and 9 px of padding inside a 1 px border, beside the 24 x 31 px compact Pod, 8 px apart)
+     at its widest cw, measured on a canvas (no layout); the wrap is taken a little early, so a line near the edge
+     counts as two */
+  function stripSize(text, o, cw) {
+    const key = O55.theme().slug;
+    if (podFontKey !== key) { podFontKey = key; podFont = getComputedStyle(rootEl()).getPropertyValue('--body-font').trim() || 'sans-serif'; }
+    if (!podPen) podPen = document.createElement('canvas').getContext('2d');
+    const P = podPen, m = LEAD.exec(text), lead = String(o.lead || (m ? m[1] : 'report')).replace(/:$/, '').toLowerCase();
+    const words = m ? text.slice(m[0].length) : text;
+    if ('letterSpacing' in P) P.letterSpacing = '0.24px';
+    P.font = `500 12px ${podFont}`;
+    let w = P.measureText(words).width;
+    if (has('voice')) { P.font = `700 12px ${podFont}`; w += P.measureText(O55.t('nierFx.pod.leads.' + lead) || '').width + 5; }
+    const room = cw - 22, lines = w <= room * 0.96 ? 1 : Math.ceil(w / (room * 0.92));
+    return { w: (lines > 1 ? cw : Math.min(cw, Math.ceil(w) + 22)) + 32, h: Math.max(32, Math.ceil(11 + 16.8 * lines)) };
+  }
+  function paneLane(F, st, text, o) {
+    const lay = layerNow(), first = lay && lay.querySelector('.o55-content > *');
+    if (!first) return null;
+    const z = zoom(), S = st.getBoundingClientRect(), cw = Math.max(220, Math.round(S.width / z - 96));
+    const size = stripSize(text, o, cw), there = F.pod.lanes(st, { w: size.w, h: size.h, lane: o.lane || null });
+    if (!there || there.pick.clear) return null;
+    /* the gap from the band's foot (the pane's top) to the first words of the screen; room for the strip with 10 px
+       or more above and below it, or the stage it is */
+    const pane = lay.parentElement, top = pane.getBoundingClientRect().top, gap = Math.floor((first.getBoundingClientRect().top - top) / z);
+    return gap - size.h >= 20 ? { pane, gap } : null;
+  }
+  function laneBox(at) {
+    if (!podLane) { podLane = document.createElement('i'); podLane.className = 'o55nw-podlane'; podLane.setAttribute('aria-hidden', 'true'); }
+    if (podLane.parentNode !== at.pane) at.pane.appendChild(podLane);
+    podLane.style.height = at.gap + 'px';
+    return podLane;
   }
   function podScreen(def, o) {
     const R = runState(), s = O55.S, id = def.id;

@@ -71,6 +71,9 @@ html[data-o55-open] #o55np-reticle[data-o55nw-hide] { visibility: hidden !import
    66-nier-window.js say()), at most 260 px wide; on the narrow window's short band O55.nierFx draws it compact itself
    (data-compact: one or two lines, a smaller Pod), so nothing here scales it again. */
 #pm-o55-onboarding > .o55fx-layer .o55fx-pod-strip { max-width: 260px; }
+/* the narrow window's pane-top lane: an unseen box over the gap between the band's foot and the screen's title rule,
+   for a line the band has no clear place for (say(), its height written there) */
+.o55nw-podlane { position: absolute; left: 0; top: 0; width: 100%; height: 0; visibility: hidden; pointer-events: none; contain: strict; }
 
 /* ---- the stepped screen change: one cut, never a flash ----
    The old screen leaves in a two-step fade (one way), and the new one's blocks step in one way (unseen, a faint step,
