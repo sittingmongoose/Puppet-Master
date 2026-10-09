@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L3542
+Source lines: L13-L3572
 
-Source SHA256: `38d55fb5a0b66f1a663a18966c668afbd01a4b5dfdc6ab57c396d24b2208f4bc`
+Source SHA256: `e3e1f6cdc3809097c19b5ec97085a7e01711b098e38a03b1629681ba2fa1240b`
 
 ---
 
@@ -3538,3 +3538,33 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-601, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md`, SHA-256 `4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED-SCREENSHOT-retro-light.png`, SHA-256 `e668fe203ee8aeeb9c9ed1e8aa2f263f525188ce14d4a837958074aace4b839b` (his screenshot).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/DRY_Rules.md#DR-047
+
+### DL-159: The chat opens in the look you chose, from its first frame
+
+**Question:** What should the assistant chat show in its first moments, before it has drawn itself?
+
+**Why it came up:** The 5.6 Pro chat concept opened on the browser's own dark grey and switched to the look a person had chosen only when the chat first drew itself, 1.3 to 1.7 seconds in. For a Light theme the whole window went from dark to light; for NieR Mode the dark grey came before the parchment or ink and the boot log. PMConcept7 had just fixed the same thing for its own page (its boot paint, F3-468, DL-153), and Jared approved doing the same for the chat on 2026-10-09.
+
+**What you get:**
+- The chat opens in the look you chose from its very first frame, in all ten themes, NieR Mode with any parts, and with reduced motion on. With nothing chosen yet it opens in Basic Dark.
+- No flash: nothing large changes colour while the chat draws itself.
+- Nothing new is stored. The first frame reads the chat's own saved look and changes nothing; the chat and NieR Mode still own the look.
+- NieR Mode's boot log plays as before, only when the chat opens in NieR Mode with Boot sequence installed and motion allowed, and the chat never shows before it. The reboot moment still plays only when you turn NieR Mode on or off, never on a reload.
+- The pinned history drawer stays in place from the first frame.
+
+**What it costs:**
+- The chat's page carries a small reader of its own for now. When the chat is ported into PMConcept7, PMConcept7's boot paint takes over and the chat's reader is removed.
+
+**Options considered:** None were offered; the request named PMConcept7's pattern. Painting only a background colour first was not chosen: the attributes the chat already uses paint every family's ground, NieR Mode's included, with no colour table to keep in step.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, relayed by the round's orchestrator thread: the chat should paint the viewer's stored look before its first frame, as PMConcept7 does, reading its own store and never writing it.
+
+**What the spec now says:**
+1. **The chat's first paint** (`Plans/FinalGUISpec.md#F3-612`), applying the boot paint of `Plans/FinalGUISpec.md#F3-468` to the chat's own page.
+2. **One first-paint reader per page** (`Plans/DRY_Rules.md#DR-054`): the reader reads the look owner's store and never writes it, and the chat's reader is dropped when the chat becomes part of PMConcept7's page.
+3. **Unchanged:** the look's owners, NieR Mode's contract and the chat under NieR Mode (`Plans/FinalGUISpec.md#F3-589`). No command, action id, setting, settings key or wiring entry is added, changed or removed, so `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, `Plans/UI_Wiring_Rules.md` and both Wiring Matrix files are untouched.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md`, SHA-256 `8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be` (the owner request as relayed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md`, SHA-256 `edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7` (frame 1 before and after, per stored look).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-612, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/DRY_Rules.md#DR-054
