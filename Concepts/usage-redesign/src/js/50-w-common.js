@@ -709,9 +709,10 @@
   } catch (error) {}
   /* an embedded face that landed after the board measured in its fallback (30-charts-core.js faceReady; item 9): the
      wrap memo forgets every count, and each body re-renders at its size in place (no entrance, no count roll), so its
-     rows, short names and line counts are chosen again in the real face; the fit pass follows the render. Never inside
+     rows, short names and line counts are chosen again in the real face; the fit pass follows each render. In slices of
+     about 6 ms a frame, the cards in view first (a whole board in one task was 100-250 ms on the CPU-only VM); never inside
      a moment or a gesture (it waits for their end, about 10 s at most), never on a hidden page. */
-  var refaceT = 0, refaceTries = 0;
+  var refaceT = 0, refaceTries = 0, refaceQ = null;
   function reface() {
     refaceT = 0;
     var panel = document.getElementById('panel-usage');
@@ -719,11 +720,21 @@
     var busy = (PMU.film && PMU.film.moment && PMU.film.moment()) || (PMU.board && PMU.board.gesture && PMU.board.gesture());
     if (busy && ++refaceTries < 40) { refaceT = setTimeout(reface, 250); return; }
     refaceTries = 0;
-    Array.prototype.forEach.call(document.querySelectorAll('#pmuBoard > .pmu-card'), function (card) {
-      var body = card.querySelector(':scope > .pmu-cardbody'), tier = body && body._pmuCtx && body._pmuCtx.tier;
-      if (!tier || !body._pmuKind || card._pmuLeaving || card.hasAttribute('data-leaving')) return;
-      try { PMU.cards.resizeBody(card, tier); } catch (error) { console.error('[pm-usage] reface', error); }
-    });
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card')), inV = PMU.board && PMU.board.inView;
+    if (inV) cards = cards.filter(function (c) { return inV(c); }).concat(cards.filter(function (c) { return !inV(c); }));
+    var q = refaceQ = { list: cards };
+    (function slice() {
+      if (refaceQ !== q) return;
+      var t0 = performance.now(), run = function () {
+        while (q.list.length && performance.now() - t0 < 6) {
+          var card = q.list.shift(), body = card.isConnected && card.querySelector(':scope > .pmu-cardbody'), tier = body && body._pmuCtx && body._pmuCtx.tier;
+          if (!tier || !body._pmuKind || card._pmuLeaving || card.hasAttribute('data-leaving')) continue;
+          try { PMU.cards.resizeBody(card, tier); if (PMU.charts.flush) PMU.charts.flush(); } catch (error) { console.error('[pm-usage] reface', error); }
+        }
+      };
+      if (PMU.board && PMU.board.fitSliced) PMU.board.fitSliced(run); else run();
+      if (q.list.length) requestAnimationFrame(slice); else if (refaceQ === q) refaceQ = null;
+    })();
   }
   if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(function () {
     wrapMemo = {}; wrapN = 0;
