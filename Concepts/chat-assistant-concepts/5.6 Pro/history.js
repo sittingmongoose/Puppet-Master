@@ -695,6 +695,30 @@
     requestAnimationFrame(sync);
   }
   if(document.body) setMode('closed');   // history.css is inert until this exists
+  /* A stored pin is applied now, before app.js's first render, not only in boot(): boot() runs at DOMContentLoaded,
+     after that render, so .assistant-grid was first styled unpinned and its 200px gutter then slid in through the
+     padding-left transition. A frame painted the composer under the drawer, and the boot stall that follows held it
+     there for about two seconds (2026-10-09). boot() still confirms or corrects this from the app's state; the
+     stored width goes on with it, clamped by history.css until boot() clamps it in JS. */
+  (function earlyPin(){
+    if(!document.body) return;
+    var saved = store(null), pin = saved === '1';
+    if(saved == null){
+      /* first run: boot() inherits the app's default historyMode ('pinned', unless saved prefs say otherwise) and
+         drops it under app.js's isNarrow() width */
+      var hm = 'pinned';
+      try{ hm = JSON.parse(window.localStorage.getItem('pm56-prefs') || '{}').historyMode || 'pinned'; }catch(e){}
+      pin = hm === 'pinned' && window.innerWidth >= 821;
+    }
+    if(!pin) return;
+    var w = parseFloat(storeW(null));
+    if(isFinite(w) && w > 0) document.documentElement.style.setProperty('--ph-user-w', Math.round(w) + 'px');
+    setMode('pinned');
+  })();
+  /* ...and boot() itself runs from app.js's first render, in the afterRender hook that fires after the patch and
+     before that frame is painted: the app's default historyMode 'pinned' (the in-grid column) is folded into the
+     pinned drawer before anything is drawn, so the composer's first painted place is its final one. */
+  EXT.slot('afterRender', function(c, info){ if(!api && info && info.phase === 'app') boot(); });
   document.addEventListener('DOMContentLoaded', boot);
   setTimeout(boot, 0);
 
