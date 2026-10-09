@@ -1419,8 +1419,22 @@
       var tmpl = cols.map(function (c) { return c.w || 'minmax(0,1fr)'; }).join(' ');
       var toolbar = '';
       if (m.toolbar) {
+        /* (lane c-presets) the filters that fit beside the search (90 px at least), the count and the export, in order: a
+           400 px board gave the toolbar 372 px and its two filters ran the count 38 px past the card. Canvas measure;
+           Retro and NieR faces run about 15 % wider. */
+        var countTxt = rows.length ? (pageStarts[page] + 1) + '-' + (pageStarts[page] + shown.length) + ' of ' + rows.length : '0 of 0';
+        var thm = document.documentElement.getAttribute('data-theme') || '', kW = document.documentElement.getAttribute('data-o55-nier') === 'on' || /^retro/.test(thm) ? 1.18 : 1.06;
+        var twT = function (str, px, wt) { return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(str, px, false, wt) : str.length * px * 0.6) * kW; };
+        var roomT = ctx.tier.bw - (m.toolbar.search != null ? 98 : 0) - twT(countTxt, 12, 400) - 8 - (m.toolbar.export ? 36 : 0), fitsF = true;
+        var shownF = filters.filter(function (f) {
+          if (!fitsF || !C.w(ctx, 'm')) return false;
+          var v = C.view(id, 'f-' + f.key, 'all'), o = f.options.filter(function (x) { return x.value === v; })[0];
+          var need = twT(f.label + ' ', 12.5, 400) + twT(o ? o.label : 'All', 12.5, 600) + 16 + 4 + 12 + 2 + 8;
+          if (need > roomT) { fitsF = false; return false; }
+          roomT -= need; return true;
+        });
         toolbar = '<div class="pmu-ttools">' + (m.toolbar.search != null ? '<label class="pmu-tsearch">' + C.glyph('search') + '<input type="text" data-pmu-tsearch value="' + esc(C.view(id, 'q', '')) + '" placeholder="' + esc(m.toolbar.search || 'Search') + '" aria-label="' + esc(m.toolbar.search || 'Search') + '"></label>' : '') +
-          filters.filter(function () { return C.w(ctx, 'm'); }).map(function (f) {
+          shownF.map(function (f) {
             var v = C.view(id, 'f-' + f.key, 'all'), o = f.options.filter(function (x) { return x.value === v; })[0];
             return '<button type="button" class="pmu-tfilter" data-pmu-act="tfilter" data-key="' + esc(f.key) + '" aria-haspopup="menu">' + esc(f.label) + ' <b>' + esc(o ? o.label : 'All') + '</b>' + C.glyph('chevronDown') + '</button>';
           }).join('') + '<span class="pmu-tcount">' + (rows.length ? esc((pageStarts[page] + 1) + '-' + (pageStarts[page] + shown.length) + ' of ' + rows.length) : '0 of 0') + '</span>' +

@@ -88,16 +88,15 @@ KINDS = {
         P('expanded', 'Expanded', 12, 14, 'Every account, window and fact', fit='all')]),
     'provider': (3, None, 3, 24, [
         P('compact', 'Compact', 6, 7, 'The active account', fit=1),
-        P('standard', 'Standard', 10, 12, 'Every account and its binding window', fit='all'),
-        P('expanded', 'Expanded', (12, 16, 16, 16), 12, 'Every account, window and action', fit='all')]),
-    'switch': (4, None, 3, 14, [
+        P('standard', 'Standard', 12, 14, 'Every account, window and action', fit='all'),
+        P('expanded', 'Expanded', 16, 12, 'Every account with room for its words', fit='all', frm='M')]),
+    'switch': (4, None, 3, 18, [
         P('strip', 'Strip', 'full', 3, 'The switch levels on one line', minpx=480),
         P('panel', 'Panel', 6, 10, 'Controls and most room, stacked', fit='all'),
         P('ladder', 'Ladder', 'full', 10, "Controls and every account's headroom", fit='all', hmin={'S': 9, 'M': 7, 'L': 7, 'XL': 7}, minpx=480)]),
     'providers': (4, None, 3, 12, [
         P('compact', 'Compact', 6, 5, 'Every provider, stacked', fit='all'),
-        P('standard', 'Standard', 10, 4, 'Every provider on one line', fit='all'),
-        P('wide', 'Wide', 'full', 3, 'Every provider, in columns', fit='all', frm='M')]),
+        P('standard', 'Standard', 10, 4, 'Every provider on one line', fit='all')]),
     'group': (6, None, 2, 2, [P('band', 'Band', 'full', 2, 'The group heading across the board')]),
     'setup': (4, 16, 3, 18, [
         P('compact', 'Compact', 6, 7, 'State, Settings link and note'),
@@ -122,10 +121,10 @@ KINDS = {
     'heat': (6, None, 5, 14, [
         P('standard', 'Standard', 8, 10, 'Every hour of the week'),
         P('wide', 'Wide', WIDE(), 11, 'Adds hour labels and Tokens / Cost')]),
-    'agenda': (6, None, 4, 30, [
+    'agenda': (6, None, 4, 40, [
         P('compact', 'Compact', (6, 6, 6, 6), 10, 'The next four resets', fit=4),
         P('standard', 'Standard', 8, 16, 'The next eight resets', fit=8),
-        P('wide', 'Wide', 'full', 14, 'Every reset, a column per day', fit='all')]),
+        P('wide', 'Wide', 'full', 14, 'Every reset in its horizon', fit='all')]),
     'qhist': (6, None, 5, 40, [
         P('compact', 'Compact', 8, 10, 'The first four accounts', fit=4),
         P('standard', 'Standard', 12, 30, "Every account's main window", fit='all'),

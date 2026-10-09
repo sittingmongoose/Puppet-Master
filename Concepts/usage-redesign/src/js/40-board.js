@@ -257,7 +257,7 @@
     var have = {}; kept.forEach(function (r) { have[r.id] = true; });
     var extra = Object.keys(withAccounts).filter(function (id) { return !have[id]; }).map(function (id) {
       /* the provider presets' widths (lane c-presets): Standard for a group, Compact for one account */
-      var many = withAccounts[id].accounts.length > 1; return { id: id, w: Math.min(many ? 10 : 6, cls.tracks), h: many ? 12 : 7 };
+      var many = withAccounts[id].accounts.length > 1; return { id: id, w: Math.min(many ? 12 : 6, cls.tracks), h: many ? 14 : 7 };
     });
     if (!extra.length) return kept;
     return kept.concat(firstFitInto(kept, extra, cls.tracks));
