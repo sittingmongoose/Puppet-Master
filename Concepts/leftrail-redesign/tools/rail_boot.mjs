@@ -1,6 +1,9 @@
-/* Rail acceptance check: boots LeftRailPMConcept7.html over file:// (?o55=off) in GPU Chrome on the VM (one
- * agent-browser headless session per boot, driven through playwright-core connectOverCDP), and for each concept
- * checks the redesigned panels by real clicks against the reference page (PMConcept7.html):
+/* Rail acceptance check: boots LeftRailPMConcept7.html (or, with --page, the published PMConcept7.html, whose rail is
+ * concept D) over file:// (?o55=off) in GPU Chrome on the VM (one agent-browser headless session per boot, driven
+ * through playwright-core connectOverCDP), and for each concept checks the panels by real clicks against the reference
+ * page: the shell's own rail, by default the review copy opened with ?rail=current (D never mounts there; since
+ * 2026-10-09 PMConcept7.html carries D, so it is no reference). --page and --ref take a file, optionally with a query
+ * (`--ref 'rail.html?rail=current'`); ?o55=off is always added. Checks:
  *   - no new console errors; the concept view replaces the original panel when its icon is clicked. A skin concept
  *     (registered with skin: true, today d "Polish"; 'current' is checked the same way) keeps the shell's own panels
  *     instead: the original panel must stay visible and its reach is read straight off it, not crawled;
@@ -13,11 +16,14 @@
  *     .pm6-tb-menu-trigger of the panel must sprout a chat-style .pmr-menu, never the shell's .pm6-tb-menu, and no
  *     <select> may be visible inside the panel ('current' reports only); reduced motion leaves nothing animating;
  *   - every theme family x light/dark, and NieR Mode light/dark: view visible, no overflow at 280, type floor, pills.
- *   - --restore: boots Current, snapshots the rail's nine panels and the activity bar (normalised as the kit's
+ *   - --restore: switches to Current (PMR.concepts.set('current'), so it runs on the published page too, which boots
+ *     into D and has no ?rail=), snapshots the rail's nine panels and the activity bar (normalised as the kit's
  *     t-restore.mjs does), uses D (every panel, every tab, two expanders and a menu per panel, the Git/Jujutsu engine
- *     switch both ways), goes back to Current, snapshots again and fails on any difference, per panel and theme.
+ *     switch both ways), goes back to Current, snapshots again and fails on any difference, per panel and theme. The
+ *     first snapshot is also compared with the reference's own rail in the same theme (baseline): the page may have
+ *     mounted D at boot, and Current after that must be the rail D never touched.
  *
- *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P] [--ref R] [--concepts a,b,c,d|none]
+ *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P[?query]] [--ref R[?query]] [--concepts a,b,c,d|none]
  *        [--panels files,source,docker] [--themes all|basic-dark,...] [--quick] [--shots] [--restore]
  * Skin concepts (d, current) are checked on all nine rail panels, the view concepts (a, b, c) on their three
  * (files, source, docker); --panels overrides both. Writes <out-dir>/rail-boot.json (summary.gpu names the WebGL
@@ -39,8 +45,11 @@ const argv = process.argv.slice(2);
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true) : d; };
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/rail-boot');
 mkdirSync(out, { recursive: true });
-const PAGE = resolve(opt('page', join(concepts, 'LeftRailPMConcept7.html')));
-const REF = resolve(opt('ref', join(concepts, 'PMConcept7.html')));
+/* a page to boot: a file and an optional query (after the first '?'), e.g. 'rail.html?rail=current' */
+const target = (s) => { s = String(s); const i = s.indexOf('?'); return i < 0 ? { file: resolve(s), query: '' } : { file: resolve(s.slice(0, i)), query: s.slice(i + 1) }; };
+const shown = (t) => t.file + (t.query ? '?' + t.query : '');
+const PAGE = target(opt('page', join(concepts, 'LeftRailPMConcept7.html')));
+const REF = target(opt('ref', join(concepts, 'LeftRailPMConcept7.html') + '?rail=current'));
 const ALL_THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 const themesOpt = opt('themes', 'all');
 const THEMES = themesOpt === 'all' ? ALL_THEMES : String(themesOpt).split(',');
@@ -298,7 +307,10 @@ const PAGE_LIB = () => {
       await L.open(p);
       const root = document.getElementById('panel-' + p);
       await L.walkTabs(root);
-      for (const h of [...root.querySelectorAll('.sh-shelf[data-acc] > .sh-head')].filter(L.visible).slice(0, 2)) { h.click(); await L.sleep(220); }
+      /* each expander is toggled and toggled back: a shelf left the other way round changes the shell's own derived
+         state (Files' Collapse all / Expand all icon follows "any shelf open" of the visible pane, refreshed on its own
+         schedule), which the snapshot keeps and which is no trace of D */
+      for (const h of [...root.querySelectorAll('.sh-shelf[data-acc] > .sh-head')].filter(L.visible).slice(0, 2)) { h.click(); await L.sleep(220); h.click(); await L.sleep(220); }
       const trig = [...root.querySelectorAll('.pm6-tb-menu-trigger')].filter(L.visible)[0];
       if (trig) { trig.click(); await L.sleep(300); window.PMR.menu.closeAll(); await L.sleep(200); }
     }
@@ -310,7 +322,7 @@ const PAGE_LIB = () => {
   };
 };
 
-async function bootPage(file, { width = 1600, height = 1000 } = {}) {
+async function bootPage(tgt, { width = 1600, height = 1000 } = {}) {
   const started = JSON.parse(execFileSync('agent-browser', ['start', '--url', 'about:blank'], { encoding: 'utf8', timeout: 120000 }));
   openSessions.add(started.id);
   let browser = null;
@@ -329,7 +341,7 @@ async function bootPage(file, { width = 1600, height = 1000 } = {}) {
     page.on('console', (m) => { if (m.type() === 'error') b.errors.push('CONSOLE ' + m.text().slice(0, 300)); });
     const cdp = await ctx.newCDPSession(page);
     await cdp.send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: false });
-    await page.goto(pathToFileURL(file).href + '?o55=off', { waitUntil: 'load', timeout: 60000 });
+    await page.goto(pathToFileURL(tgt.file).href + '?o55=off' + (tgt.query ? '&' + tgt.query : ''), { waitUntil: 'load', timeout: 60000 });
     b.gpu = await page.evaluate(GPU_PROBE);
     if (GPU === null) GPU = b.gpu;
     if (SOFT_GPU.test(String(b.gpu))) throw new NoGpu(b.gpu);
@@ -492,23 +504,50 @@ function shortDiff(a, b) {
   const clip = (s) => (s === undefined ? '(end)' : s.replace(/\s+/g, ' ').slice(0, 160));
   return { lines: count, at: first, before: clip(A.slice(first, first + 2).join('')), after: clip(B.slice(first, first + 2).join('')) };
 }
+/* --restore baseline: the reference's own rail (Current, D never mounted when the reference is the review copy at
+   ?rail=current) in one theme, walked and snapshotted exactly as the page's first snapshot is */
+async function refRailSnapshot(t) {
+  const b = await bootPage(REF);
+  try {
+    return await b.page.evaluate(async ([slug, nier, panels, ids]) => {
+      const L = window.__railCheck;
+      for (let i = 0; i < 60 && window.PMR && !document.documentElement.hasAttribute('data-pmr-ready'); i++) await L.sleep(100);
+      const booted = window.PMR && window.PMR.concepts ? window.PMR.concepts.current() : null;
+      if (booted && booted !== 'current') { window.PMR.concepts.set('current'); await L.sleep(800); }
+      L.skin = true;
+      await L.theme(slug, nier);
+      await L.walkAll(panels);
+      return { booted, snap: L.snapAll(ids) };
+    }, [t.slug, t.nier, ALL_PANELS, RESTORE_IDS]);
+  } finally { await b.close(); }
+}
 async function restoreCheck() {
-  const res = { themes: {}, errors: [] };
+  const res = { themes: {}, errors: [], baseline: null };
+  const runs = (QUICK ? ['basic-dark'] : THEMES).map((t) => ({ slug: t, nier: false })).concat(QUICK ? [] : [{ slug: 'basic-dark', nier: true }]);
+  let base = null;
+  try { base = await refRailSnapshot(runs[0]); } catch (e) { res.baseline = { fatal: String(e && e.stack || e).slice(0, 600) }; }
   const b = await bootPage(PAGE);
   const page = b.page;
   try {
-    await page.evaluate(async () => {
+    res.booted = await page.evaluate(async () => {
       const L = window.__railCheck;
       for (let i = 0; i < 60 && !document.documentElement.hasAttribute('data-pmr-ready'); i++) await L.sleep(100);
+      const booted = window.PMR.concepts.current();
       window.PMR.concepts.set('current'); await L.sleep(800); L.skin = true;
+      return booted;
     });
     const walkEveryPanel = () => page.evaluate((ids) => window.__railCheck.walkAll(ids), ALL_PANELS);
-    const runs = (QUICK ? ['basic-dark'] : THEMES).map((t) => ({ slug: t, nier: false })).concat(QUICK ? [] : [{ slug: 'basic-dark', nier: true }]);
     for (const t of runs) {
       const key = t.slug + (t.nier ? '+nier' : '');
       await page.evaluate(([s, n]) => window.__railCheck.theme(s, n), [t.slug, t.nier]);
       await walkEveryPanel();
       const before = await page.evaluate((ids) => window.__railCheck.snapAll(ids), RESTORE_IDS);
+      if (base && t === runs[0]) {
+        const diffs = {};
+        for (const k of Object.keys(RESTORE_IDS)) { if (base.snap[k] !== before[k]) diffs[k] = shortDiff(base.snap[k], before[k]); }
+        res.baseline = { key, refBooted: base.booted, pageBooted: res.booted, diffs };
+        console.log(`restore baseline ${key} (page booted ${res.booted}, reference booted ${base.booted}): ${Object.keys(diffs).length ? 'DIFF in ' + Object.keys(diffs).join(', ') : 'identical to the reference rail (' + Object.keys(RESTORE_IDS).length + ' elements)'}`);
+      }
       const skinBefore = await page.evaluate(() => document.documentElement.getAttribute('data-rail-skin'));
       await page.evaluate(async () => { window.PMR.concepts.set('d'); await window.__railCheck.sleep(800); });
       const used = await page.evaluate((ids) => window.__railCheck.useRail(ids), ALL_PANELS);
@@ -574,6 +613,8 @@ try {
     if (rest.fatal) fails.push(`restore: fatal ${rest.fatal.split('\n')[0]}`);
     const newErr = rest.errors.filter((e) => !ref.errors.includes(e));
     if (newErr.length) fails.push(`restore: ${newErr.length} new console errors: ${newErr.slice(0, 3).join(' || ')}`);
+    if (!rest.baseline || rest.baseline.fatal) fails.push(`restore: no baseline from the reference (${rest.baseline ? rest.baseline.fatal.split('\n')[0] : 'not taken'})`);
+    else for (const [k, d] of Object.entries(rest.baseline.diffs)) fails.push(`restore/baseline/${k}@${rest.baseline.key}: Current after the boot differs from the reference's own rail (${d.lines} positions, first at ${d.at}: ${d.before} vs ${d.after})`);
     for (const [key, t] of Object.entries(rest.themes)) {
       for (const [k, d] of Object.entries(t.diffs)) fails.push(`restore/${k}@${key}: differs after D -> Current (${d.lines} positions, first at ${d.at}: ${d.before} vs ${d.after})`);
       if (t.skin.after !== t.skin.before) fails.push(`restore@${key}: data-rail-skin ${t.skin.before} -> ${t.skin.after} after going back to Current`);
@@ -584,8 +625,9 @@ try {
   if (e instanceof NoGpu) fails.push(e.message);
   else throw e;
 }
-const summary = { page: PAGE, ref: REF, gpu: GPU, refErrors: ref.errors.length, refPairs: Object.fromEntries(Object.entries(ref.pairs).map(([k, v]) => [k, v.length])), concepts: results.map((r) => ({ concept: r.concept, skin: r.skin, gpu: r.gpu, errors: r.errors.length, reach: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.reach ? `${x.reach.reached} seen, ${x.reach.missingCount} missing` : 'skipped'])), type: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.type && x.type.min])) })), fails };
+const summary = { page: shown(PAGE), ref: shown(REF), gpu: GPU, refErrors: ref.errors.length, refPairs: Object.fromEntries(Object.entries(ref.pairs).map(([k, v]) => [k, v.length])), concepts: results.map((r) => ({ concept: r.concept, skin: r.skin, gpu: r.gpu, errors: r.errors.length, reach: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.reach ? `${x.reach.reached} seen, ${x.reach.missingCount} missing` : 'skipped'])), type: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.type && x.type.min])) })), fails };
 if (rest) summary.restore = Object.fromEntries(Object.entries(rest.themes).map(([k, t]) => [k, { used: t.used, differing: Object.keys(t.diffs) }]));
+if (rest) summary.restoreBaseline = rest.baseline && !rest.baseline.fatal ? { theme: rest.baseline.key, pageBooted: rest.baseline.pageBooted, refBooted: rest.baseline.refBooted, differing: Object.keys(rest.baseline.diffs) } : rest.baseline;
 writeFileSync(join(out, 'rail-boot.json'), JSON.stringify({ summary, results, restore: rest }, null, 2));
 console.log(JSON.stringify(summary, null, 1));
 console.log(fails.length ? `rail boot: ${fails.length} failing checks` : 'rail boot: ok');

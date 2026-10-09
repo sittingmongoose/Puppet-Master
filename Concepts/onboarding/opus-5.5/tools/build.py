@@ -583,6 +583,15 @@ LAYOUT_EXPOSE = ('    o55RestoreSnapshot: function (snapshot) { var problem = va
 SETTINGS_NOTES: dict = {}
 
 
+def _rail():
+    """The left rail layer (Concepts/leftrail-redesign/tools/rail_layer.py), imported when first needed."""
+    rail_tools = str(CONCEPTS / 'leftrail-redesign' / 'tools')
+    if rail_tools not in sys.path:
+        sys.path.insert(0, rail_tools)
+    import rail_layer  # noqa: E402
+    return rail_layer
+
+
 def build_text() -> str:
     original = SOURCE.read_bytes()
     need(hashlib.sha256(original).hexdigest() == BASE_SHA256,
@@ -623,13 +632,16 @@ def build_text() -> str:
                   f'window.O55_COPY={copy};\n{js}\n</script>\n<!-- O55:BODY:END -->')
     text = text.replace('<!-- O55:BODY:START -->\n<!-- O55:BODY:END -->', body_block, 1)
     text = re.sub(r'<title>.*?</title>', '<title>TestOpus5.5 · Puppet Master</title>', text, count=1, flags=re.S)
+    # 4. The left rail: concept D (Polish) from Concepts/leftrail-redesign, a skin over the shell's own rail panels
+    #    (its CSS, its script and data-rail-* on the <html> tag); the review copy with concepts A-C is build_rail.py.
+    text, SETTINGS_NOTES['rail'] = _rail().apply_published(text, need)
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')
     return note + text
 
 
 def check(built: str) -> list[str]:
-    problems = lint_sources() + syntax_check(built)
+    problems = lint_sources() + syntax_check(built) + _rail().published_problems(built)
     for removed in ['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                     'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
                     "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')"]:
@@ -682,7 +694,7 @@ def main() -> int:
             print('CHECK:', p)
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
-    problems = lint_sources() + syntax_check(built)
+    problems = lint_sources() + syntax_check(built) + _rail().published_problems(built)
     if problems:
         for p in problems:
             print('LINT:', p)
