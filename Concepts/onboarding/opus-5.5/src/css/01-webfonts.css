@@ -17,7 +17,8 @@
    Not embedded: Orbitron and Rajdhani (the :root defaults every look overrides, so no text computes to them) and
    JetBrains Mono (behind IBM Plex Mono with the same Latin coverage; its file is already here as "PM NieR Mono").
    Roboto, Segoe UI, SF Pro/SF Mono, Menlo, Consolas, Monaco, Cascadia Mono, ui-monospace and system-ui are platform
-   stacks, left to the machine on purpose. */
+   stacks, left to the machine on purpose. The symbols no face here carries (arrows, check marks, box lines and the
+   like) are PM Symbols, in 03-symbols.css. */
 
 /* Inter: SIL Open Font License 1.1 (src/fonts/OFL-Inter.txt). Variable, wght 100-900. */
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url("o55font:inter-latin-100-900-normal.woff2") format('woff2'); }

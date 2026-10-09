@@ -307,7 +307,7 @@ def lint_sources() -> list[str]:
     problems.extend(duplicate_keys())
     # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
     problems.extend(nier_palette.check())
-    problems.extend(settings_layer.shared_font_drift(SRC / 'fonts'))
+    problems.extend(settings_layer.web_font_checks(SRC))
     # The scene SVGs are drawn by nier_scene_art.py and composed into kit.d/21-nier-scenes.js by nier_scenes.py.
     if nier_scene_art.main(['--check']) != 0:
         problems.append('NieR scene SVGs are stale; run tools/nier_scene_art.py --write')

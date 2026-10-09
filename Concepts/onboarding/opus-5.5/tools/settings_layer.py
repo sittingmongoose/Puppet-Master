@@ -169,6 +169,57 @@ def shared_font_drift(font_dir: Path) -> list[str]:
     return problems
 
 
+# Text faces that carry PM Symbols (src/css/03-symbols.css). Nunito and Georgia are left out on purpose: Nunito only
+# stands behind Poppins, and Georgia sets one "i".
+SYMBOL_MIRRORED = {'Inter', 'Poppins', 'IBM Plex Mono', 'PM NieR Sans', 'PM NieR Mono'}
+
+
+def _font_faces(css: str) -> list[tuple[str, str, str, str, str]]:
+    """(family, style, weight, src, unicode-range) of every @font-face, values normalised."""
+    out = []
+    for m in re.finditer(r'@font-face\s*\{([^}]*)\}', re.sub(r'/\*.*?\*/', '', css, flags=re.S)):
+        body = m.group(1)
+
+        def get(prop: str, default: str = '') -> str:
+            v = re.search(prop + r'\s*:\s*([^;]+)', body)
+            return re.sub(r'\s+', ' ', v.group(1)).strip().strip('\'"') if v else default
+        out.append((get('font-family'), get('font-style', 'normal'), get('font-weight', '400'), get('src'),
+                    get('unicode-range')))
+    return out
+
+
+def web_font_checks(src: Path) -> list[str]:
+    """DR-050's shared 5.6 Pro faces, and PM Symbols: each symbol face repeats a text face's family, style and weight
+    exactly (a mismatch makes Chrome drop the text face), every text face of a mirrored family has its symbol face,
+    the unicode-range is exactly the drawn glyphs, and every re-stated platform stack still matches the base page."""
+    problems = shared_font_drift(src / 'fonts')
+    css_files = sorted((src / 'css').glob('*.css')) + [FORK / 'styles.css'] + sorted((FORK / 'styles.d').glob('*.css'))
+    faces = [f for p in css_files for f in _font_faces(p.read_text(encoding='utf-8'))]
+    text = {(f, s, w) for f, s, w, u, _ in faces if 'pm-symbols' not in u}
+    sym = [(f, s, w, r) for f, s, w, u, r in faces if 'pm-symbols' in u]
+    drawn = sorted(int(p.stem[1:], 16) for p in (src / 'fonts' / 'symbols' / 'svg' / 'sans' / '400').glob('u*.svg'))
+    want_range = ', '.join(f'U+{cp:04X}' for cp in drawn)
+    for f, s, w, r in sym:
+        if f not in ('PM Symbols', 'PM Symbols Mono') and (f, s, w) not in text:
+            problems.append(f'PM Symbols face {f} {s} {w} matches no text face of that family, style and weight')
+        if r != want_range:
+            problems.append(f'PM Symbols face {f} {s} {w}: unicode-range is not the drawn glyphs ({want_range})')
+    for f, s, w in sorted(text):
+        if f in SYMBOL_MIRRORED and (f, s, w) not in {(a, b, c) for a, b, c, _ in sym}:
+            problems.append(f'text face {f} {s} {w} has no PM Symbols face (src/css/03-symbols.css)')
+    base = (PKG.parents[1] / 'Onboarding concepts' / 'TestPMConcept.html').read_text(encoding='utf-8')
+    sym_css = (src / 'css' / '03-symbols.css').read_text(encoding='utf-8')
+    for sel, prop, rest in re.findall(r"^([^@{}\n]+?)\s*\{\s*(font-family|--mono-font)\s*:\s*'PM Symbols Mono',\s*([^;]+);",
+                                      sym_css, re.M):
+        if prop == '--mono-font':
+            ok = re.search(r'--mono-font:\s*' + re.escape(rest) + ';', base)
+        else:
+            ok = re.search(r'(?:^|[}\s])' + re.escape(sel.strip()) + r'\s*\{[^}]*font-family:\s*' + re.escape(rest) + ';', base)
+        if not ok:
+            problems.append(f'03-symbols.css re-states {sel.strip()} {prop}: {rest}, which the base page no longer has')
+    return problems
+
+
 def validate(merged: dict, engine: str, t50, need) -> dict:
     """The kit resolves every canonical id first-match-wins (hand-rendered, then the first override rule that names or
     globs it, then its subgroup, then its page default); a placement.d patch's rules come first, so it can re-home ids a

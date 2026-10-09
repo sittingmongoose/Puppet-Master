@@ -37,3 +37,14 @@ byte for byte. If 5.6 Pro changes its faces, decode them again into this folder 
 
 Georgia, which the base page names for the info badges' "i", is proprietary and cannot be embedded. Gelasio (by Eben
 Sorkin) is drawn to Georgia's metrics and is declared under the family name `Georgia`.
+
+## PM Symbols (`pm-symbols-sans.woff2`, `pm-symbols-mono.woff2`)
+
+The 21 symbol characters the page uses that no text face above carries (arrows, check and cross marks, triangles,
+the warning sign, dots, math signs, the command key and box-drawing lines). They were drawn for Puppet Master on
+2026-10-09 as SVG in `symbols/svg/<sans|mono>/<400|700>/uXXXX.svg`, are our own work, and carry no third-party licence.
+`tools/symbols_font.py --write` builds them into two variable fonts (wght 400-700; the mono one is 600 units wide), and
+`src/css/03-symbols.css` attaches them to every embedded text face for those characters only. The tool needs
+fontTools and brotli, which the build itself does not: `python3 -m venv v && v/bin/pip install fonttools brotli`, then
+`v/bin/python tools/symbols_font.py --write` (or `--check`, or `--preview DIR`). The SVG format is in the tool's docstring; the
+design brief the glyphs were drawn from is `tools/symbols_design.md`.
