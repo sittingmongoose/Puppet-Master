@@ -10,6 +10,9 @@
 #panel-usage .pmu-planrow.is-stack { grid-template-columns: minmax(0, 1fr); row-gap: 7px; align-items: start; padding-top: 10px; padding-bottom: 10px; }
 #panel-usage .pmu-planmeters { display: grid; column-gap: 10px; row-gap: 8px; min-width: 0; }
 #panel-usage .pmu-planrow .pmu-acccell { min-width: 0; }
+/* columns: a row reads like a table line, every cell from the top, so the window values line up across a row whose reset
+   lines wrap differently (Retro: "resets in 2h / 50m" beside "resets Nov 1" set the monthly value 7 px lower) */
+#panel-usage .pmu-planrow:not(.is-stack) { align-items: start; }
 #panel-usage .pmu-planrow .pmu-meter .pmu-meterna .pmu-vs { white-space: normal; }
 /* the meta line leads with the state word in its tone (the Active mark) and wraps rather than cut */
 #panel-usage .pmu-planrow .pmu-identmeta .pmu-acstate b { font-weight: 600; }

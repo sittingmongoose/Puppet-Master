@@ -169,17 +169,22 @@
        row estimates lean long so an account row is never cut; the facts and the foot take the room by the rows' likely
        height instead (each a little shorter), and the fit pass trims a fact or the foot that does not fit, exactly */
     var tight = 0; shown.forEach(function (a, i) { tight += hs[i] - (cols ? 4 : 8); });
-    var room = bh - bandH - tight - (folded.length ? MORE : 0) - 4, facts = (m.facts || []).slice(), footOk = m.foot && room >= 34 + 4;
-    if (footOk) room -= 34;
+    /* the foot's height from its wrapped words (one line 34 px, about 18 a line more: a 226 px plate wraps "+3 pts vs norm ·
+       provider reported" to two lines, and a one-line estimate let it run past the body) */
+    var footText = m.foot ? String(m.foot).replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ') : '';
+    var footLinesN = footText ? Math.max(1, Math.min(4, C.wrapLines(footText, Math.max(80, bw - 26), 12.5))) : 1, footH = footLinesN > 1 ? 16 + 18 * footLinesN : 34;
+    var room = bh - bandH - tight - (folded.length ? MORE : 0) - 4, facts = (m.facts || []).slice(), footOk = m.foot && room >= footH + 4;
+    if (footOk) room -= footH;
     var lay = facts.length ? C.factLayout(facts, bw) : null, fr = lay && !folded.length ? lay.fit(room) : { n: 0, used: 0 };
     var headItems = facts.slice(fr.n).map(C.factText).concat(m.foot && !footOk ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()] : []);
     C.headMore(ctx, body, headItems);
     body.innerHTML = '<div class="pmu-acc is-group pmu-planplate" data-mode="' + (cols ? 'full' : 'stack') + '"' + (folded.length || C.smallCard(ctx) || !headItems.length ? '' : C.foldHover(headItems)) + '>' + band + '<div class="pmu-accrows">' + rows + '</div>' +
       (folded.length ? C.more(folded.length, folded.length === 1 ? 'account' : 'accounts', false, foldItems) : '') + (fr.n ? lay.html(fr.n) : '') + '</div>' + (footOk ? C.foot(m.foot, m.footGlyph) : '');
-    /* the facts and the foot give way before any account row (the engine's fit pass takes [data-fit-first] lines first, the
-       last first: the foot, then the facts from the end). Without this a foot that ran 6 px past the body cost the plate
-       its last account (Copilot at 1920, Basic Dark: 1 of 2 rows); what gives way joins the head count's hover tag */
-    Array.prototype.forEach.call(body.querySelectorAll('.pmu-planplate > .pmu-facts > .pmu-fact, .pmu-cardfoot'), function (el) { el.setAttribute('data-fit-first', ''); });
+    /* the facts give way before any account row (the engine's fit pass takes [data-fit-first] lines first, the last first),
+       and the foot does where no fact shows (it names the source, so it stays while a fact can go instead). Without this
+       a foot that ran 6 px past the body cost the plate its last account (Copilot at 1920, Basic Dark: 1 of 2 rows); what
+       gives way joins the head count's hover tag */
+    Array.prototype.forEach.call(body.querySelectorAll(fr.n ? '.pmu-planplate > .pmu-facts > .pmu-fact' : '.pmu-cardfoot'), function (el) { el.setAttribute('data-fit-first', ''); });
     if (headItems.length && !folded.length) body._pmuHeadFold = true;
     shown.forEach(function (a) {
       var row = body.querySelector('.pmu-planrow[data-acct="' + a.key + '"]');
