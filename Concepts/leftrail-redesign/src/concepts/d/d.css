@@ -796,6 +796,12 @@
 [data-rail-skin="d"] #panel-source .pm7-scm-context-row > .pm7-post-state { grid-area: state; margin-top: 0; }
 
 [data-rail-skin="d"] #panel-source .sh-wt-h[data-d-stack] { grid-template-areas: "chev branch branch branch" "chev pill owner ds"; }
+/* a shelf head with a summary keeps its whole label while the summary sits beside it. 20-fit stackHeads allows 1 px of
+   overflow before it stacks, and a label that may shrink turned that 1 px into an ellipsis (Friendly, 280 px:
+   "Branches & sta…", 106.6 px of text in a 106 px box). Unshrunk, up to 1 px runs into the head's end padding and
+   anything more overflows the head, which stackHeads sees and stacks. A stacked head's label may shrink again, and a
+   label alone in its head (Graph, Current change: no summary, so never stacked) keeps shrinking. */
+[data-rail-skin="d"] #panel-source .sh-shelf > .sh-head:not([data-d-stack]) > .sh-hlabel:not(:last-child) { flex-shrink: 0; }
 
 /* both Source strips fit by one rule (15-jj.js jjStripMode, DECISION [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts)4.4): inactive tabs down to 24 px (the 15 px icon
    and 4.5 px a side), the active tab 6 px a side and 5 px before its label */
@@ -940,17 +946,26 @@
 [data-rail-skin="d"] #panel-source .d-jr > .d-jr-l1 { grid-area: l1; display: flex; align-items: flex-start; gap: 6px; min-width: 0; }
 [data-rail-skin="d"] #panel-source .d-jr > .d-jr-l2 { grid-area: l2; display: flex; align-items: flex-end; gap: 6px; min-width: 0; }
 [data-rail-skin="d"] #panel-source .d-jr > .sh-accchev { grid-area: chev; align-self: start; margin-top: 4px; }
+/* Colours on a row's text are !important: NieR's cursor rule (40-nier.css, `.pmr-cur:hover :where(*) { color: inherit
+   !important }`) would otherwise hand them the paper colour over D's faint hover fill, the same colour as the shelf.
+   Git rows keep theirs through D's !important .sh-name and .sh-meta rules; these are the Jujutsu rows' equivalents. */
 [data-rail-skin="d"] #panel-source .d-jr-l1 > .sh-nm-txt {
   flex: 1 1 auto; min-width: 0; font: var(--d-w-name) var(--d-fs-name)/var(--d-lh) var(--body-font); letter-spacing: 0;
-  color: var(--d-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: var(--d-text) !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 [data-rail-skin="d"] #panel-source .d-jr-l1 > .sh-nm-txt.sh-mono { font-family: var(--mono-font); font-size: var(--d-fs-mono); }
 [data-rail-skin="d"] #panel-source .d-jr-l1 > .sh-nm-txt.d-wrap { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-[data-rail-skin="d"] #panel-source .d-jr-l1 > .sh-nm-txt.d-jr-quiet { color: var(--d-text-3); font-style: italic; }
+[data-rail-skin="d"] #panel-source .d-jr-l1 > .sh-nm-txt.d-jr-quiet { color: var(--d-text-3) !important; font-style: italic; }
 [data-rail-skin="d"] #panel-source .d-jr-l1 > .d-jr-aside {
   flex: none; margin: 2px 0 0;
-  font: 400 var(--d-fs-small)/1.3 var(--body-font); color: var(--d-text-3); font-variant-numeric: tabular-nums; white-space: nowrap;
+  font: 400 var(--d-fs-small)/1.3 var(--body-font); font-variant-numeric: tabular-nums; white-space: nowrap;
 }
+[data-rail-skin="d"] #panel-source .d-jr-l1 > .d-jr-aside:not(.pm-gs) { color: var(--d-text-3) !important; }
+/* a workspace's diff sits on line 1 after the name, where Git's worktree rows have it */
+[data-rail-skin="d"] #panel-source .d-jr-l1 > .sh-ds { flex: none; margin: 2px 0 0 auto; }
+/* ...and goes under the name when the whole name does not fit beside it, as Git's do (20-fit stackRows) */
+[data-rail-skin="d"] #panel-source .d-jr-dstop > .d-jr-l1 { flex-wrap: wrap; row-gap: 1px; }
+[data-rail-skin="d"] #panel-source .d-jr-dstop > .d-jr-l1 > .sh-nm-txt { flex: 1 0 auto; max-width: 100%; }
 [data-rail-skin="d"] #panel-source .d-jr-l1 > .pm-gs.d-jr-aside { margin-top: 4px; font: 700 var(--d-fs-small)/1 var(--mono-font) !important; }
 [data-rail-skin="d"] #panel-source .d-gs-conflict { color: var(--d-conflict) !important; }
 [data-rail-skin="d"] #panel-source .d-jr-l2 > .sh-meta {
@@ -964,8 +979,8 @@
 [data-rail-skin="d"] #panel-source .d-jmi.d-jdir { white-space: nowrap; overflow: hidden; overflow-wrap: normal; }
 [data-rail-skin="d"] #panel-source .d-jmi::before { content: '\00B7'; display: inline-block; width: 13px; text-align: center; font: 400 var(--d-fs-meta)/1 var(--body-font); color: var(--d-text-3); }
 [data-rail-skin="d"] #panel-source .d-jr-l2 > .sh-ds { flex: none; }
-[data-rail-skin="d"] #panel-source .d-jr .d-jid { font: 500 var(--d-fs-small)/1 var(--mono-font); color: var(--d-text-2); }
-[data-rail-skin="d"] #panel-source .d-jr :is(.d-jdir, .d-jbm) { font-family: var(--mono-font); font-size: var(--d-fs-small); color: var(--d-text-2); }
+[data-rail-skin="d"] #panel-source .d-jr .d-jid { font: 500 var(--d-fs-small)/1 var(--mono-font); color: var(--d-text-2) !important; }
+[data-rail-skin="d"] #panel-source .d-jr :is(.d-jdir, .d-jbm) { font-family: var(--mono-font); font-size: var(--d-fs-small); color: var(--d-text-2) !important; }
 [data-rail-skin="d"] #panel-source .d-jst { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; font-weight: 600; }
 /* notes: inside an open row, and the always-visible one under an out-of-date workspace */
 [data-rail-skin="d"] #panel-source .d-jj-rnote { padding: 3px 0 1px; font: 400 var(--d-fs-small)/1.45 var(--body-font); color: var(--d-text-2); }
@@ -1032,6 +1047,8 @@
 [data-rail-skin="d"] #panel-source .d-jkv { display: grid; grid-template-columns: minmax(48px, max-content) minmax(0, 1fr); column-gap: 8px; row-gap: 3px; padding: 3px 0; }
 [data-rail-skin="d"] #panel-source .d-jkv > .sh-kv { grid-column: 1 / -1; grid-template-columns: subgrid !important; column-gap: 8px; padding: 0 !important; }
 [data-rail-skin="d"] #panel-source .d-jkv > .sh-kv > .sh-v { overflow-wrap: anywhere; }
+/* facts placed straight in a shelf (Bookmarks > Git) get the row inset, like the shell's .sh-body > .sh-kv */
+[data-rail-skin="d"] #panel-source .sh-shelf > .sh-body > .d-jkv { padding: 4px var(--d-pad) 2px; }
 /* Jujutsu mode puts Undo and Refresh on the status line, so the title keeps its whole row (NieR's capitals need it) */
 [data-rail-skin="d"] #panel-source[data-scm-engine="jj"] > .sh-banner { grid-template-areas: "ico title title" "ico sub acts"; }
 [data-rail-skin="d"] #panel-source[data-scm-engine="jj"] > .sh-banner > .d-jj-acts { margin: -5px -2px -5px 0; }

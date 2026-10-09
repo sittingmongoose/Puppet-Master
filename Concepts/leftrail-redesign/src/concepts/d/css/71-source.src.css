@@ -117,6 +117,12 @@
 §S .pm7-scm-context-row > .pm7-post-state { grid-area: state; margin-top: 0; }
 
 §S .sh-wt-h[data-d-stack] { grid-template-areas: "chev branch branch branch" "chev pill owner ds"; }
+/* a shelf head with a summary keeps its whole label while the summary sits beside it. 20-fit stackHeads allows 1 px of
+   overflow before it stacks, and a label that may shrink turned that 1 px into an ellipsis (Friendly, 280 px:
+   "Branches & sta…", 106.6 px of text in a 106 px box). Unshrunk, up to 1 px runs into the head's end padding and
+   anything more overflows the head, which stackHeads sees and stacks. A stacked head's label may shrink again, and a
+   label alone in its head (Graph, Current change: no summary, so never stacked) keeps shrinking. */
+§S .sh-shelf > .sh-head:not([data-d-stack]) > .sh-hlabel:not(:last-child) { flex-shrink: 0; }
 
 /* both Source strips fit by one rule (15-jj.js jjStripMode, DECISION §4.4): inactive tabs down to 24 px (the 15 px icon
    and 4.5 px a side), the active tab 6 px a side and 5 px before its label */
