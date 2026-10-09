@@ -762,7 +762,7 @@ owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Commands_System.md, Plans/UI_Comma
 The recovered PMConcept7 direct-manipulation controls use one transactional UI sequence:
 
 1. Snapshot the owner projection and acquire pointer capture or the equivalent keyboard transaction.
-2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize keeps peers frozen.
+2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks obstructed peers, Usage reorder displaces affected peers, both apply Usage board gravity so the held preview is the layout the release commits (`Plans/Widget_System.md#WS-019`), and Dashboard resize keeps peers frozen.
 3. Resolve the final pointer/keyboard coordinate and committed semantic target on release.
 4. Dispatch exactly one existing command only when the semantic result changed.
 5. Reconcile owner result/event/receipt, persist settled state once, then release capture and clear every preview class, portal, placeholder, ghost, pending animation frame, and transient listener.
@@ -776,7 +776,11 @@ actions use the existing catalog rows. Event-primary callers normalize to usage_
 PMConcept7 Ledger attempt row normalizes to usage_attempt/attempt_id without `OpenSubject` and retains
 usage_event_ref plus provider/account/runtime refs as correlation.
 Current PMConcept7 aggregate provider/account/panel cards open local inspectors with no command, receipt, event, or
-invented route kind.
+invented route kind. On the redesigned Usage Accounts room the card body and Details stay local; Use this account
+dispatches `cmd.account.select_profile` and each provider's auto-switch controls commit through the Settings
+transaction pair at scope provider (`Plans/UI_Command_Catalog.md#UCC-147`, `Plans/Settings_System.md#SSYS-044`).
+Usage Tidy is one settled layout transaction: steps 3 to 5 run once for the whole repacked room, with exactly one
+existing `cmd.widget.move` and one receipt, never one move per card; a Tidy that changes nothing follows step 6.
 
 The shared Assistant has one DOM/native component identity and one thread/context store. Shell wiring may
 re-seat that same node between its saved Home host and the right-side global host for other primary pages.
@@ -814,9 +818,12 @@ canonical_text: >-
   Concurrent resize/reorder entry is rejected before mutation; unrelated interactives, expired
   or foreign-pointer leases, cancellation, no-op, and settlement cannot leave a latent activation path.
   Usage pointer-resize preview uses the shared target-first slot projection to advance the real placeholder
-  footprint and visibly repack only occupied neighbors while retaining peer node identity, paint, DOM order,
-  and effect-spy silence. An accepted release retains the exact last-painted topology once; rollback restores
-  the snapshot. Dashboard resize retains frozen peers.
+  footprint, visibly repack occupied neighbors and apply Usage board gravity (WS-019) while retaining peer node
+  identity, paint, DOM order, and effect-spy silence. An accepted release retains the exact last-painted topology,
+  gravity included, once; rollback restores the snapshot. Dashboard resize retains frozen peers. Usage Tidy runs
+  the same commit sequence once for the whole repacked room and dispatches exactly one existing cmd.widget.move with
+  one receipt. On the Usage Accounts room the card body and Details stay local, while Use this account and the
+  provider auto-switch controls dispatch their owner commands (UCC-147).
 gui_related: true
 gui_classification_reason: The unit governs direct manipulation, cleanup, cross-page Assistant seating, and visible state continuity.
 split_recommended: false
@@ -826,6 +833,7 @@ acceptance_criteria:
   - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize peers remain frozen. Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition preserves body magnetism, neutralizes translation continuously only around measured control zones, uses no synthetic pointerdown or second controller, requires rescued pointerdown top-hit ownership by the remembered card, lets an intervening overlay receive the event while clearing that stale lease, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and clears the short pointer-specific acquisition lease on every direct/rescued activation and terminal path.
   - A changed pointer release dispatches exactly one canonical command after final-coordinate resolution, a changed keyboard reorder drop dispatches one move command for its selected insertion intent, and each supported keyboard-resize activation settles atomically through one resize command; no-change and cancel paths dispatch nothing. Event-primary Usage callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses cmd.nav.open_usage_subject with usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate cards remain local with no command, receipt, event, or route identity.
   - Commit and cancel both release capture and remove ghost, placeholder, portal, preview, animation-frame, and transient-listener state.
+  - "Usage board gravity is part of the same local preview and the same single commit: besides the obstructed peers the first criterion names, shown cards float up into holes in reading order during the held preview, the accepted release commits exactly that painted layout, and no extra command, receipt, or write follows; Usage Tidy dispatches exactly one cmd.widget.move for the whole repacked room."
   - Home preset sizing uses cmd.workspace_layout.resize_surface after preset resolution and does not register cmd.workspace_layout.size_surface.
   - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
@@ -1173,6 +1181,8 @@ The Assistant redesign adds fifty-five production-intent wiring rows under the `
 
 **View-local intents are declared, not disguised.** Three rows carry a view-local or owner-internal effect rather than a user-facing command: composer text entry updating the `ComposerBuffer`, parent To-Do expansion, and Plan view switching between Rich Text and Markdown. Each is declared explicitly as `(view-local intent)` in its wiring row. A view-local intent must not emit a domain event, must not write a `TodoTransition`, and must not be presented in the catalog as a command.
 
+The redesigned Usage page (2026-10-09) declares its view-local intents the same way. Live / Paused, in the rail head beside Usage, holds or applies arriving Usage projection updates; it is a declared view-local intent whose remembered choice is the storage-owned Usage view preference `live` (`Plans/usage-feature.md#UF-095`), and it emits no domain event and has no catalog command or production wiring row. Play the next hour, Back to now and the concept feature switches (`PMU.flags`, `?pmu-flags=`) are lab-only concept controls, excluded from canon as `Plans/assistant-chat-design.md#ACD-474` excludes the 5.6 Pro lab tools: they are not view-local intents of the product and receive no command, setting, wiring row, persisted key or test gate (`Plans/UI_Command_Catalog.md#UCC-147`).
+
 **Availability and disabled reason come from the owner.** Every row reads `state.assistant_redesign.<selector>.availability` and `state.assistant_redesign.<selector>.disabled_reason` from its semantic owner before dispatch. A surface that cannot read the owner projection renders the control disabled rather than optimistic, and it announces the exact owner reason rather than a generic one.
 
 **Negative paths are part of the wiring row.** Each row declares the specific thing it must not do — no Draft UI, no direct Plan edit, no bulk To-Do completion, no unrelated composer text on a component send, no auto-resume after a manual stop, no provider-native state read back as canonical. A wiring row whose negative path is not asserted by a test is not closed.
@@ -1191,7 +1201,7 @@ unit_type: wiring_rule
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Every Assistant redesign wiring row names one producer, one registered command ID, and one sole future target handler, reads its owner availability and exact disabled reason from the declared state selectors before dispatch, and renders disabled with command_not_registered when no registered command exists. A row carrying a view-local or owner-internal effect rather than a user-facing command is declared explicitly as a view-local intent, emits no domain event, writes no transition record, and receives no catalog command row. Each row declares its specific negative path and is not closed until a test asserts it. A row whose producer is a schedule, window, quota resume, Crew Auto, Goal continuation, or provider retry re-checks the latched user_stop_epoch immediately before dispatch and aborts with the exact failed clause when it has moved. Back Seat Driver rows produce advice records and projections only and may never be a precondition of a primary-flow row. Rows dispatching against a Plan, message snapshot, or frozen review target carry the exact version and hash, revalidate immediately before dispatch, and abort rather than rebinding.
+  Every Assistant redesign wiring row names one producer, one registered command ID, and one sole future target handler, reads its owner availability and exact disabled reason from the declared state selectors before dispatch, and renders disabled with command_not_registered when no registered command exists. A row carrying a view-local or owner-internal effect rather than a user-facing command is declared explicitly as a view-local intent, emits no domain event, writes no transition record, and receives no catalog command row. The Usage page's Live / Paused control is declared the same way: a view-local intent that holds or applies arriving Usage projection updates, remembered as the storage-owned Usage view preference live, with no domain event and no catalog or production wiring row. Its Play the next hour, Back to now and concept feature switches are lab-only concept controls, as ACD-474 excludes the 5.6 Pro lab tools, and receive no command, setting, wiring row, persisted key or test gate. Each row declares its specific negative path and is not closed until a test asserts it. A row whose producer is a schedule, window, quota resume, Crew Auto, Goal continuation, or provider retry re-checks the latched user_stop_epoch immediately before dispatch and aborts with the exact failed clause when it has moved. Back Seat Driver rows produce advice records and projections only and may never be a precondition of a primary-flow row. Rows dispatching against a Plan, message snapshot, or frozen review target carry the exact version and hash, revalidate immediately before dispatch, and abort rather than rebinding.
 gui_related: true
 gui_classification_reason: These rules govern how every Assistant control resolves availability, dispatch, and disabled state.
 depends_on: [UIW-017]
@@ -1199,6 +1209,7 @@ unblocks: []
 acceptance_criteria:
   - Every row names one command or is declared a view-local intent.
   - No page-local action, alias, fixture, timer, or toast simulates a registered command.
+  - Usage Live / Paused is declared a view-local intent, dispatches nothing, and has no catalog or production wiring row; Play the next hour, Back to now and the concept feature switches have no command, setting, wiring row, persisted key or test gate.
   - Every declared negative path has an asserting test.
   - Automatic producers re-check the stop epoch immediately before dispatch.
   - No primary-flow row depends on BSD health.
@@ -1220,12 +1231,15 @@ source_lineage:
   - pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json
   - pm-assistant-implementation-2026-09-02-recovered:05_GUI_WIRING_MATRIX.md
   - pm-assistant-implementation-2026-09-02-recovered:DRY-004
+  - Plans/Decision_Log.md#DL-167
 preserved_exact_tokens:
   - "command_not_registered"
   - "handler_unavailable"
   - "user_stop_epoch"
+  - "Live / Paused"
 negative_constraints:
   - Do not let a view-local intent emit a domain event or a transition record.
+  - Do not give the Usage Live / Paused control or the lab-only demo-hour controls a command, and do not treat a lab-only concept control as product.
   - Do not make a primary-flow row depend on Back Seat Driver.
   - Do not rebind an exact-version dispatch to a newer target.
 owner_hints:

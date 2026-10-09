@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3384-L11766
+Source lines: L3620-L12414
 
-Source SHA256: `e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c`
+Source SHA256: `7a25d0f65d27c01b3ac5f5841ac2396906752011ee1e1e4a2bd0c51c2aba57db`
 
 ---
 
@@ -8390,4 +8390,416 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-163 - The Usage Page Is Redesigned And Replaces The Old One
+
+```yaml
+plan_unit_id: DL-163
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-163 records the owner's Usage redesign request of 2026-10-01, his choices of 2026-10-02 and his approval of
+  2026-10-09. PMConcept7's Usage page is the redesigned one: the calm, polished Direction B with the Daylight Atlas
+  readability, the rail of rooms and the overall layout kept, the thirteen rooms, three disclosure levels and widget
+  board unchanged (UF-093, UF-055), no pills, coloured side bars, tinted side boxes or emoji, every chart redrawn and
+  animated, far more data on screen, every fact of the old page kept, NieR Mode fully supported and text fits measured
+  with the app's embedded fonts. The requirements are UF-107, the presentation F3-623 and the presentation grammar's
+  single owner DR-058. The concept's look is not bound by the Slint portability notes, which stay as compatibility
+  notes; the native renderer (DL-139) and every framework version pin are unchanged. On the owner's instruction the
+  review copy Concepts/UsageTestPMConcept7.html is deleted after the port lands, the one exception to the rule that
+  nothing under Concepts/ is deleted; Concepts/usage-redesign/ stays. The record states his requests in plain words,
+  without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on the Usage page's design and its replacement in PMConcept7.
+split_recommended: false
+depends_on: [UF-055, UF-092, UF-093, DL-139]
+unblocks: [UF-107, F3-623, DR-058]
+acceptance_criteria:
+  - "PMConcept7's Usage page is the redesigned page, with the thirteen rooms and three disclosure levels unchanged (UF-093)."
+  - "No fact shown by the earlier Usage page is missing from the redesigned page."
+  - "Concepts/UsageTestPMConcept7.html is the only file deleted under Concepts/ by this decision, and Concepts/usage-redesign/ remains."
+  - "No framework version pin changes through this decision."
+  - "The owner's requests are recorded in plain words, with the sources cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_redesign_drift
+reasoning_tier: high
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-usage-upgrade-handoff/HANDOFF.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+  - "Concepts/usage-redesign/ (concept lineage only; branch concept/usage-redesign-20261001)"
+preserved_exact_tokens:
+  - "DL-163"
+  - "Direction B"
+  - "Concepts/UsageTestPMConcept7.html"
+negative_constraints:
+  - "Do not delete any other file under Concepts/ on the strength of this decision."
+  - "Do not change a framework version pin through this decision."
+  - "Do not drop a fact the earlier Usage page showed."
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-164 - The Accounts Room Acts In Place Auto Switch Per Provider And Every Account Shown
+
+```yaml
+plan_unit_id: DL-164
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-164 records the owner's answer of 2026-10-01 on the Accounts room and his notes of 2026-10-09. Usage's Accounts
+  room acts in place: Use this account dispatches the existing cmd.account.select_profile as a labelled override,
+  shown only when supports_manual_set_active allows it (MA-022), and each provider with two or more accounts carries
+  its own Auto-switch toggle and switch level, which are the same bound Settings values, committed through
+  cmd.settings.transaction.preview and cmd.settings.transaction.apply with scope=provider (SSYS-044, SSYS-009,
+  SSYS-018) and never copied into Usage; an account card's body and Details stay a local inspector (UF-093, UCC-147).
+  ai.accounts.multi-account-switching, ai.accounts.hard-switch-level, ai.accounts.soft-warning-level and
+  ai.accounts.cooldown-policy gain the provider scope (F3-441); a value resolves account override, then provider,
+  then project, then global, and the global value is the default where the setting has one (MA-073). The switch follows the AI Account
+  Center's rules: two or more accounts, a notch at the provider's switch point on each of its meters, only a fresh
+  identity-bound reading decides, the target is the eligible account with the most left, the switch waits for the
+  tool to be idle, paid credit draws a warning, and a manual activation past the switch point asks first without
+  becoming consent for automatic switching. The room reads one roster with Settings, in Settings' names, order,
+  groups and windows, and Plans & limits shows one row per account (MA-049).
+gui_related: true
+gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
+split_recommended: false
+depends_on: [MA-022, MA-049, SSYS-009, SSYS-018, F3-441, UF-093, UCC-147]
+unblocks: [MA-073, SSYS-044, UF-107]
+acceptance_criteria:
+  - "Changing a provider's Auto-switch toggle or switch level on the Usage card and in Settings changes one value, committed through the Settings transaction with scope=provider."
+  - "The four auto-switch settings resolve account override, provider, project, global wherever the setting has that scope, with the global value as the default where the setting has one."
+  - "Use this account dispatches cmd.account.select_profile and appears only when supports_manual_set_active allows it."
+  - "Plans & limits lists every account of a provider, one row per account."
+  - "No command is added for the Accounts room."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: account_switch_policy_drift
+reasoning_tier: high
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/Multi-Account.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-usage-upgrade-handoff/HANDOFF.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+  - "/mnt/Cursor/AIAccountCenter/code (per-provider auto-switch reference; lineage only)"
+preserved_exact_tokens:
+  - "DL-164"
+  - "Use this account"
+  - "scope=provider"
+negative_constraints:
+  - "Do not keep a Usage-local copy of an auto-switch setting."
+  - "Do not mint a command for the Accounts room's actions."
+  - "Do not flatten a provider's accounts into one row or label."
+owner_hints:
+  - Plans/Multi-Account.md
+  - Plans/Settings_System.md
+  - Plans/usage-feature.md
+```
+
+### DL-165 - Usage Shows Pace Without Countdowns At Readable Sizes
+
+```yaml
+plan_unit_id: DL-165
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-165 records the owner's answers of 2026-10-01 on pace and density. Usage shows no countdown to running out (no
+  time-to-empty clock, runway in hours or time left before a limit); percentage headroom is allowed, pace is said in
+  one unit everywhere, points ahead of or behind the window's even pace, and month-end spend appears only as a
+  labelled estimate (UF-107; the run-out projection stays rejected, DR-038). Values and body text are 13 to 14 px,
+  chart ticks, legends and small captions at least 11 px, and rows and buttons about 28 to 32 px for a desktop
+  mouse (F3-623). Unknown never reads as zero (UF-092). The single pace unit is a planning ruling, not an owner answer.
+gui_related: true
+gui_classification_reason: Records an owner decision on how Usage states pace and on its text and control sizes.
+split_recommended: false
+depends_on: [DR-038, UF-092]
+unblocks: [UF-107, F3-623]
+acceptance_criteria:
+  - "No Usage surface shows a time until a window runs out."
+  - "Pace is shown only as points against the norm."
+  - "No Usage value or body text is below 13 px and no tick, legend or caption below 11 px."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_honesty_drift
+reasoning_tier: standard
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+preserved_exact_tokens:
+  - "DL-165"
+  - "labelled estimate"
+negative_constraints:
+  - "Do not show a countdown or runway to running out on Usage."
+  - "Do not size Usage rows for touch as the wand does."
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-166 - Narrow Usage Widgets Real Move And Resize Previews Size Presets Tidy And Gravity
+
+```yaml
+plan_unit_id: DL-166
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-166 records the owner's requests of 2026-10-01 and his notes of 2026-10-09 on Usage widgets. Widgets are much
+  narrower on a finer grid whose column count grows with the board's width, every kind has narrow widths that show
+  its facts complete (UF-094, UF-096), and horizontal resizing works from either edge and the corners at every
+  width. A move lifts the card under the pointer with a landing placeholder and peers sliding aside; a resize shows a
+  live outline of the snapped size with its name and dimensions; release settles the card and Escape glides it back
+  (WS-019). During a gesture only obstructed peers move; once it settles, cards float up into empty space keeping
+  their order, and Tidy is the explicit full repack. Gravity and Tidy each commit as one settled layout transaction
+  with one receipt, never one move command per card, and no command is added (WS-019, WM-045, UCC-147). Size presets
+  are rethought per kind: every preset shows a complete content tier and the picker previews it (WS-017); a chosen
+  preset commits through cmd.widget.resize with its preset_id (WS-020). A card's hover actions never sit behind its
+  title and always fit (F3-623, F3-514). Gravity and the single-transaction commit are planning rulings, not owner answers.
+gui_related: true
+gui_classification_reason: Records an owner decision on Usage widget widths, direct manipulation previews, size presets and repacking.
+split_recommended: false
+depends_on: [WS-017, WS-019, WS-020, UF-094, UF-096, F3-514, WM-045, UCC-147]
+unblocks: []
+acceptance_criteria:
+  - "Every widget kind has narrow widths that show its facts complete, and horizontal resize works from both edges and the corners at every board width."
+  - "Gravity after a gesture and Tidy each produce one settled layout transaction with one receipt and no per-card move commands."
+  - "Every size preset of every kind shows a complete content tier, and the picker previews it."
+  - "No new command is added for Tidy, gravity or the size picker."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: widget_layout_transaction_drift
+reasoning_tier: high
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/Widget_System.md
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-usage-upgrade-handoff/HANDOFF.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+preserved_exact_tokens:
+  - "DL-166"
+  - "Tidy"
+  - "preset_id"
+negative_constraints:
+  - "Do not commit a Tidy or gravity as one move command per card."
+  - "Do not offer a size preset that shows a partial content tier."
+  - "Do not persist preview geometry."
+owner_hints:
+  - Plans/Widget_System.md
+  - Plans/usage-feature.md
+```
+
+### DL-167 - Live Readings On By Default With A Live Paused Control And A Concept Demo Hour
+
+```yaml
+plan_unit_id: DL-167
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-167 records the owner's answers of 2026-10-02. Live readings are on by default: arriving readings change the
+  page one beat at a time with nothing moving between beats. A Live / Paused control sits in the rail head beside the
+  Usage title, the head staying one line (UF-089); Paused holds arriving updates and Live applies them, and the choice
+  is remembered as the view-only live family, kept by the storage owner, with pm7:usage:live:v1 as the concept's
+  noncanonical prototype key (UF-095). It never changes what is counted and dispatches no command (UCC-147). With Live
+  paused, nothing animates at idle. Play the next hour, Back to now and the concept's feature switches stay concept
+  demonstrations labelled as demo time; on the coordinator's recommendation, not yet the owner's decision, they are
+  treated as lab-only concept controls on the ACD-474 precedent and receive no command, setting, wiring row, persisted
+  key or test gate (UCC-147, UF-092).
+gui_related: true
+gui_classification_reason: Records an owner decision on live Usage readings and the place of the concept's demo hour.
+split_recommended: false
+depends_on: [UF-089, UF-092, UF-095, UCC-147, ACD-474]
+unblocks: [UF-107]
+acceptance_criteria:
+  - "Live is on by default, the Live / Paused control sits in the rail head, and the choice is remembered."
+  - "Live / Paused dispatches no command and changes no counted value."
+  - "No product catalog, settings inventory, wiring matrix or persisted product key names Play the next hour, Back to now or the concept's feature switches."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_live_view_drift
+reasoning_tier: standard
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-usage-upgrade-handoff/HANDOFF.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+preserved_exact_tokens:
+  - "DL-167"
+  - "Live / Paused"
+  - "pm7:usage:live:v1"
+negative_constraints:
+  - "Do not mint a command or setting for Live / Paused."
+  - "Do not let demo-hour readings reach a product surface or store."
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-168 - Usage Rooms Get Heroes Calm Colour And A Soft Key Light And No Fact Is Dropped
+
+```yaml
+plan_unit_id: DL-168
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-168 records the owner's answers of 2026-10-02 and his notes of 2026-10-09. Each Usage room names its hero on a
+  plate of its own; on arrival and room change only the hero's number rolls while supporting values fade in final,
+  with rolls kept for live, range and scope changes. Below the warning line meters and skyline towers shade indigo
+  to cyan to mint by value, and the Settings thresholds take over above it. The room's key light falls on the hero
+  plate as a soft top-left radial, 16 % on dark themes and 9 % on light ones, the one tinted surface allowed. Shared
+  elements fly between rooms, every room entrance is visible from every neighbour and may vary with the origin, and
+  every series' end dot sits on its own last point (F3-623). Facts that do not fit fold behind N more and Details and
+  stay reachable, and facts from the old page's static lists return in their natural widget labelled as concept
+  fixture data (F3-514, UF-107, DR-058). The restoration of those facts is a planning ruling, not an owner answer.
+gui_related: true
+gui_classification_reason: Records an owner decision on Usage heroes, colour ramps, light and fact folding.
+split_recommended: false
+depends_on: [F3-514]
+unblocks: [F3-623, DR-058, UF-107]
+acceptance_criteria:
+  - "Only the room's hero number rolls on arrival and room change."
+  - "The hero key light is the only tinted surface on Usage."
+  - "Every room entrance from every neighbouring room is visible."
+  - "Every folded fact is reachable through N more or Details."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_presentation_drift
+reasoning_tier: standard
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-usage-upgrade-handoff/HANDOFF.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+preserved_exact_tokens:
+  - "DL-168"
+  - "N more"
+  - "key light"
+negative_constraints:
+  - "Do not drop a fact because it does not fit; fold it."
+  - "Do not tint any Usage surface other than the hero plate's key light."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-169 - Usage Uses The Chat Menus Official Provider Logos And Family Motion
+
+```yaml
+plan_unit_id: DL-169
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-169 records the owner's choices of 2026-10-01 and 2026-10-02 and his notes of 2026-10-09. Every Usage dropdown,
+  the Export menu included (UF-089, still cmd.usage.export with scope snapshot or ledger), is the chat assistant's
+  menu family with its corner-origin spring and keyboard behaviour. Every provider is marked by its official logo,
+  never recoloured, filtered, tinted, redrawn or set on a plate it is not published on; Free Models and Local model
+  server use neutral icons. Usage motion uses the theme family voices owned by ACD-475 (DR-043), with Friendly and
+  Glass as distinct from Basic as Retro and NieR are; no Usage-only voice exists, and the voices' exact values are
+  design tokens, not owner text (DL-113). Without a GPU, Glass uses its solid pane while Usage is open; no step of a
+  room switch exceeds about 50 ms; motion holds 60 frames a second without a GPU; nothing loops at idle; no blur
+  lingers after its effect ends; Reduce Motion is instant (DL-115). F3-623 owns this presentation and DR-058 its
+  reuse. The solid Glass pane and the room-switch limit are planning rulings, not owner answers.
+gui_related: true
+gui_classification_reason: Records an owner decision on Usage menus, provider marks and motion.
+split_recommended: false
+depends_on: [ACD-475, DR-043, DL-113, DL-115, UF-089]
+unblocks: [F3-623, DR-058]
+acceptance_criteria:
+  - "Every Usage dropdown uses the chat assistant's menu family."
+  - "Every provider mark on Usage is the provider's official logo, unaltered."
+  - "Friendly and Glass motion on Usage are distinct from Basic, and come only from the family voices of ACD-475."
+  - "No blur remains on a Usage surface after its effect ends, and Reduce Motion makes every change instant."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_motion_drift
+reasoning_tier: high
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-usage-upgrade-handoff/HANDOFF.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/menus.css and menus.js (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-169"
+  - "corner-origin spring"
+  - "official logo"
+negative_constraints:
+  - "Do not create a Usage-only motion voice or a per-view motion setting."
+  - "Do not recolour, filter, tint or redraw a provider's official logo."
+  - "Do not fork the chat assistant's menus for Usage."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```

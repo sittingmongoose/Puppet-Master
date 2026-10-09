@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6329-L6418
+Source lines: L6339-L6434
 
-Source SHA256: `4beb92e999b9c0c8c361c17bac5e26772a0ba962e012792cf2764c28cd565e76`
+Source SHA256: `297218ce696180a7306329bc27edfe82e7ad73f32b68c08f288da6638bb15cdb`
 
 ---
 
@@ -42,9 +42,14 @@ canonical_text: >-
   provider_route_kind describe who pays for it, and the page never collapses the two into one badge. Usage
   reports and routes but owns no policy: a Usage affordance that would change a Settings-owned value
   deep-links to its owner through cmd.settings.open with a typed Settings-owned setting or manager/detail
-  target, and the page stores, mutates, and re-declares nothing on the policy side. Provider-native quota units
+  target, and the page stores, mutates, and re-declares nothing on the policy side. The one exception is a
+  bound Settings control that the Accounts room hosts in place (UF-107, DL-164): it shows the Settings
+  owner's current value and changes it only through cmd.settings.transaction.preview and
+  cmd.settings.transaction.apply, so the value, its validation, its scope and its receipt stay the Settings
+  owner's and Usage keeps no copy. Provider-native quota units
   keep their own units, windows, and reset semantics and are never flattened onto a single cross-provider
-  percentage scale.
+  percentage scale. A concept's demo clock that plays readings forward in time (UF-107) is a lab-only
+  demonstration, never a Usage reading, and nothing it shows is counted, stored or exported.
 gui_related: true
 gui_classification_reason: The unit governs what the Usage page shows for unknown, zero, not-exposed, settlement, entitlement, and quota-unit values, and where a policy change is routed.
 depends_on: [UF-085, UF-087, UF-089, UF-090, UF-091]
@@ -53,7 +58,7 @@ acceptance_criteria:
   - A route with no published separate billing treatment for its cache-read or reasoning bucket renders that bucket as not exposed and leaves displayed totals unchanged; no fixture infers an inclusive or exclusive rule from an unpublished route.
   - Unknown and provider-reported zero render as distinct states with distinct reasons on every Usage surface, and no projection path converts one into the other.
   - Settlement state and billing route render as independent axes; a combined badge that hides one behind the other fails the fixture.
-  - Every Usage affordance that would change a Settings-owned value dispatches cmd.settings.open with a typed target whose setting id exists in Plans/settings_inventory.json, preserves the exact-return contract, and writes no local policy value.
+  - Every Usage affordance that would change a Settings-owned value dispatches cmd.settings.open with a typed target whose setting id exists in Plans/settings_inventory.json, preserves the exact-return contract, and writes no local policy value; the only exception is a bound Settings control hosted in the Accounts room, which commits through cmd.settings.transaction.preview and cmd.settings.transaction.apply and keeps no Usage copy of the value.
   - Provider-native quota units keep their own unit, window, and reset semantics; a single cross-provider percentage rollup fails the fixture.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -89,7 +94,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not fold a cache-read or reasoning bucket into a displayed total on a route whose provider publishes no separate billing treatment for it.
   - Do not render a missing value as zero, and do not render a provider-reported zero as unknown.
-  - Do not let the Usage page own, persist, or mutate a Settings-owned policy value.
+  - Do not let the Usage page own, persist, or mutate a Settings-owned policy value; a bound control hosted in place changes it only through the Settings owner's transaction.
+  - Do not count, store, or export a reading a demo clock produced.
   - Do not flatten provider-native quota units onto one shared percentage scale.
   - Do not hardcode the concept fixture identities as canonical copy.
 owner_hints:

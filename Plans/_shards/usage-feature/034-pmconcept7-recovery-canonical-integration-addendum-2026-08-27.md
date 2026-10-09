@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6420-L6529
+Source lines: L6436-L6557
 
-Source SHA256: `4beb92e999b9c0c8c361c17bac5e26772a0ba962e012792cf2764c28cd565e76`
+Source SHA256: `297218ce696180a7306329bc27edfe82e7ad73f32b68c08f288da6638bb15cdb`
 
 ---
 
@@ -41,14 +41,20 @@ canonical_text: >-
   is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts exactly
   4, 6, and 8 panels at those three disclosure levels, and all thirteen rooms remain reachable at every supported
   physical viewport width even when the secondary rail collapses into an overflow surface. Active room, scope, date
-  range, disclosure level, and the expanded-room rail state are local view projections unless an existing
-  canonical command owner explicitly requires a command; changing them does not justify a new command family.
+  range, disclosure level, the expanded-room rail state, and the Live / Paused choice (UF-107) are local view
+  projections unless an existing canonical command owner explicitly requires a command; changing them does not
+  justify a new command family.
   Usage refresh and object-backed Usage/Ledger drill-through continue through their existing authorities. A
   PMConcept7 Ledger attempt row dispatches `cmd.nav.open_usage_subject` only with stable `attempt_id` and
   `usage_event_ref`, normalizes to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keeps
   the event/provider/account/runtime refs as correlation, and carries no `OpenSubject`; event-primary callers
   retain `usage_event` plus `usage_event_ref`, while aggregate provider/account/panel details remain local inspectors and dispatch no
-  command, receipt, or domain event. When a selected provider
+  command, receipt, or domain event. The Accounts room acts in place through explicit controls on its cards, never
+  through the card itself (UF-107, DL-164): an account's "Use this account" control dispatches the existing
+  `cmd.account.select_profile` as a labelled override and shows only where the provider's capability
+  `supports_manual_set_active` is true, and a provider's Auto-switch toggle and switch level are bound Settings
+  controls that commit through `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with
+  `scope=provider`. Opening a card's Details stays a local inspector. When a selected provider
   route cannot run because setup is absent, the exact state is `Provider Setup Required`; it shows explicit
   `Host/Environment`, preserves operation and continuation identity, and reuses `cmd.settings.open` with
   `target_type=setting` and `setting_id=ai.accounts.provider-connections`. UF-090, UF-092, and CBP-028 remain the policy
@@ -57,12 +63,13 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage room taxonomy, disclosure labels, and view-state behavior.
 depends_on: [CBP-028, UF-044, UF-055, UF-090, UF-092, WS-016]
-unblocks: [UF-094, UF-095, UF-096]
+unblocks: [UF-094, UF-095, UF-096, UF-107]
 acceptance_criteria:
   - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width, including through the secondary-room overflow surface when required, and each renders its room-specific panel catalog at the current disclosure level.
   - The only user-facing disclosure labels are At a glance, Detailed, and Diagnostics; Essen, Std, Adv, essentials, standard, and advanced are not disclosure labels.
   - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts exactly 4/6/8 panels for At a glance/Detailed/Diagnostics, and no disclosure switch deletes an existing widget instance or stored layout.
-  - Active room, scope, date range, disclosure, and expanded-room rail state remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
+  - Active room, scope, date range, disclosure, expanded-room rail state, and the Live / Paused choice remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
+  - In the Accounts room, "Use this account" dispatches cmd.account.select_profile only where supports_manual_set_active is true, and a provider's Auto-switch toggle and switch level dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply with scope=provider on the Settings rows, show the same value Settings shows, and keep no Usage copy; opening a card or its Details still dispatches no command.
   - Provider setup absence renders the exact `Provider Setup Required` state with explicit `Host/Environment` and preserved operation and continuation identity; its CTA reuses `cmd.settings.open` with `target_type=setting` and `setting_id=ai.accounts.provider-connections`, mints no new setup command, keeps installation and authentication separate, performs no automatic acquisition or silent reroute, and leaves UF-090, UF-092, and CBP-028 as the underlying policy owners.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -108,9 +115,14 @@ preserved_exact_tokens:
   - "At a glance"
   - Detailed
   - Diagnostics
+  - "Use this account"
+  - cmd.account.select_profile
+  - supports_manual_set_active
+  - scope=provider
 negative_constraints:
   - Do not expose Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels.
-  - Do not mint commands merely to persist local room, scope, date-range, disclosure, or expanded-rail projection state.
+  - Do not mint commands merely to persist local room, scope, date-range, disclosure, expanded-rail, or Live / Paused projection state.
+  - Do not give an Accounts card a Usage-local copy of an auto-switch value or a Usage-only switch command; the card's in-place controls are the existing account command and the Settings owner's transaction.
   - Do not route aggregate provider/account/panel cards, copy a presentation card ID into route_target.object_id, attach OpenSubject to either typed cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the primary object_id of a PMConcept7 Ledger attempt row.
   - Do not treat the protected generated artifact or in-progress audit work as passed executable acceptance evidence.
   - Do not bundle installation with authentication, start automatic acquisition, or silently reroute a setup-blocked request.

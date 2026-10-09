@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30717-L31584
+Source lines: L30717-L31596
 
-Source SHA256: `ec9fcca7a80f55122d75bbc7d9b1700ff628f9d28b94f4d4ade985e4f06ff116`
+Source SHA256: `92fd19d0d84c663ee8e8b8605b1180c8504c851139260d2f785b26f698afed7d`
 
 ---
 
@@ -694,6 +694,18 @@ rows, all scope `global` and tier `simple`: `general.visual.nier-mode` (toggle, 
 `general.visual.nier-background` (select of eight scenes, default City Ruins). NieR Mode is a hidden theme painted over
 the Basic family, not a ninth theme: the eight built-in variants of F3-425 are unchanged, and while it is on NieR
 decides the accent color and the app font. Its parts and background rows show only while it is on.
+
+Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-164`, owner `Plans/Multi-Account.md#MA-073`):
+four rows gain the `provider` scope beside the scopes they already have, and the row count stays 916:
+`ai.accounts.multi-account-switching` (global, project, provider), `ai.accounts.hard-switch-level` and
+`ai.accounts.soft-warning-level` (global, project, provider, account), and `ai.accounts.cooldown-policy` (provider,
+account). A value resolves from the account override, then the provider, then the project, then the global value,
+over the scopes each row has; the global value, where the row has one, is the default for every provider without a value of its own (the rest period has no global row and uses its inventory default), and
+MA-073 owns that resolution and the switching rules. The provider value is set in the provider's own section of
+Settings > AI > Providers & Accounts and, for the toggle and the switch level, also on the Usage Accounts room's
+provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, written only through the Settings owner's
+`cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,
+SSYS-044), and neither surface keeps a copy.
 
 ### F3-442 - Project Settings Modal Reconciliation
 

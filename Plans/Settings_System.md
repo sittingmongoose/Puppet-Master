@@ -2553,7 +2553,9 @@ Lists and key/value settings open an editor that adds, removes and reorders item
 
 ### 8. Rows that describe one thing
 
-Rows the inventory holds once but which describe one account (nickname, jobs it may do, billing, sign-in method, Google Cloud project, priority, switch and cooldown overrides, retry budget, quota profile, credential storage) or one AI service (on or off, preferred sign-in) are drawn and edited inside that account or service. A thing without its own value shows the inventory default, never another thing's value; Details says the row is set per account or per service and lists what each one has; anywhere the plain row renderer draws such a row (All Settings included) it is a way to the accounts or services, not one global control. The per-thing value is held by the account or service owner record; the inventory row's scope metadata is not widened by this presentation.
+Rows the inventory holds once but which describe one account (nickname, jobs it may do, billing, sign-in method, Google Cloud project, priority, switch and cooldown overrides, retry budget, quota profile, credential storage) or one AI service (on or off, preferred sign-in) are drawn and edited inside that account or service. A thing without its own value shows the inventory default, never another thing's value; Details says the row is set per account or per service and lists what each one has; anywhere the plain row renderer draws such a row (All Settings included) it is a way to the accounts or services, not one global control. The per-thing value is held by the account or service owner record; the inventory row's scope metadata is not widened by this presentation, only by a recorded inventory decision such as the one below.
+
+Auto-switch is set per AI service from 2026-10-09 (`Plans/Decision_Log.md#DL-164`, `Plans/Multi-Account.md#MA-073`). That is a recorded inventory decision (`Plans/FinalGUISpec.md#F3-441`), not presentation: `ai.accounts.multi-account-switching`, `ai.accounts.hard-switch-level`, `ai.accounts.soft-warning-level` and `ai.accounts.cooldown-policy` gain the provider scope beside their existing scopes, and the provider's value is a Settings value committed through the ordinary transaction, not a field of the service's own record. Each service shows its own four rows in its own rows of this section, as rows that describe one thing; a service with no value of its own shows the value it inherits (the global value where the row has one, or for the rest period, which has no global row, the inventory default), marked as the default, and changing it there gives the service its own value. Limits & switching › Moving between accounts keeps the global rows of the first three, which are the defaults for every service, and says which services have their own. Details on any of the four rows lists each service's value and the order the values apply in, among the scopes the row has: an account's own override, then the service, then the project, then the global value. The account rows of section 8 (switch and cooldown overrides) stay inside each account and win over the service value. The Usage page's Accounts room hosts the same four controls for each provider as bound controls under SSYS-044; they are the same value, not a copy.
 
 ### 9. Inventory admission (2026-09-27)
 
@@ -2900,3 +2902,77 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-041, ContractName:Plans/Settings_System.md#SSYS-036, ContractName:Plans/FinalGUISpec.md#F3-426, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/Decision_Log.md#DL-152
+
+## Settings controls hosted on the Usage page — 2026-10-09
+
+The Usage page's Accounts room acts in place (`Plans/Decision_Log.md#DL-164`): each provider's auto-switch on/off, switch point, warning level and rest period are drawn on that provider's plate as the same controls Settings draws in the provider's own rows (section 8 above, `Plans/Multi-Account.md#MA-073`). SSYS-043 already lets the NieR Mode checkbox live outside Settings where a look is chosen; this unit states the general rule for a Settings control hosted on another surface and names the Usage controls under it.
+
+### SSYS-044 - Settings Controls Hosted Outside Settings
+
+```yaml
+plan_unit_id: SSYS-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  A surface other than Settings may host the control of a Settings row only where an owner unit names that surface
+  and those row ids: SSYS-043 names the title-bar theme selector, the onboarding look choice and the Look menus for
+  the three NieR rows, and this unit names the Usage page's Accounts room for ai.accounts.multi-account-switching,
+  ai.accounts.hard-switch-level, ai.accounts.soft-warning-level and ai.accounts.cooldown-policy at scope provider,
+  one set per provider plate (Plans/Multi-Account.md#MA-073). A hosted control is a bound control of the same
+  setting, not a copy: it reads the effective value, its scope and whether it is inherited from the Settings
+  projection; every change it makes is one SSYS-009 transaction through SSYS-018's cmd.settings.transaction.preview
+  and then the bound cmd.settings.transaction.apply, carrying the exact setting id, the scope (provider) and the
+  provider id, the expected Project revision, the actor and an idempotency key; a slider or stepper commits once
+  when the value settles, not at every step; nothing paints as committed before admission, and an optimistic value
+  reconciles to the typed result or rolls back with the owner's reason; and an unavailable control shows the
+  owner's disabled reason. Settings and the hosting surface show the same value at once. The hosted control offers
+  Open in Settings through cmd.settings.open with target_type setting, landing on the row inside that provider's
+  section. The Settings row stays the row's one home for SSYS-040's count; a hosted control is a consumer of it and
+  adds no setting key, scope, manager_id, route, detail id or command id.
+gui_related: true
+gui_classification_reason: Governs Settings controls drawn on the Usage page and other named surfaces, their commits, their disabled states and their way back to Settings.
+split_recommended: false
+depends_on: [SSYS-009, SSYS-018, SSYS-019, SSYS-040, SSYS-043]
+unblocks: [MA-073]
+acceptance_criteria:
+  - "Only the surfaces and row ids an owner unit names host Settings controls; the Usage Accounts room hosts exactly the four ai.accounts rows at scope provider, one set per provider."
+  - "Each change on a hosted control dispatches one cmd.settings.transaction.preview and one bound cmd.settings.transaction.apply with the setting id, scope provider, provider id, expected revision, actor and idempotency key; a slider or stepper drag commits once on settle; a stale revision, invalid value or permission denial leaves the stored value and both surfaces unchanged and shows the reason."
+  - "After an applied change on either surface, Settings and the Usage Accounts room show the same value, inherited or the provider's own, without a reload."
+  - "No hosted control writes through a host-side setter, a local store or any path other than the Settings transaction, and none keeps a value of its own."
+  - "Open in Settings dispatches cmd.settings.open with target_type setting and lands on the row inside that provider's section."
+  - "No setting key, scope, manager_id, route, detail id or command id is added for hosting."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+risk_class: hosted_settings_control_copy_or_bypass
+reasoning_tier: high
+context_scope: settings_hosted_controls
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/Multi-Account.md
+  - Plans/usage-feature.md
+  - Plans/settings_inventory.json
+node_compile_hint:
+  mode: settings_hosted_control_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-164
+  - Plans/Settings_System.md#SSYS-043
+  - "Concepts/usage-redesign/src/js/54-w-accounts.js (Usage redesign Accounts room auto-switch controls; source-lineage-only)"
+  - "Concepts/usage-redesign/src/js/16-settings.js (Usage redesign Settings bridge; source-lineage-only)"
+preserved_exact_tokens:
+  - "cmd.settings.transaction.preview"
+  - "cmd.settings.transaction.apply"
+  - "cmd.settings.open"
+  - "Open in Settings"
+negative_constraints:
+  - Do not host a Settings control on a surface or for a row id no owner unit names.
+  - Do not let a hosted control write a setting through anything but the Settings transaction, or keep its own copy of the value.
+  - Do not count a hosted control as a second home of the row, or add a key, scope, manager, route or command for hosting.
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/Multi-Account.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Decision_Log.md#DL-164
