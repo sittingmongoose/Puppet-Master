@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L2840-L2895
 
-Source SHA256: `543bde44fad4ffd564bdb2a47eac41ae3bdcf2df64aafadcec7476535b0ab612`
+Source SHA256: `bb66be93271338b81403cfc85569090700dce0ddd742374fb8e49bae54c077a1`
 
 ---
 
@@ -31,8 +31,8 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Keeps one action-row grammar for every Plan surface."
 split_recommended: false
-depends_on: [DR-044, F3-566, F3-606, F3-607, DL-156]
-unblocks: []
+depends_on: [DR-044, F3-566, DL-156]
+unblocks: [F3-606]
 acceptance_criteria:
   - "No Plan surface defines its own button height, type size, padding or gap for its actions."
   - "The Build control's size comes from the shared row, and the row's spacing treats it as a boxed primary."

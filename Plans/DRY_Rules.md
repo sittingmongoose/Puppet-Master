@@ -2860,8 +2860,8 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Keeps one action-row grammar for every Plan surface."
 split_recommended: false
-depends_on: [DR-044, F3-566, F3-606, F3-607, DL-156]
-unblocks: []
+depends_on: [DR-044, F3-566, DL-156]
+unblocks: [F3-606]
 acceptance_criteria:
   - "No Plan surface defines its own button height, type size, padding or gap for its actions."
   - "The Build control's size comes from the shared row, and the row's spacing treats it as a boxed primary."

@@ -1,43 +1,18 @@
 {
-  "build_order_blockers": [
-    {
-      "blocker_type": "dependency_cycles",
-      "items": [
-        {
-          "plan_unit_id": "DR-047",
-          "remaining_depends_on": [
-            "F3-606",
-            "F3-607"
-          ]
-        },
-        {
-          "plan_unit_id": "F3-606",
-          "remaining_depends_on": [
-            "DR-047"
-          ]
-        },
-        {
-          "plan_unit_id": "F3-607",
-          "remaining_depends_on": [
-            "F3-606"
-          ]
-        }
-      ]
-    }
-  ],
+  "build_order_blockers": [],
   "dependency_graph_summary": {
-    "build_order_available": false,
-    "build_order_blocked_node_count": 3,
-    "cycle_blocker_count": 3,
-    "depends_on_edge_count": 16483,
+    "build_order_available": true,
+    "build_order_blocked_node_count": 0,
+    "cycle_blocker_count": 0,
+    "depends_on_edge_count": 16481,
     "downstream_blocked_node_count": 0,
-    "edge_count": 19382,
+    "edge_count": 19381,
     "node_count": 6987,
-    "true_cycle_component_count": 1,
-    "unblocks_edge_count": 2899,
+    "true_cycle_component_count": 0,
+    "unblocks_edge_count": 2900,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-09T19:38:21Z",
+  "generated_at_utc": "2026-10-09T19:43:41Z",
   "gui_related_units": {
     "count": 3427,
     "units": [
