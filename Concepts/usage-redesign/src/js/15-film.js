@@ -659,7 +659,8 @@
     if (card.querySelector(LIGHTS)) return null;
     var a;
     if (f === 'friendly') {
-      var w = H('i', 'pmu-film-warm', null); w.setAttribute('aria-hidden', 'true'); card.insertBefore(w, card.firstChild);
+      /* appended (never before the head: no child of the plate changes its position); z-index -1 puts it under the content */
+      var w = H('i', 'pmu-film-warm', card); w.setAttribute('aria-hidden', 'true');
       a = anim(w, [{ opacity: 0, transform: 'scale(.86)' }, { opacity: 0.85, transform: 'scale(1)', offset: 0.34 }, { opacity: 0, transform: 'scale(1.04)' }], { dur: 900, delay: d, easing: E.out, fill: 'both' });
       gone(a, w);
       return a;
@@ -778,6 +779,8 @@
     var boardMove = sp && dir && f !== 'nier' && o.board && o.board.isConnected;
     if (boardMove) anim(o.board, [{ opacity: 0.9, transform: 'translateY(' + (24 * sgn) + 'px)' }, { opacity: 1, transform: 'none' }], { dur: 280, delay: 0, easing: E.out });
     var heroMade = false;
+    /* the beat holds its targets at most until 3.2 s (a moment whose beat never comes still shows everything) */
+    if (m && !m.holdT && !reduced()) m.holdT = mtimer(m, 3200, releaseBeatHold);
     cards.forEach(function (card) {
       if (!inView(card)) return;
       var d = base + (card._pmuEnterDelay || 0), hero = card.hasAttribute('data-hero');
