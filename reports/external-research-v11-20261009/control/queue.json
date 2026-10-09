@@ -5,11 +5,14 @@
     "method": "M01",
     "case": "S01",
     "route": "luna",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M01-B",
@@ -17,11 +20,14 @@
     "method": "M01",
     "case": "S07",
     "route": "muse",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M02-A",
@@ -29,11 +35,14 @@
     "method": "M02",
     "case": "S02",
     "route": "glm",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M02-B",
@@ -41,11 +50,14 @@
     "method": "M02",
     "case": "S08",
     "route": "luna",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M03-A",
@@ -53,10 +65,13 @@
     "method": "M03",
     "case": "S03",
     "route": "muse",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M03-B",
@@ -64,11 +79,14 @@
     "method": "M03",
     "case": "S09",
     "route": "glm",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 1
+    "started_arms": 1,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M04-A",
@@ -76,11 +94,14 @@
     "method": "M04",
     "case": "S04",
     "route": "luna",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M04-B",
@@ -88,10 +109,13 @@
     "method": "M04",
     "case": "S10",
     "route": "muse",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M05-A",
@@ -99,10 +123,13 @@
     "method": "M05",
     "case": "S05",
     "route": "glm",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M05-B",
@@ -110,10 +137,13 @@
     "method": "M05",
     "case": "S11",
     "route": "luna",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M06-A",
@@ -121,10 +151,13 @@
     "method": "M06",
     "case": "S06",
     "route": "muse",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M06-B",
@@ -132,7 +165,7 @@
     "method": "M06",
     "case": "S12",
     "route": "glm",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
@@ -141,7 +174,10 @@
       "research": 1440,
       "critic": 1080,
       "reviser": 1080
-    }
+    },
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M07-A",
@@ -149,10 +185,13 @@
     "method": "M07",
     "case": "S07",
     "route": "luna",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M07-B",
@@ -160,10 +199,13 @@
     "method": "M07",
     "case": "S01",
     "route": "muse",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M08-A",
@@ -171,7 +213,7 @@
     "method": "M08",
     "case": "S08",
     "route": "glm",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
@@ -180,7 +222,10 @@
       "research": 1440,
       "critic": 1080,
       "reviser": 1080
-    }
+    },
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M08-B",
@@ -188,10 +233,13 @@
     "method": "M08",
     "case": "S02",
     "route": "luna",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M09-A",
@@ -199,10 +247,13 @@
     "method": "M09",
     "case": "S09",
     "route": "muse",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M09-B",
@@ -210,11 +261,14 @@
     "method": "M09",
     "case": "S03",
     "route": "glm",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M10-A",
@@ -222,10 +276,13 @@
     "method": "M10",
     "case": "S10",
     "route": "luna",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M10-B",
@@ -233,11 +290,14 @@
     "method": "M10",
     "case": "S04",
     "route": "muse",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M11-A",
@@ -245,7 +305,7 @@
     "method": "M11",
     "case": "S11",
     "route": "glm",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
@@ -254,7 +314,10 @@
       "research": 1440,
       "critic": 1080,
       "reviser": 1080
-    }
+    },
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M11-B",
@@ -262,11 +325,14 @@
     "method": "M11",
     "case": "S05",
     "route": "luna",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M12-A",
@@ -274,10 +340,13 @@
     "method": "M12",
     "case": "S12",
     "route": "muse",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "A-M12-B",
@@ -285,11 +354,14 @@
     "method": "M12",
     "case": "S06",
     "route": "glm",
-    "status": "STARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
-    "started_arms": 2
+    "started_arms": 2,
+    "legacy_scheduling_status": "STARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "B-01",
@@ -297,12 +369,15 @@
     "method": "M13",
     "case": "I01",
     "route": "luna",
-    "status": "UNSTARTED_DEVELOPMENT",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
     "resource_version": "retained60-critic12-v1",
-    "purpose": "prospective development; not promoted integrated/confirmation evidence"
+    "purpose": "prospective development; not promoted integrated/confirmation evidence",
+    "legacy_scheduling_status": "UNSTARTED_DEVELOPMENT",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "B-02",
@@ -310,12 +385,15 @@
     "method": "M13",
     "case": "I02",
     "route": "luna",
-    "status": "UNSTARTED_DEVELOPMENT",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
     "resource_version": "retained60-critic12-v1",
-    "purpose": "prospective development; not promoted integrated/confirmation evidence"
+    "purpose": "prospective development; not promoted integrated/confirmation evidence",
+    "legacy_scheduling_status": "UNSTARTED_DEVELOPMENT",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "B-03",
@@ -323,7 +401,7 @@
     "method": "M05",
     "case": "I03",
     "route": "luna",
-    "status": "UNSTARTED_SELECTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
@@ -331,7 +409,10 @@
     "method_file": "M05-v2",
     "terminal_critic_handoff": true,
     "resource_version": "retained-terminal-handoff-v2",
-    "purpose": "prospective integrated successor; second starts only after B-03 treatment full-source PASS with 45-minute treatment vs60-minute control"
+    "purpose": "prospective integrated successor; second starts only after B-03 treatment full-source PASS with 45-minute treatment vs60-minute control",
+    "legacy_scheduling_status": "UNSTARTED_SELECTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "B-04",
@@ -356,7 +437,7 @@
     "method": "M14",
     "case": "I05",
     "route": "muse",
-    "status": "READY_DEVELOPMENT",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 4500,
     "occupied_ceiling_s": 5400,
@@ -372,7 +453,10 @@
       "treatment": {
         "critic": "luna"
       }
-    }
+    },
+    "legacy_scheduling_status": "READY_DEVELOPMENT",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "B-06",
@@ -380,7 +464,7 @@
     "method": "M14",
     "case": "I06",
     "route": "muse",
-    "status": "READY_DEVELOPMENT",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 4500,
     "occupied_ceiling_s": 5400,
@@ -396,7 +480,10 @@
       "treatment": {
         "critic": "luna"
       }
-    }
+    },
+    "legacy_scheduling_status": "READY_DEVELOPMENT",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "B-07",
@@ -404,7 +491,7 @@
     "method": "M15",
     "case": "I07",
     "route": "luna",
-    "status": "READY_DEVELOPMENT",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 4500,
     "occupied_ceiling_s": 5400,
@@ -415,7 +502,10 @@
       "verifier": 900,
       "reviser": 1500
     },
-    "resource_version": "75-30-parallel20+15-25-v1"
+    "resource_version": "75-30-parallel20+15-25-v1",
+    "legacy_scheduling_status": "READY_DEVELOPMENT",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "B-08",
@@ -423,7 +513,7 @@
     "method": "M15",
     "case": "I08",
     "route": "muse",
-    "status": "READY_DEVELOPMENT",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 4500,
     "occupied_ceiling_s": 5400,
@@ -434,7 +524,10 @@
       "verifier": 900,
       "reviser": 1500
     },
-    "resource_version": "75-30-parallel20+15-25-v1"
+    "resource_version": "75-30-parallel20+15-25-v1",
+    "legacy_scheduling_status": "READY_DEVELOPMENT",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "C-01",
@@ -442,7 +535,7 @@
     "method": "M16",
     "case": "H01",
     "route": "luna",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 4500,
     "occupied_ceiling_s": 5400,
@@ -463,7 +556,10 @@
         "critic": 1080,
         "reviser": 1080
       }
-    }
+    },
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "C-02",
@@ -471,7 +567,7 @@
     "method": "M16",
     "case": "H02",
     "route": "luna",
-    "status": "UNSTARTED",
+    "status": "FINISHED_ATTEMPTED",
     "kind": "full-discovery",
     "allowance_s": 4500,
     "occupied_ceiling_s": 5400,
@@ -492,7 +588,10 @@
         "critic": 1080,
         "reviser": 1080
       }
-    }
+    },
+    "legacy_scheduling_status": "UNSTARTED",
+    "attempted_arms": 2,
+    "execution_status_basis": "Original arm state plus terminal native/T3 stage records. Scientific grades remain separate."
   },
   {
     "block_id": "C-03",

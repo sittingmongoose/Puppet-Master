@@ -13,5 +13,5 @@ for b in dict.fromkeys(r['block'] for r in rows):
     if not all(r['final_delivered'] and str(r['grade'] or '').startswith('PASS') for r in (c,t)):continue
     print(json.dumps({'block':b,'delivery_saving_fraction':1-t['candidate_delivery_s']/c['candidate_delivery_s'],
       'occupied_change_fraction':t['occupied_agent_s']/c['occupied_agent_s']-1 if all(r['occupied_agent_s'] is not None for r in (c,t)) else None,
-      'strict_time_eligible':all(r['delivery_within_whole_deadline'] and r['occupied_within_90min'] and all(s['delivery_within_stage_deadline'] for s in r['stages']) for r in (c,t))},sort_keys=True))
+      'paired_time_eligible_among_both_source_pass':all(r['delivery_within_whole_deadline'] and r['occupied_within_90min'] and all(s['delivery_within_stage_deadline'] for s in r['stages']) for r in (c,t))},sort_keys=True))
 print('These are descriptive ratios. Failed/missing/unstarted cells remain above; no billing, quality equivalence, causal provider effect or warm-cache saving is inferred.')

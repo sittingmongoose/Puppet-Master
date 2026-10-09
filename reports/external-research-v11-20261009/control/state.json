@@ -6279,8 +6279,10 @@
           "role": "candidate"
         }
       },
-      "status": "STARTED",
-      "kind": "full-discovery"
+      "status": "INVALID_UNDECLARED_PROVIDER_DELEGATION",
+      "kind": "full-discovery",
+      "original_status_before_late_audit": "STARTED",
+      "protocol_disposition": "Forbidden nested three-stage delegation, unapproved provider instances, 7 actual product contexts vs4 declared; full final scientific FAIL unchanged."
     },
     "B-08/control": {
       "block": "B-08",

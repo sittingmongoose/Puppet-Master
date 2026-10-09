@@ -1,0 +1,1398 @@
+{
+  "block": "C-02",
+  "case": "H02",
+  "schema_version": 1,
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/assignment.md",
+      "sha256": "0f98c382a13d99985b1b412dcc7578ee7ac382e2d536658f0e18029478517dbe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/input-map.json",
+      "sha256": "3af9f9ff9271f0574faef9fe7e94a8a958a1cb55756bc8a77ea421c2ba89c9ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H02/brief.md",
+      "sha256": "415ad751720b695b4cc789793972e4f663c279d83afa0a874705c6b9831b0206"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H02/plan-root-only.md",
+      "sha256": "090ed82b1da1acd7283f34207edfd5345571da2f961485d1131f7f56a4291ab7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+      "sha256": "75363e731984ff17604ede0944b32d89765a0c8d0a162d310f6c262098c8614f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/source-map.json",
+      "sha256": "c97045f7f7246e6c8ff9c48d440e76e9e3ecda8166888c19d4709a005607ca96"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/assignment.md",
+      "sha256": "c8708f1eef5f9f9c6aa5691b0c17071d254d81e88fc4cc29afcfe631b20953c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/input-map.json",
+      "sha256": "2f5b02d93060cc6cf8c44caab8d7d0e981430aa46dfcccc1cb8b6c29b630a9c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/critique.md",
+      "sha256": "4faca82395cd26f15b38fe32e2226e190b4d4e2a5633d5bc0eec5a19cb840416"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/source-map.json",
+      "sha256": "5f9f46bd21a36b08bcabd73ccf6221410c357e4ef9aebc14f898797e51c96110"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/assignment.md",
+      "sha256": "bafb1ba0e84752f7216920ca4e05abe885244f5398e57c5f90f3a77db8c462d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/input-map.json",
+      "sha256": "fa2bde87e009ba5e912e9628c36128dfcee5ee5c74dd964f8da5340e43126891"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/discovery.md",
+      "sha256": "f532c8470ba7d057b0557d81fbc65a097be9bfbd9a6ec7a98e8901dada9b4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/draft.md",
+      "sha256": "3f77c06093dc10ef2a7704a3f7fbab4f118b532353f9c95c656c11aaf20e8ed2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/source-map.json",
+      "sha256": "ad9e6bb870ac9cc44915ee6a9a2068f6457c7b26d39a2cbbbd183df60b8b01cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/revealed-plan.md",
+      "sha256": "090ed82b1da1acd7283f34207edfd5345571da2f961485d1131f7f56a4291ab7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/plan-reveal.json",
+      "sha256": "015d91a0d609086a86ad531978a1362b792cf1b3939321df02e195794420af71"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/assignment.md",
+      "sha256": "a0502fa89d40aee1e77f4b83469d2b8083725608cc5057cf1e0194f4d0a70f3f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/input-map.json",
+      "sha256": "fbc8f6cc363dd9937ce99dad2db6eef2946a5ff0b5e403ac7e5d60a7c74c6d19"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+      "sha256": "038d98a13c31779dfd75ac9a8fce90f584b5ccfec8218fb324144f8f49fa40ae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/source-map.json",
+      "sha256": "95e8de5d495b35eefd19ef1f16eb96bbea285e5ed2097c6315473b8b513d0db8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/assignment.md",
+      "sha256": "b9d19aea1587faaa46e1f8b1fe1aa57f4641ec195d2e8dacbc164c42997ee829"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/input-map.json",
+      "sha256": "c0662d1660a683b247aa4393c292a2f2162a026840298adbdd3ade99dbc909b9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+      "sha256": "3de624e6edbd9abfe5ab338bb75c8a3dbd41b5ba56b15282be0ffbcf38359397"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/source-map.json",
+      "sha256": "fd0b45fe1cadc9ebdf0d5ea1d936bf40c6d0c562311a01a43136eba2b37e2521"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/assignment.md",
+      "sha256": "7d5575f36ea7d330ae45de07daadcbaca2a223d0c0ceb149baf7dbde5021e765"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/input-map.json",
+      "sha256": "43633201f5ac78f471bc71e5414440b2bd39816a9a252b88b4722e531a228b9c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/discovery.md",
+      "sha256": "68d81609d8a93e915edfde6bec88360fb35d07fa6821a35959f08d44aa5ddc7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/draft.md",
+      "sha256": "4e0e0473f6a107f04b70068ed09360f0366ef141119a940b4ec949990f95d998"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/source-map.json",
+      "sha256": "a203e86f80895342067ec86eff8f22d54d97b43d0da2f03278dca8dd16a68b1a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/revealed-plan.md",
+      "sha256": "090ed82b1da1acd7283f34207edfd5345571da2f961485d1131f7f56a4291ab7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/plan-reveal.json",
+      "sha256": "a78611beb492e59c509ea3bc63b08d9121074d7be1371d79ba08ed91825a2dc4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/assignment.md",
+      "sha256": "599f51577409abd7573599e3dd21895a18a7483213339a090ab113bba0365d9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/input-map.json",
+      "sha256": "70f514e307b63b133932132c087580849db919572630714d5e42da8415a58d36"
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "type": "PRESERVATION_SHARPENING_LOSS",
+          "severity": "minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+            "lines": "9,62,68-77"
+          },
+          "additional_candidate_locations": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/draft.md",
+              "lines": "53"
+            }
+          ],
+          "primary_evidence": [
+            "E06"
+          ],
+          "reasoning": "The final preserves ABALOBI workflow-fit questions and setup immobility, but the draft\u2019s named data ownership/export question is no longer explicit in the self-contained final. Product fit and support/cost remain unresolved and live selection is gated; this narrows an optional due-diligence lead without falsely establishing safe ownership/export or selecting the product."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "EXTERNAL_PRODUCT_INPUT",
+          "items": [
+            "actual species/product form/jurisdiction and Authority",
+            "release role and hold policy",
+            "eligible notice source and reviewed bed association",
+            "buyer channel/approved fields",
+            "pilot languages, devices, gloves and acceptance thresholds",
+            "itemized initial and ongoing costs/support",
+            "chosen Collect/Central/AppSheet versions/configuration if trialed"
+          ],
+          "assessment": "Honest open farm inputs and future pilot checks; not unfinished reviewer scope."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "Full O1-O6 and original-constraint review",
+          "judgment": "Satisfied for the bounded planning brief. No material original obligation or negative constraint was erased. Unknown species/jurisdiction/devices/languages/roles/buyer needs/cost remain external decisions.",
+          "evidence": [
+            "brief",
+            "final 15-28,68-103"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "All consequential product/standard/regulator claim groups checked",
+          "judgment": "Supported with precise captured-source and proposed-version limits. Clock, setup immobility, numeric inputs, count/measurement, web/offline, submission/read access and old issue applicability were checked independently.",
+          "evidence": [
+            "E01",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E14",
+            "E16",
+            "GH-P6910",
+            "GH-I5550"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "All discovery/options passages and retained leads reviewed",
+          "judgment": "Useful materially different choices: paper-backed board, configurable forms, narrow custom event workflow and adjacent offline fisheries/farm tools. Neither citation count nor no-price knowledge determines quality.",
+          "evidence": [
+            "E06",
+            "E07",
+            "E16",
+            "final 56-66",
+            "N2-m1"
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "Every exact P1-P6 disposition and additional defer/reject scope reviewed",
+          "judgment": "All six supported, with decisions open and proposed pilot defaults explicit. Append-only history is a chosen recommendation rather than a standard mandate. Unneeded automatic legality/GPS/blockchain/GIS scope does not replace supported plan requirements.",
+          "evidence": [
+            "plan_dispositions.N2",
+            "final 66"
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "Complete discovery, draft, critique, final, six maps/indexes and source notes inspected",
+          "judgment": "Material findings, qualifications and useful options survive. Critic items are checked against primary evidence and their severity qualified independently; ownership/export lead sharpening is minor.",
+          "evidence": [
+            "preservation_coverage.N2",
+            "criticism_adjudication.N2",
+            "N2-m1"
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "All eight final proposed validations and execution claims reviewed",
+          "judgment": "Meaningful independent card/event/output oracles, concurrency/restart/clock/authority/privacy/usability/recovery discriminators, and pre-agreed thresholds. Product witnesses were not executed or implied. Upstream PR checks are reports, not farm tests.",
+          "evidence": [
+            "final 88-103",
+            "E01",
+            "GH-P6910"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "source_id": "E01",
+            "candidate_source_ids": [
+              "N2:S02"
+            ],
+            "judgment": "Audit is explicitly configured in the XLSForm. Change/reason/identity parameters are optional; identity is entered text. Epoch milliseconds use a device-derived session origin and elapsed intervals. Shutdown and changed audit settings have documented limitations. N2 retains clock qualification; N1 omits it and misstates the definition-row scope."
+          },
+          {
+            "source_id": "E04",
+            "candidate_source_ids": [
+              "N2:S03"
+            ],
+            "judgment": "Collect is recommended for offline enumerator work. Web Forms lack full offline operation; Enketo has a conditional offline path. Public links grant submission, not a buyer read portal. Central submission edits create versions. N2 statements preserve these distinctions."
+          },
+          {
+            "source_id": "E05",
+            "candidate_source_ids": [
+              "N2:S04"
+            ],
+            "judgment": "The documented integer widget rejects decimal input and limits digits; the decimal widget has a character cap. N2 gives nine digits and fifteen characters correctly and asks for real quantity/range testing. These input types do not determine the farm unit."
+          },
+          {
+            "source_id": "E06",
+            "candidate_source_ids": [
+              "N2:S01"
+            ],
+            "judgment": "The multilingual offline landing workflow is a relevant adjacent reference. Organization placement and placeholder-site assignment cannot be casually changed after capture. N2 preserves this live-data caution while retaining demo use. Farm bed/capacity/release/buyer fit and all-in cost are unestablished."
+          },
+          {
+            "source_id": "E07",
+            "candidate_source_ids": [
+              "N2:S10"
+            ],
+            "judgment": "The guide calls v1 a proof of concept without major feature updates and requires a farmOS server with HTTPS. N2 rejects v1 as an assumed production default while retaining the offline-log approach. It does not claim current Field Kit 2 support was assessed."
+          },
+          {
+            "source_id": "E14",
+            "candidate_source_ids": [
+              "N2:S09"
+            ],
+            "judgment": "The mixed date presentation reported by N2 is present. A non-enforcement direction and a proposed extension cannot themselves prove an amended legal compliance date. N2 keeps applicability, exemption and jurisdiction open."
+          },
+          {
+            "source_id": "E16",
+            "candidate_source_ids": [
+              "N2:S08"
+            ],
+            "judgment": "A specified count without uom is a positive integer; physical measurement has positive quantity with uom. Unknown quantity and its unit may both be omitted. UOM codes cover permitted physical measures. Event time is timezone-aware; event IDs are optional; disposition persists across intervening events that do not change it. N2 preserves the count/measurement distinction; N1 gives an unconditional quantity-plus-unit account."
+          },
+          {
+            "source_id": "GH-P6910",
+            "candidate_source_ids": [
+              "N2:S05",
+              "N2:S06"
+            ],
+            "judgment": "The owner-only unchanged-list-hash edge and integrity cleanup fix are supported by issue/PR text and source. Android 10/16 reports and the rendered six passed checks are upstream reports, not farm or reviewer tests. N2 limits the conclusion correctly."
+          },
+          {
+            "source_id": "GH-I5550",
+            "candidate_source_ids": [
+              "N2:S07"
+            ],
+            "judgment": "The reported answer/audit divergence is narrow historical evidence. Both finals retain it as a selected-version regression target and avoid inferring a current general defect or proven fix."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "scope": "All consequential final claim families and applicable stage/disposition/preservation claims in the exact input map; full runtime and case-specific legal applicability were not required or available."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "reviewed_stages": [
+          "discovery",
+          "draft",
+          "critique",
+          "final",
+          "all declared source maps and indexes/notes"
+        ],
+        "records": [
+          {
+            "subject": "Constraints and decisions",
+            "predecessor_locator": "discovery 7-9; draft 28,59-70",
+            "final_locator": "final 15-17,68-79",
+            "judgment": "Retained: workload, cards, weak coverage, cap, buyer exclusions, notices, language/gloves, states, attributable corrections, all three open decisions."
+          },
+          {
+            "subject": "Unfamiliar products and optional approaches",
+            "predecessor_locator": "discovery 15-21; draft 49-57",
+            "final_locator": "final 56-66",
+            "judgment": "Paper, ODK, custom workflow, ABALOBI and legacy farmOS remain substantive; GS1 stays optional. No false product fit or price is inferred. ABALOBI ownership/export question becomes less explicit (N2-m1)."
+          },
+          {
+            "subject": "Mechanism qualifications",
+            "predecessor_locator": "discovery 23-45; draft 26-45",
+            "final_locator": "final 23-54,83-85",
+            "judgment": "Units/ranges, reported versus received time, shared capacity, typed identity, buyer allowlist, Web Forms/public-link distinction and narrow sync/audit issue conditions survive. Clock and placement details are added."
+          },
+          {
+            "subject": "Validation",
+            "predecessor_locator": "discovery 59-66; draft 72-87",
+            "final_locator": "final 90-103",
+            "judgment": "All core proposals retain independent card/history/output oracles and negative cases; explicit thresholds and clock tests improve them. No runtime result is invented."
+          },
+          {
+            "subject": "Critique",
+            "predecessor_locator": "critic 15-43,49-54",
+            "final_locator": "final 105-113",
+            "judgment": "Every two material and three minor critic items is substantively addressed; all P dispositions preserved. Critic severity is independently qualified above."
+          }
+        ],
+        "criticism_adjudication": [
+          {
+            "claim": "M1 audit clock",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/critique.md",
+              "lines": "15-19"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+              "lines": "24,40,97,107"
+            },
+            "disposition": "Accept substantive clarification; qualify severity",
+            "evidence": [
+              "E01"
+            ],
+            "reasoning": "The exact device-origin/elapsed-time qualification is true and carried into the final. The draft already warned about wrong wall clocks and separate receipt times, so it was a clarification of existing safeguards, not evidence those safeguards were absent."
+          },
+          {
+            "claim": "M2 ABALOBI placement",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/critique.md",
+              "lines": "21-25"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+              "lines": "9,62,108"
+            },
+            "disposition": "Accept live-data condition; retain demo option",
+            "evidence": [
+              "E06"
+            ],
+            "reasoning": "Primary setup restrictions support caution before live capture. The predecessor proposed demo/reference use rather than buying the platform, so no product rejection follows."
+          },
+          {
+            "claim": "m1 FDA date distinction",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/critique.md",
+              "lines": "29-33"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+              "lines": "48,109"
+            },
+            "disposition": "Accept",
+            "evidence": [
+              "E14"
+            ],
+            "reasoning": "The revised statement distinguishes original compliance text, proposed extension and non-enforcement. It does not invent applicability."
+          },
+          {
+            "claim": "m2 thresholds",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/critique.md",
+              "lines": "35-39"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+              "lines": "92,100,110"
+            },
+            "disposition": "Accept proportionate improvement",
+            "evidence": [
+              "brief O6"
+            ],
+            "reasoning": "Pre-agreed devices, actors and thresholds improve discrimination. Zero test-case errors are not universal production guarantees."
+          },
+          {
+            "claim": "m3 source/version scope",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/critique.md",
+              "lines": "41-43"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+              "lines": "85,111"
+            },
+            "disposition": "Accept",
+            "evidence": [
+              "GH-P6910",
+              "GH-I5550",
+              "E01",
+              "E04"
+            ],
+            "reasoning": "Mutable docs, old issue applicability and short captured merge hash are honestly qualified. A future chosen release is not claimed tested."
+          }
+        ]
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_text": "Track harvest lots from crew entry through shed handoff, packing, and review hold.",
+          "candidate_disposition": "Already covered; retain explicit transitions/source linkage",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+            "lines": "23"
+          },
+          "independent_judgment": "Supported. Stable lot identity, stage visibility and schedule-versus-occurrence distinction implement the given path. The proposed event model is a chosen design, not a GS1 or legal mandate.",
+          "evidence": [
+            "E03",
+            "E04",
+            "E16"
+          ]
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Preserve a change history for corrections to quantities and lot details.",
+          "candidate_disposition": "Correction/material refinement; non-destructive corrections",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+            "lines": "24"
+          },
+          "independent_judgment": "Supported as an operational refinement of history. Prior/current values and attribution implement the brief; reason and append-only events are the recommended design. It does not assert the exact P2 wording mandates a specific database. Audit clock and prompt limits are retained.",
+          "evidence": [
+            "E01",
+            "E04"
+          ]
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Restrict crew contact details and internal quality notes from buyer-facing records.",
+          "candidate_disposition": "Already covered; separate buyer allowlist",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+            "lines": "25"
+          },
+          "independent_judgment": "Supported. Printed and later digital outputs preserve both prohibited data classes, with buyer channel still open.",
+          "evidence": [
+            "E04",
+            "E17"
+          ]
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Provide multilingual labels and glove-usable shed controls for the initial pilot.",
+          "candidate_disposition": "Already covered; farm-approved usability thresholds",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+            "lines": "26"
+          },
+          "independent_judgment": "Supported. No product translation feature is treated as proof of glove usability.",
+          "evidence": [
+            "E08"
+          ]
+        },
+        {
+          "clause": "P5",
+          "exact_text": "Lot-release authority and the chosen source for locally issued notices are farm governance decisions.",
+          "candidate_disposition": "User decision; release blocked pending governance",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+            "lines": "27"
+          },
+          "independent_judgment": "Supported. It chooses neither release role nor notice issuer and forbids software permission inference. Uncertain notice matching remains reviewed.",
+          "evidence": [
+            "E13",
+            "E14",
+            "E15"
+          ]
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Buyer access versus paper handoff and expansion beyond one species and shed remain undecided.",
+          "candidate_disposition": "User decision; provisional printed one-shed pilot",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+            "lines": "28"
+          },
+          "independent_judgment": "Supported. The initial defaults are proposals, not findings that paper is sufficient or expansion authorized. Buyer proof-of-need and pilot evidence still govern.",
+          "evidence": [
+            "E04",
+            "E06",
+            "E07"
+          ]
+        }
+      ],
+      "grade_limits": [
+        "Scientific grade applies to the complete saved planning artifact, not implementation certification.",
+        "All primary-source checks are documentary/static; selected product runtimes, farm devices, field work, legal applicability and procurement quotes were not executed.",
+        "Mutable source pages were independently retrieved at reviewer timestamps; no current-page observation proves a specific future deployment.",
+        "No native success, deadline compliance, price, usage or billing is inferred from artifact presence."
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N1-M1",
+          "type": "MATERIALLY_WRONG",
+          "severity": "material",
+          "obligations": [
+            "O2",
+            "O5"
+          ],
+          "axes": [
+            2,
+            5
+          ],
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "71"
+          },
+          "passage": "quantity carries a numeric amount and unit of measure",
+          "additional_candidate_locations": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/draft.md",
+              "lines": "76"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/sources/standards-and-alternatives.md",
+              "lines": "19-25"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "99"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "E16",
+              "url": "https://ref.gs1.org/standards/epcis/2.0.1/",
+              "version": "EPCIS 2.0.1 URL / Release 2.0 PDF",
+              "section": "7.3.3.1 QuantityElement and 7.3.3.1.1 UOM, printed pages 53-55",
+              "symbols": [
+                "quantity",
+                "uom",
+                "xsd:double"
+              ]
+            }
+          ],
+          "reasoning": "The final presents quantity-plus-unit as the standard model without its count/measurement branch. The normative model permits a positive integer count with uom omitted, requires uom for a physical measurement, and permits unknown quantity with both fields omitted. Count versus measured harvest quantity is a real pilot/export decision, so the omitted branch changes how a buyer-facing traceability mapping would be understood. This is a governing unit/type/domain exception under O2, not a missing citation or a demand to implement EPCIS. Optional future export does not make an inaccurate description of the selected standard correct. The researcher summary, critic affirmation and final carry the same error; no runtime failure is claimed.",
+          "qualification": "The farm-facing requirement to retain explicit quantity units is sensible. The defect is the account of EPCIS, not that farm policy. The grade does not infer a shipped invalid export."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m1",
+          "type": "WORDING_SCOPE",
+          "severity": "minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "61"
+          },
+          "passage": "the docs allow one audit row per form instance",
+          "primary_evidence": [
+            "E01"
+          ],
+          "reasoning": "The limit is one audit declaration row in an XLSForm definition, not one event row per completed instance. The candidate source note correctly distinguishes an audit.csv per instance from the definition row; the final wording conflates them. Other prose expects multiple events/history, so this is treated as a misleading wording defect rather than evidence that the candidate designs a one-event log."
+        },
+        {
+          "id": "N1-m2",
+          "type": "SOURCE_VERSION_LOCATOR",
+          "severity": "minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/source-map.json",
+            "lines": "sources[R05].version"
+          },
+          "additional_candidate_locations": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "183"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/sources/odk-language-access.md",
+              "lines": "13-15"
+            }
+          ],
+          "passage": "changelog v2026.2 notes App User form assignments now explicit",
+          "primary_evidence": [
+            "E09",
+            "E10"
+          ],
+          "reasoning": "The cited automatic-all-forms default change is under v0.7 in the changelog, not v2026.2. Current explicit assignment/revocation advice is correct and version checks remain proposed; the false introduction-version attribution has no demonstrated product-selection consequence here."
+        },
+        {
+          "id": "N1-m3",
+          "type": "UNSUPPORTED_CONTEXT",
+          "severity": "minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "7,22,150"
+          },
+          "passage": "with some annual spend available",
+          "primary_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H02/brief.md",
+              "lines": "3"
+            }
+          ],
+          "reasoning": "The original brief describes spending part of each year working in weak coverage; it supplies no recurring-funding commitment. N1 invents available annual spend. No annual amount, affordable product or procurement decision is inferred, and quotes remain required, so the residual defect is contextual rather than a supported cost conclusion."
+        },
+        {
+          "id": "N1-m4",
+          "type": "QUALIFICATION_OMISSION",
+          "severity": "minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "59-63,167-168"
+          },
+          "primary_evidence": [
+            "E01",
+            "E02"
+          ],
+          "reasoning": "The selected audit timestamp discussion gives epoch units but omits the documented device-derived session origin and possible absolute-clock error. Also missing is a specific clock-skew discriminator. Because the final neither calls audit time verified harvest time nor uses it to decide permission, and treats history as conditional/tested, this is an important qualification gap without a demonstrated material false authority claim. It is not automatically assigned the other critic\u2019s material label."
+        },
+        {
+          "id": "N1-m5",
+          "type": "PRESERVATION_SHARPENING_LOSS",
+          "severity": "minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "161-173"
+          },
+          "additional_candidate_locations": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/draft.md",
+              "lines": "155-163"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "118-122"
+            }
+          ],
+          "primary_evidence": [
+            "E01",
+            "E02",
+            "E03"
+          ],
+          "reasoning": "The compressed final keeps recovery as a policy/fit criterion but no longer states the draft\u2019s explicit clean restore-and-reconcile witness. It also no longer spells out the simultaneous arrivals/window-change/capacity-pressure scenario in the proposed workload test. The workflow, capacity, recovery questions and reconciliation remain in substantive final prose, so this is a loss of useful test discrimination rather than erasure of the brief\u2019s core outcomes. No test is falsely represented as executed."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "EXTERNAL_PRODUCT_INPUT",
+          "items": [
+            "actual species/product form/jurisdiction and Authority",
+            "release role and hold policy",
+            "eligible notice source and reviewed bed association",
+            "buyer channel/approved fields",
+            "pilot languages, devices, gloves and acceptance thresholds",
+            "itemized initial and ongoing costs/support",
+            "chosen Collect/Central/AppSheet versions/configuration if trialed"
+          ],
+          "assessment": "Honest open farm inputs and future pilot checks; not unfinished reviewer scope."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "Full O1-O6 and original-constraint review",
+          "judgment": "Substantive obligations and negative constraints retained, subject to the O2 standard-model defect. Available annual funding is not a supplied fact (minor N1-m3). No price or legal result is inferred.",
+          "evidence": [
+            "brief",
+            "final 7-11,140-173",
+            "N1-m3"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "All consequential claim groups, defaults, exceptions, units, releases and applicability checked",
+          "judgment": "Materially wrong EPCIS quantity model (N1-M1). Other selected product behavior and narrow release history are generally supported. Minor audit-row, timestamp qualification and access-default release attribution defects remain.",
+          "evidence": [
+            "E01",
+            "E02",
+            "E03",
+            "E08",
+            "E09",
+            "E10",
+            "E11",
+            "E12",
+            "E13",
+            "E15",
+            "E16",
+            "E17",
+            "GH-I5550",
+            "GH-P4830",
+            "N1-M1"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "All discovery alternatives and final conditions reviewed",
+          "judgment": "Useful ODK/AppSheet/paper-first mechanisms and optional standards are retained. Documented offline/cache/history caveats are relevant. No product winner, price advantage or unlimited fit is asserted.",
+          "evidence": [
+            "final 15-22",
+            "E02",
+            "E11",
+            "E12"
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "Every exact P1-P6 disposition and rejected inference reviewed",
+          "judgment": "Supported final scope/dispositions. Several critic severity claims overstate already-qualified draft text; that is not evidence of final requirement loss. EPCIS event-ID optionality is independently supported.",
+          "evidence": [
+            "plan_dispositions.N1",
+            "criticism_adjudication.N1",
+            "E16"
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "Complete discovery, draft, critique, final, source maps/indexes/notes inspected",
+          "judgment": "Generally complete preservation with justified mechanism narrowing. Source-model error survives all stages (N1-M1). Explicit restore/capacity discrimination loses detail (minor N1-m5). Every critic item receives independent treatment.",
+          "evidence": [
+            "preservation_coverage.N1",
+            "criticism_adjudication.N1",
+            "N1-M1",
+            "N1-m5"
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "All nine final proposed validations plus predecessor checks and execution claims reviewed",
+          "judgment": "Meaningful queue/reconciliation, definition-change, edit ordering, confidentiality, language/glove and notice discriminators. Runtime/restore/legal/price trials remain proposed. Lost restore specificity is noted; no validation-overclaim or self-referential executed witness found.",
+          "evidence": [
+            "final 153-173",
+            "E01",
+            "E02",
+            "E03",
+            "N1-m5"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "source_id": "E01",
+            "candidate_source_ids": [
+              "N1:R03"
+            ],
+            "judgment": "Audit is explicitly configured in the XLSForm. Change/reason/identity parameters are optional; identity is entered text. Epoch milliseconds use a device-derived session origin and elapsed intervals. Shutdown and changed audit settings have documented limitations. N2 retains clock qualification; N1 omits it and misstates the definition-row scope."
+          },
+          {
+            "source_id": "E02",
+            "candidate_source_ids": [
+              "N1:R01"
+            ],
+            "judgment": "Offline finalizations queue; App User auto-send is the documented default. Finalized/sent editing is opt-in, on-device, under the original definition; a Central edit excludes later Collect editing. Entity data is unchanged by such submission edits; manually queued edits require order. N1 final preserves these limits."
+          },
+          {
+            "source_id": "E03",
+            "candidate_source_ids": [
+              "N1:R02"
+            ],
+            "judgment": "Central applies updates in receipt order and surfaces parallel/conflicting versions. Missing predecessors can hold a chain for five days, then force processing with conflict marking. N1 correctly treats mutable shared status as a reconciliation risk, not universal unreliability."
+          },
+          {
+            "source_id": "E08",
+            "candidate_source_ids": [
+              "N1:R04"
+            ],
+            "judgment": "Labels, hints, media and messages can be translated; blanks remain blank, the app interface is separate, and language-used export needs explicit capture/calculation. N1 preserves native-speaker testing and does not infer glove performance."
+          },
+          {
+            "source_id": "E09",
+            "candidate_source_ids": [
+              "N1:R05"
+            ],
+            "judgment": "App Users are project-scoped, may be restricted to assigned forms, and can be revoked. The source does not certify safe shared-device sessions or a buyer portal. N1 preserves separate privacy/session tests."
+          },
+          {
+            "source_id": "E10",
+            "candidate_source_ids": [
+              "N1:R05 supplemental"
+            ],
+            "judgment": "The current explicit form-assignment behavior is supported, but the candidate incorrectly associates its introduction with v2026.2. This is a release-locator error, not a reversal of current permission advice."
+          },
+          {
+            "source_id": "E11",
+            "candidate_source_ids": [
+              "N1:R09"
+            ],
+            "judgment": "Initial online loading, configured caching/delayed sync, prolonged-offline stale-update risk and browser restrictions support a conditional shed-board trial. Offline Google Maps caching is unavailable. N1 does not reject short-duration use or claim runtime fit."
+          },
+          {
+            "source_id": "E12",
+            "candidate_source_ids": [
+              "N1:R10"
+            ],
+            "judgment": "The page gives fifty-three days for Enterprise Plus and seven for other account types; richer analysis is plan-dependent. N1 appropriately distinguishes this recent activity log from indefinite lot history."
+          },
+          {
+            "source_id": "E13",
+            "candidate_source_ids": [
+              "N1:R06"
+            ],
+            "judgment": "Bivalve inclusion has specified raw-bivalve exemptions, and scallop adductor muscle is excluded from this entry. N1 does not infer applicability from an unspecified species/jurisdiction; its local Authority qualification is justified."
+          },
+          {
+            "source_id": "E15",
+            "candidate_source_ids": [
+              "N1:R07"
+            ],
+            "judgment": "The tag size/material, Authority sanction, prescribed contents, ninety-day chronological retention statement and conditional same-area/day/harvester bulk tagging are supported. Consignee is added for bulk sale. This does not establish that this farm card is an official tag or that digital history shares tag retention."
+          },
+          {
+            "source_id": "E16",
+            "candidate_source_ids": [
+              "N1:R08"
+            ],
+            "judgment": "A specified count without uom is a positive integer; physical measurement has positive quantity with uom. Unknown quantity and its unit may both be omitted. UOM codes cover permitted physical measures. Event time is timezone-aware; event IDs are optional; disposition persists across intervening events that do not change it. N2 preserves the count/measurement distinction; N1 gives an unconditional quantity-plus-unit account."
+          },
+          {
+            "source_id": "E17",
+            "candidate_source_ids": [
+              "N1:R10 supplemental"
+            ],
+            "judgment": "Security filters alone are not a complete security solution; source-level protections matter. N1 appropriately tests buyer data paths, exports and caches instead of equating hidden UI with privacy."
+          },
+          {
+            "source_id": "GH-I5550",
+            "candidate_source_ids": [
+              "N1:R16"
+            ],
+            "judgment": "The reported answer/audit divergence is narrow historical evidence. Both finals retain it as a selected-version regression target and avoid inferring a current general defect or proven fix."
+          },
+          {
+            "source_id": "GH-P4830",
+            "candidate_source_ids": [
+              "N1:R11",
+              "N1:R12",
+              "N1:R13",
+              "N1:R14",
+              "N1:R15"
+            ],
+            "judgment": "The chain concerns manual form-download error details. The merge SHA and both candidate tag targets independently match public API metadata. Maintainer intentions to reuse the pattern for uploads do not establish shipped upload reliability; N1 retains that boundary."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "scope": "All consequential final claim families and applicable stage/disposition/preservation claims in the exact input map; full runtime and case-specific legal applicability were not required or available."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "reviewed_stages": [
+          "discovery",
+          "draft",
+          "critique",
+          "final",
+          "all declared source maps and indexes/notes"
+        ],
+        "records": [
+          {
+            "subject": "Constraints and decisions",
+            "predecessor_locator": "discovery 7; draft 7,132-143",
+            "final_locator": "final 7-11,140-151",
+            "judgment": "Original operational/privacy/governance/pilot constraints survive. The unsupported annual-spend premise also survives (N1-m3), rather than being silently credited as a brief fact."
+          },
+          {
+            "subject": "Discovery and options",
+            "predecessor_locator": "discovery 11-27; draft 15-22",
+            "final_locator": "final 15-22",
+            "judgment": "ODK, AppSheet, paper-first and optional standards remain coherent with fit, cache/history and cost limits. Removing discovery\u2019s unsupported better-first-prototype claim is appropriate."
+          },
+          {
+            "subject": "Mechanisms and standards",
+            "predecessor_locator": "discovery 31-60; draft 64-82",
+            "final_locator": "final 59-77",
+            "judgment": "Offline queue, edit opt-in/order/Entity effect, conflicts, language/access and legal tag qualifications survive; edit-definition limitations are strengthened. Wrong EPCIS quantity generalization is preserved (N1-M1); audit-row wording persists (N1-m1)."
+          },
+          {
+            "subject": "Evolution",
+            "predecessor_locator": "discovery 62-66; draft 84-88",
+            "final_locator": "final 79-83",
+            "judgment": "Issue/fix/release account and upload-versus-download boundary survive. No current #5550 defect or fix is inferred. Independent reviewer API checks corroborate inherited hashes."
+          },
+          {
+            "subject": "Optional mechanisms and policy",
+            "predecessor_locator": "draft 30-46,98-104; critic 26-40",
+            "final_locator": "final 30-41,93-99",
+            "judgment": "Alternative ID schemes, conditional split/merge, physical tag uncertainty and recoverable history survive. Distinct IDs/reason/review/architecture are no longer presented as exact clause necessities. This narrowing is generally justified."
+          },
+          {
+            "subject": "Validation",
+            "predecessor_locator": "discovery 68-79; draft 155-164; critic 118-122",
+            "final_locator": "final 161-173",
+            "judgment": "Meaningful queue/edit/privacy/usability/notice/fit discriminators remain. Explicit clean restore-and-reconcile and dynamic capacity-pressure detail are compressed away (N1-m5). No proposed test is called executed."
+          },
+          {
+            "subject": "Critique",
+            "predecessor_locator": "critic 20-52,105-112",
+            "final_locator": "final 127-138",
+            "judgment": "All five material and all eight minor critic points are expressly addressed. Independent adjudication rejects overstatements about ranges, abandoned P4 and newly discovered upload overclaim. The critic also missed N1-M1."
+          }
+        ],
+        "criticism_adjudication": [
+          {
+            "claim": "M1 P4 uncertain label",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "20-24"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "111,129"
+            },
+            "disposition": "Accept reclassification; reject implication that draft removed P4",
+            "evidence": [
+              "brief P4",
+              "E08"
+            ],
+            "reasoning": "The plan obligation is clear; criteria are unknown. Draft line 116 already said to keep both requirements. The final improves classification without recovering a previously absent pilot obligation."
+          },
+          {
+            "claim": "M2 P1 extra mechanisms",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "26-32"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "30-33,93,130"
+            },
+            "disposition": "Accept separation; reject mandatory-range subclaim",
+            "evidence": [
+              "brief P1",
+              "E02",
+              "E03",
+              "E15",
+              "E16"
+            ],
+            "reasoning": "Separate event IDs are optional in EPCIS and split/merge/tag integration are conditional. But draft line 30 already allowed another collision-resistant scheme; the critic overstated required ranges. Final narrowing retains useful mechanisms and does not reverse necessary lot identity."
+          },
+          {
+            "claim": "M3 P2 additional policies",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "34-40"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "37-41,99,131"
+            },
+            "disposition": "Accept policy-versus-clause distinction with operational qualification",
+            "evidence": [
+              "brief P2",
+              "E01",
+              "E15"
+            ],
+            "reasoning": "Exact P2 does not prescribe a reason, review or storage architecture. Draft line 104 already allowed equivalent recoverability. Calling backups optional in clause classification does not prove safe reliance without recovery. The final preserves policy questions but loses a specific restore witness (N1-m5)."
+          },
+          {
+            "claim": "M4 edit/version conditions",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "42-46"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "59,132,167"
+            },
+            "disposition": "Accept, primary-confirmed",
+            "evidence": [
+              "E02"
+            ],
+            "reasoning": "On-device/original-definition/Central-edit/non-retroactive limits genuinely affect correction validation and now appear in full prose and test cases."
+          },
+          {
+            "claim": "M5 evolution scope",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "48-52"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "81-83,133"
+            },
+            "disposition": "Retain valid caution; reject characterization as new material error",
+            "evidence": [
+              "GH-P4830",
+              "GH-I5550"
+            ],
+            "reasoning": "Draft line 88 already denied general upload reliability. The final retains that denial and critic SHA-retrieval limitation. Reviewer independently confirmed the SHA; this does not alter the authored artifact."
+          },
+          {
+            "claim": "minor 1-3 ID/split/reason choices",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "105-107"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "30,32,37,134"
+            },
+            "disposition": "Accept qualified options",
+            "evidence": [
+              "brief P1/P2",
+              "E16"
+            ],
+            "reasoning": "Identity outcome survives; specific mechanism, allowed operations and reason/review policy remain optional or conditional."
+          },
+          {
+            "claim": "minor 4 local Model Ordinance",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "108"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "41,67-69,134"
+            },
+            "disposition": "Accept",
+            "evidence": [
+              "E13",
+              "E15"
+            ],
+            "reasoning": "Tag facts stay model-based and conditional; digital retention is not silently set to ninety days."
+          },
+          {
+            "claim": "minor 5-6 sample and cohort",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "109-110"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "11,135,165-166"
+            },
+            "disposition": "Accept",
+            "evidence": [
+              "brief pilot scope/O6"
+            ],
+            "reasoning": "Twenty lots is scenario coverage, zero silent failures a tested-case gate, and workload modeling is not a mandate to deploy all crews."
+          },
+          {
+            "claim": "minor 7 cost",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "111"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "22,136,150,172"
+            },
+            "disposition": "Accept no-winner/quote condition; note invented funding premise",
+            "evidence": [
+              "brief budget",
+              "E11",
+              "E12"
+            ],
+            "reasoning": "Prices and fit remain unknown; no cost conclusion is made. Available annual funding is nevertheless not supplied by the original brief (N1-m3)."
+          },
+          {
+            "claim": "minor 8 execution",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+              "lines": "112"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+              "lines": "157-163,136"
+            },
+            "disposition": "Accept",
+            "evidence": [
+              "declared stage source notes"
+            ],
+            "reasoning": "Research reading is distinguished from runtime, field, legal and procurement tests. No product witness is claimed."
+          }
+        ]
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_text": "Track harvest lots from crew entry through shed handoff, packing, and review hold.",
+          "candidate_disposition": "Correction, scoped",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "91-93"
+          },
+          "independent_judgment": "Supported. Identity and queue/state/workflow links make the path operable; ranges/event IDs and split/merge are mechanisms or conditional scope. Twelve-crew workload does not force all live users into the pilot.",
+          "evidence": [
+            "E02",
+            "E03",
+            "E15",
+            "E16"
+          ]
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Preserve a change history for corrections to quantities and lot details.",
+          "candidate_disposition": "Correction, outcome-based",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "97-99"
+          },
+          "independent_judgment": "Supported. Attributable prior/corrected values remain required. Reason/review and implementation architecture are qualified. Optional classification of backup does not settle whether actual reliance on digital history needs it.",
+          "evidence": [
+            "E01",
+            "E02"
+          ]
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Restrict crew contact details and internal quality notes from buyer-facing records.",
+          "candidate_disposition": "Already covered",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "103-105"
+          },
+          "independent_judgment": "Supported. Both forbidden buyer fields survive across paper/accounts/exports/cache. The buyer field list stays open.",
+          "evidence": [
+            "E09",
+            "E11",
+            "E17"
+          ]
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Provide multilingual labels and glove-usable shed controls for the initial pilot.",
+          "candidate_disposition": "Already covered; criteria uncertain",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "109-111"
+          },
+          "independent_judgment": "Supported final disposition. The draft\u2019s uncertain label did not remove its explicit keep-both instruction; the final correctly separates requirement from unknown acceptance criteria.",
+          "evidence": [
+            "E08"
+          ]
+        },
+        {
+          "clause": "P5",
+          "exact_text": "Lot-release authority and the chosen source for locally issued notices are farm governance decisions.",
+          "candidate_disposition": "User decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "115-117"
+          },
+          "independent_judgment": "Supported. Authority, source, verifier and mapping remain human governance; a conservative hold policy is only proposed.",
+          "evidence": [
+            "E13",
+            "E15"
+          ]
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Buyer access versus paper handoff and expansion beyond one species and shed remain undecided.",
+          "candidate_disposition": "User decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+            "lines": "121-123"
+          },
+          "independent_judgment": "Supported. Paper/direct access and expansion remain open; there is no known product/cost winner.",
+          "evidence": [
+            "E09",
+            "E11",
+            "E12"
+          ]
+        }
+      ],
+      "grade_limits": [
+        "Scientific grade applies to the complete saved planning artifact, not implementation certification.",
+        "All primary-source checks are documentary/static; selected product runtimes, farm devices, field work, legal applicability and procurement quotes were not executed.",
+        "Mutable source pages were independently retrieved at reviewer timestamps; no current-page observation proves a specific future deployment.",
+        "No native success, deadline compliance, price, usage or billing is inferred from artifact presence."
+      ]
+    }
+  },
+  "method_clues": {
+    "blinding": "Partial only. Neutral labels were used, but exact paths disclose control/treatment; artifacts explicitly name M16 and stage assignments disclose resource allocation.",
+    "observations": [
+      "N2 discovery discloses a same-thread counterread rather than claiming a fresh nested worker; later frozen critic/reviser files are separately authored artifacts.",
+      "N1 draft/footer and final describe fresh M16 contexts; actual context isolation/native lifecycle cannot be established from this permitted corpus.",
+      "No method, length, citation count, critic agreement, or artifact hash match was used as the scientific grade."
+    ]
+  },
+  "comparative_quality_eligible": false,
+  "comparative_quality_reason": "N2 has a full-scope bounded pass and N1 an identified source-grounded material defect. Both are independently assessed; there is no paired full-quality speed comparison, two-FAIL equivalence, or faster-FAIL win.",
+  "scope_limits": [
+    "Review used the exact C-02 input map, original H02 brief, exact frozen plan, all complete declared candidates/stages/maps/source notes, and independent relevant public primary evidence.",
+    "No other case, campaign aggregate, other evaluation, private provider history or internals was inspected. The repository Plans index was read only to comply with workspace instructions and was not H02 scientific evidence.",
+    "No candidate repair, repository/Git/canon edit, account/config change, executable download, nested worker, product runtime, or deployment occurred.",
+    "No scientific review scope remains unfinished. Runtime, price, local legal applicability and unresolved farm inputs remain explicit external limitations."
+  ],
+  "evaluation_started_at": "2026-10-09T22:20:52Z",
+  "evaluation_completed_at": "2026-10-09T22:34:35.011370+00:00",
+  "observed_source_operations": {
+    "frozen_read": "Read assignment, exact input map/rubric, original brief/plan, both complete discoveries/drafts/critiques/finals and declared source maps/indexes/notes; compared frozen SHA-256 and sizes.",
+    "public_operations": [
+      "web.run opened official ODK audit/forms/entities/submissions pages and focused sections",
+      "web.run searched official Google AppSheet security guidance",
+      "web.run opened ODK PR #6910 and its verification/merge section",
+      "Read-only HTTP fetched exact public documentation, regulator PDFs, GitHub issues/comments/PR metadata/source diffs and release/tag metadata; gzip decoded and PDFs text-extracted without retaining full PDFs or executing source code",
+      "Independently inspected code symbols for integrity cleanup and manual download error display, and verified published merge/tag identities"
+    ],
+    "capture_record_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "E10",
+      "E11",
+      "E12",
+      "E13",
+      "E14",
+      "E15",
+      "E16",
+      "GH-I6768",
+      "GH-C6768",
+      "GH-I5550",
+      "GH-C5550",
+      "GH-I1703",
+      "GH-C1703",
+      "GH-I4489",
+      "GH-C4489",
+      "GH-P6910",
+      "GH-F6910",
+      "GH-PC6910",
+      "GH-P4830",
+      "GH-F4830",
+      "GH-PC4830",
+      "GH-Rv2021.3.0",
+      "GH-Tv2021.3.0",
+      "GH-Rv1.28.0",
+      "GH-Tv1.28.0",
+      "E17"
+    ],
+    "supplemental_retrievals": "Focused reopens checked the governing v0.7 assignment heading, audit time origin, EPCIS quantity and optional eventID table, AppSheet browser/maps/Enterprise analysis, and form/app language distinctions. These remain documentary checks.",
+    "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+    "interpretation": "Document reading and metadata/source inspection are research execution, not product validation. HTTP success/hash agreement is provenance only."
+  },
+  "native_and_cost_limits": {
+    "candidate_native_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_t3_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_deadline_compliance": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_usage": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_billing": {
+      "N1": null,
+      "N2": null
+    },
+    "reviewer_usage": null,
+    "reviewer_billing": null,
+    "qualification": "Reviewer native lifecycle is shown by actual supported create_goal/get_goal/update_goal calls in the thread, not a handwritten receipt. Required science is saved before requesting native terminal completion. Delivery availability is taken from the exact input map; native, timing, usage and billing remain independently unknown unless separately observed.",
+    "reviewer_usage_kind": "Provider/billable usage; not independently observed.",
+    "reviewer_native_counter_observation": {
+      "counter": "tokensUsed",
+      "value": 236901,
+      "source": "Actual get_goal response during the active check",
+      "qualification": "Native accounting counter, not provider billing telemetry or terminal usage. It is not used as a scientific score."
+    }
+  },
+  "original_constraint_coverage": [
+    {
+      "constraint": "Twelve crews; two sheds; broad inlet",
+      "N2_locator": "N2 final 15,42,96,101",
+      "N1_locator": "N1 final 7,11,151,165",
+      "judgment": "Retained; pilot workload distinguished from expansion/live cohort."
+    },
+    {
+      "constraint": "Beds, pickup windows, line capacity",
+      "N2_locator": "N2 final 23,36,42,96,101",
+      "N1_locator": "N1 final 28,93,165",
+      "judgment": "Retained; N2 has the sharper capacity-conflict test; N1 retains workflow but compresses dynamic-pressure test detail."
+    },
+    {
+      "constraint": "Waterproof cards, harvest quantities and lot labels",
+      "N2_locator": "N2 final 7,23,36,38,95",
+      "N1_locator": "N1 final 28-33,165,168",
+      "judgment": "Retained with physical-source linkage; explicit farm quantity units are sensible in both."
+    },
+    {
+      "constraint": "$14,000 initial system budget",
+      "N2_locator": "N2 final 11,15,94",
+      "N1_locator": "N1 final 7,22,150,172",
+      "judgment": "Cap preserved; neither supplies price/fit proof. N1 incorrectly adds annual funding availability."
+    },
+    {
+      "constraint": "Part-year weak mobile coverage",
+      "N2_locator": "N2 final 15,36-42,96-97",
+      "N1_locator": "N1 final 7,17-18,59-60,75,165-167",
+      "judgment": "Offline queue, persistence and reconciliation addressed; no unsupported runtime pass."
+    },
+    {
+      "constraint": "Reliable lot-level buyer handoffs; no contacts/internal quality notes",
+      "N2_locator": "N2 final 25,50-54,99",
+      "N1_locator": "N1 final 49-53,105,169",
+      "judgment": "Both prohibited classes retained across chosen/future buyer channels."
+    },
+    {
+      "constraint": "Weather, buyer demand and locally issued closure changes",
+      "N2_locator": "N2 final 15,36,44-48,98",
+      "N1_locator": "N1 final 7,28,43-47,171",
+      "judgment": "Scheduling changes and reviewed notice provenance retained; specific weather automation is not invented."
+    },
+    {
+      "constraint": "Own authorized notices; software must not decide permission",
+      "N2_locator": "N2 final 27,44-48,98",
+      "N1_locator": "N1 final 11,43-47,117,171",
+      "judgment": "Authority/source/bed association stay externally governed; no absence-of-notice legal openness inference."
+    },
+    {
+      "constraint": "Multiple languages; shared gloved touchscreen",
+      "N2_locator": "N2 final 26,54,100",
+      "N1_locator": "N1 final 63,111,149,170",
+      "judgment": "Both retained as pilot obligations; target languages/device/usability thresholds honestly unknown."
+    },
+    {
+      "constraint": "Waiting, packed, held; attributable transcription correction",
+      "N2_locator": "N2 final 7,23-24,40-42,97-98",
+      "N1_locator": "N1 final 31,37,59-63,99,165,168",
+      "judgment": "Core visibility/history retained. Source-model issues are separately adjudicated, not hidden by constraint repetition."
+    },
+    {
+      "constraint": "One species/one shed considered; release role, notice-bed link, buyer channel undecided",
+      "N2_locator": "N2 final 17,27-28,68-79",
+      "N1_locator": "N1 final 7,115-123,140-151",
+      "judgment": "Both preserve decisions and conditional pilot boundary; neither demonstrates paper adequacy or authorized expansion."
+    }
+  ],
+  "evaluation_start_qualification": "First observed UTC checkpoint, immediately after startup reads and actual Goal activation; earlier startup was not precisely timed."
+}

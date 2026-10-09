@@ -1,0 +1,27 @@
+{
+  "verified_at": "2026-10-09T22:24:08.560717+00:00",
+  "commit": "34704eccafc094e5635ada4a7ce458977ee83390",
+  "github_ref_actual": "34704eccafc094e5635ada4a7ce458977ee83390",
+  "verification": "Actual GitHub API branch ref and independent immutable README plus A-M08-A assessment readback.",
+  "critical_files": [
+    "README.md",
+    "evaluations/A-M08-A/assessment.md"
+  ],
+  "author_and_committer_verified_public_noreply": true,
+  "snapshot": {
+    "original_arms": 80,
+    "started": 66,
+    "delivered": 58,
+    "paired_assessments": 31,
+    "full_source_assessments": 54,
+    "source_pass": 13,
+    "source_fail": 41,
+    "missing_complete_final_quality_null": 8,
+    "unstarted_closed": 14,
+    "pending_paired_reviews": [
+      "C-01",
+      "C-02"
+    ]
+  },
+  "status": "INTERMEDIATE: all candidates/screening science finished; last development reviews/cleanup pending"
+}

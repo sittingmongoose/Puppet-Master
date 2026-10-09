@@ -1,0 +1,19 @@
+{
+  "decided_at": "2026-10-09T22:48:51.867010+00:00",
+  "locked_recipe": "M16-v1",
+  "promotion": false,
+  "C-01": {
+    "control": "PASS_WITH_LIMITATIONS",
+    "treatment": "PASS_WITH_LIMITATIONS",
+    "delivery_saving_fraction": 0.161157,
+    "occupied_change_fraction": -0.171391,
+    "all_time_ceilings": true
+  },
+  "C-02": {
+    "control": "PASS_WITH_LIMITATIONS",
+    "treatment": "FAIL",
+    "delivery_treatment_slower_fraction": 0.689439,
+    "material_failure": "EPCIS QuantityElement count/measurement/unknown-quantity branch omitted; false generic unit claim preserved across draft/critic/final"
+  },
+  "reason": "One scoped16.1%gain, second treatment sourceFAIL andslower. Neither meets locked20%delivery gate; no confirmation/tuning/replacement."
+}

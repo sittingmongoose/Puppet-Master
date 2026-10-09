@@ -1,0 +1,536 @@
+{
+  "schema_version": "1.0",
+  "component": "ER11 bounded publication/report-accounting-method-attribution audit",
+  "status": "COMPLETE_WITH_PUBLICATION_FINDINGS",
+  "assignment_deadline_utc": "2026-10-09T22:33:03.725Z",
+  "scope": "Read-only permitted-input audit; only result.md and result.json are written. Not a scored arm, premium candidate repair, source-science assessment, or live campaign control.",
+  "native_goal": "An actual supported create_goal call activated this assignment before audit reads. Supported update_goal completion is performed only after both result artifacts are saved. No Goal receipt JSON is fabricated or transcribed here.",
+  "pending_source_policy": {
+    "method": "M16",
+    "arms": [
+      "C-01/control",
+      "C-01/treatment",
+      "C-02/control",
+      "C-02/treatment"
+    ],
+    "audit_source_status": "PENDING_FOR_THIS_ASSIGNMENT",
+    "outcomes_inferred": false,
+    "science_assessed": false,
+    "note": "Inputs changed during the finite audit. All M16 source-grade fields are excluded from conclusions, even if later file revisions carry different statuses."
+  },
+  "disposition_snapshot": {
+    "original_arms": 80,
+    "started_arms_including_failures": 66,
+    "started_blocks": 33,
+    "complete_finals": 58,
+    "graded_complete_finals": 54,
+    "full_final_pass_with_limitations": 13,
+    "full_final_fail": 41,
+    "pending_complete_final_grades": 4,
+    "missing_complete_finals": 8,
+    "closed_unstarted_arms": 14,
+    "terminal_paired_assessments_at_initial_snapshot": 31,
+    "confirmation_executed": false,
+    "note": "13+41+4+8+14=80; 13+41+4=58 delivered; 58+8=66 started. Initial table snapshot observed at first read was frozen_at 2026-10-09T22:24:55.484392+00:00. Four M16 grades are retained as pending by assignment scope."
+  },
+  "findings": [
+    {
+      "id": "PUB-01",
+      "severity": "medium",
+      "category": "arm_attribution",
+      "paths": [
+        "final/FINAL_RESULTS_DRAFT.md",
+        "reusable/REFERENCE_WORKFLOW.md",
+        "control/QUEUE_CLOSURE.json",
+        "accounting/v2/TIMING.json"
+      ],
+      "claim": "M16 delivery is written as 28.848 versus 34.391 minutes for H01 and 39.944 versus 23.644 for H02 without arm labels.",
+      "observation": "Those sequences are treatment/control. The explicit metadata is H01 control 2063.434s (34.390567min), treatment 1730.897s (28.848283min); H02 control 1418.612s (23.643533min), treatment 2396.659s (39.944317min). The stated saving percentages are correct; the unlabeled order invites reversed arm attribution.",
+      "recommendation": "Label both arms explicitly, preferably control then treatment. Retain 16.115708% saving and 68.943940% slower treatment, with all four source grades pending."
+    },
+    {
+      "id": "PUB-02",
+      "severity": "medium",
+      "category": "execution_accounting_metadata",
+      "paths": [
+        "control/queue.json",
+        "control/QUEUE_ORIGINAL.json",
+        "control/QUEUE_CLOSURE.json",
+        "final/tables/ALL_80_ARMS.json"
+      ],
+      "claim": "The mutable queue contains UNSTARTED, UNSTARTED_DEVELOPMENT, UNSTARTED_SELECTED or READY_DEVELOPMENT statuses for executed blocks.",
+      "observation": "Twenty non-M16 started blocks have these stale statuses; their identities are recorded in accounting_checks.queue_started_block_statuses. C-01/C-02 were also labeled UNSTARTED at the first read, despite recorded completed candidate delivery. Original queue preservation is appropriate, but mutable queue statuses cannot serve as the closing execution denominator.",
+      "recommendation": "Publish an explicit schedule-versus-final-disposition distinction or reconcile mutable execution statuses through the campaign owner's normal process. Count all started failures: 66 attempted arms, not just the 58 rows whose original_attempt_status literally equals STARTED."
+    },
+    {
+      "id": "PUB-03",
+      "severity": "medium",
+      "category": "qualification_axis_conflation",
+      "paths": [
+        "accounting/v2/TIMING.json",
+        "final/tables/ALL_80_ARMS.json"
+      ],
+      "claim": "The pair field strict_time_eligible is false for C-02.",
+      "observation": "Both C-02 arms have delivery_within_whole_deadline=true, all stage delivery deadlines=true and occupied_within_90min=true; both arm rows have time_eligible=true at the initial snapshot. The pair field therefore does not denote timing alone. At the first snapshot C-01 had the same false pair field, despite both arms meeting timing limits. No M16 source outcome is used here.",
+      "recommendation": "Expose paired timing eligibility separately. If the existing field means source-and-time joint qualification, rename/document it accordingly and preserve pending source status independently."
+    },
+    {
+      "id": "PUB-04",
+      "severity": "medium",
+      "category": "assessment_coverage_linkage",
+      "paths": [
+        "final/FINAL_CLOSEOUT.md",
+        "final/SCREENING_RESULTS.md",
+        "final/tables/ALL_80_ARMS.json"
+      ],
+      "claim": "Existing terminal assessments cover available components of all eight missing-final arms.",
+      "observation": "A-M12-B/treatment is NO_COMPLETE_FINAL with original_assessor_grade=null and assessment_path=null. The screening table links a paired original review, but the permitted row metadata does not establish treatment component coverage. This is a linkage/qualification gap, not proof that the paired assessment or component review did not occur.",
+      "recommendation": "Attach the explicit treatment component-coverage disposition or qualify the all-eight coverage statement. Keep unseen full-final source quality null and do not convert a raw operational label into full-final quality."
+    }
+  ],
+  "verified": [
+    "All 24 screening table method/case/provider/full-final-quality mappings agree with non-M16 final rows.",
+    "All 180 original product-stage assignment headers match the recorded method and version; every declared control/treatment contrast exactly matches its registered method JSON.",
+    "ALL_80 rows and timing rows agreed on method/version/case/route/delivery/occupied fields in the bounded comparison.",
+    "Missing complete finals retain null full-final source quality. NO_DELIVERY/HOLD and invalid/operational statuses are separate raw labels, not additional full-final FAILs.",
+    "M02 is progressive retrieval with separate fresh critic/reviser; M03 is critic-finalizer; M05-v2 is the terminal/hash successor. No screening case-number-to-method attribution error was found.",
+    "M14 B-05/B-06 is a bundled cross-provider recipe: Muse investigation/finalization with Luna treatment critic. Per-stage effective route metadata and role overrides retain that distinction.",
+    "M15 uses four treatment contexts with a factored verifier; controls use three. M01 four-context parallel controls are properly excluded from the three-context reference denominator.",
+    "Reference cohort independently reconstructs to 10 attempts, 10 delivered, 8 source passes, 2 failures and 5 joint source/time successes.",
+    "Descriptive latency does not qualify failed or pending source outputs; reports do not claim repeatable optimization, 2x speed, affordability or confirmation."
+  ],
+  "arithmetic_checks": {
+    "formula_delivery_saving_percent": "100 * (control_delivery_s - treatment_delivery_s) / control_delivery_s",
+    "formula_occupied_change_percent": "100 * (treatment_occupied_s - control_occupied_s) / control_occupied_s",
+    "pairs": [
+      {
+        "block": "A-M05-B",
+        "delivery_saving_percent": 28.270941901910373,
+        "occupied_change_percent": 16.671975192470857
+      },
+      {
+        "block": "A-M08-A",
+        "delivery_saving_percent": 24.338644932882946,
+        "quality_comparable": false
+      },
+      {
+        "block": "A-M08-B",
+        "delivery_saving_percent": 0.39893170946613266,
+        "occupied_change_percent": -4.70908960611477
+      },
+      {
+        "block": "B-02",
+        "delivery_saving_percent": 4.906517015192446,
+        "occupied_change_percent": 60.36546727345515
+      },
+      {
+        "block": "C-01",
+        "delivery_saving_percent": 16.115708086616788,
+        "source_status": "PENDING_FOR_THIS_ASSIGNMENT",
+        "gate_20_percent_met": false
+      },
+      {
+        "block": "C-02",
+        "delivery_saving_percent": -68.94393956909994,
+        "source_status": "PENDING_FOR_THIS_ASSIGNMENT",
+        "gate_20_percent_met": false
+      }
+    ],
+    "reference": {
+      "attempts": 10,
+      "pass": 8,
+      "fail": 2,
+      "pass_all_time": 5
+    },
+    "reference_pass_statistics": {
+      "delivery_minutes": {
+        "min": 27.675,
+        "max": 59.622,
+        "median": 41.6545
+      },
+      "occupied_agent_minutes": {
+        "min": 19.662,
+        "max": 50.932,
+        "median": 35.247
+      }
+    },
+    "partial_experiment_occupation": {
+      "snapshot": "2026-10-09T22:29:10.675683+00:00",
+      "reported_s": 174897.721,
+      "reported_hours": 48.582700277777775,
+      "product_s": 125317.87700000001,
+      "paired_assessment_s": 36232.674,
+      "explicit_extra_owned_s": 78.818,
+      "remaining_not_itemized_by_these_fields_s": 13268.351999999984,
+      "note": "The hours conversion is correct. Additional helpers/setup/other experiment contexts are not fully itemized by the permitted serialized row fields; the difference is not evidence of an arithmetic error. Reported experiment occupation is explicitly partial. Do not claim a fully reconstructed campaign total."
+    }
+  },
+  "accounting_checks": {
+    "screening_rows_checked": 24,
+    "screening_mismatches": [],
+    "assignments_checked": 180,
+    "assignment_method_mismatches": [],
+    "assignment_registered_contrast_mismatches": [],
+    "queue_started_block_statuses": [
+      {
+        "block": "A-M03-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M04-B",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M05-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M05-B",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M06-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M06-B",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M07-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M07-B",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M08-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M08-B",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M09-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M10-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M11-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "A-M12-A",
+        "queue_status": "UNSTARTED"
+      },
+      {
+        "block": "B-01",
+        "queue_status": "UNSTARTED_DEVELOPMENT"
+      },
+      {
+        "block": "B-02",
+        "queue_status": "UNSTARTED_DEVELOPMENT"
+      },
+      {
+        "block": "B-03",
+        "queue_status": "UNSTARTED_SELECTED"
+      },
+      {
+        "block": "B-05",
+        "queue_status": "READY_DEVELOPMENT"
+      },
+      {
+        "block": "B-06",
+        "queue_status": "READY_DEVELOPMENT"
+      },
+      {
+        "block": "B-07",
+        "queue_status": "READY_DEVELOPMENT"
+      },
+      {
+        "block": "B-08",
+        "queue_status": "READY_DEVELOPMENT"
+      }
+    ],
+    "m16_timing_only": [
+      {
+        "block": "C-01",
+        "arm": "control",
+        "candidate_delivery_s": 2063.434,
+        "occupied_agent_s": 2038.3020000000001,
+        "delivery_within_whole_deadline": true,
+        "all_stages_delivery_within_deadline": true,
+        "occupied_within_90min": true
+      },
+      {
+        "block": "C-01",
+        "arm": "treatment",
+        "candidate_delivery_s": 1730.897,
+        "occupied_agent_s": 1688.955,
+        "delivery_within_whole_deadline": true,
+        "all_stages_delivery_within_deadline": true,
+        "occupied_within_90min": true
+      },
+      {
+        "block": "C-02",
+        "arm": "control",
+        "candidate_delivery_s": 1418.612,
+        "occupied_agent_s": 1339.282,
+        "delivery_within_whole_deadline": true,
+        "all_stages_delivery_within_deadline": true,
+        "occupied_within_90min": true
+      },
+      {
+        "block": "C-02",
+        "arm": "treatment",
+        "candidate_delivery_s": 2396.659,
+        "occupied_agent_s": 2358.43,
+        "delivery_within_whole_deadline": true,
+        "all_stages_delivery_within_deadline": true,
+        "occupied_within_90min": true
+      }
+    ],
+    "reference_blocks": [
+      "A-M02-B",
+      "A-M04-A",
+      "A-M05-B",
+      "A-M07-A",
+      "A-M08-B",
+      "A-M10-A",
+      "A-M11-B",
+      "B-01",
+      "B-02",
+      "B-03"
+    ]
+  },
+  "limits": [
+    "No candidates, full transcripts, private provider internals, source pages, input maps, request/freeze files, unavailable review bodies or product files were read.",
+    "Original assignment.md files were read only for method/version/topology attribution; no candidate science was assessed.",
+    "Primary-source truth, evaluator independence/completeness, root Ultra configuration, reusable runner execution, GitHub readback and cleanup claims cannot be independently established from this allowlist. Unverified does not mean false.",
+    "No supported native lifecycle/configuration was inspected live for other sessions. Recorded observations remain distinct from scientific grade and exact native timestamps.",
+    "Files changed during the audit. Fingerprints identify the final bounded input-read versions; they are not hashes of the earlier 22:24:55 table snapshot. No new M16 outcome is published.",
+    "No delegation, polling/monitoring loops, T3 inspections/control, network download, Git, reviewed-artifact edit, new harness or temporary artifact was used."
+  ],
+  "input_snapshots": {
+    "timing": "2026-10-09T22:29:10.675683+00:00",
+    "closure": "2026-10-09T22:21:10.600198+00:00",
+    "reference": "2026-10-09T21:15:15.753413+00:00"
+  },
+  "input_sha256": {
+    "BRIEF.md": "1eaa811f31692bc0e0821d4d65db0c7214be95bbb0b2f04948673d994bdf47c5",
+    "final/FINAL_RESULTS_DRAFT.md": "36d7f33db93c9accfdea92ae4953ea50e6ff8c481a47d63f53f21625874e8016",
+    "final/FINAL_CLOSEOUT.md": "5b4a2a0d868da18d87a13f4f58955b6d10465cc02b90bc1a51dff300c1c61dab",
+    "final/SCREENING_RESULTS.md": "96316ee4d99cb10455f5e0bebfd9d0c180d56b7e53288e260ee30aa2444b5147",
+    "final/tables/ALL_80_ARMS.json": "3686c5c47d8bfefd35cb90129cc53e306197e66c20ba3b8d142c20277fde8008",
+    "control/queue.json": "21b0f59697cc73352ed4a89b88652d0e19b5e19729310904f9a6eeb52e55e30f",
+    "control/QUEUE_ORIGINAL.json": "608fd3a0226b8b534b4f6c4335e811b0ea5669db30b5a8c4fd0925128d42c846",
+    "control/QUEUE_CLOSURE.json": "1fe82863f0b301ee017aecdd958fb901e9fefb5db26b6369fea18a7c83300f95",
+    "control/SELECTION_RULES.md": "59537f5fb9c97bf47cf9af381a8bfbfe476e5fd239d826fec70c5d4ec50171e5",
+    "accounting/v2/TIMING.json": "07ff2aca74e3fbe50e00592273f78b9ec800f6239015482d26e710509e907eca",
+    "reusable/OBSERVED_REFERENCE.json": "8b4cd277d188b2c03e38b74e719ca526a2c0942f9137485ccdd6e2d52d5bb628",
+    "reusable/REFERENCE_WORKFLOW.md": "ce4560e0474774defc65c8102c4e29076b6690e32c3e251bed86d6d37ec2455f",
+    "methods/M01.json": "de4f753f52f16abcde4317adc89dbda6404c5c0314c6281a77a54fe98e27c4e6",
+    "methods/M02.json": "2f3c73c02e96c7b0130c20108f2ad7cbc61f8da6ce239f2cac662308362038fd",
+    "methods/M03.json": "dd1a7ef0f180b704ead6e959b35c5414972690525c8ceb925a45c32f77318d6b",
+    "methods/M04.json": "d2f34eb8477398c0d37137ead1d7ddf7a6d575c1578d53376408cc8942814caf",
+    "methods/M05-v2.json": "828e70c1d9c1304fecc179c4f4bfd6a81186a520e6a174065b3bff7f289b6dd8",
+    "methods/M05.json": "441994238f267b924e47584a69a2f0ae7f2b609dd901fcac40412b2b2eb7df7f",
+    "methods/M06.json": "83f1273a0d2f0b17dc53b5165aed32594d796c3aca566e8624e3346bf4df1676",
+    "methods/M07.json": "d72b00d76072a7cad1ec539cacc5d55d249d27ae95b4db03b6725199d5ee6ec6",
+    "methods/M08.json": "24c84915012ca6e92a3e5c2753185ae4604e8660d2835f24be7dcc24cc40f5fd",
+    "methods/M09.json": "851380dfcd3ceeb7d52fdff86b0d28539c7032c79adaa40352229b0e76cce860",
+    "methods/M10.json": "2ee60c924228059b042bfd860b34c4d5a1804d42a38285b20cc20db739223882",
+    "methods/M11.json": "573145407d4f75cc3e7b1f09cf0ff2e2b5a5585c07f73555282c86f1adb7e21b",
+    "methods/M12.json": "263abf18154d1ca385115b9074badb53e76ec207bdf0ece2441c986b4799c8a1",
+    "methods/M13.json": "39f1ead2365c6bb7f318f4084fa8fb731068d29f66badaea37f2a83b5fd78b0c",
+    "methods/M14.json": "051ba44d0397c8566ae5fdd5eaa17cb4e5d3d6b90a55ad46ffc00565dcebdb1b",
+    "methods/M15.json": "545471cd3c57f48f076890b9ee9ae4fe741f1566742d36f0f77b865e6baa4aed",
+    "methods/M16.json": "01975e690d48334feb2f69585e3ca4334c0543c30dd13b620b3cf465a37871c4",
+    "methods/research-sources.json": "65b46688e5c870138f04604d1f9807407eedb5b93885661478b267d98bb44ea7",
+    "jobs/A-M01-A/control/critic/assignment.md": "3f59bea0745d4a51516e7b0a74572dee03ed4039585b7025d91d92862018bb66",
+    "jobs/A-M01-A/control/research-q1/assignment.md": "39a23c05137bd30ffd3e160f979f9330afe9ac6bc6d3ca822ff38b2d446345fe",
+    "jobs/A-M01-A/control/research-q2/assignment.md": "b51a82b8970c11827406ad88815521ed0f111fe7a080399f1306745575150143",
+    "jobs/A-M01-A/control/reviser/assignment.md": "c40957fb52f2869f7e94daeab2478ebf3230c5b6ab2013a86e147730701847d6",
+    "jobs/A-M01-A/treatment/research/assignment.md": "4ed2a97e201ce73e42bf5c9dce95450a147124968fa3c750e8f7027b43fab1a7",
+    "jobs/A-M01-B/control/critic/assignment.md": "92b15d54d756e11cb73d5e5116ffd977bfdd437cf7f1abd065c6fefa768a34c4",
+    "jobs/A-M01-B/control/research-q1/assignment.md": "c15d26643a308e24305451df45338db9d1f51cc8112d3ab092a821b65128ad95",
+    "jobs/A-M01-B/control/research-q2/assignment.md": "af6c5498ddfeec81f88874297c6b372e28798ab7b354187359e1680daf0dc23c",
+    "jobs/A-M01-B/control/reviser/assignment.md": "07b422cf95df2cbe534fdd274c942704b8899b56bf4d756266b7d85dc750b6ce",
+    "jobs/A-M01-B/treatment/critic/assignment.md": "8de29afee2ff001d06f3cce756e36d3dded1a148c3fc06b64732fa44a2f6c4e9",
+    "jobs/A-M01-B/treatment/research/assignment.md": "b0822918d26bf991e9c6496cada4f9b8189ee792ff10ee870afec36592f43f66",
+    "jobs/A-M01-B/treatment/reviser/assignment.md": "0f774bc3e6caaa542828c453fa13c674e414765b33717e928bc01f05c14b26df",
+    "jobs/A-M02-A/control/research/assignment.md": "e4141d0f481ccbbff157ae70abf6b7778033ede55da84ee09d30c1c0a764eba8",
+    "jobs/A-M02-A/treatment/research/assignment.md": "160853d49cad64c0e254f344c6f07068478cfcff6e41deac6dc9439f7048091e",
+    "jobs/A-M02-B/control/critic/assignment.md": "d52315e491b17f20eecaa2141e7ab0469d1d81cc1d4bcadea58a4af87cc8b69c",
+    "jobs/A-M02-B/control/research/assignment.md": "d98439bf6bb52f83e070bb8d7f768c97229c1cd6033d70d0241101d4e327b2bf",
+    "jobs/A-M02-B/control/reviser/assignment.md": "0e899a760e09ac57a21431d231e0bc8218725cfdd3f72ec5ea3d780916c060fe",
+    "jobs/A-M02-B/treatment/critic/assignment.md": "091d7b6215f9a3459b056f2ba2242ef83bf48e449af21e5ef07f1b536f5ada3a",
+    "jobs/A-M02-B/treatment/research/assignment.md": "c00b412edb672987845801c273aaf20961ab346dd4f88f766a250c79b4a9e5ba",
+    "jobs/A-M02-B/treatment/reviser/assignment.md": "a6f4749c54f3c94774e824641a11afa171e288feb19d710f530e900803b89d50",
+    "jobs/A-M03-A/control/critic/assignment.md": "4280c13a54aff4b4a65088729e368cd9c00b9204b4f3d1f7931ba822de4514c5",
+    "jobs/A-M03-A/control/research/assignment.md": "a7cc2955ea3c7522036d5b4f0ab94fb2c80043a677b42eb14df98d27bcc9830a",
+    "jobs/A-M03-A/control/reviser/assignment.md": "6dbbe0821b97b49afcbb83c6a355d2e38b996db5bb66e6735978eac56dc8f868",
+    "jobs/A-M03-A/treatment/critic-finalizer/assignment.md": "ce7b38c971ff63087dd5e080f58b0efedd026e59fe42d60a9c838bbe6841fd4f",
+    "jobs/A-M03-A/treatment/research/assignment.md": "c42b06a1f71531e0938640b2fc227cf4ad89e55dc7d2931a3e088f975441acfc",
+    "jobs/A-M03-B/control/research/assignment.md": "56c6c23031f968f6f6a824fe6779ae5a0d2e29b1fe3c6cb10f301503c85fe7ad",
+    "jobs/A-M03-B/treatment/research/assignment.md": "bc6e21a58eb102fd33404f378e0f2d57f0f1d2b311c4d2ba99c8399a796d95be",
+    "jobs/A-M04-A/control/critic/assignment.md": "ef6afe466f3bc8ef6db30ffaa30e8780940bb0fd1c72724b3fd85ecc081d1470",
+    "jobs/A-M04-A/control/research/assignment.md": "38178e849b49e8c57fff75e569634f963f934a0a97afba3e88b435f0eeba2c7e",
+    "jobs/A-M04-A/control/reviser/assignment.md": "e0ca9127cc1b84a039fed0e0d0ec8309cabcd263f438016d5a55ae202ed71f5d",
+    "jobs/A-M04-A/treatment/critic/assignment.md": "f9b74f6ea4318130b61a27e61e06dff0755ac57935d398dad1bbe68833de8534",
+    "jobs/A-M04-A/treatment/research/assignment.md": "2b3efd813d4073dcf0f8db7e43b48b3ccf69c5892736d9a220c9dc1dc7175ddf",
+    "jobs/A-M04-A/treatment/reviser/assignment.md": "05c7c62bf831a932c57030909a198eb73bb5ca97b6f84bbeb745aa3c930e571c",
+    "jobs/A-M04-B/control/critic/assignment.md": "3389e7b1e3345d7f7ecc72ccbfdbbbb359fd396f498d34edb424c78bdef55a08",
+    "jobs/A-M04-B/control/research/assignment.md": "793bfb485ad52474e19a0719dad36dd7fac8a987c7d27fe34ad2b619febffabc",
+    "jobs/A-M04-B/control/reviser/assignment.md": "cf685d487395c079b0cda8f707440caad708938d9107eecf8ac477a2884a9d9b",
+    "jobs/A-M04-B/treatment/critic/assignment.md": "408f56418cbfaf6b769bdadc9531ddb61967b6c11e6e26b9b8396521a2d535ea",
+    "jobs/A-M04-B/treatment/research/assignment.md": "5c5c5396e33118f0a90a36061ae477cb2196056396446b05c128f1dab5558217",
+    "jobs/A-M04-B/treatment/reviser/assignment.md": "d55bb8c593b97b225033a55fda6f93410e4dc02b94943da6febb75fd0cb559e9",
+    "jobs/A-M05-A/control/critic/assignment.md": "c6fadd38dcc56fcea7ccfc47ed184fd392d336746bdcf195384638d832214a1b",
+    "jobs/A-M05-A/control/research/assignment.md": "db671e117c213c8824f83586c16b44ced30d2f9c16dcea615e77da570867344a",
+    "jobs/A-M05-A/control/reviser/assignment.md": "3e46a6c0071c6bf61c6c233657cb1185899fffaa9d533c86a77f24ca78f10ba0",
+    "jobs/A-M05-A/treatment/critic/assignment.md": "d69f609a2492e5601d077f778d211f651534b578f1fc7dcacc1eaea968f2ea51",
+    "jobs/A-M05-A/treatment/research/assignment.md": "940c326f559ac817d6b238dff719eb4e6d19fdd791b9fec96a9775b843dc4eaf",
+    "jobs/A-M05-B/control/critic/assignment.md": "ffb788a9cebf707c5c956a4eefb72160773ba49bc71d6aeda387d598d8cc0c80",
+    "jobs/A-M05-B/control/research/assignment.md": "9f5ce124ba95482bb177834bd8dbae1d92a8d3dbeb3877a79b6586932dff1b4b",
+    "jobs/A-M05-B/control/reviser/assignment.md": "929eb663c0cad406c94ea9a1335a5084c690bdaea620cd0d96f6246d5053c83e",
+    "jobs/A-M05-B/treatment/critic/assignment.md": "ac1c003eaf02697eee187055e803f5582c7ad75c41ef42f59cbebb10eafda7c5",
+    "jobs/A-M05-B/treatment/research/assignment.md": "18d9ffe68031a1521933787d7236e3dba22ada84808c361d16cba8d8f012a065",
+    "jobs/A-M06-A/control/critic/assignment.md": "7438e63f843ec18e34b1ba706e45333001e5ef1ae333d311289d160a4dc36b41",
+    "jobs/A-M06-A/control/research/assignment.md": "e862cf0f156837353283a5f701d272dbbb662e1474bee92b4b4ae94a140acf29",
+    "jobs/A-M06-A/control/reviser/assignment.md": "3ab8faac752eec81d725f2236946c7e129c901e08716699ddbe62d6fa84783ab",
+    "jobs/A-M06-A/treatment/critic/assignment.md": "fcf755a64dbc8db20af511b1a335e47416d6a1aed10c0670848fca986261dbb3",
+    "jobs/A-M06-A/treatment/research/assignment.md": "254b63cef7f380f5092fe2c630555b51bd087085feaae79222e3b3b5282b317d",
+    "jobs/A-M06-A/treatment/reviser/assignment.md": "50f75ceddefff2f470292206f0e109a42a5b1e85cf28ecaa110deed8f52a751f",
+    "jobs/A-M06-B/control/critic/assignment.md": "24fe75b9925ccd3950700f5e6053f7960dde517f9634f3e159b02527b29c1730",
+    "jobs/A-M06-B/control/research/assignment.md": "1aa79ec77d8562cc0de0f5e9a5dcc4acb2ef1b9757cbd65b189a0145e121cf88",
+    "jobs/A-M06-B/treatment/critic/assignment.md": "b960bccc22b0fd1d9b378e6a4a98878cdfb77fc3251dd5fa1dddb2ced72603b7",
+    "jobs/A-M06-B/treatment/research/assignment.md": "3a431a97b91a4c4f558064ab3cd776f37da0cd2881edb3309b7fefef083be858",
+    "jobs/A-M06-B/treatment/reviser/assignment.md": "ed148072af66abf706715f35a924bd52edf357f31d4c42522b0462835828a55c",
+    "jobs/A-M07-A/control/critic/assignment.md": "9e2da6c2a0540323ee54295378e0a0dd4264893679666f3d9c16e426e0f8c141",
+    "jobs/A-M07-A/control/research/assignment.md": "a1cd637001c6ba71d2e6ee37a361a79887a32095998b5952f10f74b9446dd1f8",
+    "jobs/A-M07-A/control/reviser/assignment.md": "3b1980d75eeca6fcf6d2fc7e125e6d976c11eb664fb5ce2022e07881a0ed9b21",
+    "jobs/A-M07-A/treatment/critic/assignment.md": "062a91bd00026876bc3a918ac2eb131ac8f128cc980c3f846cb706ffb5a28bb1",
+    "jobs/A-M07-A/treatment/research/assignment.md": "7beb975ea9f2ffa11d4ca64d2f804e6932bf7bfee6d06e3102505c16f98f3e5f",
+    "jobs/A-M07-A/treatment/reviser/assignment.md": "71fef31ffe57d8a7d59f0727d770d21ca4085c687d32db9bd85ed966fc331016",
+    "jobs/A-M07-B/control/critic/assignment.md": "85db45dd8b860c5211067435546fbfd271218a8f3c451d8efae850272143ea6a",
+    "jobs/A-M07-B/control/research/assignment.md": "d224fb962eac19917e4ce94a5782061377bda1abf3808dd441fec6217073a880",
+    "jobs/A-M07-B/control/reviser/assignment.md": "97ed4c22ac60939b3ebd3d35b009fa57fa7dd68de049d3f195fccc7405968cde",
+    "jobs/A-M07-B/treatment/critic/assignment.md": "75501b43e9be6edc8803e65425fa81dd2ab4ae4f3288259858f6b3cf9bd3b186",
+    "jobs/A-M07-B/treatment/research/assignment.md": "b20bc28718b2ed2bd3cf8a09c3ae53a4d176e0fe7b4c76547569d52646ea439a",
+    "jobs/A-M07-B/treatment/reviser/assignment.md": "fe9e73538058231f98b85a67e98af94777dcefbf20c1da0d9c7f8688f44e2ea7",
+    "jobs/A-M08-A/control/critic/assignment.md": "2abf0ba04a80ff647e007ad0ecbf701bf425787d2fc6efac3d757a0974e16c21",
+    "jobs/A-M08-A/control/research/assignment.md": "5c96af53dd49751004a8ab41c26959e434a5d2f246bbbfab29aa6b4def3415ac",
+    "jobs/A-M08-A/control/reviser/assignment.md": "848c5f68cf6813cd0741688e75dc42cb3570dffeb6e5cd2a8c64fb6e8c6102a0",
+    "jobs/A-M08-A/treatment/critic/assignment.md": "f514fc6348d8156366fced7e3b6404af5aac9d71962ac271268eb2d7e54580e9",
+    "jobs/A-M08-A/treatment/research/assignment.md": "12685bdd14fba9abf3bedc229f63cb4332298ec55e371254664fa746bb8db932",
+    "jobs/A-M08-A/treatment/reviser/assignment.md": "b5f21043b10281c92c0dac62da8a0c893766b0b9b44425af312dbcdf6df96e80",
+    "jobs/A-M08-B/control/critic/assignment.md": "81252062a7505a88ee641d76c144cc138ed523f8b4cf14f37397efd06ec179f4",
+    "jobs/A-M08-B/control/research/assignment.md": "89372d36979d34aa085608a0e576973594f895ffde5d706ba9e1013747483625",
+    "jobs/A-M08-B/control/reviser/assignment.md": "5a4cdc5903ce3057b5f6066386d4d73c8cc3b5046beaebec0b5376e06b7097c1",
+    "jobs/A-M08-B/treatment/critic/assignment.md": "9e1242273c383528280f9005b23de19ed91b32b9ae18fde7e6f3398da5f2cfd9",
+    "jobs/A-M08-B/treatment/research/assignment.md": "4d12d513b813601cbeacfa305a080987e467ef876f86f178ea9a2ab68e598733",
+    "jobs/A-M08-B/treatment/reviser/assignment.md": "49c505cda3c40cbd37959ae8912debeb656e8ef778699007d3ba1fec1fc3cc3a",
+    "jobs/A-M09-A/control/critic/assignment.md": "19320525052fcc84cf888b03adf8b4dbf9c7bf6ffc196e5fe0f716eeb723df9f",
+    "jobs/A-M09-A/control/research/assignment.md": "f1d97c82f0d173ba08b663a599a0d94786088b44f7baab69c51ed905873c2841",
+    "jobs/A-M09-A/control/reviser/assignment.md": "1693805f0234ced895760b62f42072c788eb66d6b6f860799ca5681e9b2a5806",
+    "jobs/A-M09-A/treatment/critic/assignment.md": "52b2852a16c5cd0f5ce1ecfb5aee7c501b68b39d84cade9758448341911413d3",
+    "jobs/A-M09-A/treatment/research/assignment.md": "813e9ec13fae91723f3841b6495ba19730b7d9b97f49f4cb6a1e0bf0bea7cfa8",
+    "jobs/A-M09-A/treatment/reviser/assignment.md": "bf254782582ca13e1109032e3f26f3c384f93c6f4e37954ec0ae1a00c0226044",
+    "jobs/A-M09-B/control/critic/assignment.md": "e8f0935f9db9b1ca8664aa30f56e657587842c6bf77eb791d3893ac4ad6bfea5",
+    "jobs/A-M09-B/control/research/assignment.md": "672f9178a331789687695d2ff0d3b4b41b1ec18e8e387e12c85ff7bc25cda2a2",
+    "jobs/A-M09-B/control/reviser/assignment.md": "db2a4490dbe0c8d0c72e49cf346ee7657994dfb461276d0694c808e966f3cf8e",
+    "jobs/A-M09-B/treatment/critic/assignment.md": "28a6cd8d594990d51b7f2c1f7e64a732641aff85bac14552304d08dfb8895c87",
+    "jobs/A-M09-B/treatment/research/assignment.md": "7d6221a18374869de392ccaa5e1a1b8e7a14dd6b93dfd82a10776c37efef1a9c",
+    "jobs/A-M09-B/treatment/reviser/assignment.md": "a6900c959db241c7a7cc0e326564ef47fc3c2a59f94922e4e8dc7b0644b69b97",
+    "jobs/A-M10-A/control/critic/assignment.md": "7991a2e578d6ae6780c29b0a7982d8bf58e69b065a57fe8c39c03e7a4d6a6b7a",
+    "jobs/A-M10-A/control/research/assignment.md": "3dd86c58fb53250ab24aff18d8ebe0176c3e62eef9a7e4fb4ba94e58c090ab42",
+    "jobs/A-M10-A/control/reviser/assignment.md": "3bacb70e8920f4a33ff84eb4b1798f7896ce8e9e7ac168b295e3c8bbf06805b7",
+    "jobs/A-M10-A/treatment/critic/assignment.md": "3338b83946d087e22cc2cb2256c13aa73a1048a87705fb5bf67e684be01466c3",
+    "jobs/A-M10-A/treatment/research/assignment.md": "b79caef5ff67d50b4b77d8509b6df794406edcd83d3b3b92dc9a25cd7767ec4d",
+    "jobs/A-M10-A/treatment/reviser/assignment.md": "92e507cca753fc9c3ad901d7844ee5e2a9ea4a56b9d248e442515b0ef4d5593d",
+    "jobs/A-M10-B/control/critic/assignment.md": "3616a2ce3bbc8947f37076756c364ebf69a20a3fab7d5e831888e5e5eb8506b3",
+    "jobs/A-M10-B/control/research/assignment.md": "d95d572f5123253c3ff73c8eaf3ae6a0b7b1522d5a7489afa594a6132800e524",
+    "jobs/A-M10-B/control/reviser/assignment.md": "73c1cb17a040577d00dc69d696d7a7b535366f47eda9402b7aa0a7c35da2a160",
+    "jobs/A-M10-B/treatment/critic/assignment.md": "bfa03af7ed327c5041cb8525685310f71a39bfb8b6e5c3e094e6d2eb9353b27f",
+    "jobs/A-M10-B/treatment/research/assignment.md": "b97ef9e9fdc1d7f44d40264fa0979270b5ebcda17cf32d8d6b68aa0a8c2208fc",
+    "jobs/A-M10-B/treatment/reviser/assignment.md": "f3e12c890e161e340c1f3132665e973f727887e68a325264ec0f5d4dfe385479",
+    "jobs/A-M11-A/control/critic/assignment.md": "381870abf13577e9cfe14c331b9a466ab6dae7d8adacd04322bebe6df36b3296",
+    "jobs/A-M11-A/control/research/assignment.md": "16fa6cd0bdf8e8efe768985de17492f86893e4f426eca96acb70538b6abae5ec",
+    "jobs/A-M11-A/control/reviser/assignment.md": "ea8677c7b5a8b760ba693480ac59cf043209df41d1d1756cd90d23b0825f7742",
+    "jobs/A-M11-A/treatment/critic/assignment.md": "90f5c8bc7937c73ffe3e6943b7836be9199b1984310a85fa3f02024db9a5a3ba",
+    "jobs/A-M11-A/treatment/research/assignment.md": "ce729d9ef41a78f34a8b65b5624e6a104d558dc4adc9bb7570e68214bdcdf0de",
+    "jobs/A-M11-B/control/critic/assignment.md": "ac17b23975e212d5f956d42982c0141f4cd744b0d9ff5ae526da875f089a209b",
+    "jobs/A-M11-B/control/research/assignment.md": "c8154071e86020233506b5ca74cbfa50d4b818674eb066e5e0c0693c19824fdd",
+    "jobs/A-M11-B/control/reviser/assignment.md": "5eaf09171a4d6ec862c8a35669c2c33e46461f827e55d5500c68e709e9d0f6c6",
+    "jobs/A-M11-B/treatment/critic/assignment.md": "acbf49f70ac37d87fa8cd3838beccf62f09ad0e93c81d1283b924cafae061faf",
+    "jobs/A-M11-B/treatment/research/assignment.md": "ea59d7c71d4c5aa9b47f277035cc3d1de2c53b21757230a90f4cbaeb5b6fa7cf",
+    "jobs/A-M11-B/treatment/reviser/assignment.md": "62cf0ebf13517bd46a5a5430445fdb0838b32ea053eb63f20f55bf7c12f2170f",
+    "jobs/A-M12-A/control/critic/assignment.md": "42f42d46148718255cc7cc44c16f11d8acd429b91d68f8ac7d143c585876a219",
+    "jobs/A-M12-A/control/research/assignment.md": "1b222a1492ec6e26788d9815c50ad8b5bddaae6b8e1902ecc8a94275712b071a",
+    "jobs/A-M12-A/control/reviser/assignment.md": "160dc672e90dab5f54e7137b7dffb7a24ccd917a128d0a99ff0152d7d93de8c6",
+    "jobs/A-M12-A/treatment/critic/assignment.md": "bc8c772960f4c899fdc03e79d2886c2664e9982ffc4e81a4900abfd445ff83d3",
+    "jobs/A-M12-A/treatment/research/assignment.md": "5cd554c38286324f2796ac578a301310d6a501241d3d62dbe5837b447e637a7d",
+    "jobs/A-M12-A/treatment/reviser/assignment.md": "6333758f372c8250fe467020fb8c4c9e16fc7dd1d6ca213f6f360a6f4a6efcb6",
+    "jobs/A-M12-B/control/critic/assignment.md": "16da751ac8d35425a0739893294261383d268c8fd855af6928f19012698c7a48",
+    "jobs/A-M12-B/control/research/assignment.md": "999acd27e647f4e5289d736350a2058215ecbb41cceb72934904bcdf29556772",
+    "jobs/A-M12-B/control/reviser/assignment.md": "1891ae48d64e6932c670d8337b32d877eef2f8b32b703f406aecc2fed235333d",
+    "jobs/A-M12-B/treatment/research/assignment.md": "b9d81cf5eb5527ba5768a255ed9f89c70d498e7149b7f81d7d8bbd89ce1a105a",
+    "jobs/B-01/control/critic/assignment.md": "0c243c552384e760425036b51dc553244386615807ea375eb6a09bd073194196",
+    "jobs/B-01/control/research/assignment.md": "29cc56d9dc148e99e8b2be93130db27214ca7346f45431765b4f0c0efd137e86",
+    "jobs/B-01/control/reviser/assignment.md": "8058443151fc06339683b50ea1871b3faea7c5d32ffe9fd6455143c912b129e8",
+    "jobs/B-01/treatment/critic/assignment.md": "910ccbc1429139e4e4b97dca2288bd4475429a22644cc7bd24e4e987e2d81f7f",
+    "jobs/B-01/treatment/research/assignment.md": "b893847f43c8a28d2294396080fcf5669cfb5de8ac6bb527986e03199894f4e8",
+    "jobs/B-02/control/critic/assignment.md": "8d6f4d257a7c276ca2d3fba253b7411e74b3f44c900f11933cfc0be6ca701383",
+    "jobs/B-02/control/research/assignment.md": "13bc4917ab020e7c786f0c0114fb4f6db9db013b2474582cd75ecc7fb665adb4",
+    "jobs/B-02/control/reviser/assignment.md": "2857b5ea24e7e02fc83d867c9089894240b2e4b90f8229a1e79f314c9e338d75",
+    "jobs/B-02/treatment/critic/assignment.md": "02b370e716dfee8b831ce46185168da57a00370f8a0be790e1a87e4c1df94a64",
+    "jobs/B-02/treatment/research/assignment.md": "f6b79c6193f83c99bfac74b5bad7b1d2a6e10851a1444c3a8944bad05d5c2d7d",
+    "jobs/B-03/control/critic/assignment.md": "696a957fe70ef3bff028dcc685ee195337cdfbfeb7818fb63495d01b0f20eb2f",
+    "jobs/B-03/control/research/assignment.md": "3e213d2f5e38148ab2817ee19965732406e4bc1c9db1c7ba31ec32507f984399",
+    "jobs/B-03/control/reviser/assignment.md": "2c49b4fbc96aaac169fb56d9fa2261ef2a34123df07ee537c6d0bd0af9f394ef",
+    "jobs/B-03/treatment/critic/assignment.md": "d78d8eff8b988d40d519e4199418ae235da1d6fb26b2838eb9a5ad45440f74bf",
+    "jobs/B-03/treatment/research/assignment.md": "a1946761e4cd45a7838ae161b76e104bebfba4c0e24a18bbf7716231247dcc57",
+    "jobs/B-05/control/critic/assignment.md": "f8bcbe47cda83d52e2d3337f7c1e7173cf9b2a9948583ad8bfc34878c3ae1e9b",
+    "jobs/B-05/control/research/assignment.md": "d64e75718c8e2224af80ecca49e88a3f87c9919ed6a968013ad7f23dc7626544",
+    "jobs/B-05/control/reviser/assignment.md": "adf13c9bee03374022f940bb1dc447757cce9ecdcfb1b3202909e24968dad6ad",
+    "jobs/B-05/treatment/critic/assignment.md": "229d65daed7e18c5912b12204f5fd12f0f8f1960bf0a846758a0cf74d80f86fb",
+    "jobs/B-05/treatment/research/assignment.md": "243415115728b968a5e805145019bda6aec86d55ea1a6e53eba747741f772ad2",
+    "jobs/B-06/control/critic/assignment.md": "d6a14210a8c4db0a2a96506d793616af5f83f3d863c7f7bb9b119127732b024e",
+    "jobs/B-06/control/research/assignment.md": "338ff42e7427f0ac393e3716bbc9f92a421d48a533ec77ccf75a3ce3cea53552",
+    "jobs/B-06/control/reviser/assignment.md": "480010f1bb295134de3389328f28ae98a3357348aef469c95f922bb93dca3889",
+    "jobs/B-06/treatment/critic/assignment.md": "e9ca3efbbfeefb81b914cafddcdeaded153ac8e8d3072f2a23256560261f366a",
+    "jobs/B-06/treatment/research/assignment.md": "5dd394663d8f6616e0920959eaed30fa1bc0e105a68375913e2110887c03bba9",
+    "jobs/B-07/control/critic/assignment.md": "e3db932d75b4b3042e30e748646124aeb3872ea4d2d3ed16bafba6eac9ead0cc",
+    "jobs/B-07/control/research/assignment.md": "a5a9ef6d37681262a41f1582701bf886c015baf31e49b70001ad43e82f13b609",
+    "jobs/B-07/control/reviser/assignment.md": "904fac6028adb24b64381e24ba8df9c554c7aaa2df46637dee588f11556a8325",
+    "jobs/B-07/treatment/critic/assignment.md": "9d9c89258e2cd8819c7cc76bb432241c28908c0b7f9960269b7f406830c8f2d4",
+    "jobs/B-07/treatment/research/assignment.md": "89c416142537544bdcd8b0df6d5239b81baec35b52b194a4600a3314278a77fe",
+    "jobs/B-07/treatment/reviser/assignment.md": "2c641b3adcdedc686113dd7b155f545718a58b54464fcdaf42e54dec93f1ef88",
+    "jobs/B-07/treatment/verifier/assignment.md": "e845fcd467905e2e6cac29534740a4c353afe15a635aae65132f0ba351d3fec2",
+    "jobs/B-08/control/critic/assignment.md": "24c1eeae08f58d3d82d7584754a17efc9b23e9c66a344e692817b7d3a9191155",
+    "jobs/B-08/control/research/assignment.md": "599956ac5a7484f10ed918b489b989f52ad69dfba5cd371acbca0d9a6b75c772",
+    "jobs/B-08/control/reviser/assignment.md": "b3986cdb8adbfeb29e17e6b96628c935b5462d433edb35da7fce25cd9c0ba268",
+    "jobs/B-08/treatment/critic/assignment.md": "3e334a8fdd6c5a6907f4518d69aeaeb35df0ca8f6fdf116c7e7620a10c69e5cf",
+    "jobs/B-08/treatment/research/assignment.md": "9fc5ec0be8fd85a0a8e338cacb6dc40d50b522015ebda0137dca3b3d22f3a336",
+    "jobs/B-08/treatment/reviser/assignment.md": "44059ec37f2271972d4deac9c35b78712b8328a5bd0418d85a15d70f44662bd1",
+    "jobs/B-08/treatment/verifier/assignment.md": "4d5f484e58636ffd942d27a247d167d0ce206b57bc525192ecf6219a1d20a809",
+    "jobs/C-01/control/critic/assignment.md": "8c95a7312f4be1f9c008f7db8857bcba346e020d4e2b2012f3a5b138138efcb7",
+    "jobs/C-01/control/research/assignment.md": "42fdd38118ada9e40d96b285a99eba926adb7fe4c70fbf8d4414254f912c9f83",
+    "jobs/C-01/control/reviser/assignment.md": "70b2ac72561481fc17ff539ebbce58633403ad4544b09eb50d07609c287e0db3",
+    "jobs/C-01/treatment/critic/assignment.md": "f7d11db3132710898f8bc109c4f4adbb97cfd6792f78ca9f1b4f5d8dd9763dfb",
+    "jobs/C-01/treatment/research/assignment.md": "7cbb4c510cd0fe99f7a7e18cefa6853851576bcd3ffd8d63f28e0dbbc6f98d05",
+    "jobs/C-01/treatment/reviser/assignment.md": "5a340de03f918deb56f132edf507754346360e6c7357205a8b496e2a7099d268",
+    "jobs/C-02/control/critic/assignment.md": "bafb1ba0e84752f7216920ca4e05abe885244f5398e57c5f90f3a77db8c462d7",
+    "jobs/C-02/control/research/assignment.md": "a0502fa89d40aee1e77f4b83469d2b8083725608cc5057cf1e0194f4d0a70f3f",
+    "jobs/C-02/control/reviser/assignment.md": "c8708f1eef5f9f9c6aa5691b0c17071d254d81e88fc4cc29afcfe631b20953c0",
+    "jobs/C-02/treatment/critic/assignment.md": "7d5575f36ea7d330ae45de07daadcbaca2a223d0c0ceb149baf7dbde5021e765",
+    "jobs/C-02/treatment/research/assignment.md": "599f51577409abd7573599e3dd21895a18a7483213339a090ab113bba0365d9d",
+    "jobs/C-02/treatment/reviser/assignment.md": "b9d19aea1587faaa46e1f8b1fe1aa57f4641ec195d2e8dacbc164c42997ee829"
+  }
+}

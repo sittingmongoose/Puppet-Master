@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-10-09T22:22:46.669860+00:00",
+  "snapshot_at": "2026-10-09T22:56:44.423343+00:00",
   "rows": [
     {
       "block": "A-M01-A",
@@ -1048,7 +1048,7 @@
       "route": "luna",
       "provider_role_overrides": "{}",
       "arm": "treatment",
-      "attempt_status": "STARTED",
+      "attempt_status": "INVALID_UNDECLARED_PROVIDER_DELEGATION",
       "final_delivered": true,
       "grade": "FAIL",
       "final_path": "jobs/B-07/treatment/reviser/final.md",
@@ -1101,7 +1101,7 @@
       "arm": "control",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "PASS_WITH_LIMITATIONS",
       "final_path": "jobs/C-01/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T21:37:32.734901+00:00",
       "deadline": "2026-10-09T22:52:32.734901+00:00"
@@ -1118,7 +1118,7 @@
       "arm": "treatment",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "PASS_WITH_LIMITATIONS",
       "final_path": "jobs/C-01/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T21:37:34.418337+00:00",
       "deadline": "2026-10-09T22:37:34.418337+00:00"
@@ -1135,7 +1135,7 @@
       "arm": "control",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "PASS_WITH_LIMITATIONS",
       "final_path": "jobs/C-02/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T21:37:37.734702+00:00",
       "deadline": "2026-10-09T22:52:37.734702+00:00"
@@ -1152,7 +1152,7 @@
       "arm": "treatment",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "final_path": "jobs/C-02/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T21:37:40.303378+00:00",
       "deadline": "2026-10-09T22:37:40.303378+00:00"

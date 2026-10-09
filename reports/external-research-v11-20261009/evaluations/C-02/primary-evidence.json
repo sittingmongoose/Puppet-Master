@@ -1,0 +1,2107 @@
+{
+  "purpose": "Bounded independent public-primary evidence identities and discrimination locators; source text was untrusted. Scientific interpretations are in source-map.json and assessment.md.",
+  "records": [
+    {
+      "id": "E01",
+      "url": "https://docs.getodk.org/form-audit-log/",
+      "requested_at": "2026-10-09T22:23:34.193657+00:00",
+      "final_url": "https://docs.getodk.org/form-audit-log/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 12219,
+      "response_sha256": "cbf48491db347fc7672ce7aefad7c40d74bef22d6bf43f8b83bc2206daddde92",
+      "decompressed_bytes": 62140,
+      "extracted_text_sha256": "b81dcc4a3862c424ac9979011435c7efb776073b00995808dd8be6e7c035f68a",
+      "extracted_characters": 11364,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:34.375726+00:00",
+      "extract_index": [
+        {
+          "pattern": "Enabling audit logging",
+          "text_offset": 677,
+          "excerpt_sha256": "83645d7abb7cfc756fe976d727a2967be5c7a7551ece643ff87cddff9eaccee8"
+        },
+        {
+          "pattern": "Change tracking",
+          "text_offset": 3386,
+          "excerpt_sha256": "b4ffe677cfd879319bf81635992a12167f2947f158f137410ba3b90d1ac1af79"
+        },
+        {
+          "pattern": "Change tracking",
+          "text_offset": 3418,
+          "excerpt_sha256": "ac05a1b2b650a36fbca09ddf341f2d5ec4d7b7bec64d71efa949db6ceabd384f"
+        },
+        {
+          "pattern": "Change tracking",
+          "text_offset": 6012,
+          "excerpt_sha256": "4fa1fc88d1251560f4a8d6ec4713fd4e6f726ab99604ec9323864659045fc51d"
+        },
+        {
+          "pattern": "Reason for changes",
+          "text_offset": 3644,
+          "excerpt_sha256": "e33af8cfc4f2e58d7719f39455f3cc48fbdf2d91a507826f4cb3eea22eecf663"
+        },
+        {
+          "pattern": "Enumerator identification",
+          "text_offset": 4147,
+          "excerpt_sha256": "ca77ef8175f41bb1c35ac47ead29d3e2bfa91ce4e5a883e1a44d24fcd971b9eb"
+        },
+        {
+          "pattern": "Timestamps",
+          "text_offset": 5720,
+          "excerpt_sha256": "970d214a96f613f241c9f1e07e763e19cedee714521be8d9d415811b045fa2a0"
+        },
+        {
+          "pattern": "Timestamps",
+          "text_offset": 5919,
+          "excerpt_sha256": "f0dbd5448db60fd7b25685ae9ffa4e60ce15ac8fbad7856dadcaabc525204a80"
+        },
+        {
+          "pattern": "Timestamps",
+          "text_offset": 5970,
+          "excerpt_sha256": "7dff857f7f85bc8aa3540cb9889304ba3b575f4e0675830e138fa98c4ed34a75"
+        },
+        {
+          "pattern": "Known limitations",
+          "text_offset": 10809,
+          "excerpt_sha256": "0dfa3bc4e72078070138215b208bcde56d212a45ada60dd88bd051d9246ffd30"
+        },
+        {
+          "pattern": "we only use device time",
+          "text_offset": 12919,
+          "excerpt_sha256": "b97c773821da11cfe02378a6753a922ad98ee96fe50c3f0b004067a51fad1140"
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "requested_at": "2026-10-09T22:23:34.195146+00:00",
+      "final_url": "https://docs.getodk.org/collect-forms/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 12737,
+      "response_sha256": "69730ac962ffcc556a8f41505f9639739cb9fa609dce36b335b1b7d136d48c58",
+      "decompressed_bytes": 57393,
+      "extracted_text_sha256": "acfa02c800909480ce6adcf8dc1cc8866f4e386a2d5645be1fc6a6c637943fad",
+      "extracted_characters": 10512,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:34.459609+00:00",
+      "extract_index": [
+        {
+          "pattern": "Sending finalized forms",
+          "text_offset": 4103,
+          "excerpt_sha256": "b8c8c4225840d1df8aadbc4ee4ea7771fffd1c3b01d3d08b90fc3a2e2f01b6eb"
+        },
+        {
+          "pattern": "Editing finalized or sent forms",
+          "text_offset": 5275,
+          "excerpt_sha256": "9e08b0cf6cbcd145efd37f84e12e49eb22c6a4e62554a15a5763729b5dbf6634"
+        },
+        {
+          "pattern": "client_editable",
+          "text_offset": 6786,
+          "excerpt_sha256": "f99da16556a7685bcc3cd6c64c7d20e2a4d535d959faf0bd2d83d59330a872bd"
+        },
+        {
+          "pattern": "client_editable",
+          "text_offset": 6949,
+          "excerpt_sha256": "56483ad6d3bbd1febe980d19549c80646663fc036ebd426da651059bc2cafc68"
+        },
+        {
+          "pattern": "Central-based edits",
+          "text_offset": 6099,
+          "excerpt_sha256": "cf047b6429ad990c8f01991e6a2ad157579fafad0d41ed934c84ff6e4c49c8f7"
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "url": "https://docs.getodk.org/central-entities/",
+      "requested_at": "2026-10-09T22:23:34.196484+00:00",
+      "final_url": "https://docs.getodk.org/central-entities/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 25157,
+      "response_sha256": "2a45cc7ec3f2755e1bb7fef48b38eb6aa2c978a2d40bb6622fefb7753bd3e86a",
+      "decompressed_bytes": 110072,
+      "extracted_text_sha256": "a67698ea90cd9e55b3c7d96d76837bbead0214231f63eff663f5a1efb98b2184",
+      "extracted_characters": 42588,
+      "missing_patterns": [
+        "last received"
+      ],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:34.552467+00:00",
+      "extract_index": [
+        {
+          "pattern": "Managing Entity conflicts",
+          "text_offset": 33618,
+          "excerpt_sha256": "169d2a91c0007a52ca1d3b4bb70f801786810fdc3fbe76a0dda8b9c61860594e"
+        },
+        {
+          "pattern": "Conflicts related to Offline Entities",
+          "text_offset": 39925,
+          "excerpt_sha256": "fdec4597c36c607d80c02fabb96498e9e43a3cd158289f7471d25198fb251068"
+        },
+        {
+          "pattern": "5 days",
+          "text_offset": 41038,
+          "excerpt_sha256": "7a9ba9d0d71168cd46cf194d7adbc460f39ee055c500d8a7642525b4a90d708a"
+        },
+        {
+          "pattern": "5 days",
+          "text_offset": 41089,
+          "excerpt_sha256": "50168866d3d4896c669a4d5248020b7c1a9b12caf24229032b192f5f6b22844f"
+        },
+        {
+          "pattern": "5 days",
+          "text_offset": 41181,
+          "excerpt_sha256": "e4e10b0d2f0b96d116cedbb79a5650c416a7407bbcd36451eeb2bd2d3b99a522"
+        },
+        {
+          "pattern": "2024.3",
+          "text_offset": 4336,
+          "excerpt_sha256": "aa07876aa46ee871ba6c63ed677d75b4cbecafe021101e9b8d5ac831d643648b"
+        },
+        {
+          "pattern": "2024.3",
+          "text_offset": 39978,
+          "excerpt_sha256": "823fbe29963224f2d00816673c69e2b478d15afaaaa747a5739a6c9a6b81b0a6"
+        },
+        {
+          "pattern": "2024.3",
+          "text_offset": 40018,
+          "excerpt_sha256": "3a4305df5d30062b339f039d48c6ce4151c35d617d7d6ea83f56d5b0240da72c"
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "requested_at": "2026-10-09T22:23:34.197434+00:00",
+      "final_url": "https://docs.getodk.org/central-submissions/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 18174,
+      "response_sha256": "710d2d5687ebee69d74e5114daea6ba73d79630fb666b133783c0215d9d910a7",
+      "decompressed_bytes": 79353,
+      "extracted_text_sha256": "63a7e257703ccbc021207c87c895975798c2cedc7768741471154966618f5d55",
+      "extracted_characters": 24853,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:34.539679+00:00",
+      "extract_index": [
+        {
+          "pattern": "Public Access Links",
+          "text_offset": 746,
+          "excerpt_sha256": "8dae768fc5f363686addf2ffc9d4a77f1893355f0bfa8d0312354b49f5bc072c"
+        },
+        {
+          "pattern": "Public Access Links",
+          "text_offset": 834,
+          "excerpt_sha256": "73d581cb822af6b73eebcd084083a726f783adc79764185e7f98a4823b0132ec"
+        },
+        {
+          "pattern": "Public Access Links",
+          "text_offset": 1008,
+          "excerpt_sha256": "7a3926128aa0afa1fceb83d3f53c91504e02572c0f0c7dc1e21309b71c0d99bd"
+        },
+        {
+          "pattern": "Editing Submissions",
+          "text_offset": 18525,
+          "excerpt_sha256": "bb0b2ef4e82033f0d350cb3a1fab9496087471bf8c977c4bc139e712f261832f"
+        },
+        {
+          "pattern": "new version",
+          "text_offset": 10608,
+          "excerpt_sha256": "6bd049e21b3129d12266b0c550199a863fcde512c127491e5ab55e41fe683799"
+        },
+        {
+          "pattern": "new version",
+          "text_offset": 18696,
+          "excerpt_sha256": "8958278c0aa45b3e651c90da23df9162f3c2106b2c8f1187bc84c6758215524b"
+        },
+        {
+          "pattern": "ODK Web Forms does not yet",
+          "text_offset": 19690,
+          "excerpt_sha256": "b3d5c4f3866c7546dac4f5086c4e281886b62eebd08a98e21f1fe6bf81e3b728"
+        },
+        {
+          "pattern": "ODK Web Forms does not yet",
+          "text_offset": 23442,
+          "excerpt_sha256": "e2e06862b86350b3ee0ba5f1321dd7c33ba084ac59135aa743c03a38de2a074a"
+        },
+        {
+          "pattern": "Enketo",
+          "text_offset": 1923,
+          "excerpt_sha256": "8995621c54d9fc8f3e46302132218bc3702a5eca7e28927c7af4274fcbf9b370"
+        },
+        {
+          "pattern": "Enketo",
+          "text_offset": 19915,
+          "excerpt_sha256": "5de2cd8b0f9812ed60bdd78d46815e43812283873271e0a968f8af8ab1e9db18"
+        },
+        {
+          "pattern": "Enketo",
+          "text_offset": 20270,
+          "excerpt_sha256": "d691e9a0b94de2fbf119702601e072964c532b1dfee18559f7b361bfac4b9d8b"
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "url": "https://docs.getodk.org/form-question-types/",
+      "requested_at": "2026-10-09T22:23:34.199193+00:00",
+      "final_url": "https://docs.getodk.org/form-question-types/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 50187,
+      "response_sha256": "830f69a8c1710360917de89deb0d7fbfdf192581db15e39555dc85bfbc61836c",
+      "decompressed_bytes": 306950,
+      "extracted_text_sha256": "7e0bad39f55f60cc6ff7dd5ef6a28aa0a1ff4790460cb6585cbb180c3a939391",
+      "extracted_characters": 82939,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:34.725331+00:00",
+      "extract_index": [
+        {
+          "pattern": "Integer widget",
+          "text_offset": 2078,
+          "excerpt_sha256": "0d3a26ce7b27b2c8126b0fb5d0bb310874535bc15b4175f5c5dee4c0f4802472"
+        },
+        {
+          "pattern": "Integer widget",
+          "text_offset": 2144,
+          "excerpt_sha256": "5faf604bc00f0b42ae98482f6882acdb9807cfa61a6e6c67d89936a95d785219"
+        },
+        {
+          "pattern": "Integer widget",
+          "text_offset": 5025,
+          "excerpt_sha256": "7502cdd3067ea064ba3dd29c9b804231fb39c03221a2e7c5ca8c18850622de91"
+        },
+        {
+          "pattern": "Decimal widget",
+          "text_offset": 2096,
+          "excerpt_sha256": "28fe258cdbfb37c84e354e04e15bb11f7a87a7158b4c73297176d9314ad18cc1"
+        },
+        {
+          "pattern": "Decimal widget",
+          "text_offset": 2195,
+          "excerpt_sha256": "4fc473e777739778a3eec54b85268162aa2c0e9454ce7f34addf2c29734a6e6d"
+        },
+        {
+          "pattern": "Decimal widget",
+          "text_offset": 5402,
+          "excerpt_sha256": "84ac06b808bf77ed4b3e6deb7f6748987ad05514fa4c8a09e2c8c8eddeccc62c"
+        },
+        {
+          "pattern": "nine",
+          "text_offset": 2174,
+          "excerpt_sha256": "33c9fb2b61d81b75d239ffc776f0cb7e4ce4e50d4071fa3f30ad8b2ee50bc275"
+        },
+        {
+          "pattern": "nine",
+          "text_offset": 5181,
+          "excerpt_sha256": "25689add26151dbc2c15ca0712b9b4962596f03e607f3f2dd956f6c0000782ff"
+        },
+        {
+          "pattern": "nine",
+          "text_offset": 5226,
+          "excerpt_sha256": "72ba7043705e06df84b9484fac9c3e852ba44d5af4de0bb097571c0905bc22da"
+        },
+        {
+          "pattern": "15 characters",
+          "text_offset": 2225,
+          "excerpt_sha256": "07cc8c6c827fbb71286a7b4a3b2d3f34afc1715689a83d2f5f9f01453df9dfe9"
+        },
+        {
+          "pattern": "15 characters",
+          "text_offset": 5530,
+          "excerpt_sha256": "0b1507de118d07ac67ab2b3921eae2db1b3b1f2c43ec7596581d3fedac1c8fb1"
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "url": "https://abalobi.org/monitor/",
+      "requested_at": "2026-10-09T22:22:54.358692+00:00",
+      "final_url": "https://abalobi.org/monitor/",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "response_bytes": 182691,
+      "response_sha256": "dc687b2e7e8bd525a07b0f5a7409861615190e4d15c1c29b23a39b44dd52ac3e",
+      "extracted_text_sha256": "25375b52ed41be89cc119d1e4498415cc805c01d14747d8d3932365a6483cbfa",
+      "extracted_characters": 5893,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.021660+00:00",
+      "extract_index": [
+        {
+          "pattern": "Key Features",
+          "text_offset": 748,
+          "excerpt_sha256": "38e9cf80008b3bdf2570a8c3f438ccdf26c3d5aec8f637994a1b146f0a0802a8"
+        },
+        {
+          "pattern": "Key Features",
+          "text_offset": 3177,
+          "excerpt_sha256": "5a1d9f5d52053b4e965e0971f439c4f215bc2e76ab29a37f01ea5ccfad2acabd"
+        },
+        {
+          "pattern": "move",
+          "text_offset": 2426,
+          "excerpt_sha256": "032b1846abad3d0ec7a2ebbfede6e6d9f4068593dee757d0afb5fe088c74058e"
+        },
+        {
+          "pattern": "move",
+          "text_offset": 4230,
+          "excerpt_sha256": "4a32e2a6a781f739d2eb4fb6c1770ace9c972dc802fab80d6811e6460a9946db"
+        },
+        {
+          "pattern": "placeholder",
+          "text_offset": 3567,
+          "excerpt_sha256": "10c266eab3add2baf0c6916dac7e403e1ea2c43647ae48e8e7735d2d69eb06ae"
+        },
+        {
+          "pattern": "placeholder",
+          "text_offset": 3912,
+          "excerpt_sha256": "b1d7106c87231890aeebcf0fbcdf37690d148220d6c1b7515d33c5a58dacb9f5"
+        },
+        {
+          "pattern": "placeholder",
+          "text_offset": 4035,
+          "excerpt_sha256": "3991ae98ee435eb1d2ff31061ac010d1e2501c281a713dd2f43a76d2ac2a0241"
+        },
+        {
+          "pattern": "offline",
+          "text_offset": 775,
+          "excerpt_sha256": "78522f0c8fd42fbfc3cd5ea96280689dd75859dd4cc60ec5d05a402d040448cd"
+        },
+        {
+          "pattern": "multilingual",
+          "text_offset": 761,
+          "excerpt_sha256": "8298a45436a261c37b907ba7c7824b8ad414478e847130020e0e987f23d9aec2"
+        }
+      ]
+    },
+    {
+      "id": "E07",
+      "url": "https://v1.farmos.org/guide/app/",
+      "requested_at": "2026-10-09T22:22:54.567230+00:00",
+      "final_url": "https://v1.farmos.org/guide/app/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 19962,
+      "response_sha256": "9941f82f2ad9c60a584940597462d463e45ce74e6e37bc59e1756c94fbc6daf3",
+      "extracted_text_sha256": "b119ad5cfed2bba3b70856c8fcc19c33b6db412263e2b117cb94c7731d5580a2",
+      "extracted_characters": 3867,
+      "missing_patterns": [
+        "proof of concept"
+      ],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:54.707670+00:00",
+      "extract_index": [
+        {
+          "pattern": "proof-of-concept",
+          "text_offset": 1992,
+          "excerpt_sha256": "8744be1133d470a04d744a08c2571115aa252a7fae42cdec94ae0b99978deb8c"
+        },
+        {
+          "pattern": "offline",
+          "text_offset": 1028,
+          "excerpt_sha256": "a36f92dd3ce47d07c02a0054f1d64349c392e81006263cf6fbef30f7e2f40506"
+        },
+        {
+          "pattern": "offline",
+          "text_offset": 1822,
+          "excerpt_sha256": "8358a1b8ce54649b0bf85b5200bd0db1e258c9a2bc33c50b78da2acc34d8c117"
+        },
+        {
+          "pattern": "major feature",
+          "text_offset": 2089,
+          "excerpt_sha256": "363765ad7b573a66fd1d59590962287893e20f1d397481cd69fb0316b44f40f5"
+        },
+        {
+          "pattern": "SSL",
+          "text_offset": 3012,
+          "excerpt_sha256": "1ba946698ca06e86be5896a29bbdfa19a06f86fa02aa2f529a5f88c7a09c41e8"
+        }
+      ]
+    },
+    {
+      "id": "E08",
+      "url": "https://docs.getodk.org/guide-form-language/",
+      "requested_at": "2026-10-09T22:23:34.201505+00:00",
+      "final_url": "https://docs.getodk.org/guide-form-language/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 15939,
+      "response_sha256": "0393e1b169e30aba7c9016bfa211ebd7bc0aba42c6f30a1276613b26e3298a43",
+      "decompressed_bytes": 67141,
+      "extracted_text_sha256": "2c0d02444fc070dbfa2f2993f86ffdf40275fb4075afb4d24fa9c76ac496dca8",
+      "extracted_characters": 18089,
+      "missing_patterns": [
+        "Collect interface"
+      ],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:34.399907+00:00",
+      "extract_index": [
+        {
+          "pattern": "blank",
+          "text_offset": 3326,
+          "excerpt_sha256": "766c5a0dd2b4cb888dfcaec642ccccee749b2ee1c374bd2d442d84a485b7126c"
+        },
+        {
+          "pattern": "blank",
+          "text_offset": 3381,
+          "excerpt_sha256": "ab31b81933cc3d3f7d944bbfe547db3cccaf42e96858c959749df1801522e938"
+        },
+        {
+          "pattern": "blank",
+          "text_offset": 8814,
+          "excerpt_sha256": "99973fe4f8cd61af93943dff2517dc655d9cf5f6faedcc1037af0eb658b4964d"
+        },
+        {
+          "pattern": "Identifying the language",
+          "text_offset": 1250,
+          "excerpt_sha256": "5e415a65f9199ff9917dfec5e15452baaa80d0f464a245748ede6a34fa411ef1"
+        },
+        {
+          "pattern": "Identifying the language",
+          "text_offset": 13738,
+          "excerpt_sha256": "d999fc0281f425b943fbadd17d4db34a8ea5d4adf54d274a8653bd2baa514dfa"
+        },
+        {
+          "pattern": "native",
+          "text_offset": 2577,
+          "excerpt_sha256": "31ad5aa87836e02e4d7d4153c13eb0c604dc1388182d4e6436e99a893a3ea3d8"
+        },
+        {
+          "pattern": "native",
+          "text_offset": 2626,
+          "excerpt_sha256": "8a61b355ec4d01ebab276e14dd074985abad20717e4d085dd9319e99af9e27ad"
+        },
+        {
+          "pattern": "native",
+          "text_offset": 9335,
+          "excerpt_sha256": "b18e68e4e9ca28c9dc0a1951be009ad43a04d6edc84de6986cd523b425eb652d"
+        },
+        {
+          "pattern": "consistent",
+          "text_offset": 2204,
+          "excerpt_sha256": "292ca75c61614827907bb25d24ab815d65efe99831c4e527209b2f856d65287d"
+        },
+        {
+          "pattern": "consistent",
+          "text_offset": 4588,
+          "excerpt_sha256": "b8c697aa4741dd83e7bf850d05993dcf319d07a387aecf33be7ed8ae827cfc7f"
+        }
+      ]
+    },
+    {
+      "id": "E09",
+      "url": "https://docs.getodk.org/central-users/",
+      "requested_at": "2026-10-09T22:23:34.375850+00:00",
+      "final_url": "https://docs.getodk.org/central-users/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 12358,
+      "response_sha256": "0c8831852ba992adf164ecfe3d735c1a5ae572c78613c918f908831a36eafaa6",
+      "decompressed_bytes": 56821,
+      "extracted_text_sha256": "15f2d2b57c593f63d92418bb816ef9cb5f1c7e0329f8cd1b67d287cbc63ebd0e",
+      "extracted_characters": 11927,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:34.626846+00:00",
+      "extract_index": [
+        {
+          "pattern": "App Users",
+          "text_offset": 95,
+          "excerpt_sha256": "f8057744d4015c8bebae8ec45d8b842db551c464a55a4107cc6e4ba207bd8dcc"
+        },
+        {
+          "pattern": "App Users",
+          "text_offset": 449,
+          "excerpt_sha256": "cbabf5cbd8a3f00264c25d96a7e213620df6f00780d60e441ed8c215354299ba"
+        },
+        {
+          "pattern": "App Users",
+          "text_offset": 535,
+          "excerpt_sha256": "48a638d0b752bbdaf1b1d7f00b1a12333f1bc54669b5eb80a115c2751243db22"
+        },
+        {
+          "pattern": "Revoking",
+          "text_offset": 11209,
+          "excerpt_sha256": "e223be10ab32831c9b4893ca8313a4b0686048a6f803a71595854346f34f6cc4"
+        },
+        {
+          "pattern": "Access",
+          "text_offset": 1067,
+          "excerpt_sha256": "4adc0f58b6a7ac8b823c7cf72d7ef60684e6aa291e3bcb24c5bd2c25753b07de"
+        },
+        {
+          "pattern": "Access",
+          "text_offset": 1114,
+          "excerpt_sha256": "5869ad5deea9555b7a1f3e2590c9b359cec59ab3272cc4c3c0a723f12b711f98"
+        },
+        {
+          "pattern": "Access",
+          "text_offset": 2022,
+          "excerpt_sha256": "c7afa2ff7fd721cbfd5d652118da1b0eecc57685b45e966bfc013b2b015b5407"
+        },
+        {
+          "pattern": "assigned",
+          "text_offset": 1514,
+          "excerpt_sha256": "be588364f976a3c88c3c6e6c82a6ae386d8f30d1a38a73eee80232017eae3475"
+        },
+        {
+          "pattern": "assigned",
+          "text_offset": 1625,
+          "excerpt_sha256": "af62175784c2d76ff82120fb4edf7557016a53980c141ec196c8dfdb94167434"
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "url": "https://docs.getodk.org/central-api-changelog/",
+      "requested_at": "2026-10-09T22:23:34.400008+00:00",
+      "final_url": "https://docs.getodk.org/central-api-changelog/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 18509,
+      "response_sha256": "1c6998b34b0eb82641f65fe860dc660bedcdb352ff456561886b1edb0f28d56d",
+      "decompressed_bytes": 79760,
+      "extracted_text_sha256": "559662d1122b105396b698d4c823ed7e2f07d9542b134d495329b2ba42bb01f5",
+      "extracted_characters": 29223,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:34.748744+00:00",
+      "extract_index": [
+        {
+          "pattern": "2026.2",
+          "text_offset": 1078,
+          "excerpt_sha256": "fdff899e89b3ae2e40967d13324bf2d88ba56c17ad4ba3f5fb8e550afdc24812"
+        },
+        {
+          "pattern": "automatically",
+          "text_offset": 6278,
+          "excerpt_sha256": "fda86f2ec0a150f76995b08299d532bf3be6e7b403df901c7382134650cfd73e"
+        },
+        {
+          "pattern": "automatically",
+          "text_offset": 7667,
+          "excerpt_sha256": "1a6d600be8f56fa79ca21baf9c4c4e95fe6eaab6a7349cff1b411cfdeff5bb5a"
+        },
+        {
+          "pattern": "automatically",
+          "text_offset": 17409,
+          "excerpt_sha256": "1029fdefcb197faae3d773c10d774710759cfd61bd84d3aeab19d24e059d428b"
+        },
+        {
+          "pattern": "App Users",
+          "text_offset": 1158,
+          "excerpt_sha256": "7ff24f0755826e606981915c08345383cba88498e73f48d516b291270e91f544"
+        },
+        {
+          "pattern": "App Users",
+          "text_offset": 2683,
+          "excerpt_sha256": "714cf590f6c07e798416fb8aef1be4455fae72b8188186228f8051e3fe19ee76"
+        },
+        {
+          "pattern": "App Users",
+          "text_offset": 5729,
+          "excerpt_sha256": "9e0569456a9403f1f8d39a88a05aa87eca6af9fa0c240187e79b1a1cd9f8d00d"
+        },
+        {
+          "pattern": "all Forms",
+          "text_offset": 28556,
+          "excerpt_sha256": "4dc68de1d6dc73e15f39a61b3eee62885dde7ca88cd08f6dc3a718c43f72d83b"
+        },
+        {
+          "pattern": "all Forms",
+          "text_offset": 32200,
+          "excerpt_sha256": "477cb28a6929ee1d438a9d151921f9f1ea818404297a67aa23ad91b3e818d745"
+        },
+        {
+          "pattern": "all forms",
+          "text_offset": 28556,
+          "excerpt_sha256": "4dc68de1d6dc73e15f39a61b3eee62885dde7ca88cd08f6dc3a718c43f72d83b"
+        },
+        {
+          "pattern": "all forms",
+          "text_offset": 32200,
+          "excerpt_sha256": "477cb28a6929ee1d438a9d151921f9f1ea818404297a67aa23ad91b3e818d745"
+        },
+        {
+          "pattern": "no longer",
+          "text_offset": 29769,
+          "excerpt_sha256": "e8d134b06f21fe4e6ba28bbe694c6d64d4ba4652084e1f599f2631204b50758b"
+        },
+        {
+          "pattern": "no longer",
+          "text_offset": 30456,
+          "excerpt_sha256": "4cad0feb842c49f39163150f593e9e7819b969658824c5de829b0945bf213900"
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "url": "https://support.google.com/appsheet/answer/10107724?hl=en",
+      "requested_at": "2026-10-09T22:22:54.707709+00:00",
+      "final_url": "https://support.google.com/appsheet/answer/10107724?hl=en",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "response_bytes": 1565438,
+      "response_sha256": "78c691ca61c81600b05b8a647bf6ba9c7feb8baaf2e495c9fd1f6979fed7786d",
+      "extracted_text_sha256": "070992689c71c4da5318aa163dce5d01849199ee1040931182cb6e2e00220510",
+      "extracted_characters": 11534,
+      "missing_patterns": [
+        "Google maps"
+      ],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:58.280768+00:00",
+      "extract_index": [
+        {
+          "pattern": "first",
+          "text_offset": 7731,
+          "excerpt_sha256": "d6929f5006473f82139657880f2f4dde543fe7c9008bf95684537fa20569c066"
+        },
+        {
+          "pattern": "first",
+          "text_offset": 10935,
+          "excerpt_sha256": "db6a4b392c63b6df451b71208bec251131ee59c06a16bb0477bcd332189463fe"
+        },
+        {
+          "pattern": "Prolonged offline",
+          "text_offset": 893,
+          "excerpt_sha256": "5b3938c1980bb05ea481fcf13ce9fc5bb0e159327d1226cbbca5ecd2f4556aeb"
+        },
+        {
+          "pattern": "Prolonged offline",
+          "text_offset": 9983,
+          "excerpt_sha256": "25938adc991a14649e7a7a6bee6cf903dd0e754b0be439ac20ad7c9ab4b7dddd"
+        },
+        {
+          "pattern": "days or weeks",
+          "text_offset": 10056,
+          "excerpt_sha256": "f0da37e38966cde009d316eb3405acc19583b3881c05a4acc72c277e0c141065"
+        },
+        {
+          "pattern": "browser",
+          "text_offset": 355,
+          "excerpt_sha256": "81e67cbff25d777779dd1af5d2b7fa619e0993197fb2f1c798b162bdc1ffc13f"
+        },
+        {
+          "pattern": "browser",
+          "text_offset": 386,
+          "excerpt_sha256": "23acab590dac507989b38876bea190011ad2a2642d94f0cb059c2157c5f38e87"
+        },
+        {
+          "pattern": "browser",
+          "text_offset": 954,
+          "excerpt_sha256": "7251527b3250733bb18406d29e08ef6d46da533dbb13479da60f975ecacc4c6f"
+        }
+      ]
+    },
+    {
+      "id": "E12",
+      "url": "https://support.google.com/appsheet/answer/10104794?hl=en",
+      "requested_at": "2026-10-09T22:22:54.773860+00:00",
+      "final_url": "https://support.google.com/appsheet/answer/10104794?hl=en",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "response_bytes": 1548031,
+      "response_sha256": "0f0910fb3ef99f9ae19fd93d79e9057149c48038db1c939f70789fffe91860d7",
+      "extracted_text_sha256": "495b4dbaec60028ab584afed9e070c3587d74f08ac5127ae53269a6c5ef3b935",
+      "extracted_characters": 5584,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:23:04.442697+00:00",
+      "extract_index": [
+        {
+          "pattern": "53 days",
+          "text_offset": 96,
+          "excerpt_sha256": "16feb5440a2e3e5b9f648a706150ee423845072bb1113662da2b47c2837b327b"
+        },
+        {
+          "pattern": "7 days",
+          "text_offset": 137,
+          "excerpt_sha256": "11b4bd6ca20aeb46fe7d08c9f67c11330d852ae04d94f504a70f8756b34a43fb"
+        },
+        {
+          "pattern": "Enterprise",
+          "text_offset": 108,
+          "excerpt_sha256": "9b10efdc133073686190d4d612860682e4c3cd8b8b02353ed1898ca8df473661"
+        },
+        {
+          "pattern": "Enterprise",
+          "text_offset": 1529,
+          "excerpt_sha256": "ad42d7f2bb173442431b6fbeba963b6336e822f2aa44a818091129dc9f15127a"
+        },
+        {
+          "pattern": "Enterprise",
+          "text_offset": 2607,
+          "excerpt_sha256": "832b27e0269ca58655e7f5cacd4e8cadff3b92fdd2856d7bdc28caca4d5fbba2"
+        },
+        {
+          "pattern": "retained",
+          "text_offset": 83,
+          "excerpt_sha256": "20f76726fbe219725a3a878031045e28e8c46eedd7388d61414e1e03963ffe61"
+        }
+      ]
+    },
+    {
+      "id": "E13",
+      "url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/food-traceability-list",
+      "requested_at": "2026-10-09T22:22:54.837617+00:00",
+      "final_url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/food-traceability-list",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "response_bytes": 52282,
+      "response_sha256": "6f3ca2c1edf359b0cfafb174e8b391e0272bb9d840b9bb00102f3457cd996e72",
+      "extracted_text_sha256": "6550edb644f5274d3386f795c86201925a5f4493a581608db5da12479a8e54e0",
+      "extracted_characters": 13958,
+      "missing_patterns": [
+        "NSSP"
+      ],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:54.918263+00:00",
+      "extract_index": [
+        {
+          "pattern": "Molluscan",
+          "text_offset": 6652,
+          "excerpt_sha256": "ae2c3e13f1268d687092fb5467b4e547f0cc88cd4e768f3b79e5d99b1485b766"
+        },
+        {
+          "pattern": "Molluscan",
+          "text_offset": 6890,
+          "excerpt_sha256": "a6362fe5b30136ddf4d64a3e1e95e61f1078bba0e56b9f4a7de0a5cecc91f69b"
+        },
+        {
+          "pattern": "Molluscan",
+          "text_offset": 7155,
+          "excerpt_sha256": "2d3e7bc1d59f948a457bdbaa707bd9816c1a1ff1958d91ef0bcf1ed4b9216907"
+        },
+        {
+          "pattern": "raw bivalve",
+          "text_offset": 6878,
+          "excerpt_sha256": "16361fa788630a4a52cb46a581cea458c2998da0a4896e37ef09f641e53ca748"
+        },
+        {
+          "pattern": "raw bivalve",
+          "text_offset": 7143,
+          "excerpt_sha256": "217f2a54e0659401382488f1e53e100ccd33b0c219da0bb82e25298bc7c99b0a"
+        }
+      ]
+    },
+    {
+      "id": "E14",
+      "url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/fsma-final-rule-requirements-additional-traceability-records-certain-foods",
+      "requested_at": "2026-10-09T22:22:54.882060+00:00",
+      "final_url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/fsma-final-rule-requirements-additional-traceability-records-certain-foods",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "response_bytes": 179845,
+      "response_sha256": "b9ae4e91ae6571f97c552dc9a66cd7446782fec348aad23f423f8e02019c8095",
+      "extracted_text_sha256": "9fe6616426310f321dfbb29f180949425814525a41a574e7d5db7cdf797cc26e",
+      "extracted_characters": 35718,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:55.048703+00:00",
+      "extract_index": [
+        {
+          "pattern": "original compliance",
+          "text_offset": 3258,
+          "excerpt_sha256": "282275de8ce8176150357f3307d856c1aa840149a99324955ef60241fba5dbc2"
+        },
+        {
+          "pattern": "2028",
+          "text_offset": 3487,
+          "excerpt_sha256": "4e925cde61af1eeb80afa112e0206423da8fbd44ea422e36b139586269525e1a"
+        },
+        {
+          "pattern": "2026",
+          "text_offset": 807,
+          "excerpt_sha256": "5462fadafb6e6757a875e95e2df73626db809e29d9908b75b8147dc8731b6c0b"
+        },
+        {
+          "pattern": "2026",
+          "text_offset": 1323,
+          "excerpt_sha256": "5976ca4620d14e2dbc226fe57c7068b2a2e73249a1242db2f5f686b5ddf5a078"
+        },
+        {
+          "pattern": "2026",
+          "text_offset": 1425,
+          "excerpt_sha256": "827f5292c915691394754941396b08bfd0cb50d5b1b8babc7248bee3930f165f"
+        },
+        {
+          "pattern": "Getting Started",
+          "text_offset": 3780,
+          "excerpt_sha256": "c72716c8ed34979511d9be2d6f654ac3b395dc30806b1564c7934cc52ae5250b"
+        },
+        {
+          "pattern": "Getting Started",
+          "text_offset": 4068,
+          "excerpt_sha256": "75bf97f1b31a379105d78779dd5596445f50bc84eee3db4410d18b2e6fe134b6"
+        },
+        {
+          "pattern": "Getting Started",
+          "text_offset": 29213,
+          "excerpt_sha256": "7c53726cf6a8a3bfbf2bed2dd1d7e993136aa3653cec91b4383d2af5d2f0916a"
+        }
+      ]
+    },
+    {
+      "id": "E15",
+      "url": "https://www.fda.gov/media/181370/download",
+      "requested_at": "2026-10-09T22:22:54.918392+00:00",
+      "final_url": "https://www.fda.gov/media/181370/download",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "response_bytes": 6612266,
+      "response_sha256": "194e728908e1f63552d1409937cead633d64212c5d9b7fce29fb8889b7f0a542",
+      "extracted_text_sha256": "ed5bf91715d2178310191dec3e8230c9cf82cc1881908c5b1b660c613207d2c9",
+      "extracted_characters": 1614907,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:57.660085+00:00",
+      "extract_index": [
+        {
+          "pattern": "13.8 square",
+          "text_offset": 306838,
+          "excerpt_sha256": "340d16926f784d33cbeabceee62eaa7a6406440cdfd6f174c925e2168f66e668"
+        },
+        {
+          "pattern": "13.8 square",
+          "text_offset": 339415,
+          "excerpt_sha256": "a6ca25a25ca0ef3093c63a63483536443db9cf29d6684b24595520decfe0ae95"
+        },
+        {
+          "pattern": "13.8 square",
+          "text_offset": 1283267,
+          "excerpt_sha256": "2b901d7a0d6c9246cbe2e01565d4e0384e86bc5a69ac02b8827a3bded277d947"
+        },
+        {
+          "pattern": "89.03",
+          "text_offset": 306858,
+          "excerpt_sha256": "42ea6c5665059409a1aee0c056f5a1fe1b81136506c1cf2ee590f1b3667d422b"
+        },
+        {
+          "pattern": "89.03",
+          "text_offset": 339435,
+          "excerpt_sha256": "818686e261ac22c5f9ca1dbf3981b5c092623fd48605fc497125582527c8f595"
+        },
+        {
+          "pattern": "89.03",
+          "text_offset": 1283287,
+          "excerpt_sha256": "83f452c3f16f798f8036091f15485e8ebf4c857aee6bdc4c100a11ffae6661a1"
+        },
+        {
+          "pattern": "90 days",
+          "text_offset": 307803,
+          "excerpt_sha256": "af468cb897acf2973d635e66d50f1ccb54a70430e946a238a9076922a82e388f"
+        },
+        {
+          "pattern": "90 days",
+          "text_offset": 340835,
+          "excerpt_sha256": "5c9cd53575eb602fb105512d4ef6e521761e80a4b7ae13967adccce7b8d8dea9"
+        },
+        {
+          "pattern": "90 days",
+          "text_offset": 352782,
+          "excerpt_sha256": "fe73f3aaf629ca1b6e9fc15f53b54f2cf11a2477805e5de87fe714c33b2ee51b"
+        },
+        {
+          "pattern": "single growing area",
+          "text_offset": 144548,
+          "excerpt_sha256": "60b2908d69bd2159a8a705b0959790eb3bbdfa9bbc4e62b6081a5b77e93d8a51"
+        },
+        {
+          "pattern": "single growing area",
+          "text_offset": 829690,
+          "excerpt_sha256": "d21abdaff8adf371b20c50ee02ee46c0e93e10979d28a80c982e1350843b9d4b"
+        },
+        {
+          "pattern": "consignee",
+          "text_offset": 308998,
+          "excerpt_sha256": "017e3c1485b0c101fd4e5bc06f0758be9fc1dcbd173914e95ed451c7f8f45684"
+        },
+        {
+          "pattern": "consignee",
+          "text_offset": 335798,
+          "excerpt_sha256": "35b97b364761561a1a1b1b6e1b3fd425ce6a476ce0380d06e20154c1e0154774"
+        },
+        {
+          "pattern": "consignee",
+          "text_offset": 343858,
+          "excerpt_sha256": "98274af88d227eb6cc7b3ca1dd639f783b78de66459f008ca2a3992dd56d5dd8"
+        },
+        {
+          "pattern": "retagged",
+          "text_offset": 307736,
+          "excerpt_sha256": "2a26d02bd6a64238dce7aecf09ab8e0281a5a463da446a608a2ce4a6e1eeead6"
+        },
+        {
+          "pattern": "retagged",
+          "text_offset": 340768,
+          "excerpt_sha256": "7349558a00960c8354290320e8b3bc0181a5c045550a7db6ef1bb84e6407bdfa"
+        },
+        {
+          "pattern": "retagged",
+          "text_offset": 352715,
+          "excerpt_sha256": "503cfbdfdbdcb8600c3adcd5b90fb310f35a2d27359677052b23f43b0c63a7e5"
+        },
+        {
+          "pattern": "bulk",
+          "text_offset": 303999,
+          "excerpt_sha256": "edc5bab94b51d4e9fdaba51e9dab8c6cc966ab1a6415baeeb598756885781ef0"
+        },
+        {
+          "pattern": "bulk",
+          "text_offset": 304771,
+          "excerpt_sha256": "9bb64bd653f12c8e6283184149b3ed46ce822bcf59f274a7bab7b52de8cc5e42"
+        },
+        {
+          "pattern": "single tag",
+          "text_offset": 304392,
+          "excerpt_sha256": "da5e0840134bab675f0f3cc5c7f130003b7e9788eaf2a6f14158afba801572bf"
+        }
+      ]
+    },
+    {
+      "id": "E16",
+      "url": "https://ref.gs1.org/standards/epcis/2.0.1/",
+      "requested_at": "2026-10-09T22:22:54.938908+00:00",
+      "final_url": "https://ref.gs1.org/standards/epcis/2.0.1/",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "response_bytes": 4827202,
+      "response_sha256": "6c9b2b51b41cd2cf169f6723001cac56a31c574e9c79ec8d4d52d2bf505f8eaa",
+      "extracted_text_sha256": "490f509aa956444f170e9e0365bfb57806a60db83d1a5676540647eb1bdc750f",
+      "extracted_characters": 507316,
+      "missing_patterns": [],
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:57.681278+00:00",
+      "extract_index": [
+        {
+          "pattern": "7.3.3.1",
+          "text_offset": 115685,
+          "excerpt_sha256": "0552d679fd305296fa9ccf60167157e74e4f95b0813739a4d139577ea79e0944"
+        },
+        {
+          "pattern": "7.3.3.1",
+          "text_offset": 121601,
+          "excerpt_sha256": "b6a26337331809de1f4cf941ee13e6978993e7ca315605d339a56236a82585ff"
+        },
+        {
+          "pattern": "7.3.3.1",
+          "text_offset": 124625,
+          "excerpt_sha256": "d278977f127b23369f8e9f0e8820238af7af219748cf044778cebdcb144398ff"
+        },
+        {
+          "pattern": "positive integer",
+          "text_offset": 122361,
+          "excerpt_sha256": "5f758ca4ad48afc77af4446c72966171c889571b844efb1b5b47e962d8fb3727"
+        },
+        {
+          "pattern": "positive integer",
+          "text_offset": 123900,
+          "excerpt_sha256": "8814b7ca62ff9859fce10089a40dcd6419a28730c9f1aa2339da5ffa0fb0b51d"
+        },
+        {
+          "pattern": "uom",
+          "text_offset": 122210,
+          "excerpt_sha256": "e406ead34fabe429773a7453d2d4865adbaf315ce88cf217d771cb9ed3119ade"
+        },
+        {
+          "pattern": "uom",
+          "text_offset": 122311,
+          "excerpt_sha256": "7fa06e0efdd95ffc27ad9c8fb9a82a9f4189fb873a670e60177dbdeb0f13707a"
+        },
+        {
+          "pattern": "uom",
+          "text_offset": 122536,
+          "excerpt_sha256": "b6e520387e979d4866e56e300cf4152cfb5021c3fb6a2c70d580c312aa3dbb6b"
+        },
+        {
+          "pattern": "not required",
+          "text_offset": 129335,
+          "excerpt_sha256": "c75f88cbe018d16b53d7b3cac5401a135f48c3b662b756edb205316b72574e00"
+        },
+        {
+          "pattern": "not required",
+          "text_offset": 167982,
+          "excerpt_sha256": "4d2c4c774f6a414c1d0ac29f6447b5207380d8edcb442326e2e0942641640f0c"
+        },
+        {
+          "pattern": "not required",
+          "text_offset": 176985,
+          "excerpt_sha256": "8bb0041412766a788c8c88b8f8331f2198dad5c499dec39603ec6dde492be835"
+        },
+        {
+          "pattern": "eventTime",
+          "text_offset": 85239,
+          "excerpt_sha256": "c850fac63b7a296812d9565c113cfc3a2cd07b60d8056caebc945a35952c6014"
+        },
+        {
+          "pattern": "eventTime",
+          "text_offset": 113145,
+          "excerpt_sha256": "3df27ec04cc1e6ebfee839b69ec1234e853b6e074b681e4d4c747c28a1dc6721"
+        },
+        {
+          "pattern": "eventTime",
+          "text_offset": 113181,
+          "excerpt_sha256": "a8fe9b57659e1538b7819e6b75b3bcae4cd3bf126f265f14fb08a030de414606"
+        },
+        {
+          "pattern": "7.3.6.2",
+          "text_offset": 108601,
+          "excerpt_sha256": "d737add24f7a22a5773f6938978157f0329f2bbf34fbf569c253b462bf9caa9b"
+        },
+        {
+          "pattern": "7.3.6.2",
+          "text_offset": 115445,
+          "excerpt_sha256": "311d1641eb437c1536ffbd8d361300e1ac177e031b417ec83a6876603b0f074f"
+        },
+        {
+          "pattern": "7.3.6.2",
+          "text_offset": 135527,
+          "excerpt_sha256": "d103cda8cfda00bb8ed3febbead81adba308b64a7ced9deb771df2f6c90889d2"
+        },
+        {
+          "pattern": "eventID is",
+          "text_offset": 432477,
+          "excerpt_sha256": "e43a0e337083edbe590d1063b59e678df44a5fb8f5ca232d5fcaa85a4f9caf0c"
+        },
+        {
+          "pattern": "eventID is",
+          "text_offset": 488637,
+          "excerpt_sha256": "58f34761b26760146df145b52b967862dd96874f9e29b43dc0344810bdb0d074"
+        },
+        {
+          "pattern": "eventID field",
+          "text_offset": 302049,
+          "excerpt_sha256": "6074ed50443eafe24fb8659c7551a7f970c59c6da27dcbfa21bed8106a29c684"
+        },
+        {
+          "pattern": "eventID field",
+          "text_offset": 423865,
+          "excerpt_sha256": "e00442b551f9f365186dce9fd260aa2a0f303a944e6a9159ead39aa64ce57a91"
+        },
+        {
+          "pattern": "7.3.6.2 Disposition",
+          "text_offset": 134083,
+          "excerpt_sha256": "a1026d61ed1a60bb19cb6036cea6aaeb526030ae6800fdecb336b0c6b7d45c25"
+        },
+        {
+          "pattern": "7.3.3.1 QuantityElement",
+          "text_offset": 120301,
+          "excerpt_sha256": "7f2d5fa6af197968dbf51c80fa6707215775b6415b1734060aa5d659023b804c"
+        }
+      ]
+    },
+    {
+      "id": "GH-I6768",
+      "url": "https://api.github.com/repos/getodk/collect/issues/6768",
+      "requested_at": "2026-10-09T22:22:55.048998+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/6768",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 6645,
+      "response_sha256": "c2491983832a17629a6f3d1ad1f91480ed9f83ba744fdba8eaf81dbbd44750d5",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:55.243714+00:00",
+      "extract_index": [],
+      "metadata": {
+        "number": 6768,
+        "title": "With Entity access by owner only, Entity not deleted in Collect if deleted in Central while Collect is offline",
+        "state": "closed",
+        "created_at": "2025-06-12T19:33:09Z",
+        "updated_at": "2025-10-17T09:22:28Z",
+        "closed_at": "2025-10-17T09:22:28Z",
+        "html_url": "https://github.com/getodk/collect/issues/6768",
+        "body_sha256": "ad5187b5c24c3735a8d051e21b4afed2804d80fe59b5cf650b04ddb94c7743d3",
+        "body_characters": 1272
+      }
+    },
+    {
+      "id": "GH-C6768",
+      "url": "https://api.github.com/repos/getodk/collect/issues/6768/comments",
+      "requested_at": "2026-10-09T22:22:55.243768+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/6768/comments",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 26127,
+      "response_sha256": "46b7bd5a5cfca97faeb0a7a10b074b7cf654be634a736114b04bf3b5cc966bf9",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:55.405803+00:00",
+      "extract_index": [],
+      "metadata": [
+        {
+          "created_at": "2025-06-12T21:40:41Z",
+          "updated_at": "2025-06-16T18:53:38Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-2968243088",
+          "body_sha256": "7a10326faf5a2903b472d476097c1d11fd26ca03b56d0467b7672d712065895e",
+          "body_characters": 734
+        },
+        {
+          "created_at": "2025-06-13T09:38:38Z",
+          "updated_at": "2025-06-13T09:44:16Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-2969749733",
+          "body_sha256": "e7abce38c1fd396aeca95be8e7dc89d2c523939351ce6c29f5940b19de2907fb",
+          "body_characters": 2541
+        },
+        {
+          "created_at": "2025-06-16T18:42:05Z",
+          "updated_at": "2025-06-16T18:42:05Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-2977686328",
+          "body_sha256": "a92f4fb274907627027b276dcc59620818b34fbae24493fa0ce3ed931e66e874",
+          "body_characters": 2325
+        },
+        {
+          "created_at": "2025-06-16T19:02:11Z",
+          "updated_at": "2025-06-16T19:02:11Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-2977752368",
+          "body_sha256": "a20b20ebdeff4a27ac6497b45e6fef72e9d8f8cfefec6aee0ee98eafd1a4bfd5",
+          "body_characters": 1388
+        },
+        {
+          "created_at": "2025-06-16T19:12:24Z",
+          "updated_at": "2025-06-16T19:12:24Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-2977784177",
+          "body_sha256": "d7d508f48887e253b1ef0fb9b06cb29f26b64cd2d49a1b6ce5c926473bd013dd",
+          "body_characters": 805
+        },
+        {
+          "created_at": "2025-06-17T12:48:55Z",
+          "updated_at": "2025-06-17T12:48:55Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-2980256841",
+          "body_sha256": "0b5e452a0d322bc6536f718c2a09df0380b9f015341d2b0117ce2cbb179b0313",
+          "body_characters": 3001
+        },
+        {
+          "created_at": "2025-07-17T08:36:59Z",
+          "updated_at": "2025-07-17T08:37:11Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-3083157894",
+          "body_sha256": "3383bf9f25db7d6edaf373e0ba20ea0a211e4461307a27d40a36c5267349291e",
+          "body_characters": 83
+        },
+        {
+          "created_at": "2025-07-21T19:57:54Z",
+          "updated_at": "2025-07-21T19:59:13Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-3098367320",
+          "body_sha256": "0f126bb7dfabd80e8698a164e36747a13b3ae042bc1f75b7609fded872276cac",
+          "body_characters": 506
+        },
+        {
+          "created_at": "2025-08-05T16:32:38Z",
+          "updated_at": "2025-08-05T16:32:38Z",
+          "html_url": "https://github.com/getodk/collect/issues/6768#issuecomment-3155835946",
+          "body_sha256": "517496e29dee8c9915b35a1886f0671b6c8212985b3841fc64ef5476484d3e75",
+          "body_characters": 133
+        }
+      ]
+    },
+    {
+      "id": "GH-I5550",
+      "url": "https://api.github.com/repos/getodk/collect/issues/5550",
+      "requested_at": "2026-10-09T22:22:55.405881+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/5550",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 4943,
+      "response_sha256": "a1841d11295da57ac1516d0c9dd24e86969fab96cac637fa8657d67d3d35364d",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:55.571784+00:00",
+      "extract_index": [],
+      "metadata": {
+        "number": 5550,
+        "title": "Missing events in audit log after validating answers in a field-list group when finalized",
+        "state": "open",
+        "created_at": "2023-04-14T09:53:25Z",
+        "updated_at": "2026-01-28T14:47:46Z",
+        "closed_at": null,
+        "html_url": "https://github.com/getodk/collect/issues/5550",
+        "body_sha256": "4b44dcaa37c70e4a9f0281dd64c4ec1e929e4bff886ed20ab5e73afa1ade04c9",
+        "body_characters": 2506
+      }
+    },
+    {
+      "id": "GH-C5550",
+      "url": "https://api.github.com/repos/getodk/collect/issues/5550/comments",
+      "requested_at": "2026-10-09T22:22:55.571834+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/5550/comments",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 7717,
+      "response_sha256": "d37ba2dccdb81818d53cb8133694c0692a1658cc7a86b0d6b31b212c43fa6cba",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:55.738924+00:00",
+      "extract_index": [],
+      "metadata": [
+        {
+          "created_at": "2023-08-09T08:31:56Z",
+          "updated_at": "2023-08-09T08:31:56Z",
+          "html_url": "https://github.com/getodk/collect/issues/5550#issuecomment-1670899982",
+          "body_sha256": "c5de783f97b34915d83ef4761c65bba1a45b336cd51f9705cfadda52aa5da46d",
+          "body_characters": 122
+        },
+        {
+          "created_at": "2023-08-09T09:19:48Z",
+          "updated_at": "2023-08-09T09:19:48Z",
+          "html_url": "https://github.com/getodk/collect/issues/5550#issuecomment-1670971070",
+          "body_sha256": "e84fb3bf80290a29cbd3139bef12d2140834c256153e5196b73d06cd8e804c44",
+          "body_characters": 778
+        },
+        {
+          "created_at": "2023-08-09T09:35:41Z",
+          "updated_at": "2023-08-09T09:36:11Z",
+          "html_url": "https://github.com/getodk/collect/issues/5550#issuecomment-1670994692",
+          "body_sha256": "5e3c367e3decba309a378a2ed9b5a5eabc0de38c54aaecbe9feb0a937809c218",
+          "body_characters": 93
+        },
+        {
+          "created_at": "2023-08-09T09:39:57Z",
+          "updated_at": "2023-08-09T09:40:43Z",
+          "html_url": "https://github.com/getodk/collect/issues/5550#issuecomment-1671000559",
+          "body_sha256": "59d2d93c484ef1bdb1296eff09793b2af5a5d88e1057ec911eb2ae5b8de2b7f0",
+          "body_characters": 375
+        }
+      ]
+    },
+    {
+      "id": "GH-I1703",
+      "url": "https://api.github.com/repos/getodk/collect/issues/1703",
+      "requested_at": "2026-10-09T22:22:55.739007+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/1703",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 4439,
+      "response_sha256": "835ef9c5feb75351ebf879722e8f5483d189d96d16e5378ac290a709573cbe73",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:55.912137+00:00",
+      "extract_index": [],
+      "metadata": {
+        "number": 1703,
+        "title": "User should see user friendly error messages when user loses internet connection during downloading new forms or sending finalized forms",
+        "state": "closed",
+        "created_at": "2017-12-13T10:14:51Z",
+        "updated_at": "2021-10-18T08:32:58Z",
+        "closed_at": "2021-10-18T08:32:58Z",
+        "html_url": "https://github.com/getodk/collect/issues/1703",
+        "body_sha256": "68a531180c0151bf397ebf323be768cd2f1242c195e73778319f3e9709ccdf8c",
+        "body_characters": 997
+      }
+    },
+    {
+      "id": "GH-C1703",
+      "url": "https://api.github.com/repos/getodk/collect/issues/1703/comments",
+      "requested_at": "2026-10-09T22:22:55.912226+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/1703/comments",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 16065,
+      "response_sha256": "010a8938217db1fd369e792a5bad60ac8109e03cdbcd4d9a1dcf72ee6e9c2bea",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.097185+00:00",
+      "extract_index": [],
+      "metadata": [
+        {
+          "created_at": "2017-12-13T15:03:39Z",
+          "updated_at": "2017-12-13T15:03:39Z",
+          "html_url": "https://github.com/getodk/collect/issues/1703#issuecomment-351417095",
+          "body_sha256": "53f630f1594da82d416675f64ce7417e4c4b5f20f65ee755b96cb36bdb657d5e",
+          "body_characters": 81
+        },
+        {
+          "created_at": "2017-12-13T15:20:56Z",
+          "updated_at": "2017-12-13T15:20:56Z",
+          "html_url": "https://github.com/getodk/collect/issues/1703#issuecomment-351422623",
+          "body_sha256": "a6dc98628ce7b204a6fd53caaf765b1c4e5be44b3ce9a5b5e085def30af78bda",
+          "body_characters": 155
+        },
+        {
+          "created_at": "2017-12-13T18:39:09Z",
+          "updated_at": "2017-12-13T18:41:26Z",
+          "html_url": "https://github.com/getodk/collect/issues/1703#issuecomment-351482713",
+          "body_sha256": "d0080b74a1bef4b7cc0093ba5e4ac2fe01eac2c4408bc61501488bf0b6dafb30",
+          "body_characters": 700
+        },
+        {
+          "created_at": "2017-12-13T18:46:46Z",
+          "updated_at": "2017-12-13T18:46:46Z",
+          "html_url": "https://github.com/getodk/collect/issues/1703#issuecomment-351484815",
+          "body_sha256": "fed155fe93ff7aaf7c0d71c9c3b22473914e43cc8e070116b590e165060639b2",
+          "body_characters": 228
+        },
+        {
+          "created_at": "2017-12-14T02:41:16Z",
+          "updated_at": "2017-12-14T02:41:16Z",
+          "html_url": "https://github.com/getodk/collect/issues/1703#issuecomment-351591532",
+          "body_sha256": "aa1126e62d2c32972f5429c1ce3f7f430560488e0362cd17ff0b69bdf7c03d59",
+          "body_characters": 412
+        },
+        {
+          "created_at": "2017-12-14T02:41:29Z",
+          "updated_at": "2017-12-14T02:41:29Z",
+          "html_url": "https://github.com/getodk/collect/issues/1703#issuecomment-351591559",
+          "body_sha256": "6df319c28be939d7156169cb9e87adcf1bb74f532630800b672562172ee1d361",
+          "body_characters": 745
+        },
+        {
+          "created_at": "2020-09-14T23:23:23Z",
+          "updated_at": "2020-09-14T23:23:23Z",
+          "html_url": "https://github.com/getodk/collect/issues/1703#issuecomment-692369777",
+          "body_sha256": "acc6b77ba96c3554c073164d45e7a98c3095ddcb228ded491d9315fa88fb34a9",
+          "body_characters": 512
+        },
+        {
+          "created_at": "2021-10-18T08:32:58Z",
+          "updated_at": "2021-10-18T08:32:58Z",
+          "html_url": "https://github.com/getodk/collect/issues/1703#issuecomment-945531458",
+          "body_sha256": "5847a348bc5365fc846c226d1447da8c4ef5f33d649ce5f275ff40650daf5baa",
+          "body_characters": 269
+        }
+      ]
+    },
+    {
+      "id": "GH-I4489",
+      "url": "https://api.github.com/repos/getodk/collect/issues/4489",
+      "requested_at": "2026-10-09T22:22:56.021929+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/4489",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 9176,
+      "response_sha256": "e0038fe182b3523ee39f51c9c39011d2cd808a7807f7a7aac89cad5b8f5c9f75",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.238036+00:00",
+      "extract_index": [],
+      "metadata": {
+        "number": 4489,
+        "title": "Augment \"Form Download Failed\" message with source of error",
+        "state": "closed",
+        "created_at": "2021-03-24T21:18:09Z",
+        "updated_at": "2021-10-06T09:07:47Z",
+        "closed_at": "2021-10-06T09:07:47Z",
+        "html_url": "https://github.com/getodk/collect/issues/4489",
+        "body_sha256": "69e17b5d97708680e9926c1d5ac6348be0456e36c5d7b241597fdeee4447a656",
+        "body_characters": 2215
+      }
+    },
+    {
+      "id": "GH-C4489",
+      "url": "https://api.github.com/repos/getodk/collect/issues/4489/comments",
+      "requested_at": "2026-10-09T22:22:56.097298+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/4489/comments",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 38518,
+      "response_sha256": "46e0c81fe0936e5a846e8f8062912ac31d7fe3d1b75a8dcdd2022259e6589fd7",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.274038+00:00",
+      "extract_index": [],
+      "metadata": [
+        {
+          "created_at": "2021-07-30T13:28:33Z",
+          "updated_at": "2021-07-30T13:28:33Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-889893922",
+          "body_sha256": "3a564ef83e2a5eb37c8070149a6e28d05720a6c2932e8ff13757cf9f911905c8",
+          "body_characters": 150
+        },
+        {
+          "created_at": "2021-08-06T10:44:12Z",
+          "updated_at": "2021-08-06T10:44:12Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-894173891",
+          "body_sha256": "c7c82da46f630c72cb938a1eeb5d44b81e96f5d53f5715a90ac0c4c997551c65",
+          "body_characters": 48
+        },
+        {
+          "created_at": "2021-08-09T13:32:53Z",
+          "updated_at": "2021-08-09T13:33:13Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-895226451",
+          "body_sha256": "59748ea6cfe31064cacf60109df98d2ac40eeba5990d5b364f8b8716c4bca7a5",
+          "body_characters": 722
+        },
+        {
+          "created_at": "2021-08-09T15:05:26Z",
+          "updated_at": "2021-08-09T15:05:26Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-895302062",
+          "body_sha256": "b9d58711ab4866caa8728d1a5d4c8a3ddd57d95c592a5a5cceccc5bb535d09e3",
+          "body_characters": 316
+        },
+        {
+          "created_at": "2021-08-09T16:31:11Z",
+          "updated_at": "2021-08-09T16:31:11Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-895366695",
+          "body_sha256": "1c755ec55fb1c935db323c204dcba44c198540d4ff0b60296f5bd5f8dbef5a2d",
+          "body_characters": 417
+        },
+        {
+          "created_at": "2021-08-10T12:47:28Z",
+          "updated_at": "2021-08-10T12:47:28Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-895998362",
+          "body_sha256": "6ab8d9734b524c48c2b0ad546e3b8c1212ed75494377be26edfb4453c86e4faf",
+          "body_characters": 878
+        },
+        {
+          "created_at": "2021-08-10T12:53:11Z",
+          "updated_at": "2021-08-10T12:53:11Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-896002158",
+          "body_sha256": "500e4701e5dbaeb87156baa21999b781503600563ddd0dbb81d873b0e2a1d90f",
+          "body_characters": 1562
+        },
+        {
+          "created_at": "2021-08-10T12:57:39Z",
+          "updated_at": "2021-08-10T12:57:39Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-896005120",
+          "body_sha256": "928cd481e323a9aff194d6bca5dd17c24c8a8621f1a509719c9b4ad816865114",
+          "body_characters": 317
+        },
+        {
+          "created_at": "2021-08-10T13:53:44Z",
+          "updated_at": "2021-08-10T13:53:44Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-896048145",
+          "body_sha256": "dddfe0b4a3e5710d5555d153de87ddbdf69e218d370a1f8ea528886abb644cd5",
+          "body_characters": 762
+        },
+        {
+          "created_at": "2021-08-11T04:48:56Z",
+          "updated_at": "2021-08-11T04:54:30Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-896497457",
+          "body_sha256": "c3bcc1b4cdf96fcc79958d1c33011103a6d76bf1f0cbc454866c36193ba3b126",
+          "body_characters": 1055
+        },
+        {
+          "created_at": "2021-08-11T14:34:25Z",
+          "updated_at": "2021-08-11T14:34:25Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-896881088",
+          "body_sha256": "8d478df1e7f50af50edca66cb1fa11f57cc15df4a029ab50b799776a836903c0",
+          "body_characters": 1601
+        },
+        {
+          "created_at": "2021-08-16T03:13:53Z",
+          "updated_at": "2021-08-16T03:13:53Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-899183493",
+          "body_sha256": "1b84d8ce7edcbeac45576deeb779681354571b8df1fbfdf165bf716a76182585",
+          "body_characters": 224
+        },
+        {
+          "created_at": "2021-08-16T08:27:13Z",
+          "updated_at": "2021-08-16T08:27:13Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-899323566",
+          "body_sha256": "42ce578edbf4d44e95e3739a40508e568ba49c2d535c7e33eab736169c95a057",
+          "body_characters": 537
+        },
+        {
+          "created_at": "2021-08-17T11:15:59Z",
+          "updated_at": "2021-08-17T11:15:59Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-900208402",
+          "body_sha256": "fdacbc1e804a40794232ded7e54038de1bdb64bdfaa4ff543740b3a7e81e3163",
+          "body_characters": 268
+        },
+        {
+          "created_at": "2021-08-17T13:25:23Z",
+          "updated_at": "2021-08-17T13:25:23Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-900296697",
+          "body_sha256": "f97d318c2dec584368ad038198aa1efd5e651c0febc839c8de380fba206e2f19",
+          "body_characters": 65
+        },
+        {
+          "created_at": "2021-08-20T20:44:39Z",
+          "updated_at": "2021-08-20T20:44:39Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-902947229",
+          "body_sha256": "57f40aa676c2db5f12a21ee05381af796108951ca556663f395218f0efba6e57",
+          "body_characters": 440
+        },
+        {
+          "created_at": "2021-08-23T09:13:19Z",
+          "updated_at": "2021-08-23T09:18:27Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-903587058",
+          "body_sha256": "d4ddaccd886d47d5af5bc297fa6576fc94114e364581b66ee6a5af068ae26a24",
+          "body_characters": 230
+        },
+        {
+          "created_at": "2021-08-23T09:39:06Z",
+          "updated_at": "2021-08-23T09:39:06Z",
+          "html_url": "https://github.com/getodk/collect/issues/4489#issuecomment-903606290",
+          "body_sha256": "7b759ae00250410b143c5eeea7df4b5168344465b9fb6cd52fe05ba3eb48c7d6",
+          "body_characters": 113
+        }
+      ]
+    },
+    {
+      "id": "GH-P6910",
+      "url": "https://api.github.com/repos/getodk/collect/pulls/6910",
+      "requested_at": "2026-10-09T22:22:56.238118+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/pulls/6910",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 19530,
+      "response_sha256": "532205ac87a320d707c5ec2e3a7e5cea0b1f9b55df62b3e88d3fc372ef1c5d04",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.471954+00:00",
+      "extract_index": [],
+      "metadata": {
+        "number": 6910,
+        "title": "Use integrity URL to clean up offline entities when hash is unchanged",
+        "state": "closed",
+        "created_at": "2025-09-30T11:16:51Z",
+        "updated_at": "2025-10-17T09:22:27Z",
+        "closed_at": "2025-10-17T09:22:27Z",
+        "merged_at": "2025-10-17T09:22:27Z",
+        "merge_commit_sha": "a93c6292f31f85e214b8fcd7ba953352c1ea4cbc",
+        "html_url": "https://github.com/getodk/collect/pull/6910",
+        "additions": 65,
+        "deletions": 110,
+        "body_sha256": "0b660ffbe5785f58d7114af3a7b57ae944f0f397d7be1599174923298176104c",
+        "body_characters": 2143
+      }
+    },
+    {
+      "id": "GH-F6910",
+      "url": "https://api.github.com/repos/getodk/collect/pulls/6910/files",
+      "requested_at": "2026-10-09T22:22:56.274186+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/pulls/6910/files",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 19506,
+      "response_sha256": "024c3dcfb959b2cba945dff14105103b5dc6d14c96ac24c41743efc90c861af9",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.590978+00:00",
+      "extract_index": [],
+      "metadata": [
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/feature/formentry/EntityFormTest.kt",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 1,
+          "patch_sha256": "f89e75680dbd997395110203ab6615373a379f1356f66f6f9b4f19bc4ef19a89",
+          "patch_characters": 352
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/support/StubOpenRosaServer.kt",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 11,
+          "patch_sha256": "e8e3389d7db0289f6e9e53ec6cdee83bc09d9aa0370f6ca8cdbac2f15cade9f2",
+          "patch_characters": 632
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/formmanagement/ServerFormUseCases.kt",
+          "status": "modified",
+          "additions": 28,
+          "deletions": 16,
+          "patch_sha256": "7dee7e1ec3fae54eab0d4645b41070987850e249612e8d28b0e70dc3c2ac6309",
+          "patch_characters": 3017
+        },
+        {
+          "filename": "entities/src/main/java/org/odk/collect/entities/LocalEntityUseCases.kt",
+          "status": "modified",
+          "additions": 14,
+          "deletions": 19,
+          "patch_sha256": "427257402d9c736b76e8c4e4716a362ee63baf151f600f19e5e3d346e8661105",
+          "patch_characters": 2203
+        },
+        {
+          "filename": "entities/src/test/java/org/odk/collect/entities/LocalEntityUseCasesTest.kt",
+          "status": "modified",
+          "additions": 21,
+          "deletions": 63,
+          "patch_sha256": "4ef12dc10bc3085cebfe8ff3d1abd6e6181509bfa1ab4b1823ec2a9ed77cf0ba",
+          "patch_characters": 8655
+        }
+      ]
+    },
+    {
+      "id": "GH-PC6910",
+      "url": "https://api.github.com/repos/getodk/collect/issues/6910/comments",
+      "requested_at": "2026-10-09T22:22:56.472023+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/6910/comments",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 3780,
+      "response_sha256": "6f4d5079c7a05d2b90a8d588e847c8ba6b65fe56d97c38143042e2c683b32c99",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.636741+00:00",
+      "extract_index": [],
+      "metadata": [
+        {
+          "created_at": "2025-10-17T09:18:02Z",
+          "updated_at": "2025-10-17T09:18:02Z",
+          "html_url": "https://github.com/getodk/collect/pull/6910#issuecomment-3414578674",
+          "body_sha256": "ce7af21bd1a8bbb17f9c97332a8ea9372562c11de676d931ad32bae148c6f8d5",
+          "body_characters": 600
+        },
+        {
+          "created_at": "2025-10-17T09:19:03Z",
+          "updated_at": "2025-10-17T09:19:03Z",
+          "html_url": "https://github.com/getodk/collect/pull/6910#issuecomment-3414584728",
+          "body_sha256": "1eea894b1be597496ad97305ce44daaf63a63ad2f6bf9d08fe79dd67e1d204fc",
+          "body_characters": 49
+        }
+      ]
+    },
+    {
+      "id": "GH-P4830",
+      "url": "https://api.github.com/repos/getodk/collect/pulls/4830",
+      "requested_at": "2026-10-09T22:22:56.591100+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/pulls/4830",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 19684,
+      "response_sha256": "05ce78059b85c442262c56bb3295fec21e956f18d07494e972a29a1758b15171",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.807815+00:00",
+      "extract_index": [],
+      "metadata": {
+        "number": 4830,
+        "title": "Improved showing errors that might occur during downloading forms",
+        "state": "closed",
+        "created_at": "2021-09-23T16:13:53Z",
+        "updated_at": "2021-10-06T09:07:47Z",
+        "closed_at": "2021-10-06T09:07:47Z",
+        "merged_at": "2021-10-06T09:07:47Z",
+        "merge_commit_sha": "e08a3a5ae2c22c2f4cc0dc21ce3db6bcb63208a9",
+        "html_url": "https://github.com/getodk/collect/pull/4830",
+        "additions": 598,
+        "deletions": 183,
+        "body_sha256": "ce740da62f8151bb21477c4db372695da8b5e56f3ffad07430203ddc108d941c",
+        "body_characters": 2353
+      }
+    },
+    {
+      "id": "GH-F4830",
+      "url": "https://api.github.com/repos/getodk/collect/pulls/4830/files",
+      "requested_at": "2026-10-09T22:22:56.636821+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/pulls/4830/files",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 64066,
+      "response_sha256": "7c671526d9141d708b7c7edb85997b15f99e493888664a4678c289299806114e",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:56.946603+00:00",
+      "extract_index": [],
+      "metadata": [
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/feature/formmanagement/DeleteBlankFormTest.java",
+          "status": "modified",
+          "additions": 4,
+          "deletions": 4,
+          "patch_sha256": "98c86da01dc25b44adbd1a5ac7eb76a20effd6f611facc75261d111cfa4c6de0",
+          "patch_characters": 1134
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/feature/formmanagement/GetBlankFormsTest.java",
+          "status": "modified",
+          "additions": 4,
+          "deletions": 2,
+          "patch_sha256": "5535d6525d2c8f35d20236e9f2a8692168fbe06cd6b66e05e4bf4220daf05b8b",
+          "patch_characters": 815
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/feature/projects/SwitchProjectTest.kt",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 1,
+          "patch_sha256": "c7a33a6d9cc24a70ae7baa747cdf3e57761441776888c0eba363ddb619b2b12f",
+          "patch_characters": 320
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/feature/settings/ServerSettingsTest.java",
+          "status": "modified",
+          "additions": 2,
+          "deletions": 2,
+          "patch_sha256": "33d45b389fd44515ac8c1d8c644a6b7518c4b0a9ba211bdc302382e6bc6ea7dd",
+          "patch_characters": 422
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/feature/smoke/BadServerTest.java",
+          "status": "modified",
+          "additions": 4,
+          "deletions": 1,
+          "patch_sha256": "7807ad95c354f46c09229efaccb58973c3e958b76be6c6ceeaf5c2d3f1340b70",
+          "patch_characters": 661
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/feature/smoke/GetAndSubmitFormTest.java",
+          "status": "modified",
+          "additions": 2,
+          "deletions": 2,
+          "patch_sha256": "f12d1f22450045aba3520968da46d577c1fa5a285afc8426a79232da3165c06c",
+          "patch_characters": 536
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/support/pages/FormsDownloadErrorPage.kt",
+          "status": "added",
+          "additions": 28,
+          "deletions": 0,
+          "patch_sha256": "5b4b0f596f21fc9e7a6ddff7479830e7584afe2d80ba46afe50717df8a725dd7",
+          "patch_characters": 985
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/support/pages/FormsDownloadResultPage.kt",
+          "status": "added",
+          "additions": 27,
+          "deletions": 0,
+          "patch_sha256": "753a87277f9d763e7debe073acc3f5984bc4de3fe71f11570eab41e8ad64be3a",
+          "patch_characters": 1033
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/support/pages/GetBlankFormPage.java",
+          "status": "modified",
+          "additions": 2,
+          "deletions": 2,
+          "patch_sha256": "886d9b8b8fb31d297df871aa4bf4f324fa472fcc82d3e8b1cd7775983f394ce2",
+          "patch_characters": 391
+        },
+        {
+          "filename": "collect_app/src/androidTest/java/org/odk/collect/android/support/pages/Page.java",
+          "status": "modified",
+          "additions": 6,
+          "deletions": 0,
+          "patch_sha256": "bb6c875549f0f15e3e001b7b54e4bc3248461a62a7a12507eb869f3cd3682cae",
+          "patch_characters": 434
+        },
+        {
+          "filename": "collect_app/src/main/AndroidManifest.xml",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 0,
+          "patch_sha256": "9c0eedfe4add62ddc91d8afbf0f70a36292ce3d2a7403b0c1ba46a87f894845c",
+          "patch_characters": 509
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/activities/FormDownloadListActivity.java",
+          "status": "modified",
+          "additions": 21,
+          "deletions": 3,
+          "patch_sha256": "bb7f12e44084fbd7117ab5f4aa6544b2a4ee9a1ec51d8867cb51c87bee9ec0fd",
+          "patch_characters": 3359
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/errors/ErrorActivity.kt",
+          "status": "added",
+          "additions": 29,
+          "deletions": 0,
+          "patch_sha256": "02ca0cb0128f447ef7b32b9e51795754adbbe0495dcd1b3c0e441bdc5599c83f",
+          "patch_characters": 1139
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/errors/ErrorAdapter.kt",
+          "status": "added",
+          "additions": 31,
+          "deletions": 0,
+          "patch_sha256": "b7afd32a08949de51b79928935f4e1418278b992c6e305ac5a6b7b26d914292c",
+          "patch_characters": 1226
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/errors/ErrorItem.kt",
+          "status": "added",
+          "additions": 9,
+          "deletions": 0,
+          "patch_sha256": "a9c92dc4f6bba78bfdb30c4734cb6481d03b2e6c82094f0d6ac331ac2dd3d050",
+          "patch_characters": 217
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/formmanagement/FormDownloadExceptionMapper.kt",
+          "status": "modified",
+          "additions": 14,
+          "deletions": 18,
+          "patch_sha256": "eac5dfd1a99991a1236691e3485f6ea57e3bc17ae00ace0e9853245dd2e961f4",
+          "patch_characters": 2775
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/formmanagement/FormSourceExceptionMapper.kt",
+          "status": "modified",
+          "additions": 16,
+          "deletions": 20,
+          "patch_sha256": "db464cab797a72b54f2334393a01ca85a8dc6012e38df8b82e131a7a2a821681",
+          "patch_characters": 3280
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/formmanagement/ServerFormDetails.java",
+          "status": "removed",
+          "additions": 0,
+          "deletions": 76,
+          "patch_sha256": "3b4da6ffaf6b798ec4b815f622aaeb5136bdc3c7d615c822f9d3d4b4b1dcb895",
+          "patch_characters": 2240
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/formmanagement/ServerFormDetails.kt",
+          "status": "added",
+          "additions": 33,
+          "deletions": 0,
+          "patch_sha256": "613ffe7ea0a260a2b5732610d9a4be6e4f44c547f3325b4ffbe9677cc0f7dc08",
+          "patch_characters": 1126
+        },
+        {
+          "filename": "collect_app/src/main/java/org/odk/collect/android/fragments/dialogs/FormsDownloadResultDialog.kt",
+          "status": "added",
+          "additions": 66,
+          "deletions": 0,
+          "patch_sha256": "8d2d85c14c0a3f00f784705b25cb43d7cb619d1d19ee5290f7fda415f88efd77",
+          "patch_characters": 2331
+        },
+        {
+          "filename": "collect_app/src/main/res/layout/activity_error.xml",
+          "status": "added",
+          "additions": 13,
+          "deletions": 0,
+          "patch_sha256": "10b63d10fc0d41702dfb1fe4e19298d9923e7cb91536d6446e08a5c99ab106ee",
+          "patch_characters": 524
+        },
+        {
+          "filename": "collect_app/src/main/res/layout/error_item.xml",
+          "status": "added",
+          "additions": 41,
+          "deletions": 0,
+          "patch_sha256": "9b5bf1c903e34acf3d029ebc2d18b86abd3d63ffbb459e90f652ba572df44798",
+          "patch_characters": 1808
+        },
+        {
+          "filename": "collect_app/src/test/java/org/odk/collect/android/fragments/dialogs/FormsDownloadResultDialogTest.kt",
+          "status": "added",
+          "additions": 194,
+          "deletions": 0,
+          "patch_sha256": "d5123bd164e68dd07620e945d01bcd3df6a55c2891f7a7fa1fd8f1a97587580f",
+          "patch_characters": 9293
+        },
+        {
+          "filename": "forms/src/main/java/org/odk/collect/forms/ManifestFile.kt",
+          "status": "renamed",
+          "additions": 5,
+          "deletions": 21,
+          "patch_sha256": "a9efd282cee0c9e40ddc7346d5d82edc97df38fe626c4ad5da643c0e19dd333d",
+          "patch_characters": 713
+        },
+        {
+          "filename": "forms/src/main/java/org/odk/collect/forms/MediaFile.kt",
+          "status": "renamed",
+          "additions": 6,
+          "deletions": 25,
+          "patch_sha256": "97814dd56e1c1b1e2a49317b03f1b11be9a6b915581bd87e2345c8b21ba06154",
+          "patch_characters": 836
+        },
+        {
+          "filename": "strings/src/main/res/values/strings.xml",
+          "status": "modified",
+          "additions": 39,
+          "deletions": 6,
+          "patch_sha256": "5de7296bf04704701a33a265fd7c8e1b55bcd0396ddb2cfde36c2f115a961c7a",
+          "patch_characters": 3447
+        }
+      ]
+    },
+    {
+      "id": "GH-PC4830",
+      "url": "https://api.github.com/repos/getodk/collect/issues/4830/comments",
+      "requested_at": "2026-10-09T22:22:56.807926+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/issues/4830/comments",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 14810,
+      "response_sha256": "074ccdb42e0bb767c620e27ea4b3c9b5d90db86e43c410af4260abb03b623fe7",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:57.002680+00:00",
+      "extract_index": [],
+      "metadata": [
+        {
+          "created_at": "2021-09-29T22:57:26Z",
+          "updated_at": "2021-09-29T22:59:46Z",
+          "html_url": "https://github.com/getodk/collect/pull/4830#issuecomment-930604961",
+          "body_sha256": "19aa4ae8339c9d90a041dc103ad49f082daef56008280372550d671b2c940885",
+          "body_characters": 344
+        },
+        {
+          "created_at": "2021-09-30T10:08:38Z",
+          "updated_at": "2021-09-30T10:09:45Z",
+          "html_url": "https://github.com/getodk/collect/pull/4830#issuecomment-931182716",
+          "body_sha256": "4b39df0611db7ae2b487fd79d047fef28f5827e59a080616a46d00105111ce3b",
+          "body_characters": 882
+        },
+        {
+          "created_at": "2021-09-30T14:19:49Z",
+          "updated_at": "2021-09-30T14:19:49Z",
+          "html_url": "https://github.com/getodk/collect/pull/4830#issuecomment-931367293",
+          "body_sha256": "d099cd8a3a7cf3aa722f1e656d2dac42a355c15e5fa4f0596e5ea37d1fb71c77",
+          "body_characters": 19
+        },
+        {
+          "created_at": "2021-10-04T13:53:47Z",
+          "updated_at": "2021-10-04T13:53:47Z",
+          "html_url": "https://github.com/getodk/collect/pull/4830#issuecomment-933509528",
+          "body_sha256": "bbdce3ebf3d75d4c340212aeeda379df970b4c7979c972b81f77d6663a8dd17c",
+          "body_characters": 671
+        },
+        {
+          "created_at": "2021-10-04T15:08:01Z",
+          "updated_at": "2021-10-04T15:08:01Z",
+          "html_url": "https://github.com/getodk/collect/pull/4830#issuecomment-933578880",
+          "body_sha256": "76595cb732a2936181a9f784fe40cf1a3ed716c66f7f4f34b61ca43f85e38bb4",
+          "body_characters": 210
+        },
+        {
+          "created_at": "2021-10-06T07:24:20Z",
+          "updated_at": "2021-10-06T07:24:20Z",
+          "html_url": "https://github.com/getodk/collect/pull/4830#issuecomment-935643335",
+          "body_sha256": "edd06b4347dbb45138b832e545dc674e79afe13fe4d7c621156870b57a6bb1a8",
+          "body_characters": 1363
+        },
+        {
+          "created_at": "2021-10-06T07:37:28Z",
+          "updated_at": "2021-10-06T07:37:28Z",
+          "html_url": "https://github.com/getodk/collect/pull/4830#issuecomment-935662754",
+          "body_sha256": "329b6eda1f85e092d4fdfcb311eec8949eaa11ac548f579d59f4a3725b519eb9",
+          "body_characters": 60
+        }
+      ]
+    },
+    {
+      "id": "GH-Rv2021.3.0",
+      "url": "https://api.github.com/repos/getodk/collect/releases/tags/v2021.3.0",
+      "requested_at": "2026-10-09T22:22:56.946696+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/releases/tags/v2021.3.0",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 7152,
+      "response_sha256": "6b600e68f3768e2cf4785287eec7c95de1ae3b9072feca39c54451506224f63d",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:57.095344+00:00",
+      "extract_index": [],
+      "metadata": {
+        "created_at": "2021-11-04T16:55:34Z",
+        "updated_at": "2021-11-04T17:26:09Z",
+        "html_url": "https://github.com/getodk/collect/releases/tag/v2021.3.0",
+        "tag_name": "v2021.3.0",
+        "target_commitish": "master",
+        "published_at": "2021-11-04T17:10:24Z",
+        "body_sha256": "61c36bcedd76ce361532bdcc9f8cd2431bde1c73d1707a17d863bc737e856efb",
+        "body_characters": 3803
+      }
+    },
+    {
+      "id": "GH-Tv2021.3.0",
+      "url": "https://api.github.com/repos/getodk/collect/git/ref/tags/v2021.3.0",
+      "requested_at": "2026-10-09T22:22:57.002796+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/git/ref/tags/v2021.3.0",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 347,
+      "response_sha256": "77793e4171206bed542d84c7be6de35ac8e2704486ce198eba14c534852e571b",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:57.143412+00:00",
+      "extract_index": [],
+      "metadata": {
+        "object": {
+          "sha": "75ebdb7e6c159be6c7d6d15af3d38963900548e4",
+          "type": "commit",
+          "url": "https://api.github.com/repos/getodk/collect/git/commits/75ebdb7e6c159be6c7d6d15af3d38963900548e4"
+        }
+      }
+    },
+    {
+      "id": "GH-Rv1.28.0",
+      "url": "https://api.github.com/repos/getodk/collect/releases/tags/v1.28.0",
+      "requested_at": "2026-10-09T22:22:57.095423+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/releases/tags/v1.28.0",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 13239,
+      "response_sha256": "a75a0cc1be9c1ebb646926e0d0dcb953ee9065c5e279d392359d6f7f8837fc10",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:57.251643+00:00",
+      "extract_index": [],
+      "metadata": {
+        "created_at": "2020-09-23T19:49:23Z",
+        "updated_at": "2020-09-23T20:25:47Z",
+        "html_url": "https://github.com/getodk/collect/releases/tag/v1.28.0",
+        "tag_name": "v1.28.0",
+        "target_commitish": "master",
+        "published_at": "2020-09-23T19:49:37Z",
+        "body_sha256": "5a65cd83db476d1e0aad3669d39878fc691d1d079989cf7c1a58dfd4282f8ed8",
+        "body_characters": 9651
+      }
+    },
+    {
+      "id": "GH-Tv1.28.0",
+      "url": "https://api.github.com/repos/getodk/collect/git/ref/tags/v1.28.0",
+      "requested_at": "2026-10-09T22:22:57.143468+00:00",
+      "final_url": "https://api.github.com/repos/getodk/collect/git/ref/tags/v1.28.0",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 339,
+      "response_sha256": "3e00c5c9a0db41fabe02c878d21903e5cec29648baa796b391245749e13defa4",
+      "status": "captured",
+      "completed_at": "2026-10-09T22:22:57.271115+00:00",
+      "extract_index": [],
+      "metadata": {
+        "object": {
+          "sha": "05d295a791121e2e6f0be6df14c60775161a9b61",
+          "type": "commit",
+          "url": "https://api.github.com/repos/getodk/collect/git/commits/05d295a791121e2e6f0be6df14c60775161a9b61"
+        }
+      }
+    },
+    {
+      "id": "E17",
+      "url": "https://support.google.com/appsheet/answer/10105078?hl=en",
+      "final_url": "https://support.google.com/appsheet/answer/10105078?hl=en",
+      "requested_at": "2026-10-09T22:27:22.554900+00:00",
+      "completed_at": "2026-10-09T22:27:23.030875+00:00",
+      "http_status": 200,
+      "response_bytes": 1559133,
+      "response_sha256": "514a15266cbed421b6fbd9cb8acdf4b2697c72713aee32ec24b044cf5d56f8c9",
+      "status": "captured",
+      "extract_index": [
+        {
+          "pattern": "Although security filters",
+          "text_offset": 303481,
+          "excerpt_sha256": "d760bdb6d5f624eb4bfc5b4f68d3be7ded5b1e316bd2b048b1668ef790356b51"
+        }
+      ]
+    }
+  ],
+  "supplemental_operations": [
+    {
+      "url": "https://docs.getodk.org/central-api-changelog/",
+      "requested_at": "2026-10-09T22:25:54.669660+00:00",
+      "completed_at": "2026-10-09T22:25:54.832966+00:00",
+      "response_sha256": "1c6998b34b0eb82641f65fe860dc660bedcdb352ff456561886b1edb0f28d56d",
+      "locator": "Version heading governing Newly created App Users",
+      "governing_version": "ODK Central v0.7"
+    },
+    {
+      "url": "https://ref.gs1.org/standards/epcis/2.0.1/",
+      "requested_at": "2026-10-09T22:33:12.479566+00:00",
+      "completed_at": "2026-10-09T22:33:15.089728+00:00",
+      "response_sha256": "6c9b2b51b41cd2cf169f6723001cac56a31c574e9c79ec8d4d52d2bf505f8eaa",
+      "locator": "7.4.1 EPCISEvent field table, eventID/eventTime/eventTimeZoneOffset",
+      "observation": "eventID is explicitly optional; eventTime identifies occurrence and eventTimeZoneOffset is separate local-offset context."
+    },
+    {
+      "url": "https://support.google.com/appsheet/answer/10107724?hl=en",
+      "requested_at": "2026-10-09T22:33:35.648149+00:00",
+      "completed_at": "2026-10-09T22:33:36.132971+00:00",
+      "response_sha256": "750186bf925b7c76ef7800132e5f37991b30d8e981bb14118ffd03da448f171c",
+      "locator": "Considerations for offline use; offline browser; map data",
+      "operation": "Focused independent section reading; full response not retained"
+    },
+    {
+      "url": "https://docs.getodk.org/guide-form-language/",
+      "requested_at": "2026-10-09T22:33:36.140058+00:00",
+      "completed_at": "2026-10-09T22:33:36.348425+00:00",
+      "response_sha256": "c7fa08243d762d264287b90b5ee828ebb7e98952adccea5e366f177aa83db386",
+      "locator": "Translation blank cells and application/form language",
+      "operation": "Focused independent section reading; full response not retained"
+    },
+    {
+      "url": "https://support.google.com/appsheet/answer/10104794?hl=en",
+      "requested_at": "2026-10-09T22:33:36.348667+00:00",
+      "completed_at": "2026-10-09T22:33:36.795292+00:00",
+      "response_sha256": "64743f8493009e1f05a6617db0e606c8329b8844ba734504da639ff7dc4b65e0",
+      "locator": "Audit History analysis subscription conditions",
+      "operation": "Focused independent section reading; full response not retained"
+    }
+  ]
+}

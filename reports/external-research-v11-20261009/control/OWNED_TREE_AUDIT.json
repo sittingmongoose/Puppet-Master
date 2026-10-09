@@ -1,0 +1,1899 @@
+{
+  "observed_at": "2026-10-09T22:40:23.229Z",
+  "project_enumeration_complete": true,
+  "pages": 13,
+  "exact_owned_tasks": 225,
+  "visible_owned_thread_records": 229,
+  "missing_expected_thread_ids": [],
+  "live_owned": [],
+  "unsettled_owned": [
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-b07-m15-reviser-v1-20261009",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-20261009-116bb1e4-B07-M15-verifier-v1",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-20261009-116bb1e4-B07-M15-critic-v1",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    }
+  ],
+  "new_unregistered_descendants": [
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-b07-m15-reviser-v1-20261009",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-20261009-116bb1e4-B07-M15-verifier-v1",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-20261009-116bb1e4-B07-M15-critic-v1",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    }
+  ],
+  "threads": [
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-02-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:35:06.259Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-publication-audit-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:32:42.388Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-01-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:28:55.013Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-02-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:20:27.993Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:17:39.159Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:13:45.753Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-01-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:12:13.965Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:11:20.998Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-01-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:06:36.125Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-01-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:04:46.493Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-02-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:03:59.363Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-02-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:01:24.854Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:00:55.314Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-01-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T22:00:23.618Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-02-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:58:50.846Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-recipe-qualification-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:54:48.481Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:54:15.221Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-02-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:53:52.524Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-b07-m15-reviser-v1-20261009",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:52:09.395Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-01-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:51:19.191Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-01-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:49:45.326Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:48:48.845Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-20261009-116bb1e4-B07-M15-verifier-v1",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:46:41.578Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-C-02-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:46:40.856Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-08-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:44:01.108Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:38:55.246Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:38:34.988Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-verifier-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:38:13.787Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:36:41.842Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T21:30:30.299Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:28:18.372Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:26:57.470Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:26:39.145Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-08-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:25:43.228Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:24:52.042Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:24:19.932Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3Ad1c9aab7-8204-41bc-a8d7-acd3c4553e10%3Adelegate-task%3Aer11-20261009-116bb1e4-B07-M15-critic-v1",
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-07-treatment-research-v1",
+      "status": "completed",
+      "settled": false,
+      "settledAt": null,
+      "registered": false
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-08-treatment-verifier-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:18:24.583Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-08-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:17:49.930Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-08-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:17:30.444Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-08-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:12:30.298Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:10:12.945Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:10:11.207Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-08-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:10:10.515Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:10:09.537Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:10:08.534Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:06:27.019Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-08-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T21:05:58.431Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:56:52.674Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:56:51.793Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T20:53:44.052Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:52:37.031Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-monitor-v2",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T20:49:31.449Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-monitor-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T20:49:29.376Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:48:59.809Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:48:57.651Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:48:54.079Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:48:07.646Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:48:06.614Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:48:05.236Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:47:27.435Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:45:43.054Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:45:16.261Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:44:14.654Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:42:59.428Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:41:15.540Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:41:09.615Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:41:02.361Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-reusable-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:35:44.322Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:34:40.137Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:31:15.415Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:31:13.573Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:27:40.564Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:27:39.488Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:27:37.313Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:24:21.795Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:23:35.407Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:23:24.790Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:23:00.705Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:22:28.416Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:22:20.186Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T20:17:13.405Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:17:12.054Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:16:39.442Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:15:43.253Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:14:41.689Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:14:40.677Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:12:36.520Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:09:23.956Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:06:57.203Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:04:07.599Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:04:03.393Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:04:00.957Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:03:59.391Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T20:03:56.080Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:56:01.389Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:55:53.306Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:55:52.270Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T19:55:48.000Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:55:38.250Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:55:32.564Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:55:26.011Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:55:20.678Z",
+      "registered": true
+    },
+    {
+      "threadId": "mcp:1a93aa3c-fc17-4c29-904c-7176e685d9ee",
+      "parentThreadId": null,
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:53:43.714Z",
+      "registered": false
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:49:56.091Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:49:54.155Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:49:52.137Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:49:46.558Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:49:44.889Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:46:21.719Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:45:32.391Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:43:59.560Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:41:03.422Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:41:01.029Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:39:59.508Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:39:57.235Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:39:12.931Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:38:01.872Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:38:01.082Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-accounting-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:37:48.236Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:36:39.410Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:34:44.021Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:34:38.742Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:34:37.227Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:33:05.680Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:33:04.971Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:32:38.816Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:32:29.307Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:32:28.090Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:28:42.275Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:28:41.381Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:28:39.890Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:27:15.497Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:27:12.250Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:27:11.483Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:26:18.323Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:26:14.933Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:57.793Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:56.161Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:54.699Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:53.841Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:51.763Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-sealed-casebank-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:27.477Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:26.999Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:26.378Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:24:25.954Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:19:19.065Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:19:17.870Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:19:16.713Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:19:14.724Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:16:36.008Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:16:34.769Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:16:32.564Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:16:31.691Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:16:29.540Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:16:28.994Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:16:27.764Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-assessment-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:14:04.264Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:12:09.619Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:12:08.866Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:12:07.829Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:12:06.296Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:15.875Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:14.752Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:13.314Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:12.515Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:11.376Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:09.878Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:09.044Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:08.104Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:06.757Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:05.509Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:04.536Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:01.915Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:08:00.975Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:02:25.356Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:02:24.171Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:02:22.720Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:02:22.129Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:02:21.312Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:02:20.475Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-treatment-critic-finalizer-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T19:02:19.821Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:57:40.968Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:57:40.273Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:57:37.927Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:57:37.260Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:55:22.370Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:55:21.218Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:55:20.273Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:55:19.237Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-treatment-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:52:45.291Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:52:44.751Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:52:43.661Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:52:42.389Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:48:51.744Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:47:04.225Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:46:53.926Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:46:46.088Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:46:45.056Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:46:43.298Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:46:41.068Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:46:38.187Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-control-reviser-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:43:45.187Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:43:43.746Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:43:42.548Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:43:40.343Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-treatment-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:43:38.149Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-control-research-q1-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:41:44.146Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T18:39:20.986Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T18:39:20.470Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T18:39:20.118Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T18:39:19.316Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-control-critic-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:37:50.980Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-control-research-q2-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:37:50.799Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:37:50.650Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:37:50.501Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:37:50.248Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-control-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:37:50.056Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:33:52.607Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-control-research-q2-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:32:28.219Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-control-research-q1-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:30:56.756Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-qualification-glm-v2",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T18:29:49.185Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-qualification-glm-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "interrupted",
+      "settled": true,
+      "settledAt": "2026-10-09T18:28:53.674Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-treatment-research-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:27:34.679Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-methodology-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:21:44.533Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-qualification-luna-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:21:44.338Z",
+      "registered": true
+    },
+    {
+      "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-qualification-muse-v1",
+      "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+      "status": "completed",
+      "settled": true,
+      "settledAt": "2026-10-09T18:18:48.431Z",
+      "registered": true
+    }
+  ],
+  "scope": "Only exact registered campaign tasks, declared extra verifier, and actual descendants. Unrelated enumerated thread metadata excluded from retained artifact.",
+  "post_settlement_verified_at": "2026-10-09T22:44:05.963365+00:00",
+  "post_settlement_unsettled_owned": [],
+  "late_descendant_disposition": "All3 terminal and exact settled=true, activeRunId=null, pendingRequestCount=0 verified by supported thread read. B07 treatment protocol invalid; extras registered separately."
+}

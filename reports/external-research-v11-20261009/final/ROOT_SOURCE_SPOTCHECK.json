@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-10-09T22:48:51.867398+00:00",
+  "scope": "Bounded root check of last retirement mechanism after candidate/evaluator science froze; no artifact/grade repair.",
+  "case": "C-02/H02",
+  "source": "https://ref.gs1.org/standards/epcis/2.0.1/",
+  "observed_document": "Release2.0 PDF, June2022,229pages under2.0.1URL",
+  "locator": "7.3.3.1 QuantityElement, printedpage54;7.3.3.1.1UOM,printedpage55",
+  "operations": [
+    "Opened official PDF",
+    "Found count/UOM normative branches",
+    "Requested PDF screenshot page53 zero-based for quantity table"
+  ],
+  "finding": "Count can omit UOM; physical measure carries UOM; unspecified quantity omits both. Final generalizes quantity as numeric amount plus unit without branch. Farm policy explicit units remains sensible; no shipped invalid export/runtime/legal conclusion inferred.",
+  "original_grade": "FAIL",
+  "grade_changed": false,
+  "runtime_execution": false
+}

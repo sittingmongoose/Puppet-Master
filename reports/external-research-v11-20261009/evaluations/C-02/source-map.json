@@ -1,0 +1,876 @@
+{
+  "block": "C-02",
+  "schema_version": 1,
+  "purpose": "Fresh independent primary coverage for both frozen complete arms. Candidate source notes are authored claims, not primary truth.",
+  "sources": [
+    {
+      "id": "E01",
+      "candidate_source_ids": [
+        "N2:S02",
+        "N1:R03"
+      ],
+      "title": "ODK Form Audit Log",
+      "url": "https://docs.getodk.org/form-audit-log/",
+      "version_or_state": "Mutable official docs, read 2026-10-09; reason/identity features v1.25.0",
+      "section_or_symbol": "Enablement; change tracking; identity; log structure; timestamps; known limitations",
+      "independent_judgment": "Audit is explicitly configured in the XLSForm. Change/reason/identity parameters are optional; identity is entered text. Epoch milliseconds use a device-derived session origin and elapsed intervals. Shutdown and changed audit settings have documented limitations. N2 retains clock qualification; N1 omits it and misstates the definition-row scope.",
+      "accessed_at": "2026-10-09T22:23:34.375726+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "cbf48491db347fc7672ce7aefad7c40d74bef22d6bf43f8b83bc2206daddde92",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E01",
+      "symbols": [
+        "track-changes=true",
+        "track-changes-reasons=on-form-edit",
+        "identify-user=true",
+        "audit.csv"
+      ]
+    },
+    {
+      "id": "E02",
+      "candidate_source_ids": [
+        "N1:R01"
+      ],
+      "title": "ODK Managing Forms in Collect",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "version_or_state": "Collect v2025.2.0 / Central v2025.1.4 edit feature; current docs",
+      "section_or_symbol": "Sending finalized forms; Editing finalized or sent forms",
+      "independent_judgment": "Offline finalizations queue; App User auto-send is the documented default. Finalized/sent editing is opt-in, on-device, under the original definition; a Central edit excludes later Collect editing. Entity data is unchanged by such submission edits; manually queued edits require order. N1 final preserves these limits.",
+      "accessed_at": "2026-10-09T22:23:34.459609+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "69730ac962ffcc556a8f41505f9639739cb9fa609dce36b335b1b7d136d48c58",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E02",
+      "symbols": [
+        "client_editable"
+      ]
+    },
+    {
+      "id": "E03",
+      "candidate_source_ids": [
+        "N1:R02"
+      ],
+      "title": "ODK Managing Entities in Central",
+      "url": "https://docs.getodk.org/central-entities/",
+      "version_or_state": "Central and Collect v2024.3.0+ for offline Entity behavior",
+      "section_or_symbol": "Managing Entity conflicts; Conflicts related to Offline Entities",
+      "independent_judgment": "Central applies updates in receipt order and surfaces parallel/conflicting versions. Missing predecessors can hold a chain for five days, then force processing with conflict marking. N1 correctly treats mutable shared status as a reconciliation risk, not universal unreliability.",
+      "accessed_at": "2026-10-09T22:23:34.552467+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "2a45cc7ec3f2755e1bb7fef48b38eb6aa2c978a2d40bb6622fefb7753bd3e86a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E03",
+      "symbols": []
+    },
+    {
+      "id": "E04",
+      "candidate_source_ids": [
+        "N2:S03"
+      ],
+      "title": "ODK Managing Submissions in Central",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version_or_state": "Current docs describe multiple Central generations",
+      "section_or_symbol": "Web submissions; Public Access Links; Editing; offline Enketo versus ODK Web Forms",
+      "independent_judgment": "Collect is recommended for offline enumerator work. Web Forms lack full offline operation; Enketo has a conditional offline path. Public links grant submission, not a buyer read portal. Central submission edits create versions. N2 statements preserve these distinctions.",
+      "accessed_at": "2026-10-09T22:23:34.539679+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "710d2d5687ebee69d74e5114daea6ba73d79630fb666b133783c0215d9d910a7",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E04",
+      "symbols": []
+    },
+    {
+      "id": "E05",
+      "candidate_source_ids": [
+        "N2:S04"
+      ],
+      "title": "ODK Question Types",
+      "url": "https://docs.getodk.org/form-question-types/",
+      "version_or_state": "Mutable current official docs",
+      "section_or_symbol": "Integer and decimal widgets; numbers appearance",
+      "independent_judgment": "The documented integer widget rejects decimal input and limits digits; the decimal widget has a character cap. N2 gives nine digits and fifteen characters correctly and asks for real quantity/range testing. These input types do not determine the farm unit.",
+      "accessed_at": "2026-10-09T22:23:34.725331+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "830f69a8c1710360917de89deb0d7fbfdf192581db15e39555dc85bfbc61836c",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E05",
+      "symbols": []
+    },
+    {
+      "id": "E06",
+      "candidate_source_ids": [
+        "N2:S01"
+      ],
+      "title": "ABALOBI MONITOR",
+      "url": "https://abalobi.org/monitor/",
+      "version_or_state": "Mutable official product/setup page; no tagged product version",
+      "section_or_symbol": "Key Features; organization registration; Console and placeholder sites",
+      "independent_judgment": "The multilingual offline landing workflow is a relevant adjacent reference. Organization placement and placeholder-site assignment cannot be casually changed after capture. N2 preserves this live-data caution while retaining demo use. Farm bed/capacity/release/buyer fit and all-in cost are unestablished.",
+      "accessed_at": "2026-10-09T22:22:56.021660+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "dc687b2e7e8bd525a07b0f5a7409861615190e4d15c1c29b23a39b44dd52ac3e",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E06",
+      "symbols": []
+    },
+    {
+      "id": "E07",
+      "candidate_source_ids": [
+        "N2:S10"
+      ],
+      "title": "farmOS Field Kit v1",
+      "url": "https://v1.farmos.org/guide/app/",
+      "version_or_state": "Legacy v1 guide, including April 2021 platform context",
+      "section_or_symbol": "Offline assigned logs; v1 maintenance; server requirements",
+      "independent_judgment": "The guide calls v1 a proof of concept without major feature updates and requires a farmOS server with HTTPS. N2 rejects v1 as an assumed production default while retaining the offline-log approach. It does not claim current Field Kit 2 support was assessed.",
+      "accessed_at": "2026-10-09T22:22:54.707670+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "9941f82f2ad9c60a584940597462d463e45ce74e6e37bc59e1756c94fbc6daf3",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E07",
+      "symbols": []
+    },
+    {
+      "id": "E08",
+      "candidate_source_ids": [
+        "N1:R04"
+      ],
+      "title": "ODK Multilingual Forms",
+      "url": "https://docs.getodk.org/guide-form-language/",
+      "version_or_state": "Mutable official community guide",
+      "section_or_symbol": "Language columns; blank translations; app versus form language; language-used capture",
+      "independent_judgment": "Labels, hints, media and messages can be translated; blanks remain blank, the app interface is separate, and language-used export needs explicit capture/calculation. N1 preserves native-speaker testing and does not infer glove performance.",
+      "accessed_at": "2026-10-09T22:23:34.399907+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "0393e1b169e30aba7c9016bfa211ebd7bc0aba42c6f30a1276613b26e3298a43",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E08",
+      "symbols": []
+    },
+    {
+      "id": "E09",
+      "candidate_source_ids": [
+        "N1:R05"
+      ],
+      "title": "ODK Managing Users in Central",
+      "url": "https://docs.getodk.org/central-users/",
+      "version_or_state": "Mutable current docs",
+      "section_or_symbol": "Web User roles; App User access and revocation",
+      "independent_judgment": "App Users are project-scoped, may be restricted to assigned forms, and can be revoked. The source does not certify safe shared-device sessions or a buyer portal. N1 preserves separate privacy/session tests.",
+      "accessed_at": "2026-10-09T22:23:34.626846+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "0c8831852ba992adf164ecfe3d735c1a5ae572c78613c918f908831a36eafaa6",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E09",
+      "symbols": []
+    },
+    {
+      "id": "E10",
+      "candidate_source_ids": [
+        "N1:R05 supplemental"
+      ],
+      "title": "ODK Central API Changelog",
+      "url": "https://docs.getodk.org/central-api-changelog/",
+      "version_or_state": "v0.7 governs the cited explicit-assignment change; v2026.2 is a separate entry",
+      "section_or_symbol": "v0.7 Changed: newly created App Users; v2026.2 Actor Properties",
+      "independent_judgment": "The current explicit form-assignment behavior is supported, but the candidate incorrectly associates its introduction with v2026.2. This is a release-locator error, not a reversal of current permission advice.",
+      "accessed_at": "2026-10-09T22:23:34.748744+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "1c6998b34b0eb82641f65fe860dc660bedcdb352ff456561886b1edb0f28d56d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E10",
+      "symbols": [],
+      "additional_evidence_locator": "primary-evidence.json supplemental_operations: version heading governing Newly created App Users"
+    },
+    {
+      "id": "E11",
+      "candidate_source_ids": [
+        "N1:R09"
+      ],
+      "title": "Google AppSheet Offline and Sync",
+      "url": "https://support.google.com/appsheet/answer/10107724?hl=en",
+      "version_or_state": "Mutable official help as read 2026-10-09",
+      "section_or_symbol": "Initial launch; Delayed Sync; prolonged offline; browser and maps",
+      "independent_judgment": "Initial online loading, configured caching/delayed sync, prolonged-offline stale-update risk and browser restrictions support a conditional shed-board trial. Offline Google Maps caching is unavailable. N1 does not reject short-duration use or claim runtime fit.",
+      "accessed_at": "2026-10-09T22:22:58.280768+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "78c691ca61c81600b05b8a647bf6ba9c7feb8baaf2e495c9fd1f6979fed7786d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E11",
+      "symbols": []
+    },
+    {
+      "id": "E12",
+      "candidate_source_ids": [
+        "N1:R10"
+      ],
+      "title": "Google AppSheet Audit History",
+      "url": "https://support.google.com/appsheet/answer/10104794?hl=en",
+      "version_or_state": "Mutable official help as read 2026-10-09",
+      "section_or_symbol": "Retention; troubleshooting; Enterprise filtering",
+      "independent_judgment": "The page gives fifty-three days for Enterprise Plus and seven for other account types; richer analysis is plan-dependent. N1 appropriately distinguishes this recent activity log from indefinite lot history.",
+      "accessed_at": "2026-10-09T22:23:04.442697+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "0f0910fb3ef99f9ae19fd93d79e9057149c48038db1c939f70789fffe91860d7",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E12",
+      "symbols": []
+    },
+    {
+      "id": "E13",
+      "candidate_source_ids": [
+        "N1:R06"
+      ],
+      "title": "FDA Food Traceability List",
+      "url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/food-traceability-list",
+      "version_or_state": "Mutable official regulator page",
+      "section_or_symbol": "Molluscan shellfish row; raw-bivalve exception under 1.1305(f)",
+      "independent_judgment": "Bivalve inclusion has specified raw-bivalve exemptions, and scallop adductor muscle is excluded from this entry. N1 does not infer applicability from an unspecified species/jurisdiction; its local Authority qualification is justified.",
+      "accessed_at": "2026-10-09T22:22:54.918263+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "6f3ca2c1edf359b0cfafb174e8b391e0272bb9d840b9bb00102f3457cd996e72",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E13",
+      "symbols": []
+    },
+    {
+      "id": "E14",
+      "candidate_source_ids": [
+        "N2:S09"
+      ],
+      "title": "FDA Food Traceability Final Rule",
+      "url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/fsma-final-rule-requirements-additional-traceability-records-certain-foods",
+      "version_or_state": "Mutable official regulator page as read 2026-10-09",
+      "section_or_symbol": "Original compliance date; proposed extension; 2026 non-enforcement direction; lower Getting Started text",
+      "independent_judgment": "The mixed date presentation reported by N2 is present. A non-enforcement direction and a proposed extension cannot themselves prove an amended legal compliance date. N2 keeps applicability, exemption and jurisdiction open.",
+      "accessed_at": "2026-10-09T22:22:55.048703+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "b9ae4e91ae6571f97c552dc9a66cd7446782fec348aad23f423f8e02019c8095",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E14",
+      "symbols": []
+    },
+    {
+      "id": "E15",
+      "candidate_source_ids": [
+        "N1:R07"
+      ],
+      "title": "FDA NSSP Guide for Control of Molluscan Shellfish",
+      "url": "https://www.fda.gov/media/181370/download",
+      "version_or_state": "2023 Revision, Section II Model Ordinance",
+      "section_or_symbol": "Chapter VIII .02F(4)-(8), printed pages 82-84; suggested harvest/sales records",
+      "independent_judgment": "The tag size/material, Authority sanction, prescribed contents, ninety-day chronological retention statement and conditional same-area/day/harvester bulk tagging are supported. Consignee is added for bulk sale. This does not establish that this farm card is an official tag or that digital history shares tag retention.",
+      "accessed_at": "2026-10-09T22:22:57.660085+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "194e728908e1f63552d1409937cead633d64212c5d9b7fce29fb8889b7f0a542",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E15",
+      "symbols": []
+    },
+    {
+      "id": "E16",
+      "candidate_source_ids": [
+        "N2:S08",
+        "N1:R08"
+      ],
+      "title": "GS1 EPCIS Standard",
+      "url": "https://ref.gs1.org/standards/epcis/2.0.1/",
+      "version_or_state": "Exact 2.0.1 URL; PDF identifies Release 2.0, ratified June 2022",
+      "section_or_symbol": "7.3.3.1 QuantityElement; 7.3.3.1.1 UOM; 7.3.6.2 disposition; 7.4.1 event time and IDs",
+      "independent_judgment": "A specified count without uom is a positive integer; physical measurement has positive quantity with uom. Unknown quantity and its unit may both be omitted. UOM codes cover permitted physical measures. Event time is timezone-aware; event IDs are optional; disposition persists across intervening events that do not change it. N2 preserves the count/measurement distinction; N1 gives an unconditional quantity-plus-unit account.",
+      "accessed_at": "2026-10-09T22:22:57.681278+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "6c9b2b51b41cd2cf169f6723001cac56a31c574e9c79ec8d4d52d2bf505f8eaa",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E16",
+      "symbols": [
+        "QuantityElement",
+        "quantity: xsd:double",
+        "uom: optional",
+        "eventTime",
+        "eventID",
+        "eventTimeZoneOffset"
+      ],
+      "additional_primary_locator": "primary-evidence.json supplemental_operations: 7.4.1 EPCISEvent field table"
+    },
+    {
+      "id": "E17",
+      "candidate_source_ids": [
+        "N1:R10 supplemental"
+      ],
+      "title": "Google AppSheet Security: The Essentials",
+      "url": "https://support.google.com/appsheet/answer/10105078?hl=en",
+      "version_or_state": "Mutable official help",
+      "section_or_symbol": "Security filters; protection at the data source",
+      "independent_judgment": "Security filters alone are not a complete security solution; source-level protections matter. N1 appropriately tests buyer data paths, exports and caches instead of equating hidden UI with privacy.",
+      "accessed_at": "2026-10-09T22:27:23.030875+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "514a15266cbed421b6fbd9cb8acdf4b2697c72713aee32ec24b044cf5d56f8c9",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id E17",
+      "symbols": []
+    },
+    {
+      "id": "GH-P6910",
+      "candidate_source_ids": [
+        "N2:S05",
+        "N2:S06"
+      ],
+      "title": "ODK Collect #6768 / PR #6910",
+      "url": "https://api.github.com/repos/getodk/collect/pulls/6910",
+      "version_or_state": "Merged 2025-10-17, a93c6292f31f85e214b8fcd7ba953352c1ea4cbc",
+      "section_or_symbol": "Issue reproduction; PR tradeoff; changed source; Android verification comments",
+      "independent_judgment": "The owner-only unchanged-list-hash edge and integrity cleanup fix are supported by issue/PR text and source. Android 10/16 reports and the rendered six passed checks are upstream reports, not farm or reviewer tests. N2 limits the conclusion correctly.",
+      "accessed_at": "2026-10-09T22:22:56.471954+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "532205ac87a320d707c5ec2e3a7e5cea0b1f9b55df62b3e88d3fc372ef1c5d04",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id GH-P6910",
+      "symbols": [
+        "LocalEntityUseCases.cleanUpDeletedOfflineEntities",
+        "ServerFormUseCases",
+        "fetchDeletedStates"
+      ],
+      "related_primary_records": [
+        "GH-I6768",
+        "GH-C6768",
+        "GH-F6910",
+        "GH-PC6910"
+      ],
+      "commit": "a93c6292f31f85e214b8fcd7ba953352c1ea4cbc",
+      "rendered_page_confirmation": "https://github.com/getodk/collect/pull/6910 lines 350-388: Android reports and six checks"
+    },
+    {
+      "id": "GH-I5550",
+      "candidate_source_ids": [
+        "N2:S07",
+        "N1:R16"
+      ],
+      "title": "ODK Collect issue #5550",
+      "url": "https://api.github.com/repos/getodk/collect/issues/5550",
+      "version_or_state": "Open at reviewer retrieval; reported Collect 2022.4.4 / store 2023.1.2 / master 1f9155c7f1f6c1d91532993fd45cc9b68270124a",
+      "section_or_symbol": "Field-list; defer validation until finalized; reproductions and comments",
+      "independent_judgment": "The reported answer/audit divergence is narrow historical evidence. Both finals retain it as a selected-version regression target and avoid inferring a current general defect or proven fix.",
+      "accessed_at": "2026-10-09T22:22:55.571784+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "a1841d11295da57ac1516d0c9dd24e86969fab96cac637fa8657d67d3d35364d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id GH-I5550",
+      "symbols": [],
+      "related_primary_records": [
+        "GH-C5550"
+      ]
+    },
+    {
+      "id": "GH-P4830",
+      "candidate_source_ids": [
+        "N1:R11",
+        "N1:R12",
+        "N1:R13",
+        "N1:R14",
+        "N1:R15"
+      ],
+      "title": "ODK download-error issue/fix/release chain",
+      "url": "https://api.github.com/repos/getodk/collect/pulls/4830",
+      "version_or_state": "PR merged 2021-10-06; v2021.3.0 published 2021-11-04",
+      "section_or_symbol": "1703 comments; 4489 acceptance; 4830 source; release highlights and tag refs",
+      "independent_judgment": "The chain concerns manual form-download error details. The merge SHA and both candidate tag targets independently match public API metadata. Maintainer intentions to reuse the pattern for uploads do not establish shipped upload reliability; N1 retains that boundary.",
+      "accessed_at": "2026-10-09T22:22:56.807815+00:00",
+      "observed_operations": [
+        "Fetched exact public primary URL",
+        "Read relevant source text or API metadata; no product runtime executed"
+      ],
+      "response_sha256": "05ce78059b85c442262c56bb3295fec21e956f18d07494e972a29a1758b15171",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+      "evidence_locator": "record id GH-P4830",
+      "symbols": [
+        "FormDownloadListActivity.formsDownloadingComplete",
+        "FormsDownloadResultDialog.getMessage",
+        "ErrorItem"
+      ],
+      "related_primary_records": [
+        "GH-I1703",
+        "GH-C1703",
+        "GH-I4489",
+        "GH-C4489",
+        "GH-F4830",
+        "GH-PC4830",
+        "GH-Rv2021.3.0",
+        "GH-Tv2021.3.0",
+        "GH-Rv1.28.0",
+        "GH-Tv1.28.0"
+      ],
+      "commit": "e08a3a5ae2c22c2f4cc0dc21ce3db6bcb63208a9",
+      "tag_targets": {
+        "v2021.3.0": "75ebdb7e6c159be6c7d6d15af3d38963900548e4",
+        "v1.28.0": "05d295a791121e2e6f0be6df14c60775161a9b61"
+      }
+    }
+  ],
+  "frozen_source_note_inventory": [
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S01-abalobi-monitor.md",
+      "sha256": "59e1ae613a64560e4e21aa70b716a73903ae9c749f640c1349d1126863601b70"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S02-odk-audit-log.md",
+      "sha256": "3f3940520fd9f36cd0ccc1bb233e1b5715dff31f768798f3f29487330174f47c"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S03-odk-central-submissions.md",
+      "sha256": "3ec7f454df85584e6130ae918f188e6b3259202abc38b93a7c87e5e4ca0f03cf"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S04-odk-question-types.md",
+      "sha256": "0f1adb50f3497d41cd766d2513bf55e9705d91cda79aea434f592c17b7c08965"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S05-collect-issue-6768.md",
+      "sha256": "3740f110d9f9f041dfb0d9fd5c846ab9f51136dd1c65aabddfc3cbecc109abfc"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S06-collect-pr-6910.md",
+      "sha256": "20fd13c868ddd87a8dd3b71fd97ad77cb55b0ddb5d95b3761d45a6a25a324a94"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S07-collect-issue-5550.md",
+      "sha256": "6f5242881d181250cbebab572b63d432d1e5ca967059002c9ea3a1b63d8e09bb"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S08-gs1-epcis-201.md",
+      "sha256": "197a998635e42fce02a513541d134f510fe96093a52cda0aa122432795fe2180"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S09-fda-food-traceability-rule.md",
+      "sha256": "7f3004e0853edac7b3307c5f6ab59cce569ced589dcddad3336ae22ac5f65e54"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/S10-farmos-field-kit.md",
+      "sha256": "e4bf11342f5c61e0819d3e6bcb1bb04de679c96ca39c2474954212730678a6c2"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/critic-recheck-notes.md",
+      "sha256": "6a48fae2b377ab973b12b3f5abf26505c282029126931a73b87bfe530dbc7bb5"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/index.md",
+      "sha256": "5d738b52e1b3803524d25b030e41f7c0e57a99dcf66807d8073c4c989d29e983"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/sources/reviser-recheck.md",
+      "sha256": "b49037e9ade821e880cbe37c7667932fafde8d95b395b5ab1ba68c13c392815c"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/sources/index.md",
+      "sha256": "95ff08a97195bbd8f78e5fff3ec88b8e15d902be411daac59e9812a161b2a76c"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/sources/recheck-notes.md",
+      "sha256": "6a48fae2b377ab973b12b3f5abf26505c282029126931a73b87bfe530dbc7bb5"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S01-abalobi-monitor.md",
+      "sha256": "59e1ae613a64560e4e21aa70b716a73903ae9c749f640c1349d1126863601b70"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S02-odk-audit-log.md",
+      "sha256": "3f3940520fd9f36cd0ccc1bb233e1b5715dff31f768798f3f29487330174f47c"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S03-odk-central-submissions.md",
+      "sha256": "3ec7f454df85584e6130ae918f188e6b3259202abc38b93a7c87e5e4ca0f03cf"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S04-odk-question-types.md",
+      "sha256": "0f1adb50f3497d41cd766d2513bf55e9705d91cda79aea434f592c17b7c08965"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S05-collect-issue-6768.md",
+      "sha256": "3740f110d9f9f041dfb0d9fd5c846ab9f51136dd1c65aabddfc3cbecc109abfc"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S06-collect-pr-6910.md",
+      "sha256": "20fd13c868ddd87a8dd3b71fd97ad77cb55b0ddb5d95b3761d45a6a25a324a94"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S07-collect-issue-5550.md",
+      "sha256": "6f5242881d181250cbebab572b63d432d1e5ca967059002c9ea3a1b63d8e09bb"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S08-gs1-epcis-201.md",
+      "sha256": "197a998635e42fce02a513541d134f510fe96093a52cda0aa122432795fe2180"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S09-fda-food-traceability-rule.md",
+      "sha256": "7f3004e0853edac7b3307c5f6ab59cce569ced589dcddad3336ae22ac5f65e54"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/S10-farmos-field-kit.md",
+      "sha256": "e4bf11342f5c61e0819d3e6bcb1bb04de679c96ca39c2474954212730678a6c2"
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/sources/index.md",
+      "sha256": "d556af9d92cb05a23147400b9d3d8b06a5bc63d3ba0b451aa685c6bd0ccf93af"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/index.md",
+      "sha256": "5ac07b57369dce0421d629683c87829f3419d7fa23923459829010154c210cb9"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/odk-audit-history.md",
+      "sha256": "607fc1830523e8f9f47c7556bf2c00801c7bd94d89d94281ab58d9268547742d"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/odk-evolution.md",
+      "sha256": "4503d881f5dfb9fc317d691a6f8c43b37345ea20b64b3f15622d28edaafcb9a0"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/odk-language-access.md",
+      "sha256": "132cb8f2d08935865b61d43ba52ce64f00dc96cec70ab779fb4a32e527ee1a8f"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/odk-offline-edits.md",
+      "sha256": "c2a000e896269685729c6dbc5c9eb7a6e0755cc25d972c8f916dcf2624ecfb68"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/reviser-r01-check.md",
+      "sha256": "e1b20fad55e4ced5b925d7b233201494a8bb9548179c82678560f94e0e11fbe5"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/standards-and-alternatives.md",
+      "sha256": "e6268c7f0a044522077efefe0756575fe8ae0d3efbeca0bb2fe40c0e4ad91f7f"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/verification/appsheet-verification.md",
+      "sha256": "b6c390908f0b476ca3bd60f094442ef4e525117a21ba1cebc6373b9b8527e19f"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/verification/odk-current-verification.md",
+      "sha256": "b84a645000442728d755cce3375e2735ce6d97a12606c46eb2f8026b5aa14dff"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/verification/odk-evolution-verification.md",
+      "sha256": "7b705884ba5b02adbf8cb30ff2310e5c88994f775c8c449d3e2043ed73aab494"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/verification/odk-language-access-verification.md",
+      "sha256": "02e9acea94c3cefdd7af2a636fac235a05ad84f58711b833e2cefad75dcb95a4"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/sources/verification/standards-verification.md",
+      "sha256": "a89b8e3c3e707f2f159009bb3f464c2b24e01280f5e92f5163b750ac61d5fe3d"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/sources/appsheet-verification.md",
+      "sha256": "b6c390908f0b476ca3bd60f094442ef4e525117a21ba1cebc6373b9b8527e19f"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/sources/index.md",
+      "sha256": "8e3f6485c3d539bb5dbc70dc6a4b8b304130069e1b09a8268b926e1de57e8cd0"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/sources/odk-current-verification.md",
+      "sha256": "b84a645000442728d755cce3375e2735ce6d97a12606c46eb2f8026b5aa14dff"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/sources/odk-evolution-verification.md",
+      "sha256": "7b705884ba5b02adbf8cb30ff2310e5c88994f775c8c449d3e2043ed73aab494"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/sources/odk-language-access-verification.md",
+      "sha256": "02e9acea94c3cefdd7af2a636fac235a05ad84f58711b833e2cefad75dcb95a4"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/sources/standards-verification.md",
+      "sha256": "a89b8e3c3e707f2f159009bb3f464c2b24e01280f5e92f5163b750ac61d5fe3d"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/sources/index.md",
+      "sha256": "15ef9d32a6faba4e4e6d611ffa5e895a15a9590f79e3e3cfb8bc0e007c0b919e"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/sources/odk-audit-history.md",
+      "sha256": "607fc1830523e8f9f47c7556bf2c00801c7bd94d89d94281ab58d9268547742d"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/sources/odk-evolution.md",
+      "sha256": "4503d881f5dfb9fc317d691a6f8c43b37345ea20b64b3f15622d28edaafcb9a0"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/sources/odk-language-access.md",
+      "sha256": "132cb8f2d08935865b61d43ba52ce64f00dc96cec70ab779fb4a32e527ee1a8f"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/sources/odk-offline-edits.md",
+      "sha256": "c2a000e896269685729c6dbc5c9eb7a6e0755cc25d972c8f916dcf2624ecfb68"
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/sources/standards-and-alternatives.md",
+      "sha256": "e6268c7f0a044522077efefe0756575fe8ae0d3efbeca0bb2fe40c0e4ad91f7f"
+    }
+  ],
+  "frozen_input_manifest": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/assignment.md",
+      "sha256": "0f98c382a13d99985b1b412dcc7578ee7ac382e2d536658f0e18029478517dbe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/input-map.json",
+      "sha256": "3af9f9ff9271f0574faef9fe7e94a8a958a1cb55756bc8a77ea421c2ba89c9ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H02/brief.md",
+      "sha256": "415ad751720b695b4cc789793972e4f663c279d83afa0a874705c6b9831b0206"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H02/plan-root-only.md",
+      "sha256": "090ed82b1da1acd7283f34207edfd5345571da2f961485d1131f7f56a4291ab7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/final.md",
+      "sha256": "75363e731984ff17604ede0944b32d89765a0c8d0a162d310f6c262098c8614f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/source-map.json",
+      "sha256": "c97045f7f7246e6c8ff9c48d440e76e9e3ecda8166888c19d4709a005607ca96"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/assignment.md",
+      "sha256": "c8708f1eef5f9f9c6aa5691b0c17071d254d81e88fc4cc29afcfe631b20953c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/reviser/input-map.json",
+      "sha256": "2f5b02d93060cc6cf8c44caab8d7d0e981430aa46dfcccc1cb8b6c29b630a9c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/critique.md",
+      "sha256": "4faca82395cd26f15b38fe32e2226e190b4d4e2a5633d5bc0eec5a19cb840416"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/source-map.json",
+      "sha256": "5f9f46bd21a36b08bcabd73ccf6221410c357e4ef9aebc14f898797e51c96110"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/assignment.md",
+      "sha256": "bafb1ba0e84752f7216920ca4e05abe885244f5398e57c5f90f3a77db8c462d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/critic/input-map.json",
+      "sha256": "fa2bde87e009ba5e912e9628c36128dfcee5ee5c74dd964f8da5340e43126891"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/discovery.md",
+      "sha256": "f532c8470ba7d057b0557d81fbc65a097be9bfbd9a6ec7a98e8901dada9b4a0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/draft.md",
+      "sha256": "3f77c06093dc10ef2a7704a3f7fbab4f118b532353f9c95c656c11aaf20e8ed2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/source-map.json",
+      "sha256": "ad9e6bb870ac9cc44915ee6a9a2068f6457c7b26d39a2cbbbd183df60b8b01cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/revealed-plan.md",
+      "sha256": "090ed82b1da1acd7283f34207edfd5345571da2f961485d1131f7f56a4291ab7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/plan-reveal.json",
+      "sha256": "015d91a0d609086a86ad531978a1362b792cf1b3939321df02e195794420af71"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/assignment.md",
+      "sha256": "a0502fa89d40aee1e77f4b83469d2b8083725608cc5057cf1e0194f4d0a70f3f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/control/research/input-map.json",
+      "sha256": "fbc8f6cc363dd9937ce99dad2db6eef2946a5ff0b5e403ac7e5d60a7c74c6d19"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/final.md",
+      "sha256": "038d98a13c31779dfd75ac9a8fce90f584b5ccfec8218fb324144f8f49fa40ae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/source-map.json",
+      "sha256": "95e8de5d495b35eefd19ef1f16eb96bbea285e5ed2097c6315473b8b513d0db8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/assignment.md",
+      "sha256": "b9d19aea1587faaa46e1f8b1fe1aa57f4641ec195d2e8dacbc164c42997ee829"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/input-map.json",
+      "sha256": "c0662d1660a683b247aa4393c292a2f2162a026840298adbdd3ade99dbc909b9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+      "sha256": "3de624e6edbd9abfe5ab338bb75c8a3dbd41b5ba56b15282be0ffbcf38359397"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/source-map.json",
+      "sha256": "fd0b45fe1cadc9ebdf0d5ea1d936bf40c6d0c562311a01a43136eba2b37e2521"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/assignment.md",
+      "sha256": "7d5575f36ea7d330ae45de07daadcbaca2a223d0c0ceb149baf7dbde5021e765"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/input-map.json",
+      "sha256": "43633201f5ac78f471bc71e5414440b2bd39816a9a252b88b4722e531a228b9c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/discovery.md",
+      "sha256": "68d81609d8a93e915edfde6bec88360fb35d07fa6821a35959f08d44aa5ddc7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/draft.md",
+      "sha256": "4e0e0473f6a107f04b70068ed09360f0366ef141119a940b4ec949990f95d998"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/source-map.json",
+      "sha256": "a203e86f80895342067ec86eff8f22d54d97b43d0da2f03278dca8dd16a68b1a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/revealed-plan.md",
+      "sha256": "090ed82b1da1acd7283f34207edfd5345571da2f961485d1131f7f56a4291ab7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/plan-reveal.json",
+      "sha256": "a78611beb492e59c509ea3bc63b08d9121074d7be1371d79ba08ed91825a2dc4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/assignment.md",
+      "sha256": "599f51577409abd7573599e3dd21895a18a7483213339a090ab113bba0365d9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/input-map.json",
+      "sha256": "70f514e307b63b133932132c087580849db919572630714d5e42da8415a58d36"
+    }
+  ],
+  "evidence_file": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-02/primary-evidence.json",
+    "format": "Bounded response identities, extraction digests/locators and public API metadata; full raw pages/PDFs and redundant passages are not retained.",
+    "sha256": "cae8f6e4ff7b4cbdf02f634d752a732c9b8aa8cb86218d0105d880f94eedbaaf"
+  },
+  "remaining_consequential_claims": [],
+  "coverage_complete": true,
+  "limitations": [
+    "Review used the exact C-02 input map, original H02 brief, exact frozen plan, all complete declared candidates/stages/maps/source notes, and independent relevant public primary evidence.",
+    "No other case, campaign aggregate, other evaluation, private provider history or internals was inspected. The repository Plans index was read only to comply with workspace instructions and was not H02 scientific evidence.",
+    "No candidate repair, repository/Git/canon edit, account/config change, executable download, nested worker, product runtime, or deployment occurred.",
+    "No scientific review scope remains unfinished. Runtime, price, local legal applicability and unresolved farm inputs remain explicit external limitations.",
+    "Response SHA-256 names the actual fetched response bytes; content compression can affect transport-byte digests. Locators use document sections/symbols, not unstable rendered line counts.",
+    "A commit verifies source identity, not farm runtime applicability. Reviewer corroboration does not change the frozen candidate source map."
+  ]
+}

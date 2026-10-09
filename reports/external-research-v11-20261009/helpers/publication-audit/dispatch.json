@@ -1,0 +1,30 @@
+{
+  "requestedAt": "2026-10-09T22:28:03.725Z",
+  "deadline": "2026-10-09T22:33:03.725Z",
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  },
+  "taskId": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-publication-audit-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-publication-audit-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-publication-audit-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-publication-audit-v1",
+  "status": "running",
+  "workState": "working",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": null,
+  "latestTerminalStatus": null,
+  "latestTerminalSummary": null,
+  "latestTerminalResultContextTransferId": null,
+  "providerInstanceId": "codex_gmail",
+  "model": "gpt-6.1-sol",
+  "summary": null,
+  "resultContextTransferId": null,
+  "waitTimedOut": false,
+  "acceptedAt": "2026-10-09T22:28:04.841Z",
+  "request_time_basis": "Pre-dispatch freeze time; actual native requestedAt/start observed separately from host run."
+}

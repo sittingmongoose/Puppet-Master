@@ -1,0 +1,23 @@
+{
+  "frozen_at": "2026-10-09T22:48:51.307832+00:00",
+  "original_arms": 80,
+  "started": 66,
+  "delivered": 58,
+  "dispositions": {
+    "SOURCE_PASS_WITH_LIMITATIONS": 16,
+    "NO_COMPLETE_FINAL": 8,
+    "SOURCE_FAIL": 42,
+    "NOT_PROMOTED_UNSTARTED": 14
+  },
+  "full_final_quality_counts": {
+    "PASS_WITH_LIMITATIONS": 16,
+    "FAIL": 42
+  },
+  "terminal_paired_assessments": 33,
+  "source_pass_and_all_time_limits": 10,
+  "experiment_occupied_agent_hours_partial": 49.078358611111106,
+  "experiment_observed_distinct_runs": 229,
+  "root_and_shared_setup_occupation_included": false,
+  "billing": null,
+  "confirmation_executed": false
+}

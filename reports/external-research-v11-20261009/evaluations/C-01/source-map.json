@@ -1,0 +1,1553 @@
+{
+  "schema": "er11-reviewer-source-map-v1",
+  "block": "C-01",
+  "case": "H01",
+  "reviewer_role": "fresh independent assessor; no candidate repair",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-01/input-map.json",
+  "input_map_sha256": "d02d392d90dd9b87d8a7c76b852157d4d3320b080dd9d35c9476818547a7e1bc",
+  "source_policy": "Original declared candidates and permitted public primary evidence only; source text treated as untrusted data. Candidate identities remain unchanged; reviewer supplements are distinct records.",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-01/assignment.md",
+      "sha256": "03bed327d0a834a075d17a7bd6206952bbe6c561ff0354e94d3fc84e37c6dfdd",
+      "bytes": 2164,
+      "role": "review assignment"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/C-01/input-map.json",
+      "sha256": "d02d392d90dd9b87d8a7c76b852157d4d3320b080dd9d35c9476818547a7e1bc",
+      "bytes": 9514,
+      "role": "exact frozen input map"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "role": "rubric"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H01/brief.md",
+      "sha256": "2653c8600117b94d87de9c9922ace2073942b39885d7ecc25b83e32f32534bf2",
+      "bytes": 2257,
+      "role": "original brief"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H01/plan-root-only.md",
+      "sha256": "45fbd5a0a7654955292605e2995af70fece917393d469c9b18746cf4fe47785e",
+      "bytes": 587,
+      "role": "original frozen plan"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser/final.md",
+      "sha256": "2c04a78bd4ec466f5d8f0c5c840f6fefe362b25dbb74fc5b5c1eba1900455166",
+      "bytes": 36029,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser/source-map.json",
+      "sha256": "8e3e36709e36cb72f1169a129812d08686abc7f4bfae12defcb60d63f84609b2",
+      "bytes": 34834,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser/assignment.md",
+      "sha256": "70b2ac72561481fc17ff539ebbce58633403ad4544b09eb50d07609c287e0db3",
+      "bytes": 3070,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser/input-map.json",
+      "sha256": "7766e4fa63e31c3065d1ada2f9e38c2acb0e8788b53dc15ee6791a450ff81719",
+      "bytes": 1513,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/critique.md",
+      "sha256": "7edf3193e857a61e08198c4bf070ed2814f81566f5d2a3d05e60c711252efdd8",
+      "bytes": 20397,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/source-map.json",
+      "sha256": "f05c7c4317af25ae1da760cb3df763301dae9c0d0257ea1f334b19a85fe14270",
+      "bytes": 29582,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/assignment.md",
+      "sha256": "8c95a7312f4be1f9c008f7db8857bcba346e020d4e2b2012f3a5b138138efcb7",
+      "bytes": 2807,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/input-map.json",
+      "sha256": "c1e1cca1553ce6e946cf638dcdc382beb5e44a79ad7f78432cb94075cfa01778",
+      "bytes": 1198,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/discovery.md",
+      "sha256": "0f3f5bce2b380b6f07904a2cca29096b8a1275abc9a39045a40381579aab46e8",
+      "bytes": 22232,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/draft.md",
+      "sha256": "6d25e8c68ced10a1a5bdd71ab8e9babfd7c9a123ec844f0a8d2f71ca3d88ed53",
+      "bytes": 25242,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/source-map.json",
+      "sha256": "e17215e02d91d55536aa656d195377870f5176c2cf0ec0d825adeb1a866169d8",
+      "bytes": 17062,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/revealed-plan.md",
+      "sha256": "45fbd5a0a7654955292605e2995af70fece917393d469c9b18746cf4fe47785e",
+      "bytes": 587,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/plan-reveal.json",
+      "sha256": "6096351a4bb33a6a89a283a9e99801251552fbb0fa109606622a52e3ccb0cd5d",
+      "bytes": 276,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/assignment.md",
+      "sha256": "42fdd38118ada9e40d96b285a99eba926adb7fe4c70fbf8d4414254f912c9f83",
+      "bytes": 3280,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/input-map.json",
+      "sha256": "09e98193fe22a2f19016f84c7956d9b0e696c64e564914230775504aa21145e7",
+      "bytes": 667,
+      "role": "N2 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser/sources/evidence.md",
+      "sha256": "56b5f233d3e497e6a6a5e7194c013d398001b77b82eba23bb0f69df7506cdc1f",
+      "bytes": 10754,
+      "role": "N2 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser/sources/index.md",
+      "sha256": "b58b34af888e52b3458aeebdf98a47678da88ef92b3f8400a7728f8dd926b565",
+      "bytes": 2596,
+      "role": "N2 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/sources/evidence.md",
+      "sha256": "106ed7f1d80ddb781f1779a215a547c039f4d33276969eba8f38cbc20f9f8e4c",
+      "bytes": 9708,
+      "role": "N2 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/sources/index.md",
+      "sha256": "0b841042d0e85ab0b9702b4747f3249314d6dc1653b933e6f89b8118837b62f2",
+      "bytes": 2051,
+      "role": "N2 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/sources/evidence.md",
+      "sha256": "8282b93cd8014f9df7f4124e1af55b40b62bada2374b69395879152213290ec8",
+      "bytes": 11740,
+      "role": "N2 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/sources/index.md",
+      "sha256": "841687469406062f40589c1ac7d15022487a09819235497e2e025601ded28a39",
+      "bytes": 1278,
+      "role": "N2 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/reviser/final.md",
+      "sha256": "aec19891a281bc1a10dede3fb45af4f686c55708d70e996b94dd2bd4b5da5d8f",
+      "bytes": 30156,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/reviser/source-map.json",
+      "sha256": "7d00bf21d3f473e3de3e3c17c8a7333f4f92488309eceed43ab7f80cd1f0c682",
+      "bytes": 38031,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/reviser/assignment.md",
+      "sha256": "5a340de03f918deb56f132edf507754346360e6c7357205a8b496e2a7099d268",
+      "bytes": 3074,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/reviser/input-map.json",
+      "sha256": "be41cae9c3a0e4f78c4ab344e0fc9e94416e56d8dc80427dd5edc1b090f83dab",
+      "bytes": 1535,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/critic/critique.md",
+      "sha256": "a391054ce06087ff6a4a6b6e97e56cdc1e34a3b69d19ff5670c526bb4e934ecc",
+      "bytes": 12373,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/critic/source-map.json",
+      "sha256": "3b89cf060b9b4728ac46f8239be4305d39f2cc38c56c92dabf64c5c9c41f13c2",
+      "bytes": 20659,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/critic/assignment.md",
+      "sha256": "f7d11db3132710898f8bc109c4f4adbb97cfd6792f78ca9f1b4f5d8dd9763dfb",
+      "bytes": 2811,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/critic/input-map.json",
+      "sha256": "a9e4db2eec6b9b976419c912218724b0d2bd84d20b9cf4b2409cc8444304fe0e",
+      "bytes": 1214,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/discovery.md",
+      "sha256": "25de6522f3d1715dcc04468e3d68bd64bbbd8efac4fa9d879b9e81c9a7de4f1c",
+      "bytes": 14222,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/draft.md",
+      "sha256": "f19c0cb31cdad33b09c5d22e4276f4b58c1e395c596e1444d81dabffbb132e59",
+      "bytes": 21585,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/source-map.json",
+      "sha256": "afa7d4e6ca07ef3b0f8e81ad075ffc9b4da38cd41d129bdf71240746aeab4ae5",
+      "bytes": 19923,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/revealed-plan.md",
+      "sha256": "45fbd5a0a7654955292605e2995af70fece917393d469c9b18746cf4fe47785e",
+      "bytes": 587,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/plan-reveal.json",
+      "sha256": "08ee1926ae8936e15e6a762378affe8e9407959e892c8a7c3aff912ac683ee89",
+      "bytes": 276,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/assignment.md",
+      "sha256": "7cbb4c510cd0fe99f7a7e18cefa6853851576bcd3ffd8d63f28e0dbbc6f98d05",
+      "bytes": 3286,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/input-map.json",
+      "sha256": "a8a489e5d0440eb7dbfb429e9a991c1c6e65bd35c28bff07ffa554fe6d8140e4",
+      "bytes": 673,
+      "role": "N1 frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/reviser/sources/index.md",
+      "sha256": "4b0309a5d6f05f18a94ffa96cacdc588590d5314a0baf2e35721c4f8473ba6e1",
+      "bytes": 3647,
+      "role": "N1 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/reviser/sources/observations.md",
+      "sha256": "32bb25603ec0dc82d2f0b890e1e7048beb88b0feb00bc8652035e03699c880c3",
+      "bytes": 6313,
+      "role": "N1 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/critic/sources/index.md",
+      "sha256": "3e5435bed1cf96cd4ec019f8064a1fc6395c14e996340049a3ec3ff4fbd4a6e5",
+      "bytes": 1288,
+      "role": "N1 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/critic/sources/observations.md",
+      "sha256": "af4ded0a559c5ac3a5d4c7acc12d1f85d7cd9625f6daf9427256dfa04ef60544",
+      "bytes": 5067,
+      "role": "N1 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/sources/index.md",
+      "sha256": "2f00589bd46ffaec82fe44f3a8088acde1588772f0e25bb05c4561bb9267bef5",
+      "bytes": 4564,
+      "role": "N1 declared source index/bounded evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/sources/observations.md",
+      "sha256": "092d3bd0c512acc8812769f693c88fa933db6799505e5bed383a48f7ceef20d0",
+      "bytes": 4609,
+      "role": "N1 declared source index/bounded evidence"
+    }
+  ],
+  "primary_sources": [
+    {
+      "reviewer_source_id": "R01",
+      "candidate_source_ids": [
+        "N2:PA01",
+        "N1:S02"
+      ],
+      "url": "https://www.passare.com/manage",
+      "resolved_url": "https://www.passare.com/manage",
+      "http_status": 200,
+      "title": "Manage",
+      "accessed_at_utc": "2026-10-09T22:14:28.499777+00:00",
+      "response_sha256": "19d2e6c3e48c9ea8f5fbd812d41c46e48e9111da89dd785c82b84c14ec05b89f",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA01",
+          "version_or_commit": "Live product page; copyright 2026; no application build identifier",
+          "commit": null
+        },
+        {
+          "candidate": "N1",
+          "source_id": "S02",
+          "version_or_commit": "Live public product page; no product release/version disclosed",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Shareable calendar, notes/checklists, user settings and product summary",
+        "Sharable team calendar, notes/checklists, user settings/permissions, collaboration, reminders, and reports (page lines 21-97)."
+      ],
+      "independent_observation": "Reviewer GET returned HTTP 200 with a funeral-software staff calendar and permission lead. This differs from the frozen critic fetch failure; it does not retrospectively prove what that fetch returned.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R02",
+      "candidate_source_ids": [
+        "N2:PA02"
+      ],
+      "url": "https://support.passare.com/calendar",
+      "resolved_url": "https://support.passare.com/calendar",
+      "http_status": 200,
+      "title": "Stay organized with Passare's Calendar",
+      "accessed_at_utc": "2026-10-09T22:14:28.502306+00:00",
+      "response_sha256": "231f1c316b25cc451107c03b985f486b64f07cf364119398e2c92bb1a21116f8",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA02",
+          "version_or_commit": "Live support page; copyright 2025; no product build identifier",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Calendar overview; Event settings; Participants; Manage Calendar"
+      ],
+      "independent_observation": "Support describes case-event details, participant availability and change notices, personal-calendar connection, and print. It does not demonstrate field privacy or exclusive reservations.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R03",
+      "candidate_source_ids": [
+        "N2:PA03"
+      ],
+      "url": "https://support.passare.com/event-types?hsLang=en",
+      "resolved_url": "https://support.passare.com/event-types",
+      "http_status": 200,
+      "title": "Add &amp; edit event types",
+      "accessed_at_utc": "2026-10-09T22:14:28.503558+00:00",
+      "response_sha256": "676346fb036fa5cf6fa88eaeb98c9eb731335a7ea26f1c6cfb5342e047885651",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA03",
+          "version_or_commit": "Live support page; copyright 2025",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Add an event; Default participants; Funeral options"
+      ],
+      "independent_observation": "Event-type settings include duration, funeral attributes, provider categories and automatically selected participant roles. These are event defaults, not a demonstrated separate case workflow.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R04",
+      "candidate_source_ids": [
+        "N2:PA04"
+      ],
+      "url": "https://support.passare.com/roles-permissions",
+      "resolved_url": "https://support.passare.com/roles-permissions",
+      "http_status": 200,
+      "title": "Manage roles &amp; permissions",
+      "accessed_at_utc": "2026-10-09T22:14:28.504800+00:00",
+      "response_sha256": "0b876cd00ead207d71e69d0fd3298ca6b45f4de7197ec06e7e4e8505d8341004",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA04",
+          "version_or_commit": "Live support page; copyright 2025",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Create new roles; Manage user roles; Mobile-only users"
+      ],
+      "independent_observation": "Support documents staff roles, area permissions, read-only access and web/mobile scope. The complete H01 sensitive-field matrix is not published in the inspected text.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R05",
+      "candidate_source_ids": [
+        "N2:PA05"
+      ],
+      "url": "https://support.passare.com/create-checklists",
+      "resolved_url": "https://support.passare.com/create-checklists",
+      "http_status": 200,
+      "title": "Create a checklist",
+      "accessed_at_utc": "2026-10-09T22:14:28.510158+00:00",
+      "response_sha256": "1cf16f0b58b819afce85fc4bc5841129c0743ef3d1a35d26db19ab80f7334381",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA05",
+          "version_or_commit": "Live support page; copyright 2025",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Checklist editing, recording and viewing"
+      ],
+      "independent_observation": "Checklists can be internal or family-facing, record completion identity/time, and appear by case/disposition/service type. This offers conditional task/template leads.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R06",
+      "candidate_source_ids": [
+        "N2:PA06"
+      ],
+      "url": "https://support.passare.com/getting-started-with-the-planning-center",
+      "resolved_url": "https://support.passare.com/getting-started-with-the-planning-center",
+      "http_status": 200,
+      "title": "Getting started with Planning Center",
+      "accessed_at_utc": "2026-10-09T22:14:28.513326+00:00",
+      "response_sha256": "f691161dfaca4afc042ad45412fe902908a463060819b97cab5f43d8edf9fd2d",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA06",
+          "version_or_commit": "Live support page; copyright 2025",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Invite the family; Logging in; Collect information; Plan a meaningful service"
+      ],
+      "independent_observation": "Planning Center is invitation-based; account or one-time-code access and internet-dependent family use are documented. Obituary, files, preferences and checklists are family features, not staff offline guarantees.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R07",
+      "candidate_source_ids": [
+        "N2:PA07"
+      ],
+      "url": "https://support.passare.com/assign-planning-center-roles",
+      "resolved_url": "https://support.passare.com/assign-planning-center-roles",
+      "http_status": 200,
+      "title": "Assign Planning Center roles",
+      "accessed_at_utc": "2026-10-09T22:14:28.704473+00:00",
+      "response_sha256": "7d59b4964f107b7522ee0c72a60e74eb211aff9ceca1d5f395df5f52b5c1122d",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA07",
+          "version_or_commit": "Live support page; copyright 2025",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Planning Center roles; Assign roles within Planning Center"
+      ],
+      "independent_observation": "The family portal documents Viewer, Contributor and Editor; Editor is default/full portal access, and one Editor per case is required. This does not establish staff-schedule edit authority.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R08",
+      "candidate_source_ids": [
+        "N2:PA08"
+      ],
+      "url": "https://support.passare.com/how-to-schedule-share-events-with-the-planning-center?hsLang=en",
+      "resolved_url": "https://support.passare.com/how-to-schedule-share-events-with-the-planning-center",
+      "http_status": 200,
+      "title": "Schedule and share events with Planning Center",
+      "accessed_at_utc": "2026-10-09T22:14:29.259141+00:00",
+      "response_sha256": "8a5488ebcb1c1bbbae09a89c5e2833ed2e6a62bb8814f449ee575d6a26c0985a",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA08",
+          "version_or_commit": "Live support page; copyright 2025",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Add events in Passare; View events in the Planning Center"
+      ],
+      "independent_observation": "Scheduled arrangement/service events appear in the family Events widget. The inspected page describes viewing/sharing rather than relatives editing staff logistics.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R09",
+      "candidate_source_ids": [
+        "N2:PA09"
+      ],
+      "url": "https://support.passare.com/manage-tasks",
+      "resolved_url": "https://support.passare.com/manage-tasks",
+      "http_status": 200,
+      "title": "Getting started with Tasks",
+      "accessed_at_utc": "2026-10-09T22:14:29.282024+00:00",
+      "response_sha256": "f1ab3602b559951b80e0cd0355f03e13f9359361f981fed492e802fc2377ef49",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA09",
+          "version_or_commit": "Live support page; copyright 2025",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Create a task; Task reminders; Managing tasks"
+      ],
+      "independent_observation": "Tasks have case/checklist links, owners, due dates/times, reminders, overdue status, completion and comments. No running task workflow was observed.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R10",
+      "candidate_source_ids": [
+        "N2:PA10"
+      ],
+      "url": "https://support.passare.com/how-to-export-cases",
+      "resolved_url": "https://support.passare.com/how-to-export-cases",
+      "http_status": 200,
+      "title": "Export case information",
+      "accessed_at_utc": "2026-10-09T22:14:29.305719+00:00",
+      "response_sha256": "08e8f256bdba5e00420d8e2383ce22182a5c8c2ac763d6c95d23c768b662edc2",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA10",
+          "version_or_commit": "Live support page; copyright 2025",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Export information"
+      ],
+      "independent_observation": "Case exports select information categories and download each separately as CSV. The documented examples do not constitute a demonstrated whole-case backup.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R11",
+      "candidate_source_ids": [
+        "N2:PA11"
+      ],
+      "url": "https://support.passare.com/2026-release-notes",
+      "resolved_url": "https://support.passare.com/2026-release-notes",
+      "http_status": 200,
+      "title": "2026 - Release Notes",
+      "accessed_at_utc": "2026-10-09T22:14:29.343671+00:00",
+      "response_sha256": "ef5f7a6e9b7e7fbedf04368c510b21f4bd6e5e57c7834e2eededc57630d42e98",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "PA11",
+          "version_or_commit": "Dated entries; no product build ID shown",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "2026-07-07 Calendar and Participant updates; 2026-05-15 Event participants"
+      ],
+      "independent_observation": "The dated July 7, 2026 entry describes Case ID in notifications, participant export, and participant-role defaults by service type. No deployed build identifier or complete-export proof is supplied.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R12",
+      "candidate_source_ids": [
+        "N2:NC01"
+      ],
+      "url": "https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html",
+      "resolved_url": "https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html",
+      "http_status": 200,
+      "title": "Using the Calendar app &mdash; Nextcloud 35 User Manual",
+      "accessed_at_utc": "2026-10-09T22:14:29.388026+00:00",
+      "response_sha256": "600ae175ea04823367d060b806cb8c964ec4c77c724a698e4b892ddb09b1e626",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "NC01",
+          "version_or_commit": "Nextcloud Server 35 User Manual",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Edit/Export/Delete Calendar; Sharing calendars; event .ics export; Appointments"
+      ],
+      "independent_observation": "The Server 35 manual describes calendar write shares as event create/edit/delete, iCalendar export and backend-dependent resource conflict handling. It does not establish case-field confidentiality.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R13",
+      "candidate_source_ids": [
+        "N2:NC02"
+      ],
+      "url": "https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html",
+      "resolved_url": "https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html",
+      "http_status": 200,
+      "title": "Calendar / CalDAV &mdash; Nextcloud 35 Administration Manual",
+      "accessed_at_utc": "2026-10-09T22:14:29.419478+00:00",
+      "response_sha256": "f455fdae8ff36afafbc538d066a46733f99faa382f9ce2d2c2046843ba3ff51e",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "NC02",
+          "version_or_commit": "Nextcloud Server 35 Administration Manual",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Hide export buttons; Resources and rooms; Sync tokens/data retention"
+      ],
+      "independent_observation": "The Server 35 admin manual documents backend-dependent exclusive resource scheduling, delayed discovery, export controls, calendar/task trash settings, and differential-sync token retention. These mechanisms have distinct scopes.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R14",
+      "candidate_source_ids": [
+        "N2:NC03"
+      ],
+      "url": "https://docs.nextcloud.com/server/stable/user_manual/en/universal_access.html",
+      "resolved_url": "https://docs.nextcloud.com/server/stable/user_manual/en/universal_access.html",
+      "http_status": 200,
+      "title": "Universal access &mdash; Nextcloud 35 User Manual",
+      "accessed_at_utc": "2026-10-09T22:14:29.545371+00:00",
+      "response_sha256": "d2d64aa43d6fafe796a9f94a760ce735e8172a48a015e2184d469c291fb92d23",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "NC03",
+          "version_or_commit": "Nextcloud Server 35 User Manual",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Navigating via keyboard; Included themes"
+      ],
+      "independent_observation": "The current Server 35 page states a vendor accessibility aim and generic keyboard instructions. It does not demonstrate Calendar/task conformance; the critic/reviser extraction discrepancy remains historically unresolved.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R15",
+      "candidate_source_ids": [
+        "N2:NC04"
+      ],
+      "url": "https://github.com/nextcloud/calendar/issues/2572",
+      "resolved_url": "https://github.com/nextcloud/calendar/issues/2572",
+      "http_status": 200,
+      "title": "Check import ics for VTODOs and filter Calendars accordingly · Issue #2572 · nextcloud/calendar · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:29.573182+00:00",
+      "response_sha256": "a441a84348c962ffffd25629edc4072b6f575a91c3d3e0f1aab080813a805127",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "NC04",
+          "version_or_commit": "Opened 2020-09-09 against Calendar 2.0.4 / Server 19.0.2; closed 2026-06-04",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Issue reproduction, discussion and close record"
+      ],
+      "independent_observation": "Issue #2572 concerns an old mixed VEVENT/VTODO import destination problem on Calendar 2.0.4/Server 19.0.2. It closed through #7876, not as a current funeral-workflow defect.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R16",
+      "candidate_source_ids": [
+        "N2:NC05"
+      ],
+      "url": "https://github.com/nextcloud/calendar/pull/7876",
+      "resolved_url": "https://github.com/nextcloud/calendar/pull/7876",
+      "http_status": 200,
+      "title": "feat(importing): show all writable calendars in picker by odzhychko · Pull Request #7876 · nextcloud/calendar · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:29.678888+00:00",
+      "response_sha256": "d4776ad2eedb7a406bf77ffa70b8dd22e95d8521d3d4f03d8bd8ed28ee568d21",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "NC05",
+          "version_or_commit": "Merged 2026-06-04",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "PR summary and merge record"
+      ],
+      "independent_observation": "PR #7876 changes hidden unsupported destinations into disabled visible choices with explanations and merged June 4, 2026. It changes eligibility presentation rather than adding underlying component support.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R17",
+      "candidate_source_ids": [
+        "N2:NC06"
+      ],
+      "url": "https://github.com/nextcloud/calendar/commit/02fb072fee39e83746b09582481f63c87505f14b",
+      "resolved_url": "https://github.com/nextcloud/calendar/commit/02fb072fee39e83746b09582481f63c87505f14b",
+      "http_status": 200,
+      "title": "Merge pull request #7876 from odzhychko/2572 · nextcloud/calendar@02fb072 · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:29.871471+00:00",
+      "response_sha256": "5baa028755f1eff521ee6e18fb3aff5add486d4671e3a7b19bbd4cfc9cc704a8",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "NC06",
+          "version_or_commit": "02fb072fee39e83746b09582481f63c87505f14b",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Commit message; import picker/store and unit tests"
+      ],
+      "independent_observation": "The exact merge SHA resolves; picker/store changes inspect supported component classes and tests cover writable calendars. Static upstream tests were inspected, not executed by the reviewer.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R18",
+      "candidate_source_ids": [
+        "N2:NC07"
+      ],
+      "url": "https://github.com/nextcloud/calendar/blob/main/CHANGELOG.md",
+      "resolved_url": "https://github.com/nextcloud/calendar/blob/main/CHANGELOG.md",
+      "http_status": 200,
+      "title": "calendar/CHANGELOG.md at main · nextcloud/calendar · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:29.954093+00:00",
+      "response_sha256": "23bd852a1c75a383ea13364ce5ffa8aa93fc7cfcb185dc32a29609c12a8f8446",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "NC07",
+          "version_or_commit": "Calendar 6.6.0 entry dated 2026-07-28; main branch is mutable",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "6.6.0 bug-fix section"
+      ],
+      "independent_observation": "The 6.6.0 dated changelog contains the picker, supported-type display and ACL entries. These occur under Features, so the candidate map locator saying bug-fix section is imprecise.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R19",
+      "candidate_source_ids": [
+        "N2:NC08"
+      ],
+      "url": "https://github.com/nextcloud/calendar/commit/ea4d703419d9a7b7fc467071c760d7541af7af14",
+      "resolved_url": "https://github.com/nextcloud/calendar/commit/ea4d703419d9a7b7fc467071c760d7541af7af14",
+      "http_status": 200,
+      "title": "feat: read calendar ACL properly · nextcloud/calendar@ea4d703 · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:29.973153+00:00",
+      "response_sha256": "a3bed20ff2d72fb32b57b1792e1b5a17506f1e8b276e8873fe86ccb480c01ddb",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "NC08",
+          "version_or_commit": "ea4d703419d9a7b7fc467071c760d7541af7af14",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Calendar model ACL properties, shareability logic and unit tests"
+      ],
+      "independent_observation": "The exact code SHA separates create, modify and delete calendar capabilities through DAV privileges, with corresponding test changes. These are calendar operations, not case-field controls.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R20",
+      "candidate_source_ids": [
+        "N2:BR01"
+      ],
+      "url": "https://baserow.io/pricing?version=hosted",
+      "resolved_url": "https://baserow.io/pricing?version=hosted",
+      "http_status": 200,
+      "title": "Pricing",
+      "accessed_at_utc": "2026-10-09T22:14:30.065012+00:00",
+      "response_sha256": "7ab9789fcc4402095407ccb0098d5b0500da41ef8f8f22c086b2f30c8f8fba16",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "BR01",
+          "version_or_commit": "Live hosted pricing page; mutable",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Advanced rate; role permissions and audit log inclusions"
+      ],
+      "independent_observation": "The hosted Advanced plan displays annual/monthly seat rates and row-change history duration; six annual-rate staff seats calculate to the candidate amount. This excludes total implementation and operating costs.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R21",
+      "candidate_source_ids": [
+        "N2:BR02"
+      ],
+      "url": "https://baserow.io/user-docs/view-level-permissions",
+      "resolved_url": "https://baserow.io/user-docs/view-level-permissions",
+      "http_status": 200,
+      "title": "View-level permissions in Baserow",
+      "accessed_at_utc": "2026-10-09T22:14:30.406431+00:00",
+      "response_sha256": "eff8e350d2238e2922a23705048ebcd47e5724634c1e9b1b2be447665c43147b",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N2",
+          "source_id": "BR02",
+          "version_or_commit": "Live user documentation; copyright 2026",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Permission hierarchy; restricted view setup; security troubleshooting"
+      ],
+      "independent_observation": "Restricted views constrain visible rows/fields and their exports; broader table grants can expose another unrestricted view. Field edit permissions alone are distinct from hiding data.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R22",
+      "candidate_source_ids": [
+        "N1:S01"
+      ],
+      "url": "https://www.passare.com/",
+      "resolved_url": "https://www.passare.com/",
+      "http_status": 200,
+      "title": "Funeral Home Software - Passare",
+      "accessed_at_utc": "2026-10-09T22:14:30.635438+00:00",
+      "response_sha256": "ee33a02dd4cfa5ec17e937a07c474ff2d5d504f9b85c1660aa38efbb3043c355",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S01",
+          "version_or_commit": "Live public product page; page footer displays © 2026; no product release/version disclosed",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Sections: Keep every case organized; Manage financials with ease; Serve today's families better; Features to help you juggle every task; See Passare in action (page lines 21-87, 126-135)."
+      ],
+      "independent_observation": "The vendor homepage supports a funeral-specific case/task/financial/family-collaboration lead. It is marketing evidence rather than a quote or verified role/offline/export contract.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R23",
+      "candidate_source_ids": [
+        "N1:S03"
+      ],
+      "url": "https://github.com/nextcloud/calendar_resource_management/blob/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/README.md",
+      "resolved_url": "https://github.com/nextcloud/calendar_resource_management/blob/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/README.md",
+      "http_status": 200,
+      "title": "calendar_resource_management/README.md at d017e31aab5c59d401ad87cd2cd5579e95c0d7e4 · nextcloud/calendar_resource_management · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:30.692016+00:00",
+      "response_sha256": "d985abe43812672f72092ada64cbc59d62e4f0b423b264cb5d7662b8adcdeccb",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S03",
+          "version_or_commit": "v0.12.2",
+          "commit": "d017e31aab5c59d401ad87cd2cd5579e95c0d7e4"
+        }
+      ],
+      "candidate_locators": [
+        "Configuration table, room/resource/vehicle/restriction commands, unique email caveat, and cron note (README lines 193-228)."
+      ],
+      "independent_observation": "The pinned README documents rooms, general resources, vehicles, hierarchy, group restrictions, false boolean defaults and cron publication. It does not specify numeric types or a vehicle-range distance unit.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R24",
+      "candidate_source_ids": [
+        "N1:S04"
+      ],
+      "url": "https://apps.nextcloud.com/apps/calendar_resource_management",
+      "resolved_url": "https://apps.nextcloud.com/apps/calendar_resource_management",
+      "http_status": 200,
+      "title": "Calendar Resource Management - Apps - App Store - Nextcloud",
+      "accessed_at_utc": "2026-10-09T22:14:30.752040+00:00",
+      "response_sha256": "faaf1c13ccaf1068476adde7a4166c014de309d8a400ddb2edff250189912acc",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S04",
+          "version_or_commit": "Observed listing: stable 0.12.2 for Nextcloud 34/35; highest server version shown is 35",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Highest Nextcloud version and Releases table (lines 20-68)."
+      ],
+      "independent_observation": "The app catalog lists stable 0.12.2 for server 34/35 and also older servers; 35 is highest displayed. The listing alone does not prove server 36 incompatibility.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R25",
+      "candidate_source_ids": [
+        "N1:S05"
+      ],
+      "url": "https://docs.nextcloud.com/server/latest/user_manual/en/groupware/calendar.html",
+      "resolved_url": "https://docs.nextcloud.com/server/latest/user_manual/en/groupware/calendar.html",
+      "http_status": 200,
+      "title": "Using the Calendar app &mdash; Nextcloud 36 User Manual",
+      "accessed_at_utc": "2026-10-09T22:14:30.920628+00:00",
+      "response_sha256": "a917326d30b0cd0e0e42ec713d974899f7867e7029227588de6b54a3f41c67ea",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S05",
+          "version_or_commit": "Nextcloud 36 User Manual as identified in page title at access; URL alias `latest` is mutable",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Room/resource booking and rejected overlaps (lines 220-230); calendar share read/write effects (lines 74-85); calendar .ics export (lines 57-66); trash retention default 30 days (lines 263-272)."
+      ],
+      "independent_observation": "The current latest alias identifies manual edition 36 and documents calendar sharing, resource overlap rejection, event export and calendar/event/task trash behavior. Cross-version deployed applicability still needs a selected pair.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R26",
+      "candidate_source_ids": [
+        "N1:S06"
+      ],
+      "url": "https://docs.nextcloud.com/server/stable/admin_manual/occ_database.html",
+      "resolved_url": "https://docs.nextcloud.com/server/stable/admin_manual/occ_database.html",
+      "http_status": 200,
+      "title": "DAV &amp; database commands &mdash; Nextcloud 35 Administration Manual",
+      "accessed_at_utc": "2026-10-09T22:14:31.109100+00:00",
+      "response_sha256": "43f4af17c0b0550631508ebf84d7df19cb3891ab45ec8019ab553698fb6b4d3d",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S06",
+          "version_or_commit": "Nextcloud 35 Administration Manual as identified in page title at access; URL alias `stable` is mutable",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Export/import calendar commands and format/defaults, validation/error options (lines 227-275)."
+      ],
+      "independent_observation": "The Server 35 CLI manual documents calendar export formats, validation modes and error handling. The described calendar command is not a demonstrated case/task/attachment archive or restore.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R27",
+      "candidate_source_ids": [
+        "N1:S07"
+      ],
+      "url": "https://github.com/nextcloud/calendar_resource_management/issues/196",
+      "resolved_url": "https://github.com/nextcloud/calendar_resource_management/issues/196",
+      "http_status": 200,
+      "title": "Enable private resource bookings (hide event details, show only busy status) · Issue #196 · nextcloud/calendar_resource_management · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:31.127279+00:00",
+      "response_sha256": "bb2e22ec905a2233cc2958e3eb41add1c2712aedc1edef5859c5d8c26d7cdfc8",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S07",
+          "version_or_commit": "Issue opened 2025-09-13; observed open on 2026-10-09",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Issue description and requested behavior (lines 162-175)."
+      ],
+      "independent_observation": "Issue #196 remains open. The reporter describes private linked-resource disclosure; the busy-only comment applies to an account-owned resource calendar. Neither is a tested backend-wide guarantee.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R28",
+      "candidate_source_ids": [
+        "N1:S08"
+      ],
+      "url": "https://github.com/nextcloud/calendar/blob/main/README.md",
+      "resolved_url": "https://github.com/nextcloud/calendar/blob/main/README.md",
+      "http_status": 200,
+      "title": "calendar/README.md at main · nextcloud/calendar · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:31.198063+00:00",
+      "response_sha256": "2f5abcd49a1d2d3ee60457e86330551e6773f0b80a54b60493a9d42b046b0dae",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S08",
+          "version_or_commit": "main branch as served 2026-10-09; exact commit not captured",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Feature list (README product-summary section)."
+      ],
+      "independent_observation": "The mutable frontend README lists Tasks/Deck due items in Calendar and free/busy integration. It does not establish complete handoffs or selected-release permission behavior.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R29",
+      "candidate_source_ids": [
+        "N1:S09"
+      ],
+      "url": "https://github.com/LibreBooking/librebooking/security/advisories/GHSA-3356-vjx2-5pg8",
+      "resolved_url": "https://github.com/LibreBooking/librebooking/security/advisories/GHSA-3356-vjx2-5pg8",
+      "http_status": 200,
+      "title": "Unauthenticated administrator account takeover through the legacy migration endpoint. · Advisory · LibreBooking/librebooking · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:31.253621+00:00",
+      "response_sha256": "523192dbe123dace9cc7afa87be5d9517b4445f3a3ad853c42feee86b36fb3df",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S09",
+          "version_or_commit": "Published 2026-10-06; affected <7.0.0; patched 7.0.0",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Affected/patched versions and impact/patch details (lines 130-178); technical details (198-205)."
+      ],
+      "independent_observation": "The advisory applies to the legacy migration attack path before 7.0.0, with endpoint and attacker-database connectivity conditions; 7.0.0 is patched. It does not establish later overall security.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R30",
+      "candidate_source_ids": [
+        "N1:S10"
+      ],
+      "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+      "resolved_url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+      "http_status": 200,
+      "title": "Release v7.0.0 · LibreBooking/librebooking · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:31.339466+00:00",
+      "response_sha256": "e87389c09abfe45fac10137d9fe4d1bb4b6ff2c52f216054d018b74676044103",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S10",
+          "version_or_commit": "v7.0.0, release dated 2026-10-06",
+          "commit": "422b4b0223335d18c7d5f005ffcdd93719575c20"
+        }
+      ],
+      "candidate_locators": [
+        "Release notes list migration removal, security-policy update, and breaking-change note (release lines 153-191); release commit diff shows v7.0.0 changelog and supported-version update (commit lines 129-252)."
+      ],
+      "independent_observation": "The v7.0.0 release dated October 6, 2026 removes web migration and lists breaking changes. The supplied full commit resolves to that release build.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R31",
+      "candidate_source_ids": [
+        "N1:S11"
+      ],
+      "url": "https://github.com/LibreBooking/librebooking",
+      "resolved_url": "https://github.com/LibreBooking/librebooking",
+      "http_status": 200,
+      "title": "GitHub - LibreBooking/librebooking: LibreBooking is an open-source resource scheduling solution. It provides a flexible, mobile-friendly, and extensible interface for organizations to manage resource reservations. The &quot;develop&quot; branch contains the latest code of the project. · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:31.649247+00:00",
+      "response_sha256": "a7e95bce857eddf2d811e0fa35be615a88847532218f49376e0ea7785371dc90",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S11",
+          "version_or_commit": "develop branch as observed 2026-10-09; exact commit not captured",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Security warning banner above About, lines 270-310."
+      ],
+      "independent_observation": "The current repository warns of a further high-impact release scheduled October 13, 2026. This is a dated unresolved adoption condition distinct from the earlier patched migration issue.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R32",
+      "candidate_source_ids": [
+        "N1:S12"
+      ],
+      "url": "https://pouchdb.com/guides/replication.html",
+      "resolved_url": "https://pouchdb.com/guides/replication.html",
+      "http_status": 200,
+      "title": "Replication",
+      "accessed_at_utc": "2026-10-09T22:14:31.662945+00:00",
+      "response_sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S12",
+          "version_or_commit": "Current public guide as accessed 2026-10-09; no release/version disclosed",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Live replication/retry options and paused/active/error events (lines 68-97); local/remote and multiple database examples (lines 49-65, 136-144)."
+      ],
+      "independent_observation": "The project guide distinguishes live replication from retrying connection recovery and documents paused/active events. Recovery of replication does not itself reserve shared resources.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R33",
+      "candidate_source_ids": [
+        "N1:S13"
+      ],
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "resolved_url": "https://pouchdb.com/guides/conflicts.html",
+      "http_status": 200,
+      "title": "Conflicts",
+      "accessed_at_utc": "2026-10-09T22:14:31.730771+00:00",
+      "response_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S13",
+          "version_or_commit": "Current public guide as accessed 2026-10-09; no release/version disclosed",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Eventual offline conflict example, deterministic winner, `_conflicts` retrieval, and possible resolution (lines 53-108)."
+      ],
+      "independent_observation": "The conflicts guide distinguishes immediate and eventual same-document conflicts, a deterministic winner, retained revisions and application resolution. Different reservation documents need application-level arbitration.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R34",
+      "candidate_source_ids": [
+        "N1:S14"
+      ],
+      "url": "https://github.com/apache/pouchdb/releases/tag/9.0.0",
+      "resolved_url": "https://github.com/apache/pouchdb/releases/tag/9.0.0",
+      "http_status": 200,
+      "title": "Release 9.0.0 · apache/pouchdb · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:31.790954+00:00",
+      "response_sha256": "c47378aff94c4a6b0a0ef90c64046a220445876f8d66fcd2557ba6683fd00a0b",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S14",
+          "version_or_commit": "9.0.0",
+          "commit": "b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1"
+        }
+      ],
+      "candidate_locators": [
+        "GitHub 9.0.0 release highlights include the `.find()` default limit of 25 and IndexedDB stability/performance improvements (release page lines 153-200); linked full release commit is recorded above."
+      ],
+      "independent_observation": "The 9.0.0 release specifies a default find limit and calls it incompatible with earlier behavior; the supplied build commit resolves. No selected application query was executed.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R35",
+      "candidate_source_ids": [
+        "N1:S15"
+      ],
+      "url": "https://github.com/apache/pouchdb/issues/3179",
+      "resolved_url": "https://github.com/apache/pouchdb/issues/3179",
+      "http_status": 200,
+      "title": "Removing conflicting revision doesn&#39;t sync from local to remote · Issue #3179 · apache/pouchdb · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:31.858516+00:00",
+      "response_sha256": "58d62b027720c717e0f3efe7f5632fe7e8ef29e1ea6585fd0d9d43aacc1bdccc",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S15",
+          "version_or_commit": "Issue opened 2014-12-14; history consulted through 2024-02-26",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Initial failing case/test, fix and closure timeline (lines 131-228 and 260-352)."
+      ],
+      "independent_observation": "Issue #3179 records failing tests, attempted fixes, a reopen and later live-conflict replication fix/closure. Its historical timeline is not evidence of a current 9.0.0 defect.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R36",
+      "candidate_source_ids": [
+        "N1:S16"
+      ],
+      "url": "https://github.com/apache/pouchdb/blob/3.3.1/docs/_posts/2015-02-14-a-quick-one.md",
+      "resolved_url": "https://github.com/apache/pouchdb/blob/3.3.1/docs/_posts/2015-02-14-a-quick-one.md",
+      "http_status": 200,
+      "title": "pouchdb/docs/_posts/2015-02-14-a-quick-one.md at 3.3.1 · apache/pouchdb · GitHub",
+      "accessed_at_utc": "2026-10-09T22:14:31.861958+00:00",
+      "response_sha256": "4e447b884c9a908a654465c7a6aac880572bc04bc380606c722c84d997ff779d",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S16",
+          "version_or_commit": "3.3.1 release source, 2015-02-14",
+          "commit": "tag 3.3.1; commit SHA not captured"
+        }
+      ],
+      "candidate_locators": [
+        "Bugfix list explicitly names live replication of conflicting revisions (#3179) (lines 195-205)."
+      ],
+      "independent_observation": "The version-tagged 3.3.1 release source explicitly links the live conflicting-revision replication fix to #3179. The candidate did not capture a full tag commit.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    },
+    {
+      "reviewer_source_id": "R37",
+      "candidate_source_ids": [
+        "N1:S17"
+      ],
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "resolved_url": "https://www.w3.org/TR/WCAG22/",
+      "http_status": 200,
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "accessed_at_utc": "2026-10-09T22:14:31.949104+00:00",
+      "response_sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057",
+      "observed_operations": [
+        "independent unauthenticated HTTPS GET and bounded relevant text extraction; no execution",
+        "Manual review of relevant extracted primary paragraphs; focused supplements where necessary"
+      ],
+      "version_lineage": [
+        {
+          "candidate": "N1",
+          "source_id": "S17",
+          "version_or_commit": "WCAG 2.2 Recommendation, W3C TR version dated 2023-10-05",
+          "commit": null
+        }
+      ],
+      "candidate_locators": [
+        "Success Criterion 2.1.1 Keyboard (lines 700-707); Success Criterion 2.4.3 Focus Order (lines 913-920)."
+      ],
+      "independent_observation": "The current WCAG 2.2 Recommendation supplies keyboard, trap and focus-order criteria. The live document is dated December 12, 2024; the candidate map labels the original 2023 publication instead.",
+      "evidence_limit": "Public source/text inspection; no application test. Full response was hashed in memory and not retained as an archive."
+    }
+  ],
+  "focused_primary_supplements": [
+    {
+      "id": "BR02-body",
+      "url": "https://baserow.io/user-docs/view-level-permissions",
+      "accessed_at_utc": "2026-10-09T22:16:26.023914+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "ff0ff13c7c0d0760da113f544542d518b3ed70cbbffb079f78b7ae7ae5e8cc86",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "Focused body inspection independently confirmed hierarchy, broader-Editor bypass and filtered-field export restrictions after the first extraction included sidebar text.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "WCAG-criteria",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "accessed_at_utc": "2026-10-09T22:16:26.025137+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "Focused normative inspection confirmed criteria 2.1.1, 2.1.2 and 2.4.3 and current Recommendation date. Criteria were not applied to an installed candidate.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "PA11-date",
+      "url": "https://support.passare.com/2026-release-notes",
+      "accessed_at_utc": "2026-10-09T22:16:26.028013+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "63ebed0790b264abd571f923e2563f41f5694c96b76e04e6bb98dbbb76664a2a",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "Focused dated-section inspection confirmed that the three calendar/participant changes belong to July 7, 2026.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "NC08-tests",
+      "url": "https://api.github.com/repos/nextcloud/calendar/commits/ea4d703419d9a7b7fc467071c760d7541af7af14",
+      "accessed_at_utc": "2026-10-09T22:16:26.030383+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "1a794ca38a154cbedc01051cb991f0b42729439d7ea0e14c2d62dc11211e7a5f",
+      "commit_sha": "ea4d703419d9a7b7fc467071c760d7541af7af14",
+      "commit_date": "2026-02-13T17:05:54Z",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "Public commit metadata and patch inspection confirmed DAV bind/write-content/unbind capability mapping and test modifications. No upstream test suite was run.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "NC06-api",
+      "url": "https://api.github.com/repos/nextcloud/calendar/commits/02fb072fee39e83746b09582481f63c87505f14b",
+      "accessed_at_utc": "2026-10-09T22:16:26.032194+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "58fa62a177b4d459de258e32f9647f6e3ed37b97935bfe3414b4a014d92a3c79",
+      "commit_sha": "02fb072fee39e83746b09582481f63c87505f14b",
+      "commit_date": "2026-06-04T13:45:42Z",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "Public commit metadata and patch inspection confirmed exact merge SHA, disabled component-dependent destinations and the sorted writable-calendar test.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "CRM-code:lib/Command/CreateRoom.php",
+      "url": "https://raw.githubusercontent.com/nextcloud/calendar_resource_management/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/lib/Command/CreateRoom.php",
+      "accessed_at_utc": "2026-10-09T22:16:26.034743+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "efa3cc425404207d8960938f5dd4eab15b23ecfd02f41ea845c93ec62eb70803",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "CreateRoom.execute casts room capacity to integer. The inspected command help describes capacity as people; this does not implement a booking-feasibility proof.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "CRM-code:lib/Command/CreateVehicle.php",
+      "url": "https://raw.githubusercontent.com/nextcloud/calendar_resource_management/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/lib/Command/CreateVehicle.php",
+      "accessed_at_utc": "2026-10-09T22:16:26.145850+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "148948a0917be0f88c505aef55186e99c5417ef86bfa8cf2929a737992fdb033",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "CreateVehicle.execute casts range and seating capacity to integers. No distance unit for range was established in the inspected command/model/migration code.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "CRM-code:lib/Db/RoomModel.php",
+      "url": "https://raw.githubusercontent.com/nextcloud/calendar_resource_management/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/lib/Db/RoomModel.php",
+      "accessed_at_utc": "2026-10-09T22:16:26.239596+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "00ff32bda077477b2263e8fe6ebdd8cc5cd260fcd40f5db8399463f22b958ea5",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "RoomModel declares integer capacity and typed boolean properties; these are schema/model types rather than access or reservation proofs.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "CRM-code:lib/Db/VehicleModel.php",
+      "url": "https://raw.githubusercontent.com/nextcloud/calendar_resource_management/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/lib/Db/VehicleModel.php",
+      "accessed_at_utc": "2026-10-09T22:16:26.267646+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "22e2050b0319bc85b25ab6935a2902316196e38a9237bf8767875621c203b8c3",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "VehicleModel declares integer range and seating capacity and boolean electric flag. The inspected symbols do not define a distance unit.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "CRM-code:lib/Migration/Version1000Date20200805220319.php",
+      "url": "https://raw.githubusercontent.com/nextcloud/calendar_resource_management/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/lib/Migration/Version1000Date20200805220319.php",
+      "accessed_at_utc": "2026-10-09T22:16:26.324375+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "861d4d46040d6755e499a2f9c335917021c7bb55d042f28aaf453f7dac74effc",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "The pinned migration declares integer capacity/range/seating columns, false boolean defaults and per-table unique UID/email indexes with parent relationships.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "CRM-code:lib/Migration/Version1012Date20260410000001.php",
+      "url": "https://raw.githubusercontent.com/nextcloud/calendar_resource_management/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/lib/Migration/Version1012Date20260410000001.php",
+      "accessed_at_utc": "2026-10-09T22:16:26.338938+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "5a2247a1dc760774b3d3cfec2dd803cba608aa6ed681bcd5f9b430f9f67c580c",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "The pinned migration adds restricted as a boolean with a false default and migrates pre-existing restriction records. No live permission behavior was tested.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "CRM-code:appinfo/info.xml",
+      "url": "https://raw.githubusercontent.com/nextcloud/calendar_resource_management/d017e31aab5c59d401ad87cd2cd5579e95c0d7e4/appinfo/info.xml",
+      "accessed_at_utc": "2026-10-09T22:16:26.342025+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "f0cbb94c68b577975f64f0755255a43985ee59448fb62a20fcb2b5ac136b147b",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "The pinned manifest identifies app 0.12.2 with declared Nextcloud minimum 31 and maximum 35, independently strengthening the candidate compatibility caution.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "commit-identity:LibreBooking/librebooking",
+      "url": "https://api.github.com/repos/LibreBooking/librebooking/commits/422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "accessed_at_utc": "2026-10-09T22:16:26.426956+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "44ebc64362a4a50eab19f114f826bfcec1f21235f4ae630a7e2d60e3cc12856a",
+      "commit_sha": "422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "commit_date": "2026-10-06T16:04:13Z",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "The supplied full SHA resolves to the v7.0.0 release build dated October 6, 2026.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "commit-identity:apache/pouchdb",
+      "url": "https://api.github.com/repos/apache/pouchdb/commits/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "accessed_at_utc": "2026-10-09T22:16:26.446437+00:00",
+      "operation": "independent unauthenticated HTTPS GET; text/code inspection only",
+      "http_status": 200,
+      "response_sha256": "2bfff8dd31566ff51c6c11cc3ba17976444f68e0fe5c4532de519c4c831abb4e",
+      "commit_sha": "b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "commit_date": "2024-06-21T16:01:09Z",
+      "locator_kind": "source lines for raw code; body-extracted lines for HTML; per-file patch lines for API",
+      "independent_observation": "The supplied full SHA resolves to build 9.0.0. Static commit identity alone is not a runtime query witness.",
+      "scope": "Relevant primary paragraphs or release-pinned source symbols, inspected as data only; no executable file downloaded or executed."
+    },
+    {
+      "id": "NC07-heading-check",
+      "url": "https://raw.githubusercontent.com/nextcloud/calendar/main/CHANGELOG.md",
+      "accessed_at_utc": "2026-10-09T22:17:42.761433+00:00",
+      "http_status": 200,
+      "response_sha256": "4f1534d16b7a1bd74b9ecd11b497a03c9804e5a330e06b6cbde61264b22af48f",
+      "observed_operation": "Independent nearest-release-heading check; source text not executed",
+      "independent_observation": "Nearest raw Markdown release heading is 6.6.0 dated July 28, 2026 for entries at raw lines 797 (picker), 808 (ACL), and 816 (supported-type display). Entries are features, not added component support."
+    }
+  ],
+  "claim_to_evidence": "assessment.json arms.*.primary_coverage.checked_claims and plan_dispositions contain exact candidate passages and candidate-source references. Each reference resolves through primary_sources.candidate_source_ids to exact URL, version lineage, access time and response hash.",
+  "coverage_note": "All consequential authored conclusions reviewed; no product behavior was executed. Source-response hashes identify fetched bytes without pretending a mutable alias is an immutable release.",
+  "bounded_evidence_policy": "Retained observations are paraphrases and source locators. No full-page capture, downloaded executable, account data or raw source archive is delivered.",
+  "native_boundary": "The actual supported native Goal was observed active; science outputs saved before terminal completion. No hand-authored Goal receipt is supplied."
+}
