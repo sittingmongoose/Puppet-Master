@@ -122,6 +122,12 @@
     return { x: x + (w - vw) / 2, y: y + (h - vh) / 2, w: vw, h: vh };
   }
   const vbFull = (vb) => { const [x, y, w, h] = String(vb).split(/[\s,]+/).map(Number); return { x, y, w, h }; };
+  /* what the narrow window's 170 px band shows of a viewBox, from the window's own size rule (60-ui-core.js winSize)
+     with nothing measured: the open draws before the window is laid out */
+  function bandSeen(vb) {
+    const vw = window.innerWidth, W = (vw <= 560 ? vw - 16 : Math.min(1080, vw - 48)) - 2;
+    return visible(vb, Math.max(200, W), 170);
+  }
   /* family type: Basic small caps with tracking, Friendly rounded, Glass light, Retro pixel caps */
   function txt(f, x, y, s, size, o) {
     o = o || {};
@@ -175,14 +181,19 @@
         measure(() => {
           const to = nav.querySelector('.o55-railitem[data-state="current"] .o55-railnode');
           const b = to ? to.getBoundingClientRect() : null, n = nav.getBoundingClientRect();
-          return () => { if (a && b && a.width && b.width && Math.abs(b.left - a.left) > 2) walkMarker(f, nav, n, a, b); if (done) done(); };
+          return () => {
+            const ms = a && b && a.width && b.width && Math.abs(b.left - a.left) > 2 ? walkMarker(f, nav, n, a, b) : 0;
+            if (done) { if (ms) { const q = perf('walked'); q.at(ms, () => { q.finish(); done(); }); } else done(); }
+          };
         });
       };
     });
   }
   function walkMarker(f, nav, n, a, b) {
     const z = zoom();
+    /* (the node's centre; above the labels, the string's height between the rail's bar and the nodes; the bar's line) */
     const x0 = (a.left + a.width / 2 - n.left) / z, y0 = (a.top + a.height / 2 - n.top) / z, x1 = (b.left + b.width / 2 - n.left) / z, y1 = (b.top + b.height / 2 - n.top) / z;
+    const ys = Math.max(4, (a.top - n.top) / z - 6), yb = 10;
     nav.querySelectorAll(':scope > .o55fm-walk').forEach((m) => m.remove());
     const m = document.createElement('i');
     m.className = 'o55fm-walk o55fm-walk-' + f; m.setAttribute('aria-hidden', 'true');
@@ -190,11 +201,12 @@
     const p = perf('walk'), dx = x1 - x0;
     p.end(() => m.remove());
     if (f === 'basic') {
-      m.style.cssText = `left:${x0.toFixed(1)}px;top:${y0.toFixed(1)}px;width:${dx.toFixed(1)}px`;
+      m.style.cssText = `left:${x0.toFixed(1)}px;top:${ys.toFixed(1)}px;width:${dx.toFixed(1)}px`;
       p.anim(m, [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 300, easing: EASE.basic, fill: 'backwards' });
       p.anim(m, OUT, { duration: 220, delay: 620, fill: 'forwards' });
       play('move', { step: 0 }); p.at(300, () => play('move', { step: 2 }));
       p.at(860, () => p.finish());
+      return 320;
     } else if (f === 'friendly') {
       m.style.cssText = `left:${x0.toFixed(1)}px;top:${(y0 - 22).toFixed(1)}px`;
       p.anim(m, [{ transform: 'translate(0px, 0px) scale(1, 1)' }, { transform: `translate(${(dx * 0.5).toFixed(1)}px, -16px) scale(1, 1)`, offset: 0.45 },
@@ -202,17 +214,22 @@
       p.anim(m, OUT, { duration: 200, delay: 640, fill: 'forwards' });
       p.at(340, () => play('move', { step: 2 }));
       p.at(860, () => p.finish());
+      return 420;
     } else if (f === 'glass') {
-      m.style.cssText = `left:${x0.toFixed(1)}px;top:${(y0 - 6).toFixed(1)}px`;
+      m.style.cssText = `left:${x0.toFixed(1)}px;top:${(yb - 6).toFixed(1)}px`;
       p.anim(m, [{ transform: 'translateX(0px)', opacity: 0 }, { opacity: 1, offset: 0.15 }, { transform: `translateX(${dx.toFixed(1)}px)`, opacity: 1, offset: 0.8 }, { transform: `translateX(${dx.toFixed(1)}px)`, opacity: 0 }],
         { duration: 520, easing: EASE.glass, fill: 'forwards' });
       play('move', { step: 1 });
       p.at(560, () => p.finish());
+      return 420;
     } else {
+      /* a pixel hop: up onto the rail's string line half-way, then down into the new box, one frame each */
       m.style.cssText = `left:${(x0 - 5).toFixed(1)}px;top:${(y0 - 5).toFixed(1)}px`;
-      p.anim(m, [{ transform: 'translate(0px, 0px)' }, { transform: `translate(${dx.toFixed(1)}px, ${(y1 - y0).toFixed(1)}px)` }], { duration: 240, easing: 'steps(2, end)', fill: 'forwards' });
-      play('move', { step: 0, walk: true }); p.at(120, () => play('move', { step: 1, walk: true }));
-      p.at(300, () => p.finish());
+      const mid = `translate(${(dx / 2).toFixed(1)}px, ${(ys - y0).toFixed(1)}px)`, end = `translate(${dx.toFixed(1)}px, ${(y1 - y0).toFixed(1)}px)`;
+      p.anim(m, [{ transform: 'translate(0px, 0px)', offset: 0, easing: 'step-end' }, { transform: mid, offset: 0.34, easing: 'step-end' }, { transform: end, offset: 0.67 }, { transform: end }], { duration: 270, fill: 'forwards' });
+      play('move', { step: 0, walk: true }); p.at(92, () => play('move', { step: 1, walk: true })); p.at(180, () => play('move', { step: 2, walk: true }));
+      p.at(320, () => p.finish());
+      return 200;
     }
   }
   /* Ready: every finished chapter re-stamps, left to right, 60 ms apart (the family's own stamp, 14-family-moments.css) */
@@ -374,7 +391,8 @@
         + star(cx - 36, ty + 70) + star(cx, ty + 66) + star(cx + 36, ty + 70)
         + `<g data-k="bonus">${txt(f, bx, ty + 112, bonus, bs, { a: 'start', fill: p.text })}${txt(f, bx + monoW(bonus + ' ', bs), ty + 112, '0000', bs, { a: 'start', fill: p.c, k: 'digits' })}</g>`
         + `<g data-k="next">${txt(f, cx, ty + 146, next, 13, { fill: p.text })}</g>`
-        + `<g data-k="ready">${txt(f, cx, ty + 184, ready, 17, { fill: p.b })}</g>`;
+        + `<g data-k="ready">${txt(f, cx, ty + 184, ready, 17, { fill: p.b })}</g>`
+        + (L.ctx.fam.props.helper && V.h > 420 ? [-1, 0, 1].map((k, i) => `<g data-k="sprite" transform="translate(${cx + k * 62} ${ty + 286})">${L.ctx.fam.props.helper(L.ctx, { x: 0, y: 0, s: 1, opts: { variant: i, pose: i === 1 ? 'wave' : 'stand', px: 5 } })}</g>`).join('') : '');
     }
     L.root.innerHTML = `<g data-k="panel" class="o55fm-wipe"><rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="${p.bg}"/><rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="${L.ctx.url('scan')}"/>`
       + `<rect x="${X0}" y="${Y0}" width="${W}" height="${H}" fill="none" stroke="${ink}" stroke-width="4"/>${frame}${body}</g>`;
@@ -386,14 +404,16 @@
     P.at(land, hooks.land);
     P.anim(part(L, 'clear'), [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: land, easing: 'steps(1, end)', fill: 'backwards' });
     P.anim(part(L, 'bonus'), [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: land + 160, fill: 'backwards' });
-    const digits = part(L, 'digits'), steps = 8;
-    for (let i = 1; i <= steps; i++) P.at(land + 180 + i * 90, () => { if (digits) digits.textContent = String(Math.round((1000 * i) / steps)).padStart(4, '0'); play('phase', { step: i }); });
-    parts(L, 'star').forEach((el, i) => P.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: land + 180 + [3, 5, 8][i] * 90, fill: 'backwards' }));
+    const digits = part(L, 'digits'), steps = 5, STEP = 100;
+    for (let i = 1; i <= steps; i++) P.at(land + 160 + i * STEP, () => { if (digits) digits.textContent = String(Math.round((1000 * i) / steps)).padStart(4, '0'); play('phase', { step: i }); });
+    parts(L, 'star').forEach((el, i) => P.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: land + 160 + [2, 4, 5][i] * STEP, fill: 'backwards' }));
+    /* the troupe's sprites jump on the tally, one pixel step up and down, one after another */
+    parts(L, 'sprite').forEach((el, i) => P.anim(el, [{ transform: 'translateY(0px)' }, { transform: 'translateY(-10px)', offset: 0.5 }, { transform: 'translateY(0px)' }], { duration: 240, delay: land + 200 + i * 110, easing: 'steps(2, end)', iterations: 2 }));
     P.end(() => { if (digits) digits.textContent = '1000'; });
-    const nx = land + 180 + steps * 90 + 60;
+    const nx = land + 160 + steps * STEP + 60;
     P.anim(part(L, 'next'), [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: nx, fill: 'backwards' });
     P.anim(part(L, 'ready'), [{ opacity: 0 }, { opacity: 1, offset: 0.25 }, { opacity: 0, offset: 0.5 }, { opacity: 1, offset: 0.75 }, { opacity: 1 }], { duration: 400, delay: nx + 60, easing: 'steps(1, end)', fill: 'backwards' });
-    const out = nx + 520;
+    const out = nx + 480;
     P.anim(panel, [{ clipPath: 'inset(0% 0% 0% 0%)' }, { clipPath: 'inset(100% 0% 0% 0%)' }], { duration: 200, delay: out, easing: 'steps(6, end)', fill: 'forwards' });
     return out + 220;
   };
@@ -587,12 +607,12 @@
     friendly(L, vb) {
       /* the footlights stand on the stage's own front (the stage prop at the floor + 28: a wood rail at -4..14 with its
          lamps at +4), in front of the curtain; on the narrow band, whose view stops above the stage, along its foot */
-      const p = L.ctx.pal, V = vbFull(vb), sy = A.metrics('friendly').floor + 28, inView = sy + 16 <= V.y + V.h;
+      const p = L.ctx.pal, V = isNarrow() ? bandSeen(vb) : vbFull(vb), sy = A.metrics('friendly').floor + 28, inView = sy + 16 <= V.y + V.h;
       const ly = inView ? sy + 4 : V.y + V.h - 10;
-      const cur = L.ctx.fam.props.curtain ? L.ctx.fam.props.curtain(L.ctx, { x: 240, y: 300, opts: {} }) : '';
+      const cur = L.ctx.fam.props.curtain ? L.ctx.fam.props.curtain(L.ctx, { x: 240, y: 300, opts: {} }) : '', F0 = vbFull(vb);
       const lights = [-150, -90, -30, 30, 90, 150].map((x) => `<g data-k="lamp" transform="translate(${240 + x} ${ly})"><ellipse data-k="glow" cx="0" cy="-10" rx="30" ry="16" fill="${p.glow}"/>`
         + `<ellipse data-k="bulb" class="o55fm-pop" cx="0" cy="0" rx="9" ry="4" fill="${p.sun}" stroke="${p.ink}" stroke-width="1.4" stroke-linejoin="round"/></g>`).join('');
-      L.root.innerHTML = `<g data-k="curtain" transform="translate(240 ${V.y + V.h / 2}) scale(1, ${Math.max(1, V.h / 600).toFixed(3)})">${cur}</g>`
+      L.root.innerHTML = `<g data-k="curtain" transform="translate(240 ${F0.y + F0.h / 2}) scale(1, ${Math.max(1, F0.h / 600).toFixed(3)})">${cur}</g>`
         + (inView ? `<rect data-k="lip" x="34" y="${sy - 4}" width="412" height="18" rx="6" fill="${p.wood}" stroke="${p.ink}" stroke-width="2" stroke-linejoin="round"/>` : '') + lights;
       parts(L, 'bulb').forEach((b) => { b.style.opacity = '0.28'; });
       parts(L, 'glow').forEach((g) => { g.style.opacity = '0'; });
@@ -794,7 +814,7 @@
       addProps();
       if (pr.current === 'ready') {
         if (def.id !== 'ready' || R.stung.has('ready')) return false;
-        R.stung.add('ready'); R.claim = { kind: 'call', f };
+        R.stung.add('ready'); R.claim = { kind: 'call', f, pr: prev };
         s.railHold = prev;
         return true;
       }
@@ -817,6 +837,9 @@
       const f = famNow();
       if (!f) { if (s && s.railHold && claim) { s.railHold = null; O55.ui.renderRail(); } endCold(); return false; }
       if (dir === 'open' && R.cold) { const cold = R.cold; calmFrames(1200).then(() => { if (R.cold === cold && !cold.done && shown()) wake(f, cold); else if (R.cold === cold) endCold(); }); return false; }
+      /* the rail stays in its old state until the moment's beat walks it (NieR's screen hook, asked first, lets go of
+         any hold while NieR Mode is not painted; it is taken again here, in the same task, so no frame shows between) */
+      if (claim && claim.pr && (claim.kind === 'card' || R.calling)) { s.railHold = claim.pr; O55.ui.renderRail(); }
       if (claim && claim.kind === 'card') { actCard(f, claim); return false; }
       /* ready() performs the call and its rail walks on its beat; a call that could not play lets the rail go now */
       if (claim && claim.kind === 'call' && !R.calling && s.railHold) { s.railHold = null; O55.ui.renderRail(); }

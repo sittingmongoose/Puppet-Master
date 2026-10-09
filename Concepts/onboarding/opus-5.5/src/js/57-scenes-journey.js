@@ -186,9 +186,9 @@
 
   /* Ready: the curtain lifts, the helpers bow, a sign reads ready. */
   A.defineScene('ready', {
-    /* (NieR's narrow band frames the troupe's heads, visors and shoulders, so the curtain call's bows read there, with
-       Pod's lane just above the heads: on the 170 px band of a 760 px window the scene shows about y 294..406) */
-    label: 'art.hero', band: [0, 170, 480, 280], bandNier: [0, 210, 480, 280],
+    /* (the narrow band frames the troupe's heads and shoulders, so the curtain call's bows read there: on the 170 px
+       band of a 760 px window the scene shows about y 294..406; NieR's lane for Pod sits just above the heads) */
+    label: 'art.hero', band: [0, 210, 480, 280], bandNier: [0, 210, 480, 280],
     compose(ctx) {
       /* NieR's troupe stands in a line for its curtain call (O55.art.curtainCall bows it and rises it), and the unit
          nearest the pane ends pointing at it: the next thing to press is the Guided Tour. The curtain opens on it
