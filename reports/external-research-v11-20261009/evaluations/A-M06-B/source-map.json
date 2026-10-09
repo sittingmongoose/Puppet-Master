@@ -1,0 +1,2128 @@
+{
+  "block": "A-M06-B",
+  "created_at": "2026-10-09T22:12:54.015643+00:00",
+  "authority": "Independent reviewer public-primary retrievals. Candidate dossiers are lineage, not independent factual oracles.",
+  "frozen_input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/input-map.json",
+    "sha256": "1b111726e4a26d876285c32b78609d42ab9d50f590692125c3305751c7fece77"
+  },
+  "frozen_source_dossiers": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C01-rfc8493-critic-verification.md",
+      "sha256": "89665e3f0d62221a5adef013e57fc27a1bd2d528573aa4808d7f95d33f7650f5",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C02-debian-tracker-cve-2021-22204-excerpt.md",
+      "sha256": "32617752e8b479d7466ee987eee0791f27c9fb56fa4a6e2cbb437b96b4112d22",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C03-debian-tracker-cve-2021-36370-excerpt.md",
+      "sha256": "b266ce1fc528354fa479e42880a3bb9e6c195a4a25e6b007c6a0a9ee138ce20c",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C04-ubuntu-cve-2021-36370-excerpt.md",
+      "sha256": "4ab810a561b8f25a0371e761042ee21cb9f8d6dd73f669a81a9569e5bd625763",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C05-bagit-python-releases-critic-excerpt.md",
+      "sha256": "7760edd7b7f3c60426969b1db341c7e95438af1d381301ce0a543dbc71f167b7",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C06-archivematica-micro-services-critic-excerpt.md",
+      "sha256": "d58ad4cb75b498e0ad8de9ee3d47623d60edc917fb2fcfac43f615d729e7958f",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C07-clamav-2023-patch-critic-excerpt.md",
+      "sha256": "5d76d3311bbf57aede426ccfd8b309645b1674b89c4b467d0f4f4e11bc52660c",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C08-exiftool-current-history-critic-excerpt.md",
+      "sha256": "920b03c224424a04e0c7b347ec7507d8651da91b86fd1b9ef2f1011f0a6914d6",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/C09-clamd-conf-manpage-excerpt.md",
+      "sha256": "69a387676f47930d660ce35fb3b1f2835630c618604c9bdb4fe6789f62d21e1f",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/sources/INDEX.md",
+      "sha256": "ed29318b98bf3bf388da3839d9ab5d512a93ebba36d95fdd6418c7f95beb5fc2",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/sources/S01-rfc8493-bagit-excerpt.md",
+      "sha256": "9973cbd17144d16207f09dc4830ffe8164bb486e48e305372111faf8a63b83a6",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/sources/S02-archivematica-micro-services-excerpt.md",
+      "sha256": "2397e4da5ee27e304c2c3474301927d7eb27f9c8c517085bdbc6fdd15ab3ffe7",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/sources/S03-clamav-2023-patch-release-excerpt.md",
+      "sha256": "bec2d1e67f57591929a3213c50bee0898ab8b5fff80e486485558431d5ed14f5",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/sources/S04-bagit-python-releases-excerpt.md",
+      "sha256": "c6c96231f03a059b0d15bdd8d11aa0eb4592b1ecb5f8e4af32153c19af274207",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/sources/S05-exiftool-history-excerpt.md",
+      "sha256": "c29e192c83e03b102bfe48889aad6374faeaddd5203b4fb4bcc4d5960fd06618",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/sources/S06-exiftool-current-history-excerpt.md",
+      "sha256": "b62f75adad9390966b311c798cc0260584e75ca71db3db49d3af51909e1603d5",
+      "role": "N2 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/sources/index.md",
+      "sha256": "8f1d91b71e72257c869a346912ac1db9cc3f14367e10c8667abca98365258728",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/sources/reviser-evidence.md",
+      "sha256": "f015c185a47a9783008c8c6552af4ddb3e2a22afea8faf94b43027fa8b52e64c",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/sources/dossier-archivematica-releases.md",
+      "sha256": "f1061d355d219d40ee6900bd69c91449b1a408ae6fe0d0724672ca09544b84f9",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/sources/dossier-clamav.md",
+      "sha256": "d1a058cf7dd9409035da866d34acace079a4cead695930c9414c72ed2a5efc81",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/sources/dossier-failed-fetches.md",
+      "sha256": "0f653b77b1329a0a2e2c054acb5ccc295f4311e14e32fb2b73acdcaa62011083",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/sources/dossier-ndsa-levels.md",
+      "sha256": "33265776457bc1d836723696d6de67e641477163d3b22c1bcd448c92e6c67077",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/sources/dossier-rfc8493.md",
+      "sha256": "6913d4458aeb421b2d914340829ea93d413b1851af177a9878882a427b35ae7b",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/sources/dossier-siegfried-verapdf.md",
+      "sha256": "91e0faf1f5ac7d0d7df7a48752436288d39daf618ba142eaa548422dbda9f9bf",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/sources/index.md",
+      "sha256": "7ae40f4cde252cf5b830c364ab5d0cf6d91f4c2b3b239b5d83410bae0af634f2",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/sources/dossier-aptrust-dart.md",
+      "sha256": "36aaa42ecaf9a46e6d6a47e2255bf4d226235f1c6e7511276244dc633778ac99",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/sources/dossier-archivematica.md",
+      "sha256": "ffd958946e5be3dd524d3f26b42654b36ee73ebb505c9a72697943f6914a649e",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/sources/dossier-bagit.md",
+      "sha256": "0e3f40b965d2e174283639c405428a7dc1f5c5301e63cae674d1fc246d500a4e",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/sources/dossier-bitcurator.md",
+      "sha256": "023c7de3ac5c3a618ff9140bba967de6c3b85f75fb2e929345902f3c3c20ff47",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/sources/dossier-clamav.md",
+      "sha256": "5a71acc70147f562d9295987fe57d05f827b2af65b5688962627cd43fb49534f",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/sources/dossier-pronom-droid.md",
+      "sha256": "ed19f409b5f384bed6f0c9761688318e6bb09cc8e82c06bf4154f79264b0273c",
+      "role": "N1 mapped source-root dossier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/sources/index.md",
+      "sha256": "56d9b66249ab35c69f226e8e74811868b367f665f6ad0a53b0ab4e6facfb3db9",
+      "role": "N1 mapped source-root dossier"
+    }
+  ],
+  "independent_sources": [
+    {
+      "id": "E01",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "accessed_utc": "2026-10-09T21:54:28.250439+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "response_sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "response_bytes": 48783,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E01.md",
+      "evidence_sha256": "584a1a1ab4fb6e18b1afa04d012ce83e99b8d2c67087470c7abd7b7d9aa6eacc",
+      "selected_lines": 578,
+      "normalized_lines": 1428
+    },
+    {
+      "id": "E02",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.md",
+      "accessed_utc": "2026-10-09T21:54:28.252474+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": "FAILED",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "E03",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+      "accessed_utc": "2026-10-09T21:54:28.254163+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+      "response_sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "response_bytes": 54632,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E03.md",
+      "evidence_sha256": "121b712874010c3ffd14eb19bed002254ec92000fe2d9d6fbed84971ee64fa1d",
+      "selected_lines": 381,
+      "normalized_lines": 1601
+    },
+    {
+      "id": "E04",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+      "accessed_utc": "2026-10-09T21:54:28.256068+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+      "response_sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e",
+      "response_bytes": 4053,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E04.md",
+      "evidence_sha256": "df31e28a01f6a687590b928f97f6c6cb2b8614cc9fd936f90c01f39cdb727b95",
+      "selected_lines": 13,
+      "normalized_lines": 13
+    },
+    {
+      "id": "E05",
+      "url": "https://api.github.com/repos/archivematica/Issues/issues/691",
+      "accessed_utc": "2026-10-09T21:54:28.257084+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/archivematica/Issues/issues/691",
+      "response_sha256": "3f2f8713530ab4957ea1e73c9beb65d7d7d6f5caa333e027c14076ca34ce8480",
+      "response_bytes": 5148,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E05.md",
+      "evidence_sha256": "0f640444bcd361d163fd87ff50dbb49166fcd0e9d8a99c6c83eef44204cb2d24",
+      "selected_lines": 25,
+      "normalized_lines": 25
+    },
+    {
+      "id": "E06",
+      "url": "https://api.github.com/repos/archivematica/Issues/issues/691/comments",
+      "accessed_utc": "2026-10-09T21:54:28.258239+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/archivematica/Issues/issues/691/comments",
+      "response_sha256": "4fd2ebaafa03f3b01d6b6fb525b8950633c512de10f8d884a263c260931f9c36",
+      "response_bytes": 7254,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E06.md",
+      "evidence_sha256": "87a5fb8e5b879c31a73b1e0945d016eda21a44e83d48cd30f0c1afecc8b8ad9e",
+      "selected_lines": 26,
+      "normalized_lines": 26
+    },
+    {
+      "id": "E07",
+      "url": "https://api.github.com/repos/archivematica/Issues/issues/869",
+      "accessed_utc": "2026-10-09T21:54:28.363149+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/archivematica/Issues/issues/869",
+      "response_sha256": "cdc2c33b26f61957311d945fe8600086ce9a55a48790297e14a905cb1bb18475",
+      "response_bytes": 6550,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E07.md",
+      "evidence_sha256": "cee886469588ac5f93687ab28516ff6d7ebc8fec4e4585839276d51706dd8d6f",
+      "selected_lines": 45,
+      "normalized_lines": 73,
+      "retention_note": "Further bounded to cited relevant sections; raw-response hash unchanged."
+    },
+    {
+      "id": "E08",
+      "url": "https://api.github.com/repos/archivematica/Issues/issues/869/comments",
+      "accessed_utc": "2026-10-09T21:54:28.375939+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/archivematica/Issues/issues/869/comments",
+      "response_sha256": "dd2be790123b91caa297c561e3f968b2c75acc68de4bbd97210694a14bd459dd",
+      "response_bytes": 5687,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E08.md",
+      "evidence_sha256": "5242f4187c8840baf520373bce661fad8f6aed56b51fd9f0aa97059b257226b3",
+      "selected_lines": 20,
+      "normalized_lines": 20
+    },
+    {
+      "id": "E09",
+      "url": "https://api.github.com/repos/artefactual/archivematica/releases/tags/v1.18.0",
+      "accessed_utc": "2026-10-09T21:54:28.413914+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/artefactual/archivematica/releases/tags/v1.18.0",
+      "response_sha256": "14ff3f7a19cde59c2b9b0b9e7757e52966b55dcba3c2e0943b00150a1e65404a",
+      "response_bytes": 2029,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E09.md",
+      "evidence_sha256": "d0c447b4695663d0af2506afafae253f15c55b655d4230e59b6d01fddf535d3d",
+      "selected_lines": 13,
+      "normalized_lines": 13
+    },
+    {
+      "id": "E10",
+      "url": "https://wiki.archivematica.org/Archivematica_1.13.0_and_Storage_Service_0.18.0_release_notes",
+      "accessed_utc": "2026-10-09T21:54:28.414446+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://wiki.archivematica.org/Archivematica_1.13.0_and_Storage_Service_0.18.0_release_notes",
+      "response_sha256": "814c7e2e248d201d0bb557cff25d49dab12a46edfdb361431efa3303cbafafea",
+      "response_bytes": 34108,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E10.md",
+      "evidence_sha256": "e47e21748b107a18d1fa2e23dd0d29318570df6795c255690988723616b28295",
+      "selected_lines": 50,
+      "normalized_lines": 117
+    },
+    {
+      "id": "E11",
+      "url": "https://wiki.archivematica.org/Micro-services",
+      "accessed_utc": "2026-10-09T21:54:28.443355+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://wiki.archivematica.org/Micro-services",
+      "response_sha256": "1fe9f142fef333b77aa63d5e27e9677fdf6b3ddc76ee4eef1162c948eedea3ee",
+      "response_bytes": 41302,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E11.md",
+      "evidence_sha256": "8825247f9c8ec73b81903d7011c682ffc91e7bf508473f47cb598730f8d484f5",
+      "selected_lines": 86,
+      "normalized_lines": 307
+    },
+    {
+      "id": "E12",
+      "url": "https://docs.clamav.net/",
+      "accessed_utc": "2026-10-09T21:54:28.455923+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/",
+      "response_sha256": "4ae3e066ae71ee6492c1b4a75ccc2a05b0b6be360a7f66a5db4bc623707ae2b6",
+      "response_bytes": 32768,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E12.md",
+      "evidence_sha256": "0d9fc870218ad0e36dd20fbea6b8aacd9249974a6c5c2bb2ec220327cf8c558a",
+      "selected_lines": 118,
+      "normalized_lines": 160
+    },
+    {
+      "id": "E13",
+      "url": "https://docs.clamav.net/faq/faq-malware-fp-reports.html",
+      "accessed_utc": "2026-10-09T21:54:28.537958+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/faq/faq-malware-fp-reports.html",
+      "response_sha256": "1ce56b48b16034f8b646878d143e1a74b5fa5e5c20246035ac0a86fa3e57471b",
+      "response_bytes": 24235,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E13.md",
+      "evidence_sha256": "6ad85864e2ed6e7b36431185b7dd8b27e76982c47a73c3d68b93f2fabc918b2d",
+      "selected_lines": 17,
+      "normalized_lines": 23
+    },
+    {
+      "id": "E14",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.3/etc/clamd.conf.sample",
+      "accessed_utc": "2026-10-09T21:54:28.545189+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.3/etc/clamd.conf.sample",
+      "response_sha256": "e70849884434ab1c9623eb233f83d80c895a65f7e1a123a57e1aaac3893e081f",
+      "response_bytes": 28586,
+      "evidence_path": null,
+      "evidence_sha256": null,
+      "selected_lines": 192,
+      "normalized_lines": 843,
+      "discarded_capture_sha256": "1177e1a0ebede11701cc4405f3ae2e88e8ce3eab14f5d84bf62197a1190694c1",
+      "retention_note": "Historic configuration duplicated by current supported1.4.6 E42"
+    },
+    {
+      "id": "E15",
+      "url": "https://docs.aptrust.org/dart-docs/dart3/",
+      "accessed_utc": "2026-10-09T21:54:28.568316+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.aptrust.org/dart-docs/dart3/",
+      "response_sha256": "4f8190f8de9e7fc91fa104e62e9ae20cba9ddd1ce906265a69f1d6d84bd6d384",
+      "response_bytes": 139150,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E15.md",
+      "evidence_sha256": "ab06338d428e62864235e8576836639abe1fca7c0409e53924317c97323bdba8",
+      "selected_lines": 222,
+      "normalized_lines": 316
+    },
+    {
+      "id": "E16",
+      "url": "https://docs.aptrust.org/dart-docs/dart3/download/",
+      "accessed_utc": "2026-10-09T21:54:28.576274+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.aptrust.org/dart-docs/dart3/download/",
+      "response_sha256": "174cdecb220194e3367c755fc9baa07fd277a7b5da7036ffee0c6455b188c384",
+      "response_bytes": 135691,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E16.md",
+      "evidence_sha256": "7fea54eae444e5e91d8071c7907229cb0b2646b829bedd3393f91bf7a6d3d9dd",
+      "selected_lines": 33,
+      "normalized_lines": 293
+    },
+    {
+      "id": "E17",
+      "url": "https://api.github.com/repos/richardlehane/siegfried/releases/tags/v1.11.9",
+      "accessed_utc": "2026-10-09T21:54:28.635503+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/richardlehane/siegfried/releases/tags/v1.11.9",
+      "response_sha256": "4b1d54ca02bcbc59892ca4bd0fb6d24fabed7502b6efdaa37d772b8223ca1203",
+      "response_bytes": 18606,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E17.md",
+      "evidence_sha256": "a2f42a62067b3369cc1f3b7179ebc8039f930d98d5ad2be4702e5edb1f8fe57e",
+      "selected_lines": 13,
+      "normalized_lines": 13
+    },
+    {
+      "id": "E18",
+      "url": "https://raw.githubusercontent.com/richardlehane/siegfried/v1.11.9/README.md",
+      "accessed_utc": "2026-10-09T21:54:28.670557+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/richardlehane/siegfried/v1.11.9/README.md",
+      "response_sha256": "de2b8ad6c416dfd1197941e0666e4d5271ed9bb08827c4ceac01d672b6f80b17",
+      "response_bytes": 12879,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E18.md",
+      "evidence_sha256": "2c44b4b9e8f61a95decb64c46c735601684c72917b622f9c61901d96f575d2eb",
+      "selected_lines": 247,
+      "normalized_lines": 250
+    },
+    {
+      "id": "E19",
+      "url": "https://www.ndsa.org/publications/levels-of-digital-preservation/",
+      "accessed_utc": "2026-10-09T21:54:28.740941+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://www.ndsa.org/publications/levels-of-digital-preservation/",
+      "response_sha256": "d82e909d217e9a08979ec18e844855894aeaffd76c0ebf76df128a98320fc08a",
+      "response_bytes": 35963,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E19.md",
+      "evidence_sha256": "7422609e926baecd54bdf64c01aed43f446ccc484051a37cd6fb14ebbbee61fd",
+      "selected_lines": 68,
+      "normalized_lines": 100
+    },
+    {
+      "id": "E20",
+      "url": "https://blog.clamav.net/2023/02/clamav-01038-01052-and-101-patch.html",
+      "accessed_utc": "2026-10-09T21:54:28.767709+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://blog.clamav.net/2023/02/clamav-01038-01052-and-101-patch.html",
+      "response_sha256": "baa39c3edb14bbf3bc875d2373a426b90c31f1ac7c4992cf6b74c98530b154d2",
+      "response_bytes": 129050,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E20.md",
+      "evidence_sha256": "6e40e648e98154f8ccff6035b910a1ae43d62168879a9f8b5e87229323b7378f",
+      "selected_lines": 104,
+      "normalized_lines": 829
+    },
+    {
+      "id": "E21",
+      "url": "https://exiftool.org/ancient_history.html",
+      "accessed_utc": "2026-10-09T21:54:28.779243+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://exiftool.org/ancient_history.html",
+      "response_sha256": "bb54c18d9d29f9c8eccf1779de4b7ca44577fc92f2d3735fde92f4228e4e78e4",
+      "response_bytes": 597863,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E21.md",
+      "evidence_sha256": "57bd574de3c8668014c3f4bdbdbff7ee71adb209e01b00ea4882422bc47d4f2a",
+      "selected_lines": 56,
+      "normalized_lines": 9708,
+      "retention_note": "Further bounded to cited relevant sections; raw-response hash unchanged."
+    },
+    {
+      "id": "E22",
+      "url": "https://exiftool.org/history.html",
+      "accessed_utc": "2026-10-09T21:54:28.787055+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://exiftool.org/history.html",
+      "response_sha256": "3201d0f51a3b6d6cc39097d0665cc584adddf891f5c425d8b34c315d525daa25",
+      "response_bytes": 20079,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E22.md",
+      "evidence_sha256": "e926010955b021ca9fa66fad04dca460787d33f28f021b0f23543a18d7ddb3c3",
+      "selected_lines": 118,
+      "normalized_lines": 279
+    },
+    {
+      "id": "E23",
+      "url": "https://security-tracker.debian.org/tracker/CVE-2021-22204",
+      "accessed_utc": "2026-10-09T21:54:28.811384+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://security-tracker.debian.org/tracker/CVE-2021-22204",
+      "response_sha256": "94ddf3081c9955404559ee89989bc4155b4ffa476ab6ce374fa3738fb9d25a1b",
+      "response_bytes": 4966,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E23.md",
+      "evidence_sha256": "7e87c7895c067f6ea13a5a85b527f9e0c4416b5db884c081000e115ec428024f",
+      "selected_lines": 24,
+      "normalized_lines": 24
+    },
+    {
+      "id": "E24",
+      "url": "https://security-tracker.debian.org/tracker/CVE-2021-36370",
+      "accessed_utc": "2026-10-09T21:54:28.812019+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://security-tracker.debian.org/tracker/CVE-2021-36370",
+      "response_sha256": "77161483eacbfb8218b8141173a47532134d1458df088464b1c3d8cb8215a152",
+      "response_bytes": 4141,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E24.md",
+      "evidence_sha256": "c93b057c7baafad1349c6b6f2250d4668cafc88f6cfad4cfb2f94957ba3f1a15",
+      "selected_lines": 22,
+      "normalized_lines": 22
+    },
+    {
+      "id": "E25",
+      "url": "https://bitcurator.net/bitcurator/",
+      "accessed_utc": "2026-10-09T21:54:28.827633+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://bitcurator.net/bitcurator/",
+      "response_sha256": "8277ebdfa84a094406c899e5cd99946950efe536632e4b5419e79eb3c93ab90f",
+      "response_bytes": 109462,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E25.md",
+      "evidence_sha256": "2e6bae2345a149e13de30378113543f2bc9ecaa5b17973dee9338ca625d67a6c",
+      "selected_lines": 77,
+      "normalized_lines": 186
+    },
+    {
+      "id": "E26",
+      "url": "https://github.com/digital-preservation/droid",
+      "accessed_utc": "2026-10-09T21:54:28.892438+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://github.com/digital-preservation/droid",
+      "response_sha256": "764559f2c8eca00000c47aaa69e07a0ba181a2b5c065ec49010f7b0538c347ea",
+      "response_bytes": 367926,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E26.md",
+      "evidence_sha256": "417567a492f9fec592b3ff5ef4fff5b1eff068d22dd3f95aa92111319c6d19d1",
+      "selected_lines": 233,
+      "normalized_lines": 326
+    },
+    {
+      "id": "E27",
+      "url": "https://raw.githubusercontent.com/archivematica/archivematica-architectural-decisions/master/0008-remove-quarantine.md",
+      "accessed_utc": "2026-10-09T21:55:36.807496+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/archivematica/archivematica-architectural-decisions/master/0008-remove-quarantine.md",
+      "response_sha256": "d5578dbc387f84ab2779a75727ac27ef3b11c95ae3c68ddc549b9c4fadb1b92d",
+      "response_bytes": 1727,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E27.md",
+      "evidence_sha256": "38923d3415155eeeda24d458dc9a6a60185151788a59d565cf631a1e91d48f81",
+      "selected_lines": 47,
+      "normalized_lines": 47
+    },
+    {
+      "id": "E28",
+      "url": "https://wiki.archivematica.org/Archivematica_1.11_and_Storage_Service_0.16_release_notes",
+      "accessed_utc": "2026-10-09T21:55:36.809047+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://wiki.archivematica.org/Archivematica_1.11_and_Storage_Service_0.16_release_notes",
+      "response_sha256": "73a9507a17ada254c9daf0e908964c7a83e5b270adc5c4b3285b872beaa84123",
+      "response_bytes": 50375,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E28.md",
+      "evidence_sha256": "f430b4b7d4c0828edf43accbb81d513deec86905235c889e61cf16514ae016ac",
+      "selected_lines": 88,
+      "normalized_lines": 187
+    },
+    {
+      "id": "E29",
+      "url": "https://raw.githubusercontent.com/artefactual/archivematica/v1.18.0/src/archivematica/dashboard/components/administration/forms.py",
+      "accessed_utc": "2026-10-09T21:55:36.810046+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/artefactual/archivematica/v1.18.0/src/archivematica/dashboard/components/administration/forms.py",
+      "response_sha256": "541edc561dd171444f2bf0f9f85168eebac28855ec6ea1dfb5460e47863e3c46",
+      "response_bytes": 15653,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E29.md",
+      "evidence_sha256": "51086aa68f14c91b4560374bc0cf387775e61e3aab78b5f0b05a011563885310",
+      "selected_lines": 22,
+      "normalized_lines": 420
+    },
+    {
+      "id": "E30",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.rst",
+      "accessed_utc": "2026-10-09T21:55:36.811030+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.rst",
+      "response_sha256": "65572ed3f666e434bdaa5499583d7d505b8e8ccf8b482a7e5dc0f831c3493c7d",
+      "response_bytes": 6875,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E30.md",
+      "evidence_sha256": "9d192adb2ab470ae540c9d1b6b86f18b6016774228373a696d7fa0655d015ce0",
+      "selected_lines": 255,
+      "normalized_lines": 262
+    },
+    {
+      "id": "E31",
+      "url": "https://docs.clamav.net/manual/Usage/Scanning.html",
+      "accessed_utc": "2026-10-09T21:55:36.812532+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/manual/Usage/Scanning.html",
+      "response_sha256": "f23ecbe252c1192cc2058234d86e4e8a9349743515a009b2b95bb4ac82a538f4",
+      "response_bytes": 41958,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E31.md",
+      "evidence_sha256": "85a019b2c4aca4967bb0c654bcac554671068a477a2fcc710b410f5be9ff2b06",
+      "selected_lines": 138,
+      "normalized_lines": 154
+    },
+    {
+      "id": "E32",
+      "url": "https://docs.clamav.net/faq/faq-scan-alerts.html",
+      "accessed_utc": "2026-10-09T21:55:36.813706+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/faq/faq-scan-alerts.html",
+      "response_sha256": "c338d1838055afa7a42b40dbb085987d3f3ae598b723729a56772ef1622de2bd",
+      "response_bytes": 31814,
+      "evidence_path": null,
+      "evidence_sha256": null,
+      "selected_lines": 0,
+      "normalized_lines": 90,
+      "discarded_capture_sha256": "9359dcd3e1424be1d8063a825565ecf94329a61044a8ec4773c818e85430e693",
+      "retention_note": "No useful matched content"
+    },
+    {
+      "id": "E33",
+      "url": "https://exiftool.org/",
+      "accessed_utc": "2026-10-09T21:55:36.941191+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://exiftool.org/",
+      "response_sha256": "6d4c7f2fe1cbf1aa21836149f11f381df50429b43db2a8f58fcbfab7a883be74",
+      "response_bytes": 170396,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E33.md",
+      "evidence_sha256": "8fb931dc0e09d6eaecb4db2be87e5819180975a5371d6e90342d147912a4b2a0",
+      "selected_lines": 137,
+      "normalized_lines": 1329,
+      "retention_note": "Further bounded to cited relevant sections; raw-response hash unchanged."
+    },
+    {
+      "id": "E34",
+      "url": "https://educopia.org/research-project/ossarcflow/",
+      "accessed_utc": "2026-10-09T21:55:36.956985+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://educopia.org/research-project/ossarcflow/",
+      "response_sha256": "0e03b9a6ab9dbeca190966e0acff0c5c74191758e48045bfb9b8f7e11d5f3c6c",
+      "response_bytes": 243409,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E34.md",
+      "evidence_sha256": "cb619691c78115d7d77ffddbd519b10345418af079e5c6570d0cddfccb48ced3",
+      "selected_lines": 170,
+      "normalized_lines": 436
+    },
+    {
+      "id": "E35",
+      "url": "https://raw.githubusercontent.com/exponential-decay/signature-development-utility/master/README.md",
+      "accessed_utc": "2026-10-09T21:55:36.961043+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/exponential-decay/signature-development-utility/master/README.md",
+      "response_sha256": "7bf7ed85e4584727a92dfa11c4071366ac3e26f847498abfbd81b14b1605159c",
+      "response_bytes": 2359,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E35.md",
+      "evidence_sha256": "a15b349658b774d9d45f6a8575b091754d4cb9d8bf4113fcfee26ed1c5c0a8a0",
+      "selected_lines": 63,
+      "normalized_lines": 63
+    },
+    {
+      "id": "E36",
+      "url": "https://github.com/veraPDF/veraPDF-parser",
+      "accessed_utc": "2026-10-09T21:55:36.980421+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://github.com/veraPDF/veraPDF-parser",
+      "response_sha256": "99916516b5784f878e9def62e9ee251110ca59600ada6d66f20ff188dc3aba4b",
+      "response_bytes": 285937,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E36.md",
+      "evidence_sha256": "639e1250827bfa9ac0b2fa662fc046834f6aec2441666c27df0ed53736507c29",
+      "selected_lines": 130,
+      "normalized_lines": 216
+    },
+    {
+      "id": "E37",
+      "url": "https://docs.clamav.net/faq/faq-eol.html",
+      "accessed_utc": "2026-10-09T21:56:43.100848+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/faq/faq-eol.html",
+      "response_sha256": "5857f6200dbe8d9ad20363fa5d82c0054f876054018fd71c775a33a5a6badec8",
+      "response_bytes": 35478,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E37.md",
+      "evidence_sha256": "00ab76abde3b83ed7c65b44002288d580c92b9e10abddc61a77238c2ab7a4ef5",
+      "selected_lines": 82,
+      "normalized_lines": 88
+    },
+    {
+      "id": "E38",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.3/libclamav/unzip.c",
+      "accessed_utc": "2026-10-09T21:56:43.102743+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.3/libclamav/unzip.c",
+      "response_sha256": "16e585e55b10fa5827dd582d0a65074989f3f73f6eabaf026b03c79c82afe249",
+      "response_bytes": 57656,
+      "evidence_path": null,
+      "evidence_sha256": null,
+      "selected_lines": 341,
+      "normalized_lines": 1526,
+      "discarded_capture_sha256": "e773d5b5bedef78edcb78691563cd752efe4eb75c4a9483e96b3f602b828634a",
+      "retention_note": "Historic unzip code superseded for selected gate by current1.4.6 E43"
+    },
+    {
+      "id": "E39",
+      "url": "https://docs.clamav.net/manual/Usage/Configuration.html",
+      "accessed_utc": "2026-10-09T21:56:43.103475+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/manual/Usage/Configuration.html",
+      "response_sha256": "45cee9a72090533f7c72040d5080f9155883ee1fa630a0c2099907d3edffe404",
+      "response_bytes": 38193,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E39.md",
+      "evidence_sha256": "052915ba88ac8f6d0e112a45ea7dfd4d409efa04926939b11d69e405c9011674",
+      "selected_lines": 136,
+      "normalized_lines": 159
+    },
+    {
+      "id": "E40",
+      "url": "https://raw.githubusercontent.com/artefactual/archivematica/v1.18.0/src/archivematica/MCPServer/assets/workflow.json",
+      "accessed_utc": "2026-10-09T21:56:43.104356+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/artefactual/archivematica/v1.18.0/src/archivematica/MCPServer/assets/workflow.json",
+      "response_sha256": "f6faf16d1559d385b8c8c25ff6decb64143999be174ccdefb31051a4a6246746",
+      "response_bytes": 432878,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E40.md",
+      "evidence_sha256": "38ac407acc901fe0728bd36a38b95a100b79e7cf827bb8f2c17908d71e18aac4",
+      "selected_lines": 290,
+      "normalized_lines": 12044
+    },
+    {
+      "id": "E41",
+      "url": "https://docs.clamav.net/faq/faq-scan-alerts.html",
+      "accessed_utc": "2026-10-09T21:56:43.104915+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/faq/faq-scan-alerts.html",
+      "response_sha256": "9258664738abcd89156899184b4507b9a2061ee4a24c7079d5da357e57e7de0a",
+      "response_bytes": 31814,
+      "evidence_path": null,
+      "evidence_sha256": null,
+      "selected_lines": 48,
+      "normalized_lines": 90,
+      "discarded_capture_sha256": "cf46f53c70c8e85187b222d9358853732ba694f8e7b11fa93a412fb625633fc4",
+      "retention_note": "Unused ancillary false-positive source; no consequential selected claim needs this capture"
+    },
+    {
+      "id": "E42",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.6/etc/clamd.conf.sample",
+      "accessed_utc": "2026-10-09T21:57:46.297470+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.6/etc/clamd.conf.sample",
+      "response_sha256": "e70849884434ab1c9623eb233f83d80c895a65f7e1a123a57e1aaac3893e081f",
+      "response_bytes": 28586,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E42.md",
+      "evidence_sha256": "b0301697c3a4ef60d373cf88ee773ee6779e93b434b62cf417246e11c8ba6939",
+      "selected_lines": 170,
+      "normalized_lines": 843
+    },
+    {
+      "id": "E43",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.6/libclamav/unzip.c",
+      "accessed_utc": "2026-10-09T21:57:46.299560+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.6/libclamav/unzip.c",
+      "response_sha256": "16e585e55b10fa5827dd582d0a65074989f3f73f6eabaf026b03c79c82afe249",
+      "response_bytes": 57656,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E43.md",
+      "evidence_sha256": "e95f314e766043911d238f923b83a732137f42a03019d99d761b02ee7ca70f3d",
+      "selected_lines": 66,
+      "normalized_lines": 1526
+    },
+    {
+      "id": "E44",
+      "url": "https://docs.clamav.net/manual/Installing/Docker.html",
+      "accessed_utc": "2026-10-09T21:57:46.300855+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/manual/Installing/Docker.html",
+      "response_sha256": "35dc5ea36b6d69146d9605861df13039e15eec1073b2ce2cedc0fd347fd555ee",
+      "response_bytes": 54087,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E44.md",
+      "evidence_sha256": "e1e160e88723b8f8ead9713442608aac993ed261a5caa1b260d7051d9572aec6",
+      "selected_lines": 166,
+      "normalized_lines": 232
+    },
+    {
+      "id": "E47",
+      "url": "https://docs.aptrust.org/dart-docs/dart3/users/storage_services/",
+      "accessed_utc": "2026-10-09T21:57:46.301977+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": "FAILED",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "E48",
+      "url": "https://staging.openpreservation.org/blogs/pronom-research-week-signature-development-utility-2-0-ffdev-info/",
+      "accessed_utc": "2026-10-09T21:57:46.305304+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://staging.openpreservation.org/blogs/pronom-research-week-signature-development-utility-2-0-ffdev-info/",
+      "response_sha256": "28b14025b7d9e5d97226740f5414362cb31d3c094d9b390958fcc84d104de78c",
+      "response_bytes": 173251,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E48.md",
+      "evidence_sha256": "b706aa19a9a0f24644b6a5ad8718d242ad2cd96d37a260a6853a0ec1b210798e",
+      "selected_lines": 80,
+      "normalized_lines": 139
+    },
+    {
+      "id": "E45",
+      "url": "https://www.ndsa.org/images//Levels_v2-1.png",
+      "accessed_utc": "2026-10-09T21:57:47.205131+00:00",
+      "method": "Python urllib HTTP GET; source data not executed",
+      "status": 200,
+      "final_url": "https://www.ndsa.org/images//Levels_v2-1.png",
+      "response_sha256": "af3bc9e998ba4d3ab7424687d388c9f3e1bc6f6cb76b48987cc49fe977ccb37d",
+      "response_bytes": 143061,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E45.png",
+      "evidence_sha256": "af3bc9e998ba4d3ab7424687d388c9f3e1bc6f6cb76b48987cc49fe977ccb37d"
+    },
+    {
+      "id": "E46",
+      "url": "https://educopia.org/wp-content/uploads/2024/09/OSSArcFlow-LM-script-1_Common-Steps.pdf",
+      "accessed_utc": "2026-10-09T21:57:47.583172+00:00",
+      "method": "Python urllib HTTP GET; source data not executed",
+      "status": 200,
+      "final_url": "https://educopia.org/wp-content/uploads/2024/09/OSSArcFlow-LM-script-1_Common-Steps.pdf",
+      "response_sha256": "3c13036205c528c7c38b1581c75b3cf1cf324c7ed0b8af2dea98958c73f93f69",
+      "response_bytes": 78654,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E46.md",
+      "evidence_sha256": "4e89aa860bf3be734d9cf139436fe50bce95b01e8184f6c2302928e90cccba5a"
+    },
+    {
+      "id": "E49",
+      "url": "https://github.com/APTrust/dart3",
+      "accessed_utc": "2026-10-09T21:58:24.279168+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://github.com/APTrust/dart3",
+      "response_sha256": "55f0920d846479de2b1e878c3281c2ef0eddba85e14057250bc784d68c9809a3",
+      "response_bytes": 277910,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E49.md",
+      "evidence_sha256": "666a84ac9703b28bc55044655329a50f42571ab59d8e16398c42b36da15a36e9",
+      "selected_lines": 123,
+      "normalized_lines": 223
+    },
+    {
+      "id": "E50",
+      "url": "https://aptrust.github.io/dart-docs/dart3/users/storage_services/",
+      "accessed_utc": "2026-10-09T21:58:24.281483+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": "FAILED",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "E51",
+      "url": "https://cprerc.wordpress.com/modules/",
+      "accessed_utc": "2026-10-09T21:58:24.282637+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": "FAILED",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "E52",
+      "url": "https://docs.clamav.net/manual/Usage/Scanning.html",
+      "accessed_utc": "2026-10-09T21:58:24.283720+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://docs.clamav.net/manual/Usage/Scanning.html",
+      "response_sha256": "5c4b142436daced9279894b3f0feab19314050e1ce133f6c719312b3940a8941",
+      "response_bytes": 41958,
+      "evidence_path": null,
+      "evidence_sha256": null,
+      "selected_lines": 138,
+      "normalized_lines": 154,
+      "discarded_capture_sha256": "0fa0a9fc8b2035d700381052e88af274629bab5e726b82fb7c5364af2ee9fce2",
+      "retention_note": "Duplicate of E31 scanning-mode documentation"
+    },
+    {
+      "id": "E53",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/master/README.rst",
+      "accessed_utc": "2026-10-09T21:58:55.970751+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/master/README.rst",
+      "response_sha256": "6a3358837ec4b2b59b8d4031f8f7b06429b63f4c65df82e6a9afb69d770688d5",
+      "response_bytes": 6880,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E53.md",
+      "evidence_sha256": "3f0c48297fea43dfb5aa5ba6ec8cc517d0f5daf04492a5ca6d26d657eb451a1a",
+      "selected_lines": 65,
+      "normalized_lines": 262
+    },
+    {
+      "id": "E54",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+      "accessed_utc": "2026-10-09T21:58:55.972657+00:00",
+      "method": "Python urllib HTTP GET; source text not executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+      "response_sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "response_bytes": 54632,
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E54.md",
+      "evidence_sha256": "f5406c0dc5c6b17967b28e4aea0827a528355d2e6b0c8ac0a9e9dd66ba9edcc6",
+      "selected_lines": 288,
+      "normalized_lines": 1601
+    }
+  ],
+  "claim_links": {
+    "N1": [
+      {
+        "id": "T-C01",
+        "subject": "BagIt SHA requirements, hex file manifests, Oxum units, complete/valid semantics",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            51,
+            70
+          ]
+        },
+        "independent_outcome": "Confirmed with RFC8493 §§2.2.2/2.4/3/5.4. Oxum is OctetCount.StreamCount and is only a precheck. Final fixes the draft discovery octets.bytes error.",
+        "primary_evidence_ids": [
+          "E01"
+        ]
+      },
+      {
+        "id": "T-C02",
+        "subject": "bagit-python defaults, fast mode and rejection taxonomy",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            55,
+            64
+          ]
+        },
+        "independent_outcome": "v1.9.0 code uses DEFAULT_CHECKSUMS SHA256/SHA512, make_bag uses it, fast performs structure/Oxum then skips full completeness/hash. FileMissing/UnexpectedFile/ChecksumMismatch taxonomy is supported. Current README differs from tagged README; installed release not known.",
+        "primary_evidence_ids": [
+          "E03",
+          "E30",
+          "E53",
+          "E54"
+        ]
+      },
+      {
+        "id": "T-C03",
+        "subject": "Fixity does not authenticate donor identity/custody",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            65,
+            70
+          ]
+        },
+        "independent_outcome": "Confirmed by RFC threat model. Donor identity, transfer agreement and custody events are defensible proposed added evidence, not proven authentication by digests.",
+        "primary_evidence_ids": [
+          "E01"
+        ]
+      },
+      {
+        "id": "T-C04",
+        "subject": "DART profiles, generic transport, GUI/CLI and release",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            20,
+            23
+          ]
+        },
+        "independent_outcome": "Profile packaging and generic S3/SFTP are supported; membership is not needed for generic endpoints. DART3 itself has no CLI; separate Runner is required. Official download lists3.0 April28,2026. GUI donor alternative remains viable.",
+        "primary_evidence_ids": [
+          "E15",
+          "E16",
+          "E49"
+        ]
+      },
+      {
+        "id": "T-C05",
+        "subject": "Archivematica scanning exception",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            78,
+            82
+          ]
+        },
+        "independent_outcome": "Refuted:1.13 added supported toggles; selected1.18 forms/workflow retain decision. F01.",
+        "primary_evidence_ids": [
+          "E07",
+          "E08",
+          "E10",
+          "E29",
+          "E40"
+        ]
+      },
+      {
+        "id": "T-C06",
+        "subject": "Archivematica quarantine outcome/current applicability",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            91,
+            110
+          ]
+        },
+        "independent_outcome": "Historical skip confirmed; closure/removal in1.11 omitted. Current built-in quarantine default/transition research is misdirected. F02.1.18 release year also wrong.",
+        "primary_evidence_ids": [
+          "E05",
+          "E06",
+          "E09",
+          "E27",
+          "E28"
+        ]
+      },
+      {
+        "id": "T-C07",
+        "subject": "ClamAV RAM/OS/update modes/48h",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            71,
+            77
+          ]
+        },
+        "independent_outcome": "Ubuntu22.04/24.04 listed; invocation/database reload tradeoffs real. RAM recommendation is not hard floor (F03). Signature FAQ latency and always-current wording lack governing qualifications. No freshclam guaranteed cadence established.",
+        "primary_evidence_ids": [
+          "E12",
+          "E13",
+          "E31",
+          "E39",
+          "E44"
+        ]
+      },
+      {
+        "id": "T-C08",
+        "subject": "Selected malware gate accepted-input limits",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            144,
+            159
+          ]
+        },
+        "independent_outcome": "Known unknown-password/limited scan inputs can remain unscanned, with alerts off by default. Gate/report/test conditions absent, F04. No universal antivirus guarantee demanded.",
+        "primary_evidence_ids": [
+          "E42",
+          "E43"
+        ]
+      },
+      {
+        "id": "T-C09",
+        "subject": "Siegfried/DROID/PRONOM functionality, versions and signature reproducibility",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            31,
+            34
+          ]
+        },
+        "independent_outcome": "Siegfried1.11.9 release date and tagged sf -serve/PRONOM/custom signatures confirmed. DROID official repo supports identification/signature updates, but installed/current binary unspecified. SDUv2/container evolution real. Signature version must be recorded; arbitrary two-version file set need not differ.",
+        "primary_evidence_ids": [
+          "E17",
+          "E18",
+          "E26",
+          "E35",
+          "E48"
+        ]
+      },
+      {
+        "id": "T-C10",
+        "subject": "Media-imaging alternative/common workflow order",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            27,
+            30
+          ]
+        },
+        "independent_outcome": "BitCurator media/forensics/PII path confirmed. Educopia provides common steps, explicitly variable order/nonlinear; canonical order attribution unsupported. Exact CPRER module bibliography is peripheral unverified.",
+        "primary_evidence_ids": [
+          "E25",
+          "E34",
+          "E46"
+        ]
+      },
+      {
+        "id": "T-C11",
+        "subject": "NDSA2.1 and veraPDF provisional lead",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            38,
+            47
+          ]
+        },
+        "independent_outcome": "NDSA2.1 March2026 confirmed; actual row names differ. veraPDF parser/validator family is real, provisional selected release unspecified; no PDF/A compliance runtime asserted.",
+        "primary_evidence_ids": [
+          "E19",
+          "E36",
+          "E45"
+        ]
+      },
+      {
+        "id": "T-C12",
+        "subject": "Audited metadata repair, filename mapping, event history, report taxonomy",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            165,
+            216
+          ]
+        },
+        "independent_outcome": "Manual repair and original-value/event retention are coherent product proposals; no dedicated automatic repair implementation proven or required. Bag.info/save functionality and filename/path rules support the approach. Reports proposed from actual bagit exceptions; donor understandability untested.",
+        "primary_evidence_ids": [
+          "E01",
+          "E03",
+          "E30",
+          "E33",
+          "E54"
+        ]
+      },
+      {
+        "id": "T-C13",
+        "subject": "Minimal host versus full Archivematica alternative and licensing/cost",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            208,
+            216
+          ]
+        },
+        "independent_outcome": "Composable OSS tools and heavier preservation-pipeline alternative are real.4GiB conservative host is a proposal; no operational cost/workload benchmark proves cheapest. Low-cost pathway is supplied with conditions, but false floor materially constrains it.",
+        "primary_evidence_ids": [
+          "E12",
+          "E15",
+          "E18",
+          "E25",
+          "E30",
+          "E44",
+          "E49"
+        ]
+      },
+      {
+        "id": "T-C14",
+        "subject": "All proposed and executed validation statements",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+          "lines": [
+            218,
+            240
+          ]
+        },
+        "independent_outcome": "No runtime claimed. All seven proposals separately adjudicated; fast/full test has meaningful oracle, while V2/V3 current built-in quarantine applicability and V7 floor are defective. Source-operation counts are authored, not verified provider traces.",
+        "primary_evidence_ids": [
+          "E01",
+          "E03",
+          "E27",
+          "E28",
+          "E42",
+          "E43",
+          "E44"
+        ]
+      }
+    ],
+    "N2": [
+      {
+        "id": "C-C01",
+        "subject": "BagIt package semantics, legacy checksums, completeness, provenance",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+          "lines": [
+            13,
+            56
+          ]
+        },
+        "independent_outcome": "RFC confirms complete/valid, SHA support and fixity/provenance distinction. Archive-side receipt/rebag is useful. fetch.txt citation locator minor; newly generated strong digest does not authenticate legacy receipt.",
+        "primary_evidence_ids": [
+          "E01",
+          "E03"
+        ]
+      },
+      {
+        "id": "C-C02",
+        "subject": "Pointer-bag and bagit1.9 behavior/evolution",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+          "lines": [
+            31,
+            32
+          ]
+        },
+        "independent_outcome": "fetch.txt real; RFC external/size conditions missing from chosen alternative.1.9 released2025-06-13;#154 URL syntax and path/process changes are real, not auto-fetch functionality. S02 and independent rejection of critic LFI inference.",
+        "primary_evidence_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ]
+      },
+      {
+        "id": "C-C03",
+        "subject": "Historical Archivematica quarantine and custom minimal workflow",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+          "lines": [
+            58,
+            85
+          ]
+        },
+        "independent_outcome": "Old wiki supports historical hold/scanning/failure precedent. Built-in quarantine removed in1.11. Custom scheduler/hold is permissible, not a current Archivematica product guarantee.",
+        "primary_evidence_ids": [
+          "E11",
+          "E27",
+          "E28"
+        ]
+      },
+      {
+        "id": "C-C04",
+        "subject": "ClamAV historical patch chain",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/discovery.md",
+          "lines": [
+            129,
+            141
+          ]
+        },
+        "independent_outcome": "2023 parser CVEs fixed in1.0.1/.105.2/.103.8,0.104 EOL and libmspack0.11alpha contribution confirmed. Correct historical chain does not establish detection-miss oracle or current ≥1.0.1 support.",
+        "primary_evidence_ids": [
+          "E20",
+          "E37"
+        ]
+      },
+      {
+        "id": "C-C05",
+        "subject": "ClamAV ZIP accepted-input limits and failures",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+          "lines": [
+            58,
+            85
+          ]
+        },
+        "independent_outcome": "Encrypted unknown-password contents can skip inspection with success; finite limits and off-by-default alerts apply. S01. Password database exception qualifies critic cannot-decrypt universal claim.",
+        "primary_evidence_ids": [
+          "E42",
+          "E43"
+        ]
+      },
+      {
+        "id": "C-C06",
+        "subject": "ExifTool upstream fix and CVE mapping",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/discovery.md",
+          "lines": [
+            109,
+            157
+          ]
+        },
+        "independent_outcome": "Vendor history12.24 April13,2021 DjVu security fix confirmed; Debian mapsCVE2021-22204 and backports. CVE2021-36370 is MidnightCommander, a researcher uncertainty rather than asserted wrong ExifTool fact. Production13.55/newest13.59 distinction confirmed.",
+        "primary_evidence_ids": [
+          "E21",
+          "E22",
+          "E23",
+          "E24"
+        ]
+      },
+      {
+        "id": "C-C07",
+        "subject": "Metadata overlay versus embedded rewrite",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+          "lines": [
+            87,
+            108
+          ]
+        },
+        "independent_outcome": "ExifTool reads/writes supported metadata formats and is real repair option, not a universal repair guarantee. Original/edited byte preservation and new fixity on byte changes are sensible. Post-import staff overlay is valid; earlier embedded repair is optional.",
+        "primary_evidence_ids": [
+          "E01",
+          "E30",
+          "E33"
+        ]
+      },
+      {
+        "id": "C-C08",
+        "subject": "Original filenames and interoperable mapping",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+          "lines": [
+            110,
+            125
+          ]
+        },
+        "independent_outcome": "RFC filename/path/Unicode conditions support retaining original name evidence separately from safe keys. Normalization/collision choices proposed, not a proven ZIP implementation.",
+        "primary_evidence_ids": [
+          "E01"
+        ]
+      },
+      {
+        "id": "C-C09",
+        "subject": "Monolithic versus small scheduler architecture and deployment cost",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+          "lines": [
+            143,
+            162
+          ]
+        },
+        "independent_outcome": "Materially different workflows and OSS component path supplied. No per-seat pricing or measured running-cost claim made; latest-release age alone cannot settle maintenance status. Hardware adequacy unmeasured.",
+        "primary_evidence_ids": [
+          "E12",
+          "E30",
+          "E33",
+          "E44"
+        ]
+      },
+      {
+        "id": "C-C10",
+        "subject": "Validation proposals and report usability",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+          "lines": [
+            176,
+            210
+          ]
+        },
+        "independent_outcome": "All seven proposals distinguished from claimed documentary retrieval; no runtime witness. Plain EICAR and complete/valid reporting useful; pointer-fetch/known-unscanned matrix absent and parser-CVE miss test wrong. Donor comprehension remains proposed.",
+        "primary_evidence_ids": [
+          "E01",
+          "E03",
+          "E20",
+          "E21",
+          "E23",
+          "E37",
+          "E42",
+          "E43"
+        ]
+      },
+      {
+        "id": "C-C11",
+        "subject": "Optional unsourced discovery register",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/discovery.md",
+          "lines": [
+            175,
+            180
+          ]
+        },
+        "independent_outcome": "DROID/Siegfried and signature-based provenance are credible optional follow-ups; no selected implementation claim here requires exhaustive research of PREMIS/ePADD/DSpace/RFC3161. Draft omits this undeveloped register; final absent, so final retention cannot be inferred.",
+        "primary_evidence_ids": [
+          "E01",
+          "E18",
+          "E26"
+        ]
+      }
+    ]
+  },
+  "material_judgment_links": [
+    {
+      "id": "N1-F01",
+      "scope": "N1 final",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+        "lines": {
+          "start": 78,
+          "end": 82
+        },
+        "passage": "- **Archivematica governing defaults (version-conditioned per M3):** virus scanning is\n  mandatory — no supported off-switch (#869 closed 2021-06-18, R08) — making ClamAV\n  availability a hard dependency; scan placement and failed-directory routing are known\n  from 1.8.1-era docs and ~1.1-era wiki (R04, R06) and must be re-verified at a pinned\n  current release (v1.18.0 line, R09) before any behavior claim is relied on."
+      },
+      "primary_evidence": [
+        {
+          "evidence_id": "E07",
+          "url": "https://api.github.com/repos/archivematica/Issues/issues/869",
+          "release_version_symbol_section": "Issue #869, milestone 1.13.0, original 2019 request and June 2021 closure",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E07.md",
+          "evidence_sha256": "cee886469588ac5f93687ab28516ff6d7ebc8fec4e4585839276d51706dd8d6f"
+        },
+        {
+          "evidence_id": "E08",
+          "url": "https://api.github.com/repos/archivematica/Issues/issues/869/comments",
+          "release_version_symbol_section": "2021-02-24 comment linking PR1687; 2021-06-18 successful toggle test",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E08.md",
+          "evidence_sha256": "5242f4187c8840baf520373bce661fad8f6aed56b51fd9f0aa97059b257226b3"
+        },
+        {
+          "evidence_id": "E10",
+          "url": "https://wiki.archivematica.org/Archivematica_1.13.0_and_Storage_Service_0.18.0_release_notes",
+          "release_version_symbol_section": "Archivematica 1.13.0 + Storage Service 0.18.0, July 12 2021, Disableable virus scanning feature",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E10.md",
+          "evidence_sha256": "e47e21748b107a18d1fa2e23dd0d29318570df6795c255690988723616b28295"
+        },
+        {
+          "evidence_id": "E29",
+          "url": "https://raw.githubusercontent.com/artefactual/archivematica/v1.18.0/src/archivematica/dashboard/components/administration/forms.py",
+          "release_version_symbol_section": "v1.18.0 ProcessingConfigurationForm.LABELS, virus_scanning: Scan for viruses?",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E29.md",
+          "evidence_sha256": "51086aa68f14c91b4560374bc0cf387775e61e3aab78b5f0b05a011563885310"
+        },
+        {
+          "evidence_id": "E40",
+          "url": "https://raw.githubusercontent.com/artefactual/archivematica/v1.18.0/src/archivematica/MCPServer/assets/workflow.json",
+          "release_version_symbol_section": "v1.18.0 workflow.json, Do you want to scan for viruses? decision links",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E40.md",
+          "evidence_sha256": "38ac407acc901fe0728bd36a38b95a100b79e7cf827bb8f2c17908d71e18aac4"
+        }
+      ]
+    },
+    {
+      "id": "N1-F02",
+      "scope": "N1 final",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+        "lines": {
+          "start": 91,
+          "end": 110
+        },
+        "passage": "**Primary chain — Archivematica quarantine-release scan-skip (#691).** Reported ~2019-05-15,\nclosed 2019-10-30, label \"Status: won't fix\" (R07, issue-list metadata; body and commits\nunfetched — evidence limit stated): the quarantine exit edge proceeds to format\nidentification without a rescan. Citation strength amended per adjudication M1: this is a\n*reported* skip on old evidence, upstream-declined; behavior on any current release is\nunknown. The design consequence stands independently: quarantine release is exactly where\nmalware/quarantine separation is decided, so the deployment adds a compensating\nrescan-on-release event (\"quarantine released + rescanned\") as defense-in-depth whether or\nnot #691 still reproduces (proposed validation V3).\n**Supporting chains:** #869 mandatory scanning (R08) — an availability coupling, not a\nbug; release-line evolution 1.8.1-docs era → v1.18.0 + Storage Service 0.24.0 (Sep 26, 2026,\nR09) — docs-age risk for any behavior claim (M3); PRONOM SDU v1→v2 (Oct 2020) and the PRONOM\nweb beta (R13) — identification outcomes drift with registry evolution; bagit-python\nalgorithm-default drift (R02 vs R03) — implementation/summary alignment changed across\nversions and secondhand summaries.\n**Honestly absent/inapplicable:** #691 issue body and linked commits (unfetched); no ClamAV\nCVE chain pulled in this arm (absent, not claimed); processingMCP.xml shipped default\nquarantine value (both raw fetches 404'd — R10; known-bad paths recorded, next step is\nrepository browsing at a pinned release); DROID current version (404, R12); veraPDF release\n(unpinned, R15)."
+      },
+      "primary_evidence": [
+        {
+          "evidence_id": "E05",
+          "url": "https://api.github.com/repos/archivematica/Issues/issues/691",
+          "release_version_symbol_section": "Issue #691, old QA/1.x before 1.10 report",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E05.md",
+          "evidence_sha256": "0f640444bcd361d163fd87ff50dbb49166fcd0e9d8a99c6c83eef44204cb2d24"
+        },
+        {
+          "evidence_id": "E06",
+          "url": "https://api.github.com/repos/archivematica/Issues/issues/691/comments",
+          "release_version_symbol_section": "2019-10-30 closure explanation: quarantine being removed for 1.11",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E06.md",
+          "evidence_sha256": "87a5fb8e5b879c31a73b1e0945d016eda21a44e83d48cd30f0c1afecc8b8ad9e"
+        },
+        {
+          "evidence_id": "E27",
+          "url": "https://raw.githubusercontent.com/archivematica/archivematica-architectural-decisions/master/0008-remove-quarantine.md",
+          "release_version_symbol_section": "ADR0008, accepted 2019-10-13, Remove quarantine",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E27.md",
+          "evidence_sha256": "38923d3415155eeeda24d458dc9a6a60185151788a59d565cf631a1e91d48f81"
+        },
+        {
+          "evidence_id": "E28",
+          "url": "https://wiki.archivematica.org/Archivematica_1.11_and_Storage_Service_0.16_release_notes",
+          "release_version_symbol_section": "Archivematica 1.11 / Storage Service 0.16, April 1 2020, quarantine feature removal",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E28.md",
+          "evidence_sha256": "f430b4b7d4c0828edf43accbb81d513deec86905235c889e61cf16514ae016ac"
+        },
+        {
+          "evidence_id": "E29",
+          "url": "https://raw.githubusercontent.com/artefactual/archivematica/v1.18.0/src/archivematica/dashboard/components/administration/forms.py",
+          "release_version_symbol_section": "v1.18.0 processing configuration form",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E29.md",
+          "evidence_sha256": "51086aa68f14c91b4560374bc0cf387775e61e3aab78b5f0b05a011563885310"
+        },
+        {
+          "evidence_id": "E40",
+          "url": "https://raw.githubusercontent.com/artefactual/archivematica/v1.18.0/src/archivematica/MCPServer/assets/workflow.json",
+          "release_version_symbol_section": "v1.18.0 workflow decisions",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E40.md",
+          "evidence_sha256": "38ac407acc901fe0728bd36a38b95a100b79e7cf827bb8f2c17908d71e18aac4"
+        }
+      ]
+    },
+    {
+      "id": "N1-F03",
+      "scope": "N1 final",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+        "lines": {
+          "start": 158,
+          "end": 159
+        },
+        "passage": "v1.18.x (M3, R09). Resource condition: the host or scan lane meets ClamAV's 3 GiB+ RAM\nfloor — a 1–2 GB VPS cannot run it; ≥4 GiB host budget or a separate scan host (M5, R11)."
+      },
+      "primary_evidence": [
+        {
+          "evidence_id": "E12",
+          "url": "https://docs.clamav.net/",
+          "release_version_symbol_section": "ClamAV documentation, Minimum Recommended System Requirements, 3 GiB+ with standard Cisco databases; explicit less-memory exception",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E12.md",
+          "evidence_sha256": "0d9fc870218ad0e36dd20fbea6b8aacd9249974a6c5c2bb2ec220327cf8c558a"
+        },
+        {
+          "evidence_id": "E44",
+          "url": "https://docs.clamav.net/manual/Installing/Docker.html",
+          "release_version_symbol_section": "ClamAV Docker guide, Recommended system requirements and ConcurrentDatabaseReload resource tradeoff",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E44.md",
+          "evidence_sha256": "e1e160e88723b8f8ead9713442608aac993ed261a5caa1b260d7051d9572aec6"
+        }
+      ]
+    },
+    {
+      "id": "N1-F04",
+      "scope": "N1 final",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/final.md",
+        "lines": {
+          "start": 144,
+          "end": 159
+        },
+        "passage": "**P3 — \"Extract to the archive folder and update a database.\" — correction (sequence\nviolates malware/quarantine separation).**\nExtraction straight to archive storage ignores the reported quarantine-release gap (#691,\nR07) and the fact that scan results depend on definition age (R11). Correct sequence:\nextract into quarantine → scan (ClamAV) → rescan after freshclam updates → release to\narchive storage, with a compensating rescan-on-release event regardless of #691's current\nstatus (amended citation strength per M1). \"Update a database\" is undefined: recommend an\nappend-only transfer-history event log using the canonical OSS step order (receive → virus\ncheck → format ID → fixity → sensitive-content review → extract; R18) with tool and\nsignature/definition versions per event — that is what makes history repeatable.\nConditions: freshclam automation; quarantine duration > 0 — the shipped processingMCP.xml\ndefault remains UNRESOLVED (R10; search-level indication \"effectively off unless\nconfigured\", never to be asserted); clamdscan vs clamscan chosen consciously (R05); all\nArchivematica behavior claims conditioned to 1.8.1-era evidence, re-verify at pinned\nv1.18.x (M3, R09). Resource condition: the host or scan lane meets ClamAV's 3 GiB+ RAM\nfloor — a 1–2 GB VPS cannot run it; ≥4 GiB host budget or a separate scan host (M5, R11)."
+      },
+      "primary_evidence": [
+        {
+          "evidence_id": "E42",
+          "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.6/etc/clamd.conf.sample",
+          "release_version_symbol_section": "clamav-1.4.6 etc/clamd.conf.sample: AlertEncryptedArchive/AlertEncryptedDoc default no; MaxScanSize 400M, MaxFileSize 100M, MaxRecursion 17, MaxFiles 10000; AlertExceedsMax default no",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E42.md",
+          "evidence_sha256": "b0301697c3a4ef60d373cf88ee773ee6779e93b434b62cf417246e11c8ba6939"
+        },
+        {
+          "evidence_id": "E43",
+          "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.6/libclamav/unzip.c",
+          "release_version_symbol_section": "clamav-1.4.6 libclamav/unzip.c: zdecrypt tries password databases; lines 578–579 skip unknown-password content with CL_SUCCESS; encrypted alert is conditional",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E43.md",
+          "evidence_sha256": "e95f314e766043911d238f923b83a732137f42a03019d99d761b02ee7ca70f3d"
+        },
+        {
+          "evidence_id": "E12",
+          "url": "https://docs.clamav.net/",
+          "release_version_symbol_section": "ClamAV ZIP-format and resource support qualifications",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E12.md",
+          "evidence_sha256": "0d9fc870218ad0e36dd20fbea6b8aacd9249974a6c5c2bb2ec220327cf8c558a"
+        }
+      ]
+    },
+    {
+      "id": "N2-S01",
+      "scope": "N2 available stages",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+        "lines": {
+          "start": 58,
+          "end": 85
+        },
+        "passage": "## P3 — \"Extract to the archive folder and update a database.\"\n\nDisposition: **correction** (ordering and safety gate) + **user decision** (quarantine window\nlength).\n\n- Correction (ordering): extraction into the archive folder must come **after** the malware\n  gate, not as part of a single step. The Archivematica pattern (S02) separates: quarantine\n  \"for a set duration, to allow virus definitions to update, before virus scan\"; then \"Scan for\n  viruses … uses ClamAV …; if a virus is found, the transfer is automatically placed in\n  …/failed/ and all processing on the transfer is stopped.\" Concretely: accept → quarantine →\n  scan (fail-closed to a failed area, never the live archive) → extract path-safely → database\n  update. Quarantine (waiting) and failed (detected) must remain distinct states with distinct\n  staff reports.\n- Correction (dependency conditions): ClamAV must run a supported branch — the 2023 patch\n  releases fixed ≤1.0.0/≤0.105.1/≤0.103.7 in 1.0.1/0.105.2/0.103.8 and explicitly did **not**\n  patch the EOL 0.104 branch (S03). The engine and its definition set are attack surface fed\n  directly by donor files (DMG/HFS+ parser CVEs, S03), so run it unprivileged and record its\n  version with each verdict.\n- Correction (database): the database update belongs after acceptance and should be\n  append-only event records (transfer history: receipt, quarantine start/end, scan verdict +\n  engine version, validation verdict complete/valid, metadata operations, staff actions) — the\n  brief's \"repeatable transfer history\" and the provenance weight once checksums are\n  disclaimed as authenticity proof (P2 correction 1).\n- User decision: quarantine duration. Archivematica exposes it as configuration (\"Remove from\n  quarantine after (days)\" — seen only in unfetched search summaries, so **secondary**) and the\n  fetched micro-services page states no default (S02). The number is archive policy (risk\n  appetite vs donor turnaround); propose a default (e.g., a week, re-scan on release) but mark\n  it for staff decision."
+      },
+      "primary_evidence": [
+        {
+          "evidence_id": "E42",
+          "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.6/etc/clamd.conf.sample",
+          "release_version_symbol_section": "clamav-1.4.6 configuration sample: encrypted and exceeded-limit alerts default no; finite scan limits",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E42.md",
+          "evidence_sha256": "b0301697c3a4ef60d373cf88ee773ee6779e93b434b62cf417246e11c8ba6939"
+        },
+        {
+          "evidence_id": "E43",
+          "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.6/libclamav/unzip.c",
+          "release_version_symbol_section": "clamav-1.4.6 unzip.c password database attempts and CL_SUCCESS when no valid password",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E43.md",
+          "evidence_sha256": "e95f314e766043911d238f923b83a732137f42a03019d99d761b02ee7ca70f3d"
+        }
+      ]
+    },
+    {
+      "id": "N2-S02",
+      "scope": "N2 available stages",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+        "lines": {
+          "start": 31,
+          "end": 32
+        },
+        "passage": "  transfers (S01 §2.4) — a small manifest first, files fetched at ingest; bagit-python's\n  handling of fetch.txt changed as recently as v1.9.0 (#154, S04), so version-pin it."
+      },
+      "primary_evidence": [
+        {
+          "evidence_id": "E01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "release_version_symbol_section": "RFC8493 October 2018 §2.2.3 fetch.txt, §5.2 external hosts, §5.3 untrustworthy declared size and abort on excess",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E01.md",
+          "evidence_sha256": "584a1a1ab4fb6e18b1afa04d012ce83e99b8d2c67087470c7abd7b7d9aa6eacc"
+        },
+        {
+          "evidence_id": "E03",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "release_version_symbol_section": "bagit-python v1.9.0 Bag.validate_fetch lines 758–776 and fetch_entries destination-path checks",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E03.md",
+          "evidence_sha256": "121b712874010c3ffd14eb19bed002254ec92000fe2d9d6fbed84971ee64fa1d"
+        }
+      ]
+    },
+    {
+      "id": "N2-S03",
+      "scope": "N2 available stages",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/draft.md",
+        "lines": {
+          "start": 192,
+          "end": 194
+        },
+        "passage": "5. **Scanner-branch discrimination**: ClamAV on a supported branch (≥1.0.1) vs an EOL branch\n   (0.104) against the S03 CVE-era samples if obtainable — expected to show EOL misses; in\n   practice this validates the dependency-pinning rule rather than the CVEs themselves."
+      },
+      "primary_evidence": [
+        {
+          "evidence_id": "E20",
+          "url": "https://blog.clamav.net/2023/02/clamav-01038-01052-and-101-patch.html",
+          "release_version_symbol_section": "ClamAV February 15 2023 patch announcement, CVE-2023-20032 HFS+ parser RCE and CVE-2023-20052 DMG information leak; 1.0.1/0.105.2/0.103.8 fixes",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E20.md",
+          "evidence_sha256": "6e40e648e98154f8ccff6035b910a1ae43d62168879a9f8b5e87229323b7378f"
+        },
+        {
+          "evidence_id": "E37",
+          "url": "https://docs.clamav.net/faq/faq-eol.html",
+          "release_version_symbol_section": "ClamAV EOL policy and release tables accessed 2026-10-09; latest 1.4 LTS patch 1.4.6; 1.0 critical patch support ended 2025-11-28",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M06-B/evidence/E37.md",
+          "evidence_sha256": "00ab76abde3b83ed7c65b44002288d580c92b9e10abddc61a77238c2ab7a4ef5"
+        }
+      ]
+    }
+  ],
+  "criticism_links": {
+    "N1": [
+      {
+        "id": "M1",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            23,
+            34
+          ]
+        },
+        "disposition": "ACCEPT_WITH_ADDITIONAL_APPLICABILITY_FINDING",
+        "independent_reasoning": "List metadata did not prove current persistence. Weakening to an old reported skip was appropriate, but independently retrieved issue comments and release/ADR evidence show quarantine removal in 1.11. An external rescan policy can survive independently; the current built-in transition cannot.",
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E27",
+          "E28"
+        ],
+        "observed_final_response": "Final 91–110 weakens persistence, but leaves outcome and current applicability unresolved; N1-F02 remains."
+      },
+      {
+        "id": "M2",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            36,
+            48
+          ]
+        },
+        "disposition": "ACCEPT_WITH_QUALIFICATION",
+        "independent_reasoning": "A fetched README outweighs an inaccessible search snippet for what that README says. Neither proves a selected installed release default. v1.9.0 code confirms SHA256/SHA512 while its README still says MD5; current documentation disagreement alone does not prove implementation-version drift.",
+        "evidence_ids": [
+          "E03",
+          "E30",
+          "E53",
+          "E54"
+        ],
+        "observed_final_response": "Final 59–64/203–205 correctly demotes the snippet and retains release uncertainty; drift phrasing remains minor."
+      },
+      {
+        "id": "M3",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            50,
+            59
+          ]
+        },
+        "disposition": "ACCEPT",
+        "independent_reasoning": "Old 1.8.1 documentation cannot establish current 1.18 behavior. Version-conditioning is necessary but cannot rehabilitate an independently false claim about a shipped supported toggle.",
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E10",
+          "E29"
+        ],
+        "observed_final_response": "Final 78–82/156–157 adds old-version qualifications, while F01/F02 survive."
+      },
+      {
+        "id": "M4",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            61,
+            73
+          ]
+        },
+        "disposition": "ACCEPT_RESEARCH_NEED_REJECT_DEFERRAL_AS_RESOLUTION",
+        "independent_reasoning": "Trying guessed URLs is not enough to settle consequential applicability when they 404. Issue comments and release notes resolve removal without a runtime. The actual selected source repository is artefactual/archivematica. A removed feature has no current shipped duration default to discover.",
+        "evidence_ids": [
+          "E06",
+          "E27",
+          "E28",
+          "E29",
+          "E40"
+        ],
+        "observed_final_response": "Final 154–157/228–231 preserves two failures and future browsing rather than completing the available evolution chain."
+      },
+      {
+        "id": "M5",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            75,
+            83
+          ]
+        },
+        "disposition": "PARTIALLY_REJECT_FALSE_HARD_FLOOR",
+        "independent_reasoning": "Considering RAM is relevant to low cost. The cited 3 GiB+ figure is a recommendation with explicit exceptions, not an absolute minimum. The FAQ latency also has in-most-cases and submission-to-publication qualifiers.",
+        "evidence_ids": [
+          "E12",
+          "E13",
+          "E44"
+        ],
+        "observed_final_response": "Final 75–76/158–159/239–240 adopts the hard floor, creating N1-F03."
+      },
+      {
+        "id": "M6",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            85,
+            92
+          ]
+        },
+        "disposition": "ACCEPT_LIMITATION_REQUEST_REJECT_MATERIAL_TOOL_OMISSION_INFERENCE",
+        "independent_reasoning": "The researched tools do not establish an automated metadata-repair implementation. The critic permits either adding evidence or stating that absence; the final states it. The brief allows staff editing, and audited manual repair does not itself require ExifTool or FITS. Thus the source limitation is real but does not establish a material missing-tool defect. Optional leads may remain optional. BagIt info editing/save behavior is independently available but is not being supplied as a candidate repair.",
+        "evidence_ids": [
+          "E30",
+          "E33"
+        ],
+        "observed_final_response": "Final 165–176 states the limitation and retains staff-audited repair and choices; no material metadata-tool omission assigned."
+      },
+      {
+        "id": "m1",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            112,
+            115
+          ]
+        },
+        "disposition": "ACCEPT",
+        "independent_reasoning": "RFC8493 dates to October 2018. Correcting November is bibliographic, not material.",
+        "evidence_ids": [
+          "E01"
+        ],
+        "observed_final_response": "Final uses October."
+      },
+      {
+        "id": "m2",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            116,
+            119
+          ]
+        },
+        "disposition": "ACCEPT_SOURCE_NEED",
+        "independent_reasoning": "Selected Siegfried release and PRONOM-serving behavior warranted primary verification. The mapped critic fetched them and independent tagged sources confirm 1.11.9 dated 2026-09-27 and sf -serve.",
+        "evidence_ids": [
+          "E17",
+          "E18"
+        ],
+        "observed_final_response": "Final 31–34 retains the sourced alternative."
+      },
+      {
+        "id": "m3",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            120,
+            122
+          ]
+        },
+        "disposition": "TIMING_LIMIT_ONLY",
+        "independent_reasoning": "Authored header times and filesystem mtime cannot settle actual stage execution duration or billable usage. No scientific grade is derived from this discrepancy.",
+        "evidence_ids": [],
+        "observed_final_response": "Timing claims remain self-reported and unverified."
+      },
+      {
+        "id": "m4",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            123,
+            126
+          ]
+        },
+        "disposition": "ACCEPT",
+        "independent_reasoning": "P4 permits staff editing; uncontrolled editing is not entailed by that clause. Rejecting P4 wholesale was too strong. Audited repair is a qualification and policy choice.",
+        "evidence_ids": [],
+        "observed_final_response": "Final 165–176 changes reject to correction plus user decision and retains the manual option."
+      },
+      {
+        "id": "m5",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            127,
+            130
+          ]
+        },
+        "disposition": "ACCEPT_OPTIONAL_ENRICHMENT_WITH_QUALIFICATION",
+        "independent_reasoning": "NDSA2.1 is a relevant March 2026 audit framework, not a required tool. Its actual row labels differ from final wording; the audit use remains viable.",
+        "evidence_ids": [
+          "E19",
+          "E45"
+        ],
+        "observed_final_response": "Final retains NDSA but has the minor functional-area naming error."
+      },
+      {
+        "id": "m6",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/critique.md",
+          "lines": [
+            131,
+            134
+          ]
+        },
+        "disposition": "ACCEPT_UNCERTAINTY",
+        "independent_reasoning": "A failed DROID page does not establish a current binary version. Primary official repository supports the function and signature-version conditions; no installed/current version has been asserted.",
+        "evidence_ids": [
+          "E26"
+        ],
+        "observed_final_response": "Final leaves current DROID release unknown and keeps it as an alternative."
+      }
+    ],
+    "N2": [
+      {
+        "id": "MF1",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            38,
+            51
+          ]
+        },
+        "disposition": "AMEND_TO_MINOR",
+        "independent_reasoning": "Correct RFC location is §2.2.3. The transport mechanism is real. A section-number error is not the substantive material pointer-fetch gap.",
+        "evidence_ids": [
+          "E01"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "MF2",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            53,
+            64
+          ]
+        },
+        "disposition": "AMEND_TO_MINOR",
+        "independent_reasoning": "An informal bagit.zip-style label is not a normative profile. Packaging a compliant bag in a ZIP remains viable; this is naming/interchange-profile precision rather than evidence against P1.",
+        "evidence_ids": [
+          "E01"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "MF3",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            66,
+            93
+          ]
+        },
+        "disposition": "ACCEPT_CVE_FACT_REJECT_MATERIAL_CLASSIFICATION",
+        "independent_reasoning": "CVE-2021-22204 is ExifTool DjVu; CVE-2021-36370 is Midnight Commander. The discovery explicitly withheld the latter mapping as unverified. Do not turn a stated uncertainty into an authored wrong fact.",
+        "evidence_ids": [
+          "E21",
+          "E23",
+          "E24"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "MF4",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            95,
+            117
+          ]
+        },
+        "disposition": "ACCEPT_WITH_PASSWORD_EXCEPTION",
+        "independent_reasoning": "Unknown-password content and disabled alerts can undermine the proposed gate; that is material. ClamAV does try password databases, so a categorical cannot-decrypt claim is too broad. Scope to members actually unscanned and test/report that state.",
+        "evidence_ids": [
+          "E42",
+          "E43"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "MF5",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            119,
+            140
+          ]
+        },
+        "disposition": "ACCEPT_POLICY_GAP_REJECT_VALIDATOR_LFI_INFERENCE",
+        "independent_reasoning": "A chosen pointer-fetcher needs trust/resource policy. bagit-python 1.9 validates URI syntax and destination paths; it does not fetch URLs. #154 does not prove validator local-file/network reads or an exploit. Conditional fetcher risk is distinct from library behavior.",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "m1",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            144,
+            148
+          ]
+        },
+        "disposition": "UNPROVEN_MAINTENANCE_INFERENCE",
+        "independent_reasoning": "A dated latest release alone neither proves inactivity nor proves active maintenance. The repository and 2025 release support a real candidate tool; do not infer a material maintenance conclusion from elapsed months.",
+        "evidence_ids": [
+          "E04",
+          "E53"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "m2",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            149,
+            153
+          ]
+        },
+        "disposition": "ACCEPT_MINOR",
+        "independent_reasoning": "Production and newest listed ExifTool versions are different official labels.",
+        "evidence_ids": [
+          "E22"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "m3",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            154,
+            156
+          ]
+        },
+        "disposition": "ACCEPT_NARROWING",
+        "independent_reasoning": "#154 concerns file-URL validation syntax, not a new fetch implementation. This undercuts MF5’s stronger factual inference.",
+        "evidence_ids": [
+          "E03",
+          "E04"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "m4",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            157,
+            162
+          ]
+        },
+        "disposition": "ACCEPT_MINOR_QUALIFICATION",
+        "independent_reasoning": "Old quarantine documentation and a custom rescan-on-release proposal need distinct applicability. Configurable policy is permitted; no universal waiting-period claim is required.",
+        "evidence_ids": [
+          "E11",
+          "E27",
+          "E28"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "m5",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            163,
+            167
+          ]
+        },
+        "disposition": "REJECT_FALSE_CORRECTION_DEMAND",
+        "independent_reasoning": "Whether P1 is called corrected, enhanced or kept-with-conditions is partly presentation. The actual constraint remains ZIP support with validation and a donor choice; do not fail solely on the label.",
+        "evidence_ids": [
+          "E01"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "m6",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            168,
+            170
+          ]
+        },
+        "disposition": "COSMETIC_ALREADY_COVERED_LABEL",
+        "independent_reasoning": "P5’s original-name intent is retained with safer storage keys and mappings. Adding an already-covered label may help, but absence of that exact label is not a defect.",
+        "evidence_ids": [
+          "E01"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "m7",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            171,
+            174
+          ]
+        },
+        "disposition": "PARTIAL_ACCEPT",
+        "independent_reasoning": "Legacy algorithms and ordinary oversize cases are useful tests, not an exhaustive mandatory production suite. Scan coverage limits are consequential to the selected release gate and are covered by S01.",
+        "evidence_ids": [
+          "E01",
+          "E42"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "per-P-comments",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            176,
+            202
+          ]
+        },
+        "disposition": "CHECKED_INDEPENDENTLY",
+        "independent_reasoning": "The six dispositions have each been assessed below; critic endorsement was not used as an oracle. P4 embedded repair is an optional route rather than a requirement to abandon post-import staff edits.",
+        "evidence_ids": [
+          "E01",
+          "E21",
+          "E30"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "remaining-gaps",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            204,
+            218
+          ]
+        },
+        "disposition": "MIXED",
+        "independent_reasoning": "Preserve useful report taxonomy, pointer-fetch and scanner conditions, while qualifying the asserted decryption and fetch behavior. No mandatory unrelated workflow was inferred.",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E42",
+          "E43"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "validation-comments",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            220,
+            239
+          ]
+        },
+        "disposition": "PARTIALLY_REJECT",
+        "independent_reasoning": "Plain EICAR, malformed bags, deliberate digest substitution and a defined DjVu fixture can be discriminating. The critic incorrectly approves the parser-CVE test’s expected detection misses. Release-specific vulnerability behavior is a different oracle.",
+        "evidence_ids": [
+          "E01",
+          "E20",
+          "E21",
+          "E23",
+          "E37"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "invalid-demands",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            245,
+            264
+          ]
+        },
+        "disposition": "GENERALLY_ACCEPT",
+        "independent_reasoning": "The brief does not require actually running all proposals, a particular NVD page, a universal quarantine duration, real paid infrastructure or citations for every design preference. Available primary evidence is still required for consequential selected-tool behavior.",
+        "evidence_ids": [
+          "E01",
+          "E20",
+          "E21"
+        ],
+        "observed_final_response": null
+      },
+      {
+        "id": "post-critique-uncertainty-and-source-register",
+        "locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/critique.md",
+          "lines": [
+            266,
+            317
+          ]
+        },
+        "disposition": "CHECKED_WITH_SCOPE_QUALIFICATIONS",
+        "independent_reasoning": "The DjVu CVE mapping is resolved by vendor/Debian evidence; exposure of metadata writing versus the vulnerable reader is not separately established. Donor familiarity and actual version-difference runtimes remain untested. Current built-in quarantine applicability is resolved by removal in1.11. Upstream unzip code now independently confirms the unknown-password skip, with password-database exceptions. The non-seekable-stream aside remains secondary and is not a selected implemented transport claim. Source lists and retrieval timestamps are lineage, not executed security witnesses or independent provider/native chronology.",
+        "evidence_ids": [
+          "E03",
+          "E21",
+          "E23",
+          "E27",
+          "E28",
+          "E42",
+          "E43"
+        ],
+        "observed_final_response": null
+      }
+    ]
+  },
+  "retention_policy": "Only bounded cited source captures and required reports retained; failed requests and pruned duplicate/unused captures remain honestly recorded. Source URLs/UTC/raw-response hashes and retained-capture hashes distinguish observed retrieval from generated assessment prose.",
+  "limits": "HTML L numbers are normalized excerpt locations, not server HTML line numbers; raw code L numbers preserve original code positions. Public issue API comments are source statements, not reviewer runtime tests. API release publication dates and tagged source are separated from mutable docs. No downloaded source executable was run."
+}

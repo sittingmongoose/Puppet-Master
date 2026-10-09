@@ -1,0 +1,366 @@
+{
+  "schema_version": 1,
+  "candidate": "ER11 C-02/treatment/reviser",
+  "case": "H02",
+  "method": "M16",
+  "access_timestamp_basis": "Original source identity fields, original access timestamps, versions, commit values and observed operations are retained verbatim from the assigned treatment/research source map. Existing critic verification records are carried forward under their same immutable IDs. The reviser reopened R01 at its original public URL on 2026-10-09; the browser tool did not expose a fetch timestamp or repository commit, so reviser_verification.recorded_at is the UTC time the observation was recorded immediately after the open, not a claimed fetch-second timestamp. No source ID, URL, version or commit was rebound.",
+  "immutable_ids": true,
+  "sources": [
+    {
+      "id": "R01",
+      "title": "Managing Forms in Collect - ODK Docs",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "version": "Current documentation page as accessed 2026-10-09; edit feature added Collect v2025.2.0 and Central v2025.1.4",
+      "commit": null,
+      "commit_note": "Rendered docs page exposes no documentation repository commit.",
+      "locator": "Sending finalized forms; Editing finalized or sent forms; lines 147-192.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for official ODK offline/sync docs",
+        "opened rendered page",
+        "read offline finalization and edit prerequisites"
+      ],
+      "evidence_path": "sources/odk-offline-edits.md#r01",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened current ODK Collect Forms guide; read Sending finalized forms and Editing finalized or sent forms, including version, form-opt-in, original-form-version, device-presence, edit ordering, and Entity caveats.",
+        "critic_evidence_path": "sources/verification/odk-current-verification.md#r01"
+      },
+      "reviser_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:07:47Z",
+        "timestamp_note": "The UTC clock was read immediately after the successful page open; the browser tool did not return its own fetch timestamp.",
+        "observed_operations": "Opened the exact public ODK Collect Forms URL in the web browser and read lines 164-198: offline Ready to send/Sent behavior; Collect v2025.2.0 and Central v2025.1.4 edit feature; on-device/form-opt-in conditions; activity feed; current/original form-version semantics; Central edit exclusion; Entity caveat; manual edit ordering; client_editable setting. No runtime was run and no source commit was exposed.",
+        "evidence_path": "sources/reviser-r01-check.md#r01"
+      }
+    },
+    {
+      "id": "R02",
+      "title": "Managing Entities in Central - ODK Docs",
+      "url": "https://docs.getodk.org/central-entities/",
+      "version": "Offline Entity behavior added Central/Collect v2024.3.0 or later",
+      "commit": null,
+      "commit_note": "Rendered docs page exposes no documentation repository commit.",
+      "locator": "Managing Entity conflicts; Conflicts related to Offline Entities; lines 599-611.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for offline Entities",
+        "opened and reviewed conflict behavior section"
+      ],
+      "evidence_path": "sources/odk-offline-edits.md#r02",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened current ODK Central Entities guide; read parallel update/conflict behavior and the five-day out-of-order submission sections.",
+        "critic_evidence_path": "sources/verification/odk-current-verification.md#r02"
+      }
+    },
+    {
+      "id": "R03",
+      "title": "Form Audit Log - ODK Docs",
+      "url": "https://docs.getodk.org/form-audit-log/",
+      "version": "Current documentation page as accessed 2026-10-09; reason and identify parameters added Collect v1.25.0",
+      "commit": null,
+      "commit_note": "Rendered docs page exposes no documentation repository commit.",
+      "locator": "Enable audit logging, change tracking, reasons, enumerator identification, and log structure; lines 143-152 and 199-251.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for official audit logging docs",
+        "opened page at audit setup",
+        "reviewed change tracking parameters and exported CSV structure"
+      ],
+      "evidence_path": "sources/odk-audit-history.md#r03",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened current ODK Form Audit Log guide; read audit enablement, change tracking, reason, identity, and export sections. Did not run Collect or inspect a generated CSV.",
+        "critic_evidence_path": "sources/verification/odk-current-verification.md#r03"
+      }
+    },
+    {
+      "id": "R04",
+      "title": "Multilingual forms - ODK Docs",
+      "url": "https://docs.getodk.org/guide-form-language/",
+      "version": "Current documentation page as accessed 2026-10-09",
+      "commit": null,
+      "commit_note": "Rendered docs page exposes no documentation repository commit.",
+      "locator": "Building a multilingual XLSForm; translation guidance; language-identification limitation; lines 142-159 and 208-239.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for ODK language support",
+        "opened guide",
+        "reviewed required translation fields, blank behavior, and native-speaker testing guidance"
+      ],
+      "evidence_path": "sources/odk-language-access.md#r04",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened current ODK multilingual forms guide; read translation columns, blank-cell behavior, native-speaker testing, language capture, and app-UI language sections.",
+        "critic_evidence_path": "sources/verification/odk-language-access-verification.md#r04"
+      }
+    },
+    {
+      "id": "R05",
+      "title": "Managing Users in Central - ODK Docs",
+      "url": "https://docs.getodk.org/central-users/",
+      "version": "Current documentation page as accessed 2026-10-09; changelog v2026.2 notes App User form assignments now explicit",
+      "commit": null,
+      "commit_note": "Rendered docs and changelog expose no source commit.",
+      "locator": "Roles and App User access/revocation; lines 121-136 and 268-284; Central API changelog v2026.2.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for Central roles/security",
+        "opened user guide and changelog",
+        "reviewed access scopes and revocation"
+      ],
+      "evidence_path": "sources/odk-language-access.md#r05",
+      "critic_verification": {
+        "status": "partially verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened current ODK Central Users guide; checked Web User/App User distinction, form access, credential privacy and revocation. The predecessor source note’s Central API changelog v2026.2 statement was not independently checked in this pass.",
+        "critic_evidence_path": "sources/verification/odk-language-access-verification.md#r05"
+      }
+    },
+    {
+      "id": "R06",
+      "title": "Food Traceability List - FDA",
+      "url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/food-traceability-list",
+      "version": "Current FDA list as accessed 2026-10-09",
+      "commit": null,
+      "commit_note": "Regulatory webpage, no code commit.",
+      "locator": "FTL scope and molluscan shellfish row; lines 67-68 and 103-106.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search on FDA rule scope",
+        "opened official FDA list",
+        "read shellfish inclusion and stated raw-bivalve exception"
+      ],
+      "evidence_path": "sources/standards-and-alternatives.md#r06",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened current FDA Food Traceability List and located the raw bivalve exception text; no H02-specific applicability inference made.",
+        "critic_evidence_path": "sources/verification/standards-verification.md#r06"
+      }
+    },
+    {
+      "id": "R07",
+      "title": "NSSP Guide for Control of Molluscan Shellfish, 2023 Revision - FDA",
+      "url": "https://www.fda.gov/media/181370/download",
+      "version": "2023 Revision",
+      "commit": null,
+      "commit_note": "Published PDF revision, no code commit.",
+      "locator": "Section II Model Ordinance, Chapter VIII, section .02F-G; PDF pages 93-95 / guide pages 82-84; harvest/purchase and sales forms pages 468-470.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for official NSSP guide",
+        "opened FDA PDF",
+        "searched tag size, Authority approval, tag contents, retention, and bulk-tag provisions"
+      ],
+      "evidence_path": "sources/standards-and-alternatives.md#r07",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened FDA 2023 NSSP PDF at Model Ordinance Chapter VIII .02F–G; checked tag size/content/retention, conditional bulk tag, and transaction-record provisions.",
+        "critic_evidence_path": "sources/verification/standards-verification.md#r07"
+      }
+    },
+    {
+      "id": "R08",
+      "title": "EPCIS and CBV Standard 2.0.1 - GS1",
+      "url": "https://ref.gs1.org/standards/epcis/2.0.1/",
+      "version": "EPCIS 2.0.1 path; ratified EPCIS 2.0 June 2022",
+      "commit": null,
+      "commit_note": "Versioned normative standard, no code commit.",
+      "locator": "Sections 7.3.6 and ObjectEvent semantics; eventTime schema; business-step/JSON-LD examples; PDF pages 60-61, 78-83, 159-161.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for official GS1 EPCIS standard",
+        "opened versioned standard PDF",
+        "searched eventTime, quantity, business step, disposition, and object/lot class semantics"
+      ],
+      "evidence_path": "sources/standards-and-alternatives.md#r08",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened versioned GS1 EPCIS 2.0.1 standard; checked eventTime schema/examples, ObjectEvent semantics, and event-ID optionality in error declaration discussion.",
+        "critic_evidence_path": "sources/verification/standards-verification.md#r08"
+      }
+    },
+    {
+      "id": "R09",
+      "title": "Offline and Sync: The Essentials - Google AppSheet Help",
+      "url": "https://support.google.com/appsheet/answer/10107724?hl=en",
+      "version": "Current help page as accessed 2026-10-09",
+      "commit": null,
+      "commit_note": "Rendered help page exposes no documentation repository commit.",
+      "locator": "Configure offline/sync, delayed sync, prolonged offline use, browser behavior, and maps.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for official AppSheet offline behavior",
+        "opened help page",
+        "reviewed local cache prerequisites, sync settings, prolonged offline caveats, map limitation"
+      ],
+      "evidence_path": "sources/standards-and-alternatives.md#r09",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened current Google AppSheet offline/sync help; checked online launch, prolonged offline caution, and offline map limitation.",
+        "critic_evidence_path": "sources/verification/appsheet-verification.md#r09"
+      }
+    },
+    {
+      "id": "R10",
+      "title": "Monitor app activity using Audit History - Google AppSheet Help",
+      "url": "https://support.google.com/appsheet/answer/10104794?hl=en",
+      "version": "Current help page as accessed 2026-10-09",
+      "commit": null,
+      "commit_note": "Rendered help page exposes no documentation repository commit.",
+      "locator": "Audit History retention and enterprise filtering; Security: The Essentials security caveat.",
+      "accessed_at": "2026-10-09T21:43:20Z",
+      "observed_operations": [
+        "web search for official audit history docs",
+        "opened page and read retention limits",
+        "reviewed associated source-level security guidance"
+      ],
+      "evidence_path": "sources/standards-and-alternatives.md#r10",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened current Google AppSheet Audit History help and located the retention statement; the predecessor source note for Security: The Essentials was not independently opened in this pass.",
+        "critic_evidence_path": "sources/verification/appsheet-verification.md#r10"
+      }
+    },
+    {
+      "id": "R11",
+      "title": "User network error report #1703 - getodk/collect",
+      "url": "https://github.com/getodk/collect/issues/1703",
+      "version": "Initially Collect v1.11.0; issue comment references v1.28.0",
+      "commit": null,
+      "commit_note": "Issue evidence reports versions but is not itself a code commit.",
+      "locator": "Initial reproduction and Sep 14 2020 report of v1.28.0 behavior; lines 160-181 and 285-312.",
+      "accessed_at": "2026-10-09T21:45:00Z",
+      "observed_operations": [
+        "web search for issue/fix history",
+        "opened issue at version and closure comments",
+        "reviewed exact network failure and remaining generic per-form error"
+      ],
+      "evidence_path": "sources/odk-evolution.md#r11",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened official getodk/collect issue #1703; checked initial download/send report, v1.28.0 comment, and maintainer statement about other paths.",
+        "critic_evidence_path": "sources/verification/odk-evolution-verification.md#r11"
+      }
+    },
+    {
+      "id": "R12",
+      "title": "Augment Form Download Failed message #4489 - getodk/collect",
+      "url": "https://github.com/getodk/collect/issues/4489",
+      "version": "Milestone v2021.3; closed through PR #4830",
+      "commit": null,
+      "commit_note": "Issue page is process evidence, not source commit.",
+      "locator": "Description and acceptance criteria lines 129-196; relation to #1703 and milestone v2021.3.",
+      "accessed_at": "2026-10-09T21:45:00Z",
+      "observed_operations": [
+        "opened issue from source link",
+        "read acceptance criteria and linked implementation"
+      ],
+      "evidence_path": "sources/odk-evolution.md#r12",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened official getodk/collect issue #4489; checked download-specific acceptance criteria, #1703 relation, and v2021.3 milestone.",
+        "critic_evidence_path": "sources/verification/odk-evolution-verification.md#r12"
+      }
+    },
+    {
+      "id": "R13",
+      "title": "Improved showing errors that might occur during downloading forms #4830 - getodk/collect",
+      "url": "https://api.github.com/repos/getodk/collect/pulls/4830",
+      "version": "Merged 2021-10-06",
+      "commit": "e08a3a5ae2c22c2f4cc0dc21ce3db6bcb63208a9",
+      "commit_note": "Full merge commit SHA from GitHub public API; rendered page click timed out, API response was successfully queried.",
+      "locator": "REST response fields: title, state, merged_at, merge_commit_sha, base/head refs.",
+      "accessed_at": "2026-10-09T21:44:00Z",
+      "observed_operations": [
+        "queried GitHub public REST API with urllib",
+        "recorded returned merge commit and merge date"
+      ],
+      "evidence_path": "sources/odk-evolution.md#r13",
+      "critic_verification": {
+        "status": "not independently reconfirmed",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Attempted web.open on the public GitHub PR API endpoint and pull-request page; both returned an internal error. Retained the predecessor map’s original API response fields and full merge SHA without rebinding; this critic pass does not claim a fresh SHA confirmation.",
+        "critic_evidence_path": "sources/verification/odk-evolution-verification.md#r13"
+      }
+    },
+    {
+      "id": "R14",
+      "title": "ODK Collect v2021.3.0 release",
+      "url": "https://github.com/getodk/collect/releases/tag/v2021.3.0",
+      "version": "v2021.3.0",
+      "commit": "75ebdb7e6c159be6c7d6d15af3d38963900548e4",
+      "commit_note": "Full tag target resolved through GitHub refs API.",
+      "locator": "Release highlights and added PR list include detailed download errors and #4830; lines 150-203.",
+      "accessed_at": "2026-10-09T21:45:00Z",
+      "observed_operations": [
+        "opened official release page",
+        "reviewed release highlights/PR list",
+        "resolved tag target through GitHub refs API"
+      ],
+      "evidence_path": "sources/odk-evolution.md#r14",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened official getodk/collect v2021.3.0 release page; reviewed the release page as the published release identity and documented download-error evidence. Commit remains inherited from predecessor map.",
+        "critic_evidence_path": "sources/verification/odk-evolution-verification.md#r14"
+      }
+    },
+    {
+      "id": "R15",
+      "title": "ODK Collect v1.28.0 release",
+      "url": "https://github.com/getodk/collect/releases/tag/v1.28.0",
+      "version": "v1.28.0",
+      "commit": "05d295a791121e2e6f0be6df14c60775161a9b61",
+      "commit_note": "Full tag target resolved through GitHub refs API.",
+      "locator": "Release tag identity lines 150-164; network behavior cross-referenced from issue #1703.",
+      "accessed_at": "2026-10-09T21:45:00Z",
+      "observed_operations": [
+        "opened official release page",
+        "recorded displayed tag",
+        "resolved tag target through GitHub refs API"
+      ],
+      "evidence_path": "sources/odk-evolution.md#r15",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened official getodk/collect v1.28.0 release page; used with issue #1703 to check version context. Commit remains inherited from predecessor map.",
+        "critic_evidence_path": "sources/verification/odk-evolution-verification.md#r15"
+      }
+    },
+    {
+      "id": "R16",
+      "title": "Missing audit events in field-list after validation #5550 - getodk/collect",
+      "url": "https://github.com/getodk/collect/issues/5550",
+      "version": "Reported Collect 2022.4.4; store 2023.1.2; master 1f9155c; issue remained open when accessed",
+      "commit": null,
+      "commit_note": "Reported master SHA is a short prefix; issue is unresolved and no fix commit was established.",
+      "locator": "Description, reproduction, and later status; lines 139-196, 245-283, 330-357.",
+      "accessed_at": "2026-10-09T21:45:00Z",
+      "observed_operations": [
+        "opened issue at reproducer and status",
+        "reviewed validation alternatives and activity timeline"
+      ],
+      "evidence_path": "sources/odk-audit-history.md#r16",
+      "critic_verification": {
+        "status": "verified",
+        "recorded_at": "2026-10-09T22:01:02Z",
+        "observed_operations": "Opened official getodk/collect issue #5550; checked issue state and old-version reproduction/status. Did not reproduce the issue or search later code history.",
+        "critic_evidence_path": "sources/verification/odk-current-verification.md#r16"
+      }
+    }
+  ],
+  "stage": "reviser"
+}

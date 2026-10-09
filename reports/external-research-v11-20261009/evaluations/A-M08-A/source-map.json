@@ -1,0 +1,1201 @@
+{
+  "block": "A-M08-A",
+  "purpose": "Independent evaluator primary-evidence map; candidate source maps preserved unchanged. No source IDs silently rebound.",
+  "frozen_input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/input-map.json",
+    "sha256": "2adce3d7d65508814672fcd611ff535cdcb4f780d058386ff914c207153ab37a"
+  },
+  "sources": [
+    {
+      "id": "E01-fairness-doc",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "accessed_at": "2026-10-09T22:02:56.504152+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "response_sha256": "f375d6ec047e3f5da2d86a0da4ed67b5b9460f3b5ed8055d485d32cb12036909",
+      "response_bytes": 51603,
+      "retention": "HTML text extraction, scripts/styles/nav/footer/header/head removed; response hash separately recorded",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E01-fairness-doc.txt",
+      "retained_sha256": "888f34ac751c51ba89618a17db9218e7bd3d3bbbb40670a6ada2017f5e11bcd9",
+      "retained_bytes": 5192
+    },
+    {
+      "id": "E02-volunteerhub-scheduling",
+      "url": "https://volunteerhub.com/platform/volunteer-scheduling",
+      "accessed_at": "2026-10-09T22:02:56.506110+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://volunteerhub.com/platform/volunteer-scheduling",
+      "response_sha256": "108d3f6c425122dc2e7ea0ae439458447796e735e27593b6bd10343b607e25a5",
+      "response_bytes": 436280,
+      "retention": "HTML text extraction, scripts/styles/nav/footer/header/head removed; response hash separately recorded",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E02-volunteerhub-scheduling.txt",
+      "retained_sha256": "f16993df161381558b95618db12ed36757db05352a7b18241d43605259635a32",
+      "retained_bytes": 14498
+    },
+    {
+      "id": "E03-ortools-employee-doc",
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling",
+      "accessed_at": "2026-10-09T22:02:56.507111+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://developers.google.com/optimization/scheduling/employee_scheduling",
+      "response_sha256": "c03981baf4d5dad820d4ce8f4dc4df8334485912f6be2c236bfe1760c447ddae",
+      "response_bytes": 853530,
+      "retention": "HTML text extraction, scripts/styles/nav/footer/header/head removed; response hash separately recorded",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E03-ortools-employee-doc.txt",
+      "retained_sha256": "c6c546a03f747ccee2293f59c5eac05e1b19d178eafc6cd9402cdfb682141375",
+      "retained_bytes": 70605
+    },
+    {
+      "id": "E04-civi-introduction",
+      "url": "https://docs.civicrm.org/volunteer/en/latest/",
+      "accessed_at": "2026-10-09T22:02:56.508459+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://docs.civicrm.org/volunteer/en/latest/",
+      "response_sha256": "cf5c2c554384ce4dfc7eb438bfef2cb1069e15f3fedfc123ecd1406f8f405da9",
+      "response_bytes": 30284,
+      "retention": "HTML text extraction, scripts/styles/nav/footer/header/head removed; response hash separately recorded",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E04-civi-introduction.txt",
+      "retained_sha256": "95d4625454918e5d059bc7d589788ea5f155a8c79efe92d8cc17b05670222c8e",
+      "retained_bytes": 2110
+    },
+    {
+      "id": "E05-civi-2.2",
+      "url": "https://docs.civicrm.org/volunteer/en/latest/release/2.2/",
+      "accessed_at": "2026-10-09T22:02:56.509528+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://docs.civicrm.org/volunteer/en/latest/release/2.2/",
+      "response_sha256": "ee91baa71a7e56705fcf9121b56403e53078136b6473db4182b3f725ab5638d7",
+      "response_bytes": 31327,
+      "retention": "HTML text extraction, scripts/styles/nav/footer/header/head removed; response hash separately recorded",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E05-civi-2.2.txt",
+      "retained_sha256": "285cbb94cb138c712eab3ccbff397708632c15e3f0da0b5bad64747975f7e226",
+      "retained_bytes": 3458
+    },
+    {
+      "id": "E06-provider-b205-java",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/b2056965eb30/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "accessed_at": "2026-10-09T22:02:56.513904+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/b2056965eb30/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "response_sha256": "dc92ad182e12512127d1edb6b2e2ed0b167d0e80f57db49db071b416350c5b28",
+      "response_bytes": 6510,
+      "retention": "verbatim UTF-8 text data; not executed",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E06-provider-b205-java.txt",
+      "retained_sha256": "dc92ad182e12512127d1edb6b2e2ed0b167d0e80f57db49db071b416350c5b28",
+      "retained_bytes": 6510
+    },
+    {
+      "id": "E07-provider-v2.0.0",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v2.0.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "accessed_at": "2026-10-09T22:02:56.515703+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v2.0.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "response_sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "response_bytes": 6404,
+      "retention": "verbatim UTF-8 text data; not executed",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E07-provider-v2.0.0.txt",
+      "retained_sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "retained_bytes": 6404
+    },
+    {
+      "id": "E08-provider-v1.10.0",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.10.0/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "accessed_at": "2026-10-09T22:02:56.516842+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.10.0/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "response_sha256": "3c9fc645479616f10c53f509c6e62dd861898d874e842446c0f2e2988c3f6fcb",
+      "response_bytes": 6570,
+      "retention": "verbatim UTF-8 text data; not executed",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E08-provider-v1.10.0.txt",
+      "retained_sha256": "3c9fc645479616f10c53f509c6e62dd861898d874e842446c0f2e2988c3f6fcb",
+      "retained_bytes": 6570
+    },
+    {
+      "id": "E09-provider-stable-old",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/stable/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "accessed_at": "2026-10-09T22:02:56.625179+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/stable/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "response_sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "response_bytes": 6404,
+      "retention": "verbatim UTF-8 text data; not executed",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E09-provider-stable-old.txt",
+      "retained_sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "retained_bytes": 6404
+    },
+    {
+      "id": "E10-loadbalance-api",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/common/LoadBalance.java",
+      "accessed_at": "2026-10-09T22:02:56.628355+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/common/LoadBalance.java",
+      "response_sha256": "43e6480d322d3dfce7be9b324793b239b201318679c9698b90d56630f213114f",
+      "response_bytes": 1554,
+      "retention": "verbatim UTF-8 text data; not executed",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E10-loadbalance-api.txt",
+      "retained_sha256": "43e6480d322d3dfce7be9b324793b239b201318679c9698b90d56630f213114f",
+      "retained_bytes": 1554
+    },
+    {
+      "id": "E11-loadbalance-impl",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/LoadBalanceImpl.java",
+      "accessed_at": "2026-10-09T22:02:56.676614+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "error": "HTTP Error 404: Not Found",
+      "http_status": 404
+    },
+    {
+      "id": "E12-collectors",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintCollectors.java",
+      "accessed_at": "2026-10-09T22:02:56.678112+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintCollectors.java",
+      "response_sha256": "1dcc511331f4564c859355b25add33975f86dc52088b6418d2da0c9344e00721",
+      "response_bytes": 109786,
+      "retention": "Bounded line-numbered excerpts; original response hash recorded separately",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E12-collectors.txt",
+      "retained_sha256": "30d1c91af3ebe807a50520a96a2646cc3ccf9265357526753cb1263d536eb854",
+      "retained_bytes": 10293,
+      "original_line_ranges": [
+        [
+          55,
+          95
+        ],
+        [
+          1948,
+          2086
+        ]
+      ]
+    },
+    {
+      "id": "E13-shift-example",
+      "url": "https://raw.githubusercontent.com/google/or-tools/v9.15/examples/python/shift_scheduling_sat.py",
+      "accessed_at": "2026-10-09T22:02:56.747637+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/google/or-tools/v9.15/examples/python/shift_scheduling_sat.py",
+      "response_sha256": "eaca027c0900f90a617d5668d83f9c453797bab448d55fa7787685e76fc74a54",
+      "response_bytes": 16660,
+      "retention": "verbatim UTF-8 text data; not executed",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E13-shift-example.txt",
+      "retained_sha256": "eaca027c0900f90a617d5668d83f9c453797bab448d55fa7787685e76fc74a54",
+      "retained_bytes": 16660
+    },
+    {
+      "id": "E14-timefold-releases",
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-solver/releases?per_page=15",
+      "accessed_at": "2026-10-09T22:02:56.748198+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://api.github.com/repos/TimefoldAI/timefold-solver/releases?per_page=15",
+      "response_sha256": "ef70f43c915995c5be9e4abfc5d80f7e636e8bd08ebd08a261765a7962d7b5e4",
+      "response_bytes": 78943,
+      "retention": "Bounded API extraction: release metadata all returned entries, complete body only selected relevant releases; assets/user profile JSON omitted",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E14-timefold-releases.txt",
+      "retained_sha256": "46854552ab9b366fcd13bdab0c6c35a49b532f4161c926ed04c62a2061fbf93a",
+      "retained_bytes": 23267
+    },
+    {
+      "id": "E15-ortools-releases",
+      "url": "https://api.github.com/repos/google/or-tools/releases?per_page=12",
+      "accessed_at": "2026-10-09T22:02:56.750686+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://api.github.com/repos/google/or-tools/releases?per_page=12",
+      "response_sha256": "2db7e43e3fa40a5cb363579fd6cd7b26a69da153a7646f795464e9427c95f3c9",
+      "response_bytes": 1889015,
+      "retention": "Bounded API extraction: release metadata all returned entries, complete body only selected relevant releases; assets/user profile JSON omitted",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E15-ortools-releases.txt",
+      "retained_sha256": "5dc0ded5f7649b146aae394f403cac7de729717d4ca57dcd89a550c72463b47c",
+      "retained_bytes": 13180
+    },
+    {
+      "id": "E16-quickstart-tags",
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/tags?per_page=100",
+      "accessed_at": "2026-10-09T22:02:56.811381+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/tags?per_page=100",
+      "response_sha256": "5535958ab7aa23c34ac402d0e86fe7ee240c42b98de40aed9a5d3208a9797d9f",
+      "response_bytes": 18530,
+      "retention": "verbatim UTF-8 text data; not executed",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E16-quickstart-tags.txt",
+      "retained_sha256": "5535958ab7aa23c34ac402d0e86fe7ee240c42b98de40aed9a5d3208a9797d9f",
+      "retained_bytes": 18530
+    },
+    {
+      "id": "E17-quickstart-readme",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/stable/README.adoc",
+      "accessed_at": "2026-10-09T22:02:56.850406+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "error": "HTTP Error 404: Not Found",
+      "http_status": 404
+    },
+    {
+      "id": "E18-volunteerhub-features",
+      "url": "https://volunteerhub.com/features/",
+      "accessed_at": "2026-10-09T22:02:56.850914+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://volunteerhub.com/platform",
+      "response_sha256": "c96338141813457eb235a4df9264bcb91fda640cc389c5f504cd482d5bb476d8",
+      "response_bytes": 223130,
+      "retention": "HTML text extraction, scripts/styles/nav/footer/header/head removed; response hash separately recorded",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E18-volunteerhub-features.txt",
+      "retained_sha256": "6795544cd00a205b873e642e9f462441815eb0da50e3b9ff52257438275c54e6",
+      "retained_bytes": 11085
+    },
+    {
+      "id": "E19-civi-license",
+      "url": "https://raw.githubusercontent.com/civicrm/org.civicrm.volunteer/master/agpl-3.0.exception.txt",
+      "accessed_at": "2026-10-09T22:02:56.953582+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/civicrm/org.civicrm.volunteer/master/agpl-3.0.exception.txt",
+      "response_sha256": "e92e7c49f73b00ae0a9eb3b50f9d6614eb5aaab7177420a47edc2dcce1255411",
+      "response_bytes": 718,
+      "retention": "verbatim UTF-8 text data; not executed",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E19-civi-license.txt",
+      "retained_sha256": "e92e7c49f73b00ae0a9eb3b50f9d6614eb5aaab7177420a47edc2dcce1255411",
+      "retained_bytes": 718
+    },
+    {
+      "id": "E20-rfc5545",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545.txt",
+      "accessed_at": "2026-10-09T22:02:57.110950+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc5545.txt",
+      "response_sha256": "c256f809479d98aa23d71bbd1658b3800ea9f13f41ca56e59c8d2de1b31cbfcb",
+      "response_bytes": 345537,
+      "retention": "Bounded line-numbered excerpts; original response hash recorded separately",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E20-rfc5545.txt",
+      "retained_sha256": "99db3cc964435c8006368624fcdccbf9c2017a2082851ff9beb66d54fd576aec",
+      "retained_bytes": 9249,
+      "original_line_ranges": [
+        [
+          1785,
+          1905
+        ],
+        [
+          2377,
+          2397
+        ],
+        [
+          5415,
+          5485
+        ]
+      ]
+    },
+    {
+      "id": "E21-localdatetime",
+      "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html",
+      "accessed_at": "2026-10-09T22:02:57.195858+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html",
+      "response_sha256": "566e976c44fce11f288919bf55cbc4d1d6be2c81a4683d10a25d52b2940ac958",
+      "response_bytes": 188006,
+      "retention": "Bounded line-numbered excerpts; original response hash recorded separately",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E21-localdatetime.txt",
+      "retained_sha256": "732771920585c79494c92323e812961dad2eb8ef0e463393f7c0d142473e9318",
+      "retained_bytes": 2015,
+      "original_line_ranges": [
+        [
+          1,
+          35
+        ]
+      ]
+    },
+    {
+      "id": "E22-golden-foodbank",
+      "url": "https://goldenvolunteer.com/blog/volunteer-scheduling-platforms-food-banks",
+      "accessed_at": "2026-10-09T22:02:57.223423+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "error": "HTTP Error 403: Forbidden",
+      "http_status": 403
+    },
+    {
+      "id": "E23-bistream",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/bi/BiConstraintStream.java",
+      "accessed_at": "2026-10-09T22:02:57.223976+00:00",
+      "operation": "independent unauthenticated HTTP GET; retained primary data only",
+      "http_status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/bi/BiConstraintStream.java",
+      "response_sha256": "f45f7465e94940c080643928e993dac449fa014112cdf385b194c98181c3d9ef",
+      "response_bytes": 82268,
+      "retention": "Bounded line-numbered excerpts; original response hash recorded separately",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E23-bistream.txt",
+      "retained_sha256": "56defec71b99ee8f9576c85bb715f83ad2ae467eee50b4eb634ed9e0b36c61c1",
+      "retained_bytes": 9112,
+      "original_line_ranges": [
+        [
+          1260,
+          1372
+        ],
+        [
+          1374,
+          1420
+        ]
+      ]
+    },
+    {
+      "id": "E25-loadbalance-default",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/DefaultLoadBalance.java",
+      "accessed_at": "2026-10-09T22:03:36.033104+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E25-loadbalance-default.txt",
+      "response_sha256": "9983033042c20c8fbc59710df331028b43dd81c45f55951f8aecc3a38c8b4d9d",
+      "retained_sha256": "9983033042c20c8fbc59710df331028b43dd81c45f55951f8aecc3a38c8b4d9d",
+      "retained_bytes": 4333,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E26-loadbalance-slot",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/AbstractLoadBalanceSlot.java",
+      "accessed_at": "2026-10-09T22:03:36.034719+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E26-loadbalance-slot.txt",
+      "response_sha256": "529cf1880732718bf33a7082e870a034445ddf2e2100568935706f35aa9de3b1",
+      "retained_sha256": "529cf1880732718bf33a7082e870a034445ddf2e2100568935706f35aa9de3b1",
+      "retained_bytes": 1049,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E27-readme",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/stable/README.md",
+      "accessed_at": "2026-10-09T22:03:36.036055+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E27-readme.txt",
+      "response_sha256": "bf611532c7437dd2692b921dfb85b75fc728afc1e72afb8f5952a91cd9804189",
+      "retained_sha256": "bf611532c7437dd2692b921dfb85b75fc728afc1e72afb8f5952a91cd9804189",
+      "retained_bytes": 11678,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E28-provider-v1.13.0",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.13.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "accessed_at": "2026-10-09T22:03:36.036937+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E28-provider-v1.13.0.txt",
+      "response_sha256": "5be5935c01a9a037e79016aa373859ea4b5811021f0c4774287749ec2cdc5576",
+      "retained_sha256": "5be5935c01a9a037e79016aa373859ea4b5811021f0c4774287749ec2cdc5576",
+      "retained_bytes": 6430,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E29-provider-v1.12.0",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.12.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "accessed_at": "2026-10-09T22:03:36.038483+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E29-provider-v1.12.0.txt",
+      "response_sha256": "56cc96484da12c66b7746ffa103669c63be0154e9de394affa50dc7171863993",
+      "retained_sha256": "56cc96484da12c66b7746ffa103669c63be0154e9de394affa50dc7171863993",
+      "retained_bytes": 5477,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E30-quickstarts-releases",
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/releases?per_page=100",
+      "accessed_at": "2026-10-09T22:03:36.039854+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E30-quickstarts-releases.txt",
+      "response_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_bytes": 2,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E31-cp-params",
+      "url": "https://raw.githubusercontent.com/google/or-tools/v9.15/ortools/sat/sat_parameters.proto",
+      "accessed_at": "2026-10-09T22:03:36.162296+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E31-cp-params.txt",
+      "response_sha256": "9a5e08486a63414191870bd9953f9e561af221e165654913a33662bf1b674308",
+      "retained_sha256": "60396d9d994f6c1162437ed772b49f26f94cd63a1111a58da0362ccbb6f466ff",
+      "retained_bytes": 3143,
+      "retention": "Bounded line-numbered excerpts; original response hash recorded separately",
+      "original_line_ranges": [
+        [
+          348,
+          380
+        ],
+        [
+          685,
+          710
+        ]
+      ]
+    },
+    {
+      "id": "E32-ortools-4677",
+      "url": "https://api.github.com/repos/google/or-tools/issues/4677",
+      "accessed_at": "2026-10-09T22:03:36.184756+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E32-ortools-4677.txt",
+      "response_sha256": "30209ddbdf00b2ae7d9360103d53635ec7b14f205b1302e3c6a1e358817d7fb5",
+      "retained_sha256": "30209ddbdf00b2ae7d9360103d53635ec7b14f205b1302e3c6a1e358817d7fb5",
+      "retained_bytes": 8542,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E33-ortools-4674",
+      "url": "https://api.github.com/repos/google/or-tools/issues/4674",
+      "accessed_at": "2026-10-09T22:03:36.204731+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E33-ortools-4674.txt",
+      "response_sha256": "68eccb93c91997ee616a0b09059f88f916695a259de538fbd7025c34fc6d0620",
+      "retained_sha256": "68eccb93c91997ee616a0b09059f88f916695a259de538fbd7025c34fc6d0620",
+      "retained_bytes": 8472,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E34-timefold-2724",
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-solver/pulls/2724",
+      "accessed_at": "2026-10-09T22:03:36.236691+00:00",
+      "operation": "unauthenticated HTTP GET of primary text data; no code execution",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E34-timefold-2724.txt",
+      "response_sha256": "aee80e39244afd11bcdf1ce35c69e6d194d9f5df4325f6e4ae1a6ad383dee1c0",
+      "retained_sha256": "aee80e39244afd11bcdf1ce35c69e6d194d9f5df4325f6e4ae1a6ad383dee1c0",
+      "retained_bytes": 21793,
+      "retention": "verbatim source or API JSON"
+    },
+    {
+      "id": "E35-bistream-v2.3.0",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/bi/BiConstraintStream.java",
+      "accessed_at": "2026-10-09T22:05:55.431393+00:00",
+      "operation": "unauthenticated HTTP GET, release-applicable source data",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E35-bistream-v2.3.0.txt",
+      "response_sha256": "f45f7465e94940c080643928e993dac449fa014112cdf385b194c98181c3d9ef",
+      "retained_sha256": "56defec71b99ee8f9576c85bb715f83ad2ae467eee50b4eb634ed9e0b36c61c1",
+      "retained_bytes": 9112,
+      "retention": "Bounded line-numbered excerpts; original response hash recorded separately",
+      "original_line_ranges": [
+        [
+          1260,
+          1372
+        ],
+        [
+          1374,
+          1420
+        ]
+      ]
+    },
+    {
+      "id": "E36-loadbalance-api-v2.3.0",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/common/LoadBalance.java",
+      "accessed_at": "2026-10-09T22:05:55.432602+00:00",
+      "operation": "unauthenticated HTTP GET, release-applicable source data",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E36-loadbalance-api-v2.3.0.txt",
+      "response_sha256": "43e6480d322d3dfce7be9b324793b239b201318679c9698b90d56630f213114f",
+      "retained_sha256": "43e6480d322d3dfce7be9b324793b239b201318679c9698b90d56630f213114f",
+      "retained_bytes": 1554,
+      "retention": "verbatim text source data"
+    },
+    {
+      "id": "E37-loadbalance-impl-v2.3.0",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/LoadBalanceImpl.java",
+      "accessed_at": "2026-10-09T22:05:55.433491+00:00",
+      "operation": "unauthenticated HTTP GET, release-applicable source data",
+      "error": "HTTP Error 404: Not Found",
+      "http_status": 404
+    },
+    {
+      "id": "E38-collectors-v2.3.0",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintCollectors.java",
+      "accessed_at": "2026-10-09T22:05:55.434540+00:00",
+      "operation": "unauthenticated HTTP GET, release-applicable source data",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E38-collectors-v2.3.0.txt",
+      "response_sha256": "1dcc511331f4564c859355b25add33975f86dc52088b6418d2da0c9344e00721",
+      "retained_sha256": "30d1c91af3ebe807a50520a96a2646cc3ccf9265357526753cb1263d536eb854",
+      "retained_bytes": 10293,
+      "retention": "Bounded line-numbered excerpts; original response hash recorded separately",
+      "original_line_ranges": [
+        [
+          55,
+          95
+        ],
+        [
+          1948,
+          2086
+        ]
+      ]
+    },
+    {
+      "id": "E39-golden-foodbank-canonical",
+      "url": "https://goldenvolunteer.com/blog/volunteer-scheduling-platforms-food-banks/",
+      "accessed_at": "2026-10-09T22:05:55.436274+00:00",
+      "operation": "unauthenticated HTTP GET, release-applicable source data",
+      "error": "HTTP Error 403: Forbidden",
+      "http_status": 403
+    },
+    {
+      "id": "E40-golden-noshow",
+      "url": "https://goldenvolunteer.com/blog/reducing-volunteer-no-shows-at-scale/",
+      "accessed_at": "2026-10-09T22:05:55.441841+00:00",
+      "operation": "unauthenticated HTTP GET, release-applicable source data",
+      "error": "HTTP Error 403: Forbidden",
+      "http_status": 403
+    },
+    {
+      "id": "E41-quickstart-commit-b205",
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/b2056965eb30",
+      "accessed_at": "2026-10-09T22:07:29.835497+00:00",
+      "operation": "unauthenticated GET; bounded commit metadata or released code",
+      "http_status": 200,
+      "response_sha256": "1e9b455dc24e3616ef2c85c9fdb0ea7c049af276d18a19af3cbbe953dd8816e8",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E41-quickstart-commit-b205.txt",
+      "retained_sha256": "928744c8f1dcaed3bf2bfb531bb79cb4aadaa908a0ae0402a734aadfe23d5154",
+      "retained_bytes": 25607,
+      "retention": "Bounded commit metadata and relevant provider patches only"
+    },
+    {
+      "id": "E42-quickstart-commit-v1.13",
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/v1.13.0",
+      "accessed_at": "2026-10-09T22:07:29.837126+00:00",
+      "operation": "unauthenticated GET; bounded commit metadata or released code",
+      "http_status": 200,
+      "response_sha256": "732181168bb4a1a2f861ebee6ec5d13f0cb9f4008055801b64ef63c6ea305c46",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E42-quickstart-commit-v1.13.txt",
+      "retained_sha256": "32e32e5f706b333f6da58773ef76d5900e87577bee619a2279bdddbe12f5034f",
+      "retained_bytes": 1036,
+      "retention": "Bounded commit metadata and relevant provider patches only"
+    },
+    {
+      "id": "E43-quickstart-commit-v1.12",
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/v1.12.0",
+      "accessed_at": "2026-10-09T22:07:29.838502+00:00",
+      "operation": "unauthenticated GET; bounded commit metadata or released code",
+      "http_status": 200,
+      "response_sha256": "ac82cfcbf9ffff40c4bd7b8575badb00ccc0df82f136b64e43dba10f1f53f05c",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E43-quickstart-commit-v1.12.txt",
+      "retained_sha256": "13359f718c4161666ac3c686092bfed17ac121ff30eb29934293749727fee33b",
+      "retained_bytes": 1036,
+      "retention": "Bounded commit metadata and relevant provider patches only"
+    },
+    {
+      "id": "E44-defaultbalance-v2.3",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/DefaultLoadBalance.java",
+      "accessed_at": "2026-10-09T22:07:29.839399+00:00",
+      "operation": "unauthenticated GET; bounded commit metadata or released code",
+      "http_status": 200,
+      "response_sha256": "9983033042c20c8fbc59710df331028b43dd81c45f55951f8aecc3a38c8b4d9d",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E44-defaultbalance-v2.3.txt",
+      "retained_sha256": "9983033042c20c8fbc59710df331028b43dd81c45f55951f8aecc3a38c8b4d9d",
+      "retained_bytes": 4333,
+      "retention": "verbatim source data"
+    },
+    {
+      "id": "E45-factory-v1.10",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v1.10.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintFactory.java",
+      "accessed_at": "2026-10-09T22:08:23.628627+00:00",
+      "operation": "unauthenticated primary release source GET; not executed",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E45-factory-v1.10.txt",
+      "response_sha256": "b9b80b550e94ebd500828c99104be5ba018a5863753f08d0e2141db14eee82b3",
+      "retained_sha256": "b9b80b550e94ebd500828c99104be5ba018a5863753f08d0e2141db14eee82b3",
+      "retained_bytes": 22329,
+      "retention": "verbatim source data"
+    },
+    {
+      "id": "E46-factory-v2.3",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintFactory.java",
+      "accessed_at": "2026-10-09T22:08:23.769170+00:00",
+      "operation": "unauthenticated primary release source GET; not executed",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E46-factory-v2.3.txt",
+      "response_sha256": "61aa1d7159b3503af906401126f95dbd3f0a3e3465f6fcdac87bf95f7e046d9a",
+      "retained_sha256": "61aa1d7159b3503af906401126f95dbd3f0a3e3465f6fcdac87bf95f7e046d9a",
+      "retained_bytes": 11917,
+      "retention": "verbatim source data"
+    },
+    {
+      "id": "E47-quickstart-v1.10-pom",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.10.0/use-cases/employee-scheduling/pom.xml",
+      "accessed_at": "2026-10-09T22:08:43.683720+00:00",
+      "operation": "unauthenticated GET to check solver dependency applicability",
+      "http_status": 200,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E47-quickstart-v1.10-pom.txt",
+      "response_sha256": "a92dc28dc5ad511bfe70311dc21860bf978ba0fbd8b384ba25295fa5b55b207f",
+      "retained_sha256": "a92dc28dc5ad511bfe70311dc21860bf978ba0fbd8b384ba25295fa5b55b207f",
+      "retained_bytes": 6371,
+      "retention": "verbatim Maven XML data, not executed"
+    },
+    {
+      "id": "W01",
+      "url": "https://goldenvolunteer.com/blog/volunteer-scheduling-platforms-food-banks/",
+      "title": "Top Volunteer Scheduling Platforms for Food Banks",
+      "section": "Date; categories; distinct drop-in/group-signup flows; recurring warehouse schedules; cost context",
+      "observation": "Web tool returned complete publisher page after direct HTTP retrieval returned 403. Publisher date September 14, 2026. Body distinguishes one-time/drop-in volunteers and recurring regulars and describes large group registration. Volunteer-hour value displayed as $36.14. No body no-show-history predictor claim.",
+      "evidence_kind": "primary publisher observation, marketing/domain guidance; not independent empirical proof",
+      "recorded_at": "2026-10-09T22:10:02.879013+00:00",
+      "operation": "web open/find on publisher/official documentation; direct-HTTP outcome recorded separately",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/web-source-notes.json",
+      "retained_sha256": "d47bc6ea3bfcb262388b7ad62d068feaf62f9a8789638db8ef4bf9f3dd535c3f"
+    },
+    {
+      "id": "W02",
+      "url": "https://goldenvolunteer.com/blog/reducing-volunteer-no-shows-at-scale/",
+      "title": "Best Option for Reducing Volunteer No-Shows at Scale",
+      "section": "Prior attendance; reliability-score purpose; risk/applicability and references",
+      "observation": "Web tool returned publisher page; direct HTTP retrieval returned 403. Publisher date September 11, 2026. Describes prior absence as one predictive signal, inferred from appointment studies. Frames reliability signals as outreach support and warns against automatic opportunity restriction. This is vendor guidance, not demonstrated accuracy for this 180-volunteer food bank.",
+      "evidence_kind": "primary publisher observation; cross-domain medical evidence not validated for volunteers",
+      "recorded_at": "2026-10-09T22:10:02.879052+00:00",
+      "operation": "web open/find on publisher/official documentation; direct-HTTP outcome recorded separately",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/web-source-notes.json",
+      "retained_sha256": "d47bc6ea3bfcb262388b7ad62d068feaf62f9a8789638db8ef4bf9f3dd535c3f"
+    },
+    {
+      "id": "W03",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "title": "Timefold 2.7.1 fairness documentation",
+      "section": "What is fair; collector; BigDecimal guidance",
+      "observation": "Independent web open and independent HTTP GET succeeded. Page presents a conceptual maximum-load/second-maximum narrative and six-decimal guidance; released DefaultLoadBalance code provides a different precise ordering and MathContext precision. Used current source code as governing implementation evidence.",
+      "evidence_kind": "primary docs compared against released code",
+      "recorded_at": "2026-10-09T22:10:02.879055+00:00",
+      "operation": "web open/find on publisher/official documentation; direct-HTTP outcome recorded separately",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/web-source-notes.json",
+      "retained_sha256": "d47bc6ea3bfcb262388b7ad62d068feaf62f9a8789638db8ef4bf9f3dd535c3f"
+    },
+    {
+      "id": "I-brief",
+      "kind": "frozen original task authority",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "retained_sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+      "symbol_or_section": "Original obligations O1-O6 and all user constraints",
+      "url": null,
+      "version_or_release": "exact frozen assignment input"
+    },
+    {
+      "id": "I-plan",
+      "kind": "frozen original task authority",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+      "retained_sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "symbol_or_section": "Exact frozen P1-P6, including undefined roster fields and unspecified time storage",
+      "url": null,
+      "version_or_release": "exact frozen assignment input"
+    }
+  ],
+  "source_discovery": [
+    {
+      "id": "E24-tree",
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-solver/git/trees/v2.7.1?recursive=1",
+      "accessed_at": "2026-10-09T22:03:16.253254+00:00",
+      "http_status": 200,
+      "response_sha256": "dd252c3dad365ce0073d2248ad94f03d270433dbbf3fff5b85edf61e1ab0b6ee",
+      "response_bytes": 1932809,
+      "truncated": false,
+      "selected_paths": [
+        "core/src/main/java/ai/timefold/solver/core/api/score/stream/common/LoadBalance.java",
+        "core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/AbstractLoadBalanceSlot.java",
+        "core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/DefaultLoadBalance.java",
+        "core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/bi/LoadBalanceBiCollector.java",
+        "core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/quad/LoadBalanceQuadCollector.java",
+        "core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/tri/LoadBalanceTriCollector.java",
+        "core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/uni/LoadBalanceUniCollector.java",
+        "persistence/jackson/src/main/java/ai/timefold/solver/jackson/api/score/stream/common/DeserializableLoadBalance.java",
+        "persistence/jackson/src/main/java/ai/timefold/solver/jackson/api/score/stream/common/LoadBalanceJacksonDeserializer.java",
+        "persistence/jackson/src/main/java/ai/timefold/solver/jackson/api/score/stream/common/LoadBalanceJacksonSerializer.java",
+        "persistence/jackson/src/main/java/ai/timefold/solver/jackson/api/score/stream/common/SerializableLoadBalance.java",
+        "persistence/jackson/src/test/java/ai/timefold/solver/jackson/api/score/stream/common/LoadBalanceRoundTripTest.java",
+        "quarkus-integration/quarkus-jackson/runtime/src/main/java/ai/timefold/solver/quarkus/jackson/score/stream/common/DeserializableLoadBalance.java",
+        "quarkus-integration/quarkus-jackson/runtime/src/main/java/ai/timefold/solver/quarkus/jackson/score/stream/common/LoadBalanceJacksonDeserializer.java",
+        "quarkus-integration/quarkus-jackson/runtime/src/main/java/ai/timefold/solver/quarkus/jackson/score/stream/common/LoadBalanceJacksonSerializer.java",
+        "quarkus-integration/quarkus-jackson/runtime/src/main/java/ai/timefold/solver/quarkus/jackson/score/stream/common/SerializableLoadBalance.java",
+        "quarkus-integration/quarkus-jackson/runtime/src/test/java/ai/timefold/solver/quarkus/jackson/score/stream/common/LoadBalanceRoundTripTest.java"
+      ],
+      "tree_sha": "04d17fc9025a934a7c516ccbfdb380cded719a35",
+      "operation": "unauthenticated recursive tree read, retained only relevant path metadata",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E24-tree.json",
+      "retained_sha256": "56aae57a17bd19a6841d96eed33ccc3444a9a7f8c2912dbdcbdc8fbb6869b8ce"
+    }
+  ],
+  "analytical_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/fairness-order-analysis.json",
+      "sha256": "f34bd7e3e73d27fd0f041f69af875b310d23b10f08dbf2ebb2a84eebc8ea7fb0",
+      "kind": "reviewer static source analysis, not runtime proof"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/rest-pair-analysis.json",
+      "sha256": "17ec01a322e8e752a7f28e151bc599f21dabe7288d92c6a9f713960aa6638894",
+      "kind": "reviewer static source analysis, not runtime proof"
+    }
+  ],
+  "material_judgment_links": [
+    {
+      "finding_id": "N2-F1",
+      "arm": "N2",
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+          "lines": "207-218",
+          "passage": "the constraint demonstrably exists from ≤ 2024-06-19 and is unchanged through 2.3.0; arrived inside b2056965eb30"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/verification.md",
+          "lines": "44-49",
+          "passage": "Conclusion: the constraint demonstrably exists from the file’s first appearance on the new path"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+          "lines": "498-500",
+          "passage": "M1 arrival window corrected to ≤ 2024-06-19"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "E06-provider-b205-java",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/b2056965eb30/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "defineConstraints, lines 34-46; complete file contains no balanceEmployeeShiftAssignments or loadBalance",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E06-provider-b205-java.txt",
+          "sha256": "dc92ad182e12512127d1edb6b2e2ed0b167d0e80f57db49db071b416350c5b28"
+        },
+        {
+          "source_id": "E41-quickstart-commit-b205",
+          "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/b2056965eb30",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "commit committer date 2024-06-19; provider rename and patch",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E41-quickstart-commit-b205.txt",
+          "sha256": "928744c8f1dcaed3bf2bfb531bb79cb4aadaa908a0ae0402a734aadfe23d5154"
+        },
+        {
+          "source_id": "E29-provider-v1.12.0",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.12.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "defineConstraints; balance absent",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E29-provider-v1.12.0.txt",
+          "sha256": "56cc96484da12c66b7746ffa103669c63be0154e9de394affa50dc7171863993"
+        },
+        {
+          "source_id": "E28-provider-v1.13.0",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.13.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "defineConstraints and balanceEmployeeShiftAssignments",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E28-provider-v1.13.0.txt",
+          "sha256": "5be5935c01a9a037e79016aa373859ea4b5811021f0c4774287749ec2cdc5576"
+        },
+        {
+          "source_id": "E42-quickstart-commit-v1.13",
+          "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/v1.13.0",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "tag commit date 2024-08-13",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E42-quickstart-commit-v1.13.txt",
+          "sha256": "32e32e5f706b333f6da58773ef76d5900e87577bee619a2279bdddbe12f5034f"
+        },
+        {
+          "source_id": "E43-quickstart-commit-v1.12",
+          "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/v1.12.0",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "tag commit date 2024-07-09",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E43-quickstart-commit-v1.12.txt",
+          "sha256": "13359f718c4161666ac3c686092bfed17ac121ff30eb29934293749727fee33b"
+        }
+      ]
+    },
+    {
+      "finding_id": "N2-F2",
+      "arm": "N2",
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+          "lines": "119-129",
+          "passage": "complement zero-inclusion, LoadBalance::unfairness spread statistics, and the BigDecimal requirement ... no fetched source proves"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+          "lines": "462-464",
+          "passage": "all primary lookups 404 in both stages"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/source-map.json",
+          "lines": "sources entry R8 / operations",
+          "passage": "no new lookups attempted ... no new evidence could reasonably exist ... requires the semantics to stay labeled unevidenced either way"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "E35-bistream-v2.3.0",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/bi/BiConstraintStream.java",
+          "version_or_release": "v2.3.0",
+          "symbol_or_section": "BiConstraintStream.complement(Class,Function), original lines 1386-1410",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E35-bistream-v2.3.0.txt",
+          "sha256": "56defec71b99ee8f9576c85bb715f83ad2ae467eee50b4eb634ed9e0b36c61c1"
+        },
+        {
+          "source_id": "E36-loadbalance-api-v2.3.0",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/common/LoadBalance.java",
+          "version_or_release": "v2.3.0",
+          "symbol_or_section": "LoadBalance.loads and unfairness",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E36-loadbalance-api-v2.3.0.txt",
+          "sha256": "43e6480d322d3dfce7be9b324793b239b201318679c9698b90d56630f213114f"
+        },
+        {
+          "source_id": "E38-collectors-v2.3.0",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintCollectors.java",
+          "version_or_release": "v2.3.0",
+          "symbol_or_section": "ConstraintCollectors.loadBalance overloads, original lines 1952-2023",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E38-collectors-v2.3.0.txt",
+          "sha256": "30d1c91af3ebe807a50520a96a2646cc3ccf9265357526753cb1263d536eb854"
+        },
+        {
+          "source_id": "E44-defaultbalance-v2.3",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/DefaultLoadBalance.java",
+          "version_or_release": "v2.3.0",
+          "symbol_or_section": "DefaultLoadBalance.unfairness and updateSquaredDeviation",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E44-defaultbalance-v2.3.txt",
+          "sha256": "9983033042c20c8fbc59710df331028b43dd81c45f55951f8aecc3a38c8b4d9d"
+        },
+        {
+          "source_id": "E01-fairness-doc",
+          "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "Timefold Solver 2.7.1 collector and score-type guidance",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E01-fairness-doc.txt",
+          "sha256": "888f34ac751c51ba89618a17db9218e7bd3d3bbbb40670a6ada2017f5e11bcd9"
+        }
+      ]
+    },
+    {
+      "finding_id": "N2-F3",
+      "arm": "N2",
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+          "lines": "219-221",
+          "passage": "forEachUniquePair while stable uses forEach().join() — a behaviorally near-equivalent pairing change"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md",
+          "lines": "34",
+          "passage": "behaviorally near-equivalent pairing change worth one line"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "E08-provider-v1.10.0",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.10.0/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+          "version_or_release": "v1.10.0",
+          "symbol_or_section": "atLeast10HoursBetweenTwoShifts, lines 62-73",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E08-provider-v1.10.0.txt",
+          "sha256": "3c9fc645479616f10c53f509c6e62dd861898d874e842446c0f2e2988c3f6fcb"
+        },
+        {
+          "source_id": "E45-factory-v1.10",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v1.10.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintFactory.java",
+          "version_or_release": "v1.10.0",
+          "symbol_or_section": "ConstraintFactory.forEachUniquePair, lines 94-123; implicit PlanningId ordering",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E45-factory-v1.10.txt",
+          "sha256": "b9b80b550e94ebd500828c99104be5ba018a5863753f08d0e2141db14eee82b3"
+        },
+        {
+          "source_id": "E47-quickstart-v1.10-pom",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.10.0/use-cases/employee-scheduling/pom.xml",
+          "version_or_release": "v1.10.0",
+          "symbol_or_section": "version.ai.timefold.solver = 1.10.0",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E47-quickstart-v1.10-pom.txt",
+          "sha256": "a92dc28dc5ad511bfe70311dc21860bf978ba0fbd8b384ba25295fa5b55b207f"
+        },
+        {
+          "source_id": "E09-provider-stable-old",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/stable/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "atLeast10HoursBetweenTwoShifts, lines 67-77",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E09-provider-stable-old.txt",
+          "sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4"
+        }
+      ]
+    },
+    {
+      "finding_id": "N1-F1",
+      "arm": "N1",
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+          "lines": "43",
+          "passage": "Timefold ... minimax semantics (minimize the most-loaded participant’s workload, next-most-loaded as tie-break)"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/discovery.md",
+          "lines": "35-37",
+          "passage": "Semantics: lexicographic minimax ... not variance"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md",
+          "lines": "22",
+          "passage": "Replacement mechanics verify ... S02 ... all near-verbatim"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "E25-loadbalance-default",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/DefaultLoadBalance.java",
+          "version_or_release": "v2.7.1",
+          "symbol_or_section": "DefaultLoadBalance.updateSquaredDeviation and unfairness, lines 66-125",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E25-loadbalance-default.txt",
+          "sha256": "9983033042c20c8fbc59710df331028b43dd81c45f55951f8aecc3a38c8b4d9d"
+        },
+        {
+          "source_id": "E12-collectors",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintCollectors.java",
+          "version_or_release": "v2.7.1",
+          "symbol_or_section": "ConstraintCollectors.loadBalance overloads, original lines 1952-2023",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E12-collectors.txt",
+          "sha256": "30d1c91af3ebe807a50520a96a2646cc3ccf9265357526753cb1263d536eb854"
+        },
+        {
+          "source_id": "E10-loadbalance-api",
+          "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/common/LoadBalance.java",
+          "version_or_release": "v2.7.1",
+          "symbol_or_section": "LoadBalance.loads and unfairness",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E10-loadbalance-api.txt",
+          "sha256": "43e6480d322d3dfce7be9b324793b239b201318679c9698b90d56630f213114f"
+        },
+        {
+          "source_id": "E01-fairness-doc",
+          "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "What is fair? conceptual narrative contrasted with collector implementation",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E01-fairness-doc.txt",
+          "sha256": "888f34ac751c51ba89618a17db9218e7bd3d3bbbb40670a6ada2017f5e11bcd9"
+        }
+      ]
+    },
+    {
+      "finding_id": "N1-F2",
+      "arm": "N1",
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+          "lines": "30-32",
+          "passage": "No fetched vendor page exposes a named recurring-shifts feature ... first-class weekly-template engine ... product-gap differentiator"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/discovery.md",
+          "lines": "13-17",
+          "passage": "two ... hard requirements ... exactly where a primary vendor page went quiet ... strongest argument for a custom/lightweight scheduler core"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md",
+          "lines": "21",
+          "passage": "P1 ... sound ... absence of named recurring-shift ... features"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "E18-volunteerhub-features",
+          "url": "https://volunteerhub.com/features/",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "Volunteer Scheduling link and feature summaries",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E18-volunteerhub-features.txt",
+          "sha256": "6795544cd00a205b873e642e9f462441815eb0da50e3b9ff52257438275c54e6"
+        },
+        {
+          "source_id": "E02-volunteerhub-scheduling",
+          "url": "https://volunteerhub.com/platform/volunteer-scheduling",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "Recurring Volunteer Shift Scheduling; recurring/duplicate schedules; mobile and reminder sections",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E02-volunteerhub-scheduling.txt",
+          "sha256": "f16993df161381558b95618db12ed36757db05352a7b18241d43605259635a32"
+        }
+      ]
+    },
+    {
+      "finding_id": "N1-F3",
+      "arm": "N1",
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+          "lines": "32",
+          "passage": "Imported rosters land as templates or template deltas, not just shift instances ... Template-level import is the reusable form"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/draft.md",
+          "lines": "17-20",
+          "passage": "Imported rosters must land as templates (or template deltas), not just shift instances"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/discovery.md",
+          "lines": "17",
+          "passage": "high-volume drop-in + recurring regulars, group sign-ups (corporate teams 20+)"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "W01",
+          "url": "https://goldenvolunteer.com/blog/volunteer-scheduling-platforms-food-banks/",
+          "version_or_release": "publisher page observed 2026-10-09",
+          "symbol_or_section": "Food-bank scheduling: drop-in/one-time versus recurring volunteers; group signup; implementation guidance",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/web-source-notes.json",
+          "sha256": "d47bc6ea3bfcb262388b7ad62d068feaf62f9a8789638db8ef4bf9f3dd535c3f"
+        },
+        {
+          "source_id": "E20-rfc5545",
+          "url": "https://www.rfc-editor.org/rfc/rfc5545.txt",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "RFC 5545 §3.8.2.4 DTSTART and §3.3.5 dated event representation",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E20-rfc5545.txt",
+          "sha256": "99db3cc964435c8006368624fcdccbf9c2017a2082851ff9beb66d54fd576aec"
+        },
+        {
+          "source_id": "I-brief",
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+          "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+          "url": null,
+          "version_or_release": "exact frozen original task authority",
+          "symbol_or_section": "Original obligations O1-O6 and all user constraints"
+        },
+        {
+          "source_id": "I-plan",
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+          "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+          "url": null,
+          "version_or_release": "exact frozen original task authority",
+          "symbol_or_section": "Exact frozen P1-P6, including undefined roster fields and unspecified time storage"
+        }
+      ]
+    },
+    {
+      "finding_id": "N1-F4",
+      "arm": "N1",
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+          "lines": "57",
+          "passage": "Emailing the full roster ... exposes all contact details and patterns to everyone"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+          "lines": "57",
+          "passage": "what roster means ... names-only directory vs full contact list — an organizational privacy norm evidence cannot set"
+        }
+      ],
+      "primary_evidence": [
+        {
+          "source_id": "E18-volunteerhub-features",
+          "url": "https://volunteerhub.com/features/",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "Email/Text messaging and Advanced Permissions product surfaces",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E18-volunteerhub-features.txt",
+          "sha256": "6795544cd00a205b873e642e9f462441815eb0da50e3b9ff52257438275c54e6"
+        },
+        {
+          "source_id": "E02-volunteerhub-scheduling",
+          "url": "https://volunteerhub.com/platform/volunteer-scheduling",
+          "version_or_release": "see URL and retained release metadata",
+          "symbol_or_section": "Targeted confirmation/reminder capability",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E02-volunteerhub-scheduling.txt",
+          "sha256": "f16993df161381558b95618db12ed36757db05352a7b18241d43605259635a32"
+        },
+        {
+          "source_id": "I-brief",
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+          "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+          "url": null,
+          "version_or_release": "exact frozen original task authority",
+          "symbol_or_section": "Original obligations O1-O6 and all user constraints"
+        },
+        {
+          "source_id": "I-plan",
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+          "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+          "url": null,
+          "version_or_release": "exact frozen original task authority",
+          "symbol_or_section": "Exact frozen P1-P6, including undefined roster fields and unspecified time storage"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Scope is the original small food-bank scheduling brief, not a production certification, legal analysis or exhaustive vendor comparison.",
+    "All mapped complete stage prose, maps, assignments, revealed plans and navigable source indexes were read. Source duplicate Java snapshots compared by contents/diffs; frozen vendor HTML inspected for relevant capability passages, not scripts or irrelevant navigation.",
+    "Referenced candidate extras outside the exact map, including adjudication.md, claim-inventory.md, claim-judgments.md, predecessor-notes and versions directories, were not opened. Their substantive scientific content is assessed only where present in the mapped complete artifacts.",
+    "Primary behavior checked against released Timefold v1.10.0/v2.3.0/v2.7.1 code and tagged quickstart snapshots; live marketing pages can drift and do not prove private implementation defaults.",
+    "No candidate solver, product, scheduler or accessibility sandbox was executed. Reviewer arithmetic/predicate checks are explicitly static source analyses, not library runtime witnesses.",
+    "Direct Golden HTTP GETs returned 403; official publisher content was observed through web open/find and retained as bounded notes with URLs/sections. Secondary search leads were not validated as deployed product claims.",
+    "A repository-required Plans index and read-only status check occurred at startup; unrelated product canon was not used for this case assessment. All writes are within the assigned evaluation directory.",
+    "The fixed assignment deadline remains 2026-10-09T22:25:56.049457+00:00. Start timestamp below is the earliest explicitly observed clock/native creation sample, after initial assignment/input reading; it is not a billing or queue-start claim."
+  ],
+  "aliases": {
+    "E01": "E01-fairness-doc",
+    "E02": "E02-volunteerhub-scheduling",
+    "E03": "E03-ortools-employee-doc",
+    "E04": "E04-civi-introduction",
+    "E05": "E05-civi-2.2",
+    "E06": "E06-provider-b205-java",
+    "E07": "E07-provider-v2.0.0",
+    "E08": "E08-provider-v1.10.0",
+    "E09": "E09-provider-stable-old",
+    "E10": "E10-loadbalance-api",
+    "E11": "E11-loadbalance-impl",
+    "E12": "E12-collectors",
+    "E13": "E13-shift-example",
+    "E14": "E14-timefold-releases",
+    "E15": "E15-ortools-releases",
+    "E16": "E16-quickstart-tags",
+    "E17": "E17-quickstart-readme",
+    "E18": "E18-volunteerhub-features",
+    "E19": "E19-civi-license",
+    "E20": "E20-rfc5545",
+    "E21": "E21-localdatetime",
+    "E22": "E22-golden-foodbank",
+    "E23": "E23-bistream",
+    "E25": "E25-loadbalance-default",
+    "E26": "E26-loadbalance-slot",
+    "E27": "E27-readme",
+    "E28": "E28-provider-v1.13.0",
+    "E29": "E29-provider-v1.12.0",
+    "E30": "E30-quickstarts-releases",
+    "E31": "E31-cp-params",
+    "E32": "E32-ortools-4677",
+    "E33": "E33-ortools-4674",
+    "E34": "E34-timefold-2724",
+    "E35": "E35-bistream-v2.3.0",
+    "E36": "E36-loadbalance-api-v2.3.0",
+    "E37": "E37-loadbalance-impl-v2.3.0",
+    "E38": "E38-collectors-v2.3.0",
+    "E39": "E39-golden-foodbank-canonical",
+    "E40": "E40-golden-noshow",
+    "E41": "E41-quickstart-commit-b205",
+    "E42": "E42-quickstart-commit-v1.13",
+    "E43": "E43-quickstart-commit-v1.12",
+    "E44": "E44-defaultbalance-v2.3",
+    "E45": "E45-factory-v1.10",
+    "E46": "E46-factory-v2.3",
+    "E47": "E47-quickstart-v1.10-pom",
+    "W01": "W01",
+    "W02": "W02",
+    "W03": "W03"
+  },
+  "assessment_completed_at": "2026-10-09T22:17:10.812616+00:00"
+}

@@ -1,0 +1,94 @@
+{
+  "frozen_at": "2026-10-09T22:21:10.600198+00:00",
+  "rule_ref": "SELECTION_RULES.md promotion/stopping; DEVELOPMENT_REALLOCATION_05.json",
+  "scope": "Close only unstarted capacity; do not cancel or influence remaining independent assessments. No feedback supplied to candidates/evaluators.",
+  "original_queue_unchanged": "QUEUE_ORIGINAL.json",
+  "started_arms": 66,
+  "completed_finals": 58,
+  "missing_complete_finals": 8,
+  "closed_unstarted_arms": 14,
+  "development_delivery_evidence": [
+    {
+      "block": "C-01",
+      "control_delivery_s": 2063.434,
+      "treatment_delivery_s": 1730.897,
+      "descriptive_saving_fraction": 0.16115708086616787,
+      "source_quality": "PENDING",
+      "gate_20_percent_met": false
+    },
+    {
+      "block": "C-02",
+      "control_delivery_s": 1418.612,
+      "treatment_delivery_s": 2396.659,
+      "descriptive_saving_fraction": -0.6894393956909994,
+      "source_quality": "PENDING",
+      "gate_20_percent_met": false
+    }
+  ],
+  "closed": [
+    {
+      "block": "B-04",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "reason": "B-03 treatment failed its locked full-source PASS gate; I04 remains sealed.",
+      "case_opened": false
+    },
+    {
+      "block": "C-03",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed.",
+      "case_opened": false
+    },
+    {
+      "block": "C-04",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed.",
+      "case_opened": false
+    },
+    {
+      "block": "C-05",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed.",
+      "case_opened": false
+    },
+    {
+      "block": "C-06",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed.",
+      "case_opened": false
+    },
+    {
+      "block": "C-07",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed.",
+      "case_opened": false
+    },
+    {
+      "block": "C-08",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed.",
+      "case_opened": false
+    }
+  ],
+  "confirmation_executed": false
+}

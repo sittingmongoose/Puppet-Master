@@ -1,0 +1,84 @@
+{
+  "frozen_at": "2026-10-09T22:03:59.875329+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H02/brief.md",
+      "sha256": "415ad751720b695b4cc789793972e4f663c279d83afa0a874705c6b9831b0206",
+      "bytes": 2178
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M16.json",
+      "sha256": "01975e690d48334feb2f69585e3ca4334c0543c30dd13b620b3cf465a37871c4",
+      "bytes": 2246
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/assignment.md",
+      "sha256": "b9d19aea1587faaa46e1f8b1fe1aa57f4641ec195d2e8dacbc164c42997ee829",
+      "bytes": 3074
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/reviser/input-map.json",
+      "sha256": "c0662d1660a683b247aa4393c292a2f2162a026840298adbdd3ade99dbc909b9",
+      "bytes": 1535
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/draft.md",
+      "sha256": "4e0e0473f6a107f04b70068ed09360f0366ef141119a940b4ec949990f95d998",
+      "bytes": 39360
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/discovery.md",
+      "sha256": "68d81609d8a93e915edfde6bec88360fb35d07fa6821a35959f08d44aa5ddc7c",
+      "bytes": 14156
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/source-map.json",
+      "sha256": "a203e86f80895342067ec86eff8f22d54d97b43d0da2f03278dca8dd16a68b1a",
+      "bytes": 12564
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/revealed-plan.md",
+      "sha256": "090ed82b1da1acd7283f34207edfd5345571da2f961485d1131f7f56a4291ab7",
+      "bytes": 555
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/source-map.json",
+      "sha256": "fd0b45fe1cadc9ebdf0d5ea1d936bf40c6d0c562311a01a43136eba2b37e2521",
+      "bytes": 19440
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/critic/critique.md",
+      "sha256": "3de624e6edbd9abfe5ab338bb75c8a3dbd41b5ba56b15282be0ffbcf38359397",
+      "bytes": 23359
+    }
+  ],
+  "method": {
+    "id": "M16",
+    "version": "v1",
+    "name": "intermediate-budget-allocation-on-source-assessed-reference",
+    "control": "Three fresh contexts: full external-discovery investigator, independent full critic, fresh complete reviser. Preserve all original research/source/plan/preservation/validation scope. No new source inventory or answers. The declared wall/stage resource allocation is the sole contrast; finish early when full output is ready, never fill the deadline.",
+    "treatment": "Three fresh contexts: full external-discovery investigator, independent full critic, fresh complete reviser. Preserve all original research/source/plan/preservation/validation scope. No new source inventory or answers. The declared wall/stage resource allocation is the sole contrast; finish early when full output is ready, never fill the deadline.",
+    "locked_at": "2026-10-09T21:37:32.336912+00:00",
+    "evidence_kind": "full-discovery budget-recipe comparison",
+    "control_wall_s": 4500,
+    "treatment_wall_s": 3600,
+    "control_stages_s": {
+      "research": 1800,
+      "critic": 1200,
+      "reviser": 1500
+    },
+    "treatment_stages_s": {
+      "research": 1440,
+      "critic": 1080,
+      "reviser": 1080
+    },
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "provider": "luna Max/priority in both arms",
+    "lineage": "Source-assessed three-fresh-context Luna reference has8/10 full-source passes,5alltimeeligible. Test where time is allocated at a realistic intermediate reduction, not half-deadline survival. No novelty credit, no optimized win assumed. M15 assessment feedback not read for this recipe.",
+    "selection": "Two development blocks. Material treatment source failure retires promotion. If both full treatment source passes/no regression and >=20% strict eligible both-PASS measured delivery saving, complete runnable/native recipe may qualify for remaining four-case confirmation. Nominal ceiling reduction is not measured speed/cost. Remaining capacity permits one four-case finalist; the first eligible completed M15 or M16 may lock the remaining H03-H06 cases without waiting for unrelated pending experiments. No prompt tuning after confirmation lock; C07/C08 stay reserved/unstarted unless prospectively assigned within40pairs."
+  },
+  "resource_version": "budget-75vs60-v1",
+  "stage_allowance_s": 1080,
+  "deadline": "2026-10-09T22:21:59.875329+00:00"
+}

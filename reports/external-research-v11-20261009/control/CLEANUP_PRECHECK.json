@@ -1,0 +1,58 @@
+{
+  "observed": "2026-10-09T22:22:00Z",
+  "runtime_files": 4496,
+  "runtime_bytes": 87020803,
+  "largest": [
+    [
+      33291312,
+      "control/native-observations.jsonl"
+    ],
+    [
+      10592721,
+      "control/glm-integration-observations.jsonl"
+    ],
+    [
+      569611,
+      "accounting/v2/TIMING.json"
+    ],
+    [
+      550224,
+      "jobs/A-M08-A/control/critic/sources/verify-volunteerhub-home-20261009T2135Z.html"
+    ],
+    [
+      533262,
+      "control/OWNERSHIP.json"
+    ],
+    [
+      500892,
+      "evaluations/A-M07-A/assessment.json"
+    ],
+    [
+      498770,
+      "control/state.json"
+    ],
+    [
+      489459,
+      "control/monitor-02.json"
+    ],
+    [
+      436364,
+      "jobs/A-M08-A/control/critic/sources/verify-volunteerhub-scheduling-20261009T2135Z.html"
+    ],
+    [
+      425233,
+      "evaluations/A-M07-B/assessment.json"
+    ],
+    [
+      423224,
+      "accounting/original-v1/TIMING.json"
+    ],
+    [
+      423224,
+      "accounting/TIMING.json"
+    ]
+  ],
+  "active_runtime_reference_count": 1,
+  "deletion": "NONE; independent evaluators active, no source movement/deletion",
+  "private_zcode_artifacts": "RETAIN unless exact ownership and inactive binding independently established; no private transcripts read"
+}

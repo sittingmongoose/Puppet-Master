@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-10-09T22:13:24.207297+00:00",
+  "snapshot_at": "2026-10-09T22:22:46.669860+00:00",
   "export_rules": "Complete terminal-authored stages verbatim except explicit private-email redaction. Raw captures/corpora/private transcripts/machine state excluded. Source and published SHA-256 distinguish redaction. Current evaluators show assignment only until terminal. Native metadata lifecycle receipts are supported host observations, not synthesized worker JSON.",
   "files": [
     {
@@ -8,6 +8,20 @@
       "published_sha256": "4b11436ea062fd01edce39dcb20cf1b94c8754d5159adac2196fc0ccc325992b",
       "bytes": 27591,
       "redacted": true
+    },
+    {
+      "path": "control/QUEUE_CLOSURE.json",
+      "source_sha256": "1fe82863f0b301ee017aecdd958fb901e9fefb5db26b6369fea18a7c83300f95",
+      "published_sha256": "1fe82863f0b301ee017aecdd958fb901e9fefb5db26b6369fea18a7c83300f95",
+      "bytes": 3222,
+      "redacted": false
+    },
+    {
+      "path": "control/CLEANUP_PRECHECK.json",
+      "source_sha256": "565b62f403a937495e870f85fdef7032e7deabe9c037f90e57c7ab084ed4e64c",
+      "published_sha256": "565b62f403a937495e870f85fdef7032e7deabe9c037f90e57c7ab084ed4e64c",
+      "bytes": 1264,
+      "redacted": false
     },
     {
       "path": "methods/M11.json",
@@ -452,9 +466,9 @@
     },
     {
       "path": "control/queue.json",
-      "source_sha256": "f70eb81c213dd9d0c1085c62b2719737d16eb81cff726d1792629e6e8546e712",
-      "published_sha256": "f70eb81c213dd9d0c1085c62b2719737d16eb81cff726d1792629e6e8546e712",
-      "bytes": 12700,
+      "source_sha256": "21b0f59697cc73352ed4a89b88652d0e19b5e19729310904f9a6eeb52e55e30f",
+      "published_sha256": "21b0f59697cc73352ed4a89b88652d0e19b5e19729310904f9a6eeb52e55e30f",
+      "bytes": 13912,
       "redacted": false
     },
     {
@@ -564,9 +578,9 @@
     },
     {
       "path": "control/state.json",
-      "source_sha256": "5e6f80ba0463d43686988402c9293d85fc2b93d518adef08a5131e45bb1b61b4",
-      "published_sha256": "5e6f80ba0463d43686988402c9293d85fc2b93d518adef08a5131e45bb1b61b4",
-      "bytes": 498589,
+      "source_sha256": "e9c3168a8fd16111d5a19ffed2521f9205202510874fd83000e4dde48c4ba9a8",
+      "published_sha256": "e9c3168a8fd16111d5a19ffed2521f9205202510874fd83000e4dde48c4ba9a8",
+      "bytes": 498770,
       "redacted": false
     },
     {
@@ -665,6 +679,13 @@
       "source_sha256": "397f419793f6e2fe4e5f038b5537706a4bbc4fd8a17d2a6965ef54a3b6e831c1",
       "published_sha256": "397f419793f6e2fe4e5f038b5537706a4bbc4fd8a17d2a6965ef54a3b6e831c1",
       "bytes": 1668,
+      "redacted": false
+    },
+    {
+      "path": "control/PUBLICATION_07.json",
+      "source_sha256": "4b0f289ce24ecc44780c4bca2a496e5d75e1f9c14c16e1f747420bc32a47ac24",
+      "published_sha256": "4b0f289ce24ecc44780c4bca2a496e5d75e1f9c14c16e1f747420bc32a47ac24",
+      "bytes": 835,
       "redacted": false
     },
     {
@@ -2093,6 +2114,76 @@
       "source_sha256": "8817112516207c7d667d8ace48e0ac92b053b136fc8d638430203fe49cb5ecaf",
       "published_sha256": "8817112516207c7d667d8ace48e0ac92b053b136fc8d638430203fe49cb5ecaf",
       "bytes": 1632,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/assignment.md",
+      "source_sha256": "b9d19aea1587faaa46e1f8b1fe1aa57f4641ec195d2e8dacbc164c42997ee829",
+      "published_sha256": "b9d19aea1587faaa46e1f8b1fe1aa57f4641ec195d2e8dacbc164c42997ee829",
+      "bytes": 3074,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/dispatch.json",
+      "source_sha256": "5d52bf4ae8bae5028f0cf1554fcef5ce89b59594dce1d6056376df1f92c9fae5",
+      "published_sha256": "5d52bf4ae8bae5028f0cf1554fcef5ce89b59594dce1d6056376df1f92c9fae5",
+      "bytes": 1718,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/capacity-check.json",
+      "source_sha256": "1a6e58db41e93fc0fd50ff5a2c15f282060276007e93da50d73925447c51e13e",
+      "published_sha256": "1a6e58db41e93fc0fd50ff5a2c15f282060276007e93da50d73925447c51e13e",
+      "bytes": 297,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/freeze.json",
+      "source_sha256": "95b53c1518a22c95fb42f61456efa94a74b0cc9b516ee3d284a411e9d6ec5f1e",
+      "published_sha256": "95b53c1518a22c95fb42f61456efa94a74b0cc9b516ee3d284a411e9d6ec5f1e",
+      "bytes": 4820,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/input-map.json",
+      "source_sha256": "c0662d1660a683b247aa4393c292a2f2162a026840298adbdd3ade99dbc909b9",
+      "published_sha256": "c0662d1660a683b247aa4393c292a2f2162a026840298adbdd3ade99dbc909b9",
+      "bytes": 1535,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/final.md",
+      "source_sha256": "038d98a13c31779dfd75ac9a8fce90f584b5ccfec8218fb324144f8f49fa40ae",
+      "published_sha256": "038d98a13c31779dfd75ac9a8fce90f584b5ccfec8218fb324144f8f49fa40ae",
+      "bytes": 37483,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/host-runs.json",
+      "source_sha256": "96dbf7d6ea7bc490c1d885e55cece4d721bc9a7d5d44dcc7b5fcbbf541d3828a",
+      "published_sha256": "96dbf7d6ea7bc490c1d885e55cece4d721bc9a7d5d44dcc7b5fcbbf541d3828a",
+      "bytes": 618,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/source-map.json",
+      "source_sha256": "95e8de5d495b35eefd19ef1f16eb96bbea285e5ed2097c6315473b8b513d0db8",
+      "published_sha256": "95e8de5d495b35eefd19ef1f16eb96bbea285e5ed2097c6315473b8b513d0db8",
+      "bytes": 20311,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/task-result.json",
+      "source_sha256": "b16bd0cf39d25b36631e1947c0a58b361f91b1ca087faeaf669c347095e04b5d",
+      "published_sha256": "b16bd0cf39d25b36631e1947c0a58b361f91b1ca087faeaf669c347095e04b5d",
+      "bytes": 3909,
+      "redacted": false
+    },
+    {
+      "path": "jobs/C-02/treatment/reviser/sources/index.md",
+      "source_sha256": "5ac07b57369dce0421d629683c87829f3419d7fa23923459829010154c210cb9",
+      "published_sha256": "5ac07b57369dce0421d629683c87829f3419d7fa23923459829010154c210cb9",
+      "bytes": 2067,
       "redacted": false
     },
     {
@@ -15039,6 +15130,34 @@
       "redacted": false
     },
     {
+      "path": "evaluations/C-02/assignment.md",
+      "source_sha256": "0f98c382a13d99985b1b412dcc7578ee7ac382e2d536658f0e18029478517dbe",
+      "published_sha256": "0f98c382a13d99985b1b412dcc7578ee7ac382e2d536658f0e18029478517dbe",
+      "bytes": 2164,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/C-02/dispatch.json",
+      "source_sha256": "73b4661ab45ccc7e3ae79b8a68cff4338a2d5accd34fbf6f8b1668aa5d839755",
+      "published_sha256": "73b4661ab45ccc7e3ae79b8a68cff4338a2d5accd34fbf6f8b1668aa5d839755",
+      "bytes": 1536,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/C-02/freeze.json",
+      "source_sha256": "2d3b361a95acda1d32b26847b28aea86089b6e88ed8e6418876d9f6aa7e28a88",
+      "published_sha256": "2d3b361a95acda1d32b26847b28aea86089b6e88ed8e6418876d9f6aa7e28a88",
+      "bytes": 9955,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/C-02/input-map.json",
+      "source_sha256": "3af9f9ff9271f0574faef9fe7e94a8a958a1cb55756bc8a77ea421c2ba89c9ab",
+      "published_sha256": "3af9f9ff9271f0574faef9fe7e94a8a958a1cb55756bc8a77ea421c2ba89c9ab",
+      "bytes": 9512,
+      "redacted": false
+    },
+    {
       "path": "evaluations/A-M12-B/assignment.md",
       "source_sha256": "ff7fafaac0af05a272025b86aecb1dcd2ccf43b77b9efb0fc4053d4e962a6d6f",
       "published_sha256": "ff7fafaac0af05a272025b86aecb1dcd2ccf43b77b9efb0fc4053d4e962a6d6f",
@@ -15368,6 +15487,13 @@
       "redacted": false
     },
     {
+      "path": "evaluations/A-M08-A/assessment.json",
+      "source_sha256": "d8c0877c3415793cd3176b748c4c8868f91bf5391ff87901af77bdb52a1e6dba",
+      "published_sha256": "d8c0877c3415793cd3176b748c4c8868f91bf5391ff87901af77bdb52a1e6dba",
+      "bytes": 116567,
+      "redacted": false
+    },
+    {
       "path": "evaluations/A-M08-A/dispatch.json",
       "source_sha256": "510ab7532144c520d46ec921e19e75e96d6317a1b5e40c5f9ab572c9197e0340",
       "published_sha256": "510ab7532144c520d46ec921e19e75e96d6317a1b5e40c5f9ab572c9197e0340",
@@ -15386,6 +15512,34 @@
       "source_sha256": "2adce3d7d65508814672fcd611ff535cdcb4f780d058386ff914c207153ab37a",
       "published_sha256": "2adce3d7d65508814672fcd611ff535cdcb4f780d058386ff914c207153ab37a",
       "bytes": 9888,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/A-M08-A/host-runs.json",
+      "source_sha256": "8ee94e10b7ffcccb114cf6b6cc2fa572d3714a0a4fb7e641f4722bc8c6d85577",
+      "published_sha256": "8ee94e10b7ffcccb114cf6b6cc2fa572d3714a0a4fb7e641f4722bc8c6d85577",
+      "bytes": 611,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/A-M08-A/source-map.json",
+      "source_sha256": "c7a97448090041afe38e29ac5d7d4dc603e6292518e78d0521edf365d87b43a9",
+      "published_sha256": "c7a97448090041afe38e29ac5d7d4dc603e6292518e78d0521edf365d87b43a9",
+      "bytes": 73518,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/A-M08-A/assessment.md",
+      "source_sha256": "ee9b03b3b5aa434065855b8772b8514138331356676caf11f4909f0ee85acf1d",
+      "published_sha256": "ee9b03b3b5aa434065855b8772b8514138331356676caf11f4909f0ee85acf1d",
+      "bytes": 122652,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/A-M08-A/task-result.json",
+      "source_sha256": "b908cc4103229231e54e3c220df06dccfb685d1f39ee7280782904c6add04b8d",
+      "published_sha256": "b908cc4103229231e54e3c220df06dccfb685d1f39ee7280782904c6add04b8d",
+      "bytes": 2760,
       "redacted": false
     },
     {
@@ -16670,6 +16824,13 @@
       "redacted": false
     },
     {
+      "path": "evaluations/A-M06-B/assessment.json",
+      "source_sha256": "d01abdd99f218334cb0c5b48b2b3d4024c0c1b3a15ecf8dbd76538dd2c673817",
+      "published_sha256": "d01abdd99f218334cb0c5b48b2b3d4024c0c1b3a15ecf8dbd76538dd2c673817",
+      "bytes": 213137,
+      "redacted": false
+    },
+    {
       "path": "evaluations/A-M06-B/dispatch.json",
       "source_sha256": "e7866ac051b6cc8a1ff33dbdf491aa90af3187da65c024d0929ce7c0d15c3a6b",
       "published_sha256": "e7866ac051b6cc8a1ff33dbdf491aa90af3187da65c024d0929ce7c0d15c3a6b",
@@ -16688,6 +16849,34 @@
       "source_sha256": "1b111726e4a26d876285c32b78609d42ab9d50f590692125c3305751c7fece77",
       "published_sha256": "1b111726e4a26d876285c32b78609d42ab9d50f590692125c3305751c7fece77",
       "bytes": 8935,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/A-M06-B/host-runs.json",
+      "source_sha256": "1d95411b7b2e4c89856c2e292ee5a69df9cf425c6cc9e7ba58c1011c20e6fd51",
+      "published_sha256": "1d95411b7b2e4c89856c2e292ee5a69df9cf425c6cc9e7ba58c1011c20e6fd51",
+      "bytes": 611,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/A-M06-B/source-map.json",
+      "source_sha256": "4088227ef710687e467631bff771bcae6093d3bcffca01cd90dcaa89c7de75fe",
+      "published_sha256": "4088227ef710687e467631bff771bcae6093d3bcffca01cd90dcaa89c7de75fe",
+      "bytes": 107709,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/A-M06-B/assessment.md",
+      "source_sha256": "df84484a090560754efc0f6f8af01d0f0aa972cb7c810b41fc194547bf44de4e",
+      "published_sha256": "df84484a090560754efc0f6f8af01d0f0aa972cb7c810b41fc194547bf44de4e",
+      "bytes": 138559,
+      "redacted": false
+    },
+    {
+      "path": "evaluations/A-M06-B/task-result.json",
+      "source_sha256": "7f2094e0595ece7e636224f6c70d9bc69bdd9bb558075dba7969e937ea0ab031",
+      "published_sha256": "7f2094e0595ece7e636224f6c70d9bc69bdd9bb558075dba7969e937ea0ab031",
+      "bytes": 2752,
       "redacted": false
     },
     {
@@ -17273,9 +17462,9 @@
     },
     {
       "path": "reusable/REFERENCE_WORKFLOW.md",
-      "source_sha256": "a2c66c91b1e7d75481203ae31a09e0d5e133d565b008a642eed83fbe827ed594",
-      "published_sha256": "a2c66c91b1e7d75481203ae31a09e0d5e133d565b008a642eed83fbe827ed594",
-      "bytes": 12753,
+      "source_sha256": "ce4560e0474774defc65c8102c4e29076b6690e32c3e251bed86d6d37ec2455f",
+      "published_sha256": "ce4560e0474774defc65c8102c4e29076b6690e32c3e251bed86d6d37ec2455f",
+      "bytes": 12989,
       "redacted": false
     },
     {
@@ -17343,27 +17532,11 @@
     },
     {
       "path": "README.md",
-      "source_sha256": "e016ab87940cdaee1d17e11788f8b8d1826171c9463fd2a8dd352b29c56e4f4b",
-      "published_sha256": "e016ab87940cdaee1d17e11788f8b8d1826171c9463fd2a8dd352b29c56e4f4b",
-      "bytes": 19123,
+      "source_sha256": "f3a1f0ccc30d5d9fd7c2aa33f987ef05221eef1cbba41d0483001a9fa08654f4",
+      "published_sha256": "f3a1f0ccc30d5d9fd7c2aa33f987ef05221eef1cbba41d0483001a9fa08654f4",
+      "bytes": 19878,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
-    },
-    {
-      "path": "tables/ARMS.csv",
-      "source_sha256": "462928a1837610ffd5fd29708422468a24fbb01de5a75dde40a4f27355b298b4",
-      "published_sha256": "462928a1837610ffd5fd29708422468a24fbb01de5a75dde40a4f27355b298b4",
-      "bytes": 13423,
-      "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
-    },
-    {
-      "path": "tables/ARMS.json",
-      "source_sha256": "1af0a0348a159c8d770ff706ba6db3c3fe66883c2423b8e94d0cbfbf85be4076",
-      "published_sha256": "1af0a0348a159c8d770ff706ba6db3c3fe66883c2423b8e94d0cbfbf85be4076",
-      "bytes": 41839,
-      "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
       "path": "accounting/MEASUREMENT_LIMITS.md",
@@ -17371,15 +17544,7 @@
       "published_sha256": "bc6dcaaacb5415680c4450c7d960335657ea29ea1b27c1a3a5b316713e40e4c6",
       "bytes": 3228,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
-    },
-    {
-      "path": "accounting/calculate-v2.py",
-      "source_sha256": "aecf14fcacd627ddfdd73fe3b7deb2a1f5380f531485b1b94221f8cff49fb289",
-      "published_sha256": "aecf14fcacd627ddfdd73fe3b7deb2a1f5380f531485b1b94221f8cff49fb289",
-      "bytes": 10884,
-      "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
       "path": "accounting/ORIGINAL_COMPONENT_LIMITS.md",
@@ -17387,7 +17552,7 @@
       "published_sha256": "d87247580f34c30fe270ebc34130610bd5ca8e956b07ad0b722512287c673cb2",
       "bytes": 612,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
       "path": "accounting/USAGE_QUERY.json",
@@ -17395,7 +17560,15 @@
       "published_sha256": "1fa647ef3fd0c60285f79c643dc04c8dc85c3e0540f17454213824bda7b1a8e0",
       "bytes": 368,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
+    },
+    {
+      "path": "accounting/calculate-v2.py",
+      "source_sha256": "aecf14fcacd627ddfdd73fe3b7deb2a1f5380f531485b1b94221f8cff49fb289",
+      "published_sha256": "aecf14fcacd627ddfdd73fe3b7deb2a1f5380f531485b1b94221f8cff49fb289",
+      "bytes": 10884,
+      "redacted": false,
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
       "path": "accounting/reproduce-summary.py",
@@ -17403,39 +17576,23 @@
       "published_sha256": "297335eb7dac5a91edcc3e8bac82ea3bfb6d3d08c6918391a47c65a7cdd028f0",
       "bytes": 1553,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
-      "path": "native/native-observations.json",
-      "source_sha256": "c4c9b6bd77cc47d69c64e981b906e70b576eceec6513402ea075b31ee079f40f",
-      "published_sha256": "c4c9b6bd77cc47d69c64e981b906e70b576eceec6513402ea075b31ee079f40f",
-      "bytes": 211568,
+      "path": "accounting/v2/ARMS_TIMING.csv",
+      "source_sha256": "08225c7f7100f3d951829e2dd565e24243a156d72d69d64136cd546475eeb673",
+      "published_sha256": "08225c7f7100f3d951829e2dd565e24243a156d72d69d64136cd546475eeb673",
+      "bytes": 21008,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
-      "path": "native/glm-integration-observations.json",
-      "source_sha256": "fb9993d5fe602c824d892d979c9d1c1c3e11908e99e62a2070486a98750b7811",
-      "published_sha256": "fb9993d5fe602c824d892d979c9d1c1c3e11908e99e62a2070486a98750b7811",
-      "bytes": 73777,
+      "path": "accounting/v2/TIMING.json",
+      "source_sha256": "20d3da0f3a1ae192ecfc9be16bdc04f4bb163b5b2eb304ce8858bc1ad01665bf",
+      "published_sha256": "20d3da0f3a1ae192ecfc9be16bdc04f4bb163b5b2eb304ce8858bc1ad01665bf",
+      "bytes": 569611,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
-    },
-    {
-      "path": "native/zcode-loop.json",
-      "source_sha256": "2b27aca54d59582724ff1d6f46aeea44289d6b475d60ba31bc99347a671cc685",
-      "published_sha256": "2b27aca54d59582724ff1d6f46aeea44289d6b475d60ba31bc99347a671cc685",
-      "bytes": 336282,
-      "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
-    },
-    {
-      "path": "native/host-goals.json",
-      "source_sha256": "3c697266993d6cc4cdff3edd63030ece41fe155311eab371d83e4643d039d3c6",
-      "published_sha256": "3c697266993d6cc4cdff3edd63030ece41fe155311eab371d83e4643d039d3c6",
-      "bytes": 1103124,
-      "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
       "path": "evaluations/EVIDENCE_AVAILABILITY.md",
@@ -17443,23 +17600,55 @@
       "published_sha256": "00d6fe887e345d6f41dc729321d0f00f2d8b8c1bce324179f8d9f1dd62fa09f4",
       "bytes": 737,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
-      "path": "accounting/v2/ARMS_TIMING.csv",
-      "source_sha256": "c9c07bdeddae5affefc4888aac5db37663059becf8d13ecaa61d28c36adecdfe",
-      "published_sha256": "c9c07bdeddae5affefc4888aac5db37663059becf8d13ecaa61d28c36adecdfe",
-      "bytes": 20725,
+      "path": "native/glm-integration-observations.json",
+      "source_sha256": "fb9993d5fe602c824d892d979c9d1c1c3e11908e99e62a2070486a98750b7811",
+      "published_sha256": "fb9993d5fe602c824d892d979c9d1c1c3e11908e99e62a2070486a98750b7811",
+      "bytes": 73777,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
-      "path": "accounting/v2/TIMING.json",
-      "source_sha256": "d2fa86b9952c50c3a364533c496444a13b1aae04a2c50a051a3c368894eb1547",
-      "published_sha256": "d2fa86b9952c50c3a364533c496444a13b1aae04a2c50a051a3c368894eb1547",
-      "bytes": 569195,
+      "path": "native/host-goals.json",
+      "source_sha256": "bf78936a550ce5e65701eedba38db5f0737f8957d328667e173e6e28e3b39c27",
+      "published_sha256": "bf78936a550ce5e65701eedba38db5f0737f8957d328667e173e6e28e3b39c27",
+      "bytes": 1047472,
       "redacted": false,
-      "source": "Root calculated accounting, compact observations or publication explanation"
+      "scope": "Root-generated compact public artifact or retained prior publication"
+    },
+    {
+      "path": "native/native-observations.json",
+      "source_sha256": "c4c9b6bd77cc47d69c64e981b906e70b576eceec6513402ea075b31ee079f40f",
+      "published_sha256": "c4c9b6bd77cc47d69c64e981b906e70b576eceec6513402ea075b31ee079f40f",
+      "bytes": 211568,
+      "redacted": false,
+      "scope": "Root-generated compact public artifact or retained prior publication"
+    },
+    {
+      "path": "native/zcode-loop.json",
+      "source_sha256": "65a86a07465e25f78823a0055df39aa63a163a918a685e07d9a88f377012a6bc",
+      "published_sha256": "65a86a07465e25f78823a0055df39aa63a163a918a685e07d9a88f377012a6bc",
+      "bytes": 352129,
+      "redacted": false,
+      "scope": "Root-generated compact public artifact or retained prior publication"
+    },
+    {
+      "path": "tables/ARMS.csv",
+      "source_sha256": "41afd0c46a9c98c9c364ad5e468b52986b502d8dd106f9b60e515cab7246ca51",
+      "published_sha256": "41afd0c46a9c98c9c364ad5e468b52986b502d8dd106f9b60e515cab7246ca51",
+      "bytes": 13481,
+      "redacted": false,
+      "scope": "Root-generated compact public artifact or retained prior publication"
+    },
+    {
+      "path": "tables/ARMS.json",
+      "source_sha256": "c98705845fea21073281cbc79e40650e018ea47f9c579eae243dd90a75fc90fc",
+      "published_sha256": "c98705845fea21073281cbc79e40650e018ea47f9c579eae243dd90a75fc90fc",
+      "bytes": 41887,
+      "redacted": false,
+      "scope": "Root-generated compact public artifact or retained prior publication"
     }
   ]
 }

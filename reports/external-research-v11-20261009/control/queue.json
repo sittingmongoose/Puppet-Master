@@ -500,10 +500,11 @@
     "method": null,
     "case": "C03",
     "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "status": "NOT_PROMOTED_UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed."
   },
   {
     "block_id": "C-04",
@@ -511,10 +512,11 @@
     "method": null,
     "case": "C04",
     "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "status": "NOT_PROMOTED_UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed."
   },
   {
     "block_id": "C-05",
@@ -522,10 +524,11 @@
     "method": null,
     "case": "C05",
     "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "status": "NOT_PROMOTED_UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed."
   },
   {
     "block_id": "C-06",
@@ -533,10 +536,11 @@
     "method": null,
     "case": "C06",
     "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "status": "NOT_PROMOTED_UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed."
   },
   {
     "block_id": "C-07",
@@ -544,10 +548,11 @@
     "method": null,
     "case": "C07",
     "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "status": "NOT_PROMOTED_UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed."
   },
   {
     "block_id": "C-08",
@@ -555,9 +560,10 @@
     "method": null,
     "case": "C08",
     "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "status": "NOT_PROMOTED_UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "reason": "No recipe meets locked confirmation promotion gate. M16 two development delivery savings are below 20% independently of pending source grades; remaining held-out cases stay sealed."
   }
 ]

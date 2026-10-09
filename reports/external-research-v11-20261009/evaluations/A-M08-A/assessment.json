@@ -1,0 +1,1794 @@
+{
+  "block": "A-M08-A",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+      "bytes": 1453
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+      "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "bytes": 312
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/assignment.md",
+      "sha256": "bca9f8630f8d8a90ae8ac83dbbd872a8d9030289151653d4e6f3bbf0e523c5d0",
+      "bytes": 2170
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/input-map.json",
+      "sha256": "2adce3d7d65508814672fcd611ff535cdcb4f780d058386ff914c207153ab37a",
+      "bytes": 9888
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/assignment.md",
+      "sha256": "2abf0ba04a80ff647e007ad0ecbf701bf425787d2fc6efac3d757a0974e16c21",
+      "bytes": 2793
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md",
+      "sha256": "cf06e1f776e33fe21f3e45122dcadc239805e721c1b1685794381d558cd8468a",
+      "bytes": 13002
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/input-map.json",
+      "sha256": "72d58b88a59cef6e297e5067b77fd1f299481549fdd7420ec91861861fc31653",
+      "bytes": 1220
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/source-map.json",
+      "sha256": "a32c073c89bd99584643588aa565a517d0a822446141334c2f366c74cfc443cb",
+      "bytes": 14111
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/sources/README.md",
+      "sha256": "f548f8edcc491313204aaa8854456c22b3d1678dd5cb5f36d3bf4b719daf0ed3",
+      "bytes": 2114
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/sources/verify-timefold-provider-v1.6.0.java",
+      "sha256": "0ea6b00515ffbc3d43a6048ea1a9f5b02e7467a065cc4b7c86ff6b07f897a33e",
+      "bytes": 6016
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/sources/verify-timefold-provider-v2.0.0.java",
+      "sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "bytes": 6404
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/sources/verify-timefold-provider-v2.2.0.java",
+      "sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "bytes": 6404
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/sources/verify-volunteerhub-home-20261009T2135Z.html",
+      "sha256": "b6c0710ecdc1e5ea8d31e98c9855d0b7846ca309292dd86f7834ffd7bfbbe892",
+      "bytes": 550224
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/sources/verify-volunteerhub-scheduling-20261009T2135Z.html",
+      "sha256": "8977c47d4f9873d6508119cf731d5beb733fed9ecbc25c50207e65f977063185",
+      "bytes": 436364
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/verification.md",
+      "sha256": "7d2d1b85d569c7dda2aa2c1319b03018b6163294f8f60ba75079950117a99eb5",
+      "bytes": 13670
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/assignment.md",
+      "sha256": "5c96af53dd49751004a8ab41c26959e434a5d2f246bbbfab29aa6b4def3415ac",
+      "bytes": 3269
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/discovery.md",
+      "sha256": "9d2798f92a80c2247e997c661b72f4d94740422b93fe1a2d2fa9eca1f4819384",
+      "bytes": 14609
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/draft.md",
+      "sha256": "fbb9e299354a1e3ad34fd24ee7660fe61f7675df2fd641d5d70f13a05785794d",
+      "bytes": 13392
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/input-map.json",
+      "sha256": "55316fe08c60f6cab0917e0ab309ce5d4bd65eb22212dcb5b952811f24c90e0b",
+      "bytes": 674
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/plan-reveal.json",
+      "sha256": "d213c7e1f818a4a257ddf9d826572dae03eaea5258b2456b1b06566f87f0315b",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/revealed-plan.md",
+      "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "bytes": 312
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/source-map.json",
+      "sha256": "2bf7839c1efef1240e9b0f9abb4e73eb6b2065fa144dc87e324c7b3043595ad7",
+      "bytes": 8663
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/sources/timefold-EmployeeSchedulingConstraintProvider_stable-2.3.0.java",
+      "sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "bytes": 6404
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/sources/timefold-EmployeeSchedulingConstraintProvider_v1.10.0.java",
+      "sha256": "3c9fc645479616f10c53f509c6e62dd861898d874e842446c0f2e2988c3f6fcb",
+      "bytes": 6570
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/assignment.md",
+      "sha256": "848c5f68cf6813cd0741688e75dc42cb3570dffeb6e5cd2a8c64fb6e8c6102a0",
+      "bytes": 3056
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+      "sha256": "1c1ee08922597828ce986280aa4921a450ca604bb42fcf2a1d80fee9c7875aee",
+      "bytes": 37142
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/input-map.json",
+      "sha256": "2936b50e7877bde23421168ca9ba0f8f6af4736740fa5c45b837952599a2c9f0",
+      "bytes": 1655
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/source-map.json",
+      "sha256": "f33fbc5e06b58ccd938a9811548aee227b053178e83580099798e9258a3eb376",
+      "bytes": 9179
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/sources/README.md",
+      "sha256": "3bcb268881337839fc66b575bc47a5463a04606802fa0b2f1a1e12eb6afd57a6",
+      "bytes": 1994
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/sources/live-refetch-v200-20261009T2153Z.md",
+      "sha256": "90fa5e9b35b96766efee0e0152a1227d5f7b01f0f2b9109aa58fb1601c1b0084",
+      "bytes": 1916
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/assignment.md",
+      "sha256": "f514fc6348d8156366fced7e3b6404af5aac9d71962ac271268eb2d7e54580e9",
+      "bytes": 2941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md",
+      "sha256": "54cbfcbc3a27f7a0e21a7e38cd489f10b57aa0cbf4ab8823f0e1aea4e8732932",
+      "bytes": 11054
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/input-map.json",
+      "sha256": "331e194ea13b528cf0e2115f2d9733491979fb86956f81e0ed38180abd68e6d6",
+      "bytes": 1236
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/source-map.json",
+      "sha256": "3a7c7e172e0ab6784a6612dc73556401f105d854634e144af19d6dbfb176d8a6",
+      "bytes": 7859
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/sources/index.md",
+      "sha256": "4510ed4a80af8c95afc8264c09607f720cb3f96a524b94d9e1a0fb169389abec",
+      "bytes": 3247
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/sources/re-observations.md",
+      "sha256": "32eaca88d6e86c629ed406ad0a5991233b2e7f2073b2db67ead7eee2ac499da8",
+      "bytes": 7800
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/assignment.md",
+      "sha256": "12685bdd14fba9abf3bedc229f63cb4332298ec55e371254664fa746bb8db932",
+      "bytes": 3419
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/discovery.md",
+      "sha256": "6dd83e2c57fb9ea025c7ba9e5ac010cda2ccf3e948247ff1caa61a7df13ec8c5",
+      "bytes": 13023
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/draft.md",
+      "sha256": "bb5b5827a73902a65a5f99152ef307e6f7019a2543c89b35f8a69b853fe3b679",
+      "bytes": 11782
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/input-map.json",
+      "sha256": "7dfa349f0b284580c3adbe89bb5b3053fe9e08c7fdbb87426bb223fc2f9159b6",
+      "bytes": 680
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/plan-reveal.json",
+      "sha256": "b0fe5676e2f43327e7015c4e2223ead0fa9f1e217c98142d1b6e416d6b1f17c7",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/revealed-plan.md",
+      "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "bytes": 312
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/source-map.json",
+      "sha256": "0c537348989fac1e15aee992a8e432a1f7699ceb5e6aa3858881552c6ee615ba",
+      "bytes": 5665
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/S01-or-tools-employee-scheduling-docs.md",
+      "sha256": "64e193488566929d6639c279c4b243c2cc2364e02e922a39099c41302c85cf1a",
+      "bytes": 1397
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/S02-timefold-load-balance-docs.md",
+      "sha256": "aa96815ddccf54856d1a308e04303f6ff38fbda0b2fc461d2f1761c20d0b393b",
+      "bytes": 1661
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/S03-timefold-quickstarts-repo.md",
+      "sha256": "26861e1b44fe0f6c8fb3fb20548667bcb36d7f296884462456a6c7aabecb09cc",
+      "bytes": 1060
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/S04-or-tools-releases.md",
+      "sha256": "43a78fc15f92adfa685ee81a6020c6198c5945f5c46edb6acf32166e228a4ed1",
+      "bytes": 1439
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/S05-timefold-solver-releases.md",
+      "sha256": "76de1e5c40fc293b5444d339f9e77b9966f4dabb842d02b300e8a64504be0dbb",
+      "bytes": 1335
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/S06-golden-food-bank-platforms.md",
+      "sha256": "8bd8e0f9cae9746bc711b1e21a07cbfdabb2af2db16b871c3b3cd61db4d64fdc",
+      "bytes": 1228
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/S07-volunteerhub-features.md",
+      "sha256": "e17470f7e6343d964b13f29af804f5d49eee67c77b3da63134edff4dbd4cb771",
+      "bytes": 970
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/S08-search-landscape-secondary.md",
+      "sha256": "4f72e56ea38d8080f8a06010d93ce859c69fa92d91d7377b3ba3cab8225684d3",
+      "bytes": 1077
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/sources/index.md",
+      "sha256": "cf66ca957962f167d54ed54221f896f471d7a6a30cd31edffde5e30c17e5e673",
+      "bytes": 1861
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/assignment.md",
+      "sha256": "b5f21043b10281c92c0dac62da8a0c893766b0b9b44425af312dbcdf6df96e80",
+      "bytes": 3204
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+      "sha256": "a370e7c4b7d5fb4ea71a59a415ff95fb71708a5c92305752e90c36942661aaf3",
+      "bytes": 24621
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/input-map.json",
+      "sha256": "77d6581912b353e3327620aee5b6201b222c28e402a8351af05eb18141baf904",
+      "bytes": 1566
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/source-map.json",
+      "sha256": "0f24c4334cb8b513998b8d38158fe67fbc5c50fb1e664a506965b4c0df03bc58",
+      "bytes": 5270
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/sources/N01-shift-scheduling-example-path-resolution.md",
+      "sha256": "3537d9c307695790f3021bb5ccc6171e15e498616bd6118f108e53659040a235",
+      "bytes": 1996
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/sources/S01-or-tools-employee-scheduling-docs-re.md",
+      "sha256": "f9e71ec35c23d382afda85dbd2c64e78702eb17b978cc1dc862bb775e7f0c485",
+      "bytes": 1826
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/sources/S05-timefold-solver-releases-re.md",
+      "sha256": "cecc9f4fbf775cd4855f24416e70825cf40894651a8ae7d5c32f69055e9c633e",
+      "bytes": 1141
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/sources/index.md",
+      "sha256": "ba69454ed29e0f8b5a2ff07a473b08ef1f4de65c098ac322284027d9be2e0746",
+      "bytes": 1728
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N2-F1",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "severity": "material / medium",
+          "original_obligations": [
+            "O2",
+            "O3",
+            "O5"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+              "lines": "207-218",
+              "passage": "the constraint demonstrably exists from ≤ 2024-06-19 and is unchanged through 2.3.0; arrived inside b2056965eb30"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/verification.md",
+              "lines": "44-49",
+              "passage": "Conclusion: the constraint demonstrably exists from the file’s first appearance on the new path"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+              "lines": "498-500",
+              "passage": "M1 arrival window corrected to ≤ 2024-06-19"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E06-provider-b205-java",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/b2056965eb30/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "defineConstraints, lines 34-46; complete file contains no balanceEmployeeShiftAssignments or loadBalance",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E06-provider-b205-java.txt",
+              "sha256": "dc92ad182e12512127d1edb6b2e2ed0b167d0e80f57db49db071b416350c5b28"
+            },
+            {
+              "source_id": "E41-quickstart-commit-b205",
+              "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/b2056965eb30",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "commit committer date 2024-06-19; provider rename and patch",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E41-quickstart-commit-b205.txt",
+              "sha256": "928744c8f1dcaed3bf2bfb531bb79cb4aadaa908a0ae0402a734aadfe23d5154"
+            },
+            {
+              "source_id": "E29-provider-v1.12.0",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.12.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "defineConstraints; balance absent",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E29-provider-v1.12.0.txt",
+              "sha256": "56cc96484da12c66b7746ffa103669c63be0154e9de394affa50dc7171863993"
+            },
+            {
+              "source_id": "E28-provider-v1.13.0",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.13.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "defineConstraints and balanceEmployeeShiftAssignments",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E28-provider-v1.13.0.txt",
+              "sha256": "5be5935c01a9a037e79016aa373859ea4b5811021f0c4774287749ec2cdc5576"
+            },
+            {
+              "source_id": "E42-quickstart-commit-v1.13",
+              "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/v1.13.0",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "tag commit date 2024-08-13",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E42-quickstart-commit-v1.13.txt",
+              "sha256": "32e32e5f706b333f6da58773ef76d5900e87577bee619a2279bdddbe12f5034f"
+            },
+            {
+              "source_id": "E43-quickstart-commit-v1.12",
+              "url": "https://api.github.com/repos/TimefoldAI/timefold-quickstarts/commits/v1.12.0",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "tag commit date 2024-07-09",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E43-quickstart-commit-v1.12.txt",
+              "sha256": "13359f718c4161666ac3c686092bfed17ac121ff30eb29934293749727fee33b"
+            }
+          ],
+          "reasoning": "The critic inferred the contents of an early revision from the first path-history row, then the reviser re-fetched only v2.0.0, not the alleged introducing revision. Independent retrieval of the exact named b205 commit shows HardSoftScore and seven constraints, with no fairness constraint. v1.12.0 still lacks it; v1.13.0 contains it. Thus the asserted June upper bound and introduction attribution are false. The independently checked tags bound presence between the July 9 and August 13 tagged states; no exact feature-authoring claim is needed for this assessment.",
+          "consequence": "This is an incorrect source-grounded implementation/version correction introduced by criticism and preserved in the final, rather than an honestly unresolved historical detail. It affects the required evolution evidence for the selected fairness mechanism.",
+          "criticism_accept_reject_evidence": "Accept M1’s narrower discovery that the restructured v2.0.0 path has the fairness block and that old-path 404s do not prove feature absence. Reject its unsupported first-path-commit ⇒ first-feature-presence inference. The final adopted that inference without checking its governing revision."
+        },
+        {
+          "id": "N2-F2",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "material / high",
+          "original_obligations": [
+            "O2",
+            "O5"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+              "lines": "119-129",
+              "passage": "complement zero-inclusion, LoadBalance::unfairness spread statistics, and the BigDecimal requirement ... no fetched source proves"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+              "lines": "462-464",
+              "passage": "all primary lookups 404 in both stages"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/source-map.json",
+              "lines": "sources entry R8 / operations",
+              "passage": "no new lookups attempted ... no new evidence could reasonably exist ... requires the semantics to stay labeled unevidenced either way"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E35-bistream-v2.3.0",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/bi/BiConstraintStream.java",
+              "version_or_release": "v2.3.0",
+              "symbol_or_section": "BiConstraintStream.complement(Class,Function), original lines 1386-1410",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E35-bistream-v2.3.0.txt",
+              "sha256": "56defec71b99ee8f9576c85bb715f83ad2ae467eee50b4eb634ed9e0b36c61c1"
+            },
+            {
+              "source_id": "E36-loadbalance-api-v2.3.0",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/common/LoadBalance.java",
+              "version_or_release": "v2.3.0",
+              "symbol_or_section": "LoadBalance.loads and unfairness",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E36-loadbalance-api-v2.3.0.txt",
+              "sha256": "43e6480d322d3dfce7be9b324793b239b201318679c9698b90d56630f213114f"
+            },
+            {
+              "source_id": "E38-collectors-v2.3.0",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintCollectors.java",
+              "version_or_release": "v2.3.0",
+              "symbol_or_section": "ConstraintCollectors.loadBalance overloads, original lines 1952-2023",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E38-collectors-v2.3.0.txt",
+              "sha256": "30d1c91af3ebe807a50520a96a2646cc3ccf9265357526753cb1263d536eb854"
+            },
+            {
+              "source_id": "E44-defaultbalance-v2.3",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.3.0/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/DefaultLoadBalance.java",
+              "version_or_release": "v2.3.0",
+              "symbol_or_section": "DefaultLoadBalance.unfairness and updateSquaredDeviation",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E44-defaultbalance-v2.3.txt",
+              "sha256": "9983033042c20c8fbc59710df331028b43dd81c45f55951f8aecc3a38c8b4d9d"
+            },
+            {
+              "source_id": "E01-fairness-doc",
+              "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "Timefold Solver 2.7.1 collector and score-type guidance",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E01-fairness-doc.txt",
+              "sha256": "888f34ac751c51ba89618a17db9218e7bd3d3bbbb40670a6ada2017f5e11bcd9"
+            }
+          ],
+          "reasoning": "Honest uncertainty is appropriate for inaccessible product internals, but this is abandoned required research on public APIs central to the recommendation. The recorded failed paths include a topic URL that is not the fairness page and guessed org/timefold Javadoc paths, while the retained provider imports ai.timefold. Released v2.3.0 API/code is publicly retrievable and matches the final’s selected quickstart era; the complement contract, BigDecimal result type, long-valued load mappings and precise unfairness calculation are available. Their v2.3.0 and v2.7.1 API captures are byte-identical for the checked API files. Fifteen minutes since a failed URL is not a reason that correct existing sources cannot be found.",
+          "consequence": "The final leaves the governing behavior of its strongest fairness mechanism intentionally uninvestigated and demotes supported zero-participant inclusion to unresolved semantics. This is a research/preservation deficit, not a claim that unexecuted scheduling was proven or that a private vendor contract had to be obtained.",
+          "criticism_accept_reject_evidence": "M8 correctly warns against inferring every API behavior from a call site. Its uncertainty label does not complete O2. m6’s admitted abandoned-docs gap is material for this central selected mechanism, and R8’s deliberate non-research is not justified by the failed guessed URLs."
+        },
+        {
+          "id": "N2-F3",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "material / medium",
+          "original_obligations": [
+            "O2",
+            "O3",
+            "O5"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+              "lines": "219-221",
+              "passage": "forEachUniquePair while stable uses forEach().join() — a behaviorally near-equivalent pairing change"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md",
+              "lines": "34",
+              "passage": "behaviorally near-equivalent pairing change worth one line"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E08-provider-v1.10.0",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.10.0/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+              "version_or_release": "v1.10.0",
+              "symbol_or_section": "atLeast10HoursBetweenTwoShifts, lines 62-73",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E08-provider-v1.10.0.txt",
+              "sha256": "3c9fc645479616f10c53f509c6e62dd861898d874e842446c0f2e2988c3f6fcb"
+            },
+            {
+              "source_id": "E45-factory-v1.10",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v1.10.0/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintFactory.java",
+              "version_or_release": "v1.10.0",
+              "symbol_or_section": "ConstraintFactory.forEachUniquePair, lines 94-123; implicit PlanningId ordering",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E45-factory-v1.10.txt",
+              "sha256": "b9b80b550e94ebd500828c99104be5ba018a5863753f08d0e2141db14eee82b3"
+            },
+            {
+              "source_id": "E47-quickstart-v1.10-pom",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.10.0/use-cases/employee-scheduling/pom.xml",
+              "version_or_release": "v1.10.0",
+              "symbol_or_section": "version.ai.timefold.solver = 1.10.0",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E47-quickstart-v1.10-pom.txt",
+              "sha256": "a92dc28dc5ad511bfe70311dc21860bf978ba0fbd8b384ba25295fa5b55b207f"
+            },
+            {
+              "source_id": "E09-provider-stable-old",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/stable/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "atLeast10HoursBetweenTwoShifts, lines 67-77",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E09-provider-stable-old.txt",
+              "sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4"
+            }
+          ],
+          "reasoning": "The code-call descriptions are accurate, but the near-equivalent characterization omits a governing applicability condition: unique-pair ID order need not match chronological order. The two forms are not generally equivalent for the asymmetric end≤start join. The old API automatically orients a unique pair by PlanningId, not chronological order. For the same employee, an earlier 08:00–10:00 shift with ID 20 and a later 12:00–14:00 shift with ID 10 have a two-hour rest violation. The old unique pair is later→earlier and fails its end≤start join; the current unrestricted ordered join admits earlier→later and penalizes 480 missing minutes. The old quickstart POM pins Solver 1.10.0, so the checked old API is release-applicable. The two-hour separation is independent of DST and does not involve a hypothetical zero-duration shift.",
+          "consequence": "A governing default hidden by the surface-level diff changes constraint enforcement under ordinary out-of-chronology IDs, relevant to imported schedules. The final inaccurately minimizes this implementation evolution detail. evidence/rest-pair-analysis.json is a predicate-level reviewer calculation, not a Timefold runtime run.",
+          "criticism_accept_reject_evidence": "Reject the critic’s m4 characterization as a merely near-equivalent pairing change unless the unstated ID/chronology condition is supplied. The final accepted it without checking the default unique-pair orientation."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "type": "minor scope/taxonomy",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "32-36 / 418-426",
+            "passage": "mobile access including on-site app/check-in; import/permission/accessibility probes optional"
+          },
+          "judgment": "The brief requires mobile access, not a native app or check-in. Treat cited app/check-in as optional precedent. The features remain binding even if these particular probes are optional."
+        },
+        {
+          "id": "N2-m2",
+          "type": "unsupported explanatory inference / minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "255-258",
+            "passage": "evidence that recurrence is genuinely hard to ship"
+          },
+          "judgment": "An undated roadmap and unrelated fixes do not establish engineering difficulty or current commercial absence. E04 supports documented future-plan placement only."
+        },
+        {
+          "id": "N2-m3",
+          "type": "source/applicability limitation / minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "88 / 231-235",
+            "passage": "license file names unverified; planned-but-unshipped across 2.x"
+          },
+          "judgment": "Retain candidate verification limits; E19 confirms exception file. Latest undated docs can support documented status, not an exhaustive audit of shipped recurrence implementations."
+        },
+        {
+          "id": "N2-m4",
+          "type": "proposal limitation / minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "414-417",
+            "passage": "whether ... over-assigns the more-available volunteer"
+          },
+          "judgment": "A raw equal-count objective commonly overutilizes the less-available participant relative to offered capacity. The hypothesis is poorly framed, but the proposed A/B scenario is still meaningful and no observed result is asserted."
+        }
+      ],
+      "unresolved": [
+        {
+          "topic": "Private vendor defaults and chosen product policy",
+          "status": "honestly externally unresolved / user decision",
+          "detail": "Waitlist ranking, detailed recurrence/import contracts, availability-normalization choice, sharing granularity and operational thresholds are not established by public capability pages. No fabricated facts substituted."
+        },
+        {
+          "topic": "Runtime feasibility, performance and accessibility",
+          "status": "not executed; proposed work",
+          "detail": "No product or solver validation is available. The brief allows meaningful honest proposals and does not demand unlimited production guarantees."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "original obligations and constraints",
+          "coverage": "Complete document review; O1-O6 and every explicit brief constraint assessed",
+          "coverage_complete": true,
+          "judgment": "Partial candidate compliance: useful product comparison and full self-containment; O2 has central research gap and O3 false correction.",
+          "evidence": [
+            "final.md:20-46",
+            "N2-F1",
+            "N2-F2",
+            "N2-F3"
+          ]
+        },
+        {
+          "axis": 2,
+          "name": "consequential primary facts/defaults/applicability",
+          "coverage": "All selected consequential claim clusters checked against primary docs/released code; honest external/private uncertainties distinguished",
+          "coverage_complete": true,
+          "judgment": "Material defects in version introduction, core-API research and unique-pair default; other core model and product facts substantially supported.",
+          "evidence": [
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E35",
+            "E38",
+            "E45"
+          ]
+        },
+        {
+          "axis": 3,
+          "name": "unfamiliar discovery and viable alternatives",
+          "coverage": "Complete discovery/draft/final landscape and optional mechanism review",
+          "coverage_complete": true,
+          "judgment": "Strong substantive alternatives: commercial self-signup, open CRM manual allocation, solver families, queue/lottery; no grade from source/length counts.",
+          "evidence": [
+            "final.md:67-150",
+            "276-315",
+            "438-452"
+          ]
+        },
+        {
+          "axis": 4,
+          "name": "every exact P disposition",
+          "coverage": "P1-P6 all quoted and checked; conditions, corrections, already-covered scope, options and uncertainty assessed",
+          "coverage_complete": true,
+          "judgment": "Most directions defensible; storage rejection interpreted conditionally, policy decisions not treated as source-proved requirements.",
+          "evidence": [
+            "plan_dispositions",
+            "E20",
+            "E21"
+          ]
+        },
+        {
+          "axis": 5,
+          "name": "draft→critique→final preservation/adjudication",
+          "coverage": "Complete mapped prose reviewed; all M1-M9/m1-m9 adjudicated; critic verification read",
+          "coverage_complete": true,
+          "judgment": "Final expands self-containment and preserves most alternatives; M1 introduces false correction, M8 demotes selected public semantics without required research, m4 minimizes a real default change.",
+          "evidence": [
+            "criticism_adjudication",
+            "N2-F1",
+            "N2-F2",
+            "N2-F3"
+          ]
+        },
+        {
+          "axis": 6,
+          "name": "proposed versus executed validation",
+          "coverage": "Every final proposed scenario and claimed executed source-operation category reviewed",
+          "coverage_complete": true,
+          "judgment": "Meaningful proposal set; no executed scheduler/solver proof claimed. Static successful source operations do not rescue incorrect inference.",
+          "evidence": [
+            "validation_review",
+            "final.md:410-434",
+            "482-491"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_cluster": "Vendor capabilities",
+            "evidence": "E02/E18 + frozen HTML",
+            "result": "Recurring shifts, self-signup, waitlists, timing/channels, app/check-in and group placement are supported marketing capabilities; private ranking/expansion defaults remain unknown."
+          },
+          {
+            "claim_cluster": "CiviVolunteer scope/API/release",
+            "evidence": "E04/E05/E19",
+            "result": "Docs place recurrence in Future plans; VOL-267 and VOL-269/permissions supported. Current shipped recurrence absence and causal difficulty are not exhaustively established."
+          },
+          {
+            "claim_cluster": "Current provider hard/soft constraints",
+            "evidence": "E09 + frozen Java",
+            "result": "Required skill, overlaps, 10h rest, date bucketing, unavailable/desire/undesire minutes and fairness call chain checked."
+          },
+          {
+            "claim_cluster": "Historical provider versions",
+            "evidence": "E06/E08/E28/E29/E41/E42/E43",
+            "result": "Old/new tagged states checked; June introduction refuted."
+          },
+          {
+            "claim_cluster": "Fairness governing APIs",
+            "evidence": "E35/E36/E38/E44",
+            "result": "Complement padding and all-present facts, long-valued loads, BigDecimal result and aggregate unfairness available; avoidable research deferral identified."
+          },
+          {
+            "claim_cluster": "Pairing default/evolution",
+            "evidence": "E45/E47 + rest-pair-analysis.json",
+            "result": "Implicit ID order makes old asymmetric join observably different; dependency pinned."
+          },
+          {
+            "claim_cluster": "OR-Tools basics/defaults",
+            "evidence": "E03/E31",
+            "result": "Boolean exact/at-most coverage, uniform min/max bands, 0/1 soft requests, enumeration settings, ordinary solve defaults and no size assurance checked."
+          },
+          {
+            "claim_cluster": "Temporal representation",
+            "evidence": "E20/E21",
+            "result": "Naive LocalDateTime lacks instant/zone, local+TZID and UTC are legitimate distinct forms; recurrence policies matter."
+          },
+          {
+            "claim_cluster": "Plan/user constraints",
+            "evidence": "exact frozen brief and plan",
+            "result": "Every P and explicit brief constraint reviewed; normalized fairness choice not empirically imposed."
+          },
+          {
+            "claim_cluster": "Preservation/criticism",
+            "evidence": "full discovery/draft/critique/verification/final/source maps",
+            "result": "All 18 critic findings and five rejected-demand statements considered against content, not accepted by count."
+          },
+          {
+            "claim_cluster": "Validation claims",
+            "evidence": "all final validation prose",
+            "result": "Five proposed tests versus source-only execution independently distinguished; no runtime/library witness claimed by candidate."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning_of_complete": "Complete scoped review of consequential authored claim clusters and all six axes. Confirmed/refuted facts and honestly private/unexecuted uncertainties are distinguished. Does not mean all claims are true, all vendors were evaluated, or candidate runtime behavior is certified."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "read_scope": [
+          "research/discovery.md",
+          "research/draft.md",
+          "critic/critique.md",
+          "critic/verification.md if mapped",
+          "reviser/final.md",
+          "all mapped source maps and source indexes"
+        ],
+        "judgment": "All meaningful draft/final options and criticism outcomes traced. Findings identify false changes and lost/avoidably demoted conditions; no claim is made that unmapped intermediate versions were inspected."
+      },
+      "grade_limits": [
+        "FAIL rests on the listed material substantive defects, not metadata, source/citation/length counts, critic agreement, or a demand to execute unavailable scheduler tests.",
+        "Full scoped six-axis review completed. Remaining uncertainty belongs to private product contracts, user policy or unexecuted validation; no central available evidence remains unreviewed within the assessed claim clusters.",
+        "No quality equivalence or quality-adjusted timing/cost win follows from both grades being FAIL."
+      ],
+      "obligations": [
+        {
+          "obligation": "O1",
+          "judgment": "Substantive competing approaches: VolunteerHub self-signup/waitlist versus CiviVolunteer CRM/manual assignment versus two optimization mechanisms; optional queue/lottery leads retained. Verified beyond the thin plan."
+        },
+        {
+          "obligation": "O2",
+          "judgment": "Provider formulas and OR-Tools model mostly accurate, but central public fairness APIs deliberately left unresolved (N2-F2) and pairing evolution minimized incorrectly (N2-F3)."
+        },
+        {
+          "obligation": "O3",
+          "judgment": "CiviVolunteer VOL-267/VOL-269 chain genuinely relevant and supported. Timefold tagged change exists, but alleged June introduction is false (N2-F1). No exact authoring-commit identification is demanded."
+        },
+        {
+          "obligation": "O4",
+          "judgment": "All six exact clauses quoted, distinguished conditions/options/user choices. Most directions defensible; P5 rejection must mean unqualified naive storage, not all local+zone recurrence representations."
+        },
+        {
+          "obligation": "O5",
+          "judgment": "Full self-contained final and binding-constraint restatement; alternatives, uncertainty, user decisions largely survive. Fallible criticism introduces a false version correction and leaves a supported mechanism demoted to avoidable uncertainty."
+        },
+        {
+          "obligation": "O6",
+          "judgment": "Five meaningful proposals, no solver/product runtime claimed. Static source verification was executed, not scheduling tests. Proposal limitations do not become executed success or a speed win."
+        }
+      ],
+      "explicit_constraints": {
+        "scale_180": "Both finals address 180 explicitly in validation/model context; example scale does not prove interactive production capacity.",
+        "changing_availability": "Both discuss availability and caps; N2 explicitly hard enforcement and re-solving, N1 validation masks and availability-derived policy. No equality of availability may be inferred from headcount.",
+        "recurring_shifts": "Both retain weekly template; N1 market-gap rationale defective, N2 vendor recurrence verified.",
+        "predictable_coverage": "Both keep coordinator control and explicit filling mechanisms; no empirical no-show or coverage improvement is proven.",
+        "mobile_access": "Both retain primary mobile product precedent; no responsive/native implementation was built.",
+        "accessible_reminders": "Both retain text/channel choices and no executed accessibility validation. N2 expressly proposes screen-reader pass; N1’s machine-readable-text proposal is not proof of accessibility.",
+        "privacy_limited_sharing": "Both propose scoped audiences; no legal privacy mandate is invented. N1 overstates unknown contact fields.",
+        "occasional_imported_rosters": "Both retain import need; N2 contract unknown plus round-trip proposal, N1 wrongly mandates template-only shape.",
+        "no_invented_legal_requirements": "No jurisdiction-specific legal requirement invented in either final. Learning accessibility guidance would not itself invent law.",
+        "no_equal_availability_assumption": "Both reject the unmodified toy model for lacking binding availability. Availability-normalized fairness remains a product choice, not the only possible fair policy."
+      },
+      "plan_dispositions": [
+        {
+          "clause_id": "P1",
+          "exact_clause": "Generate recurring shifts from a weekly template.",
+          "authored_disposition": "already-covered with conditions and corrections",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "247-274",
+            "passage": "already-covered with conditions and corrections"
+          },
+          "independent_judgment": "Supported recurrence precedent; timezone, capacity, horizon and holiday choices are reasonable design conditions. The leap from an old CiviVolunteer roadmap to recurrence being intrinsically hard to ship is not established. RRULE remains optional.",
+          "evidence_ids": [
+            "E02-volunteerhub-scheduling",
+            "E04-civi-introduction",
+            "E20-rfc5545"
+          ]
+        },
+        {
+          "clause_id": "P2",
+          "exact_clause": "Assign the first available volunteer alphabetically.",
+          "authored_disposition": "rejected as sole mechanism; correction plus user decisions",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "276-315",
+            "passage": "rejected as sole mechanism; correction plus user decisions"
+          },
+          "independent_judgment": "Alphabetical repeated first-fit can concentrate assignments; rejection of it as the only allocation policy is reasonable. Hard availability, eligibility and re-solving are design requirements. Normalized fairness is an explicit decision, not established vendor behavior. Core API research is incomplete (N2-F2).",
+          "evidence_ids": [
+            "E03-ortools-employee-doc",
+            "E09-provider-stable-old",
+            "E35-bistream-v2.3.0"
+          ]
+        },
+        {
+          "clause_id": "P3",
+          "exact_clause": "Allow coordinators to swap names.",
+          "authored_disposition": "already-covered, conditional; volunteer swap requests optional",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "317-340",
+            "passage": "already-covered, conditional; volunteer swap requests optional"
+          },
+          "independent_judgment": "Coordinator swaps fit the brief. Revalidation, permission policy and audit trail are clearly separated as design conditions; documented CRM management is narrower than a complete access-control model.",
+          "evidence_ids": [
+            "E09-provider-stable-old",
+            "E05-civi-2.2"
+          ]
+        },
+        {
+          "clause_id": "P4",
+          "exact_clause": "Email everyone the full roster.",
+          "authored_disposition": "rejected as stated; scoped reminders/views, user decisions",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "342-370",
+            "passage": "rejected as stated; scoped reminders/views, user decisions"
+          },
+          "independent_judgment": "Privacy-limited sharing warrants an explicit audience/content policy. Final correctly withdraws the contact-details assumption. Targeted reminders are a product precedent, not proof that a consented limited directory can never be shared.",
+          "evidence_ids": [
+            "E02-volunteerhub-scheduling",
+            "E05-civi-2.2"
+          ]
+        },
+        {
+          "clause_id": "P5",
+          "exact_clause": "Use local wall-clock timestamps.",
+          "authored_disposition": "rejected as unqualified storage; UTC plus zone, local expansion",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "372-395",
+            "passage": "rejected as unqualified storage; UTC plus zone, local expansion"
+          },
+          "independent_judgment": "Reasonable for instants/reminders and zone-pinned recurrence. Interpret rejection conditionally: local civil time plus a zone is also a legitimate recurring-template representation, as the final itself requires. P5 alone does not mandate naive storage.",
+          "evidence_ids": [
+            "E21-localdatetime",
+            "E20-rfc5545",
+            "E09-provider-stable-old"
+          ]
+        },
+        {
+          "clause_id": "P6",
+          "exact_clause": "Test one ordinary week.",
+          "authored_disposition": "ordinary smoke base; mandatory correction validations and optional probes",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md",
+            "lines": "397-434",
+            "passage": "ordinary smoke base; mandatory correction validations and optional probes"
+          },
+          "independent_judgment": "All five scenarios are meaningful proposals and are honestly unexecuted. Import, privacy and accessibility are binding brief requirements even if their particular proposed probes are called optional; no solver validation outcome is proven.",
+          "evidence_ids": [
+            "E03-ortools-employee-doc",
+            "E20-rfc5545"
+          ]
+        }
+      ],
+      "criticism_adjudication": [
+        {
+          "critic_id": "M1",
+          "independent_disposition": "accept narrow tagged-path discovery; reject early-introduction inference",
+          "reasoning_and_evidence": "Adopted in final 190-218 and 498-500. E06/E41 refute alleged June feature presence; E07 confirms later tagged presence. N2-F1.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "M2",
+          "independent_disposition": "accept factual wording correction",
+          "reasoning_and_evidence": "Fork rename is explicitly non-release and post-2022; final 195-198/500-502 names it. No grade based on dates/commit counts alone.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "M3",
+          "independent_disposition": "accept evidence/design distinction",
+          "reasoning_and_evidence": "Final 293-298 marks immediacy as a design requirement; provider enforces constraints during score calculation, not a live availability-update service.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "M4",
+          "independent_disposition": "accept consistency tightening; severity limited",
+          "reasoning_and_evidence": "Final 399-403 reclassifies DST/fairness probes. This is taxonomy consistency, not evidence any tests executed; original O6 permits meaningful proposals.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "M5",
+          "independent_disposition": "accept narrowed contact-schema premise; qualify rejection rationale",
+          "reasoning_and_evidence": "Final 348-368 withdraws contact-publication assumption and retains audience/content decisions. Targeted-reminder marketing does not prohibit every consented roster digest.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "M6",
+          "independent_disposition": "accept mechanism clarification",
+          "reasoning_and_evidence": "Final 130-140/164-173 correctly identifies soft requests and absent availability masks, per E03. Equal-count bands are not intrinsically a claim of equal availability, but the toy model lacks binding availability.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "M7",
+          "independent_disposition": "accept provenance improvement; reject as standalone material scientific defect",
+          "reasoning_and_evidence": "Snapshots support actual quotes. Hash and retention absence alone is not scientific wrongness; 404 vs 200 by user agent is access variation, not evidence of semantic drift.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "M8",
+          "independent_disposition": "accept need for API evidence; reject closure by permanent uncertainty",
+          "reasoning_and_evidence": "Final 119-129/462-464 and map R8 leave required public semantics unresearched. E35/E36/E38/E44 resolve central behavior. N2-F2.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "M9",
+          "independent_disposition": "accept binding-constraint restatement",
+          "reasoning_and_evidence": "Final 20-46 makes scale, mobile, reminders, imports and prohibitions self-contained. On-site check-in/native-app precedent is additional capability, not an extra user requirement.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m1",
+          "independent_disposition": "accept minor count clarification",
+          "reasoning_and_evidence": "Final 201-206 names wc-l convention; source content matters, not the off-by-one count.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m2",
+          "independent_disposition": "accept named committer-date convention",
+          "reasoning_and_evidence": "Final 199-201 states the convention and does not pretend those are all authoring dates.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m3",
+          "independent_disposition": "accept scoped management wording",
+          "reasoning_and_evidence": "Final 322-326 distinguishes relationship-based management from the complete permission model; E05 supports named configuration permissions.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m4",
+          "independent_disposition": "reject near-equivalence characterization",
+          "reasoning_and_evidence": "Final 219-221 preserves critic’s description. E45 plus E08 and current provider distinguish ID-oriented unique pairs from chronological joins; N2-F3.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m5",
+          "independent_disposition": "accept design-requirement and uncertainty labels",
+          "reasoning_and_evidence": "Final 331-340 labels audit trail as a design requirement and permission granularity as open product choice.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m6",
+          "independent_disposition": "accept existence of abandoned-docs gap; upgrade importance",
+          "reasoning_and_evidence": "Final 146-150/479-480 admits the gap but does not resolve central selected fairness semantics; N2-F2.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m7",
+          "independent_disposition": "retain narrow historical verification limitation, not a license defect",
+          "reasoning_and_evidence": "API license=null does not disprove license files. Independent E19 confirms AGPL exception text; candidate does not invent proprietary licensing.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m8",
+          "independent_disposition": "accept retention improvement, minor",
+          "reasoning_and_evidence": "Retained C3 matches source. This establishes earlier file contents, not a scientific score from artifact count.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        },
+        {
+          "critic_id": "m9",
+          "independent_disposition": "accept provenance limitation, minor",
+          "reasoning_and_evidence": "Transcription-only product statements are independently checked against E02/E03/E04/E05; no material quote defect is established by lack of hashes.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/critique.md"
+        }
+      ],
+      "validation_review": [
+        {
+          "check": "DST recurrence",
+          "authored_status": "proposed",
+          "independent_judgment": "Tests the local-time/instant distinction across a transition. Explicit ambiguous/nonexistent-time policy is not fixed; useful as a proposal, not demonstrated semantics."
+        },
+        {
+          "check": "Unequal availability fairness",
+          "authored_status": "proposed",
+          "independent_judgment": "A=4×B scenario discriminates fairness policy. Needs per-participant utilization interpretation; no optimum or chosen policy is verified."
+        },
+        {
+          "check": "Import round-trip",
+          "authored_status": "proposed",
+          "independent_judgment": "Unicode and duplicate-email roster tests a real identity/dedupe uncertainty; does not by itself prove assignment-instance/template import semantics."
+        },
+        {
+          "check": "Permission probe",
+          "authored_status": "proposed",
+          "independent_judgment": "Volunteer-role attempt to access another contact is a meaningful independent unauthorized-access scenario, not proof from a zero exit code."
+        },
+        {
+          "check": "Reminder accessibility",
+          "authored_status": "proposed",
+          "independent_judgment": "Screen-reader/text-alt pass tests channel existence versus accessible content; no such pass executed."
+        },
+        {
+          "check": "Source/tag/phrase/hash/API operations",
+          "authored_status": "executed source verification only",
+          "independent_judgment": "Frozen files substantiate source reading and comparisons; hash/HTTP success is provenance evidence only. One erroneous historical inference survives despite successful retrieval."
+        }
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N1-F1",
+          "type": "MATERIALLY_WRONG",
+          "severity": "material / high",
+          "original_obligations": [
+            "O2",
+            "O4"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+              "lines": "43",
+              "passage": "Timefold ... minimax semantics (minimize the most-loaded participant’s workload, next-most-loaded as tie-break)"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/discovery.md",
+              "lines": "35-37",
+              "passage": "Semantics: lexicographic minimax ... not variance"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md",
+              "lines": "22",
+              "passage": "Replacement mechanics verify ... S02 ... all near-verbatim"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E25-loadbalance-default",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/impl/score/stream/collector/DefaultLoadBalance.java",
+              "version_or_release": "v2.7.1",
+              "symbol_or_section": "DefaultLoadBalance.updateSquaredDeviation and unfairness, lines 66-125",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E25-loadbalance-default.txt",
+              "sha256": "9983033042c20c8fbc59710df331028b43dd81c45f55951f8aecc3a38c8b4d9d"
+            },
+            {
+              "source_id": "E12-collectors",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/ConstraintCollectors.java",
+              "version_or_release": "v2.7.1",
+              "symbol_or_section": "ConstraintCollectors.loadBalance overloads, original lines 1952-2023",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E12-collectors.txt",
+              "sha256": "30d1c91af3ebe807a50520a96a2646cc3ccf9265357526753cb1263d536eb854"
+            },
+            {
+              "source_id": "E10-loadbalance-api",
+              "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-solver/v2.7.1/core/src/main/java/ai/timefold/solver/core/api/score/stream/common/LoadBalance.java",
+              "version_or_release": "v2.7.1",
+              "symbol_or_section": "LoadBalance.loads and unfairness",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E10-loadbalance-api.txt",
+              "sha256": "43e6480d322d3dfce7be9b324793b239b201318679c9698b90d56630f213114f"
+            },
+            {
+              "source_id": "E01-fairness-doc",
+              "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "What is fair? conceptual narrative contrasted with collector implementation",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E01-fairness-doc.txt",
+              "sha256": "888f34ac751c51ba89618a17db9218e7bd3d3bbbb40670a6ada2017f5e11bcd9"
+            }
+          ],
+          "reasoning": "The current documentation gives a conceptual highest-load/second-highest narrative, which the candidate faithfully transcribes. Released v2.7.1 code nevertheless computes sqrt(sum(load_i²) − sum(load_i)²/n), with MathContext(6, HALF_EVEN); this is a squared-deviation aggregate rather than an exact lexicographic ordering. On the same five-participant, fifteen-assignment dataset, A=(6,3,2,2,2) has squared deviation 12 and unfairness about 3.46410; B=(5,5,3,1,1) has squared deviation 16 and unfairness 4. Lexicographic minimax prefers B, but the collector prefers A. This large reversal survives rounding. evidence/fairness-order-analysis.json independently evaluates the released formula; no Java solver was executed.",
+          "consequence": "The plan recommends a fairness mechanism under the wrong governing ordering. That matters directly to which volunteer receives concentrated workload. This is not a citation-count or agreement judgment; primary implementation behavior governs when conceptual documentation conflicts.",
+          "criticism_accept_reject_evidence": "The critic correctly verified that the documentation contains the conceptual description, but failed to check whether the implementation realizes that exact semantics. The final preserves and operationalizes the overstatement. Numeric units and recommended BigDecimal/scaling tradeoffs are largely supported; precision has a separate minor source-conflict note."
+        },
+        {
+          "id": "N1-F2",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "severity": "material / high",
+          "original_obligations": [
+            "O1",
+            "O2",
+            "O4"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+              "lines": "30-32",
+              "passage": "No fetched vendor page exposes a named recurring-shifts feature ... first-class weekly-template engine ... product-gap differentiator"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/discovery.md",
+              "lines": "13-17",
+              "passage": "two ... hard requirements ... exactly where a primary vendor page went quiet ... strongest argument for a custom/lightweight scheduler core"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md",
+              "lines": "21",
+              "passage": "P1 ... sound ... absence of named recurring-shift ... features"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E18-volunteerhub-features",
+              "url": "https://volunteerhub.com/features/",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "Volunteer Scheduling link and feature summaries",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E18-volunteerhub-features.txt",
+              "sha256": "6795544cd00a205b873e642e9f462441815eb0da50e3b9ff52257438275c54e6"
+            },
+            {
+              "source_id": "E02-volunteerhub-scheduling",
+              "url": "https://volunteerhub.com/platform/volunteer-scheduling",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "Recurring Volunteer Shift Scheduling; recurring/duplicate schedules; mobile and reminder sections",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E02-volunteerhub-scheduling.txt",
+              "sha256": "f16993df161381558b95618db12ed36757db05352a7b18241d43605259635a32"
+            }
+          ],
+          "reasoning": "The literal observation that the generic features list has no separate recurrence feature label is supportable. The consequential conclusion that recurrence is a product gap differentiating a custom weekly-template engine is not. The vendor’s directly linked scheduling page explicitly describes recurring shifts and duplicated schedules, and the independently frozen control snapshot also contains that capability. This assessment uses the public vendor page independently, not the counterpart’s conclusion as evidence. The capability does not establish vendor recurrence expansion semantics, optimizer allocation, or a CSV import contract; those narrower unknowns remain valid.",
+          "consequence": "The custom/build rationale and P1 correction are partly driven by a false market gap. Named product leads do not compensate for failing to inspect a directly relevant competing capability. Distinguish recurrence itself from the genuinely unverified combination of automatic allocation, import and fairness.",
+          "criticism_accept_reject_evidence": "Reject the critic’s endorsement of the recurrence-gap inference while accepting its narrow feature-list absence observation. The final repeats the inference instead of treating the linked primary capability as already covered."
+        },
+        {
+          "id": "N1-F3",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "severity": "material / medium",
+          "original_obligations": [
+            "O1",
+            "O4",
+            "O5"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+              "lines": "32",
+              "passage": "Imported rosters land as templates or template deltas, not just shift instances ... Template-level import is the reusable form"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/draft.md",
+              "lines": "17-20",
+              "passage": "Imported rosters must land as templates (or template deltas), not just shift instances"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/discovery.md",
+              "lines": "17",
+              "passage": "high-volume drop-in + recurring regulars, group sign-ups (corporate teams 20+)"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "W01",
+              "url": "https://goldenvolunteer.com/blog/volunteer-scheduling-platforms-food-banks/",
+              "version_or_release": "publisher page observed 2026-10-09",
+              "symbol_or_section": "Food-bank scheduling: drop-in/one-time versus recurring volunteers; group signup; implementation guidance",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/web-source-notes.json",
+              "sha256": "d47bc6ea3bfcb262388b7ad62d068feaf62f9a8789638db8ef4bf9f3dd535c3f"
+            },
+            {
+              "source_id": "E20-rfc5545",
+              "url": "https://www.rfc-editor.org/rfc/rfc5545.txt",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "RFC 5545 §3.8.2.4 DTSTART and §3.3.5 dated event representation",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E20-rfc5545.txt",
+              "sha256": "99db3cc964435c8006368624fcdccbf9c2017a2082851ff9beb66d54fd576aec"
+            },
+            {
+              "source_id": "I-brief",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+              "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+              "url": null,
+              "version_or_release": "exact frozen original task authority",
+              "symbol_or_section": "Original obligations O1-O6 and all user constraints"
+            },
+            {
+              "source_id": "I-plan",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+              "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+              "url": null,
+              "version_or_release": "exact frozen original task authority",
+              "symbol_or_section": "Exact frozen P1-P6, including undefined roster fields and unspecified time storage"
+            }
+          ],
+          "reasoning": "The original brief requires occasional imported rosters but supplies no import schema or requirement that imports describe repeatable series. A concrete dated roster or one-time assignment list may carry no recurrence pattern at all. Nothing on the searched vendor features page establishes a template-only import requirement. The final promotes one reusable optional import shape to a mandatory correction and rules out the viable concrete-instance interpretation without a user decision. Its own supported discovery distinguished drop-in/one-time operation from recurring regulars, but that distinction and group-signup lead disappear in the final. RFC 5545 is evidence that dated event input is a legitimate representation, not a requirement that this product implement iCalendar.",
+          "consequence": "The correction unnecessarily narrows the brief and loses a useful alternative condition from discovery. This is material because it changes what occasional imported scheduling data is accepted. It does not require a production import implementation or invent a new mandatory group-registration feature.",
+          "criticism_accept_reject_evidence": "Reject the critic’s unqualified P1 endorsement of template-only import. Preserve the core weekly template and the legitimate need for exception handling; neither entails requiring recurrence templates for dated-instance-only imports. The final’s claim of complete retention is too broad."
+        },
+        {
+          "id": "N1-F4",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "severity": "material / medium",
+          "original_obligations": [
+            "O2",
+            "O4"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+              "lines": "57",
+              "passage": "Emailing the full roster ... exposes all contact details and patterns to everyone"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+              "lines": "57",
+              "passage": "what roster means ... names-only directory vs full contact list — an organizational privacy norm evidence cannot set"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E18-volunteerhub-features",
+              "url": "https://volunteerhub.com/features/",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "Email/Text messaging and Advanced Permissions product surfaces",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E18-volunteerhub-features.txt",
+              "sha256": "6795544cd00a205b873e642e9f462441815eb0da50e3b9ff52257438275c54e6"
+            },
+            {
+              "source_id": "E02-volunteerhub-scheduling",
+              "url": "https://volunteerhub.com/platform/volunteer-scheduling",
+              "version_or_release": "see URL and retained release metadata",
+              "symbol_or_section": "Targeted confirmation/reminder capability",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-A/evidence/E02-volunteerhub-scheduling.txt",
+              "sha256": "f16993df161381558b95618db12ed36757db05352a7b18241d43605259635a32"
+            },
+            {
+              "source_id": "I-brief",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+              "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+              "url": null,
+              "version_or_release": "exact frozen original task authority",
+              "symbol_or_section": "Original obligations O1-O6 and all user constraints"
+            },
+            {
+              "source_id": "I-plan",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+              "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+              "url": null,
+              "version_or_release": "exact frozen original task authority",
+              "symbol_or_section": "Exact frozen P1-P6, including undefined roster fields and unspecified time storage"
+            }
+          ],
+          "reasoning": "The exact frozen P4 says full roster but never defines its fields. Neither the brief nor the named product features establish that every such roster contains all contact details. The final states a categorical contact-publication consequence and then acknowledges the roster schema is an unresolved organizational choice. Permission-limited views and personal reminders are reasonable proposed responses to privacy-limited sharing; that sound direction does not validate the stronger data-schema assertion.",
+          "consequence": "The evidence ground for a required privacy correction overstates unspecified user data and is internally qualified away. The plan disposition need not be reversed, but the asserted governing consequence is unsupported.",
+          "criticism_accept_reject_evidence": "The treatment critic called P4 sound without challenging the schema premise. Independently reject that premise while accepting privacy-limited sharing as a valid requirement. The control critic’s parallel contact-info concern is checked independently against the original wording, not used as proof by agreement."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m1",
+          "type": "mechanism rationale / uncertainty",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "43 / 73",
+            "passage": "generic key function makes utilization ratio expressible; V2 tests composition"
+          },
+          "judgment": "E12/E10 use item keys and long loads. The candidate honestly flags exact ratio composition as unverified; V2 compares raw-count collector with a different cap/spread mechanism and does not implement the uncertain ratio collector. Do not treat the uncertainty as resolved or an impossible general approach."
+        },
+        {
+          "id": "N1-m2",
+          "type": "version/pinning inference / minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "93 / 101",
+            "passage": "no releases; quickstart-level version pinning evidence absent"
+          },
+          "judgment": "E30 confirms no GitHub Release objects, while E16 supplies many tags. Empty Release metadata does not imply absence of version pinning evidence; the arm did not inspect those available tags."
+        },
+        {
+          "id": "N1-m3",
+          "type": "proposed validation oracle limitation",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "72-76",
+            "passage": "scale comparison; score-type diff; callback timing"
+          },
+          "judgment": "Useful proposal directions, not established head-to-head viability. Selected-solution changes alone cannot distinguish score traps from equal optima/search variation. Current-version callback overhead is not necessarily the old regression, and #4674 is a packaging issue rather than notification behavior."
+        },
+        {
+          "id": "N1-m4",
+          "type": "documentation/implementation precision conflict",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "43",
+            "passage": "six-decimal rounding means about 1e-6 differences matter"
+          },
+          "judgment": "E01 faithfully supports the documentation statement; E25/E44 use MathContext(6), meaning six significant digits, not fixed six decimal places. This is a primary-source discrepancy which the final does not investigate; N1-F1 is the material ordering defect."
+        },
+        {
+          "id": "N1-m5",
+          "type": "unsupported applicability premise / minor",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "64",
+            "passage": "imported-roster requirement makes cross-zone input non-hypothetical"
+          },
+          "judgment": "Import does not imply cross-zone data. Zone-explicit scheduling remains reasonable because recurrent civil time and reminder instants have distinct semantics, independently supported by E20/E21."
+        },
+        {
+          "id": "N1-m6",
+          "type": "peripheral source/preservation limitation",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "17-18 / 83 / 101",
+            "passage": "attendance history; named platform leads; $36.14/$33.49 disagreement"
+          },
+          "judgment": "Product lead names remain honestly unverified. W02 supports publisher predictor framing with outreach/error-rate cautions, not demonstrated volunteer allocation benefit. The unmapped $33.49 and optional group-signup/drop-in detail are incompletely retained/grounded; neither monetary figure determines a P disposition."
+        }
+      ],
+      "unresolved": [
+        {
+          "topic": "Private vendor defaults and chosen product policy",
+          "status": "honestly externally unresolved / user decision",
+          "detail": "Waitlist ranking, detailed recurrence/import contracts, availability-normalization choice, sharing granularity and operational thresholds are not established by public capability pages. No fabricated facts substituted."
+        },
+        {
+          "topic": "Runtime feasibility, performance and accessibility",
+          "status": "not executed; proposed work",
+          "detail": "No product or solver validation is available. The brief allows meaningful honest proposals and does not demand unlimited production guarantees."
+        },
+        {
+          "topic": "No-show prediction benefit at brief scale",
+          "status": "vendor framing / empirical applicability unresolved",
+          "detail": "Golden cites appointment-domain evidence and outreach guidance; no predictive allocation accuracy or benefit was executed or established for this 180-volunteer food bank."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "original obligations and constraints",
+          "coverage": "Complete O1-O6 and all explicit brief constraints reviewed",
+          "coverage_complete": true,
+          "judgment": "Most constraints retained; competing-product investigation and imported-roster interpretation materially deficient. No invented legal mandate or equal-availability assumption used as a proven fact.",
+          "evidence": [
+            "final.md:27-103",
+            "N1-F2",
+            "N1-F3"
+          ]
+        },
+        {
+          "axis": 2,
+          "name": "consequential primary facts/defaults/applicability",
+          "coverage": "All selected consequential clusters checked; released code governs primary-doc conflicts",
+          "coverage_complete": true,
+          "judgment": "Material collector-ordering error and unsupported market/privacy conclusions; CP-SAT primitives and release facts substantially supported.",
+          "evidence": [
+            "N1-F1",
+            "N1-F2",
+            "N1-F4",
+            "E03",
+            "E14",
+            "E15"
+          ]
+        },
+        {
+          "axis": 3,
+          "name": "unfamiliar discovery and viable alternatives",
+          "coverage": "Complete product lead and mechanism inventory inspected for actual usefulness and viability",
+          "coverage_complete": true,
+          "judgment": "Useful solver/soft-weighting/self-signup/no-show leads; names mostly unverified and a real recurrence capability missed. Commercial full model boundary does not exclude open-source fairness.",
+          "evidence": [
+            "final.md:81-101",
+            "E09",
+            "E27",
+            "N1-F2"
+          ]
+        },
+        {
+          "axis": 4,
+          "name": "every exact P disposition",
+          "coverage": "All exact P1-P6, proposed conditions/options and rejections checked",
+          "coverage_complete": true,
+          "judgment": "P2/P6 directions reasonable; P1 template-only requirement and recurrence-gap rationale unsupported; P4 schema consequence overstated; P5 qualified zone-aware direction reasonable.",
+          "evidence": [
+            "plan_dispositions",
+            "N1-F2",
+            "N1-F3",
+            "N1-F4"
+          ]
+        },
+        {
+          "axis": 5,
+          "name": "draft→critique→final preservation/adjudication",
+          "coverage": "Complete discovery/draft/critique/final read; M1-M4 and m1-m5 independently adjudicated",
+          "coverage_complete": true,
+          "judgment": "Self-contained substantive final and sound M2 rebuttal; nonrecurring/drop-in alternative condition lost, market and collector errors survive critic approval.",
+          "evidence": [
+            "criticism_adjudication",
+            "N1-F3",
+            "final.md:11-23"
+          ]
+        },
+        {
+          "axis": 6,
+          "name": "proposed versus executed validation",
+          "coverage": "Every V1-V5/addition and source-only execution claim reviewed",
+          "coverage_complete": true,
+          "judgment": "Honest split and several useful discriminating ideas. Ratio-composition, precision trap and head-to-head benchmark conclusions exceed specified probe details; none claimed executed success.",
+          "evidence": [
+            "validation_review",
+            "final.md:66-77",
+            "E31"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_cluster": "Vendor recurrence/gap",
+            "evidence": "E02/E18",
+            "result": "Generic feature-list absence is narrow; broader product-gap inference refuted by linked vendor capability."
+          },
+          {
+            "claim_cluster": "CP-SAT basics",
+            "evidence": "E03",
+            "result": "Boolean model, hard uniform bounds, preference objective, toy scales and absence of size assurance checked; masks/caps remain proposed modifications."
+          },
+          {
+            "claim_cluster": "Fairness mechanism/defaults",
+            "evidence": "E01/E10/E12/E25/E26",
+            "result": "Documentation checked against released code, ordering refuted; six-significant-digit conflict recorded; keys versus long-valued loads distinguished."
+          },
+          {
+            "claim_cluster": "Quickstart scope/version/licensing",
+            "evidence": "E09/E16/E27/E30",
+            "result": "README broader commercial model versus actual open fairness provider; no releases confirmed, tags available, no dedicated volunteer quickstart established from listed use cases."
+          },
+          {
+            "claim_cluster": "OR-Tools example retrieval",
+            "evidence": "E13",
+            "result": "Released correct-path weighted objective, negative request weights, soft bounds and lack of cross-person balancing checked; wrong-path global absence criticism rejected."
+          },
+          {
+            "claim_cluster": "OR-Tools release/regression chain",
+            "evidence": "E15/E32/E33",
+            "result": "9.13 known issues→9.14 fixes, callbacks 9.11, 9.15 latest and component applicability checked; no implied callback repair from SCIP linkage fixes."
+          },
+          {
+            "claim_cluster": "Timefold evolution",
+            "evidence": "E14/E34",
+            "result": "2.7.1 regression repair, 1.34.0 maintenance EOL and search-move fairness versus outcome fairness checked; huge-data evidence not a food-bank benchmark."
+          },
+          {
+            "claim_cluster": "Food-bank/no-show guidance",
+            "evidence": "W01/W02",
+            "result": "Publisher date, recurring plus one-time/group contexts and $36.14 supported; predictor framing is vendor extrapolation, not proven allocation improvement."
+          },
+          {
+            "claim_cluster": "Import/roster/time applicability",
+            "evidence": "brief/plan + E20/E21",
+            "result": "Template-only import not entailed; full roster fields not supplied; import does not prove cross-zone input; zone-aware proposal conditionally reasonable."
+          },
+          {
+            "claim_cluster": "Preservation/criticism",
+            "evidence": "full discovery/draft/critique/final/maps/source notes",
+            "result": "All four material and five minor critic findings re-adjudicated; correct resistance to M2 acknowledged; lost nonrecurring condition identified."
+          },
+          {
+            "claim_cluster": "Validation claims",
+            "evidence": "all final V1-V5 and additions + E31",
+            "result": "Meaningful proposed/executed separation checked; discriminating limitations and corrected worker default identified."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning_of_complete": "Complete scoped review of consequential authored claim clusters and all six axes. Confirmed/refuted facts and honestly private/unexecuted uncertainties are distinguished. Does not mean all claims are true, all vendors were evaluated, or candidate runtime behavior is certified."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "read_scope": [
+          "research/discovery.md",
+          "research/draft.md",
+          "critic/critique.md",
+          "critic/verification.md if mapped",
+          "reviser/final.md",
+          "all mapped source maps and source indexes"
+        ],
+        "judgment": "All meaningful draft/final options and criticism outcomes traced. Findings identify false changes and lost/avoidably demoted conditions; no claim is made that unmapped intermediate versions were inspected."
+      },
+      "grade_limits": [
+        "FAIL rests on the listed material substantive defects, not metadata, source/citation/length counts, critic agreement, or a demand to execute unavailable scheduler tests.",
+        "Full scoped six-axis review completed. Remaining uncertainty belongs to private product contracts, user policy or unexecuted validation; no central available evidence remains unreviewed within the assessed claim clusters.",
+        "No quality equivalence or quality-adjusted timing/cost win follows from both grades being FAIL."
+      ],
+      "obligations": [
+        {
+          "obligation": "O1",
+          "judgment": "Useful CP-SAT/Timefold, self-signup and no-show leads discovered, but genuine competing-product investigation remains limited to one generic product page and misses a directly linked recurrence capability (N1-F2)."
+        },
+        {
+          "obligation": "O2",
+          "judgment": "Core CP-SAT APIs, units, objective and numeric guidance investigated. Governing collector ordering is wrong (N1-F1); fractional-load reasoning is explicitly uncertain rather than proved."
+        },
+        {
+          "obligation": "O3",
+          "judgment": "At least one relevant chain is satisfied: OR-Tools 9.13 issues→9.14 fixes, 9.11 callback issue, Timefold 2.7.1 regression repair and 1.x EOL. Distinguish packaging from scheduling algorithm semantics and empty Release objects from tags."
+        },
+        {
+          "obligation": "O4",
+          "judgment": "All six clauses compared explicitly. Template-only imports are an unjustified required correction (N1-F3), recurrence-gap premise defective (N1-F2), and P4 contact-schema assertion unsupported (N1-F4)."
+        },
+        {
+          "obligation": "O5",
+          "judgment": "Self-contained substantial final; reviser rightly rejects wrong-path absence criticism, retains useful options and uncertainty. Nonrecurring/drop-in condition from discovery is lost while template-only import is made mandatory; other optional group/signup lead detail is not fully preserved."
+        },
+        {
+          "obligation": "O6",
+          "judgment": "V1-V5 plus scenario additions are meaningfully proposed; no solver runtime outcome fabricated. Ratio-composition and precision-trap probe claims exceed the specified discriminators, but do not claim executed proof."
+        }
+      ],
+      "explicit_constraints": {
+        "scale_180": "Both finals address 180 explicitly in validation/model context; example scale does not prove interactive production capacity.",
+        "changing_availability": "Both discuss availability and caps; N2 explicitly hard enforcement and re-solving, N1 validation masks and availability-derived policy. No equality of availability may be inferred from headcount.",
+        "recurring_shifts": "Both retain weekly template; N1 market-gap rationale defective, N2 vendor recurrence verified.",
+        "predictable_coverage": "Both keep coordinator control and explicit filling mechanisms; no empirical no-show or coverage improvement is proven.",
+        "mobile_access": "Both retain primary mobile product precedent; no responsive/native implementation was built.",
+        "accessible_reminders": "Both retain text/channel choices and no executed accessibility validation. N2 expressly proposes screen-reader pass; N1’s machine-readable-text proposal is not proof of accessibility.",
+        "privacy_limited_sharing": "Both propose scoped audiences; no legal privacy mandate is invented. N1 overstates unknown contact fields.",
+        "occasional_imported_rosters": "Both retain import need; N2 contract unknown plus round-trip proposal, N1 wrongly mandates template-only shape.",
+        "no_invented_legal_requirements": "No jurisdiction-specific legal requirement invented in either final. Learning accessibility guidance would not itself invent law.",
+        "no_equal_availability_assumption": "Both reject the unmodified toy model for lacking binding availability. Availability-normalized fairness remains a product choice, not the only possible fair policy."
+      },
+      "plan_dispositions": [
+        {
+          "clause_id": "P1",
+          "exact_clause": "Generate recurring shifts from a weekly template.",
+          "authored_disposition": "correction: exceptions and template-level import",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "27-36",
+            "passage": "correction: exceptions and template-level import"
+          },
+          "independent_judgment": "Retain weekly recurrence and exception handling; recurrence differentiation is unsupported (N1-F2), and template-only import is an unjustified mandatory narrowing (N1-F3).",
+          "evidence_ids": [
+            "E02-volunteerhub-scheduling",
+            "W01"
+          ]
+        },
+        {
+          "clause_id": "P2",
+          "exact_clause": "Assign the first available volunteer alphabetically.",
+          "authored_disposition": "rejected as primary; alphabetical fallback, constraint allocation, user decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "38-47",
+            "passage": "rejected as primary; alphabetical fallback, constraint allocation, user decision"
+          },
+          "independent_judgment": "Directionally reasonable; retain self-signup and suggestion-only options. Claimed collector ordering is wrong (N1-F1). Cap derivation is a proposed policy, not a guarantee of availability feasibility; validation mentions masks. Ratio-keying remains explicitly uncertain and needs a distinct load mapping.",
+          "evidence_ids": [
+            "E03-ortools-employee-doc",
+            "E12-collectors",
+            "E25-loadbalance-default"
+          ]
+        },
+        {
+          "clause_id": "P3",
+          "exact_clause": "Allow coordinators to swap names.",
+          "authored_disposition": "already-covered; warn-not-block and audit as optional enhancements",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "49-52",
+            "passage": "already-covered; warn-not-block and audit as optional enhancements"
+          },
+          "independent_judgment": "Retains coordinators’ manual control. Permitting hard-constraint override is a disclosed product-policy decision, not proven source behavior. Predictable coverage remains conditional on the organization’s override policy. This review does not impose automatic blocking.",
+          "evidence_ids": [
+            "E09-provider-stable-old"
+          ]
+        },
+        {
+          "clause_id": "P4",
+          "exact_clause": "Email everyone the full roster.",
+          "authored_disposition": "correction; personal schedules and coordinator full view",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "54-59",
+            "passage": "correction; personal schedules and coordinator full view"
+          },
+          "independent_judgment": "Privacy direction is reasonable; contact-schema premise is unsupported (N1-F4). Accessible text/channel choices are proposals, not demonstrated accessibility. Callback-decoupling recommendation is a reasonable response to known overhead, not a proven current-version bug.",
+          "evidence_ids": [
+            "E02-volunteerhub-scheduling",
+            "E15-ortools-releases"
+          ]
+        },
+        {
+          "clause_id": "P5",
+          "exact_clause": "Use local wall-clock timestamps.",
+          "authored_disposition": "rejected as storage, engineering reasoning",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "61-64",
+            "passage": "rejected as storage, engineering reasoning"
+          },
+          "independent_judgment": "Zone-explicit interpretation is appropriate, and the source-absence label is honest. Imported rosters do not by themselves prove cross-zone input. No blanket ban on local+zone civil representations follows from RFC 5545.",
+          "evidence_ids": [
+            "E20-rfc5545",
+            "E21-localdatetime"
+          ]
+        },
+        {
+          "clause_id": "P6",
+          "exact_clause": "Test one ordinary week.",
+          "authored_disposition": "correction; ordinary week plus V1-V5 and additions",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/final.md",
+            "lines": "66-77",
+            "passage": "correction; ordinary week plus V1-V5 and additions"
+          },
+          "independent_judgment": "Meaningful broader scenarios; honest source-only execution. V2 does not actually specify executing a ratio-keyed collector despite claiming to test that composition; V3 selected-solution difference is only a preliminary signal. These are proposal limitations, not claims of executed success.",
+          "evidence_ids": [
+            "E31-cp-params",
+            "E12-collectors",
+            "E15-ortools-releases"
+          ]
+        }
+      ],
+      "criticism_adjudication": [
+        {
+          "critic_id": "M1",
+          "independent_disposition": "accept clarification; reject exaggerated severity",
+          "reasoning_and_evidence": "Final 13/45 removes the ambiguous size-limit statement. The draft already called brief-scale performance unknown, so this was not an operative unbounded-capacity assurance; E03 has no general size-limit statement.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        },
+        {
+          "critic_id": "M2",
+          "independent_disposition": "reject critic’s absence/inconsistency conclusion; accept final amendment",
+          "reasoning_and_evidence": "Final 14/93 finds the docs-linked examples/python path. E13 at released v9.15 confirms weighted soft bounds and objective. Wrong-path 404s cannot establish global absence; runtime was not executed.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        },
+        {
+          "critic_id": "M3",
+          "independent_disposition": "accept EOL addition",
+          "reasoning_and_evidence": "Final 15/92 retains early-2027 1.x EOL; E14 v1.34.0 body confirms it. Does not prove quickstart tags/pinning absent.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        },
+        {
+          "critic_id": "M4",
+          "independent_disposition": "accept honest validation separation; qualify discrimination claims",
+          "reasoning_and_evidence": "Final 16/71-77 retains proposals. V1 is useful scale research, but not proof Timefold beats CP-SAT; V2 does not specify ratio-keyed collector execution; V3 needs more than selected-solution differences to establish precision traps.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        },
+        {
+          "critic_id": "m1",
+          "independent_disposition": "accept corrected source attribution; limit empirical applicability",
+          "reasoning_and_evidence": "Final 17/41 re-scopes predictor to a linked Golden post. W02 distinguishes vendor guidance based on appointment studies from demonstrated accuracy for this food bank.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        },
+        {
+          "critic_id": "m2",
+          "independent_disposition": "accept publisher date; retain peripheral monetary disagreement unresolved",
+          "reasoning_and_evidence": "Final 18/101 retains $36.14/$33.49 discrepancy. W01 shows September 14, 2026 and $36.14; no mapped primary support for the other figure is supplied and no decision depends on it.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        },
+        {
+          "critic_id": "m3",
+          "independent_disposition": "accept README-location clarification",
+          "reasoning_and_evidence": "Final 19/45 distinguishes use-case description from concept table; E27 confirms. Actual quickstart code also contains fairness, so richer commercial model wording does not make all fairness commercial-only.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        },
+        {
+          "critic_id": "m4",
+          "independent_disposition": "retain stated composition uncertainty; reject key-function sufficiency rationale",
+          "reasoning_and_evidence": "Final 20/43/101 flags uncertainty. E12 shows the key identifies a balanced item and loadFunction is long-valued; generic keys alone do not establish fractional per-volunteer utilization semantics.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        },
+        {
+          "critic_id": "m5",
+          "independent_disposition": "accept current release fix with domain limit",
+          "reasoning_and_evidence": "Final 21/72/92 records v2.7.1 performance fix; E14 and E34 show large-dataset/FSR-related evidence, not a measured 180-volunteer scheduling result.",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/critique.md"
+        }
+      ],
+      "validation_review": [
+        {
+          "check": "V1 scale",
+          "authored_status": "proposed",
+          "independent_judgment": "180×3×28 with masks and optimality/gap comparison is useful. Current default num_workers=0 uses available cores (E31); discovery’s default ten-worker claim disappears in final. No common Timefold/CP-SAT benchmark or interactive latency target is proven."
+        },
+        {
+          "check": "V2 fairness metric",
+          "authored_status": "proposed",
+          "independent_judgment": "Raw-count versus availability-cap/spread comparison tests two policy/mechanism choices. It does not execute the hypothesized ratio-keyed collector, despite claiming to test that composition."
+        },
+        {
+          "check": "V3 numeric score type",
+          "authored_status": "proposed",
+          "independent_judgment": "BigDecimal versus scaled-long comparison addresses documented precision risk; selected-solution differences alone do not establish a score trap, because alternative optima/search variation can differ."
+        },
+        {
+          "check": "V4 product gap",
+          "authored_status": "proposed",
+          "independent_judgment": "Buy/build research can be meaningful, but a future trial cannot excuse missing the public recurrence capability already linked from the inspected feature page."
+        },
+        {
+          "check": "V5 callbacks",
+          "authored_status": "proposed",
+          "independent_judgment": "Current-version wall-time comparison can measure integration overhead. It cannot by itself establish that the historical 9.11 regression survives or that notifications must occur in callbacks."
+        },
+        {
+          "check": "Additional scenario tests",
+          "authored_status": "proposed",
+          "independent_judgment": "Caps, multiweek drift, import, DST and ordinary-week smoke are relevant. No application was built or tested."
+        },
+        {
+          "check": "Retrieval/status/static inspections",
+          "authored_status": "executed source verification only",
+          "independent_judgment": "Correct-path example retrieval is a meaningful correction of negative evidence. Source operations do not prove feasibility, performance, privacy or accessible delivery at brief scale."
+        }
+      ]
+    }
+  },
+  "method_clues": {
+    "partial_blinding_only": true,
+    "observed": "Neutral labels map N2→control and N1→treatment. Paths, stage titles, stage assignments and progressive-draft wording reveal method. No claim of full blinding or independent statistical replication.",
+    "independence": "Both arms judged against the original case and public primary evidence. Neither critic’s agreement nor counterpart prose used as governing proof. No nested workers, candidate repair, campaign/other-case/other-evaluation/private-provider access or Git/canon edits."
+  },
+  "comparative_quality_eligible": false,
+  "comparative_quality_reason": "Both available finals FAIL on independently source-grounded material defects. This is not equal-quality equivalence and does not establish a faster-FAIL speed win. N2 offers a more concrete competing open-source product and explicit constraint self-containment; N1 correctly resists a false negative-source criticism and investigates useful numerical/release details. Their defect profiles differ; no validated quality-adjusted speed or cost conclusion is available.",
+  "scope_limits": [
+    "Scope is the original small food-bank scheduling brief, not a production certification, legal analysis or exhaustive vendor comparison.",
+    "All mapped complete stage prose, maps, assignments, revealed plans and navigable source indexes were read. Source duplicate Java snapshots compared by contents/diffs; frozen vendor HTML inspected for relevant capability passages, not scripts or irrelevant navigation.",
+    "Referenced candidate extras outside the exact map, including adjudication.md, claim-inventory.md, claim-judgments.md, predecessor-notes and versions directories, were not opened. Their substantive scientific content is assessed only where present in the mapped complete artifacts.",
+    "Primary behavior checked against released Timefold v1.10.0/v2.3.0/v2.7.1 code and tagged quickstart snapshots; live marketing pages can drift and do not prove private implementation defaults.",
+    "No candidate solver, product, scheduler or accessibility sandbox was executed. Reviewer arithmetic/predicate checks are explicitly static source analyses, not library runtime witnesses.",
+    "Direct Golden HTTP GETs returned 403; official publisher content was observed through web open/find and retained as bounded notes with URLs/sections. Secondary search leads were not validated as deployed product claims.",
+    "A repository-required Plans index and read-only status check occurred at startup; unrelated product canon was not used for this case assessment. All writes are within the assigned evaluation directory.",
+    "The fixed assignment deadline remains 2026-10-09T22:25:56.049457+00:00. Start timestamp below is the earliest explicitly observed clock/native creation sample, after initial assignment/input reading; it is not a billing or queue-start claim."
+  ],
+  "evaluation_started_at": "2026-10-09T22:01:16Z",
+  "evaluation_completed_at": "2026-10-09T22:17:10.812616+00:00",
+  "observed_source_operations": {
+    "independent_http": "evidence/primary-retrieval.json records actual requests, status, timestamps, response and retained-content hashes, failures and bounded extraction methods.",
+    "independent_web": "evidence/web-source-notes.json records primary publisher/docs observations; official web sources also opened for OR-Tools, Timefold, VolunteerHub and CiviVolunteer.",
+    "input_integrity": "Every exact-map listed digest matched at ingestion; input and source-root hashes recorded above. Integrity checks establish frozen identity only, not scientific quality.",
+    "analytical_checks": [
+      "evidence/fairness-order-analysis.json: independently calculated opposite ordering from released formula; not a solver runtime.",
+      "evidence/rest-pair-analysis.json: independent tuple-predicate counterexample using documented unique-pair default and release-pinned old dependency; not a solver runtime."
+    ],
+    "failed_or_corrected_operations": [
+      "Initial text extraction attempt lacked bs4; no installation performed. Retried with Python standard-library HTMLParser.",
+      "One guessed LoadBalanceImpl path returned 404; authoritative release tree revealed DefaultLoadBalance and the correct file was retrieved.",
+      "README.adoc guessed path returned 404; README.md succeeded.",
+      "Golden direct GETs returned 403; web publisher open/find succeeded."
+    ]
+  },
+  "native_and_cost_limits": {
+    "reviewer_lifecycle": "One actual native create_goal was called with this assignment and a concise objective; native get_goal observed active. Required scientific files are saved and checked before native update_goal(complete). No handwritten Goal receipt/JSON is used.",
+    "candidate_native_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_t3_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_timing": {
+      "N1": null,
+      "N2": null
+    },
+    "usage": {
+      "N1": null,
+      "N2": null,
+      "reviewer_billed_usage": null
+    },
+    "billing": {
+      "N1": null,
+      "N2": null,
+      "reviewer": null
+    },
+    "qualification": "Final delivery=true and scientific_artifact_available=true come from the exact frozen input map for both arms. Native/T3 lifecycle, duration, token billing and costs are not reconstructed from authored prose or file timestamps and do not affect scientific grades."
+  },
+  "save_verification": {
+    "required_artifacts": [
+      "assessment.md",
+      "assessment.json",
+      "source-map.json"
+    ],
+    "checked_before_native_terminal": true,
+    "checks": "Required rubric fields; six complete axes and P clauses per arm; all mapped criticism outcomes; frozen input digests; all finding/evidence paths and retained hashes; Markdown/JSON material finding consistency. These checks validate assessment integrity, not scientific quality by artifact counts."
+  }
+}
