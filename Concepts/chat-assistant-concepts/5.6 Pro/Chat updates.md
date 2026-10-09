@@ -176,6 +176,38 @@ Plans.
   **Custom mix** (`recipe: -1`) so those family picks are not mislabeled as
   PM7 Refined. **Reset all** restores this mix.
 
+## First paint: the stored look from the first frame
+
+The first painted frame is the viewer's stored look, in all ten themes, NieR
+with any parts and under reduced motion (2026-10-09, PMConcept7's first-paint
+pattern against this page's own store). A reader in `<head>`, before the
+stylesheet (written by `build.py`), reads, and never writes, the stored theme
+(`pm56-prefs`, Basic Dark when there is none) and NieR's parts (`pm56-nier`,
+all 29 when there are none). For NieR it writes the `data-o55-nier` and
+`data-o55-nier-parts` attributes on `<html>`, and for every look it adds a
+small sheet that paints the look's ground on `<html>`. The first child of
+`<body>` then writes `body[data-theme]` (Basic in the right mode for a NieR
+theme) and removes that sheet, so from there the stylesheet paints the look,
+Glass's mesh included. Chrome would paint one frame as soon as `<body>` exists,
+before that script runs; a `<link rel="expect" href="#pmRoot"
+blocking="render">` holds rendering until `#pmRoot`, just after it, is parsed,
+and the ground sheet covers a browser that ignores it. It
+stores nothing and keeps no global copy of the theme; `app.js` and `nier.js`
+still own the look and write the same values on their first render. Motion has
+no stored setting here (reduced motion is the system's), so nothing writes
+`data-motion`. Until this change every open painted Chrome's dark default
+(#121212) until the app's first render, 1.3 to 1.7 s in, which flashed the
+whole window for a Light theme.
+
+- The NieR boot log plays as it did: when the page opens in a NieR theme with
+  Boot sequence installed and motion allowed. It arrives in the same frame as
+  the app, so the app never shows before it, and frame 1 is already the log's
+  own ground. The reboot moment never plays on a reload; it belongs to a
+  person's switch into or out of NieR.
+- The pinned history drawer stays in place from the first frame.
+- When the chat is ported into PMConcept7, PMConcept7's head boot script owns
+  first paint, and this reader is dropped.
+
 ## NieR Mode (NieR Light and NieR Dark)
 
 Demo Studio's theme list ends with **NieR Dark** and **NieR Light**, after the
