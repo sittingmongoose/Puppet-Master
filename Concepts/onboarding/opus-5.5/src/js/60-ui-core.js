@@ -674,6 +674,9 @@
        A window already on screen (Start over) mounts where it is. */
     if (!opts._mount) {
       O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
+      /* a new install started in the page (the demo's Reset) turns to Basic Dark in the click's own task, so the
+         frame that dims for the window is already Basic Dark (a page load is Basic Dark from its first frame) */
+      if (opts.install && opts.fresh) { const cur = S.sess || O55.store.get(KEY, null); if (!(cur && cur.commit && cur.commit.state === 'running')) installPaint(); }
       const wasShown = !!(S.open && S.root && !S.root.hidden);
       const focus = opts.returnFocus || document.activeElement;
       const gen = ++openGen;
@@ -761,7 +764,7 @@
   /* Basic Dark as the window's look preview (persist: false, as a pick on Pick a look), a NieR Mode that is on turned
      into an off preview at once (writes nothing; kit.d/18-nier.js already started a new install's page that way), and
      Basic Dark preselected on Pick a look, in both drafts and in the session's NieR choice */
-  function installLook() {
+  function installPaint() {
     const n = window.PM_NIER;
     if (n && n.preview && (n.wanted ? n.wanted() : n.on())) { try { n.preview({ on: false }, { within: null, instant: true, sound: false }); } catch (_) {} }
     const th = O55.theme();
@@ -769,6 +772,10 @@
       try { window.PM_THEME.setFamily('basic', { persist: false }); window.PM_THEME.setMode('dark', { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', 'basic-dark'); }
     }
+  }
+  function installLook() {
+    installPaint();
+    const n = window.PM_NIER;
     Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: 'basic', theme_mode: 'dark' }));
     if (n && n.parts && n.background) S.sess.look = { nier: false, parts: n.parts().slice(), background: n.background() };
   }
