@@ -32557,14 +32557,21 @@ canonical_text: >-
   Theme boot stamps a pre-paint layer with the persisted theme's solid background color
   and color-scheme before heavy styles and assets settle, fonts load non-blocking via
   preload then swap, and page-enter transitions are gated until after first paint so boot
-  never runs an opacity-zero enter animation or a double flash.
+  never runs an opacity-zero enter animation or a double flash. The persisted theme is the look
+  stored in the Settings of the Project the application opens on, NieR Mode included (its
+  ground, and while NieR's boot log is coming the page waits under the log's own paper), so
+  the first frame is already that look and no default look shows before it. The pre-paint only
+  reads it: it stores no theme of its own, and the Project's Settings stay the one owner and the
+  one store of the theme (DL-153). A new install's onboarding paints Basic Dark instead (F3-520).
 gui_related: true
 gui_classification_reason: This unit defines visible boot paint, font loading, and first-paint transition gating behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-153]
 unblocks: []
 acceptance_criteria:
 - "Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets settle."
+- "The first frame of an ordinary open is the look stored for the Project the application opens on, in each of the eight family variants and in NieR Mode light and dark; no default look shows before it, and with NieR's boot log coming the page shows only the log's paper before the log (DL-153)."
+- "The pre-paint reads the Project's stored Settings and writes no theme anywhere: no global or cross-Project theme key exists (DL-153)."
 - "Fonts load non-blocking via preload then swap."
 - "Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -32588,7 +32595,8 @@ negative_constraints:
 - "Do not render-block first paint on font loading and do not run an enter animation on first paint."
 compatibility_only_notes:
 - "Slint portability: the pre-paint layer maps to painting the persisted theme's solid background at window creation before content loads; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-153): the persisted theme the pre-paint stamps is the look stored for the Project the application opens on, read from its Settings, NieR Mode included; the concept's fixed Basic Dark boot paint is retired, and no global theme key is added."
 owner_boundary_notes:
 - "F3-464 consumes this gate for page transitions; this unit owns the boot paint and the gate itself."
 owner_hints:
@@ -35216,6 +35224,11 @@ canonical_text: >-
   The bounded eight-theme choice
   appears at welcome, before Project or infrastructure choices, and changes presentation only; below it, never among its
   options, a NieR Mode checkbox with an Adjust NieR look button previews NieR Mode painted over Basic (F3-598).
+  On a new install, when the window opens by itself because no Project exists yet, onboarding always starts in
+  Basic Dark, from its first frame, with Basic Dark preselected and NieR Mode unticked, whatever look was shown
+  before; stored values are not changed. Run Onboarding Again (from Settings or the Home menu) is the one exception:
+  it starts in the look then shown, NieR Mode included, preselected, with no change of look as the window opens
+  (DL-153). The window's hero moments take five styles, one per look family (F3-600).
   A persistent Look menu (`Change the look`), carrying the same NieR Mode checkbox and Adjust NieR look button below
   its family and mode choices, and a sound control remain reachable in the onboarding header on every stage beyond
   welcome. Look selections preview presentation without dispatching owner work. Before a verified current Project
@@ -35318,6 +35331,8 @@ acceptance_criteria:
   - "At the standard review viewport, each stage--including Review and Ready--fits within the bounded modal without a floating action bar, obscured content, or required page scroll; short/narrow fallback may scroll one explicit content region while its in-flow actions remain reachable and never cover the choices."
   - "Cards, buttons, focus rings, hover elevation, explainer surfaces, headings, summaries, and consequence text remain fully inside their clip/viewport bounds; no hover edge or sentence is cut off. Decorative yellow reminders, duplicate Apply Setup panels, sticky blue confirmation boxes, and left-edge color-rail callouts are absent."
   - "Every stage has a distinct visual scene and meaningful continuity of focus; the four theme families, and NieR Mode painted over Basic, use different directing systems rather than paint-only variants, all motion uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and theme tokens, and essential storytelling does not require browser-only effects."
+  - "A new install's onboarding starts in Basic Dark from its first frame with Basic Dark preselected and NieR Mode unticked, whatever look was shown before and without changing stored values; Run Onboarding Again starts in the look then shown, NieR Mode included, preselected, and never switches look as it opens (DL-153)."
+  - "The wake at the window's opening, the act card at a chapter's end and the curtain call at Ready take five styles, one per look family, as F3-600 sets out."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -35419,7 +35434,9 @@ canonical_text: >-
   direct the film with substantially different
   callout composition, illustration, typography, target treatment, and motion--not one recolored overlay--while never
   using a left-edge accent rail. Transitions preserve the mounted application continuously without a black or empty
-  flash. Skip restores captured layout, Chat state, and focus. Finish restores the temporary arrangement by default
+  flash. Skip restores captured layout, Chat state, and focus. While any restore runs, the application's own notices
+  about it (a widget removed, a persona applied from the next turn) stay quiet in every look, and the Tour's own
+  closing note says what was put back (DL-153). Finish restores the temporary arrangement by default
   or keeps it only on explicit selection, removes practice content, and lands on the real Planning Wizard with the
   committed Project selected and no work auto-started. Close/reload resumes a safe checkpoint after owner revalidation.
 gui_related: true
@@ -35453,6 +35470,7 @@ acceptance_criteria:
   - "Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director, and while NieR Mode is painted a NieR ink director (YoRHa headers, ink target brackets, the menu cursor and Pod narration, each under its installed part) replaces Basic's; these systems differ in silhouette, typography, target treatment, and choreography rather than just color."
   - "Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame; no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside the viewport is accepted."
   - "Protected AuthBrowserSession content is never highlighted, captured, inspected, or described."
+  - "Skip, Restore my layout and Keep this layout raise none of the application's own notices about the restore in any look (no widget-removed or persona notice); the Tour's own closing note still shows (DL-153)."
   - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
@@ -41171,18 +41189,20 @@ canonical_text: >-
   or a tick may flicker. Input never waits: a key or a press snaps a running performance to its end state. Every
   beat is gated by an existing part. Reduced Motion, the Still and Colors only presets and low resource show each
   moment's end state, and Quiet drops the Pod beats. A background change made from the editor cross-fades as F3-589
-  sets out. The application beneath the onboarding window stays still while the window is open. No settings key,
+  sets out. The application beneath the onboarding window stays still while the window is open. The four theme
+  families have hero moments of their own (F3-600); NieR's play whenever NieR Mode is painted, whatever family
+  is chosen beneath it, and have no per-family variants (DL-153). No settings key,
   NieR part, theme family, theme variant, `ui.onboarding.*` action or `ui.guided_tour.*` action is added.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
-depends_on: [DL-152, SSYS-043, F3-082, F3-426, F3-441, F3-520, F3-521, F3-589]
+depends_on: [DL-152, DL-153, SSYS-043, F3-082, F3-426, F3-441, F3-520, F3-521, F3-589]
 unblocks: []
 acceptance_criteria:
   - "The title-bar theme selector, the onboarding look choice and both Look menus show one NieR Mode checkbox with an Adjust NieR look button below their family and Light/Dark choices; NieR Mode never appears as a family choice or a ninth variant, and the selector still exposes exactly eight built-in variants."
   - "The checkbox and the button are keyboard reachable and the checkbox exposes its checked state; the editor opens as a popup dialog over the application or as a panel inside the onboarding window, closes on Escape and returns focus to the button."
   - "Before a verified current Project exists no NieR choice writes a setting; committing the look writes the three NieR rows with the theme pair to that Project, and closing setup first leaves the stored values in place."
-  - "With NieR Mode painted every onboarding stage draws the NieR unit marionettes and the window and every Tour step draw the NieR touches of the installed parts; with it off no NieR touch draws, moves or plays, and the four family directions are unchanged."
+  - "With NieR Mode painted every onboarding stage draws the NieR unit marionettes and the window and every Tour step draw the NieR touches of the installed parts; with it off no NieR touch draws, moves or plays, and the four families keep their own directions, with the hero moments of F3-600; with it on NieR's moments play whatever family is chosen beneath it (DL-153)."
   - "The unit marionette keeps its visor, collar, square pins and strings under every part selection and preset, and keeps the 1.21 head-to-torso ratio and the size-gated detail of its icon form."
   - "Every NieR beat is gated by an existing installed part, and Animation speed still scales the motion."
   - "Words longer than 8 characters type on with their final layout reserved from the first frame, and a label of 8 characters or fewer may decode."
@@ -41223,7 +41243,8 @@ negative_constraints:
   - "Do not use a game asset, game audio or a character likeness."
   - "Do not add a NieR part, a settings key, a theme or an onboarding or tour action."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-153): 'the four family directions are unchanged' is retired; the four families gain their own act card, wake and curtain call (F3-600), and NieR's moments still play whenever NieR Mode is painted."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -41290,7 +41311,8 @@ canonical_text: >-
   is previewed after an explicit gesture under F3-405's preview rules. In the concept that library holds 354
   entries (Basic 69 takes, Friendly, Glass and Retro 66 each, and the NieR kit 87), generated demonstration tones
   labelled as such and previewed through the onboarding's own player. This pass changes the four family kits'
-  sounds and leaves the four families' pixels unchanged. Production built-in cues carry source, licence, version,
+  sounds; the four families' pictures change only at their own hero moments (F3-600, DL-153), which play those kits'
+  existing cues and add no take. Production built-in cues carry source, licence, version,
   duration and hash metadata, and no game audio is used.
 gui_related: true
 gui_classification_reason: Places onboarding and Guided Tour sound cues, their kits and the NieR kit in the sound settings model.
@@ -41305,7 +41327,7 @@ acceptance_criteria:
   - "wake falls back to a reveal, string to a tap, land to a drop, bow to back, save to a success, showPointer to the pointer and showInterrupt to an interruption when a kit has no take of its own."
   - "Each look's chapter sting builds that look's four-note motif one note per chapter and resolves at Ready, and a chapter already stung in the run does not sting again after Back."
   - "No two cues of priority 75 or higher play within 1000 ms except the designed layers, and Ready's chord and the tour's finish each wait through 150 ms of rest."
-  - "The sound library lists every take of each onboarding and Tour cue of each kit with its moment and style (Setup & tour per look, and NieR), 354 entries in the concept, main takes first and the rest behind Show N more takes, labelled as a generated demonstration tone in the concept, and previews it only after an explicit gesture. The four family kits' sounds change with this pass, and the four families' pixels do not."
+  - "The sound library lists every take of each onboarding and Tour cue of each kit with its moment and style (Setup & tour per look, and NieR), 354 entries in the concept, main takes first and the rest behind Show N more takes, labelled as a generated demonstration tone in the concept, and previews it only after an explicit gesture. The four family kits' sounds change with this pass; the four families' pictures change only at their own hero moments (F3-600), which add no take (DL-153)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -41337,10 +41359,105 @@ negative_constraints:
   - "Do not let a cue be the only signal."
   - "Do not use game audio or present demonstration tones as licensed recordings."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-153): 'leaves the four families' pixels unchanged' is retired; the families' pictures change at their own hero moments (F3-600), with no new take."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-405, ContractName:Plans/FinalGUISpec.md#F3-564, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-039
+
+## DL-153 — The App Opens In Its Own Look, Setup's Starting Look, And The Four Families' Hero Moments (2026-10-09)
+
+This addendum compiles the owner decision DL-153, Jared's request of 2026-10-09 to take the next steps of the NieR
+onboarding showpiece (DL-152) and his two rulings of that day. It amends F3-468 (the first paint), F3-520 (the look
+onboarding starts in), F3-521 (the restore's own notices), F3-598 and F3-599 (the four families' pictures), and adds
+F3-600. Behaviour stays with its owners: `Plans/Planning_Wizard.md` PWIZ-021 to PWIZ-023 (onboarding and tour
+orchestration), `Plans/Settings_System.md` section 4.4 and SSYS-043 (the theme pair and NieR Mode). The units own the
+presentation only. The concept is source lineage only: its class names, keys, event identifiers, harness hooks and every
+measured timing outside these units are not canon.
+
+### F3-600 — The Hero Moments In The Four Theme Families
+
+```yaml
+plan_unit_id: F3-600
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Product Onboarding's three hero moments, the wake as the window opens, the act card at a chapter's end and the
+  curtain call at Ready, take five styles, one per look family: Basic, Friendly, Glass, Retro and NieR (DL-153).
+  Whenever NieR Mode is painted, its onboarding preview included, NieR's moments play as F3-598 sets them out,
+  whatever family is chosen beneath it, and no family has a NieR variant. Otherwise the painted family plays its own
+  style, the same in its Light and its Dark variant and drawn only in that family's own materials, never a recoloured
+  NieR. Basic is one drafting job: as the window opens a parallel rule sweeps down the sheet drawing its construction
+  lines before the strings are tensioned; at a chapter's end a title block is drafted over the stage, the rail draws a
+  dimension line to the next chapter and a DONE stamp presses onto the block before the sheet is lifted away; at Ready
+  the troupe bows on the chord and an APPROVED stamp lands on the Ready sign. Friendly is a paper theatre: the
+  footlights come up and the house curtain gathers as the paper troupe folds up from flat; a title card on a stick
+  pops up from below the stage while a paper pennant hops along the rail; at Ready the troupe bows and paper roses land
+  at its feet. Glass is a light lab: the lab switches on under its beam and light runs down each filament into its
+  helper; a frosted plate lights up under a beam while a pulse of light runs along the rail; at Ready a spotlight comes
+  on over each helper as it bows. Retro is an arcade: an attract screen types the name and the sprites spawn in
+  stepped frames; a stage-clear screen with a bonus tally wipes over the stage while the rail's cursor jumps; at Ready
+  the sprites duck their bows, ALL CLEAR types under the sign and a pixel arrow points to the Guided Tour. The wake
+  plays on a fresh opening, the act card on the first forward arrival in a chapter of the run and the curtain call on
+  the first arrival at Ready; the act card is that chapter's one sting, and the rail keeps its old state until the
+  moment's beat moves it. Each family's moments play only that family's existing cues (F3-599). Reduced Motion and low
+  resource show each moment's end state at once; a key or a press snaps a running moment to its end state, and input
+  never waits; motion is one-shot transform or opacity, scaled by Animation speed; no surface larger than 340x256 px
+  reverses its opacity more than once a second, and a large area leaves one way; no filter, blur, blend mode, mask,
+  canvas or WebGL is used. Outside these moments every onboarding screen settles exactly as before; Ready settles with
+  the troupe in a line and its family's mark (the APPROVED stamp, the roses, the spotlights, ALL CLEAR with its
+  arrow). Ready still hands the window over to the Guided Tour's first callout in every family. No settings key,
+  theme family, theme variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*` action is
+  added.
+gui_related: true
+gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme families.
+split_recommended: false
+depends_on: [DL-153, DL-152, F3-520, F3-598, F3-599]
+unblocks: []
+acceptance_criteria:
+  - "With NieR Mode painted, NieR's wake, act card and curtain call play over every family, and no family-styled moment draws, moves or plays."
+  - "With NieR Mode off, each of Basic, Friendly, Glass and Retro plays its own wake, act card and curtain call, in its Light and in its Dark variant, drawn only in its own materials."
+  - "The act card plays on the first forward arrival in a chapter of the run and is that chapter's one sting; Back and forward again play no card; the curtain call plays on the first arrival at Ready."
+  - "Reduced Motion and low resource show each moment's end state at once, and a key or a press snaps a running moment to its end state; an act card never delays the next screen beyond NieR's act card."
+  - "Every onboarding screen other than Ready settles pixel-identical to its earlier picture in the eight family variants; Ready settles with the troupe in a line and its family's mark."
+  - "No surface larger than 340x256 px reverses its opacity more than once a second; no filter, blur, blend mode, mask, canvas or WebGL is used; motion is one-shot transform or opacity scaled by Animation speed."
+  - "The families' moments play only their kits' existing cues, and no settings key, theme variant, NieR part, sound setting or onboarding or tour action is added."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+risk_class: nier_onboarding_tour_drift
+reasoning_tier: high
+context_scope: nier_onboarding_tour
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-153"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48"
+  - "Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/nier-showpiece-next)"
+preserved_exact_tokens:
+  - "NieR Mode"
+  - "APPROVED"
+  - "ALL CLEAR"
+negative_constraints:
+  - "Do not make a NieR variant per family or play a family's moment while NieR Mode is painted."
+  - "Do not recolour NieR's moments as a family's moments."
+  - "Do not add a settings key, a theme, a NieR part, a sound setting or an onboarding or tour action."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Planning_Wizard.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-520

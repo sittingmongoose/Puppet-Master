@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L3376
+Source lines: L13-L3407
 
-Source SHA256: `e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c`
+Source SHA256: `519719f7c8d6f07b4f981671d4febead5b59366531ed4a907188d6324ec08a61`
 
 ---
 
@@ -3372,3 +3372,34 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-597, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md`, SHA-256 `416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652`.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/Settings_System.md#SSYS-043
+
+### DL-153: The app opens in its own look, setup's starting look is decided, the tour stays quiet as it tidies up, and the four looks get their own hero moments
+
+**Question:** How should the app look in its first moments, which look does setup start in, and should Basic, Friendly, Glass and Retro get their own versions of setup's big moments?
+
+**Why it came up:** The NieR showpiece (DL-152) left four next steps. The app opened on a black frame and then Basic Dark before the look a person had chosen (about 3 seconds for a Light theme). Setup's act card, wake and curtain call existed only in NieR. When the tour put the page back, the app raised "Widget removed" and "Applied from the next turn" in the four normal looks. A measurement in the page's tab bar cost a whole-page restyle on every Reduced Motion change. Jared asked for all four on 2026-10-09 and ruled on two questions the same day.
+
+**What you get:**
+- The app opens in the look stored for its Project from its very first frame, NieR Mode included; with NieR's boot log coming, the page shows the log's paper first, never the app beneath. Nothing new is stored: the first paint reads the Project's own setting.
+- Setup on a new install always starts in Basic Dark, with Basic Dark picked on "Pick a look", whatever look the browser showed before. Run Onboarding Again starts in the look you have on screen, NieR Light or Dark included, and keeps it picked.
+- Five styles of setup's three big moments, one per look family: Basic drafts, signs off and stamps its sheet, Friendly raises its paper theatre's curtain and throws roses, Glass switches its light lab on and lights its helpers, Retro plays attract mode, STAGE CLEAR and ALL CLEAR, and NieR keeps its ink cards. NieR Mode on always means NieR's moments, whatever theme is underneath; each of the four families has one style that works in its Light and Dark themes.
+- The tour no longer raises the app's own notices when it puts the page back, in any look.
+
+**What it costs:**
+- The four families' pictures now change at three moments, and Ready settles with the troupe in a line and its family's mark, so there are five looks of the moments to keep in step. The families' moments use their existing sounds; the sound library does not grow.
+- The first paint depends on knowing which Project opens; if a host picks another Project before Settings load, that Project's look arrives when Settings paints it, as before.
+
+**Options considered:** A global "paint hint" of the last painted look, written by Settings, was the suggested fix. It was not chosen: the app reopens the Project selected in its title bar, so a global hint would paint another Project's look and then flip, and it would add a second, global store of a setting that each Project owns (the T44 rule that Settings alone persists the theme). Per-family NieR variants were ruled out by Jared.
+
+**What Jared asked (2026-10-09, in the T3 thread "NieR onboarding showpiece next steps"):** to take all four next steps of the NieR showpiece handoff: the app's first paint, the hero moments in the four normal looks in their own materials, quiet restores in the four looks, and the Reduced Motion cost in the tab bar. He then ruled that there are five styles of the moments, NieR's unchanged and always shown while NieR Mode is on, each family's working in its Light and Dark themes; and that setup on a new install always starts in Basic Dark, while Run Onboarding Again starts in the look on screen, NieR included. The record keeps his request in plain words (his choice of 2026-10-07, DL-145).
+
+**What the spec now says:**
+1. **The first paint** (`Plans/FinalGUISpec.md#F3-468`, amended): the pre-paint layer shows the look stored for the Project the app opens on, NieR Mode included, read from that Project's Settings without storing a theme anywhere else.
+2. **Setup's starting look** (`Plans/FinalGUISpec.md#F3-520`, amended): a new install starts in Basic Dark, preselected; Run Onboarding Again starts in the look on screen, preselected.
+3. **The four families' hero moments** (`Plans/FinalGUISpec.md#F3-600`, new; `#F3-598` and `#F3-599`, amended): five styles, NieR's whenever NieR Mode is painted, each family's in its own materials in both its variants, with end states under Reduced Motion and low resource, input that never waits and no flash.
+4. **Quiet restores** (`Plans/FinalGUISpec.md#F3-521`, amended): the app's own notices about the tour's restore stay quiet in every look.
+5. **Unchanged:** no settings key, theme family or variant, NieR part, sound setting or onboarding or tour action is added. The tab bar's Reduced Motion measurement is a concept fix with no canon of its own (the concept's README records it).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md`, SHA-256 `5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48` (the request and the two rulings, the rulings word for word).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599

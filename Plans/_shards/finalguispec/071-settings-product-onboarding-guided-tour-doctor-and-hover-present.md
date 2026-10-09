@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35115-L35878
+Source lines: L35123-L35896
 
-Source SHA256: `f53b691e46c27e09fd2db732b918c0650a0f8b9516dd9b49d708c869ab1be25a`
+Source SHA256: `a0e27d58f5b81e56672b85f9b47dfd865bdab8447ec953ba6b0ac355e873adb7`
 
 ---
 
@@ -112,6 +112,11 @@ canonical_text: >-
   The bounded eight-theme choice
   appears at welcome, before Project or infrastructure choices, and changes presentation only; below it, never among its
   options, a NieR Mode checkbox with an Adjust NieR look button previews NieR Mode painted over Basic (F3-598).
+  On a new install, when the window opens by itself because no Project exists yet, onboarding always starts in
+  Basic Dark, from its first frame, with Basic Dark preselected and NieR Mode unticked, whatever look was shown
+  before; stored values are not changed. Run Onboarding Again (from Settings or the Home menu) is the one exception:
+  it starts in the look then shown, NieR Mode included, preselected, with no change of look as the window opens
+  (DL-153). The window's hero moments take five styles, one per look family (F3-600).
   A persistent Look menu (`Change the look`), carrying the same NieR Mode checkbox and Adjust NieR look button below
   its family and mode choices, and a sound control remain reachable in the onboarding header on every stage beyond
   welcome. Look selections preview presentation without dispatching owner work. Before a verified current Project
@@ -214,6 +219,8 @@ acceptance_criteria:
   - "At the standard review viewport, each stage--including Review and Ready--fits within the bounded modal without a floating action bar, obscured content, or required page scroll; short/narrow fallback may scroll one explicit content region while its in-flow actions remain reachable and never cover the choices."
   - "Cards, buttons, focus rings, hover elevation, explainer surfaces, headings, summaries, and consequence text remain fully inside their clip/viewport bounds; no hover edge or sentence is cut off. Decorative yellow reminders, duplicate Apply Setup panels, sticky blue confirmation boxes, and left-edge color-rail callouts are absent."
   - "Every stage has a distinct visual scene and meaningful continuity of focus; the four theme families, and NieR Mode painted over Basic, use different directing systems rather than paint-only variants, all motion uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and theme tokens, and essential storytelling does not require browser-only effects."
+  - "A new install's onboarding starts in Basic Dark from its first frame with Basic Dark preselected and NieR Mode unticked, whatever look was shown before and without changing stored values; Run Onboarding Again starts in the look then shown, NieR Mode included, preselected, and never switches look as it opens (DL-153)."
+  - "The wake at the window's opening, the act card at a chapter's end and the curtain call at Ready take five styles, one per look family, as F3-600 sets out."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -315,7 +322,9 @@ canonical_text: >-
   direct the film with substantially different
   callout composition, illustration, typography, target treatment, and motion--not one recolored overlay--while never
   using a left-edge accent rail. Transitions preserve the mounted application continuously without a black or empty
-  flash. Skip restores captured layout, Chat state, and focus. Finish restores the temporary arrangement by default
+  flash. Skip restores captured layout, Chat state, and focus. While any restore runs, the application's own notices
+  about it (a widget removed, a persona applied from the next turn) stay quiet in every look, and the Tour's own
+  closing note says what was put back (DL-153). Finish restores the temporary arrangement by default
   or keeps it only on explicit selection, removes practice content, and lands on the real Planning Wizard with the
   committed Project selected and no work auto-started. Close/reload resumes a safe checkpoint after owner revalidation.
 gui_related: true
@@ -349,6 +358,7 @@ acceptance_criteria:
   - "Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director, and while NieR Mode is painted a NieR ink director (YoRHa headers, ink target brackets, the menu cursor and Pod narration, each under its installed part) replaces Basic's; these systems differ in silhouette, typography, target treatment, and choreography rather than just color."
   - "Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame; no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside the viewport is accepted."
   - "Protected AuthBrowserSession content is never highlighted, captured, inspected, or described."
+  - "Skip, Restore my layout and Keep this layout raise none of the application's own notices about the restore in any look (no widget-removed or persona notice); the Tour's own closing note still shows (DL-153)."
   - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
