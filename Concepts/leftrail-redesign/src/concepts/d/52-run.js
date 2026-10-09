@@ -163,7 +163,7 @@ function rdpOpenConfigs(trig, keyboard) {
   if (rest.length) groups.push({ label: recent.length ? 'Other configurations' : null, items: rest });
   if (acts.length) groups.push({ items: acts });
   const sel = recent.concat(rest).find(x => x.selected);
-  const w = Math.max(240, Math.min(340, Math.round(trig.getBoundingClientRect().width)));
+  const w = Math.max(300, Math.min(360, Math.round(trig.getBoundingClientRect().width)));   // whole names: the menu may reach past the rail
   PMR.menu.toggle({ id: 'd-rd-configs', label: menu.getAttribute('aria-label') || 'Launch configurations', value: sel ? sel.value : undefined, groups },
     trig, { width: w, keyboard, onPick: it => { if (it._src) it._src.click(); } });
   return true;
@@ -180,7 +180,7 @@ function rdpOpenSessions(trig, keyboard) {
     };
   });
   const sel = items.find(x => x.selected);
-  const w = Math.max(250, Math.min(340, Math.round(trig.getBoundingClientRect().width)));
+  const w = Math.max(300, Math.min(360, Math.round(trig.getBoundingClientRect().width)));   // whole names: the menu may reach past the rail
   const el = PMR.menu.toggle({ id: 'd-rd-sessions', label: menu.getAttribute('aria-label') || 'Debug sessions', value: sel ? sel.value : undefined, groups: [{ items }] },
     trig, { width: w, keyboard, onPick: it => { if (it._src) it._src.click(); } });
   if (el) el.querySelectorAll('.pmr-mi').forEach(b => {

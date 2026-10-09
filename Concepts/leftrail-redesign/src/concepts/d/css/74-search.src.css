@@ -12,7 +12,7 @@
 /* header: the index toggle is a quiet text button on the status line */
 §@search .sh-banner > .sh-idxtoggle {
   max-width: 100% !important; min-height: 22px; margin: 0 0 0 -5px !important; padding: 1px 5px !important; gap: 5px;
-  border-radius: var(--d-r) !important; cursor: pointer; background: none !important;
+  border-radius: var(--d-rs) !important; cursor: pointer; background: none !important;
   transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease);
 }
 §@search .sh-banner > .sh-idxtoggle:hover, §@search .sh-banner > .sh-idxtoggle.open { background: var(--d-hover) !important; }

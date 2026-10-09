@@ -101,7 +101,7 @@
 §@run .sh-shelf[data-acc]:not(.open) > .sh-head .sh-hacts { display: none !important; }
 §@run .sh-shelf[data-acc].open > .sh-head .sh-hacts-wide { flex: none !important; justify-content: flex-end; }
 §@run .sh-shelf > .sh-head[data-d-stack] { flex-wrap: wrap !important; padding-top: 7px !important; padding-bottom: 8px !important; }
-§@run .sh-head[data-d-stack] > .sh-hlabel { flex: 1 1 auto !important; }
+§@run .sh-head[data-d-stack] > .sh-hlabel { flex: 1 1 0 !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
 §@run .sh-head[data-d-stack] .sh-hacts { margin-left: auto !important; }
 §@run .sh-head[data-d-stack] .sh-hcount {
   order: 9; flex: 1 1 100% !important; margin-left: var(--d-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere; text-align: left;
