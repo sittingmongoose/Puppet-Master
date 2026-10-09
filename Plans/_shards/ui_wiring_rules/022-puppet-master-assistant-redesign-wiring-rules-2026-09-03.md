@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1176-L1247
+Source lines: L1176-L1243
 
-Source SHA256: `28177dbfda3e61ec6d0abf6c9b3300e82e74d154f07253375995f93ee4c79d92`
+Source SHA256: `6e8b622453820e34712c34a277ff854d187b74e0cc1974798ccc7efe2a98a319`
 
 ---
 
@@ -16,7 +16,7 @@ The Assistant redesign adds fifty-five production-intent wiring rows under the `
 
 **View-local intents are declared, not disguised.** Three rows carry a view-local or owner-internal effect rather than a user-facing command: composer text entry updating the `ComposerBuffer`, parent To-Do expansion, and Plan view switching between Rich Text and Markdown. Each is declared explicitly as `(view-local intent)` in its wiring row. A view-local intent must not emit a domain event, must not write a `TodoTransition`, and must not be presented in the catalog as a command.
 
-The redesigned Usage page (2026-10-09) declares its view-local intents the same way. Live / Paused, in the rail head beside Usage, holds or applies arriving Usage projection updates; it is a declared view-local intent whose remembered choice is the storage-owned Usage view preference `live` (`Plans/usage-feature.md#UF-095`), and it emits no domain event and has no catalog command or production wiring row. Play the next hour, Back to now and the concept feature switches (`PMU.flags`, `?pmu-flags=`) are lab-only concept controls, excluded from canon as `Plans/assistant-chat-design.md#ACD-474` excludes the 5.6 Pro lab tools: they are not view-local intents of the product and receive no command, setting, wiring row, persisted key or test gate (`Plans/UI_Command_Catalog.md#UCC-147`).
+The redesigned Usage page (2026-10-09) is not an Assistant redesign row, but its view-local controls follow the same declaration: Live / Paused is a view-local intent with no catalog command or production wiring row, as `Plans/UI_Command_Catalog.md#UCC-147` records, and the concept's demo controls take the lab-only disposition `Plans/usage-feature.md#UF-107` owns.
 
 **Availability and disabled reason come from the owner.** Every row reads `state.assistant_redesign.<selector>.availability` and `state.assistant_redesign.<selector>.disabled_reason` from its semantic owner before dispatch. A surface that cannot read the owner projection renders the control disabled rather than optimistic, and it announces the exact owner reason rather than a generic one.
 
@@ -36,7 +36,7 @@ unit_type: wiring_rule
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Every Assistant redesign wiring row names one producer, one registered command ID, and one sole future target handler, reads its owner availability and exact disabled reason from the declared state selectors before dispatch, and renders disabled with command_not_registered when no registered command exists. A row carrying a view-local or owner-internal effect rather than a user-facing command is declared explicitly as a view-local intent, emits no domain event, writes no transition record, and receives no catalog command row. The Usage page's Live / Paused control is declared the same way: a view-local intent that holds or applies arriving Usage projection updates, remembered as the storage-owned Usage view preference live, with no domain event and no catalog or production wiring row. Its Play the next hour, Back to now and concept feature switches are lab-only concept controls, as ACD-474 excludes the 5.6 Pro lab tools, and receive no command, setting, wiring row, persisted key or test gate. Each row declares its specific negative path and is not closed until a test asserts it. A row whose producer is a schedule, window, quota resume, Crew Auto, Goal continuation, or provider retry re-checks the latched user_stop_epoch immediately before dispatch and aborts with the exact failed clause when it has moved. Back Seat Driver rows produce advice records and projections only and may never be a precondition of a primary-flow row. Rows dispatching against a Plan, message snapshot, or frozen review target carry the exact version and hash, revalidate immediately before dispatch, and abort rather than rebinding.
+  Every Assistant redesign wiring row names one producer, one registered command ID, and one sole future target handler, reads its owner availability and exact disabled reason from the declared state selectors before dispatch, and renders disabled with command_not_registered when no registered command exists. A row carrying a view-local or owner-internal effect rather than a user-facing command is declared explicitly as a view-local intent, emits no domain event, writes no transition record, and receives no catalog command row. Each row declares its specific negative path and is not closed until a test asserts it. A row whose producer is a schedule, window, quota resume, Crew Auto, Goal continuation, or provider retry re-checks the latched user_stop_epoch immediately before dispatch and aborts with the exact failed clause when it has moved. Back Seat Driver rows produce advice records and projections only and may never be a precondition of a primary-flow row. Rows dispatching against a Plan, message snapshot, or frozen review target carry the exact version and hash, revalidate immediately before dispatch, and abort rather than rebinding.
 gui_related: true
 gui_classification_reason: These rules govern how every Assistant control resolves availability, dispatch, and disabled state.
 depends_on: [UIW-017]
@@ -44,7 +44,6 @@ unblocks: []
 acceptance_criteria:
   - Every row names one command or is declared a view-local intent.
   - No page-local action, alias, fixture, timer, or toast simulates a registered command.
-  - Usage Live / Paused is declared a view-local intent, dispatches nothing, and has no catalog or production wiring row; Play the next hour, Back to now and the concept feature switches have no command, setting, wiring row, persisted key or test gate.
   - Every declared negative path has an asserting test.
   - Automatic producers re-check the stop epoch immediately before dispatch.
   - No primary-flow row depends on BSD health.
@@ -66,15 +65,12 @@ source_lineage:
   - pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json
   - pm-assistant-implementation-2026-09-02-recovered:05_GUI_WIRING_MATRIX.md
   - pm-assistant-implementation-2026-09-02-recovered:DRY-004
-  - Plans/Decision_Log.md#DL-167
 preserved_exact_tokens:
   - "command_not_registered"
   - "handler_unavailable"
   - "user_stop_epoch"
-  - "Live / Paused"
 negative_constraints:
   - Do not let a view-local intent emit a domain event or a transition record.
-  - Do not give the Usage Live / Paused control or the lab-only demo-hour controls a command, and do not treat a lab-only concept control as product.
   - Do not make a primary-flow row depend on Back Seat Driver.
   - Do not rebind an exact-version dispatch to a newer target.
 owner_hints:

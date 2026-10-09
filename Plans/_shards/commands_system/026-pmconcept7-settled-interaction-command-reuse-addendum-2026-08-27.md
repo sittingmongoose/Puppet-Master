@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4825-L4933
+Source lines: L4839-L4962
 
-Source SHA256: `193828ed8a0a85fc27e834f5ab259f9f0a3aaaea2da31067d6620dd8bb079535`
+Source SHA256: `7df18903cac9722f5d6d6fadb2cf37b37a27260dae1c0e94d9475116c4f9f352`
 
 ---
 
@@ -27,6 +27,10 @@ The canonical dispositions are:
 | Usage refresh and object-backed Usage/Ledger drill-through | `cmd.usage.refresh`, `cmd.nav.open_usage_subject` | Refresh records a no-persist dispatch receipt. Event-primary callers use `usage_event`/`usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, repeats `attempt_id` at top level, retains `usage_event_ref` plus provider/account/runtime refs as correlation, and carries no `OpenSubject`. |
 | Aggregate provider/account/panel details | local inspector (`view_only`) | Current aggregate cards open their local inspector only; no command, command receipt, domain event, or invented route kind is admitted. |
 | Usage room, scope, range, disclosure, More-menu state, and per-widget filters | local projection (`view_only`) | No command, command receipt, persisted event, or storage mutation is emitted merely for local projection changes. Settled saved preferences remain storage-owned. |
+| Usage Live / Paused (redesigned page, 2026-10-09) | local projection (`view_only`) | Holds or applies arriving Usage projection updates for display only; the remembered choice is the storage-owned view preference `live` (`Plans/usage-feature.md#UF-095`). |
+| Usage Tidy and board gravity (redesigned page) | one existing `cmd.widget.move` carrying `arrange` `{ mode: "tidy", detail }` for Tidy; gravity inside the action's own widget command | One settled layout transaction with one receipt; no per-card move and no new command (`Plans/Widget_System.md#WS-019`). |
+| Usage Accounts room Use this account | `cmd.account.select_profile` | Explicit labelled override, shown only where `supports_manual_set_active` holds; never a page-scope pick. |
+| Usage Accounts room provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` | The Settings owner's transaction commits the one Settings value; Usage keeps no copy (`Plans/Settings_System.md#SSYS-044`). |
 | Context-ring popup/hover summary | local projection (`view_only`) | Opening or hovering the menu does not compact context or open a detail surface. |
 | `Compact Now` | `cmd.chat.compact_context` | Dispatches only after explicit selection. While no `context.compaction.*` Event Authority registration exists, production wiring records the command result/receipt and visible projection state rather than fabricating an event family. |
 | `More Details`, focus, and close | `cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, `cmd.chat.close_thread_context_details` | Reuses the shared thread Context Detail Pane; it does not create a Usage route or a second chat-local details store. |
@@ -58,7 +62,13 @@ canonical_text: >-
   cmd.workspace_layout.size_surface token normalizes to cmd.workspace_layout.resize_surface
   after preset resolution and never becomes a primary command. No pointer-preview event,
   PM7 command family, second Assistant command path, or rejected provider-management
-  command is admitted.
+  command is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its
+  Accounts room's Use this account reuses cmd.account.select_profile, each provider's Auto-switch toggle and
+  switch level reuse the Settings owner's cmd.settings.transaction.preview and cmd.settings.transaction.apply at
+  scope provider (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy, detail } for the
+  whole room and Usage board gravity commits inside the action's own widget command (WS-019), a size preset
+  commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
+  take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
 split_recommended: false
@@ -71,6 +81,7 @@ acceptance_criteria:
   - Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context Detail Pane command family; menu open and hover dispatch nothing.
   - Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command, receipt, event, or persistence write.
   - cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
+  - "The redesigned Usage page dispatches cmd.account.select_profile for Use this account, the cmd.settings.transaction.preview/apply pair at scope provider for a provider's Auto-switch toggle and switch level, exactly one cmd.widget.move carrying arrange { mode: tidy, detail } per Tidy that moves cards, and nothing for Live / Paused, gravity beyond the causing action, or the concept's demo controls; no command is added."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -95,6 +106,9 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - Plans/Decision_Log.md#DL-173
+  - Plans/Decision_Log.md#DL-174
+  - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - cmd.widget.resize
   - cmd.widget.move
@@ -111,6 +125,7 @@ negative_constraints:
   - Do not dispatch commands or persist events for pointer-preview frames, hover, popup disclosure, or cancellation.
   - Do not revive cmd.provider.usage.open_management.
   - Do not create a second Assistant command path or store.
+  - Do not mint a command for Usage Tidy, board gravity, size presets, Live / Paused, or the Accounts room's in-place controls, and do not commit Tidy as one move per card.
   - Do not route aggregate provider/account/panel cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt selector.
 owner_hints:
   - Plans/Commands_System.md

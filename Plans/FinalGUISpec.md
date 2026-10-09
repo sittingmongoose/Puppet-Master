@@ -31401,13 +31401,13 @@ rows, all scope `global` and tier `simple`: `general.visual.nier-mode` (toggle, 
 the Basic family, not a ninth theme: the eight built-in variants of F3-425 are unchanged, and while it is on NieR
 decides the accent color and the app font. Its parts and background rows show only while it is on.
 
-Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-164`, owner `Plans/Multi-Account.md#MA-073`):
-four rows gain the `provider` scope beside the scopes they already have, and the row count stays 916:
+Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
+four rows gain the `provider` scope beside the scopes they already have, `ai.accounts.cooldown-policy` also gains
+the `global` scope so that each of the four has a global value as the default, and the row count stays 916:
 `ai.accounts.multi-account-switching` (global, project, provider), `ai.accounts.hard-switch-level` and
-`ai.accounts.soft-warning-level` (global, project, provider, account), and `ai.accounts.cooldown-policy` (provider,
-account). A value resolves from the account override, then the provider, then the project, then the global value,
-over the scopes each row has; the global value, where the row has one, is the default for every provider without a value of its own (the rest period has no global row and uses its inventory default), and
-MA-073 owns that resolution and the switching rules. The provider value is set in the provider's own section of
+`ai.accounts.soft-warning-level` (global, project, provider, account), and `ai.accounts.cooldown-policy` (global,
+provider, account). MA-073 owns the order in which these scopes resolve, the global value as the default for every
+provider without a value of its own, and the switching rules. The provider value is set in the provider's own section of
 Settings > AI > Providers & Accounts and, for the toggle and the switch level, also on the Usage Accounts room's
 provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, written only through the Settings owner's
 `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,
@@ -34773,7 +34773,7 @@ canonical_text: >-
   PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and Diagnostics
   disclosure ladder from the Usage owner into a balanced widget workspace whose track count follows the board's
   measured width on the 12, 20, 24 and 30 track ladder of UF-094, which replaces the earlier fixed twelve-track
-  board (DL-166). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
+  board (DL-176). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
   information, every size preset shows a complete content tier, and facts a size cannot show fold behind "N more"
   with hover and Details rather than being dropped (UF-096). Curated defaults,
   provider-heavy narrow-and-tall cards, partial-row alignment, semantic size identities, complete-or-hidden
@@ -34804,7 +34804,7 @@ canonical_text: >-
   one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
   a provider's Auto-switch toggle and switch level are bound Settings controls committed through the Settings
   owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
-  previews, its menus, marks, heroes, charts and motion are owned by F3-623.
+  previews, its menus, marks, heroes, charts and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
 split_recommended: false
@@ -34869,10 +34869,10 @@ canonical_text: >-
   candidate rectangles cannot redirect the visible placeholder. Pointer and keyboard reorder use the same
   candidate model with live interruptible peer displacement while peer nodes remain mounted and fully painted;
   entrance animations do not restart and the accepted settlement reconciles DOM order once. Usage pointer resize
-  advances its real target footprint through the same deterministic slot projection, visibly repacks obstructed
-  peers and then applies Usage board gravity during the held preview as WS-019 sets out (DL-166), and retains that
-  last-painted topology on acceptance without remounting peers; Usage Tidy and gravity settle inside one existing
-  widget command with one receipt, never one command per card (WS-019); Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
+  advances its real target footprint through the same deterministic slot projection, visibly repacks only
+  obstructed peers during the held preview, and on acceptance retains that last-painted topology with Usage board
+  gravity applied at settle, as WS-019 sets out (DL-176), without remounting peers; Usage Tidy and gravity settle
+  inside one existing widget command with one receipt, never one command per card (WS-019); Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
   axis at the far right, far left, and middle while minimizing companion-axis drift; an edge-constrained deliberate
   drag can express one step, and an in-viewport release commits the last painted supported size even after
   same-direction overshoot. A changed reorder
@@ -34895,7 +34895,7 @@ split_recommended: false
 depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012]
 unblocks: [ATS-037, ATS-039, ATS-040]
 acceptance_criteria:
-  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces obstructed peers and the peers Usage board gravity floats, as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
+  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
   - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema."
@@ -41368,27 +41368,27 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-405, ContractName:Plans/FinalGUISpec.md#F3-564, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-039
 
-## DL-163 to DL-169 — The Redesigned Usage Page In PMConcept7 (2026-10-09)
+## DL-173 to DL-179 — The Redesigned Usage Page In PMConcept7 (2026-10-09)
 
-This addendum compiles the owner decisions DL-163 to DL-169: Jared approved the redesigned Usage page, asked for it to replace the old one in PMConcept7, and added notes of 2026-10-09. Behaviour stays with its owners: `Plans/usage-feature.md#UF-107` and the Usage units it amends (what the page shows and does), `Plans/Multi-Account.md#MA-073` (per-provider auto-switch), `Plans/Widget_System.md#WS-017` to `#WS-020` (sizes, presets and the board transaction), `#F3-514` and `#F3-515` above (rooms, sizes and the settled-interaction boundary), `#F3-465` with `#F3-446` (hover), and `Plans/assistant-chat-design.md#ACD-475` (motion voices). The unit below owns the page's presentation only, and `Plans/DRY_Rules.md#DR-058` makes it the single owner of the Usage presentation grammar. The concept under `Concepts/usage-redesign/` is source lineage only: its class names, keys, switches, harness hooks and measured timings outside this unit are not canon.
+This addendum compiles the owner decisions DL-173 to DL-179: Jared approved the redesigned Usage page, asked for it to replace the old one in PMConcept7, and added notes of 2026-10-09. Behaviour stays with its owners: `Plans/usage-feature.md#UF-107` and the Usage units it amends (what the page shows and does), `Plans/Multi-Account.md#MA-073` (per-provider auto-switch), `Plans/Widget_System.md#WS-017` to `#WS-020` (sizes, presets and the board transaction), `#F3-514` and `#F3-515` above (rooms, sizes and the settled-interaction boundary), `#F3-465` with `#F3-446` (hover), and `Plans/assistant-chat-design.md#ACD-475` (motion voices). The unit below owns the page's presentation only, and `Plans/DRY_Rules.md#DR-058` makes it the single owner of the Usage presentation grammar. The concept under `Concepts/usage-redesign/` is source lineage only: its class names, keys, switches, harness hooks and measured timings outside this unit are not canon.
 
-### F3-623 — The Redesigned Usage Page's Presentation
+### F3-628 — The Redesigned Usage Page's Presentation
 
 ```yaml
-plan_unit_id: F3-623
+plan_unit_id: F3-628
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The redesigned Usage page (DL-163) is calm, polished and dense: it shows far more data per screen than the page it
+  The redesigned Usage page (DL-173) is calm, polished and dense: it shows far more data per screen than the page it
   replaces and never trades a fact for space. It reads like the Daylight Atlas reference: a clear type hierarchy,
   small-caps micro-labels, row tables whose window columns line up, plate titles with one subtitle line, semantic
   colour pairs, and series colours by token type. There are no pills, no coloured side bars, no tinted side boxes
   and no emoji; icons are inline SVG, and the hero key light below is the one approved tint. Sizes are readable at a
-  desktop distance (DL-165): values and body text 13 to 14 px, chart ticks, legends and small captions never below
+  desktop distance (DL-175): values and body text 13 to 14 px, chart ticks, legends and small captions never below
   11 px, and rows and buttons 28 to 32 px tall for a mouse. Type is the theme family's own font as the app's font
   owner provides it, and every fit is measured again once the fonts finish loading, so a late font never leaves a
-  label truncated or overflowing. Each room has one explicit hero plate (DL-168). A soft top-left radial key light
+  label truncated or overflowing. Each room has one explicit hero plate (DL-178). A soft top-left radial key light
   falls on the hero plate at 16% strength in dark themes and 9% in light themes; on arrival and on a room change
   only the hero number rolls, like an odometer, while supporting values appear final with a short fade, and rolls
   stay for live changes and for range and scope changes. Below the warn line, meters and skyline towers shade by
@@ -41414,10 +41414,11 @@ canonical_text: >-
   elements the two rooms share, the hero's reveal and the room's own signature beat; every room's entrance from
   every neighbour is visible and rich, and it may vary by direction or by what the rooms share but is never a plain
   cut. Moving a widget lifts the card to follow the pointer one to one while a landing placeholder sits in the exact
-  target slot and peers slide to make room; resizing shows a live outline of the snapped target size with its size
-  name and its width by height while peers reflow; release morphs the card into place, and Escape glides it back.
+  target slot and the peers in its way slide to make room; resizing shows a live outline of the snapped target size
+  with its size name and its width by height while the peers in its way reflow; release morphs the card into place,
+  after which board gravity floats the other cards up into the holes above them, and Escape glides it back.
   Width resizes from the right edge, the left edge and the corners at every board width. Tidy and board gravity
-  (WS-019) move the peers into place as one movement. The size menu previews each preset with its name before it
+  (WS-019) each move the cards into place as one movement. The size menu previews each preset with its name before it
   is chosen. A card's head actions never sit behind its title and always fit inside the card head at every width.
   Hover on the page is the shell's one hover system (F3-465 driven through F3-446's single pointer handler), with no
   Usage-only hover engine; no blur outlives its moment: hover leaves no blurred or scaled raster behind, an
@@ -41432,12 +41433,12 @@ canonical_text: >-
   because the new room is built in slices and then released; and on a computer without a GPU, Glass shows its solid
   pane instead of the live backdrop blur while Usage is open. Reduce Motion is instant (DL-115): every beat lands
   at its end state, and every close path, Escape included, works under it. The Slint portability limits recorded
-  for earlier Usage units do not bind this page's look (DL-163, after DL-139), and framework version pins are
+  for earlier Usage units do not bind this page's look (DL-173, after DL-139), and framework version pins are
   unchanged.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
-depends_on: [DL-163, DL-164, DL-165, DL-166, DL-167, DL-168, DL-169, DL-115, DL-139, UF-107, F3-418, F3-424, F3-446, F3-461, F3-465, F3-514, F3-515, F3-531, F3-589, F3-598, ACD-475, SSYS-043, MA-073, WS-019]
+depends_on: [DL-173, DL-174, DL-175, DL-176, DL-177, DL-178, DL-179, DL-115, DL-139, UF-107, F3-418, F3-424, F3-446, F3-461, F3-465, F3-514, F3-515, F3-531, F3-589, F3-598, ACD-475, SSYS-043, MA-073, WS-019]
 unblocks: []
 acceptance_criteria:
   - "No pill, coloured side bar, tinted side box or emoji appears on the page; values and body text are 13 to 14 px, no tick, legend or caption is below 11 px, and rows and buttons are 28 to 32 px tall."
@@ -41476,9 +41477,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-163"
+  - "Plans/Decision_Log.md#DL-173"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
-  - "/mnt/Cursor/share/puppet-master/2026-10-09-usage-upgrade-handoff/HANDOFF.md section 2, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md section 2, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
   - "Concepts/usage-redesign/ (src/js, src/css, marks/sources.json; concept lineage only; branch concept/usage-pm7-20261009)"
 preserved_exact_tokens:
   - "N more"
@@ -41500,4 +41501,4 @@ owner_hints:
   - Plans/usage-feature.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-163, ContractName:Plans/Decision_Log.md#DL-165, ContractName:Plans/Decision_Log.md#DL-166, ContractName:Plans/Decision_Log.md#DL-168, ContractName:Plans/Decision_Log.md#DL-169, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/DRY_Rules.md#DR-058
+ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-178, ContractName:Plans/Decision_Log.md#DL-179, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/DRY_Rules.md#DR-058

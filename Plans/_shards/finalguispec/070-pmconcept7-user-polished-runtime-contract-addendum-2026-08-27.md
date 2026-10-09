@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L34695-L35136
 
-Source SHA256: `92fd19d0d84c663ee8e8b8605b1180c8504c851139260d2f785b26f698afed7d`
+Source SHA256: `c3e94a37a917a38caea0c208fc9b73768730b87c3e86142ec63ea95a63c94e1d`
 
 ---
 
@@ -89,7 +89,7 @@ canonical_text: >-
   PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and Diagnostics
   disclosure ladder from the Usage owner into a balanced widget workspace whose track count follows the board's
   measured width on the 12, 20, 24 and 30 track ladder of UF-094, which replaces the earlier fixed twelve-track
-  board (DL-166). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
+  board (DL-176). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
   information, every size preset shows a complete content tier, and facts a size cannot show fold behind "N more"
   with hover and Details rather than being dropped (UF-096). Curated defaults,
   provider-heavy narrow-and-tall cards, partial-row alignment, semantic size identities, complete-or-hidden
@@ -120,7 +120,7 @@ canonical_text: >-
   one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
   a provider's Auto-switch toggle and switch level are bound Settings controls committed through the Settings
   owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
-  previews, its menus, marks, heroes, charts and motion are owned by F3-623.
+  previews, its menus, marks, heroes, charts and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
 split_recommended: false
@@ -185,10 +185,10 @@ canonical_text: >-
   candidate rectangles cannot redirect the visible placeholder. Pointer and keyboard reorder use the same
   candidate model with live interruptible peer displacement while peer nodes remain mounted and fully painted;
   entrance animations do not restart and the accepted settlement reconciles DOM order once. Usage pointer resize
-  advances its real target footprint through the same deterministic slot projection, visibly repacks obstructed
-  peers and then applies Usage board gravity during the held preview as WS-019 sets out (DL-166), and retains that
-  last-painted topology on acceptance without remounting peers; Usage Tidy and gravity settle inside one existing
-  widget command with one receipt, never one command per card (WS-019); Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
+  advances its real target footprint through the same deterministic slot projection, visibly repacks only
+  obstructed peers during the held preview, and on acceptance retains that last-painted topology with Usage board
+  gravity applied at settle, as WS-019 sets out (DL-176), without remounting peers; Usage Tidy and gravity settle
+  inside one existing widget command with one receipt, never one command per card (WS-019); Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
   axis at the far right, far left, and middle while minimizing companion-axis drift; an edge-constrained deliberate
   drag can express one step, and an in-viewport release commits the last painted supported size even after
   same-direction overshoot. A changed reorder
@@ -211,7 +211,7 @@ split_recommended: false
 depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012]
 unblocks: [ATS-037, ATS-039, ATS-040]
 acceptance_criteria:
-  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces obstructed peers and the peers Usage board gravity floats, as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
+  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
   - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema."

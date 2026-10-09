@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L6559-L6937
 
-Source SHA256: `297218ce696180a7306329bc27edfe82e7ad73f32b68c08f288da6638bb15cdb`
+Source SHA256: `35a14cdceb49882a49cf37ec14fba68466bf5f1a656744cce447177f14237bd3`
 
 ---
 
@@ -135,7 +135,7 @@ status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
   Every Usage room starts from a non-empty, room-specific, balanced curated board. The board's track count
-  follows its measured width on a ladder of 12, 20, 24 and 30 tracks (DL-166), which replaces the earlier single
+  follows its measured width on a ladder of 12, 20, 24 and 30 tracks (DL-176), which replaces the earlier single
   twelve-track layout; the narrowest class keeps twelve tracks, and Widget_System owns the class widths. Default
   boards are curated per width class (the widest class may be projected from the next narrower one) under one
   default-set version, and a changed default-set version drops saved geometry while keeping the saved view,
@@ -180,7 +180,7 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
-  - "Concepts/usage-redesign/src/js/40-board.js (the width-class ladder and versioned default sets of the redesigned Usage page, DL-163; source-lineage-only)"
+  - "Concepts/usage-redesign/src/js/40-board.js (the width-class ladder and versioned default sets of the redesigned Usage page, DL-173; source-lineage-only)"
 preserved_exact_tokens:
   - twelve-track
   - balanced curated board
@@ -207,10 +207,10 @@ owner_doc: Plans/usage-feature.md
 canonical_text: >-
   Usage restores the current workspace from nine view/layout state families: active `room`, disclosure
   `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state,
-  per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (DL-167), a
+  per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (DL-177), a
   remembered view-only preference that is Live by default and holds no Settings-owned value. The product
   implementation stores these through the current storage and widget-layout owners, not through the PMConcept7
-  prototype localStorage keys. The redesigned concept (DL-163) keeps its view and layout in a prototype envelope
+  prototype localStorage keys. The redesigned concept (DL-173) keeps its view and layout in a prototype envelope
   with schema id `pm.usage.widget_layout.v1` stored under the name `widget_layout:v1:usage`, and its Live
   choice under `pm7:usage:live:v1`; both are demo-only, noncanonical prototype lineage, and the envelope's
   schema id is not a product schema (the product record is `UsageWidgetLayoutRecord`, WS-020). When that
@@ -296,7 +296,7 @@ canonical_text: >-
   Pricing confidence, Provider charges, Allowance authority, Pressure order, Upcoming resets, Settlement mix,
   Route pressure, Tool details, Current sources, All signals, Cache economics, Routing trace, and Free usage.
   Each named card still follows its kind-specific supported geometry; this list is coverage, not a mandate to
-  force unrelated widgets to one numeric width. Since the redesign (DL-166), every widget kind also has narrow
+  force unrelated widgets to one numeric width. Since the redesign (DL-176), every widget kind also has narrow
   widths that show the same information well, adapting its content to the measured width rather than dropping
   facts. Every size preset a kind offers in the card's size menu shows a complete, sensible content tier for that
   kind: no preset is so small that it shows a fragment, a truncated fact or a chart without its readable values,

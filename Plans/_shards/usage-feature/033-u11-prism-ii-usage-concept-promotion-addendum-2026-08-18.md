@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L6339-L6434
 
-Source SHA256: `297218ce696180a7306329bc27edfe82e7ad73f32b68c08f288da6638bb15cdb`
+Source SHA256: `35a14cdceb49882a49cf37ec14fba68466bf5f1a656744cce447177f14237bd3`
 
 ---
 
@@ -43,7 +43,7 @@ canonical_text: >-
   reports and routes but owns no policy: a Usage affordance that would change a Settings-owned value
   deep-links to its owner through cmd.settings.open with a typed Settings-owned setting or manager/detail
   target, and the page stores, mutates, and re-declares nothing on the policy side. The one exception is a
-  bound Settings control that the Accounts room hosts in place (UF-107, DL-164): it shows the Settings
+  bound Settings control that the Accounts room hosts in place (UF-107, DL-174): it shows the Settings
   owner's current value and changes it only through cmd.settings.transaction.preview and
   cmd.settings.transaction.apply, so the value, its validation, its scope and its receipt stay the Settings
   owner's and Usage keeps no copy. Provider-native quota units

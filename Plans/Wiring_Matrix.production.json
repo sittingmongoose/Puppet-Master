@@ -5990,7 +5990,7 @@
     },
     "catalog.account_select_profile": {
       "ui_element_id": "catalog.account_select_profile",
-      "ui_location": "Usage page / account switcher > Profile rows",
+      "ui_location": "Usage page / account switcher > Profile rows; Usage page > Accounts room > account card Use this account control (shown only when supports_manual_set_active)",
       "ui_command_id": "cmd.account.select_profile",
       "handler_location": "handlers::account::select_profile",
       "expected_event_types": [
@@ -55795,7 +55795,7 @@
     },
     "catalog.settings_transaction_apply": {
       "ui_element_id": "catalog.settings_transaction_apply",
-      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit",
+      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; Usage page > Accounts room > provider plate Auto-switch toggle and switch level at scope provider (SSYS-044)",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request",
@@ -55856,7 +55856,7 @@
     },
     "catalog.settings_transaction_preview": {
       "ui_element_id": "catalog.settings_transaction_preview",
-      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036",
+      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; Usage page > Accounts room > provider plate Auto-switch toggle and switch level at scope provider (SSYS-044)",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request",
@@ -63051,7 +63051,7 @@
     },
     "catalog.widget_move": {
       "ui_element_id": "catalog.widget_move",
-      "ui_location": "Widget hosts > Usage or Dashboard > Dedicated move handle or keyboard reorder commit",
+      "ui_location": "Widget hosts > Usage or Dashboard > Dedicated move handle or keyboard reorder commit; Usage page > card menu or Customize panel > Tidy (one move carrying arrange { mode: tidy, detail } for the whole repacked room)",
       "ui_command_id": "cmd.widget.move",
       "handler_location": "handlers::widget::move",
       "expected_event_types": [],

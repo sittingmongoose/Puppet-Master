@@ -3138,6 +3138,7 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Priority and stickiness rules align GUI ordering with requested/effective runtime selection.
+- "Refined 2026-10-09 by MA-073 for a provider's threshold auto-switch: the target there is the eligible account of the same provider with the most remaining, and this unit's priority order, then the account id, only breaks ties; MA-073 owns that rule."
 owner_hints:
 - Plans/Multi-Account.md
 preserved_contractrefs:
@@ -3894,7 +3895,7 @@ canonical_text: Usage and status surfaces show current effective account/profile
   pressure/cooldown state, source-confidence/stale/estimated labels, and switch/failover reason. Plans/usage-feature.md
   consumes this account/provider owner contract and must not reintroduce stale buckets or flatten direct-provider quota
   context into one generic account label. Usage's Accounts room and its Plans & limits room (consumer note 2026-10-09,
-  Plans/Decision_Log.md#DL-164) show one row per account of each provider, every account signed in to that provider and
+  Plans/Decision_Log.md#DL-174) show one row per account of each provider, every account signed in to that provider and
   not only the active one, grouped under the provider in the Settings provider catalog's order, each with its own
   windows, reading source and freshness; per-provider auto-switch on those rows follows MA-073.
 gui_related: true
@@ -5375,7 +5376,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Shared_Inte
 
 ## Per-Provider Auto-Switch Addendum (2026-10-09)
 
-Auto-switch between accounts is set per AI provider (`Plans/Decision_Log.md#DL-164`). Before this, one global on/off and one switch point applied to every provider, and section 5's "unless provider/account overrides say otherwise" named a provider layer that no unit or setting gave. Four Settings rows now carry a provider scope beside their existing scopes: `ai.accounts.multi-account-switching` (auto-switch on or off), `ai.accounts.hard-switch-level` (the switch point, in percent left), `ai.accounts.soft-warning-level` (the warning level, in percent left) and `ai.accounts.cooldown-policy` (how long an account rests). The global value is the default for every provider that has no value of its own where the row has a global value; the rest period has no global row and falls back to its inventory default. The provider value is one Settings value, edited in Settings > Providers & Accounts and on the Usage page's Accounts room through the same Settings transaction (`Plans/Settings_System.md#SSYS-044`), so the two always show the same value. The switching rules below follow the AI Account Center's per-provider policy (Codex and Antigravity), adapted to Puppet Master's attempt-boundary, reason-code and manual-override rules in section 5.
+Auto-switch between accounts is set per AI provider (`Plans/Decision_Log.md#DL-174`). Before this, one global on/off and one switch point applied to every provider, and section 5's "unless provider/account overrides say otherwise" named a provider layer that no unit or setting gave. Four Settings rows now carry a provider scope beside their existing scopes: `ai.accounts.multi-account-switching` (auto-switch on or off), `ai.accounts.hard-switch-level` (the switch point, in percent left), `ai.accounts.soft-warning-level` (the warning level, in percent left) and `ai.accounts.cooldown-policy` (how long an account rests). `ai.accounts.cooldown-policy`, which was set per account only, also gains a global scope, so each of the four rows has a global value, and the global value is the default for every provider that has no value of its own; the rest period's global value starts at its inventory default, the provider's own defaults. The provider value is one Settings value, edited in Settings > Providers & Accounts, where all four rows appear in the provider's own section, and on the Usage page's Accounts room, which hosts the auto-switch toggle and the switch point for each provider, through the same Settings transaction (`Plans/Settings_System.md#SSYS-044`), so the two always show the same value. The switching rules below follow the AI Account Center's per-provider policy (Codex and Antigravity), adapted to Puppet Master's attempt-boundary, reason-code and manual-override rules in section 5.
 
 ### MA-073 - Per-Provider Auto-Switch
 
@@ -5387,11 +5388,14 @@ owner_doc: Plans/Multi-Account.md
 canonical_text: >-
   Auto-switch between accounts is set per provider. ai.accounts.multi-account-switching,
   ai.accounts.hard-switch-level, ai.accounts.soft-warning-level and ai.accounts.cooldown-policy each carry a provider
-  scope in addition to their existing scopes, and each resolves through the scopes its row has in the order account
-  override, then provider, then project, then global; the global value, where the row has one, is the default for every provider without its own value (the rest period has no global row and falls back to its inventory default), and ai.accounts.account-threshold-override stays the per-account layer that wins over the provider
-  value. A provider's value is one Settings value: Settings > Providers & Accounts and the Usage Accounts room edit it
-  through the Settings owner with cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope
-  provider for that provider id (Plans/Settings_System.md#SSYS-044), and neither surface keeps a copy. For each
+  scope in addition to their existing scopes, ai.accounts.cooldown-policy also carries a global scope, and each
+  resolves through the scopes its row has in the order account override, then provider, then project, then global;
+  the global value is the default for every provider without its own value, and
+  ai.accounts.account-threshold-override stays the per-account layer that wins over the provider value. A
+  provider's value is one Settings value: Settings > Providers & Accounts edits all four rows in the provider's own
+  section, and the Usage Accounts room hosts the provider's auto-switch toggle and switch point; both edit it through
+  the Settings owner with cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider
+  for that provider id (Plans/Settings_System.md#SSYS-044), and neither surface keeps a copy. For each
   provider: auto-switch acts only while the provider has two or more signed-in accounts, and with one account it
   reads off until a second account is signed in while its stored value is kept; every meter of that provider, and
   only of that provider, carries a notch at the provider's switch point; only a fresh, identity-bound reading reported
@@ -5414,8 +5418,8 @@ gui_classification_reason: Settings and the Usage Accounts room show and edit ea
 depends_on: [MA-036, MA-049, MA-069, SSYS-009, SSYS-018, SSYS-044]
 unblocks: []
 acceptance_criteria:
-  - "The four rows resolve, for every provider, account override over provider over project over global wherever the row has that scope, and a provider with no value of its own shows and uses the global value, labelled as the default, or for the rest period the inventory default."
-  - "Changing a provider's auto-switch, switch point, warning level or rest period on the Usage Accounts room or in Settings commits one Settings transaction at scope provider for that provider id, and the other surface shows the new value without a reload; neither surface holds its own copy."
+  - "The four rows resolve, for every provider, account override over provider over project over global wherever the row has that scope; every one of the four has a global value, and a provider with no value of its own shows and uses it, labelled as the default."
+  - "Changing a provider's auto-switch, switch point, warning level or rest period in Settings, or its auto-switch or switch point on the Usage Accounts room, commits one Settings transaction at scope provider for that provider id, and the other surface shows the new value without a reload; neither surface holds its own copy."
   - "A provider with one signed-in account reads off until a second account is signed in, without changing its stored value; with two or more it acts on its own values only."
   - "Every meter of a provider carries a notch at that provider's switch point and no other provider's notch."
   - "A missing, locally estimated, stale, sign-in-required or reset-passed-without-reading active account never triggers a threshold switch, and the block reason is shown in plain words."
@@ -5424,7 +5428,7 @@ acceptance_criteria:
   - "Use this account on an account past its provider's switch point asks first; declining changes nothing, and accepting dispatches one cmd.account.select_profile that section 5 treats as the manual override."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - Plans/settings_inventory.json (provider scope on the four ai.accounts rows)
+  - Plans/settings_inventory.json (provider scope on the four ai.accounts rows, and global scope on ai.accounts.cooldown-policy)
   - future per-provider auto-switch resolution and eligibility fixtures
 risk_class: provider_auto_switch_scope_or_copy_drift
 reasoning_tier: high
@@ -5440,7 +5444,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/Decision_Log.md#DL-164
+  - Plans/Decision_Log.md#DL-174
   - "AIAccountCenter main 04c252fb: src/web-server/services/codex-auto-switch-service.ts and src/antigravity/auto-switch/policy.ts (per-provider auto-switch reference; external, read-only)"
   - "AIAccountCenter main 04c252fb: web-dashboard/public/accounts-view.mjs and view-model.mjs (per-provider policy rows, meter notches, past-switch-point confirmation; external, read-only)"
   - "Concepts/usage-redesign/src/js/54-w-accounts.js (Usage redesign Accounts room; source-lineage-only)"
@@ -5464,4 +5468,4 @@ owner_hints:
   - Plans/Settings_System.md
 ```
 
-ContractRef: ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Decision_Log.md#DL-164
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Decision_Log.md#DL-174

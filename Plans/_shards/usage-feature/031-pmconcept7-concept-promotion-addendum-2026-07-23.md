@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L6182-L6256
 
-Source SHA256: `297218ce696180a7306329bc27edfe82e7ad73f32b68c08f288da6638bb15cdb`
+Source SHA256: `35a14cdceb49882a49cf37ec14fba68466bf5f1a656744cce447177f14237bd3`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  The Usage page head stays one line. Since the redesigned page replaced the old one (DL-163), the head is the
+  The Usage page head stays one line. Since the redesigned page replaced the old one (DL-173), the head is the
   room's head: the room title with one short description line under it, and on the same line the scope, range and
   disclosure menus, the room's panel menu, and the Refresh and Export buttons. The page name "Usage" sits in the
   rail head, and the Live / Paused control (UF-107) sits beside it there, never as a second head line. Wherever
@@ -72,13 +72,13 @@ negative_constraints:
 - "Do not hardcode a project name or the refresh-cadence and retention figures as literal copy; they mirror the active project and the configured values."
 - "Do not change cmd.usage.refresh or cmd.usage.export IDs, payloads, events, or preconditions from this unit, and do not mint a command or an export scope per Export menu row; it is presentation only."
 compatibility_only_notes:
-- "Slint portability: the Usage page head and its icon-only controls render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed. This note does not bind the redesigned concept's look (DL-163): the Slint limits were lifted for the concept, and framework version pins are untouched."
+- "Slint portability: the Usage page head and its icon-only controls render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed. This note does not bind the redesigned concept's look (DL-173): the Slint limits were lifted for the concept, and framework version pins are untouched."
 stale_retired_dispositions:
 - "The 'prominent Refresh action' presentation is retired per PMConcept7 rev 9 Usage head; Refresh remains an explicit user action rendered icon-only with title and aria-label accessible names so the head stays one line."
-- "The page-level subtitle 'AI Cost/usage for <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.' (concept fixture project Tastebook) is retired by DL-163: the room description line replaces it, and the rule that cadence and retention figures mirror configured values is kept."
+- "The page-level subtitle 'AI Cost/usage for <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.' (concept fixture project Tastebook) is retired by DL-173: the room description line replaces it, and the rule that cadence and retention figures mirror configured values is kept."
 - "The single-action Export button is retired: Export is an icon-only button that opens the Snapshot and Ledger menu, dispatching the same cmd.usage.export scopes."
 owner_boundary_notes:
-- "Page-header layout and per-theme header boxes are owned by Plans/FinalGUISpec.md F3-462; the redesigned head's look is owned by Plans/FinalGUISpec.md F3-623; this unit owns Usage head copy and control presentation only."
+- "Page-header layout and per-theme header boxes are owned by Plans/FinalGUISpec.md F3-462; the redesigned head's look is owned by Plans/FinalGUISpec.md F3-628; this unit owns Usage head copy and control presentation only."
 - "cmd.usage.refresh and cmd.usage.export command semantics are owned by Plans/UI_Command_Catalog.md (UCC-116); this unit registers no commands."
 owner_hints:
 - "Plans/usage-feature.md"

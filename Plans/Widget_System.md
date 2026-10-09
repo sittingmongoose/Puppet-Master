@@ -1240,7 +1240,7 @@ canonical_text: >-
   legible facts; context and authority cards reveal additional source, route, confidence, history, forecast,
   reset, or settlement facts. A compact tier mounts complete content groups only, so the next tier never
   peeks, clips, or appears as a partial row, bar, label, legend, or footer.
-  Size presets (rethought 2026-10-09, Plans/Decision_Log.md#DL-166) are the named sizes a widget kind offers in
+  Size presets (rethought 2026-10-09, Plans/Decision_Log.md#DL-176) are the named sizes a widget kind offers in
   its card menu's size picker. The Usage board measures its own width and lays cards on 12 tracks below 820 px,
   20 tracks from 820 px, 24 tracks from 1100 px, and 30 tracks from 1460 px of board width, with 24 px of hysteresis
   at each step, so widgets can be much narrower than before; a preset is a width in tracks and a height in rows
@@ -1292,7 +1292,7 @@ source_lineage:
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
   - "Concepts/usage-redesign/src/js/42-cards.js (Usage redesign card menu and size picker; source-lineage-only)"
   - "Concepts/usage-redesign/src/js/40-board.js (Usage redesign board track ladder; source-lineage-only)"
-  - Plans/Decision_Log.md#DL-166
+  - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - Strip
   - Compact
@@ -1386,19 +1386,21 @@ canonical_text: >-
   stable widget identity, committed order, and measured painted physical column/row footprint. Usage pointer resize
   installs a real in-flow placeholder initialized from that footprint, lifts a fixed-position preview, and then
   advances both the placeholder and lifted card to each last-painted supported footprint while visibly and
-  deterministically repacking obstructed peers and then applying Usage board gravity to that candidate layout.
-  Usage board gravity (2026-10-09, Plans/Decision_Log.md#DL-166) belongs to the one settled layout, never to a later
-  step: for each new target the held Usage preview runs the obstruction resolver and then gravity, in which each
-  displaced peer takes the highest free place above where the resolver put it (preferring a place that overlaps the region the active card left, then the highest free place, then the column nearest its own) and every card except the active one floats
-  straight up into any hole above it, in reading order, so the order is kept. Only cards shown at the current
-  disclosure level float; cards of deeper levels and hidden cards keep their places unless a floated card lands on
-  them, and then they step down. The preview therefore is the layout the release commits. Peers that neither the
-  resolver nor gravity moves retain their rectangles, and every peer
-  remains mounted, painted, and free of entrance-animation replay. A Usage move lifts the card, which follows the
-  pointer one to one, and shows a landing placeholder in the exact target slot while peers slide live; a Usage
-  resize from any edge or corner shows a live outline of the snapped target size labelled with its preset name, or
-  custom size, and its width x height in tracks and rows, while peers reflow live; on release the card morphs into
-  place without overshoot, and every cancel path glides the card and its peers back to the snapshot. Under reduced
+  deterministically repacking only obstructed peers. Unobstructed peers retain their rectangles during the held
+  preview, and every peer remains mounted, painted, and free of entrance-animation replay. Usage board gravity
+  (2026-10-09, Plans/Decision_Log.md#DL-176) applies once the gesture settles, never during the held preview, and
+  inside the gesture's own single command rather than as a later step: the settled layout is the last-painted
+  layout with gravity applied to it, in which each displaced peer takes the highest free place above where the
+  resolver put it (preferring a place that overlaps the region the active card left, then the highest free place,
+  then the column nearest its own) and every card except the active one floats straight up into any hole above
+  it, in reading order, so the order is kept. The active card keeps the place and size the preview showed. Only
+  cards shown at the current disclosure level float; cards of deeper levels and hidden cards keep their places
+  unless a floated card lands on them, and then they step down. A Usage move lifts the card, which follows the
+  pointer one to one, and shows a landing placeholder in the exact target slot while obstructed peers slide live;
+  a Usage resize from any edge or corner shows a live outline of the snapped target size labelled with its preset
+  name, or custom size, and its width x height in tracks and rows, while obstructed peers reflow live; on release
+  the card morphs into place without overshoot and the cards gravity moves then float up into their settled
+  places; every cancel path glides the card and its peers back to the snapshot. Under reduced
   motion each of these moves is instant. Dashboard resize retains its measured-footprint
   placeholder and frozen peers. Reorder starts only from the dedicated widget handle, uses a fixed ghost plus a
   measured-footprint in-flow placeholder, and derives stable two-dimensional slot candidates from the frozen
@@ -1420,17 +1422,23 @@ canonical_text: >-
   keyboard-resize activation settles its directional size intent atomically. Each changed terminal path dispatches
   exactly one existing `cmd.widget.resize` or
   `cmd.widget.move`, persists the settled state once, settles the board once, and emits no persisted domain event,
-  including no `workspace.layout_changed`. On Usage that one command's settled result is the whole last-painted
-  layout of the room: the active card plus every peer the resolver or gravity moved, written once under its one
-  receipt, with no per-peer command and no second gravity commit. Every Usage commit path applies the same
+  including no `workspace.layout_changed`. On Usage that one command's settled result is the whole settled layout
+  of the room: the last-painted layout plus gravity, that is the active card plus every peer the resolver or
+  gravity moved, written once under its one receipt, with no per-peer command and no second gravity commit. Every Usage commit path applies the same
   gravity inside its own single command: pointer and keyboard move and resize, a size-picker preset (WS-017), and
   hiding or showing a card through `cmd.widget.remove` or `cmd.widget.add`. Tidy, chosen from a card's menu or the
   Customize panel, is the explicit full repack of the current Usage room: the cards shown at the current disclosure
   level take their first-fit places upward in reading order (their columns may change), then the cards of other
-  levels and hidden cards take places below them. Tidy commits as one settled layout transaction: exactly one
-  existing `cmd.widget.move`, whose `instance_id` is the first card in reading order whose place changed and whose
-  settled result carries every card Tidy moved, one receipt, one settled write, and one board settlement; there is
-  no per-card move command and no Tidy command. A Tidy that would move nothing dispatches nothing, and an owner
+  levels and hidden cards take places below them. Tidy commits as one settled layout transaction through exactly
+  one existing `cmd.widget.move` that carries the optional typed `arrange` field `{ mode: "tidy", detail }`
+  (Plans/UI_Command_Catalog.md section 2.3), where `detail` is the disclosure level whose shown cards go first. Its
+  `instance_id` names the card whose menu chose Tidy, or the room's first card in reading order when Tidy is chosen
+  from Customize, and its `col` and `row` repeat that card's committed place, so the request names the room and the
+  level and dictates no layout: the owner computes the repack itself, deterministically, from that room's committed
+  layout, and rejects as stale a request whose place differs from the committed one. A `cmd.widget.move` without
+  `arrange` is an ordinary move. The settled result carries every card Tidy moved, under one receipt, one settled
+  write, and one board settlement; there is no per-card move command and no Tidy command. A Tidy that would move
+  nothing, which the surface knows by computing the same deterministic repack, dispatches nothing, and an owner
   rejection leaves the pre-Tidy layout in place. Gravity and Tidy are Usage board behaviour; Dashboard keeps its
   own settlement. Escape, pointer cancellation, `lostpointercapture`, blur, an invalid
   target, a pre-dispatch validation failure, or an unchanged release/drop restores the committed state and
@@ -1452,17 +1460,17 @@ gui_classification_reason: This unit defines the complete pointer and keyboard l
 depends_on: [WS-004, WS-005, WS-009, WS-017, WS-018]
 unblocks: [WS-020]
 acceptance_criteria:
-  - Pickup records the stable widget identity, committed order, and measured painted physical column/row footprint; Usage pointer resize initializes a real placeholder from that footprint, then paints each supported target footprint and visibly repacks obstructed peers and applies Usage board gravity to the candidate layout while the peer nodes, the rectangles of peers that neither the resolver nor gravity moves, DOM order, opacity, entrance-animation state, and document scroll position remain stable. Usage keyboard resize remains one atomic changed-only settlement per supported directional key intent rather than a held live-preview mode. Dashboard resize retains its measured placeholder and frozen peers.
+  - Pickup records the stable widget identity, committed order, and measured painted physical column/row footprint; Usage pointer resize initializes a real placeholder from that footprint, then paints each supported target footprint and visibly repacks only obstructed peers while the peer nodes, unobstructed peer rectangles, DOM order, opacity, entrance-animation state, and document scroll position remain stable. Usage keyboard resize remains one atomic changed-only settlement per supported directional key intent rather than a held live-preview mode. Dashboard resize retains its measured placeholder and frozen peers.
   - Command, receipt, event, and persistence spies remain empty until a changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation.
-  - Reorder begins only from the dedicated handle, uses a fixed ghost and measured-footprint in-flow placeholder for pointer operation, resolves stable two-dimensional candidates including empty same-footprint cavities and lower rows, binds pointer choice to the ghost's anchored top-left with geometric hysteresis, resolves before/after identities against the committed-order snapshot, and visibly displaces affected peers during pointer and keyboard preview while keeping their DOM nodes mounted, their opacity nonzero, and their entrance animations stopped; Usage pointer resize uses the same target-first deterministic slot projection so obstructed peers move during the held preview and the accepted settlement matches the last painted topology, while Usage keyboard resize remains atomic and Dashboard resize peers remain frozen. Horizontal-only pointer and keyboard input advances strictly along the requested supported curated axis with minimum companion-axis drift at far-right, far-left, and middle positions, an edge-constrained deliberate drag can express one step, and an in-viewport pointer release after same-direction overshoot commits the last painted supported intent.
+  - Reorder begins only from the dedicated handle, uses a fixed ghost and measured-footprint in-flow placeholder for pointer operation, resolves stable two-dimensional candidates including empty same-footprint cavities and lower rows, binds pointer choice to the ghost's anchored top-left with geometric hysteresis, resolves before/after identities against the committed-order snapshot, and visibly displaces affected peers during pointer and keyboard preview while keeping their DOM nodes mounted, their opacity nonzero, and their entrance animations stopped; Usage pointer resize uses the same target-first deterministic slot projection so obstructed peers move during the held preview and the accepted settlement matches the last painted topology with Usage board gravity applied at settle, while Usage keyboard resize remains atomic and Dashboard resize peers remain frozen. Horizontal-only pointer and keyboard input advances strictly along the requested supported curated axis with minimum companion-axis drift at far-right, far-left, and middle positions, an edge-constrained deliberate drag can express one step, and an in-viewport pointer release after same-direction overshoot commits the last painted supported intent.
   - A changed pointer release commits the last painted pointer intent without pointer-up re-hit-testing or retargeting, a changed keyboard reorder drop commits its selected insertion intent, and each supported keyboard-resize activation settles atomically; each changed terminal path emits exactly one existing `cmd.widget.resize` or `cmd.widget.move`, writes settled state once, triggers one board settlement, and emits no persisted domain event, including no `workspace.layout_changed`.
   - Escape, pointercancel, `lostpointercapture`, blur, invalid target, pre-dispatch validation failure, and unchanged release/drop restore the original state, emit no command, receipt, event, or persistence write, release capture, and remove every listener, class, ghost, placeholder, lifted state, preview style, and pending animation frame; an owner-rejected command or post-dispatch persistence-adapter failure instead retains exactly one attempted command and one rejected/failed receipt, restores authoritative geometry/order, emits no settled event or successful owner-store write, and performs the same complete transient cleanup.
   - Successful pointer and keyboard reorder restore the board's pre-transaction inline minimum-height value and leave scroll extent bounded to settled card geometry so repeated moves do not accumulate a blank tail; while one pointer or keyboard resize/reorder owns the board, every competing pointer, touch, pen, or keyboard acquisition is rejected before focus, capture, transient DOM, or class mutation, and cancelling the owner clears exactly that owner without leaving an operation flag.
   - Keyboard reorder supports pickup, directional move, drop, Escape, and blur; `aria-grabbed` is true only while pickup is active and returns to false after drop or cancellation, the picked card has a visible focus/outline state, and its two-dimensional candidate choice, live peer displacement, changed-only commit, rollback, and cleanup match pointer reorder without requiring a cloned pointer ghost or placeholder.
   - The contract applies to Usage widgets and widgets owned by the Home Dashboard wrapper/host, even when that wrapper participates presentation-only in an outer grid; the outer grid does not own widget mutations, and moving or resizing the Dashboard surface itself remains Home workspace authority.
-  - "Usage board gravity: after any changed Usage move, resize, preset, hide, or show, no shown card other than the one the action placed has an empty hole directly above it that it could float into, reading order is unchanged among the cards gravity moved, cards of deeper disclosure levels and hidden cards move only to step down from a floated card, the held preview equals the committed layout, and exactly one command and one receipt carry the whole settled room."
-  - "Usage move and resize previews: a move lifts the card and follows the pointer one to one with a landing placeholder in the exact target slot; a resize from every edge and corner shows a live snapped outline labelled with the preset name or custom size and its width x height; peers slide or reflow live; release morphs into place without overshoot; every cancel path glides card and peers back to the snapshot; reduced motion makes each of these instant; and none of it dispatches or writes before release."
-  - "Tidy repacks the current Usage room first-fit upward in reading order, shown cards first, and commits through exactly one existing cmd.widget.move whose instance_id is the first changed card in reading order and whose settled result carries every moved card, with one receipt, one settled write, and one board settlement; a Tidy that moves nothing dispatches nothing, and command, receipt, and persistence spies show no per-card move and no other command."
+  - "Usage board gravity: after any changed Usage move, resize, preset, hide, or show, no shown card other than the one the action placed has an empty hole directly above it that it could float into, reading order is unchanged among the cards gravity moved, cards of deeper disclosure levels and hidden cards move only to step down from a floated card, no unobstructed peer moves during the held preview, the active card settles where the preview showed it, the committed layout equals the last-painted layout with gravity applied, and exactly one command and one receipt carry the whole settled room."
+  - "Usage move and resize previews: a move lifts the card and follows the pointer one to one with a landing placeholder in the exact target slot; a resize from every edge and corner shows a live snapped outline labelled with the preset name or custom size and its width x height; only obstructed peers slide or reflow live; release morphs into place without overshoot and the cards gravity moves then float up; every cancel path glides card and peers back to the snapshot; reduced motion makes each of these instant; and none of it dispatches or writes before release."
+  - "Tidy repacks the current Usage room first-fit upward in reading order, shown cards first, and commits through exactly one existing cmd.widget.move carrying arrange { mode: tidy, detail }, whose instance_id is the card Tidy was chosen from (or the room's first card from Customize) at its committed place, whose repack the owner computes from the committed layout, and whose settled result carries every moved card, with one receipt, one settled write, and one board settlement; a Tidy that moves nothing dispatches nothing, and command, receipt, and persistence spies show no per-card move and no other command."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/interaction_transaction_matrix.json (static contract fixture only)
@@ -1487,7 +1495,7 @@ source_lineage:
   - "Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
   - "Concepts/usage-redesign/src/js/40-board.js (Usage redesign board: resolver, gravity, Tidy, move and resize previews; source-lineage-only)"
-  - Plans/Decision_Log.md#DL-166
+  - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - cmd.widget.resize
   - cmd.widget.move
@@ -1502,11 +1510,13 @@ preserved_exact_tokens:
   - drop
   - Usage board gravity
   - Tidy
+  - arrange
 negative_constraints:
   - Do not dispatch a command, receipt, persisted event, or storage write for pointer-preview frames.
   - Do not mint PM7-only resize or move commands.
   - Do not commit Usage board gravity or Tidy as per-card commands, as a second commit after the gesture's own, or through a new command.
   - Do not let gravity change the reading order of the cards it moves or float a card of a deeper disclosure level or a hidden card into view.
+  - Do not move an unobstructed peer during a held Usage preview, and do not let a Tidy request carry or dictate the repacked layout; the owner computes it.
   - Do not persist or treat live Usage preview repack as settlement, reconcile DOM order, or remount peers during preview; do not generalize Usage live resize repack to Dashboard resize.
   - Do not remount reorder peers, replay their entrance animation, or black out the board during preview.
   - Do not retain preview-only board minimum height after either commit or rollback, or allow simultaneous widget-operation controllers.
@@ -1594,7 +1604,7 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
-  - Plans/Decision_Log.md#DL-166
+  - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - widget_layout:v1:usage
   - widget_layout:v1:dashboard

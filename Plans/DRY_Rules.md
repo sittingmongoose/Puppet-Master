@@ -2723,7 +2723,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/FinalGUI
 
 ## Usage presentation grammar single owner — 2026-10-09
 
-The redesigned Usage page (DL-163 to DL-169) adds a presentation grammar that must live in one place, beside the chat transcript owners of DR-043 and the wand grammar of DR-044, and it reuses several of their owners rather than copying them.
+The redesigned Usage page (DL-173 to DL-179) adds a presentation grammar that must live in one place, beside the chat transcript owners of DR-043 and the wand grammar of DR-044, and it reuses several of their owners rather than copying them.
 
 ### DR-058 - Usage Presentation Grammar Single Owner
 
@@ -2733,7 +2733,7 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  The Usage page's presentation grammar has exactly one GUI owner, FinalGUISpec F3-623 with F3-514:
+  The Usage page's presentation grammar has exactly one GUI owner, FinalGUISpec F3-628 with F3-514:
   the chart family (area, line, columns, budget and stacked, with the crosshair readout card, draw-on
   and morph), meters with the calm spectrum, the threshold tones and the switch-point notch, the hero
   plate with its key light and roll, folded facts behind N more, the provider mark rule, the Accounts
@@ -2755,7 +2755,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Fixes one owner for the Usage page's presentation grammar and points it at the owners it reuses."
 split_recommended: false
-depends_on: [DR-038, DR-039, DR-043, DR-044, F3-623, F3-514, DL-163, DL-169]
+depends_on: [DR-038, DR-039, DR-043, DR-044, F3-628, F3-514, DL-173, DL-179]
 unblocks: []
 acceptance_criteria:
   - "No second chart family, meter, hero, mark rule, folded-facts control or formatter exists for a Usage room or widget."
@@ -2777,19 +2777,19 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-163"
-  - "Plans/Decision_Log.md#DL-169"
+  - "Plans/Decision_Log.md#DL-173"
+  - "Plans/Decision_Log.md#DL-179"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md (SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-09-usage-upgrade-handoff/research/R4-plans.md section 2 (SHA-256 e485c9b971d498774b7bd9b27e85f7f007790235e323dd8a989c51d44b5edad0)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/R4-plans-20261009.md section 2 (SHA-256 e485c9b971d498774b7bd9b27e85f7f007790235e323dd8a989c51d44b5edad0)"
 preserved_exact_tokens:
-  - "F3-623"
+  - "F3-628"
   - "DR-043"
   - "DR-044"
   - "ACD-475"
   - "F3-465"
   - "N more"
 negative_constraints:
-  - "Do not restate the Usage presentation grammar outside F3-623."
+  - "Do not restate the Usage presentation grammar outside F3-628."
   - "Do not fork the chat menu family, the shell hover system, the motion voices, the sound player, NieR's grammar or the font set for Usage."
   - "Do not keep a Usage copy of a Settings-owned value or a Usage formatter."
 owner_hints:
@@ -2797,4 +2797,4 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/FinalGUISpec.md#F3-514, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-446, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Widget_System.md#WS-019
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-514, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-446, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Widget_System.md#WS-019

@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L3905-L4015
 
-Source SHA256: `6d22a576a81eb92710d4a1c779e2b39f488eb4e9ff01af474c43ce3fa22933fa`
+Source SHA256: `b2fd211658773af1cc2194754ae343af548eb4d787daa0c517312b453b725b6d`
 
 ---
 
@@ -17,8 +17,8 @@ state selector, effect, cancellation, error, and evidence boundaries summarized 
 | Producer | Command/disposition | Handler/reducer and owner state | Persistence/effect | Consumer | Cancel/error path |
 |---|---|---|---|---|---|
 | Usage/Dashboard widget add/remove/configure | existing `cmd.widget.*` row | `handlers::widget::*`; Widget System owner | settled `widget_layout:v1:usage` or `widget_layout:v1:dashboard`; dispatch receipt; no persisted domain event | current widget host and saved layout projection | disabled/rejected/stale result leaves owner state unchanged |
-| Usage/Dashboard resize or reorder | `cmd.widget.resize` / `cmd.widget.move` on changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation; preview is `view_only` | `handlers::widget::resize` / `handlers::widget::move`; surface-specific local draft: Usage pointer resize and pointer/keyboard reorder visibly repack affected peers and apply Usage board gravity in the held preview, Dashboard resize peers remain frozen | one settled write and receipt for the whole room, gravity included; no pointer-preview event | Usage retains the accepted last-painted pointer-preview topology once; Dashboard reflows after commit | Escape, `pointercancel`, invalid/no-change release/drop/activation restores prior geometry/order and dispatches nothing |
-| Usage Tidy (card menu or Customize panel) | one existing `cmd.widget.move` for the whole repacked room | `handlers::widget::move`; Widget System owner (`Plans/Widget_System.md#WS-019`) | one settled layout transaction: one write of `widget_layout:v1:usage` and one receipt; no per-card move, no Tidy command | current Usage room and saved layout projection | a Tidy that moves nothing dispatches nothing; rejection leaves the pre-Tidy layout |
+| Usage/Dashboard resize or reorder | `cmd.widget.resize` / `cmd.widget.move` on changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation; preview is `view_only` | `handlers::widget::resize` / `handlers::widget::move`; surface-specific local draft: Usage pointer resize and pointer/keyboard reorder visibly repack affected peers in the held preview and apply Usage board gravity only at settle, Dashboard resize peers remain frozen | one settled write and receipt for the whole room, gravity included; no pointer-preview event | Usage retains the accepted last-painted pointer-preview topology once, with gravity applied at settle; Dashboard reflows after commit | Escape, `pointercancel`, invalid/no-change release/drop/activation restores prior geometry/order and dispatches nothing |
+| Usage Tidy (card menu or Customize panel) | one existing `cmd.widget.move` carrying `arrange` `{ mode: "tidy", detail }` for the whole repacked room | `handlers::widget::move`; Widget System owner (`Plans/Widget_System.md#WS-019`) | one settled layout transaction: one write of `widget_layout:v1:usage` and one receipt; no per-card move, no Tidy command | current Usage room and saved layout projection | a Tidy that moves nothing dispatches nothing; rejection leaves the pre-Tidy layout |
 | Usage size picker preset | `cmd.widget.resize` with the preset's geometry | `handlers::widget::resize`; settled record stores `preset_id` (`Plans/Widget_System.md#WS-020`) | one settled write and receipt, gravity included; picker open and row-hover preview are `view_only` | current Usage card and saved layout projection | dismissing the picker or an unchanged choice dispatches nothing |
 | Home move/resize/collapse/reset | existing `cmd.workspace_layout.*` rows | `handlers::workspace_layout::*`; `pm.home_workspace_layout.v1` owner | one revision-checked commit; existing `workspace.layout_changed` effect; no preview effect | Home hosts, saved dock/size/collapse projection | cancel/invalid/stale revision restores prior layout and emits no command/effect; error projects owner reason |
 | Home preset size | concept alias normalized to `cmd.workspace_layout.resize_surface` | preset resolver produces committed width/height/flex and optional `preset_id` | same resize commit as direct resize | Home surface layout | no primary `cmd.workspace_layout.size_surface` row or handler exists |
@@ -26,9 +26,9 @@ state selector, effect, cancellation, error, and evidence boundaries summarized 
 | PMConcept7 Ledger attempt drill-through | `cmd.nav.open_usage_subject`, with stable `attempt_id` and `usage_event_ref` | `handlers::nav::open_usage_subject`; route/open owner resolves `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`; usage_event/provider/account/runtime refs are correlation | route/open receipt, no fabricated domain event, no `OpenSubject` | canonical Usage attempt inspector/route | missing/invalid attempt identity or unavailable target returns typed route/open failure without state mutation |
 | Aggregate provider/account/panel details | `view_only` local inspector | current Usage projection; no router or command handler | no command, receipt, domain event, or persistence | local inspector | missing presentation data remains local; no fallback route or invented object kind |
 | Usage Accounts Use this account | `cmd.account.select_profile`, shown only when `supports_manual_set_active` | `handlers::account::select_profile`; Multi-Account owner (`Plans/Multi-Account.md#MA-073`) | dispatch receipt and the existing `account_switch_event` history; no Usage-side state | the account card and every account and provider projection | past the provider's switch point it asks first; declining dispatches nothing; owner disabled reasons stay visible |
-| Usage Accounts provider auto-switch, switch point, warning level, rest period | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` | `handlers::settings::transaction_preview` / `handlers::settings::transaction_apply`; Settings owner (`Plans/Settings_System.md#SSYS-044`) | one Settings transaction per settled change, read back | the provider plate and Settings › Providers & Accounts, showing the same value | stale revision, invalid value or denial leaves the stored value and both surfaces unchanged and shows the reason |
+| Usage Accounts provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` | `handlers::settings::transaction_preview` / `handlers::settings::transaction_apply`; Settings owner (`Plans/Settings_System.md#SSYS-044`) | one Settings transaction per settled change, read back | the provider plate and Settings › Providers & Accounts, showing the same value | stale revision, invalid value or denial leaves the stored value and both surfaces unchanged and shows the reason |
 | Usage room/scope/range/disclosure/filter/More-menu | `view_only` | current Usage view projection | no command/receipt/event; settled preference storage remains storage-owned | current Usage render | dismissal/cancel restores or retains prior local selection |
-| Usage Live / Paused | `view_only` | current Usage view projection holds or applies arriving projection updates | no command/receipt/event; the remembered choice is the storage-owned Usage view preference `live` | current Usage render | none; Play the next hour, Back to now and the concept feature switches are lab-only concept controls with no wiring row |
+| Usage Live / Paused | `view_only` | current Usage view projection holds or applies arriving projection updates | no command/receipt/event; the remembered choice is the storage-owned Usage view preference `live` | current Usage render | none; the concept's demo controls have no row (`Plans/usage-feature.md#UF-107`) |
 | Context ring popup/hover | `view_only` | shared Assistant local overlay projection | no command/receipt/event | compact context summary | dismissal emits nothing |
 | Context ring `Compact Now` | `cmd.chat.compact_context` | `handlers::chat::compact_context`; live Prompt Pipeline/context owner | explicit dispatch receipt and visible result/projection; no fabricated `context.compaction.*` event while unregistered | the same ring and Context Detail Pane | already-running/no-op/degraded/unavailable/retry/failed states remain visible and preserve thread identity |
 | Context ring `More Details` and pane focus/close | existing thread Context Detail Pane commands | `handlers::chat::*thread_context_details`; shared Assistant/thread state | no-persist receipt/layout state | one shared Context Detail Pane | unavailable/close returns focus deterministically; no second pane store |
@@ -52,15 +52,15 @@ canonical_text: >-
   command or view_only disposition, its sole handler/reducer, owner projection/store,
   settled persistence or declared effect, dispatch receipt, consumer, cancel path, and
   error path. Pointer/hover/popup previews never dispatch or persist; Usage pointer resize may locally advance
-  its target footprint, visibly repack obstructed peers, and apply Usage board gravity so the held preview is the
-  layout the release commits, while Dashboard resize peers remain frozen; one changed
+  its target footprint and visibly repack only obstructed peers, with Usage board gravity applied at settle and
+  never previewed, while Dashboard resize peers remain frozen; one changed
   pointer release, keyboard reorder drop, or atomic keyboard-resize activation commits through cmd.widget.* or
   cmd.workspace_layout.*, and on Usage that one command carries the whole settled room, gravity included. Usage
   Tidy commits the whole repacked room as one settled layout transaction through exactly one existing
-  cmd.widget.move with one receipt, never one move per card, and a size-picker preset commits one cmd.widget.resize.
-  The Usage Accounts room's Use this account reuses the account-select row, and each provider's auto-switch controls
-  reuse the Settings transaction rows at scope provider; Live / Paused is view_only, and the concept's demo-hour
-  controls and feature switches are lab-only with no row. Usage refresh and stable-event
+  cmd.widget.move carrying arrange { mode: tidy, detail } with one receipt, never one move per card, and a
+  size-picker preset commits one cmd.widget.resize. The Usage Accounts room's Use this account reuses the
+  account-select row, and each provider's Auto-switch toggle and switch level reuse the Settings transaction rows at
+  scope provider; Live / Paused is view_only, and the concept's demo controls have no row (UF-107). Usage refresh and stable-event
   drill-through reuse their existing rows while current PMConcept7 aggregate provider/account/panel details
   remain local inspectors; Context-ring actions reuse their existing rows; and the same
   Assistant node/store is re-seated across Home and global docks without cloning. The concept-only size_surface
@@ -76,7 +76,7 @@ acceptance_criteria:
   - Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage writes.
   - Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases produce exactly one existing semantic command and settle only after owner acceptance.
   - "A changed Usage move, resize, preset, hide, or show produces one command whose settled write includes every peer the resolver or Usage board gravity moved; a Tidy that moves cards produces exactly one cmd.widget.move, one receipt, and one write of widget_layout:v1:usage; no gravity or Tidy path produces a per-card command or a second commit."
-  - "The Usage Accounts room's Use this account and provider auto-switch controls dispatch only cmd.account.select_profile and the cmd.settings.transaction.preview/apply pair at scope provider, Live / Paused dispatches nothing, and the demo-hour controls and feature switches have no production row."
+  - "The Usage Accounts room's Use this account and each provider's Auto-switch toggle and switch level dispatch only cmd.account.select_profile and the cmd.settings.transaction.preview/apply pair at scope provider, the production rows catalog.account_select_profile, catalog.settings_transaction_preview and catalog.settings_transaction_apply name those Usage Accounts locations and catalog.widget_move names Usage Tidy, Live / Paused dispatches nothing, and the concept's demo controls (UF-107) have no production row."
   - The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
   - No production row exists for cmd.workspace_layout.size_surface or cmd.provider.usage.open_management.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
@@ -100,7 +100,7 @@ source_lineage:
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - "Concepts/usage-redesign/src/js/40-board.js (Usage redesign board: gravity and Tidy commits; source-lineage-only)"
-  - Plans/Decision_Log.md#DL-166
+  - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - view_only
   - widget_layout:v1:usage

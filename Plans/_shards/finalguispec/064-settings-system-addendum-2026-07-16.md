@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L30717-L31596
 
-Source SHA256: `92fd19d0d84c663ee8e8b8605b1180c8504c851139260d2f785b26f698afed7d`
+Source SHA256: `c3e94a37a917a38caea0c208fc9b73768730b87c3e86142ec63ea95a63c94e1d`
 
 ---
 
@@ -695,13 +695,13 @@ rows, all scope `global` and tier `simple`: `general.visual.nier-mode` (toggle, 
 the Basic family, not a ninth theme: the eight built-in variants of F3-425 are unchanged, and while it is on NieR
 decides the accent color and the app font. Its parts and background rows show only while it is on.
 
-Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-164`, owner `Plans/Multi-Account.md#MA-073`):
-four rows gain the `provider` scope beside the scopes they already have, and the row count stays 916:
+Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
+four rows gain the `provider` scope beside the scopes they already have, `ai.accounts.cooldown-policy` also gains
+the `global` scope so that each of the four has a global value as the default, and the row count stays 916:
 `ai.accounts.multi-account-switching` (global, project, provider), `ai.accounts.hard-switch-level` and
-`ai.accounts.soft-warning-level` (global, project, provider, account), and `ai.accounts.cooldown-policy` (provider,
-account). A value resolves from the account override, then the provider, then the project, then the global value,
-over the scopes each row has; the global value, where the row has one, is the default for every provider without a value of its own (the rest period has no global row and uses its inventory default), and
-MA-073 owns that resolution and the switching rules. The provider value is set in the provider's own section of
+`ai.accounts.soft-warning-level` (global, project, provider, account), and `ai.accounts.cooldown-policy` (global,
+provider, account). MA-073 owns the order in which these scopes resolve, the global value as the default for every
+provider without a value of its own, and the switching rules. The provider value is set in the provider's own section of
 Settings > AI > Providers & Accounts and, for the toggle and the switch level, also on the Usage Accounts room's
 provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, written only through the Settings owner's
 `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,

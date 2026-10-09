@@ -3461,11 +3461,11 @@ canonical_text: >-
   Fixture presence and `must`/`must_not` lists grant static representation only; runtime, visual, motion, and
   migration behavior require fresh browser execution, raw receipts, and independent review.
   For the redesigned Usage page (2026-10-09) the suite also covers the Accounts room acting in place (one row per
-  account of each provider, Use this account and each provider's auto-switch controls with the dispositions of
+  account of each provider, Use this account and each provider's Auto-switch toggle and switch level with the dispositions of
   UCC-147 and the hosted-control commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and
   target choice (MA-073), Live / Paused as a remembered view-only choice, every widget kind's size presets and their
   stored preset_id (WS-017, WS-020), and the single commit of Usage board gravity and Tidy (WS-019). The concept's
-  lab-only controls (Play the next hour, Back to now, the feature switches) receive no fixture or gate.
+  demo controls take UF-107's lab-only disposition and receive no fixture or gate.
 gui_related: true
 gui_classification_reason: This unit owns the canonical fixtures for visible Usage behavior across PM surfaces.
 depends_on: [UF-088, F3-514, WS-017, WS-018, WS-019, WS-020, MA-073, SSYS-044, UCC-147]
@@ -3481,7 +3481,7 @@ acceptance_criteria:
   - "Per-provider auto-switch fixtures cover account over provider over project over global resolution with an inherited default, a one-account provider reading off with its stored value kept, notches only on that provider's meters, blocked switches for missing, estimated, stale, sign-in-required and reset-passed readings, the most-remaining target with priority then id tie-breaks, and one cmd.settings.transaction.preview plus one bound cmd.settings.transaction.apply at scope provider per settled change after which Usage and Settings show the same value, with no Usage-local write."
   - "Live / Paused fixtures cover Live by default, the choice remembered across reload, Paused holding the shown projection, the return to Live, and zero commands; checks of stillness at idle run with Live paused, since live beats are the one motion allowed at idle while Live is on."
   - "Size-preset fixtures cover each widget kind's presets in every room that hosts it at 12, 20, 24, and 30 tracks, expecting a complete, sensible tier for every offered preset, a disabled reason for a preset wider than the board, a preview without dispatch on row hover or focus, one cmd.widget.resize per choice, and the stored preset_id or null."
-  - "Gravity and Tidy fixtures expect one command and one receipt for the whole settled room after a move, resize, preset, hide, or show, a held preview equal to the commit, exactly one cmd.widget.move for a Tidy that moves cards, and nothing for a Tidy that moves nothing."
+  - "Gravity and Tidy fixtures expect one command and one receipt for the whole settled room after a move, resize, preset, hide, or show, a held preview that moves only obstructed peers, a commit equal to the last-painted layout with gravity applied at settle, exactly one cmd.widget.move carrying arrange { mode: tidy, detail } for a Tidy that moves cards, and nothing for a Tidy that moves nothing."
 validation_surfaces:
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures"
   - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
@@ -3497,14 +3497,14 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
   - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
-  - Plans/Decision_Log.md#DL-164
-  - Plans/Decision_Log.md#DL-166
-  - Plans/Decision_Log.md#DL-167
+  - Plans/Decision_Log.md#DL-174
+  - Plans/Decision_Log.md#DL-176
+  - Plans/Decision_Log.md#DL-177
 preserved_exact_tokens: [GUI-USG-001, GUI-USG-008, GUI-CBP-001, GUI-CBP-002, GUI-ROUTE-001, GUI-RAW-001, GUI-RAP-001]
 negative_constraints:
   - "Do not use Concepts/usage-concepts reports as the canonical fixture root."
   - "Do not let missing or unknown data satisfy a zero-value assertion."
-  - "Do not add a fixture or gate for the lab-only concept controls, or let a fixture expect a Usage-local write of a provider's auto-switch values."
+  - "Do not add a fixture or gate for the concept demo controls UF-107 classes as lab-only, or let a fixture expect a Usage-local write of a provider's auto-switch values."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/usage-feature.md]
 ```
 

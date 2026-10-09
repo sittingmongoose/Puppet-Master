@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L834-L4683
+Source lines: L834-L4684
 
-Source SHA256: `6d6a93576ffae0c12251aa00d7f6bf19e9a8dab74e302ae4df14c877ca602b56`
+Source SHA256: `40e8db16f116e0c8591c73ed42853c7a72426367871001579a90399d0423d380`
 
 ---
 
@@ -2315,6 +2315,7 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Priority and stickiness rules align GUI ordering with requested/effective runtime selection.
+- "Refined 2026-10-09 by MA-073 for a provider's threshold auto-switch: the target there is the eligible account of the same provider with the most remaining, and this unit's priority order, then the account id, only breaks ties; MA-073 owns that rule."
 owner_hints:
 - Plans/Multi-Account.md
 preserved_contractrefs:
@@ -3071,7 +3072,7 @@ canonical_text: Usage and status surfaces show current effective account/profile
   pressure/cooldown state, source-confidence/stale/estimated labels, and switch/failover reason. Plans/usage-feature.md
   consumes this account/provider owner contract and must not reintroduce stale buckets or flatten direct-provider quota
   context into one generic account label. Usage's Accounts room and its Plans & limits room (consumer note 2026-10-09,
-  Plans/Decision_Log.md#DL-164) show one row per account of each provider, every account signed in to that provider and
+  Plans/Decision_Log.md#DL-174) show one row per account of each provider, every account signed in to that provider and
   not only the active one, grouped under the provider in the Settings provider catalog's order, each with its own
   windows, reading source and freshness; per-provider auto-switch on those rows follows MA-073.
 gui_related: true

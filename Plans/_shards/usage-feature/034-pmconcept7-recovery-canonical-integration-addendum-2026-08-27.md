@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L6436-L6557
 
-Source SHA256: `297218ce696180a7306329bc27edfe82e7ad73f32b68c08f288da6638bb15cdb`
+Source SHA256: `35a14cdceb49882a49cf37ec14fba68466bf5f1a656744cce447177f14237bd3`
 
 ---
 
@@ -50,7 +50,7 @@ canonical_text: >-
   the event/provider/account/runtime refs as correlation, and carries no `OpenSubject`; event-primary callers
   retain `usage_event` plus `usage_event_ref`, while aggregate provider/account/panel details remain local inspectors and dispatch no
   command, receipt, or domain event. The Accounts room acts in place through explicit controls on its cards, never
-  through the card itself (UF-107, DL-164): an account's "Use this account" control dispatches the existing
+  through the card itself (UF-107, DL-174): an account's "Use this account" control dispatches the existing
   `cmd.account.select_profile` as a labelled override and shows only where the provider's capability
   `supports_manual_set_active` is true, and a provider's Auto-switch toggle and switch level are bound Settings
   controls that commit through `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with
